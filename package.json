@@ -30,7 +30,8 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "wrangler": "^4.92.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -40,7 +41,9 @@
     "dev:safe": "concurrently \"npm run server:watch\" \"npm start\"",
     "build": "cross-env CI=false react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && wrangler deploy",
+    "preview": "npm run build && wrangler dev"
   },
   "eslintConfig": {
     "extends": [
