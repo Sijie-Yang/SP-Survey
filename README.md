@@ -3,6 +3,7 @@
 # 🏙️ SP-Survey (Streetscape Perception Survey)
 
 [![Stars](https://img.shields.io/github/stars/Sijie-Yang/Streetscape-Perception-Survey?style=social)](https://github.com/Sijie-Yang/Streetscape-Perception-Survey)
+[![SP-Survey.org](https://img.shields.io/badge/🚀_Use_Online-SP--Survey.org-FF6B35?style=for-the-badge)](https://sp-survey.org)
 [![Paper](https://img.shields.io/badge/📄-Published_Paper-9cf)](https://www.sciencedirect.com/science/article/pii/S0360132325000514)
 [![Website](https://img.shields.io/badge/🌐-Live_Demo-blue)](https://streetscape-perception-survey.vercel.app/)
 [![License](https://img.shields.io/badge/📄-CC_BY_4.0-green)](https://creativecommons.org/licenses/by/4.0/)
@@ -16,6 +17,15 @@
 <br>
 Self-hosted local edition of <a href="https://sp-survey.org">SP-Survey-Platform</a> — same survey features, no login required. Build surveys with drag-and-drop, AI generation, skill questions, and deploy to your own Supabase + Vercel.
 
+> ### ⚡ Don't want to self-host? Use the online platform
+>
+> **Most users don't need to clone this repo.** Go to **[sp-survey.org](https://sp-survey.org), sign up, and you're ready — upload images, build surveys, share links, and collect responses, all in your browser.
+>
+> 👉 **[Use SP-Survey.org now →](https://sp-survey.org)**
+>
+> *This repo (SP-Survey) is for researchers who need local self-hosting, a login-free admin panel, or their own Supabase + Vercel deployment.*
+
+🌐 <a href="https://sp-survey.org"><strong>SP-Survey.org (online — recommended)</strong></a> •
 🌐 <a href="https://streetscape-perception-survey.vercel.app/"><strong>Live Demo</strong></a> •
 📄 <a href="https://www.sciencedirect.com/science/article/pii/S0360132325000514"><strong>Research Paper</strong></a> •
 🔗 <a href="https://thermal-affordance.ual.sg"><strong>Project Website</strong></a> •
@@ -49,11 +59,29 @@ Self-hosted local edition of <a href="https://sp-survey.org">SP-Survey-Platform<
 
 ## 🚀 Quick Start
 
-### Two Ways to Use SP-Survey
+### ⚡ Use the online platform (recommended for most users)
+
+**No installation. No Supabase/Vercel setup.** Visit **[sp-survey.org](https://sp-survey.org)**, create an account, and you can:
+
+- Upload images and media
+- Build surveys from templates or with AI
+- Share survey links in one click
+- View and export results online
+
+👉 **[Open sp-survey.org →](https://sp-survey.org)**
+
+---
+
+### Self-host locally (this repo)
+
+For users who need to run locally, use a login-free admin panel, or deploy via GitHub + Vercel themselves.
+
+#### Two Ways to Use SP-Survey
 
 | | **SP-Survey-Platform** (online) | **SP-Survey** (this repo) |
 |---|---|---|
-| URL | [sp-survey.org](https://sp-survey.org) | Self-hosted locally |
+| URL | **[sp-survey.org](https://sp-survey.org)** ← use directly | Self-hosted locally |
+| Setup | **Zero setup — sign up and go** | Clone + `npm run dev` + Supabase/Vercel |
 | Login | Required | **None** — open `/admin` directly |
 | Image storage | Cloudflare R2 | **Supabase Storage** (`survey-images` bucket) |
 | Deployment | Share link | **GitHub + Vercel** wizard (Step 4) |
