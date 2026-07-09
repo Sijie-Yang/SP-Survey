@@ -1,7 +1,9 @@
 // File system manager for templates and projects
 // Uses API calls to backend server for file operations
 
-const API_BASE_URL = 'http://localhost:3001/api';
+import { API_ROOT } from './apiConfig';
+
+const API_BASE_URL = API_ROOT;
 const TEMPLATES_PATH = '/project_templates';
 const PROJECTS_PATH = '/projects';
 
@@ -17,12 +19,30 @@ export const loadTemplatesFromFiles = async () => {
     }
     
     const { files } = await response.json();
-    console.log('Template files found:', files);
+    const templateFiles = (files || []).filter((f) => f !== 'index.json');
+
+    // Optional ordering from index.json
+    let ordered = templateFiles;
+    try {
+      const indexRes = await fetch(`${TEMPLATES_PATH}/index.json`);
+      if (indexRes.ok) {
+        const indexData = await indexRes.json();
+        const catalog = indexData.templates || [];
+        const rank = new Map(catalog.map((name, i) => [name, i]));
+        ordered = [...templateFiles].sort((a, b) => {
+          const ra = rank.has(a) ? rank.get(a) : 9999;
+          const rb = rank.has(b) ? rank.get(b) : 9999;
+          return ra - rb || a.localeCompare(b);
+        });
+      }
+    } catch (_) { /* use default order */ }
+
+    console.log('Template files found:', ordered);
     
     const templates = [];
     
     // Load each template file
-    for (const filename of files) {
+    for (const filename of ordered) {
       try {
         console.log(`📄 Loading template file: ${filename}`);
         const templateResponse = await fetch(`${TEMPLATES_PATH}/${filename}`);

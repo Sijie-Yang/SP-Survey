@@ -11,3 +11,256 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* ============================================================================
+   Force every image-based survey question to display images at their NATURAL
+   aspect ratio. We override SurveyJS's default sizing (imageWidth/imageHeight
+   inline styles + object-fit) and our own legacy imageFit="cover" so that
+   imagepicker, image, imageranking, imagerating, imageboolean, imagematrix
+   and any html-rendered survey image always preserves its source aspect ratio.
+   ========================================================================== */
+
+/* SurveyJS built-in imagepicker question
+   ---------------------------------------------------------------------------
+   We use a "justified gallery" layout: items in the same row share the SAME
+   height, and each item's WIDTH is proportional to its image's natural
+   aspect ratio. The actual width/height values are computed in JS by
+   src/lib/imagePickerLayout.js (which also strips the HTML width/height
+   attributes SurveyJS injects on each <img>) and are written as inline
+   styles on every .sd-imagepicker__item, .sd-imagepicker__image-container
+   and .sd-imagepicker__image.
+
+   The CSS below provides:
+     * the flex container that lays out items in rows with wrapping,
+     * the positioning of the check mark on the image-container,
+     * and sensible fallback sizing for the brief moment before the JS has
+       had a chance to size the items (e.g. between mount and image load).
+   The DOM SurveyJS renders is:
+     .sd-imagepicker                          <-- root flex container
+       └─ .sd-imagepicker__column             <-- one or more "columns"
+            └─ .sd-imagepicker__item          <-- the flex item we size
+                 └─ <label class="sd-imagepicker__label">
+                      └─ .sd-imagepicker__item-decorator
+                           └─ .sd-imagepicker__image-container (position rel)
+                                ├─ <span class="sd-imagepicker__check-decorator">
+                                └─ <img class="sd-imagepicker__image" />
+                      └─ .sd-imagepicker__item-text                              */
+
+/* Outer grid: horizontal flow with wrapping. JS gives each item an explicit
+   pixel width, but we still need flex-wrap so a row that genuinely cannot
+   fit at MIN_HEIGHT splits onto a new row. */
+.sd-imagepicker {
+  display: flex !important;
+  flex-flow: row wrap !important;
+  gap: 12px !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  padding: 0 !important;
+  width: 100%;
+}
+
+.sd-imagepicker__column,
+.sd-selectbase__column.sd-imagepicker__column {
+  display: flex !important;
+  flex-flow: row wrap !important;
+  gap: 12px !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+/* Each item gets an inline width from JS. Until then we let it shrink-to-fit
+   so the page does not flash with full-width items. */
+.sd-imagepicker__item {
+  flex: 0 0 auto !important;
+  display: inline-block !important;
+  width: auto;
+  max-width: 100% !important;
+  vertical-align: top;
+  margin: 0 !important;
+}
+
+.sd-imagepicker__label {
+  display: block !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.sd-imagepicker__item-decorator {
+  display: block !important;
+  width: 100% !important;
+  text-align: center;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* The image container — positioning anchor for the check decorator. JS sets
+   pixel width and height on it (matching the image's rendered box) so the
+   absolutely-positioned check mark lands on the image's top-right corner. */
+.sd-imagepicker__image-container {
+  position: relative !important;
+  display: block !important;
+  width: 100%;
+  vertical-align: top;
+  line-height: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 0;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+/* The image itself. JS sets exact width + height in pixels (= row height x
+   natural AR). object-fit is irrelevant once those are set because the box
+   matches the image's natural AR; we still default to `cover` so a brief
+   pre-JS render uses a sensible fit. */
+.sd-imagepicker__image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  margin: 0 !important;
+}
+
+/* Caption below the image. width: 100% pegs it to the item's width so a
+   long caption can't widen the item and offset the check mark. */
+.sd-imagepicker__text,
+.sd-imagepicker__item-text {
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  text-align: center;
+  word-break: break-word;
+  line-height: 1.4;
+  margin: 4px 0 0 !important;
+  font-size: 14px;
+}
+
+/* Snug the check mark to the image's top-right corner. */
+.sd-imagepicker__check-decorator {
+  top: 6px !important;
+  right: 6px !important;
+  padding: 4px !important;
+}
+
+.sd-imagepicker__check-icon {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+/* SurveyJS built-in image (display) question */
+.sd-image,
+.sd-image__image-wrapper {
+  width: auto !important;
+  height: auto !important;
+  max-width: 100%;
+}
+
+.sd-image__image {
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 600px !important;
+  object-fit: contain !important;
+}
+
+/* HTML-rendered images inside survey panels (used by imageboolean, imagerating,
+   imagematrix when converted to a panel with an html element). */
+.sv-string-viewer img,
+.sd-html img,
+.sv_q_html img {
+  max-width: 100%;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+/* Custom image-based widgets rendered by us. These widgets also flag every
+   image with the .sp-natural-image class so we can guarantee aspect-ratio
+   preservation regardless of any inline height/objectFit that may slip in.
+   This is the "fallback" styling for the brief moment before
+   src/lib/imagePickerLayout.js has had a chance to size each image
+   precisely; once that runs, JS sets pixel width + height inline, which
+   wins over the rules below. */
+.sp-natural-image,
+.sp-natural-image img {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+  max-width: 100%;
+  display: block;
+}
+
+/* Generic image-gallery container used by every custom image-based widget
+   (imageranking, imagerating with multiple images, imageboolean with
+   multiple images, imagematrix). The actual sizes are written as inline
+   styles by src/lib/imagePickerLayout.js — what we provide here is just
+   the flex container, gap, and item shrink-to-fit so the JS-written widths
+   are honoured. */
+.sp-image-gallery {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Vertical variant: one item per row, items stay full width. The gallery
+   layout module sizes the *image* inside each item (centered horizontally),
+   keeping each row's draggable hit area full width — the surrounding card
+   stays full-width, only the image shrinks/grows around its own AR. */
+.sp-image-gallery.sp-image-gallery--vertical {
+  flex-flow: column nowrap;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.sp-image-gallery__item {
+  flex: 0 0 auto;
+  display: block;
+  margin: 0;
+  padding: 0;
+  vertical-align: top;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.sp-image-gallery.sp-image-gallery--vertical > .sp-image-gallery__item {
+  width: 100%;
+  max-width: 100%;
+}
+
+.sp-image-gallery__image-container {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+  font-size: 0;
+  overflow: hidden;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.sp-image-gallery__item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  object-fit: cover;
+}
+
+/* Skill question iframe — keep pointer events on the interactive layer */
+.sd-question[data-name] iframe[title="skill-question"],
+iframe[title="skill-question"] {
+  pointer-events: auto !important;
+  touch-action: manipulation;
+}

@@ -36,6 +36,120 @@ const getPermanentImageUrl = (imageData, datasetName) => {
   return tempUrl;
 };
 
+// Build a headers object that includes Authorization only when a non-empty
+// token is provided. Used so the same call sites work for both public and
+// gated datasets without forcing a token on public access.
+const authHeaders = (token, extra = {}) => {
+  const h = { ...extra };
+  if (token && token.trim()) {
+    h.Authorization = `Bearer ${token.trim()}`;
+  }
+  return h;
+};
+
+// Image file extensions accepted when listing dataset folders.
+const IMAGE_EXT_RE = /\.(jpe?g|png|gif|webp|bmp|tiff?)$/i;
+
+// Per-segment URL encoding (preserves the slashes between path components
+// while still escaping spaces / unicode within a segment).
+const encodePathSegments = (path) =>
+  path.split('/').filter(Boolean).map(encodeURIComponent).join('/');
+
+/**
+ * Parse a user-entered dataset target into `{ dataset, path }`. Accepts:
+ *   - "owner/repo"               → rows mode (datasets-server)
+ *   - "owner/repo/sub/folder"    → folder mode (Hub tree API)
+ * Returns null when the input doesn't look like a HF dataset id at all.
+ */
+const parseDatasetTarget = (input) => {
+  if (!input || typeof input !== 'string') return null;
+  const parts = input.trim().replace(/^\/+|\/+$/g, '').split('/').filter(Boolean);
+  if (parts.length < 2) return null;
+  return {
+    dataset: `${parts[0]}/${parts[1]}`,
+    path: parts.slice(2).join('/'),
+  };
+};
+
+/**
+ * List all image files under a folder inside a dataset repo via the Hub
+ * tree API. Follows `Link: rel="next"` cursors so big folders fully
+ * enumerate. Results are cached for CACHE_DURATION so the three public
+ * functions can share a single network walk per dataset/path.
+ */
+const listImagesInDatasetFolder = async (token, dataset, folderPath) => {
+  const cacheKey = `tree::${dataset}::${folderPath}::${token ? 'auth' : 'pub'}`;
+  const cached = apiCache.get(cacheKey);
+  if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+    console.log(`📦 Using cached folder listing for ${dataset}/${folderPath}`);
+    return cached.data;
+  }
+
+  const headers = authHeaders(token);
+  const encodedPath = encodePathSegments(folderPath);
+  const base = `https://huggingface.co/api/datasets/${dataset}/tree/main${encodedPath ? `/${encodedPath}` : ''}`;
+  let next = `${base}?recursive=false&expand=false`;
+  const all = [];
+
+  while (next) {
+    await respectRateLimit();
+    const res = await fetch(next, { headers });
+    if (!res.ok) {
+      if (res.status === 401) {
+        throw new Error(
+          (!token || !token.trim())
+            ? `Folder "${dataset}/${folderPath}" requires authentication. Provide a Hugging Face Access Token.`
+            : 'Invalid or expired Hugging Face Access Token.'
+        );
+      }
+      if (res.status === 403) {
+        throw new Error(
+          `Access to "${dataset}" is gated. Open https://huggingface.co/datasets/${dataset} ` +
+          `and click "Agree and access repository", then retry with a token from the same account.`
+        );
+      }
+      if (res.status === 404) {
+        throw new Error(`Folder "${folderPath}" not found in dataset "${dataset}".`);
+      }
+      throw new Error(`HF tree API ${res.status}: ${res.statusText}`);
+    }
+    const items = await res.json();
+    for (const item of items || []) {
+      if (item.type === 'file' && IMAGE_EXT_RE.test(item.path)) {
+        all.push(item.path);
+      }
+    }
+    // HF returns pagination cursors via `Link: <…>; rel="next"`.
+    const link = res.headers.get('Link') || res.headers.get('link');
+    const m = link && link.match(/<([^>]+)>;\s*rel="next"/i);
+    next = m ? m[1] : null;
+  }
+
+  apiCache.set(cacheKey, { data: all, timestamp: Date.now() });
+  return all;
+};
+
+/**
+ * Build image entries (url + filename + metadata) from a folder listing,
+ * sliced by offset/limit so the existing paginated preloader keeps working.
+ */
+const buildFolderModeImages = (dataset, folderPath, paths, offset = 0, limit = paths.length) => {
+  const slice = paths.slice(offset, offset + limit);
+  return slice.map((p) => {
+    const filename = p.split('/').pop();
+    return {
+      url: `https://huggingface.co/datasets/${dataset}/resolve/main/${encodePathSegments(p)}`,
+      name: filename,
+      metadata: {
+        dataset,
+        folderPath,
+        path: p,
+        isPermanent: true,
+      },
+    };
+  });
+};
+
 // Cache for API responses to reduce requests
 const apiCache = new Map();
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
@@ -124,12 +238,44 @@ const cachedFetch = async (url, options = {}) => {
  */
 export const testHuggingFaceConnection = async (token, datasetName) => {
   try {
-    // Try datasets-server API first (more reliable for public datasets)
+    const parsed = parseDatasetTarget(datasetName);
+    if (!parsed) {
+      throw new Error(
+        'Invalid dataset name. Use "owner/repo" for rows-style datasets, ' +
+        'or "owner/repo/subfolder" to target a folder of image files.'
+      );
+    }
+
+    // Folder mode: probe the Hub tree API for the requested subfolder.
+    // This bypasses datasets-server entirely (which only understands
+    // parquet-style row layouts) and lets us support image-folder repos.
+    if (parsed.path) {
+      console.log(`Testing folder mode: ${parsed.dataset} @ ${parsed.path}`);
+      const paths = await listImagesInDatasetFolder(token, parsed.dataset, parsed.path);
+      return {
+        success: true,
+        datasetInfo: {
+          id: datasetName,
+          mode: 'folder',
+          folderPath: parsed.path,
+          imageCount: paths.length,
+          author: parsed.dataset.split('/')[0] || 'unknown',
+          description: `Folder access via Hub tree API (${paths.length} image file${paths.length === 1 ? '' : 's'})`,
+        },
+      };
+    }
+
+    // Try datasets-server API first (more reliable for public datasets).
+    // We pass the token through when present so gated datasets succeed on
+    // the first attempt instead of failing with 401 and forcing a retry.
     console.log(`Testing connection to dataset: ${datasetName}`);
-    
+
     try {
-      const datasetsServerResponse = await cachedFetch(`https://datasets-server.huggingface.co/info?dataset=${datasetName}`);
-      
+      const datasetsServerResponse = await cachedFetch(
+        `https://datasets-server.huggingface.co/info?dataset=${datasetName}`,
+        { headers: authHeaders(token) }
+      );
+
       if (datasetsServerResponse.ok) {
         const datasetsServerInfo = await datasetsServerResponse.json();
         console.log('Successfully connected via datasets-server API');
@@ -178,26 +324,23 @@ export const testHuggingFaceConnection = async (token, datasetName) => {
     }
 
     // Fallback to traditional Hugging Face API
-    const headers = {
-      'Content-Type': 'application/json'
-    };
-    
-    // Only add Authorization header if token is provided
-    if (token && token.trim()) {
-      headers['Authorization'] = `Bearer ${token}`;
-    }
-    
     const response = await cachedFetch(`https://huggingface.co/api/datasets/${datasetName}`, {
-      headers
+      headers: authHeaders(token, { 'Content-Type': 'application/json' }),
     });
 
     if (!response.ok) {
       if (response.status === 401) {
         if (!token || !token.trim()) {
           throw new Error(`Dataset "${datasetName}" requires authentication. Please provide a Hugging Face Access Token.`);
-        } else {
-          throw new Error(`Invalid or expired Hugging Face Access Token. Please check your token.`);
         }
+        throw new Error('Invalid or expired Hugging Face Access Token. Please check your token.');
+      } else if (response.status === 403) {
+        // Gated datasets: token is fine but the user hasn't accepted the
+        // dataset's terms yet. Point them straight at the page they need.
+        throw new Error(
+          `Access to "${datasetName}" is gated. Open https://huggingface.co/datasets/${datasetName} ` +
+          `and click "Agree and access repository", then retry with a token from the same account.`
+        );
       } else if (response.status === 404) {
         throw new Error(`Dataset "${datasetName}" not found. Please check the dataset name.`);
       } else {
@@ -235,184 +378,134 @@ export const testHuggingFaceConnection = async (token, datasetName) => {
  */
 export const getImagesFromHuggingFace = async (token, datasetName, limit = 500, offset = 0) => {
   try {
-    // Prepare headers for authenticated requests
-    const headers = {
-      'Content-Type': 'application/json'
-    };
-    
-    // Only add Authorization header if token is provided
-    if (token && token.trim()) {
-      headers['Authorization'] = `Bearer ${token}`;
+    const parsed = parseDatasetTarget(datasetName);
+    if (!parsed) {
+      throw new Error(
+        'Invalid dataset name. Use "owner/repo" or "owner/repo/subfolder".'
+      );
     }
 
-    // Try datasets-server API first (works for most public datasets)
+    // Folder mode: enumerate via the Hub tree API and slice the cached
+    // result so the existing offset/limit-based preloader pipeline works
+    // unchanged. The listing itself is cached, so multiple paginated
+    // requests reuse a single network walk per dataset+folder.
+    if (parsed.path) {
+      const paths = await listImagesInDatasetFolder(token, parsed.dataset, parsed.path);
+      return {
+        success: true,
+        images: buildFolderModeImages(parsed.dataset, parsed.path, paths, offset, limit),
+        total: paths.length,
+      };
+    }
+
     console.log(`Attempting to load images from dataset: ${datasetName}`);
-    
-    // Use rows endpoint with pagination for larger datasets
-    const viewerResponse = await cachedFetch(`https://datasets-server.huggingface.co/rows?dataset=${datasetName}&config=default&split=train&offset=${offset}&length=${Math.min(limit, 100)}`, {
-      // Don't use auth headers for datasets-server API as it's public
-    });
 
-    if (viewerResponse.ok) {
-      const viewerData = await viewerResponse.json();
-      const images = [];
+    // Use the rows endpoint with pagination. We pass the token through
+    // when present so gated datasets work on the first try; the header
+    // is omitted for public datasets so they keep working token-less.
+    const viewerResponse = await cachedFetch(
+      `https://datasets-server.huggingface.co/rows?dataset=${datasetName}&config=default&split=train&offset=${offset}&length=${Math.min(limit, 100)}`,
+      { headers: authHeaders(token) }
+    );
 
-      console.log(`Dataset viewer response for ${datasetName}:`, viewerData);
-
-      if (viewerData.rows) {
-        const rowsToProcess = viewerData.rows;
-        console.log(`Processing ${rowsToProcess.length} rows from dataset ${datasetName}`);
-
-        for (let i = 0; i < rowsToProcess.length; i++) {
-          const rowContainer = rowsToProcess[i];
-          console.log(`Row ${i} structure:`, Object.keys(rowContainer));
-
-          // Extract the actual row data (it's nested in the 'row' field)
-          const actualRow = rowContainer.row || rowContainer;
-          console.log(`Actual row ${i} data keys:`, Object.keys(actualRow));
-
-          // Look for image columns in the actual row data
-          const imageColumns = Object.keys(actualRow).filter(key => 
-            key.toLowerCase().includes('image') || 
-            key.toLowerCase().includes('img') || 
-            key.toLowerCase().includes('picture') ||
-            key.toLowerCase().includes('photo') ||
-            key.toLowerCase().includes('thermal') || // Add thermal for this specific dataset
-            key.toLowerCase().includes('rgb') ||     // Add rgb as common image type
-            key.toLowerCase().includes('depth')      // Add depth as common image type
-          );
-
-          console.log(`Found image columns in row ${i}:`, imageColumns);
-
-          for (const column of imageColumns) {
-            const imageData = actualRow[column];
-            console.log(`Image data for column ${column}:`, imageData);
-
-            if (imageData && typeof imageData === 'object') {
-              // Try to get permanent URL, fallback to temporary URL
-              const imageUrl = getPermanentImageUrl(imageData, datasetName);
-
-              if (imageUrl) {
-                images.push({
-                  url: imageUrl,
-                  name: `${datasetName.replace('/', '_')}_${i}_${column}`,
-                  metadata: {
-                    dataset: datasetName,
-                    column: column,
-                    rowIndex: i,
-                    isPermanent: !imageUrl.includes('Expires='), // Flag if URL is permanent
-                    ...actualRow
-                  }
-                });
-                console.log(`Added image ${images.length - 1}: ${imageUrl.substring(0, 100)}...`);
-              }
-                } else if (typeof imageData === 'string' && imageData.startsWith('http')) {
-                  // Handle direct URL strings
-                  images.push({
-                    url: imageData,
-                    name: `${datasetName.replace('/', '_')}_${i}_${column}`,
-                    metadata: {
-                      dataset: datasetName,
-                      column: column,
-                      rowIndex: i,
-                      ...actualRow
-                    }
-                  });
-                  console.log(`Added direct URL image ${images.length - 1}: ${imageData}`);
-                }
-          }
-        }
+    if (!viewerResponse.ok) {
+      if (viewerResponse.status === 401) {
+        throw new Error(
+          (!token || !token.trim())
+            ? `Dataset "${datasetName}" requires authentication. Provide a Hugging Face Access Token.`
+            : 'Invalid or expired Hugging Face Access Token.'
+        );
       }
-
-      if (images.length > 0) {
-        return {
-          success: true,
-          images,
-          total: viewerData.num_rows_total || viewerData.rows?.length || images.length
-        };
+      if (viewerResponse.status === 403) {
+        throw new Error(
+          `Access to "${datasetName}" is gated. Open https://huggingface.co/datasets/${datasetName} ` +
+          `and click "Agree and access repository", then retry with a token from the same account.`
+        );
       }
+      if (viewerResponse.status === 404) {
+        throw new Error(`Dataset "${datasetName}" not found. Please check the dataset name.`);
+      }
+      throw new Error(`Unable to access images from dataset "${datasetName}" (HTTP ${viewerResponse.status}).`);
     }
 
-    // If datasets-server API didn't work, try alternative method with authentication
-    if (token && token.trim()) {
-      console.log('Trying authenticated API access...');
-      
-      try {
-        const rowsResponse = await cachedFetch(`https://datasets-server.huggingface.co/rows?dataset=${datasetName}&config=default&split=train&offset=${offset}&limit=${limit}`, {
-          headers
-        });
+    const viewerData = await viewerResponse.json();
+    const images = [];
 
-        if (rowsResponse.ok) {
-          const rowsData = await rowsResponse.json();
-          const images = [];
-          
-          if (rowsData.rows) {
-            for (const rowContainer of rowsData.rows) {
-              const actualRow = rowContainer.row || rowContainer;
-              
-              // Look for image columns
-              const imageColumns = Object.keys(actualRow).filter(key => 
-                key.toLowerCase().includes('image') || 
-                key.toLowerCase().includes('img') || 
-                key.toLowerCase().includes('picture') ||
-                key.toLowerCase().includes('photo') ||
-                key.toLowerCase().includes('thermal') ||
-                key.toLowerCase().includes('rgb') ||
-                key.toLowerCase().includes('depth')
-              );
+    console.log(`Dataset viewer response for ${datasetName}:`, viewerData);
 
-              for (const column of imageColumns) {
-                const imageData = actualRow[column];
-                if (imageData && typeof imageData === 'object') {
-                  // Handle base64 bytes separately
-                  if (imageData.bytes) {
-                    images.push({
-                      url: `data:image/jpeg;base64,${imageData.bytes}`,
-                      name: `${datasetName}_${rowContainer.row_idx || 'unknown'}_${column}`,
-                      metadata: {
-                        dataset: datasetName,
-                        row_idx: rowContainer.row_idx,
-                        column: column,
-                        isPermanent: true, // Data URLs don't expire
-                        ...actualRow
-                      }
-                    });
-                  } else {
-                    // Try to get permanent URL for regular images
-                    const imageUrl = getPermanentImageUrl(imageData, datasetName);
-                    if (imageUrl) {
-                      images.push({
-                        url: imageUrl,
-                        name: `${datasetName}_${rowContainer.row_idx || 'unknown'}_${column}`,
-                        metadata: {
-                          dataset: datasetName,
-                          row_idx: rowContainer.row_idx,
-                          column: column,
-                          isPermanent: !imageUrl.includes('Expires='), // Flag if URL is permanent
-                          ...actualRow
-                        }
-                      });
-                    }
-                  }
-                }
-              }
+    if (viewerData.rows) {
+      const rowsToProcess = viewerData.rows;
+      console.log(`Processing ${rowsToProcess.length} rows from dataset ${datasetName}`);
+
+      for (let i = 0; i < rowsToProcess.length; i++) {
+        const rowContainer = rowsToProcess[i];
+        const actualRow = rowContainer.row || rowContainer;
+
+        const imageColumns = Object.keys(actualRow).filter((key) =>
+          key.toLowerCase().includes('image') ||
+          key.toLowerCase().includes('img') ||
+          key.toLowerCase().includes('picture') ||
+          key.toLowerCase().includes('photo') ||
+          key.toLowerCase().includes('thermal') ||
+          key.toLowerCase().includes('rgb') ||
+          key.toLowerCase().includes('depth')
+        );
+
+        for (const column of imageColumns) {
+          const imageData = actualRow[column];
+
+          if (imageData && typeof imageData === 'object') {
+            // Base64 payloads are inlined as data URLs so they bypass any
+            // additional auth handshake during download.
+            if (imageData.bytes) {
+              images.push({
+                url: `data:image/jpeg;base64,${imageData.bytes}`,
+                name: `${datasetName.replace('/', '_')}_${i}_${column}`,
+                metadata: {
+                  dataset: datasetName,
+                  column,
+                  rowIndex: i,
+                  isPermanent: true,
+                  ...actualRow,
+                },
+              });
+              continue;
             }
+            const imageUrl = getPermanentImageUrl(imageData, datasetName);
+            if (imageUrl) {
+              images.push({
+                url: imageUrl,
+                name: `${datasetName.replace('/', '_')}_${i}_${column}`,
+                metadata: {
+                  dataset: datasetName,
+                  column,
+                  rowIndex: i,
+                  isPermanent: !imageUrl.includes('Expires='),
+                  ...actualRow,
+                },
+              });
+            }
+          } else if (typeof imageData === 'string' && imageData.startsWith('http')) {
+            images.push({
+              url: imageData,
+              name: `${datasetName.replace('/', '_')}_${i}_${column}`,
+              metadata: {
+                dataset: datasetName,
+                column,
+                rowIndex: i,
+                ...actualRow,
+              },
+            });
           }
-
-          return {
-            success: true,
-            images,
-            total: rowsData.num_rows_total || images.length
-          };
         }
-      } catch (authError) {
-        console.warn('Authenticated API access failed:', authError);
       }
     }
 
-    // If all methods fail, return appropriate error
-    throw new Error(`Unable to access images from dataset "${datasetName}". The dataset may require authentication or may not contain images.`);
-
+    return {
+      success: true,
+      images,
+      total: viewerData.num_rows_total || viewerData.rows?.length || images.length,
+    };
   } catch (error) {
     console.error('Failed to get images from Hugging Face:', error);
     return {
@@ -489,11 +582,21 @@ export const getRandomImagesFromHuggingFace = async (token, datasetName, count =
  */
 export const getImageCountFromDataset = async (token, datasetName) => {
   try {
+    const parsed = parseDatasetTarget(datasetName);
+    if (parsed?.path) {
+      // Folder mode: walk the tree once (cached) and count image files.
+      const paths = await listImagesInDatasetFolder(token, parsed.dataset, parsed.path);
+      return { imageCount: paths.length };
+    }
+
     // Use rows API to get the count - it's more reliable
     console.log(`Getting image count for dataset: ${datasetName}`);
-    
-    const viewerResponse = await cachedFetch(`https://datasets-server.huggingface.co/rows?dataset=${datasetName}&config=default&split=train&offset=0&length=1`);
-    
+
+    const viewerResponse = await cachedFetch(
+      `https://datasets-server.huggingface.co/rows?dataset=${datasetName}&config=default&split=train&offset=0&length=1`,
+      { headers: authHeaders(token) }
+    );
+
     if (viewerResponse.ok) {
       const viewerData = await viewerResponse.json();
       console.log('Dataset count response:', viewerData);

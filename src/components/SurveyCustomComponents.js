@@ -1,9 +1,16 @@
 import React from 'react';
 import { ReactQuestionFactory } from 'survey-react-ui';
-import { Serializer, Question } from 'survey-core';
+import { Serializer, Question, CustomError } from 'survey-core';
 import ImageRankingWidget from './ImageRankingWidget';
 import ImageRatingWidget from './ImageRatingWidget';
 import ImageBooleanWidget from './ImageBooleanWidget';
+import { MediaDisplayContent, MediaRatingContent, MediaBooleanContent } from './MediaWidgets';
+import { SliderGroupContent, PointAllocationContent, ImageSliderGroupContent, ImagePointAllocationContent } from './ResponseWidgets';
+import ImageAnnotationCanvas from './ImageAnnotationWidget';
+import SkillQuestionFrame from './SkillQuestionWidget';
+import { readSkillQuestionFields } from '../lib/skillPostMessage';
+import { inferMediaType } from '../lib/mediaUtils';
+import { resolveQuestionMediaItems } from '../lib/surveyMediaInjection';
 
 // Define the custom question type
 const WIDGET_NAME = 'imageranking';
@@ -504,33 +511,33 @@ function ImageMatrixQuestionComponent(props) {
 
   return (
     <div style={{ width: '100%' }}>
-      {/* Display Images */}
+      {/* Display Images — justified gallery, see src/lib/imagePickerLayout.js */}
       {images.length > 0 && (
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: `repeat(${Math.min(images.length, 4)}, 1fr)`,
-          gap: '16px',
-          marginBottom: '24px',
-          padding: '16px',
-          backgroundColor: '#f5f5f5',
-          borderRadius: '8px'
-        }}>
+        <div
+          className="sp-image-gallery"
+          style={{
+            marginBottom: '24px',
+            padding: '16px',
+            backgroundColor: '#f5f5f5',
+            borderRadius: '8px',
+            boxSizing: 'border-box',
+          }}
+        >
           {images.map((imageUrl, index) => (
-            <div key={index} style={{
-              aspectRatio: '1',
-              borderRadius: '8px',
-              overflow: 'hidden',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-            }}>
-              <img
-                src={imageUrl}
-                alt={`Image ${index + 1}`}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: question.imageFit || 'cover'
-                }}
-              />
+            <div
+              key={index}
+              className="sp-image-gallery__item"
+              style={{
+                borderRadius: '8px',
+                overflow: 'hidden',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                backgroundColor: '#fff',
+                lineHeight: 0,
+              }}
+            >
+              <div className="sp-image-gallery__image-container">
+                <img src={imageUrl} alt={`Image ${index + 1}`} />
+              </div>
             </div>
           ))}
         </div>
@@ -640,3 +647,353 @@ function ImageMatrixQuestionComponent(props) {
 
 // Export default registration function
 export default registerImageRankingWidget;
+
+// ── Media question types ──────────────────────────────────────────────────────
+
+const MEDIA_PAIRING_TYPES = [
+  'imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'image', 'imagematrix',
+  'mediadisplay', 'mediarating', 'mediaboolean', 'imageannotation', 'skillquestion',
+  'imageslidergroup', 'imagepointallocation',
+];
+
+export function registerMediaPairingProps() {
+  MEDIA_PAIRING_TYPES.forEach((typeName) => {
+    Serializer.addProperty(typeName, {
+      name: 'mediaAssignmentMode',
+      default: 'individual',
+      choices: ['individual', 'group', 'category'],
+      category: 'general',
+    });
+    Serializer.addProperty(typeName, {
+      name: 'assignedMediaGroupId',
+      category: 'general',
+    });
+    Serializer.addProperty(typeName, {
+      name: 'assignedMediaCategories',
+      category: 'general',
+    });
+  });
+}
+
+const MEDIA_PROPS = [
+  { name: 'mediaUrl', category: 'general' },
+  { name: 'mediaType', default: 'any', choices: ['any', 'image', 'video', 'audio'], category: 'general' },
+  { name: 'mediaName', category: 'general' },
+  { name: 'imageCount:number', default: 1, category: 'general' },
+  { name: 'randomImageSelection:boolean', default: false, category: 'general' },
+  { name: 'imageSelectionMode', default: 'random', category: 'general' },
+  { name: 'excludePreviouslyUsedImages:boolean', default: true, category: 'general' },
+];
+
+function makeMediaQuestion(typeName, parent = 'question') {
+  class Q extends Question {
+    getType() { return typeName; }
+  }
+  Serializer.addClass(typeName, MEDIA_PROPS, () => new Q(), parent);
+}
+
+export function registerMediaDisplayWidget() {
+  makeMediaQuestion('mediadisplay');
+  Serializer.addProperty('mediadisplay', { name: 'mediaItems', default: [], category: 'general' });
+  Serializer.addProperty('mediadisplay', { name: 'mediaUrls:string[]', category: 'general' });
+  Serializer.addProperty('mediadisplay', { name: 'mediaNames:string[]', category: 'general' });
+  Serializer.addProperty('mediadisplay', { name: 'mediaTypes:string[]', category: 'general' });
+  Serializer.addProperty('mediadisplay', {
+    name: 'displayMode',
+    default: 'single',
+    choices: ['single', 'sideBySide', 'reveal', 'timed'],
+    category: 'general',
+  });
+  Serializer.addProperty('mediadisplay', { name: 'exposureSeconds:number', default: 5, category: 'general' });
+  Serializer.addProperty('mediadisplay', { name: 'beforeLabel', default: 'Before', category: 'general' });
+  Serializer.addProperty('mediadisplay', { name: 'afterLabel', default: 'After', category: 'general' });
+  ReactQuestionFactory.Instance.registerQuestion('mediadisplay', (props) => {
+    const q = props.question;
+    const items = resolveQuestionMediaItems(q);
+    const first = items[0];
+    const url = first?.url || q.mediaUrl || '';
+    const type = first?.type
+      || (q.mediaType === 'any' ? inferMediaType(url) : (q.mediaType || inferMediaType(url)));
+    return React.createElement(MediaDisplayContent, {
+      mediaUrl: url,
+      mediaType: type,
+      mediaName: first?.name || q.mediaName,
+      mediaItems: items.length ? items : null,
+      displayMode: q.displayMode || 'single',
+      exposureSeconds: q.exposureSeconds || 5,
+      beforeLabel: q.beforeLabel || 'Before',
+      afterLabel: q.afterLabel || 'After',
+    });
+  });
+}
+
+export function registerMediaRatingWidget() {
+  makeMediaQuestion('mediarating');
+  Serializer.addProperty('mediarating', { name: 'rateMin:number', default: 1, category: 'general' });
+  Serializer.addProperty('mediarating', { name: 'rateMax:number', default: 5, category: 'general' });
+  Serializer.addProperty('mediarating', { name: 'mediaItems', default: [], category: 'general' });
+  Serializer.addProperty('mediarating', { name: 'mediaUrls:string[]', category: 'general' });
+  Serializer.addProperty('mediarating', { name: 'mediaNames:string[]', category: 'general' });
+  Serializer.addProperty('mediarating', { name: 'mediaTypes:string[]', category: 'general' });
+  ReactQuestionFactory.Instance.registerQuestion('mediarating', (props) => {
+    const q = props.question;
+    const items = resolveQuestionMediaItems(q);
+    const first = items[0];
+    const url = first?.url || q.mediaUrl || '';
+    const type = first?.type
+      || (q.mediaType === 'any' ? inferMediaType(url) : (q.mediaType || inferMediaType(url)));
+    return React.createElement(MediaRatingContent, {
+      mediaUrl: url, mediaType: type, mediaName: first?.name || q.mediaName, mediaItems: items.length ? items : null,
+      value: q.value, rateMin: q.rateMin || 1, rateMax: q.rateMax || 5,
+      onChange: (v) => q.value = v,
+    });
+  });
+}
+
+export function registerMediaBooleanWidget() {
+  makeMediaQuestion('mediaboolean', 'boolean');
+  Serializer.addProperty('mediaboolean', { name: 'mediaItems', default: [], category: 'general' });
+  Serializer.addProperty('mediaboolean', { name: 'mediaUrls:string[]', category: 'general' });
+  Serializer.addProperty('mediaboolean', { name: 'mediaNames:string[]', category: 'general' });
+  Serializer.addProperty('mediaboolean', { name: 'mediaTypes:string[]', category: 'general' });
+  ReactQuestionFactory.Instance.registerQuestion('mediaboolean', (props) => {
+    const q = props.question;
+    const items = resolveQuestionMediaItems(q);
+    const first = items[0];
+    const url = first?.url || q.mediaUrl || '';
+    const type = first?.type
+      || (q.mediaType === 'any' ? inferMediaType(url) : (q.mediaType || inferMediaType(url)));
+    return React.createElement(MediaBooleanContent, {
+      mediaUrl: url, mediaType: type, mediaName: first?.name || q.mediaName, mediaItems: items.length ? items : null,
+      value: q.value, labelTrue: q.labelTrue || 'Yes', labelFalse: q.labelFalse || 'No',
+      onChange: (v) => q.value = v,
+    });
+  });
+}
+
+// ── Image annotation question type ────────────────────────────────────────────
+
+export function registerImageAnnotationWidget() {
+  const QuestionModel = class extends Question {
+    getType() { return 'imageannotation'; }
+    validate() {
+      const base = super.validate();
+      if (base) return base;
+      const count = this.value?.shapes?.length || 0;
+      const min = this.minAnnotations || 0;
+      if (min > 0 && count < min) {
+        return `Please add at least ${min} annotation(s).`;
+      }
+      return '';
+    }
+  };
+  Serializer.addClass('imageannotation', [
+    ...MEDIA_PROPS.filter((p) => p.name !== 'mediaUrl' && p.name !== 'mediaName'),
+    { name: 'annotationImageUrl', category: 'general' },
+    { name: 'allowedTools', default: ['point', 'line', 'region'], category: 'general' },
+    { name: 'minAnnotations:number', default: 0, category: 'general' },
+    { name: 'maxAnnotations:number', default: 50, category: 'general' },
+  ], () => new QuestionModel(), 'question');
+
+  ReactQuestionFactory.Instance.registerQuestion('imageannotation', (props) => {
+    const q = props.question;
+    const url = q.annotationImageUrl || q.mediaUrl || '';
+    return React.createElement(ImageAnnotationCanvas, {
+      imageUrl: url,
+      value: q.value,
+      allowedTools: q.allowedTools || ['point', 'line', 'region'],
+      minAnnotations: q.minAnnotations || 0,
+      maxAnnotations: q.maxAnnotations ?? 50,
+      onChange: (v) => { q.value = v; },
+    });
+  });
+}
+
+// ── Native response types (slider group / point allocation) ──────────────────
+
+export function registerSliderGroupWidget() {
+  class Q extends Question {
+    getType() { return 'slidergroup'; }
+    onCheckForErrors(errors, isOnValueChanged) {
+      super.onCheckForErrors(errors, isOnValueChanged);
+      if (!this.isRequired || isOnValueChanged) return;
+      const dims = this.dimensions || [];
+      const val = this.value || {};
+      const missing = dims.filter((d) => val[d.id] === undefined || val[d.id] === null);
+      if (missing.length) {
+        errors.push(new CustomError('Please rate every dimension.', this));
+      }
+    }
+  }
+  Serializer.addClass('slidergroup', [
+    { name: 'dimensions', default: [], category: 'general' },
+    { name: 'scaleMin:number', default: 1, category: 'general' },
+    { name: 'scaleMax:number', default: 7, category: 'general' },
+  ], () => new Q(), 'question');
+
+  ReactQuestionFactory.Instance.registerQuestion('slidergroup', (props) => {
+    const q = props.question;
+    return React.createElement(SliderGroupContent, {
+      dimensions: q.dimensions || [],
+      scaleMin: q.scaleMin ?? 1,
+      scaleMax: q.scaleMax ?? 7,
+      value: q.value,
+      onChange: (v) => { q.value = v; },
+      readOnly: q.isReadOnly,
+    });
+  });
+}
+
+export function registerPointAllocationWidget() {
+  class Q extends Question {
+    getType() { return 'pointallocation'; }
+    onCheckForErrors(errors, isOnValueChanged) {
+      super.onCheckForErrors(errors, isOnValueChanged);
+      if (isOnValueChanged) return;
+      const budget = this.budget || 100;
+      const val = this.value || {};
+      const total = Object.values(val).reduce((s, n) => s + (Number(n) || 0), 0);
+      if (this.isRequired && total !== budget) {
+        errors.push(new CustomError(`Please allocate exactly ${budget} points (currently ${total}).`, this));
+      } else if (!this.isRequired && total > budget) {
+        errors.push(new CustomError(`Please allocate at most ${budget} points (currently ${total}).`, this));
+      }
+    }
+  }
+  Serializer.addClass('pointallocation', [
+    { name: 'choices', default: [], category: 'general' },
+    { name: 'budget:number', default: 100, category: 'general' },
+  ], () => new Q(), 'question');
+
+  ReactQuestionFactory.Instance.registerQuestion('pointallocation', (props) => {
+    const q = props.question;
+    return React.createElement(PointAllocationContent, {
+      choices: q.choices || [],
+      budget: q.budget || 100,
+      value: q.value,
+      onChange: (v) => { q.value = v; },
+      readOnly: q.isReadOnly,
+    });
+  });
+}
+
+export function registerImageSliderGroupWidget() {
+  class Q extends Question {
+    getType() { return 'imageslidergroup'; }
+    onCheckForErrors(errors, isOnValueChanged) {
+      super.onCheckForErrors(errors, isOnValueChanged);
+      if (!this.isRequired || isOnValueChanged) return;
+      const dims = this.dimensions || [];
+      const val = this.value || {};
+      const missing = dims.filter((d) => val[d.id] === undefined || val[d.id] === null);
+      if (missing.length) {
+        errors.push(new CustomError('Please rate every dimension.', this));
+      }
+    }
+  }
+  Serializer.addClass('imageslidergroup', [
+    ...MEDIA_PROPS,
+    { name: 'imageHtml', category: 'general' },
+    { name: 'imageLinks:string[]', category: 'general' },
+    { name: 'imageNames:string[]', category: 'general' },
+    { name: 'dimensions', default: [], category: 'general' },
+    { name: 'scaleMin:number', default: 1, category: 'general' },
+    { name: 'scaleMax:number', default: 7, category: 'general' },
+  ], () => new Q(), 'question');
+
+  ReactQuestionFactory.Instance.registerQuestion('imageslidergroup', (props) => {
+    const q = props.question;
+    const urls = q.imageLinks?.length ? q.imageLinks : [];
+    return React.createElement(ImageSliderGroupContent, {
+      imageUrls: urls,
+      dimensions: q.dimensions || [],
+      scaleMin: q.scaleMin ?? 1,
+      scaleMax: q.scaleMax ?? 7,
+      value: q.value,
+      onChange: (v) => { q.value = v; },
+      readOnly: q.isReadOnly,
+    });
+  });
+}
+
+export function registerImagePointAllocationWidget() {
+  class Q extends Question {
+    getType() { return 'imagepointallocation'; }
+    onCheckForErrors(errors, isOnValueChanged) {
+      super.onCheckForErrors(errors, isOnValueChanged);
+      if (isOnValueChanged) return;
+      const budget = this.budget || 100;
+      const val = this.value || {};
+      const total = Object.values(val).reduce((s, n) => s + (Number(n) || 0), 0);
+      if (this.isRequired && total !== budget) {
+        errors.push(new CustomError(`Please allocate exactly ${budget} points (currently ${total}).`, this));
+      } else if (!this.isRequired && total > budget) {
+        errors.push(new CustomError(`Please allocate at most ${budget} points (currently ${total}).`, this));
+      }
+    }
+  }
+  Serializer.addClass('imagepointallocation', [
+    ...MEDIA_PROPS,
+    { name: 'imageHtml', category: 'general' },
+    { name: 'imageLinks:string[]', category: 'general' },
+    { name: 'imageNames:string[]', category: 'general' },
+    { name: 'choices', default: [], category: 'general' },
+    { name: 'budget:number', default: 100, category: 'general' },
+  ], () => new Q(), 'question');
+
+  ReactQuestionFactory.Instance.registerQuestion('imagepointallocation', (props) => {
+    const q = props.question;
+    const urls = q.imageLinks?.length ? q.imageLinks : [];
+    return React.createElement(ImagePointAllocationContent, {
+      imageUrls: urls,
+      choices: q.choices || [],
+      budget: q.budget || 100,
+      value: q.value,
+      onChange: (v) => { q.value = v; },
+      readOnly: q.isReadOnly,
+    });
+  });
+}
+
+// ── Skill question type ───────────────────────────────────────────────────────
+
+export function registerSkillQuestionWidget() {
+  Serializer.addClass('skillquestion', [
+    { name: 'skillId', category: 'general' },
+    { name: 'skillHtml', category: 'general' },
+    { name: 'skillConfig', default: {}, category: 'general' },
+    { name: 'skillImages', default: [], category: 'general' },
+    { name: 'randomImageSelection:boolean', default: false, category: 'general' },
+    { name: 'imageCount', default: 1, category: 'general' },
+    { name: 'imageSelectionMode', default: 'huggingface_random', category: 'general' },
+    { name: 'excludePreviouslyUsedImages:boolean', default: true, category: 'general' },
+  ], () => new (class extends Question {
+    getType() { return 'skillquestion'; }
+  })(), 'question');
+
+  ReactQuestionFactory.Instance.registerQuestion('skillquestion', (props) => {
+    const q = props.question;
+    const { config, images, value } = readSkillQuestionFields(q);
+    return React.createElement(SkillQuestionFrame, {
+      skillHtml: q.skillHtml || '',
+      skillId: q.skillId || '',
+      config,
+      images,
+      value,
+      onChange: (v) => { q.value = v; },
+    });
+  });
+}
+
+export function registerAllExtendedWidgets() {
+  registerMediaDisplayWidget();
+  registerMediaRatingWidget();
+  registerMediaBooleanWidget();
+  registerImageAnnotationWidget();
+  registerSliderGroupWidget();
+  registerPointAllocationWidget();
+  registerImageSliderGroupWidget();
+  registerImagePointAllocationWidget();
+  registerSkillQuestionWidget();
+  registerMediaPairingProps();
+}

@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import { API_ROOT } from './apiConfig';
 
 let supabase = null;
 
@@ -112,6 +113,22 @@ initializeSupabase();
 // Export function to re-initialize (useful after config changes)
 export const reinitializeSupabase = initializeSupabase;
 
+/** Persist project Supabase credentials to sessionStorage and refresh the client. */
+export function applySupabaseConfigFromProject(imageDatasetConfig) {
+  if (!imageDatasetConfig?.supabaseUrl || !imageDatasetConfig?.supabaseKey) return;
+  try {
+    sessionStorage.setItem('supabase_config', JSON.stringify({
+      enabled: true,
+      url: imageDatasetConfig.supabaseUrl,
+      secretKey: imageDatasetConfig.supabaseKey,
+      anonKey: imageDatasetConfig.supabaseAnonKey || null,
+    }));
+    initializeSupabase();
+  } catch (err) {
+    console.error('applySupabaseConfigFromProject:', err);
+  }
+}
+
 // Export the current supabase client
 export { supabase };
 
@@ -125,9 +142,10 @@ export async function saveSurveyResponse(completeData) {
   try {
     if (!supabase) {
       // ✅ If Supabase is not configured, save to file as fallback (no localStorage!)
-      const participantId = generateParticipantId()
+      const participantId = completeData.participant_id || generateParticipantId()
       const responseData = {
         participant_id: participantId,
+        project_id: completeData.project_id || null,
         responses: completeData.responses,
         displayed_images: completeData.displayed_images,
         survey_metadata: completeData.survey_metadata,
@@ -136,7 +154,7 @@ export async function saveSurveyResponse(completeData) {
       
       // Save to file via API
       try {
-        const response = await fetch('http://localhost:3001/api/responses', {
+        const response = await fetch(`${API_ROOT}/responses`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -157,11 +175,13 @@ export async function saveSurveyResponse(completeData) {
       }
     }
 
+    const participantId = completeData.participant_id || generateParticipantId();
     const { data, error } = await supabase
       .from('survey_responses')
       .insert([
         {
-          participant_id: generateParticipantId(),
+          participant_id: participantId,
+          project_id: completeData.project_id || null,
           responses: completeData.responses,
           displayed_images: completeData.displayed_images,
           survey_metadata: completeData.survey_metadata

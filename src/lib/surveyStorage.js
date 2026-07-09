@@ -1,5 +1,6 @@
 // Survey configuration storage using file system API
 // No localStorage dependency - all data saved to server
+import { API_ROOT } from './apiConfig';
 
 const STORAGE_PREFIX = 'survey_config_';
 
@@ -21,7 +22,7 @@ export const loadSurveyConfig = async (projectId) => {
     // ✅ Load surveyConfig from project file via API
     console.log(`📂 loadSurveyConfig called for ${projectId} (loading from file system)`);
     
-    const response = await fetch(`http://localhost:3001/api/projects/${projectId}`);
+    const response = await fetch(`${API_ROOT}/projects/${projectId}`);
     if (response.ok) {
       const data = await response.json();
       if (data.success && data.surveyConfig) {

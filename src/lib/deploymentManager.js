@@ -1,4 +1,5 @@
 import { getImagesFromHuggingFace } from './huggingface';
+import { API_ROOT } from './apiConfig';
 
 export const prepareDeploymentFolder = async (currentProject) => {
   try {
@@ -27,7 +28,7 @@ export const prepareDeploymentFolder = async (currentProject) => {
     const deploymentFiles = await generateDeploymentFiles(deploymentData);
     
     // 4. Create the deployment folder
-    const response = await fetch('http://localhost:3001/api/create-deployment', {
+    const response = await fetch(`${API_ROOT}/create-deployment`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -766,7 +767,7 @@ Generated on: ${new Date(deploymentData.timestamp).toLocaleString()}
 
 export const getDeploymentStatus = async () => {
   try {
-    const response = await fetch('http://localhost:3001/api/deployment-status');
+    const response = await fetch(`${API_ROOT}/deployment-status`);
     if (!response.ok) {
       throw new Error('Failed to get deployment status');
     }
@@ -781,7 +782,7 @@ export const testDeployment = async (deploymentPath) => {
   try {
     console.log('🧪 Testing deployment build...');
     
-    const response = await fetch('http://localhost:3001/api/test-deployment', {
+    const response = await fetch(`${API_ROOT}/test-deployment`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -808,7 +809,7 @@ export const uploadToGitHub = async (deploymentPath, githubRepoUrl, commitMessag
   try {
     console.log('📤 Uploading to GitHub...');
     
-    const response = await fetch('http://localhost:3001/api/upload-to-github', {
+    const response = await fetch(`${API_ROOT}/upload-to-github`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

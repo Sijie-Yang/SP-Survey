@@ -3,14 +3,16 @@
  * Automatically determines user intent and routes to appropriate handler
  */
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+import { API_BASE_URL } from './apiConfig';
+
+const API_BASE = API_BASE_URL;
 
 /**
  * Send a chat message and get AI response
  * @param {string} message - User's message
  * @param {Object} currentConfig - Current survey configuration (if any)
  * @param {Array} conversationHistory - Previous messages in OpenAI format
- * @param {string} apiKey - OpenAI API key
+ * @param {string} apiKey - User's OpenAI or OpenRouter API key
  * @param {boolean} enableMultiAgentReview - Whether to trigger multi-agent review after generate/adjust
  * @param {string} reviewMode - Review mode: '1v1' or 'group'
  * @param {Object} customPrompts - Custom system prompts (optional)
@@ -49,7 +51,7 @@ export async function sendChatMessage(message, currentConfig, conversationHistor
 /**
  * Trigger Multi-Agent Review with Streaming (SSE)
  * @param {Object} surveyConfig - Survey configuration to review
- * @param {string} apiKey - OpenAI API key
+ * @param {string} apiKey - User's OpenAI or OpenRouter API key
  * @param {string} mode - Review mode: '1v1' or 'group'
  * @param {number} maxRounds - Maximum number of review rounds
  * @param {Function} onEvent - Callback for each SSE event: (eventType, data) => void

@@ -2,13 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Model } from "survey-core";
 import { Survey } from "survey-react-ui";
 import "survey-core/defaultV2.min.css";
-import { Box, Alert, CircularProgress } from '@mui/material';
+import { Box, Alert, CircularProgress, Typography, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { convertToSurveyJS, generateCustomTheme } from '../../lib/surveyStorage';
 import { themeJson } from "../../theme";
-import registerImageRankingWidget, { registerImageRatingWidget, registerImageBooleanWidget } from '../SurveyCustomComponents';
+import registerImageRankingWidget, {
+  registerImageRatingWidget, registerImageBooleanWidget, registerAllExtendedWidgets,
+} from '../SurveyCustomComponents';
+import {
+  isRandomMediaQuestion, defaultMediaCount, filterPoolForQuestion, applyMediaToElement, resolveSkillQuestions,
+  ensureSkillDemoMedia, pickRandomMediaForQuestion, trackMediaAssignment, getImageKey, usesGroupMediaAssignment,
+  usesCategoryMediaAssignment, buildMediaAssignmentLogEntry, shouldInjectMedia,
+} from '../../lib/surveyMediaInjection';
 
 export default function SurveyPreview({ config, currentProject }) {
   const [processedConfig, setProcessedConfig] = useState(null);
+  const [mediaAssignments, setMediaAssignments] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,28 +33,39 @@ export default function SurveyPreview({ config, currentProject }) {
         registerImageRankingWidget();
         registerImageRatingWidget();
         registerImageBooleanWidget();
+        registerAllExtendedWidgets();
         
         const configCopy = JSON.parse(JSON.stringify(config));
+        await resolveSkillQuestions(configCopy);
+        const mediaAssignmentLog = [];
         const globallyUsedImageKeys = new Set();
-        const getImageKey = (image) => image?.name || image?.url;
+        const globallyUsedGroupKeys = new Set();
         const shouldExcludePreviouslyUsedImages = (element) => element.excludePreviouslyUsedImages !== false;
-        const pickRandomImagesFromPool = (pool, imageCount, excludeUsed) => {
-          const shuffled = [...pool].sort(() => 0.5 - Math.random());
-          if (!excludeUsed) {
-            return shuffled.slice(0, imageCount);
+        const finalizeMediaSelection = (element, pool, preselected) => {
+          if (!usesGroupMediaAssignment(element) && !usesCategoryMediaAssignment(element) && preselected?.length) {
+            const imageCount = element.imageCount || defaultMediaCount(element);
+            const excludeUsed = shouldExcludePreviouslyUsedImages(element);
+            let selected = preselected;
+            if (excludeUsed) {
+              selected = preselected.filter((image) => {
+                const key = getImageKey(image);
+                return key && !globallyUsedImageKeys.has(key);
+              }).slice(0, imageCount);
+            } else {
+              selected = preselected.slice(0, imageCount);
+            }
+            const assignment = { images: selected, groupKey: null, groupId: null };
+            trackMediaAssignment(assignment, element, globallyUsedImageKeys, globallyUsedGroupKeys);
+            return assignment;
           }
-          const filtered = shuffled.filter((image) => {
-            const key = getImageKey(image);
-            return key && !globallyUsedImageKeys.has(key);
-          });
-          return filtered.slice(0, imageCount);
-        };
-        const trackGloballyUsedImages = (selectedImages, excludeUsed) => {
-          if (!excludeUsed) return;
-          selectedImages.forEach((image) => {
-            const key = getImageKey(image);
-            if (key) globallyUsedImageKeys.add(key);
-          });
+          const assignment = pickRandomMediaForQuestion(
+            pool,
+            element,
+            globallyUsedImageKeys,
+            globallyUsedGroupKeys,
+          );
+          trackMediaAssignment(assignment, element, globallyUsedImageKeys, globallyUsedGroupKeys);
+          return assignment;
         };
         
         // Process image questions and convert imageranking to ranking for SurveyJS
@@ -56,8 +75,8 @@ export default function SurveyPreview({ config, currentProject }) {
               for (const element of page.elements) {
                   // Keep imageranking as is - it will be handled by our custom component
                   if (element.type === 'imageranking') {
-                    // Set default properties for image ranking
-                    element.imageFit = element.imageFit || "cover";
+                    // Default to "contain" so images keep their natural aspect ratio
+                    element.imageFit = element.imageFit || "contain";
                     
                     // Clean up any unwanted description text that might have been added
                     if (element.description && element.description.includes('Please select all images in your preferred order')) {
@@ -70,54 +89,54 @@ export default function SurveyPreview({ config, currentProject }) {
 
                   // Keep imagerating as is - it will be handled by our custom component
                   if (element.type === 'imagerating') {
-                    // Set default properties for image rating
-                    element.imageFit = element.imageFit || "cover";
+                    element.imageFit = element.imageFit || "contain";
                   }
 
                   // Keep imageboolean as is - it will be handled by our custom component
                   if (element.type === 'imageboolean') {
-                    // Set default properties for image boolean
-                    element.imageFit = element.imageFit || "cover";
+                    element.imageFit = element.imageFit || "contain";
                   }
 
                   // Handle image display questions
                   if (element.type === 'image') {
-                    // Set default properties for image display
-                    element.imageFit = element.imageFit || "cover";
+                    element.imageFit = element.imageFit || "contain";
                   }
                 
                 // Process random image selection for imagepicker, imageranking, imagerating, imageboolean, imagematrix, and image questions
                 // ✅ Skip if manual selection mode - use existing choices
-                const isImageQuestion = (element.type === 'imagepicker' || element.type === 'imageranking' || element.type === 'imagerating' || element.type === 'imageboolean' || element.type === 'image' || element.type === 'imagematrix');
+                const isImageQuestion = isRandomMediaQuestion(element);
                 const isManualMode = (element.imageSelectionMode === 'huggingface_manual' || element.imageSelectionMode === 'manual');
                 
                 if (isImageQuestion && isManualMode && element.choices && element.choices.length > 0) {
                   console.log(`✅ Preview: Skipping image loading for ${element.type} question "${element.name}" - using manually selected images (${element.choices.length} images)`);
                 }
                 
-                if (isImageQuestion && element.randomImageSelection && !isManualMode) {
+                if (shouldInjectMedia(element)) {
                   console.log(`🔄 Preview: Loading random images for ${element.type} question: ${element.name}`);
                   try {
                     let result;
-                    const excludeUsed = shouldExcludePreviouslyUsedImages(element);
                     
                     // PRIORITY 1: Check if project has preloaded images
                     if (currentProject?.preloadedImages && currentProject.preloadedImages.length > 0) {
                       console.log(`📦 Preview: Using preloaded images from project (${currentProject.preloadedImages.length} available)`);
-                      
-                      // Use type-specific defaults if imageCount is not set
-                      const defaultCount = (element.type === 'imagerating' || element.type === 'imagematrix' || element.type === 'imageboolean' || element.type === 'image') ? 1 : 4;
-                      const imageCount = element.imageCount || defaultCount;
-                      
-                      // Randomly select from preloaded images with optional cross-question uniqueness
-                      const selectedImages = pickRandomImagesFromPool(currentProject.preloadedImages, imageCount, excludeUsed);
-                      
+                      const pool = filterPoolForQuestion(currentProject.preloadedImages, element);
+                      let assignment = finalizeMediaSelection(element, pool);
+                      let selectedImages = assignment.images;
+                      if (!selectedImages.length && pool.length > 0 && element.type === 'skillquestion' && !usesGroupMediaAssignment(element)) {
+                        const imageCount = element.imageCount || defaultMediaCount(element);
+                        selectedImages = [...pool].sort(() => 0.5 - Math.random()).slice(0, imageCount);
+                        assignment = { images: selectedImages, groupKey: null, groupId: null };
+                        trackMediaAssignment(assignment, element, globallyUsedImageKeys, globallyUsedGroupKeys);
+                        console.log(`♻️ Preview: Pool exhausted, reusing ${selectedImages.length} images for skill question`);
+                      }
                       result = {
                         success: true,
-                        images: selectedImages
+                        images: selectedImages,
+                        groupId: assignment.groupId,
+                        categories: assignment.categories,
+                        _assigned: true,
                       };
-                      
-                      console.log(`✅ Preview: Selected ${selectedImages.length} random images from preloaded pool`);
+                      console.log(`✅ Preview: Selected ${selectedImages.length} media file(s) from preloaded pool${assignment.groupId ? ` (group: ${assignment.groupId})` : ''}${assignment.categories?.length ? ` (categories: ${assignment.categories.join(', ')})` : ''}`);
                     }
                     // PRIORITY 2: Use global imageDatasetConfig if available
                     else if (currentProject?.imageDatasetConfig?.enabled && currentProject.imageDatasetConfig.datasetName) {
@@ -165,72 +184,44 @@ export default function SurveyPreview({ config, currentProject }) {
                       const supabaseResult = await getAllImagesFromSupabase(element.bucketPath, projectSupabase);
                       
                       if (supabaseResult.success && supabaseResult.images.length > 0) {
-                        // Randomly select images with optional cross-question uniqueness
-                        // Use type-specific defaults if imageCount is not set
-                        const defaultCount = (element.type === 'imagerating' || element.type === 'imagematrix' || element.type === 'imageboolean' || element.type === 'image') ? 1 : 4;
-                        const imageCount = element.imageCount || defaultCount;
-                        const selectedImages = pickRandomImagesFromPool(supabaseResult.images, imageCount, excludeUsed);
-                        result = { success: true, images: selectedImages };
+                        const pool = filterPoolForQuestion(supabaseResult.images, element);
+                        const assignment = finalizeMediaSelection(element, pool);
+                        result = { success: true, images: assignment.images, groupId: assignment.groupId, categories: assignment.categories, _assigned: true };
                       } else {
                         result = supabaseResult;
                       }
                     } else {
-                      console.warn(`Preview: No image source configured for question: ${element.name}`);
-                      continue;
+                      if (element.type === 'skillquestion') {
+                        ensureSkillDemoMedia(element);
+                        console.log(`Preview: Using demo media for skill question: ${element.name}`);
+                      } else {
+                        console.warn(`Preview: No image source configured for question: ${element.name}`);
+                        continue;
+                      }
                     }
                     
-                    if (result.success && result.images.length > 0) {
-                      // Apply cross-question uniqueness for sources that may return pre-randomized subsets.
+                    if (result?.success && result.images.length > 0) {
                       let selectedImages = result.images;
-                      if (excludeUsed) {
-                        const defaultCount = (element.type === 'imagerating' || element.type === 'imagematrix' || element.type === 'imageboolean' || element.type === 'image') ? 1 : 4;
-                        const imageCount = element.imageCount || defaultCount;
-                        const uniqueImages = selectedImages.filter((image) => {
-                          const key = getImageKey(image);
-                          return key && !globallyUsedImageKeys.has(key);
-                        });
-                        selectedImages = uniqueImages.slice(0, imageCount);
+                      let groupId = result.groupId || null;
+                      let categories = result.categories || null;
+                      if (!result._assigned) {
+                        const assignment = finalizeMediaSelection(
+                          element,
+                          filterPoolForQuestion(result.images, element),
+                          usesGroupMediaAssignment(element) ? null : result.images,
+                        );
+                        selectedImages = assignment.images;
+                        groupId = assignment.groupId;
+                        categories = assignment.categories;
                       }
-                      trackGloballyUsedImages(selectedImages, excludeUsed);
-                      
-                      // Set image data for SurveyJS
-                      if (element.type === 'image') {
-                        // For image display questions, set imageLink directly
-                        if (selectedImages.length > 0) {
-                          element.imageLink = selectedImages[0].url; // Use first image for single display
-                          element.imageName = selectedImages[0].name; // Store name for tracking
-                        }
-                        // For multiple images, we could set up an array, but SurveyJS image type typically shows one
-                        if (selectedImages.length > 1) {
-                          // Store all images in a custom property for potential future use
-                          element.imageLinks = selectedImages.map(img => img.url);
-                          element.imageNames = selectedImages.map(img => img.name);
-                        }
-                      } else if (element.type === 'imageboolean' || element.type === 'imagerating' || element.type === 'imagematrix') {
-                        // For imageboolean, imagerating, and imagematrix questions, store imageHtml
-                        let imagesHtml = '<div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0;">';
-                        selectedImages.forEach((image) => {
-                          imagesHtml += `<img src="${image.url}" data-image-name="${image.name}" style="max-width: 300px; height: auto; border-radius: 4px;" />`;
-                        });
-                        imagesHtml += '</div>';
-                        
-                        element.imageHtml = imagesHtml;
-                        // Store image names separately for tracking
-                        element.imageNames = selectedImages.map(img => img.name);
-                        console.log(`Preview: Stored imageHtml for ${element.type} question with ${selectedImages.length} images`);
-                      } else {
-                        // For other image question types, use choices
-                        element.choices = selectedImages.map((image, index) => ({
-                          value: `image_${index}`,
-                          imageLink: image.url,
-                          imageName: image.name // Store name for tracking
-                        }));
-                        // Also store names in a separate array for easier tracking
-                        element.imageNames = selectedImages.map(img => img.name);
-                      }
-                      element.imageFit = "cover";
-                      
-                      console.log(`Preview loaded ${selectedImages.length} random images for question: ${element.name}`);
+                      if (groupId) element.assignedMediaGroupId = groupId;
+                      if (categories?.length) element.assignedMediaCategories = categories;
+                      mediaAssignmentLog.push(buildMediaAssignmentLogEntry(element, selectedImages, groupId, categories));
+                      applyMediaToElement(element, selectedImages);
+                      console.log(`Preview loaded ${selectedImages.length} random media for question: ${element.name}`);
+                    } else if (element.type === 'skillquestion') {
+                      ensureSkillDemoMedia(element);
+                      console.log(`Preview: Fallback demo media for skill: ${element.name}`);
                     } else {
                       console.warn(`Preview: No images found for random selection in question: ${element.name}`);
                     }
@@ -331,6 +322,103 @@ export default function SurveyPreview({ config, currentProject }) {
                       }
                     ]
                   });
+                } else if (element.type === 'mediarating' && element.imageHtml) {
+                  newElements.push({
+                    type: 'panel',
+                    name: `${element.name}_panel`,
+                    title: 'See below images:',
+                    description: element.description,
+                    state: 'expanded',
+                    elements: [
+                      {
+                        type: 'html',
+                        name: `${element.name}_images`,
+                        html: element.imageHtml,
+                      },
+                      {
+                        type: 'rating',
+                        name: element.name,
+                        title: element.title,
+                        isRequired: element.isRequired,
+                        rateMin: element.rateMin || 1,
+                        rateMax: element.rateMax || 5,
+                        minRateDescription: element.minRateDescription,
+                        maxRateDescription: element.maxRateDescription,
+                      },
+                    ],
+                  });
+                } else if (element.type === 'mediaboolean' && element.imageHtml) {
+                  newElements.push({
+                    type: 'panel',
+                    name: `${element.name}_panel`,
+                    title: 'See below images:',
+                    description: element.description,
+                    state: 'expanded',
+                    elements: [
+                      {
+                        type: 'html',
+                        name: `${element.name}_images`,
+                        html: element.imageHtml,
+                      },
+                      {
+                        type: 'boolean',
+                        name: element.name,
+                        title: element.title,
+                        isRequired: element.isRequired,
+                        labelTrue: element.labelTrue || 'Yes',
+                        labelFalse: element.labelFalse || 'No',
+                        valueTrue: element.valueTrue,
+                        valueFalse: element.valueFalse,
+                      },
+                    ],
+                  });
+                } else if (element.type === 'imageslidergroup' && element.imageHtml) {
+                  newElements.push({
+                    type: 'panel',
+                    name: `${element.name}_panel`,
+                    title: 'See below images:',
+                    description: element.description,
+                    state: 'expanded',
+                    elements: [
+                      {
+                        type: 'html',
+                        name: `${element.name}_images`,
+                        html: element.imageHtml,
+                      },
+                      {
+                        type: 'slidergroup',
+                        name: element.name,
+                        title: element.title,
+                        isRequired: element.isRequired,
+                        dimensions: element.dimensions || [],
+                        scaleMin: element.scaleMin ?? 1,
+                        scaleMax: element.scaleMax ?? 7,
+                      },
+                    ],
+                  });
+                } else if (element.type === 'imagepointallocation' && element.imageHtml) {
+                  newElements.push({
+                    type: 'panel',
+                    name: `${element.name}_panel`,
+                    title: 'See below images:',
+                    description: element.description,
+                    state: 'expanded',
+                    elements: [
+                      {
+                        type: 'html',
+                        name: `${element.name}_images`,
+                        html: element.imageHtml,
+                      },
+                      {
+                        type: 'pointallocation',
+                        name: element.name,
+                        title: element.title,
+                        isRequired: element.isRequired,
+                        choices: element.choices || [],
+                        budget: element.budget ?? 100,
+                      },
+                    ],
+                  });
                 } else {
                   newElements.push(element);
                 }
@@ -351,6 +439,7 @@ export default function SurveyPreview({ config, currentProject }) {
           }
         }
         
+        setMediaAssignments(mediaAssignmentLog);
         setProcessedConfig(configCopy);
       } catch (error) {
         console.error('Error processing config for preview:', error);
@@ -361,7 +450,7 @@ export default function SurveyPreview({ config, currentProject }) {
     };
 
     processConfig();
-  }, [config]);
+  }, [config, currentProject?.preloadedImages]);
 
   if (!config) {
     return (
@@ -443,6 +532,66 @@ export default function SurveyPreview({ config, currentProject }) {
         }}>
           📋 Preview Mode - This shows exactly how your survey will appear to participants
         </Box>
+        {mediaAssignments.length > 0 && (
+          <Box sx={{ mb: 2, p: 2, border: '1px solid', borderColor: 'divider', borderRadius: 1, bgcolor: 'grey.50' }}>
+            <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1 }}>
+              This preview&apos;s media assignment (simulated participant draw)
+            </Typography>
+            <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1.5 }}>
+              Refresh preview to re-roll random sets. Group mode shows which <strong>group ID</strong> was picked per question.
+            </Typography>
+            <TableContainer component={Paper} variant="outlined">
+              <Table size="small">
+                <TableHead>
+                  <TableRow sx={{ '& th': { fontWeight: 700 } }}>
+                    <TableCell>Question</TableCell>
+                    <TableCell>Mode</TableCell>
+                    <TableCell>Group ID</TableCell>
+                    <TableCell>Categories</TableCell>
+                    <TableCell>Assigned files</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {mediaAssignments.map((row) => (
+                    <TableRow key={row.questionName}>
+                      <TableCell>
+                        <Typography variant="body2" fontWeight={600}>{row.questionTitle}</Typography>
+                        <Typography variant="caption" color="text.secondary">{row.questionName}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Chip
+                          size="small"
+                          label={row.mode === 'group' ? 'Fixed set' : row.mode === 'category' ? 'One per category' : 'Individual'}
+                          color={row.mode === 'group' || row.mode === 'category' ? 'primary' : 'default'}
+                          variant="outlined"
+                        />
+                      </TableCell>
+                      <TableCell>
+                        {row.groupId ? (
+                          <Typography variant="body2" fontWeight={600} color="primary.main">{row.groupId}</Typography>
+                        ) : (
+                          <Typography variant="caption" color="text.secondary">—</Typography>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {row.categories?.length ? (
+                          <Typography variant="caption">{row.categories.join(', ')}</Typography>
+                        ) : (
+                          <Typography variant="caption" color="text.secondary">—</Typography>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="caption" sx={{ fontFamily: 'monospace' }}>
+                          {row.fileNames.join(' · ') || '—'}
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
+        )}
         <Box sx={{ maxWidth: 900, mx: 'auto', px: 2 }}>
           <Survey model={model} />
         </Box>

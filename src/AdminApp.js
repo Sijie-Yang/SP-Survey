@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { RegionProvider } from './contexts/RegionContext';
+import RegionSwitcher from './components/admin/RegionSwitcher';
 import {
   AppBar,
   Toolbar,
@@ -19,13 +21,11 @@ import {
   Tooltip,
   Menu,
   MenuItem,
-  ListItemIcon,
-  ListItemText,
   Divider
 } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import { 
-  Preview, 
+import {
+  Preview,
   Menu as MenuIcon,
   FolderOpen,
   Save,
@@ -33,7 +33,8 @@ import {
   Star,
   GitHub,
   Palette,
-  Check
+  Check,
+  EditNote,
 } from '@mui/icons-material';
 import { themes, createCustomTheme } from './themes/themeConfig';
 import SurveyBuilder from './components/admin/SurveyBuilder';
@@ -44,13 +45,18 @@ import WebsiteSetup from './components/admin/WebsiteSetup';
 import ResultsAnalysis from './components/admin/ResultsAnalysis';
 import ProjectSidebar from './components/admin/ProjectSidebar';
 import BackendStatus from './components/admin/BackendStatus';
-import { saveSurveyConfig, loadSurveyConfig } from './lib/surveyStorage';
+import { isSupabaseConfigured } from './lib/supabase';
+import { isLocalSelfHosted } from './lib/appMode';
+import { API_ROOT } from './lib/apiConfig';
+import { loadSurveyConfig } from './lib/surveyStorage';
 import { demoSurveyConfig } from './lib/demoConfig';
-import { 
-  migrateExistingConfig, 
+import {
+  migrateExistingConfig,
   getActiveProject,
-  setActiveProject
+  setActiveProject,
+  saveProjectFull,
 } from './lib/projectManager';
+import { useNavigate } from 'react-router-dom';
 
 function TabPanel({ children, value, index, ...other }) {
   return (
@@ -71,6 +77,8 @@ function TabPanel({ children, value, index, ...other }) {
 }
 
 export default function AdminApp() {
+  const navigate = useNavigate();
+
   // Theme state
   const [currentTheme, setCurrentTheme] = useState(() => {
     return localStorage.getItem('sp-survey-theme') || 'default';
@@ -84,6 +92,10 @@ export default function AdminApp() {
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [hasUnsavedImageDatasetChanges, setHasUnsavedImageDatasetChanges] = useState(false);
+  const [saveStatus, setSaveStatus] = useState('saved'); // saved | saving | unsaved | error
+  const [lastSavedAt, setLastSavedAt] = useState(null);
+  const autoSaveTimerRef = useRef(null);
+  const saveInFlightRef = useRef(false);
   const [latestImageDatasetConfig, setLatestImageDatasetConfig] = useState(null);
   const [lastSavedConfig, setLastSavedConfig] = useState(null);
   const [githubStars, setGithubStars] = useState(null);
@@ -141,7 +153,6 @@ export default function AdminApp() {
 
 
   useEffect(() => {
-    // Clean up any old demo images from saved configurations
     cleanupDemoImages();
     
     // Load project states
@@ -196,6 +207,9 @@ export default function AdminApp() {
     hasChanges = hasChanges || hasUnsavedImageDatasetChanges;
     
     setHasUnsavedChanges(hasChanges);
+    if (hasChanges && saveStatus !== 'saving' && saveStatus !== 'error') {
+      setSaveStatus('unsaved');
+    }
     
     // Also update project state
     if (currentProject) {
@@ -225,40 +239,6 @@ export default function AdminApp() {
       saveProjectStatesToStorage(projectStates);
     }
   }, [projectStates]);
-
-  // Temporarily disable auto-save completely to debug page refresh issues
-  // useEffect(() => {
-  //   if (surveyConfig && surveyConfig.title && currentProject) {
-  //     // Clear previous timer
-  //     if (autoSaveTimeout) {
-  //       clearTimeout(autoSaveTimeout);
-  //     }
-
-  //     // Set new timer, auto-save after 3 seconds (increased delay to reduce frequency)
-  //     const timeout = setTimeout(async () => {
-  //       try {
-  //         // Silent save, don't trigger any state updates or re-renders
-  //         console.log('🔄 Auto-saving...', currentProject.name);
-          
-  //         // Save to localStorage (silent mode, don't trigger storage event)
-  //         await saveSurveyConfig(currentProject.id, surveyConfig, { silent: true });
-          
-  //         console.log('✅ Auto-saved to localStorage only');
-  //       } catch (error) {
-  //         console.error('❌ Auto-save failed:', error);
-  //       }
-  //     }, 3000);
-
-  //     setAutoSaveTimeout(timeout);
-  //   }
-
-  //   // Cleanup function
-  //   return () => {
-  //     if (autoSaveTimeout) {
-  //       clearTimeout(autoSaveTimeout);
-  //     }
-  //   };
-  // }, [surveyConfig, currentProject]);
 
   // ✅ No longer needed - demo images are not stored in localStorage
   const cleanupDemoImages = () => {
@@ -324,44 +304,41 @@ export default function AdminApp() {
 
   const handleProjectSelect = async (project, preloadedConfig = null) => {
     if (!project) {
-      // Save current project state (if any)
-      if (currentProject) {
-        saveCurrentProjectState();
-      }
+      if (currentProject) saveCurrentProjectState();
       setCurrentProject(null);
       setSurveyConfig(null);
       return;
     }
 
     try {
-      // 1. Save current project's state (if any)
       if (currentProject && currentProject.id !== project.id) {
-        console.log('🔍 Saving current project state before switching...');
         saveCurrentProjectState();
       }
 
-      // 2. Always load latest project data from file system.
-      // Sidebar list may be stale until polling catches up, so re-fetch on selection.
       let fullProject = project;
       let fileSurveyConfig = preloadedConfig;
       try {
-        const response = await fetch(`http://localhost:3001/api/projects/${project.id}`);
-        if (response.ok) {
-          const data = await response.json();
-          if (data.success) {
-            if (data.project) {
-              fullProject = data.project;
-            }
-            if (!fileSurveyConfig && data.surveyConfig) {
-              fileSurveyConfig = data.surveyConfig;
-            }
-            console.log('✅ Loaded latest project data from file system');
+        // Try to load latest project data
+        if (!isLocalSelfHosted() && isSupabaseConfigured()) {
+          // Platform mode: survey config is inside project._surveyConfig
+          const { getProjectById } = await import('./lib/projectManager');
+          const latest = await getProjectById(project.id);
+          if (latest) {
+            fullProject = latest;
+            if (!fileSurveyConfig) fileSurveyConfig = latest._surveyConfig;
           }
         } else {
-          console.warn(`⚠️ Failed to fetch latest project data: ${response.status}`);
+          const response = await fetch(`${API_ROOT}/projects/${project.id}`);
+          if (response.ok) {
+            const data = await response.json();
+            if (data.success) {
+              if (data.project) fullProject = data.project;
+              if (!fileSurveyConfig && data.surveyConfig) fileSurveyConfig = data.surveyConfig;
+            }
+          }
         }
       } catch (error) {
-        console.warn('⚠️ Could not load latest project data, using sidebar snapshot:', error);
+        console.warn('Could not load latest project data:', error);
       }
 
       // 3. Set new project
@@ -587,6 +564,26 @@ export default function AdminApp() {
     }
   };
 
+  const handleResultsConfigSync = (nextConfig) => {
+    const savedCopy = JSON.parse(JSON.stringify(nextConfig));
+    setSurveyConfig(nextConfig);
+    setLastSavedConfig(savedCopy);
+    if (currentProject) {
+      setProjectStates((prev) => {
+        const next = {
+          ...prev,
+          [currentProject.id]: {
+            ...(prev[currentProject.id] || {}),
+            surveyConfig: nextConfig,
+            lastSavedConfig: savedCopy,
+          },
+        };
+        saveProjectStatesToStorage(next);
+        return next;
+      });
+    }
+  };
+
   const handleProjectUpdate = async (updatedProject) => {
     console.log('🔄 Updating project:', updatedProject.name);
     console.log('🔄 Current tabValue:', tabValue);
@@ -611,29 +608,12 @@ export default function AdminApp() {
     }
     
     setCurrentProject(updatedProject);
-    
-    // ✅ Save directly to file system (no localStorage!)
+
     try {
-      const response = await fetch('http://localhost:3001/api/projects', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          project: updatedProject,
-          surveyConfig: surveyConfig, // Use current surveyConfig
-          supabaseConfig: updatedProject.supabaseConfig,
-        }),
-      });
-      
-      const result = await response.json();
-      if (result.success) {
-        console.log('✅ Project configuration saved to file system');
-      } else {
-        console.error('⚠️ Failed to save project to file system:', result.error);
-      }
+      await saveProjectFull(updatedProject, surveyConfig);
+      console.log('✅ Project configuration saved');
     } catch (error) {
-      console.error('❌ Error saving project to file system:', error);
+      console.error('Error saving project:', error);
     }
   };
 
@@ -695,178 +675,131 @@ export default function AdminApp() {
     }
   };
 
-  const handleManualSave = async () => {
-    console.log('🔍 Manual save started');
-    console.log('🔍 Current project ID:', currentProject?.id);
-    
-    if (!currentProject) {
-      console.log('🔍 No project to save');
-      return;
-    }
+  const performSave = useCallback(async ({ silent = false } = {}) => {
+    if (!currentProject || saveInFlightRef.current) return { success: false };
 
-    // Get the latest surveyConfig from projectStates (latest configuration)
     const savedState = projectStates[currentProject.id];
     const latestSurveyConfig = savedState?.surveyConfig || surveyConfig;
-    
-    console.log('🔍 Survey config title:', latestSurveyConfig?.title);
-    console.log('🔍 Pages count:', latestSurveyConfig?.pages?.length);
-    
-    if (latestSurveyConfig?.pages) {
-      console.log('🔍 Questions per page:',latestSurveyConfig.pages.map(p => p.elements?.length || 0));
-    }
+
+    if (!latestSurveyConfig) return { success: false };
+
+    saveInFlightRef.current = true;
+    setSaveStatus('saving');
 
     try {
-      // ✅ Update project with latest imageDatasetConfig if available
       const projectToSave = {
         ...currentProject,
-        imageDatasetConfig: latestImageDatasetConfig || currentProject.imageDatasetConfig
+        imageDatasetConfig: latestImageDatasetConfig || currentProject.imageDatasetConfig,
       };
-      
-      console.log('🔍 Latest imageDatasetConfig:', latestImageDatasetConfig);
-      console.log('🔍 Project imageDatasetConfig to save:', projectToSave.imageDatasetConfig);
-      
-      // ✅ No localStorage checks needed - saving directly to file system!
-      const surveyConfigSize = latestSurveyConfig ? JSON.stringify(latestSurveyConfig).length : 0;
-      const projectSize = JSON.stringify(projectToSave).length;
-      const totalSize = surveyConfigSize + projectSize;
-      console.log(`📊 Data size: surveyConfig=${(surveyConfigSize/1024).toFixed(2)}KB, project=${(projectSize/1024).toFixed(2)}KB, total=${(totalSize/1024).toFixed(2)}KB`);
-      
-      console.log('🔍 Attempting file system save...');
-      // Each project uses its own Supabase configuration, not global configuration
-      const projectSupabaseConfig = projectToSave.supabaseConfig || null;
-      
-      // Add timeout for large files
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => {
-        controller.abort();
-        console.error('❌ File save timeout after 30 seconds');
-      }, 30000); // 30 second timeout
-      
-      let response, result;
-      try {
-        response = await fetch('http://localhost:3001/api/projects', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            project: projectToSave,  // Save the entire project including latest imageDatasetConfig
-            surveyConfig: latestSurveyConfig,  // Use the latest survey config
-            supabaseConfig: projectSupabaseConfig, // Use project-specific configuration
-          }),
-          signal: controller.signal
-        });
-        clearTimeout(timeoutId);
-        
-        result = await response.json();
-        console.log('🔍 File system save result:', result);
-      } catch (fetchError) {
-        clearTimeout(timeoutId);
-        if (fetchError.name === 'AbortError') {
-          console.error('❌ File save timed out');
-          result = { success: false, error: 'Request timed out (file may be too large)' };
-        } else {
-          console.error('❌ File save fetch error:', fetchError);
-          result = { success: false, error: fetchError.message };
-        }
-      }
-      
+
+      const result = await saveProjectFull(projectToSave, latestSurveyConfig);
+
       if (result.success) {
-        console.log('✅ Save completed successfully to file system!');
-        
-        // ✅ Ensure activeProject is set correctly (don't switch projects after saving)
         setActiveProject(currentProject.id);
-        console.log('🔍 Active project set to:', currentProject.id, currentProject.name);
-        
-        // ✅ Update currentProject with the saved imageDatasetConfig
         setCurrentProject(projectToSave);
-        console.log('🔍 Updated currentProject with latest imageDatasetConfig');
-        
-        // Update last saved configuration, clear unsaved state
-        if (latestSurveyConfig) {
-          const savedConfig = JSON.parse(JSON.stringify(latestSurveyConfig));
-          setLastSavedConfig(savedConfig);
-          setSurveyConfig(latestSurveyConfig); // Ensure UI is using the latest config
-        }
-        
-        // Clear all unsaved changes flags
+
+        const savedConfig = JSON.parse(JSON.stringify(latestSurveyConfig));
+        setLastSavedConfig(savedConfig);
+        setSurveyConfig(latestSurveyConfig);
         setHasUnsavedChanges(false);
         setHasUnsavedImageDatasetChanges(false);
-        setLatestImageDatasetConfig(null); // Clear the cached config after successful save
-        
-        // Clean up current project's unsaved state - save current surveyConfig as lastSavedConfig
+        setLatestImageDatasetConfig(null);
+        setSaveStatus('saved');
+        setLastSavedAt(Date.now());
+
         const newStates = { ...projectStates };
         if (newStates[currentProject.id]) {
           newStates[currentProject.id] = {
             ...newStates[currentProject.id],
             hasUnsavedChanges: false,
             surveyConfig: latestSurveyConfig,
-            lastSavedConfig: latestSurveyConfig ? JSON.parse(JSON.stringify(latestSurveyConfig)) : null
+            lastSavedConfig: savedConfig,
           };
           setProjectStates(newStates);
           saveProjectStatesToStorage(newStates);
         }
-        
-        // Show success message
+
+        if (!silent) {
+          setSnackbar({
+            open: true,
+            message: `Project "${currentProject.name}" saved successfully!`,
+            severity: 'success',
+          });
+        }
+        return { success: true };
+      }
+
+      setSaveStatus('error');
+      if (!silent) {
         setSnackbar({
           open: true,
-          message: `Project "${currentProject.name}" saved successfully!`,
-          severity: 'success'
-        });
-      } else {
-        console.log('⚠️ File save failed:', result.error);
-        
-        if (latestSurveyConfig) {
-          console.log('✅ Save completed to localStorage only');
-          // Even if file save fails, localStorage save success counts as saved
-          const savedConfig = JSON.parse(JSON.stringify(latestSurveyConfig));
-          setLastSavedConfig(savedConfig);
-          setSurveyConfig(latestSurveyConfig); // Ensure UI is using the latest config
-        }
-        
-        setHasUnsavedChanges(false);
-        setHasUnsavedImageDatasetChanges(false);
-        
-        // Clean up current project's unsaved state
-        const newStates = { ...projectStates };
-        if (newStates[currentProject.id]) {
-          newStates[currentProject.id] = {
-            ...newStates[currentProject.id],
-            hasUnsavedChanges: false,
-            surveyConfig: latestSurveyConfig,
-            lastSavedConfig: latestSurveyConfig ? JSON.parse(JSON.stringify(latestSurveyConfig)) : null
-          };
-          setProjectStates(newStates);
-          saveProjectStatesToStorage(newStates);
-        }
-        
-        // Show partial success message
-        setSnackbar({
-          open: true,
-          message: 'Saved to localStorage. File save failed: ' + result.error,
-          severity: 'warning'
+          message: 'Save failed: ' + (result.error || 'Unknown error'),
+          severity: 'error',
         });
       }
+      return { success: false, error: result.error };
     } catch (error) {
       console.error('❌ Save failed:', error);
-      
-      let errorMessage = 'Save failed: ' + error.message;
-      
-      // Provide helpful suggestions for common errors
-      if (error.message.includes('quota') || error.message.includes('QuotaExceededError')) {
-        errorMessage = 'Save failed: Project is too large for localStorage. Try clearing preloaded images in Image Dataset tab.';
-      } else if (error.message.includes('timeout') || error.message.includes('timed out')) {
-        errorMessage = 'Save failed: Request timed out. The project file may be too large. Try clearing preloaded images.';
+      setSaveStatus('error');
+      if (!silent) {
+        setSnackbar({
+          open: true,
+          message: 'Save failed: ' + error.message,
+          severity: 'error',
+        });
       }
-      
-      setSnackbar({
-        open: true,
-        message: errorMessage,
-        severity: 'error'
-      });
+      return { success: false, error: error.message };
+    } finally {
+      saveInFlightRef.current = false;
     }
-    
-    console.log('🔍 Manual save function completed');
+  }, [currentProject, projectStates, surveyConfig, latestImageDatasetConfig]);
+
+  const handleManualSave = async () => {
+    await performSave({ silent: false });
+  };
+
+  // Debounced auto-save to Supabase / file server
+  useEffect(() => {
+    if (!hasUnsavedChanges || !currentProject || !surveyConfig) return;
+
+    if (autoSaveTimerRef.current) {
+      clearTimeout(autoSaveTimerRef.current);
+    }
+
+    autoSaveTimerRef.current = setTimeout(() => {
+      performSave({ silent: true });
+    }, 3000);
+
+    return () => {
+      if (autoSaveTimerRef.current) {
+        clearTimeout(autoSaveTimerRef.current);
+      }
+    };
+  }, [hasUnsavedChanges, surveyConfig, currentProject?.id, hasUnsavedImageDatasetChanges, performSave]);
+
+  // Warn before leaving with unsaved changes
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (hasUnsavedChanges && saveStatus !== 'saving') {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [hasUnsavedChanges, saveStatus]);
+
+  const formatSaveStatusLabel = () => {
+    if (saveStatus === 'saving') return 'Saving…';
+    if (saveStatus === 'error') return 'Save failed — click Save to retry';
+    if (saveStatus === 'unsaved') return 'Unsaved changes';
+    if (lastSavedAt) {
+      const secs = Math.floor((Date.now() - lastSavedAt) / 1000);
+      if (secs < 10) return 'Auto-saved just now';
+      if (secs < 60) return `Auto-saved ${secs}s ago`;
+      return `Auto-saved ${Math.floor(secs / 60)}m ago`;
+    }
+    return 'All changes saved';
   };
 
 
@@ -880,16 +813,17 @@ export default function AdminApp() {
   }
 
   return (
+    <RegionProvider>
     <ThemeProvider theme={theme}>
     <Box sx={{ flexGrow: 1 }}>
         <AppBar 
           position="fixed" 
           sx={{ 
             zIndex: (theme) => theme.zIndex.drawer + 1,
-            bgcolor: hasUnsavedChanges ? 'error.main' : 'primary.main',
+            bgcolor: 'primary.main',
             transition: 'background-color 0.3s ease',
             '&:hover': {
-              bgcolor: hasUnsavedChanges ? 'error.dark' : 'primary.dark'
+              bgcolor: 'primary.dark'
             }
           }}
         >
@@ -988,12 +922,24 @@ export default function AdminApp() {
             )}
           </Box>
           
-          {/* Backend Server Status Monitor */}
-          <Box sx={{ mr: 2 }}>
-            <BackendStatus />
+          {/* Backend Server Status Monitor — only shown in self-hosted mode */}
+          {!process.env.REACT_APP_SUPABASE_URL && (
+            <Box sx={{ mr: 2 }}>
+              <BackendStatus />
+            </Box>
+          )}
+
+          {/* Region / Language Switcher */}
+          <Box sx={{ mr: 1 }}>
+            <RegionSwitcher />
           </Box>
           
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mr: 2 }}>
+            {currentProject && (
+              <Typography variant="caption" sx={{ opacity: 0.9, minWidth: 140, textAlign: 'right' }}>
+                {formatSaveStatusLabel()}
+              </Typography>
+            )}
             <Tooltip title={hasUnsavedChanges ? "Save unsaved changes" : "Save project configuration"}>
               <IconButton
                 type="button"
@@ -1032,7 +978,7 @@ export default function AdminApp() {
               </IconButton>
             </Tooltip>
             
-            <Tooltip title="Clean localStorage to free up space">
+            <Tooltip title="Clear session editing states (sessionStorage)">
               <IconButton
                 color="inherit"
                 onClick={handleCleanLocalStorage}
@@ -1088,8 +1034,8 @@ export default function AdminApp() {
             </Tooltip>
           </Box>
           
-          <Button 
-            color="inherit" 
+          <Button
+            color="inherit"
             onClick={() => {
               if (currentProject) {
                 window.open(`/survey?project=${currentProject.id}`, '_blank');
@@ -1098,15 +1044,27 @@ export default function AdminApp() {
               }
             }}
             disabled={!currentProject || !surveyConfig}
-            sx={{ 
-              bgcolor: 'rgba(255,255,255,0.1)', 
+            sx={{
+              bgcolor: 'rgba(255,255,255,0.1)',
               '&:hover': { bgcolor: 'rgba(255,255,255,0.2)' },
               fontWeight: 'bold',
-              px: 2
+              px: 2,
+              mr: 1,
             }}
           >
             🚀 View Live Survey
           </Button>
+
+          <Tooltip title="我的 Skill 库">
+            <IconButton
+              color="inherit"
+              onClick={() => navigate('/skills')}
+              size="small"
+              sx={{ mr: 1, border: 1, borderColor: 'rgba(255,255,255,0.4)', '&:hover': { bgcolor: 'rgba(255,255,255,0.15)' } }}
+            >
+              <EditNote fontSize="small" />
+            </IconButton>
+          </Tooltip>
         </Toolbar>
       </AppBar>
 
@@ -1243,7 +1201,7 @@ export default function AdminApp() {
                 <Tab label="Step 1 - Image Dataset" />
                 <Tab label="Step 2 - Survey Builder" />
                 <Tab label="Step 3 - Server Setup" />
-                <Tab label="Step 4 - Website Setup" />
+                <Tab label="Step 4 - Website Deployment" />
                 <Tab label="Step 5 - Results Analysis" />
               </Tabs>
             </Box>
@@ -1281,8 +1239,8 @@ export default function AdminApp() {
             </TabPanel>
 
             <TabPanel value={tabValue} index={2}>
-              <SystemStatus 
-                surveyConfig={surveyConfig} 
+              <SystemStatus
+                surveyConfig={surveyConfig}
                 currentProject={currentProject}
                 onProjectUpdate={handleProjectUpdate}
                 onNextStep={handleNextStep}
@@ -1290,7 +1248,7 @@ export default function AdminApp() {
             </TabPanel>
 
             <TabPanel value={tabValue} index={3}>
-              <WebsiteSetup 
+              <WebsiteSetup
                 currentProject={currentProject}
                 surveyConfig={surveyConfig}
               />
@@ -1300,6 +1258,7 @@ export default function AdminApp() {
               <ResultsAnalysis
                 currentProject={currentProject}
                 surveyConfig={surveyConfig}
+                onSurveyConfigChange={handleResultsConfigSync}
               />
             </TabPanel>
           </Paper>
@@ -1340,5 +1299,6 @@ export default function AdminApp() {
       </Snackbar>
     </Box>
     </ThemeProvider>
+    </RegionProvider>
   );
 }

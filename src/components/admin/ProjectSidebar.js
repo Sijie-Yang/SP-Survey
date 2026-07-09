@@ -25,7 +25,11 @@ import {
   Select,
   FormControl,
   InputLabel,
-  Grid
+  Grid,
+  InputAdornment,
+  Stack,
+  CircularProgress,
+  LinearProgress,
 } from '@mui/material';
 import {
   Folder,
@@ -46,7 +50,9 @@ import {
   Upload,
   Preview,
   Info,
-  InfoOutlined
+  InfoOutlined,
+  Search,
+  FilterList,
 } from '@mui/icons-material';
 import { 
   getUserProjects, 
@@ -63,7 +69,6 @@ import { saveSurveyConfig, loadSurveyConfig } from '../../lib/surveyStorage';
 import {
   loadTemplatesFromFiles,
   saveTemplateToFile,
-  deleteTemplateFile,
   loadProjectsFromFiles,
   exportProjectToExternal,
   duplicateProjectInFolder,
@@ -71,6 +76,14 @@ import {
   importProjectFromFile,
   deleteProjectFile
 } from '../../lib/fileSystemManager';
+import {
+  listTemplates,
+  saveTemplateToSupabase,
+  buildTemplateIdBase,
+  findAvailableTemplateId,
+} from '../../lib/templateManager';
+import { isLocalSelfHosted, LOCAL_USER_ID } from '../../lib/appMode';
+import { isR2Configured, deleteImagesFromR2, listImagesFromR2, copyImagesInR2 } from '../../lib/r2';
 
 export default function ProjectSidebar({ 
   open, 
@@ -85,7 +98,8 @@ export default function ProjectSidebar({
   const [projects, setProjects] = useState([]);
   const [templates, setTemplates] = useState([]);
   const [activeProjectId, setActiveProjectId] = useState(null);
-  
+  const [currentUserId, setCurrentUserId] = useState(null);
+
   // Dialog states
   const [createDialog, setCreateDialog] = useState(false);
   const [templateDialog, setTemplateDialog] = useState(false);
@@ -93,6 +107,29 @@ export default function ProjectSidebar({
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [previewDialog, setPreviewDialog] = useState(false);
   const [saveAsTemplateDialog, setSaveAsTemplateDialog] = useState(false);
+  // Prevents double-clicks on "Create Template" from spawning multiple
+  // templates while the async R2 copy + Supabase insert is in flight.
+  const [isSavingTemplate, setIsSavingTemplate] = useState(false);
+  // Progress for the "Save as Template" flow. `total > 0` switches the
+  // LinearProgress from indeterminate to determinate (used during the
+  // image copy phase).
+  const [templateProgress, setTemplateProgress] = useState({
+    label: '',
+    current: 0,
+    total: 0,
+  });
+  // Same pattern for the "Delete Project" flow — listing + deleting R2
+  // images can take several seconds for image-heavy projects.
+  const [isDeletingProject, setIsDeletingProject] = useState(false);
+  const [deleteProgress, setDeleteProgress] = useState({
+    label: '',
+    current: 0,
+    total: 0,
+  });
+  // "Create Project from Template" is now a fast metadata-only operation
+  // — image copying is deferred to an explicit user action on the Image
+  // Dataset page, so we only need a simple disabled/spinner flag here.
+  const [isCreatingFromTemplate, setIsCreatingFromTemplate] = useState(false);
   
   // Form states
   const [newProjectName, setNewProjectName] = useState('');
@@ -118,63 +155,41 @@ export default function ProjectSidebar({
   const [expandedProjectMetadata, setExpandedProjectMetadata] = useState({});
   const [error, setError] = useState('');
 
+  // Template search / filter / sort
+  const [templateSearch, setTemplateSearch] = useState('');
+  const [templateCategory, setTemplateCategory] = useState('');
+  const [templateSort, setTemplateSort] = useState('name');
+
   useEffect(() => {
+    if (isLocalSelfHosted()) {
+      setCurrentUserId(LOCAL_USER_ID);
+    }
     loadProjects();
     loadTemplates();
     setActiveProjectId(getActiveProjectId());
-
-    // Set up file system monitoring (only when sidebar is open)
-    const interval = setInterval(async () => {
-      try {
-        // Only check when sidebar is open to reduce unnecessary checks
-        if (!open) return;
-        
-        const [newTemplates, newProjects] = await Promise.all([
-          loadTemplatesFromFiles(),
-          loadProjectsFromFiles()
-        ]);
-        
-        // Stricter change detection to avoid unnecessary updates
-        const templatesChanged = newTemplates.length !== templates.length || 
-          newTemplates.some((t, i) => !templates[i] || t.id !== templates[i].id);
-        const projectsChanged = newProjects.length !== projects.length ||
-          newProjects.some((p, i) => !projects[i] || p.id !== projects[i].id);
-        
-        if (templatesChanged || projectsChanged) {
-          console.log('📁 File changes detected, updating panel...');
-          setTemplates(newTemplates);
-          setProjects(newProjects);
-        }
-      } catch (error) {
-        console.error('Error checking file system changes:', error);
-      }
-    }, 10000); // Increased to 10 seconds to further reduce check frequency
-
-    // Cleanup on unmount
-    return () => {
-      clearInterval(interval);
-    };
-  }, [templates.length, projects.length, open]);
+  }, []);
 
   const loadProjects = async () => {
     try {
-      const fileProjects = await loadProjectsFromFiles();
-      setProjects(fileProjects);
+      // Platform mode: load from Supabase (filtered by current user via RLS)
+      // Self-hosted mode: load from local file system
+      const loadedProjects = await getUserProjects();
+      setProjects(loadedProjects);
     } catch (error) {
-      console.error('Error loading projects from files:', error);
-      // ✅ No fallback needed - all data is in files
+      console.error('Error loading projects:', error);
       setProjects([]);
     }
   };
 
   const loadTemplates = async () => {
     try {
-      console.log('Loading templates from files...');
-
-      // Load all templates from files (including user-created ones)
+      if (isLocalSelfHosted()) {
+        const fileTemplates = await loadTemplatesFromFiles();
+        console.log('Templates loaded from files:', fileTemplates.length);
+        setTemplates(fileTemplates);
+        return;
+      }
       const fileTemplates = await loadTemplatesFromFiles();
-      console.log('Templates loaded:', fileTemplates);
-
       setTemplates(fileTemplates);
     } catch (error) {
       console.error('Error loading templates:', error);
@@ -228,43 +243,40 @@ export default function ProjectSidebar({
       return;
     }
 
+    // Re-entry guard against rapid double-clicks on Create Project.
+    if (isCreatingFromTemplate) return;
+    setIsCreatingFromTemplate(true);
+
     try {
       console.log('🎯 Creating project from template:', selectedTemplate.name);
-      console.log('📋 Template ID:', selectedTemplate.id);
-      console.log('📋 Template config exists:', !!selectedTemplate.config);
-      console.log('📋 Template config keys:', Object.keys(selectedTemplate.config));
-      console.log('📋 Template config pages:', selectedTemplate.config.pages?.length || 0);
-      
-      // ✅ Pass surveyConfig directly to createProject
-      // This works for both static templates and file-based templates
+
+      // The project is created with NO images — copying the template's
+      // R2 folder is deferred to an explicit "Import Template Images"
+      // action on the Image Dataset page so this flow stays fast and
+      // doesn't burn storage for users who never use the images.
       const projectData = {
         name: newProjectName.trim(),
         description: `Based on ${selectedTemplate.name}`,
         templateId: selectedTemplate.id,
-        surveyConfig: selectedTemplate.config // ✅ Pass config directly
+        surveyConfig: selectedTemplate.config,
+        preloadedImages: Array.isArray(selectedTemplate.preloadedImages)
+          ? selectedTemplate.preloadedImages
+          : [],
+        preloadedAt: selectedTemplate.preloadedAt || (selectedTemplate.preloadedImages?.length ? new Date().toISOString() : null),
+        preloadedSource: selectedTemplate.preloadedSource || (selectedTemplate.preloadedImages?.length ? 'template' : null),
       };
-      
-      console.log('🔨 Creating project with data:', projectData);
-      const result = await createProject(projectData);
-      console.log('📦 Create project result:', result.success ? '✅ Success' : '❌ Failed', result.error || '');
-      
-      if (!result.success) {
-        throw new Error(result.error || 'Failed to create project');
+      const createResult = await createProject(projectData);
+      if (!createResult.success) {
+        throw new Error(createResult.error || 'Failed to create project');
       }
-      
-      // Config already saved by createProject
-      const finalConfig = result.surveyConfig;
+      const createdProject = createResult.project;
+      const finalConfig = createResult.surveyConfig;
 
-      // Reload projects to update panel
-      console.log('🔄 Reloading projects...');
       await loadProjects();
-      
-      console.log('🎯 Setting active project:', result.project.id);
-      setActiveProject(result.project.id);
-      setActiveProjectId(result.project.id);
-      onProjectSelect(result.project, finalConfig);
-      
-      // Close dialog and clear state
+      setActiveProject(createdProject.id);
+      setActiveProjectId(createdProject.id);
+      onProjectSelect(createdProject, finalConfig);
+
       setTemplateDialog(false);
       setNewProjectName('');
       setSelectedTemplate(null);
@@ -273,6 +285,8 @@ export default function ProjectSidebar({
     } catch (error) {
       console.error('❌ Error creating project from template:', error);
       setError('Error creating project from template: ' + error.message);
+    } finally {
+      setIsCreatingFromTemplate(false);
     }
   };
 
@@ -386,57 +400,193 @@ export default function ProjectSidebar({
     handleMenuClose();
   };
 
+  // Copy a project's R2 image folder over to a template prefix. Returns the
+  // new preloadedImages array pointing at template-owned URLs. Best-effort:
+  // anything that fails to copy is omitted so the template still saves.
+  //
+  // `onProgress({ current, total })` is invoked after each batch so the
+  // caller can render a determinate progress bar. The total reported is the
+  // count discovered under the project prefix; current is the cumulative
+  // number processed so far (successes + failures).
+  const promoteProjectImagesToTemplate = async (project, templateId, onProgress) => {
+    if (!isR2Configured()) return [];
+    const userId = currentUserId || 'anonymous';
+    const projectPrefix = `${userId}/${project.id}/`;
+    const templatePrefix = `templates/${templateId}/`;
+
+    // Discover everything actually in R2 under the project prefix — this
+    // catches images uploaded outside of project.preloadedImages too.
+    const listed = await listImagesFromR2(projectPrefix);
+    if (!listed.success || listed.images.length === 0) {
+      onProgress?.({ current: 0, total: 0 });
+      return [];
+    }
+
+    const allCopies = listed.images.map((img) => ({
+      from: img.key,
+      to: `${templatePrefix}${img.name}`,
+    }));
+    const total = allCopies.length;
+    onProgress?.({ current: 0, total });
+
+    // Batch the copies so the LinearProgress can advance smoothly instead
+    // of waiting for the whole set to finish in one request. The server
+    // processes copies sequentially per request anyway, so batching just
+    // moves the await boundaries — total wall time is similar.
+    const BATCH_SIZE = 200;
+    const copied = [];
+    const errors = [];
+    for (let i = 0; i < allCopies.length; i += BATCH_SIZE) {
+      const batch = allCopies.slice(i, i + BATCH_SIZE);
+      const result = await copyImagesInR2(batch);
+      if (result.copied?.length) copied.push(...result.copied);
+      if (result.errors?.length) errors.push(...result.errors);
+      onProgress?.({ current: Math.min(i + batch.length, total), total });
+    }
+
+    if (errors.length) {
+      console.warn(`⚠️ ${errors.length} image(s) failed to copy to template:`, errors);
+    }
+    // Build the preloadedImages payload from successful copies.
+    return copied.map(({ to, url }) => ({
+      url: url || '',
+      name: to.split('/').pop(),
+      key: to,
+    }));
+  };
+
   const confirmSaveAsTemplate = async () => {
     if (!projectToTemplate) {
       console.error('No project to save as template');
       return;
     }
+    // Re-entry guard: the button is also disabled while saving, but this
+    // protects against rapid double-clicks landing before React re-renders
+    // the disabled state.
+    if (isSavingTemplate) return;
+    setIsSavingTemplate(true);
+    setTemplateProgress({ label: 'Loading project configuration…', current: 0, total: 0 });
 
     try {
       console.log('📝 Creating template from project:', projectToTemplate.name);
-      
-      // Load the project's surveyConfig from file system
+
+      // Load the project's surveyConfig
       const projectConfig = await loadSurveyConfig(projectToTemplate.id);
       if (!projectConfig) {
-        console.error('Failed to load survey config for project:', projectToTemplate.id);
         setError('Failed to load project configuration');
         return;
       }
-      
+
       // Parse tags
       const tagsArray = newProjectTags
         .split(',')
         .map(tag => tag.trim())
         .filter(tag => tag.length > 0);
-      
-      // Create modified project with updated metadata
+
+      const finalYear   = newProjectYear.trim() || new Date().getFullYear().toString();
+      const finalName   = newProjectName.trim();
+      const finalAuthor = newProjectAuthor.trim() || 'User';
+
+      // Reserve a human-readable, collision-free id BEFORE we touch R2 so
+      // images land in their final folder. saveTemplateToSupabase will still
+      // retry on the rare race where another save grabs the same id between
+      // our SELECT and INSERT — but the R2 destination is locked in here.
+      setTemplateProgress({ label: 'Reserving template id…', current: 0, total: 0 });
+      const baseId    = buildTemplateIdBase({ name: finalName, author: finalAuthor, year: finalYear });
+      const templateId = await findAvailableTemplateId(baseId);
+
+      // Carry the project's image folder over to the template's own R2
+      // prefix so the template owns its images independently of the source
+      // project (project images can be edited / deleted without affecting
+      // the template).
+      let templateImages = [];
+      try {
+        setTemplateProgress({ label: 'Listing project images…', current: 0, total: 0 });
+        templateImages = await promoteProjectImagesToTemplate(
+          projectToTemplate,
+          templateId,
+          ({ current, total }) => {
+            setTemplateProgress({
+              label: total > 0
+                ? `Copying images to template folder… (${current}/${total})`
+                : 'No images to copy',
+              current,
+              total,
+            });
+          },
+        );
+        if (templateImages.length > 0) {
+          console.log(`☁️  Copied ${templateImages.length} image(s) into templates/${templateId}/`);
+        }
+      } catch (copyErr) {
+        console.warn('Image carryover failed (continuing without images):', copyErr);
+      }
+
       const modifiedProject = {
         ...projectToTemplate,
-        name: newProjectName.trim(),
+        id: templateId,
+        name: finalName,
         description: newProjectDescription.trim(),
         author: newProjectAuthor.trim() || 'User',
-        year: newProjectYear.trim() || new Date().getFullYear().toString(),
+        year: finalYear,
         category: newProjectCategory.trim() || 'Custom',
         tags: tagsArray.length > 0 ? tagsArray : ['custom', 'user-created'],
         website: newProjectWebsite.trim() || undefined,
-        huggingfaceDataset: newProjectDataset.trim() || undefined
+        huggingfaceDataset: newProjectDataset.trim() || undefined,
+        preloadedImages: templateImages,
+        preloadedAt: templateImages.length > 0 ? new Date().toISOString() : null,
+        preloadedSource: templateImages.length > 0 ? 'supabase' : null,
       };
-      
-      const result = await saveProjectAsTemplate(modifiedProject, projectConfig);
+
+      setTemplateProgress({ label: 'Saving template…', current: 0, total: 0 });
+      let result;
+      if (isLocalSelfHosted()) {
+        result = await saveTemplateToSupabase({
+          ...modifiedProject,
+          config: stripSensitiveFields(projectConfig),
+        });
+      } else {
+        result = await saveProjectAsTemplate(modifiedProject, projectConfig);
+      }
+
       if (result.success) {
-        // Template is automatically saved, reload immediately
+        setTemplateProgress({ label: 'Refreshing template list…', current: 0, total: 0 });
         await loadTemplates();
-        console.log('✅ Template created and panel refreshed');
+        console.log('✅ Template submitted for review');
         setError('');
         setSaveAsTemplateDialog(false);
         setProjectToTemplate(null);
       } else {
-        setError('Failed to create template: ' + result.error);
+        setError('Failed to create template: ' + (result.error || 'Unknown error'));
       }
     } catch (error) {
       console.error('Error creating template:', error);
       setError('Error creating template: ' + error.message);
+    } finally {
+      setIsSavingTemplate(false);
+      setTemplateProgress({ label: '', current: 0, total: 0 });
     }
+  };
+
+  // Strip Supabase credentials and preloaded images from config before saving as template
+  const stripSensitiveFields = (config) => {
+    const cleaned = JSON.parse(JSON.stringify(config));
+    const rootRemove = [
+      'preloadedImages', 'preloadedAt', 'preloadedSource', 'supabaseBucket',
+      'supabaseConfig', 'imageDatasetConfig', 'supabaseUrl', 'supabaseKey',
+      'supabaseConnectionStatus', 'datasetInfo', 'huggingFaceToken',
+    ];
+    rootRemove.forEach(f => { if (cleaned[f]) delete cleaned[f]; });
+    (cleaned.pages || []).forEach(page => {
+      ['supabaseConfig', 'supabaseUrl', 'supabaseKey', 'bucketPath',
+       'huggingFaceConfig', 'imageDatasetConfig'].forEach(f => { if (page[f]) delete page[f]; });
+      (page.elements || []).forEach(el => {
+        ['supabaseConfig', 'supabaseUrl', 'supabaseKey', 'bucketPath',
+         'preloadedImages', 'huggingFaceToken', 'datasetInfo',
+         'imageDatasetConfig', 'huggingFaceConfig'].forEach(f => { if (el[f]) delete el[f]; });
+      });
+    });
+    return cleaned;
   };
 
   const handleImportProject = async (event) => {
@@ -519,35 +669,100 @@ export default function ProjectSidebar({
 
   const confirmDeleteProject = async () => {
     if (!deletingProject) return;
+    // Re-entry guard mirrors the create-template flow: the Delete button
+    // is also disabled while running, but this catches rapid double-clicks
+    // landing before React re-renders the disabled state.
+    if (isDeletingProject) return;
+    setIsDeletingProject(true);
+    setDeleteProgress({ label: 'Preparing…', current: 0, total: 0 });
 
     try {
-      // Delete the actual file using deleteProjectFile
-      const result = await deleteProjectFile(deletingProject.id);
-      if (result.success) {
-        // ✅ File deletion only (no localStorage to clean)
-        await deleteProject(deletingProject.id);
-        
-        // Reload projects to update panel
-        await loadProjects();
-        
-        // If we deleted the active project, clear selection
-        if (activeProjectId === deletingProject.id) {
-          setActiveProjectId(null);
-          onProjectSelect(null);
+      // ── Supabase Storage cleanup ──────────────────────────────────────
+      if (isR2Configured()) {
+        const keysToDelete = new Set();
+
+        // 1. Keys from preloadedImages metadata
+        if (deletingProject.preloadedImages?.length > 0) {
+          for (const img of deletingProject.preloadedImages) {
+            if (img.key) keysToDelete.add(img.key);
+            else if (img.url) {
+              try {
+                const u = new URL(img.url);
+                const parts = u.pathname.split('/storage/v1/object/public/survey-images/');
+                if (parts[1]) keysToDelete.add(decodeURIComponent(parts[1]));
+              } catch (_) { /* ignore */ }
+            }
+          }
         }
-        
-        console.log('✅ Project deleted and panel refreshed');
-        setError('');
-      } else {
-        throw new Error(result.error);
+
+        // 2. All objects under the project prefix in Supabase Storage
+        setDeleteProgress({ label: 'Listing project images…', current: 0, total: 0 });
+        const prefix = `${currentUserId || 'anonymous'}/${deletingProject.id}/`;
+        const listResult = await listImagesFromR2(prefix);
+        if (listResult.success) {
+          for (const img of listResult.images) keysToDelete.add(img.key);
+        }
+
+        // Batch the delete so the bar advances smoothly instead of waiting
+        // for the worker to chew through hundreds of keys in one request.
+        const keys = [...keysToDelete];
+        const total = keys.length;
+        if (total > 0) {
+          setDeleteProgress({
+            label: `Deleting images from Supabase… (0/${total})`,
+            current: 0,
+            total,
+          });
+          const BATCH_SIZE = 50;
+          for (let i = 0; i < total; i += BATCH_SIZE) {
+            const batch = keys.slice(i, i + BATCH_SIZE);
+            await deleteImagesFromR2(batch);
+            const done = Math.min(i + batch.length, total);
+            setDeleteProgress({
+              label: `Deleting images from Supabase… (${done}/${total})`,
+              current: done,
+              total,
+            });
+          }
+          console.log(`🗑️ Deleted ${total} Supabase Storage object(s) for project ${deletingProject.id}`);
+        }
       }
+
+      // ── Project record cleanup ────────────────────────────────────────
+      // Platform mode (Supabase): the row is deleted via deleteProject ↓.
+      // Self-hosted mode: also nuke the JSON file on the Express server.
+      // The old code called deleteProjectFile unconditionally, which hard-
+      // coded http://localhost:3001 and broke deletion in production.
+      setDeleteProgress({ label: 'Removing project record…', current: 0, total: 0 });
+      if (isLocalSelfHosted()) {
+        const fileResult = await deleteProjectFile(deletingProject.id);
+        if (!fileResult.success) throw new Error(fileResult.error);
+      }
+
+      const result = await deleteProject(deletingProject.id);
+      if (!result.success) throw new Error(result.error);
+
+      // Reload projects to update panel
+      setDeleteProgress({ label: 'Refreshing project list…', current: 0, total: 0 });
+      await loadProjects();
+
+      // If we deleted the active project, clear selection
+      if (activeProjectId === deletingProject.id) {
+        setActiveProjectId(null);
+        onProjectSelect(null);
+      }
+
+      console.log('✅ Project deleted and panel refreshed');
+      setError('');
+      setDeleteDialog(false);
+      setDeletingProject(null);
     } catch (error) {
       console.error('Error deleting project:', error);
       setError('Error deleting project: ' + error.message);
+    } finally {
+      setIsDeletingProject(false);
+      setDeleteProgress({ label: '', current: 0, total: 0 });
     }
-    
-    setDeleteDialog(false);
-    setDeletingProject(null);
   };
 
   // System template IDs (built-in templates that cannot be deleted)
@@ -632,19 +847,83 @@ export default function ProjectSidebar({
             </ListItemButton>
             
             <Collapse in={templatesExpanded} timeout="auto" unmountOnExit>
+              {/* Search / Filter / Sort controls */}
+              {templates.length > 0 && (
+                <Box sx={{ px: 1, pt: 0.5, pb: 1 }}>
+                  <TextField
+                    size="small"
+                    placeholder="Search templates..."
+                    fullWidth
+                    value={templateSearch}
+                    onChange={e => setTemplateSearch(e.target.value)}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Search sx={{ fontSize: 16, color: 'text.secondary' }} />
+                        </InputAdornment>
+                      ),
+                      sx: { fontSize: '0.8rem' },
+                    }}
+                    sx={{ mb: 0.75 }}
+                  />
+                  <Stack direction="row" spacing={0.75}>
+                    <FormControl size="small" sx={{ flex: 1 }}>
+                      <Select
+                        value={templateCategory}
+                        onChange={e => setTemplateCategory(e.target.value)}
+                        displayEmpty
+                        renderValue={v => v || 'All Categories'}
+                        sx={{ fontSize: '0.75rem' }}
+                      >
+                        <MenuItem value=""><em>All Categories</em></MenuItem>
+                        <MenuItem value="Academic Research">Academic Research</MenuItem>
+                        <MenuItem value="Urban Theory">Urban Theory</MenuItem>
+                        <MenuItem value="AI Template">AI Template</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <FormControl size="small" sx={{ flex: 1 }}>
+                      <Select
+                        value={templateSort}
+                        onChange={e => setTemplateSort(e.target.value)}
+                        sx={{ fontSize: '0.75rem' }}
+                      >
+                        <MenuItem value="name">Name A–Z</MenuItem>
+                        <MenuItem value="name_desc">Name Z–A</MenuItem>
+                        <MenuItem value="year_desc">Newest</MenuItem>
+                        <MenuItem value="year_asc">Oldest</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Stack>
+                </Box>
+              )}
               <List sx={{ pl: 1 }}>
-                {templates.length === 0 ? (
-                  <ListItem sx={{ py: 0.5 }}>
-                    <ListItemText 
-                      secondary={
+                {(() => {
+                  const q = templateSearch.toLowerCase();
+                  let list = templates.filter(t => {
+                    const matchSearch = !q || [t.name, t.author, t.description, t.id]
+                      .some(v => v?.toLowerCase().includes(q));
+                    const matchCat = !templateCategory || t.category === templateCategory;
+                    return matchSearch && matchCat;
+                  });
+                  list = [...list].sort((a, b) => {
+                    if (templateSort === 'name')      return (a.name || '').localeCompare(b.name || '');
+                    if (templateSort === 'name_desc') return (b.name || '').localeCompare(a.name || '');
+                    if (templateSort === 'year_desc') return (b.year || '').localeCompare(a.year || '');
+                    if (templateSort === 'year_asc')  return (a.year || '').localeCompare(b.year || '');
+                    return 0;
+                  });
+                  if (list.length === 0) return (
+                    <ListItem sx={{ py: 0.5 }}>
+                      <ListItemText secondary={
                         <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.75rem' }}>
-                          No templates found. Create one from a project.
+                          {templates.length === 0
+                            ? 'No templates found. Create one from a project.'
+                            : 'No templates match your search.'}
                         </Typography>
-                      } 
-                    />
-                  </ListItem>
-                ) : (
-                  templates.map((template) => (
+                      } />
+                    </ListItem>
+                  );
+                  return list.map((template) => (
                     <ListItem key={template.id} disablePadding sx={{ flexDirection: 'column', alignItems: 'stretch' }}>
                       <ListItemButton
                         sx={{ 
@@ -671,9 +950,21 @@ export default function ProjectSidebar({
                         </ListItemIcon>
                         <ListItemText
                           primary={
-                            <Typography variant="body2" sx={{ fontSize: '0.875rem', lineHeight: 1.3 }}>
-                              {template.name}
-                            </Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, flexWrap: 'wrap' }}>
+                              <Typography variant="body2" sx={{ fontSize: '0.875rem', lineHeight: 1.3 }}>
+                                {template.name}
+                              </Typography>
+                              {/* Show "Pending Review" badge for user's own pending templates */}
+                              {false && !template.is_approved && template.user_id === currentUserId && (
+                                <Chip
+                                  label="Pending Review"
+                                  size="small"
+                                  color="warning"
+                                  variant="outlined"
+                                  sx={{ height: 16, fontSize: '0.6rem', '& .MuiChip-label': { px: 0.5 } }}
+                                />
+                              )}
+                            </Box>
                           }
                           secondary={
                             <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.7rem', lineHeight: 1.2 }}>
@@ -726,27 +1017,14 @@ export default function ProjectSidebar({
                               <ContentCopy fontSize="small" />
                             </IconButton>
                           </Tooltip>
-                          {isUserTemplate(template) && (
-                            <Tooltip title="Delete Template">
-                              <IconButton 
-                                size="small"
-                                onClick={async (e) => {
-                                  e.stopPropagation();
-                                  try {
-                                    await deleteTemplateFile(template.id);
-                                    await loadTemplates(); // Refresh templates
-                                    console.log('✅ Template deleted and panel refreshed');
-                                  } catch (error) {
-                                    console.error('Error deleting template:', error);
-                                    setError('Error deleting template: ' + error.message);
-                                  }
-                                }}
-                                sx={{ p: 0.25, color: 'error.main' }}
-                              >
-                                <Delete fontSize="small" />
-                              </IconButton>
-                            </Tooltip>
-                          )}
+                          {/* No delete button here — template deletion is
+                              an admin-only operation handled from the
+                              Admin Dashboard. Showing a delete icon next
+                              to every "user template" in the sidebar was
+                              misleading: regular users would click it and
+                              hit an RLS rejection, and any template owner
+                              could blow away their own template without
+                              touching admin review state. */}
                         </Box>
                       </ListItemButton>
                       
@@ -794,8 +1072,8 @@ export default function ProjectSidebar({
                         </Box>
                       </Collapse>
                     </ListItem>
-                  ))
-                )}
+                  ));
+                })()}
               </List>
             </Collapse>
           </Box>
@@ -1088,7 +1366,18 @@ export default function ProjectSidebar({
       </Dialog>
 
       {/* Create from Template Dialog */}
-      <Dialog open={templateDialog} onClose={() => { setTemplateDialog(false); setError(''); }} maxWidth="sm" fullWidth>
+      <Dialog
+        open={templateDialog}
+        onClose={(_, reason) => {
+          if (isCreatingFromTemplate) return;
+          if (reason === 'backdropClick' || reason === 'escapeKeyDown') return;
+          setTemplateDialog(false);
+          setError('');
+        }}
+        disableEscapeKeyDown={isCreatingFromTemplate}
+        maxWidth="sm"
+        fullWidth
+      >
         <DialogTitle>Create Project from Template</DialogTitle>
         <DialogContent>
           {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
@@ -1100,6 +1389,12 @@ export default function ProjectSidebar({
               <Typography variant="body2" color="text.secondary">
                 {selectedTemplate.description}
               </Typography>
+              {Array.isArray(selectedTemplate.preloadedImages) && selectedTemplate.preloadedImages.length > 0 && (
+                <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1 }}>
+                  This template ships with {selectedTemplate.preloadedImages.length} image{selectedTemplate.preloadedImages.length === 1 ? '' : 's'}.
+                  You can import them into your project later from the Image Dataset step.
+                </Typography>
+              )}
             </Box>
           )}
           <TextField
@@ -1110,11 +1405,24 @@ export default function ProjectSidebar({
             variant="outlined"
             value={newProjectName}
             onChange={(e) => setNewProjectName(e.target.value)}
+            disabled={isCreatingFromTemplate}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => { setTemplateDialog(false); setError(''); }}>Cancel</Button>
-          <Button onClick={handleCreateFromTemplate} variant="contained">Create Project</Button>
+          <Button
+            onClick={() => { setTemplateDialog(false); setError(''); }}
+            disabled={isCreatingFromTemplate}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleCreateFromTemplate}
+            variant="contained"
+            disabled={isCreatingFromTemplate}
+            startIcon={isCreatingFromTemplate ? <CircularProgress size={16} color="inherit" /> : null}
+          >
+            {isCreatingFromTemplate ? 'Creating Project…' : 'Create Project'}
+          </Button>
         </DialogActions>
       </Dialog>
 
@@ -1188,8 +1496,8 @@ export default function ProjectSidebar({
                 >
                   <MenuItem value="">None</MenuItem>
                   <MenuItem value="Academic Research">Academic Research</MenuItem>
-                  <MenuItem value="General">General</MenuItem>
-                  <MenuItem value="Custom">Custom</MenuItem>
+                  <MenuItem value="Urban Theory">Urban Theory</MenuItem>
+                  <MenuItem value="AI Template">AI Template</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -1238,7 +1546,20 @@ export default function ProjectSidebar({
       </Dialog>
 
       {/* Save As Template Dialog */}
-      <Dialog open={saveAsTemplateDialog} onClose={() => setSaveAsTemplateDialog(false)} maxWidth="md" fullWidth>
+      <Dialog
+        open={saveAsTemplateDialog}
+        onClose={(_, reason) => {
+          // Don't let the user dismiss the dialog while the save is in flight —
+          // closing here doesn't cancel the underlying R2 copy / Supabase insert
+          // and would mask the in-progress state.
+          if (isSavingTemplate) return;
+          if (reason === 'backdropClick' || reason === 'escapeKeyDown') return;
+          setSaveAsTemplateDialog(false);
+        }}
+        disableEscapeKeyDown={isSavingTemplate}
+        maxWidth="md"
+        fullWidth
+      >
         <DialogTitle>Save As Template</DialogTitle>
         <DialogContent>
           {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
@@ -1312,8 +1633,8 @@ export default function ProjectSidebar({
                 >
                   <MenuItem value="">None</MenuItem>
                   <MenuItem value="Academic Research">Academic Research</MenuItem>
-                  <MenuItem value="General">General</MenuItem>
-                  <MenuItem value="Custom">Custom</MenuItem>
+                  <MenuItem value="Urban Theory">Urban Theory</MenuItem>
+                  <MenuItem value="AI Template">AI Template</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -1356,27 +1677,112 @@ export default function ProjectSidebar({
           </Grid>
           
           <Alert severity="warning" sx={{ mt: 2 }}>
-            <strong>Note:</strong> The template ID will be generated as <code>{newProjectYear}-{newProjectName.trim().split(/\s+/)[0].toLowerCase()}</code>
+            <strong>Note:</strong> The template ID will be generated as{' '}
+            <code>{buildTemplateIdBase({
+              name:   newProjectName,
+              author: newProjectAuthor,
+              year:   newProjectYear,
+            })}</code>
+            {' '}(a <code>-2</code>, <code>-3</code>… suffix is appended if that id already exists).
           </Alert>
+
+          {isSavingTemplate && (
+            <Box sx={{ mt: 3, p: 2, bgcolor: 'action.hover', borderRadius: 1 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+                <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                  {templateProgress.label || 'Working…'}
+                </Typography>
+                {templateProgress.total > 0 && (
+                  <Typography variant="body2" color="text.secondary">
+                    {templateProgress.current} / {templateProgress.total}
+                  </Typography>
+                )}
+              </Box>
+              <LinearProgress
+                variant={templateProgress.total > 0 ? 'determinate' : 'indeterminate'}
+                value={templateProgress.total > 0
+                  ? (templateProgress.current / templateProgress.total) * 100
+                  : undefined}
+                sx={{ height: 6, borderRadius: 3 }}
+              />
+            </Box>
+          )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => { setSaveAsTemplateDialog(false); setProjectToTemplate(null); setError(''); }}>Cancel</Button>
-          <Button onClick={confirmSaveAsTemplate} variant="contained" color="primary">Create Template</Button>
+          <Button
+            onClick={() => { setSaveAsTemplateDialog(false); setProjectToTemplate(null); setError(''); }}
+            disabled={isSavingTemplate}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={confirmSaveAsTemplate}
+            variant="contained"
+            color="primary"
+            disabled={isSavingTemplate}
+            startIcon={isSavingTemplate ? <CircularProgress size={16} color="inherit" /> : null}
+          >
+            {isSavingTemplate ? 'Creating Template…' : 'Create Template'}
+          </Button>
         </DialogActions>
       </Dialog>
 
       {/* Delete Confirmation Dialog */}
-      <Dialog open={deleteDialog} onClose={() => setDeleteDialog(false)}>
+      <Dialog
+        open={deleteDialog}
+        onClose={(_, reason) => {
+          // Don't let the user dismiss the dialog while the delete is in
+          // flight — the underlying R2 / Supabase calls don't get cancelled
+          // and the in-progress state would be lost from view.
+          if (isDeletingProject) return;
+          if (reason === 'backdropClick' || reason === 'escapeKeyDown') return;
+          setDeleteDialog(false);
+        }}
+        disableEscapeKeyDown={isDeletingProject}
+      >
         <DialogTitle>Delete Project</DialogTitle>
         <DialogContent>
+          {error && isDeletingProject === false && (
+            <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>
+          )}
           <Typography>
             Are you sure you want to delete "{deletingProject?.name}"? This action cannot be undone.
           </Typography>
+
+          {isDeletingProject && (
+            <Box sx={{ mt: 2, p: 2, bgcolor: 'action.hover', borderRadius: 1 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+                <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                  {deleteProgress.label || 'Working…'}
+                </Typography>
+                {deleteProgress.total > 0 && (
+                  <Typography variant="body2" color="text.secondary">
+                    {deleteProgress.current} / {deleteProgress.total}
+                  </Typography>
+                )}
+              </Box>
+              <LinearProgress
+                variant={deleteProgress.total > 0 ? 'determinate' : 'indeterminate'}
+                value={deleteProgress.total > 0
+                  ? (deleteProgress.current / deleteProgress.total) * 100
+                  : undefined}
+                sx={{ height: 6, borderRadius: 3 }}
+              />
+            </Box>
+          )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDeleteDialog(false)}>Cancel</Button>
-          <Button onClick={confirmDeleteProject} color="error" variant="contained">
-            Delete
+          <Button onClick={() => setDeleteDialog(false)} disabled={isDeletingProject}>
+            Cancel
+          </Button>
+          <Button
+            onClick={confirmDeleteProject}
+            color="error"
+            variant="contained"
+            disabled={isDeletingProject}
+            startIcon={isDeletingProject ? <CircularProgress size={16} color="inherit" /> : null}
+          >
+            {isDeletingProject ? 'Deleting…' : 'Delete'}
           </Button>
         </DialogActions>
       </Dialog>
@@ -1408,7 +1814,16 @@ export default function ProjectSidebar({
         </DialogTitle>
         <DialogContent sx={{ p: 0 }}>
           {previewingTemplate && (
-            <SurveyPreview config={previewingTemplate.config} />
+            <SurveyPreview
+              config={previewingTemplate.config}
+              currentProject={{
+                id: `tpl-${previewingTemplate.id}`,
+                name: previewingTemplate.name,
+                preloadedImages: Array.isArray(previewingTemplate.preloadedImages)
+                  ? previewingTemplate.preloadedImages
+                  : [],
+              }}
+            />
           )}
         </DialogContent>
       </Dialog>

@@ -14,7 +14,7 @@
 
 <strong>A professional, research-grade platform for conducting visual perception surveys.</strong>
 <br>
-No coding required – build surveys through an intuitive admin panel with drag-and-drop, real-time preview, AI-powered generation, and cloud integration.
+Self-hosted local edition of <a href="https://sp-survey.org">SP-Survey-Platform</a> — same survey features, no login required. Build surveys with drag-and-drop, AI generation, skill questions, and deploy to your own Supabase + Vercel.
 
 🌐 <a href="https://streetscape-perception-survey.vercel.app/"><strong>Live Demo</strong></a> •
 📄 <a href="https://www.sciencedirect.com/science/article/pii/S0360132325000514"><strong>Research Paper</strong></a> •
@@ -49,87 +49,75 @@ No coding required – build surveys through an intuitive admin panel with drag-
 
 ## 🚀 Quick Start
 
+### Two Ways to Use SP-Survey
+
+| | **SP-Survey-Platform** (online) | **SP-Survey** (this repo) |
+|---|---|---|
+| URL | [sp-survey.org](https://sp-survey.org) | Self-hosted locally |
+| Login | Required | **None** — open `/admin` directly |
+| Image storage | Cloudflare R2 | **Supabase Storage** (`survey-images` bucket) |
+| Deployment | Share link | **GitHub + Vercel** wizard (Step 4) |
+
 ### Prerequisites
 
-**Required:**
-- **Hugging Face Account** (https://huggingface.co) for your image dataset
-- **Supabase Account** (https://supabase.com) for cloud storage
-- **Vercel Account** (https://vercel.com) for deployment
+**Required for full workflow:**
+- **Supabase Account** ([supabase.com](https://supabase.com)) — image storage + survey responses
+- **Vercel Account** ([vercel.com](https://vercel.com)) — deploy participant-facing survey site
 
 **Optional:**
-- **OpenAI API Key** (https://platform.openai.com/api-keys) for AI-powered survey generation
+- **Hugging Face Account** — batch-import image datasets
+- **OpenAI / OpenRouter API Key** — AI survey generation & skill authoring
 
 ### Installation
 
 ```bash
-# Clone the repository
-git clone https://github.com/Sijie-Yang/Streetscape-Perception-Survey.git
-cd Streetscape-Perception-Survey
-
-# Install dependencies
+git clone https://github.com/Sijie-Yang/SP-Survey.git
+cd SP-Survey
 npm install
-
-# Start both frontend and backend
+cp .env.example .env          # optional server port overrides
+cp .env.example .env.local      # then set PORT=3020, REACT_APP_API_URL=http://localhost:3021 if needed
 npm run dev
 ```
 
 ### Access the Application
 
-- **🎨 Admin Panel**: http://localhost:3000/admin
-- **📋 Live Survey**: http://localhost:3000/survey
+- **Admin Panel**: http://localhost:3000/admin (or your `PORT` in `.env.local`)
+- **Live Survey**: http://localhost:3000/survey
+- **Skill Library**: http://localhost:3000/skills
 
-### Create Your First Survey
+### Create Your First Survey (5 Steps)
 
-1. **Load Template** or **Create New Project**
-   - Click "Load Template" → Select a template
-   - Or click "New Project" for a blank survey
-
-2. **Configure Image Dataset**
-   - Upload images to Hugging Face Dataset
-   - Configure Supabase credentials
-   - Click "Preload Images" to transfer images
-
-3. **Build Survey**
-   - Add pages and questions with drag-and-drop
-   - Configure question types (image rating, choice, ranking, etc.)
-   - Use **AI Assistant** (🤖) for automatic generation
-
-4. **Deploy**
-   - Test Supabase connection
-   - Generate deployment files
-   - Deploy to Vercel
+1. **Step 1 — Image Dataset**
+   - Configure **Supabase Storage** (Project URL, service_role key, anon key)
+   - Upload media directly or optionally import from Hugging Face
+2. **Step 2 — Survey Builder**
+   - Load a template or build from scratch (image, media, skill, slider, annotation questions)
+3. **Step 3 — Server Setup**
+   - Create `survey_responses` table in Supabase (SQL provided)
+   - Test response saving
+4. **Step 4 — Website Deployment**
+   - Generate deployment bundle → push to GitHub → deploy on Vercel with anon key
+5. **Step 5 — Results Analysis**
+   - TrueSkill, MaxDiff, Krippendorff's α, skill charts, CSV export
 
 ---
 
 ## 🪜 Step-by-Step Workflow
 
 **Step 1 — Image Dataset**
-Connect your Hugging Face dataset and preload street-view images into Supabase cloud storage.
-
-<p align="center">
-  <img src="./public/step-1.jpg" alt="Step 1 - Image Dataset" width="90%">
-</p>
+Configure Supabase Storage and upload images, video, or audio. Optional Hugging Face batch import.
 
 **Step 2 — Survey Builder**
-Design your survey with image-based question types using a drag-and-drop editor or AI-powered generation.
+Design surveys with drag-and-drop or AI. Includes skill questions, media widgets, annotation, TrueSkill-friendly imagepicker layouts.
 
-<p align="center">
-  <img src="./public/step-2-simple.jpg" alt="Step 2 - Survey Builder" width="90%">
-</p>
+**Step 3 — Server Setup**
+Create the `survey_responses` table in Supabase and verify the connection (uses credentials from Step 1).
 
-**Steps 3 & 4 — Server Setup & Website Deployment**
-Configure your Supabase backend and deploy the survey website to Vercel with a single click.
-
-<p align="center">
-  <img src="./public/step-3-4.jpg" alt="Steps 3 & 4 - Server Setup and Website Deployment" width="90%">
-</p>
+**Step 4 — Website Deployment**
+Generate a survey-only bundle, test build, push to GitHub, deploy on Vercel with your **anon key**.
 
 **Step 5 — Results Analysis**
-Analyze survey responses per question with automatic image–response pairing and export to CSV.
-
-<p align="center">
-  <img src="./public/step-5.jpg" alt="Step 5 - Results Analysis" width="90%">
-</p>
+Per-question analytics, skill-specific charts, reliability metrics, CSV export with shown-media metadata.
 
 ---
 
@@ -144,23 +132,19 @@ Analyze survey responses per question with automatic image–response pairing an
 
 ### 🔧 Survey Capabilities
 
-**Image-Based Questions:**
-- Image Choice (imagepicker) - Compare streetscape designs
-- Image Ranking (imageranking) - Preference hierarchies
-- Image Rating (imagerating) - Quantify comfort, safety, aesthetics (1-5 scale)
-- Image Yes/No (imageboolean) - Binary assessments
-- Image Matrix (imagematrix) - Multi-criteria evaluation
-- Image Display (image) - Reference images
+**Image & Media Questions:**
+- Image choice, ranking, rating, yes/no, matrix, display
+- Media display / rating / boolean (image, video, audio)
+- Image annotation, slider groups, point allocation
+- **Skill questions** — custom HTML/JS widgets (MaxDiff, video tagging, emotion picker, etc.)
 
-**Text Questions:**
-- Text input, multi-line comments, single/multiple choice
-- Rating scales, ranking, dropdowns, matrices
+**Analysis (Step 5):**
+- TrueSkill (imagepicker), MaxDiff BWS, Krippendorff's α
+- Skill-specific charts, annotation heatmaps, methods export
 
 **Research Features:**
-- Multi-page surveys with progress tracking
-- Fully responsive design
-- Drag-and-drop builder
-- Real-time preview
+- Multi-page surveys, media group/category pairing, exclude-used-images
+- Drag-and-drop builder, real-time preview, multi-agent AI review
 
 ### 📋 Template System
 
@@ -168,29 +152,24 @@ Analyze survey responses per question with automatic image–response pairing an
   <img src="./public/template-library.jpg" alt="Template Library" width="90%">
 </p>
 
-Start with peer-reviewed survey designs from published research:
+Start with peer-reviewed survey designs (see `public/project_templates/index.json`):
+
+#### 2026
+- **SP All Question Types** | `2026-sp-all.json` — QA template covering all question types + preset skills
+- **Window View / City** | Peng et al. | `2026-peng-city.json`
 
 #### 2025
-- **Thermal Comfort in Sight** | Yang et al. | [Paper](https://www.sciencedirect.com/science/article/abs/pii/S0360132325000514) | [Image](https://huggingface.co/datasets/sijiey/Thermal-Affordance-Dataset)  
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thermal affordance assessment through street view imagery with 50+ validated questions  
-- **SPECS** | Quintana et al. | [Paper](https://www.nature.com/articles/s44284-025-00330-x) | [Image](https://huggingface.co/datasets/matiasqr/specs)  
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Street perception evaluation integrating demographics and personality across 5 countries  
-- **Street Multi-Activity Potential** | Li et al. | [Paper](https://www.sciencedirect.com/science/article/pii/S0198971525001036) | [Image](https://huggingface.co/datasets/lajitong424/SMAP_svi)  
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Graph-based community detection for evaluating street multi-activity potential (SMAP)  
-- **Effective Perception Survey** | Gu et al. | [Paper](https://doi.org/10.1016/j.landurbplan.2025.105368) | [Image](https://huggingface.co/datasets/Reubengyl/EffectivePerceptionSurvey)  
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Comprehensive framework for image-based survey design in outdoor urban environments  
+- **Thermal Comfort in Sight** | Yang et al. | `2025-yang-thermal.json`
+- **SPECS** | Quintana et al. | `2025-quintana-specs.json`
+- **Street Multi-Activity Potential** | Li et al. | `2025-li-street.json`
+- **Effective Perception Survey** | Gu et al. | `2025-gu-effective.json`
+- **City Landmark** (AI) | `2025-fan-city.json`
+- **Street Bikeability** (AI) | `2025-ito-street.json`
+- **Urban Greenery** (AI) | `2025-torkko-urban.json`
 
-#### 2024
-- **Building Exterior Perception** | Liang et al. | [Paper](https://doi.org/10.1016/j.buildenv.2024.111875) | -  
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Human perception evaluation of building exteriors using machine learning techniques
-
-#### AI Template
-- **City Landmark** | AI Generated Template | [Image](https://huggingface.co/datasets/Zicheng00/Landmark_visibility)  
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Urban landmark perception focusing on visibility, accessibility, and recognition  
-- **Street Bikeability** | AI Generated Template | [Image](https://huggingface.co/datasets/koito19960406/sp_survey_bikeability)  
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Streetscape bikeability assessment examining design interventions and socio-economic impacts  
-- **Urban Greenery** | AI Generated Template | -  
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Psychological, aesthetic, and functional impacts of urban greenery in streetscapes
+#### 2024 & earlier
+- **Building Exterior Perception** | Liang et al. | `2024-liang-building.json`
+- Historical templates: Kaplan (1995), Gehl (2010), Streetscore (2014), Place Pulse (2016), Seresinhe (2017)
 
 **How to Use:**
 1. Open Admin Panel → Project Sidebar
@@ -199,9 +178,35 @@ Start with peer-reviewed survey designs from published research:
 
 ### 💾 Data & Deployment
 
-- **🤗 Hugging Face**: Host your image datasets
-- **☁️ Supabase**: Store images and survey responses
-- **🚀 Vercel**: Deploy your survey website with one click
+- **Supabase Storage** — `survey-images` bucket for media (configured in Step 1)
+- **Supabase Database** — `survey_responses` table (configured in Step 3)
+- **Vercel** — deploy participant survey (Step 4; uses **anon key only**)
+- **Hugging Face** — optional batch image import
+
+### Supabase Setup Summary
+
+| Key | Where to enter | Used for |
+|-----|----------------|----------|
+| **service_role** | Step 1 Image Dataset | Admin uploads, bucket management |
+| **anon** | Step 1 Image Dataset | Embedded in Vercel `.env` for live survey |
+| SQL script | Step 3 Server Setup | Creates `survey_responses` with `project_id` |
+
+Run this in Supabase SQL Editor if Step 3 auto-create fails:
+
+```sql
+CREATE TABLE IF NOT EXISTS survey_responses (
+  id BIGSERIAL PRIMARY KEY,
+  participant_id TEXT NOT NULL,
+  project_id TEXT,
+  responses JSONB NOT NULL,
+  displayed_images JSONB,
+  survey_metadata JSONB,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+ALTER TABLE survey_responses ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "insert" ON survey_responses FOR INSERT TO anon, authenticated WITH CHECK (true);
+CREATE POLICY "select" ON survey_responses FOR SELECT TO anon, authenticated USING (true);
+```
 
 ---
 
@@ -253,9 +258,10 @@ npm run dev
 3. Verify folder permissions
 
 ### Supabase Connection Failed
-1. Verify credentials (URL format: `https://xxxxx.supabase.co`)
-2. Use "anon/public" key, not "service_role" key
-3. Ensure project is active in Supabase dashboard
+1. **Step 1**: Enter Project ID → auto-fills URL; paste **service_role** + **anon** keys; click Save
+2. **Step 3**: Uses the same credentials; run the SQL script if table creation fails
+3. For **Vercel**, only the **anon** key is deployed — never commit service_role
+4. Ensure `survey-images` bucket is **public** (Storage → bucket settings)
 
 **Getting Help:**
 - **GitHub Issues**: [Report a bug](https://github.com/Sijie-Yang/SP-Survey/issues)

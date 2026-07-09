@@ -1,8 +1,11 @@
+require('dotenv').config();
+
 const express = require('express');
 const fs = require('fs-extra');
 const path = require('path');
 const cors = require('cors');
 const OpenAI = require('openai');
+const { resolveAiRequest, aiChat, formatAiError } = require('./aiClient');
 
 // Import multi-agent review system
 const {
@@ -19,24 +22,27 @@ const {
 } = require('./src/lib/multiAgentReview');
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
+const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:3000';
 
 // Enable CORS for React app
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: CLIENT_ORIGIN,
   credentials: true
 }));
 
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: '100mb' }));
 
 const TEMPLATES_PATH = path.join(__dirname, 'public', 'project_templates');
 const PROJECTS_PATH = path.join(__dirname, 'public', 'projects');
 const DEPLOYMENTS_PATH = path.join(__dirname, 'deployments');
+const SKILLS_PATH = path.join(__dirname, 'public', 'skills');
 
 // Ensure directories exist
 fs.ensureDirSync(TEMPLATES_PATH);
 fs.ensureDirSync(PROJECTS_PATH);
 fs.ensureDirSync(DEPLOYMENTS_PATH);
+fs.ensureDirSync(SKILLS_PATH);
 
 // Template endpoints
 app.post('/api/templates', async (req, res) => {
@@ -141,7 +147,7 @@ app.delete('/api/projects/:projectId', async (req, res) => {
 app.get('/api/templates', async (req, res) => {
   try {
     const files = await fs.readdir(TEMPLATES_PATH);
-    const jsonFiles = files.filter(file => file.endsWith('.json'));
+    const jsonFiles = files.filter(file => file.endsWith('.json') && file !== 'index.json');
     res.json({ files: jsonFiles });
   } catch (error) {
     console.error('Error listing templates:', error);
@@ -563,6 +569,60 @@ app.get('/api/responses', async (req, res) => {
   }
 });
 
+// Local skill library (self-hosted, no auth)
+app.get('/api/skills', async (req, res) => {
+  try {
+    const files = (await fs.readdir(SKILLS_PATH)).filter((f) => f.endsWith('.json'));
+    const skills = [];
+    for (const file of files) {
+      try {
+        skills.push(await fs.readJson(path.join(SKILLS_PATH, file)));
+      } catch (e) {
+        console.error(`Error reading skill ${file}:`, e);
+      }
+    }
+    res.json({ success: true, skills });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.post('/api/skills', async (req, res) => {
+  try {
+    const { skill } = req.body;
+    if (!skill?.id) {
+      return res.status(400).json({ success: false, error: 'Skill id is required' });
+    }
+    const filePath = path.join(SKILLS_PATH, `${skill.id}.json`);
+    await fs.writeJson(filePath, skill, { spaces: 2 });
+    res.json({ success: true, skill });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.delete('/api/skills/:skillId', async (req, res) => {
+  try {
+    const filePath = path.join(SKILLS_PATH, `${req.params.skillId}.json`);
+    if (await fs.pathExists(filePath)) await fs.unlink(filePath);
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// DELETE /api/responses/:filename — remove a local response JSON file
+app.delete('/api/responses/:filename', async (req, res) => {
+  try {
+    const RESPONSES_PATH = path.join(__dirname, 'public', 'responses');
+    const filePath = path.join(RESPONSES_PATH, req.params.filename);
+    if (await fs.pathExists(filePath)) await fs.unlink(filePath);
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // ✅ Survey response endpoint (saves to file instead of localStorage!)
 app.post('/api/responses', async (req, res) => {
   try {
@@ -611,25 +671,96 @@ app.post('/api/restart', async (req, res) => {
 
 // ✅ OpenAI API endpoints for AI-powered survey generation
 
-// Validate OpenAI API key
+// Validate OpenAI / OpenRouter API key
 app.post('/api/openai/validate-key', async (req, res) => {
   try {
     const { apiKey } = req.body;
-    
     if (!apiKey) {
       return res.status(400).json({ success: false, error: 'API key is required' });
     }
-    
-    const openai = new OpenAI({ apiKey });
-    
-    // Try a simple API call to validate the key
-    await openai.models.list();
-    
-    console.log('✅ OpenAI API key validated successfully');
-    res.json({ success: true, valid: true });
+    const ai = resolveAiRequest(apiKey);
+    await aiChat(ai, 'fast', { messages: [{ role: 'user', content: 'Hi' }], max_tokens: 5 });
+    console.log(`✅ API key validated (${ai.provider})`);
+    res.json({ success: true, valid: true, provider: ai.provider });
   } catch (error) {
-    console.error('❌ OpenAI API key validation failed:', error.message);
+    console.error('❌ API key validation failed:', error.message);
     res.status(400).json({ success: false, valid: false, error: 'Invalid API key' });
+  }
+});
+
+// Generate or revise a custom question skill (HTML + config schemas)
+app.post('/api/openai/generate-skill', async (req, res) => {
+  try {
+    const { message, apiKey, currentSkill, conversationHistory = [] } = req.body;
+    if (!apiKey || !message) {
+      return res.status(400).json({ success: false, error: 'API key and message are required' });
+    }
+
+    const ai = resolveAiRequest(apiKey);
+    const skillContext = currentSkill
+      ? `\n\nCurrent skill JSON (revise this):\n${JSON.stringify({
+        name: currentSkill.name,
+        description: currentSkill.description,
+        configSchema: currentSkill.configSchema,
+        defaultConfig: currentSkill.defaultConfig,
+        resultSchema: currentSkill.resultSchema,
+        sourceHtml: currentSkill.sourceHtml,
+      }, null, 2).slice(0, 12000)}`
+      : '';
+
+    const systemPrompt = `You are an expert at building custom survey question types ("skills") for the SP Survey Platform.
+
+Each skill is HTML/CSS/JS running in a sandboxed iframe with this SDK:
+- document.addEventListener('spskill-init', function(e) { var cfg = e.detail.config; var images = e.detail.images; ... })
+- SPSkill.setAnswer(object) — submit participant answer
+- SPSkill.ready() — call when UI is ready
+- spSetImg(imgEl, 'image'|'video'|'audio', index, alt) — bind injected media
+- spUrl('image', index, label) — media URL helper
+- cfg.prompt, cfg.mediaCount, cfg.mediaType from defaultConfig
+
+Return JSON only:
+{
+  "message": "brief explanation of what you built/changed",
+  "skill": {
+    "name": "string",
+    "description": "string",
+    "configSchema": [{ "key": "prompt", "label": "Prompt", "type": "string" }, ...],
+    "defaultConfig": { "mediaCount": 1, "mediaType": "image", "prompt": "...", ... },
+    "resultSchema": [{ "key": "score", "label": "Score", "type": "number" }],
+    "sourceHtml": "<full HTML document with inline script using spskill-init>"
+  }
+}
+
+configSchema field types: string, text, number, boolean, select (with options array), dimensions (array of {id,left,right}), stringList (array of strings), json.
+Keep HTML self-contained (inline styles OK).`;
+
+    const messages = [
+      { role: 'system', content: systemPrompt + skillContext },
+      ...conversationHistory.slice(-6),
+      { role: 'user', content: message },
+    ];
+
+    const completion = await aiChat(ai, 'strong', {
+      messages,
+      response_format: { type: 'json_object' },
+      temperature: 0.4,
+      max_tokens: 8000,
+    });
+
+    const raw = completion.choices[0].message.content.trim();
+    const parsed = JSON.parse(raw);
+    if (!parsed.skill?.sourceHtml) {
+      return res.status(500).json({ success: false, error: 'AI did not return valid skill HTML' });
+    }
+
+    res.json({
+      success: true,
+      message: parsed.message || 'Skill generated',
+      skill: parsed.skill,
+    });
+  } catch (error) {
+    console.error('generate-skill error:', error);
+    res.status(500).json({ success: false, error: formatAiError(error) });
   }
 });
 

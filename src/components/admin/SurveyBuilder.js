@@ -30,11 +30,13 @@ import {
   Paper,
   Tooltip,
   Badge,
+  Snackbar,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
-  Avatar
+  Avatar,
+  Collapse
 } from '@mui/material';
 import {
   ExpandMore,
@@ -199,7 +201,38 @@ function SortablePageItem({ page, pageIndex, onEdit, onDelete, onDuplicate }) {
 
 export default function SurveyBuilder({ config, onChange, currentProject, onNextStep }) {
   const [selectedPage, setSelectedPage] = useState(null);
-  const [selectedQuestion, setSelectedQuestion] = useState(null);
+
+  // Collapsed-state for the rarely-used sub-sections of the Survey Settings
+  // panel. We default both to collapsed and persist the user's choice per
+  // project in localStorage so the sections stay open if they were actively
+  // editing them.
+  const displaySettingsKey = currentProject?.id
+    ? `displaySettingsCollapsed_${currentProject.id}`
+    : 'displaySettingsCollapsed_default';
+  const themeCustomizationKey = currentProject?.id
+    ? `themeCustomizationCollapsed_${currentProject.id}`
+    : 'themeCustomizationCollapsed_default';
+  const [displaySettingsCollapsed, setDisplaySettingsCollapsed] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    const stored = window.localStorage.getItem(displaySettingsKey);
+    return stored === 'false' ? false : true;
+  });
+  const [themeCustomizationCollapsed, setThemeCustomizationCollapsed] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    const stored = window.localStorage.getItem(themeCustomizationKey);
+    return stored === 'false' ? false : true;
+  });
+  const [themeSnackbar, setThemeSnackbar] = useState({ open: false, message: '', severity: 'success' });
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(displaySettingsKey, displaySettingsCollapsed ? 'true' : 'false');
+    }
+  }, [displaySettingsCollapsed, displaySettingsKey]);
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(themeCustomizationKey, themeCustomizationCollapsed ? 'true' : 'false');
+    }
+  }, [themeCustomizationCollapsed, themeCustomizationKey]);
   
   // Chat Assistant states - with localStorage persistence
   const [openaiApiKey, setOpenaiApiKey] = useState(() => {
@@ -209,6 +242,8 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
     return localStorage.getItem('apiKeyValid') === 'true';
   });
   const [userMessage, setUserMessage] = useState('');
+  const aiUndoSnapshotRef = useRef(null);
+  const [aiUndoAvailable, setAiUndoAvailable] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState(''); // e.g., "Thinking...", "Generating survey..."
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -615,13 +650,13 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
               ...config,
               theme: themeData.theme
             });
-            alert('Theme imported successfully!');
+            setThemeSnackbar({ open: true, message: 'Theme imported successfully!', severity: 'success' });
           } else {
-            alert('Invalid theme file format.');
+            setThemeSnackbar({ open: true, message: 'Invalid theme file format.', severity: 'error' });
           }
         } catch (error) {
           console.error('Error importing theme:', error);
-          alert('Error importing theme file.');
+          setThemeSnackbar({ open: true, message: 'Error importing theme file.', severity: 'error' });
         }
       };
       reader.readAsText(file);
@@ -643,6 +678,14 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
   };
 
   const deletePage = (pageIndex) => {
+    const page = config.pages[pageIndex];
+    const questionCount = page?.elements?.length || 0;
+    const pageTitle = page?.title || `Page ${pageIndex + 1}`;
+    const message = questionCount > 0
+      ? `Delete "${pageTitle}" and its ${questionCount} question(s)? This cannot be undone.`
+      : `Delete "${pageTitle}"? This cannot be undone.`;
+    if (!window.confirm(message)) return;
+
     const newPages = config.pages.filter((_, index) => index !== pageIndex);
     onChange({
       ...config,
@@ -749,7 +792,7 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
 
   // ✅ Post-process AI-generated config to ensure all image questions have correct settings
   const processAIGeneratedConfig = (surveyConfig) => {
-    const imageQuestionTypes = ['imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'image', 'imagematrix'];
+    const imageQuestionTypes = ['imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'image', 'imagematrix', 'imageslidergroup', 'imagepointallocation'];
     
     const processedConfig = JSON.parse(JSON.stringify(surveyConfig)); // Deep clone
     
@@ -820,7 +863,23 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
     }
   };
 
-  // Send chat message (unified handler for generate/adjust/question)
+  const handleRevertAiChange = () => {
+    if (!aiUndoSnapshotRef.current) return;
+    onChange(JSON.parse(JSON.stringify(aiUndoSnapshotRef.current)));
+    aiUndoSnapshotRef.current = null;
+    setAiUndoAvailable(false);
+    if (currentProject?.id) {
+      sessionStorage.removeItem(`ai_undo_${currentProject.id}`);
+    }
+    if (conversationHistoryRef.current) {
+      conversationHistoryRef.current.addMessage('assistant',
+        '↩️ Reverted to the survey configuration before the last AI change.',
+        { actionType: 'system' }
+      );
+      setConversationMessages(conversationHistoryRef.current.getAllMessages());
+    }
+  };
+
   const handleSendMessage = async () => {
     if (!userMessage.trim()) return;
     
@@ -833,7 +892,7 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
     if (!openaiApiKey || !apiKeyValid) {
       if (conversationHistoryRef.current) {
         conversationHistoryRef.current.addMessage('assistant', 
-          '⚠️ Please configure and validate your OpenAI API key in settings first.',
+          '⚠️ Please configure and validate your API key in settings first.',
           { actionType: 'system', error: true }
         );
         setConversationMessages(conversationHistoryRef.current.getAllMessages());
@@ -989,6 +1048,11 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
 
         // If survey config was generated/adjusted, apply it
         if (result.surveyConfig) {
+          aiUndoSnapshotRef.current = JSON.parse(JSON.stringify(config));
+          setAiUndoAvailable(true);
+          if (currentProject?.id) {
+            sessionStorage.setItem(`ai_undo_${currentProject.id}`, JSON.stringify(config));
+          }
           const processedConfig = processAIGeneratedConfig(result.surveyConfig);
           onChange(processedConfig);
 
@@ -1216,8 +1280,64 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
 
   // Old handlers removed - now using unified handleSendMessage
 
+  const getSurveyValidationWarnings = (cfg) => {
+    if (!cfg?.pages) return [];
+    const warnings = [];
+    const names = new Set();
+    const imageTypes = ['imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'imagematrix', 'image', 'imageannotation', 'skillquestion', 'mediadisplay', 'mediarating', 'mediaboolean', 'imageslidergroup', 'imagepointallocation'];
+
+    cfg.pages.forEach((page, pi) => {
+      const pageTitle = page.title || `Page ${pi + 1}`;
+      if (!page.elements?.length) {
+        warnings.push(`Page "${pageTitle}" has no questions.`);
+      }
+      (page.elements || []).forEach((el) => {
+        if (el.name) {
+          if (names.has(el.name)) warnings.push(`Duplicate question name: "${el.name}".`);
+          names.add(el.name);
+        }
+        if (imageTypes.includes(el.type)) {
+          const hasManual = el.selectedImageUrls?.length || el.choices?.length || el.imageLinks?.length || el.annotationImageUrl;
+          const hasRandom = el.randomImageSelection !== false || el.imageSelectionMode === 'huggingface_random';
+          if (!hasManual && !hasRandom && el.type !== 'skillquestion') {
+            warnings.push(`"${el.title || el.name}" may have no images configured.`);
+          }
+        }
+        if ((el.type === 'slidergroup' || el.type === 'imageslidergroup') && !el.dimensions?.length) {
+          warnings.push(`Slider group "${el.title || el.name}" has no dimensions configured.`);
+        }
+        if ((el.type === 'pointallocation' || el.type === 'imagepointallocation') && !el.choices?.length) {
+          warnings.push(`Point allocation "${el.title || el.name}" has no choices configured.`);
+        }
+      });
+    });
+    return warnings;
+  };
+
+  const validationWarnings = getSurveyValidationWarnings(config);
+
   return (
     <Box>
+      <Typography variant="h5" sx={{ mb: 1, color: 'primary.main' }}>
+        🛠️ Survey Builder
+      </Typography>
+      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+        Build your survey with pages, questions, and theme. Use the AI assistant
+        below to draft and refine questions, then preview the result before sharing.
+      </Typography>
+
+      {validationWarnings.length > 0 && (
+        <Alert severity="warning" sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ mb: 0.5 }}>Survey checks (non-blocking)</Typography>
+          {validationWarnings.slice(0, 5).map((w, i) => (
+            <Typography key={i} variant="body2">• {w}</Typography>
+          ))}
+          {validationWarnings.length > 5 && (
+            <Typography variant="caption">+ {validationWarnings.length - 5} more</Typography>
+          )}
+        </Alert>
+      )}
+
       {/* AI Chat Assistant */}
       <ChatAssistant
         key={currentProject?.id || 'no-project'}
@@ -1238,6 +1358,8 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
         sessionLearningRef={sessionLearningRef}
         onMessageChange={setUserMessage}
         onPromptsChange={setCustomPrompts}
+        onRevertAiChange={handleRevertAiChange}
+        aiUndoAvailable={aiUndoAvailable}
         onSendMessage={handleSendMessage}
         onApiKeyChange={setOpenaiApiKey}
         onValidateApiKey={handleValidateApiKey}
@@ -1295,6 +1417,31 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
                   onChange={(e) => handleBasicInfoChange('description', e.target.value)}
                   helperText="A brief description explaining the purpose of your survey"
                 />
+
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  multiline
+                  rows={2}
+                  label="Completion Message (optional)"
+                  value={config.completionMessage || ''}
+                  onChange={(e) => handleBasicInfoChange('completionMessage', e.target.value)}
+                  helperText="Shown to participants after they submit the survey"
+                />
+
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  type="number"
+                  label="Response Quota (optional)"
+                  value={config.responseQuota ?? ''}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    handleBasicInfoChange('responseQuota', v === '' ? null : Math.max(1, parseInt(v, 10) || 1));
+                  }}
+                  helperText="Close the survey automatically after this many responses (leave empty for unlimited)"
+                  inputProps={{ min: 1 }}
+                />
               </Box>
             </Box>
 
@@ -1332,78 +1479,149 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
 
             <Divider />
 
-            {/* Display Settings */}
+            {/* Display Settings — collapsed by default since most users
+                rarely need to toggle question numbers / progress bar. */}
             <Box>
-              <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 600, mb: 2 }}>
-                ⚙️ Display Settings
-              </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={config.showQuestionNumbers !== 'off' && config.showQuestionNumbers !== false}
-                      onChange={(e) => handleBasicInfoChange('showQuestionNumbers', e.target.checked)}
-                    />
-                  }
-                  label="Show Question Numbers"
+              <Box
+                onClick={() => setDisplaySettingsCollapsed((c) => !c)}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1,
+                  cursor: 'pointer',
+                  userSelect: 'none',
+                  mb: displaySettingsCollapsed ? 0 : 2,
+                  '&:hover': { color: 'primary.main' },
+                }}
+              >
+                <ExpandMore
+                  sx={{
+                    transition: 'transform 0.2s',
+                    transform: displaySettingsCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)',
+                  }}
                 />
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={config.showProgressBar !== 'off' && config.showProgressBar !== false}
-                      onChange={(e) => handleBasicInfoChange('showProgressBar', e.target.checked)}
-                    />
-                  }
-                  label="Show Progress Bar"
-                />
+                <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                  ⚙️ Display Settings
+                </Typography>
               </Box>
+              <Collapse in={!displaySettingsCollapsed} timeout="auto" unmountOnExit>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={config.showQuestionNumbers !== 'off' && config.showQuestionNumbers !== false}
+                        onChange={(e) => handleBasicInfoChange('showQuestionNumbers', e.target.checked)}
+                      />
+                    }
+                    label="Show Question Numbers"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={config.showProgressBar !== 'off' && config.showProgressBar !== false}
+                        onChange={(e) => handleBasicInfoChange('showProgressBar', e.target.checked)}
+                      />
+                    }
+                    label="Show Progress Bar"
+                  />
+                  <Divider sx={{ my: 1 }} />
+                  <Typography variant="subtitle2" color="text.secondary">Research Annotation Mode</Typography>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={!!config.repeatConfig?.enabled}
+                        onChange={(e) => onChange({
+                          ...config,
+                          repeatConfig: { ...(config.repeatConfig || {}), enabled: e.target.checked, total: config.repeatConfig?.total || 10 },
+                        })}
+                      />
+                    }
+                    label="Enable repeat annotation (researcher answers N times)"
+                  />
+                  {config.repeatConfig?.enabled && (
+                    <TextField
+                      label="Repeat count"
+                      type="number"
+                      size="small"
+                      value={config.repeatConfig?.total || 10}
+                      onChange={(e) => onChange({
+                        ...config,
+                        repeatConfig: { ...config.repeatConfig, enabled: true, total: Math.max(1, parseInt(e.target.value, 10) || 1) },
+                      })}
+                      inputProps={{ min: 2, max: 500 }}
+                      helperText="Also overridable via survey URL: ?repeat=20"
+                      sx={{ maxWidth: 200 }}
+                    />
+                  )}
+                </Box>
+              </Collapse>
             </Box>
 
             <Divider />
 
-            {/* Theme Customization */}
+            {/* Theme Customization — collapsed by default. The action
+                buttons (Import / Export / Reset) only matter once the
+                section is expanded, so we move them inside the Collapse. */}
             <Box>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+              <Box
+                onClick={() => setThemeCustomizationCollapsed((c) => !c)}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1,
+                  cursor: 'pointer',
+                  userSelect: 'none',
+                  mb: themeCustomizationCollapsed ? 0 : 2,
+                  '&:hover': { color: 'primary.main' },
+                }}
+              >
+                <ExpandMore
+                  sx={{
+                    transition: 'transform 0.2s',
+                    transform: themeCustomizationCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)',
+                  }}
+                />
                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                   🎨 Theme Customization
                 </Typography>
-                <Box sx={{ display: 'flex', gap: 1 }}>
-                  <input
-                    type="file"
-                    accept=".json"
-                    onChange={handleImportTheme}
-                    style={{ display: 'none' }}
-                    id="theme-import-input"
-                  />
-                  <label htmlFor="theme-import-input">
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      component="span"
-                      startIcon={<Download sx={{ transform: 'rotate(180deg)' }} />}
-                    >
-                      Import
-                    </Button>
-                  </label>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    onClick={handleExportTheme}
-                    startIcon={<Download />}
-                  >
-                    Export
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    onClick={handleThemeReset}
-                    startIcon={<Clear />}
-                  >
-                    Reset
-                  </Button>
-                </Box>
               </Box>
-              
+              <Collapse in={!themeCustomizationCollapsed} timeout="auto" unmountOnExit>
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, mb: 2 }}>
+                <input
+                  type="file"
+                  accept=".json"
+                  onChange={handleImportTheme}
+                  style={{ display: 'none' }}
+                  id="theme-import-input"
+                />
+                <label htmlFor="theme-import-input">
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    component="span"
+                    startIcon={<Download sx={{ transform: 'rotate(180deg)' }} />}
+                  >
+                    Import
+                  </Button>
+                </label>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={handleExportTheme}
+                  startIcon={<Download />}
+                >
+                  Export
+                </Button>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={handleThemeReset}
+                  startIcon={<Clear />}
+                >
+                  Reset
+                </Button>
+              </Box>
+
               {/* Theme Presets */}
               <Box sx={{ mb: 3 }}>
                 <Typography variant="caption" sx={{ fontWeight: 600, display: 'block', mb: 1.5, color: 'text.secondary' }}>
@@ -1846,6 +2064,7 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
                   </Paper>
                 </Box>
               </Box>
+              </Collapse>
             </Box>
           </Box>
         </AccordionDetails>
@@ -1922,20 +2141,6 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
         />
       )}
 
-      {/* Question Editor Dialog */}
-      {selectedQuestion && (
-        <QuestionEditor
-          question={selectedQuestion.question}
-          onSave={(updatedQuestion) => {
-            // Handle question update
-            setSelectedQuestion(null);
-          }}
-          onCancel={() => setSelectedQuestion(null)}
-          images={config.images || []}
-          currentProject={currentProject}
-        />
-      )}
-      
       {/* Next Step Button */}
       {onNextStep && (
         <Box sx={{ mt: 4, pt: 3, borderTop: 1, borderColor: 'divider', display: 'flex', justifyContent: 'flex-end' }}>
@@ -1950,10 +2155,19 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
               fontWeight: 600
             }}
           >
-            Next: Server Setup →
+            Next: Share Survey →
           </Button>
         </Box>
       )}
+      <Snackbar
+        open={themeSnackbar.open}
+        autoHideDuration={4000}
+        onClose={() => setThemeSnackbar((s) => ({ ...s, open: false }))}
+      >
+        <Alert severity={themeSnackbar.severity} onClose={() => setThemeSnackbar((s) => ({ ...s, open: false }))}>
+          {themeSnackbar.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

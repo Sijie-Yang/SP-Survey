@@ -1,5 +1,5 @@
 // OpenAI integration for AI-powered survey generation and adjustment
-// This module provides functions to interact with OpenAI API for survey creation
+import { API_BASE_URL } from './apiConfig';
 
 /**
  * Generate survey structure from natural language description
@@ -9,7 +9,7 @@
  */
 export const generateSurveyFromDescription = async (description, apiKey) => {
   try {
-    const response = await fetch('http://localhost:3001/api/openai/generate-survey', {
+    const response = await fetch(`${API_BASE_URL}/api/openai/generate-survey`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export const generateSurveyFromDescription = async (description, apiKey) => {
  */
 export const adjustSurvey = async (currentConfig, instruction, apiKey) => {
   try {
-    const response = await fetch('http://localhost:3001/api/openai/adjust-survey', {
+    const response = await fetch(`${API_BASE_URL}/api/openai/adjust-survey`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ export const adjustSurvey = async (currentConfig, instruction, apiKey) => {
  */
 export const generateQuestions = async (pageDescription, apiKey) => {
   try {
-    const response = await fetch('http://localhost:3001/api/openai/generate-questions', {
+    const response = await fetch(`${API_BASE_URL}/api/openai/generate-questions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -106,7 +106,7 @@ export const generateQuestions = async (pageDescription, apiKey) => {
  */
 export const validateApiKey = async (apiKey) => {
   try {
-    const response = await fetch('http://localhost:3001/api/openai/validate-key', {
+    const response = await fetch(`${API_BASE_URL}/api/openai/validate-key`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

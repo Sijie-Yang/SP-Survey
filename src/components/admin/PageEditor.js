@@ -88,7 +88,16 @@ function SortableQuestionItem({ question, questionIndex, onEdit, onDelete, onDup
       matrix: 'Matrix',
       imagematrix: 'Image Matrix',
       expression: 'Text Instruction',
-      image: 'Image Display'
+      image: 'Image Display (1 image)',
+      mediadisplay: 'Media Display',
+      mediarating: 'Media Rating',
+      mediaboolean: 'Media Yes/No',
+      imageannotation: 'Image Annotation',
+      slidergroup: 'Slider Group',
+      imageslidergroup: 'Image Slider Group',
+      pointallocation: 'Point Allocation',
+      imagepointallocation: 'Image Point Allocation',
+      skillquestion: 'Skill Question',
     };
     return typeLabels[type] || type;
   };
@@ -231,6 +240,10 @@ export default function PageEditor({ page, pageIndex, onSave, onCancel, images, 
   };
 
   const deleteQuestion = (questionIndex) => {
+    const question = editedPage.elements[questionIndex];
+    const title = question?.title || question?.name || `Question ${questionIndex + 1}`;
+    if (!window.confirm(`Delete "${title}"? This cannot be undone.`)) return;
+
     const newElements = editedPage.elements.filter((_, index) => index !== questionIndex);
     setEditedPage({
       ...editedPage,
@@ -333,7 +346,16 @@ export default function PageEditor({ page, pageIndex, onSave, onCancel, images, 
       matrix: 'Matrix',
       imagematrix: 'Image Matrix',
       expression: 'Text Instruction',
-      image: 'Image Display'
+      image: 'Image Display (1 image)',
+      mediadisplay: 'Media Display',
+      mediarating: 'Media Rating',
+      mediaboolean: 'Media Yes/No',
+      imageannotation: 'Image Annotation',
+      slidergroup: 'Slider Group',
+      imageslidergroup: 'Image Slider Group',
+      pointallocation: 'Point Allocation',
+      imagepointallocation: 'Image Point Allocation',
+      skillquestion: 'Skill Question',
     };
     return typeLabels[type] || type;
   };

@@ -1,0 +1,477 @@
+{
+  "id": "2026-sp-all",
+  "name": "All Question Types (QA Template)",
+  "description": "Smoke-test survey covering all 23 native question types and 6 preset skills. Uses bundled demo images from /preset_skills/ — no Hugging Face dataset required. Before previewing skill questions, import the 6 preset skills from Skill Library once.",
+  "author": "SP Survey Platform",
+  "year": "2026",
+  "category": "Platform",
+  "tags": [
+    "official",
+    "qa",
+    "testing"
+  ],
+  "website": null,
+  "huggingfaceDataset": null,
+  "preloadedImages": [
+    { "name": "demo-street-a.svg", "url": "/preset_skills/demo-street-a.svg", "type": "image" },
+    { "name": "demo-street-b.svg", "url": "/preset_skills/demo-street-b.svg", "type": "image" },
+    { "name": "demo-alley.svg", "url": "/preset_skills/demo-alley.svg", "type": "image" },
+    { "name": "demo-before.svg", "url": "/preset_skills/demo-before.svg", "type": "image" },
+    { "name": "demo-after.svg", "url": "/preset_skills/demo-after.svg", "type": "image" }
+  ],
+  "preloadedSource": "static",
+  "preloadedAt": "2026-07-09T00:00:00.000Z",
+  "createdAt": "2026-07-09T00:00:00.000Z",
+  "config": {
+    "title": "All Question Types — QA Smoke Test",
+    "description": "One page per question family. Answer a few items on each page to verify rendering, validation, response capture, and Results analysis. Skill questions require preset skills imported in Skill Library.",
+    "logo": "",
+    "logoPosition": "right",
+    "settings": {
+      "showQuestionNumbers": "on",
+      "showProgressBar": "aboveheader",
+      "progressBarType": "questions",
+      "autoGrowComment": true,
+      "showPreviewBeforeComplete": "showAllQuestions"
+    },
+    "images": [],
+    "pages": [
+      {
+        "name": "intro",
+        "title": "Introduction",
+        "description": "This template exists to QA every supported question type in SP Survey Platform.",
+        "elements": [
+          {
+            "type": "expression",
+            "name": "qa_intro",
+            "title": "How to use this template",
+            "description": "Work through each page. Native types (text, rating, image, media, slider group, etc.) need no extra setup. For skill questions, open Skill Library → import all 6 presets first. Demo images load from /preset_skills/ automatically when the project is created from this template."
+          }
+        ]
+      },
+      {
+        "name": "text_and_choice",
+        "title": "Text & choice types",
+        "description": "text · comment · radiogroup · checkbox · dropdown · boolean · rating · ranking · matrix",
+        "elements": [
+          {
+            "type": "text",
+            "name": "qa_text",
+            "title": "[text] One-line answer",
+            "placeholder": "Type anything…",
+            "isRequired": false
+          },
+          {
+            "type": "comment",
+            "name": "qa_comment",
+            "title": "[comment] Multi-line answer",
+            "placeholder": "Longer free text…",
+            "isRequired": false
+          },
+          {
+            "type": "radiogroup",
+            "name": "qa_radiogroup",
+            "title": "[radiogroup] Pick one",
+            "choices": ["Option A", "Option B", "Option C"],
+            "isRequired": false
+          },
+          {
+            "type": "checkbox",
+            "name": "qa_checkbox",
+            "title": "[checkbox] Pick any",
+            "choices": ["Tag 1", "Tag 2", "Tag 3", "Tag 4"],
+            "isRequired": false
+          },
+          {
+            "type": "dropdown",
+            "name": "qa_dropdown",
+            "title": "[dropdown] Select from list",
+            "choices": ["Low", "Medium", "High"],
+            "isRequired": false
+          },
+          {
+            "type": "boolean",
+            "name": "qa_boolean",
+            "title": "[boolean] Yes or No",
+            "label": "Do you agree?",
+            "isRequired": false
+          },
+          {
+            "type": "rating",
+            "name": "qa_rating",
+            "title": "[rating] 1–5 stars",
+            "rateMin": 1,
+            "rateMax": 5,
+            "minRateDescription": "Poor",
+            "maxRateDescription": "Excellent",
+            "isRequired": false
+          },
+          {
+            "type": "ranking",
+            "name": "qa_ranking",
+            "title": "[ranking] Order by preference",
+            "choices": ["First choice", "Second choice", "Third choice"],
+            "isRequired": false
+          },
+          {
+            "type": "matrix",
+            "name": "qa_matrix",
+            "title": "[matrix] Grid ratings",
+            "columns": ["1", "2", "3", "4", "5"],
+            "rows": [
+              { "value": "quality", "text": "Quality" },
+              { "value": "value", "text": "Value" },
+              { "value": "design", "text": "Design" }
+            ],
+            "isRequired": false
+          }
+        ]
+      },
+      {
+        "name": "native_advanced",
+        "title": "Slider group & budget",
+        "description": "slidergroup · pointallocation",
+        "elements": [
+          {
+            "type": "slidergroup",
+            "name": "qa_slidergroup",
+            "title": "[slidergroup] Semantic differential",
+            "scaleMin": 1,
+            "scaleMax": 7,
+            "dimensions": [
+              { "id": "pleasant", "left": "Unpleasant", "right": "Pleasant" },
+              { "id": "safe", "left": "Unsafe", "right": "Safe" },
+              { "id": "lively", "left": "Dull", "right": "Lively" }
+            ],
+            "isRequired": false
+          },
+          {
+            "type": "pointallocation",
+            "name": "qa_pointallocation",
+            "title": "[pointallocation] Allocate 100 points",
+            "budget": 100,
+            "choices": [
+              { "value": "walk", "text": "Walking" },
+              { "value": "bike", "text": "Cycling" },
+              { "value": "transit", "text": "Public transit" },
+              { "value": "car", "text": "Driving" }
+            ],
+            "isRequired": false
+          }
+        ]
+      },
+      {
+        "name": "image_native",
+        "title": "Image question types",
+        "description": "image (display) · imagepicker · imagerating · imageboolean · imageranking · imagematrix",
+        "elements": [
+          {
+            "type": "image",
+            "name": "qa_image_display",
+            "title": "[image] Single image display",
+            "imageCount": 1,
+            "imageSelectionMode": "random",
+            "randomImageSelection": true,
+            "excludePreviouslyUsedImages": false,
+            "choices": [],
+            "isRequired": false
+          },
+          {
+            "type": "imagepicker",
+            "name": "qa_imagepicker",
+            "title": "[imagepicker] Pick preferred scene",
+            "imageCount": 4,
+            "multiSelect": false,
+            "imageSelectionMode": "random",
+            "randomImageSelection": true,
+            "excludePreviouslyUsedImages": false,
+            "choices": [],
+            "isRequired": false
+          },
+          {
+            "type": "imagerating",
+            "name": "qa_imagerating",
+            "title": "[imagerating] Rate this scene",
+            "imageCount": 1,
+            "rateMin": 1,
+            "rateMax": 5,
+            "minRateDescription": "Very poor",
+            "maxRateDescription": "Excellent",
+            "imageSelectionMode": "random",
+            "randomImageSelection": true,
+            "excludePreviouslyUsedImages": false,
+            "choices": [],
+            "isRequired": false
+          },
+          {
+            "type": "imageboolean",
+            "name": "qa_imageboolean",
+            "title": "[imageboolean] Would you walk here?",
+            "imageCount": 1,
+            "imageSelectionMode": "random",
+            "randomImageSelection": true,
+            "excludePreviouslyUsedImages": false,
+            "choices": [],
+            "isRequired": false
+          },
+          {
+            "type": "imageranking",
+            "name": "qa_imageranking",
+            "title": "[imageranking] Rank scenes (best first)",
+            "imageCount": 4,
+            "imageSelectionMode": "random",
+            "randomImageSelection": true,
+            "excludePreviouslyUsedImages": false,
+            "choices": [],
+            "isRequired": false
+          },
+          {
+            "type": "imagematrix",
+            "name": "qa_imagematrix",
+            "title": "[imagematrix] Rate attributes of shown scenes",
+            "imageCount": 2,
+            "imageSelectionMode": "random",
+            "randomImageSelection": true,
+            "excludePreviouslyUsedImages": false,
+            "choices": [],
+            "columns": [
+              { "value": "1", "text": "Low" },
+              { "value": "2", "text": "Medium" },
+              { "value": "3", "text": "High" }
+            ],
+            "rows": [
+              { "value": "appeal", "text": "Visual appeal" },
+              { "value": "comfort", "text": "Comfort" }
+            ],
+            "isRequired": false
+          }
+        ]
+      },
+      {
+        "name": "media_types",
+        "title": "Media display & responses",
+        "description": "mediadisplay · mediarating · mediaboolean",
+        "elements": [
+          {
+            "type": "mediadisplay",
+            "name": "qa_mediadisplay_single",
+            "title": "[mediadisplay] Single media",
+            "displayMode": "single",
+            "mediaType": "image",
+            "imageCount": 1,
+            "randomImageSelection": true,
+            "imageSelectionMode": "random",
+            "excludePreviouslyUsedImages": false,
+            "isRequired": false
+          },
+          {
+            "type": "mediadisplay",
+            "name": "qa_mediadisplay_side",
+            "title": "[mediadisplay] Side-by-side comparison",
+            "displayMode": "sideBySide",
+            "mediaType": "image",
+            "imageCount": 2,
+            "randomImageSelection": true,
+            "imageSelectionMode": "random",
+            "excludePreviouslyUsedImages": false,
+            "isRequired": false
+          },
+          {
+            "type": "mediarating",
+            "name": "qa_mediarating",
+            "title": "[mediarating] Rate the media",
+            "mediaType": "image",
+            "imageCount": 1,
+            "rateMin": 1,
+            "rateMax": 5,
+            "randomImageSelection": true,
+            "imageSelectionMode": "random",
+            "excludePreviouslyUsedImages": false,
+            "isRequired": false
+          },
+          {
+            "type": "mediaboolean",
+            "name": "qa_mediaboolean",
+            "title": "[mediaboolean] Yes/No about the media",
+            "mediaType": "image",
+            "imageCount": 1,
+            "randomImageSelection": true,
+            "imageSelectionMode": "random",
+            "excludePreviouslyUsedImages": false,
+            "isRequired": false
+          }
+        ]
+      },
+      {
+        "name": "annotation",
+        "title": "Image annotation",
+        "description": "imageannotation",
+        "elements": [
+          {
+            "type": "imageannotation",
+            "name": "qa_imageannotation",
+            "title": "[imageannotation] Mark points, lines, or regions",
+            "imageCount": 1,
+            "allowedTools": ["point", "line", "region"],
+            "minAnnotations": 0,
+            "maxAnnotations": 20,
+            "randomImageSelection": true,
+            "imageSelectionMode": "random",
+            "excludePreviouslyUsedImages": false,
+            "isRequired": false
+          }
+        ]
+      },
+      {
+        "name": "skills_pairwise_maxdiff",
+        "title": "Preset skills (1/3)",
+        "description": "Pairwise Preference Slider · Best–Worst (MaxDiff)",
+        "elements": [
+          {
+            "type": "skillquestion",
+            "name": "qa_skill_pairwise",
+            "title": "[skill] Pairwise Preference Slider",
+            "skillId": "preset_image_preference_slider",
+            "skillConfig": {
+              "leftLabel": "Prefer A",
+              "rightLabel": "Prefer B",
+              "prompt": "Which scene do you prefer? Drag the slider.",
+              "mediaCount": 2,
+              "mediaType": "image"
+            },
+            "randomImageSelection": true,
+            "imageCount": 2,
+            "isRequired": false
+          },
+          {
+            "type": "skillquestion",
+            "name": "qa_skill_maxdiff",
+            "title": "[skill] Best–Worst Image Choice (MaxDiff)",
+            "skillId": "preset_best_worst_choice",
+            "skillConfig": {
+              "prompt": "Select the BEST and WORST scene.",
+              "mediaCount": 4,
+              "mediaType": "image",
+              "bestLabel": "Best",
+              "worstLabel": "Worst"
+            },
+            "randomImageSelection": true,
+            "imageCount": 4,
+            "isRequired": false
+          }
+        ]
+      },
+      {
+        "name": "skills_color_composite",
+        "title": "Preset skills (2/3)",
+        "description": "Emotion Color Mapping · Composite Blocks",
+        "elements": [
+          {
+            "type": "skillquestion",
+            "name": "qa_skill_color",
+            "title": "[skill] Emotion Color Mapping",
+            "skillId": "preset_emotion_color_picker",
+            "skillConfig": {
+              "prompt": "Pick a color that matches your feeling about this place.",
+              "mediaCount": 1,
+              "mediaType": "image"
+            },
+            "randomImageSelection": true,
+            "imageCount": 1,
+            "isRequired": false
+          },
+          {
+            "type": "skillquestion",
+            "name": "qa_skill_composite",
+            "title": "[skill] Composite Question (Blocks)",
+            "skillId": "preset_composite_blocks",
+            "skillConfig": {
+              "prompt": "Look at the scene and answer all blocks below.",
+              "scaleMin": 1,
+              "scaleMax": 7,
+              "mediaCount": 1,
+              "mediaType": "image",
+              "blocks": [
+                { "type": "media", "index": 0 },
+                {
+                  "type": "sliders",
+                  "title": "Rate the scene",
+                  "dimensions": [
+                    { "id": "safe", "left": "Unsafe", "right": "Safe" },
+                    { "id": "beautiful", "left": "Ugly", "right": "Beautiful" }
+                  ]
+                },
+                {
+                  "type": "words",
+                  "title": "Pick up to 3 words",
+                  "max": 3,
+                  "options": ["green", "noisy", "open", "historic", "crowded"]
+                },
+                {
+                  "type": "choice",
+                  "title": "Would you visit?",
+                  "options": ["Yes", "Maybe", "No"]
+                },
+                { "type": "text", "title": "Comments", "placeholder": "Optional…" }
+              ]
+            },
+            "randomImageSelection": true,
+            "imageCount": 1,
+            "isRequired": false
+          }
+        ]
+      },
+      {
+        "name": "skills_video",
+        "title": "Preset skills (3/3)",
+        "description": "Video Key Moment Tagging · Continuous Video Rating (use demo poster in preview)",
+        "elements": [
+          {
+            "type": "skillquestion",
+            "name": "qa_skill_video_moment",
+            "title": "[skill] Video Key Moment Tagging",
+            "skillId": "preset_video_moment_tag",
+            "skillConfig": {
+              "prompt": "Mark key moments on the timeline (demo uses poster + simulated playback).",
+              "maxSegments": 5,
+              "mediaCount": 1,
+              "mediaType": "video"
+            },
+            "randomImageSelection": true,
+            "imageCount": 1,
+            "isRequired": false
+          },
+          {
+            "type": "skillquestion",
+            "name": "qa_skill_video_rating",
+            "title": "[skill] Continuous Video Rating",
+            "skillId": "preset_video_continuous_rating",
+            "skillConfig": {
+              "prompt": "Adjust the slider while watching (demo mode).",
+              "lowLabel": "Unpleasant",
+              "highLabel": "Pleasant",
+              "mediaCount": 1,
+              "mediaType": "video"
+            },
+            "randomImageSelection": true,
+            "imageCount": 1,
+            "isRequired": false
+          }
+        ]
+      },
+      {
+        "name": "complete",
+        "title": "Done",
+        "description": "Thank you for QA-testing all question types.",
+        "elements": [
+          {
+            "type": "expression",
+            "name": "qa_complete",
+            "title": "Checklist",
+            "description": "Verify in Results: text stats, rating histograms, image TrueSkill, slider profile, MaxDiff BWS, video timelines, and IRR where applicable."
+          }
+        ]
+      }
+    ]
+  }
+}

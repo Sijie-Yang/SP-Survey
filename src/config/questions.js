@@ -194,7 +194,7 @@ export const surveyPages = [
         description: "Which street environment do you perceive to be the SAFEST?", // 🔧 Change question description
         isRequired: true, // 🔧 Set to false to make optional
         choices: displayedImages.safety_perception, // Uses pre-generated images
-        imageFit: "cover", // Keep as "cover" for best display
+        imageFit: "contain", // "contain" preserves each image's natural aspect ratio
         multiSelect: false // Keep false for "choose 1", true for "choose multiple"
       },
       
@@ -207,7 +207,7 @@ export const surveyPages = [
         description: "Which street environment do you find most VISUALLY ATTRACTIVE?", // 🔧 Change question description
         isRequired: true,
         choices: displayedImages.attractiveness_perception,
-        imageFit: "cover",
+        imageFit: "contain",
         multiSelect: false
       },
       
@@ -219,7 +219,7 @@ export const surveyPages = [
         description: "Which street environment would be most COMFORTABLE for walking?", // 🔧 Change question description
         isRequired: true,
         choices: displayedImages.walkability_perception,
-        imageFit: "cover",
+        imageFit: "contain",
         multiSelect: false
       },
       
@@ -231,7 +231,7 @@ export const surveyPages = [
         description: "Which street environment appears most LIVELY and full of activity?", // 🔧 Change question description
         isRequired: true,
         choices: displayedImages.liveliness_perception,
-        imageFit: "cover",
+        imageFit: "contain",
         multiSelect: false
       },
       
@@ -243,7 +243,7 @@ export const surveyPages = [
         description: "Which street environment seems most RELAXING and peaceful?", // 🔧 Change question description
         isRequired: true,
         choices: displayedImages.relaxation_perception,
-        imageFit: "cover",
+        imageFit: "contain",
         multiSelect: false
       },
       
@@ -255,7 +255,7 @@ export const surveyPages = [
         description: "Which street environment appears most CLEAN and well-maintained?", // 🔧 Change question description
         isRequired: true,
         choices: displayedImages.cleanliness_perception,
-        imageFit: "cover",
+        imageFit: "contain",
         multiSelect: false
       }
       
@@ -280,8 +280,8 @@ export const surveyPages = [
         type: "image",
         name: "comfort_image",
         imageLink: displayedImages.comfort_rating[0]?.imageLink, // Uses pre-generated image
-        imageFit: "cover", // Keep as "cover"
-        imageHeight: "300px", // 🔧 Adjust image height
+        imageFit: "contain", // "contain" preserves the image's natural aspect ratio
+        imageHeight: "auto", // Let height adapt so the image keeps its natural ratio
         imageWidth: "100%" // Keep as "100%"
       },
       // 🔧 RATING QUESTION - 1-5 scale
@@ -316,7 +316,7 @@ export const surveyPages = [
         type: "image", 
         name: "elements_image",
         imageLink: displayedImages.street_elements[0]?.imageLink, // Uses pre-generated image
-        imageFit: "cover",
+        imageFit: "contain",
         imageHeight: "300px", // 🔧 Adjust image height
         imageWidth: "100%"
       },
@@ -358,7 +358,7 @@ export const surveyPages = [
         type: "image", 
         name: "ranking_image",
         imageLink: displayedImages.feature_ranking[0]?.imageLink, // Uses pre-generated image
-        imageFit: "cover",
+        imageFit: "contain",
         imageHeight: "300px", // 🔧 Adjust image height
         imageWidth: "100%"
       },
@@ -395,7 +395,7 @@ export const surveyPages = [
         type: "image", 
         name: "feedback_image",
         imageLink: displayedImages.open_feedback[0]?.imageLink, // Uses pre-generated image
-        imageFit: "cover",
+        imageFit: "contain",
         imageHeight: "300px", // 🔧 Adjust image height
         imageWidth: "100%"
       },

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Typography, Card, CardMedia, Rating, Grid } from '@mui/material';
+import React from 'react';
+import { Box, Typography, Card, Rating } from '@mui/material';
 
 export default function ImageRatingWidget({ question, value, onValueChanged }) {
   console.log('ImageRatingWidget - question:', question);
@@ -50,13 +50,18 @@ export default function ImageRatingWidget({ question, value, onValueChanged }) {
 
     return (
       <Box sx={{ width: '100%', maxWidth: 600, mx: 'auto' }}>
-        <Card sx={{ mb: 3 }}>
-          <CardMedia
+        <Card sx={{ mb: 3, lineHeight: 0 }}>
+          <Box
             component="img"
-            height="300"
-            image={imageLink}
+            className="sp-natural-image"
+            src={imageLink}
             alt="Image to rate"
-            sx={{ objectFit: 'cover' }}
+            sx={{
+              width: '100%',
+              height: 'auto',
+              display: 'block',
+              objectFit: 'contain',
+            }}
           />
         </Card>
         
@@ -84,14 +89,13 @@ export default function ImageRatingWidget({ question, value, onValueChanged }) {
     );
   }
 
-  // Multiple images display (compact grid)
+  // Multiple images display (justified gallery — see imagePickerLayout.js)
   return (
     <Box sx={{ width: '100%', maxWidth: 800, mx: 'auto' }}>
-      <Grid container spacing={2} sx={{ mb: 3 }}>
+      <Box className="sp-image-gallery" sx={{ mb: 3 }}>
         {question.choices.map((choice, index) => {
           let imageLink;
-          
-          // Extract imageLink from SurveyJS ItemValue object
+
           if (choice.imageLink) {
             imageLink = choice.imageLink;
           } else if (choice.getPropertyValue) {
@@ -102,30 +106,30 @@ export default function ImageRatingWidget({ question, value, onValueChanged }) {
 
           if (!imageLink) {
             return (
-              <Grid item xs={6} sm={4} md={3} key={index}>
-                <Card sx={{ bgcolor: 'error.light', p: 2 }}>
-                  <Typography variant="caption">No image data</Typography>
-                </Card>
-              </Grid>
+              <Card key={index} className="sp-image-gallery__item" sx={{ bgcolor: 'error.light', p: 2 }}>
+                <Typography variant="caption">No image data</Typography>
+              </Card>
             );
           }
 
           return (
-            <Grid item xs={6} sm={4} md={3} key={index}>
-              <Card>
-                <CardMedia
+            <Card
+              key={index}
+              className="sp-image-gallery__item"
+              sx={{ lineHeight: 0, overflow: 'hidden' }}
+            >
+              <Box className="sp-image-gallery__image-container">
+                <Box
                   component="img"
-                  height="120"
-                  image={imageLink}
+                  src={imageLink}
                   alt={`Image ${index + 1}`}
-                  sx={{ objectFit: 'cover' }}
                 />
-              </Card>
-            </Grid>
+              </Box>
+            </Card>
           );
         })}
-      </Grid>
-      
+      </Box>
+
       <Box sx={{ textAlign: 'center' }}>
         <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
           Rate the overall environment shown in these images

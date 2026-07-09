@@ -1,8 +1,9 @@
 // Project management system for handling multiple survey projects
 // ✅ No localStorage - all data via API
 import { saveSurveyConfig, loadSurveyConfig, deleteSurveyConfig, getSavedConfigList } from './surveyStorage';
-import { saveProjectToProjectsFolder } from './fileSystemManager';
+import { saveProjectToProjectsFolder, loadProjectsFromFiles } from './fileSystemManager';
 import { projectTemplates, getTemplateById } from './projectTemplates';
+import { API_ROOT } from './apiConfig';
 
 // Active project is now stored in sessionStorage (session-only)
 const ACTIVE_PROJECT_KEY = 'active_project_id';
@@ -32,11 +33,13 @@ export const createProject = async (projectData) => {
       templateId: projectData.templateId || null,
       supabaseConfig: projectData.supabaseConfig || null,
       imageDatasetConfig: projectData.imageDatasetConfig || {
-        enabled: true, // Default to enabled for new projects
+        enabled: true,
         huggingFaceToken: '',
         datasetName: '',
+        supabaseProjectId: '',
         supabaseUrl: '',
-        supabaseKey: ''
+        supabaseKey: '',
+        supabaseAnonKey: ''
       }
     };
     
@@ -163,7 +166,7 @@ export const updateProject = async (projectId, updates) => {
     console.log(`📝 Updating project ${projectId}...`);
     
     // Step 1: Load the current project from file system
-    const response = await fetch(`http://localhost:3001/api/projects/${projectId}`);
+    const response = await fetch(`${API_ROOT}/projects/${projectId}`);
     if (!response.ok) {
       throw new Error('Failed to load project');
     }
@@ -182,7 +185,7 @@ export const updateProject = async (projectId, updates) => {
     };
     
     // Step 3: Save back to file system
-    const saveResponse = await fetch('http://localhost:3001/api/projects', {
+    const saveResponse = await fetch(`${API_ROOT}/projects`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -206,12 +209,10 @@ export const updateProject = async (projectId, updates) => {
   }
 };
 
-// ✅ getUserProjects now fetches from API (see ProjectSidebar.js)
+// Load all projects from local JSON files via backend API
 export const getUserProjects = async () => {
   try {
-    const response = await fetch('http://localhost:3001/api/projects');
-    const data = await response.json();
-    return data.projects || [];
+    return await loadProjectsFromFiles();
   } catch (error) {
     console.error('Error getting user projects from API:', error);
     return [];
@@ -221,7 +222,7 @@ export const getUserProjects = async () => {
 // ✅ getProjectById now fetches from API
 export const getProjectById = async (projectId) => {
   try {
-    const response = await fetch(`http://localhost:3001/api/projects/${projectId}`);
+    const response = await fetch(`${API_ROOT}/projects/${projectId}`);
     const data = await response.json();
     return data.project || null;
   } catch (error) {
@@ -277,4 +278,20 @@ const createDefaultSurveyConfig = (title) => {
 export const migrateExistingConfig = async () => {
   console.log('📝 Migration skipped (no longer using localStorage)');
   return null;
+};
+
+/** Save project + survey config to local file system (used by auto-save). */
+export const saveProjectFull = async (project, surveyConfig, supabaseConfig = null) => {
+  try {
+    const result = await saveProjectToProjectsFolder(project, surveyConfig, supabaseConfig);
+    if (!result.success) throw new Error(result.error || 'Save failed');
+    return { success: true };
+  } catch (error) {
+    console.error('saveProjectFull:', error);
+    return { success: false, error: error.message };
+  }
+};
+
+export const loadSurveyConfigForProject = async (projectId) => {
+  return loadSurveyConfig(projectId);
 };

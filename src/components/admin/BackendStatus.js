@@ -19,6 +19,7 @@ import {
   Refresh,
   Info
 } from '@mui/icons-material';
+import { API_ROOT, API_BASE_URL } from '../../lib/apiConfig';
 
 /**
  * Backend Status Monitor Component
@@ -37,7 +38,7 @@ export default function BackendStatus() {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
 
-      const response = await fetch('http://localhost:3001/api/projects', {
+      const response = await fetch(`${API_ROOT}/projects`, {
         method: 'GET',
         signal: controller.signal
       });
@@ -103,7 +104,7 @@ export default function BackendStatus() {
     
     try {
       // Try to trigger auto-restart through a special endpoint
-      const response = await fetch('http://localhost:3001/api/restart', {
+      const response = await fetch(`${API_ROOT}/restart`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       });
@@ -278,7 +279,7 @@ export default function BackendStatus() {
                 Server Information:
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                • URL: http://localhost:3001
+                • URL: {API_BASE_URL}
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 • API Endpoint: /api/projects

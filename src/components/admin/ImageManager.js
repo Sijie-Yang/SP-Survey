@@ -12,7 +12,8 @@ import {
   Error,
   Info
 } from '@mui/icons-material';
-import { isSupabaseConfigured, checkImageFolderStatus } from '../../lib/supabase';
+import { isSupabaseConfigured } from '../../lib/supabase';
+import { checkImageFolderStatus } from '../../lib/supabase';
 
 export default function ImageManager({ images, onChange }) {
   const [checking, setChecking] = useState(false);
@@ -22,36 +23,31 @@ export default function ImageManager({ images, onChange }) {
   // Auto-check status on component mount and every 10 seconds
   useEffect(() => {
     if (isSupabaseConfigured()) {
-      // Initial check
       handleCheckStatus();
-      
-      // Set up interval for periodic checks
       const checkInterval = setInterval(() => {
         handleCheckStatus();
       }, 10000);
-
-      return () => {
-        clearInterval(checkInterval);
-      };
+      return () => clearInterval(checkInterval);
     }
   }, []);
 
   const handleCheckStatus = async () => {
     setChecking(true);
     setFolderStatus(null);
-    
     try {
-      const status = await checkImageFolderStatus();
-      setFolderStatus(status);
+      const raw = await checkImageFolderStatus();
+      setFolderStatus({
+        success: raw.success,
+        connected: raw.connected,
+        bucketExists: raw.bucketExists,
+        imageCount: raw.imageCount || 0,
+        error: raw.error,
+        message: raw.message,
+      });
       setLastChecked(new Date().toLocaleString());
     } catch (error) {
-      console.error('Error checking folder status:', error);
-      setFolderStatus({
-        success: false,
-        error: error.message,
-        bucketExists: false,
-        imageCount: 0
-      });
+      console.error('Error checking Supabase Storage status:', error);
+      setFolderStatus({ success: false, error: error.message, bucketExists: false, imageCount: 0 });
     } finally {
       setChecking(false);
     }
@@ -67,35 +63,16 @@ export default function ImageManager({ images, onChange }) {
     if (!isSupabaseConfigured()) {
       return {
         type: 'error',
-        message: 'Supabase is not configured. Please configure cloud storage in Server Status first.'
+        message: 'Supabase is not configured. Save credentials in Step 1 — Image Dataset first.'
       };
     }
-    
     if (!folderStatus) {
-      return {
-        type: 'info',
-        message: 'Click "Check Image Bucket \'survey-images\' Status" to verify your setup.'
-      };
+      return { type: 'info', message: 'Click "Check Storage Status" to verify your Supabase setup.' };
     }
-    
     if (folderStatus.success && folderStatus.bucketExists) {
-      return {
-        type: 'success',
-        message: `✅ Connected! Found ${folderStatus.imageCount} images in 'survey-images' bucket.`
-      };
+      return { type: 'success', message: `Connected to Supabase Storage (${folderStatus.imageCount || 0} image(s) in survey-images bucket).` };
     }
-    
-    if (folderStatus.success && !folderStatus.bucketExists) {
-      return {
-        type: 'warning',
-        message: '⚠️ Bucket "survey-images" not found. Please create it manually in Supabase Storage.'
-      };
-    }
-    
-    return {
-      type: 'error',
-      message: `❌ Connection failed: ${folderStatus.error || 'Unknown error'}`
-    };
+    return { type: 'error', message: `❌ Connection failed: ${folderStatus.error || 'Unknown error'}` };
   };
 
   const statusInfo = getStatusMessage();
@@ -116,11 +93,9 @@ export default function ImageManager({ images, onChange }) {
             📋 Setup Instructions:
           </Typography>
           <Typography variant="body2" component="div">
-            1. Go to your Supabase project → Storage<br/>
-            2. Create a new bucket called <strong>"survey-images"</strong><br/>
-            3. Make it a <strong>public bucket</strong><br/>
-            4. Upload all your survey images to this bucket<br/>
-            5. Click "Check Image Bucket 'survey-images' Status" below to verify
+            1. Configure Supabase in <strong>Step 1 — Image Dataset</strong> (Supabase Storage Configuration)<br/>
+            2. Ensure a public bucket named <code>survey-images</code> exists<br/>
+            3. Click &quot;Check Storage Status&quot; below to verify
           </Typography>
         </Alert>
 
@@ -148,24 +123,8 @@ export default function ImageManager({ images, onChange }) {
             disabled={checking || !isSupabaseConfigured()}
             size="large"
           >
-            {checking ? 'Checking...' : "Check Image Bucket 'survey-images' Status"}
+            {checking ? 'Checking...' : 'Check Storage Status'}
           </Button>
-          
-          {!isSupabaseConfigured() && (
-            <Button
-              variant="contained"
-              color="warning"
-              onClick={() => {
-                window.location.hash = '#system-status';
-                if (window.location.pathname.includes('/admin')) {
-                  alert('Please go to the Server Status tab to configure Supabase cloud storage.');
-                }
-              }}
-              size="large"
-            >
-              Configure Cloud Storage
-            </Button>
-          )}
           
         </Box>
 
@@ -187,7 +146,7 @@ export default function ImageManager({ images, onChange }) {
                 variant="outlined"
               />
               <Chip 
-                label={`Supabase Server Connection: ${folderStatus.connected ? '✅ OK' : '❌ Failed'}`}
+                label={`Supabase Storage: ${folderStatus.connected ? 'OK' : 'Failed'}`}
                 color={folderStatus.connected ? 'success' : 'error'}
                 variant="outlined"
               />

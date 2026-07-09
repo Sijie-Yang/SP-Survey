@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Skill Test</title></head><body style="max-width:900px;margin:20px auto;">
+<h2 style="font-family:sans-serif;">Pairwise Preference Slider (image_preference_slider)</h2>
+<iframe style="width:100%;height:560px;border:1px solid #ccc;border-radius:8px;" srcdoc="<!DOCTYPE html>
+<html><head><meta charset=&quot;utf-8&quot;><style>
+:root {
+  --primary: #1976d2;
+  --primary-dark: #1565c0;
+  --primary-light: #e3f2fd;
+  --success: #2e7d32;
+  --warning: #ed6c02;
+  --text: #1a1a2e;
+  --muted: #5c6b7a;
+  --border: #e0e6ed;
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --radius: 12px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.5;
+}
+.card {
+  background: var(--card); border-radius: var(--radius); padding: 16px;
+  border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(25, 118, 210, 0.06);
+}
+.title { margin: 0 0 4px; font-size: 1.05rem; font-weight: 600; color: var(--primary-dark); }
+.subtitle { margin: 0 0 14px; font-size: 0.85rem; color: var(--muted); }
+.btn {
+  border: none; border-radius: 8px; padding: 8px 14px; font-size: 0.85rem;
+  cursor: pointer; font-weight: 600; transition: all .15s;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-outline { background: #fff; color: var(--primary); border: 1px solid var(--primary); }
+.btn-outline:hover { background: var(--primary-light); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; align-items: center; }
+.badge {
+  display: inline-block; padding: 2px 8px; border-radius: 999px;
+  background: var(--primary-light); color: var(--primary-dark); font-size: 0.75rem; font-weight: 600;
+}
+.media-frame {
+  position: relative; border-radius: 10px; overflow: hidden;
+  background: #e8eef5; border: 1px solid var(--border);
+}
+.media-frame img, .media-frame video { display: block; width: 100%; max-height: 320px; object-fit: cover; background: #e8eef5; }
+.slider-row { margin: 12px 0; }
+.slider-row label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+input[type=range] { width: 100%; accent-color: var(--primary); }
+.scale-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+.dim-row { padding: 10px 0; border-bottom: 1px solid var(--border); }
+.dim-row:last-child { border-bottom: none; }
+.hint { font-size: 0.78rem; color: var(--muted); margin-top: 8px; }
+</style></head><body>
+
+<div class=&quot;card&quot;>
+  <p class=&quot;title&quot;>Pairwise Preference</p>
+  <p class=&quot;subtitle&quot; id=&quot;prompt&quot;></p>
+  <div style=&quot;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;&quot;>
+    <div><div class=&quot;badge&quot; style=&quot;margin-bottom:6px;&quot;>Option A</div><div class=&quot;media-frame&quot;><img id=&quot;imgA&quot; alt=&quot;A&quot;/></div></div>
+    <div><div class=&quot;badge&quot; style=&quot;margin-bottom:6px;&quot;>Option B</div><div class=&quot;media-frame&quot;><img id=&quot;imgB&quot; alt=&quot;B&quot;/></div></div>
+  </div>
+  <div class=&quot;slider-row&quot;>
+    <label><span id=&quot;labL&quot;>A</span><span id=&quot;val&quot;>0</span><span id=&quot;labR&quot;>B</span></label>
+    <input type=&quot;range&quot; id=&quot;slider&quot; min=&quot;-100&quot; max=&quot;100&quot; value=&quot;0&quot; step=&quot;1&quot;/>
+    <div class=&quot;scale-labels&quot;><span>Strongly prefer A</span><span>Neutral</span><span>Strongly prefer B</span></div>
+  </div>
+  <label style=&quot;display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--muted);margin-top:8px;&quot;>
+    <input type=&quot;checkbox&quot; id=&quot;hard&quot;/> Hard to decide / about the same
+  </label>
+</div>
+<script>window.__SP_BOOT__ = {&quot;config&quot;:{&quot;mediaCount&quot;:2,&quot;mediaType&quot;:&quot;image&quot;,&quot;leftLabel&quot;:&quot;Prefer A&quot;,&quot;rightLabel&quot;:&quot;Prefer B&quot;,&quot;prompt&quot;:&quot;Which one do you prefer? Drag the slider to express how strongly.&quot;,&quot;demoImages&quot;:[{&quot;name&quot;:&quot;street-a.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%2387CEEB%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%2378909C%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%231976d2%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3EMain%20Street%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;},{&quot;name&quot;:&quot;street-b.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%2364B5F6%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%23BCAAA4%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%231565c0%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3ECity%20Plaza%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;}]},&quot;images&quot;:[{&quot;name&quot;:&quot;street-a.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%2387CEEB%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%2378909C%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%231976d2%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3EMain%20Street%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;},{&quot;name&quot;:&quot;street-b.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%2364B5F6%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%23BCAAA4%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%231565c0%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3ECity%20Plaza%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;}]};
+
+function spPlaceholder(label) {
+  var palettes = [
+    { sky: '#87CEEB', ground: '#78909C', accent: '#1976d2', title: 'Main Street' },
+    { sky: '#64B5F6', ground: '#BCAAA4', accent: '#1565c0', title: 'City Plaza' },
+    { sky: '#CFD8DC', ground: '#616161', accent: '#455a64', title: 'Alleyway' },
+    { sky: '#B0BEC5', ground: '#757575', accent: '#37474f', title: 'Before' },
+    { sky: '#81D4FA', ground: '#A5D6A7', accent: '#2e7d32', title: 'After' },
+  ];
+  var idx = 0;
+  if (label &amp;&amp; label.indexOf('B') >= 0) idx = 1;
+  if (label &amp;&amp; label.indexOf('Before') >= 0) idx = 3;
+  if (label &amp;&amp; label.indexOf('After') >= 0) idx = 4;
+  var p = palettes[idx] || palettes[0];
+  var svg = '<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;800&quot; height=&quot;500&quot; viewBox=&quot;0 0 800 500&quot;>' +
+    '<rect width=&quot;800&quot; height=&quot;500&quot; fill=&quot;' + p.sky + '&quot;/>' +
+    '<rect y=&quot;340&quot; width=&quot;800&quot; height=&quot;160&quot; fill=&quot;' + p.ground + '&quot;/>' +
+    '<rect x=&quot;80&quot; y=&quot;120&quot; width=&quot;140&quot; height=&quot;220&quot; fill=&quot;#90A4AE&quot; opacity=&quot;0.85&quot;/>' +
+    '<rect x=&quot;560&quot; y=&quot;100&quot; width=&quot;160&quot; height=&quot;240&quot; fill=&quot;#A1887F&quot; opacity=&quot;0.85&quot;/>' +
+    '<ellipse cx=&quot;400&quot; cy=&quot;300&quot; rx=&quot;60&quot; ry=&quot;75&quot; fill=&quot;#43A047&quot;/>' +
+    '<rect x=&quot;388&quot; y=&quot;300&quot; width=&quot;24&quot; height=&quot;50&quot; fill=&quot;#6D4C41&quot;/>' +
+    '<text x=&quot;400&quot; y=&quot;470&quot; text-anchor=&quot;middle&quot; fill=&quot;' + p.accent + '&quot; font-family=&quot;sans-serif&quot; font-size=&quot;16&quot; font-weight=&quot;600&quot;>' + p.title + '</text></svg>';
+  return 'data:image/svg+xml,' + encodeURIComponent(svg);
+}
+function spAbsUrl(url) {
+  if (!url) return url;
+  if (url.indexOf('http') === 0 || url.indexOf('data:') === 0) return url;
+  try {
+    if (window.parent &amp;&amp; window.parent.location &amp;&amp; window.parent.location.origin) {
+      return window.parent.location.origin + (url.charAt(0) === '/' ? url : '/' + url);
+    }
+  } catch (e) { /* sandbox */ }
+  return url;
+}
+function spBootImages() {
+  try {
+    if (window.__SP_BOOT__ &amp;&amp; window.__SP_BOOT__.images &amp;&amp; window.__SP_BOOT__.images.length) {
+      return window.__SP_BOOT__.images;
+    }
+  } catch (e) { /* ignore */ }
+  return [];
+}
+function spMedia(type, index) {
+  var pool = [];
+  try { pool = SPSkill.getImages() || []; } catch (e) { /* SPSkill not ready */ }
+  if (!pool.length) pool = spBootImages();
+  var list = type ? pool.filter(function(m) { return !m.type || m.type === type; }) : pool;
+  var item = list[index != null ? index : 0];
+  return item &amp;&amp; item.url ? item : null;
+}
+function spDemoFromConfig(type, index) {
+  var cfg = {};
+  try { cfg = SPSkill.getConfig() || {}; } catch (e) { /* ignore */ }
+  if (!cfg.demoImages &amp;&amp; window.__SP_BOOT__ &amp;&amp; window.__SP_BOOT__.config) {
+    cfg = window.__SP_BOOT__.config;
+  }
+  var demos = cfg.demoImages || [];
+  var idx = index != null ? index : 0;
+  if (type) {
+    var typed = demos.filter(function(d) { return !d.type || d.type === type; });
+    if (typed[idx]) return typed[idx];
+  }
+  return demos[idx] || null;
+}
+function spUrl(type, index, label) {
+  var m = spMedia(type, index);
+  if (m &amp;&amp; m.url) return spAbsUrl(m.url);
+  var d = spDemoFromConfig(type, index);
+  if (d &amp;&amp; d.url) return spAbsUrl(d.url);
+  return spPlaceholder(label);
+}
+function spName(type, index) {
+  var m = spMedia(type, index) || spDemoFromConfig(type, index);
+  return m ? (m.name || 'media') : 'demo';
+}
+function spSetImg(el, type, index, label) {
+  if (!el) return;
+  el.onerror = function() { el.onerror = null; el.src = spPlaceholder(label); };
+  el.src = spUrl(type, index, label);
+}
+
+
+var cfg = {};
+function report() {
+  var v = parseInt(document.getElementById('slider').value, 10);
+  SPSkill.setAnswer({
+    preference: v,
+    hardToDecide: document.getElementById('hard').checked,
+    imageA: spUrl('image', 0, 'Option A'),
+    imageB: spUrl('image', 1, 'Option B'),
+    interpretation: v < -20 ? 'prefer_A' : v > 20 ? 'prefer_B' : 'neutral',
+  });
+}
+document.addEventListener('spskill-init', function(e) {
+  cfg = e.detail.config || {};
+  document.getElementById('prompt').textContent = cfg.prompt || '';
+  document.getElementById('labL').textContent = cfg.leftLabel || 'A';
+  document.getElementById('labR').textContent = cfg.rightLabel || 'B';
+  spSetImg(document.getElementById('imgA'), 'image', 0, 'Option A');
+  spSetImg(document.getElementById('imgB'), 'image', 1, 'Option B');
+  if (e.detail.value) {
+    document.getElementById('slider').value = e.detail.value.preference || 0;
+    document.getElementById('hard').checked = !!e.detail.value.hardToDecide;
+  }
+  document.getElementById('val').textContent = document.getElementById('slider').value;
+  SPSkill.ready();
+});
+document.getElementById('slider').oninput = function() {
+  document.getElementById('val').textContent = this.value;
+  report();
+};
+document.getElementById('hard').onchange = report;
+
+</script></body></html>"></iframe>
+<h2 style="font-family:sans-serif;">Video Key Moment Tagging (video_moment_tag)</h2>
+<iframe style="width:100%;height:560px;border:1px solid #ccc;border-radius:8px;" srcdoc="<!DOCTYPE html>
+<html><head><meta charset=&quot;utf-8&quot;><style>
+:root {
+  --primary: #1976d2;
+  --primary-dark: #1565c0;
+  --primary-light: #e3f2fd;
+  --success: #2e7d32;
+  --warning: #ed6c02;
+  --text: #1a1a2e;
+  --muted: #5c6b7a;
+  --border: #e0e6ed;
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --radius: 12px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.5;
+}
+.card {
+  background: var(--card); border-radius: var(--radius); padding: 16px;
+  border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(25, 118, 210, 0.06);
+}
+.title { margin: 0 0 4px; font-size: 1.05rem; font-weight: 600; color: var(--primary-dark); }
+.subtitle { margin: 0 0 14px; font-size: 0.85rem; color: var(--muted); }
+.btn {
+  border: none; border-radius: 8px; padding: 8px 14px; font-size: 0.85rem;
+  cursor: pointer; font-weight: 600; transition: all .15s;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-outline { background: #fff; color: var(--primary); border: 1px solid var(--primary); }
+.btn-outline:hover { background: var(--primary-light); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; align-items: center; }
+.badge {
+  display: inline-block; padding: 2px 8px; border-radius: 999px;
+  background: var(--primary-light); color: var(--primary-dark); font-size: 0.75rem; font-weight: 600;
+}
+.media-frame {
+  position: relative; border-radius: 10px; overflow: hidden;
+  background: #e8eef5; border: 1px solid var(--border);
+}
+.media-frame img, .media-frame video { display: block; width: 100%; max-height: 320px; object-fit: cover; background: #e8eef5; }
+.slider-row { margin: 12px 0; }
+.slider-row label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+input[type=range] { width: 100%; accent-color: var(--primary); }
+.scale-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+.dim-row { padding: 10px 0; border-bottom: 1px solid var(--border); }
+.dim-row:last-child { border-bottom: none; }
+.hint { font-size: 0.78rem; color: var(--muted); margin-top: 8px; }
+</style></head><body>
+
+<div class=&quot;card&quot;>
+  <p class=&quot;title&quot;>Video Key Moment Tagging</p>
+  <p class=&quot;subtitle&quot; id=&quot;prompt&quot;></p>
+  <div class=&quot;media-frame&quot; id=&quot;vframe&quot;>
+    <video id=&quot;vid&quot; controls playsinline style=&quot;display:none;&quot;></video>
+    <img id=&quot;poster&quot; alt=&quot;video preview&quot;/>
+  </div>
+  <div id=&quot;demoTimeline&quot; style=&quot;display:none;margin-top:8px;&quot;>
+    <input type=&quot;range&quot; id=&quot;demoTime&quot; min=&quot;0&quot; max=&quot;60&quot; value=&quot;0&quot; style=&quot;width:100%;accent-color:var(--primary);&quot;/>
+    <p class=&quot;hint&quot; style=&quot;margin-top:4px;&quot;>Preview mode: drag the timeline to simulate playback and mark key moments</p>
+  </div>
+  <div style=&quot;margin:10px 0;font-size:0.82rem;color:var(--muted);&quot;>Current time: <strong id=&quot;cur&quot;>0:00</strong></div>
+  <div class=&quot;toolbar&quot;>
+    <button class=&quot;btn btn-outline&quot; id=&quot;markStart&quot;>Mark start</button>
+    <button class=&quot;btn btn-outline&quot; id=&quot;markEnd&quot;>Mark end</button>
+    <span class=&quot;badge&quot; id=&quot;segCount&quot;>0 segments</span>
+  </div>
+  <ul id=&quot;list&quot; style=&quot;margin:10px 0 0;padding-left:18px;font-size:0.85rem;color:var(--text);&quot;></ul>
+</div>
+<script>window.__SP_BOOT__ = {&quot;config&quot;:{&quot;mediaCount&quot;:1,&quot;mediaType&quot;:&quot;video&quot;,&quot;prompt&quot;:&quot;Watch the video and mark the moments you consider key or important (click \&quot;Mark start\&quot; then \&quot;Mark end\&quot;)&quot;,&quot;maxSegments&quot;:5,&quot;demoImages&quot;:[{&quot;name&quot;:&quot;street-a.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%2387CEEB%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%2378909C%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%231976d2%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3EMain%20Street%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;}]},&quot;images&quot;:[{&quot;name&quot;:&quot;street-a.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%2387CEEB%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%2378909C%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%231976d2%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3EMain%20Street%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;}]};
+
+function spPlaceholder(label) {
+  var palettes = [
+    { sky: '#87CEEB', ground: '#78909C', accent: '#1976d2', title: 'Main Street' },
+    { sky: '#64B5F6', ground: '#BCAAA4', accent: '#1565c0', title: 'City Plaza' },
+    { sky: '#CFD8DC', ground: '#616161', accent: '#455a64', title: 'Alleyway' },
+    { sky: '#B0BEC5', ground: '#757575', accent: '#37474f', title: 'Before' },
+    { sky: '#81D4FA', ground: '#A5D6A7', accent: '#2e7d32', title: 'After' },
+  ];
+  var idx = 0;
+  if (label &amp;&amp; label.indexOf('B') >= 0) idx = 1;
+  if (label &amp;&amp; label.indexOf('Before') >= 0) idx = 3;
+  if (label &amp;&amp; label.indexOf('After') >= 0) idx = 4;
+  var p = palettes[idx] || palettes[0];
+  var svg = '<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;800&quot; height=&quot;500&quot; viewBox=&quot;0 0 800 500&quot;>' +
+    '<rect width=&quot;800&quot; height=&quot;500&quot; fill=&quot;' + p.sky + '&quot;/>' +
+    '<rect y=&quot;340&quot; width=&quot;800&quot; height=&quot;160&quot; fill=&quot;' + p.ground + '&quot;/>' +
+    '<rect x=&quot;80&quot; y=&quot;120&quot; width=&quot;140&quot; height=&quot;220&quot; fill=&quot;#90A4AE&quot; opacity=&quot;0.85&quot;/>' +
+    '<rect x=&quot;560&quot; y=&quot;100&quot; width=&quot;160&quot; height=&quot;240&quot; fill=&quot;#A1887F&quot; opacity=&quot;0.85&quot;/>' +
+    '<ellipse cx=&quot;400&quot; cy=&quot;300&quot; rx=&quot;60&quot; ry=&quot;75&quot; fill=&quot;#43A047&quot;/>' +
+    '<rect x=&quot;388&quot; y=&quot;300&quot; width=&quot;24&quot; height=&quot;50&quot; fill=&quot;#6D4C41&quot;/>' +
+    '<text x=&quot;400&quot; y=&quot;470&quot; text-anchor=&quot;middle&quot; fill=&quot;' + p.accent + '&quot; font-family=&quot;sans-serif&quot; font-size=&quot;16&quot; font-weight=&quot;600&quot;>' + p.title + '</text></svg>';
+  return 'data:image/svg+xml,' + encodeURIComponent(svg);
+}
+function spAbsUrl(url) {
+  if (!url) return url;
+  if (url.indexOf('http') === 0 || url.indexOf('data:') === 0) return url;
+  try {
+    if (window.parent &amp;&amp; window.parent.location &amp;&amp; window.parent.location.origin) {
+      return window.parent.location.origin + (url.charAt(0) === '/' ? url : '/' + url);
+    }
+  } catch (e) { /* sandbox */ }
+  return url;
+}
+function spBootImages() {
+  try {
+    if (window.__SP_BOOT__ &amp;&amp; window.__SP_BOOT__.images &amp;&amp; window.__SP_BOOT__.images.length) {
+      return window.__SP_BOOT__.images;
+    }
+  } catch (e) { /* ignore */ }
+  return [];
+}
+function spMedia(type, index) {
+  var pool = [];
+  try { pool = SPSkill.getImages() || []; } catch (e) { /* SPSkill not ready */ }
+  if (!pool.length) pool = spBootImages();
+  var list = type ? pool.filter(function(m) { return !m.type || m.type === type; }) : pool;
+  var item = list[index != null ? index : 0];
+  return item &amp;&amp; item.url ? item : null;
+}
+function spDemoFromConfig(type, index) {
+  var cfg = {};
+  try { cfg = SPSkill.getConfig() || {}; } catch (e) { /* ignore */ }
+  if (!cfg.demoImages &amp;&amp; window.__SP_BOOT__ &amp;&amp; window.__SP_BOOT__.config) {
+    cfg = window.__SP_BOOT__.config;
+  }
+  var demos = cfg.demoImages || [];
+  var idx = index != null ? index : 0;
+  if (type) {
+    var typed = demos.filter(function(d) { return !d.type || d.type === type; });
+    if (typed[idx]) return typed[idx];
+  }
+  return demos[idx] || null;
+}
+function spUrl(type, index, label) {
+  var m = spMedia(type, index);
+  if (m &amp;&amp; m.url) return spAbsUrl(m.url);
+  var d = spDemoFromConfig(type, index);
+  if (d &amp;&amp; d.url) return spAbsUrl(d.url);
+  return spPlaceholder(label);
+}
+function spName(type, index) {
+  var m = spMedia(type, index) || spDemoFromConfig(type, index);
+  return m ? (m.name || 'media') : 'demo';
+}
+function spSetImg(el, type, index, label) {
+  if (!el) return;
+  el.onerror = function() { el.onerror = null; el.src = spPlaceholder(label); };
+  el.src = spUrl(type, index, label);
+}
+
+
+var cfg = {};
+var segments = [];
+var pendingStart = null;
+var vid, poster, demoMode, demoTime;
+
+function currentTime() {
+  if (demoMode &amp;&amp; demoTime) return parseFloat(demoTime.value) || 0;
+  return vid &amp;&amp; vid.duration ? vid.currentTime : 0;
+}
+function hasDuration() {
+  return demoMode || (vid &amp;&amp; vid.duration &amp;&amp; isFinite(vid.duration));
+}
+
+function fmt(t) {
+  var m = Math.floor(t / 60), s = Math.floor(t % 60);
+  return m + ':' + String(s).padStart(2, '0');
+}
+function renderList() {
+  var ul = document.getElementById('list');
+  ul.innerHTML = segments.map(function(s, i) {
+    return '<li>Segment ' + (i+1) + ': ' + fmt(s.start) + ' → ' + fmt(s.end) + ' (' + (s.end - s.start).toFixed(1) + 's)</li>';
+  }).join('') || '<li style=&quot;color:var(--muted);list-style:none;margin-left:-18px;&quot;>Nothing marked yet</li>';
+  document.getElementById('segCount').textContent = segments.length + ' segments';
+}
+function report() {
+  SPSkill.setAnswer({
+    videoUrl: spMedia('video', 0) ? spUrl('video', 0, 'Walkthrough Video') : null,
+    posterUrl: spUrl('image', 0, 'Walkthrough'),
+    videoName: spName('video', 0),
+    segments: segments,
+    duration: vid &amp;&amp; vid.duration ? vid.duration : (demoMode ? 60 : null),
+    demoMode: demoMode,
+  });
+}
+document.addEventListener('spskill-init', function(e) {
+  cfg = e.detail.config || {};
+  document.getElementById('prompt').textContent = cfg.prompt || '';
+  vid = document.getElementById('vid');
+  poster = document.getElementById('poster');
+  demoTime = document.getElementById('demoTime');
+  var posterUrl = spUrl('image', 0, 'Walkthrough');
+  spSetImg(poster, 'image', 0, 'Walkthrough');
+  poster.style.display = 'block';
+  var realVideo = spMedia('video', 0);
+  if (realVideo &amp;&amp; realVideo.url) {
+    demoMode = false;
+    vid.style.display = 'block';
+    poster.style.display = 'none';
+    vid.src = realVideo.url;
+    vid.poster = posterUrl;
+    vid.ontimeupdate = function() { document.getElementById('cur').textContent = fmt(vid.currentTime); };
+  } else {
+    demoMode = true;
+    vid.style.display = 'none';
+    document.getElementById('demoTimeline').style.display = 'block';
+    demoTime.oninput = function() { document.getElementById('cur').textContent = fmt(parseFloat(this.value)); };
+    document.getElementById('cur').textContent = '0:00';
+  }
+  if (e.detail.value &amp;&amp; e.detail.value.segments) segments = e.detail.value.segments;
+  renderList();
+  SPSkill.ready();
+});
+document.getElementById('markStart').onclick = function() {
+  if (!hasDuration()) return;
+  pendingStart = currentTime();
+};
+document.getElementById('markEnd').onclick = function() {
+  if (pendingStart == null) return;
+  var max = cfg.maxSegments || 5;
+  if (segments.length >= max) return;
+  var end = currentTime();
+  if (end <= pendingStart) return;
+  segments.push({ start: pendingStart, end: end });
+  pendingStart = null;
+  renderList(); report();
+};
+
+</script></body></html>"></iframe>
+<h2 style="font-family:sans-serif;">Emotion Color Mapping (emotion_color_picker)</h2>
+<iframe style="width:100%;height:560px;border:1px solid #ccc;border-radius:8px;" srcdoc="<!DOCTYPE html>
+<html><head><meta charset=&quot;utf-8&quot;><style>
+:root {
+  --primary: #1976d2;
+  --primary-dark: #1565c0;
+  --primary-light: #e3f2fd;
+  --success: #2e7d32;
+  --warning: #ed6c02;
+  --text: #1a1a2e;
+  --muted: #5c6b7a;
+  --border: #e0e6ed;
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --radius: 12px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.5;
+}
+.card {
+  background: var(--card); border-radius: var(--radius); padding: 16px;
+  border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(25, 118, 210, 0.06);
+}
+.title { margin: 0 0 4px; font-size: 1.05rem; font-weight: 600; color: var(--primary-dark); }
+.subtitle { margin: 0 0 14px; font-size: 0.85rem; color: var(--muted); }
+.btn {
+  border: none; border-radius: 8px; padding: 8px 14px; font-size: 0.85rem;
+  cursor: pointer; font-weight: 600; transition: all .15s;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-outline { background: #fff; color: var(--primary); border: 1px solid var(--primary); }
+.btn-outline:hover { background: var(--primary-light); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; align-items: center; }
+.badge {
+  display: inline-block; padding: 2px 8px; border-radius: 999px;
+  background: var(--primary-light); color: var(--primary-dark); font-size: 0.75rem; font-weight: 600;
+}
+.media-frame {
+  position: relative; border-radius: 10px; overflow: hidden;
+  background: #e8eef5; border: 1px solid var(--border);
+}
+.media-frame img, .media-frame video { display: block; width: 100%; max-height: 320px; object-fit: cover; background: #e8eef5; }
+.slider-row { margin: 12px 0; }
+.slider-row label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+input[type=range] { width: 100%; accent-color: var(--primary); }
+.scale-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+.dim-row { padding: 10px 0; border-bottom: 1px solid var(--border); }
+.dim-row:last-child { border-bottom: none; }
+.hint { font-size: 0.78rem; color: var(--muted); margin-top: 8px; }
+</style></head><body>
+
+<div class=&quot;card&quot;>
+  <p class=&quot;title&quot;>Emotion Color Mapping</p>
+  <p class=&quot;subtitle&quot; id=&quot;prompt&quot;></p>
+  <div class=&quot;media-frame&quot; style=&quot;margin-bottom:14px;&quot;><img id=&quot;scene&quot; alt=&quot;scene&quot;/></div>
+  <div style=&quot;display:flex;gap:16px;flex-wrap:wrap;align-items:center;&quot;>
+    <canvas id=&quot;wheel&quot; width=&quot;160&quot; height=&quot;160&quot; style=&quot;cursor:crosshair;border-radius:50%;box-shadow:0 2px 12px rgba(0,0,0,.12);&quot;></canvas>
+    <div style=&quot;flex:1;min-width:160px;&quot;>
+      <div style=&quot;width:100%;height:48px;border-radius:10px;border:1px solid var(--border);margin-bottom:10px;&quot; id=&quot;swatch&quot;></div>
+      <div class=&quot;slider-row&quot;>
+        <label><span>Emotion intensity</span><span class=&quot;badge&quot; id=&quot;int&quot;>70</span></label>
+        <input type=&quot;range&quot; id=&quot;intensity&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;70&quot;/>
+      </div>
+      <p style=&quot;margin:8px 0 0;font-size:0.85rem;color:var(--muted);&quot;>Selected color: <code id=&quot;hex&quot;>#1976d2</code></p>
+    </div>
+  </div>
+</div>
+<script>window.__SP_BOOT__ = {&quot;config&quot;:{&quot;mediaCount&quot;:1,&quot;mediaType&quot;:&quot;image&quot;,&quot;prompt&quot;:&quot;Look at the image and pick the color that best matches your first emotional response&quot;,&quot;demoImages&quot;:[{&quot;name&quot;:&quot;alley.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%23CFD8DC%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%23616161%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%23455a64%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3EAlleyway%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;}]},&quot;images&quot;:[{&quot;name&quot;:&quot;alley.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%23CFD8DC%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%23616161%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%23455a64%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3EAlleyway%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;}]};
+
+function spPlaceholder(label) {
+  var palettes = [
+    { sky: '#87CEEB', ground: '#78909C', accent: '#1976d2', title: 'Main Street' },
+    { sky: '#64B5F6', ground: '#BCAAA4', accent: '#1565c0', title: 'City Plaza' },
+    { sky: '#CFD8DC', ground: '#616161', accent: '#455a64', title: 'Alleyway' },
+    { sky: '#B0BEC5', ground: '#757575', accent: '#37474f', title: 'Before' },
+    { sky: '#81D4FA', ground: '#A5D6A7', accent: '#2e7d32', title: 'After' },
+  ];
+  var idx = 0;
+  if (label &amp;&amp; label.indexOf('B') >= 0) idx = 1;
+  if (label &amp;&amp; label.indexOf('Before') >= 0) idx = 3;
+  if (label &amp;&amp; label.indexOf('After') >= 0) idx = 4;
+  var p = palettes[idx] || palettes[0];
+  var svg = '<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;800&quot; height=&quot;500&quot; viewBox=&quot;0 0 800 500&quot;>' +
+    '<rect width=&quot;800&quot; height=&quot;500&quot; fill=&quot;' + p.sky + '&quot;/>' +
+    '<rect y=&quot;340&quot; width=&quot;800&quot; height=&quot;160&quot; fill=&quot;' + p.ground + '&quot;/>' +
+    '<rect x=&quot;80&quot; y=&quot;120&quot; width=&quot;140&quot; height=&quot;220&quot; fill=&quot;#90A4AE&quot; opacity=&quot;0.85&quot;/>' +
+    '<rect x=&quot;560&quot; y=&quot;100&quot; width=&quot;160&quot; height=&quot;240&quot; fill=&quot;#A1887F&quot; opacity=&quot;0.85&quot;/>' +
+    '<ellipse cx=&quot;400&quot; cy=&quot;300&quot; rx=&quot;60&quot; ry=&quot;75&quot; fill=&quot;#43A047&quot;/>' +
+    '<rect x=&quot;388&quot; y=&quot;300&quot; width=&quot;24&quot; height=&quot;50&quot; fill=&quot;#6D4C41&quot;/>' +
+    '<text x=&quot;400&quot; y=&quot;470&quot; text-anchor=&quot;middle&quot; fill=&quot;' + p.accent + '&quot; font-family=&quot;sans-serif&quot; font-size=&quot;16&quot; font-weight=&quot;600&quot;>' + p.title + '</text></svg>';
+  return 'data:image/svg+xml,' + encodeURIComponent(svg);
+}
+function spAbsUrl(url) {
+  if (!url) return url;
+  if (url.indexOf('http') === 0 || url.indexOf('data:') === 0) return url;
+  try {
+    if (window.parent &amp;&amp; window.parent.location &amp;&amp; window.parent.location.origin) {
+      return window.parent.location.origin + (url.charAt(0) === '/' ? url : '/' + url);
+    }
+  } catch (e) { /* sandbox */ }
+  return url;
+}
+function spBootImages() {
+  try {
+    if (window.__SP_BOOT__ &amp;&amp; window.__SP_BOOT__.images &amp;&amp; window.__SP_BOOT__.images.length) {
+      return window.__SP_BOOT__.images;
+    }
+  } catch (e) { /* ignore */ }
+  return [];
+}
+function spMedia(type, index) {
+  var pool = [];
+  try { pool = SPSkill.getImages() || []; } catch (e) { /* SPSkill not ready */ }
+  if (!pool.length) pool = spBootImages();
+  var list = type ? pool.filter(function(m) { return !m.type || m.type === type; }) : pool;
+  var item = list[index != null ? index : 0];
+  return item &amp;&amp; item.url ? item : null;
+}
+function spDemoFromConfig(type, index) {
+  var cfg = {};
+  try { cfg = SPSkill.getConfig() || {}; } catch (e) { /* ignore */ }
+  if (!cfg.demoImages &amp;&amp; window.__SP_BOOT__ &amp;&amp; window.__SP_BOOT__.config) {
+    cfg = window.__SP_BOOT__.config;
+  }
+  var demos = cfg.demoImages || [];
+  var idx = index != null ? index : 0;
+  if (type) {
+    var typed = demos.filter(function(d) { return !d.type || d.type === type; });
+    if (typed[idx]) return typed[idx];
+  }
+  return demos[idx] || null;
+}
+function spUrl(type, index, label) {
+  var m = spMedia(type, index);
+  if (m &amp;&amp; m.url) return spAbsUrl(m.url);
+  var d = spDemoFromConfig(type, index);
+  if (d &amp;&amp; d.url) return spAbsUrl(d.url);
+  return spPlaceholder(label);
+}
+function spName(type, index) {
+  var m = spMedia(type, index) || spDemoFromConfig(type, index);
+  return m ? (m.name || 'media') : 'demo';
+}
+function spSetImg(el, type, index, label) {
+  if (!el) return;
+  el.onerror = function() { el.onerror = null; el.src = spPlaceholder(label); };
+  el.src = spUrl(type, index, label);
+}
+
+
+var color = { h: 210, s: 72, l: 48, hex: '#1976d2' };
+var canvas, wctx;
+
+function hslToHex(h, s, l) {
+  s /= 100; l /= 100;
+  var c = (1 - Math.abs(2 * l - 1)) * s;
+  var x = c * (1 - Math.abs((h / 60) % 2 - 1));
+  var m = l - c / 2, r = 0, g = 0, b = 0;
+  if (h < 60) { r = c; g = x; } else if (h < 120) { r = x; g = c; }
+  else if (h < 180) { g = c; b = x; } else if (h < 240) { g = x; b = c; }
+  else if (h < 300) { r = x; b = c; } else { r = c; b = x; }
+  var toHex = function(n) { var v = Math.round((n + m) * 255).toString(16); return v.length === 1 ? '0' + v : v; };
+  return '#' + toHex(r) + toHex(g) + toHex(b);
+}
+function drawWheel() {
+  var cx = 80, cy = 80, r = 78;
+  for (var a = 0; a < 360; a++) {
+    wctx.beginPath();
+    wctx.strokeStyle = hslToHex(a, 85, 52);
+    wctx.lineWidth = 3;
+    wctx.arc(cx, cy, r, (a - 1) * Math.PI / 180, (a + 1) * Math.PI / 180);
+    wctx.stroke();
+  }
+}
+function pick(ev) {
+  var rect = canvas.getBoundingClientRect();
+  var x = ev.clientX - rect.left - 80, y = ev.clientY - rect.top - 80;
+  var ang = (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
+  var dist = Math.sqrt(x * x + y * y);
+  if (dist > 78) return;
+  color.h = Math.round(ang);
+  color.hex = hslToHex(color.h, 72, 48);
+  document.getElementById('swatch').style.background = color.hex;
+  document.getElementById('hex').textContent = color.hex;
+  report();
+}
+function report() {
+  SPSkill.setAnswer({
+    imageUrl: spUrl('image', 0, 'Place'),
+    color: { hex: color.hex, hue: color.h, intensity: parseInt(document.getElementById('intensity').value, 10) },
+  });
+}
+document.addEventListener('spskill-init', function(e) {
+  var cfg = e.detail.config || {};
+  document.getElementById('prompt').textContent = cfg.prompt || '';
+  spSetImg(document.getElementById('scene'), 'image', 0, 'Place');
+  canvas = document.getElementById('wheel');
+  wctx = canvas.getContext('2d');
+  drawWheel();
+  canvas.onclick = pick;
+  if (e.detail.value &amp;&amp; e.detail.value.color) {
+    color = e.detail.value.color;
+    document.getElementById('intensity').value = color.intensity || 70;
+    document.getElementById('swatch').style.background = color.hex || '#1976d2';
+    document.getElementById('hex').textContent = color.hex || '#1976d2';
+  } else {
+    document.getElementById('swatch').style.background = color.hex;
+  }
+  document.getElementById('int').textContent = document.getElementById('intensity').value;
+  SPSkill.ready();
+});
+document.getElementById('intensity').oninput = function() {
+  document.getElementById('int').textContent = this.value;
+  report();
+};
+
+</script></body></html>"></iframe>
+<h2 style="font-family:sans-serif;">Best–Worst Image Choice (best_worst_choice)</h2>
+<iframe style="width:100%;height:560px;border:1px solid #ccc;border-radius:8px;" srcdoc="<!DOCTYPE html>
+<html><head><meta charset=&quot;utf-8&quot;><style>
+:root {
+  --primary: #1976d2;
+  --primary-dark: #1565c0;
+  --primary-light: #e3f2fd;
+  --success: #2e7d32;
+  --warning: #ed6c02;
+  --text: #1a1a2e;
+  --muted: #5c6b7a;
+  --border: #e0e6ed;
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --radius: 12px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.5;
+}
+.card {
+  background: var(--card); border-radius: var(--radius); padding: 16px;
+  border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(25, 118, 210, 0.06);
+}
+.title { margin: 0 0 4px; font-size: 1.05rem; font-weight: 600; color: var(--primary-dark); }
+.subtitle { margin: 0 0 14px; font-size: 0.85rem; color: var(--muted); }
+.btn {
+  border: none; border-radius: 8px; padding: 8px 14px; font-size: 0.85rem;
+  cursor: pointer; font-weight: 600; transition: all .15s;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-outline { background: #fff; color: var(--primary); border: 1px solid var(--primary); }
+.btn-outline:hover { background: var(--primary-light); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; align-items: center; }
+.badge {
+  display: inline-block; padding: 2px 8px; border-radius: 999px;
+  background: var(--primary-light); color: var(--primary-dark); font-size: 0.75rem; font-weight: 600;
+}
+.media-frame {
+  position: relative; border-radius: 10px; overflow: hidden;
+  background: #e8eef5; border: 1px solid var(--border);
+}
+.media-frame img, .media-frame video { display: block; width: 100%; max-height: 320px; object-fit: cover; background: #e8eef5; }
+.slider-row { margin: 12px 0; }
+.slider-row label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+input[type=range] { width: 100%; accent-color: var(--primary); }
+.scale-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+.dim-row { padding: 10px 0; border-bottom: 1px solid var(--border); }
+.dim-row:last-child { border-bottom: none; }
+.hint { font-size: 0.78rem; color: var(--muted); margin-top: 8px; }
+</style></head><body>
+
+<div class=&quot;card&quot;>
+  <p class=&quot;title&quot;>Best–Worst Choice</p>
+  <p class=&quot;subtitle&quot; id=&quot;prompt&quot;></p>
+  <div id=&quot;grid&quot; style=&quot;display:grid;grid-template-columns:1fr 1fr;gap:10px;&quot;></div>
+  <p class=&quot;hint&quot; id=&quot;status&quot;>Select one Best and one Worst image.</p>
+</div>
+<script>window.__SP_BOOT__ = {&quot;config&quot;:{&quot;mediaCount&quot;:4,&quot;mediaType&quot;:&quot;image&quot;,&quot;prompt&quot;:&quot;Among these scenes, select the one you like MOST and the one you like LEAST&quot;,&quot;bestLabel&quot;:&quot;Best&quot;,&quot;worstLabel&quot;:&quot;Worst&quot;,&quot;demoImages&quot;:[{&quot;name&quot;:&quot;opt-a.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%2387CEEB%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%2378909C%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%231976d2%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3EMain%20Street%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;},{&quot;name&quot;:&quot;opt-b.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%2364B5F6%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%23BCAAA4%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%231565c0%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3ECity%20Plaza%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;},{&quot;name&quot;:&quot;opt-c.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%23CFD8DC%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%23616161%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%23455a64%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3EAlleyway%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;},{&quot;name&quot;:&quot;opt-d.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%2381D4FA%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%23A5D6A7%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%232e7d32%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3EAfter%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;}]},&quot;images&quot;:[{&quot;name&quot;:&quot;opt-a.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%2387CEEB%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%2378909C%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%231976d2%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3EMain%20Street%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;},{&quot;name&quot;:&quot;opt-b.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%2364B5F6%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%23BCAAA4%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%231565c0%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3ECity%20Plaza%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;},{&quot;name&quot;:&quot;opt-c.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%23CFD8DC%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%23616161%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%23455a64%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3EAlleyway%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;},{&quot;name&quot;:&quot;opt-d.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%2381D4FA%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%23A5D6A7%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%232e7d32%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3EAfter%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;}]};
+
+function spPlaceholder(label) {
+  var palettes = [
+    { sky: '#87CEEB', ground: '#78909C', accent: '#1976d2', title: 'Main Street' },
+    { sky: '#64B5F6', ground: '#BCAAA4', accent: '#1565c0', title: 'City Plaza' },
+    { sky: '#CFD8DC', ground: '#616161', accent: '#455a64', title: 'Alleyway' },
+    { sky: '#B0BEC5', ground: '#757575', accent: '#37474f', title: 'Before' },
+    { sky: '#81D4FA', ground: '#A5D6A7', accent: '#2e7d32', title: 'After' },
+  ];
+  var idx = 0;
+  if (label &amp;&amp; label.indexOf('B') >= 0) idx = 1;
+  if (label &amp;&amp; label.indexOf('Before') >= 0) idx = 3;
+  if (label &amp;&amp; label.indexOf('After') >= 0) idx = 4;
+  var p = palettes[idx] || palettes[0];
+  var svg = '<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;800&quot; height=&quot;500&quot; viewBox=&quot;0 0 800 500&quot;>' +
+    '<rect width=&quot;800&quot; height=&quot;500&quot; fill=&quot;' + p.sky + '&quot;/>' +
+    '<rect y=&quot;340&quot; width=&quot;800&quot; height=&quot;160&quot; fill=&quot;' + p.ground + '&quot;/>' +
+    '<rect x=&quot;80&quot; y=&quot;120&quot; width=&quot;140&quot; height=&quot;220&quot; fill=&quot;#90A4AE&quot; opacity=&quot;0.85&quot;/>' +
+    '<rect x=&quot;560&quot; y=&quot;100&quot; width=&quot;160&quot; height=&quot;240&quot; fill=&quot;#A1887F&quot; opacity=&quot;0.85&quot;/>' +
+    '<ellipse cx=&quot;400&quot; cy=&quot;300&quot; rx=&quot;60&quot; ry=&quot;75&quot; fill=&quot;#43A047&quot;/>' +
+    '<rect x=&quot;388&quot; y=&quot;300&quot; width=&quot;24&quot; height=&quot;50&quot; fill=&quot;#6D4C41&quot;/>' +
+    '<text x=&quot;400&quot; y=&quot;470&quot; text-anchor=&quot;middle&quot; fill=&quot;' + p.accent + '&quot; font-family=&quot;sans-serif&quot; font-size=&quot;16&quot; font-weight=&quot;600&quot;>' + p.title + '</text></svg>';
+  return 'data:image/svg+xml,' + encodeURIComponent(svg);
+}
+function spAbsUrl(url) {
+  if (!url) return url;
+  if (url.indexOf('http') === 0 || url.indexOf('data:') === 0) return url;
+  try {
+    if (window.parent &amp;&amp; window.parent.location &amp;&amp; window.parent.location.origin) {
+      return window.parent.location.origin + (url.charAt(0) === '/' ? url : '/' + url);
+    }
+  } catch (e) { /* sandbox */ }
+  return url;
+}
+function spBootImages() {
+  try {
+    if (window.__SP_BOOT__ &amp;&amp; window.__SP_BOOT__.images &amp;&amp; window.__SP_BOOT__.images.length) {
+      return window.__SP_BOOT__.images;
+    }
+  } catch (e) { /* ignore */ }
+  return [];
+}
+function spMedia(type, index) {
+  var pool = [];
+  try { pool = SPSkill.getImages() || []; } catch (e) { /* SPSkill not ready */ }
+  if (!pool.length) pool = spBootImages();
+  var list = type ? pool.filter(function(m) { return !m.type || m.type === type; }) : pool;
+  var item = list[index != null ? index : 0];
+  return item &amp;&amp; item.url ? item : null;
+}
+function spDemoFromConfig(type, index) {
+  var cfg = {};
+  try { cfg = SPSkill.getConfig() || {}; } catch (e) { /* ignore */ }
+  if (!cfg.demoImages &amp;&amp; window.__SP_BOOT__ &amp;&amp; window.__SP_BOOT__.config) {
+    cfg = window.__SP_BOOT__.config;
+  }
+  var demos = cfg.demoImages || [];
+  var idx = index != null ? index : 0;
+  if (type) {
+    var typed = demos.filter(function(d) { return !d.type || d.type === type; });
+    if (typed[idx]) return typed[idx];
+  }
+  return demos[idx] || null;
+}
+function spUrl(type, index, label) {
+  var m = spMedia(type, index);
+  if (m &amp;&amp; m.url) return spAbsUrl(m.url);
+  var d = spDemoFromConfig(type, index);
+  if (d &amp;&amp; d.url) return spAbsUrl(d.url);
+  return spPlaceholder(label);
+}
+function spName(type, index) {
+  var m = spMedia(type, index) || spDemoFromConfig(type, index);
+  return m ? (m.name || 'media') : 'demo';
+}
+function spSetImg(el, type, index, label) {
+  if (!el) return;
+  el.onerror = function() { el.onerror = null; el.src = spPlaceholder(label); };
+  el.src = spUrl(type, index, label);
+}
+
+
+var cfg = {};
+var best = null, worst = null, n = 4;
+
+function cellHtml(i) {
+  var letter = String.fromCharCode(65 + i);
+  return '<div style=&quot;border:2px solid var(--border);border-radius:10px;padding:6px;&quot; id=&quot;cell' + i + '&quot;>' +
+    '<div class=&quot;badge&quot; style=&quot;margin-bottom:6px;&quot;>Option ' + letter + '</div>' +
+    '<div class=&quot;media-frame&quot;><img id=&quot;img' + i + '&quot; alt=&quot;Option ' + letter + '&quot; style=&quot;max-height:180px;&quot;/></div>' +
+    '<div class=&quot;toolbar&quot; style=&quot;margin-top:8px;&quot;>' +
+    '<button class=&quot;btn btn-outline bw-best&quot; data-i=&quot;' + i + '&quot;>' + (cfg.bestLabel || 'Best') + '</button>' +
+    '<button class=&quot;btn btn-outline bw-worst&quot; data-i=&quot;' + i + '&quot;>' + (cfg.worstLabel || 'Worst') + '</button>' +
+    '</div></div>';
+}
+function refresh() {
+  for (var i = 0; i < n; i++) {
+    var cell = document.getElementById('cell' + i);
+    if (!cell) continue;
+    cell.style.borderColor = i === best ? 'var(--success)' : i === worst ? '#c62828' : 'var(--border)';
+  }
+  document.querySelectorAll('.bw-best').forEach(function(b) {
+    b.className = 'btn bw-best ' + (parseInt(b.dataset.i, 10) === best ? 'btn-primary' : 'btn-outline');
+  });
+  document.querySelectorAll('.bw-worst').forEach(function(b) {
+    var on = parseInt(b.dataset.i, 10) === worst;
+    b.className = 'btn bw-worst ' + (on ? 'btn-primary' : 'btn-outline');
+    if (on) b.style.background = '#c62828'; else b.style.background = '';
+  });
+  document.getElementById('status').textContent =
+    best == null &amp;&amp; worst == null ? 'Select one Best and one Worst image.' :
+    best == null ? 'Now select the Best image.' :
+    worst == null ? 'Now select the Worst image.' : 'Done — you can still change your choices.';
+}
+function report() {
+  SPSkill.setAnswer({
+    bestIndex: best, worstIndex: worst,
+    bestUrl: best != null ? spUrl('image', best, 'Best') : null,
+    worstUrl: worst != null ? spUrl('image', worst, 'Worst') : null,
+    complete: best != null &amp;&amp; worst != null,
+  });
+}
+document.addEventListener('spskill-init', function(e) {
+  cfg = e.detail.config || {};
+  n = cfg.mediaCount || 4;
+  document.getElementById('prompt').textContent = cfg.prompt || '';
+  var grid = document.getElementById('grid');
+  var html = '';
+  for (var i = 0; i < n; i++) html += cellHtml(i);
+  grid.innerHTML = html;
+  for (var j = 0; j < n; j++) spSetImg(document.getElementById('img' + j), 'image', j, 'Option ' + String.fromCharCode(65 + j));
+  grid.addEventListener('click', function(ev) {
+    var t = ev.target;
+    if (!t.dataset || t.dataset.i == null) return;
+    var i = parseInt(t.dataset.i, 10);
+    if (t.className.indexOf('bw-best') >= 0) {
+      best = best === i ? null : i;
+      if (worst === best) worst = null;
+    } else if (t.className.indexOf('bw-worst') >= 0) {
+      worst = worst === i ? null : i;
+      if (best === worst) best = null;
+    }
+    refresh(); report();
+  });
+  if (e.detail.value) {
+    if (e.detail.value.bestIndex != null) best = e.detail.value.bestIndex;
+    if (e.detail.value.worstIndex != null) worst = e.detail.value.worstIndex;
+  }
+  refresh();
+  SPSkill.ready();
+});
+
+</script></body></html>"></iframe>
+<h2 style="font-family:sans-serif;">Continuous Video Rating (video_continuous_rating)</h2>
+<iframe style="width:100%;height:560px;border:1px solid #ccc;border-radius:8px;" srcdoc="<!DOCTYPE html>
+<html><head><meta charset=&quot;utf-8&quot;><style>
+:root {
+  --primary: #1976d2;
+  --primary-dark: #1565c0;
+  --primary-light: #e3f2fd;
+  --success: #2e7d32;
+  --warning: #ed6c02;
+  --text: #1a1a2e;
+  --muted: #5c6b7a;
+  --border: #e0e6ed;
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --radius: 12px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.5;
+}
+.card {
+  background: var(--card); border-radius: var(--radius); padding: 16px;
+  border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(25, 118, 210, 0.06);
+}
+.title { margin: 0 0 4px; font-size: 1.05rem; font-weight: 600; color: var(--primary-dark); }
+.subtitle { margin: 0 0 14px; font-size: 0.85rem; color: var(--muted); }
+.btn {
+  border: none; border-radius: 8px; padding: 8px 14px; font-size: 0.85rem;
+  cursor: pointer; font-weight: 600; transition: all .15s;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-outline { background: #fff; color: var(--primary); border: 1px solid var(--primary); }
+.btn-outline:hover { background: var(--primary-light); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; align-items: center; }
+.badge {
+  display: inline-block; padding: 2px 8px; border-radius: 999px;
+  background: var(--primary-light); color: var(--primary-dark); font-size: 0.75rem; font-weight: 600;
+}
+.media-frame {
+  position: relative; border-radius: 10px; overflow: hidden;
+  background: #e8eef5; border: 1px solid var(--border);
+}
+.media-frame img, .media-frame video { display: block; width: 100%; max-height: 320px; object-fit: cover; background: #e8eef5; }
+.slider-row { margin: 12px 0; }
+.slider-row label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+input[type=range] { width: 100%; accent-color: var(--primary); }
+.scale-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+.dim-row { padding: 10px 0; border-bottom: 1px solid var(--border); }
+.dim-row:last-child { border-bottom: none; }
+.hint { font-size: 0.78rem; color: var(--muted); margin-top: 8px; }
+</style></head><body>
+
+<div class=&quot;card&quot;>
+  <p class=&quot;title&quot;>Continuous Video Rating</p>
+  <p class=&quot;subtitle&quot; id=&quot;prompt&quot;></p>
+  <div class=&quot;media-frame&quot;>
+    <video id=&quot;vid&quot; controls playsinline style=&quot;display:none;&quot;></video>
+    <img id=&quot;poster&quot; alt=&quot;video preview&quot;/>
+  </div>
+  <div id=&quot;demoTimeline&quot; style=&quot;display:none;margin-top:8px;&quot;>
+    <input type=&quot;range&quot; id=&quot;demoTime&quot; min=&quot;0&quot; max=&quot;60&quot; value=&quot;0&quot; style=&quot;width:100%;accent-color:var(--primary);&quot;/>
+    <p class=&quot;hint&quot; style=&quot;margin-top:4px;&quot;>Preview mode: drag the timeline to simulate playback</p>
+  </div>
+  <div class=&quot;slider-row&quot; style=&quot;margin-top:14px;&quot;>
+    <label><span id=&quot;labL&quot;>Unpleasant</span><span class=&quot;badge&quot; id=&quot;val&quot;>50</span><span id=&quot;labR&quot;>Pleasant</span></label>
+    <input type=&quot;range&quot; id=&quot;rate&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;50&quot;/>
+  </div>
+  <p class=&quot;hint&quot;><span id=&quot;sampleCount&quot;>0</span> samples recorded — keep the slider updated while watching.</p>
+</div>
+<script>window.__SP_BOOT__ = {&quot;config&quot;:{&quot;mediaCount&quot;:1,&quot;mediaType&quot;:&quot;video&quot;,&quot;prompt&quot;:&quot;While the video plays, keep adjusting the slider to match how pleasant the environment feels right now&quot;,&quot;lowLabel&quot;:&quot;Very unpleasant&quot;,&quot;highLabel&quot;:&quot;Very pleasant&quot;,&quot;demoImages&quot;:[{&quot;name&quot;:&quot;street-a.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%2387CEEB%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%2378909C%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%231976d2%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3EMain%20Street%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;}]},&quot;images&quot;:[{&quot;name&quot;:&quot;street-a.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%2387CEEB%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%2378909C%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%231976d2%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3EMain%20Street%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;}]};
+
+function spPlaceholder(label) {
+  var palettes = [
+    { sky: '#87CEEB', ground: '#78909C', accent: '#1976d2', title: 'Main Street' },
+    { sky: '#64B5F6', ground: '#BCAAA4', accent: '#1565c0', title: 'City Plaza' },
+    { sky: '#CFD8DC', ground: '#616161', accent: '#455a64', title: 'Alleyway' },
+    { sky: '#B0BEC5', ground: '#757575', accent: '#37474f', title: 'Before' },
+    { sky: '#81D4FA', ground: '#A5D6A7', accent: '#2e7d32', title: 'After' },
+  ];
+  var idx = 0;
+  if (label &amp;&amp; label.indexOf('B') >= 0) idx = 1;
+  if (label &amp;&amp; label.indexOf('Before') >= 0) idx = 3;
+  if (label &amp;&amp; label.indexOf('After') >= 0) idx = 4;
+  var p = palettes[idx] || palettes[0];
+  var svg = '<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;800&quot; height=&quot;500&quot; viewBox=&quot;0 0 800 500&quot;>' +
+    '<rect width=&quot;800&quot; height=&quot;500&quot; fill=&quot;' + p.sky + '&quot;/>' +
+    '<rect y=&quot;340&quot; width=&quot;800&quot; height=&quot;160&quot; fill=&quot;' + p.ground + '&quot;/>' +
+    '<rect x=&quot;80&quot; y=&quot;120&quot; width=&quot;140&quot; height=&quot;220&quot; fill=&quot;#90A4AE&quot; opacity=&quot;0.85&quot;/>' +
+    '<rect x=&quot;560&quot; y=&quot;100&quot; width=&quot;160&quot; height=&quot;240&quot; fill=&quot;#A1887F&quot; opacity=&quot;0.85&quot;/>' +
+    '<ellipse cx=&quot;400&quot; cy=&quot;300&quot; rx=&quot;60&quot; ry=&quot;75&quot; fill=&quot;#43A047&quot;/>' +
+    '<rect x=&quot;388&quot; y=&quot;300&quot; width=&quot;24&quot; height=&quot;50&quot; fill=&quot;#6D4C41&quot;/>' +
+    '<text x=&quot;400&quot; y=&quot;470&quot; text-anchor=&quot;middle&quot; fill=&quot;' + p.accent + '&quot; font-family=&quot;sans-serif&quot; font-size=&quot;16&quot; font-weight=&quot;600&quot;>' + p.title + '</text></svg>';
+  return 'data:image/svg+xml,' + encodeURIComponent(svg);
+}
+function spAbsUrl(url) {
+  if (!url) return url;
+  if (url.indexOf('http') === 0 || url.indexOf('data:') === 0) return url;
+  try {
+    if (window.parent &amp;&amp; window.parent.location &amp;&amp; window.parent.location.origin) {
+      return window.parent.location.origin + (url.charAt(0) === '/' ? url : '/' + url);
+    }
+  } catch (e) { /* sandbox */ }
+  return url;
+}
+function spBootImages() {
+  try {
+    if (window.__SP_BOOT__ &amp;&amp; window.__SP_BOOT__.images &amp;&amp; window.__SP_BOOT__.images.length) {
+      return window.__SP_BOOT__.images;
+    }
+  } catch (e) { /* ignore */ }
+  return [];
+}
+function spMedia(type, index) {
+  var pool = [];
+  try { pool = SPSkill.getImages() || []; } catch (e) { /* SPSkill not ready */ }
+  if (!pool.length) pool = spBootImages();
+  var list = type ? pool.filter(function(m) { return !m.type || m.type === type; }) : pool;
+  var item = list[index != null ? index : 0];
+  return item &amp;&amp; item.url ? item : null;
+}
+function spDemoFromConfig(type, index) {
+  var cfg = {};
+  try { cfg = SPSkill.getConfig() || {}; } catch (e) { /* ignore */ }
+  if (!cfg.demoImages &amp;&amp; window.__SP_BOOT__ &amp;&amp; window.__SP_BOOT__.config) {
+    cfg = window.__SP_BOOT__.config;
+  }
+  var demos = cfg.demoImages || [];
+  var idx = index != null ? index : 0;
+  if (type) {
+    var typed = demos.filter(function(d) { return !d.type || d.type === type; });
+    if (typed[idx]) return typed[idx];
+  }
+  return demos[idx] || null;
+}
+function spUrl(type, index, label) {
+  var m = spMedia(type, index);
+  if (m &amp;&amp; m.url) return spAbsUrl(m.url);
+  var d = spDemoFromConfig(type, index);
+  if (d &amp;&amp; d.url) return spAbsUrl(d.url);
+  return spPlaceholder(label);
+}
+function spName(type, index) {
+  var m = spMedia(type, index) || spDemoFromConfig(type, index);
+  return m ? (m.name || 'media') : 'demo';
+}
+function spSetImg(el, type, index, label) {
+  if (!el) return;
+  el.onerror = function() { el.onerror = null; el.src = spPlaceholder(label); };
+  el.src = spUrl(type, index, label);
+}
+
+
+var cfg = {};
+var samples = {};
+var vid, demoMode = false, demoTime;
+
+function currentTime() {
+  if (demoMode) return parseFloat(demoTime.value) || 0;
+  return vid &amp;&amp; vid.currentTime ? vid.currentTime : 0;
+}
+function record() {
+  var t = Math.floor(currentTime());
+  samples[t] = parseInt(document.getElementById('rate').value, 10);
+  document.getElementById('sampleCount').textContent = Object.keys(samples).length;
+  report();
+}
+function report() {
+  var keys = Object.keys(samples);
+  var arr = keys.map(function(k) { return { t: parseInt(k, 10), v: samples[k] }; })
+    .sort(function(a, b) { return a.t - b.t; });
+  var mean = arr.length ? Math.round(arr.reduce(function(s, p) { return s + p.v; }, 0) / arr.length) : null;
+  SPSkill.setAnswer({
+    videoUrl: spMedia('video', 0) ? spUrl('video', 0, 'Walkthrough') : null,
+    samples: arr,
+    sampleCount: arr.length,
+    mean: mean,
+    demoMode: demoMode,
+  });
+}
+document.addEventListener('spskill-init', function(e) {
+  cfg = e.detail.config || {};
+  document.getElementById('prompt').textContent = cfg.prompt || '';
+  document.getElementById('labL').textContent = cfg.lowLabel || 'Low';
+  document.getElementById('labR').textContent = cfg.highLabel || 'High';
+  vid = document.getElementById('vid');
+  demoTime = document.getElementById('demoTime');
+  var poster = document.getElementById('poster');
+  spSetImg(poster, 'image', 0, 'Walkthrough');
+  var realVideo = spMedia('video', 0);
+  if (realVideo &amp;&amp; realVideo.url) {
+    vid.style.display = 'block';
+    poster.style.display = 'none';
+    vid.src = realVideo.url;
+    vid.ontimeupdate = record;
+  } else {
+    demoMode = true;
+    document.getElementById('demoTimeline').style.display = 'block';
+    demoTime.oninput = record;
+  }
+  document.getElementById('rate').oninput = function() {
+    document.getElementById('val').textContent = this.value;
+    record();
+  };
+  if (e.detail.value &amp;&amp; e.detail.value.samples) {
+    e.detail.value.samples.forEach(function(p) { samples[p.t] = p.v; });
+    document.getElementById('sampleCount').textContent = Object.keys(samples).length;
+  }
+  SPSkill.ready();
+});
+
+</script></body></html>"></iframe>
+<h2 style="font-family:sans-serif;">Composite Question (Blocks) (composite_blocks)</h2>
+<iframe style="width:100%;height:560px;border:1px solid #ccc;border-radius:8px;" srcdoc="<!DOCTYPE html>
+<html><head><meta charset=&quot;utf-8&quot;><style>
+:root {
+  --primary: #1976d2;
+  --primary-dark: #1565c0;
+  --primary-light: #e3f2fd;
+  --success: #2e7d32;
+  --warning: #ed6c02;
+  --text: #1a1a2e;
+  --muted: #5c6b7a;
+  --border: #e0e6ed;
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --radius: 12px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.5;
+}
+.card {
+  background: var(--card); border-radius: var(--radius); padding: 16px;
+  border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(25, 118, 210, 0.06);
+}
+.title { margin: 0 0 4px; font-size: 1.05rem; font-weight: 600; color: var(--primary-dark); }
+.subtitle { margin: 0 0 14px; font-size: 0.85rem; color: var(--muted); }
+.btn {
+  border: none; border-radius: 8px; padding: 8px 14px; font-size: 0.85rem;
+  cursor: pointer; font-weight: 600; transition: all .15s;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-outline { background: #fff; color: var(--primary); border: 1px solid var(--primary); }
+.btn-outline:hover { background: var(--primary-light); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; align-items: center; }
+.badge {
+  display: inline-block; padding: 2px 8px; border-radius: 999px;
+  background: var(--primary-light); color: var(--primary-dark); font-size: 0.75rem; font-weight: 600;
+}
+.media-frame {
+  position: relative; border-radius: 10px; overflow: hidden;
+  background: #e8eef5; border: 1px solid var(--border);
+}
+.media-frame img, .media-frame video { display: block; width: 100%; max-height: 320px; object-fit: cover; background: #e8eef5; }
+.slider-row { margin: 12px 0; }
+.slider-row label { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; }
+input[type=range] { width: 100%; accent-color: var(--primary); }
+.scale-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+.dim-row { padding: 10px 0; border-bottom: 1px solid var(--border); }
+.dim-row:last-child { border-bottom: none; }
+.hint { font-size: 0.78rem; color: var(--muted); margin-top: 8px; }
+</style></head><body>
+
+<div class=&quot;card&quot;>
+  <p class=&quot;title&quot; id=&quot;skillTitle&quot;>Composite Question</p>
+  <p class=&quot;subtitle&quot; id=&quot;prompt&quot;></p>
+  <div id=&quot;blocks&quot;></div>
+</div>
+<script>window.__SP_BOOT__ = {&quot;config&quot;:{&quot;mediaCount&quot;:1,&quot;mediaType&quot;:&quot;image&quot;,&quot;prompt&quot;:&quot;Look at the scene below and answer the questions&quot;,&quot;scaleMin&quot;:1,&quot;scaleMax&quot;:7,&quot;blocks&quot;:[{&quot;type&quot;:&quot;media&quot;,&quot;index&quot;:0},{&quot;type&quot;:&quot;sliders&quot;,&quot;title&quot;:&quot;Rate the scene&quot;,&quot;dimensions&quot;:[{&quot;id&quot;:&quot;safety&quot;,&quot;left&quot;:&quot;Unsafe&quot;,&quot;right&quot;:&quot;Safe&quot;},{&quot;id&quot;:&quot;beauty&quot;,&quot;left&quot;:&quot;Ugly&quot;,&quot;right&quot;:&quot;Beautiful&quot;}]},{&quot;type&quot;:&quot;words&quot;,&quot;title&quot;:&quot;Pick up to 3 words that describe this place&quot;,&quot;max&quot;:3,&quot;options&quot;:[&quot;green&quot;,&quot;noisy&quot;,&quot;open&quot;,&quot;crowded&quot;,&quot;clean&quot;,&quot;historic&quot;]},{&quot;type&quot;:&quot;choice&quot;,&quot;title&quot;:&quot;Would you visit this place?&quot;,&quot;options&quot;:[&quot;Yes&quot;,&quot;Maybe&quot;,&quot;No&quot;]},{&quot;type&quot;:&quot;text&quot;,&quot;title&quot;:&quot;Any other comments?&quot;,&quot;placeholder&quot;:&quot;Optional…&quot;}],&quot;demoImages&quot;:[{&quot;name&quot;:&quot;street-a.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%2387CEEB%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%2378909C%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%231976d2%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3EMain%20Street%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;}]},&quot;images&quot;:[{&quot;name&quot;:&quot;street-a.svg&quot;,&quot;url&quot;:&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22800%22%20height%3D%22500%22%20viewBox%3D%220%200%20800%20500%22%3E%3Crect%20width%3D%22800%22%20height%3D%22500%22%20fill%3D%22%2387CEEB%22%2F%3E%3Crect%20y%3D%22340%22%20width%3D%22800%22%20height%3D%22160%22%20fill%3D%22%2378909C%22%2F%3E%3Crect%20x%3D%2280%22%20y%3D%22120%22%20width%3D%22140%22%20height%3D%22220%22%20fill%3D%22%2390A4AE%22%20opacity%3D%220.85%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22100%22%20width%3D%22160%22%20height%3D%22240%22%20fill%3D%22%23A1887F%22%20opacity%3D%220.85%22%2F%3E%3Cellipse%20cx%3D%22400%22%20cy%3D%22300%22%20rx%3D%2260%22%20ry%3D%2275%22%20fill%3D%22%2343A047%22%2F%3E%3Crect%20x%3D%22388%22%20y%3D%22300%22%20width%3D%2224%22%20height%3D%2250%22%20fill%3D%22%236D4C41%22%2F%3E%3Ctext%20x%3D%22400%22%20y%3D%22470%22%20text-anchor%3D%22middle%22%20fill%3D%22%231976d2%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22600%22%3EMain%20Street%3C%2Ftext%3E%3C%2Fsvg%3E&quot;,&quot;type&quot;:&quot;image&quot;}]};
+
+function spPlaceholder(label) {
+  var palettes = [
+    { sky: '#87CEEB', ground: '#78909C', accent: '#1976d2', title: 'Main Street' },
+    { sky: '#64B5F6', ground: '#BCAAA4', accent: '#1565c0', title: 'City Plaza' },
+    { sky: '#CFD8DC', ground: '#616161', accent: '#455a64', title: 'Alleyway' },
+    { sky: '#B0BEC5', ground: '#757575', accent: '#37474f', title: 'Before' },
+    { sky: '#81D4FA', ground: '#A5D6A7', accent: '#2e7d32', title: 'After' },
+  ];
+  var idx = 0;
+  if (label &amp;&amp; label.indexOf('B') >= 0) idx = 1;
+  if (label &amp;&amp; label.indexOf('Before') >= 0) idx = 3;
+  if (label &amp;&amp; label.indexOf('After') >= 0) idx = 4;
+  var p = palettes[idx] || palettes[0];
+  var svg = '<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;800&quot; height=&quot;500&quot; viewBox=&quot;0 0 800 500&quot;>' +
+    '<rect width=&quot;800&quot; height=&quot;500&quot; fill=&quot;' + p.sky + '&quot;/>' +
+    '<rect y=&quot;340&quot; width=&quot;800&quot; height=&quot;160&quot; fill=&quot;' + p.ground + '&quot;/>' +
+    '<rect x=&quot;80&quot; y=&quot;120&quot; width=&quot;140&quot; height=&quot;220&quot; fill=&quot;#90A4AE&quot; opacity=&quot;0.85&quot;/>' +
+    '<rect x=&quot;560&quot; y=&quot;100&quot; width=&quot;160&quot; height=&quot;240&quot; fill=&quot;#A1887F&quot; opacity=&quot;0.85&quot;/>' +
+    '<ellipse cx=&quot;400&quot; cy=&quot;300&quot; rx=&quot;60&quot; ry=&quot;75&quot; fill=&quot;#43A047&quot;/>' +
+    '<rect x=&quot;388&quot; y=&quot;300&quot; width=&quot;24&quot; height=&quot;50&quot; fill=&quot;#6D4C41&quot;/>' +
+    '<text x=&quot;400&quot; y=&quot;470&quot; text-anchor=&quot;middle&quot; fill=&quot;' + p.accent + '&quot; font-family=&quot;sans-serif&quot; font-size=&quot;16&quot; font-weight=&quot;600&quot;>' + p.title + '</text></svg>';
+  return 'data:image/svg+xml,' + encodeURIComponent(svg);
+}
+function spAbsUrl(url) {
+  if (!url) return url;
+  if (url.indexOf('http') === 0 || url.indexOf('data:') === 0) return url;
+  try {
+    if (window.parent &amp;&amp; window.parent.location &amp;&amp; window.parent.location.origin) {
+      return window.parent.location.origin + (url.charAt(0) === '/' ? url : '/' + url);
+    }
+  } catch (e) { /* sandbox */ }
+  return url;
+}
+function spBootImages() {
+  try {
+    if (window.__SP_BOOT__ &amp;&amp; window.__SP_BOOT__.images &amp;&amp; window.__SP_BOOT__.images.length) {
+      return window.__SP_BOOT__.images;
+    }
+  } catch (e) { /* ignore */ }
+  return [];
+}
+function spMedia(type, index) {
+  var pool = [];
+  try { pool = SPSkill.getImages() || []; } catch (e) { /* SPSkill not ready */ }
+  if (!pool.length) pool = spBootImages();
+  var list = type ? pool.filter(function(m) { return !m.type || m.type === type; }) : pool;
+  var item = list[index != null ? index : 0];
+  return item &amp;&amp; item.url ? item : null;
+}
+function spDemoFromConfig(type, index) {
+  var cfg = {};
+  try { cfg = SPSkill.getConfig() || {}; } catch (e) { /* ignore */ }
+  if (!cfg.demoImages &amp;&amp; window.__SP_BOOT__ &amp;&amp; window.__SP_BOOT__.config) {
+    cfg = window.__SP_BOOT__.config;
+  }
+  var demos = cfg.demoImages || [];
+  var idx = index != null ? index : 0;
+  if (type) {
+    var typed = demos.filter(function(d) { return !d.type || d.type === type; });
+    if (typed[idx]) return typed[idx];
+  }
+  return demos[idx] || null;
+}
+function spUrl(type, index, label) {
+  var m = spMedia(type, index);
+  if (m &amp;&amp; m.url) return spAbsUrl(m.url);
+  var d = spDemoFromConfig(type, index);
+  if (d &amp;&amp; d.url) return spAbsUrl(d.url);
+  return spPlaceholder(label);
+}
+function spName(type, index) {
+  var m = spMedia(type, index) || spDemoFromConfig(type, index);
+  return m ? (m.name || 'media') : 'demo';
+}
+function spSetImg(el, type, index, label) {
+  if (!el) return;
+  el.onerror = function() { el.onerror = null; el.src = spPlaceholder(label); };
+  el.src = spUrl(type, index, label);
+}
+
+
+var cfg = {};
+var state = { ratings: {}, words: [], choice: null, text: '' };
+
+function scaleMin() { return cfg.scaleMin != null ? cfg.scaleMin : 1; }
+function scaleMax() { return cfg.scaleMax != null ? cfg.scaleMax : 7; }
+function midValue() { return Math.round((scaleMin() + scaleMax()) / 2); }
+
+var dimIndex = {};
+function report() {
+  var ratings = [];
+  Object.keys(state.ratings).forEach(function(id) {
+    var d = dimIndex[id] || {};
+    ratings.push({ id: id, left: d.left, right: d.right, value: state.ratings[id] });
+  });
+  SPSkill.setAnswer({
+    ratings: ratings,
+    words: state.words,
+    choice: state.choice,
+    text: state.text,
+    scaleMin: scaleMin(),
+    scaleMax: scaleMax(),
+  });
+}
+
+function blockTitle(text) {
+  if (!text) return '';
+  return '<p style=&quot;font-size:0.85rem;font-weight:600;color:var(--text);margin:14px 0 6px;&quot;>' + text + '</p>';
+}
+
+function renderMedia(root, block) {
+  var idx = block.index || 0;
+  var type = block.mediaType || null;
+  var m = spMedia(type, idx);
+  var wrap = document.createElement('div');
+  if (m &amp;&amp; m.type === 'audio') {
+    wrap.innerHTML = '<div style=&quot;background:var(--primary-light);border-radius:10px;padding:12px;margin-bottom:10px;&quot;>' +
+      '<audio controls style=&quot;width:100%;&quot; src=&quot;' + spAbsUrl(m.url) + '&quot;></audio></div>';
+  } else if (m &amp;&amp; m.type === 'video') {
+    wrap.innerHTML = '<div class=&quot;media-frame&quot; style=&quot;margin-bottom:10px;&quot;><video controls style=&quot;width:100%;max-height:320px;&quot; src=&quot;' + spAbsUrl(m.url) + '&quot;></video></div>';
+  } else {
+    wrap.innerHTML = '<div class=&quot;media-frame&quot; style=&quot;margin-bottom:10px;&quot;><img alt=&quot;media&quot;/></div>';
+    spSetImg(wrap.querySelector('img'), 'image', idx, 'Scene');
+  }
+  root.appendChild(wrap);
+}
+
+function renderSliders(root, block) {
+  var box = document.createElement('div');
+  box.innerHTML = blockTitle(block.title);
+  (block.dimensions || []).forEach(function(d) {
+    dimIndex[d.id] = d;
+    var row = document.createElement('div');
+    row.className = 'slider-row';
+    row.innerHTML = '<label><span>' + (d.left || '') + '</span><span class=&quot;badge&quot; id=&quot;v_' + d.id + '&quot;>' + midValue() + '</span><span>' + (d.right || '') + '</span></label>' +
+      '<input type=&quot;range&quot; data-id=&quot;' + d.id + '&quot; min=&quot;' + scaleMin() + '&quot; max=&quot;' + scaleMax() + '&quot; value=&quot;' + midValue() + '&quot;/>' +
+      '<div class=&quot;scale-labels&quot;><span>' + scaleMin() + '</span><span>' + scaleMax() + '</span></div>';
+    var sl = row.querySelector('input');
+    state.ratings[d.id] = midValue();
+    sl.oninput = function() {
+      state.ratings[d.id] = parseInt(sl.value, 10);
+      row.querySelector('.badge').textContent = sl.value;
+      report();
+    };
+    box.appendChild(row);
+  });
+  root.appendChild(box);
+}
+
+function renderWordsBlock(root, block) {
+  var box = document.createElement('div');
+  box.innerHTML = blockTitle(block.title) + '<div style=&quot;display:flex;flex-wrap:wrap;gap:6px;&quot; class=&quot;wordwrap&quot;></div>';
+  var wrap = box.querySelector('.wordwrap');
+  function paint() {
+    wrap.innerHTML = '';
+    (block.options || []).forEach(function(w) {
+      var on = state.words.indexOf(w) >= 0;
+      var chip = document.createElement('button');
+      chip.className = 'btn ' + (on ? 'btn-primary' : 'btn-outline');
+      chip.style.cssText = 'padding:5px 12px;font-size:0.8rem;border-radius:999px;';
+      chip.textContent = w;
+      chip.onclick = function() {
+        var max = block.max || 3;
+        var idx = state.words.indexOf(w);
+        if (idx >= 0) state.words.splice(idx, 1);
+        else if (state.words.length < max) state.words.push(w);
+        paint(); report();
+      };
+      wrap.appendChild(chip);
+    });
+  }
+  paint();
+  root.appendChild(box);
+}
+
+function renderChoice(root, block) {
+  var box = document.createElement('div');
+  box.innerHTML = blockTitle(block.title) + '<div style=&quot;display:flex;flex-wrap:wrap;gap:8px;&quot; class=&quot;choicewrap&quot;></div>';
+  var wrap = box.querySelector('.choicewrap');
+  function paint() {
+    wrap.innerHTML = '';
+    (block.options || []).forEach(function(opt) {
+      var on = state.choice === opt;
+      var b = document.createElement('button');
+      b.className = 'btn ' + (on ? 'btn-primary' : 'btn-outline');
+      b.textContent = opt;
+      b.onclick = function() { state.choice = opt; paint(); report(); };
+      wrap.appendChild(b);
+    });
+  }
+  paint();
+  root.appendChild(box);
+}
+
+function renderText(root, block) {
+  var box = document.createElement('div');
+  box.innerHTML = blockTitle(block.title) +
+    '<textarea style=&quot;width:100%;min-height:70px;border:1px solid var(--border);border-radius:8px;padding:8px;font-family:inherit;font-size:0.85rem;&quot; placeholder=&quot;' + (block.placeholder || '') + '&quot;></textarea>';
+  var ta = box.querySelector('textarea');
+  ta.oninput = function() { state.text = ta.value; report(); };
+  root.appendChild(box);
+}
+
+document.addEventListener('spskill-init', function(e) {
+  cfg = e.detail.config || {};
+  document.getElementById('prompt').textContent = cfg.prompt || '';
+  if (cfg.title) document.getElementById('skillTitle').textContent = cfg.title;
+  var root = document.getElementById('blocks');
+  root.innerHTML = '';
+  (cfg.blocks || []).forEach(function(block) {
+    if (block.type === 'media') renderMedia(root, block);
+    else if (block.type === 'sliders') renderSliders(root, block);
+    else if (block.type === 'words') renderWordsBlock(root, block);
+    else if (block.type === 'choice') renderChoice(root, block);
+    else if (block.type === 'text') renderText(root, block);
+  });
+  if (e.detail.value) {
+    var v = e.detail.value;
+    (v.ratings || []).forEach(function(r) {
+      state.ratings[r.id] = r.value;
+      var sl = document.querySelector('input[data-id=&quot;' + r.id + '&quot;]');
+      if (sl) {
+        sl.value = r.value;
+        var badge = document.getElementById('v_' + r.id);
+        if (badge) badge.textContent = r.value;
+      }
+    });
+    if (v.words) state.words = v.words;
+    if (v.choice) state.choice = v.choice;
+    if (v.text) state.text = v.text;
+  }
+  SPSkill.ready();
+});
+
+</script></body></html>"></iframe>
+</body></html>

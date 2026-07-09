@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Grid } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import 'survey-core/defaultV2.min.css';
 
 export default function ImageBooleanWidget({ question, value, onValueChanged }) {
@@ -80,13 +80,14 @@ export default function ImageBooleanWidget({ question, value, onValueChanged }) 
         {/* Image display */}
         <Box sx={{ mb: 3, maxWidth: 600, mx: 'auto' }}>
           <img
+            className="sp-natural-image"
             src={imageLink}
             alt="Image for yes/no question"
             style={{
               width: '100%',
               height: 'auto',
-              maxHeight: '400px',
-              objectFit: 'cover',
+              display: 'block',
+              objectFit: 'contain',
               borderRadius: '8px',
               boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
             }}
@@ -99,14 +100,13 @@ export default function ImageBooleanWidget({ question, value, onValueChanged }) 
     );
   }
 
-  // Multiple images display (compact grid)
+  // Multiple images display (justified gallery — see imagePickerLayout.js)
   return (
     <Box sx={{ width: '100%' }}>
-      <Grid container spacing={2} sx={{ mb: 3 }}>
+      <Box className="sp-image-gallery" sx={{ mb: 3 }}>
         {question.choices.map((choice, index) => {
           let imageLink;
-          
-          // Extract imageLink from SurveyJS ItemValue object
+
           if (choice.imageLink) {
             imageLink = choice.imageLink;
           } else if (choice.getPropertyValue) {
@@ -117,36 +117,38 @@ export default function ImageBooleanWidget({ question, value, onValueChanged }) 
 
           if (!imageLink) {
             return (
-              <Grid item xs={6} sm={4} md={3} key={index}>
-                <Box sx={{ bgcolor: 'error.light', p: 2, borderRadius: 1 }}>
-                  <Typography variant="caption">No image data</Typography>
-                </Box>
-              </Grid>
+              <Box
+                key={index}
+                className="sp-image-gallery__item"
+                sx={{ bgcolor: 'error.light', p: 2, borderRadius: 1 }}
+              >
+                <Typography variant="caption">No image data</Typography>
+              </Box>
             );
           }
 
           return (
-            <Grid item xs={6} sm={4} md={3} key={index}>
-              <img
-                src={imageLink}
-                alt={`Image ${index + 1}`}
-                style={{
-                  width: '100%',
-                  height: '120px',
-                  objectFit: 'cover',
-                  borderRadius: '8px',
-                  boxShadow: '0 1px 4px rgba(0,0,0,0.1)'
-                }}
-              />
-            </Grid>
+            <Box
+              key={index}
+              className="sp-image-gallery__item"
+              sx={{
+                borderRadius: '8px',
+                boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
+                overflow: 'hidden',
+              }}
+            >
+              <Box className="sp-image-gallery__image-container">
+                <img src={imageLink} alt={`Image ${index + 1}`} />
+              </Box>
+            </Box>
           );
         })}
-      </Grid>
-      
+      </Box>
+
       <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
         Based on the images shown above, please answer:
       </Typography>
-      
+
       {/* Boolean control */}
       {renderBooleanControl()}
     </Box>

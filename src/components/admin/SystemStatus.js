@@ -32,6 +32,7 @@ import {
   BugReport
 } from '@mui/icons-material';
 import { createClient } from '@supabase/supabase-js';
+import { applySupabaseConfigFromProject } from '../../lib/supabase';
 
 export default function SystemStatus({ surveyConfig, currentProject, onProjectUpdate, onNextStep }) {
   // Step management - restore from localStorage or default to 0
@@ -115,6 +116,7 @@ export default function SystemStatus({ surveyConfig, currentProject, onProjectUp
         };
         
         setConfig(supabaseConfig);
+        applySupabaseConfigFromProject(currentProject.imageDatasetConfig);
         
         // Restore saved step for this project
         const savedStep = localStorage.getItem(`supabase_setup_step_${currentProject.id}`);
@@ -169,8 +171,12 @@ export default function SystemStatus({ surveyConfig, currentProject, onProjectUp
     
     if (!config.url) {
       errors.push('Supabase URL is required');
-    } else if (!config.url.includes('supabase.co')) {
-      errors.push('Invalid Supabase URL format');
+    } else {
+      try {
+        new URL(config.url);
+      } catch {
+        errors.push('Invalid Supabase URL format');
+      }
     }
     
     if (!config.secretKey) {
@@ -600,6 +606,7 @@ export default function SystemStatus({ surveyConfig, currentProject, onProjectUp
     return `CREATE TABLE IF NOT EXISTS survey_responses (
   id BIGSERIAL PRIMARY KEY,
   participant_id TEXT NOT NULL,
+  project_id TEXT,
   responses JSONB NOT NULL,
   displayed_images JSONB,
   survey_metadata JSONB,
@@ -608,6 +615,7 @@ export default function SystemStatus({ surveyConfig, currentProject, onProjectUp
 
 CREATE INDEX IF NOT EXISTS idx_survey_responses_created_at ON survey_responses(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_survey_responses_participant_id ON survey_responses(participant_id);
+CREATE INDEX IF NOT EXISTS idx_survey_responses_project_id ON survey_responses(project_id);
 
 ALTER TABLE survey_responses ENABLE ROW LEVEL SECURITY;
 
@@ -616,7 +624,14 @@ CREATE POLICY "Allow anonymous inserts to survey_responses"
 ON survey_responses
 FOR INSERT
 TO anon, authenticated
-WITH CHECK (true);`;
+WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Allow public read survey_responses" ON survey_responses;
+CREATE POLICY "Allow public read survey_responses"
+ON survey_responses
+FOR SELECT
+TO anon, authenticated
+USING (true);`;
   };
 
   const testSurveyResponse = async () => {
@@ -630,10 +645,12 @@ WITH CHECK (true);`;
       // Create a test response
       const testData = {
         participant_id: `test_${Date.now()}`,
+        project_id: currentProject?.id || 'test',
         responses: {
           test_question: 'test_answer',
           timestamp: new Date().toISOString()
         },
+        displayed_images: {},
         survey_metadata: {
           test: true,
           project_id: currentProject?.id || 'test',
@@ -966,7 +983,7 @@ WITH CHECK (true);`;
             ⚠️ Supabase Not Configured
           </Typography>
           <Typography variant="body2">
-            Please configure Supabase in the <strong>Image Dataset</strong> tab first. 
+            Please configure Supabase in <strong>Step 1 — Image Dataset</strong> (Supabase Storage Configuration section) first. 
             The Supabase configuration is now centralized there for both image storage and response collection.
           </Typography>
         </Alert>

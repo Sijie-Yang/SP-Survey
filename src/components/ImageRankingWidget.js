@@ -3,7 +3,7 @@ import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, us
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Box, Typography, Card, CardMedia } from '@mui/material';
+import { Box, Typography, Card } from '@mui/material';
 
 // Sortable Item Component
 function SortableItem({ id, image, index }) {
@@ -38,23 +38,29 @@ function SortableItem({ id, image, index }) {
       style={style}
       {...attributes}
       {...listeners}
+      className="sp-image-gallery__item"
       sx={{
         cursor: 'grab',
         '&:active': { cursor: 'grabbing' },
-        mb: 2,
         position: 'relative',
         '&:hover': {
           boxShadow: 3,
         },
+        // Card itself stays full row width so the entire row is a drag
+        // hit-area; only the inner image-container is sized to the image.
+        width: '100%',
+        background: 'transparent',
       }}
     >
-      <Box sx={{ position: 'relative' }}>
-        <CardMedia
+      <Box
+        className="sp-image-gallery__image-container"
+        sx={{ position: 'relative', lineHeight: 0 }}
+      >
+        <Box
           component="img"
-          height="150"
-          image={image.imageLink}
+          src={image.imageLink}
           alt={`Image ${index + 1}`}
-          sx={{ objectFit: 'cover' }}
+          sx={{ display: 'block' }}
           onError={(e) => {
             console.error('Image failed to load:', image.imageLink);
             e.target.style.display = 'none';
@@ -75,6 +81,7 @@ function SortableItem({ id, image, index }) {
             py: 0.5,
             fontSize: '0.875rem',
             fontWeight: 'bold',
+            zIndex: 1,
           }}
         >
           #{index + 1}
@@ -202,7 +209,10 @@ export default function ImageRankingWidget({ question, value, onValueChanged }) 
   }
 
   return (
-    <Box sx={{ width: '100%', maxWidth: 600, mx: 'auto' }}>
+    <Box
+      className="sp-image-gallery sp-image-gallery--vertical"
+      sx={{ width: '100%', maxWidth: 600, mx: 'auto' }}
+    >
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
