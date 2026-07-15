@@ -652,7 +652,7 @@ export default registerImageRankingWidget;
 
 const MEDIA_PAIRING_TYPES = [
   'imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'image', 'imagematrix',
-  'mediadisplay', 'mediarating', 'mediaboolean', 'imageannotation', 'skillquestion',
+  'mediadisplay', 'mediarating', 'mediaboolean', 'mediaranking', 'imageannotation', 'skillquestion',
   'imageslidergroup', 'imagepointallocation',
 ];
 
@@ -661,7 +661,20 @@ export function registerMediaPairingProps() {
     Serializer.addProperty(typeName, {
       name: 'mediaAssignmentMode',
       default: 'individual',
-      choices: ['individual', 'group', 'category'],
+      choices: ['individual', 'set', 'group', 'category'],
+      category: 'general',
+    });
+    Serializer.addProperty(typeName, {
+      name: 'mediaFolders',
+      category: 'general',
+    });
+    Serializer.addProperty(typeName, {
+      name: 'mediaPerCategory:number',
+      default: 1,
+      category: 'general',
+    });
+    Serializer.addProperty(typeName, {
+      name: 'assignedMediaSetId',
       category: 'general',
     });
     Serializer.addProperty(typeName, {
@@ -985,10 +998,53 @@ export function registerSkillQuestionWidget() {
   });
 }
 
+/** Media Ranking — same drag-rank UI as Image Ranking, choices may be image/video/audio URLs. */
+export function registerMediaRankingWidget() {
+  const TYPE = 'mediaranking';
+  if (Serializer.findClass(TYPE)) return;
+
+  class MediaRankingQuestion extends Question {
+    getType() { return TYPE; }
+    getValueCore() {
+      const val = super.getValueCore();
+      return Array.isArray(val) ? val : [];
+    }
+    setValueCore(newValue) {
+      if (Array.isArray(newValue)) super.setValueCore(newValue);
+    }
+  }
+
+  Serializer.addClass(
+    TYPE,
+    [
+      { name: 'choices:itemvalue[]', category: 'choices' },
+      { name: 'imageCount:number', default: 4, category: 'general' },
+      { name: 'imageSelectionMode', default: 'random', category: 'general' },
+      { name: 'selectedImageUrls:string[]', category: 'general' },
+      { name: 'randomImageSelection:boolean', default: false, category: 'general' },
+      { name: 'mediaType', default: 'any', choices: ['any', 'image', 'video', 'audio'], category: 'general' },
+      { name: 'imageFit', default: 'contain', category: 'general' },
+      { name: 'excludePreviouslyUsedImages:boolean', default: true, category: 'general' },
+    ],
+    () => new MediaRankingQuestion(),
+    'question',
+  );
+
+  ReactQuestionFactory.Instance.registerQuestion(TYPE, (props) => {
+    const { question } = props;
+    return React.createElement(ImageRankingWidget, {
+      question,
+      value: question.value,
+      onValueChanged: (v) => { question.value = v; },
+    });
+  });
+}
+
 export function registerAllExtendedWidgets() {
   registerMediaDisplayWidget();
   registerMediaRatingWidget();
   registerMediaBooleanWidget();
+  registerMediaRankingWidget();
   registerImageAnnotationWidget();
   registerSliderGroupWidget();
   registerPointAllocationWidget();

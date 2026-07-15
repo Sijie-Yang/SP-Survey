@@ -39,12 +39,13 @@ Same survey builder and analysis tools as the hosted platform — **no login**, 
 
 ## Highlights
 
-- **No-code builder** — image choice / rating / ranking / matrix / annotation, media panels, custom skill iframes
+- **No-code builder** — image/media choice, rating, ranking, matrix, annotation; consent & number; custom skill iframes
+- **Folder media sets** — tag folders as fixed sets or categories for survey assignment
 - **AI-assisted design** — optional OpenAI / OpenRouter key in the app
-- **Research templates** — Place Pulse, SPECS, thermal affordance, and more (`public/project_templates/`)
+- **Research templates** — Place Pulse, SPECS, thermal affordance, greenery, street GSV, hotel hue, and more (`public/project_templates/`)
 - **Supabase Storage** — upload media (or import from Hugging Face); responses in `survey_responses`
 - **Deploy to Vercel** — Step 4 generates a survey-only bundle; use the **anon** key only (never `service_role`)
-- **Analysis** — TrueSkill, reliability metrics, skill charts, CSV with shown-media metadata
+- **Analysis** — TrueSkill, forced-choice / MaxDiff skill charts, reliability metrics, CSV with shown-media metadata
 
 ---
 
@@ -66,14 +67,14 @@ npm run dev
 
 ### Workflow
 
-1. **Image dataset** — connect Supabase Storage (`service_role` + `anon`), upload or import media  
+1. **Image dataset** — connect Supabase Storage (`service_role` + `anon`), upload or import media, optionally tag folders as sets/categories  
 2. **Survey builder** — template or from scratch  
-3. **Server setup** — create `survey_responses` in Supabase (SQL in Admin Step 3)  
+3. **Server setup** — create `survey_responses` in Supabase (SQL in Admin Step 3, or below)  
 4. **Deploy** — generate bundle → push to GitHub → deploy on **Vercel** with **anon** key only  
 5. **Results** — analyze in Admin Step 5 or export CSV  
 
 ```sql
--- If Step 3 auto-create fails, run in Supabase SQL Editor:
+-- Same script as Admin → Step 3 (System Status). Run in Supabase SQL Editor if auto-create fails:
 CREATE TABLE IF NOT EXISTS survey_responses (
   id BIGSERIAL PRIMARY KEY,
   participant_id TEXT NOT NULL,
@@ -81,14 +82,35 @@ CREATE TABLE IF NOT EXISTS survey_responses (
   responses JSONB NOT NULL,
   displayed_images JSONB,
   survey_metadata JSONB,
-  created_at TIMESTAMPTZ DEFAULT NOW()
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
+
+CREATE INDEX IF NOT EXISTS idx_survey_responses_created_at ON survey_responses(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_survey_responses_participant_id ON survey_responses(participant_id);
+CREATE INDEX IF NOT EXISTS idx_survey_responses_project_id ON survey_responses(project_id);
+
 ALTER TABLE survey_responses ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "insert" ON survey_responses FOR INSERT TO anon, authenticated WITH CHECK (true);
-CREATE POLICY "select" ON survey_responses FOR SELECT TO anon, authenticated USING (true);
+
+DROP POLICY IF EXISTS "Allow anonymous inserts to survey_responses" ON survey_responses;
+CREATE POLICY "Allow anonymous inserts to survey_responses"
+ON survey_responses
+FOR INSERT
+TO anon, authenticated
+WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Allow public read survey_responses" ON survey_responses;
+CREATE POLICY "Allow public read survey_responses"
+ON survey_responses
+FOR SELECT
+TO anon, authenticated
+USING (true);
 ```
 
-Make the `survey-images` Storage bucket **public**. Credentials are entered in Admin → Step 1 (not required in `.env` for local use).
+Make the `survey-images` Storage bucket **public** (Storage → bucket → Public).  
+Credentials are entered in Admin → Step 1 (`service_role` for uploads, `anon` for the live survey). Not required in `.env` for local use.
+
+On Vercel, set only:
+`REACT_APP_SUPABASE_URL` and `REACT_APP_SUPABASE_ANON_KEY` (never deploy `service_role`).
 
 ---
 

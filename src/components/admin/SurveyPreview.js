@@ -3,7 +3,7 @@ import { Model } from "survey-core";
 import { Survey } from "survey-react-ui";
 import "survey-core/defaultV2.min.css";
 import { Box, Alert, CircularProgress, Typography, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-import { convertToSurveyJS, generateCustomTheme } from '../../lib/surveyStorage';
+import { convertToSurveyJS, generateCustomTheme, normalizeBuilderSurveyJson } from '../../lib/surveyStorage';
 import { themeJson } from "../../theme";
 import registerImageRankingWidget, {
   registerImageRatingWidget, registerImageBooleanWidget, registerAllExtendedWidgets,
@@ -482,8 +482,8 @@ export default function SurveyPreview({ config, currentProject }) {
       console.log('🔧 Preview: Fixed showProgressBar boolean to string');
     }
     
-    // Directly use processed configuration (already in standard SurveyJS format)
-    const model = new Model(configToUse);
+    // Map builder-only types (consent/number) onto SurveyJS-native types
+    const model = new Model(normalizeBuilderSurveyJson(configToUse));
     
     // Apply theme (same as Live Survey) - with error handling
     try {

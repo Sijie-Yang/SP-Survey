@@ -183,7 +183,64 @@ export function attachMuStd5(rankings) {
 
 export function computeQuestionTrueSkill(responses, questionName) {
   const matches = extractPairwiseMatches(responses, questionName);
-  if (!matches.length) return { matches: [], rankings: [] };
+  return computeTrueSkillFromMatches(matches);
+}
+
+/**
+ * From a full ranking (best → worst): each higher-ranked image beats every lower-ranked one.
+ * e.g. [A,B,C] → A≻B, A≻C, B≻C
+ */
+export function matchesFromOrderedRanking(orderedKeys) {
+  const keys = (orderedKeys || []).filter(Boolean);
+  const matches = [];
+  for (let i = 0; i < keys.length; i += 1) {
+    for (let j = i + 1; j < keys.length; j += 1) {
+      if (keys[i] !== keys[j]) matches.push({ winner: keys[i], loser: keys[j] });
+    }
+  }
+  return matches;
+}
+
+/**
+ * MaxDiff / Best–Worst → pairwise TrueSkill matches.
+ * For shown set with best B and worst W:
+ *   - B beats every other shown image (including W)
+ *   - every middle image (neither B nor W) beats W
+ * e.g. {A,B,C,D} best=A worst=D → A≻B, A≻C, A≻D, B≻D, C≻D
+ *
+ * answer: { bestIndex, worstIndex, shownUrls? }
+ * shownImages: trial media list (preferred over answer.shownUrls)
+ */
+export function matchesFromMaxDiffAnswer(answer, shownImages) {
+  if (!answer || typeof answer !== 'object') return [];
+  const { bestIndex, worstIndex } = answer;
+  if (bestIndex == null || worstIndex == null || bestIndex === worstIndex) return [];
+
+  const rawShown = (shownImages?.length ? shownImages : (answer.shownUrls || []));
+  const shownKeys = rawShown
+    .map((s) => filenameKey(typeof s === 'string' ? s : s?.url || s?.name || ''))
+    .filter(Boolean);
+  if (shownKeys.length < 2) return [];
+  if (bestIndex < 0 || bestIndex >= shownKeys.length) return [];
+  if (worstIndex < 0 || worstIndex >= shownKeys.length) return [];
+
+  const best = shownKeys[bestIndex];
+  const worst = shownKeys[worstIndex];
+  if (!best || !worst || best === worst) return [];
+
+  const matches = [];
+  shownKeys.forEach((key) => {
+    if (key !== best) matches.push({ winner: best, loser: key });
+  });
+  shownKeys.forEach((key) => {
+    if (key !== best && key !== worst) matches.push({ winner: key, loser: worst });
+  });
+  return matches;
+}
+
+/** Run TrueSkill on an arbitrary list of { winner, loser } matches. */
+export function computeTrueSkillFromMatches(matches) {
+  if (!matches?.length) return { matches: [], rankings: [] };
   const ratings = computeTrueSkillRatings(matches);
   return { matches, rankings: attachMuStd5(rankTrueSkillPlayers(ratings)) };
 }

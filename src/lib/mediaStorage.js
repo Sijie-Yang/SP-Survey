@@ -91,46 +91,49 @@ export async function deleteImagesFromR2(keys) {
   }
 }
 
+async function listImagesRecursive(client, pathPrefix = '', acc = []) {
+  const listPath = pathPrefix.replace(/\/$/, '');
+  const { data, error } = await client.storage.from(BUCKET).list(listPath || '', {
+    limit: 10000,
+    sortBy: { column: 'name', order: 'asc' },
+  });
+  if (error) throw error;
+
+  for (const f of data || []) {
+    if (!f?.name || f.name.startsWith('.')) continue;
+    const key = listPath ? `${listPath}/${f.name}` : f.name;
+    // Supabase folders have null id; files have a uuid
+    if (f.id == null) {
+      await listImagesRecursive(client, key, acc);
+      continue;
+    }
+    acc.push({
+      key,
+      name: f.name,
+      url: publicUrl(client, key),
+      size: f.metadata?.size || 0,
+      lastModified: f.updated_at || f.created_at,
+    });
+  }
+  return acc;
+}
+
 export async function listImagesFromR2(prefix = '') {
   try {
     const client = ensureClient();
     await ensureBucket(client);
-    const normalized = prefix.endsWith('/') ? prefix.slice(0, -1) : prefix;
-    const parts = normalized ? normalized.split('/') : [];
-    let folder = '';
-    let parentPrefix = '';
-    if (parts.length > 1) {
-      folder = parts.slice(1).join('/');
-      parentPrefix = parts[0];
-    } else if (parts.length === 1) {
-      parentPrefix = parts[0];
-    }
-
-    const listPath = [parentPrefix, folder].filter(Boolean).join('/');
-    const { data, error } = await client.storage.from(BUCKET).list(listPath, {
-      limit: 10000,
-      sortBy: { column: 'name', order: 'asc' },
-    });
-    if (error) throw error;
-
-    const images = (data || [])
-      .filter((f) => f.name && !f.name.endsWith('/'))
-      .map((f) => {
-        const key = listPath ? `${listPath}/${f.name}` : f.name;
-        return {
-          key,
-          name: f.name,
-          url: publicUrl(client, key),
-          size: f.metadata?.size || 0,
-          lastModified: f.updated_at || f.created_at,
-        };
-      });
-
+    const normalized = (prefix || '').replace(/\/$/, '');
+    const images = await listImagesRecursive(client, normalized, []);
     return { success: true, images, objects: images };
   } catch (error) {
     console.error('listImagesFromR2 (Supabase):', error);
     return { success: false, images: [], objects: [], error: error.message };
   }
+}
+
+export function projectR2Prefix(userId, projectId) {
+  if (!userId || !projectId) return '';
+  return `${userId}/${projectId}/`;
 }
 
 export async function copyImagesInR2(items, { onProgress } = {}) {
@@ -167,6 +170,23 @@ export async function copyImagesInR2(items, { onProgress } = {}) {
     console.error('copyImagesInR2 (Supabase):', error);
     return { success: false, error: error.message, copied: [], errors: [] };
   }
+}
+
+/** Move objects via copy + delete (R2-compatible API for MediaFolderBrowser). */
+export async function moveImagesInR2(moves, options = {}) {
+  const list = (moves || []).filter((m) => m?.from && m?.to && m.from !== m.to);
+  if (!list.length) return { success: true, moved: [], errors: [] };
+  const copyResult = await copyImagesInR2(list, options);
+  const copiedOk = (copyResult.copied || []).map((c) => c.from);
+  if (copiedOk.length) {
+    await deleteImagesFromR2(copiedOk);
+  }
+  return {
+    success: copyResult.success && !(copyResult.errors || []).length,
+    moved: copyResult.copied || [],
+    errors: copyResult.errors || [],
+    error: copyResult.error,
+  };
 }
 
 export async function checkR2Status() {

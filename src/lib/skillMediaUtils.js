@@ -107,6 +107,8 @@ export function matchesPresetSkillAnswer(skillId, answer) {
       return Array.isArray(answer.samples);
     case 'image_preference_slider':
       return typeof answer.preference === 'number';
+    case 'image_preference_forced':
+      return answer.choice === 'A' || answer.choice === 'B' || answer.chosenIndex === 0 || answer.chosenIndex === 1;
     case 'best_worst_choice':
       return answer.bestIndex != null || answer.worstIndex != null;
     case 'emotion_color_picker':

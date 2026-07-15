@@ -755,7 +755,7 @@ function ImageQuestionAnalysis({ answers, type, question }) {
   };
 
   // ── image_ranking ─────────────────────────────────────────────────────────
-  if (type === 'image_ranking' || type === 'imageranking') {
+  if (type === 'image_ranking' || type === 'imageranking' || type === 'mediaranking') {
     const imageRankPositions = {};
     const rankingLists = [];
     for (const { answer } of answers) {
@@ -1651,6 +1651,7 @@ function QuestionCard({ question, answers, totalResponses, questionNumber, allRe
       case 'imagerating':
       case 'image_ranking':
       case 'imageranking':
+      case 'mediaranking':
       case 'image_boolean':
       case 'imageboolean':
       case 'image_matrix':

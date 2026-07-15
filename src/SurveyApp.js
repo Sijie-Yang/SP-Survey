@@ -8,7 +8,7 @@ import { findDraftForProject, saveDraft, clearDraft, clearDraftByKey, clearAllDr
 import { surveyJson, displayedImages } from './config/questions';
 import { surveyConfig } from './config/surveyConfig';
 import { themeJson } from "./theme";
-import { loadSurveyConfig, convertToSurveyJS, generateCustomTheme } from './lib/surveyStorage';
+import { loadSurveyConfig, convertToSurveyJS, generateCustomTheme, normalizeBuilderSurveyJson } from './lib/surveyStorage';
 import registerImageRankingWidget, {
   registerImageRatingWidget, registerImageBooleanWidget, registerImageMatrixWidget,
   registerAllExtendedWidgets,
@@ -846,8 +846,8 @@ export default function SurveyApp() {
         console.log('🔧 Survey: Fixed showProgressBar boolean to string');
       }
       
-      // Create survey model
-      const model = new Model(finalSurveyJson);
+      // Create survey model (map builder-only types like consent/number)
+      const model = new Model(normalizeBuilderSurveyJson(finalSurveyJson));
       
       // Apply theme - with error handling
       try {

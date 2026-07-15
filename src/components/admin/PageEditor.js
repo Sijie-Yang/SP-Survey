@@ -27,6 +27,8 @@ import {
   DragIndicator,
   ContentCopy
 } from '@mui/icons-material';
+import ConfirmDialog from '../layout/ConfirmDialog';
+import { allocateUniqueName, collectUsedQuestionNames } from '../../lib/questionNames';
 import {
   DndContext,
   closestCenter,
@@ -46,6 +48,15 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import QuestionEditor from './QuestionEditor';
+import { getPresetSkill } from '../../lib/presetSkills';
+
+function skillQuestionTypeLabel(question) {
+  if (question?.type !== 'skillquestion') return null;
+  const preset = getPresetSkill(question.skillId);
+  if (preset) return preset.builderLabel || preset.name;
+  if (question.skillId) return 'Custom interactive task';
+  return 'Custom interactive task (not configured)';
+}
 
 // Sortable Question Item Component
 function SortableQuestionItem({ question, questionIndex, onEdit, onDelete, onDuplicate }) {
@@ -71,6 +82,10 @@ function SortableQuestionItem({ question, questionIndex, onEdit, onDelete, onDup
     if (typeof question === 'object' && type === 'ranking' && question.isImageRanking) {
       return 'Image Ranking';
     }
+
+    if (type === 'skillquestion') {
+      return skillQuestionTypeLabel(typeof question === 'object' ? question : null) || 'Custom interactive task';
+    }
     
     const typeLabels = {
       text: 'Text Input',
@@ -85,19 +100,21 @@ function SortableQuestionItem({ question, questionIndex, onEdit, onDelete, onDup
       rating: 'Text Rating Scale',
       boolean: 'Text Yes/No',
       dropdown: 'Text Dropdown',
-      matrix: 'Matrix',
+      matrix: 'Text Matrix',
       imagematrix: 'Image Matrix',
       expression: 'Text Instruction',
+      number: 'Text Number',
+      consent: 'Text Consent',
       image: 'Image Display (1 image)',
       mediadisplay: 'Media Display',
       mediarating: 'Media Rating',
       mediaboolean: 'Media Yes/No',
+      mediaranking: 'Media Ranking',
       imageannotation: 'Image Annotation',
-      slidergroup: 'Slider Group',
+      slidergroup: 'Text Slider Group',
       imageslidergroup: 'Image Slider Group',
-      pointallocation: 'Point Allocation',
+      pointallocation: 'Text Point Allocation',
       imagepointallocation: 'Image Point Allocation',
-      skillquestion: 'Skill Question',
     };
     return typeLabels[type] || type;
   };
@@ -207,9 +224,10 @@ function SortableQuestionItem({ question, questionIndex, onEdit, onDelete, onDup
   );
 }
 
-export default function PageEditor({ page, pageIndex, onSave, onCancel, images, currentProject }) {
+export default function PageEditor({ page, pageIndex, onSave, onCancel, images, currentProject, surveyConfig }) {
   const [editedPage, setEditedPage] = useState({ ...page });
   const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [confirmDialog, setConfirmDialog] = useState(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -242,59 +260,60 @@ export default function PageEditor({ page, pageIndex, onSave, onCancel, images, 
   const deleteQuestion = (questionIndex) => {
     const question = editedPage.elements[questionIndex];
     const title = question?.title || question?.name || `Question ${questionIndex + 1}`;
-    if (!window.confirm(`Delete "${title}"? This cannot be undone.`)) return;
-
-    const newElements = editedPage.elements.filter((_, index) => index !== questionIndex);
-    setEditedPage({
-      ...editedPage,
-      elements: newElements
+    setConfirmDialog({
+      title: 'Delete question',
+      message: `Delete "${title}"? This cannot be undone.`,
+      confirmLabel: 'Delete',
+      confirmColor: 'error',
+      onConfirm: () => {
+        setConfirmDialog(null);
+        const newElements = editedPage.elements.filter((_, index) => index !== questionIndex);
+        setEditedPage({
+          ...editedPage,
+          elements: newElements
+        });
+      },
     });
   };
 
   const duplicateQuestion = (questionIndex) => {
     const questionToDuplicate = editedPage.elements[questionIndex];
-    // Deep clone the question
     const duplicatedQuestion = JSON.parse(JSON.stringify(questionToDuplicate));
-    
-    const underscoreNumberPattern = /_(\d+)$/;
-    
-    // Smart name generation: check if name ends with _number
-    const originalName = questionToDuplicate.name;
-    const nameMatch = originalName.match(underscoreNumberPattern);
-    
-    if (nameMatch) {
-      // Name ends with _number, increment the number
-      const currentNumber = parseInt(nameMatch[1], 10);
-      const newNumber = currentNumber + 1;
-      duplicatedQuestion.name = originalName.replace(underscoreNumberPattern, `_${newNumber}`);
-    } else {
-      // Name doesn't end with _number, add _1
-      duplicatedQuestion.name = `${originalName}_1`;
+
+    // Names must be unique across the whole survey, not just this page.
+    const draftConfig = {
+      ...(surveyConfig || {}),
+      pages: (surveyConfig?.pages || []).map((p, i) => (
+        i === pageIndex ? editedPage : p
+      )),
+    };
+    // If this page isn't in surveyConfig yet, append editedPage for name collection.
+    if (!surveyConfig?.pages?.[pageIndex]) {
+      draftConfig.pages = [...(draftConfig.pages || []), editedPage];
     }
-    // Smart title generation: check if title ends with _number
-    const originalTitle = questionToDuplicate.title || 'New Question';
-    const titleMatch = originalTitle.match(underscoreNumberPattern);
-    
-    if (titleMatch) {
-      // Title ends with _number, increment the number
-      const currentNumber = parseInt(titleMatch[1], 10);
-      const newNumber = currentNumber + 1;
-      duplicatedQuestion.title = originalTitle.replace(underscoreNumberPattern, `_${newNumber}`);
-    } else {
-      // Title doesn't end with _number, add _1
-      duplicatedQuestion.title = `${originalTitle}_1`;
-    }
-    
-    // Insert the duplicated question right after the original
+    const usedNames = collectUsedQuestionNames(draftConfig);
+    duplicatedQuestion.name = allocateUniqueName(
+      questionToDuplicate.name || 'question',
+      usedNames,
+    );
+
+    const titleUsed = new Set(
+      (editedPage.elements || []).map((el) => el?.title).filter(Boolean),
+    );
+    duplicatedQuestion.title = allocateUniqueName(
+      questionToDuplicate.title || 'New Question',
+      titleUsed,
+    );
+
     const newElements = [
       ...editedPage.elements.slice(0, questionIndex + 1),
       duplicatedQuestion,
-      ...editedPage.elements.slice(questionIndex + 1)
+      ...editedPage.elements.slice(questionIndex + 1),
     ];
-    
+
     setEditedPage({
       ...editedPage,
-      elements: newElements
+      elements: newElements,
     });
   };
 
@@ -329,6 +348,10 @@ export default function PageEditor({ page, pageIndex, onSave, onCancel, images, 
     if (typeof question === 'object' && type === 'ranking' && question.isImageRanking) {
       return 'Image Ranking';
     }
+
+    if (type === 'skillquestion') {
+      return skillQuestionTypeLabel(typeof question === 'object' ? question : null) || 'Custom interactive task';
+    }
     
     const typeLabels = {
       text: 'Text Input',
@@ -343,19 +366,21 @@ export default function PageEditor({ page, pageIndex, onSave, onCancel, images, 
       rating: 'Text Rating Scale',
       boolean: 'Text Yes/No',
       dropdown: 'Text Dropdown',
-      matrix: 'Matrix',
+      matrix: 'Text Matrix',
       imagematrix: 'Image Matrix',
       expression: 'Text Instruction',
+      number: 'Text Number',
+      consent: 'Text Consent',
       image: 'Image Display (1 image)',
       mediadisplay: 'Media Display',
       mediarating: 'Media Rating',
       mediaboolean: 'Media Yes/No',
+      mediaranking: 'Media Ranking',
       imageannotation: 'Image Annotation',
-      slidergroup: 'Slider Group',
+      slidergroup: 'Text Slider Group',
       imageslidergroup: 'Image Slider Group',
-      pointallocation: 'Point Allocation',
+      pointallocation: 'Text Point Allocation',
       imagepointallocation: 'Image Point Allocation',
-      skillquestion: 'Skill Question',
     };
     return typeLabels[type] || type;
   };
@@ -468,6 +493,15 @@ export default function PageEditor({ page, pageIndex, onSave, onCancel, images, 
           currentProject={currentProject}
         />
       )}
+      <ConfirmDialog
+        open={Boolean(confirmDialog)}
+        title={confirmDialog?.title}
+        message={confirmDialog?.message}
+        confirmLabel={confirmDialog?.confirmLabel}
+        confirmColor={confirmDialog?.confirmColor || 'error'}
+        onConfirm={() => confirmDialog?.onConfirm?.()}
+        onCancel={() => setConfirmDialog(null)}
+      />
     </>
   );
 }

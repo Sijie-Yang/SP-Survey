@@ -44,17 +44,23 @@ import {
   Search,
   SelectAll,
   Deselect,
+  DriveFileMove,
 } from '@mui/icons-material';
 import {
   testHuggingFaceConnection,
   getImagesFromHuggingFace,
   getImageCountFromDataset,
 } from '../../lib/huggingface';
-import { isR2Configured, uploadImageToR2, deleteImagesFromR2, listImagesFromR2, copyImagesInR2 } from '../../lib/r2';
+import { isR2Configured, uploadImageToR2, deleteImagesFromR2, listImagesFromR2, copyImagesInR2, projectR2Prefix } from '../../lib/r2';
 import { asyncPool } from '../../lib/asyncPool';
-import { inferMediaType, normalizeMediaEntry, MEDIA_ACCEPT, analyzeMediaGroups, summarizeMediaGroupsBySize, analyzeMediaCategories, downloadMediaFiles } from '../../lib/mediaUtils';
-import { MediaPairingGuide } from './MediaPairingGuide';
-import { MediaCategoryGuide } from './MediaCategoryGuide';
+import {
+  inferMediaType, normalizeMediaEntry, MEDIA_ACCEPT, downloadMediaFiles,
+  analyzeTaggedSets, analyzeTaggedCategories, sortMediaByName,
+  buildProjectMediaKey,
+} from '../../lib/mediaUtils';
+import MediaPairingGuide from './MediaPairingGuide';
+import MediaCategoryGuide from './MediaCategoryGuide';
+import MediaFolderBrowser from './MediaFolderBrowser';
 import SupabaseStorageConfig from './SupabaseStorageConfig';
 import { getTemplateById, listTemplates } from '../../lib/templateManager';
 import {
@@ -129,7 +135,8 @@ function safeR2Name(name = '') {
 function mediaEntryKey(entry, userId, projectId) {
   if (entry?.key) return entry.key;
   if (!entry?.name || !projectId) return null;
-  return `${userId}/${projectId}/${safeR2Name(entry.name)}`;
+  const prefix = projectR2Prefix(userId, projectId);
+  return buildProjectMediaKey(prefix, entry.folder || '', entry.name);
 }
 
 export default function ImageDataset({ currentProject, onProjectUpdate, onConfigChange, onNextStep }) {
@@ -179,17 +186,19 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
   const [mediaDownloadProgress, setMediaDownloadProgress] = useState(null);
   const [refreshingMedia, setRefreshingMedia] = useState(false);
   const [groupSizeFilter, setGroupSizeFilter] = useState('all');
+  const [currentFolder, setCurrentFolder] = useState('');
+  const [openMoveSignal, setOpenMoveSignal] = useState(0);
 
   const userId = user?.id || 'anonymous';
   const projectId = currentProject?.id;
-  const projectPrefix = projectId ? `${userId}/${projectId}/` : '';
+  const projectPrefix = projectId ? projectR2Prefix(userId, projectId) : '';
 
   const normalizeR2Listing = (images = []) => images.map((img) => normalizeMediaEntry({
     url: img.url,
     name: img.name,
     key: img.key,
     type: img.type || inferMediaType(img.name),
-  }));
+  }, projectPrefix));
 
   const persistPreloadedImages = (images, extra = {}) => {
     if (!currentProject) return;
@@ -317,13 +326,18 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
 
   const filteredMedia = useMemo(() => {
     const q = mediaSearch.trim().toLowerCase();
-    return (currentProject?.preloadedImages || []).filter((m) => {
-      const t = m.type || inferMediaType(m.name || m.url);
+    const folder = currentFolder || '';
+    const filtered = (currentProject?.preloadedImages || []).filter((m) => {
+      const entry = normalizeMediaEntry(m, projectPrefix);
+      if ((entry.folder || '') !== folder) return false;
+      const t = entry.type || inferMediaType(entry.name || entry.url);
       if (mediaFilter !== 'all' && t !== mediaFilter) return false;
-      if (q && !(m.name || '').toLowerCase().includes(q)) return false;
+      if (q && !(entry.name || '').toLowerCase().includes(q)
+        && !(entry.folder || '').toLowerCase().includes(q)) return false;
       return true;
     });
-  }, [currentProject?.preloadedImages, mediaSearch, mediaFilter]);
+    return sortMediaByName(filtered);
+  }, [currentProject?.preloadedImages, mediaSearch, mediaFilter, currentFolder, projectPrefix]);
 
   const totalMediaPages = Math.max(1, Math.ceil(filteredMedia.length / MEDIA_PAGE_SIZE));
   const pagedMedia = useMemo(() => {
@@ -333,7 +347,7 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
 
   useEffect(() => {
     setMediaPage(1);
-  }, [mediaSearch, mediaFilter]);
+  }, [mediaSearch, mediaFilter, currentFolder]);
 
   useEffect(() => {
     if (mediaPage > totalMediaPages) setMediaPage(totalMediaPages);
@@ -701,12 +715,23 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
         const file = mediaType === 'image' ? await compressImage(raw) : raw;
         const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
         const userId = user?.id || 'anonymous';
-        const key = `${userId}/${currentProject?.id || 'default'}/${safeName}`;
+        const key = buildProjectMediaKey(
+          `${userId}/${currentProject?.id || 'default'}/`,
+          currentFolder,
+          safeName,
+        );
 
         const result = await uploadImageToR2(file, key);
 
         if (result.success) {
-          uploadedImages.push({ url: result.url, name: raw.name, type: mediaType, key });
+          uploadedImages.push({
+            url: result.url,
+            name: raw.name,
+            type: mediaType,
+            key,
+            media_id: key,
+            folder: currentFolder || '',
+          });
           successCount++;
         } else {
           console.error('Upload error:', result.error);
@@ -931,10 +956,16 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
       preloadedImages: [],
       preloadedAt: null,
       preloadedSource: null,
+      imageDatasetConfig: {
+        ...(currentProject.imageDatasetConfig || {}),
+        mediaFolderTags: {},
+        mediaFolders: [],
+      },
     };
     onProjectUpdate(updatedProject);
     setSelectedMedia(new Set());
     setMediaPage(1);
+    setCurrentFolder('');
     if (onConfigChange) onConfigChange(true, updatedProject.imageDatasetConfig);
   };
 
@@ -942,22 +973,34 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
 
   const preloadedCount = currentProject?.preloadedImages?.length || 0;
   const mediaGroups = useMemo(
-    () => analyzeMediaGroups(currentProject?.preloadedImages || []),
-    [currentProject?.preloadedImages],
+    () => analyzeTaggedSets(
+      currentProject?.preloadedImages || [],
+      currentProject?.imageDatasetConfig?.mediaFolderTags || {},
+      null,
+      { projectPrefix },
+    ),
+    [currentProject?.preloadedImages, currentProject?.imageDatasetConfig?.mediaFolderTags, projectPrefix],
   );
-  const groupSummary = useMemo(
-    () => summarizeMediaGroupsBySize(currentProject?.preloadedImages || []),
-    [currentProject?.preloadedImages],
-  );
-  const pairedGroups = mediaGroups.filter((g) => g.isGrouped);
+  const pairedGroups = mediaGroups;
+  const groupSummary = useMemo(() => {
+    const bySize = {};
+    pairedGroups.forEach((g) => {
+      bySize[g.size] = (bySize[g.size] || 0) + 1;
+    });
+    return { total: pairedGroups.length, bySize };
+  }, [pairedGroups]);
   const filteredPairedGroups = useMemo(() => {
     if (groupSizeFilter === 'all') return pairedGroups;
     const n = parseInt(groupSizeFilter, 10);
     return pairedGroups.filter((g) => g.size === n);
   }, [pairedGroups, groupSizeFilter]);
   const mediaCategories = useMemo(
-    () => analyzeMediaCategories(currentProject?.preloadedImages || []),
-    [currentProject?.preloadedImages],
+    () => analyzeTaggedCategories(
+      currentProject?.preloadedImages || [],
+      currentProject?.imageDatasetConfig?.mediaFolderTags || {},
+      { projectPrefix },
+    ),
+    [currentProject?.preloadedImages, currentProject?.imageDatasetConfig?.mediaFolderTags, projectPrefix],
   );
   const mediaCounts = (currentProject?.preloadedImages || []).reduce((acc, m) => {
     const t = m.type || inferMediaType(m.name || m.url);
@@ -985,7 +1028,6 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
       <MediaPairingGuide
         totalFileCount={preloadedCount}
         pairedSetCount={groupSummary.total}
-        pairedSetsBySize={groupSummary.bySize}
       />
 
       <MediaCategoryGuide
@@ -1026,14 +1068,14 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
         )}
       </Box>
 
-      {preloadedCount > 0 && pairedGroups.length > 0 && (
+      {pairedGroups.length > 0 && (
         <Box sx={{ mb: 3, p: 3, bgcolor: 'background.paper', borderRadius: 1, border: '1px solid', borderColor: 'info.light' }}>
           <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 1 }}>
-            Detected Media Groups ({pairedGroups.length})
+            Tagged sets ({pairedGroups.length})
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
-            Upload-time pairing preview. Each row is one fixed set that stays together when a question uses
-            &quot;Random fixed sets&quot; with a matching <strong>files per set</strong> count.
+            Folders tagged <code>set</code>. Each folder&apos;s direct files stay together when a question uses
+            &quot;Random fixed sets&quot; with a matching media count.
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
             {Object.entries(groupSummary.bySize)
@@ -1076,9 +1118,9 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
               </TableHead>
               <TableBody>
                 {filteredPairedGroups.slice(0, 50).map((g) => (
-                  <TableRow key={g.groupKey} hover>
+                  <TableRow key={g.setKey || g.groupKey} hover>
                     <TableCell>
-                      <Typography variant="body2" fontWeight={600}>{g.groupId}</Typography>
+                      <Typography variant="body2" fontWeight={600}>{g.setId || g.groupId}</Typography>
                     </TableCell>
                     <TableCell align="center">{g.size}</TableCell>
                     <TableCell>
@@ -1105,10 +1147,10 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
         </Box>
       )}
 
-      {preloadedCount > 0 && mediaCategories.length > 0 && (
+      {mediaCategories.length > 0 && (
         <Box sx={{ mb: 3, p: 3, bgcolor: 'background.paper', borderRadius: 1, border: '1px solid', borderColor: 'secondary.light' }}>
           <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 1 }}>
-            Detected Media Categories ({mediaCategories.length})
+            Tagged categories ({mediaCategories.length})
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
             Use Survey Builder → Media Assignment → <strong>One per category</strong> to show one random file from each class in every question.
@@ -1359,6 +1401,7 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
         <Typography variant="subtitle1" sx={{ mb: 1.5, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 1 }}>
           <CloudUpload fontSize="small" color="primary" />
           Upload Media to Supabase Storage
+          {currentFolder ? ` → ${currentFolder}` : ' → root'}
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
           Select image, video, or audio files to upload to Supabase Storage.
@@ -1415,12 +1458,30 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
         </Button>
       </Box>
 
-      {/* ── Uploaded Media Library ── */}
-      {preloadedCount > 0 && (
+      {/* ── Uploaded Media Library (folder browser) ── */}
+      <Typography variant="overline" color="text.secondary" sx={{ display: 'block', mb: 1, letterSpacing: 1 }}>
+        Organize in folders
+      </Typography>
+      <MediaFolderBrowser
+        currentProject={currentProject}
+        userId={userId}
+        onProjectUpdate={onProjectUpdate}
+        currentFolder={currentFolder}
+        onCurrentFolderChange={setCurrentFolder}
+        selectedMediaEntries={(currentProject?.preloadedImages || []).filter((m) => selectedMedia.has(m.name))}
+        openMoveSignal={openMoveSignal}
+        mediaCount={preloadedCount}
+      >
+        {preloadedCount === 0 ? (
+          <Alert severity="info" sx={{ mb: 2 }}>
+            No media uploaded yet. Use the import / upload cards above, then organize files with folders on the left.
+          </Alert>
+        ) : (
         <Box sx={{ mb: 3, p: 3, bgcolor: 'background.paper', borderRadius: 1, border: '1px solid', borderColor: 'divider' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, mb: 2, flexWrap: 'wrap' }}>
             <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
               Uploaded Media ({preloadedCount})
+              {currentFolder ? ` · ${currentFolder}` : ' · root'}
             </Typography>
             <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
               <Button
@@ -1467,6 +1528,15 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
                 disabled={!filteredMedia.length || mediaActionStatus.loading}
               >
                 Download filtered ({filteredMedia.length})
+              </Button>
+              <Button
+                size="small"
+                variant="outlined"
+                startIcon={<DriveFileMove />}
+                onClick={() => setOpenMoveSignal((n) => n + 1)}
+                disabled={!selectedMedia.size || mediaActionStatus.loading}
+              >
+                Move to folder… ({selectedMedia.size})
               </Button>
               <Button
                 size="small"
@@ -1637,7 +1707,8 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
             </>
           )}
         </Box>
-      )}
+        )}
+      </MediaFolderBrowser>
 
       <Divider sx={{ my: 4 }} />
 

@@ -79,6 +79,13 @@ import { CSS } from '@dnd-kit/utilities';
 import PageEditor from './PageEditor';
 import QuestionEditor from './QuestionEditor';
 import ChatAssistant from './ChatAssistant';
+import {
+  allocateUniqueName,
+  allocateUniquePageName,
+  collectUsedQuestionNames,
+  findDuplicateQuestionNames,
+  repairDuplicateQuestionNames,
+} from '../../lib/questionNames';
 // Old API functions removed - now using chatApi.js
 import { getConversationHistory } from '../../lib/conversationHistory';
 import { getWorkingMemory } from '../../lib/workingMemory';
@@ -696,73 +703,47 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
 
   const duplicatePage = (pageIndex) => {
     const pageToDuplicate = config.pages[pageIndex];
-    // Deep clone the page
     const duplicatedPage = JSON.parse(JSON.stringify(pageToDuplicate));
-    
-    const underscoreNumberPattern = /_(\d+)$/;
-    
-    // Smart name generation for page: check if name ends with _number
-    const originalPageName = pageToDuplicate.name;
-    const pageNameMatch = originalPageName.match(underscoreNumberPattern);
-    
-    if (pageNameMatch) {
-      // Name ends with _number, increment the number
-      const currentNumber = parseInt(pageNameMatch[1], 10);
-      const newNumber = currentNumber + 1;
-      duplicatedPage.name = originalPageName.replace(underscoreNumberPattern, `_${newNumber}`);
-    } else {
-      // Name doesn't end with _number, add _1
-      duplicatedPage.name = `${originalPageName}_1`;
-    }
-    
-    // Smart title generation for page: check if title ends with _number
+
+    duplicatedPage.name = allocateUniquePageName(
+      pageToDuplicate.name || `page_${pageIndex + 1}`,
+      config,
+    );
+
     const originalTitle = pageToDuplicate.title || `Page ${pageIndex + 1}`;
-    const titleMatch = originalTitle.match(underscoreNumberPattern);
-    
-    if (titleMatch) {
-      // Title ends with _number, increment the number
-      const currentNumber = parseInt(titleMatch[1], 10);
-      const newNumber = currentNumber + 1;
-      duplicatedPage.title = originalTitle.replace(underscoreNumberPattern, `_${newNumber}`);
-    } else {
-      // Title doesn't end with _number, add _1
-      duplicatedPage.title = `${originalTitle}_1`;
-    }
-    
-    // Generate new unique names for all questions in the duplicated page using smart numbering
+    const titleUsed = new Set(
+      (config.pages || []).map((p) => p?.title).filter(Boolean),
+    );
+    duplicatedPage.title = allocateUniqueName(originalTitle, titleUsed);
+
+    const usedNames = collectUsedQuestionNames(config);
     if (duplicatedPage.elements) {
-      duplicatedPage.elements = duplicatedPage.elements.map(element => {
-        const originalElementName = element.name;
-        const elementNameMatch = originalElementName.match(underscoreNumberPattern);
-        
-        let newElementName;
-        if (elementNameMatch) {
-          // Name ends with _number, increment the number
-          const currentNumber = parseInt(elementNameMatch[1], 10);
-          const newNumber = currentNumber + 1;
-          newElementName = originalElementName.replace(underscoreNumberPattern, `_${newNumber}`);
-        } else {
-          // Name doesn't end with _number, add _1
-          newElementName = `${originalElementName}_1`;
+      duplicatedPage.elements = duplicatedPage.elements.map((element) => {
+        if (element?.type === 'panel' && Array.isArray(element.elements)) {
+          return {
+            ...element,
+            elements: element.elements.map((child) => ({
+              ...child,
+              name: allocateUniqueName(child.name || 'question', usedNames),
+            })),
+          };
         }
-        
         return {
           ...element,
-          name: newElementName
+          name: allocateUniqueName(element.name || 'question', usedNames),
         };
       });
     }
-    
-    // Insert the duplicated page right after the original
+
     const newPages = [
       ...config.pages.slice(0, pageIndex + 1),
       duplicatedPage,
-      ...config.pages.slice(pageIndex + 1)
+      ...config.pages.slice(pageIndex + 1),
     ];
-    
+
     onChange({
       ...config,
-      pages: newPages
+      pages: newPages,
     });
   };
 
@@ -1283,8 +1264,17 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
   const getSurveyValidationWarnings = (cfg) => {
     if (!cfg?.pages) return [];
     const warnings = [];
-    const names = new Set();
-    const imageTypes = ['imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'imagematrix', 'image', 'imageannotation', 'skillquestion', 'mediadisplay', 'mediarating', 'mediaboolean', 'imageslidergroup', 'imagepointallocation'];
+    const imageTypes = [
+      'imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'imagematrix', 'image',
+      'imageannotation', 'skillquestion', 'mediadisplay', 'mediarating', 'mediaboolean',
+      'mediaranking', 'imageslidergroup', 'imagepointallocation',
+    ];
+
+    findDuplicateQuestionNames(cfg).forEach((dup) => {
+      warnings.push(
+        `Duplicate question id "${dup.name}" appears ${dup.count} times — answers will overwrite each other.`,
+      );
+    });
 
     cfg.pages.forEach((page, pi) => {
       const pageTitle = page.title || `Page ${pi + 1}`;
@@ -1292,10 +1282,6 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
         warnings.push(`Page "${pageTitle}" has no questions.`);
       }
       (page.elements || []).forEach((el) => {
-        if (el.name) {
-          if (names.has(el.name)) warnings.push(`Duplicate question name: "${el.name}".`);
-          names.add(el.name);
-        }
         if (imageTypes.includes(el.type)) {
           const hasManual = el.selectedImageUrls?.length || el.choices?.length || el.imageLinks?.length || el.annotationImageUrl;
           const hasRandom = el.randomImageSelection !== false || el.imageSelectionMode === 'huggingface_random';
@@ -1315,6 +1301,29 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
   };
 
   const validationWarnings = getSurveyValidationWarnings(config);
+  const duplicateQuestionIssues = findDuplicateQuestionNames(config);
+
+  const handleRepairDuplicateQuestionNames = () => {
+    const { config: fixed, renames, remainingDuplicates } = repairDuplicateQuestionNames(config);
+    if (!renames.length) {
+      setThemeSnackbar({
+        open: true,
+        message: remainingDuplicates?.length
+          ? 'Could not repair duplicate ids automatically. Please rename them manually.'
+          : 'No duplicate ids to fix.',
+        severity: remainingDuplicates?.length ? 'error' : 'info',
+      });
+      return;
+    }
+    onChange(fixed);
+    setThemeSnackbar({
+      open: true,
+      message: remainingDuplicates?.length
+        ? `Renamed ${renames.length} id(s), but ${remainingDuplicates.length} duplicate(s) remain.`
+        : `Renamed ${renames.length} duplicate question id(s).`,
+      severity: remainingDuplicates?.length ? 'warning' : 'success',
+    });
+  };
 
   return (
     <Box>
@@ -1327,7 +1336,15 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
       </Typography>
 
       {validationWarnings.length > 0 && (
-        <Alert severity="warning" sx={{ mb: 2 }}>
+        <Alert
+          severity={duplicateQuestionIssues.length ? 'error' : 'warning'}
+          sx={{ mb: 2 }}
+          action={duplicateQuestionIssues.length ? (
+            <Button color="inherit" size="small" onClick={handleRepairDuplicateQuestionNames}>
+              Auto-fix ids
+            </Button>
+          ) : null}
+        >
           <Typography variant="subtitle2" sx={{ mb: 0.5 }}>Survey checks (non-blocking)</Typography>
           {validationWarnings.slice(0, 5).map((w, i) => (
             <Typography key={i} variant="body2">• {w}</Typography>
