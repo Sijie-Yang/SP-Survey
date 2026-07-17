@@ -6,6 +6,7 @@ const path = require('path');
 const cors = require('cors');
 const OpenAI = require('openai');
 const { resolveAiRequest, aiChat, formatAiError } = require('./aiClient');
+const { registerAgentProjectApi } = require('./src/server/agentProjectApi');
 
 // Import multi-agent review system
 const {
@@ -164,6 +165,13 @@ app.get('/api/projects', async (req, res) => {
     console.error('Error listing projects:', error);
     res.status(500).json({ success: false, error: error.message });
   }
+});
+
+// Local Codex/IDE agents can update surveyConfig directly without receiving credentials.
+registerAgentProjectApi(app, {
+  fs,
+  projectsPath: PROJECTS_PATH,
+  clientOrigin: CLIENT_ORIGIN,
 });
 
 // Deployment endpoints

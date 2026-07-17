@@ -626,12 +626,11 @@ FOR INSERT
 TO anon, authenticated
 WITH CHECK (true);
 
+GRANT INSERT ON TABLE survey_responses TO anon, authenticated;
+GRANT USAGE, SELECT ON SEQUENCE survey_responses_id_seq TO anon, authenticated;
+
 DROP POLICY IF EXISTS "Allow public read survey_responses" ON survey_responses;
-CREATE POLICY "Allow public read survey_responses"
-ON survey_responses
-FOR SELECT
-TO anon, authenticated
-USING (true);`;
+REVOKE SELECT ON TABLE survey_responses FROM anon, authenticated;`;
   };
 
   const testSurveyResponse = async () => {

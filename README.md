@@ -9,83 +9,34 @@
 
 <img src="./public/fig_introduction.png" alt="SP-Survey" width="100%">
 
-**Build research-grade visual surveys with a UI, or design them together with Codex and other IDE agents.**
+Visual survey design, media experiments, participant deployment, and research analysis in one self-hosted application.
 
-Open-source and self-hosted: no login, local project files, your own Supabase, and your own participant deployment.
+**No login · Local project files · Your Supabase · Your deployment**
 
-> Want managed accounts, storage, and live links? Use **[sp-survey.org](https://sp-survey.org)**.
-
-🌐 **[Hosted platform](https://sp-survey.org)** ·
-⭐ **[Open-source repository](https://github.com/Sijie-Yang/SP-Survey)** ·
-📄 **[Research paper](https://www.sciencedirect.com/science/article/pii/S0360132325000514)**
+[Hosted platform](https://sp-survey.org) · [Paper](https://www.sciencedirect.com/science/article/pii/S0360132325000514) · [Issues](https://github.com/Sijie-Yang/SP-Survey/issues)
 
 </div>
 
----
+## Features
 
-## Why use SP-Survey if an AI can code a survey?
+- Standard, image, ranking, matrix, annotation, and custom-skill questions.
+- Random media, curated media, fixed sets, categories, and repeated trials.
+- Supabase/Hugging Face media workflows and advanced research analysis.
+- Unified theme behavior across question preview, full preview, Researcher Practice, and Live Survey.
+- Response quality checks, reliability, TrueSkill, perception analysis, ablation, and CSV export.
+- Participant-only deployment with response and shown-media metadata.
 
-AI coding tools are excellent at producing a form. The difficult part is keeping the entire research workflow correct after the first prompt.
+The hosted Platform and this repository share survey/research features. The difference is infrastructure:
 
-SP-Survey gives an AI-generated survey a stable system around it:
-
-- a visual builder for researchers who do not want to edit code;
-- reusable, validated question types instead of one-off UI components;
-- the same theme and participant widgets in question preview, survey preview, and Live Survey;
-- reproducible media assignment with folders, fixed sets, categories, and multi-trial questions;
-- participant progress, draft/resume, completion codes, quotas, and response metadata;
-- Researcher Practice before data collection;
-- shown-media and trial metadata preserved with responses;
-- analysis and export designed for perception research;
-- a deployment boundary that keeps admin credentials out of the participant bundle.
-
-Use Codex, Cursor, VS Code Copilot, Claude Code, or another IDE agent to propose and edit the survey. Use SP-Survey to inspect, interact with, test, run, and analyze it.
-
-```text
-Research brief → AI/IDE edits survey JSON → SP-Survey visual validation
-               → Researcher Practice → Live Survey → responses + analysis
-```
-
----
-
-## Hosted platform vs this repository
-
-| | **[sp-survey.org](https://sp-survey.org)** | **This repository** |
+| | Hosted Platform | SP-Survey |
 |---|---|---|
-| Setup | Sign up and start | Clone and run locally |
-| Login | Required | **No login** — open `/admin` |
-| Project management | Multi-user hosted projects | Local JSON project files |
-| Media and responses | Managed cloud infrastructure | Your **Supabase** Storage and database |
-| Participant survey | Hosted live link | Build and deploy it yourself |
-| Survey/research features | Included | Intended to match the hosted platform |
-
-The product difference is hosting and data ownership—not a reduced survey builder.
-
----
-
-## What you can build
-
-- Standard questions: text, comment, number, consent, dropdown, radio, checkbox, boolean, rating, ranking, and matrix.
-- Visual questions: image/media choice, rating, ranking, boolean, matrix, annotation, and custom skill iframes.
-- Experimental designs: random media, curated media, fixed folder sets, per-category sampling, exclusion across questions, and repeated trials.
-- Media workflow: your Supabase configuration, direct upload, Hugging Face import, folders, set/category tags, spatial features, and SAM3 pre-annotation.
-- Survey experience: theme presets, unified previews, progress chrome, mobile layouts, draft/resume, response quotas, and completion messages.
-- Research workflow: templates, researcher practice, response quality checks, TrueSkill/forced-choice analysis, reliability metrics, perception joins, ablation, and CSV export.
-
-Research templates are stored in [`public/project_templates/`](./public/project_templates/).
-
----
+| Access | Account and managed projects | No login; open `/admin` |
+| Storage | Managed | Local project JSON + your Supabase |
+| Participant site | Hosted | Deploy it yourself |
 
 ## Quick start
 
-### Requirements
-
-- Node.js 18 or newer
-- npm
-- A Supabase project when you are ready to upload media or collect responses
-- Optional: Hugging Face, OpenAI/OpenRouter, and fal.ai credentials
-
-### Run locally
+Requirements: Node.js 18+ and npm.
 
 ```bash
 git clone https://github.com/Sijie-Yang/SP-Survey.git
@@ -94,140 +45,89 @@ npm install
 npm run dev
 ```
 
-With no port overrides:
-
 - Admin: [http://localhost:3000/admin](http://localhost:3000/admin)
-- Participant survey: [http://localhost:3000/survey](http://localhost:3000/survey)
-- Skill library: [http://localhost:3000/skills](http://localhost:3000/skills)
+- Local Live Survey: [http://localhost:3000/survey](http://localhost:3000/survey)
 - Local API: `http://localhost:3001`
 
-For custom ports, copy [`.env.example`](./.env.example) and follow its comments. The React client can use `.env.local` with `REACT_APP_API_URL` pointing to the local API.
+Use [`.env.example`](./.env.example) for custom ports. Supabase is optional until media upload or response collection.
 
-### Normal workflow
+## Use SP-Survey directly with Codex
 
-1. **Media Dataset** — connect your Supabase project, upload/import media, organize folders, and optionally tag folders as sets or categories.
-2. **Survey Builder** — start from a research template or create a survey from scratch.
-3. **Server Setup** — create and check the `survey_responses` table.
-4. **Website Deployment** — generate the participant-only bundle and deploy it.
-5. **Results Analysis** — inspect quality, analyze results, and export data.
-
-Before deployment, use **Researcher Practice**, the full **Preview Survey**, and **View Live Survey**. They exercise different parts of the workflow and should all be checked.
-
----
-
-## Design surveys with Codex or another IDE agent
-
-SP-Survey supports a safe round trip between the visual application and an AI coding environment.
-
-### Recommended: credential-free export and import
-
-1. Create or open a project in SP-Survey.
-2. In the project menu, select **Export for AI / IDE**.
-3. Give the downloaded `*-for-ai.json` file and your research brief to your IDE agent.
-4. Ask the agent to edit `surveyConfig` while keeping the `project` and `surveyConfig` root objects intact.
-5. In SP-Survey, click **Import Project** and select the edited JSON.
-6. Inspect non-blocking survey checks, question previews, the full preview, Researcher Practice, and Live Survey.
-7. Configure Supabase and deployment credentials inside SP-Survey; do not ask the agent to add them to the JSON.
-
-The AI/IDE export recursively removes known Supabase, Hugging Face, fal.ai, OpenAI/OpenRouter, password, token, and API-key fields. A normal **Export Project** is a backup and may contain credentials; do not use that file for AI collaboration or public issues.
-
-### Example prompt: create a study
+Open the SP-Survey folder in Codex and describe the study. Codex can create, read, and update local projects directly; export/import is not required.
 
 ```text
-Edit the attached SP-Survey AI/IDE export.
-
-Study goal: compare perceived safety and visual comfort for 40 street images.
-Design: each participant sees 10 randomly selected images, one image per trial.
-Measures: safety (1–7), visual comfort (1–7), and one optional comment.
-Requirements:
-- include consent and brief demographics;
-- use stable, descriptive question names;
-- avoid leading wording and double-barrelled questions;
-- preserve the project and surveyConfig root objects;
-- do not add credentials or application code;
-- return a valid importable JSON file and summarize the design decisions.
+Open my current streetscape project. Give each participant 10 random images,
+ask safety and visual-comfort ratings from 1–7, then run the checks and open
+the local Live Survey for me to review. Preserve my media and Supabase settings.
 ```
 
-### Example prompt: review an existing study
+The localhost-only agent API is available while `npm run dev` is running:
 
-```text
-Review and revise this SP-Survey export as a survey-methods expert.
-
-Check construct coverage, ordering effects, required questions, scale anchors,
-randomization, participant burden, mobile usability, and whether media/trial
-metadata will support the planned analysis. Make only justified edits to
-surveyConfig. Keep existing question names when changing them would break
-longitudinal compatibility. Do not add secrets.
-```
-
-### Example prompt: implement a new interaction
-
-When the existing question types are insufficient, an IDE agent can extend the application itself:
-
-```text
-Add a participant interaction to SP-Survey, not to SP-Survey-Platform.
-Reuse the existing SurveyJS custom-widget registration, trial navigation,
-theme application, response enrichment, question preview, full preview, and
-Live Survey paths. The interaction must behave consistently in all previews,
-support mobile layouts, preserve response metadata, and include tests.
-Do not introduce login, Cloudflare R2, or hosted-platform dependencies.
-```
-
-Useful implementation locations:
-
-| Purpose | Location |
+| Action | Endpoint |
 |---|---|
-| Local project API and deployment generation | `server.js`, `src/lib/deploymentManager.js` |
-| Survey builder and question editor | `src/components/admin/SurveyBuilder.js`, `QuestionEditor.js` |
-| Participant widgets | `src/components/SurveyCustomComponents.js`, `src/components/*Widget.js` |
-| Question/full/live previews | `QuestionParticipantPreview.js`, `SurveyPreview.js`, `src/SurveyApp.js` |
-| Media assignment and repeated trials | `src/lib/surveyMediaInjection.js`, `src/lib/trialNavigation.js` |
-| Theme consistency | `src/lib/surveyStorage.js`, `SurveyThemePreviewPanel.js` |
-| Response metadata and exports | `src/lib/enrichSurveyResponses.js`, `src/components/admin/ResultsAnalysis.js` |
-| Local project files | `public/projects/` |
+| Discover the API | `GET /api/agent` |
+| Create a project | `POST /api/agent/projects` |
+| List projects | `GET /api/agent/projects` |
+| Read a project | `GET /api/agent/projects/:id` |
+| Update `surveyConfig` | `PATCH /api/agent/projects/:id/survey` |
+| Validate | `POST /api/agent/projects/:id/validate` |
+| Get preview URLs | `GET /api/agent/projects/:id/preview-url` |
 
-### The verification loop
+Agent reads exclude known credentials. Updates change only `surveyConfig`, preserve stored credentials, create a local backup, and reject invalid structure. Send the returned `savedAt` as `expectedSavedAt` when updating to prevent overwriting a newer edit.
 
-Do not accept an AI-generated JSON or code change only because it parses.
+After every change, check:
 
-```bash
-npm test -- --watchAll=false
-npm run build
-```
+1. Question preview and Theme Settings preview.
+2. Full Preview Survey.
+3. Researcher Practice for media or annotation studies.
+4. Local Live Survey, including mobile width.
+5. Response fields required by the analysis plan.
 
-Then verify in the browser:
+`Export for AI / IDE` remains available for sharing a credential-free project outside the local workspace.
 
-- the question-setting preview;
-- Theme Settings preview;
-- the complete Preview Survey dialog;
-- Researcher Practice for media/annotation studies;
-- `/survey?project=<project-id>` as a participant;
-- at least one mobile-width layout;
-- the exported response fields needed by the analysis plan.
+## Complete survey workflow
 
----
+### 1. Create a Supabase project
 
-## Application AI Assistant
+Create a project at [supabase.com](https://supabase.com). In **Project Settings → API**, copy:
 
-The Survey Builder also includes an optional conversational assistant. Enter an OpenAI or OpenRouter key in its settings to draft or revise a survey without leaving the application.
+- Project ID or Project URL;
+- anon key for the participant website;
+- `service_role` key for local administrator uploads and analysis.
 
-Use the in-app assistant for quick question and structure changes. Use an IDE agent when you want file-based review, larger JSON transformations, tests, a new question interaction, or a contribution to SP-Survey itself.
+Do not give keys to Codex. Enter them only in the SP-Survey interface.
 
-API credentials entered for AI services remain your responsibility. Never commit keys to the repository.
+### 2. Create the local SP-Survey project
 
----
+Run `npm run dev`, then create a project in `/admin` or ask Codex to create one through the local agent API. Projects are local JSON files under `public/projects/` and are not committed.
 
-## Supabase setup
+Codex can create, review, and update the selected survey directly through the local agent API. If several projects have similar names, identify the intended project before asking Codex to edit it.
 
-In **Admin → Step 1 → Supabase Storage**, enter:
+### 3. Configure Supabase and upload media
 
-- Project ID/URL
-- `service_role` key for local administrator uploads only
-- `anon` key for the deployed participant survey
+Open **Step 1 - Media Dataset**. The top row has three panels:
 
-Create a public Storage bucket named `survey-images`. The application can attempt to create it on first upload, but you should verify that it is public and that browser CORS works.
+1. **Supabase Storage** — enter Project ID, anon key, and `service_role` key; click **Save**, then **Test**.
+2. **Upload Media** — choose local images, video, or audio and upload them to Supabase Storage.
+3. **HF Dataset Import** — import a Hugging Face dataset and transfer its media to Supabase.
 
-Create the response table from **Admin → Step 3**, or run:
+In Supabase **Storage**, create a public bucket named `survey-images`. SP-Survey can also attempt to create it on the first upload. Confirm that uploaded files appear in the Media Library, then organize folders and mark folders as sets or categories when required.
+
+Codex can configure media assignment, folders, repeated trials, and question logic. The user should enter credentials and select private local files.
+
+### 4. Design the survey
+
+Open **Step 2 - Survey Builder**. Create pages and questions, configure media assignment, repeated trials, validation, progress, theme, completion text, and response metadata.
+
+This is the main Codex step. Describe the study in natural language; Codex reads the current local project, updates `surveyConfig`, validates it, and returns the local Admin and Local Live Survey URLs. Use the visual editor for manual adjustments.
+
+### 5. Preview and practice
+
+Check the question preview, Theme Settings preview, full **Preview Survey**, **Researcher Practice**, and local **View Live Survey**. Test mobile width and confirm that media, trial navigation, required questions, theme, and saved metadata agree in every view. This localhost page is a preview; the public participant link is created in Step 7.
+
+### 6. Create the Supabase response table
+
+Open **Step 3 - Server Setup**. It uses the Supabase configuration saved in Step 1. Click **Copy SQL Script**, open **Supabase Dashboard → SQL Editor**, paste the following SQL, and click **Run**:
 
 ```sql
 CREATE TABLE IF NOT EXISTS survey_responses (
@@ -251,53 +151,67 @@ ON survey_responses(project_id);
 
 ALTER TABLE survey_responses ENABLE ROW LEVEL SECURITY;
 
-DROP POLICY IF EXISTS "Allow anonymous inserts to survey_responses" ON survey_responses;
+DROP POLICY IF EXISTS "Allow anonymous inserts to survey_responses"
+ON survey_responses;
+
 CREATE POLICY "Allow anonymous inserts to survey_responses"
-ON survey_responses FOR INSERT TO anon, authenticated
+ON survey_responses
+FOR INSERT
+TO anon, authenticated
 WITH CHECK (true);
+
+GRANT INSERT ON TABLE survey_responses TO anon, authenticated;
+GRANT USAGE, SELECT ON SEQUENCE survey_responses_id_seq TO anon, authenticated;
+
+DROP POLICY IF EXISTS "Allow public read survey_responses"
+ON survey_responses;
+
+REVOKE SELECT ON TABLE survey_responses FROM anon, authenticated;
 ```
 
-Grant only the policies your deployment needs. Anonymous participant submission normally needs `INSERT`; public `SELECT` is not required for a participant-facing survey and should not be enabled unless you intentionally want public reads.
+Return to SP-Survey, check the connection and table status, then submit a test response. Participants can insert responses; anonymous users cannot read all responses. The local administrator uses the `service_role` key for Results Analysis.
 
-For a deployed survey, expose only:
+### 7. Generate and deploy the participant website
+
+Open **Step 4 - Website Deployment**:
+
+1. Click **Prepare Deployment Folder**.
+2. Click **Test Build** and open the generated preview.
+3. Create an empty GitHub repository for this participant deployment.
+4. Enter that repository URL and click **Upload to GitHub**, or push the generated folder manually.
+5. In Vercel, create a project by importing that GitHub repository.
+6. In **Vercel Project Settings → Environment Variables**, add:
 
 ```text
-REACT_APP_SUPABASE_URL
-REACT_APP_SUPABASE_ANON_KEY
+REACT_APP_SUPABASE_URL=https://your-project.supabase.co
+REACT_APP_SUPABASE_ANON_KEY=your-anon-key
 ```
 
-Never deploy or commit the `service_role` key.
+Do not add the `service_role` key to GitHub or Vercel. Deploy or redeploy after saving the environment variables.
 
----
+Open the deployed `/survey` page, complete the survey once, and confirm the new row in **Supabase → Table Editor → survey_responses**. Test the final participant URL before distributing it.
 
-## Local data and security
+### 8. Analyze responses
 
-- Local projects are stored as JSON under `public/projects/`.
-- A regular project backup can contain Supabase configuration. Treat it as sensitive.
-- Use **Export for AI / IDE** for agent collaboration, examples, bug reports, and external review.
-- `.env`, `.env.local`, project backups, response exports, and participant data should not be committed.
-- The generated participant deployment must use the Supabase anon key, never the administrator service key.
-- Review consent, retention, access control, and institutional requirements for your own study.
+Return to **Results Analysis** in the local Admin application. Use the locally stored `service_role` configuration to load responses, inspect quality and researcher-practice records, run the required analyses, and export CSV files.
 
----
+Templates are stored in [`public/project_templates/`](./public/project_templates/). `Export for AI / IDE` is only for sharing a credential-free project outside the local workspace.
 
-## Contributing
+## Security
 
-Issues and pull requests are welcome: [Sijie-Yang/SP-Survey/issues](https://github.com/Sijie-Yang/SP-Survey/issues).
+- Never commit or deploy the `service_role` key.
+- The participant website receives only the Supabase URL and anon key.
+- `.env`, local projects, backups, responses, and participant data are ignored by Git.
+- Review consent, retention, access control, and institutional requirements before data collection.
 
-For changes to survey interactions, include the complete path rather than only the editor control:
+## Development
 
-1. builder/editor configuration;
-2. question preview;
-3. full survey preview;
-4. participant Live Survey;
-5. response serialization and metadata;
-6. analysis/export compatibility;
-7. tests and production build.
+```bash
+CI=true npm test -- --watchAll=false --runInBand
+npm run build
+```
 
-Keep self-hosted boundaries intact: SP-Survey has no login, stores local projects as files, uses user-configured Supabase, and generates an independently deployed participant site.
-
----
+Changes to participant interactions must cover the builder, question preview, full preview, Researcher Practice, Live Survey, response metadata, analysis/export, and tests. Keep the self-hosted boundary: no login, no Platform project ownership, no managed R2 dependency.
 
 ## Citation
 
