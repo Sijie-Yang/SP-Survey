@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Box, Typography, Rating, FormControlLabel, Radio, RadioGroup, Button, Chip } from '@mui/material';
+import { Box, Typography, Button, Chip } from '@mui/material';
 import { Visibility, TimerOutlined } from '@mui/icons-material';
+import { SurveyJsBooleanControl } from './ImageBooleanWidget';
+import { SurveyJsRatingControl } from './ImageRatingWidget';
 
 function isImageMedia(type) {
   return !type || type === 'image' || type === 'any';
@@ -66,6 +68,88 @@ export function MediaGallery({ items = [] }) {
   );
 }
 
+/** Render resolved media slots (stack or sequential). */
+export function MediaSlotLayout({
+  slots = [],
+  presentation = 'stack',
+  items = null,
+}) {
+  const list = (slots?.length ? slots : (items || [])).filter((s) => s?.url);
+  if (!list.length) return null;
+
+  if (presentation === 'sequential') {
+    return <MediaSequentialSlots slots={list} />;
+  }
+
+  const choiceSlots = list.filter((s) => (s.role || 'stimulus') === 'choice');
+  if (choiceSlots.length >= 2 && choiceSlots.length === list.filter((s) => s.role === 'choice').length) {
+    // Compare-style: choice slots side by side; companions below
+    const companions = list.filter((s) => s.role !== 'choice');
+    return (
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 2 }}>
+        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+          {choiceSlots.map((s, i) => (
+            <Box key={s.slotId || s.url || i} sx={{ flex: '1 1 0', minWidth: { xs: '100%', sm: 160 } }}>
+              <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5, fontWeight: 600 }}>
+                {s.name || s.slotId || `Option ${i + 1}`}
+              </Typography>
+              <MediaPlayer url={s.url} type={s.type} name={s.name} />
+            </Box>
+          ))}
+        </Box>
+        {companions.length > 0 && <MediaGallery items={companions} />}
+      </Box>
+    );
+  }
+
+  return (
+    <Box sx={{ mb: 2 }}>
+      <MediaGallery items={list} />
+    </Box>
+  );
+}
+
+function MediaSequentialSlots({ slots }) {
+  const [idx, setIdx] = useState(0);
+  const current = slots[idx];
+  const done = idx >= slots.length;
+  if (done) {
+    return (
+      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+        All media shown — please answer below.
+      </Typography>
+    );
+  }
+  return (
+    <Box sx={{ mb: 2 }}>
+      <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
+        {idx + 1} / {slots.length}
+        {current.slotId ? ` · ${current.slotId}` : ''}
+        {current.name ? ` · ${current.name}` : ''}
+      </Typography>
+      <MediaPlayer url={current.url} type={current.type} name={current.name} />
+      <Button
+        sx={{ mt: 1.5, minHeight: { xs: 44, sm: 32 } }}
+        variant="outlined"
+        size="medium"
+        fullWidth
+        onClick={() => setIdx((i) => i + 1)}
+      >
+        {idx + 1 < slots.length ? 'Next media' : 'Done viewing'}
+      </Button>
+    </Box>
+  );
+}
+
+function renderStimulus({ mediaUrl, mediaType, mediaName, mediaItems, mediaSlots, mediaPresentation }) {
+  const slots = Array.isArray(mediaSlots) ? mediaSlots.filter((s) => s?.url) : [];
+  if (slots.length) {
+    return <MediaSlotLayout slots={slots} presentation={mediaPresentation || 'stack'} />;
+  }
+  const items = mediaItems?.length ? mediaItems : (mediaUrl ? [{ url: mediaUrl, type: mediaType, name: mediaName }] : []);
+  return <MediaSlotLayout items={items} presentation="stack" />;
+}
+
 /** Legacy side-by-side for video/audio; images use ImageGalleryGrid instead. */
 export function MediaSideBySide({ items = [] }) {
   if (!items.length) return null;
@@ -77,7 +161,7 @@ export function MediaSideBySide({ items = [] }) {
   return (
     <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
       {otherItems.map((item, i) => (
-        <Box key={item.url || i} sx={{ flex: '1 1 0', minWidth: 200 }}>
+        <Box key={item.url || i} sx={{ flex: '1 1 0', minWidth: { xs: '100%', sm: 200 } }}>
           <Typography variant="caption" color="text.secondary" sx={{ mb: 0.5, display: 'block', textAlign: 'center', fontWeight: 600 }}>
             {item.label || item.name || `Option ${String.fromCharCode(65 + i)}`}
           </Typography>
@@ -181,13 +265,30 @@ export function MediaTimedExposure({ url, type, name, exposureSeconds = 5 }) {
   if (phase === 'idle') {
     return (
       <Box sx={{
-        height: 260, borderRadius: 2, border: '1px dashed', borderColor: 'divider',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 1.5, bgcolor: 'grey.50',
+        minHeight: { xs: 200, sm: 260 },
+        height: { xs: 'auto', sm: 260 },
+        borderRadius: 2,
+        border: '1px dashed',
+        borderColor: 'divider',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        justifyContent: 'center',
+        gap: 1.5,
+        bgcolor: 'grey.50',
+        px: 2,
+        py: 2,
       }}>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center' }}>
           You will see the media for {exposureSeconds} second{exposureSeconds === 1 ? '' : 's'}. Watch carefully — it will not be shown again.
         </Typography>
-        <Button variant="contained" startIcon={<Visibility />} onClick={() => { setRemaining(exposureSeconds); setPhase('showing'); }}>
+        <Button
+          variant="contained"
+          fullWidth
+          startIcon={<Visibility />}
+          sx={{ minHeight: { xs: 44, sm: 36 } }}
+          onClick={() => { setRemaining(exposureSeconds); setPhase('showing'); }}
+        >
           I'm ready — show it
         </Button>
       </Box>
@@ -219,10 +320,13 @@ export function MediaTimedExposure({ url, type, name, exposureSeconds = 5 }) {
 }
 
 export function MediaDisplayContent({
-  mediaUrl, mediaType, mediaName, mediaItems,
+  mediaUrl, mediaType, mediaName, mediaItems, mediaSlots, mediaPresentation,
   displayMode = 'single', exposureSeconds = 5, beforeLabel = 'Before', afterLabel = 'After',
 }) {
   const items = mediaItems?.length ? mediaItems : (mediaUrl ? [{ url: mediaUrl, type: mediaType, name: mediaName }] : []);
+  if (mediaSlots?.length) {
+    return renderStimulus({ mediaUrl, mediaType, mediaName, mediaItems, mediaSlots, mediaPresentation });
+  }
 
   if (displayMode === 'reveal') {
     return (
@@ -293,50 +397,106 @@ export function MediaDisplayContent({
   );
 }
 
-export function MediaRatingContent({ mediaUrl, mediaType, mediaName, mediaItems, value, onChange, rateMin = 1, rateMax = 5 }) {
-  const items = mediaItems?.length ? mediaItems : (mediaUrl ? [{ url: mediaUrl, type: mediaType, name: mediaName }] : []);
-  const imageItems = items.filter((item) => item?.url && isImageMedia(item.type));
-  const one = items[0];
+export function MediaRatingContent({
+  mediaUrl, mediaType, mediaName, mediaItems, mediaSlots, mediaPresentation,
+  value, onChange, rateMin = 1, rateMax = 5,
+  minRateDescription = '', maxRateDescription = '',
+}) {
   return (
-    <Box>
-      {imageItems.length > 0 ? (
-        <ImageGalleryGrid items={imageItems} />
-      ) : (
-        <MediaPlayer url={one?.url || mediaUrl} type={one?.type || mediaType} name={one?.name || mediaName} />
-      )}
-      <Box sx={{ mt: 2, display: 'flex', alignItems: 'center', gap: 2 }}>
-        <Typography variant="body2">{rateMin}</Typography>
-        <Rating
-          value={value || null}
-          max={rateMax - rateMin + 1}
-          onChange={(_, v) => onChange(v ? v + rateMin - 1 : null)}
-        />
-        <Typography variant="body2">{rateMax}</Typography>
-      </Box>
+    <Box sx={{ width: '100%' }}>
+      {renderStimulus({ mediaUrl, mediaType, mediaName, mediaItems, mediaSlots, mediaPresentation })}
+      <SurveyJsRatingControl
+        rateMin={rateMin}
+        rateMax={rateMax}
+        minRateDescription={minRateDescription}
+        maxRateDescription={maxRateDescription}
+        value={value}
+        onChange={onChange}
+      />
     </Box>
   );
 }
 
-export function MediaBooleanContent({ mediaUrl, mediaType, mediaName, mediaItems, value, onChange, labelTrue = 'Yes', labelFalse = 'No' }) {
-  const items = mediaItems?.length ? mediaItems : (mediaUrl ? [{ url: mediaUrl, type: mediaType, name: mediaName }] : []);
-  const imageItems = items.filter((item) => item?.url && isImageMedia(item.type));
-  const one = items[0];
+export function MediaBooleanContent({
+  mediaUrl, mediaType, mediaName, mediaItems, mediaSlots, mediaPresentation,
+  value, onChange, labelTrue = 'Yes', labelFalse = 'No', name = 'mediaboolean',
+}) {
   return (
-    <Box>
-      {imageItems.length > 0 ? (
-        <ImageGalleryGrid items={imageItems} />
-      ) : (
-        <MediaPlayer url={one?.url || mediaUrl} type={one?.type || mediaType} name={one?.name || mediaName} />
-      )}
-      <RadioGroup
-        row
-        value={value === true ? 'yes' : value === false ? 'no' : ''}
-        onChange={(e) => onChange(e.target.value === 'yes')}
-        sx={{ mt: 2 }}
-      >
-        <FormControlLabel value="yes" control={<Radio />} label={labelTrue} />
-        <FormControlLabel value="no" control={<Radio />} label={labelFalse} />
-      </RadioGroup>
+    <Box sx={{ width: '100%' }}>
+      {renderStimulus({ mediaUrl, mediaType, mediaName, mediaItems, mediaSlots, mediaPresentation })}
+      <SurveyJsBooleanControl
+        name={name}
+        labelTrue={labelTrue}
+        labelFalse={labelFalse}
+        value={value}
+        onChange={onChange}
+      />
     </Box>
   );
+}
+
+/** Choice among media items (video/audio/image). */
+export function MediaPickerContent({
+  mediaItems, mediaSlots, choices, value, onChange, multiSelect = false,
+}) {
+  const items = (mediaItems?.length ? mediaItems : (mediaSlots || []).filter((s) => s.role === 'choice' || !s.role))
+    .filter((m) => m?.url);
+  const choiceList = (choices?.length ? choices : items.map((m, i) => ({
+    value: `media_${i}`,
+    imageLink: m.url,
+    imageName: m.name,
+  })));
+
+  const selected = multiSelect
+    ? (Array.isArray(value) ? value : [])
+    : value;
+
+  const toggle = (v) => {
+    if (!multiSelect) {
+      onChange(v);
+      return;
+    }
+    const set = new Set(Array.isArray(selected) ? selected : []);
+    if (set.has(v)) set.delete(v);
+    else set.add(v);
+    onChange([...set]);
+  };
+
+  return (
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+      {choiceList.map((c, i) => {
+        const url = c.imageLink || items[i]?.url;
+        const type = items[i]?.type || inferTypeFromUrl(url);
+        const name = c.imageName || items[i]?.name || c.value;
+        const v = c.value;
+        const isOn = multiSelect ? selected.includes(v) : selected === v;
+        return (
+          <Box
+            key={v || i}
+            onClick={() => toggle(v)}
+            sx={{
+              border: '2px solid',
+              borderColor: isOn ? 'primary.main' : 'divider',
+              borderRadius: 2,
+              p: 1.5,
+              cursor: 'pointer',
+              bgcolor: isOn ? 'action.selected' : 'background.paper',
+            }}
+          >
+            <Typography variant="caption" fontWeight={700} sx={{ mb: 0.5, display: 'block' }}>
+              {name}
+            </Typography>
+            <MediaPlayer url={url} type={type} name={name} />
+          </Box>
+        );
+      })}
+    </Box>
+  );
+}
+
+function inferTypeFromUrl(url) {
+  const n = String(url || '').toLowerCase();
+  if (/\.(mp4|webm|mov)(\?|$)/.test(n)) return 'video';
+  if (/\.(mp3|wav|m4a|ogg)(\?|$)/.test(n)) return 'audio';
+  return 'image';
 }

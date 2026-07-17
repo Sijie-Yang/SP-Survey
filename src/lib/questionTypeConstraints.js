@@ -6,7 +6,9 @@
 const MEDIA_TYPES = new Set([
   'imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'imagematrix',
   'image', 'imageslidergroup', 'imagepointallocation',
-  'mediadisplay', 'mediarating', 'mediaboolean', 'mediaranking', 'imageannotation',
+  'mediadisplay', 'mediapicker', 'mediaranking', 'mediarating', 'mediaboolean',
+  'mediamatrix', 'mediaslidergroup', 'mediapointallocation',
+  'imageannotation',
   'skillquestion',
 ]);
 
@@ -69,6 +71,11 @@ export function getQuestionMediaConstraints(type, question = {}) {
       countLabel: 'Media files to rank',
       samplingModes: true,
     },
+    mediapicker: {
+      countMin: 1, countMax: 20, defaultCount: 4,
+      countLabel: 'Media files shown as choices',
+      samplingModes: true,
+    },
     imagerating: {
       countMin: 1, countMax: 6, defaultCount: 1,
       countLabel: 'Images to rate',
@@ -114,6 +121,21 @@ export function getQuestionMediaConstraints(type, question = {}) {
       countLabel: 'Media files shown',
       samplingModes: true,
     },
+    mediamatrix: {
+      countMin: 1, countMax: 6, defaultCount: 1,
+      countLabel: 'Media files shown above the matrix',
+      samplingModes: true,
+    },
+    mediaslidergroup: {
+      countMin: 1, countMax: 6, defaultCount: 1,
+      countLabel: 'Media files shown above the sliders',
+      samplingModes: true,
+    },
+    mediapointallocation: {
+      countMin: 1, countMax: 6, defaultCount: 1,
+      countLabel: 'Media files shown above the budget task',
+      samplingModes: true,
+    },
     imageannotation: {
       countFixed: 1,
       countLabel: 'Always 1 image to annotate',
@@ -156,4 +178,19 @@ export function usesStimulusSampling(type, question = {}) {
 
 export function isCuratedSelectionMode(mode) {
   return mode === 'huggingface_manual' || mode === 'manual';
+}
+
+/** Interactive media types that can repeat as multiple trials (see trialNavigation.js). */
+export const TRIAL_LOOP_EDITOR_TYPES = new Set([
+  'imagepicker', 'mediapicker',
+  'imagerating', 'mediarating', 'imageboolean', 'mediaboolean',
+  'imageranking', 'mediaranking',
+  'imagematrix', 'mediamatrix',
+  'imageslidergroup', 'mediaslidergroup',
+  'imagepointallocation', 'mediapointallocation',
+  'imageannotation',
+]);
+
+export function supportsTrialCount(type) {
+  return TRIAL_LOOP_EDITOR_TYPES.has(type);
 }

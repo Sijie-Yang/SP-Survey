@@ -1,5 +1,7 @@
 /** Inter-rater reliability: Krippendorff's alpha and agreement rate. */
 
+import { expandQuestionAnswerUnits } from './responseAnswerUnits';
+
 function filenameKey(val) {
   if (!val || typeof val !== 'string') return String(val ?? '');
   return val.split('?')[0].split('/').pop();
@@ -8,40 +10,37 @@ function filenameKey(val) {
 /**
  * Build a units × coders value matrix for one question.
  * Each unit = one shown image (by filename); each coder = one response row.
+ * Multi-trial answers contribute one observation per trial (same coder index).
  */
 export function buildIrrMatrix(responses, questionName, { interval = false } = {}) {
   const unitMap = new Map(); // unitKey -> { coderIndex: value }
 
   responses.forEach((row, coderIdx) => {
-    const qData = row.responses?.[questionName];
-    if (!qData) return;
-    let ans = typeof qData === 'object' && 'answer' in qData ? qData.answer : qData;
-    const shown = qData.shown_images?.length
-      ? qData.shown_images
-      : (row.displayed_images?.[questionName] || []);
-
-    if (interval && typeof ans === 'number') {
-      const unit = shown[0] ? filenameKey(shown[0]) : `row_${coderIdx}`;
-      if (!unitMap.has(unit)) unitMap.set(unit, {});
-      unitMap.get(unit)[coderIdx] = ans;
-      return;
-    }
-
-    if (typeof ans === 'string' && shown.length) {
-      const chosen = filenameKey(ans);
-      shown.forEach((img) => {
-        const unit = filenameKey(img);
+    const trialUnits = expandQuestionAnswerUnits(row, questionName, { requireAnswer: true });
+    trialUnits.forEach(({ answer: ans, shown_images: shown }) => {
+      if (interval && typeof ans === 'number') {
+        const unit = shown[0] ? filenameKey(shown[0]) : `row_${coderIdx}`;
         if (!unitMap.has(unit)) unitMap.set(unit, {});
-        unitMap.get(unit)[coderIdx] = filenameKey(img) === chosen ? 1 : 0;
-      });
-      return;
-    }
+        unitMap.get(unit)[coderIdx] = ans;
+        return;
+      }
 
-    if (typeof ans === 'number') {
-      const unit = shown[0] ? filenameKey(shown[0]) : `row_${coderIdx}`;
-      if (!unitMap.has(unit)) unitMap.set(unit, {});
-      unitMap.get(unit)[coderIdx] = ans;
-    }
+      if (typeof ans === 'string' && shown.length) {
+        const chosen = filenameKey(ans);
+        shown.forEach((img) => {
+          const unit = filenameKey(img);
+          if (!unitMap.has(unit)) unitMap.set(unit, {});
+          unitMap.get(unit)[coderIdx] = filenameKey(img) === chosen ? 1 : 0;
+        });
+        return;
+      }
+
+      if (typeof ans === 'number') {
+        const unit = shown[0] ? filenameKey(shown[0]) : `row_${coderIdx}`;
+        if (!unitMap.has(unit)) unitMap.set(unit, {});
+        unitMap.get(unit)[coderIdx] = ans;
+      }
+    });
   });
 
   const units = [...unitMap.keys()];

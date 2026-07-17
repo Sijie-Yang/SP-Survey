@@ -1,5 +1,6 @@
 /** Clone skill iframe init payload — postMessage requires structured-clone-safe data only. */
-import { buildFallbackDemoImages, inlineDemoSvgDataUri } from './presetSkills';
+
+import { enrichEmotionColorConfig } from './emotionColor';
 
 function absUrl(url) {
   if (!url || typeof url !== 'string') return url;
@@ -51,9 +52,8 @@ function safeJsonClone(data, fallback) {
 export function toSkillInitPayload(config, images, value) {
   const safeConfig = safeJsonClone(config, {}) || {};
 
-  if (Array.isArray(safeConfig.demoImages)) {
-    safeConfig.demoImages = safeConfig.demoImages.map(normImage).filter(Boolean);
-  }
+  // Legacy SVG demoImages are ignored; strip so skills never see them.
+  delete safeConfig.demoImages;
   if (Array.isArray(safeConfig.injectedImages)) {
     safeConfig.injectedImages = safeConfig.injectedImages.map(normImage).filter(Boolean);
   }
@@ -64,19 +64,7 @@ export function toSkillInitPayload(config, images, value) {
   if (safeConfig.injectedImages?.length) {
     safeImages = safeConfig.injectedImages;
   }
-  if (!safeImages.length && safeConfig.demoImages?.length) {
-    safeImages = safeConfig.demoImages;
-  }
-  if (!safeImages.length) {
-    safeImages = buildFallbackDemoImages(
-      safeConfig.mediaCount || 1,
-      safeConfig.mediaType || 'image',
-      safeConfig.skillId,
-    ).map(normImage).filter(Boolean);
-  }
-  if (!safeImages.length) {
-    safeImages = [{ name: 'demo.svg', url: inlineDemoSvgDataUri(0), type: 'image' }];
-  }
+  // No SVG / built-in demo fallback — use project media or admin skill-preview library.
 
   const safeValue = safeJsonClone(value, null);
 
@@ -89,13 +77,15 @@ export function toSkillInitPayload(config, images, value) {
 
 /** Read plain skill fields from a SurveyJS question model. */
 export function readSkillQuestionFields(question) {
-  const config = safeJsonClone(question?.skillConfig, {}) || {};
+  let config = safeJsonClone(question?.skillConfig, {}) || {};
   if (question?.skillId && !config.skillId) config.skillId = question.skillId;
 
-  let images = toPlainArray(question?.skillImages).map(normImage).filter(Boolean);
-  if (!images.length && config.demoImages?.length) {
-    images = config.demoImages.map(normImage).filter(Boolean);
+  const skillKey = String(question?.skillId || config.skillId || '').replace(/^preset_/, '');
+  if (skillKey === 'emotion_color_picker') {
+    config = enrichEmotionColorConfig(config);
   }
+
+  const images = toPlainArray(question?.skillImages).map(normImage).filter(Boolean);
 
   const payload = toSkillInitPayload(config, images, question?.value);
   return payload;

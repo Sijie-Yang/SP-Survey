@@ -10,4 +10,8 @@ export {
   projectR2Prefix,
   checkR2Status,
   uploadBase64ToStorage,
+  getMediaStoragePublicUrl,
+  downloadStorageText,
+  isTemplateR2Key,
+  filterDeletableR2Keys,
 } from './mediaStorage';

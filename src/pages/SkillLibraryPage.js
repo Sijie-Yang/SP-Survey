@@ -14,7 +14,6 @@ import {
   listMySkills, deleteSkill, submitSkillForReview, getSkillStatus,
   importPresetSkill, listImportedPresetIds, PRESET_SKILLS,
 } from '../lib/skillManager';
-import { PRESET_SKILL_DEMO_IMAGES } from '../lib/presetSkills';
 import { listSkillPreviewMedia, pickPreviewMedia } from '../lib/skillPreviewMedia';
 import SkillQuestionFrame from '../components/SkillQuestionWidget';
 
@@ -86,16 +85,11 @@ export default function SkillLibraryPage() {
     finally { setImporting(null); }
   };
 
-  // Prefer real media from the admin preview library; fall back to built-in demos.
+  // Prefer real media from the configured preview library.
   const mediaForSkill = (skillLike) => {
     const count = skillLike.defaultConfig?.mediaCount || 1;
     const mediaType = skillLike.defaultConfig?.mediaType || 'image';
-    const real = pickPreviewMedia(previewMediaPool, mediaType, count);
-    if (real.length) return real;
-    if (skillLike.defaultConfig?.demoImages?.length) {
-      return skillLike.defaultConfig.demoImages;
-    }
-    return PRESET_SKILL_DEMO_IMAGES.slice(0, count);
+    return pickPreviewMedia(previewMediaPool, mediaType, count);
   };
 
   // Pick media once when the dialog opens so re-renders don't reshuffle

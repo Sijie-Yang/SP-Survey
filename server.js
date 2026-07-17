@@ -2067,6 +2067,224 @@ Now adjust the survey configuration following all the rules and maintaining cons
   }
 });
 
+function extractFalMaskUrl(result) {
+  if (!result) return null;
+  if (typeof result.image?.url === 'string') return result.image.url;
+  if (typeof result.mask?.url === 'string') return result.mask.url;
+  if (Array.isArray(result.masks) && result.masks[0]?.url) return result.masks[0].url;
+  if (Array.isArray(result.images) && result.images[0]?.url) return result.images[0].url;
+  if (typeof result.url === 'string') return result.url;
+  return null;
+}
+
+// POST /api/inference/test
+app.post('/api/inference/test', async (req, res) => {
+  try {
+    const falKey = String(req.body?.falKey || '').trim();
+    if (!falKey) return res.status(400).json({ success: false, error: 'falKey is required' });
+
+    // Lightweight auth check (does not run a model / spend credits)
+    const falRes = await fetch('https://api.fal.ai/v1/models?limit=1', {
+      headers: { Authorization: `Key ${falKey}` },
+    });
+    const text = await falRes.text();
+    let detail = '';
+    try {
+      const body = JSON.parse(text);
+      detail = body?.detail || body?.error || body?.message || '';
+      if (Array.isArray(detail)) detail = detail.map((d) => d?.msg || JSON.stringify(d)).join('; ');
+    } catch {
+      detail = text.slice(0, 300);
+    }
+
+    if (falRes.status === 401) {
+      return res.status(401).json({
+        success: false,
+        error: detail || 'Invalid fal API key (401). Use the full key from fal.ai/dashboard/keys (id:secret).',
+      });
+    }
+    if (falRes.status === 403) {
+      // Key may be valid but lack platform-API scope — still try a tiny model ping
+      const ping = await fetch('https://fal.run/fal-ai/any-llm', {
+        method: 'POST',
+        headers: { Authorization: `Key ${falKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: 'ping', model: 'google/gemini-flash-1.5' }),
+      });
+      if (ping.status === 401) {
+        return res.status(401).json({
+          success: false,
+          error: 'Invalid fal API key. Check you copied the full key (key_id:key_secret).',
+        });
+      }
+      // 400/422/402/etc. mean the key authenticated
+      return res.json({ success: true, status: ping.status, note: 'Key accepted by fal.run' });
+    }
+    if (!falRes.ok && falRes.status >= 500) {
+      return res.status(502).json({ success: false, error: detail || `fal server error (${falRes.status})` });
+    }
+    return res.json({ success: true, status: falRes.status });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// POST /api/inference/sam3
+app.post('/api/inference/sam3', async (req, res) => {
+  try {
+    let { falKey, imageUrl, prompt, points, box, projectId } = req.body || {};
+    if (!falKey && projectId) {
+      try {
+        const projectPath = path.join(PROJECTS_PATH, `${projectId}.json`);
+        if (fs.existsSync(projectPath)) {
+          const proj = JSON.parse(fs.readFileSync(projectPath, 'utf8'));
+          falKey = proj.imageDatasetConfig?.falApiKey || proj.image_dataset_config?.falApiKey;
+        }
+      } catch (_) { /* ignore */ }
+    }
+    if (!falKey) return res.status(400).json({ success: false, error: 'falKey is required (or configure falApiKey on the project)' });
+    if (!imageUrl) return res.status(400).json({ success: false, error: 'imageUrl is required' });
+    const input = { image_url: imageUrl };
+    if (prompt) input.prompt = prompt;
+    if (points?.length) {
+      input.point_prompts = points.map((p) => ({
+        x: p.x, y: p.y, label: p.label === 0 ? 0 : 1,
+      }));
+    }
+    if (box) {
+      input.box_prompts = [{ x_min: box.x1, y_min: box.y1, x_max: box.x2, y_max: box.y2 }];
+    }
+    const falRes = await fetch('https://fal.run/fal-ai/sam-3/image', {
+      method: 'POST',
+      headers: { Authorization: `Key ${falKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(input),
+    });
+    const text = await falRes.text();
+    let result;
+    try { result = JSON.parse(text); } catch {
+      return res.status(502).json({ success: false, error: text || `fal HTTP ${falRes.status}` });
+    }
+    if (!falRes.ok) {
+      return res.status(falRes.status === 401 ? 401 : 502).json({
+        success: false,
+        error: result?.detail || result?.error || result?.message || `fal HTTP ${falRes.status}`,
+      });
+    }
+    return res.json({ success: true, maskUrl: extractFalMaskUrl(result), raw: result });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// POST /api/inference/streetscape-seg
+// SegFormer Cityscapes via HuggingFace Inference (ONE pass per image — not SAM3).
+app.post('/api/inference/streetscape-seg', async (req, res) => {
+  try {
+    let { hfToken, imageUrl, projectId } = req.body || {};
+    hfToken = String(hfToken || '').trim();
+    if (!hfToken && projectId) {
+      try {
+        const projectPath = path.join(PROJECTS_PATH, `${projectId}.json`);
+        if (fs.existsSync(projectPath)) {
+          const proj = JSON.parse(fs.readFileSync(projectPath, 'utf8'));
+          const cfg = proj.imageDatasetConfig || proj.image_dataset_config || {};
+          hfToken = cfg.huggingFaceToken || cfg.huggingfaceToken || '';
+        }
+      } catch (_) { /* ignore */ }
+    }
+    if (!hfToken) {
+      return res.status(400).json({
+        success: false,
+        error: 'HuggingFace token required for SegFormer streetscape seg. Set it in Media Dataset → HuggingFace section.',
+      });
+    }
+    if (!imageUrl) return res.status(400).json({ success: false, error: 'imageUrl is required' });
+
+    const HF_MODEL = 'nvidia/segformer-b0-finetuned-cityscapes-1024-1024';
+    const endpoints = [
+      `https://router.huggingface.co/hf-inference/models/${HF_MODEL}`,
+      `https://api-inference.huggingface.co/models/${HF_MODEL}`,
+    ];
+
+    const imgRes = await fetch(imageUrl);
+    if (!imgRes.ok) {
+      return res.status(400).json({ success: false, error: `Failed to fetch image (${imgRes.status})` });
+    }
+    const imgBuf = Buffer.from(await imgRes.arrayBuffer());
+    const contentType = imgRes.headers.get('content-type') || 'image/jpeg';
+
+    let lastErr = '';
+    let segments = null;
+    for (const endpoint of endpoints) {
+      // eslint-disable-next-line no-await-in-loop
+      const hfRes = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${hfToken}`,
+          'Content-Type': contentType,
+          Accept: 'application/json',
+        },
+        body: imgBuf,
+      });
+      const text = await hfRes.text();
+      let parsed;
+      try {
+        parsed = JSON.parse(text);
+      } catch {
+        lastErr = text.slice(0, 300) || `HF HTTP ${hfRes.status}`;
+        continue;
+      }
+      if (hfRes.status === 503 && parsed?.estimated_time) {
+        return res.status(503).json({
+          success: false,
+          error: `Model is loading on HuggingFace (~${Math.ceil(parsed.estimated_time)}s). Retry in a moment.`,
+        });
+      }
+      if (!hfRes.ok) {
+        lastErr = parsed?.error || parsed?.message || `HF HTTP ${hfRes.status}`;
+        if (hfRes.status === 401 || hfRes.status === 403) {
+          return res.status(401).json({ success: false, error: lastErr || 'Invalid HuggingFace token' });
+        }
+        continue;
+      }
+      if (!Array.isArray(parsed)) {
+        lastErr = 'Unexpected HF response (expected segment list)';
+        continue;
+      }
+      segments = parsed;
+      break;
+    }
+
+    if (!segments) {
+      return res.status(502).json({ success: false, error: lastErr || 'SegFormer request failed' });
+    }
+
+    const masks = {};
+    const labels = [];
+    for (const seg of segments) {
+      const label = seg.label || seg.class || '';
+      if (!label) continue;
+      labels.push(label);
+      const m = seg.mask;
+      if (!m) masks[label] = null;
+      else if (typeof m === 'string' && m.startsWith('data:')) masks[label] = m;
+      else if (typeof m === 'string') masks[label] = `data:image/png;base64,${m}`;
+      else masks[label] = null;
+    }
+
+    return res.json({
+      success: true,
+      model: HF_MODEL,
+      masks,
+      labels,
+      vocab: labels,
+      compute_runtime: 'hf_segformer_cityscapes',
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+
 app.listen(PORT, () => {
   console.log(`🚀 File management server running on http://localhost:${PORT}`);
   console.log(`📁 Templates directory: ${TEMPLATES_PATH}`);

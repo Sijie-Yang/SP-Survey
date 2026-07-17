@@ -7,10 +7,6 @@ import {
   CircularProgress,
   LinearProgress,
   Chip,
-  Divider,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   TextField,
   Switch,
   FormControlLabel,
@@ -34,13 +30,10 @@ import {
 import {
   Refresh,
   CheckCircle,
-  Error as ErrorIcon,
   Warning,
   CloudDownload,
   Delete,
-  ExpandMore,
   CloudUpload,
-  ContentCopy,
   Search,
   SelectAll,
   Deselect,
@@ -51,8 +44,7 @@ import {
   getImagesFromHuggingFace,
   getImageCountFromDataset,
 } from '../../lib/huggingface';
-import { isR2Configured, uploadImageToR2, deleteImagesFromR2, listImagesFromR2, copyImagesInR2, projectR2Prefix } from '../../lib/r2';
-import { asyncPool } from '../../lib/asyncPool';
+import { isR2Configured, uploadImageToR2, deleteImagesFromR2, listImagesFromR2, projectR2Prefix } from '../../lib/r2';
 import {
   inferMediaType, normalizeMediaEntry, MEDIA_ACCEPT, downloadMediaFiles,
   analyzeTaggedSets, analyzeTaggedCategories, sortMediaByName,
@@ -62,76 +54,12 @@ import MediaPairingGuide from './MediaPairingGuide';
 import MediaCategoryGuide from './MediaCategoryGuide';
 import MediaFolderBrowser from './MediaFolderBrowser';
 import SupabaseStorageConfig from './SupabaseStorageConfig';
-import { getTemplateById, listTemplates } from '../../lib/templateManager';
-import {
-  computeTemplateImportProgress,
-  buildTemplateCopyTodo,
-  mergeCopiedIntoProjectImages,
-  getTemplateImportHistory,
-  mergeTemplateImportHistory,
-  formatTemplateImportStatus,
-} from '../../lib/templateImageImport';
+import SpatialIntelligencePanel from './SpatialIntelligencePanel';
+import MediaPreannotatePanel from './MediaPreannotatePanel';
 import { useRegion } from '../../contexts/RegionContext';
 import { LOCAL_USER_ID } from '../../lib/appMode';
 
 const MEDIA_PAGE_SIZE = 24;
-/** Images per R2 copy API request. */
-const R2_COPY_REQUEST_BATCH = 100;
-/** How many copy requests run in parallel (up to BATCH × CONCURRENCY objects in flight). */
-const R2_COPY_CONCURRENCY = 3;
-
-function templateImportProgressLabel(status) {
-  if (status.phase === 'listing') return 'Scanning template & project folders…';
-  if (status.phase === 'saving') return 'Saving project image list…';
-  if (status.total === 0) {
-    return status.activeTemplateName
-      ? `All images from "${status.activeTemplateName}" are already in this project.`
-      : 'All template images are already in this project.';
-  }
-  const shown = Math.min(status.progress, status.total);
-  const pct = status.total > 0 ? Math.round((shown / status.total) * 100) : 0;
-  let label = status.activeTemplateName
-    ? `Importing "${status.activeTemplateName}": ${shown} / ${status.total} (${pct}%)`
-    : `Copying ${shown} / ${status.total} (${pct}%)`;
-  if (status.skipped > 0) label += ` · ${status.skipped} skipped (already present)`;
-  return label;
-}
-
-/** Copy template images — progress ticks +1 each time the server finishes one file. */
-async function copyTemplateImagesWithRealProgress(todo, setStatus) {
-  const batches = [];
-  for (let i = 0; i < todo.length; i += R2_COPY_REQUEST_BATCH) {
-    batches.push(todo.slice(i, i + R2_COPY_REQUEST_BATCH));
-  }
-
-  const copiedImages = [];
-  const errors = [];
-  const progressRef = { current: 0 };
-
-  await asyncPool(R2_COPY_CONCURRENCY, batches, async (batch) => {
-    const res = await copyImagesInR2(batch, {
-      onProgress: () => {
-        progressRef.current += 1;
-        const done = progressRef.current;
-        setStatus((prev) => ({
-          ...prev,
-          progress: done,
-          phase: 'copying',
-        }));
-      },
-    });
-    if (res.copied?.length) copiedImages.push(...res.copied);
-    if (res.errors?.length) errors.push(...res.errors);
-    return res;
-  });
-
-  return { copiedImages, errors, completed: progressRef.current };
-}
-
-function safeR2Name(name = '') {
-  return name.replace(/[^a-zA-Z0-9._-]/g, '_');
-}
-
 function mediaEntryKey(entry, userId, projectId) {
   if (entry?.key) return entry.key;
   if (!entry?.name || !projectId) return null;
@@ -150,32 +78,13 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
   });
   const fileInputRef = useRef(null);
 
-  // HuggingFace optional section
-  const [hfExpanded, setHfExpanded] = useState(false);
+  // HuggingFace optional import
   const [hfConfig, setHfConfig] = useState({ enabled: false, token: '', datasetName: '' });
   const [hfStatus, setHfStatus] = useState({ loading: false, connected: false, error: null, datasetInfo: null });
   const [preloadStatus, setPreloadStatus] = useState({ loading: false, progress: 0, total: 0, error: null, success: null });
 
   // R2 sync state
   const [r2Syncing, setR2Syncing] = useState(false);
-
-  // Import template images — any project can pull from any template with an R2 folder.
-  const [availableTemplates, setAvailableTemplates] = useState([]);
-  const [selectedTemplateId, setSelectedTemplateId] = useState('');
-  const [templateProgressMap, setTemplateProgressMap] = useState({});
-  const [loadingTemplates, setLoadingTemplates] = useState(false);
-  const [templateImportStatus, setTemplateImportStatus] = useState({
-    loading: false,
-    progress: 0,
-    total: 0,
-    templateTotal: 0,
-    skipped: 0,
-    phase: 'idle', // idle | listing | copying | saving
-    activeTemplateId: null,
-    activeTemplateName: null,
-    error: null,
-    success: null,
-  });
 
   // Uploaded media library management
   const [mediaSearch, setMediaSearch] = useState('');
@@ -188,6 +97,16 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
   const [groupSizeFilter, setGroupSizeFilter] = useState('all');
   const [currentFolder, setCurrentFolder] = useState('');
   const [openMoveSignal, setOpenMoveSignal] = useState(0);
+  const [preannotateFocusName, setPreannotateFocusName] = useState(null);
+  const scrollRef = useRef(0);
+  const restoreScrollRef = useRef(false);
+
+  useEffect(() => {
+    if (restoreScrollRef.current) {
+      window.scrollTo(0, scrollRef.current);
+      restoreScrollRef.current = false;
+    }
+  });
 
   const userId = user?.id || 'anonymous';
   const projectId = currentProject?.id;
@@ -395,72 +314,6 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
     return () => { cancelled = true; };
   }, [currentProject?.id, user?.id]); // eslint-disable-line
 
-  // Scroll position restore
-  const scrollRef = useRef(0);
-  const restoreScrollRef = useRef(false);
-  useEffect(() => {
-    if (restoreScrollRef.current) {
-      window.scrollTo(0, scrollRef.current);
-      restoreScrollRef.current = false;
-    }
-  });
-
-  const templateImportHistory = useMemo(
-    () => getTemplateImportHistory(currentProject),
-    [currentProject?.imageDatasetConfig?.templateImportHistory],
-  );
-
-  const refreshTemplateProgress = async (templateIds) => {
-    if (!projectId || !isR2Configured() || !templateIds?.length) return;
-    const uid = user?.id || 'anonymous';
-    const entries = await Promise.all(
-      templateIds.map(async (id) => {
-        const progress = await computeTemplateImportProgress(id, uid, projectId);
-        return [id, progress];
-      }),
-    );
-    setTemplateProgressMap((prev) => {
-      const next = { ...prev };
-      entries.forEach(([id, progress]) => { next[id] = progress; });
-      return next;
-    });
-  };
-
-  // Load templates that ship with images (any project can import from them).
-  useEffect(() => {
-    let cancelled = false;
-    setLoadingTemplates(true);
-    listTemplates(user?.id).then((templates) => {
-      if (cancelled) return;
-      const withImages = templates.filter(
-        (t) => Array.isArray(t.preloadedImages) && t.preloadedImages.length > 0,
-      );
-      setAvailableTemplates(withImages);
-      setSelectedTemplateId((prev) => {
-        if (prev && withImages.some((t) => t.id === prev)) return prev;
-        if (currentProject?.templateId && withImages.some((t) => t.id === currentProject.templateId)) {
-          return currentProject.templateId;
-        }
-        return withImages[0]?.id || '';
-      });
-    }).finally(() => {
-      if (!cancelled) setLoadingTemplates(false);
-    });
-    return () => { cancelled = true; };
-  }, [user?.id, currentProject?.templateId]);
-
-  // Refresh per-template import counts (supports resume after interrupt).
-  useEffect(() => {
-    const ids = new Set([
-      ...availableTemplates.map((t) => t.id),
-      ...Object.keys(templateImportHistory),
-    ]);
-    if (ids.size && projectId) refreshTemplateProgress([...ids]);
-  }, [availableTemplates, projectId, currentProject?.preloadedImages?.length]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const selectedTemplate = availableTemplates.find((t) => t.id === selectedTemplateId) || null;
-  const selectedProgress = templateProgressMap[selectedTemplateId];
-
   // Sync hfConfig from project
   useEffect(() => {
     if (currentProject?.imageDatasetConfig) {
@@ -502,156 +355,6 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
       }
     } catch (e) {
       setHfStatus({ loading: false, connected: false, error: e.message, datasetInfo: null });
-    }
-  };
-
-  // ── Import images from source template ───────────────────────────────────
-
-  const handleImportFromTemplate = async (templateIdOverride) => {
-    const templateId = templateIdOverride || selectedTemplateId;
-    if (!templateId || !currentProject?.id) return;
-    if (!isR2Configured()) {
-      setTemplateImportStatus((prev) => ({
-        ...prev,
-        error: 'Supabase is not configured. Save Supabase credentials in the section above first.',
-      }));
-      return;
-    }
-    if (templateImportStatus.loading) return;
-
-    const template = availableTemplates.find((t) => t.id === templateId)
-      || (await getTemplateById(templateId));
-    if (!template) {
-      setTemplateImportStatus((prev) => ({ ...prev, error: 'Template not found.' }));
-      return;
-    }
-
-    scrollRef.current = window.scrollY;
-    restoreScrollRef.current = true;
-
-    const uid = user?.id || 'anonymous';
-    const projectPrefix = `${uid}/${currentProject.id}/`;
-
-    setTemplateImportStatus({
-      loading: true,
-      progress: 0,
-      total: 0,
-      templateTotal: 0,
-      skipped: 0,
-      phase: 'listing',
-      activeTemplateId: template.id,
-      activeTemplateName: template.name,
-      error: null,
-      success: null,
-    });
-
-    try {
-      const progress = await computeTemplateImportProgress(template.id, uid, currentProject.id);
-      if (progress.error) throw new Error(progress.error);
-
-      const listed = { success: true, images: progress.templateImages };
-      const existing = await listImagesFromR2(projectPrefix);
-      if (!existing.success) {
-        throw new Error(existing.error || 'Failed to list project images');
-      }
-
-      if (listed.images.length === 0) {
-        setTemplateImportStatus({
-          loading: false,
-          progress: 0,
-          total: 0,
-          templateTotal: 0,
-          skipped: 0,
-          phase: 'idle',
-          activeTemplateId: template.id,
-          activeTemplateName: template.name,
-          error: null,
-          success: `"${template.name}" has no images in its template folder.`,
-        });
-        return;
-      }
-
-      const todo = buildTemplateCopyTodo(listed.images, progress.existingNames, projectPrefix);
-      const total = todo.length;
-      const skipCount = listed.images.length - total;
-
-      setTemplateImportStatus((prev) => ({
-        ...prev,
-        templateTotal: listed.images.length,
-        skipped: skipCount,
-        total,
-        progress: 0,
-        phase: total > 0 ? 'copying' : 'saving',
-      }));
-
-      const copiedImages = [];
-      const errors = [];
-      if (total > 0) {
-        const copyResult = await copyTemplateImagesWithRealProgress(todo, setTemplateImportStatus);
-        copiedImages.push(...copyResult.copiedImages);
-        errors.push(...copyResult.errors);
-      }
-
-      setTemplateImportStatus((prev) => ({
-        ...prev,
-        phase: 'saving',
-        progress: copiedImages.length,
-      }));
-
-      const finalImages = mergeCopiedIntoProjectImages(existing.images, copiedImages);
-
-      const afterProgress = await computeTemplateImportProgress(template.id, uid, currentProject.id);
-      const historyEntry = {
-        templateName: template.name,
-        totalInTemplate: afterProgress.totalInTemplate,
-        importedCount: afterProgress.importedCount,
-        remaining: afterProgress.remaining,
-        isComplete: afterProgress.isComplete,
-        lastImportAt: new Date().toISOString(),
-        lastBatchCopied: copiedImages.length,
-      };
-
-      const updatedImageDatasetConfig = mergeTemplateImportHistory(currentProject, template.id, historyEntry);
-
-      onProjectUpdate({
-        ...currentProject,
-        preloadedImages: finalImages,
-        preloadedSource: 'supabase',
-        preloadedAt: new Date().toISOString(),
-        imageDatasetConfig: updatedImageDatasetConfig,
-      });
-      if (onConfigChange) onConfigChange(true, updatedImageDatasetConfig);
-
-      await refreshTemplateProgress([template.id]);
-
-      const newCount = copiedImages.length;
-      setTemplateImportStatus({
-        loading: false,
-        progress: total,
-        total,
-        templateTotal: listed.images.length,
-        skipped: skipCount,
-        phase: 'idle',
-        activeTemplateId: template.id,
-        activeTemplateName: template.name,
-        error: errors.length ? `${errors.length} file(s) failed to copy.` : null,
-        success: total === 0
-          ? `All ${listed.images.length} image(s) from "${template.name}" are already in this project.`
-          : `Imported ${newCount} image${newCount === 1 ? '' : 's'} from "${template.name}"${skipCount > 0 ? ` (${skipCount} already present — resume supported)` : ''}.`,
-      });
-    } catch (err) {
-      setTemplateImportStatus({
-        loading: false,
-        progress: 0,
-        total: 0,
-        templateTotal: 0,
-        skipped: 0,
-        phase: 'idle',
-        activeTemplateId: template?.id || null,
-        activeTemplateName: template?.name || null,
-        error: err.message,
-        success: null,
-      });
     }
   };
 
@@ -1007,6 +710,17 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
     acc[t] = (acc[t] || 0) + 1;
     return acc;
   }, {});
+  const preannotateImages = useMemo(
+    () => sortMediaByName((currentProject?.preloadedImages || []).filter(
+      (m) => (m.type || inferMediaType(m.name || m.url)) === 'image',
+    )),
+    [currentProject?.preloadedImages],
+  );
+  const preannotateIndex = Math.max(
+    0,
+    preannotateImages.findIndex((m) => m.name === preannotateFocusName),
+  );
+  const preannotateEntry = preannotateImages[preannotateIndex] || null;
 
   return (
     <Box>
@@ -1019,29 +733,15 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
         HuggingFace batch import is available as an optional tool for images.
       </Typography>
 
-      <SupabaseStorageConfig
-        currentProject={currentProject}
-        onProjectUpdate={onProjectUpdate}
-        onConfigChange={onConfigChange}
-      />
-
-      <MediaPairingGuide
-        totalFileCount={preloadedCount}
-        pairedSetCount={groupSummary.total}
-      />
-
-      <MediaCategoryGuide
-        categoryCount={mediaCategories.length}
-        totalFileCount={preloadedCount}
-        categoryLabels={mediaCategories.map((c) => c.category)}
-      />
-
-      {!isR2Configured() && (
-        <Alert severity="warning" sx={{ mb: 3 }}>
-          Supabase is not configured. In <strong>Supabase Storage Configuration</strong> above, enter your
-          Project URL and Service Role key, then click Save Configuration.
-        </Alert>
-      )}
+      <Box sx={{ mb: 2.5, display: 'grid', gap: 1.5, gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' } }}>
+        <MediaPairingGuide compact totalFileCount={preloadedCount} pairedSetCount={groupSummary.total} />
+        <MediaCategoryGuide
+          compact
+          categoryCount={mediaCategories.length}
+          totalFileCount={preloadedCount}
+          categoryLabels={mediaCategories.map((c) => c.category)}
+        />
+      </Box>
 
       {/* ── Current Status ── */}
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3, flexWrap: 'wrap' }}>
@@ -1067,6 +767,148 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
           <Chip icon={<Warning />} label="No images uploaded yet" color="default" variant="outlined" />
         )}
       </Box>
+
+      <Typography variant="overline" color="text.secondary" sx={{ display: 'block', mb: 1, letterSpacing: 1 }}>
+        1 · Add media
+      </Typography>
+
+      <Box
+        sx={{
+          mb: 3,
+          display: 'grid',
+          gap: 2,
+          alignItems: 'stretch',
+          gridTemplateColumns: { xs: '1fr', md: 'repeat(3, minmax(0, 1fr))' },
+        }}
+      >
+        <Box sx={{ p: 2.5, borderRadius: 1.5, border: '2px solid', borderColor: 'secondary.light', bgcolor: 'background.paper' }}>
+          <SupabaseStorageConfig
+            compact
+            currentProject={currentProject}
+            onProjectUpdate={onProjectUpdate}
+            onConfigChange={onConfigChange}
+          />
+        </Box>
+
+        <Box sx={{
+          p: 2.5, borderRadius: 1.5, border: '2px solid', borderColor: 'primary.light',
+          bgcolor: 'background.paper', display: 'flex', flexDirection: 'column', minHeight: 0,
+        }}>
+          <Typography variant="subtitle1" sx={{ mb: 0.75, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 1 }}>
+            <CloudUpload fontSize="small" color="primary" />
+            Upload Media
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+            Upload into the <strong>current folder</strong> ({currentFolder ? <code>{currentFolder}</code> : 'root'}).
+            Images over 300 KB are compressed automatically.
+          </Typography>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept={MEDIA_ACCEPT}
+            multiple
+            style={{ display: 'none' }}
+            onChange={(e) => setSelectedFiles(Array.from(e.target.files))}
+          />
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5, flexWrap: 'wrap' }}>
+            <Button size="small" variant="outlined" onClick={() => fileInputRef.current?.click()} disabled={directUploadStatus.loading}>
+              Choose files
+            </Button>
+            {selectedFiles.length > 0 && <Typography variant="caption" color="text.secondary">{selectedFiles.length} selected</Typography>}
+          </Box>
+          {directUploadStatus.loading && (
+            <Box sx={{ mb: 1.5 }}>
+              <Typography variant="caption" display="block" sx={{ mb: 0.5 }}>
+                Uploading… {directUploadStatus.progress} / {directUploadStatus.total}
+              </Typography>
+              <LinearProgress
+                variant="determinate"
+                value={directUploadStatus.total > 0 ? (directUploadStatus.progress / directUploadStatus.total) * 100 : 0}
+                sx={{ height: 6, borderRadius: 3 }}
+              />
+            </Box>
+          )}
+          {directUploadStatus.success && <Alert severity="success" sx={{ mb: 1.5 }}>{directUploadStatus.success}</Alert>}
+          {directUploadStatus.error && <Alert severity="error" sx={{ mb: 1.5 }}>{directUploadStatus.error}</Alert>}
+          <Box sx={{ mt: 'auto' }}>
+            <Button
+              fullWidth variant="contained" onClick={handleDirectUpload}
+              disabled={!selectedFiles.length || directUploadStatus.loading || !isR2Configured()}
+              startIcon={directUploadStatus.loading ? <CircularProgress size={16} color="inherit" /> : <CloudUpload />}
+            >
+              Upload{selectedFiles.length > 0 ? ` ${selectedFiles.length}` : ''}{currentFolder ? ` → ${currentFolder}` : ' → root'}
+            </Button>
+          </Box>
+        </Box>
+
+        <Box sx={{
+          p: 2.5, borderRadius: 1.5, border: '2px solid', borderColor: 'warning.light',
+          bgcolor: 'background.paper', display: 'flex', flexDirection: 'column', minHeight: 0,
+        }}>
+          <Typography variant="subtitle1" sx={{ mb: 0.75, fontWeight: 700 }}>🤗 HF Dataset Import</Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+            Batch-import from HuggingFace using <code>owner/dataset</code> or <code>owner/dataset/folder</code>.
+          </Typography>
+          <FormControlLabel
+            sx={{ mb: 1, ml: 0 }}
+            control={<Switch size="small" checked={hfConfig.enabled} onChange={(e) => setHfConfig((p) => ({ ...p, enabled: e.target.checked }))} />}
+            label={<Typography variant="body2">Enable HF import</Typography>}
+          />
+          <TextField
+            fullWidth size="small" label="Token (optional)" type="password" value={hfConfig.token}
+            onChange={(e) => setHfConfig((p) => ({ ...p, token: e.target.value }))} disabled={!hfConfig.enabled} sx={{ mb: 1 }}
+          />
+          <TextField
+            fullWidth size="small" label="Dataset" value={hfConfig.datasetName}
+            onChange={(e) => setHfConfig((p) => ({ ...p, datasetName: e.target.value }))}
+            placeholder="owner/dataset" disabled={!hfConfig.enabled} sx={{ mb: 1 }}
+          />
+          <Box sx={{ display: 'flex', gap: 1, mb: 1.5, flexWrap: 'wrap' }}>
+            <Button size="small" variant="outlined" onClick={saveHfConfig} disabled={!hfConfig.enabled || !hfConfig.datasetName}>Save</Button>
+            <Button
+              size="small" variant="outlined" onClick={testHfConnection}
+              disabled={!hfConfig.enabled || !hfConfig.datasetName || hfStatus.loading}
+              startIcon={hfStatus.loading ? <CircularProgress size={14} /> : <Refresh />}
+            >Test</Button>
+          </Box>
+          {(hfStatus.connected || hfStatus.error) && (
+            <Alert severity={hfStatus.connected ? 'success' : 'error'} sx={{ mb: 1.5 }} icon={false}>
+              <Typography variant="caption">
+                {hfStatus.connected
+                  ? `Connected${hfStatus.datasetInfo?.imageCount != null ? ` · ${hfStatus.datasetInfo.imageCount} images` : ''}`
+                  : hfStatus.error}
+              </Typography>
+            </Alert>
+          )}
+          {preloadStatus.loading && (
+            <Box sx={{ mb: 1.5 }}>
+              <Typography variant="caption" display="block" sx={{ mb: 0.5 }}>HF → Supabase… {preloadStatus.progress} / {preloadStatus.total}</Typography>
+              <LinearProgress
+                variant="determinate"
+                value={preloadStatus.total > 0 ? (preloadStatus.progress / preloadStatus.total) * 100 : 0}
+                sx={{ height: 6, borderRadius: 3 }}
+              />
+            </Box>
+          )}
+          {preloadStatus.success && <Alert severity="success" sx={{ mb: 1.5 }}>{preloadStatus.success}</Alert>}
+          {preloadStatus.error && <Alert severity="error" sx={{ mb: 1.5 }}>{preloadStatus.error}</Alert>}
+          <Box sx={{ mt: 'auto' }}>
+            <Button
+              fullWidth variant="contained" onClick={handlePreloadAllImages}
+              disabled={!hfStatus.connected || !isR2Configured() || preloadStatus.loading}
+              startIcon={preloadStatus.loading ? <CircularProgress size={16} /> : <CloudDownload />}
+            >
+              {preloadedCount > 0 ? 'Re-preload to Supabase' : 'Preload to Supabase'}
+            </Button>
+          </Box>
+        </Box>
+      </Box>
+
+      <SpatialIntelligencePanel
+        currentProject={currentProject}
+        onProjectUpdate={onProjectUpdate}
+        onConfigChange={onConfigChange}
+      />
 
       {pairedGroups.length > 0 && (
         <Box sx={{ mb: 3, p: 3, bgcolor: 'background.paper', borderRadius: 1, border: '1px solid', borderColor: 'info.light' }}>
@@ -1188,275 +1030,6 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
           </TableContainer>
         </Box>
       )}
-
-      {/* ── Import from templates (any project) ── */}
-      {isR2Configured() && (loadingTemplates || availableTemplates.length > 0 || Object.keys(templateImportHistory).length > 0) && (
-        <Box sx={{ mb: 3, p: 3, bgcolor: 'background.paper', borderRadius: 1, border: '1px solid', borderColor: 'secondary.light' }}>
-          <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 1 }}>
-            <ContentCopy fontSize="small" color="secondary" />
-            Import Template Images
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Copy images from any published template into this project. You can import from multiple templates;
-            files already in your project folder are skipped automatically so interrupted imports can be resumed.
-          </Typography>
-
-          {/* Import history — templates with progress or past imports */}
-          {(() => {
-            const historyIds = [...new Set([
-              ...Object.keys(templateImportHistory),
-              ...availableTemplates.map((t) => t.id),
-            ])].filter((tid) => {
-              const hist = templateImportHistory[tid];
-              const live = templateProgressMap[tid];
-              const imported = live?.importedCount ?? hist?.importedCount ?? 0;
-              return imported > 0 || hist?.lastImportAt;
-            });
-            if (historyIds.length === 0) return null;
-            const totalImportedFiles = historyIds.reduce((sum, tid) => {
-              const live = templateProgressMap[tid];
-              const hist = templateImportHistory[tid];
-              return sum + (live?.importedCount ?? hist?.importedCount ?? 0);
-            }, 0);
-            return (
-              <>
-                <Typography variant="body2" sx={{ mb: 1 }}>
-                  <strong>{historyIds.length}</strong> template{historyIds.length === 1 ? '' : 's'} with imports ·{' '}
-                  <strong>{totalImportedFiles}</strong> template file{totalImportedFiles === 1 ? '' : 's'} in this project
-                </Typography>
-                <TableContainer component={Paper} variant="outlined" sx={{ mb: 2, maxHeight: 280 }}>
-                  <Table size="small" stickyHeader>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell sx={{ fontWeight: 700 }}>Template</TableCell>
-                        <TableCell align="right" sx={{ fontWeight: 700 }}>Imported</TableCell>
-                        <TableCell align="right" sx={{ fontWeight: 700 }}>Total</TableCell>
-                        <TableCell sx={{ fontWeight: 700 }}>Status</TableCell>
-                        <TableCell sx={{ fontWeight: 700 }}>Last import</TableCell>
-                        <TableCell align="right" sx={{ fontWeight: 700 }} />
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {historyIds.map((tid) => {
-                        const hist = templateImportHistory[tid];
-                        const tpl = availableTemplates.find((t) => t.id === tid);
-                        const live = templateProgressMap[tid];
-                        const total = live?.totalInTemplate ?? hist?.totalInTemplate ?? tpl?.preloadedImages?.length ?? 0;
-                        const imported = live?.importedCount ?? hist?.importedCount ?? 0;
-                        const remaining = live?.remaining ?? hist?.remaining ?? Math.max(0, total - imported);
-                        const isComplete = live?.isComplete ?? hist?.isComplete ?? (total > 0 && remaining === 0);
-                        const name = hist?.templateName || tpl?.name || tid;
-                        const lastAt = hist?.lastImportAt
-                          ? new Date(hist.lastImportAt).toLocaleString()
-                          : '—';
-                        const isActive = templateImportStatus.loading && templateImportStatus.activeTemplateId === tid;
-                        return (
-                          <TableRow key={tid} hover selected={selectedTemplateId === tid}>
-                            <TableCell>
-                              <Typography variant="body2" fontWeight={600}>{name}</Typography>
-                              <Typography variant="caption" color="text.secondary" sx={{ fontFamily: 'monospace' }}>{tid}</Typography>
-                            </TableCell>
-                            <TableCell align="right">{imported}</TableCell>
-                            <TableCell align="right">{total}</TableCell>
-                            <TableCell>
-                              {isComplete ? (
-                                <Chip size="small" color="success" label="Complete" />
-                              ) : remaining > 0 ? (
-                                <Chip size="small" color="warning" label={`${remaining} remaining`} />
-                              ) : (
-                                <Chip size="small" variant="outlined" label="In progress" />
-                              )}
-                            </TableCell>
-                            <TableCell>
-                              <Typography variant="caption">{lastAt}</Typography>
-                            </TableCell>
-                            <TableCell align="right">
-                              {!isComplete && total > 0 && (
-                                <Button
-                                  size="small"
-                                  variant="outlined"
-                                  disabled={templateImportStatus.loading}
-                                  onClick={() => {
-                                    setSelectedTemplateId(tid);
-                                    handleImportFromTemplate(tid);
-                                  }}
-                                >
-                                  {isActive ? 'Importing…' : `Resume (${remaining})`}
-                                </Button>
-                              )}
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </>
-            );
-          })()}
-
-          {loadingTemplates ? (
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-              <CircularProgress size={20} />
-              <Typography variant="body2" color="text.secondary">Loading templates…</Typography>
-            </Box>
-          ) : availableTemplates.length === 0 ? (
-            <Alert severity="info" sx={{ mb: 2 }}>
-              No templates with images are available yet. Upload images to a template in Admin → Templates first.
-            </Alert>
-          ) : (
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, alignItems: 'flex-end', mb: 2 }}>
-              <FormControl size="small" sx={{ minWidth: 280 }}>
-                <InputLabel id="template-import-select">Template to import</InputLabel>
-                <Select
-                  labelId="template-import-select"
-                  label="Template to import"
-                  value={selectedTemplateId}
-                  onChange={(e) => setSelectedTemplateId(e.target.value)}
-                  disabled={templateImportStatus.loading}
-                >
-                  {availableTemplates.map((t) => {
-                    const live = templateProgressMap[t.id];
-                    const status = formatTemplateImportStatus(live) || `${t.preloadedImages?.length || 0} in catalog`;
-                    return (
-                      <MenuItem key={t.id} value={t.id}>
-                        {t.name} ({status})
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-              {selectedTemplate && selectedProgress && !selectedProgress.isComplete && selectedProgress.remaining > 0 && (
-                <Typography variant="caption" color="text.secondary">
-                  {selectedProgress.importedCount}/{selectedProgress.totalInTemplate} already in project ·{' '}
-                  {selectedProgress.remaining} left to copy
-                </Typography>
-              )}
-            </Box>
-          )}
-
-          {templateImportStatus.loading && (
-            <Box sx={{ mb: 2 }}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5, gap: 2 }}>
-                <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                  {templateImportProgressLabel(templateImportStatus)}
-                </Typography>
-                {templateImportStatus.phase === 'copying' && templateImportStatus.total > 0 && (
-                  <Typography variant="body2" color="text.secondary" sx={{ flexShrink: 0 }}>
-                    {Math.min(
-                      100,
-                      Math.round((templateImportStatus.progress / templateImportStatus.total) * 100),
-                    )}%
-                  </Typography>
-                )}
-              </Box>
-              <LinearProgress
-                variant={templateImportStatus.phase === 'copying' && templateImportStatus.total > 0
-                  ? 'determinate'
-                  : 'indeterminate'}
-                value={templateImportStatus.total > 0
-                  ? Math.min(
-                    (templateImportStatus.progress / templateImportStatus.total) * 100,
-                    100,
-                  )
-                  : undefined}
-                sx={{ height: 8, borderRadius: 4 }}
-              />
-              {templateImportStatus.templateTotal > 0 && templateImportStatus.phase === 'copying' && (
-                <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.75 }}>
-                  Template has {templateImportStatus.templateTotal} file(s) total
-                  {templateImportStatus.skipped > 0
-                    ? ` · ${templateImportStatus.skipped} already in your project folder (resume)`
-                    : ''}
-                </Typography>
-              )}
-            </Box>
-          )}
-
-          {templateImportStatus.success && <Alert severity="success" sx={{ mb: 2 }}>{templateImportStatus.success}</Alert>}
-          {templateImportStatus.error && <Alert severity="error" sx={{ mb: 2 }}>{templateImportStatus.error}</Alert>}
-
-          {availableTemplates.length > 0 && (
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => handleImportFromTemplate()}
-              disabled={templateImportStatus.loading || !selectedTemplateId}
-              startIcon={templateImportStatus.loading ? <CircularProgress size={18} color="inherit" /> : <ContentCopy />}
-            >
-              {templateImportStatus.loading
-                ? 'Importing…'
-                : selectedProgress?.remaining > 0
-                  ? `Resume import (${selectedProgress.remaining} remaining)`
-                  : selectedProgress?.isComplete
-                    ? 'Re-check template (all copied)'
-                    : 'Import from selected template'}
-            </Button>
-          )}
-        </Box>
-      )}
-
-      {/* ── Direct Upload ── */}
-      <Box sx={{ mb: 3, p: 3, bgcolor: 'background.paper', borderRadius: 1, border: '1px solid', borderColor: 'primary.light' }}>
-        <Typography variant="subtitle1" sx={{ mb: 1.5, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 1 }}>
-          <CloudUpload fontSize="small" color="primary" />
-          Upload Media to Supabase Storage
-          {currentFolder ? ` → ${currentFolder}` : ' → root'}
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          Select image, video, or audio files to upload to Supabase Storage.
-          Images over 300 KB are automatically compressed in your browser before upload.
-        </Typography>
-
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept={MEDIA_ACCEPT}
-          multiple
-          style={{ display: 'none' }}
-          onChange={(e) => setSelectedFiles(Array.from(e.target.files))}
-        />
-
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2, flexWrap: 'wrap' }}>
-          <Button variant="outlined" onClick={() => fileInputRef.current?.click()} disabled={directUploadStatus.loading}>
-            Choose Media Files
-          </Button>
-          {selectedFiles.length > 0 && (
-            <Typography variant="body2" color="text.secondary">
-              {selectedFiles.length} file(s) selected
-            </Typography>
-          )}
-        </Box>
-
-        {directUploadStatus.loading && (
-          <Box sx={{ mb: 2 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
-              <Typography variant="body2">Uploading...</Typography>
-              <Typography variant="body2" color="text.secondary">
-                {directUploadStatus.progress} / {directUploadStatus.total}
-              </Typography>
-            </Box>
-            <LinearProgress
-              variant="determinate"
-              value={directUploadStatus.total > 0 ? (directUploadStatus.progress / directUploadStatus.total) * 100 : 0}
-              sx={{ height: 8, borderRadius: 4 }}
-            />
-          </Box>
-        )}
-
-        {directUploadStatus.success && <Alert severity="success" sx={{ mb: 2 }}>{directUploadStatus.success}</Alert>}
-        {directUploadStatus.error && <Alert severity="error" sx={{ mb: 2 }}>{directUploadStatus.error}</Alert>}
-
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleDirectUpload}
-          disabled={!selectedFiles.length || directUploadStatus.loading || !isR2Configured()}
-          startIcon={directUploadStatus.loading ? <CircularProgress size={20} color="inherit" /> : <CloudUpload />}
-        >
-          Upload {selectedFiles.length > 0 ? `${selectedFiles.length} File(s)` : ''} to Supabase
-        </Button>
-      </Box>
 
       {/* ── Uploaded Media Library (folder browser) ── */}
       <Typography variant="overline" color="text.secondary" sx={{ display: 'block', mb: 1, letterSpacing: 1 }}>
@@ -1710,123 +1283,24 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
         )}
       </MediaFolderBrowser>
 
-      <Divider sx={{ my: 4 }} />
-
-      {/* ── HuggingFace (Optional) ── */}
-      <Accordion
-        expanded={hfExpanded}
-        onChange={(_, v) => setHfExpanded(v)}
-        sx={{ border: '1px solid', borderColor: 'divider', borderRadius: 1, '&:before': { display: 'none' } }}
-      >
-        <AccordionSummary expandIcon={<ExpandMore />}>
-          <Box>
-            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-              🤗 HuggingFace Dataset Import (Optional)
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Batch-import images from a HuggingFace dataset into Supabase Storage
-            </Typography>
-          </Box>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Alert severity="info" sx={{ mb: 2 }}>
-            <Typography variant="body2" component="div">
-              1. <strong>Public datasets:</strong> Leave token empty<br />
-              2. <strong>Private datasets:</strong> Get token from{' '}
-              <a href="https://huggingface.co/settings/tokens" target="_blank" rel="noopener noreferrer">
-                HuggingFace Settings → Access Tokens
-              </a><br />
-              3. Format: <code>owner/dataset</code> for parquet-style datasets
-              (e.g. <code>sijiey/Thermal-Affordance-Dataset</code>),
-              or <code>owner/dataset/subfolder</code> to import an image folder
-              (e.g. <code>Jusba/Greenery_Survey_Helsinki_Mapillary/images</code>)<br />
-              4. Enable, save, test connection, then click Preload
-            </Typography>
-          </Alert>
-
-          {(hfStatus.connected || hfStatus.error) && (
-            <Alert severity={hfStatus.connected ? 'success' : 'error'} sx={{ mb: 2 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                {hfStatus.loading ? <CircularProgress size={18} /> : hfStatus.connected ? <CheckCircle /> : <ErrorIcon />}
-                <Typography variant="body2">
-                  {hfStatus.connected ? 'Connection successful!' : hfStatus.error}
-                </Typography>
-              </Box>
-            </Alert>
-          )}
-
-          <Box sx={{ p: 2.5, bgcolor: 'background.paper', borderRadius: 1, border: '1px solid', borderColor: 'divider', mb: 2 }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <FormControlLabel
-                control={<Switch checked={hfConfig.enabled} onChange={(e) => setHfConfig(p => ({ ...p, enabled: e.target.checked }))} />}
-                label="Enable HuggingFace Dataset Integration"
-              />
-              <TextField
-                fullWidth label="Access Token (optional)" type="password"
-                value={hfConfig.token}
-                onChange={(e) => setHfConfig(p => ({ ...p, token: e.target.value }))}
-                placeholder="hf_xxxxxxxxxxxxxxxxxxxxxxxx"
-                helperText="Leave empty for public datasets"
-                disabled={!hfConfig.enabled} size="small"
-              />
-              <TextField
-                fullWidth label="Dataset Name" value={hfConfig.datasetName}
-                onChange={(e) => setHfConfig(p => ({ ...p, datasetName: e.target.value }))}
-                placeholder="owner/dataset  or  owner/dataset/subfolder"
-                helperText="Use 'owner/dataset' for rows-style data, or 'owner/dataset/subfolder' to import an image folder"
-                disabled={!hfConfig.enabled} size="small"
-              />
-              <Box sx={{ display: 'flex', gap: 2 }}>
-                <Button variant="contained" size="small" onClick={saveHfConfig} disabled={!hfConfig.enabled || !hfConfig.datasetName}>
-                  Save
-                </Button>
-                <Button variant="outlined" size="small" onClick={testHfConnection}
-                  disabled={!hfConfig.enabled || !hfConfig.datasetName || hfStatus.loading}
-                  startIcon={hfStatus.loading ? <CircularProgress size={16} /> : <Refresh />}>
-                  Test Connection
-                </Button>
-              </Box>
-            </Box>
-          </Box>
-
-          {hfStatus.datasetInfo && hfStatus.connected && (
-            <Alert severity="info" sx={{ mb: 2 }}>
-              <Typography variant="body2">
-                <strong>{hfStatus.datasetInfo.id}</strong> — {hfStatus.datasetInfo.imageCount || 0} images found
-              </Typography>
-            </Alert>
-          )}
-
-          {preloadStatus.loading && (
-            <Box sx={{ mb: 2 }}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
-                <Typography variant="body2">Downloading from HuggingFace → Uploading to Supabase Storage...</Typography>
-                <Typography variant="body2" color="text.secondary">{preloadStatus.progress} / {preloadStatus.total}</Typography>
-              </Box>
-              <LinearProgress variant="determinate"
-                value={preloadStatus.total > 0 ? (preloadStatus.progress / preloadStatus.total) * 100 : 0}
-                sx={{ height: 8, borderRadius: 4 }} />
-            </Box>
-          )}
-          {preloadStatus.success && <Alert severity="success" sx={{ mb: 2 }}>{preloadStatus.success}</Alert>}
-          {preloadStatus.error && <Alert severity="error" sx={{ mb: 2 }}>{preloadStatus.error}</Alert>}
-
-          <Button
-            variant="contained" color="primary"
-            onClick={handlePreloadAllImages}
-            disabled={!hfStatus.connected || !isR2Configured() || preloadStatus.loading}
-            startIcon={preloadStatus.loading ? <CircularProgress size={20} /> : <CloudDownload />}
-          >
-            {preloadedCount > 0 ? 'Re-preload All Images to Supabase' : 'Preload All Images to Supabase'}
-          </Button>
-
-          {!hfStatus.connected && (
-            <Alert severity="warning" sx={{ mt: 2 }}>
-              Configure HuggingFace dataset and test connection first.
-            </Alert>
-          )}
-        </AccordionDetails>
-      </Accordion>
+      {preloadedCount > 0 && (
+        <MediaPreannotatePanel
+          mediaEntry={preannotateEntry}
+          imageIndex={preannotateIndex}
+          imageTotal={preannotateImages.length}
+          onPrev={() => {
+            const prev = preannotateImages[preannotateIndex - 1];
+            if (prev) setPreannotateFocusName(prev.name);
+          }}
+          onNext={() => {
+            const next = preannotateImages[preannotateIndex + 1];
+            if (next) setPreannotateFocusName(next.name);
+          }}
+          r2Prefix={projectPrefix}
+          falKey={currentProject?.imageDatasetConfig?.falApiKey || ''}
+          projectId={projectId || ''}
+        />
+      )}
 
       {onNextStep && (
         <Box sx={{ mt: 4, pt: 3, borderTop: 1, borderColor: 'divider', display: 'flex', justifyContent: 'flex-end' }}>

@@ -317,7 +317,7 @@ import "survey-core/defaultV2.min.css";
 import { Box, Alert, CircularProgress, Typography } from '@mui/material';
 import { saveSurveyResponse } from './lib/supabase';
 import { deploymentConfig, getPreloadedImages } from './config/deploymentConfig';
-import { generateCustomTheme } from './lib/surveyStorage';
+import { applyAdminThemeToSurveyModel, buildSurveyHostStyle } from './lib/surveyStorage';
 import registerImageRankingWidget, { registerImageRatingWidget, registerImageBooleanWidget, registerImageMatrixWidget } from './components/SurveyCustomComponents';
 
 export default function SurveyAppClean() {
@@ -400,10 +400,13 @@ export default function SurveyAppClean() {
                     element.imageLink = selectedImages[0].url;
                     element.imageName = selectedImages[0].name || selectedImages[0].url;
                   } else if (element.type === 'imageboolean' || element.type === 'imagerating' || element.type === 'imagematrix') {
-                    // For imageboolean, imagerating, and imagematrix questions, store imageHtml
-                    let imagesHtml = '<div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0;">';
+                    // For imageboolean, imagerating, and imagematrix questions, store imageHtml.
+                    // The .sp-image-gallery class is picked up by
+                    // src/lib/imagePickerLayout.js for uniform per-question
+                    // image heights at natural aspect ratio.
+                    let imagesHtml = '<div class="sp-image-gallery">';
                     selectedImages.forEach((image) => {
-                      imagesHtml += \`<img src="\${image.url}" style="max-width: 300px; height: auto; border-radius: 4px;" />\`;
+                      imagesHtml += \`<div class="sp-image-gallery__item"><div class="sp-image-gallery__image-container"><img src="\${image.url}" alt="\${image.name || ''}" /></div></div>\`;
                     });
                     imagesHtml += '</div>';
                     
@@ -418,7 +421,10 @@ export default function SurveyAppClean() {
                     element.imageNames = selectedImages.map((img) => img.name || img.url);
                   }
                   imageTracker[element.name] = selectedImages.map((img) => img.name || img.url);
-                  element.imageFit = "cover";
+                  // Default to "contain" so images keep their natural aspect ratio.
+                  if (!element.imageFit) {
+                    element.imageFit = "contain";
+                  }
                 }
               }
             }
@@ -428,115 +434,16 @@ export default function SurveyAppClean() {
         console.warn('No preloaded images available');
       }
       
-      // Post-process: Convert imageboolean questions to panels with HTML + boolean
-      if (surveyConfig.pages) {
-        for (const page of surveyConfig.pages) {
-          if (page.elements) {
-            const newElements = [];
-            for (const element of page.elements) {
-              if (element.type === 'imageboolean' && element.imageHtml) {
-                // Convert imageboolean to panel - keeps everything in one frame
-                console.log(\`Deployment: Converting imageboolean question \${element.name} to panel with HTML\`);
-                
-                newElements.push({
-                  type: 'panel',
-                  name: \`\${element.name}_panel\`,
-                  title: 'See below images:', // Fixed instruction text
-                  description: element.description,
-                  state: 'expanded',
-                  elements: [
-                    {
-                      type: 'html',
-                      name: \`\${element.name}_images\`,
-                      html: element.imageHtml
-                    },
-                    {
-                      type: 'boolean',
-                      name: element.name,
-                      title: element.title, // Show actual question title
-                      isRequired: element.isRequired,
-                      labelTrue: element.labelTrue || 'Yes',
-                      labelFalse: element.labelFalse || 'No',
-                      valueTrue: element.valueTrue,
-                      valueFalse: element.valueFalse
-                    }
-                  ]
-                });
-              } else if (element.type === 'imagerating' && element.imageHtml) {
-                // Convert imagerating to panel - keeps everything in one frame
-                console.log(\`Deployment: Converting imagerating question \${element.name} to panel with HTML\`);
-                
-                newElements.push({
-                  type: 'panel',
-                  name: \`\${element.name}_panel\`,
-                  title: 'See below images:', // Fixed instruction text
-                  description: element.description,
-                  state: 'expanded',
-                  elements: [
-                    {
-                      type: 'html',
-                      name: \`\${element.name}_images\`,
-                      html: element.imageHtml
-                    },
-                    {
-                      type: 'rating',
-                      name: element.name,
-                      title: element.title, // Show actual question title
-                      isRequired: element.isRequired,
-                      rateMin: element.rateMin || 1,
-                      rateMax: element.rateMax || 5,
-                      minRateDescription: element.minRateDescription,
-                      maxRateDescription: element.maxRateDescription
-                    }
-                  ]
-                });
-              } else if (element.type === 'imagematrix' && element.imageHtml) {
-                // Convert imagematrix to panel - keeps everything in one frame
-                console.log(\`Deployment: Converting imagematrix question \${element.name} to panel with HTML\`);
-                
-                newElements.push({
-                  type: 'panel',
-                  name: \`\${element.name}_panel\`,
-                  title: 'See below images:', // Fixed instruction text
-                  description: element.description,
-                  state: 'expanded',
-                  elements: [
-                    {
-                      type: 'html',
-                      name: \`\${element.name}_images\`,
-                      html: element.imageHtml
-                    },
-                    {
-                      type: 'matrix',
-                      name: element.name,
-                      title: element.title, // Show actual question title
-                      isRequired: element.isRequired,
-                      columns: element.columns,
-                      rows: element.rows
-                    }
-                  ]
-                });
-              } else {
-                newElements.push(element);
-              }
-            }
-            page.elements = newElements;
-          }
-        }
-      }
+      // Keep custom image widgets as-is (no "See below images:" panel split).
+      // trial=1 and trial>1 both use the same React question components.
 
       // Create survey model
       console.log('Creating survey model...');
       const model = new Model(surveyConfig);
       console.log('Survey model created successfully');
       
-      // Apply theme
-      if (surveyConfig.theme) {
-        const customTheme = generateCustomTheme(surveyConfig);
-        if (customTheme) {
-          model.applyTheme(customTheme);
-        }
-      }
+      // Keep standalone deployments identical to both admin previews and Live Survey.
+      applyAdminThemeToSurveyModel(model, surveyConfig);
       
       // Apply survey configuration
       model.title = surveyConfig.title || '';
@@ -646,8 +553,14 @@ export default function SurveyAppClean() {
   }
 
   return (
-    <Box sx={{ maxWidth: 1200, mx: 'auto', px: 2, py: 3 }}>
-      <Survey model={surveyModel} />
+    <Box
+      className="sp-survey-theme-host"
+      style={buildSurveyHostStyle(surveyConfig.theme || {})}
+      sx={{ minHeight: '100vh' }}
+    >
+      <Box sx={{ maxWidth: 1200, mx: 'auto', px: 2, py: 3 }}>
+        <Survey model={surveyModel} />
+      </Box>
     </Box>
   );
 }

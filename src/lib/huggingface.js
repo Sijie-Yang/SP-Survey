@@ -73,12 +73,13 @@ const parseDatasetTarget = (input) => {
 
 /**
  * List all image files under a folder inside a dataset repo via the Hub
- * tree API. Follows `Link: rel="next"` cursors so big folders fully
- * enumerate. Results are cached for CACHE_DURATION so the three public
- * functions can share a single network walk per dataset/path.
+ * tree API. Uses recursive listing so nested subfolders are included.
+ * Follows `Link: rel="next"` cursors so big folders fully enumerate.
+ * Results are cached for CACHE_DURATION so the three public functions can
+ * share a single network walk per dataset/path.
  */
 const listImagesInDatasetFolder = async (token, dataset, folderPath) => {
-  const cacheKey = `tree::${dataset}::${folderPath}::${token ? 'auth' : 'pub'}`;
+  const cacheKey = `tree::recursive::${dataset}::${folderPath}::${token ? 'auth' : 'pub'}`;
   const cached = apiCache.get(cacheKey);
   if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
     console.log(`📦 Using cached folder listing for ${dataset}/${folderPath}`);
@@ -88,7 +89,8 @@ const listImagesInDatasetFolder = async (token, dataset, folderPath) => {
   const headers = authHeaders(token);
   const encodedPath = encodePathSegments(folderPath);
   const base = `https://huggingface.co/api/datasets/${dataset}/tree/main${encodedPath ? `/${encodedPath}` : ''}`;
-  let next = `${base}?recursive=false&expand=false`;
+  // recursive=true walks nested folders under the target path.
+  let next = `${base}?recursive=true&expand=false`;
   const all = [];
 
   while (next) {
@@ -129,21 +131,38 @@ const listImagesInDatasetFolder = async (token, dataset, folderPath) => {
   return all;
 };
 
+/** Relative path of a file under the HF folder root (may include nested dirs). */
+const relativePathUnderFolder = (fullPath, folderPath) => {
+  const full = String(fullPath || '').replace(/^\/+|\/+$/g, '');
+  const root = String(folderPath || '').replace(/^\/+|\/+$/g, '');
+  if (!root) return full;
+  if (full === root) return '';
+  if (full.startsWith(`${root}/`)) return full.slice(root.length + 1);
+  return full;
+};
+
 /**
  * Build image entries (url + filename + metadata) from a folder listing,
  * sliced by offset/limit so the existing paginated preloader keeps working.
+ * Preserves nested folders relative to the HF folderPath.
  */
 const buildFolderModeImages = (dataset, folderPath, paths, offset = 0, limit = paths.length) => {
   const slice = paths.slice(offset, offset + limit);
   return slice.map((p) => {
-    const filename = p.split('/').pop();
+    const relative = relativePathUnderFolder(p, folderPath);
+    const parts = relative.split('/').filter(Boolean);
+    const filename = parts.pop() || p.split('/').pop();
+    const relativeFolder = parts.join('/');
     return {
       url: `https://huggingface.co/datasets/${dataset}/resolve/main/${encodePathSegments(p)}`,
       name: filename,
+      relativeFolder,
+      relativePath: relative,
       metadata: {
         dataset,
         folderPath,
         path: p,
+        relativeFolder,
         isPermanent: true,
       },
     };
@@ -231,6 +250,33 @@ const cachedFetch = async (url, options = {}) => {
 };
 
 /**
+ * Lightweight HF token check (whoami) — no dataset required.
+ * Used by Spatial Intelligence for SegFormer inference auth.
+ */
+export const testHuggingFaceToken = async (token) => {
+  const t = String(token || '').trim();
+  if (!t) throw new Error('HuggingFace token is required');
+  const res = await fetch('https://huggingface.co/api/whoami-v2', {
+    headers: { Authorization: `Bearer ${t}` },
+  });
+  const text = await res.text();
+  let body;
+  try {
+    body = JSON.parse(text);
+  } catch {
+    throw new Error(text.slice(0, 200) || `HF HTTP ${res.status}`);
+  }
+  if (!res.ok) {
+    throw new Error(body?.error || body?.message || `Invalid HuggingFace token (${res.status})`);
+  }
+  return {
+    success: true,
+    name: body?.name || body?.fullname?.name || null,
+    type: body?.type || null,
+  };
+};
+
+/**
  * Test connection to Hugging Face dataset
  * @param {string} token - Hugging Face access token
  * @param {string} datasetName - Dataset name (e.g., "username/dataset-name")
@@ -242,7 +288,7 @@ export const testHuggingFaceConnection = async (token, datasetName) => {
     if (!parsed) {
       throw new Error(
         'Invalid dataset name. Use "owner/repo" for rows-style datasets, ' +
-        'or "owner/repo/subfolder" to target a folder of image files.'
+        'or "owner/repo/subfolder" to import a folder recursively (nested subfolders kept).'
       );
     }
 
@@ -260,7 +306,7 @@ export const testHuggingFaceConnection = async (token, datasetName) => {
           folderPath: parsed.path,
           imageCount: paths.length,
           author: parsed.dataset.split('/')[0] || 'unknown',
-          description: `Folder access via Hub tree API (${paths.length} image file${paths.length === 1 ? '' : 's'})`,
+          description: `Recursive folder import (${paths.length} image file${paths.length === 1 ? '' : 's'} under ${parsed.path}/)`,
         },
       };
     }

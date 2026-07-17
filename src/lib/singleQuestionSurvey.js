@@ -10,163 +10,20 @@ import {
   isCuratedMediaMode,
   isRandomMediaQuestion,
   pickRandomMediaForQuestion,
+  pickTrialMediaSetsForQuestion,
+  rememberInjectedMedia,
   resolveCuratedImages,
   trackMediaAssignment,
 } from './surveyMediaInjection';
 import { clampQuestionImageCount } from './questionTypeConstraints';
 import { normalizeBuilderQuestion } from './surveyStorage';
+import { getTrialCount } from './trialNavigation';
 
-/** Mirror SurveyPreview panel conversions for composite image/media types. */
+/**
+ * Keep custom image/media widgets as-is so trial=1 matches trial>1.
+ * (Previously flattened some types into "See below images:" html+control panels.)
+ */
 export function toPreviewElement(element) {
-  if (element.type === 'imageboolean' && element.imageHtml) {
-    return {
-      type: 'panel',
-      name: `${element.name}_panel`,
-      title: 'See below images:',
-      description: element.description,
-      state: 'expanded',
-      elements: [
-        { type: 'html', name: `${element.name}_images`, html: element.imageHtml },
-        {
-          type: 'boolean',
-          name: element.name,
-          title: element.title,
-          isRequired: element.isRequired,
-          labelTrue: element.labelTrue || 'Yes',
-          labelFalse: element.labelFalse || 'No',
-          valueTrue: element.valueTrue,
-          valueFalse: element.valueFalse,
-        },
-      ],
-    };
-  }
-  if (element.type === 'imagerating' && element.imageHtml) {
-    return {
-      type: 'panel',
-      name: `${element.name}_panel`,
-      title: 'See below images:',
-      description: element.description,
-      state: 'expanded',
-      elements: [
-        { type: 'html', name: `${element.name}_images`, html: element.imageHtml },
-        {
-          type: 'rating',
-          name: element.name,
-          title: element.title,
-          isRequired: element.isRequired,
-          rateMin: element.rateMin || 1,
-          rateMax: element.rateMax || 5,
-          minRateDescription: element.minRateDescription,
-          maxRateDescription: element.maxRateDescription,
-        },
-      ],
-    };
-  }
-  if (element.type === 'imagematrix' && element.imageHtml) {
-    return {
-      type: 'panel',
-      name: `${element.name}_panel`,
-      title: 'See below images:',
-      description: element.description,
-      state: 'expanded',
-      elements: [
-        { type: 'html', name: `${element.name}_images`, html: element.imageHtml },
-        {
-          type: 'matrix',
-          name: element.name,
-          title: element.title,
-          isRequired: element.isRequired,
-          columns: element.columns,
-          rows: element.rows,
-        },
-      ],
-    };
-  }
-  if (element.type === 'mediarating' && element.imageHtml) {
-    return {
-      type: 'panel',
-      name: `${element.name}_panel`,
-      title: 'See below images:',
-      description: element.description,
-      state: 'expanded',
-      elements: [
-        { type: 'html', name: `${element.name}_images`, html: element.imageHtml },
-        {
-          type: 'rating',
-          name: element.name,
-          title: element.title,
-          isRequired: element.isRequired,
-          rateMin: element.rateMin || 1,
-          rateMax: element.rateMax || 5,
-          minRateDescription: element.minRateDescription,
-          maxRateDescription: element.maxRateDescription,
-        },
-      ],
-    };
-  }
-  if (element.type === 'mediaboolean' && element.imageHtml) {
-    return {
-      type: 'panel',
-      name: `${element.name}_panel`,
-      title: 'See below images:',
-      description: element.description,
-      state: 'expanded',
-      elements: [
-        { type: 'html', name: `${element.name}_images`, html: element.imageHtml },
-        {
-          type: 'boolean',
-          name: element.name,
-          title: element.title,
-          isRequired: element.isRequired,
-          labelTrue: element.labelTrue || 'Yes',
-          labelFalse: element.labelFalse || 'No',
-          valueTrue: element.valueTrue,
-          valueFalse: element.valueFalse,
-        },
-      ],
-    };
-  }
-  if (element.type === 'imageslidergroup' && element.imageHtml) {
-    return {
-      type: 'panel',
-      name: `${element.name}_panel`,
-      title: 'See below images:',
-      description: element.description,
-      state: 'expanded',
-      elements: [
-        { type: 'html', name: `${element.name}_images`, html: element.imageHtml },
-        {
-          type: 'slidergroup',
-          name: element.name,
-          title: element.title,
-          isRequired: element.isRequired,
-          dimensions: element.dimensions || [],
-          scaleMin: element.scaleMin ?? 1,
-          scaleMax: element.scaleMax ?? 7,
-        },
-      ],
-    };
-  }
-  if (element.type === 'imagepointallocation' && element.imageHtml) {
-    return {
-      type: 'panel',
-      name: `${element.name}_panel`,
-      title: 'See below images:',
-      description: element.description,
-      state: 'expanded',
-      elements: [
-        { type: 'html', name: `${element.name}_images`, html: element.imageHtml },
-        {
-          type: 'pointallocation',
-          name: element.name,
-          title: element.title,
-          isRequired: element.isRequired,
-          choices: element.choices || [],
-          budget: element.budget ?? 100,
-        },
-      ],
-    };
-  }
   return element;
 }
 
@@ -240,18 +97,64 @@ export function buildSingleQuestionSurvey({
   const element = normalizeBuilderQuestion(JSON.parse(JSON.stringify(question)));
   if (!element.name) element.name = 'preview_q';
 
-  const assignment = resolveQuestionMedia(element, projectImages, {
-    usedImageKeys,
-    usedGroupKeys,
-    random: randomMedia,
-    folderTags,
-  });
-  const images = assignment.images || [];
+  const trialCount = getTrialCount(element);
+  const pool = filterPoolForQuestion(projectImages || [], element);
+  let assignment;
+  let images = [];
+  let trialMediaSets = null;
+
+  if (
+    isRandomMediaQuestion(element)
+    && trialCount > 1
+    && randomMedia
+    && !isCuratedMediaMode(element)
+    && pool.length
+  ) {
+    const picked = pickTrialMediaSetsForQuestion(
+      pool,
+      element,
+      trialCount,
+      usedImageKeys,
+      usedGroupKeys,
+      null,
+      folderTags,
+    );
+    trialMediaSets = picked.trialMediaSets;
+    assignment = picked.trialAssignments?.[0] || { images: [] };
+    images = assignment.flatMedia || assignment.images || trialMediaSets[0] || [];
+    element.trialCount = trialCount;
+    element.trialMediaSets = trialMediaSets;
+  } else {
+    assignment = resolveQuestionMedia(element, projectImages, {
+      usedImageKeys,
+      usedGroupKeys,
+      random: randomMedia,
+      folderTags,
+    });
+    images = assignment.images || [];
+    if (trialCount > 1 && images.length) {
+      // Curated / non-random: reuse the same stimulus set for every trial.
+      trialMediaSets = Array.from({ length: trialCount }, () => (
+        images.map((img) => ({ ...img }))
+      ));
+      element.trialCount = trialCount;
+      element.trialMediaSets = trialMediaSets;
+    }
+  }
+
   if (images.length) {
     applyMediaToElement(element, images);
   }
-  if (trackUsed && usedImageKeys) {
+  // Random multi-trial already tracked inside pickTrialMediaSetsForQuestion.
+  const multiTrialRandom = trialCount > 1 && randomMedia && !isCuratedMediaMode(element);
+  if (trackUsed && usedImageKeys && !multiTrialRandom) {
     trackMediaAssignment(assignment, element, usedImageKeys, usedGroupKeys);
+  }
+  if (element.name && (images.length || trialMediaSets?.some((s) => s?.length))) {
+    rememberInjectedMedia(element.name, {
+      items: images,
+      trialMediaSets,
+    });
   }
 
   const previewEl = toPreviewElement(element);
@@ -262,14 +165,19 @@ export function buildSingleQuestionSurvey({
   };
 
   const shownImages = images.map((img) => img.url || img).filter(Boolean);
+  const shownImagesByTrial = Array.isArray(trialMediaSets)
+    ? trialMediaSets.map((set) => (set || []).map((img) => img.url || img).filter(Boolean))
+    : null;
 
   return {
     surveyJson,
     element,
     shownImages,
+    shownImagesByTrial,
     assignment,
-    shownMediaGroup: assignment.groupId || null,
-    shownMediaCategories: assignment.categories || null,
+    trialMediaSets,
+    shownMediaGroup: assignment?.groupId || assignment?.setId || null,
+    shownMediaCategories: assignment?.categories || null,
   };
 }
 

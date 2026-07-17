@@ -12,7 +12,7 @@ const defaultFields = {
   supabaseAnonKey: '',
 };
 
-export default function SupabaseStorageConfig({ currentProject, onProjectUpdate, onConfigChange }) {
+export default function SupabaseStorageConfig({ currentProject, onProjectUpdate, onConfigChange, compact = false }) {
   const [config, setConfig] = useState(defaultFields);
   const [initialConfig, setInitialConfig] = useState(null);
   const [status, setStatus] = useState({
@@ -121,19 +121,25 @@ export default function SupabaseStorageConfig({ currentProject, onProjectUpdate,
   };
 
   return (
-    <Box sx={{ mb: 4 }}>
+    <Box sx={compact ? { display: 'flex', flexDirection: 'column', height: '100%' } : { mb: 4 }}>
       <Typography variant="h6" sx={{ mb: 1, color: 'primary.main' }}>
-        Supabase Storage Configuration
+        {compact ? 'Supabase Storage' : 'Supabase Storage Configuration'}
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        Configure Supabase for image/media storage and survey response collection.
-        Use the <strong>service_role</strong> key here for admin uploads; use the <strong>anon</strong> key for Vercel deployment (Step 4).
+        {compact ? (
+          <>Connect your own project. Admin uploads use <strong>service_role</strong>; deployed surveys use <strong>anon</strong>.</>
+        ) : (
+          <>Configure Supabase for image/media storage and survey response collection.
+            Use the <strong>service_role</strong> key here for admin uploads; use the <strong>anon</strong> key for Vercel deployment (Step 4).</>
+        )}
       </Typography>
 
-      <Alert severity="info" sx={{ mb: 2 }}>
-        Supabase Dashboard → Project Settings → API → copy Project URL, anon key, and service_role key.
-        Create a public bucket named <code>survey-images</code> (or let the app create it on first upload).
-      </Alert>
+      {!compact && (
+        <Alert severity="info" sx={{ mb: 2 }}>
+          Supabase Dashboard → Project Settings → API → copy Project URL, anon key, and service_role key.
+          Create a public bucket named <code>survey-images</code> (or let the app create it on first upload).
+        </Alert>
+      )}
 
       {(status.connected || status.error) && (
         <Alert severity={status.connected ? 'success' : 'error'} sx={{ mb: 2 }}>
@@ -144,8 +150,9 @@ export default function SupabaseStorageConfig({ currentProject, onProjectUpdate,
         </Alert>
       )}
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, p: 2, border: 1, borderColor: 'divider', borderRadius: 1 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: compact ? 1 : 2, flex: 1 }}>
         <TextField
+          size={compact ? 'small' : 'medium'}
           label="Supabase Project ID"
           value={config.supabaseProjectId || ''}
           onChange={(e) => handleField('supabaseProjectId', e.target.value)}
@@ -153,11 +160,13 @@ export default function SupabaseStorageConfig({ currentProject, onProjectUpdate,
           helperText="Auto-builds https://&lt;id&gt;.supabase.co"
         />
         <TextField
+          size={compact ? 'small' : 'medium'}
           label="Supabase Project URL"
           value={config.supabaseUrl || ''}
           InputProps={{ readOnly: true }}
         />
         <TextField
+          size={compact ? 'small' : 'medium'}
           label="Anon Key (for deployed survey / Vercel)"
           type="password"
           value={config.supabaseAnonKey || ''}
@@ -165,27 +174,29 @@ export default function SupabaseStorageConfig({ currentProject, onProjectUpdate,
           helperText="Public anon key — embedded in deployment .env"
         />
         <TextField
+          size={compact ? 'small' : 'medium'}
           label="Service Role Key (admin uploads only)"
           type="password"
           value={config.supabaseKey || ''}
           onChange={(e) => handleField('supabaseKey', e.target.value)}
           helperText="Keep secret — never commit or deploy this key"
         />
-        <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-          <Button variant="contained" startIcon={<Save />} onClick={saveConfig} disabled={!config.supabaseUrl || !config.supabaseKey}>
-            Save Configuration
+        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mt: compact ? 'auto' : 0 }}>
+          <Button size={compact ? 'small' : 'medium'} variant="contained" startIcon={<Save />} onClick={saveConfig} disabled={!config.supabaseUrl || !config.supabaseKey}>
+            {compact ? 'Save' : 'Save Configuration'}
           </Button>
           <Button
+            size={compact ? 'small' : 'medium'}
             variant="outlined"
             startIcon={status.loading ? <CircularProgress size={18} /> : <Refresh />}
             onClick={testConnection}
             disabled={!config.supabaseUrl || !config.supabaseKey || status.loading}
           >
-            Test Connection
+            {compact ? 'Test' : 'Test Connection'}
           </Button>
         </Box>
       </Box>
-      <Divider sx={{ mt: 3 }} />
+      {!compact && <Divider sx={{ mt: 3 }} />}
     </Box>
   );
 }

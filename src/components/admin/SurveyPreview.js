@@ -3,18 +3,24 @@ import { Model } from "survey-core";
 import { Survey } from "survey-react-ui";
 import "survey-core/defaultV2.min.css";
 import { Box, Alert, CircularProgress, Typography, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-import { convertToSurveyJS, generateCustomTheme, normalizeBuilderSurveyJson } from '../../lib/surveyStorage';
-import { themeJson } from "../../theme";
+import { applyAdminThemeToSurveyModel, buildSurveyHostStyle, convertToSurveyJS, normalizeBuilderSurveyJson } from '../../lib/surveyStorage';
 import registerImageRankingWidget, {
-  registerImageRatingWidget, registerImageBooleanWidget, registerAllExtendedWidgets,
+  registerImageRatingWidget, registerImageBooleanWidget, registerImageMatrixWidget,
+  registerAllExtendedWidgets,
 } from '../SurveyCustomComponents';
 import {
-  isRandomMediaQuestion, defaultMediaCount, filterPoolForQuestion, applyMediaToElement, resolveSkillQuestions,
-  ensureSkillDemoMedia, pickRandomMediaForQuestion, trackMediaAssignment, getImageKey, usesGroupMediaAssignment,
-  usesCategoryMediaAssignment, buildMediaAssignmentLogEntry, shouldInjectMedia,
+  isRandomMediaQuestion, defaultMediaCount, filterPoolForQuestion, resolveSkillQuestions,
+  ensureSkillDemoMedia, pickMediaForQuestion, trackMediaAssignment, getImageKey, usesSetMediaAssignment,
+  applyMediaAssignmentToElement, hasMediaSlots,
+  usesCategoryMediaAssignment, buildMediaAssignmentLogEntry, shouldInjectMedia, applyCuratedMediaIfNeeded,
+  resolveMediaFolderTags, pickTrialMediaSetsForQuestion, syncInjectedMediaOntoSurveyModel,
+  clearInjectedMediaStore,
 } from '../../lib/surveyMediaInjection';
+import { getTrialCount } from '../../lib/trialNavigation';
+import { SurveyTrialNavProvider } from '../../contexts/SurveyTrialNavContext';
+import SurveyProgressBridge, { isProgressEnabled } from '../SurveyProgressBridge';
 
-export default function SurveyPreview({ config, currentProject }) {
+export default function SurveyPreview({ config, currentProject, showMediaAssignment = true }) {
   const [processedConfig, setProcessedConfig] = useState(null);
   const [mediaAssignments, setMediaAssignments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,11 +34,13 @@ export default function SurveyPreview({ config, currentProject }) {
 
       try {
         console.log('🎨 Preview: Processing config at:', new Date().toISOString());
-        
+        clearInjectedMediaStore();
+
         // Register custom components
         registerImageRankingWidget();
         registerImageRatingWidget();
         registerImageBooleanWidget();
+        registerImageMatrixWidget();
         registerAllExtendedWidgets();
         
         const configCopy = JSON.parse(JSON.stringify(config));
@@ -42,7 +50,13 @@ export default function SurveyPreview({ config, currentProject }) {
         const globallyUsedGroupKeys = new Set();
         const shouldExcludePreviouslyUsedImages = (element) => element.excludePreviouslyUsedImages !== false;
         const finalizeMediaSelection = (element, pool, preselected) => {
-          if (!usesGroupMediaAssignment(element) && !usesCategoryMediaAssignment(element) && preselected?.length) {
+          const folderTags = resolveMediaFolderTags(currentProject, configCopy);
+          if (
+            !hasMediaSlots(element)
+            && !usesSetMediaAssignment(element)
+            && !usesCategoryMediaAssignment(element)
+            && preselected?.length
+          ) {
             const imageCount = element.imageCount || defaultMediaCount(element);
             const excludeUsed = shouldExcludePreviouslyUsedImages(element);
             let selected = preselected;
@@ -54,17 +68,30 @@ export default function SurveyPreview({ config, currentProject }) {
             } else {
               selected = preselected.slice(0, imageCount);
             }
-            const assignment = { images: selected, groupKey: null, groupId: null };
+            const assignment = {
+              images: selected,
+              flatMedia: selected,
+              slots: selected.map((img, i) => ({
+                slotId: `legacy_${i}`, role: 'stimulus',
+                type: img.type, url: img.url, name: img.name,
+                media_id: img.media_id || img.key || img.name,
+              })),
+              groupKey: null, groupId: null, setKey: null, setId: null,
+            };
             trackMediaAssignment(assignment, element, globallyUsedImageKeys, globallyUsedGroupKeys);
             return assignment;
           }
-          const assignment = pickRandomMediaForQuestion(
+          const assignment = pickMediaForQuestion(
             pool,
             element,
             globallyUsedImageKeys,
             globallyUsedGroupKeys,
+            null,
+            folderTags,
           );
-          trackMediaAssignment(assignment, element, globallyUsedImageKeys, globallyUsedGroupKeys);
+          if (!hasMediaSlots(element)) {
+            trackMediaAssignment(assignment, element, globallyUsedImageKeys, globallyUsedGroupKeys);
+          }
           return assignment;
         };
         
@@ -110,6 +137,10 @@ export default function SurveyPreview({ config, currentProject }) {
                 if (isImageQuestion && isManualMode && element.choices && element.choices.length > 0) {
                   console.log(`✅ Preview: Skipping image loading for ${element.type} question "${element.name}" - using manually selected images (${element.choices.length} images)`);
                 }
+
+                if (isManualMode && applyCuratedMediaIfNeeded(element, currentProject?.preloadedImages || [])) {
+                  console.log(`✅ Preview: Applied curated media for ${element.type} question "${element.name}"`);
+                }
                 
                 if (shouldInjectMedia(element)) {
                   console.log(`🔄 Preview: Loading random images for ${element.type} question: ${element.name}`);
@@ -120,23 +151,56 @@ export default function SurveyPreview({ config, currentProject }) {
                     if (currentProject?.preloadedImages && currentProject.preloadedImages.length > 0) {
                       console.log(`📦 Preview: Using preloaded images from project (${currentProject.preloadedImages.length} available)`);
                       const pool = filterPoolForQuestion(currentProject.preloadedImages, element);
+                      const elementTrialCount = getTrialCount(element);
+                      const folderTags = resolveMediaFolderTags(currentProject, currentProject?.config);
+                      if (elementTrialCount > 1) {
+                        const { trialMediaSets, trialAssignments } = pickTrialMediaSetsForQuestion(
+                          pool, element, elementTrialCount,
+                          globallyUsedImageKeys, globallyUsedGroupKeys, null, folderTags,
+                        );
+                        element.trialMediaSets = trialMediaSets;
+                        element.trialCount = elementTrialCount;
+                        const assignment = trialAssignments[0] || { images: [] };
+                        const selectedImages = assignment.flatMedia || assignment.images || [];
+                        result = {
+                          success: !!selectedImages.length || trialMediaSets.some((s) => s?.length),
+                          images: selectedImages,
+                          setId: assignment.setId || assignment.groupId,
+                          groupId: assignment.setId || assignment.groupId,
+                          categories: assignment.categories,
+                          assignment,
+                          _assigned: true,
+                          trialMediaSets,
+                        };
+                      } else {
                       let assignment = finalizeMediaSelection(element, pool);
                       let selectedImages = assignment.images;
-                      if (!selectedImages.length && pool.length > 0 && element.type === 'skillquestion' && !usesGroupMediaAssignment(element)) {
+                      if (!selectedImages.length && pool.length > 0 && element.type === 'skillquestion' && !usesSetMediaAssignment(element)) {
                         const imageCount = element.imageCount || defaultMediaCount(element);
                         selectedImages = [...pool].sort(() => 0.5 - Math.random()).slice(0, imageCount);
-                        assignment = { images: selectedImages, groupKey: null, groupId: null };
+                        assignment = {
+                          images: selectedImages, flatMedia: selectedImages,
+                          slots: selectedImages.map((img, i) => ({
+                            slotId: `legacy_${i}`, role: 'stimulus',
+                            type: img.type, url: img.url, name: img.name,
+                            media_id: img.media_id || img.key || img.name,
+                          })),
+                          groupKey: null, groupId: null,
+                        };
                         trackMediaAssignment(assignment, element, globallyUsedImageKeys, globallyUsedGroupKeys);
                         console.log(`♻️ Preview: Pool exhausted, reusing ${selectedImages.length} images for skill question`);
                       }
                       result = {
                         success: true,
                         images: selectedImages,
-                        groupId: assignment.groupId,
+                        setId: assignment.setId || assignment.groupId,
+                        groupId: assignment.setId || assignment.groupId,
                         categories: assignment.categories,
+                        assignment,
                         _assigned: true,
                       };
-                      console.log(`✅ Preview: Selected ${selectedImages.length} media file(s) from preloaded pool${assignment.groupId ? ` (group: ${assignment.groupId})` : ''}${assignment.categories?.length ? ` (categories: ${assignment.categories.join(', ')})` : ''}`);
+                      console.log(`✅ Preview: Selected ${selectedImages.length} media file(s) from preloaded pool${(assignment.setId || assignment.groupId) ? ` (set: ${assignment.setId || assignment.groupId})` : ''}${assignment.categories?.length ? ` (categories: ${assignment.categories.join(', ')})` : ''}`);
+                      }
                     }
                     // PRIORITY 2: Use global imageDatasetConfig if available
                     else if (currentProject?.imageDatasetConfig?.enabled && currentProject.imageDatasetConfig.datasetName) {
@@ -186,7 +250,15 @@ export default function SurveyPreview({ config, currentProject }) {
                       if (supabaseResult.success && supabaseResult.images.length > 0) {
                         const pool = filterPoolForQuestion(supabaseResult.images, element);
                         const assignment = finalizeMediaSelection(element, pool);
-                        result = { success: true, images: assignment.images, groupId: assignment.groupId, categories: assignment.categories, _assigned: true };
+                        result = {
+                          success: true,
+                          images: assignment.images,
+                          setId: assignment.setId || assignment.groupId,
+                          groupId: assignment.setId || assignment.groupId,
+                          categories: assignment.categories,
+                          assignment,
+                          _assigned: true,
+                        };
                       } else {
                         result = supabaseResult;
                       }
@@ -200,24 +272,31 @@ export default function SurveyPreview({ config, currentProject }) {
                       }
                     }
                     
-                    if (result?.success && result.images.length > 0) {
-                      let selectedImages = result.images;
-                      let groupId = result.groupId || null;
+                    if (result?.success && (result.images?.length > 0 || result.trialMediaSets?.length)) {
+                      let selectedImages = result.images || [];
+                      let setId = result.setId || result.groupId || null;
                       let categories = result.categories || null;
-                      if (!result._assigned) {
-                        const assignment = finalizeMediaSelection(
+                      let assignment = result.assignment;
+                      if (!result._assigned || !assignment) {
+                        assignment = finalizeMediaSelection(
                           element,
                           filterPoolForQuestion(result.images, element),
-                          usesGroupMediaAssignment(element) ? null : result.images,
+                          usesSetMediaAssignment(element) ? null : result.images,
                         );
-                        selectedImages = assignment.images;
-                        groupId = assignment.groupId;
-                        categories = assignment.categories;
+                        selectedImages = assignment.images || selectedImages;
+                        setId = assignment.setId || assignment.groupId || setId;
+                        categories = assignment.categories || categories;
                       }
-                      if (groupId) element.assignedMediaGroupId = groupId;
+                      if (setId) {
+                        element.assignedMediaSetId = setId;
+                        element.assignedMediaGroupId = setId;
+                      }
                       if (categories?.length) element.assignedMediaCategories = categories;
-                      mediaAssignmentLog.push(buildMediaAssignmentLogEntry(element, selectedImages, groupId, categories));
-                      applyMediaToElement(element, selectedImages);
+                      mediaAssignmentLog.push(buildMediaAssignmentLogEntry(element, selectedImages, setId, categories));
+                      if (result.trialMediaSets?.length) {
+                        element.trialMediaSets = result.trialMediaSets;
+                      }
+                      applyMediaAssignmentToElement(element, assignment);
                       console.log(`Preview loaded ${selectedImages.length} random media for question: ${element.name}`);
                     } else if (element.type === 'skillquestion') {
                       ensureSkillDemoMedia(element);
@@ -240,188 +319,8 @@ export default function SurveyPreview({ config, currentProject }) {
             if (page.elements) {
               const newElements = [];
               for (const element of page.elements) {
-                if (element.type === 'imageboolean' && element.imageHtml) {
-                  // Convert imageboolean to panel - keeps everything in one frame
-                  console.log(`Preview: Converting imageboolean question ${element.name} to panel with HTML`);
-                  
-                  newElements.push({
-                    type: 'panel',
-                    name: `${element.name}_panel`,
-                    title: 'See below images:', // Fixed instruction text
-                    description: element.description,
-                    state: 'expanded',
-                    elements: [
-                      {
-                        type: 'html',
-                        name: `${element.name}_images`,
-                        html: element.imageHtml
-                      },
-                      {
-                        type: 'boolean',
-                        name: element.name,
-                        title: element.title, // Show actual question title
-                        isRequired: element.isRequired,
-                        labelTrue: element.labelTrue || 'Yes',
-                        labelFalse: element.labelFalse || 'No',
-                        valueTrue: element.valueTrue,
-                        valueFalse: element.valueFalse
-                      }
-                    ]
-                  });
-                } else if (element.type === 'imagerating' && element.imageHtml) {
-                  // Convert imagerating to panel - keeps everything in one frame
-                  console.log(`Preview: Converting imagerating question ${element.name} to panel with HTML`);
-                  
-                  newElements.push({
-                    type: 'panel',
-                    name: `${element.name}_panel`,
-                    title: 'See below images:', // Fixed instruction text
-                    description: element.description,
-                    state: 'expanded',
-                    elements: [
-                      {
-                        type: 'html',
-                        name: `${element.name}_images`,
-                        html: element.imageHtml
-                      },
-                      {
-                        type: 'rating',
-                        name: element.name,
-                        title: element.title, // Show actual question title
-                        isRequired: element.isRequired,
-                        rateMin: element.rateMin || 1,
-                        rateMax: element.rateMax || 5,
-                        minRateDescription: element.minRateDescription,
-                        maxRateDescription: element.maxRateDescription
-                      }
-                    ]
-                  });
-                } else if (element.type === 'imagematrix' && element.imageHtml) {
-                  // Convert imagematrix to panel - keeps everything in one frame
-                  console.log(`Preview: Converting imagematrix question ${element.name} to panel with HTML`);
-                  
-                  newElements.push({
-                    type: 'panel',
-                    name: `${element.name}_panel`,
-                    title: 'See below images:', // Fixed instruction text
-                    description: element.description,
-                    state: 'expanded',
-                    elements: [
-                      {
-                        type: 'html',
-                        name: `${element.name}_images`,
-                        html: element.imageHtml
-                      },
-                      {
-                        type: 'matrix',
-                        name: element.name,
-                        title: element.title, // Show actual question title
-                        isRequired: element.isRequired,
-                        columns: element.columns,
-                        rows: element.rows
-                      }
-                    ]
-                  });
-                } else if (element.type === 'mediarating' && element.imageHtml) {
-                  newElements.push({
-                    type: 'panel',
-                    name: `${element.name}_panel`,
-                    title: 'See below images:',
-                    description: element.description,
-                    state: 'expanded',
-                    elements: [
-                      {
-                        type: 'html',
-                        name: `${element.name}_images`,
-                        html: element.imageHtml,
-                      },
-                      {
-                        type: 'rating',
-                        name: element.name,
-                        title: element.title,
-                        isRequired: element.isRequired,
-                        rateMin: element.rateMin || 1,
-                        rateMax: element.rateMax || 5,
-                        minRateDescription: element.minRateDescription,
-                        maxRateDescription: element.maxRateDescription,
-                      },
-                    ],
-                  });
-                } else if (element.type === 'mediaboolean' && element.imageHtml) {
-                  newElements.push({
-                    type: 'panel',
-                    name: `${element.name}_panel`,
-                    title: 'See below images:',
-                    description: element.description,
-                    state: 'expanded',
-                    elements: [
-                      {
-                        type: 'html',
-                        name: `${element.name}_images`,
-                        html: element.imageHtml,
-                      },
-                      {
-                        type: 'boolean',
-                        name: element.name,
-                        title: element.title,
-                        isRequired: element.isRequired,
-                        labelTrue: element.labelTrue || 'Yes',
-                        labelFalse: element.labelFalse || 'No',
-                        valueTrue: element.valueTrue,
-                        valueFalse: element.valueFalse,
-                      },
-                    ],
-                  });
-                } else if (element.type === 'imageslidergroup' && element.imageHtml) {
-                  newElements.push({
-                    type: 'panel',
-                    name: `${element.name}_panel`,
-                    title: 'See below images:',
-                    description: element.description,
-                    state: 'expanded',
-                    elements: [
-                      {
-                        type: 'html',
-                        name: `${element.name}_images`,
-                        html: element.imageHtml,
-                      },
-                      {
-                        type: 'slidergroup',
-                        name: element.name,
-                        title: element.title,
-                        isRequired: element.isRequired,
-                        dimensions: element.dimensions || [],
-                        scaleMin: element.scaleMin ?? 1,
-                        scaleMax: element.scaleMax ?? 7,
-                      },
-                    ],
-                  });
-                } else if (element.type === 'imagepointallocation' && element.imageHtml) {
-                  newElements.push({
-                    type: 'panel',
-                    name: `${element.name}_panel`,
-                    title: 'See below images:',
-                    description: element.description,
-                    state: 'expanded',
-                    elements: [
-                      {
-                        type: 'html',
-                        name: `${element.name}_images`,
-                        html: element.imageHtml,
-                      },
-                      {
-                        type: 'pointallocation',
-                        name: element.name,
-                        title: element.title,
-                        isRequired: element.isRequired,
-                        choices: element.choices || [],
-                        budget: element.budget ?? 100,
-                      },
-                    ],
-                  });
-                } else {
-                  newElements.push(element);
-                }
+                // Keep custom widgets as-is so trial=1 matches trial>1 (no "See below images:" panel).
+                newElements.push(element);
               }
               page.elements = newElements;
               
@@ -482,34 +381,25 @@ export default function SurveyPreview({ config, currentProject }) {
       console.log('🔧 Preview: Fixed showProgressBar boolean to string');
     }
     
-    // Map builder-only types (consent/number) onto SurveyJS-native types
-    const model = new Model(normalizeBuilderSurveyJson(configToUse));
+    // Directly use processed configuration (already in standard SurveyJS format)
+    const normalizedPreviewJson = normalizeBuilderSurveyJson(configToUse);
+    const model = new Model(normalizedPreviewJson);
+    syncInjectedMediaOntoSurveyModel(model, normalizedPreviewJson);
     
-    // Apply theme (same as Live Survey) - with error handling
-    try {
-      if (config.theme) {
-        // Use custom theme from admin config
-        const customTheme = generateCustomTheme(config);
-        if (customTheme) {
-          console.log('Preview: Applying custom theme...');
-          model.applyTheme(customTheme);
-          console.log('✅ Preview applied custom theme successfully');
-        }
-      } else if (themeJson) {
-        // Use default theme
-        console.log('Preview: Applying default theme...');
-        model.applyTheme(themeJson);
-      }
-    } catch (themeError) {
-      console.error('⚠️ Error applying theme in preview, using default styling:', themeError);
-      // Continue without theme - SurveyJS will use default styling
-    }
+    // Use the exact same theme entry point as question preview and Live Survey.
+    applyAdminThemeToSurveyModel(model, config);
     
     // Configuration already applied directly to model (via new Model(config))
     // No additional setup needed
     
     // Disable survey completion for preview
     model.mode = "display";
+
+    const progressEnabled = isProgressEnabled(configToUse);
+    try {
+      // Match live SurveyApp: ProgressChrome replaces the native SurveyJS bar
+      model.showProgressBar = 'off';
+    } catch { /* ignore */ }
     
     console.log('Preview using standard SurveyJS config:', {
       title: model.title,
@@ -517,7 +407,8 @@ export default function SurveyPreview({ config, currentProject }) {
       logo: model.logo,
       logoPosition: model.logoPosition,
       showQuestionNumbers: model.showQuestionNumbers,
-      showProgressBar: model.showProgressBar
+      showProgressBar: model.showProgressBar,
+      progressChrome: progressEnabled,
     });
     
     return (
@@ -532,13 +423,13 @@ export default function SurveyPreview({ config, currentProject }) {
         }}>
           📋 Preview Mode - This shows exactly how your survey will appear to participants
         </Box>
-        {mediaAssignments.length > 0 && (
+        {showMediaAssignment && mediaAssignments.length > 0 && (
           <Box sx={{ mb: 2, p: 2, border: '1px solid', borderColor: 'divider', borderRadius: 1, bgcolor: 'grey.50' }}>
             <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 1 }}>
               This preview&apos;s media assignment (simulated participant draw)
             </Typography>
             <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1.5 }}>
-              Refresh preview to re-roll random sets. Group mode shows which <strong>group ID</strong> was picked per question.
+              Refresh preview to re-roll random sets. Set mode shows which <strong>set ID</strong> was picked per question.
             </Typography>
             <TableContainer component={Paper} variant="outlined">
               <Table size="small">
@@ -546,7 +437,7 @@ export default function SurveyPreview({ config, currentProject }) {
                   <TableRow sx={{ '& th': { fontWeight: 700 } }}>
                     <TableCell>Question</TableCell>
                     <TableCell>Mode</TableCell>
-                    <TableCell>Group ID</TableCell>
+                    <TableCell>Set ID</TableCell>
                     <TableCell>Categories</TableCell>
                     <TableCell>Assigned files</TableCell>
                   </TableRow>
@@ -561,14 +452,14 @@ export default function SurveyPreview({ config, currentProject }) {
                       <TableCell>
                         <Chip
                           size="small"
-                          label={row.mode === 'group' ? 'Fixed set' : row.mode === 'category' ? 'One per category' : 'Individual'}
-                          color={row.mode === 'group' || row.mode === 'category' ? 'primary' : 'default'}
+                          label={row.mode === 'group' || row.mode === 'set' ? 'Fixed set' : row.mode === 'category' ? 'Per category' : 'Individual'}
+                          color={row.mode === 'set' || row.mode === 'group' || row.mode === 'category' ? 'primary' : 'default'}
                           variant="outlined"
                         />
                       </TableCell>
                       <TableCell>
-                        {row.groupId ? (
-                          <Typography variant="body2" fontWeight={600} color="primary.main">{row.groupId}</Typography>
+                        {(row.setId || row.groupId) ? (
+                          <Typography variant="body2" fontWeight={600} color="primary.main">{row.setId || row.groupId}</Typography>
                         ) : (
                           <Typography variant="caption" color="text.secondary">—</Typography>
                         )}
@@ -592,8 +483,19 @@ export default function SurveyPreview({ config, currentProject }) {
             </TableContainer>
           </Box>
         )}
-        <Box sx={{ maxWidth: 900, mx: 'auto', px: 2 }}>
-          <Survey model={model} />
+        <Box
+          className="sp-survey-with-progress sp-survey-theme-host"
+          style={buildSurveyHostStyle(configToUse?.theme || {})}
+          sx={{ maxWidth: 900, mx: 'auto', px: { xs: 0, sm: 2 }, py: { xs: 1, sm: 2 } }}
+        >
+          <SurveyTrialNavProvider>
+            <SurveyProgressBridge
+              surveyModel={model}
+              progressEnabled={progressEnabled}
+              theme={config?.theme || null}
+            />
+            <Survey model={model} />
+          </SurveyTrialNavProvider>
         </Box>
       </Box>
     );

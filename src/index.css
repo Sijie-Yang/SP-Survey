@@ -52,7 +52,7 @@ code {
 .sd-imagepicker {
   display: flex !important;
   flex-flow: row wrap !important;
-  gap: 12px !important;
+  gap: var(--sp-gallery-gap, 12px) !important;
   align-items: flex-start !important;
   justify-content: flex-start !important;
   padding: 0 !important;
@@ -61,17 +61,8 @@ code {
 
 .sd-imagepicker__column,
 .sd-selectbase__column.sd-imagepicker__column {
-  display: flex !important;
-  flex-flow: row wrap !important;
-  gap: 12px !important;
-  align-items: flex-start !important;
-  justify-content: flex-start !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  flex: 1 1 auto !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  min-width: 0 !important;
+  /* Flatten SurveyJS column wrappers so JS can pack thumbs across the full width */
+  display: contents !important;
 }
 
 /* Each item gets an inline width from JS. Until then we let it shrink-to-fit
@@ -170,6 +161,12 @@ code {
   object-fit: contain !important;
 }
 
+@media (max-width: 600px) {
+  .sd-image__image {
+    max-height: 260px !important;
+  }
+}
+
 /* HTML-rendered images inside survey panels (used by imageboolean, imagerating,
    imagematrix when converted to a panel with an html element). */
 .sv-string-viewer img,
@@ -205,7 +202,7 @@ code {
 .sp-image-gallery {
   display: flex;
   flex-flow: row wrap;
-  gap: 12px;
+  gap: var(--sp-gallery-gap, 12px);
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
@@ -219,7 +216,7 @@ code {
    stays full-width, only the image shrinks/grows around its own AR. */
 .sp-image-gallery.sp-image-gallery--vertical {
   flex-flow: column nowrap;
-  gap: 12px;
+  gap: var(--sp-gallery-gap, 12px);
   align-items: stretch;
 }
 
@@ -263,4 +260,174 @@ code {
 iframe[title="skill-question"] {
   pointer-events: auto !important;
   touch-action: manipulation;
+}
+
+/* Custom matrix: hide responsive column titles on desktop. */
+.sp-surveyjs-matrix .sd-matrix__responsive-title {
+  display: none;
+}
+
+/* Matrix radios follow the configured editor/text colors in every survey surface. */
+.sd-matrix .sd-radio__decorator,
+.sd-matrix .sd-item__decorator.sd-radio__decorator {
+  background-color: var(--sjs-editor-backcolor, #ffffff) !important;
+  box-shadow:
+    inset 0 0 0 1.5px var(--sjs-general-forecolor-light, rgba(0, 0, 0, 0.35)),
+    inset 0 1px 2px 0 rgba(0, 0, 0, 0.08) !important;
+}
+.sd-matrix .sd-radio--checked .sd-radio__decorator,
+.sd-matrix .sd-item--checked .sd-radio__decorator {
+  background-color: var(--sjs-primary-backcolor, var(--primary, #1976d2)) !important;
+  box-shadow: none !important;
+}
+
+/*
+ * Mobile radio matrix (native + imagematrix / mediamatrix):
+ * SurveyJS stacks every cell vertically — keep scale options in one horizontal row.
+ */
+.sd-root-modern.sd-root-modern--mobile .sd-matrix .sd-matrix__table,
+.sd-root-modern.sd-root-modern--mobile .sd-matrix .sd-matrix__table tbody,
+.sd-root-modern.sd-root-modern--mobile .sd-matrix .sd-matrix__table thead {
+  display: block;
+  width: 100%;
+}
+.sd-root-modern.sd-root-modern--mobile .sd-matrix .sd-matrix__table thead {
+  display: none;
+}
+.sd-root-modern.sd-root-modern--mobile .sd-matrix .sd-matrix__table tr {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 4px 0;
+  margin: 0 0 8px !important;
+  padding: 0 0 8px !important;
+  border-bottom: 1px solid var(--sjs-border-light, #eaeaea);
+  box-sizing: border-box;
+}
+.sd-root-modern.sd-root-modern--mobile .sd-matrix .sd-matrix__table tr + tr {
+  margin-top: 0 !important;
+}
+.sd-root-modern.sd-root-modern--mobile .sd-matrix .sd-matrix__table tr:last-child {
+  border-bottom: none;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+.sd-root-modern.sd-root-modern--mobile .sd-matrix .sd-table__cell--row-text {
+  flex: 1 1 100% !important;
+  display: block !important;
+  width: 100% !important;
+  margin: 0 0 4px !important;
+  padding: 0 !important;
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1.25;
+  text-align: left !important;
+}
+.sd-root-modern.sd-root-modern--mobile .sd-matrix .sd-table__cell.sd-matrix__cell {
+  display: flex !important;
+  flex: 1 1 0 !important;
+  /* Keep enough width so the radio circle is never clipped */
+  min-width: 44px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  align-items: center;
+  justify-content: center;
+  overflow: visible !important;
+}
+.sd-root-modern.sd-root-modern--mobile .sd-matrix .sd-table__cell.sd-matrix__cell:first-of-type {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+.sd-root-modern.sd-root-modern--mobile .sd-matrix .sd-matrix__label {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: 100%;
+  min-height: 40px;
+  margin: 0;
+  padding: 4px 2px;
+  box-sizing: border-box;
+  gap: 4px;
+  overflow: visible !important;
+}
+.sd-root-modern.sd-root-modern--mobile .sd-matrix .sd-matrix__responsive-title {
+  display: block !important;
+  order: -1; /* label above radio */
+  margin: 0 !important;
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* Use SurveyJS default radio size (~24px) — do not shrink the circle */
+.sd-root-modern.sd-root-modern--mobile .sd-matrix .sd-radio__decorator,
+.sd-root-modern.sd-root-modern--mobile .sd-matrix .sd-item__decorator {
+  flex-shrink: 0 !important;
+  margin-top: 0 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Participant shell + SurveyJS both add horizontal padding — tighten on phones. */
+@media (max-width: 600px) {
+  .sp-survey-with-progress {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .sp-survey-with-progress .sd-body.sd-body--responsive,
+  .sp-survey-with-progress .sd-body.sd-body--static {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-top: 12px !important;
+  }
+
+  /* Slightly denser survey title so ProgressChrome + title don't dominate */
+  .sp-survey-with-progress .sd-title.sd-container-modern__title {
+    margin-bottom: 0 !important;
+    padding-bottom: 4px !important;
+  }
+
+  .sp-survey-with-progress .sd-description {
+    font-size: 0.9em;
+    margin-bottom: 8px !important;
+  }
+
+  .sp-survey-with-progress .sd-action-bar .sd-btn,
+  .sp-survey-with-progress .sd-footer .sd-btn {
+    min-height: 40px;
+  }
+
+  /* Rating: hide inline min/max (custom widget shows them above the scale) */
+  .sp-surveyjs-rating .sd-rating__min-text,
+  .sp-surveyjs-rating .sd-rating__max-text,
+  .sd-rating .sd-rating__min-text,
+  .sd-rating .sd-rating__max-text {
+    display: none !important;
+  }
+
+  /* Boolean / imageboolean: don't overflow the viewport with long labels */
+  .sp-surveyjs-boolean .sd-boolean,
+  .sd-root-modern--mobile .sd-boolean {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+  }
+  .sp-surveyjs-boolean .sd-boolean__label,
+  .sp-surveyjs-boolean .sd-boolean__thumb,
+  .sp-surveyjs-boolean .sd-boolean__thumb-text,
+  .sd-root-modern--mobile .sd-boolean__label,
+  .sd-root-modern--mobile .sd-boolean__thumb,
+  .sd-root-modern--mobile .sd-boolean__thumb-text {
+    white-space: normal !important;
+    text-align: center;
+    font-size: 0.85rem;
+    line-height: 1.25;
+    padding-inline: 8px;
+  }
 }

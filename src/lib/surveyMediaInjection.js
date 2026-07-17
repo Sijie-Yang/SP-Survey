@@ -10,6 +10,68 @@ import {
 import { getSkillById } from './skillManager';
 import { getPresetSkill } from './presetSkills';
 import { enrichEmotionColorConfig } from './emotionColor';
+import {
+  hasMediaSlots, resolveMediaSlots, legacyAssignmentToSlots,
+  applyResolvedSlotsToElement, MEDIA_STAR_TYPES, isMediaStarType,
+} from './mediaSlots';
+
+export {
+  hasMediaSlots, resolveMediaSlots, legacyAssignmentToSlots,
+  applyResolvedSlotsToElement, MEDIA_STAR_TYPES, isMediaStarType,
+} from './mediaSlots';
+
+/**
+ * Runtime store for injected media — SurveyJS often drops mediaItems / trialMediaSets
+ * from the Model, so widgets read from here by question name.
+ * Shape: name -> { items: Media[], trialMediaSets?: Media[][] }
+ */
+const injectedMediaByQuestion = new Map();
+
+export function clearInjectedMediaStore() {
+  injectedMediaByQuestion.clear();
+}
+
+export function rememberInjectedMedia(questionName, {
+  items = [],
+  trialMediaSets = null,
+} = {}) {
+  if (!questionName) return;
+  const normalizedItems = (items || []).map((m) => normalizeMediaEntry(m)).filter((m) => m?.url);
+  const normalizedTrials = Array.isArray(trialMediaSets)
+    ? trialMediaSets.map((set) => (
+      (set || []).map((m) => normalizeMediaEntry(m)).filter((m) => m?.url)
+    ))
+    : null;
+  const prev = injectedMediaByQuestion.get(questionName) || {};
+  injectedMediaByQuestion.set(questionName, {
+    items: normalizedItems.length ? normalizedItems : (prev.items || []),
+    trialMediaSets: (normalizedTrials && normalizedTrials.some((s) => s?.length))
+      ? normalizedTrials
+      : (prev.trialMediaSets || null),
+  });
+}
+
+export function getRememberedInjectedMedia(questionName) {
+  if (!questionName) return null;
+  return injectedMediaByQuestion.get(questionName) || null;
+}
+
+function mediaItemsFromImageHtml(html) {
+  if (!html || typeof html !== 'string') return [];
+  const out = [];
+  const re = /<img[^>]+src=["']([^"']+)["'][^>]*>/gi;
+  let m;
+  while ((m = re.exec(html)) !== null) {
+    const url = m[1];
+    const nameMatch = m[0].match(/data-image-name=["']([^"']*)["']/i);
+    out.push(normalizeMediaEntry({
+      url,
+      name: nameMatch?.[1] || url.split('/').pop() || '',
+      type: 'image',
+    }));
+  }
+  return out.filter((x) => x?.url);
+}
 
 /**
  * Folder tags for set/category assignment.
@@ -63,7 +125,9 @@ function skillFromPreset(skillId) {
 
 export const RANDOM_MEDIA_TYPES = new Set([
   'imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'image', 'imagematrix',
-  'mediadisplay', 'mediarating', 'mediaboolean', 'mediaranking', 'imageannotation',
+  'mediadisplay', 'mediarating', 'mediaboolean', 'mediaranking', 'mediapicker',
+  'mediamatrix', 'mediaslidergroup', 'mediapointallocation',
+  'imageannotation',
   'imageslidergroup', 'imagepointallocation',
 ]);
 
@@ -80,14 +144,19 @@ export function isCuratedMediaMode(element) {
     || element?.imageSelectionMode === 'manual';
 }
 
-/** Media display/rating types inject from project pool unless explicitly disabled. */
+/** Media display/rating types inject from project pool unless curated/manual. */
 export function shouldInjectMedia(element) {
   if (!isRandomMediaQuestion(element)) return false;
   if (isCuratedMediaMode(element)) {
     return false;
   }
-  if (['mediadisplay', 'mediarating', 'mediaboolean', 'imageannotation'].includes(element.type)) {
-    return element.randomImageSelection !== false;
+  // media* / annotation / slots: Serializer defaults randomImageSelection=false, which
+  // previously skipped injection even when imageSelectionMode is huggingface_random.
+  if ([
+    'mediadisplay', 'mediarating', 'mediaboolean', 'imageannotation',
+    'mediamatrix', 'mediaslidergroup', 'mediapointallocation',
+  ].includes(element.type) || hasMediaSlots(element)) {
+    return true;
   }
   return !!element.randomImageSelection;
 }
@@ -144,36 +213,67 @@ function toPlainArray(maybeArray) {
 
 /**
  * Resolve injected media for mediadisplay / mediarating / mediaboolean widgets.
- * SurveyJS strips object-array properties (mediaItems) during deserialization;
- * fall back to mediaUrls / mediaNames / mediaTypes parallel arrays.
+ * Order: runtime store → mediaItems → mediaUrls → mediaUrl → imageHtml.
+ * Do not re-filter by mediaType here — that filter applies at pool pick time only.
  */
 export function resolveQuestionMediaItems(question) {
   if (!question) return [];
-  const fromItems = toPlainArray(question.mediaItems)
+  const name = question.name;
+  const remembered = getRememberedInjectedMedia(name);
+  if (remembered?.items?.length) return remembered.items;
+
+  const readProp = (key) => {
+    try {
+      if (typeof question.getPropertyValue === 'function') {
+        const v = question.getPropertyValue(key);
+        if (v !== undefined && v !== null) return v;
+      }
+    } catch { /* ignore */ }
+    return question[key];
+  };
+
+  const fromItems = toPlainArray(readProp('mediaItems'))
     .map(normalizeMediaEntry)
     .filter((m) => m?.url);
   if (fromItems.length) return fromItems;
 
-  const urls = toPlainArray(question.mediaUrls);
+  const urls = toPlainArray(readProp('mediaUrls'));
   if (urls.length) {
-    const names = toPlainArray(question.mediaNames);
-    const types = toPlainArray(question.mediaTypes);
-    const filterType = question.mediaType && question.mediaType !== 'any' ? question.mediaType : null;
+    const names = toPlainArray(readProp('mediaNames'));
+    const types = toPlainArray(readProp('mediaTypes'));
     return urls.map((url, i) => normalizeMediaEntry({
       url,
       name: names[i] || '',
       type: types[i] || inferMediaType(names[i] || url),
-    })).filter((m) => m?.url && (!filterType || m.type === filterType));
+    })).filter((m) => m?.url);
   }
 
-  if (question.mediaUrl) {
+  const mediaUrl = readProp('mediaUrl');
+  if (mediaUrl) {
     const one = normalizeMediaEntry({
-      url: question.mediaUrl,
-      name: question.mediaName,
-      type: question.mediaType || inferMediaType(question.mediaUrl),
+      url: mediaUrl,
+      name: readProp('mediaName'),
+      type: inferMediaType(readProp('mediaName') || mediaUrl),
     });
     return one?.url ? [one] : [];
   }
+
+  const fromHtml = mediaItemsFromImageHtml(readProp('imageHtml'));
+  if (fromHtml.length) return fromHtml;
+
+  const links = [
+    ...toPlainArray(readProp('imageLinks')),
+    ...toPlainArray(readProp('imageUrls')),
+  ].filter(Boolean);
+  if (links.length) {
+    const names = toPlainArray(readProp('imageNames'));
+    return links.map((url, i) => normalizeMediaEntry({
+      url,
+      name: names[i] || '',
+      type: inferMediaType(names[i] || url),
+    })).filter((m) => m?.url);
+  }
+
   return [];
 }
 
@@ -181,7 +281,12 @@ export function defaultMediaCount(element) {
   if (element.type === 'skillquestion') {
     return element.imageCount || element.skillConfig?.mediaCount || 1;
   }
-  if (['imagerating', 'imagematrix', 'imageboolean', 'image', 'mediadisplay', 'mediarating', 'mediaboolean', 'imageannotation', 'imageslidergroup', 'imagepointallocation'].includes(element.type)) {
+  if ([
+    'imagerating', 'imagematrix', 'imageboolean', 'image',
+    'mediadisplay', 'mediarating', 'mediaboolean', 'mediamatrix',
+    'mediaslidergroup', 'mediapointallocation', 'imageannotation',
+    'imageslidergroup', 'imagepointallocation',
+  ].includes(element.type)) {
     return 1;
   }
   return 4;
@@ -192,13 +297,38 @@ export function getMediaTypeFilter(element) {
     return element.skillConfig?.mediaType || 'image';
   }
   if (element.type === 'imageannotation') return 'image';
-  if (['mediadisplay', 'mediarating', 'mediaboolean', 'mediaranking'].includes(element.type)) {
+  // Slots resolve per-slot types — pool stays unfiltered at question level
+  if (hasMediaSlots(element)) return 'any';
+  if (isMediaStarType(element.type)) {
     return element.mediaType || 'any';
   }
   if (['imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'image', 'imagematrix', 'imageslidergroup', 'imagepointallocation'].includes(element.type)) {
     return 'image';
   }
   return 'any';
+}
+
+/**
+ * Unified picker: mediaSlots path or legacy pickRandomMediaForQuestion.
+ * Always returns { images, slots, flatMedia, setId, ... }.
+ */
+export function pickMediaForQuestion(
+  pool,
+  element,
+  globallyUsedImageKeys,
+  globallyUsedSetKeys,
+  pairStats = null,
+  folderTags = {},
+) {
+  if (hasMediaSlots(element)) {
+    return resolveMediaSlots(
+      pool, element, globallyUsedImageKeys, globallyUsedSetKeys, folderTags,
+    );
+  }
+  const assignment = pickRandomMediaForQuestion(
+    pool, element, globallyUsedImageKeys, globallyUsedSetKeys, pairStats, folderTags,
+  );
+  return legacyAssignmentToSlots(assignment);
 }
 
 export function filterPoolForQuestion(pool, element) {
@@ -601,6 +731,41 @@ export function trackMediaAssignment(assignment, element, globallyUsedImageKeys,
   });
 }
 
+/**
+ * Pre-sample N media assignments for multi-trial questions.
+ * Uses pickMediaForQuestion (slots + legacy). Tracks used keys per trial.
+ */
+export function pickTrialMediaSetsForQuestion(
+  pool,
+  element,
+  trialCount,
+  globallyUsedImageKeys,
+  globallyUsedSetKeys,
+  pairStats = null,
+  folderTags = {},
+) {
+  const n = Math.max(1, parseInt(trialCount, 10) || 1);
+  const trialMediaSets = [];
+  const trialAssignments = [];
+  for (let i = 0; i < n; i += 1) {
+    const assignment = pickMediaForQuestion(
+      pool,
+      element,
+      globallyUsedImageKeys,
+      globallyUsedSetKeys,
+      pairStats,
+      folderTags,
+    );
+    const images = assignment?.flatMedia || assignment?.images || [];
+    trialMediaSets.push(images);
+    trialAssignments.push(assignment);
+    if (!hasMediaSlots(element)) {
+      trackMediaAssignment(assignment, element, globallyUsedImageKeys, globallyUsedSetKeys);
+    }
+  }
+  return { trialMediaSets, trialAssignments };
+}
+
 /** Build a log entry describing what media was injected into a question. */
 export function buildMediaAssignmentLogEntry(element, selectedImages, setId = null, categories = null) {
   return {
@@ -661,14 +826,24 @@ export function applyMediaToElement(element, selectedImages) {
     return;
   }
 
-  if (['mediadisplay', 'mediarating', 'mediaboolean'].includes(element.type)) {
+  if ([
+    'mediadisplay', 'mediarating', 'mediaboolean',
+    'mediamatrix', 'mediaslidergroup', 'mediapointallocation',
+  ].includes(element.type)) {
     setMediaItems(element, selectedImages);
     element.mediaUrl = first.url;
     element.mediaName = first.name;
-    element.mediaType = first.type || inferMediaType(first.url);
+    // Mirror image* fields so stimulus survives SurveyJS Model() like imagematrix
+    element.imageLinks = selectedImages.map((img) => img.url);
+    element.imageNames = selectedImages.map((img) => img.name);
+    element.imageUrls = selectedImages.map((img) => img.url);
+    // Prefer image gallery HTML for image files (imagematrix-compatible display path)
     const imageEntries = selectedImages.filter((img) => !img.type || img.type === 'image');
     if (imageEntries.length) {
       element.imageHtml = buildImageGalleryHtml(imageEntries);
+    } else if (selectedImages.length) {
+      // video/audio: still expose a single-file html placeholder is unused; MediaSlotLayout handles
+      element.imageHtml = '';
     }
     return;
   }
@@ -682,23 +857,100 @@ export function applyMediaToElement(element, selectedImages) {
     element.imageLinks = selectedImages.map((img) => img.url);
     element.imageNames = selectedImages.map((img) => img.name);
     element.imageHtml = buildImageGalleryHtml(selectedImages);
+    element.imageUrls = selectedImages.map((img) => img.url);
+    // imagerating / imageboolean / imagematrix widgets read stimulus from choices[].imageLink.
+    // imageslidergroup / imagepointallocation use imageLinks for stimulus; their choices are
+    // response options (dimensions are separate) — never overwrite allocation choices with images.
+    if (['imageboolean', 'imagerating', 'imagematrix'].includes(element.type)) {
+      element.choices = selectedImages.map((image, index) => ({
+        value: `image_${index}`,
+        imageLink: image.url,
+        imageName: image.name,
+      }));
+    }
     return;
   }
 
   // Only image/media choice types use choices-as-images. Never overwrite
   // text radiogroup / checkbox / dropdown / ranking choices.
-  if (!['imagepicker', 'imageranking', 'mediaranking'].includes(element.type)) {
+  if (!['imagepicker', 'imageranking', 'mediaranking', 'mediapicker'].includes(element.type)) {
     return;
   }
 
+  // mediapicker uses media_N; mediaranking keeps image_N for legacy response mappers
+  const choicePrefix = element.type === 'mediapicker' ? 'media_' : 'image_';
   element.choices = selectedImages.map((image, index) => ({
-    value: `image_${index}`,
+    value: `${choicePrefix}${index}`,
     imageLink: image.url,
     imageName: image.name,
   }));
   element.imageUrls = selectedImages.map((img) => img.url);
   element.imageNames = selectedImages.map((img) => img.name);
+  setMediaItems(element, selectedImages);
   if (!element.imageFit) element.imageFit = 'contain';
+}
+
+/** Apply assignment (with optional slots) to element + return urls for trackers. */
+export function applyMediaAssignmentToElement(element, assignment) {
+  const images = assignment?.flatMedia || assignment?.images || [];
+  const slots = assignment?.slots || [];
+  if (slots.length) applyResolvedSlotsToElement(element, slots);
+  applyMediaToElement(element, images);
+  if (assignment?.setId || assignment?.groupId) {
+    element.assignedMediaSetId = assignment.setId || assignment.groupId;
+    element.assignedMediaGroupId = assignment.setId || assignment.groupId;
+  }
+  if (assignment?.categories) {
+    element.assignedMediaCategories = assignment.categories;
+  }
+  if (element?.name) {
+    rememberInjectedMedia(element.name, {
+      items: images,
+      trialMediaSets: element.trialMediaSets || null,
+    });
+  }
+  return images.map((img) => img.url).filter(Boolean);
+}
+
+const INJECTED_MEDIA_SYNC_KEYS = [
+  'mediaItems', 'mediaUrls', 'mediaNames', 'mediaTypes', 'mediaUrl', 'mediaName',
+  'mediaSlots', 'mediaSlotsResolved', 'slotIds', 'slotUrls', 'slotTypes', 'slotRoles', 'slotNames',
+  'imageLinks', 'imageNames', 'imageHtml', 'imageUrls', 'imageLink', 'imageName',
+  'annotationImageUrl', 'trialMediaSets', 'skillImages',
+  'assignedMediaSetId', 'assignedMediaGroupId', 'assignedMediaCategories',
+];
+
+/**
+ * SurveyJS often drops object-array props (mediaItems / trialMediaSets) when building
+ * the Model. Re-copy injected fields from the pre-processed JSON onto live questions.
+ */
+export function syncInjectedMediaOntoSurveyModel(surveyModel, surveyJson) {
+  if (!surveyModel || !surveyJson?.pages) return;
+  const byName = new Map();
+  surveyJson.pages.forEach((page) => {
+    (page.elements || []).forEach((el) => {
+      if (el?.name) byName.set(el.name, el);
+    });
+  });
+  const questions = typeof surveyModel.getAllQuestions === 'function'
+    ? surveyModel.getAllQuestions()
+    : [];
+  questions.forEach((q) => {
+    const src = byName.get(q.name);
+    if (!src) return;
+    INJECTED_MEDIA_SYNC_KEYS.forEach((key) => {
+      const val = src[key];
+      if (val === undefined || val === null) return;
+      if (Array.isArray(val) && val.length === 0) return;
+      try {
+        if (typeof q.setPropertyValue === 'function') {
+          q.setPropertyValue(key, val);
+        } else {
+          q[key] = val;
+        }
+      } catch { /* ignore */ }
+    });
+  });
 }
 
 /**

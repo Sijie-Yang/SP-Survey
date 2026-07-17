@@ -28,6 +28,7 @@ export async function fetchPairStats(projectId) {
         wins: Number(row.wins) || 0,
         losses: Number(row.losses) || 0,
         mu: row.mu != null ? Number(row.mu) : 25,
+        sigma: row.sigma != null ? Number(row.sigma) : null,
       };
     });
     return map;

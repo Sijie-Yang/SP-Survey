@@ -22,6 +22,7 @@ import {
   Paper,
   Stack
 } from '@mui/material';
+import ConfirmDialog from '../layout/ConfirmDialog';
 import {
   Add,
   Edit,
@@ -97,6 +98,7 @@ export default function AgentsEditor({ onAgentsChange, currentProject }) {
   const [currentAgentId, setCurrentAgentId] = useState('');
   const [isNewAgent, setIsNewAgent] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
+  const [confirmDialog, setConfirmDialog] = useState(null);
 
   // Load agents from localStorage or use defaults (per project)
   useEffect(() => {
@@ -155,18 +157,32 @@ export default function AgentsEditor({ onAgentsChange, currentProject }) {
 
   // Delete agent
   const handleDelete = (agentId) => {
-    if (window.confirm(`Are you sure you want to delete ${agents[agentId].name}?`)) {
-      const newAgents = { ...agents };
-      delete newAgents[agentId];
-      saveAgents(newAgents);
-    }
+    setConfirmDialog({
+      title: 'Delete agent',
+      message: `Are you sure you want to delete ${agents[agentId].name}?`,
+      confirmLabel: 'Delete',
+      confirmColor: 'error',
+      onConfirm: () => {
+        setConfirmDialog(null);
+        const newAgents = { ...agents };
+        delete newAgents[agentId];
+        saveAgents(newAgents);
+      },
+    });
   };
 
   // Reset to defaults
   const handleReset = () => {
-    if (window.confirm('Reset all agents to default configuration? This cannot be undone.')) {
-      saveAgents(DEFAULT_AGENTS);
-    }
+    setConfirmDialog({
+      title: 'Reset agents',
+      message: 'Reset all agents to default configuration? This cannot be undone.',
+      confirmLabel: 'Reset',
+      confirmColor: 'error',
+      onConfirm: () => {
+        setConfirmDialog(null);
+        saveAgents(DEFAULT_AGENTS);
+      },
+    });
   };
 
   // Save edited agent
@@ -388,7 +404,15 @@ export default function AgentsEditor({ onAgentsChange, currentProject }) {
           </Button>
         </DialogActions>
       </Dialog>
+      <ConfirmDialog
+        open={Boolean(confirmDialog)}
+        title={confirmDialog?.title}
+        message={confirmDialog?.message}
+        confirmLabel={confirmDialog?.confirmLabel}
+        confirmColor={confirmDialog?.confirmColor || 'error'}
+        onConfirm={() => confirmDialog?.onConfirm?.()}
+        onCancel={() => setConfirmDialog(null)}
+      />
     </Box>
   );
 }
-

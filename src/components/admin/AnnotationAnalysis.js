@@ -1,9 +1,11 @@
-import React, { useMemo, useContext, useRef, useEffect } from 'react';
-import { Box, Typography, Button, Stack, Chip } from '@mui/material';
-import { AnnotationOverlay, drawAnnotationShape } from '../ImageAnnotationWidget';
+import React, { useMemo, useContext, useRef, useEffect, useState } from 'react';
+import {
+  Box, Typography, Button, Stack, Chip, FormControl, InputLabel, Select, MenuItem,
+} from '@mui/material';
+import { AnnotationOverlay, drawAnnotationShape, colorForLabel, inferShapeTool } from '../ImageAnnotationWidget';
 import { ImageResolverContext } from './imageResolverContext';
 
-function AggregateDensityOverlay({ imageUrl, annotations, width = 480 }) {
+function AggregateDensityOverlay({ imageUrl, annotations, width = 480, labelFilter = null }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -26,7 +28,18 @@ function AggregateDensityOverlay({ imageUrl, annotations, width = 480 }) {
       const cell = 12;
       annotations.forEach((ann) => {
         (ann.shapes || []).forEach((shape) => {
-          (shape.points || []).forEach((p) => {
+          if (labelFilter && shape.label !== labelFilter) return;
+          const tool = inferShapeTool(shape);
+          const pts = shape.points || [];
+          // For bbox, sample corners + center so density reflects the box area better
+          const samplePts = tool === 'bbox' && pts.length >= 2
+            ? [
+              pts[0],
+              pts[1],
+              { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 },
+            ]
+            : pts;
+          samplePts.forEach((p) => {
             const gx = Math.floor((p.x * w) / cell);
             const gy = Math.floor((p.y * h) / cell);
             const key = `${gx},${gy}`;
@@ -45,7 +58,12 @@ function AggregateDensityOverlay({ imageUrl, annotations, width = 480 }) {
       annotations.forEach((ann, pi) => {
         const color = ['#e53935', '#1e88e5', '#43a047', '#fb8c00', '#8e24aa', '#00acc1'][pi % 6];
         (ann.shapes || []).forEach((shape) => {
-          drawAnnotationShape(ctx, shape, w, h, { color, alpha: 0.55, fillAlpha: 0.22 });
+          if (labelFilter && shape.label !== labelFilter) return;
+          drawAnnotationShape(ctx, shape, w, h, {
+            color: shape.label ? colorForLabel(shape.label, color) : color,
+            alpha: 0.55,
+            fillAlpha: 0.22,
+          });
         });
       });
     };
@@ -56,14 +74,14 @@ function AggregateDensityOverlay({ imageUrl, annotations, width = 480 }) {
     img.onerror = () => draw(null);
     img.src = imageUrl;
     return () => { cancelled = true; };
-  }, [imageUrl, annotations, width]);
+  }, [imageUrl, annotations, width, labelFilter]);
 
   return (
     <Box sx={{ mb: 1 }}>
       <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>
         Aggregate overlay — darker cells = more annotations in that area
       </Typography>
-      <canvas ref={canvasRef} style={{ maxWidth: '100%', borderRadius: 8, border: '1px solid #ddd' }} />
+      <canvas ref={canvasRef} style={{ maxWidth: '100%', borderRadius: 8, border: '1px solid rgba(0,0,0,0.12)' }} />
     </Box>
   );
 }
@@ -73,6 +91,7 @@ function AggregateDensityOverlay({ imageUrl, annotations, width = 480 }) {
  */
 export default function AnnotationAnalysis({ answers, questionName, responses }) {
   const nameToUrl = useContext(ImageResolverContext);
+  const [labelFilter, setLabelFilter] = useState('');
 
   const byImage = useMemo(() => {
     const isUrl = (s) => s && (s.startsWith('http') || s.startsWith('/') || s.startsWith('data:'));
@@ -81,7 +100,6 @@ export default function AnnotationAnalysis({ answers, questionName, responses })
       const ann = typeof answer === 'object' ? answer : null;
       if (!ann?.shapes?.length) return;
       let imgUrl = ann.image || shown_images?.[0] || 'unknown';
-      // Responses may store a bare filename — resolve it via project media
       if (!isUrl(imgUrl) && nameToUrl?.has(imgUrl)) imgUrl = nameToUrl.get(imgUrl);
       if (!map[imgUrl]) map[imgUrl] = [];
       map[imgUrl].push({ shapes: ann.shapes, participantIndex: idx });
@@ -89,14 +107,27 @@ export default function AnnotationAnalysis({ answers, questionName, responses })
     return map;
   }, [answers, nameToUrl]);
 
+  const allLabels = useMemo(() => {
+    const set = new Set();
+    Object.values(byImage).forEach((anns) => {
+      anns.forEach((ann) => {
+        (ann.shapes || []).forEach((s) => {
+          if (s.label) set.add(s.label);
+        });
+      });
+    });
+    return [...set].sort();
+  }, [byImage]);
+
   const exportAnnotationCsv = () => {
-    const rows = [['participant_id', 'session_id', 'attempt_index', 'question', 'image', 'tool', 'points_json']];
+    const rows = [['participant_id', 'session_id', 'attempt_index', 'question', 'image', 'tool', 'label', 'points_json']];
     (responses || []).forEach((row) => {
       const qData = row.responses?.[questionName];
       const ann = qData?.answer || qData;
       if (!ann?.shapes) return;
       const img = ann.image || '';
       ann.shapes.forEach((shape) => {
+        if (labelFilter && shape.label !== labelFilter) return;
         rows.push([
           row.participant_id || '',
           row.survey_metadata?.session_id || '',
@@ -104,6 +135,7 @@ export default function AnnotationAnalysis({ answers, questionName, responses })
           questionName,
           img.split('/').pop(),
           shape.tool,
+          shape.label || '',
           JSON.stringify(shape.points),
         ]);
       });
@@ -141,9 +173,38 @@ export default function AnnotationAnalysis({ answers, questionName, responses })
 
   return (
     <Box>
-      <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
+      <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: 'wrap' }} alignItems="center">
         <Button size="small" variant="outlined" onClick={exportAnnotationCsv}>Export CSV</Button>
         <Button size="small" variant="outlined" onClick={exportAnnotationJson}>Export JSON</Button>
+        {allLabels.length > 0 && (
+          <FormControl size="small" sx={{ minWidth: 160 }}>
+            <InputLabel>Filter label</InputLabel>
+            <Select
+              label="Filter label"
+              value={labelFilter}
+              onChange={(e) => setLabelFilter(e.target.value)}
+            >
+              <MenuItem value="">All labels</MenuItem>
+              {allLabels.map((lb) => (
+                <MenuItem key={lb} value={lb}>{lb}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
+        {allLabels.map((lb) => (
+          <Chip
+            key={lb}
+            size="small"
+            label={lb}
+            onClick={() => setLabelFilter(labelFilter === lb ? '' : lb)}
+            variant={labelFilter === lb ? 'filled' : 'outlined'}
+            sx={{
+              borderColor: colorForLabel(lb),
+              bgcolor: labelFilter === lb ? colorForLabel(lb) : undefined,
+              color: labelFilter === lb ? '#fff' : undefined,
+            }}
+          />
+        ))}
       </Stack>
       {imageKeys.map((imgUrl) => (
         <Box key={imgUrl} sx={{ mb: 3 }}>
@@ -156,12 +217,14 @@ export default function AnnotationAnalysis({ answers, questionName, responses })
               imageUrl={imgUrl}
               annotations={byImage[imgUrl]}
               width={480}
+              labelFilter={labelFilter || null}
             />
           )}
           <AnnotationOverlay
             imageUrl={imgUrl}
             annotations={byImage[imgUrl]}
             width={480}
+            labelFilter={labelFilter || null}
           />
         </Box>
       ))}

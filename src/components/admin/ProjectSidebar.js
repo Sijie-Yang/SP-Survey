@@ -53,6 +53,7 @@ import {
   InfoOutlined,
   Search,
   FilterList,
+  Code,
 } from '@mui/icons-material';
 import { 
   getUserProjects, 
@@ -71,6 +72,7 @@ import {
   saveTemplateToFile,
   loadProjectsFromFiles,
   exportProjectToExternal,
+  exportProjectForIde,
   duplicateProjectInFolder,
   saveProjectAsTemplate,
   importProjectFromFile,
@@ -375,6 +377,20 @@ export default function ProjectSidebar({
       setError('Error exporting project: ' + error.message);
     }
     
+    handleMenuClose();
+  };
+
+  const handleExportForIde = async () => {
+    if (!menuProject) return;
+    try {
+      const projectConfig = await loadSurveyConfig(menuProject.id);
+      if (!projectConfig) throw new Error('Failed to load project configuration');
+      const result = await exportProjectForIde(menuProject, projectConfig);
+      if (!result.success) throw new Error(result.error || 'Export failed');
+      setError('');
+    } catch (exportError) {
+      setError(`AI / IDE export failed: ${exportError.message}`);
+    }
     handleMenuClose();
   };
 
@@ -1321,6 +1337,10 @@ export default function ProjectSidebar({
         <MenuItem onClick={handleExportProject}>
           <ListItemIcon><Download /></ListItemIcon>
           <ListItemText>Export Project</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={handleExportForIde}>
+          <ListItemIcon><Code /></ListItemIcon>
+          <ListItemText primary="Export for AI / IDE" secondary="Credentials removed" />
         </MenuItem>
         <MenuItem onClick={handleExportAsTemplate}>
           <ListItemIcon><Description /></ListItemIcon>

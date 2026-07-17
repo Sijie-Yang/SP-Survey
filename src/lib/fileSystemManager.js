@@ -212,6 +212,70 @@ export const exportProjectToExternal = async (project, surveyConfig) => {
   }
 };
 
+const IDE_SECRET_FIELDS = new Set([
+  'supabaseConfig',
+  'supabaseKey',
+  'supabaseAnonKey',
+  'serviceRoleKey',
+  'anonKey',
+  'huggingFaceToken',
+  'falApiKey',
+  'falKey',
+  'openaiApiKey',
+  'openRouterApiKey',
+  'apiKey',
+  'accessToken',
+  'accessKeyId',
+  'secretKey',
+  'secretAccessKey',
+  'password',
+]);
+
+/** Deep-copy project data while removing credentials before sharing with an AI/IDE. */
+export const sanitizeProjectForIde = (value) => {
+  if (Array.isArray(value)) return value.map(sanitizeProjectForIde);
+  if (!value || typeof value !== 'object') return value;
+  return Object.entries(value).reduce((cleaned, [key, child]) => {
+    if (!IDE_SECRET_FIELDS.has(key)) cleaned[key] = sanitizeProjectForIde(child);
+    return cleaned;
+  }, {});
+};
+
+/** Export an importable, credential-free project file for Codex and other IDE agents. */
+export const exportProjectForIde = async (project, surveyConfig) => {
+  try {
+    const safeName = (project?.name || 'survey').replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const filename = `${safeName || 'survey'}-for-ai.json`;
+    const projectData = {
+      _spSurveyAiExport: {
+        format: 'sp-survey-project',
+        version: '1.0',
+        generatedAt: new Date().toISOString(),
+        instructions: [
+          'Edit surveyConfig and non-secret project metadata only.',
+          'Keep the project and surveyConfig root objects.',
+          'Do not add credentials. Import the edited file through SP-Survey.',
+        ],
+      },
+      project: sanitizeProjectForIde(project),
+      surveyConfig: sanitizeProjectForIde(surveyConfig),
+      version: '2.0',
+    };
+
+    const blob = new Blob([JSON.stringify(projectData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(url);
+    return { success: true, filename };
+  } catch (error) {
+    console.error('Error exporting AI/IDE project:', error);
+    return { success: false, error: error.message };
+  }
+};
+
 // Save project to projects folder (for internal use)
 export const saveProjectToProjectsFolder = async (project, surveyConfig) => {
   try {

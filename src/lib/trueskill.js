@@ -1,5 +1,7 @@
 /** TrueSkill-style 1v1 rating for imagepicker (any count, single or multi-select). */
 
+import { expandQuestionAnswerUnits } from './responseAnswerUnits';
+
 const DEFAULT_MU = 25;
 const DEFAULT_SIGMA = DEFAULT_MU / 3;
 const BETA = DEFAULT_SIGMA / 2;
@@ -106,17 +108,15 @@ export function matchesFromImagePickerAnswer(answer, shownImages) {
 
 /**
  * Extract all pairwise outcomes from imagepicker responses (any imageCount, single/multi-select).
+ * Multi-trial responses contribute one match set per answered trial.
  */
 export function extractPairwiseMatches(responses, questionName) {
   const matches = [];
   for (const row of responses) {
-    const qData = row.responses?.[questionName];
-    if (!qData) continue;
-    const ans = typeof qData === 'object' && 'answer' in qData ? qData.answer : qData;
-    const shown = qData.shown_images?.length
-      ? qData.shown_images
-      : (row.displayed_images?.[questionName] || []);
-    matches.push(...matchesFromImagePickerAnswer(ans, shown));
+    const units = expandQuestionAnswerUnits(row, questionName, { requireAnswer: true });
+    for (const { answer: ans, shown_images: shown } of units) {
+      matches.push(...matchesFromImagePickerAnswer(ans, shown));
+    }
   }
   return matches;
 }

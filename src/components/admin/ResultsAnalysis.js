@@ -29,6 +29,9 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from '@mui/material';
 import {
   Refresh,
@@ -53,17 +56,33 @@ import {
   DeleteOutline,
 } from '@mui/icons-material';
 import { supabase as platformSupabase } from '../../lib/supabase';
-import { API_ROOT } from '../../lib/apiConfig';
 import AnnotationAnalysis from './AnnotationAnalysis';
+import ImagePerceptionPanel from './ImagePerceptionPanel';
 import { getPresetSkill } from '../../lib/presetSkills';
 import { ImageResolverContext } from './imageResolverContext';
-import { summarizeQuality, evaluateResponseQuality, QUALITY_FLAG_LABELS } from '../../lib/quality';
+import {
+  summarizeQuality,
+  QUALITY_FLAG_LABELS,
+  attentionCheckQuestionStats,
+} from '../../lib/quality';
 import { computeQuestionIrr } from '../../lib/reliability';
-import { computeQuestionTrueSkill } from '../../lib/trueskill';
-import { average, pct, descriptiveStats, wilsonCI } from '../../lib/stats';
+import { expandQuestionAnswerUnits } from '../../lib/responseAnswerUnits';
+import { supportsTrialCount } from '../../lib/questionTypeConstraints';
+import {
+  computeQuestionTrueSkill,
+  computeTrueSkillFromMatches,
+  matchesFromOrderedRanking,
+} from '../../lib/trueskill';
+import { average, pct, wilsonCI } from '../../lib/stats';
 import { computeBordaScores, kendallW, interpretKendallW } from '../../lib/rankingStats';
 import { wordFrequency, textLengthStats } from '../../lib/textStats';
 import { generateMethodsText, downloadTextFile } from '../../lib/methodsExport';
+import { buildResponsesWideCsv, downloadResponsesWideCsv } from '../../lib/responsesWideExport';
+import {
+  downloadQuestionExportZip,
+  downloadResultsExportZip,
+  downloadDataQualityCsv,
+} from '../../lib/questionSummaryExport';
 import {
   DensityHistogramChart,
   DescriptiveStatsLine,
@@ -71,9 +90,16 @@ import {
   WordFrequencyChart,
 } from './analysisCharts';
 import { getPresetSkillAnalysis } from './skillAnalysis';
+import {
+  TrueSkillMuChart,
+  TrueSkillTable,
+  TRUESKILL_SORT_COLUMNS,
+  RANKING_EXTRA_COLUMNS,
+} from './trueSkillAnalysisUi';
 import { enrichSkillAnswers, buildResponseMediaUrlMap, stripSkillAnswerContext, formatSkillAnswerForDisplay, filterAnswersForSkill } from '../../lib/skillMediaUtils';
 import { saveProjectFull } from '../../lib/projectManager';
 import { deleteSurveyResponse, responseRecordKey } from '../../lib/surveyResponses';
+import { API_ROOT } from '../../lib/apiConfig';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -82,6 +108,33 @@ const BAR_COLORS = [
   '#1976d2', '#2196f3', '#0288d1', '#0097a7', '#00838f',
   '#388e3c', '#689f38', '#f57c00', '#e64a19', '#7b1fa2'
 ];
+/** High-contrast palette for matrix stacked distributions (avoid similar blues). */
+const MATRIX_DIST_COLORS = [
+  '#1565c0', '#c62828', '#2e7d32', '#f9a825', '#6a1b9a',
+  '#00838f', '#ef6c00', '#ad1457', '#4527a0', '#558b2f',
+];
+
+function matrixDistColor(index) {
+  return MATRIX_DIST_COLORS[index % MATRIX_DIST_COLORS.length];
+}
+
+function columnKeysAreNumeric(colKeys) {
+  return (colKeys || []).length > 0
+    && colKeys.every((c) => c !== '' && c != null && !Number.isNaN(Number(c)));
+}
+
+/** Weighted mean from column-value → count map when column keys are numeric. */
+function meanFromColumnCounts(cols, colKeys) {
+  let sum = 0;
+  let n = 0;
+  (colKeys || []).forEach((c) => {
+    const count = cols?.[c] || 0;
+    if (!count) return;
+    sum += Number(c) * count;
+    n += count;
+  });
+  return n > 0 ? sum / n : null;
+}
 
 /** Questions that show content only — excluded from coverage stats. */
 const DISPLAY_ONLY_QUESTION_TYPES = new Set([
@@ -99,32 +152,36 @@ function isAnswerableQuestion(question) {
   return !!question?.name && !isDisplayOnlyQuestion(question);
 }
 
-// Collect answers for a question from all responses.
-// Handles two formats:
-//   New: responses[name] = { type, answer, shown_images }
-//   Old: responses[name] = <raw_answer>, displayed_images[name] = [...]
-function collectAnswers(questionName, responses) {
-  const result = [];
-  for (const row of responses) {
-    const qData = row.responses?.[questionName];
-    if (qData === undefined || qData === null) continue;
-
-    let ans, shown;
-
-    if (qData !== null && typeof qData === 'object' && !Array.isArray(qData) && 'answer' in qData) {
-      // New enriched format: { type, answer, shown_images }
-      ans = qData.answer;
-      shown = qData.shown_images?.length
-        ? qData.shown_images
-        : (row.displayed_images?.[questionName] || []);
-    } else {
-      // Old raw format: the value IS the answer
-      ans = qData;
-      shown = row.displayed_images?.[questionName] || [];
+/**
+ * Responses that count toward a question's completion denominator / analysis pool.
+ * Full survey submissions count for every question; researcher practice rows only
+ * count for the single question they practiced (survey_metadata.practice_question).
+ */
+export function responsesEligibleForQuestion(questionName, responses) {
+  return (responses || []).filter((row) => {
+    if (row.survey_metadata?.practice_mode) {
+      return row.survey_metadata?.practice_question === questionName;
     }
+    return true;
+  });
+}
 
-    if (ans === null || ans === undefined || ans === '') continue;
-    result.push({ answer: ans, shown_images: shown });
+// Collect answers for a question from all responses.
+// Multi-trial → one analysis unit per answered trial (paired with that trial's media).
+// Single-answer → one unit (legacy + enriched).
+export function collectAnswers(questionName, responses) {
+  const result = [];
+  for (const row of responsesEligibleForQuestion(questionName, responses)) {
+    result.push(...expandQuestionAnswerUnits(row, questionName, { requireAnswer: true }));
+  }
+  return result;
+}
+
+/** Collect shown_media even when there is no answer (e.g. mediadisplay). */
+export function collectShownMedia(questionName, responses) {
+  const result = [];
+  for (const row of responsesEligibleForQuestion(questionName, responses)) {
+    result.push(...expandQuestionAnswerUnits(row, questionName, { requireAnswer: false }));
   }
   return result;
 }
@@ -148,27 +205,32 @@ function imageKeyFromShown(entry) {
   return s.split('?')[0].split('/').pop() || s;
 }
 
-function TrueSkillMuChart({ rankings, getImageUrl }) {
-  if (!rankings?.length) return null;
-  const items = [...rankings].sort((a, b) => (b.muStd5 ?? 0) - (a.muStd5 ?? 0));
-  const scores = items.map((r) => r.muStd5 ?? 0);
-  return (
-    <DensityHistogramChart
-      scores={scores}
-      domainMin={0}
-      domainMax={5}
-      title="Standardized μ distribution (0–5)"
-      caption="Blue bars: histogram of standardized μ (density = count / n / bin width). Orange curve: fitted normal PDF."
-      xLabel="Standardized μ (0–5)"
-      bottomMarkers={items.map((item) => ({
-        key: item.imageKey,
-        value: item.muStd5 ?? 0,
-        imageUrl: getImageUrl?.(item.imageKey),
-        label: item.imageKey.length > 10 ? `${item.imageKey.slice(0, 9)}…` : item.imageKey,
-        subLabel: (item.muStd5 ?? 0).toFixed(2),
-      }))}
-    />
-  );
+/** Map imagepicker/imageranking choice values (image_N or URL) to a stable filename key. */
+function resolveImageChoiceKey(value, shownImages) {
+  if (value == null || value === '') return '';
+  const str = String(value);
+  const match = str.match(/^image_(\d+)$/);
+  if (match && Array.isArray(shownImages) && shownImages.length) {
+    const img = shownImages[Number(match[1])];
+    if (img != null) return imageKeyFromShown(img) || String(img);
+  }
+  return imageKeyFromShown(str) || str;
+}
+
+/** Best-effort display URL for a choice value given that trial's shown_images. */
+function resolveImageChoiceUrl(value, shownImages) {
+  if (value == null || value === '') return null;
+  const str = String(value);
+  const match = str.match(/^image_(\d+)$/);
+  if (match && Array.isArray(shownImages) && shownImages.length) {
+    const img = shownImages[Number(match[1])];
+    if (img == null) return null;
+    return typeof img === 'string' ? img : (img.url || img.name || null);
+  }
+  if (str.startsWith('http') || str.startsWith('/')) return str;
+  const fromShown = (shownImages || []).find((s) => imageKeyFromShown(s) === imageKeyFromShown(str));
+  if (fromShown) return typeof fromShown === 'string' ? fromShown : (fromShown.url || null);
+  return str;
 }
 
 function typeIcon(type) {
@@ -322,82 +384,6 @@ function IrrSummary({ responses, question }) {
   );
 }
 
-function TrueSkillTable({ rankings, onExport }) {
-  const resolvedUrl = useContext(ImageResolverContext);
-  if (!rankings?.length) return null;
-
-  const resolveImg = (key) => {
-    if (key?.startsWith('http')) return key;
-    return resolvedUrl?.get(key) || null;
-  };
-
-  return (
-    <Box sx={{ mt: 2 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-        <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>TrueSkill image rankings</Typography>
-        <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
-          Each selection counts as a win over every non-selected image shown in that trial (supports multi-select).
-        </Typography>
-        {onExport && (
-          <Button size="small" variant="outlined" startIcon={<Download />} onClick={onExport}>
-            Export scores CSV
-          </Button>
-        )}
-      </Box>
-      <TableContainer component={Paper} variant="outlined">
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Image</TableCell>
-              <TableCell align="right">μ</TableCell>
-              <TableCell align="right">Std. μ (0–5)</TableCell>
-              <TableCell align="right">σ</TableCell>
-              <TableCell align="right">Conservative (μ−3σ)</TableCell>
-              <TableCell align="right">Games</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rankings.map((row) => (
-              <TableRow key={row.imageKey}>
-                <TableCell>{row.rank}</TableCell>
-                <TableCell>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    {resolveImg(row.imageKey) && (
-                      <Box
-                        component="img"
-                        src={resolveImg(row.imageKey)}
-                        alt={row.imageKey}
-                        sx={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 0.5 }}
-                      />
-                    )}
-                    <Typography variant="caption">{row.imageKey}</Typography>
-                  </Box>
-                </TableCell>
-                <TableCell align="right">{row.mu.toFixed(2)}</TableCell>
-                <TableCell align="right">{(row.muStd5 ?? 0).toFixed(2)}</TableCell>
-                <TableCell align="right">{row.sigma.toFixed(2)}</TableCell>
-                <TableCell align="right">{row.conservative.toFixed(2)}</TableCell>
-                <TableCell align="right">{row.games}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
-  );
-}
-
-function exportTrueSkillCsv(questionName, rankings) {
-  const headers = ['rank', 'image', 'mu', 'mu_std5', 'sigma', 'conservative', 'wins', 'losses', 'games'];
-  const rows = rankings.map((r) => [
-    r.rank, r.imageKey, r.mu.toFixed(4), (r.muStd5 ?? 0).toFixed(4), r.sigma.toFixed(4),
-    r.conservative.toFixed(4), r.wins, r.losses, r.games,
-  ]);
-  const csv = [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
-  downloadTextFile(csv, `${questionName}_trueskill_${new Date().toISOString().slice(0, 10)}.csv`);
-}
-
 function CompactImageRanking({ title, items, getImageUrl, formatLabel, maxValue }) {
   if (!items?.length) return null;
   const peak = maxValue ?? Math.max(...items.map((i) => i.value), 0.001);
@@ -441,48 +427,86 @@ function compareByColumnProportions(a, b, colKeys) {
   return 0;
 }
 
-function ImagePickerDistribution({ answers, choices, question, allResponses }) {
-  const resolvedUrl = useContext(ImageResolverContext);
-
-  const choiceMap = {};
-  if (choices) {
-    for (const c of choices) {
-      const val = typeof c === 'object' ? String(c.value ?? '') : String(c);
-      const imgLink = typeof c === 'object' ? (c.imageLink || c.value || '') : c;
-      choiceMap[val] = { imageUrl: imgLink };
-    }
-  }
-
-  const getImageUrl = (value) => {
-    if (choiceMap[value]?.imageUrl) return choiceMap[value].imageUrl;
-    if (value && (value.startsWith('http') || value.startsWith('/'))) return value;
-    if (resolvedUrl?.has(value)) return resolvedUrl.get(value);
-    return null;
-  };
-
+function ImagePickerDistribution({ question, allResponses }) {
   const trueskillResult = useMemo(() => {
     if (!allResponses?.length || !question?.name) return { matches: [], rankings: [] };
-    return computeQuestionTrueSkill(allResponses, question.name);
+    const eligible = responsesEligibleForQuestion(question.name, allResponses);
+    return computeQuestionTrueSkill(eligible, question.name);
   }, [allResponses, question?.name]);
 
   const { matches, rankings } = trueskillResult;
 
   return (
     <Box>
+      <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
+        TrueSkill (pairwise from selections vs non-selected shown images)
+      </Typography>
       {matches.length === 0 ? (
         <Alert severity="warning" sx={{ mb: 2 }}>
           Not enough pairwise comparisons for TrueSkill (need participants to select among shown images).
         </Alert>
       ) : (
         <>
-          <TrueSkillMuChart rankings={rankings} getImageUrl={getImageUrl} />
+          <TrueSkillMuChart rankings={rankings} />
           <TrueSkillTable
             rankings={rankings}
-            onExport={() => exportTrueSkillCsv(question.name, rankings)}
+            caption="Each selection counts as a win over every non-selected image shown in that trial. Click a column header to sort (default: μ descending)."
           />
         </>
       )}
     </Box>
+  );
+}
+
+function NumberDistribution({ answers, question }) {
+  const nums = answers.map((a) => Number(a.answer)).filter((n) => !Number.isNaN(n));
+  if (!nums.length) {
+    return <Typography variant="body2" color="text.secondary">No numeric responses yet.</Typography>;
+  }
+  const domainMin = question?.min != null && question.min !== ''
+    ? Number(question.min)
+    : Math.min(...nums);
+  const domainMax = question?.max != null && question.max !== ''
+    ? Number(question.max)
+    : Math.max(...nums);
+  const lo = Number.isFinite(domainMin) ? domainMin : Math.min(...nums);
+  const hi = Number.isFinite(domainMax) && domainMax > lo ? domainMax : Math.max(...nums, lo + 1);
+  return (
+    <Box>
+      <DescriptiveStatsLine nums={nums} unit="" />
+      <DensityHistogramChart
+        scores={nums}
+        domainMin={lo}
+        domainMax={hi}
+        title="Numeric response distribution"
+        xLabel={question?.title || 'Value'}
+      />
+    </Box>
+  );
+}
+
+function AttentionCheckPassRate({ question, allResponses }) {
+  if (!question?.isAttentionCheck) return null;
+  const stats = attentionCheckQuestionStats(question, allResponses || []);
+  if (stats.answered === 0) {
+    return (
+      <Alert severity="info" sx={{ mb: 2 }}>
+        Attention check — no answered responses yet (expected: {String(question.expectedAnswer)}).
+      </Alert>
+    );
+  }
+  const ratePct = Math.round((stats.passRate || 0) * 100);
+  const severity = ratePct >= 80 ? 'success' : ratePct >= 50 ? 'warning' : 'error';
+  return (
+    <Alert severity={severity} sx={{ mb: 2 }}>
+      <Typography variant="body2" sx={{ fontWeight: 600 }}>Attention check pass rate</Typography>
+      <Typography variant="body2">
+        {stats.passed} / {stats.answered} passed ({ratePct}%) · {stats.failed} failed
+      </Typography>
+      <Typography variant="caption" color="text.secondary" display="block">
+        Expected answer: {String(question.expectedAnswer)}
+      </Typography>
+    </Alert>
   );
 }
 
@@ -563,15 +587,19 @@ function MatrixDistribution({ answers, rows, columns }) {
     colKeys.push(...seen);
   }
 
-  const allNumeric = colKeys.every((c) => !Number.isNaN(Number(c)));
+  const colLabel = (col) => {
+    if (!columns) return String(col);
+    const def = columns.find((c) => (typeof c === 'object' ? c.value : c) === col);
+    if (!def) return String(col);
+    return typeof def === 'object' ? (def.text || def.value) : def;
+  };
+
+  const allNumeric = columnKeysAreNumeric(colKeys);
   const rowMeans = allNumeric ? rowKeys.map((row) => {
     const counts = rowData[row] || {};
-    let sum = 0; let n = 0;
-    for (const [col, count] of Object.entries(counts)) {
-      sum += Number(col) * count;
-      n += count;
-    }
-    return { row, mean: n > 0 ? sum / n : null, n };
+    const mean = meanFromColumnCounts(counts, colKeys);
+    const n = Object.values(counts).reduce((s, v) => s + v, 0);
+    return { row, mean, n };
   }).sort((a, b) => (b.mean ?? 0) - (a.mean ?? 0)) : [];
 
   if (!rowKeys.length) return <Typography variant="body2" color="text.secondary">No data.</Typography>;
@@ -596,15 +624,23 @@ function MatrixDistribution({ answers, rows, columns }) {
           })}
         </Box>
       )}
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, mb: 1.5 }}>
+        {colKeys.map((col, idx) => (
+          <Box key={col} sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
+            <Box sx={{ width: 12, height: 12, borderRadius: 0.5, bgcolor: matrixDistColor(idx), flexShrink: 0 }} />
+            <Typography variant="caption" color="text.secondary">{colLabel(col)}</Typography>
+          </Box>
+        ))}
+      </Box>
       <TableContainer component={Paper} variant="outlined" sx={{ maxWidth: '100%', overflowX: 'auto' }}>
         <Table size="small">
           <TableHead>
             <TableRow>
               <TableCell sx={{ fontWeight: 'bold' }}>Question Row</TableCell>
               {colKeys.map(col => (
-                <TableCell key={col} align="center" sx={{ fontWeight: 'bold' }}>{col}</TableCell>
+                <TableCell key={col} align="center" sx={{ fontWeight: 'bold' }}>{colLabel(col)}</TableCell>
               ))}
-              <TableCell align="center" sx={{ fontWeight: 'bold', minWidth: 120 }}>Distribution</TableCell>
+              <TableCell align="center" sx={{ fontWeight: 'bold', minWidth: 160 }}>Distribution</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -631,12 +667,24 @@ function MatrixDistribution({ answers, rows, columns }) {
                     );
                   })}
                   <TableCell align="center">
-                    <Box sx={{ display: 'flex', height: 8, borderRadius: 1, overflow: 'hidden', bgcolor: 'grey.100' }}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        height: 16,
+                        borderRadius: 1,
+                        overflow: 'hidden',
+                        bgcolor: 'grey.200',
+                        border: '1px solid',
+                        borderColor: 'grey.300',
+                      }}
+                    >
                       {colKeys.map((col, idx) => {
                         const count = rowData[row]?.[col] || 0;
                         const w = total > 0 ? (count / total) * 100 : 0;
                         return w > 0 ? (
-                          <Box key={col} sx={{ width: `${w}%`, bgcolor: BAR_COLORS[idx % BAR_COLORS.length] }} />
+                          <Tooltip key={col} title={`${colLabel(col)}: ${pct(count, total)}% (${count})`}>
+                            <Box sx={{ width: `${w}%`, bgcolor: matrixDistColor(idx), minWidth: w > 0 ? 2 : 0 }} />
+                          </Tooltip>
                         ) : null;
                       })}
                     </Box>
@@ -745,6 +793,115 @@ function ShownImagesContext({ imageUrls, label }) {
   );
 }
 
+function ImageRankingTrueSkillAnalysis({ answers, question, type }) {
+  const mediaLabel = type === 'mediaranking' ? 'Media' : 'Image';
+
+  const { matches, rankings, kendallWVal } = useMemo(() => {
+    const imageRankPositions = {};
+    const imageUrls = {};
+    const rankingLists = [];
+    const allMatches = [];
+
+    for (const { answer, shown_images: shown } of answers || []) {
+      const ranked = Array.isArray(answer) ? answer : [];
+      if (!ranked.length) continue;
+      const keys = ranked
+        .map((val) => {
+          const key = resolveImageChoiceKey(val, shown);
+          if (!key) return null;
+          const url = resolveImageChoiceUrl(val, shown);
+          if (url && !imageUrls[key]) imageUrls[key] = url;
+          return key;
+        })
+        .filter(Boolean);
+      if (keys.length < 2) continue;
+      rankingLists.push(keys);
+      allMatches.push(...matchesFromOrderedRanking(keys));
+      keys.forEach((key, rankIdx) => {
+        if (!imageRankPositions[key]) imageRankPositions[key] = [];
+        imageRankPositions[key].push(rankIdx + 1);
+      });
+    }
+
+    const items = Object.keys(imageRankPositions);
+    const nItems = items.length;
+    const w = kendallW(rankingLists, items);
+    const bordaMap = computeBordaScores(imageRankPositions, nItems);
+    const { matches: m, rankings: tsRows } = computeTrueSkillFromMatches(allMatches);
+
+    const byKey = new Map((tsRows || []).map((r) => [r.imageKey, r]));
+    // Include images that only appear in rank stats (edge case: single-item lists)
+    items.forEach((key) => {
+      if (!byKey.has(key)) {
+        byKey.set(key, {
+          imageKey: key,
+          mu: null,
+          muStd5: null,
+          sigma: null,
+          conservative: null,
+          wins: 0,
+          losses: 0,
+          games: 0,
+        });
+      }
+    });
+
+    const merged = [...byKey.values()].map((row) => {
+      const ranks = imageRankPositions[row.imageKey] || [];
+      const avg = ranks.length ? average(ranks) : null;
+      const sd = ranks.length > 1
+        ? Math.sqrt(ranks.reduce((s, r) => s + (r - avg) ** 2, 0) / ranks.length)
+        : 0;
+      return {
+        ...row,
+        displayUrl: imageUrls[row.imageKey] || null,
+        avgRank: avg,
+        rankSd: sd,
+        borda: bordaMap[row.imageKey]?.borda ?? null,
+        nRanks: ranks.length,
+      };
+    });
+
+    return { matches: m, rankings: merged, kendallWVal: w };
+  }, [answers]);
+
+  if (!answers?.length || (!rankings.length && !matches.length)) {
+    return <Typography variant="body2" color="text.secondary">No responses yet.</Typography>;
+  }
+
+  const rankingColumns = [...RANKING_EXTRA_COLUMNS, ...TRUESKILL_SORT_COLUMNS];
+
+  return (
+    <Box>
+      <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
+        {mediaLabel} ranking — TrueSkill
+      </Typography>
+      <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
+        From each full ranking, every higher-ranked image beats every lower-ranked image
+        ({matches.length} pairwise outcomes).
+      </Typography>
+      {kendallWVal != null && (
+        <Alert severity={kendallWVal >= 0.5 ? 'success' : 'info'} sx={{ mb: 2 }}>
+          Kendall&apos;s W = {kendallWVal.toFixed(3)} — {interpretKendallW(kendallWVal)}
+        </Alert>
+      )}
+      {matches.length === 0 ? (
+        <Alert severity="warning">Not enough ranking comparisons for TrueSkill yet.</Alert>
+      ) : (
+        <>
+          <TrueSkillMuChart rankings={rankings.filter((r) => r.mu != null)} />
+          <TrueSkillTable
+            rankings={rankings}
+            columns={rankingColumns}
+            title={`${mediaLabel} TrueSkill + ranking stats`}
+            caption="Higher rank beats lower rank in each trial. Avg rank / Borda / n are classical ranking summaries. Default sort: μ descending."
+          />
+        </>
+      )}
+    </Box>
+  );
+}
+
 function ImageQuestionAnalysis({ answers, type, question }) {
   const resolvedUrl = useContext(ImageResolverContext);
   const getImageUrl = (value) => {
@@ -754,55 +911,9 @@ function ImageQuestionAnalysis({ answers, type, question }) {
     return resolvedUrl?.get(key) || resolvedUrl?.get(value) || null;
   };
 
-  // ── image_ranking ─────────────────────────────────────────────────────────
+  // ── image_ranking / media_ranking → TrueSkill (+ avg rank / Borda columns) ─
   if (type === 'image_ranking' || type === 'imageranking' || type === 'mediaranking') {
-    const imageRankPositions = {};
-    const rankingLists = [];
-    for (const { answer } of answers) {
-      const ranked = Array.isArray(answer) ? answer : [];
-      if (ranked.length) rankingLists.push(ranked);
-      ranked.forEach((url, rankIdx) => {
-        if (!imageRankPositions[url]) imageRankPositions[url] = [];
-        imageRankPositions[url].push(rankIdx + 1);
-      });
-    }
-
-    const items = Object.keys(imageRankPositions);
-    const nItems = items.length;
-    const w = kendallW(rankingLists, items);
-    const maxRank = Math.max(nItems, 1);
-
-    const rankedItems = Object.entries(imageRankPositions)
-      .map(([url, ranks]) => {
-        const avg = average(ranks);
-        return {
-          key: url,
-          url,
-          value: maxRank > 0 ? (maxRank - (avg ?? maxRank) + 1) / maxRank : 0,
-          label: `avg rank ${avg?.toFixed(2) ?? '–'} · n=${ranks.length}`,
-        };
-      })
-      .sort((a, b) => b.value - a.value);
-
-    return (
-      <Box>
-        {w != null && (
-          <Alert severity={w >= 0.5 ? 'success' : 'info'} sx={{ mb: 2 }}>
-            Kendall&apos;s W = {w.toFixed(3)} — {interpretKendallW(w)}
-          </Alert>
-        )}
-        <CompactImageRanking
-          title="Image ranking (rank 1 = most preferred)"
-          items={rankedItems}
-          getImageUrl={getImageUrl}
-          maxValue={1}
-          formatLabel={(v, label) => label}
-        />
-        {rankedItems.length === 0 && (
-          <Typography variant="body2" color="text.secondary">No responses yet.</Typography>
-        )}
-      </Box>
-    );
+    return <ImageRankingTrueSkillAnalysis answers={answers} question={question} type={type} />;
   }
 
   // ── image_rating / media_rating ───────────────────────────────────────────
@@ -833,10 +944,11 @@ function ImageQuestionAnalysis({ answers, type, question }) {
       })
       .sort((a, b) => b.value - a.value);
 
+    const mediaNoun = type === 'mediarating' ? 'media' : 'image';
     return (
       <Box>
         <CompactImageRanking
-          title="Average rating by image"
+          title={`Average rating by ${mediaNoun}`}
           items={rankedItems}
           getImageUrl={getImageUrl}
           maxValue={rateMax}
@@ -876,10 +988,11 @@ function ImageQuestionAnalysis({ answers, type, question }) {
       })
       .sort((a, b) => b.value - a.value);
 
+    const mediaNoun = type === 'mediaboolean' ? 'media' : 'image';
     return (
       <Box>
         <CompactImageRanking
-          title="Yes rate by image"
+          title={`Yes rate by ${mediaNoun}`}
           items={rankedItems}
           getImageUrl={getImageUrl}
           maxValue={1}
@@ -892,8 +1005,8 @@ function ImageQuestionAnalysis({ answers, type, question }) {
     );
   }
 
-  // ── image_matrix ──────────────────────────────────────────────────────────
-  if (type === 'image_matrix' || type === 'imagematrix') {
+  // ── image_matrix / mediamatrix ────────────────────────────────────────────
+  if (type === 'image_matrix' || type === 'imagematrix' || type === 'mediamatrix') {
     const perImage = {};
     for (const { answer, shown_images } of answers) {
       if (typeof answer !== 'object' || !answer || !shown_images?.length) continue;
@@ -921,9 +1034,15 @@ function ImageQuestionAnalysis({ answers, type, question }) {
     }
 
     const lastCol = colKeys[colKeys.length - 1];
+    const numericCols = columnKeysAreNumeric(colKeys);
 
     return (
       <Box>
+        {numericCols && (
+          <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1.5 }}>
+            Column values are numeric — images are ranked by mean score (higher first); percentages still shown.
+          </Typography>
+        )}
         {rowKeys.map((row) => {
           const rowDef = rowDefs.find((r) => (typeof r === 'object' ? r.value : r) === row);
           const rowLabel = rowDef ? (typeof rowDef === 'object' ? (rowDef.text || rowDef.value) : rowDef) : row;
@@ -931,21 +1050,36 @@ function ImageQuestionAnalysis({ answers, type, question }) {
           const imageStats = Object.entries(perImage).map(([key, data]) => {
             const cols = data.rows[row] || {};
             const total = Object.values(cols).reduce((s, v) => s + v, 0);
-            return { key, url: data.url, cols, total };
+            const mean = numericCols ? meanFromColumnCounts(cols, colKeys) : null;
+            return { key, url: data.url, cols, total, mean };
           }).filter((s) => s.total > 0);
 
-          const sorted = [...imageStats].sort((a, b) => compareByColumnProportions(a, b, colKeys));
-          const rankedItems = sorted.map(({ key, url, cols, total }) => {
+          const sorted = [...imageStats].sort((a, b) => {
+            if (numericCols) {
+              const diff = (b.mean ?? -Infinity) - (a.mean ?? -Infinity);
+              if (Math.abs(diff) > 1e-9) return diff;
+            }
+            return compareByColumnProportions(a, b, colKeys);
+          });
+
+          const maxMean = numericCols
+            ? Math.max(...sorted.map((s) => s.mean ?? 0), Number(colKeys[colKeys.length - 1]) || 1)
+            : 1;
+
+          const rankedItems = sorted.map(({ key, url, cols, total, mean }) => {
             const colParts = colKeys.map((c) => {
               const colDef = colDefs.find((col) => (typeof col === 'object' ? col.value : col) === c);
-              const colLabel = colDef ? (typeof colDef === 'object' ? (colDef.text || colDef.value) : colDef) : c;
-              return `${colLabel}: ${pct(cols[c] || 0, total)}%`;
+              const cLabel = colDef ? (typeof colDef === 'object' ? (colDef.text || colDef.value) : colDef) : c;
+              return `${cLabel}: ${pct(cols[c] || 0, total)}%`;
             });
+            const meanPart = numericCols && mean != null ? `avg ${mean.toFixed(2)} · ` : '';
             return {
               key,
               url,
-              value: total > 0 ? (cols[lastCol] || 0) / total : 0,
-              label: colParts.join(' · '),
+              value: numericCols
+                ? (mean ?? 0)
+                : (total > 0 ? (cols[lastCol] || 0) / total : 0),
+              label: `${meanPart}${colParts.join(' · ')}`,
             };
           });
 
@@ -955,7 +1089,7 @@ function ImageQuestionAnalysis({ answers, type, question }) {
               title={rowLabel}
               items={rankedItems}
               getImageUrl={getImageUrl}
-              maxValue={1}
+              maxValue={numericCols ? maxMean : 1}
               formatLabel={(_, label) => label}
             />
           );
@@ -1276,21 +1410,7 @@ function SkillQuestionAnalysis({ question, answers, allResponses }) {
 
 // ─── Text ranking analysis ────────────────────────────────────────────────────
 // answer = [choiceValue_rank1, choiceValue_rank2, ...]
-function exportRankingCsv(questionName, sorted, kendallWVal, items) {
-  const headers = ['rank', 'item', 'avg_rank', 'borda_score', 'n'];
-  const rows = sorted.map(({ val, avg, borda, n }, idx) => [
-    idx + 1,
-    val,
-    avg != null ? avg.toFixed(4) : '',
-    borda != null ? borda.toFixed(4) : '',
-    n,
-  ]);
-  const meta = [`kendall_w,${kendallWVal != null ? kendallWVal.toFixed(4) : ''}`, ''];
-  const csv = [...meta, headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
-  downloadTextFile(csv, `${questionName}_ranking_${new Date().toISOString().slice(0, 10)}.csv`);
-}
-
-function RankingDistribution({ answers, choices, questionName }) {
+function RankingDistribution({ answers, choices }) {
   const labelMap = {};
   (choices || []).forEach((c) => {
     if (typeof c === 'object' && c !== null) labelMap[c.value] = c.text || c.value;
@@ -1330,13 +1450,8 @@ function RankingDistribution({ answers, choices, questionName }) {
       )}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
         <Typography variant="caption" color="text.secondary">
-          Average rank (1 = top) · Borda score · SD
+          Average rank (1 = top) · Borda score · SD · use card Export for CSV
         </Typography>
-        {questionName && sorted.length > 0 && (
-          <Button size="small" variant="outlined" startIcon={<Download />} onClick={() => exportRankingCsv(questionName, sorted, w, items)}>
-            Export ranking CSV
-          </Button>
-        )}
       </Box>
       {sorted.map(({ val, avg, sd, borda, n }, idx) => (
         <Box key={val} sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
@@ -1375,7 +1490,7 @@ function useImageUrlResolver() {
   };
 }
 
-/** Per-dimension compact image ranking (imageslidergroup). */
+/** Per-dimension score distribution + per-image ranking (imageslidergroup). */
 function ImageSliderGroupAnalysis({ question, answers }) {
   const getImageUrl = useImageUrlResolver();
   const dims = question.dimensions || [];
@@ -1389,11 +1504,13 @@ function ImageSliderGroupAnalysis({ question, answers }) {
   return (
     <Box>
       {dims.map((d) => {
+        const allVals = [];
         const perImage = {};
         for (const { answer, shown_images } of answers) {
           if (!shown_images?.length || typeof answer !== 'object') continue;
           const val = Number(answer[d.id]);
           if (Number.isNaN(val)) continue;
+          allVals.push(val);
           for (const img of shown_images) {
             const key = imageKeyFromShown(img) || img;
             if (!perImage[key]) perImage[key] = { url: img, vals: [] };
@@ -1402,6 +1519,11 @@ function ImageSliderGroupAnalysis({ question, answers }) {
         }
 
         const dimTitle = d.label || `${d.left} ↔ ${d.right}`;
+        const mean = average(allVals);
+        const sd = allVals.length > 1
+          ? Math.sqrt(allVals.reduce((s, v) => s + (v - mean) ** 2, 0) / allVals.length)
+          : 0;
+
         const rankedItems = Object.entries(perImage)
           .map(([key, { url, vals }]) => {
             const avg = average(vals);
@@ -1415,14 +1537,45 @@ function ImageSliderGroupAnalysis({ question, answers }) {
           .sort((a, b) => b.value - a.value);
 
         return (
-          <CompactImageRanking
-            key={d.id}
-            title={dimTitle}
-            items={rankedItems}
-            getImageUrl={getImageUrl}
-            maxValue={scaleMax}
-            formatLabel={(_, label) => label}
-          />
+          <Box key={d.id} sx={{ mb: 3.5 }}>
+            <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 0.5 }}>
+              {dimTitle}
+            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+              <Typography variant="caption" color="text.secondary">{d.left}</Typography>
+              <Typography variant="caption" fontWeight={700}>
+                {mean != null
+                  ? `avg ${mean.toFixed(2)} ± ${sd.toFixed(2)} (n=${allVals.length})`
+                  : 'no data'}
+              </Typography>
+              <Typography variant="caption" color="text.secondary">{d.right}</Typography>
+            </Box>
+            {allVals.length > 0 && <DescriptiveStatsLine nums={allVals} />}
+            {allVals.length >= 3 && (
+              <DensityHistogramChart
+                scores={allVals}
+                domainMin={scaleMin}
+                domainMax={scaleMax}
+                title={`${dimTitle} — score distribution`}
+                caption="Blue bars: histogram (density). Orange curve: fitted normal PDF."
+                xLabel={`Score (${scaleMin}–${scaleMax})`}
+                padB={40}
+                chartH={200}
+              />
+            )}
+            {rankedItems.length > 0 && (
+              <CompactImageRanking
+                title="By image (mean score)"
+                items={rankedItems}
+                getImageUrl={getImageUrl}
+                maxValue={scaleMax}
+                formatLabel={(_, label) => label}
+              />
+            )}
+            {allVals.length === 0 && (
+              <Typography variant="body2" color="text.secondary">No responses yet.</Typography>
+            )}
+          </Box>
         );
       })}
     </Box>
@@ -1579,10 +1732,19 @@ function PointAllocationAnalysis({ question, answers }) {
 
 // ─── Question Card ────────────────────────────────────────────────────────────
 
-function QuestionCard({ question, answers, totalResponses, questionNumber, allResponses }) {
+export function QuestionCard({ question, answers, totalResponses, questionNumber, allResponses, surveyConfig, exportResponses }) {
   const [expanded, setExpanded] = useState(false);
   const type = question.type || 'text';
-  const responseCount = answers.length;
+  const trialUnitCount = answers.length;
+  const participantCount = useMemo(() => {
+    const ids = new Set();
+    (answers || []).forEach((a, i) => {
+      ids.add(a.participant_id || `row_${i}`);
+    });
+    return ids.size;
+  }, [answers]);
+  // Completion rate is per participant; charts/stats use per-trial units in `answers`.
+  const responseCount = participantCount;
 
   const renderAnalysis = () => {
     switch (type) {
@@ -1606,6 +1768,7 @@ function QuestionCard({ question, answers, totalResponses, questionNumber, allRe
         return <ChoiceDistribution answers={answers} choices={question.choices} isCheckbox />;
 
       case 'boolean':
+      case 'consent':
         return <BooleanDistribution answers={answers} />;
 
       case 'text':
@@ -1622,7 +1785,7 @@ function QuestionCard({ question, answers, totalResponses, questionNumber, allRe
         );
 
       case 'ranking':
-        return <RankingDistribution answers={answers} choices={question.choices} questionName={question.name} />;
+        return <RankingDistribution answers={answers} choices={question.choices} />;
 
       case 'expression':
       case 'image':
@@ -1635,12 +1798,11 @@ function QuestionCard({ question, answers, totalResponses, questionNumber, allRe
         );
 
       case 'imagepicker':
+      case 'mediapicker':
         return (
           <>
             <IrrSummary responses={allResponses} question={question} />
             <ImagePickerDistribution
-              answers={answers}
-              choices={question.choices}
               question={question}
               allResponses={allResponses}
             />
@@ -1656,6 +1818,7 @@ function QuestionCard({ question, answers, totalResponses, questionNumber, allRe
       case 'imageboolean':
       case 'image_matrix':
       case 'imagematrix':
+      case 'mediamatrix':
       case 'mediarating':
       case 'mediaboolean':
         return (
@@ -1667,12 +1830,13 @@ function QuestionCard({ question, answers, totalResponses, questionNumber, allRe
           </>
         );
 
+      case 'number':
+        return <NumberDistribution answers={answers} question={question} />;
+
       case 'mediadisplay':
         return (
           <Typography variant="body2" color="text.secondary">
             Display-only question — no participant answers are collected.
-            The shown media files are exported in the __shown_images / __shown_media_group /
-            __shown_media_categories CSV columns.
           </Typography>
         );
 
@@ -1685,6 +1849,7 @@ function QuestionCard({ question, answers, totalResponses, questionNumber, allRe
         );
 
       case 'imageslidergroup':
+      case 'mediaslidergroup':
         return (
           <>
             <IrrSummary responses={allResponses} question={question} />
@@ -1696,6 +1861,7 @@ function QuestionCard({ question, answers, totalResponses, questionNumber, allRe
         return <PointAllocationAnalysis question={question} answers={answers} />;
 
       case 'imagepointallocation':
+      case 'mediapointallocation':
         return <ImagePointAllocationAnalysis question={question} answers={answers} />;
 
       case 'imageannotation':
@@ -1716,6 +1882,7 @@ function QuestionCard({ question, answers, totalResponses, questionNumber, allRe
 
   const responseRate = pct(responseCount, totalResponses);
   const displayOnly = isDisplayOnlyQuestion(question);
+  const canExport = !displayOnly && responseCount > 0;
 
   return (
     <Card variant="outlined" sx={{ mb: 2 }}>
@@ -1760,6 +1927,9 @@ function QuestionCard({ question, answers, totalResponses, questionNumber, allRe
               variant="outlined"
               sx={{ fontSize: '0.7rem' }}
             />
+            {question.isAttentionCheck && (
+              <Chip label="Attention check" size="small" color="warning" variant="outlined" sx={{ fontSize: '0.7rem' }} />
+            )}
             {displayOnly ? (
               <Typography variant="caption" color="text.secondary">
                 Display / instruction
@@ -1767,10 +1937,32 @@ function QuestionCard({ question, answers, totalResponses, questionNumber, allRe
             ) : (
               <Typography variant="caption" color="text.secondary">
                 {responseCount} / {totalResponses} responses ({responseRate}%)
+                {supportsTrialCount(type) && (
+                  <> · {trialUnitCount} trial ratings</>
+                )}
               </Typography>
             )}
           </Box>
         </Box>
+
+        {canExport && (
+          <Button
+            size="small"
+            variant="outlined"
+            startIcon={<Download />}
+            sx={{ mr: 1, flexShrink: 0 }}
+            onClick={(e) => {
+              e.stopPropagation();
+              downloadQuestionExportZip(
+                question,
+                exportResponses || allResponses,
+                surveyConfig,
+              );
+            }}
+          >
+            Export
+          </Button>
+        )}
 
         <IconButton size="small">
           {expanded ? <ExpandLess /> : <ExpandMore />}
@@ -1780,6 +1972,7 @@ function QuestionCard({ question, answers, totalResponses, questionNumber, allRe
       <Collapse in={expanded}>
         <Divider />
         <CardContent>
+          <AttentionCheckPassRate question={question} allResponses={allResponses} />
           {responseCount === 0 && !isDisplayOnlyQuestion(question) ? (
             <Typography variant="body2" color="text.secondary">No responses for this question yet.</Typography>
           ) : (
@@ -1791,149 +1984,7 @@ function QuestionCard({ question, answers, totalResponses, questionNumber, allRe
   );
 }
 
-// ─── CSV Export ───────────────────────────────────────────────────────────────
-
-function exportToCSV(responses, allQuestions, surveyConfig) {
-  if (!responses.length) return;
-
-  const questionNames = allQuestions.map(q => q.name);
-
-  // For each image question, add a companion "shown_images" column.
-  // NOTE: SurveyJS's built-in display-only "image" question has no answer
-  // value in survey.data, but its randomly-selected image is still tracked
-  // in row.displayed_images (saved to Supabase). Including 'image' here
-  // ensures the CSV exposes that filename via the __shown_images column.
-  const imageTypes = new Set([
-    'imagerating', 'image_rating',
-    'imageranking', 'image_ranking',
-    'imageboolean', 'image_boolean',
-    'imagematrix', 'image_matrix',
-    'imagepicker',
-    'image',
-    'mediadisplay', 'mediarating', 'mediaboolean',
-    'imageannotation',
-    'skillquestion',
-    'imageslidergroup',
-    'imagepointallocation',
-  ]);
-  const isImageQuestion = q => imageTypes.has(q.type);
-
-  // Per-dimension / per-choice / per-schema-key sub-columns for structured answer types
-  const subKeysFor = (q) => {
-    if (q.type === 'slidergroup' || q.type === 'imageslidergroup') {
-      return (q.dimensions || []).map((d) => d.id).filter(Boolean);
-    }
-    if (q.type === 'pointallocation' || q.type === 'imagepointallocation') {
-      return (q.choices || []).map((c) => (typeof c === 'object' ? c.value : c)).filter(Boolean);
-    }
-    if (q.type === 'skillquestion') {
-      let schema = q.skillResultSchema;
-      if (!schema?.length && q.skillId?.startsWith('preset_')) {
-        schema = getPresetSkill(q.skillId.replace(/^preset_/, ''))?.resultSchema;
-      }
-      return (schema || []).map((f) => f.key).filter(Boolean);
-    }
-    return null;
-  };
-
-  // Build header columns: answer column + shown_images column (for image questions)
-  const headerCols = [];
-  for (const q of allQuestions) {
-    headerCols.push(q.name);
-    const subKeys = subKeysFor(q);
-    if (subKeys) {
-      subKeys.forEach((k) => headerCols.push(`${q.name}__${String(k).replace(/\./g, '_')}`));
-    }
-    if (isImageQuestion(q)) {
-      headerCols.push(`${q.name}__shown_images`);
-      headerCols.push(`${q.name}__shown_media_group`);
-      headerCols.push(`${q.name}__shown_media_categories`);
-    }
-  }
-
-  const headers = ['participant_id', 'created_at', 'completion_code', 'session_id', 'attempt_index', 'quality_flags', ...headerCols];
-
-  const rows = responses.map(row => {
-    const flags = surveyConfig
-      ? evaluateResponseQuality(row, surveyConfig, responses)
-      : [];
-    const cols = [
-      row.participant_id || '',
-      row.created_at || row.survey_metadata?.completion_time || '',
-      row.survey_metadata?.completion_code || '',
-      row.survey_metadata?.session_id || '',
-      row.survey_metadata?.attempt_index ?? '',
-      flags.join('|'),
-    ];
-    for (const q of allQuestions) {
-      const qName = q.name;
-      const qData = row.responses?.[qName];
-
-      // Answer value
-      let ans, shownImgs;
-      if (qData !== null && qData !== undefined && typeof qData === 'object' && !Array.isArray(qData) && 'answer' in qData) {
-        ans = qData.answer;
-        shownImgs = qData.shown_images?.length ? qData.shown_images : (row.displayed_images?.[qName] || []);
-      } else {
-        ans = qData ?? '';
-        shownImgs = row.displayed_images?.[qName] || [];
-      }
-
-      // For image questions, convert URL answers to filenames
-      let ansForCsv = ans;
-      if (q.type === 'skillquestion' && ans && typeof ans === 'object' && !Array.isArray(ans)) {
-        ansForCsv = stripSkillAnswerContext(ans);
-      }
-      if (isImageQuestion(q)) {
-        const urlToName = v => (v && typeof v === 'string') ? v.split('?')[0].split('/').pop() : v;
-        if (Array.isArray(ans)) ansForCsv = ans.map(urlToName);
-        else if (typeof ans === 'string') ansForCsv = urlToName(ans);
-      }
-      cols.push(typeof ansForCsv === 'object' ? JSON.stringify(ansForCsv) : String(ansForCsv ?? ''));
-
-      // Per-dimension / per-choice / per-schema-key sub-columns
-      const subKeys = subKeysFor(q);
-      if (subKeys) {
-        const rawObj = (ans && typeof ans === 'object' && !Array.isArray(ans)) ? ans : {};
-        const obj = q.type === 'skillquestion' ? stripSkillAnswerContext(rawObj) : rawObj;
-        subKeys.forEach((k) => {
-          const v = getPath(obj, k);
-          cols.push(v === undefined || v === null
-            ? ''
-            : (typeof v === 'object' ? JSON.stringify(v) : v));
-        });
-      }
-
-      // Shown images column (only for image questions) — use filenames, not full URLs
-      if (isImageQuestion(q)) {
-        const imgNames = Array.isArray(shownImgs)
-          ? shownImgs.map(v => v ? v.split('?')[0].split('/').pop() : v)
-          : [shownImgs ?? ''];
-        cols.push(imgNames.join('|'));
-        const mediaGroup = (typeof qData === 'object' && qData && 'shown_media_group' in qData)
-          ? (qData.shown_media_group || '')
-          : (row.displayed_media_groups?.[qName] || '');
-        cols.push(mediaGroup || '');
-        const mediaCategories = (typeof qData === 'object' && qData && qData.shown_media_categories)
-          ? (Array.isArray(qData.shown_media_categories) ? qData.shown_media_categories.join('|') : qData.shown_media_categories)
-          : (Array.isArray(row.displayed_media_categories?.[qName])
-            ? row.displayed_media_categories[qName].join('|')
-            : (row.displayed_media_categories?.[qName] || ''));
-        cols.push(mediaCategories || '');
-      }
-    }
-    return cols.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',');
-  });
-
-  const csvContent = [headers.join(','), ...rows].join('\n');
-  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `survey_responses_${new Date().toISOString().slice(0, 10)}.csv`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
+// Wide CSV lives in src/lib/responsesWideExport.js
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
@@ -1941,6 +1992,12 @@ function readExcludeFlaggedFromConfig(surveyConfig) {
   return typeof surveyConfig?.excludeFlaggedFromAnalysis === 'boolean'
     ? surveyConfig.excludeFlaggedFromAnalysis
     : true;
+}
+
+function readIncludePracticeFromConfig(surveyConfig) {
+  return typeof surveyConfig?.includeResearcherPractice === 'boolean'
+    ? surveyConfig.includeResearcherPractice
+    : false;
 }
 
 export default function ResultsAnalysis({ currentProject, surveyConfig, onSurveyConfigChange }) {
@@ -1952,8 +2009,10 @@ export default function ResultsAnalysis({ currentProject, surveyConfig, onSurvey
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
   const [sessionFilter, setSessionFilter] = useState('');
+  const [includePractice, setIncludePractice] = useState(() => readIncludePracticeFromConfig(surveyConfig));
   const [excludeFlagged, setExcludeFlagged] = useState(() => readExcludeFlaggedFromConfig(surveyConfig));
   const [savingExcludePref, setSavingExcludePref] = useState(false);
+  const [savingPracticePref, setSavingPracticePref] = useState(false);
   const [excludePrefError, setExcludePrefError] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [deleting, setDeleting] = useState(false);
@@ -1962,6 +2021,10 @@ export default function ResultsAnalysis({ currentProject, surveyConfig, onSurvey
   useEffect(() => {
     setExcludeFlagged(readExcludeFlaggedFromConfig(surveyConfig));
   }, [currentProject?.id, surveyConfig?.excludeFlaggedFromAnalysis]);
+
+  useEffect(() => {
+    setIncludePractice(readIncludePracticeFromConfig(surveyConfig));
+  }, [currentProject?.id, surveyConfig?.includeResearcherPractice]);
 
   const handleExcludeFlaggedChange = async (checked) => {
     const previous = excludeFlagged;
@@ -1980,6 +2043,26 @@ export default function ResultsAnalysis({ currentProject, surveyConfig, onSurvey
       setExcludePrefError(err.message || 'Could not save analysis preference');
     } finally {
       setSavingExcludePref(false);
+    }
+  };
+
+  const handleIncludePracticeChange = async (checked) => {
+    const previous = includePractice;
+    setIncludePractice(checked);
+    setExcludePrefError(null);
+    if (!currentProject?.id || !surveyConfig) return;
+
+    const nextConfig = { ...surveyConfig, includeResearcherPractice: checked };
+    setSavingPracticePref(true);
+    try {
+      const result = await saveProjectFull(currentProject, nextConfig);
+      if (!result.success) throw new Error(result.error || 'Failed to save preference');
+      onSurveyConfigChange?.(nextConfig);
+    } catch (err) {
+      setIncludePractice(previous);
+      setExcludePrefError(err.message || 'Could not save analysis preference');
+    } finally {
+      setSavingPracticePref(false);
     }
   };
 
@@ -2002,7 +2085,9 @@ export default function ResultsAnalysis({ currentProject, surveyConfig, onSurvey
         const resp = await fetch(`${API_ROOT}/responses`);
         if (resp.ok) {
           const json = await resp.json();
-          setResponses(json.responses || []);
+          setResponses((json.responses || []).filter(
+            (row) => !currentProject?.id || !row.project_id || row.project_id === currentProject.id,
+          ));
           setDataSource('file');
         } else {
           setError('No data source available. Configure Supabase environment variables.');
@@ -2052,9 +2137,10 @@ export default function ResultsAnalysis({ currentProject, surveyConfig, onSurvey
       if (dateFrom && ts && new Date(ts) < new Date(`${dateFrom}T00:00:00`)) return false;
       if (dateTo && ts && new Date(ts) > new Date(`${dateTo}T23:59:59`)) return false;
       if (sessionFilter && row.survey_metadata?.session_id !== sessionFilter) return false;
+      if (!includePractice && row.survey_metadata?.practice_mode) return false;
       return true;
     });
-  }, [responses, currentProject?.id, dateFrom, dateTo, sessionFilter]);
+  }, [responses, currentProject?.id, dateFrom, dateTo, sessionFilter, includePractice]);
 
   const handleDeleteResponse = async () => {
     if (!deleteTarget) return;
@@ -2106,6 +2192,11 @@ export default function ResultsAnalysis({ currentProject, surveyConfig, onSurvey
     return [...ids];
   }, [responses]);
 
+  const practiceCount = useMemo(
+    () => responses.filter((r) => r.survey_metadata?.practice_mode).length,
+    [responses],
+  );
+
   // Filter questions by search
   const filteredQuestions = useMemo(() => {
     if (!searchText.trim()) return allQuestions;
@@ -2117,11 +2208,29 @@ export default function ResultsAnalysis({ currentProject, surveyConfig, onSurvey
     );
   }, [allQuestions, searchText]);
 
-  // Pre-collect answers per question
+  // Pre-collect answers + per-question denominators (practice only inflates that question)
   const questionAnswers = useMemo(() => {
     const map = {};
     for (const q of allQuestions) {
-      map[q.name] = collectAnswers(q.name, filteredResponses);
+      map[q.name] = q.type === 'mediadisplay'
+        ? collectShownMedia(q.name, filteredResponses)
+        : collectAnswers(q.name, filteredResponses);
+    }
+    return map;
+  }, [allQuestions, filteredResponses]);
+
+  const questionDenominators = useMemo(() => {
+    const map = {};
+    for (const q of allQuestions) {
+      map[q.name] = responsesEligibleForQuestion(q.name, filteredResponses).length;
+    }
+    return map;
+  }, [allQuestions, filteredResponses]);
+
+  const questionResponsePools = useMemo(() => {
+    const map = {};
+    for (const q of allQuestions) {
+      map[q.name] = responsesEligibleForQuestion(q.name, filteredResponses);
     }
     return map;
   }, [allQuestions, filteredResponses]);
@@ -2202,10 +2311,37 @@ export default function ResultsAnalysis({ currentProject, surveyConfig, onSurvey
             variant="outlined"
             startIcon={<Download />}
             disabled={!filteredResponses.length}
-            onClick={() => exportToCSV(filteredResponses, allQuestions, surveyConfig)}
+            onClick={() => downloadResponsesWideCsv(filteredResponses, allQuestions, surveyConfig)}
             size="small"
           >
             Export CSV
+          </Button>
+          <Button
+            variant="contained"
+            startIcon={<Download />}
+            disabled={!filteredResponses.length || !surveyConfig}
+            onClick={() => {
+              const wideCsv = buildResponsesWideCsv(filteredResponses, allQuestions, surveyConfig);
+              downloadResultsExportZip({
+                project: currentProject,
+                surveyConfig,
+                questions: allQuestions,
+                filteredResponses,
+                dateFilteredResponses,
+                excludeFlagged,
+                wideCsv,
+                filters: {
+                  date_from: dateFrom || null,
+                  date_to: dateTo || null,
+                  session_id: sessionFilter || null,
+                  include_practice: includePractice,
+                  exclude_flagged: excludeFlagged,
+                },
+              });
+            }}
+            size="small"
+          >
+            Export All
           </Button>
           <Button
             variant="outlined"
@@ -2274,6 +2410,7 @@ export default function ResultsAnalysis({ currentProject, surveyConfig, onSurvey
             size="small"
             value={sessionFilter}
             onChange={(e) => setSessionFilter(e.target.value)}
+            InputLabelProps={{ shrink: true }}
             SelectProps={{ native: true }}
             sx={{ minWidth: 180 }}
           >
@@ -2283,6 +2420,21 @@ export default function ResultsAnalysis({ currentProject, surveyConfig, onSurvey
             ))}
           </TextField>
         )}
+        <FormControlLabel
+          control={
+            <Switch
+              checked={includePractice}
+              onChange={(e) => handleIncludePracticeChange(e.target.checked)}
+              disabled={savingPracticePref}
+              size="small"
+            />
+          }
+          label={
+            practiceCount > 0
+              ? `Include researcher practice (${practiceCount})`
+              : 'Include researcher practice'
+          }
+        />
       </Box>
 
       {sessionStats.length > 0 && (
@@ -2293,68 +2445,88 @@ export default function ResultsAnalysis({ currentProject, surveyConfig, onSurvey
 
       {/* Data quality panel */}
       {!loading && dateFilteredResponses.length > 0 && surveyConfig && (
-        <Paper variant="outlined" sx={{ p: 2, mb: 3 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
-            <VerifiedUser color="primary" />
-            <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>Data Quality</Typography>
-            <Box flex={1} />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={excludeFlagged}
-                  onChange={(e) => handleExcludeFlaggedChange(e.target.checked)}
-                  disabled={savingExcludePref}
-                  size="small"
-                />
-              }
-              label="Exclude flagged responses from analysis"
-            />
-          </Box>
-          {excludePrefError && (
-            <Alert severity="warning" sx={{ mb: 1, py: 0 }}>{excludePrefError}</Alert>
-          )}
-          <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 1 }}>
-            <Chip label={`${qualitySummary.clean} clean`} color="success" size="small" variant="outlined" />
-            <Chip label={`${qualitySummary.flagged} flagged`} color="warning" size="small" variant="outlined" />
-            <Chip label={`${filteredResponses.length} in analysis`} size="small" variant="outlined" />
-          </Box>
-          <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
-            Flags: {Object.entries(QUALITY_FLAG_LABELS).map(([k, v]) => `${k} (${v})`).join(' · ')}
-          </Typography>
-          {qualitySummary.flagged > 0 && (
-            <TableContainer>
-              <Table size="small">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Participant</TableCell>
-                    <TableCell>Flags</TableCell>
-                    <TableCell>Duration (s)</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {dateFilteredResponses
-                    .filter((r) => (qualitySummary.perResponse[r.id ?? r.participant_id] || []).length)
-                    .slice(0, 20)
-                    .map((r) => {
-                      const key = r.id ?? r.participant_id;
-                      const flags = qualitySummary.perResponse[key] || [];
-                      return (
-                        <TableRow key={key}>
-                          <TableCell>{r.participant_id}</TableCell>
-                          <TableCell>
-                            {flags.map((f) => (
-                              <Chip key={f} label={QUALITY_FLAG_LABELS[f] || f} size="small" sx={{ mr: 0.5, mb: 0.5 }} />
-                            ))}
-                          </TableCell>
-                          <TableCell>{r.survey_metadata?.timing?.total_seconds ?? '—'}</TableCell>
-                        </TableRow>
-                      );
-                    })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          )}
-        </Paper>
+        <Accordion defaultExpanded={false} sx={{ mb: 2 }}>
+          <AccordionSummary expandIcon={<ExpandMore />}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap', width: '100%', pr: 1 }}>
+              <VerifiedUser color="primary" fontSize="small" />
+              <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>Data Quality</Typography>
+              <Chip label={`${qualitySummary.clean} clean`} color="success" size="small" variant="outlined" />
+              <Chip label={`${qualitySummary.flagged} flagged`} color="warning" size="small" variant="outlined" />
+              <Chip label={`${filteredResponses.length} in analysis`} size="small" variant="outlined" />
+            </Box>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5, flexWrap: 'wrap' }}>
+              <Button
+                size="small"
+                variant="outlined"
+                startIcon={<Download />}
+                onClick={() => {
+                  const includedKeys = new Set(
+                    (filteredResponses || []).map((r) => String(r.id ?? `${r.participant_id}|${r.created_at}|${r.survey_metadata?.session_id}`)),
+                  );
+                  downloadDataQualityCsv(dateFilteredResponses, surveyConfig, {
+                    excludeFlagged,
+                    includedKeys,
+                  });
+                }}
+              >
+                Export
+              </Button>
+              <Box flex={1} />
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={excludeFlagged}
+                    onChange={(e) => handleExcludeFlaggedChange(e.target.checked)}
+                    disabled={savingExcludePref}
+                    size="small"
+                  />
+                }
+                label="Exclude flagged responses from analysis"
+              />
+            </Box>
+            {excludePrefError && (
+              <Alert severity="warning" sx={{ mb: 1, py: 0 }}>{excludePrefError}</Alert>
+            )}
+            <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
+              Flags: {Object.entries(QUALITY_FLAG_LABELS).map(([k, v]) => `${k} (${v})`).join(' · ')}
+            </Typography>
+            {qualitySummary.flagged > 0 && (
+              <TableContainer>
+                <Table size="small">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Participant</TableCell>
+                      <TableCell>Flags</TableCell>
+                      <TableCell>Duration (s)</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {dateFilteredResponses
+                      .filter((r) => (qualitySummary.perResponse[r.id ?? r.participant_id] || []).length)
+                      .slice(0, 20)
+                      .map((r) => {
+                        const key = r.id ?? r.participant_id;
+                        const flags = qualitySummary.perResponse[key] || [];
+                        return (
+                          <TableRow key={key}>
+                            <TableCell>{r.participant_id}</TableCell>
+                            <TableCell>
+                              {flags.map((f) => (
+                                <Chip key={f} label={QUALITY_FLAG_LABELS[f] || f} size="small" sx={{ mr: 0.5, mb: 0.5 }} />
+                              ))}
+                            </TableCell>
+                            <TableCell>{r.survey_metadata?.timing?.total_seconds ?? '—'}</TableCell>
+                          </TableRow>
+                        );
+                      })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            )}
+          </AccordionDetails>
+        </Accordion>
       )}
 
       {/* Overview cards */}
@@ -2406,81 +2578,103 @@ export default function ResultsAnalysis({ currentProject, surveyConfig, onSurvey
 
       {/* Response records — view & delete */}
       {!loading && dateFilteredResponses.length > 0 && (
-        <Paper variant="outlined" sx={{ p: 2, mb: 3 }}>
-          <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 1 }}>
-            Response records
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
-            Remove individual submissions from this project. Deletion is permanent.
-          </Typography>
-          {deleteError && (
-            <Alert severity="error" sx={{ mb: 1.5 }} onClose={() => setDeleteError(null)}>
-              {deleteError}
-            </Alert>
-          )}
-          <TableContainer>
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Participant</TableCell>
-                  <TableCell>Submitted</TableCell>
-                  <TableCell>Completion code</TableCell>
-                  <TableCell>Quality</TableCell>
-                  <TableCell align="right">Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {dateFilteredResponses.map((row) => {
-                  const key = responseRecordKey(row);
-                  const qKey = row.id ?? row.participant_id;
-                  const flags = surveyConfig
-                    ? (qualitySummary.perResponse[qKey] || [])
-                    : [];
-                  return (
-                    <TableRow key={key} hover>
-                      <TableCell sx={{ fontFamily: 'monospace', fontSize: '0.8rem' }}>
-                        {row.participant_id || '—'}
-                      </TableCell>
-                      <TableCell>{formatResponseTime(row)}</TableCell>
-                      <TableCell sx={{ fontFamily: 'monospace' }}>
-                        {row.survey_metadata?.completion_code || '—'}
-                      </TableCell>
-                      <TableCell>
-                        {flags.length === 0 ? (
-                          <Chip label="clean" color="success" size="small" variant="outlined" />
-                        ) : (
-                          flags.map((f) => (
+        <Accordion defaultExpanded={false} sx={{ mb: 3 }}>
+          <AccordionSummary expandIcon={<ExpandMore />}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                Response records
+              </Typography>
+              <Chip
+                size="small"
+                variant="outlined"
+                label={`${dateFilteredResponses.length} submissions`}
+              />
+            </Box>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+              Remove individual submissions from this project. Deletion is permanent.
+            </Typography>
+            {deleteError && (
+              <Alert severity="error" sx={{ mb: 1.5 }} onClose={() => setDeleteError(null)}>
+                {deleteError}
+              </Alert>
+            )}
+            <TableContainer>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Participant</TableCell>
+                    <TableCell>Submitted</TableCell>
+                    <TableCell>Completion code</TableCell>
+                    <TableCell>Quality</TableCell>
+                    <TableCell align="right">Actions</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {dateFilteredResponses.map((row) => {
+                    const key = responseRecordKey(row);
+                    const qKey = row.id ?? row.participant_id;
+                    const flags = surveyConfig
+                      ? (qualitySummary.perResponse[qKey] || [])
+                      : [];
+                    return (
+                      <TableRow key={key} hover>
+                        <TableCell sx={{ fontFamily: 'monospace', fontSize: '0.8rem' }}>
+                          {row.participant_id || '—'}
+                          {row.survey_metadata?.practice_mode && (
                             <Chip
-                              key={f}
-                              label={QUALITY_FLAG_LABELS[f] || f}
-                              color="warning"
                               size="small"
-                              sx={{ mr: 0.5, mb: 0.5 }}
+                              label={row.survey_metadata?.practice_question
+                                ? `practice: ${row.survey_metadata.practice_question}`
+                                : 'practice'}
+                              color="secondary"
+                              variant="outlined"
+                              sx={{ ml: 1, height: 20, fontSize: '0.65rem' }}
                             />
-                          ))
-                        )}
-                      </TableCell>
-                      <TableCell align="right">
-                        <Tooltip title="Delete this response">
-                          <IconButton
-                            size="small"
-                            color="error"
-                            onClick={() => {
-                              setDeleteError(null);
-                              setDeleteTarget(row);
-                            }}
-                          >
-                            <DeleteOutline fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
+                          )}
+                        </TableCell>
+                        <TableCell>{formatResponseTime(row)}</TableCell>
+                        <TableCell sx={{ fontFamily: 'monospace' }}>
+                          {row.survey_metadata?.completion_code || '—'}
+                        </TableCell>
+                        <TableCell>
+                          {flags.length === 0 ? (
+                            <Chip label="clean" color="success" size="small" variant="outlined" />
+                          ) : (
+                            flags.map((f) => (
+                              <Chip
+                                key={f}
+                                label={QUALITY_FLAG_LABELS[f] || f}
+                                color="warning"
+                                size="small"
+                                sx={{ mr: 0.5, mb: 0.5 }}
+                              />
+                            ))
+                          )}
+                        </TableCell>
+                        <TableCell align="right">
+                          <Tooltip title="Delete this response">
+                            <IconButton
+                              size="small"
+                              color="error"
+                              onClick={() => {
+                                setDeleteError(null);
+                                setDeleteTarget(row);
+                              }}
+                            >
+                              <DeleteOutline fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </AccordionDetails>
+        </Accordion>
       )}
 
       {/* Loading */}
@@ -2507,6 +2701,12 @@ export default function ResultsAnalysis({ currentProject, surveyConfig, onSurvey
       {/* Per-question analysis */}
       {!loading && surveyConfig && allQuestions.length > 0 && (
         <>
+          <ImagePerceptionPanel
+            currentProject={currentProject}
+            responses={filteredResponses}
+            questions={allQuestions}
+          />
+
           {/* Search */}
           <TextField
             size="small"
@@ -2538,11 +2738,13 @@ export default function ResultsAnalysis({ currentProject, surveyConfig, onSurvey
                 {pageQuestions.map((question) => (
                   <QuestionCard
                     key={question.name}
-                    question={{ ...question, _allResponses: filteredResponses }}
+                    question={{ ...question, _allResponses: questionResponsePools[question.name] || [] }}
                     answers={questionAnswers[question.name] || []}
-                    totalResponses={totalResponses}
+                    totalResponses={questionDenominators[question.name] || 0}
                     questionNumber={answerableNumberByName.get(question.name) ?? null}
-                    allResponses={filteredResponses}
+                    allResponses={questionResponsePools[question.name] || []}
+                    exportResponses={filteredResponses}
+                    surveyConfig={surveyConfig}
                   />
                 ))}
               </Box>

@@ -115,7 +115,7 @@ export default function SkillQuestionFrame({ skillHtml, config, images, value, o
         style={{
           width: '100%',
           height,
-          border: '1px solid #ddd',
+          border: '1px solid rgba(0,0,0,0.12)',
           borderRadius: 8,
           display: 'block',
           pointerEvents: 'auto',

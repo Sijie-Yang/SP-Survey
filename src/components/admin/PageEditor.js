@@ -107,9 +107,13 @@ function SortableQuestionItem({ question, questionIndex, onEdit, onDelete, onDup
       consent: 'Text Consent',
       image: 'Image Display (1 image)',
       mediadisplay: 'Media Display',
+      mediapicker: 'Media Choice',
+      mediaranking: 'Media Ranking',
       mediarating: 'Media Rating',
       mediaboolean: 'Media Yes/No',
-      mediaranking: 'Media Ranking',
+      mediamatrix: 'Media Matrix',
+      mediaslidergroup: 'Media Slider Group',
+      mediapointallocation: 'Media Point Allocation',
       imageannotation: 'Image Annotation',
       slidergroup: 'Text Slider Group',
       imageslidergroup: 'Image Slider Group',
@@ -373,9 +377,13 @@ export default function PageEditor({ page, pageIndex, onSave, onCancel, images, 
       consent: 'Text Consent',
       image: 'Image Display (1 image)',
       mediadisplay: 'Media Display',
+      mediapicker: 'Media Choice',
+      mediaranking: 'Media Ranking',
       mediarating: 'Media Rating',
       mediaboolean: 'Media Yes/No',
-      mediaranking: 'Media Ranking',
+      mediamatrix: 'Media Matrix',
+      mediaslidergroup: 'Media Slider Group',
+      mediapointallocation: 'Media Point Allocation',
       imageannotation: 'Image Annotation',
       slidergroup: 'Text Slider Group',
       imageslidergroup: 'Image Slider Group',
@@ -491,6 +499,7 @@ export default function PageEditor({ page, pageIndex, onSave, onCancel, images, 
           onCancel={() => setSelectedQuestion(null)}
           images={images}
           currentProject={currentProject}
+          surveyConfig={surveyConfig}
         />
       )}
       <ConfirmDialog

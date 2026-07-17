@@ -43,6 +43,7 @@ import SystemStatus from './components/admin/SystemStatus';
 import ImageDataset from './components/admin/ImageDataset';
 import WebsiteSetup from './components/admin/WebsiteSetup';
 import ResultsAnalysis from './components/admin/ResultsAnalysis';
+import ResearcherPractice from './components/admin/ResearcherPractice';
 import ProjectSidebar from './components/admin/ProjectSidebar';
 import BackendStatus from './components/admin/BackendStatus';
 import { isSupabaseConfigured } from './lib/supabase';
@@ -58,17 +59,18 @@ import {
 } from './lib/projectManager';
 import { useNavigate } from 'react-router-dom';
 
-function TabPanel({ children, value, index, ...other }) {
+function TabPanel({ children, value, index, keepMounted = false, ...other }) {
+  const active = value === index;
   return (
     <div
       role="tabpanel"
-      hidden={value !== index}
+      hidden={!active}
       id={`admin-tabpanel-${index}`}
       aria-labelledby={`admin-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
+      {(active || keepMounted) && (
+        <Box sx={{ p: 3, display: active ? 'block' : 'none' }}>
           {children}
         </Box>
       )}
@@ -87,6 +89,10 @@ export default function AdminApp() {
   const theme = createCustomTheme(currentTheme);
   
   const [tabValue, setTabValue] = useState(0);
+  const [practiceKeepAlive, setPracticeKeepAlive] = useState(false);
+  const handlePracticeSessionActive = useCallback((active) => {
+    setPracticeKeepAlive(!!active);
+  }, []);
   const [surveyConfig, setSurveyConfig] = useState(null);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
@@ -151,6 +157,20 @@ export default function AdminApp() {
   const [currentProject, setCurrentProject] = useState(null);
   const [projectLoading, setProjectLoading] = useState(true);
 
+  useEffect(() => {
+    if (!currentProject?.id) {
+      setPracticeKeepAlive(false);
+      return;
+    }
+    try {
+      const all = JSON.parse(sessionStorage.getItem('researcher_practice_sessions') || '{}') || {};
+      const row = all[currentProject.id];
+      setPracticeKeepAlive(!!(row?.active && row?.sessionId));
+    } catch {
+      setPracticeKeepAlive(false);
+    }
+  }, [currentProject?.id]);
+
 
   useEffect(() => {
     cleanupDemoImages();
@@ -167,7 +187,7 @@ export default function AdminApp() {
   useEffect(() => {
     const fetchGithubStars = async () => {
       try {
-        const response = await fetch('https://api.github.com/repos/Sijie-Yang/Streetscape-Perception-Survey');
+        const response = await fetch('https://api.github.com/repos/Sijie-Yang/SP-Survey');
         if (response.ok) {
           const data = await response.json();
           setGithubStars(data.stargazers_count);
@@ -852,7 +872,7 @@ export default function AdminApp() {
             {/* Custom GitHub Stars Badge */}
             <Box
               component="a"
-              href="https://github.com/Sijie-Yang/Streetscape-Perception-Survey"
+              href="https://github.com/Sijie-Yang/SP-Survey"
               target="_blank"
               rel="noopener noreferrer"
               sx={{
@@ -1198,11 +1218,12 @@ export default function AdminApp() {
           <Paper sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs value={tabValue} onChange={handleTabChange} aria-label="admin tabs" variant="scrollable" scrollButtons="auto">
-                <Tab label="Step 1 - Image Dataset" />
+                <Tab label="Step 1 - Media Dataset" />
                 <Tab label="Step 2 - Survey Builder" />
                 <Tab label="Step 3 - Server Setup" />
                 <Tab label="Step 4 - Website Deployment" />
                 <Tab label="Step 5 - Results Analysis" />
+                <Tab label="Researcher Practice" />
               </Tabs>
             </Box>
 
@@ -1259,6 +1280,14 @@ export default function AdminApp() {
                 currentProject={currentProject}
                 surveyConfig={surveyConfig}
                 onSurveyConfigChange={handleResultsConfigSync}
+              />
+            </TabPanel>
+
+            <TabPanel value={tabValue} index={5} keepMounted={practiceKeepAlive}>
+              <ResearcherPractice
+                currentProject={currentProject}
+                surveyConfig={surveyConfig}
+                onSessionActiveChange={handlePracticeSessionActive}
               />
             </TabPanel>
           </Paper>

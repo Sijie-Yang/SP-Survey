@@ -36,8 +36,29 @@ function inferContentType(key) {
     jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png',
     gif: 'image/gif', webp: 'image/webp', mp4: 'video/mp4',
     webm: 'video/webm', mp3: 'audio/mpeg', wav: 'audio/wav',
+    csv: 'text/csv', json: 'application/json', txt: 'text/plain',
   };
   return map[ext] || 'application/octet-stream';
+}
+
+export function getMediaStoragePublicUrl(key) {
+  const client = ensureClient();
+  return publicUrl(client, key);
+}
+
+export async function downloadStorageText(key) {
+  try {
+    const client = ensureClient();
+    const { data, error } = await client.storage.from(BUCKET).download(key);
+    if (error) {
+      if (/not found|does not exist|404/i.test(error.message || '')) return null;
+      throw error;
+    }
+    return await data.text();
+  } catch (error) {
+    if (/not found|does not exist|404/i.test(error.message || '')) return null;
+    throw error;
+  }
 }
 
 function base64ToBlob(base64, contentType) {
@@ -45,17 +66,6 @@ function base64ToBlob(base64, contentType) {
   const bytes = new Uint8Array(binary.length);
   for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
   return new Blob([bytes], { type: contentType });
-}
-
-async function listAll(prefix = '') {
-  const client = ensureClient();
-  await ensureBucket(client);
-  const { data, error } = await client.storage.from(BUCKET).list(prefix, {
-    limit: 10000,
-    sortBy: { column: 'name', order: 'asc' },
-  });
-  if (error) throw error;
-  return data || [];
 }
 
 export async function uploadImageToR2(fileOrBlob, key) {
@@ -77,14 +87,36 @@ export async function uploadImageToR2(fileOrBlob, key) {
   }
 }
 
-export async function deleteImagesFromR2(keys) {
+export function isTemplateR2Key(key) {
+  return typeof key === 'string' && key.startsWith('templates/');
+}
+
+export function filterDeletableR2Keys(keys, {
+  allowedPrefix = null,
+  allowTemplateKeys = false,
+} = {}) {
+  const out = [];
+  const skipped = [];
+  for (const raw of keys || []) {
+    const key = String(raw || '').replace(/^\/+/, '');
+    if (!key) continue;
+    if ((!allowTemplateKeys && isTemplateR2Key(key)) || (allowedPrefix && !key.startsWith(allowedPrefix))) {
+      skipped.push(key);
+      continue;
+    }
+    out.push(key);
+  }
+  return { keys: [...new Set(out)], skipped: [...new Set(skipped)] };
+}
+
+export async function deleteImagesFromR2(keys, options = {}) {
   try {
     const client = ensureClient();
-    const list = (keys || []).filter(Boolean);
-    if (!list.length) return { success: true };
+    const { keys: list, skipped } = filterDeletableR2Keys(keys, options);
+    if (!list.length) return { success: true, deleted: 0, skipped: skipped.length };
     const { error } = await client.storage.from(BUCKET).remove(list);
     if (error) throw error;
-    return { success: true };
+    return { success: true, deleted: list.length, skipped: skipped.length };
   } catch (error) {
     console.error('deleteImagesFromR2 (Supabase):', error);
     return { success: false, error: error.message };

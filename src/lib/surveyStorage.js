@@ -1,5 +1,8 @@
 // Survey configuration storage using file system API
 // No localStorage dependency - all data saved to server
+
+import { paletteToSurveyJsVars } from '../themes/themeConfig';
+import { themeJson } from '../theme';
 import { API_ROOT } from './apiConfig';
 
 const STORAGE_PREFIX = 'survey_config_';
@@ -19,37 +22,33 @@ export const saveSurveyConfig = async (name, config, options = {}) => {
 
 export const loadSurveyConfig = async (projectId) => {
   try {
-    // ✅ Load surveyConfig from project file via API
-    console.log(`📂 loadSurveyConfig called for ${projectId} (loading from file system)`);
-    
+    // SP-Survey stores project and survey JSON in its local Express server.
+    // Supabase is optional and is used only for media and survey responses.
     const response = await fetch(`${API_ROOT}/projects/${projectId}`);
     if (response.ok) {
       const data = await response.json();
       if (data.success && data.surveyConfig) {
-        console.log(`✅ Loaded surveyConfig for project ${projectId}:`, data.surveyConfig.title);
-        
-        // Fix boolean values that should be strings for SurveyJS
         const config = data.surveyConfig;
-        if (typeof config.showQuestionNumbers === 'boolean') {
-          config.showQuestionNumbers = config.showQuestionNumbers ? 'on' : 'off';
-          console.log('🔧 Fixed showQuestionNumbers boolean to string');
-        }
-        if (typeof config.showProgressBar === 'boolean') {
-          config.showProgressBar = config.showProgressBar ? 'top' : 'off';
-          console.log('🔧 Fixed showProgressBar boolean to string');
-        }
-        
+        fixBooleanFields(config);
         return config;
       }
     }
-    
-    console.warn(`⚠️ No surveyConfig found for project ${projectId}`);
+
     return null;
   } catch (error) {
     console.error('Error loading survey config:', error);
     return null;
   }
 };
+
+function fixBooleanFields(config) {
+  if (typeof config.showQuestionNumbers === 'boolean') {
+    config.showQuestionNumbers = config.showQuestionNumbers ? 'on' : 'off';
+  }
+  if (typeof config.showProgressBar === 'boolean') {
+    config.showProgressBar = config.showProgressBar ? 'top' : 'off';
+  }
+}
 
 export const deleteSurveyConfig = async (name) => {
   try {
@@ -106,13 +105,11 @@ export function normalizeBuilderQuestion(element) {
 
 export function normalizeBuilderSurveyJson(surveyJson) {
   if (!surveyJson?.pages) return surveyJson;
-  return {
-    ...surveyJson,
-    pages: surveyJson.pages.map((page) => ({
-      ...page,
-      elements: (page.elements || []).map(normalizeBuilderQuestion),
-    })),
-  };
+  const copy = { ...surveyJson, pages: surveyJson.pages.map((page) => ({
+    ...page,
+    elements: (page.elements || []).map(normalizeBuilderQuestion),
+  })) };
+  return copy;
 }
 
 // Convert admin config to SurveyJS format for actual survey use
@@ -136,7 +133,10 @@ export const convertToSurveyJS = (adminConfig) => {
             value: `image_${index}`,
             imageLink: url
           }));
-          question.imageFit = "cover";
+          // "contain" keeps the image's natural aspect ratio; the global CSS in
+          // src/index.css further removes fixed sizing so each image is shown
+          // at its source's natural ratio.
+          question.imageFit = "contain";
           question.multiSelect = element.multiSelect || false;
         }
         
@@ -145,9 +145,7 @@ export const convertToSurveyJS = (adminConfig) => {
           // Randomly select one image
           const randomIndex = Math.floor(Math.random() * element.imageLinks.length);
           question.imageLink = element.imageLinks[randomIndex];
-          question.imageFit = "cover";
-          question.imageHeight = "300px";
-          question.imageWidth = "100%";
+          question.imageFit = "contain";
         }
         
         return question;
@@ -181,11 +179,20 @@ const ensureColorString = (color, defaultColor) => {
     return defaultColor;
   }
   const trimmed = String(color).trim();
+  if (/NaN/i.test(trimmed)) {
+    return defaultColor;
+  }
   // Ensure it starts with # for hex colors or is a valid CSS color
   if (!trimmed.startsWith('#') && !trimmed.startsWith('rgb') && !trimmed.startsWith('hsl')) {
     return defaultColor;
   }
   return trimmed;
+};
+
+const isInvalidSurveyColor = (color) => {
+  if (!color || typeof color !== 'string') return true;
+  const trimmed = String(color).trim();
+  return /NaN/i.test(trimmed) || trimmed.length === 0;
 };
 
 // Generate custom theme based on admin config
@@ -216,6 +223,19 @@ export const generateCustomTheme = (adminConfig) => {
       focusBorder: ensureColorString(theme.focusBorder, "#1976d2")
     };
     
+    const paletteVars = paletteToSurveyJsVars({
+      primary: safeTheme.primaryColor,
+      secondary: safeTheme.secondaryColor,
+      mode: 'light',
+    });
+
+    const primaryLight = isInvalidSurveyColor(safeTheme.primaryLight)
+      ? paletteVars['--sjs-primary-backcolor-light']
+      : safeTheme.primaryLight;
+    const primaryDark = isInvalidSurveyColor(safeTheme.primaryDark)
+      ? paletteVars['--sjs-primary-backcolor-dark']
+      : safeTheme.primaryDark;
+
     console.log('✅ Generated safe theme:', safeTheme);
     
     return {
@@ -230,14 +250,14 @@ export const generateCustomTheme = (adminConfig) => {
         "--sjs-general-forecolor-light": safeTheme.secondaryText,
         "--sjs-general-dim-forecolor": safeTheme.disabledText,
         
-        // Primary colors
-        "--sjs-primary-backcolor": safeTheme.primaryColor,
-        "--sjs-primary-backcolor-light": safeTheme.primaryLight,
-        "--sjs-primary-backcolor-dark": safeTheme.primaryDark,
-        "--sjs-primary-forecolor": "#ffffff",
+        // Primary colors (paletteToSurveyJsVars ensures valid light/dark variants)
+        "--sjs-primary-backcolor": paletteVars['--sjs-primary-backcolor'],
+        "--sjs-primary-backcolor-light": primaryLight,
+        "--sjs-primary-backcolor-dark": primaryDark,
+        "--sjs-primary-forecolor": paletteVars['--sjs-primary-forecolor'],
         
         // Secondary colors
-        "--sjs-secondary-backcolor": safeTheme.secondaryColor,
+        "--sjs-secondary-backcolor": paletteVars['--sjs-secondary-backcolor'] || safeTheme.secondaryColor,
         "--sjs-secondary-backcolor-light": safeTheme.accentColor,
         "--sjs-secondary-backcolor-semi-light": safeTheme.successColor,
         "--sjs-secondary-forecolor": "#ffffff",
@@ -268,8 +288,11 @@ export const generateCustomTheme = (adminConfig) => {
         "--sjs-editorpanel-backcolor": safeTheme.cardBackground,
         "--sjs-editorpanel-hovercolor": safeTheme.primaryLight,
         
-        // Progress bar
+        // Progress bar (native SurveyJS — live app uses ProgressChrome instead)
         "--sjs-progressbar-color": safeTheme.primaryColor,
+
+        // ProgressChrome (page / question / trial) — applied on host via buildProgressChromeCssVars
+        ...buildProgressChromeCssVars(safeTheme),
         
         // Question panel
         "--sjs-questionpanel-backcolor": safeTheme.cardBackground,
@@ -285,3 +308,75 @@ export const generateCustomTheme = (adminConfig) => {
     return null; // Fall back to default theme
   }
 };
+
+/**
+ * CSS variables for ProgressChrome (participant bar + theme preview).
+ * Primary = current / overall bar; Success = completed questions; track/muted for remaining chrome.
+ */
+export function buildProgressChromeCssVars(theme = {}) {
+  const primary = ensureColorString(theme?.primaryColor, '#1976d2');
+  const primaryLight = ensureColorString(theme?.primaryLight, '#42a5f5');
+  const success = ensureColorString(theme?.successColor, '#4caf50');
+  const border = ensureColorString(theme?.borderColor, '#e0e0e0');
+  const surface = ensureColorString(theme?.cardBackground || theme?.backgroundColor, '#ffffff');
+  const bg = ensureColorString(theme?.backgroundColor, '#ffffff');
+  const label = ensureColorString(theme?.secondaryText, '#757575');
+  const muted = ensureColorString(theme?.disabledText, '#bdbdbd');
+  return {
+    '--sp-progress-primary': primary,
+    '--sp-progress-primary-light': primaryLight,
+    '--sp-progress-success': success,
+    '--sp-progress-success-light': success,
+    '--sp-progress-track': border,
+    '--sp-progress-muted': muted,
+    '--sp-progress-surface': surface,
+    '--sp-progress-border': border,
+    '--sp-progress-label': label,
+    '--sp-progress-bg': bg,
+  };
+}
+
+/**
+ * Theme the canvas around SurveyJS as well as SurveyJS itself.
+ * SurveyJS only paints its own root, so previews/live pages otherwise expose the
+ * admin application's white background around a custom (especially dark) theme.
+ */
+export function buildSurveyHostStyle(theme = {}) {
+  const background = ensureColorString(theme?.backgroundColor, '#ffffff');
+  const text = ensureColorString(theme?.textColor, '#212121');
+  const border = ensureColorString(theme?.borderColor, '#e0e0e0');
+
+  return {
+    ...buildProgressChromeCssVars(theme),
+    '--sp-survey-background': background,
+    '--sp-survey-text': text,
+    '--sp-survey-border': border,
+    backgroundColor: background,
+    color: text,
+  };
+}
+
+/** Apply project survey skin to a SurveyJS model (custom theme, else default themeJson). */
+export function applyAdminThemeToSurveyModel(model, adminConfig) {
+  if (!model) return;
+  try {
+    // A project created before theme persistence may have no `theme` field even
+    // though Theme Settings displays the custom defaults. Treat any project
+    // config as custom-theme capable so those displayed defaults are real.
+    const themeConfig = adminConfig && typeof adminConfig === 'object'
+      ? { ...adminConfig, theme: adminConfig.theme || {} }
+      : null;
+    const customTheme = generateCustomTheme(themeConfig);
+    if (customTheme) {
+      model.applyTheme(customTheme);
+      return;
+    }
+  } catch (err) {
+    console.warn('applyAdminThemeToSurveyModel: custom theme failed', err);
+  }
+  try {
+    if (themeJson) model.applyTheme(themeJson);
+  } catch (err) {
+    console.warn('applyAdminThemeToSurveyModel: default theme failed', err);
+  }
+}

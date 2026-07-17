@@ -34,6 +34,7 @@ import {
   Snackbar
 } from '@mui/material';
 import { ExpandMore, Save, RestartAlt } from '@mui/icons-material';
+import ConfirmDialog from '../layout/ConfirmDialog';
 import {
   Send,
   Settings,
@@ -125,6 +126,7 @@ export default function ChatAssistant({
   });
   const [promptsModified, setPromptsModified] = React.useState(false);
   const [promptSnackbar, setPromptSnackbar] = React.useState({ open: false, message: '', severity: 'success' });
+  const [confirmDialog, setConfirmDialog] = React.useState(null);
 
   // The AI Assistant is a sizable panel that most users only need
   // occasionally. We start it collapsed and let the user expand it by
@@ -325,14 +327,21 @@ export default function ChatAssistant({
   };
   
   const handleResetPrompts = () => {
-    if (window.confirm('Are you sure you want to reset all prompts to default values for this project?')) {
-      setPrompts(PROMPTS);
-      if (currentProject?.id) {
-        localStorage.removeItem(`customPrompts_${currentProject.id}`);
-      }
-      setPromptsModified(false);
-      setPromptSnackbar({ open: true, message: 'Prompts reset to defaults!', severity: 'info' });
-    }
+    setConfirmDialog({
+      title: 'Reset prompts',
+      message: 'Are you sure you want to reset all prompts to default values for this project?',
+      confirmLabel: 'Reset',
+      confirmColor: 'error',
+      onConfirm: () => {
+        setConfirmDialog(null);
+        setPrompts(PROMPTS);
+        if (currentProject?.id) {
+          localStorage.removeItem(`customPrompts_${currentProject.id}`);
+        }
+        setPromptsModified(false);
+        setPromptSnackbar({ open: true, message: 'Prompts reset to defaults!', severity: 'info' });
+      },
+    });
   };
 
   return (
@@ -429,7 +438,7 @@ export default function ChatAssistant({
       <CardContent sx={{ p: 0 }}>
         {/* Recommendations */}
         {contextEnabled && recommendations.length > 0 && (
-          <Box sx={{ p: 2, bgcolor: '#e8f5e9', borderBottom: '1px solid #ddd' }}>
+          <Box sx={{ p: 2, bgcolor: '#e8f5e9', borderBottom: '1px solid', borderColor: 'divider' }}>
             <Typography variant="subtitle2" sx={{ mb: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
               <TipsAndUpdates sx={{ color: '#4caf50', fontSize: 20 }} />
               <strong>Smart Recommendations</strong>
@@ -495,7 +504,7 @@ export default function ChatAssistant({
                     sx={{ 
                       width: 32, 
                       height: 32,
-                      bgcolor: msg.role === 'user' ? '#1976d2' : '#9c27b0'
+                      bgcolor: msg.role === 'user' ? 'primary.main' : 'secondary.main',
                     }}
                   >
                     {msg.role === 'user' ? <PersonOutline /> : <SmartToy />}
@@ -519,10 +528,11 @@ export default function ChatAssistant({
                     </Box>
                     
                     <Paper 
+                      variant="outlined"
                       sx={{ 
                         p: 1.5,
-                        bgcolor: msg.role === 'user' ? '#e3f2fd' : '#f3e5f5',
-                        border: msg.metadata?.error ? '1px solid #f44336' : 'none'
+                        bgcolor: msg.role === 'user' ? 'action.hover' : 'background.default',
+                        borderColor: msg.metadata?.error ? 'error.main' : 'divider',
                       }}
                     >
                       <Typography 
@@ -550,7 +560,7 @@ export default function ChatAssistant({
                     sx={{ 
                       width: 32, 
                       height: 32,
-                      bgcolor: '#9c27b0'
+                      bgcolor: 'secondary.main',
                     }}
                   >
                     <SmartToy />
@@ -564,9 +574,10 @@ export default function ChatAssistant({
                     </Box>
                     
                     <Paper 
+                      variant="outlined"
                       sx={{ 
                         p: 1.5,
-                        bgcolor: '#f3e5f5',
+                        bgcolor: 'background.default',
                         display: 'flex',
                         alignItems: 'center',
                         gap: 1
@@ -591,7 +602,7 @@ export default function ChatAssistant({
         </Box>
 
         {/* Input Area */}
-        <Box sx={{ p: 2, bgcolor: 'white', borderTop: '1px solid #ddd' }}>
+        <Box sx={{ p: 2, bgcolor: 'background.paper', borderTop: '1px solid', borderColor: 'divider' }}>
           {aiUndoAvailable && (
             <Box sx={{ mb: 1 }}>
               <Button size="small" variant="outlined" color="warning" onClick={onRevertAiChange}>
@@ -1217,10 +1228,17 @@ export default function ChatAssistant({
                   </IconButton>
                   <IconButton size="small" onClick={() => {
                     if (workingMemoryRef?.current && workingMemoryRef.current.clear) {
-                      if (window.confirm('Clear working memory for this project?')) {
-                        workingMemoryRef.current.clear();
-                        setWorkingMemoryData(null);
-                      }
+                      setConfirmDialog({
+                        title: 'Clear working memory',
+                        message: 'Clear working memory for this project?',
+                        confirmLabel: 'Clear',
+                        confirmColor: 'error',
+                        onConfirm: () => {
+                          setConfirmDialog(null);
+                          workingMemoryRef.current.clear();
+                          setWorkingMemoryData(null);
+                        },
+                      });
                     }
                   }} title="Clear">
                     <Clear />
@@ -1354,7 +1372,15 @@ export default function ChatAssistant({
           {promptSnackbar.message}
         </Alert>
       </Snackbar>
+      <ConfirmDialog
+        open={Boolean(confirmDialog)}
+        title={confirmDialog?.title}
+        message={confirmDialog?.message}
+        confirmLabel={confirmDialog?.confirmLabel}
+        confirmColor={confirmDialog?.confirmColor || 'error'}
+        onConfirm={() => confirmDialog?.onConfirm?.()}
+        onCancel={() => setConfirmDialog(null)}
+      />
     </Card>
   );
 }
-

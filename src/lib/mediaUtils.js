@@ -161,7 +161,9 @@ export async function downloadMediaFiles(entries, { onProgress } = {}) {
 /** Question types that use random media injection. */
 export const MEDIA_QUESTION_TYPES = new Set([
   'imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'image', 'imagematrix',
-  'mediadisplay', 'mediarating', 'mediaboolean', 'mediaranking', 'imageannotation',
+  'mediadisplay', 'mediarating', 'mediaboolean', 'mediaranking', 'mediapicker',
+  'mediamatrix', 'mediaslidergroup', 'mediapointallocation',
+  'imageannotation',
   'imageslidergroup', 'imagepointallocation',
 ]);
 
@@ -171,7 +173,8 @@ export const IMAGE_QUESTION_TYPES = new Set([
 ]);
 
 export const VIDEO_AUDIO_QUESTION_TYPES = new Set([
-  'mediadisplay', 'mediarating', 'mediaboolean', 'mediaranking',
+  'mediadisplay', 'mediarating', 'mediaboolean', 'mediaranking', 'mediapicker',
+  'mediamatrix', 'mediaslidergroup', 'mediapointallocation',
 ]);
 
 // ─── Folder paths & tags (set / category) ─────────────────────────────────────

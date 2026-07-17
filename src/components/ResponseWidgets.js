@@ -1,14 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Typography, Slider, TextField, Chip } from '@mui/material';
 import { ImageGalleryGrid } from './MediaWidgets';
 
 /**
  * Slider group (semantic differential): multiple bipolar dimensions rated
  * on a shared numeric scale. value = { [dimensionId]: number }
+ * Defaults every dimension to the scale midpoint until the participant moves it.
  */
-export function SliderGroupContent({ dimensions = [], scaleMin = 1, scaleMax = 7, value, onChange, readOnly }) {
-  const mid = Math.round((scaleMin + scaleMax) / 2);
-  const current = value || {};
+export function SliderGroupContent({
+  dimensions = [],
+  scaleMin = 1,
+  scaleMax = 7,
+  value,
+  onChange,
+  readOnly,
+  /** Persist midpoint as the answer when the participant never moves a slider. */
+  autoPersistDefaults = true,
+}) {
+  const mid = Math.round((Number(scaleMin) + Number(scaleMax)) / 2);
+  const current = (value && typeof value === 'object' && !Array.isArray(value)) ? value : {};
+
+  // Persist midpoint defaults so submit / required / multi-trial checks see real scores
+  // without requiring the participant to touch every slider.
+  useEffect(() => {
+    if (!autoPersistDefaults || readOnly || !onChange || !dimensions.length) return;
+    let changed = false;
+    const next = { ...current };
+    dimensions.forEach((d) => {
+      if (!d?.id) return;
+      if (next[d.id] === undefined || next[d.id] === null || next[d.id] === '') {
+        next[d.id] = mid;
+        changed = true;
+      }
+    });
+    if (changed) onChange(next);
+    // Only re-run when scale / dimension set changes — not on every value tweak.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dimensions, scaleMin, scaleMax, mid, readOnly, autoPersistDefaults]);
 
   if (!dimensions.length) {
     return (
@@ -22,21 +50,59 @@ export function SliderGroupContent({ dimensions = [], scaleMin = 1, scaleMax = 7
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
       {dimensions.map((d) => {
         const v = current[d.id] ?? mid;
-        const answered = current[d.id] !== undefined;
         return (
-          <Box key={d.id} sx={{ px: 1 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: -0.5 }}>
-              <Typography variant="body2" color="text.secondary">{d.left}</Typography>
+          <Box key={d.id} sx={{ px: { xs: 0, sm: 1 } }}>
+            {/* Phones: labels above slider so long bipolar text does not crush mid-row */}
+            <Box
+              sx={{
+                display: { xs: 'flex', sm: 'none' },
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+                gap: 1,
+                mb: 0.5,
+              }}
+            >
+              <Typography variant="caption" color="text.secondary" sx={{ flex: 1, lineHeight: 1.3 }}>
+                {d.left}
+              </Typography>
               <Chip
                 size="small"
-                label={answered ? v : '–'}
-                color={answered ? 'primary' : 'default'}
-                sx={{ height: 20, fontSize: '0.72rem', fontWeight: 700 }}
+                label={v}
+                color="primary"
+                sx={{ height: 20, fontSize: '0.72rem', fontWeight: 700, flexShrink: 0 }}
               />
-              <Typography variant="body2" color="text.secondary">{d.right}</Typography>
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                sx={{ flex: 1, lineHeight: 1.3, textAlign: 'right' }}
+              >
+                {d.right}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: { xs: 'none', sm: 'grid' },
+                gridTemplateColumns: '1fr auto 1fr',
+                alignItems: 'center',
+                columnGap: 1,
+                mb: -0.5,
+              }}
+            >
+              <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'left' }}>
+                {d.left}
+              </Typography>
+              <Chip
+                size="small"
+                label={v}
+                color="primary"
+                sx={{ height: 20, fontSize: '0.72rem', fontWeight: 700, justifySelf: 'center' }}
+              />
+              <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'right' }}>
+                {d.right}
+              </Typography>
             </Box>
             <Slider
-              value={v}
+              value={Number(v)}
               min={scaleMin}
               max={scaleMax}
               step={1}
@@ -61,7 +127,7 @@ export function SliderGroupContent({ dimensions = [], scaleMin = 1, scaleMax = 7
  * value = { [choiceValue]: number }
  */
 export function PointAllocationContent({ choices = [], budget = 100, value, onChange, readOnly }) {
-  const current = value || {};
+  const current = (value && typeof value === 'object' && !Array.isArray(value)) ? value : {};
   const normalized = choices.map((c) => (typeof c === 'object' ? c : { value: c, text: c }));
   const allocated = normalized.reduce((sum, c) => sum + (Number(current[c.value]) || 0), 0);
   const remaining = budget - allocated;
@@ -82,25 +148,46 @@ export function PointAllocationContent({ choices = [], budget = 100, value, onCh
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
       {normalized.map((c) => (
-        <Box key={c.value} sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Typography variant="body2" sx={{ flex: 1 }}>{c.text}</Typography>
-          <Slider
-            value={Number(current[c.value]) || 0}
-            min={0}
-            max={budget}
-            step={1}
-            disabled={readOnly}
-            onChange={(_, val) => setPoints(c.value, val)}
-            sx={{ flex: 2, maxWidth: 260 }}
-          />
-          <TextField
-            type="number"
-            size="small"
-            value={current[c.value] ?? 0}
-            onChange={(e) => setPoints(c.value, e.target.value)}
-            disabled={readOnly}
-            inputProps={{ min: 0, max: budget, step: 1, style: { width: 56, textAlign: 'center' } }}
-          />
+        <Box
+          key={c.value}
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            alignItems: { xs: 'stretch', sm: 'center' },
+            gap: { xs: 0.5, sm: 2 },
+          }}
+        >
+          <Typography variant="body2" sx={{ flex: { sm: 1 }, minWidth: 0 }}>
+            {c.text}
+          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1.5,
+              width: { xs: '100%', sm: 'auto' },
+              flex: { sm: 2 },
+              minWidth: 0,
+            }}
+          >
+            <Slider
+              value={Number(current[c.value]) || 0}
+              min={0}
+              max={budget}
+              step={1}
+              disabled={readOnly}
+              onChange={(_, val) => setPoints(c.value, val)}
+              sx={{ flex: 1, maxWidth: { xs: 'none', sm: 260 } }}
+            />
+            <TextField
+              type="number"
+              size="small"
+              value={current[c.value] ?? 0}
+              onChange={(e) => setPoints(c.value, e.target.value)}
+              disabled={readOnly}
+              inputProps={{ min: 0, max: budget, step: 1, style: { width: 56, textAlign: 'center' } }}
+            />
+          </Box>
         </Box>
       ))}
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 1 }}>
@@ -130,6 +217,7 @@ export function ImageSliderGroupContent({
   value,
   onChange,
   readOnly,
+  autoPersistDefaults = true,
 }) {
   const items = (imageUrls || []).filter(Boolean).map((url, i) => ({
     url,
@@ -151,6 +239,7 @@ export function ImageSliderGroupContent({
         value={value}
         onChange={onChange}
         readOnly={readOnly}
+        autoPersistDefaults={autoPersistDefaults}
       />
     </Box>
   );
