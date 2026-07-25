@@ -1,6 +1,6 @@
 /** Ranking statistics: Borda scores and Kendall's W. */
 
-import { average } from './stats';
+import { average } from './stats.js';
 
 /**
  * Borda score from rank positions (1 = best).

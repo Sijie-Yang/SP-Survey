@@ -1,6 +1,6 @@
 /** Best-Worst Scaling (MaxDiff) scoring. */
 
-import { minMaxScale } from './stats';
+import { minMaxScale } from './stats.js';
 
 function filenameKey(val) {
   if (!val || typeof val !== 'string') return String(val ?? '');

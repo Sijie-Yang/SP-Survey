@@ -1,6 +1,6 @@
 /** Inter-rater reliability: Krippendorff's alpha and agreement rate. */
 
-import { expandQuestionAnswerUnits } from './responseAnswerUnits';
+import { expandQuestionAnswerUnits } from './responseAnswerUnits.js';
 
 function filenameKey(val) {
   if (!val || typeof val !== 'string') return String(val ?? '');
@@ -124,7 +124,7 @@ export function percentAgreement(responses, questionName) {
 }
 
 export function irrLevelForQuestion(question) {
-  if (['rating', 'imagerating', 'mediarating', 'slidergroup', 'imageslidergroup', 'skillquestion'].includes(question.type)) {
+  if (['rating', 'imagerating', 'mediarating', 'slidergroup', 'imageslidergroup', 'mediaslidergroup', 'skillquestion'].includes(question.type)) {
     return 'interval';
   }
   return 'nominal';

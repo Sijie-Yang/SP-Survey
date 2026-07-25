@@ -1,22 +1,30 @@
 /** Preset skill specialized analysis components. */
 
 import React, { useMemo, useContext, useState } from 'react';
-import { Box, Typography, Button, Paper, Alert } from '@mui/material';
+import { Box, Typography, Button, Paper, Alert, Tabs, Tab } from '@mui/material';
 import Download from '@mui/icons-material/Download';
 import { ImageResolverContext } from './imageResolverContext';
 import { descriptiveStats, pct } from '../../lib/stats';
 import { computeMaxDiffScores } from '../../lib/maxdiff';
-import { computeTrueSkillFromMatches, matchesFromMaxDiffAnswer } from '../../lib/trueskill';
+import {
+  computeTrueSkillFromMatches,
+  matchesFromForcedChoiceAnswer,
+  matchesFromMaxDiffAnswer,
+} from '../../lib/trueskill';
 import {
   TrueSkillTable,
+  TrueSkillMuChart,
   exportTrueSkillCsv,
   TRUESKILL_SORT_COLUMNS,
   MAXDIFF_EXTRA_COLUMNS,
 } from './trueSkillAnalysisUi';
-import { aggregateSegmentTimeline, aggregateContinuousRating } from '../../lib/videoStats';
+import {
+  aggregateSegmentTimelineByVideo,
+  aggregateContinuousRatingByVideo,
+} from '../../lib/videoStats';
 import { wordFrequency } from '../../lib/textStats';
 import { downloadTextFile } from '../../lib/methodsExport';
-import { mediaFilenameKey } from '../../lib/skillMediaUtils';
+import { mediaFilenameKey, imageStimulusKey } from '../../lib/skillMediaUtils';
 import { resolveEmotionIntensity, getEmotionPalette, nearestPaletteOption } from '../../lib/emotionColor';
 import {
   DensityHistogramChart,
@@ -24,7 +32,6 @@ import {
   TimelineAreaChart,
   ContinuousRatingChart,
   HueWheelChart,
-  SemanticProfileChart,
   WordFrequencyChart,
   BAR_COLORS,
 } from './analysisCharts';
@@ -152,71 +159,45 @@ function HorizontalBar({ label, count, total, color, index }) {
   );
 }
 
-export function ForcedChoicePreferenceAnalysis({ answers }) {
-  const resolveUrl = useMediaResolver();
-  const pickA = answers.filter((a) => a.answer?.choice === 'A' || a.answer?.chosenIndex === 0).length;
-  const pickB = answers.filter((a) => a.answer?.choice === 'B' || a.answer?.chosenIndex === 1).length;
-  const total = pickA + pickB;
-
-  const perImage = useMemo(() => {
-    const stats = {};
-    answers.forEach(({ answer }) => {
-      const choice = answer?.choice === 'B' || answer?.chosenIndex === 1 ? 'B' : (
-        answer?.choice === 'A' || answer?.chosenIndex === 0 ? 'A' : null
-      );
-      if (!choice) return;
-      const winner = choice === 'A' ? answer?.imageA : answer?.imageB;
-      const loser = choice === 'A' ? answer?.imageB : answer?.imageA;
-      [[winner, 1], [loser, 0]].forEach(([url, win]) => {
-        if (!url) return;
-        const key = mediaFilenameKey(url);
-        if (!stats[key]) stats[key] = { key, url, wins: 0, shown: 0 };
-        stats[key].shown += 1;
-        stats[key].wins += win;
-      });
-    });
-    return Object.values(stats)
-      .map(({ key, url, wins, shown }) => ({
-        key,
-        url,
-        value: shown > 0 ? wins / shown : 0,
-        label: `${pct(wins, shown)}% win (${wins}/${shown})`,
-      }))
-      .sort((a, b) => b.value - a.value);
+/** Forced-Choice A/B — same TrueSkill view as Image Choice (winner ≻ other shown). */
+export function ForcedChoicePreferenceAnalysis({ answers, question }) {
+  const { matches, rankings } = useMemo(() => {
+    const allMatches = [];
+    for (const { answer, shown_images: shown } of answers || []) {
+      if (!answer || typeof answer !== 'object') continue;
+      allMatches.push(...matchesFromForcedChoiceAnswer(answer, shown));
+    }
+    return computeTrueSkillFromMatches(allMatches);
   }, [answers]);
-
-  const pairPreview = answers.find((a) => a.answer?.imageA && a.answer?.imageB)?.answer;
 
   return (
     <Box>
-      {pairPreview && (
-        <Box sx={{ display: 'flex', gap: 2, mb: 2, flexWrap: 'wrap' }}>
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography variant="caption" color="text.secondary">Option A</Typography>
-            {resolveUrl(pairPreview.imageA) && (
-              <Box component="img" src={resolveUrl(pairPreview.imageA)} alt="A" sx={{ display: 'block', width: 96, height: 96, objectFit: 'cover', borderRadius: 1, mt: 0.5 }} />
+      <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
+        TrueSkill (pairwise from forced-choice A/B)
+      </Typography>
+      <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
+        Each trial: the chosen image beats the other shown image
+        ({matches.length} pairwise outcome{matches.length === 1 ? '' : 's'}).
+      </Typography>
+      {matches.length === 0 ? (
+        <Alert severity="warning" sx={{ mb: 2 }}>
+          Not enough pairwise comparisons for TrueSkill (need participants to pick A or B
+          among two shown images).
+        </Alert>
+      ) : (
+        <>
+          <TrueSkillMuChart rankings={rankings} />
+          <TrueSkillTable
+            rankings={rankings}
+            caption="Forced choice: selected image wins over the other shown image. Click a column header to sort (default: μ descending)."
+            onExport={() => exportTrueSkillCsv(
+              question?.name || 'forced_choice',
+              rankings,
+              'mu',
+              'desc',
             )}
-          </Box>
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography variant="caption" color="text.secondary">Option B</Typography>
-            {resolveUrl(pairPreview.imageB) && (
-              <Box component="img" src={resolveUrl(pairPreview.imageB)} alt="B" sx={{ display: 'block', width: 96, height: 96, objectFit: 'cover', borderRadius: 1, mt: 0.5 }} />
-            )}
-          </Box>
-        </Box>
-      )}
-      <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>A/B choice rates</Typography>
-      <HorizontalBar label="Chose A" count={pickA} total={total || 1} color="#1976d2" />
-      <HorizontalBar label="Chose B" count={pickB} total={total || 1} color="#ed6c02" />
-      <SkillMediaRanking
-        title="Win rate by image (chosen when shown)"
-        items={perImage}
-        resolveUrl={resolveUrl}
-        maxValue={1}
-        formatLabel={(_v, label) => label}
-      />
-      {total === 0 && (
-        <Typography variant="body2" color="text.secondary">No responses yet.</Typography>
+          />
+        </>
       )}
     </Box>
   );
@@ -394,62 +375,173 @@ export function MaxDiffAnalysis({ answers, question, mediaCount = 4 }) {
 
 export function VideoMomentAnalysis({ answers, questionName }) {
   const resolveUrl = useMediaResolver();
-  const stimulusUrl = answers.find((a) => a.answer?.posterUrl || a.answer?.videoUrl)?.answer?.posterUrl
-    || answers.find((a) => a.answer?.videoUrl)?.answer?.videoUrl
-    || answers[0]?.shown_images?.[0];
-  const agg = useMemo(() => aggregateSegmentTimeline(answers), [answers]);
-  const segCounts = answers.map((a) => (a.answer?.segments || []).length);
-  const stats = descriptiveStats(segCounts);
-  const durations = answers.map((a) => Number(a.answer?.duration)).filter((n) => !Number.isNaN(n) && n > 0);
+  const byVideo = useMemo(() => aggregateSegmentTimelineByVideo(answers), [answers]);
+  const [tab, setTab] = useState(0);
+  const safeTab = Math.min(tab, Math.max(0, byVideo.length - 1));
+  const current = byVideo[safeTab];
+
+  if (!byVideo.length) {
+    return <Typography variant="body2" color="text.secondary">No responses yet.</Typography>;
+  }
 
   const exportCsv = () => {
-    const csv = ['time_s,participant_count,proportion', ...agg.timeline.map((p) => `${p.t},${p.count},${p.proportion.toFixed(4)}`)].join('\n');
-    downloadTextFile(csv, `${questionName}_video_moments_${new Date().toISOString().slice(0, 10)}.csv`);
+    const lines = ['video,time_s,participant_count,proportion'];
+    byVideo.forEach(({ videoKey, agg }) => {
+      agg.timeline.forEach((p) => {
+        lines.push(`${JSON.stringify(videoKey)},${p.t},${p.count},${p.proportion.toFixed(4)}`);
+      });
+    });
+    downloadTextFile(lines.join('\n'), `${questionName}_video_moments_${new Date().toISOString().slice(0, 10)}.csv`);
   };
+
+  const segCounts = (current?.answers || []).map((a) => (a.answer?.segments || []).length);
+  const stats = descriptiveStats(segCounts);
+  const durations = (current?.answers || [])
+    .map((a) => Number(a.answer?.duration))
+    .filter((n) => !Number.isNaN(n) && n > 0);
+  const previewUrl = current?.answers?.find((a) => a.answer?.posterUrl)?.answer?.posterUrl
+    || current?.videoUrl;
 
   return (
     <Box>
-      <StimulusPreview url={stimulusUrl} resolveUrl={resolveUrl} label="Video stimulus" />
-      <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
-        Segments: mean {stats.mean?.toFixed(1) ?? '—'} · total {stats.n ? segCounts.reduce((a, b) => a + b, 0) : 0}
-        {durations.length ? ` · video duration ~${(durations.reduce((a, b) => a + b, 0) / durations.length).toFixed(0)}s` : ''}
+      <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
+        Key moments by video
       </Typography>
-      <TimelineAreaChart
-        timeline={agg.timeline}
-        title="Key moment overlap (proportion of participants tagging each second)"
-        duration={agg.duration}
-      />
-      {agg.peakTime != null && (
-        <Alert severity="info" sx={{ mb: 1 }}>
-          Peak tagging at t={agg.peakTime}s ({(agg.peakProportion * 100).toFixed(0)}% of participants)
-        </Alert>
+      <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
+        Each tab is one video stimulus. Timeline shows overlap among participants who saw that video.
+      </Typography>
+      {byVideo.length > 1 && (
+        <Tabs
+          value={safeTab}
+          onChange={(_, v) => setTab(v)}
+          variant="scrollable"
+          scrollButtons="auto"
+          sx={{
+            mb: 1.5,
+            borderBottom: 1,
+            borderColor: 'divider',
+            minHeight: 40,
+            '& .MuiTab-root': { minHeight: 40, textTransform: 'none', fontSize: 13 },
+          }}
+        >
+          {byVideo.map((g) => (
+            <Tab
+              key={g.videoKey}
+              label={`${shortName(g.videoKey)} (${g.answers.length})`}
+            />
+          ))}
+        </Tabs>
       )}
-      <Button size="small" variant="outlined" startIcon={<Download />} onClick={exportCsv}>Export timeline CSV</Button>
+      {current && (
+        <>
+          <StimulusPreview url={previewUrl} resolveUrl={resolveUrl} label={current.videoKey} />
+          {byVideo.length === 1 && (
+            <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
+              Video: {shortName(current.videoKey)}
+            </Typography>
+          )}
+          <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
+            Responses: {current.answers.length}
+            {' · '}
+            Segments: mean {stats.mean?.toFixed(1) ?? '—'}
+            {' · '}
+            total {segCounts.reduce((a, b) => a + b, 0)}
+            {durations.length
+              ? ` · video duration ~${(durations.reduce((a, b) => a + b, 0) / durations.length).toFixed(0)}s`
+              : ''}
+          </Typography>
+          <TimelineAreaChart
+            timeline={current.agg.timeline}
+            title={`Key moment overlap — ${shortName(current.videoKey)}`}
+            duration={current.agg.duration}
+          />
+          {current.agg.peakTime != null && (
+            <Alert severity="info" sx={{ mb: 1 }}>
+              Peak tagging at t={current.agg.peakTime}s
+              {' '}
+              ({(current.agg.peakProportion * 100).toFixed(0)}% of participants for this video)
+            </Alert>
+          )}
+        </>
+      )}
+      <Button size="small" variant="outlined" startIcon={<Download />} onClick={exportCsv}>
+        Export timeline CSV{byVideo.length > 1 ? ' (all videos)' : ''}
+      </Button>
     </Box>
   );
 }
 
 export function ContinuousVideoRatingAnalysis({ answers, questionName }) {
   const resolveUrl = useMediaResolver();
-  const stimulusUrl = answers.find((a) => a.answer?.videoUrl)?.answer?.videoUrl
-    || answers[0]?.shown_images?.[0];
-  const agg = useMemo(() => aggregateContinuousRating(answers), [answers]);
-  const means = answers.map((a) => Number(a.answer?.mean)).filter((n) => !Number.isNaN(n));
+  const byVideo = useMemo(() => aggregateContinuousRatingByVideo(answers), [answers]);
+  const [tab, setTab] = useState(0);
+  const safeTab = Math.min(tab, Math.max(0, byVideo.length - 1));
+  const current = byVideo[safeTab];
+
+  if (!byVideo.length) {
+    return <Typography variant="body2" color="text.secondary">No responses yet.</Typography>;
+  }
 
   const exportCsv = () => {
-    const csv = ['time_s,mean,sd,n', ...agg.timeline.map((p) => `${p.t},${p.mean.toFixed(2)},${(p.sd || 0).toFixed(2)},${p.n}`)].join('\n');
-    downloadTextFile(csv, `${questionName}_video_rating_${new Date().toISOString().slice(0, 10)}.csv`);
+    const lines = ['video,time_s,mean,sd,n'];
+    byVideo.forEach(({ videoKey, agg }) => {
+      agg.timeline.forEach((p) => {
+        lines.push(`${JSON.stringify(videoKey)},${p.t},${p.mean.toFixed(2)},${(p.sd || 0).toFixed(2)},${p.n}`);
+      });
+    });
+    downloadTextFile(lines.join('\n'), `${questionName}_video_rating_${new Date().toISOString().slice(0, 10)}.csv`);
   };
 
   return (
     <Box>
-      <StimulusPreview url={stimulusUrl} resolveUrl={resolveUrl} label="Video stimulus" />
-      <DescriptiveStatsLine nums={means} unit="" />
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-        {agg.sampleCount} timeline samples aggregated · global mean {agg.globalMean?.toFixed(1) ?? '—'}
+      <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
+        Continuous rating by video
       </Typography>
-      <ContinuousRatingChart timeline={agg.timeline} title="Mean rating over time (±1 SD band)" />
-      <Button size="small" variant="outlined" startIcon={<Download />} onClick={exportCsv}>Export timeline CSV</Button>
+      {byVideo.length > 1 && (
+        <Tabs
+          value={safeTab}
+          onChange={(_, v) => setTab(v)}
+          variant="scrollable"
+          scrollButtons="auto"
+          sx={{
+            mb: 1.5,
+            borderBottom: 1,
+            borderColor: 'divider',
+            minHeight: 40,
+            '& .MuiTab-root': { minHeight: 40, textTransform: 'none', fontSize: 13 },
+          }}
+        >
+          {byVideo.map((g) => (
+            <Tab key={g.videoKey} label={`${shortName(g.videoKey)} (${g.answers.length})`} />
+          ))}
+        </Tabs>
+      )}
+      {current && (
+        <>
+          <StimulusPreview
+            url={current.videoUrl}
+            resolveUrl={resolveUrl}
+            label={current.videoKey}
+          />
+          {byVideo.length === 1 && (
+            <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
+              Video: {shortName(current.videoKey)}
+            </Typography>
+          )}
+          <DescriptiveStatsLine nums={current.means} unit="" />
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+            {current.answers.length} response(s) · {current.agg.sampleCount} timeline samples
+            · mean {current.agg.globalMean?.toFixed(1) ?? '—'}
+          </Typography>
+          <ContinuousRatingChart
+            timeline={current.agg.timeline}
+            title={`Mean rating over time — ${shortName(current.videoKey)}`}
+          />
+        </>
+      )}
+      <Button size="small" variant="outlined" startIcon={<Download />} onClick={exportCsv}>
+        Export timeline CSV{byVideo.length > 1 ? ' (all videos)' : ''}
+      </Button>
     </Box>
   );
 }
@@ -805,51 +897,194 @@ export function EmotionColorAnalysis({ answers, question }) {
 
 export function CompositeBlocksAnalysis({ answers }) {
   const resolveUrl = useMediaResolver();
-  const stimulusUrl = answers.find((a) => a.answer?.imageUrl)?.answer?.imageUrl
-    || answers[0]?.shown_images?.[0];
-  const dims = {};
-  for (const { answer } of answers) {
-    (answer?.ratings || []).forEach((d) => {
-      const id = d.id || d.label || `${d.left}/${d.right}`;
-      if (!dims[id]) dims[id] = { id, left: d.left, right: d.right, label: d.label, values: [] };
-      const n = Number(d.value);
-      if (!Number.isNaN(n)) dims[id].values.push(n);
-    });
-  }
-  const profileDims = Object.values(dims).map((d) => ({
-    ...d,
-    mean: d.values.length ? d.values.reduce((s, v) => s + v, 0) / d.values.length : null,
-    sd: d.values.length > 1 ? Math.sqrt(d.values.reduce((s, v) => s + (v - d.values.reduce((a, b) => a + b, 0) / d.values.length) ** 2, 0) / d.values.length) : 0,
-  }));
+  const { tabs, nResp } = useMemo(() => {
+    const dimMap = new Map(); // dimId → { id, left, right, label, values, byImage }
+    const words = [];
+    const choices = [];
+    const texts = [];
+    let n = 0;
 
-  const words = answers.flatMap((a) => a.answer?.words || []);
-  const wordFreq = wordFrequency(words.map(String), 15);
-  const choices = answers.map((a) => a.answer?.choice).filter((c) => c != null && c !== '');
-  const choiceFreq = {};
-  choices.forEach((c) => { choiceFreq[c] = (choiceFreq[c] || 0) + 1; });
-  const texts = answers.map((a) => a.answer?.text).filter(Boolean);
+    for (const entry of answers || []) {
+      const answer = entry?.answer;
+      if (!answer || typeof answer !== 'object') continue;
+      n += 1;
+      const imgKey = imageStimulusKey(answer, entry.shown_images);
+      const imgUrl = answer.imageUrl || entry.shown_images?.[0] || null;
+
+      (answer.ratings || []).forEach((d) => {
+        const id = d.id || d.label || `${d.left}/${d.right}` || 'dim';
+        if (!dimMap.has(id)) {
+          dimMap.set(id, {
+            id,
+            left: d.left,
+            right: d.right,
+            label: d.label || id,
+            values: [],
+            byImage: new Map(),
+          });
+        }
+        const dim = dimMap.get(id);
+        if (d.left && !dim.left) dim.left = d.left;
+        if (d.right && !dim.right) dim.right = d.right;
+        const num = Number(d.value);
+        if (Number.isNaN(num)) return;
+        dim.values.push(num);
+        if (!dim.byImage.has(imgKey)) {
+          dim.byImage.set(imgKey, { key: imgKey, url: imgUrl, values: [] });
+        }
+        const row = dim.byImage.get(imgKey);
+        if (!row.url && imgUrl) row.url = imgUrl;
+        row.values.push(num);
+      });
+
+      (answer.words || []).forEach((w) => {
+        if (w != null && w !== '') words.push(String(w));
+      });
+      if (answer.choice != null && answer.choice !== '') choices.push(String(answer.choice));
+      if (answer.text) texts.push(String(answer.text));
+    }
+
+    const attrTabs = [];
+    [...dimMap.values()]
+      .sort((a, b) => String(a.id).localeCompare(String(b.id)))
+      .forEach((dim) => {
+        const ranking = [...dim.byImage.values()]
+          .map((row) => ({
+            key: row.key,
+            url: row.url,
+            value: row.values.reduce((s, v) => s + v, 0) / row.values.length,
+            label: `n=${row.values.length}`,
+            n: row.values.length,
+          }))
+          .sort((a, b) => b.value - a.value || String(a.key).localeCompare(String(b.key)));
+        const tabLabel = dim.left && dim.right
+          ? `${dim.left} → ${dim.right}`
+          : (dim.label || dim.id);
+        attrTabs.push({
+          kind: 'dimension',
+          key: `dim:${dim.id}`,
+          label: tabLabel,
+          dim,
+          ranking,
+        });
+      });
+
+    if (words.length) {
+      attrTabs.push({
+        kind: 'words',
+        key: 'words',
+        label: `Words (${words.length})`,
+        wordFreq: wordFrequency(words, 20),
+        nWords: words.length,
+      });
+    }
+    if (choices.length) {
+      const choiceFreq = {};
+      choices.forEach((c) => { choiceFreq[c] = (choiceFreq[c] || 0) + 1; });
+      attrTabs.push({
+        kind: 'choice',
+        key: 'choice',
+        label: `Choice (${choices.length})`,
+        choiceFreq,
+        nChoices: choices.length,
+      });
+    }
+    if (texts.length) {
+      attrTabs.push({
+        kind: 'text',
+        key: 'text',
+        label: `Text (${texts.length})`,
+        texts,
+      });
+    }
+
+    return { tabs: attrTabs, nResp: n };
+  }, [answers]);
+
+  const [tab, setTab] = useState(0);
+  const safeTab = Math.min(tab, Math.max(0, tabs.length - 1));
+  const current = tabs[safeTab];
+
+  if (!nResp || !tabs.length) {
+    return <Typography variant="body2" color="text.secondary">No responses yet.</Typography>;
+  }
 
   return (
     <Box>
-      <StimulusPreview url={stimulusUrl} resolveUrl={resolveUrl} label="Stimulus media" />
-      {profileDims.length > 0 && <SemanticProfileChart dimensions={profileDims} />}
-      {Object.keys(choiceFreq).length > 0 && (
-        <Box sx={{ mb: 2 }}>
-          <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>Choice frequency</Typography>
-          {Object.entries(choiceFreq).sort((a, b) => b[1] - a[1]).map(([val, count], idx) => (
-            <HorizontalBar key={val} label={String(val)} count={count} total={choices.length} index={idx} />
+      <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 0.5 }}>
+        Composite results by attribute
+      </Typography>
+      <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1.5 }}>
+        {nResp} response{nResp === 1 ? '' : 's'} · tabs are rating dimensions / blocks (images ranked within each)
+      </Typography>
+      {tabs.length > 1 && (
+        <Tabs
+          value={safeTab}
+          onChange={(_, v) => setTab(v)}
+          variant="scrollable"
+          scrollButtons="auto"
+          sx={{
+            mb: 1.5,
+            borderBottom: 1,
+            borderColor: 'divider',
+            minHeight: 40,
+            '& .MuiTab-root': { minHeight: 40, textTransform: 'none', fontSize: 13 },
+          }}
+        >
+          {tabs.map((t) => (
+            <Tab key={t.key} label={t.label} />
           ))}
+        </Tabs>
+      )}
+      {tabs.length === 1 && (
+        <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
+          Attribute: {current.label}
+        </Typography>
+      )}
+
+      {current?.kind === 'dimension' && (
+        <Box>
+          <DescriptiveStatsLine nums={current.dim.values} unit="" />
+          <SkillMediaRanking
+            title={`Images by mean (${current.label})`}
+            items={current.ranking}
+            resolveUrl={resolveUrl}
+            formatLabel={(v, label) => `${Number(v).toFixed(2)}${label ? ` · ${label}` : ''}`}
+          />
         </Box>
       )}
-      {wordFreq.length > 0 && <WordFrequencyChart words={wordFreq} totalResponses={answers.length} />}
-      {texts.length > 0 && (
+      {current?.kind === 'words' && (
+        <WordFrequencyChart words={current.wordFreq} totalResponses={nResp} />
+      )}
+      {current?.kind === 'choice' && (
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>Choice frequency</Typography>
+          {Object.entries(current.choiceFreq)
+            .sort((a, b) => b[1] - a[1])
+            .map(([val, count], idx) => (
+              <HorizontalBar
+                key={val}
+                label={String(val)}
+                count={count}
+                total={current.nChoices}
+                index={idx}
+              />
+            ))}
+        </Box>
+      )}
+      {current?.kind === 'text' && (
         <Box>
           <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>Text responses</Typography>
-          {texts.slice(0, 5).map((t, i) => (
+          {current.texts.slice(0, 12).map((t, i) => (
             <Paper key={i} variant="outlined" sx={{ p: 1, mb: 0.5, bgcolor: 'grey.50' }}>
               <Typography variant="body2">{t}</Typography>
             </Paper>
           ))}
+          {current.texts.length > 12 && (
+            <Typography variant="caption" color="text.secondary">
+              Showing 12 of {current.texts.length}
+            </Typography>
+          )}
         </Box>
       )}
     </Box>

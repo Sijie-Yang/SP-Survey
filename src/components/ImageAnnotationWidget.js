@@ -1,39 +1,44 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import {
-  Box, Button, Typography, FormControl, InputLabel, Select, MenuItem, Chip, TextField, CircularProgress, Alert, IconButton,
+  Box, Button, Typography, Chip, TextField, CircularProgress, Alert, IconButton,
 } from '@mui/material';
 import { Check, Close } from '@mui/icons-material';
-import { runSam3, loadMaskUrlToCanvas, maskCanvasToPolygon } from '../lib/falInference';
+import { runSam3, instancesToPolygons } from '../lib/falInference';
+import {
+  inferShapeTool,
+  isPolygonTool,
+  normalizeAllowedTools,
+  normalizeAnnotationTool,
+} from '../lib/annotationTools';
+import { resolveLabelColor } from '../lib/preannotateLabels';
+import {
+  SAM_PREANNOT_MODEL,
+  SHAPE_SOURCE_SAM_TEXT,
+  SHAPE_SOURCE_SAM_CLICK,
+  SHAPE_SOURCE_SAM_BOX,
+  withShapeProvenance,
+} from '../lib/imageFeaturesR2';
+
+export { inferShapeTool, normalizeAnnotationTool, annotationToolLabel } from '../lib/annotationTools';
 
 const TOOL_COLORS = {
   point: '#e53935',
   line: '#1e88e5',
-  region: '#43a047',
+  polygon: '#43a047',
+  region: '#43a047', // legacy alias color
   bbox: '#fb8c00',
 };
 
-const LABEL_PALETTE = [
-  '#e53935', '#1e88e5', '#43a047', '#fb8c00', '#8e24aa', '#00acc1',
-  '#6d4c41', '#546e7a', '#c62828', '#1565c0',
-];
+/** Unlabeled (None) — one fixed color for every tool (not per-tool TOOL_COLORS). */
+export const NONE_SHAPE_COLOR = '#78909c';
 
 export function newShapeId() {
   return `shp_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
-export function inferShapeTool(shape) {
-  if (shape?.tool) return shape.tool;
-  const n = shape?.points?.length || 0;
-  if (n >= 3) return 'region';
-  if (n === 2) return 'line';
-  return 'point';
-}
-
-export function colorForLabel(label, fallback) {
-  if (!label) return fallback;
-  let hash = 0;
-  for (let i = 0; i < label.length; i += 1) hash = (hash * 31 + label.charCodeAt(i)) >>> 0;
-  return LABEL_PALETTE[hash % LABEL_PALETTE.length];
+/** @param {Record<string,string>} [colorMap] optional palette override */
+export function colorForLabel(label, fallback, colorMap) {
+  return resolveLabelColor(label, colorMap, fallback);
 }
 
 function withAlpha(hex, alpha) {
@@ -75,11 +80,15 @@ function drawLabelTag(ctx, text, x, y, color) {
 
 export function drawAnnotationShape(ctx, shape, w, h, {
   color, alpha = 1, fillAlpha = 0.35, selected = false, showLabel = true, showVertices = false,
+  labelColors = null,
 } = {}) {
   const tool = inferShapeTool(shape);
   const pts = (shape.points || []).map((p) => ({ x: p.x * w, y: p.y * h }));
   if (!pts.length) return;
-  const baseColor = color || colorForLabel(shape.label, TOOL_COLORS[tool] || '#333');
+  const hasLabel = !!(shape.label && String(shape.label).trim());
+  const baseColor = color || (hasLabel
+    ? colorForLabel(shape.label, TOOL_COLORS[tool] || '#333', labelColors)
+    : NONE_SHAPE_COLOR);
   ctx.globalAlpha = alpha;
   ctx.strokeStyle = baseColor;
   ctx.fillStyle = baseColor;
@@ -113,7 +122,7 @@ export function drawAnnotationShape(ctx, shape, w, h, {
     ctx.stroke();
     pts.forEach((p) => { ctx.beginPath(); ctx.arc(p.x, p.y, 4, 0, Math.PI * 2); ctx.fill(); });
     if (showLabel && shape.label) drawLabelTag(ctx, shape.label, pts[0].x, pts[0].y - 4, baseColor);
-  } else if (tool === 'region' && pts.length >= 2) {
+  } else if (isPolygonTool(tool) && pts.length >= 2) {
     ctx.beginPath();
     ctx.moveTo(pts[0].x, pts[0].y);
     pts.slice(1).forEach((p) => ctx.lineTo(p.x, p.y));
@@ -194,7 +203,7 @@ function hitTestShape(shape, pt, w, h, thresholdPx = 8) {
     }
     return false;
   }
-  if (tool === 'region' && pts.length >= 3) {
+  if (isPolygonTool(tool) && pts.length >= 3) {
     return pointInPolygon({ x: nPt.x * w, y: nPt.y * h }, pts);
   }
   return false;
@@ -264,10 +273,11 @@ function boxToPoints(box) {
 
 function draftReady(draft) {
   if (!draft?.points?.length) return false;
-  if (draft.tool === 'point') return draft.points.length >= 1;
-  if (draft.tool === 'line') return draft.points.length >= 2;
-  if (draft.tool === 'region') return draft.points.length >= 3;
-  if (draft.tool === 'bbox') return draft.points.length >= 2;
+  const t = normalizeAnnotationTool(draft.tool);
+  if (t === 'point') return draft.points.length >= 1;
+  if (t === 'line') return draft.points.length >= 2;
+  if (t === 'polygon') return draft.points.length >= 3;
+  if (t === 'bbox') return draft.points.length >= 2;
   return false;
 }
 
@@ -286,8 +296,10 @@ export default function ImageAnnotationCanvas({
   imageUrl,
   value,
   onChange,
-  allowedTools = ['point', 'line', 'region'],
+  allowedTools = ['point', 'line', 'polygon', 'bbox'],
   annotationLabels = [],
+  /** Optional { [labelName]: '#rrggbb' } for chip/shape colors */
+  labelColors = null,
   readOnly = false,
   minAnnotations = 0,
   maxAnnotations = 50,
@@ -299,17 +311,21 @@ export default function ImageAnnotationCanvas({
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
   const imgRef = useRef(null);
-  const tools = allowedTools?.length ? allowedTools : ['point', 'line', 'region'];
+  const tools = normalizeAllowedTools(allowedTools);
   const [tool, setTool] = useState(tools[0] || 'point');
   const [draft, setDraft] = useState(null); // { tool, points } | null
-  const [drag, setDrag] = useState(null); // { mode, index?, handle?, startPt, origPoints, moved }
+  /** Draft edit, or Select-mode edit of a committed shape via `shapeId`. */
+  const [drag, setDrag] = useState(null); // { mode, shapeId?, index?, handle?, startPt, origPoints, moved }
   const [shapes, setShapes] = useState(value?.shapes || []);
   const [dims, setDims] = useState({ w: 0, h: 0 });
   const [imgError, setImgError] = useState(false);
   const [imgSrc, setImgSrc] = useState(imageUrl);
-  const [selectedId, setSelectedId] = useState(null);
-  const [activeLabel, setActiveLabel] = useState(annotationLabels?.[0] || '');
-  const [samMode, setSamMode] = useState(false);
+  /** Multi-select: ids of highlighted shapes (Select mode + SAM Text batch). */
+  const [selectedIds, setSelectedIds] = useState([]);
+  // Empty string = None (no label on newly confirmed shapes).
+  const [activeLabel, setActiveLabel] = useState('');
+  /** null | 'click' | 'box' | 'text' — mutually exclusive with manual Point/Line/Polygon/Box. */
+  const [samMethod, setSamMethod] = useState(null);
   const [samPrompt, setSamPrompt] = useState('');
   const [samBusy, setSamBusy] = useState(false);
   const [samError, setSamError] = useState(null);
@@ -324,8 +340,21 @@ export default function ImageAnnotationCanvas({
   dimsRef.current = dims;
   const toolRef = useRef(tool);
   toolRef.current = tool;
-  const selectedIdRef = useRef(selectedId);
-  selectedIdRef.current = selectedId;
+  const samMethodRef = useRef(samMethod);
+  samMethodRef.current = samMethod;
+  const selectedIdsRef = useRef(selectedIds);
+  selectedIdsRef.current = selectedIds;
+
+  const clearSelection = useCallback(() => setSelectedIds([]), []);
+  const selectOnly = useCallback((id) => setSelectedIds(id ? [id] : []), []);
+  const selectMany = useCallback((ids) => {
+    const uniq = [...new Set((ids || []).filter(Boolean))];
+    setSelectedIds(uniq);
+  }, []);
+  const toggleSelectedId = useCallback((id) => {
+    if (!id) return;
+    setSelectedIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+  }, []);
 
   useEffect(() => {
     const incoming = (value?.shapes || []).map((s) => (s.id ? s : { ...s, id: newShapeId() }));
@@ -333,12 +362,15 @@ export default function ImageAnnotationCanvas({
   }, [value?.shapes]);
 
   useEffect(() => {
+    // `select` is UI-only (not part of survey allowedTools).
+    if (tool === 'select') return;
     if (!tools.includes(tool)) setTool(tools[0] || 'point');
   }, [tools, tool]);
 
   useEffect(() => {
-    if (annotationLabels?.length && !annotationLabels.includes(activeLabel)) {
-      setActiveLabel(annotationLabels[0]);
+    // Keep None (''); only clear if a non-empty active label was removed from the list.
+    if (activeLabel && annotationLabels?.length && !annotationLabels.includes(activeLabel)) {
+      setActiveLabel('');
     }
   }, [annotationLabels, activeLabel]);
 
@@ -346,6 +378,13 @@ export default function ImageAnnotationCanvas({
     setShapes(nextShapes);
     onChange?.({ image: imageUrl, shapes: nextShapes });
   }, [imageUrl, onChange]);
+
+  const patchShapePoints = useCallback((shapeId, nextPoints) => {
+    if (!shapeId || !Array.isArray(nextPoints)) return;
+    emitChange(shapesRef.current.map((s) => (
+      s.id === shapeId ? { ...s, points: nextPoints } : s
+    )));
+  }, [emitChange]);
 
   const cancelDraft = useCallback(() => {
     setDraft(null);
@@ -356,17 +395,22 @@ export default function ImageAnnotationCanvas({
     const d = draftRef.current;
     if (!draftReady(d)) return;
     if (maxAnnotations > 0 && shapesRef.current.length >= maxAnnotations) return;
-    const shape = {
+    const source = d.source || (d.tool === 'polygon' && d.fromSam ? SHAPE_SOURCE_SAM_CLICK : null);
+    const shape = withShapeProvenance({
       id: newShapeId(),
-      tool: d.tool,
+      tool: normalizeAnnotationTool(d.tool) || d.tool,
       points: d.points,
       label: activeLabel || null,
-    };
+    }, {
+      source: source || undefined,
+      prompt: d.prompt || null,
+      model: source ? SAM_PREANNOT_MODEL : null,
+    });
     setDraft(null);
     setDrag(null);
-    setSelectedId(shape.id);
+    selectOnly(shape.id);
     emitChange([...shapesRef.current, shape]);
-  }, [activeLabel, emitChange, maxAnnotations]);
+  }, [activeLabel, emitChange, maxAnnotations, selectOnly]);
 
   const redraw = useCallback(() => {
     const canvas = canvasRef.current;
@@ -379,14 +423,44 @@ export default function ImageAnnotationCanvas({
     canvas.height = h;
     setDims({ w, h });
     ctx.clearRect(0, 0, w, h);
+    const sel = new Set(selectedIds);
+    const soleId = selectedIds.length === 1 ? selectedIds[0] : null;
 
     shapes.forEach((s) => {
+      const isSole = !!(soleId && s.id === soleId);
+      const sTool = inferShapeTool(s);
       drawAnnotationShape(ctx, s, w, h, {
         alpha: 1,
         fillAlpha: 0.35,
-        selected: s.id && s.id === selectedId,
+        selected: !!(s.id && sel.has(s.id)),
+        // Single selection in Select mode: show editable vertices (bbox uses handles below).
+        showVertices: isSole && sTool !== 'bbox',
+        labelColors,
       });
     });
+
+    if (soleId) {
+      const sole = shapes.find((s) => s.id === soleId);
+      if (sole && inferShapeTool(sole) === 'bbox' && (sole.points || []).length >= 2) {
+        const box = bboxCorners(sole.points);
+        if (box) {
+          const positions = bboxHandlePositions(box, w, h);
+          const stroke = sole.label
+            ? colorForLabel(sole.label, TOOL_COLORS.bbox, labelColors)
+            : NONE_SHAPE_COLOR;
+          BOX_HANDLES.forEach((name) => {
+            const p = positions[name];
+            ctx.beginPath();
+            ctx.fillStyle = '#fff';
+            ctx.strokeStyle = stroke;
+            ctx.lineWidth = 2;
+            ctx.rect(p.x - 4, p.y - 4, 8, 8);
+            ctx.fill();
+            ctx.stroke();
+          });
+        }
+      }
+    }
 
     if (draft?.points?.length) {
       drawAnnotationShape(ctx, {
@@ -398,6 +472,7 @@ export default function ImageAnnotationCanvas({
         fillAlpha: 0.3,
         selected: true,
         showVertices: draft.tool !== 'bbox',
+        labelColors,
       });
 
       if (draft.tool === 'bbox' && draft.points.length >= 2) {
@@ -408,7 +483,9 @@ export default function ImageAnnotationCanvas({
             const p = positions[name];
             ctx.beginPath();
             ctx.fillStyle = '#fff';
-            ctx.strokeStyle = TOOL_COLORS.bbox;
+            ctx.strokeStyle = activeLabel
+              ? colorForLabel(activeLabel, TOOL_COLORS.bbox, labelColors)
+              : NONE_SHAPE_COLOR;
             ctx.lineWidth = 2;
             ctx.rect(p.x - 4, p.y - 4, 8, 8);
             ctx.fill();
@@ -417,7 +494,7 @@ export default function ImageAnnotationCanvas({
         }
       }
     }
-  }, [shapes, draft, selectedId, activeLabel]);
+  }, [shapes, draft, selectedIds, activeLabel, labelColors]);
 
   useEffect(() => {
     redraw();
@@ -429,7 +506,7 @@ export default function ImageAnnotationCanvas({
   useEffect(() => {
     if (!imageUrl) return undefined;
     setImgError(false);
-    setSelectedId(null);
+    clearSelection();
     setDraft(null);
     setDrag(null);
     let cancelled = false;
@@ -445,14 +522,18 @@ export default function ImageAnnotationCanvas({
     };
     probe.src = imageUrl;
     return () => { cancelled = true; };
-  }, [imageUrl]);
+  }, [imageUrl, clearSelection]);
 
   const canvasPoint = (e) => {
-    const { w, h } = dimsRef.current;
-    const rect = canvasRef.current.getBoundingClientRect();
+    const rect = canvasRef.current?.getBoundingClientRect();
+    if (!rect || rect.width <= 0 || rect.height <= 0) {
+      const { w, h } = dimsRef.current;
+      return normalizePoint(0, 0, w || 1, h || 1);
+    }
+    // Normalize against the same rect used for pointer offsets (avoids img/canvas size drift).
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    return normalizePoint(x, y, w, h);
+    return normalizePoint(x, y, rect.width, rect.height);
   };
 
   const findHitShape = (pt) => {
@@ -465,16 +546,108 @@ export default function ImageAnnotationCanvas({
   };
 
   const switchTool = (next) => {
-    setTool(next);
+    const t = next === 'select' ? 'select' : (normalizeAnnotationTool(next) || next);
+    setTool(t);
+    setSamMethod(null);
+    setSamError(null);
     setDraft(null);
+    setDrag(null);
+    if (t !== 'select') clearSelection();
+  };
+
+  const selectSamMethod = (method) => {
+    setSamMethod(method);
+    setSamError(null);
+    setDraft(null);
+    setDrag(null);
+    clearSelection();
+  };
+
+  const putSamPolygonInDraft = (poly, { source = SHAPE_SOURCE_SAM_CLICK, prompt = null } = {}) => {
+    if (!poly?.length) return;
+    clearSelection();
+    setDraft({ tool: 'polygon', points: poly, source, prompt, fromSam: true });
     setDrag(null);
   };
 
-  const putSamPolygonInDraft = (poly) => {
-    if (!poly?.length) return;
-    setSelectedId(null);
-    setDraft({ tool: 'region', points: poly });
-    setDrag(null);
+  /** fal SAM3 point/box prompts expect pixel coords, not normalized 0–1. */
+  const naturalImageSize = () => {
+    const img = imgRef.current;
+    const nw = img?.naturalWidth || dimsRef.current.w || 1;
+    const nh = img?.naturalHeight || dimsRef.current.h || 1;
+    return { nw: Math.max(1, nw), nh: Math.max(1, nh) };
+  };
+
+  const toPixelPoint = (pt, label = 1) => {
+    const { nw, nh } = naturalImageSize();
+    return {
+      x: Math.round(Math.min(1, Math.max(0, pt.x)) * nw),
+      y: Math.round(Math.min(1, Math.max(0, pt.y)) * nh),
+      label: label === 0 ? 0 : 1,
+    };
+  };
+
+  const toPixelBox = (start, end) => {
+    const { nw, nh } = naturalImageSize();
+    const x1 = Math.min(start.x, end.x);
+    const y1 = Math.min(start.y, end.y);
+    const x2 = Math.max(start.x, end.x);
+    const y2 = Math.max(start.y, end.y);
+    return {
+      x1: Math.round(Math.min(1, Math.max(0, x1)) * nw),
+      y1: Math.round(Math.min(1, Math.max(0, y1)) * nh),
+      x2: Math.round(Math.min(1, Math.max(0, x2)) * nw),
+      y2: Math.round(Math.min(1, Math.max(0, y2)) * nh),
+    };
+  };
+
+  /**
+   * @param {object} result fal proxy payload
+   * @param {{ multi?: boolean }} opts multi=true (SAM Text): add all polygons as shapes
+   */
+  const applySamResult = async (result, { multi = false, source = SHAPE_SOURCE_SAM_CLICK, prompt = null } = {}) => {
+    // Mask → contour polygon first. Never prefer fal's axis-aligned box (looks like "my drag box").
+    const polys = await instancesToPolygons(result, { allowBoxFallback: true });
+    if (!polys.length) {
+      throw new Error(result.error || 'SAM3 returned no usable polygon. Try another click/box, or a clearer noun.');
+    }
+    if (multi) {
+      let room = Infinity;
+      if (maxAnnotations > 0) {
+        room = Math.max(0, maxAnnotations - shapesRef.current.length);
+      }
+      const take = polys.slice(0, room === Infinity ? polys.length : room);
+      if (!take.length) {
+        throw new Error(`Annotation limit reached (${maxAnnotations}).`);
+      }
+      const added = take.map((points) => withShapeProvenance({
+        id: newShapeId(),
+        tool: 'polygon',
+        points,
+        label: activeLabel || null,
+      }, {
+        source: SHAPE_SOURCE_SAM_TEXT,
+        prompt: prompt || samPrompt || null,
+        model: SAM_PREANNOT_MODEL,
+      }));
+      setDraft(null);
+      setDrag(null);
+      emitChange([...shapesRef.current, ...added]);
+      // All new regions selected so user can batch-label immediately.
+      selectMany(added.map((s) => s.id));
+      setTool('select');
+      setSamMethod(null);
+      const apiCount = Number(result?.candidates) > 0
+        ? Number(result.candidates)
+        : (Array.isArray(result?.instances) ? result.instances.length : take.length);
+      if (take.length < polys.length) {
+        setSamError(`Added ${take.length}/${polys.length} polygons (annotation cap ${maxAnnotations}). All selected — use Selected chips to label.`);
+      } else {
+        setSamError(`Added ${take.length} polygon${take.length === 1 ? '' : 's'} from ${apiCount} SAM instance${apiCount === 1 ? '' : 's'} (fal max_masks ≤32). All selected — use Selected chips to label.`);
+      }
+      return;
+    }
+    putSamPolygonInDraft(polys[0], { source, prompt: prompt || null });
   };
 
   const runSamAtPoint = async (pt) => {
@@ -485,14 +658,9 @@ export default function ImageAnnotationCanvas({
         falKey: falKey || undefined,
         projectId: projectId || undefined,
         imageUrl,
-        prompt: samPrompt || undefined,
-        points: [{ x: pt.x, y: pt.y, label: 1 }],
+        points: [toPixelPoint(pt, 1)],
       });
-      if (!result.maskUrl) throw new Error('No mask returned from SAM3');
-      const canvas = await loadMaskUrlToCanvas(result.maskUrl);
-      const poly = maskCanvasToPolygon(canvas, 6);
-      if (poly.length < 3) throw new Error('Could not convert mask to polygon');
-      putSamPolygonInDraft(poly);
+      await applySamResult(result, { multi: false, source: SHAPE_SOURCE_SAM_CLICK });
     } catch (err) {
       setSamError(err.message || String(err));
     } finally {
@@ -504,27 +672,16 @@ export default function ImageAnnotationCanvas({
     setSamBusy(true);
     setSamError(null);
     try {
-      const box = {
-        x1: Math.min(start.x, end.x),
-        y1: Math.min(start.y, end.y),
-        x2: Math.max(start.x, end.x),
-        y2: Math.max(start.y, end.y),
-      };
       const result = await runSam3({
         falKey: falKey || undefined,
         projectId: projectId || undefined,
         imageUrl,
-        prompt: samPrompt || undefined,
-        box,
+        box: toPixelBox(start, end),
       });
-      if (!result.maskUrl) throw new Error('No mask returned from SAM3');
-      const canvas = await loadMaskUrlToCanvas(result.maskUrl);
-      const poly = maskCanvasToPolygon(canvas, 6);
-      if (poly.length < 3) throw new Error('Could not convert mask to polygon');
-      putSamPolygonInDraft(poly);
+      await applySamResult(result, { multi: false, source: SHAPE_SOURCE_SAM_BOX });
     } catch (err) {
       setSamError(err.message || String(err));
-      setDraft({ tool: 'bbox', points: [start, end] });
+      setDraft(null);
     } finally {
       setSamBusy(false);
     }
@@ -532,11 +689,11 @@ export default function ImageAnnotationCanvas({
 
   const runSamTextPrompt = async () => {
     if (!samPrompt.trim()) {
-      setSamError('Enter a text prompt (e.g. tree, car)');
+      setSamError('Enter one noun (e.g. tree, car)');
       return;
     }
     if (draftRef.current) {
-      setSamError('Confirm or cancel the current draft first');
+      setSamError('Confirm (✓) or discard (✕) the current draft first — ✓ saves the region, it does not enlarge it.');
       return;
     }
     if (maxAnnotations > 0 && shapesRef.current.length >= maxAnnotations) return;
@@ -549,11 +706,12 @@ export default function ImageAnnotationCanvas({
         imageUrl,
         prompt: samPrompt.trim(),
       });
-      if (!result.maskUrl) throw new Error('No mask returned from SAM3');
-      const canvas = await loadMaskUrlToCanvas(result.maskUrl);
-      const poly = maskCanvasToPolygon(canvas, 6);
-      if (poly.length < 3) throw new Error('Could not convert mask to polygon');
-      putSamPolygonInDraft(poly);
+      // Text: add every matching instance as a polygon shape.
+      await applySamResult(result, {
+        multi: true,
+        source: SHAPE_SOURCE_SAM_TEXT,
+        prompt: samPrompt.trim(),
+      });
     } catch (err) {
       setSamError(err.message || String(err));
     } finally {
@@ -563,12 +721,13 @@ export default function ImageAnnotationCanvas({
 
   const handlePointerDown = (e) => {
     if (readOnly || !dimsRef.current.w || imgError || samBusy) return;
-    if (samMode && enableSamAssist) return; // SAM uses click / bbox-up paths
     e.preventDefault();
     const pt = canvasPoint(e);
     const { w, h } = dimsRef.current;
     const d = draftRef.current;
+    const method = enableSamAssist ? samMethodRef.current : null;
 
+    // Draft editing always works (including SAM polygon drafts).
     if (d) {
       if (d.tool === 'bbox' && d.points.length >= 2) {
         const box = bboxCorners(d.points);
@@ -586,14 +745,26 @@ export default function ImageAnnotationCanvas({
         return; // must confirm/cancel
       }
 
-      if (d.tool === 'point' || d.tool === 'line' || d.tool === 'region') {
+      const draftTool = normalizeAnnotationTool(d.tool);
+      if (draftTool === 'point' || draftTool === 'line' || draftTool === 'polygon') {
         const vi = hitTestVertex(d, pt, w, h);
         if (vi >= 0) {
           setDrag({ mode: 'vertex', index: vi, startPt: pt, origPoints: d.points.map((p) => ({ ...p })), moved: false });
           canvasRef.current?.setPointerCapture?.(e.pointerId);
           return;
         }
-        if ((d.tool === 'line' || d.tool === 'region') && toolRef.current === d.tool) {
+        const canExtendManual = !method
+          && (draftTool === 'line' || draftTool === 'polygon')
+          && normalizeAnnotationTool(toolRef.current) === draftTool;
+        if (canExtendManual) {
+          if (draftTool === 'polygon' && d.points.length >= 3) {
+            const first = d.points[0];
+            const closePx = Math.hypot((pt.x - first.x) * w, (pt.y - first.y) * h);
+            if (closePx <= 14) {
+              if (draftReady(d)) confirmDraft();
+              return;
+            }
+          }
           setDrag({ mode: 'pending-add', startPt: pt, origPoints: d.points.map((p) => ({ ...p })), moved: false });
           canvasRef.current?.setPointerCapture?.(e.pointerId);
           return;
@@ -603,18 +774,75 @@ export default function ImageAnnotationCanvas({
       return;
     }
 
-    const hit = findHitShape(pt);
-    if (hit) {
-      setSelectedId(hit.id || null);
+    // Select mode: edit geometry when exactly one shape is selected; else multi-select.
+    if (!method && toolRef.current === 'select') {
+      const soleId = selectedIdsRef.current.length === 1 ? selectedIdsRef.current[0] : null;
+      if (soleId) {
+        const shape = shapesRef.current.find((s) => s.id === soleId);
+        if (shape) {
+          const sTool = inferShapeTool(shape);
+          const origPoints = (shape.points || []).map((p) => ({ ...p }));
+          if (sTool === 'bbox' && origPoints.length >= 2) {
+            const box = bboxCorners(origPoints);
+            const handle = hitTestBboxHandle(box, pt, w, h);
+            if (handle) {
+              setDrag({
+                mode: 'resize', shapeId: soleId, handle, startPt: pt, origPoints, moved: false,
+              });
+              canvasRef.current?.setPointerCapture?.(e.pointerId);
+              return;
+            }
+            if (hitTestShape(shape, pt, w, h)) {
+              setDrag({
+                mode: 'move', shapeId: soleId, startPt: pt, origPoints, moved: false,
+              });
+              canvasRef.current?.setPointerCapture?.(e.pointerId);
+              return;
+            }
+          } else if (sTool === 'point' || sTool === 'line' || sTool === 'polygon') {
+            const vi = hitTestVertex(shape, pt, w, h);
+            if (vi >= 0) {
+              setDrag({
+                mode: 'vertex', shapeId: soleId, index: vi, startPt: pt, origPoints, moved: false,
+              });
+              canvasRef.current?.setPointerCapture?.(e.pointerId);
+              return;
+            }
+            if (hitTestShape(shape, pt, w, h)) {
+              setDrag({
+                mode: 'move', shapeId: soleId, startPt: pt, origPoints, moved: false,
+              });
+              canvasRef.current?.setPointerCapture?.(e.pointerId);
+              return;
+            }
+          }
+        }
+      }
+      const hit = findHitShape(pt);
+      if (hit?.id) toggleSelectedId(hit.id);
+      else clearSelection();
       return;
     }
-    setSelectedId(null);
+
+    // SAM Click / Text: canvas draw off (Click uses onClick; Text uses Run). Use Select to pick shapes.
+    if (method === 'click' || method === 'text') return;
+
+    clearSelection();
     if (maxAnnotations > 0 && shapesRef.current.length >= maxAnnotations) return;
 
-    const t = toolRef.current;
+    // SAM Box: drag a guide box, then segment (not a manual bbox annotation).
+    if (method === 'box') {
+      setDraft({ tool: 'bbox', points: [pt, pt] });
+      setDrag({ mode: 'draw-bbox', startPt: pt, origPoints: [pt, pt], moved: false });
+      canvasRef.current?.setPointerCapture?.(e.pointerId);
+      return;
+    }
+
+    // Draw tools: start a new shape even on top of existing annotations (Select is separate).
+    const t = normalizeAnnotationTool(toolRef.current);
     if (t === 'point') {
       setDraft({ tool: 'point', points: [pt] });
-    } else if (t === 'line' || t === 'region') {
+    } else if (t === 'line' || t === 'polygon') {
       setDraft({ tool: t, points: [pt] });
     } else if (t === 'bbox') {
       setDraft({ tool: 'bbox', points: [pt, pt] });
@@ -628,6 +856,35 @@ export default function ImageAnnotationCanvas({
     if (!cur) return;
     const pt = canvasPoint(e);
     const { w, h } = dimsRef.current;
+
+    // Select-mode edit of a committed shape
+    if (cur.shapeId) {
+      if (cur.mode === 'vertex') {
+        const shape = shapesRef.current.find((s) => s.id === cur.shapeId);
+        if (!shape) return;
+        const pts = (shape.points || []).map((p) => ({ ...p }));
+        pts[cur.index] = {
+          x: Math.min(1, Math.max(0, pt.x)),
+          y: Math.min(1, Math.max(0, pt.y)),
+        };
+        patchShapePoints(cur.shapeId, pts);
+        setDrag({ ...cur, moved: true });
+      } else if (cur.mode === 'move') {
+        const dx = pt.x - cur.startPt.x;
+        const dy = pt.y - cur.startPt.y;
+        patchShapePoints(cur.shapeId, cur.origPoints.map((p) => ({
+          x: Math.min(1, Math.max(0, p.x + dx)),
+          y: Math.min(1, Math.max(0, p.y + dy)),
+        })));
+        setDrag({ ...cur, moved: true });
+      } else if (cur.mode === 'resize') {
+        const box = bboxCorners(cur.origPoints);
+        const next = applyBboxResize(box, cur.handle, pt);
+        patchShapePoints(cur.shapeId, boxToPoints(next));
+        setDrag({ ...cur, moved: true });
+      }
+      return;
+    }
 
     if (cur.mode === 'vertex') {
       setDraft((d) => {
@@ -689,7 +946,7 @@ export default function ImageAnnotationCanvas({
         setDraft(null);
         return;
       }
-      if (samMode && enableSamAssist) {
+      if (enableSamAssist && samMethodRef.current === 'box') {
         setDraft(null);
         await runSamWithBox(start, end);
         return;
@@ -703,14 +960,24 @@ export default function ImageAnnotationCanvas({
 
   const handleClick = (e) => {
     if (readOnly || !dimsRef.current.w || imgError || samBusy) return;
-    if (!(samMode && enableSamAssist)) return;
+    if (!(enableSamAssist && samMethodRef.current === 'click')) return;
     if (draftRef.current) {
-      setSamError('Confirm or cancel the current draft first');
+      setSamError('Confirm (✓) or discard (✕) the current draft first');
       return;
     }
     if (maxAnnotations > 0 && shapesRef.current.length >= maxAnnotations) return;
     const pt = canvasPoint(e);
     runSamAtPoint(pt);
+  };
+
+  const handleDoubleClick = (e) => {
+    if (readOnly || samBusy) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const d = draftRef.current;
+    if (!d || normalizeAnnotationTool(d.tool) !== 'polygon') return;
+    if (!draftReady(d)) return;
+    confirmDraft();
   };
 
   const undo = () => {
@@ -719,28 +986,42 @@ export default function ImageAnnotationCanvas({
       return;
     }
     const next = shapesRef.current.slice(0, -1);
-    setSelectedId(null);
+    clearSelection();
     emitChange(next);
   };
 
   const clear = () => {
-    setSelectedId(null);
+    clearSelection();
     setDraft(null);
     setDrag(null);
     emitChange([]);
   };
 
   const deleteSelected = useCallback(() => {
-    if (!selectedIdRef.current) return;
-    const next = shapesRef.current.filter((s) => s.id !== selectedIdRef.current);
-    setSelectedId(null);
+    const ids = new Set(selectedIdsRef.current);
+    if (!ids.size) return;
+    const next = shapesRef.current.filter((s) => !ids.has(s.id));
+    clearSelection();
     emitChange(next);
-  }, [emitChange]);
+  }, [emitChange, clearSelection]);
 
   const updateSelectedLabel = (label) => {
-    if (!selectedId) return;
-    const next = shapes.map((s) => (s.id === selectedId ? { ...s, label: label || null } : s));
+    const ids = new Set(selectedIds);
+    if (!ids.size) return;
+    const nextLabel = label || null;
+    const next = shapes.map((s) => (ids.has(s.id) ? { ...s, label: nextLabel } : s));
     emitChange(next);
+  };
+
+  const toggleActiveLabel = (lb) => {
+    setActiveLabel((prev) => (prev === lb ? '' : lb));
+  };
+
+  const toggleSelectedLabel = (lb) => {
+    if (!selectedIds.length) return;
+    const selected = shapes.filter((s) => selectedIds.includes(s.id));
+    const allHave = selected.length > 0 && selected.every((s) => (s.label || '') === lb);
+    updateSelectedLabel(allHave ? '' : lb);
   };
 
   useEffect(() => {
@@ -753,7 +1034,7 @@ export default function ImageAnnotationCanvas({
         e.preventDefault();
         setDraft(null);
         setDrag(null);
-        setSelectedId(null);
+        clearSelection();
         return;
       }
       if (e.key === 'Enter') {
@@ -770,7 +1051,7 @@ export default function ImageAnnotationCanvas({
           setDrag(null);
           return;
         }
-        if (selectedIdRef.current) {
+        if (selectedIdsRef.current.length) {
           e.preventDefault();
           deleteSelected();
         }
@@ -778,24 +1059,45 @@ export default function ImageAnnotationCanvas({
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [readOnly, confirmDraft, deleteSelected]);
+  }, [readOnly, confirmDraft, deleteSelected, clearSelection]);
 
-  const selectedShape = shapes.find((s) => s.id === selectedId);
+  const selectedShapes = shapes.filter((s) => selectedIds.includes(s.id));
+  const selectedLabelCommon = (() => {
+    if (!selectedShapes.length) return null;
+    const labels = selectedShapes.map((s) => s.label || '');
+    const first = labels[0];
+    return labels.every((l) => l === first) ? first : '__mixed__';
+  })();
   const showDraftUi = !readOnly && !!draft?.points?.length && dims.w > 0 && !imgError;
   const confirmPos = showDraftUi ? draftCentroidPx(draft, dims.w, dims.h) : null;
   const canConfirm = draftReady(draft);
 
   const toolHint = (() => {
+    const draftTool = normalizeAnnotationTool(draft?.tool);
+    const activeTool = normalizeAnnotationTool(tool);
     if (draft) {
-      if (draft.tool === 'line') return 'Click to add more points · drag vertices to edit · ✓ confirm · ✕ discard';
-      if (draft.tool === 'region') return 'Click to add vertices · drag to edit · ✓ confirm (≥3) · ✕ discard';
-      if (draft.tool === 'bbox') return 'Drag body to move · handles to resize · ✓ confirm · ✕ discard';
-      if (draft.tool === 'point') return 'Drag to adjust · ✓ confirm · ✕ discard';
+      if (draftTool === 'line') return 'Click to add more points · drag vertices to edit · ✓ confirm · ✕ discard';
+      if (draftTool === 'polygon') {
+        return samMethod
+          ? 'SAM region draft · drag vertices to edit · ✓ save as polygon · ✕ / Esc discard'
+          : 'Click to add vertices · click first point or double-click to close · ✓ confirm (≥3) · ✕ discard';
+      }
+      if (draftTool === 'bbox') return 'Drag body to move · handles to resize · ✓ confirm · ✕ discard';
+      if (draftTool === 'point') return 'Drag to adjust · ✓ confirm · ✕ discard';
     }
-    if (tool === 'point') return 'Click to place a point, then ✓ to confirm';
-    if (tool === 'line') return 'Click to add polyline points, then ✓ to confirm (Esc cancels)';
-    if (tool === 'region') return 'Click to add polygon vertices, then ✓ to confirm (no double-click)';
-    if (tool === 'bbox') return 'Drag to draw a box, then ✓ to confirm';
+    if (samMethod === 'click') return 'SAM Click: click object → polygon draft → ✓ · switch to Select to pick existing';
+    if (samMethod === 'box') return 'SAM Box: drag guide box → polygon draft → ✓ · switch to Select to pick existing';
+    if (samMethod === 'text') return 'SAM Text: one noun + Run → all matches as polygons (all selected for batch label)';
+    if (tool === 'select') {
+      if (selectedIds.length === 1) {
+        return 'Edit: drag vertices / move shape · box handles resize · click elsewhere to multi-select or clear';
+      }
+      return 'Select: click toggles multi-select · select one to edit points · Selected row labels all · Delete removes selected';
+    }
+    if (activeTool === 'point') return 'Point: click to place (can overlap existing) · ✓ to confirm';
+    if (activeTool === 'line') return 'Line: click to add points · ✓ to confirm (Esc cancels)';
+    if (activeTool === 'polygon') return 'Polygon: click vertices; click first point or double-click to close (≥3)';
+    if (activeTool === 'bbox') return 'Box: drag to draw (can overlap existing) · ✓ to confirm';
     return '';
   })();
 
@@ -819,24 +1121,91 @@ export default function ImageAnnotationCanvas({
             },
           }}
         >
-          {/* Individual buttons wrap on phones; ButtonGroup does not */}
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+          {/* Select is its own mode — separate from draw tools and SAM */}
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 0.75,
+              pr: 1.25,
+              mr: 0.5,
+              borderRight: '1px solid',
+              borderColor: 'divider',
+            }}
+          >
+            <Button
+              size="small"
+              color="info"
+              variant={!samMethod && tool === 'select' ? 'contained' : 'outlined'}
+              onClick={() => switchTool('select')}
+              sx={{ fontWeight: 700, minWidth: 72 }}
+            >
+              Select
+            </Button>
+          </Box>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, alignItems: 'center' }}>
+            <Typography variant="caption" color="text.secondary" sx={{ px: 0.25 }}>Draw</Typography>
             {tools.includes('point') && (
-              <Button size="small" variant={tool === 'point' ? 'contained' : 'outlined'} onClick={() => switchTool('point')}>Point</Button>
+              <Button size="small" variant={!samMethod && tool === 'point' ? 'contained' : 'outlined'} onClick={() => switchTool('point')}>Point</Button>
             )}
             {tools.includes('line') && (
-              <Button size="small" variant={tool === 'line' ? 'contained' : 'outlined'} onClick={() => switchTool('line')}>Line</Button>
+              <Button size="small" variant={!samMethod && tool === 'line' ? 'contained' : 'outlined'} onClick={() => switchTool('line')}>Line</Button>
             )}
-            {tools.includes('region') && (
-              <Button size="small" variant={tool === 'region' ? 'contained' : 'outlined'} onClick={() => switchTool('region')}>Region</Button>
+            {tools.includes('polygon') && (
+              <Button size="small" variant={!samMethod && tool === 'polygon' ? 'contained' : 'outlined'} onClick={() => switchTool('polygon')}>Polygon</Button>
             )}
             {tools.includes('bbox') && (
-              <Button size="small" variant={tool === 'bbox' ? 'contained' : 'outlined'} onClick={() => switchTool('bbox')}>Box</Button>
+              <Button size="small" variant={!samMethod && tool === 'bbox' ? 'contained' : 'outlined'} onClick={() => switchTool('bbox')}>Box</Button>
             )}
           </Box>
-          <Button size="small" onClick={undo} disabled={!shapes.length && !draft}>Undo</Button>
-          <Button size="small" color="error" onClick={clear} disabled={!shapes.length && !draft}>Clear</Button>
-          <Button size="small" color="error" onClick={deleteSelected} disabled={!selectedId || !!draft}>Delete</Button>
+          {enableSamAssist && (
+            <Box
+              sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: 0.5,
+                alignItems: 'center',
+                pl: 1,
+                ml: 0.5,
+                borderLeft: '1px solid',
+                borderColor: 'divider',
+              }}
+            >
+              <Typography variant="caption" color="text.secondary" sx={{ px: 0.25 }}>SAM</Typography>
+              <Button
+                size="small"
+                color="secondary"
+                variant={samMethod === 'click' ? 'contained' : 'outlined'}
+                disabled={samBusy}
+                onClick={() => selectSamMethod('click')}
+              >
+                {samBusy && samMethod === 'click' ? 'SAM…' : 'Click'}
+              </Button>
+              <Button
+                size="small"
+                color="secondary"
+                variant={samMethod === 'box' ? 'contained' : 'outlined'}
+                disabled={samBusy}
+                onClick={() => selectSamMethod('box')}
+              >
+                {samBusy && samMethod === 'box' ? 'SAM…' : 'Box'}
+              </Button>
+              <Button
+                size="small"
+                color="secondary"
+                variant={samMethod === 'text' ? 'contained' : 'outlined'}
+                disabled={samBusy}
+                onClick={() => selectSamMethod('text')}
+              >
+                Text
+              </Button>
+            </Box>
+          )}
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, ml: { xs: 0, sm: 'auto' } }}>
+            <Button size="small" onClick={undo} disabled={!shapes.length && !draft}>Undo</Button>
+            <Button size="small" color="error" onClick={clear} disabled={!shapes.length && !draft}>Clear</Button>
+            <Button size="small" color="error" onClick={deleteSelected} disabled={!selectedIds.length || !!draft}>Delete</Button>
+          </Box>
           {(minAnnotations > 0 || maxAnnotations > 0) && (
             <Typography variant="caption" color="text.secondary" sx={{ alignSelf: 'center' }}>
               Annotations: {shapes.length}{maxAnnotations > 0 ? ` / ${maxAnnotations}` : ''}{minAnnotations > 0 ? ` (min ${minAnnotations})` : ''}
@@ -847,85 +1216,153 @@ export default function ImageAnnotationCanvas({
               {toolHint}
             </Typography>
           )}
-          {enableSamAssist && (
-            <Button
-              size="small"
-              variant={samMode ? 'contained' : 'outlined'}
-              color="secondary"
-              disabled={samBusy}
-              onClick={() => { setSamMode((v) => !v); setDraft(null); setDrag(null); }}
-            >
-              {samBusy ? 'SAM…' : (samMode ? 'SAM on' : 'SAM')}
-            </Button>
-          )}
         </Box>
       )}
-      {!readOnly && enableSamAssist && (
+      {!readOnly && enableSamAssist && samMethod === 'text' && (
         <Box sx={{ mb: 1, display: 'flex', gap: 1, flexWrap: 'wrap', alignItems: 'center', width: '100%' }}>
           <TextField
             size="small"
-            label="SAM text prompt"
-            placeholder="e.g. tree, building"
+            label="One noun"
+            placeholder="e.g. tree"
             value={samPrompt}
             onChange={(e) => setSamPrompt(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                runSamTextPrompt();
+              }
+            }}
             sx={{ minWidth: { xs: '100%', sm: 200 }, flex: { xs: '1 1 100%', sm: '0 1 auto' } }}
           />
-          <Button size="small" variant="outlined" disabled={samBusy} onClick={runSamTextPrompt}>
-            Segment prompt
+          <Button size="small" variant="contained" color="secondary" disabled={samBusy} onClick={runSamTextPrompt}>
+            Run
           </Button>
           {samBusy && <CircularProgress size={18} />}
-          {samMode && (
-            <Typography variant="caption" color="text.secondary">
-              Click for point · drag box tool for box · result stays editable until ✓ · Esc cancels
-            </Typography>
-          )}
-          {samError && <Alert severity="warning" sx={{ py: 0 }} onClose={() => setSamError(null)}>{samError}</Alert>}
         </Box>
       )}
+      {!readOnly && enableSamAssist && samError && (
+        <Alert severity="warning" sx={{ mb: 1, py: 0 }} onClose={() => setSamError(null)}>{samError}</Alert>
+      )}
       {!readOnly && annotationLabels?.length > 0 && (
-        <Box sx={{ mb: 1, display: 'flex', gap: 1, flexWrap: 'wrap', alignItems: 'center', width: '100%' }}>
-          <FormControl size="small" sx={{ minWidth: { xs: '100%', sm: 160 } }}>
-            <InputLabel>Active label</InputLabel>
-            <Select
-              label="Active label"
-              value={activeLabel || ''}
-              onChange={(e) => setActiveLabel(e.target.value)}
-            >
-              {annotationLabels.map((lb) => (
-                <MenuItem key={lb} value={lb}>{lb}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          {selectedShape && (
-            <FormControl size="small" sx={{ minWidth: { xs: '100%', sm: 160 } }}>
-              <InputLabel>Selected label</InputLabel>
-              <Select
-                label="Selected label"
-                value={selectedShape.label || ''}
-                onChange={(e) => updateSelectedLabel(e.target.value)}
-              >
-                <MenuItem value=""><em>None</em></MenuItem>
-                {annotationLabels.map((lb) => (
-                  <MenuItem key={lb} value={lb}>{lb}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          )}
-          <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
-            {annotationLabels.map((lb) => (
-              <Chip
-                key={lb}
-                size="small"
-                label={lb}
-                onClick={() => setActiveLabel(lb)}
-                variant={activeLabel === lb ? 'filled' : 'outlined'}
-                sx={{
-                  borderColor: colorForLabel(lb),
-                  bgcolor: activeLabel === lb ? colorForLabel(lb) : undefined,
-                  color: activeLabel === lb ? '#fff' : undefined,
-                }}
-              />
-            ))}
+        <Box sx={{ mb: 1.5, display: 'flex', flexDirection: 'column', gap: 1, width: '100%' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              gap: 1,
+              px: 1.25,
+              py: 1,
+              borderRadius: 1.5,
+              border: '1px solid',
+              borderColor: 'primary.light',
+              bgcolor: (t) => (t.palette.mode === 'dark' ? 'rgba(25,118,210,0.08)' : 'rgba(25,118,210,0.04)'),
+            }}
+          >
+            <Chip
+              size="small"
+              color="primary"
+              label="Active"
+              sx={{ fontWeight: 700 }}
+            />
+            <Typography variant="caption" color="text.secondary" sx={{ mr: 0.5 }}>
+              next new shape · click again for None
+            </Typography>
+            <Chip
+              size="small"
+              label="None"
+              onClick={() => setActiveLabel('')}
+              variant={!activeLabel ? 'filled' : 'outlined'}
+              sx={{
+                fontWeight: !activeLabel ? 700 : 500,
+                bgcolor: !activeLabel ? NONE_SHAPE_COLOR : undefined,
+                color: !activeLabel ? '#fff' : 'text.secondary',
+                borderColor: NONE_SHAPE_COLOR,
+              }}
+            />
+            {annotationLabels.map((lb) => {
+              const on = activeLabel === lb;
+              const c = colorForLabel(lb, undefined, labelColors);
+              return (
+                <Chip
+                  key={`active-${lb}`}
+                  size="small"
+                  label={lb}
+                  onClick={() => toggleActiveLabel(lb)}
+                  variant={on ? 'filled' : 'outlined'}
+                  sx={{
+                    borderColor: c,
+                    bgcolor: on ? c : undefined,
+                    color: on ? '#fff' : undefined,
+                    fontWeight: on ? 700 : 500,
+                  }}
+                />
+              );
+            })}
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              gap: 1,
+              px: 1.25,
+              py: 1,
+              borderRadius: 1.5,
+              border: '1px solid',
+              borderColor: selectedShapes.length ? 'warning.main' : 'divider',
+              bgcolor: selectedShapes.length
+                ? ((t) => (t.palette.mode === 'dark' ? 'rgba(237,108,2,0.12)' : 'rgba(237,108,2,0.06)'))
+                : 'action.hover',
+              opacity: selectedShapes.length ? 1 : 0.72,
+            }}
+          >
+            <Chip
+              size="small"
+              color="warning"
+              label={selectedShapes.length ? `Selected ×${selectedShapes.length}` : 'Selected'}
+              sx={{ fontWeight: 700 }}
+            />
+            <Typography variant="caption" color="text.secondary" sx={{ mr: 0.5 }}>
+              {selectedShapes.length
+                ? (selectedLabelCommon === '__mixed__'
+                  ? 'mixed labels · click a chip to set all · click again for None'
+                  : 'label applies to all selected · click again for None')
+                : 'Select mode: click shapes to multi-select'}
+            </Typography>
+            <Chip
+              size="small"
+              label="None"
+              disabled={!selectedShapes.length}
+              onClick={() => selectedShapes.length && updateSelectedLabel('')}
+              variant={selectedLabelCommon === '' ? 'filled' : 'outlined'}
+              sx={{
+                fontWeight: selectedLabelCommon === '' ? 700 : 500,
+                bgcolor: selectedLabelCommon === '' ? NONE_SHAPE_COLOR : undefined,
+                color: selectedLabelCommon === '' ? '#fff' : 'text.secondary',
+                borderColor: NONE_SHAPE_COLOR,
+              }}
+            />
+            {annotationLabels.map((lb) => {
+              const on = selectedLabelCommon === lb;
+              const c = colorForLabel(lb, undefined, labelColors);
+              return (
+                <Chip
+                  key={`sel-${lb}`}
+                  size="small"
+                  label={lb}
+                  disabled={!selectedShapes.length}
+                  onClick={() => toggleSelectedLabel(lb)}
+                  variant={on ? 'filled' : 'outlined'}
+                  sx={{
+                    borderColor: c,
+                    bgcolor: on ? c : undefined,
+                    color: on ? '#fff' : undefined,
+                    fontWeight: on ? 700 : 500,
+                  }}
+                />
+              );
+            })}
           </Box>
         </Box>
       )}
@@ -955,6 +1392,7 @@ export default function ImageAnnotationCanvas({
           <canvas
             ref={canvasRef}
             onClick={handleClick}
+            onDoubleClick={handleDoubleClick}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}
@@ -1010,9 +1448,16 @@ export default function ImageAnnotationCanvas({
   );
 }
 /** Overlay multiple participants' annotations on one image (for ResultsAnalysis). */
-export function AnnotationOverlay({ imageUrl, annotations, width = 500, labelFilter = null }) {
+export function AnnotationOverlay({
+  imageUrl,
+  annotations,
+  width = 500,
+  labelFilter = null,
+  toolFilter = null,
+}) {
   const canvasRef = useRef(null);
   const PARTICIPANT_COLORS = ['#e53935', '#1e88e5', '#43a047', '#fb8c00', '#8e24aa', '#00acc1'];
+  const toolFilterNorm = toolFilter ? normalizeAnnotationTool(toolFilter) : '';
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -1024,6 +1469,7 @@ export function AnnotationOverlay({ imageUrl, annotations, width = 500, labelFil
         const color = PARTICIPANT_COLORS[pi % PARTICIPANT_COLORS.length];
         (ann.shapes || []).forEach((shape) => {
           if (labelFilter && shape.label !== labelFilter) return;
+          if (toolFilterNorm && inferShapeTool(shape) !== toolFilterNorm) return;
           drawAnnotationShape(ctx, shape, w, h, {
             color: shape.label ? colorForLabel(shape.label, color) : color,
             alpha: 0.75,
@@ -1069,7 +1515,7 @@ export function AnnotationOverlay({ imageUrl, annotations, width = 500, labelFil
     tryLoad(true);
 
     return () => { cancelled = true; };
-  }, [imageUrl, annotations, width, labelFilter]);
+  }, [imageUrl, annotations, width, labelFilter, toolFilterNorm]);
 
   return <canvas ref={canvasRef} style={{ maxWidth: '100%', borderRadius: 8, border: '1px solid rgba(0,0,0,0.12)' }} />;
 }

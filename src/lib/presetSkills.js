@@ -304,18 +304,31 @@ document.getElementById('pickB').onclick = function() { report('B'); };
 <div class="card">
   <p class="title">Video Key Moment Tagging</p>
   <p class="subtitle" id="prompt"></p>
-  <div class="media-frame" id="vframe">
+  <div class="media-frame" id="vframe" style="position:relative;">
     <video id="vid" controls playsinline style="display:none;"></video>
     <img id="poster" alt="video preview"/>
+    <div id="markOverlay" style="display:none;position:absolute;top:10px;left:10px;right:10px;z-index:3;pointer-events:none;">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(198,40,40,0.92);color:#fff;padding:6px 12px;border-radius:8px;font-size:0.85rem;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,0.35);">
+        <span style="width:8px;height:8px;border-radius:50%;background:#fff;animation:spBlink 1s infinite;"></span>
+        <span>MARKING</span>
+        <span id="markTimer">0:00</span>
+        <span style="font-weight:500;opacity:0.9;" id="markFromLabel"></span>
+      </div>
+    </div>
   </div>
+  <style>@keyframes spBlink{0%,100%{opacity:1}50%{opacity:0.25}}</style>
   <div id="demoTimeline" style="display:none;margin-top:8px;">
     <input type="range" id="demoTime" min="0" max="60" value="0" style="width:100%;accent-color:var(--primary);"/>
     <p class="hint" style="margin-top:4px;">Preview mode: drag the timeline to simulate playback and mark key moments</p>
   </div>
-  <div style="margin:10px 0;font-size:0.82rem;color:var(--muted);">Current time: <strong id="cur">0:00</strong></div>
+  <div id="markStatus" style="margin:10px 0;padding:8px 10px;border-radius:8px;background:var(--bg,#f5f5f5);border:1px solid var(--border,#ddd);font-size:0.85rem;">
+    <span id="idleHint" style="color:var(--muted);">Ready — press <strong>Mark start</strong> at the beginning of a key moment.</span>
+    <span id="activeHint" style="display:none;color:#c62828;font-weight:600;">Marking in progress… press <strong>Mark end</strong> when the moment finishes. <button type="button" id="cancelMark" class="btn btn-outline" style="margin-left:8px;padding:2px 8px;font-size:0.75rem;">Cancel</button></span>
+  </div>
+  <div style="margin:0 0 10px;font-size:0.82rem;color:var(--muted);">Current time: <strong id="cur">0:00</strong></div>
   <div class="toolbar">
     <button class="btn btn-outline" id="markStart">Mark start</button>
-    <button class="btn btn-outline" id="markEnd">Mark end</button>
+    <button class="btn btn-outline" id="markEnd" disabled>Mark end</button>
     <span class="badge" id="segCount">0 segments</span>
   </div>
   <ul id="list" style="margin:10px 0 0;padding-left:18px;font-size:0.85rem;color:var(--text);"></ul>
@@ -328,15 +341,63 @@ var vid, poster, demoMode, demoTime;
 
 function currentTime() {
   if (demoMode && demoTime) return parseFloat(demoTime.value) || 0;
-  return vid && vid.duration ? vid.currentTime : 0;
+  return vid ? (vid.currentTime || 0) : 0;
 }
 function hasDuration() {
-  return demoMode || (vid && vid.duration && isFinite(vid.duration));
+  return demoMode || (vid && vid.readyState >= 1);
 }
 
 function fmt(t) {
   var m = Math.floor(t / 60), s = Math.floor(t % 60);
   return m + ':' + String(s).padStart(2, '0');
+}
+function fmtPrecise(t) {
+  var m = Math.floor(t / 60);
+  var s = t % 60;
+  return m + ':' + (s < 10 ? '0' : '') + s.toFixed(1);
+}
+function tickClock() {
+  var t = currentTime();
+  document.getElementById('cur').textContent = fmt(t);
+  if (pendingStart != null) {
+    var elapsed = Math.max(0, t - pendingStart);
+    document.getElementById('markTimer').textContent = fmtPrecise(elapsed);
+    document.getElementById('markFromLabel').textContent = '(from ' + fmt(pendingStart) + ')';
+  }
+}
+function setMarkingUI(active) {
+  var overlay = document.getElementById('markOverlay');
+  var idle = document.getElementById('idleHint');
+  var activeHint = document.getElementById('activeHint');
+  var startBtn = document.getElementById('markStart');
+  var endBtn = document.getElementById('markEnd');
+  var frame = document.getElementById('vframe');
+  if (active) {
+    overlay.style.display = 'block';
+    idle.style.display = 'none';
+    activeHint.style.display = 'inline';
+    startBtn.disabled = true;
+    endBtn.disabled = false;
+    startBtn.textContent = 'Marking…';
+    endBtn.className = 'btn btn-primary';
+    endBtn.style.background = '#c62828';
+    endBtn.style.borderColor = '#c62828';
+    if (frame) frame.style.outline = '3px solid #c62828';
+    tickClock();
+  } else {
+    overlay.style.display = 'none';
+    idle.style.display = 'inline';
+    activeHint.style.display = 'none';
+    startBtn.disabled = false;
+    endBtn.disabled = true;
+    startBtn.textContent = 'Mark start';
+    endBtn.className = 'btn btn-outline';
+    endBtn.style.background = '';
+    endBtn.style.borderColor = '';
+    if (frame) frame.style.outline = '';
+    document.getElementById('markTimer').textContent = '0:00';
+    document.getElementById('markFromLabel').textContent = '';
+  }
 }
 function renderList() {
   var ul = document.getElementById('list');
@@ -361,6 +422,7 @@ document.addEventListener('spskill-init', function(e) {
   vid = document.getElementById('vid');
   poster = document.getElementById('poster');
   demoTime = document.getElementById('demoTime');
+  pendingStart = null;
   var posterUrl = spUrl('image', 0, 'Walkthrough');
   spSetImg(poster, 'image', 0, 'Walkthrough');
   poster.style.display = 'block';
@@ -371,31 +433,40 @@ document.addEventListener('spskill-init', function(e) {
     poster.style.display = 'none';
     vid.src = realVideo.url;
     vid.poster = posterUrl;
-    vid.ontimeupdate = function() { document.getElementById('cur').textContent = fmt(vid.currentTime); };
+    vid.ontimeupdate = tickClock;
   } else {
     demoMode = true;
     vid.style.display = 'none';
     document.getElementById('demoTimeline').style.display = 'block';
-    demoTime.oninput = function() { document.getElementById('cur').textContent = fmt(parseFloat(this.value)); };
-    document.getElementById('cur').textContent = '0:00';
+    demoTime.oninput = tickClock;
   }
-  if (e.detail.value && e.detail.value.segments) segments = e.detail.value.segments;
+  if (e.detail.value && e.detail.value.segments) segments = e.detail.value.segments.slice();
+  setMarkingUI(false);
   renderList();
+  tickClock();
   SPSkill.ready();
 });
 document.getElementById('markStart').onclick = function() {
   if (!hasDuration()) return;
+  var max = cfg.maxSegments || 5;
+  if (segments.length >= max) return;
   pendingStart = currentTime();
+  setMarkingUI(true);
 };
 document.getElementById('markEnd').onclick = function() {
   if (pendingStart == null) return;
   var max = cfg.maxSegments || 5;
-  if (segments.length >= max) return;
+  if (segments.length >= max) { pendingStart = null; setMarkingUI(false); return; }
   var end = currentTime();
   if (end <= pendingStart) return;
   segments.push({ start: pendingStart, end: end });
   pendingStart = null;
+  setMarkingUI(false);
   renderList(); report();
+};
+document.getElementById('cancelMark').onclick = function() {
+  pendingStart = null;
+  setMarkingUI(false);
 };
 `),
   },

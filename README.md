@@ -21,6 +21,9 @@ Visual survey design, media experiments, participant deployment, and research an
 
 - Standard, image, ranking, matrix, annotation, and custom-skill questions.
 - Random media, curated media, fixed sets, categories, and repeated trials.
+- SAM pre-annotate (click / box / text), batch SAM Text, label manager, review queue, and ZIP / feature CSV downloads.
+- Select-mode geometry editing for points, lines, polygons, and boxes.
+- Typed custom Skills with native-parity analysis/export.
 - Supabase/Hugging Face media workflows and advanced research analysis.
 - Unified theme behavior across question preview, full preview, Researcher Practice, and Live Survey.
 - Response quality checks, reliability, TrueSkill, perception analysis, ablation, and CSV export.

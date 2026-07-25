@@ -6,6 +6,14 @@ import {
   normalizeMediaEntry, folderFromR2Key, sanitizeMediaFolderConfig,
   mergeMediaFolderConfigs,
 } from './mediaUtils';
+import { PREVIEW_MEDIA_PREFIX } from './previewMediaLibrary';
+
+/** Synthetic import source id for the platform preview media library. */
+export const PREVIEW_MEDIA_IMPORT_ID = 'skill-preview';
+
+export function isPreviewMediaImportId(id) {
+  return String(id || '') === PREVIEW_MEDIA_IMPORT_ID;
+}
 
 export function getTemplateImportHistory(project) {
   return project?.imageDatasetConfig?.templateImportHistory || {};
@@ -26,64 +34,83 @@ export function mergeTemplateImportHistory(project, templateId, entry) {
   };
 }
 
-/**
- * Compare template R2 folder vs project folder by relative path (folder/name).
- * Used to skip already-copied files when importing/resuming ONE template.
- */
-export async function computeTemplateImportProgress(templateId, userId, projectId) {
-  if (!templateId || !projectId) {
-    return {
-      totalInTemplate: 0,
-      importedCount: 0,
-      remaining: 0,
-      isComplete: false,
-      hasStarted: false,
-      templateImages: [],
-      error: null,
-    };
-  }
-  const templatePrefix = `templates/${templateId}/`;
-  const projectPrefix = `${userId}/${projectId}/`;
+function emptyImportProgress(error = null) {
+  return {
+    totalInTemplate: 0,
+    importedCount: 0,
+    remaining: 0,
+    isComplete: false,
+    hasStarted: false,
+    templateImages: [],
+    existingImages: [],
+    existingNames: new Set(),
+    existingPaths: new Set(),
+    sourcePrefix: '',
+    error,
+  };
+}
 
+/**
+ * Compare a source R2 prefix vs project folder by relative path (folder/name).
+ * Used to skip already-copied files when importing/resuming one source.
+ */
+export async function computeR2SourceImportProgress(sourcePrefix, userId, projectId) {
+  const srcPrefix = String(sourcePrefix || '').replace(/^\/+/, '').replace(/\/?$/, '/');
+  if (!srcPrefix || !projectId) return emptyImportProgress();
+
+  const projectPrefix = `${userId}/${projectId}/`;
   const [listed, existing] = await Promise.all([
-    listImagesFromR2(templatePrefix),
+    listImagesFromR2(srcPrefix),
     listImagesFromR2(projectPrefix),
   ]);
 
   if (!listed.success) {
-    return {
-      totalInTemplate: 0,
-      importedCount: 0,
-      remaining: 0,
-      isComplete: false,
-      hasStarted: false,
-      templateImages: [],
-      error: listed.error || 'Failed to list template images',
-    };
+    return emptyImportProgress(listed.error || 'Failed to list source images');
   }
 
   const existingPaths = new Set(
     (existing.images || []).map((i) => mediaRelativePathFromListing(i, projectPrefix)),
   );
-  const templateImages = listed.images || [];
+  const templateImages = (listed.images || []).filter((img) => {
+    const key = String(img.key || img.name || '');
+    return !key.includes('/features/') && !key.includes('/preannotations/');
+  });
   const importedCount = templateImages.filter(
-    (img) => existingPaths.has(mediaRelativePathFromListing(img, templatePrefix)),
+    (img) => existingPaths.has(mediaRelativePathFromListing(img, srcPrefix)),
   ).length;
   const totalInTemplate = templateImages.length;
   const remaining = Math.max(0, totalInTemplate - importedCount);
-  const hasStarted = importedCount > 0;
 
   return {
     totalInTemplate,
     importedCount,
     remaining,
     isComplete: totalInTemplate > 0 && remaining === 0,
-    hasStarted,
+    hasStarted: importedCount > 0,
     templateImages,
+    existingImages: existing.images || [],
     existingNames: existingPaths,
     existingPaths,
+    sourcePrefix: srcPrefix,
     error: null,
   };
+}
+
+/**
+ * Compare template R2 folder vs project folder by relative path (folder/name).
+ * Used to skip already-copied files when importing/resuming ONE template.
+ */
+export async function computeTemplateImportProgress(templateId, userId, projectId) {
+  if (!templateId || !projectId) return emptyImportProgress();
+  if (isPreviewMediaImportId(templateId)) {
+    return computeR2SourceImportProgress(PREVIEW_MEDIA_PREFIX, userId, projectId);
+  }
+  return computeR2SourceImportProgress(`templates/${templateId}/`, userId, projectId);
+}
+
+/** Progress for admin preview media library → project import. */
+export async function computePreviewMediaImportProgress(userId, projectId) {
+  return computeR2SourceImportProgress(PREVIEW_MEDIA_PREFIX, userId, projectId);
 }
 
 export function buildTemplateCopyTodo(templateImages, existingPaths, projectPrefix, templatePrefix = '') {
@@ -164,20 +191,26 @@ export function formatTemplateImportStatus(progress, historyEntry = null) {
       ? `Imported (${historyEntry.importedCount}/${historyEntry.totalInTemplate})`
       : `${historyEntry.importedCount || 0}/${historyEntry.totalInTemplate || catalog || '?'} imported`;
   }
-  if (catalog === 0) return 'No images in template folder';
+  if (catalog === 0) return 'No files in source folder';
   if (typeof catalog === 'number') return `${catalog} in catalog`;
   return '';
 }
 
 /** Primary CTA label for the import button. */
-export function formatTemplateImportButtonLabel(progress, historyEntry = null, { loading = false } = {}) {
+export function formatTemplateImportButtonLabel(progress, historyEntry = null, {
+  loading = false,
+  sourceKind = 'template',
+} = {}) {
   if (loading) return 'Importing…';
+  const noun = sourceKind === 'preview' ? 'preview library' : 'template';
   const hasHistory = Boolean(historyEntry?.lastImportAt);
   if (hasHistory && progress?.remaining > 0) {
     return `Resume import (${progress.remaining} remaining)`;
   }
   if (hasHistory && (progress?.isComplete || historyEntry?.isComplete)) {
-    return 'Re-check template (all copied)';
+    return `Re-check ${noun} (all copied)`;
   }
-  return 'Import from selected template';
+  return sourceKind === 'preview'
+    ? 'Import from preview media library'
+    : 'Import from selected template';
 }

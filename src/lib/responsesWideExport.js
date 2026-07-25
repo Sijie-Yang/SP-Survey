@@ -14,6 +14,7 @@ const IMAGE_TYPES = new Set([
   'imageranking', 'image_ranking',
   'mediaranking', 'mediapicker',
   'imageboolean', 'image_boolean',
+  'imagecheckbox', 'image_checkbox', 'mediacheckbox',
   'imagematrix', 'image_matrix', 'mediamatrix',
   'imagepicker',
   'image',
@@ -101,7 +102,6 @@ export function buildResponsesWideCsv(responses, allQuestions, surveyConfig) {
     }
     if (isImageQuestion(q)) {
       headerCols.push(`${q.name}__shown_images`);
-      headerCols.push(`${q.name}__shown_media_ids`);
       headerCols.push(`${q.name}__shown_media_set`);
       headerCols.push(`${q.name}__shown_media_group`);
       headerCols.push(`${q.name}__shown_media_categories`);
@@ -216,10 +216,6 @@ export function buildResponsesWideCsv(responses, allQuestions, surveyConfig) {
           ? shownImgs.map((v) => (v ? String(v).split('?')[0].split('/').pop() : v))
           : [shownImgs ?? ''];
         obj[`${qName}__shown_images`] = imgNames.join('|');
-        const mediaIds = (typeof qData === 'object' && qData && Array.isArray(qData.shown_media_ids))
-          ? qData.shown_media_ids
-          : [];
-        obj[`${qName}__shown_media_ids`] = mediaIds.join('|');
         const mediaSet = (typeof qData === 'object' && qData && ('shown_media_set' in qData || 'shown_media_group' in qData))
           ? (qData.shown_media_set || qData.shown_media_group || '')
           : (row.displayed_media_groups?.[qName] || '');

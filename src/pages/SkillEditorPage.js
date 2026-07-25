@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Box, Container, Typography, AppBar, Toolbar, TextField, Button,
-  Alert, Paper, Stack, IconButton, Chip,
+  Alert, Paper, Stack, Chip, IconButton,
 } from '@mui/material';
-import { ArrowBack, Publish, Save } from '@mui/icons-material';
+import { ArrowBack, Publish, Save, CheckCircle, ErrorOutline } from '@mui/icons-material';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   saveSkill, submitSkillForReview, getSkillById, getSkillStatus,
 } from '../lib/skillManager';
 import SkillQuestionFrame from '../components/SkillQuestionWidget';
-import { listSkillPreviewMedia, pickPreviewMedia } from '../lib/skillPreviewMedia';
+import { listPreviewMedia, pickPreviewMedia } from '../lib/previewMediaLibrary';
 import SkillAiPanel from '../components/admin/SkillAiPanel';
+import { normalizeSkillSchemaArray } from '../lib/skillAnswerBridge';
+import { checkAnswerAgainstResultSchema, NATIVE_SKILL_RESULT_TYPE_IDS } from '../lib/skillResultTypes';
 
 const DEFAULT_SKILL_HTML = `<!DOCTYPE html>
 <html><head><meta charset="utf-8"><style>
@@ -19,7 +21,7 @@ button{padding:8px 16px;margin:4px;}
 </style></head><body>
 <h3>My Custom Question</h3>
 <p>Click to record your answer:</p>
-<button onclick="SPSkill.setAnswer('clicked')">Record Answer</button>
+<button onclick="SPSkill.setAnswer({value:'clicked'})">Record Answer</button>
 <script>
 document.addEventListener('spskill-init', function(e) {
   console.log('Skill initialized', e.detail);
@@ -37,6 +39,7 @@ export default function SkillEditorPage() {
   const [sourceHtml, setSourceHtml] = useState(DEFAULT_SKILL_HTML);
   const [configSchema, setConfigSchema] = useState('[]');
   const [resultSchema, setResultSchema] = useState('[]');
+  const [exampleAnswer, setExampleAnswer] = useState('{}');
   const [defaultConfig, setDefaultConfig] = useState('{}');
   const [previewConfig, setPreviewConfig] = useState({});
   const [status, setStatus] = useState('draft');
@@ -46,17 +49,18 @@ export default function SkillEditorPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [previewImages, setPreviewImages] = useState([]);
+  const [previewAnswer, setPreviewAnswer] = useState(null);
   const [openaiApiKey] = useState(() => localStorage.getItem('openaiApiKey') || sessionStorage.getItem('openai_api_key') || '');
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const pool = await listSkillPreviewMedia();
+      const pool = await listPreviewMedia();
       if (cancelled) return;
       const count = previewConfig.mediaCount || 1;
       const mediaType = previewConfig.mediaType || 'image';
       const picked = pickPreviewMedia(pool, mediaType, count);
-      setPreviewImages(picked.length ? picked : (previewConfig.demoImages || []));
+      setPreviewImages(picked);
     })();
     return () => { cancelled = true; };
   }, [previewConfig]);
@@ -79,6 +83,7 @@ export default function SkillEditorPage() {
       setSourceHtml(skill.sourceHtml || DEFAULT_SKILL_HTML);
       setConfigSchema(JSON.stringify(skill.configSchema || [], null, 2));
       setResultSchema(JSON.stringify(skill.resultSchema || [], null, 2));
+      setExampleAnswer(JSON.stringify(skill.exampleAnswer || {}, null, 2));
       setDefaultConfig(JSON.stringify(skill.defaultConfig || {}, null, 2));
       setPreviewConfig(skill.defaultConfig || {});
       setStatus(getSkillStatus(skill));
@@ -96,13 +101,14 @@ export default function SkillEditorPage() {
   }, [defaultConfig]);
 
   const parseSchema = () => {
-    try { return JSON.parse(configSchema || '[]'); }
+    try { return normalizeSkillSchemaArray(JSON.parse(configSchema || '[]')); }
     catch { throw new Error('config_schema must be a valid JSON array'); }
   };
 
   const parseResultSchema = () => {
-    try { return JSON.parse(resultSchema || '[]'); }
-    catch { throw new Error('result_schema must be a valid JSON array'); }
+    try {
+      return normalizeSkillSchemaArray(JSON.parse(resultSchema || '[]'), { defaultType: 'text' });
+    } catch { throw new Error('result_schema must be a valid JSON array'); }
   };
 
   const parseDefaultConfig = () => {
@@ -110,13 +116,56 @@ export default function SkillEditorPage() {
     catch { throw new Error('default_config must be a valid JSON object'); }
   };
 
+  const parseExampleAnswer = () => {
+    try {
+      const parsed = JSON.parse(exampleAnswer || '{}');
+      if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+        throw new Error('example_answer must be a JSON object');
+      }
+      return parsed;
+    } catch (err) {
+      throw new Error(err.message === 'example_answer must be a JSON object'
+        ? err.message
+        : 'example_answer must be a valid JSON object');
+    }
+  };
+
+  const missingSetAnswer = sourceHtml
+    && !/SPSkill\s*\.\s*setAnswer\s*\(/.test(sourceHtml);
+  const usesAltPostMessage = sourceHtml
+    && /postMessage\s*\(/.test(sourceHtml)
+    && /(skill-result|skillResult|SP_SURVEY_SKILL_RESULT)/.test(sourceHtml);
+
+  const parsedResultSchemaForCheck = useMemo(() => {
+    try {
+      return normalizeSkillSchemaArray(JSON.parse(resultSchema || '[]'), { defaultType: 'text' });
+    } catch {
+      return [];
+    }
+  }, [resultSchema]);
+
+  const answerCheck = useMemo(
+    () => checkAnswerAgainstResultSchema(previewAnswer, parsedResultSchemaForCheck),
+    [previewAnswer, parsedResultSchemaForCheck],
+  );
+
+  // Reset recorded answer when HTML / config structure changes substantially
+  useEffect(() => {
+    setPreviewAnswer(null);
+  }, [sourceHtml, defaultConfig]);
+
   const buildPayload = () => ({
     id: skillId || undefined,
     name: name || 'Untitled Skill',
     description,
     sourceHtml,
+    analysisHtml: '',
     configSchema: parseSchema(),
     resultSchema: parseResultSchema(),
+    exampleAnswer: (previewAnswer && typeof previewAnswer === 'object' && !Array.isArray(previewAnswer))
+      ? previewAnswer
+      : parseExampleAnswer(),
+    contractVersion: 1,
     defaultConfig: parseDefaultConfig(),
   });
 
@@ -129,7 +178,10 @@ export default function SkillEditorPage() {
       setSkillId(result.skill.id);
       setStatus(getSkillStatus(result.skill));
       setPreviewConfig(result.skill.defaultConfig || {});
-      setSuccess('Saved to your skill library');
+      const warn = (result.warnings || []).filter(Boolean);
+      setSuccess(warn.length
+        ? `Saved to your skill library. Note: ${warn.join(' ')}`
+        : 'Saved to your skill library');
       if (!routeId) navigate(`/skill-editor/${result.skill.id}`, { replace: true });
     } catch (err) {
       setError(err.message);
@@ -160,8 +212,19 @@ export default function SkillEditorPage() {
     if (skill.name) setName(skill.name);
     if (skill.description) setDescription(skill.description);
     if (skill.sourceHtml) setSourceHtml(skill.sourceHtml);
-    if (skill.configSchema) setConfigSchema(JSON.stringify(skill.configSchema, null, 2));
-    if (skill.resultSchema) setResultSchema(JSON.stringify(skill.resultSchema, null, 2));
+    if (skill.configSchema) {
+      setConfigSchema(JSON.stringify(normalizeSkillSchemaArray(skill.configSchema), null, 2));
+    }
+    if (skill.resultSchema) {
+      setResultSchema(JSON.stringify(
+        normalizeSkillSchemaArray(skill.resultSchema, { defaultType: 'text' }),
+        null,
+        2,
+      ));
+    }
+    if (skill.exampleAnswer && typeof skill.exampleAnswer === 'object') {
+      setExampleAnswer(JSON.stringify(skill.exampleAnswer, null, 2));
+    }
     if (skill.defaultConfig) {
       setDefaultConfig(JSON.stringify(skill.defaultConfig, null, 2));
       setPreviewConfig(skill.defaultConfig);
@@ -185,23 +248,39 @@ export default function SkillEditorPage() {
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'grey.50' }}>
-      <AppBar position="static" color="default" elevation={1}>
+      <AppBar position="static" color="default" elevation={0} sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Toolbar>
-          <IconButton edge="start" onClick={() => navigate('/skills')}><ArrowBack /></IconButton>
+          <IconButton edge="start" onClick={() => navigate('/admin')} sx={{ mr: 1 }}>
+            <ArrowBack />
+          </IconButton>
           <Typography variant="h6" sx={{ flex: 1 }}>
             {skillId ? 'Edit Skill' : 'New Skill'}
           </Typography>
-          {statusChip && <Chip size="small" label={statusChip.label} color={statusChip.color} sx={{ mr: 1 }} />}
+          {statusChip ? (
+            <Chip size="small" label={statusChip.label} color={statusChip.color} />
+          ) : null}
         </Toolbar>
       </AppBar>
       <Container maxWidth="lg" sx={{ py: 3 }}>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
           Build a custom question type with HTML/CSS/JS running in a sandboxed iframe.
           Call <code>SPSkill.setAnswer(value)</code> to submit answers and <code>SPSkill.ready()</code> when loaded.
           Save to your library and test it in your own survey before submitting for public review.
         </Typography>
         {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
         {success && <Alert severity="success" sx={{ mb: 2 }}>{success}</Alert>}
+        {missingSetAnswer && (
+          <Alert severity="warning" sx={{ mb: 2 }}>
+            This HTML never calls <code>SPSkill.setAnswer(...)</code>. Answers will not be saved in surveys.
+            Replace custom <code>parent.postMessage</code> answer protocols with <code>SPSkill.setAnswer(object)</code>.
+          </Alert>
+        )}
+        {!missingSetAnswer && usesAltPostMessage && (
+          <Alert severity="info" sx={{ mb: 2 }}>
+            HTML uses alternate <code>postMessage</code> answer types. The platform accepts some of these for
+            compatibility, but prefer <code>SPSkill.setAnswer</code> only.
+          </Alert>
+        )}
         <SkillAiPanel
           apiKey={openaiApiKey}
           currentSkill={skillId ? {
@@ -211,6 +290,7 @@ export default function SkillEditorPage() {
             configSchema: (() => { try { return JSON.parse(configSchema); } catch { return []; } })(),
             defaultConfig: (() => { try { return JSON.parse(defaultConfig); } catch { return {}; } })(),
             resultSchema: (() => { try { return JSON.parse(resultSchema); } catch { return []; } })(),
+            exampleAnswer: (() => { try { return JSON.parse(exampleAnswer); } catch { return {}; } })(),
           } : null}
           onApply={applyAiSkill}
         />
@@ -236,7 +316,14 @@ export default function SkillEditorPage() {
             value={resultSchema}
             onChange={(e) => setResultSchema(e.target.value)}
             fullWidth multiline rows={3}
-            helperText='e.g. [{"key":"score","label":"Score","type":"number"}] — types: number / boolean / choice / text / count / color / scaleGroup; auto-inferred if omitted'
+            helperText={`e.g. [{"key":"marks","label":"Marks","type":"points"}] — native types only: ${NATIVE_SKILL_RESULT_TYPE_IDS.join(' / ')}. Include settings such as options/rows/columns/dimensions/min/max/budget.`}
+          />
+          <TextField
+            label="Example Answer (JSON object) — validates the frozen result contract"
+            value={exampleAnswer}
+            onChange={(e) => setExampleAnswer(e.target.value)}
+            fullWidth multiline rows={4}
+            helperText="Required for new revisions. A valid object recorded in Live preview is used automatically when saving."
           />
           <TextField
             label="HTML source"
@@ -246,16 +333,60 @@ export default function SkillEditorPage() {
             sx={{ fontFamily: 'monospace' }}
           />
           <Paper variant="outlined" sx={{ p: 2 }}>
-            <Typography variant="subtitle2" sx={{ mb: 1 }}>Live preview</Typography>
+            <Typography variant="subtitle2" sx={{ mb: 1 }}>Live preview (interactive)</Typography>
+            <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
+              Try answering below. Confirm SPSkill.setAnswer fires before saving to a survey.
+            </Typography>
             <SkillQuestionFrame
               skillHtml={sourceHtml}
               config={previewConfig}
               images={previewImages}
-              readOnly
+              value={previewAnswer}
+              onChange={setPreviewAnswer}
             />
             <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
-              Preview uses skill-preview library media when available, otherwise demo images.
+              Preview uses the platform preview media library.
+              {previewImages.length === 0
+                ? ' No matching media found — add files under Admin → 预览媒体库.'
+                : ''}
             </Typography>
+          </Paper>
+          <Paper variant="outlined" sx={{ p: 2, bgcolor: answerCheck.recorded ? 'success.50' : 'warning.50' }}>
+            <Typography variant="subtitle2" sx={{ mb: 1 }}>Answer test</Typography>
+            {!answerCheck.recorded ? (
+              <Alert severity="warning" sx={{ mb: 1 }}>
+                No answer recorded yet — interact with the preview (click Done / submit) to confirm the skill is answerable.
+              </Alert>
+            ) : (
+              <Alert severity="success" icon={<CheckCircle />} sx={{ mb: 1 }}>
+                Answer recorded via SPSkill.setAnswer (or compatible bridge).
+              </Alert>
+            )}
+            {answerCheck.fields.length > 0 && (
+              <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 1 }}>
+                {answerCheck.fields.map((f) => (
+                  <Chip
+                    key={f.key}
+                    size="small"
+                    icon={f.ok ? <CheckCircle /> : <ErrorOutline />}
+                    color={f.ok ? 'success' : 'default'}
+                    variant={f.ok ? 'filled' : 'outlined'}
+                    label={`${f.label} (${f.type}): ${f.detail}`}
+                  />
+                ))}
+              </Stack>
+            )}
+            {previewAnswer != null && (
+              <Box
+                component="pre"
+                sx={{
+                  m: 0, p: 1.5, borderRadius: 1, bgcolor: 'grey.100',
+                  fontSize: 12, overflow: 'auto', maxHeight: 220,
+                }}
+              >
+                {JSON.stringify(previewAnswer, null, 2)}
+              </Box>
+            )}
           </Paper>
           <Stack direction="row" spacing={2}>
             <Button variant="contained" startIcon={<Save />} onClick={handleSave} disabled={saving || submitting}>

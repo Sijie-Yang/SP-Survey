@@ -1,6 +1,10 @@
-import { flattenQuestions, getAttentionCheckQuestions, summarizeQuality } from './quality';
-import { computeQuestionIrr, irrLevelForQuestion } from './reliability';
-import { computeQuestionTrueSkill } from './trueskill';
+import { flattenQuestions, getAttentionCheckQuestions, summarizeQuality } from './quality.js';
+import { computeQuestionIrr, irrLevelForQuestion } from './reliability.js';
+import {
+  computeQuestionTrueSkill,
+  computeForcedChoiceTrueSkill,
+  computeMaxDiffTrueSkill,
+} from './trueskill.js';
 
 function questionTypeLabel(type) {
   const labels = {
@@ -116,7 +120,9 @@ export function generateMethodsText({
   if (forcedChoiceQs.length) {
     lines.push(
       `Forced-choice A/B preference tasks (${forcedChoiceQs.length} question(s)) presented two images; `
-      + `participants selected A or B without a continuous intensity scale.`,
+      + `participants selected A or B without a continuous intensity scale. `
+      + `Each selection was treated as a win over the non-selected shown image; `
+      + `scores were estimated with TrueSkill (μ − 3σ conservative rating), as with image choice.`,
     );
   }
 
@@ -159,14 +165,26 @@ export function generateMethodsText({
     irrLines.forEach((l) => lines.push(`  • ${l}`));
   }
 
-  const tsLines = pairwiseQs
-    .map((q) => {
-      const { rankings } = computeQuestionTrueSkill(effective, q.name);
+  const tsLines = [
+    ...pairwiseQs.map((q) => {
+      const { rankings, matches } = computeQuestionTrueSkill(effective, q.name);
       if (!rankings.length) return null;
       return `"${q.title || q.name}": ${rankings.length} images rated across `
-        + `${computeQuestionTrueSkill(effective, q.name).matches.length} pairwise comparisons`;
-    })
-    .filter(Boolean);
+        + `${matches.length} pairwise comparisons`;
+    }),
+    ...forcedChoiceQs.map((q) => {
+      const { rankings, matches } = computeForcedChoiceTrueSkill(effective, q.name);
+      if (!rankings.length) return null;
+      return `"${q.title || q.name}" (forced-choice A/B): ${rankings.length} images rated across `
+        + `${matches.length} pairwise comparisons`;
+    }),
+    ...maxDiffQs.map((q) => {
+      const { rankings, matches } = computeMaxDiffTrueSkill(effective, q.name);
+      if (!rankings.length) return null;
+      return `"${q.title || q.name}" (best–worst): ${rankings.length} images rated across `
+        + `${matches.length} pairwise comparisons`;
+    }),
+  ].filter(Boolean);
   if (tsLines.length) {
     lines.push('');
     lines.push('Pairwise scoring:');

@@ -4,9 +4,9 @@
  */
 
 const MEDIA_TYPES = new Set([
-  'imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'imagematrix',
+  'imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'imagecheckbox', 'imagematrix',
   'image', 'imageslidergroup', 'imagepointallocation',
-  'mediadisplay', 'mediapicker', 'mediaranking', 'mediarating', 'mediaboolean',
+  'mediadisplay', 'mediapicker', 'mediaranking', 'mediarating', 'mediaboolean', 'mediacheckbox',
   'mediamatrix', 'mediaslidergroup', 'mediapointallocation',
   'imageannotation',
   'skillquestion',
@@ -86,6 +86,11 @@ export function getQuestionMediaConstraints(type, question = {}) {
       countLabel: 'Images shown',
       samplingModes: true,
     },
+    imagecheckbox: {
+      countMin: 1, countMax: 6, defaultCount: 1,
+      countLabel: 'Images shown above text multi-select',
+      samplingModes: true,
+    },
     imagematrix: {
       countMin: 1, countMax: 6, defaultCount: 1,
       countLabel: 'Images shown above the matrix',
@@ -119,6 +124,11 @@ export function getQuestionMediaConstraints(type, question = {}) {
     mediaboolean: {
       countMin: 1, countMax: 6, defaultCount: 1,
       countLabel: 'Media files shown',
+      samplingModes: true,
+    },
+    mediacheckbox: {
+      countMin: 1, countMax: 6, defaultCount: 1,
+      countLabel: 'Media files shown above text multi-select',
       samplingModes: true,
     },
     mediamatrix: {
@@ -184,6 +194,7 @@ export function isCuratedSelectionMode(mode) {
 export const TRIAL_LOOP_EDITOR_TYPES = new Set([
   'imagepicker', 'mediapicker',
   'imagerating', 'mediarating', 'imageboolean', 'mediaboolean',
+  'imagecheckbox', 'mediacheckbox',
   'imageranking', 'mediaranking',
   'imagematrix', 'mediamatrix',
   'imageslidergroup', 'mediaslidergroup',

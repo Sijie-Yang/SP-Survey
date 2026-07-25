@@ -1,6 +1,6 @@
 /** TrueSkill-style 1v1 rating for imagepicker (any count, single or multi-select). */
 
-import { expandQuestionAnswerUnits } from './responseAnswerUnits';
+import { expandQuestionAnswerUnits } from './responseAnswerUnits.js';
 
 const DEFAULT_MU = 25;
 const DEFAULT_SIGMA = DEFAULT_MU / 3;
@@ -49,8 +49,8 @@ export function filenameKey(val) {
 }
 
 /**
- * Map imagepicker answer(s) to filename keys from the shown set.
- * Handles enriched filenames/URLs and legacy image_0 indices.
+ * Map imagepicker/mediapicker answer(s) to filename keys from the shown set.
+ * Handles enriched filenames/URLs and legacy image_0 / media_0 indices.
  */
 export function answerToSelectedKeys(answer, shownImages) {
   if (answer === null || answer === undefined || answer === '') return [];
@@ -62,7 +62,7 @@ export function answerToSelectedKeys(answer, shownImages) {
   values.forEach((val) => {
     if (val === null || val === undefined || val === '') return;
     const str = String(val);
-    const indexMatch = str.match(/^image_(\d+)$/);
+    const indexMatch = str.match(/^(?:image|media)_(\d+)$/);
     if (indexMatch) {
       const idx = parseInt(indexMatch[1], 10);
       if (shownKeys[idx]) selected.add(shownKeys[idx]);
@@ -202,6 +202,72 @@ export function matchesFromOrderedRanking(orderedKeys) {
 }
 
 /**
+ * Forced-choice A/B skill → pairwise TrueSkill matches (chosen image beats the other).
+ * answer: { choice: 'A'|'B', chosenIndex?, imageA?, imageB?, chosenUrl?, shownUrls? }
+ * shownImages: trial media list (preferred)
+ */
+export function matchesFromForcedChoiceAnswer(answer, shownImages) {
+  if (!answer || typeof answer !== 'object' || Array.isArray(answer)) return [];
+
+  let rawShown = Array.isArray(shownImages) && shownImages.length ? shownImages : [];
+  if (rawShown.length < 2) {
+    const fromAnswer = [];
+    if (answer.imageA) fromAnswer.push(answer.imageA);
+    if (answer.imageB) fromAnswer.push(answer.imageB);
+    if (Array.isArray(answer.shownUrls) && answer.shownUrls.length) {
+      fromAnswer.push(...answer.shownUrls);
+    }
+    rawShown = fromAnswer;
+  }
+  const shownKeys = rawShown
+    .map((s) => filenameKey(typeof s === 'string' ? s : s?.url || s?.name || ''))
+    .filter(Boolean);
+  if (shownKeys.length < 2) return [];
+
+  let winnerIdx = answer.chosenIndex;
+  if (winnerIdx == null) {
+    if (answer.choice === 'A') winnerIdx = 0;
+    else if (answer.choice === 'B') winnerIdx = 1;
+  }
+  if (
+    (winnerIdx == null || winnerIdx < 0 || winnerIdx >= shownKeys.length)
+    && answer.chosenUrl
+  ) {
+    const fk = filenameKey(answer.chosenUrl);
+    const byUrl = shownKeys.findIndex((k) => k === fk);
+    if (byUrl >= 0) winnerIdx = byUrl;
+  }
+  if (winnerIdx == null || winnerIdx < 0 || winnerIdx >= shownKeys.length) return [];
+
+  const winner = shownKeys[winnerIdx];
+  if (!winner) return [];
+  const matches = [];
+  shownKeys.forEach((key) => {
+    if (key && key !== winner) matches.push({ winner, loser: key });
+  });
+  return matches;
+}
+
+/**
+ * Extract all pairwise outcomes from Forced-Choice A/B skill responses.
+ */
+export function extractForcedChoiceMatches(responses, questionName) {
+  const matches = [];
+  for (const row of responses) {
+    const units = expandQuestionAnswerUnits(row, questionName, { requireAnswer: true });
+    for (const { answer: ans, shown_images: shown } of units) {
+      matches.push(...matchesFromForcedChoiceAnswer(ans, shown));
+    }
+  }
+  return matches;
+}
+
+export function computeForcedChoiceTrueSkill(responses, questionName) {
+  const matches = extractForcedChoiceMatches(responses, questionName);
+  return computeTrueSkillFromMatches(matches);
+}
+
+/**
  * MaxDiff / Best–Worst → pairwise TrueSkill matches.
  * For shown set with best B and worst W:
  *   - B beats every other shown image (including W)
@@ -236,6 +302,23 @@ export function matchesFromMaxDiffAnswer(answer, shownImages) {
     if (key !== best && key !== worst) matches.push({ winner: key, loser: worst });
   });
   return matches;
+}
+
+/** Extract all MaxDiff / Best–Worst pairwise outcomes from responses. */
+export function extractMaxDiffMatches(responses, questionName) {
+  const matches = [];
+  for (const row of responses) {
+    const units = expandQuestionAnswerUnits(row, questionName, { requireAnswer: true });
+    for (const { answer: ans, shown_images: shown } of units) {
+      matches.push(...matchesFromMaxDiffAnswer(ans, shown));
+    }
+  }
+  return matches;
+}
+
+export function computeMaxDiffTrueSkill(responses, questionName) {
+  const matches = extractMaxDiffMatches(responses, questionName);
+  return computeTrueSkillFromMatches(matches);
 }
 
 /** Run TrueSkill on an arbitrary list of { winner, loser } matches. */

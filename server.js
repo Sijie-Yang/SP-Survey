@@ -2085,6 +2085,69 @@ function extractFalMaskUrl(result) {
   return null;
 }
 
+function extractFalSamBoxes(result) {
+  const out = [];
+  const topBoxes = Array.isArray(result?.boxes) ? result.boxes : [];
+  const scores = Array.isArray(result?.scores) ? result.scores : [];
+  const meta = Array.isArray(result?.metadata) ? result.metadata : [];
+  const n = Math.max(
+    topBoxes.length,
+    meta.length,
+    scores.length,
+    Array.isArray(result?.masks) ? result.masks.length : 0,
+  );
+  for (let i = 0; i < n; i += 1) {
+    const fromTop = topBoxes[i];
+    const fromMeta = meta[i]?.box;
+    const box = Array.isArray(fromTop) && fromTop.length >= 4
+      ? fromTop
+      : (Array.isArray(fromMeta) && fromMeta.length >= 4 ? fromMeta : null);
+    if (!box) continue;
+    const [cx, cy, w, h] = box.map(Number);
+    if (![cx, cy, w, h].every(Number.isFinite)) continue;
+    const score = Number(scores[i] ?? meta[i]?.score);
+    out.push({
+      cx, cy, w, h,
+      area: Math.max(0, w) * Math.max(0, h),
+      score: Number.isFinite(score) ? score : 0,
+      maskUrl: falMaskEntryUrl(result?.masks?.[i]) || null,
+      index: i,
+    });
+  }
+  return out;
+}
+
+function extractFalSamInstances(result) {
+  const masks = Array.isArray(result?.masks) ? result.masks : [];
+  const boxes = extractFalSamBoxes(result);
+  const byIndex = new Map(boxes.map((b) => [b.index, b]));
+  const n = Math.max(masks.length, boxes.length);
+  const instances = [];
+  for (let i = 0; i < n; i += 1) {
+    const box = byIndex.get(i) || null;
+    const maskUrl = falMaskEntryUrl(masks[i]) || box?.maskUrl || null;
+    if (!maskUrl && !box) continue;
+    const area = box?.area ?? 0;
+    // Keep mask even if box is huge; drop box-only full-frame junk.
+    if (!maskUrl && (area < 0.002 || area > 0.85)) continue;
+    instances.push({
+      index: i,
+      maskUrl,
+      box: box && area >= 0.002 && area <= 0.85 ? {
+        cx: box.cx, cy: box.cy, w: box.w, h: box.h, area: box.area, score: box.score,
+      } : null,
+      score: box?.score ?? 0,
+      area,
+    });
+  }
+  if (!instances.length) {
+    const maskUrl = extractFalMaskUrl(result);
+    if (maskUrl) instances.push({ index: 0, maskUrl, box: null, score: 0, area: 0 });
+  }
+  instances.sort((a, b) => (b.score - a.score) || (a.area - b.area));
+  return instances;
+}
+
 // POST /api/inference/test
 app.post('/api/inference/test', async (req, res) => {
   try {
@@ -2151,33 +2214,95 @@ app.post('/api/inference/sam3', async (req, res) => {
     }
     if (!falKey) return res.status(400).json({ success: false, error: 'falKey is required (or configure falApiKey on the project)' });
     if (!imageUrl) return res.status(400).json({ success: false, error: 'imageUrl is required' });
-    const input = { image_url: imageUrl };
-    if (prompt) input.prompt = prompt;
-    if (points?.length) {
+    const promptText = String(prompt || '').trim();
+    const hasPoints = Array.isArray(points) && points.length > 0;
+    const hasBox = !!(box && (box.x1 != null || box.x_min != null));
+    // fal defaults omitted prompt to "wheel" — always send "" for Click/Box.
+    const input = {
+      image_url: imageUrl,
+      prompt: promptText,
+      apply_mask: false,
+      output_format: 'png',
+      return_multiple_masks: true,
+      max_masks: promptText ? 32 : 4,
+      include_scores: true,
+      include_boxes: true,
+      point_prompts: [],
+      box_prompts: [],
+    };
+    if (hasPoints) {
       input.point_prompts = points.map((p) => ({
-        x: p.x, y: p.y, label: p.label === 0 ? 0 : 1,
+        x: Math.round(Number(p.x)),
+        y: Math.round(Number(p.y)),
+        label: p.label === 0 ? 0 : 1,
       }));
     }
     if (box) {
-      input.box_prompts = [{ x_min: box.x1, y_min: box.y1, x_max: box.x2, y_max: box.y2 }];
+      input.box_prompts = [{
+        x_min: Math.round(Number(box.x1)),
+        y_min: Math.round(Number(box.y1)),
+        x_max: Math.round(Number(box.x2)),
+        y_max: Math.round(Number(box.y2)),
+      }];
     }
-    const falRes = await fetch('https://fal.run/fal-ai/sam-3/image', {
-      method: 'POST',
-      headers: { Authorization: `Key ${falKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify(input),
-    });
-    const text = await falRes.text();
-    let result;
-    try { result = JSON.parse(text); } catch {
-      return res.status(502).json({ success: false, error: text || `fal HTTP ${falRes.status}` });
+
+    const callFal = async (body) => {
+      const falRes = await fetch('https://fal.run/fal-ai/sam-3/image', {
+        method: 'POST',
+        headers: { Authorization: `Key ${falKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      const text = await falRes.text();
+      let parsed;
+      try { parsed = JSON.parse(text); } catch {
+        return { ok: false, status: falRes.status, error: text || `fal HTTP ${falRes.status}`, result: null };
+      }
+      if (!falRes.ok) {
+        return {
+          ok: false,
+          status: falRes.status,
+          error: parsed?.detail || parsed?.error || parsed?.message || `fal HTTP ${falRes.status}`,
+          result: parsed,
+        };
+      }
+      return { ok: true, status: falRes.status, result: parsed };
+    };
+
+    let call = await callFal(input);
+    if (!call.ok) {
+      return res.status(call.status === 401 ? 401 : 502).json({ success: false, error: call.error });
     }
-    if (!falRes.ok) {
-      return res.status(falRes.status === 401 ? 401 : 502).json({
+    let instances = extractFalSamInstances(call.result);
+    // Empty mask URLs are common with apply_mask:false — retry once with apply_mask.
+    const anyMask = instances.some((i) => i.maskUrl);
+    if (!anyMask) {
+      const retry = await callFal({ ...input, apply_mask: true });
+      if (retry.ok) {
+        call = retry;
+        instances = extractFalSamInstances(retry.result);
+      }
+    }
+    if (!instances.length) {
+      const hint = promptText
+        ? `SAM3 found nothing for "${promptText}". Try one noun, or use SAM Click / SAM Box.`
+        : (hasPoints || hasBox)
+          ? 'SAM3 returned no mask for that click/box. Try another spot, or a tighter box.'
+          : 'SAM3 returned no mask or box.';
+      return res.status(422).json({
         success: false,
-        error: result?.detail || result?.error || result?.message || `fal HTTP ${falRes.status}`,
+        error: hint,
+        rawKeys: call.result && typeof call.result === 'object' ? Object.keys(call.result) : [],
       });
     }
-    return res.json({ success: true, maskUrl: extractFalMaskUrl(result), raw: result });
+    return res.json({
+      success: true,
+      // Back-compat single fields (first / best instance)
+      maskUrl: instances[0].maskUrl,
+      box: instances[0].box,
+      instances,
+      candidates: instances.length,
+      raw: call.result,
+    });
   } catch (error) {
     return res.status(500).json({ success: false, error: error.message });
   }

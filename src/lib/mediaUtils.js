@@ -100,6 +100,38 @@ export const MEDIA_ACCEPT = [
   'audio/mpeg,audio/wav,audio/mp4,audio/ogg',
 ].join(',');
 
+/** Target size for client-side image compression before upload. */
+export const IMAGE_COMPRESS_TARGET_BYTES = 300 * 1024;
+export const MAX_AV_MEDIA_BYTES = 40 * 1024 * 1024;
+
+export function formatMediaMb(bytes) {
+  return Math.round(Number(bytes || 0) / (1024 * 1024));
+}
+
+/**
+ * If file is video/audio and over the cap, return { name, sizeMb, maxMb }; else null.
+ */
+export function checkAvMediaTooLarge(file, mediaType = null) {
+  const type = mediaType || inferMediaType(file?.name || file?.type || '');
+  if (type !== 'video' && type !== 'audio') return null;
+  const size = Number(file?.size || 0);
+  if (size <= MAX_AV_MEDIA_BYTES) return null;
+  return {
+    name: file?.name || 'file',
+    sizeMb: (size / (1024 * 1024)).toFixed(1),
+    maxMb: formatMediaMb(MAX_AV_MEDIA_BYTES),
+  };
+}
+
+/** Throw a user-facing Error when video/audio exceeds MAX_AV_MEDIA_BYTES. */
+export function assertAvMediaUploadAllowed(file, mediaType = null) {
+  const hit = checkAvMediaTooLarge(file, mediaType);
+  if (!hit) return file;
+  throw new Error(
+    `"${hit.name}" is too large (${hit.sizeMb} MB). Video/audio max is ${hit.maxMb} MB.`,
+  );
+}
+
 /** Trigger a browser download for a media entry (R2 URL or local blob URL). */
 export async function downloadMediaFile(entry) {
   const url = entry?.url;

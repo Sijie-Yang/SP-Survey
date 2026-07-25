@@ -1,5 +1,5 @@
 /**
- * Image features in the configured Supabase Storage bucket as CSV.
+ * Image features in configured Supabase Storage (R2-compatible keys).
  * Paths: {r2Prefix}features/{model}.csv
  * Pre-annotations: {r2Prefix}preannotations/{safeId}.json
  * Rows keyed by media_id; also keep `name` for remapping when keys change on copy.
@@ -14,7 +14,7 @@ import {
 import { featureStorageKey } from './imageFeaturesStore';
 import { L0_MODEL } from './imageFeaturesL0';
 import { SEG_MODEL } from './falInference';
-import { getMediaId, normalizeMediaEntry } from './mediaUtils';
+import { getMediaId, normalizeMediaEntry, mediaRelativePath } from './mediaUtils';
 
 /** SAM3 researcher pre-annotation derived features. */
 export const SAM_PREANNOT_MODEL = 'sp_sam_preannot_v1';
@@ -24,6 +24,12 @@ export const DEFAULT_SAM_LABELS = [
 ];
 
 export const FEATURE_MODELS = [L0_MODEL, SEG_MODEL, SAM_PREANNOT_MODEL];
+
+/** Shape provenance sources. */
+export const SHAPE_SOURCE_MANUAL = 'manual';
+export const SHAPE_SOURCE_SAM_TEXT = 'sam-text';
+export const SHAPE_SOURCE_SAM_CLICK = 'sam-click';
+export const SHAPE_SOURCE_SAM_BOX = 'sam-box';
 
 export function normalizeR2Prefix(prefix) {
   if (!prefix) return '';
@@ -35,11 +41,17 @@ export function featureCsvKey(r2Prefix, model) {
 }
 
 export function featureCsvPublicUrl(r2Prefix, model) {
-  if (!isR2Configured()) return null;
-  return getMediaStoragePublicUrl(featureCsvKey(r2Prefix, model));
+  try {
+    return getMediaStoragePublicUrl(featureCsvKey(r2Prefix, model));
+  } catch {
+    return null;
+  }
 }
 
-/** Safe object basename for preannotation JSON (avoid nested keys from R2 paths). */
+/**
+ * Legacy basename-only id (collides across folders). Kept for read fallback.
+ * Prefer preannotationSafeIdPath for new writes.
+ */
 export function preannotationSafeId(mediaEntryOrId, nameHint = '') {
   const entry = typeof mediaEntryOrId === 'object'
     ? normalizeMediaEntry(mediaEntryOrId)
@@ -49,13 +61,77 @@ export function preannotationSafeId(mediaEntryOrId, nameHint = '') {
   return base.replace(/[^a-zA-Z0-9._-]/g, '_') || 'media';
 }
 
-export function preannotationKey(r2Prefix, mediaEntryOrId, nameHint = '') {
-  return `${normalizeR2Prefix(r2Prefix)}preannotations/${preannotationSafeId(mediaEntryOrId, nameHint)}.json`;
+/**
+ * Folder-aware safe id: `street__a__img.jpg` so nested files don't collide.
+ */
+export function preannotationSafeIdPath(mediaEntryOrId, nameHint = '') {
+  const entry = typeof mediaEntryOrId === 'object'
+    ? normalizeMediaEntry(mediaEntryOrId)
+    : null;
+  const rel = entry
+    ? mediaRelativePath(entry.folder, entry.name || nameHint)
+    : String(nameHint || mediaEntryOrId || '');
+  const cleaned = String(rel || 'media')
+    .replace(/\\/g, '/')
+    .replace(/^\/+/, '')
+    .replace(/[^a-zA-Z0-9._/-]+/g, '_')
+    .replace(/\//g, '__');
+  return cleaned || preannotationSafeId(mediaEntryOrId, nameHint);
 }
 
-export function preannotationPublicUrl(r2Prefix, mediaEntryOrId, nameHint = '') {
-  if (!isR2Configured()) return null;
-  return getMediaStoragePublicUrl(preannotationKey(r2Prefix, mediaEntryOrId, nameHint));
+export function preannotationKey(r2Prefix, mediaEntryOrId, nameHint = '', { legacy = false } = {}) {
+  const id = legacy
+    ? preannotationSafeId(mediaEntryOrId, nameHint)
+    : preannotationSafeIdPath(mediaEntryOrId, nameHint);
+  return `${normalizeR2Prefix(r2Prefix)}preannotations/${id}.json`;
+}
+
+export function preannotationPublicUrl(r2Prefix, mediaEntryOrId, nameHint = '', opts = {}) {
+  try {
+    return getMediaStoragePublicUrl(preannotationKey(r2Prefix, mediaEntryOrId, nameHint, opts));
+  } catch {
+    return null;
+  }
+}
+
+export function batchRunKey(r2Prefix, batchRunId) {
+  const id = String(batchRunId || '').replace(/[^a-zA-Z0-9._-]/g, '_') || 'batch';
+  return `${normalizeR2Prefix(r2Prefix)}preannotation_batches/${id}.json`;
+}
+
+export function batchRunPublicUrl(r2Prefix, batchRunId) {
+  try {
+    return getMediaStoragePublicUrl(batchRunKey(r2Prefix, batchRunId));
+  } catch {
+    return null;
+  }
+}
+
+export function newBatchRunId() {
+  return `batch_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+}
+
+export function newShapeId() {
+  return `shp_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+}
+
+/** Attach provenance fields to a new shape (backward compatible). */
+export function withShapeProvenance(shape, {
+  source = SHAPE_SOURCE_MANUAL,
+  prompt = null,
+  batchRunId = null,
+  model = null,
+  score = null,
+} = {}) {
+  return {
+    ...shape,
+    source: shape.source || source,
+    prompt: prompt != null ? prompt : (shape.prompt ?? null),
+    batchRunId: batchRunId != null ? batchRunId : (shape.batchRunId ?? null),
+    createdAt: shape.createdAt || new Date().toISOString(),
+    model: model != null ? model : (shape.model ?? null),
+    score: score != null ? score : (shape.score ?? null),
+  };
 }
 
 export function samLabelKey(label) {
@@ -80,8 +156,9 @@ function polygonAreaNorm(pts) {
 function shapeAreaRatio(shape) {
   const pts = shape?.points || [];
   if (!pts.length) return 0;
-  const tool = shape.tool
-    || (pts.length >= 3 ? 'region' : pts.length === 2 ? 'line' : 'point');
+  const raw = shape.tool
+    || (pts.length >= 3 ? 'polygon' : pts.length === 2 ? 'line' : 'point');
+  const tool = raw === 'region' ? 'polygon' : raw;
   if (tool === 'bbox' && pts.length >= 2) {
     const xs = pts.map((p) => p.x);
     const ys = pts.map((p) => p.y);
@@ -89,7 +166,7 @@ function shapeAreaRatio(shape) {
     const h = Math.max(0, Math.max(...ys) - Math.min(...ys));
     return w * h;
   }
-  if (tool === 'region' && pts.length >= 3) return polygonAreaNorm(pts);
+  if (tool === 'polygon' && pts.length >= 3) return polygonAreaNorm(pts);
   return 0;
 }
 
@@ -212,11 +289,25 @@ function csvRowsToRecords(rows, model) {
   }).filter((r) => r.media_id || r.name);
 }
 
-/** Load feature records for one model from R2 CSV (empty if missing). */
-export async function loadFeatureCsv(r2Prefix, model) {
-  if (!isR2Configured() || !r2Prefix) return [];
+/** Load raw feature CSV text from storage (null if missing). */
+export async function loadFeatureCsvText(r2Prefix, model) {
+  if (!isR2Configured() || !r2Prefix) return null;
   try {
     const text = await downloadStorageText(featureCsvKey(r2Prefix, model));
+    if (!text || !String(text).trim()) return null;
+    return text;
+  } catch (err) {
+    const msg = err.message || '';
+    if (/404|403|NoSuchKey|not found/i.test(msg)) return null;
+    console.warn('loadFeatureCsvText', model, err);
+    return null;
+  }
+}
+
+/** Load feature records for one model from R2 CSV (empty if missing). */
+export async function loadFeatureCsv(r2Prefix, model) {
+  try {
+    const text = await loadFeatureCsvText(r2Prefix, model);
     if (!text) return [];
     const { rows } = parseCsv(text);
     return csvRowsToRecords(rows, model);
@@ -275,24 +366,95 @@ export async function upsertFeatureRecordToR2(r2Prefix, record, mediaEntry) {
   }]);
 }
 
-/** Load preannotation JSON for one media (null if missing). */
-export async function loadPreannotation(r2Prefix, mediaEntry) {
-  if (!isR2Configured() || !r2Prefix) return null;
-  const entry = normalizeMediaEntry(mediaEntry);
+async function loadStorageJson(key) {
+  if (!key) return null;
   try {
-    const text = await downloadStorageText(preannotationKey(r2Prefix, entry, entry?.name));
+    const text = await downloadStorageText(key);
     if (!text) return null;
     return JSON.parse(text);
   } catch (err) {
     const msg = err.message || '';
     if (/404|403|NoSuchKey|not found|JSON/i.test(msg)) return null;
+    throw err;
+  }
+}
+
+/** Load preannotation JSON for one media (null if missing). Tries path key then legacy basename. */
+export async function loadPreannotation(r2Prefix, mediaEntry) {
+  if (!isR2Configured() || !r2Prefix) return null;
+  const entry = normalizeMediaEntry(mediaEntry);
+  try {
+    const primary = await loadStorageJson(preannotationKey(r2Prefix, entry, entry?.name));
+    if (primary) return primary;
+    const legacyId = preannotationSafeId(entry, entry?.name);
+    const pathId = preannotationSafeIdPath(entry, entry?.name);
+    if (legacyId !== pathId) {
+      return loadStorageJson(preannotationKey(r2Prefix, entry, entry?.name, { legacy: true }));
+    }
+    return null;
+  } catch (err) {
     console.warn('loadPreannotation', err);
     return null;
   }
 }
 
+/** Load batch run log (null if missing). */
+export async function loadBatchRun(r2Prefix, batchRunId) {
+  if (!isR2Configured() || !r2Prefix || !batchRunId) return null;
+  try {
+    return await loadStorageJson(batchRunKey(r2Prefix, batchRunId));
+  } catch (err) {
+    console.warn('loadBatchRun', err);
+    return null;
+  }
+}
+
+/** Persist batch run checkpoint / final log. */
+export async function saveBatchRun(r2Prefix, batchDoc) {
+  if (!isR2Configured()) throw new Error('R2 is not configured');
+  const id = batchDoc?.batchRunId || newBatchRunId();
+  const doc = {
+    ...batchDoc,
+    batchRunId: id,
+    updated_at: new Date().toISOString(),
+    model: SAM_PREANNOT_MODEL,
+  };
+  const blob = new Blob([JSON.stringify(doc, null, 2)], { type: 'application/json' });
+  const key = batchRunKey(r2Prefix, id);
+  const up = await uploadImageToR2(blob, key);
+  if (!up.success) throw new Error(up.error || 'Failed to upload batch run');
+  return { ...doc, key: up.key, url: up.url };
+}
+
+/**
+ * Load preannotation JSON for many media entries (concurrency-limited).
+ * @returns {Promise<Array<{ mediaEntry: object, annotation: object|null }>>}
+ */
+export async function loadPreannotationsForMediaList(r2Prefix, mediaEntries, { concurrency = 8 } = {}) {
+  const list = (mediaEntries || []).map((m) => normalizeMediaEntry(m)).filter((m) => m?.url || m?.name);
+  if (!list.length || !r2Prefix || !isR2Configured()) {
+    return list.map((mediaEntry) => ({ mediaEntry, annotation: null }));
+  }
+  const out = new Array(list.length);
+  let cursor = 0;
+  const workers = Array.from({ length: Math.min(concurrency, list.length) }, async () => {
+    while (cursor < list.length) {
+      const i = cursor;
+      cursor += 1;
+      const mediaEntry = list[i];
+      // eslint-disable-next-line no-await-in-loop
+      const annotation = await loadPreannotation(r2Prefix, mediaEntry);
+      out[i] = { mediaEntry, annotation };
+    }
+  });
+  await Promise.all(workers);
+  return out;
+}
+
 /**
  * Save preannotation JSON + derived SAM feature CSV row.
+ * Writes path-aware key; also mirrors to legacy basename key when folder is empty
+ * (keeps older clients working for root-level files).
  */
 export async function savePreannotation(r2Prefix, mediaEntry, annotationPayload) {
   if (!isR2Configured()) throw new Error('R2 is not configured');
@@ -302,9 +464,11 @@ export async function savePreannotation(r2Prefix, mediaEntry, annotationPayload)
   const doc = {
     media_id: mediaId,
     name: entry?.name || '',
+    folder: entry?.folder || '',
     image: entry?.url || annotationPayload?.image || '',
     shapes,
     labels: annotationPayload?.labels || DEFAULT_SAM_LABELS,
+    review_status: annotationPayload?.review_status || null,
     updated_at: new Date().toISOString(),
     model: SAM_PREANNOT_MODEL,
   };
@@ -313,12 +477,160 @@ export async function savePreannotation(r2Prefix, mediaEntry, annotationPayload)
   const up = await uploadImageToR2(blob, key);
   if (!up.success) throw new Error(up.error || 'Failed to upload preannotation');
 
+  // Mirror to legacy basename when path id differs and folder is set — helps
+  // gradual migration; load already prefers path key.
+  const pathId = preannotationSafeIdPath(entry, entry?.name);
+  const legacyId = preannotationSafeId(entry, entry?.name);
+  if (pathId !== legacyId && !(entry?.folder || '')) {
+    await uploadImageToR2(blob, preannotationKey(r2Prefix, entry, entry?.name, { legacy: true }));
+  }
+
   const featureRecord = deriveSamPreannotFeatures(shapes, {
     mediaId,
     name: entry?.name || '',
   });
   const csv = await saveFeatureCsv(r2Prefix, SAM_PREANNOT_MODEL, [featureRecord]);
   return { annotation: doc, featureRecord, csv, key: up.key, url: up.url };
+}
+
+async function mapWithConcurrency(items, concurrency, worker) {
+  const list = Array.isArray(items) ? items : [];
+  if (!list.length) return [];
+  const out = new Array(list.length);
+  let cursor = 0;
+  const n = Math.max(1, Math.min(concurrency || 8, list.length));
+  await Promise.all(Array.from({ length: n }, async () => {
+    while (cursor < list.length) {
+      const i = cursor;
+      cursor += 1;
+      // eslint-disable-next-line no-await-in-loop
+      out[i] = await worker(list[i], i);
+    }
+  }));
+  return out;
+}
+
+/**
+ * Undo / cancel a batch: remove shapes added by batchRunId and restore removedSnapshots.
+ * @param {{ finalStatus?: 'undone'|'cancelled', concurrency?: number }} opts
+ */
+export async function undoBatchRun(r2Prefix, batchRunId, {
+  labelNames = DEFAULT_SAM_LABELS,
+  onProgress,
+  onItemSaved,
+  finalStatus = 'undone',
+  concurrency = 8,
+} = {}) {
+  const batch = await loadBatchRun(r2Prefix, batchRunId);
+  if (!batch) throw new Error('Batch run not found.');
+  if (batch.status === 'accepted' || batch.status === 'cancelled' || batch.status === 'undone') {
+    throw new Error(`Batch already closed (${batch.status}).`);
+  }
+  const images = Array.isArray(batch.images) ? batch.images : [];
+  onProgress?.({ done: 0, total: Math.max(1, images.length), name: '', phase: 'close' });
+  const progress = { done: 0 };
+  const results = await mapWithConcurrency(images, concurrency, async (img) => {
+    const entry = normalizeMediaEntry({
+      name: img.name,
+      url: img.url,
+      media_id: img.media_id,
+      folder: img.folder || '',
+    });
+    const doc = await loadPreannotation(r2Prefix, entry);
+    const shapes = Array.isArray(doc?.shapes) ? doc.shapes : [];
+    const addedSet = new Set(img.addedShapeIds || []);
+    const hasBatchShapes = shapes.some((s) => s.batchRunId === batchRunId || addedSet.has(s.id));
+    const restored = Array.isArray(img.removedShapes) ? img.removedShapes : [];
+    if (!hasBatchShapes && !restored.length) {
+      progress.done += 1;
+      onProgress?.({ done: progress.done, total: images.length, name: entry.name, phase: 'close' });
+      return null;
+    }
+    let next = shapes.filter((s) => !addedSet.has(s.id) && s.batchRunId !== batchRunId);
+    if (restored.length) {
+      const existingIds = new Set(next.map((s) => s.id));
+      restored.forEach((s) => {
+        if (s?.id && !existingIds.has(s.id)) next.push(s);
+      });
+    }
+    const saved = await savePreannotation(r2Prefix, entry, {
+      image: entry.url || img.url,
+      shapes: next,
+      labels: labelNames,
+      review_status: finalStatus === 'cancelled' ? null : (doc?.review_status || null),
+    });
+    progress.done += 1;
+    onProgress?.({ done: progress.done, total: images.length, name: entry.name, phase: 'close' });
+    onItemSaved?.(saved, entry);
+    return saved;
+  });
+  const closedAt = new Date().toISOString();
+  const closed = await saveBatchRun(r2Prefix, {
+    ...batch,
+    status: finalStatus === 'cancelled' ? 'cancelled' : 'undone',
+    undone_at: closedAt,
+    closed_at: closedAt,
+  });
+  return { batch: closed, results: results.filter(Boolean) };
+}
+
+/**
+ * Accept all images touched by a batch (keep polygons, mark review_status accepted, close batch).
+ * Writes batch status first so the close is durable, then stamps images in parallel.
+ * @param {{ concurrency?: number }} opts
+ */
+export async function acceptBatchRun(r2Prefix, batchRunId, {
+  labelNames = DEFAULT_SAM_LABELS,
+  onProgress,
+  onItemSaved,
+  concurrency = 8,
+} = {}) {
+  const batch = await loadBatchRun(r2Prefix, batchRunId);
+  if (!batch) throw new Error('Batch run not found.');
+  if (batch.status === 'accepted' || batch.status === 'cancelled' || batch.status === 'undone') {
+    throw new Error(`Batch already closed (${batch.status}).`);
+  }
+  const closedAt = new Date().toISOString();
+  // Persist close immediately — UI can treat the batch as done without waiting on images.
+  const closed = await saveBatchRun(r2Prefix, {
+    ...batch,
+    status: 'accepted',
+    accepted_at: closedAt,
+    closed_at: closedAt,
+  });
+
+  const images = Array.isArray(batch.images) ? batch.images : [];
+  const targets = images.filter((i) => (
+    (i.status === 'done' || i.status === 'partial')
+    && (i.polygonsAdded > 0 || (i.addedShapeIds || []).length)
+  ));
+  onProgress?.({ done: 0, total: Math.max(1, targets.length), name: '', phase: 'close' });
+  const progress = { done: 0 };
+  const results = await mapWithConcurrency(targets, concurrency, async (img) => {
+    const entry = normalizeMediaEntry({
+      name: img.name,
+      url: img.url,
+      media_id: img.media_id,
+      folder: img.folder || '',
+    });
+    const doc = await loadPreannotation(r2Prefix, entry);
+    if (doc?.review_status === 'accepted') {
+      progress.done += 1;
+      onProgress?.({ done: progress.done, total: targets.length, name: entry.name, phase: 'close' });
+      return null;
+    }
+    const saved = await savePreannotation(r2Prefix, entry, {
+      image: entry.url || img.url || doc?.image,
+      shapes: Array.isArray(doc?.shapes) ? doc.shapes : [],
+      labels: labelNames.length ? labelNames : (doc?.labels || DEFAULT_SAM_LABELS),
+      review_status: 'accepted',
+    });
+    progress.done += 1;
+    onProgress?.({ done: progress.done, total: targets.length, name: entry.name, phase: 'close' });
+    onItemSaved?.(saved, entry);
+    return saved;
+  });
+  return { batch: closed, results: results.filter(Boolean) };
 }
 
 /**
