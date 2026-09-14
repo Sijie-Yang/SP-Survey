@@ -13,8 +13,17 @@ Visual survey design, media experiments, participant deployment, and research an
 
 **No login · Local project files · Your Supabase · Your deployment**
 
-[Hosted platform](https://sp-survey.org) · [Paper](https://www.sciencedirect.com/science/article/pii/S0360132325000514) · [Issues](https://github.com/Sijie-Yang/SP-Survey/issues)
+[Hosted platform](https://sp-survey.org) · [Paper](https://www.sciencedirect.com/science/article/pii/S0360132325000514) · [Discussions](https://github.com/Sijie-Yang/SP-Survey/discussions) · [Issues](https://github.com/Sijie-Yang/SP-Survey/issues)
 
+</div>
+
+## Community
+
+- English: [GitHub Discussions](https://github.com/Sijie-Yang/SP-Survey/discussions) for questions, ideas, and study showcases.
+- 中文：扫描二维码加入 SP-Survey 微信群。二维码有效期至 9/21，入群后会更新。
+
+<div align="center">
+<img src="./public/wechat-group-cn.jpg" alt="SP-Survey 中文微信群" width="200">
 </div>
 
 ## Features
