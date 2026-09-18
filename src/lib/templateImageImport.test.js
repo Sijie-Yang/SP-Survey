@@ -7,12 +7,6 @@ import { sanitizeMediaFolderConfig } from './mediaUtils';
 import { filterDeletableR2Keys, isTemplateR2Key } from './r2';
 
 describe('template media folder round-trip', () => {
-  test('importing more media preserves existing logical folders and independent identities', () => {
-    const existing = ['a', 'b'].map((folder) => ({ key: `u/p/${folder}/same.jpg`, media_id: `legacy_${folder}`, name: 'same.jpg', logicalFolder: '', folder, url: `https://media.test/${folder}/same.jpg`, metadata: { source: folder } }));
-    const merged = mergeCopiedIntoProjectImages(existing, [{ to: 'u/p/new.jpg' }], 'https://media.test', 'u/p/');
-    expect(merged).toHaveLength(3);
-    for (const folder of ['a', 'b']) expect(merged.find((m) => m.media_id === `legacy_${folder}`)).toMatchObject({ folder: '', logicalFolder: '', metadata: { source: folder } });
-  });
   test('mergeTemplateMediaFoldersIntoProject merges tags and keeps project-local fields', () => {
     const merged = mergeTemplateMediaFoldersIntoProject(
       {

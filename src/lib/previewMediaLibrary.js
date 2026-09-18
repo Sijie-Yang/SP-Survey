@@ -53,11 +53,21 @@ export function pickPreviewMedia(pool, mediaType, count) {
 }
 
 /**
- * Prefer project/template media; fall back to the platform preview library.
+ * Prefer project/template media. Self-hosted edition has no shared preview library.
  */
 export async function resolveMediaPoolForPreview(projectImages = []) {
   if (Array.isArray(projectImages) && projectImages.length > 0) {
     return projectImages;
   }
   return listPreviewMedia();
+}
+
+/** Same return shape as Platform, but never falls back to a hosted preview pool. */
+export async function resolvePreviewMediaContext(project = {}) {
+  const projectImages = Array.isArray(project.preloadedImages) ? project.preloadedImages : [];
+  return {
+    images: projectImages,
+    imageDatasetConfig: project.imageDatasetConfig || project.image_dataset_config || {},
+    fromPreviewLibrary: false,
+  };
 }

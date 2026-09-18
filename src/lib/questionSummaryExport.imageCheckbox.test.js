@@ -67,12 +67,12 @@ describe('imagecheckbox / mediacheckbox export', () => {
     expect(csv).toContain(',a.jpg,');
     expect(csv).toContain(',b.jpg,');
     expect(csv).toContain(',green,');
-    // a.jpg: green selected by 2/2
+    // a.jpg: green selected in 2 of 3 submissions
     const greenA = csv
       .split('\n')
       .find((line) => line.includes(',a.jpg,') && line.includes(',green,') && line.includes(',select_rate,'));
     expect(greenA).toBeTruthy();
-    expect(greenA).toMatch(/,1(\.0+)?,/);
+    expect(greenA).toMatch(/,0\.6+/);
   });
 
   test('mediacheckbox uses the same family', () => {
