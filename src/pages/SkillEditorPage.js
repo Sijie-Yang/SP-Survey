@@ -248,9 +248,9 @@ export default function SkillEditorPage() {
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'grey.50' }}>
-      <AppBar position="static" color="default" elevation={0} sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <AppBar position="static" color="primary" elevation={1}>
         <Toolbar>
-          <IconButton edge="start" onClick={() => navigate('/admin')} sx={{ mr: 1 }}>
+          <IconButton edge="start" color="inherit" onClick={() => navigate('/admin')} sx={{ mr: 1 }}>
             <ArrowBack />
           </IconButton>
           <Typography variant="h6" sx={{ flex: 1 }}>

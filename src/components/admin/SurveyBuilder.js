@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -79,7 +79,8 @@ import { CSS } from '@dnd-kit/utilities';
 import PageEditor from './PageEditor';
 import ConfirmDialog from '../layout/ConfirmDialog';
 import QuestionEditor from './QuestionEditor';
-import ChatAssistant from './ChatAssistant';
+import { AdminPageHeader } from './AdminPageLayout';
+import { useRegion } from '../../contexts/RegionContext';
 import SurveyThemePreviewPanel from '../SurveyThemePreviewPanel';
 import {
   allocateUniqueName,
@@ -88,12 +89,7 @@ import {
   findDuplicateQuestionNames,
   repairDuplicateQuestionNames,
 } from '../../lib/questionNames';
-import { applyOperations, postProcessAiConfig } from '../../lib/designProtocol';
-// Old API functions removed - now using chatApi.js
-import { getConversationHistory } from '../../lib/conversationHistory';
-import { getWorkingMemory } from '../../lib/workingMemory';
-import { getSessionLearning } from '../../lib/sessionLearning';
-import { sendChatMessage, validateApiKey as validateChatApiKey, triggerMultiAgentReviewStream } from '../../lib/chatApi';
+// Chat state lives in useLocalSurveyAssistant (Admin AI sidebar).
 
 /** Compact color picker row for Theme Customization */
 function ThemeColorField({ label, hint, value, onChange }) {
@@ -278,7 +274,16 @@ function SortablePageItem({ page, pageIndex, onEdit, onDelete, onDuplicate }) {
   );
 }
 
-export default function SurveyBuilder({ config, onChange, currentProject, onNextStep, onRepairComplete }) {
+export default function SurveyBuilder({
+  config,
+  onChange,
+  currentProject,
+  onNextStep,
+  onRepairComplete,
+  hideAssistant = false,
+  onOpenAssistant,
+}) {
+  const { t } = useRegion();
   const [confirmDialog, setConfirmDialog] = useState(null);
   const [selectedPage, setSelectedPage] = useState(null);
 
@@ -314,180 +319,12 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
     }
   }, [themeCustomizationCollapsed, themeCustomizationKey]);
   
-  // Chat Assistant states - with localStorage persistence
-  const [openaiApiKey, setOpenaiApiKey] = useState(() => {
-    return localStorage.getItem('openaiApiKey') || '';
-  });
-  const [apiKeyValid, setApiKeyValid] = useState(() => {
-    return localStorage.getItem('apiKeyValid') === 'true';
-  });
-  const [userMessage, setUserMessage] = useState('');
-  const aiUndoSnapshotRef = useRef(null);
-  const [aiUndoAvailable, setAiUndoAvailable] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [loadingStatus, setLoadingStatus] = useState(''); // e.g., "Thinking...", "Generating survey..."
-  const [settingsOpen, setSettingsOpen] = useState(false);
-  
-  // Contextual Engineering states
-  const conversationHistoryRef = useRef(null);
-  const workingMemoryRef = useRef(null);
-  const sessionLearningRef = useRef(null);
-  const [conversationMessages, setConversationMessages] = useState([]);
-  const [recommendations, setRecommendations] = useState([]);
-  // Context enabled state (per project)
-  const [contextEnabled, setContextEnabled] = useState(() => {
-    if (!currentProject?.id) return true;
-    const stored = localStorage.getItem(`contextEnabled_${currentProject.id}`);
-    return stored !== null ? stored === 'true' : true;
-  });
-  
-  // Multi-Agent Review states (per project)
-  const [multiAgentReviewEnabled, setMultiAgentReviewEnabled] = useState(() => {
-    if (!currentProject?.id) return false;
-    const stored = localStorage.getItem(`multiAgentReviewEnabled_${currentProject.id}`);
-    return stored === 'true';
-  });
-  
-  const [reviewMode, setReviewMode] = useState(() => {
-    if (!currentProject?.id) return '1v1';
-    const stored = localStorage.getItem(`reviewMode_${currentProject.id}`);
-    return stored || '1v1';
-  });
-  
-  const [maxReviewRounds, setMaxReviewRounds] = useState(() => {
-    if (!currentProject?.id) return 3;
-    const stored = localStorage.getItem(`maxReviewRounds_${currentProject.id}`);
-    return stored ? parseInt(stored, 10) : 3;
-  });
-  
-  // Flag to prevent saving during project switch
-  const isLoadingProjectSettings = useRef(false);
-  
-  // Custom prompts state
-  const [customPrompts, setCustomPrompts] = useState(null);
-  
-  // Chat scroll reference
-  const chatEndRef = useRef(null);
-
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
-
-  // Persist settings to localStorage whenever they change
-  useEffect(() => {
-    if (openaiApiKey) {
-      localStorage.setItem('openaiApiKey', openaiApiKey);
-      console.log('💾 Saved API key to localStorage');
-    }
-  }, [openaiApiKey]);
-
-  useEffect(() => {
-    localStorage.setItem('apiKeyValid', apiKeyValid.toString());
-  }, [apiKeyValid]);
-
-  // Save settings to localStorage when they change (per project)
-  useEffect(() => {
-    if (currentProject?.id && !isLoadingProjectSettings.current) {
-      localStorage.setItem(`contextEnabled_${currentProject.id}`, contextEnabled.toString());
-      console.log('💾 Saved contextEnabled for project:', currentProject.id, contextEnabled);
-    }
-  }, [contextEnabled, currentProject?.id]);
-
-  useEffect(() => {
-    if (currentProject?.id && !isLoadingProjectSettings.current) {
-      localStorage.setItem(`multiAgentReviewEnabled_${currentProject.id}`, multiAgentReviewEnabled.toString());
-      console.log('💾 Saved multiAgentReviewEnabled for project:', currentProject.id, multiAgentReviewEnabled);
-    }
-  }, [multiAgentReviewEnabled, currentProject?.id]);
-
-  useEffect(() => {
-    if (currentProject?.id && !isLoadingProjectSettings.current) {
-      localStorage.setItem(`reviewMode_${currentProject.id}`, reviewMode);
-      console.log('💾 Saved reviewMode for project:', currentProject.id, reviewMode);
-    }
-  }, [reviewMode, currentProject?.id]);
-
-  useEffect(() => {
-    if (currentProject?.id && !isLoadingProjectSettings.current) {
-      localStorage.setItem(`maxReviewRounds_${currentProject.id}`, maxReviewRounds.toString());
-      console.log('💾 Saved maxReviewRounds for project:', currentProject.id, maxReviewRounds);
-    }
-  }, [maxReviewRounds, currentProject?.id]);
-
-  // Load settings when project changes
-  useEffect(() => {
-    if (currentProject?.id) {
-      isLoadingProjectSettings.current = true;
-      
-      // Load context enabled
-      const storedContext = localStorage.getItem(`contextEnabled_${currentProject.id}`);
-      setContextEnabled(storedContext !== null ? storedContext === 'true' : true);
-      
-      // Load multi-agent review settings
-      const storedReview = localStorage.getItem(`multiAgentReviewEnabled_${currentProject.id}`);
-      setMultiAgentReviewEnabled(storedReview === 'true');
-      
-      const storedMode = localStorage.getItem(`reviewMode_${currentProject.id}`);
-      setReviewMode(storedMode || '1v1');
-      
-      const storedRounds = localStorage.getItem(`maxReviewRounds_${currentProject.id}`);
-      setMaxReviewRounds(storedRounds ? parseInt(storedRounds, 10) : 3);
-      
-      console.log('✅ Loaded settings for project:', currentProject.id);
-      
-      // Re-enable saving after a brief delay to ensure all state updates complete
-      setTimeout(() => {
-        isLoadingProjectSettings.current = false;
-      }, 100);
-    }
-  }, [currentProject?.id]);
-
-  // Initialize Contextual Engineering modules (per-project)
-  useEffect(() => {
-    if (currentProject?.id && contextEnabled) {
-      console.log('🧠 Initializing Contextual Engineering for project:', currentProject.id);
-      
-      // Initialize modules with current project ID
-      conversationHistoryRef.current = getConversationHistory(currentProject.id);
-      workingMemoryRef.current = getWorkingMemory(currentProject.id);
-      sessionLearningRef.current = getSessionLearning();
-      
-      // Load conversation history for THIS project
-      const history = conversationHistoryRef.current.getAllMessages();
-      setConversationMessages(history);
-      
-      // Get recommendations
-      const surveyType = currentProject.category || 'general';
-      const recs = sessionLearningRef.current.getRecommendations(surveyType);
-      setRecommendations(recs);
-      
-      console.log('✅ Contextual Engineering ready:', {
-        projectId: currentProject.id,
-        projectName: currentProject.name,
-        historyMessages: history.length,
-        recommendations: recs.length
-      });
-    } else {
-      // Clear refs when project changes or CE disabled
-      conversationHistoryRef.current = null;
-      workingMemoryRef.current = null;
-      sessionLearningRef.current = null;
-      setConversationMessages([]);
-      setRecommendations([]);
-    }
-  }, [currentProject?.id, contextEnabled]);
-
-  // Auto-scroll chat to bottom (only within chat container, not whole page)
-  useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ 
-      behavior: 'smooth',
-      block: 'nearest',
-      inline: 'nearest'
-    });
-  }, [conversationMessages]);
 
   const handleBasicInfoChange = (field, value) => {
     // Convert boolean values to SurveyJS expected string format
@@ -852,509 +689,6 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
     }
   };
 
-  // ✅ Post-process AI-generated config to ensure all image questions have correct settings
-  const applyAssistantResult = (result, currentConfig) => {
-    let nextConfig = currentConfig;
-    if (result?.operations) {
-      const applied = applyOperations(currentConfig || { pages: [] }, result.operations);
-      nextConfig = applied.surveyConfig;
-    } else if (result?.surveyConfig) {
-      nextConfig = result.surveyConfig;
-    } else {
-      return null;
-    }
-    return processAIGeneratedConfig(nextConfig);
-  };
-
-  const processAIGeneratedConfig = (surveyConfig) => {
-    const imageQuestionTypes = ['imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'imagecheckbox', 'image', 'imagematrix', 'imageslidergroup', 'imagepointallocation'];
-    
-    const processedConfig = JSON.parse(JSON.stringify(surveyConfig)); // Deep clone
-    
-    if (processedConfig.pages && Array.isArray(processedConfig.pages)) {
-      processedConfig.pages.forEach(page => {
-        if (page.elements && Array.isArray(page.elements)) {
-          page.elements.forEach(element => {
-            if (imageQuestionTypes.includes(element.type)) {
-              // Ensure image questions have correct default settings
-              if (!element.imageSelectionMode || element.imageSelectionMode === 'random') {
-                element.imageSelectionMode = 'huggingface_random';
-              }
-              element.randomImageSelection = true;
-              if (element.excludePreviouslyUsedImages === undefined) {
-                element.excludePreviouslyUsedImages = true;
-              }
-              if (!element.choices) {
-                element.choices = [];
-              }
-              if (element.type === 'imagematrix' && !element.imageLinks) {
-                element.imageLinks = [];
-              }
-              
-              // ✅ Remove unnecessary global config fields that should not be saved per question
-              delete element.imageSource;
-              delete element.huggingFaceConfig;
-              
-              console.log(`✅ Post-processed ${element.type} question: ${element.name}`);
-            }
-          });
-        }
-      });
-    }
-    
-    return postProcessAiConfig(processedConfig);
-  };
-
-  // AI Assistant handlers
-  // Validate API Key
-  const handleValidateApiKey = async () => {
-    setIsLoading(true);
-    
-    const result = await validateChatApiKey(openaiApiKey);
-    
-    setIsLoading(false);
-    
-    if (result.success) {
-      setApiKeyValid(true);
-      sessionStorage.setItem('openai_api_key', openaiApiKey);
-      
-      // Add system message
-      if (conversationHistoryRef.current) {
-        conversationHistoryRef.current.addMessage('assistant', 
-          '✅ API key validated! I\'m ready to help you create and modify surveys. Just type what you need!',
-          { actionType: 'system' }
-        );
-        setConversationMessages(conversationHistoryRef.current.getAllMessages());
-      }
-    } else {
-      setApiKeyValid(false);
-      if (conversationHistoryRef.current) {
-        conversationHistoryRef.current.addMessage('assistant', 
-          '❌ Invalid API key. Please check and try again in settings.',
-          { actionType: 'system', error: true }
-        );
-        setConversationMessages(conversationHistoryRef.current.getAllMessages());
-      }
-    }
-  };
-
-  const handleRevertAiChange = () => {
-    if (!aiUndoSnapshotRef.current) return;
-    onChange(JSON.parse(JSON.stringify(aiUndoSnapshotRef.current)));
-    aiUndoSnapshotRef.current = null;
-    setAiUndoAvailable(false);
-    if (currentProject?.id) {
-      sessionStorage.removeItem(`ai_undo_${currentProject.id}`);
-    }
-    if (conversationHistoryRef.current) {
-      conversationHistoryRef.current.addMessage('assistant',
-        '↩️ Reverted to the survey configuration before the last AI change.',
-        { actionType: 'system' }
-      );
-      setConversationMessages(conversationHistoryRef.current.getAllMessages());
-    }
-  };
-
-  const handleSendMessage = async () => {
-    if (!userMessage.trim()) return;
-    
-    // Safety check: Ensure we have a valid project
-    if (!currentProject?.id) {
-      alert('No project selected. Please select or create a project first.');
-      return;
-    }
-    
-    if (!openaiApiKey || !apiKeyValid) {
-      if (conversationHistoryRef.current) {
-        conversationHistoryRef.current.addMessage('assistant', 
-          '⚠️ Please configure and validate your API key in settings first.',
-          { actionType: 'system', error: true }
-        );
-        setConversationMessages(conversationHistoryRef.current.getAllMessages());
-      }
-      return;
-    }
-    
-    console.log('💬 Sending message for project:', currentProject.id, currentProject.name);
-
-    // Add user message to UI immediately
-    if (conversationHistoryRef.current) {
-      conversationHistoryRef.current.addMessage('user', userMessage, {
-        actionType: 'chat',
-        timestamp: new Date().toISOString()
-      });
-      setConversationMessages(conversationHistoryRef.current.getAllMessages());
-    }
-
-    const currentUserMessage = userMessage;
-    setUserMessage(''); // Clear input
-    setIsLoading(true);
-    setLoadingStatus('Thinking...');
-
-    try {
-      // Build conversation history for API (last 10 messages)
-      const apiHistory = conversationHistoryRef.current
-        ?.getFormattedForOpenAI(10) || [];
-
-      // Enrich with contextual engineering context if enabled
-      let enrichedHistory = apiHistory;
-      if (contextEnabled && workingMemoryRef.current && sessionLearningRef.current) {
-        const workingContext = workingMemoryRef.current.getContextForAI();
-        const sessionContext = sessionLearningRef.current.getContextForAI(currentProject?.category);
-        
-        // Prepend context as system messages
-        enrichedHistory = [
-          { role: 'system', content: sessionContext },
-          { role: 'system', content: workingContext },
-          ...apiHistory
-        ];
-        
-        console.log('🧠 Using contextual prompt with memory');
-      }
-
-      // Load research context from localStorage (per project)
-      const researchContext = currentProject?.id 
-        ? JSON.parse(localStorage.getItem(`researchContext_${currentProject.id}`) || '{}')
-        : {};
-      console.log('🔬 Research context loaded for project:', currentProject?.id, researchContext);
-
-      // Call intelligent chat API
-      const result = await sendChatMessage(
-        currentUserMessage,
-        config,
-        enrichedHistory,
-        openaiApiKey,
-        multiAgentReviewEnabled,
-        reviewMode,
-        customPrompts,
-        researchContext
-      );
-
-      // Update status based on intent
-      if (result.intent === 'generate') {
-        setLoadingStatus('Generating survey...');
-      } else if (result.intent === 'adjust') {
-        setLoadingStatus('Adjusting survey...');
-      } else {
-        setLoadingStatus('Processing...');
-      }
-
-      // Small delay to show the specific status
-      await new Promise(resolve => setTimeout(resolve, 500));
-
-      setIsLoading(false);
-      setLoadingStatus('');
-
-      if (result.success) {
-        // Add Chain of Thoughts to conversation if available
-        if (result.chainOfThoughts && conversationHistoryRef.current) {
-          console.log('🧠 Displaying Chain of Thoughts...');
-          
-          // Step 1: Research/Understanding
-          const step1Key = result.chainOfThoughts.step1_research || result.chainOfThoughts.step1_understanding;
-          if (step1Key) {
-            conversationHistoryRef.current.addMessage('assistant', 
-              `**🧠 Step 1: ${result.intent === 'generate' ? 'Research Analysis' : 'Understanding Adjustment Goal'}**\n\n${step1Key}`,
-              { type: 'chain-of-thoughts', step: 1, intent: result.intent }
-            );
-          }
-          
-          // Step 2: Structure/Planning
-          const step2Key = result.chainOfThoughts.step2_structure || result.chainOfThoughts.step2_planning;
-          if (step2Key) {
-            conversationHistoryRef.current.addMessage('assistant', 
-              `**📐 Step 2: ${result.intent === 'generate' ? 'Survey Structure Planning' : 'Adjustment Planning'}**\n\n${step2Key}`,
-              { type: 'chain-of-thoughts', step: 2, intent: result.intent }
-            );
-          }
-          
-          // Step 3: Generation/Execution
-          const step3Key = result.chainOfThoughts.step3_generation || result.chainOfThoughts.step3_execution;
-          if (step3Key) {
-            conversationHistoryRef.current.addMessage('assistant', 
-              `**🔨 Step 3: ${result.intent === 'generate' ? 'Generation' : 'Execution'}**\n\n${step3Key}`,
-              { type: 'chain-of-thoughts', step: 3, intent: result.intent }
-            );
-          }
-        }
-        
-        // Add AI response to conversation
-        if (conversationHistoryRef.current) {
-          conversationHistoryRef.current.addMessage('assistant', result.message, {
-            actionType: result.intent,
-            timestamp: new Date().toISOString()
-          });
-        }
-
-        // If multi-agent review was conducted, add all agent messages to conversation
-        if (result.multiAgentReview && result.multiAgentReview.conversationMessages) {
-          console.log('🤖 Adding multi-agent review conversations to history...');
-          
-          // Add all agent conversations to the history
-          result.multiAgentReview.conversationMessages.forEach(msg => {
-            if (conversationHistoryRef.current && msg.content) {
-              conversationHistoryRef.current.addMessage(msg.role || 'assistant', msg.content, {
-                ...(msg.metadata || {}),
-                timestamp: msg.timestamp || new Date().toISOString(),
-                isMultiAgent: true
-              });
-            }
-          });
-          
-          console.log(`  ✓ Added ${result.multiAgentReview.conversationMessages.length} agent messages`);
-          console.log(`  ✓ Final verdict: ${result.multiAgentReview.finalVerdict}`);
-          console.log(`  ✓ Final rating: ${result.multiAgentReview.finalRating}/10`);
-        }
-
-        // Update conversation display
-        if (conversationHistoryRef.current) {
-          setConversationMessages(conversationHistoryRef.current.getAllMessages());
-        }
-
-        // Update research context if provided by AI (per project)
-        if (result.researchContext && currentProject?.id) {
-          console.log('🔬 Updating research context from AI for project:', currentProject.id, result.researchContext);
-          localStorage.setItem(`researchContext_${currentProject.id}`, JSON.stringify(result.researchContext));
-          // Dispatch custom event to notify ChatAssistant
-          window.dispatchEvent(new CustomEvent('researchContextUpdated', { 
-            detail: result.researchContext 
-          }));
-        }
-
-        // If survey config was generated/adjusted, apply incremental ops or full replace
-        const processedConfig = applyAssistantResult(result, config);
-        if (processedConfig) {
-          aiUndoSnapshotRef.current = JSON.parse(JSON.stringify(config));
-          setAiUndoAvailable(true);
-          if (currentProject?.id) {
-            sessionStorage.setItem(`ai_undo_${currentProject.id}`, JSON.stringify(config));
-          }
-          onChange(processedConfig);
-
-          // Update contextual engineering memories for THIS project
-          if (contextEnabled) {
-            console.log('📝 Updating memories for project:', currentProject?.id, currentProject?.name);
-            
-            if (workingMemoryRef.current) {
-              if (result.intent === 'generate') {
-                workingMemoryRef.current.setSurveyGoal(currentUserMessage);
-                console.log('  ✓ Set survey goal for project:', currentProject?.id);
-              }
-              workingMemoryRef.current.addIteration(processedConfig, currentUserMessage);
-              console.log('  ✓ Added iteration to working memory (project:', currentProject?.id, ')');
-              if (result.intent === 'adjust') {
-                workingMemoryRef.current.addDesignDecision(currentUserMessage, 'User requested adjustment');
-                console.log('  ✓ Recorded design decision (project:', currentProject?.id, ')');
-              }
-            }
-
-            if (sessionLearningRef.current) {
-              sessionLearningRef.current.recordProjectInteraction(
-                currentProject?.id,
-                currentProject?.category || 'general',
-                result.intent === 'generate' ? 'generate_survey' : 'adjust_survey'
-              );
-              console.log('  ✓ Recorded interaction in session learning');
-            }
-          }
-
-          // Trigger Multi-Agent Review if enabled (streaming version)
-          if (multiAgentReviewEnabled && (result.intent === 'generate' || result.intent === 'adjust')) {
-            console.log('🤖 Triggering Multi-Agent Review (streaming)...');
-            setLoadingStatus('Starting Multi-Agent Review...');
-            
-            try {
-              // Load custom agents if available (per project)
-              const customAgents = currentProject?.id && localStorage.getItem(`customAgents_${currentProject.id}`) 
-                ? JSON.parse(localStorage.getItem(`customAgents_${currentProject.id}`)) 
-                : null;
-              
-              // Load research context for review alignment (per project)
-              const reviewResearchContext = currentProject?.id 
-                ? JSON.parse(localStorage.getItem(`researchContext_${currentProject.id}`) || '{}')
-                : {};
-              
-              await triggerMultiAgentReviewStream(
-                processedConfig,
-                openaiApiKey,
-                reviewMode,
-                maxReviewRounds,
-                (eventType, data) => {
-                  // Handle each SSE event in real-time
-                  console.log(`📡 SSE Event: ${eventType}`, data);
-                  
-                  if (conversationHistoryRef.current) {
-                    switch (eventType) {
-                      case 'start':
-                        conversationHistoryRef.current.addMessage('system',
-                          `\n🔄 **Multi-Agent Review Started**\n\nMode: ${data.mode}\nExperts: ${data.totalAgents}\nMax Rounds: ${data.maxRounds}\n`,
-                          { type: 'review-start', isMultiAgent: true }
-                        );
-                        break;
-                      
-                      case 'round-start':
-                        conversationHistoryRef.current.addMessage('system',
-                          `\n📋 **Review Round ${data.round}**\n`,
-                          { type: 'round-header', isMultiAgent: true, round: data.round }
-                        );
-                        setLoadingStatus(`Review Round ${data.round}...`);
-                        break;
-                      
-                      case 'agent-start':
-                        setLoadingStatus(`${data.emoji} ${data.name} reviewing...`);
-                        break;
-                      
-                      case 'agent-review':
-                        conversationHistoryRef.current.addMessage('assistant',
-                          data.formatted,
-                          { 
-                            type: 'agent-review', 
-                            isMultiAgent: true, 
-                            agentId: data.agentId,
-                            round: data.round
-                          }
-                        );
-                        // Update UI immediately
-                        setConversationMessages(conversationHistoryRef.current.getAllMessages());
-                        break;
-                      
-                      case 'round-summary':
-                        conversationHistoryRef.current.addMessage('assistant',
-                          data.formatted,
-                          { type: 'round-summary', isMultiAgent: true, round: data.round }
-                        );
-                        setConversationMessages(conversationHistoryRef.current.getAllMessages());
-                        break;
-                      
-                      case 'revision-start':
-                        conversationHistoryRef.current.addMessage('system',
-                          `\n🔧 **Survey Designer**: Addressing feedback and revising survey...\n`,
-                          { type: 'revision-start', isMultiAgent: true, round: data.round }
-                        );
-                        setConversationMessages(conversationHistoryRef.current.getAllMessages());
-                        setLoadingStatus('Revising survey...');
-                        break;
-                      
-                      case 'revision-thinking':
-                        // Display Chain of Thoughts during revision
-                        const stepTitle = data.step === 1 ? 'Understanding Expert Feedback' : 
-                                         data.step === 2 ? 'Planning Changes' : 'Executing Revision';
-                        conversationHistoryRef.current.addMessage('assistant',
-                          `**${'🧠📐🔨'[data.step - 1]} Revision Step ${data.step}: ${stepTitle}**\n\n${data.content}`,
-                          { type: 'revision-thinking', step: data.step, isMultiAgent: true }
-                        );
-                        setConversationMessages(conversationHistoryRef.current.getAllMessages());
-                        break;
-                      
-                      case 'revision-complete':
-                        // Display Chain of Thoughts if available
-                        if (data.chainOfThoughts) {
-                          if (data.chainOfThoughts.step1_understanding) {
-                            conversationHistoryRef.current.addMessage('assistant',
-                              `**🧠 Revision Step 1: Understanding Expert Feedback**\n\n${data.chainOfThoughts.step1_understanding}`,
-                              { type: 'revision-cot', step: 1, isMultiAgent: true }
-                            );
-                          }
-                          if (data.chainOfThoughts.step2_planning) {
-                            conversationHistoryRef.current.addMessage('assistant',
-                              `**📐 Revision Step 2: Planning Changes**\n\n${data.chainOfThoughts.step2_planning}`,
-                              { type: 'revision-cot', step: 2, isMultiAgent: true }
-                            );
-                          }
-                          if (data.chainOfThoughts.step3_execution) {
-                            conversationHistoryRef.current.addMessage('assistant',
-                              `**🔨 Revision Step 3: Executing Revision**\n\n${data.chainOfThoughts.step3_execution}`,
-                              { type: 'revision-cot', step: 3, isMultiAgent: true }
-                            );
-                          }
-                        }
-                        
-                        conversationHistoryRef.current.addMessage('assistant',
-                          `🔧 **Survey Designer**: Survey revised based on expert feedback. Ready for next review round.`,
-                          { type: 'revision-complete', isMultiAgent: true, round: data.round }
-                        );
-                        setConversationMessages(conversationHistoryRef.current.getAllMessages());
-                        // Update survey config with revised version
-                        if (data.surveyConfig) {
-                          const revisedConfig = processAIGeneratedConfig(data.surveyConfig);
-                          onChange(revisedConfig);
-                        }
-                        break;
-                      
-                      case 'complete':
-                        conversationHistoryRef.current.addMessage('system',
-                          `\n🎯 **Review Complete**\n\n${data.reason}\n\nFinal Rating: ${data.finalRating}/10\nFinal Verdict: ${data.finalVerdict?.toUpperCase()}\n`,
-                          { type: 'review-complete', isMultiAgent: true }
-                        );
-                        setConversationMessages(conversationHistoryRef.current.getAllMessages());
-                        // Apply final survey config
-                        if (data.surveyConfig) {
-                          const finalConfig = processAIGeneratedConfig(data.surveyConfig);
-                          onChange(finalConfig);
-                        }
-                        break;
-                      
-                      case 'error':
-                      case 'agent-error':
-                      case 'revision-error':
-                        conversationHistoryRef.current.addMessage('system',
-                          `❌ Error: ${data.error || data.message}`,
-                          { type: 'error', isMultiAgent: true }
-                        );
-                        setConversationMessages(conversationHistoryRef.current.getAllMessages());
-                        break;
-                    }
-                  }
-                },
-                customAgents,
-                userMessage,  // Pass user's original request to keep review aligned with their needs
-                reviewResearchContext,  // Pass research context for alignment
-                currentProject?.id  // Pass project ID for per-project agent configuration
-              );
-              
-              console.log('✅ Multi-Agent Review completed');
-              
-            } catch (error) {
-              console.error('❌ Multi-Agent Review error:', error);
-              if (conversationHistoryRef.current) {
-                conversationHistoryRef.current.addMessage('system',
-                  `❌ Multi-Agent Review failed: ${error.message}`,
-                  { type: 'error', isMultiAgent: true }
-                );
-                setConversationMessages(conversationHistoryRef.current.getAllMessages());
-              }
-            } finally {
-              setLoadingStatus('');
-            }
-          }
-        }
-      } else {
-        // Error handling
-        if (conversationHistoryRef.current) {
-          conversationHistoryRef.current.addMessage('assistant', 
-            `❌ Error: ${result.error}`,
-            { actionType: 'error', error: true }
-          );
-          setConversationMessages(conversationHistoryRef.current.getAllMessages());
-        }
-      }
-    } catch (error) {
-      setIsLoading(false);
-      setLoadingStatus('');
-      console.error('Error sending message:', error);
-      
-      if (conversationHistoryRef.current) {
-        conversationHistoryRef.current.addMessage('assistant', 
-          `❌ Unexpected error: ${error.message}`,
-          { actionType: 'error', error: true }
-        );
-        setConversationMessages(conversationHistoryRef.current.getAllMessages());
-      }
-    }
-  };
-
-  // Old handlers removed - now using unified handleSendMessage
-
   const getSurveyValidationWarnings = (cfg) => {
     if (!cfg?.pages) return [];
     const warnings = [];
@@ -1451,13 +785,16 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
 
   return (
     <Box>
-      <Typography variant="h5" sx={{ mb: 1, color: 'primary.main' }}>
-        🛠️ Survey Builder
-      </Typography>
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Build your survey with pages, questions, and theme. Use the AI assistant
-        below to draft and refine questions, then preview the result before sharing.
-      </Typography>
+      <AdminPageHeader
+        icon={<AutoAwesome />}
+        title={t.builderTitle}
+        description={t.builderDescription}
+        actions={hideAssistant && onOpenAssistant ? (
+          <Button variant="outlined" size="small" startIcon={<AutoAwesome />} onClick={onOpenAssistant} sx={{ textTransform: 'none' }}>
+            {t.aiLabel}
+          </Button>
+        ) : null}
+      />
 
       {validationWarnings.length > 0 && (
         <Alert
@@ -1487,60 +824,6 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
           )}
         </Alert>
       )}
-
-      {/* AI Chat Assistant */}
-      <ChatAssistant
-        key={currentProject?.id || 'no-project'}
-        messages={conversationMessages}
-        userMessage={userMessage}
-        isLoading={isLoading}
-        loadingStatus={loadingStatus}
-        apiKeyValid={apiKeyValid}
-        openaiApiKey={openaiApiKey}
-        contextEnabled={contextEnabled}
-        multiAgentReviewEnabled={multiAgentReviewEnabled}
-        reviewMode={reviewMode}
-        maxReviewRounds={maxReviewRounds}
-        recommendations={recommendations}
-        currentProject={currentProject}
-        conversationHistoryRef={conversationHistoryRef}
-        workingMemoryRef={workingMemoryRef}
-        sessionLearningRef={sessionLearningRef}
-        onMessageChange={setUserMessage}
-        onPromptsChange={setCustomPrompts}
-        onRevertAiChange={handleRevertAiChange}
-        aiUndoAvailable={aiUndoAvailable}
-        onSendMessage={handleSendMessage}
-        onApiKeyChange={setOpenaiApiKey}
-        onValidateApiKey={handleValidateApiKey}
-        onContextToggle={setContextEnabled}
-        onMultiAgentReviewToggle={setMultiAgentReviewEnabled}
-        onReviewModeChange={setReviewMode}
-        onMaxReviewRoundsChange={setMaxReviewRounds}
-        onClearHistory={() => {
-          setConfirmDialog({
-            title: 'Clear conversation',
-            message: 'Clear conversation history?',
-            confirmLabel: 'Clear',
-            confirmColor: 'error',
-            onConfirm: () => {
-              setConfirmDialog(null);
-              conversationHistoryRef.current?.clear();
-              setConversationMessages([]);
-            },
-          });
-        }}
-        onDownloadHistory={() => {
-          const data = conversationHistoryRef.current?.export();
-          const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `conversation_${currentProject?.id}_${new Date().toISOString()}.json`;
-          a.click();
-        }}
-        chatEndRef={chatEndRef}
-      />
 
       {/* Survey Settings - Unified Panel */}
       <Accordion defaultExpanded>

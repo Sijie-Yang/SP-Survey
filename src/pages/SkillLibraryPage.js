@@ -16,6 +16,8 @@ import {
 } from '../lib/skillManager';
 import { listSkillPreviewMedia, pickPreviewMedia } from '../lib/skillPreviewMedia';
 import SkillQuestionFrame from '../components/SkillQuestionWidget';
+import ConfirmDialog from '../components/layout/ConfirmDialog';
+import { AdminPageHeader } from '../components/admin/AdminPageLayout';
 
 const STATUS_LABELS = {
   draft: { label: 'Draft', color: 'default' },
@@ -40,6 +42,7 @@ export default function SkillLibraryPage() {
   const [preview, setPreview] = useState(null);
   const [codeView, setCodeView] = useState(null);
   const [snack, setSnack] = useState({ open: false, msg: '', sev: 'success' });
+  const [confirmDialog, setConfirmDialog] = useState(null);
   const showSnack = (msg, sev = 'success') => setSnack({ open: true, msg, sev });
 
   const load = useCallback(async () => {
@@ -57,22 +60,37 @@ export default function SkillLibraryPage() {
     listSkillPreviewMedia().then(setPreviewMediaPool).catch(() => {});
   }, []);
 
-  const handleDelete = async (id, name) => {
-    if (!window.confirm(`Delete skill "${name}"?`)) return;
-    try {
-      await deleteSkill(id);
-      showSnack('Deleted');
-      load();
-    } catch (err) { showSnack(err.message, 'error'); }
+  const handleDelete = (id, name) => {
+    setConfirmDialog({
+      title: 'Delete Skill',
+      message: `Delete skill "${name}"?`,
+      confirmLabel: 'Delete',
+      confirmColor: 'error',
+      onConfirm: async () => {
+        setConfirmDialog(null);
+        try {
+          await deleteSkill(id);
+          showSnack('Deleted');
+          load();
+        } catch (err) { showSnack(err.message, 'error'); }
+      },
+    });
   };
 
-  const handleSubmit = async (id, name) => {
-    if (!window.confirm(`Submit "${name}" for admin review and make it public for everyone?`)) return;
-    try {
-      await submitSkillForReview(id);
-      showSnack('Submitted for review');
-      load();
-    } catch (err) { showSnack(err.message, 'error'); }
+  const handleSubmit = (id, name) => {
+    setConfirmDialog({
+      title: 'Submit for review',
+      message: `Submit "${name}" for review and make it public?`,
+      confirmLabel: 'Submit',
+      onConfirm: async () => {
+        setConfirmDialog(null);
+        try {
+          await submitSkillForReview(id);
+          showSnack('Submitted for review');
+          load();
+        } catch (err) { showSnack(err.message, 'error'); }
+      },
+    });
   };
 
   const handleImportPreset = async (presetId) => {
@@ -107,26 +125,36 @@ export default function SkillLibraryPage() {
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'grey.50' }}>
-      <AppBar position="static" color="default" elevation={1}>
+      <AppBar position="static" color="primary" elevation={1}>
         <Toolbar>
-          <IconButton edge="start" onClick={() => navigate('/admin')}><ArrowBack /></IconButton>
-          <Typography variant="h6" sx={{ flex: 1 }}>My Skill Library</Typography>
-          <Button variant="outlined" startIcon={<AutoAwesome />} onClick={() => navigate('/skill-editor')} sx={{ mr: 1 }}>
+          <IconButton edge="start" color="inherit" onClick={() => navigate('/admin')}><ArrowBack /></IconButton>
+          <Typography variant="h6" sx={{ flex: 1 }}>Custom interactions</Typography>
+          <Button
+            color="inherit"
+            variant="outlined"
+            startIcon={<AutoAwesome />}
+            onClick={() => navigate('/skill-editor')}
+            sx={{ mr: 1, borderColor: 'rgba(255,255,255,0.65)', textTransform: 'none' }}
+          >
             New with AI
           </Button>
-          <Button variant="contained" startIcon={<Add />} onClick={() => navigate('/skill-editor')}>
+          <Button
+            color="inherit"
+            variant="contained"
+            startIcon={<Add />}
+            onClick={() => navigate('/skill-editor')}
+            sx={{ bgcolor: 'rgba(255,255,255,0.16)', textTransform: 'none', '&:hover': { bgcolor: 'rgba(255,255,255,0.24)' } }}
+          >
             New Skill
           </Button>
         </Toolbar>
       </AppBar>
 
       <Container maxWidth="lg" sx={{ py: 3 }}>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          Create and manage custom question types here. Use <strong>New with AI</strong> on the editor page
-          to generate HTML skills, or import presets from the gallery. After importing a preset, click
-          <strong> Update preset</strong> again later to sync new configurable fields.
-          Test skills in Survey Builder, then submit for public review.
-        </Typography>
+        <AdminPageHeader
+          title="Custom interactions"
+          description="Create and manage custom question types. Use New with AI to generate HTML skills, or import presets. Test them in Survey Builder, then submit for review."
+        />
 
         <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1.5 }}>
           <Typography variant="subtitle1" fontWeight={700} color="primary.dark">Preset Gallery</Typography>
@@ -365,6 +393,15 @@ export default function SkillLibraryPage() {
       <Snackbar open={snack.open} autoHideDuration={4000} onClose={() => setSnack({ ...snack, open: false })}>
         <Alert severity={snack.sev} onClose={() => setSnack({ ...snack, open: false })}>{snack.msg}</Alert>
       </Snackbar>
+      <ConfirmDialog
+        open={Boolean(confirmDialog)}
+        title={confirmDialog?.title}
+        message={confirmDialog?.message}
+        confirmLabel={confirmDialog?.confirmLabel}
+        confirmColor={confirmDialog?.confirmColor || 'primary'}
+        onConfirm={() => confirmDialog?.onConfirm?.()}
+        onCancel={() => setConfirmDialog(null)}
+      />
     </Box>
   );
 }

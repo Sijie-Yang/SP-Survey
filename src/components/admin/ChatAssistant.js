@@ -89,8 +89,19 @@ export default function ChatAssistant({
   chatEndRef,
   aiUndoAvailable = false,
   onRevertAiChange,
+  variant = 'card',
+  fillHeight = false,
+  settingsOpen: settingsOpenProp,
+  onSettingsOpenChange,
 }) {
-  const [settingsOpen, setSettingsOpen] = React.useState(false);
+  const [internalSettingsOpen, setInternalSettingsOpen] = React.useState(false);
+  const settingsOpen = settingsOpenProp ?? internalSettingsOpen;
+  const setSettingsOpen = (next) => {
+    const value = typeof next === 'function' ? next(settingsOpen) : next;
+    onSettingsOpenChange?.(value);
+    if (settingsOpenProp === undefined) setInternalSettingsOpen(value);
+  };
+  const isSidebar = variant === 'content';
   const [activeTab, setActiveTab] = React.useState(0);
   
   // States for viewing/editing data
@@ -344,18 +355,7 @@ export default function ChatAssistant({
     });
   };
 
-  return (
-    <Card 
-      sx={{ 
-        mb: 2,
-        border: 2,
-        borderColor: 'primary.main',
-        borderRadius: 2,
-        overflow: 'hidden'
-      }}
-    >
-      {/* Header — click anywhere on it (outside the action icons) to
-          expand / collapse the panel. */}
+  const chrome = (
       <Box
         onClick={() => setCollapsed((c) => !c)}
         sx={{
@@ -433,9 +433,30 @@ export default function ChatAssistant({
           </Tooltip>
         </Box>
       </Box>
+  );
 
-      <Collapse in={!collapsed} timeout="auto" unmountOnExit>
-      <CardContent sx={{ p: 0 }}>
+  const Wrapper = isSidebar ? Box : Card;
+  return (
+    <Wrapper
+      sx={isSidebar ? {
+        flex: fillHeight ? 1 : undefined,
+        minHeight: fillHeight ? 0 : undefined,
+        height: fillHeight ? '100%' : undefined,
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+      } : {
+        mb: 2,
+        border: 2,
+        borderColor: 'primary.main',
+        borderRadius: 2,
+        overflow: 'hidden',
+      }}
+    >
+      {!isSidebar && chrome}
+
+      <Collapse in={isSidebar || !collapsed} timeout="auto" unmountOnExit={!isSidebar} sx={isSidebar ? { flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' } : undefined}>
+      <CardContent sx={{ p: 0, ...(isSidebar ? { flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', height: '100%' } : {}) }}>
         {/* Recommendations */}
         {contextEnabled && recommendations.length > 0 && (
           <Box sx={{ p: 2, bgcolor: '#e8f5e9', borderBottom: '1px solid', borderColor: 'divider' }}>
@@ -463,7 +484,9 @@ export default function ChatAssistant({
         {/* Chat History */}
         <Box 
           sx={{ 
-            height: 400, 
+            height: isSidebar ? undefined : 400,
+            flex: isSidebar ? 1 : undefined,
+            minHeight: isSidebar ? 0 : undefined,
             overflowY: 'auto', 
             p: 2,
             bgcolor: '#fafafa'
@@ -1381,6 +1404,6 @@ export default function ChatAssistant({
         onConfirm={() => confirmDialog?.onConfirm?.()}
         onCancel={() => setConfirmDialog(null)}
       />
-    </Card>
+    </Wrapper>
   );
 }
