@@ -33,8 +33,11 @@ import {
 } from '@mui/icons-material';
 import { createClient } from '@supabase/supabase-js';
 import { applySupabaseConfigFromProject } from '../../lib/supabase';
+import { AdminPageHeader } from './AdminPageLayout';
+import { useRegion } from '../../contexts/RegionContext';
 
 export default function SystemStatus({ surveyConfig, currentProject, onProjectUpdate, onNextStep }) {
+  const { t } = useRegion();
   // Step management - restore from localStorage or default to 0
   const getInitialStep = () => {
     if (currentProject) {
@@ -968,12 +971,11 @@ REVOKE SELECT ON TABLE survey_responses FROM anon, authenticated;`;
 
   return (
     <Box>
-      <Typography variant="h5" sx={{ mb: 2, color: 'primary.main' }}>
-        🗄️ Server Setup
-      </Typography>
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Set up your Supabase database table to store survey responses.
-      </Typography>
+      <AdminPageHeader
+        icon={<Storage />}
+        title={t.serverTitle}
+        description={t.serverDescription}
+      />
 
       {/* Supabase Configuration Status */}
       {!config.url || !config.secretKey ? (
@@ -982,7 +984,7 @@ REVOKE SELECT ON TABLE survey_responses FROM anon, authenticated;`;
             ⚠️ Supabase Not Configured
           </Typography>
           <Typography variant="body2">
-            Please configure Supabase in <strong>Step 1 — Image Dataset</strong> (Supabase Storage Configuration section) first. 
+            Please configure Supabase in <strong>Media Dataset</strong> (Supabase Storage Configuration section) first. 
             The Supabase configuration is now centralized there for both image storage and response collection.
           </Typography>
         </Alert>

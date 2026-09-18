@@ -1,11 +1,13 @@
+import { useQuestionEditorText } from '../../contexts/questionEditorI18n';
 import React, { useState } from 'react';
 import {
   Box, Typography, Button, FormControl, InputLabel, Select, MenuItem,
   TextField, IconButton, Collapse, Alert, Chip, Stack,
 } from '@mui/material';
 import { Add, Delete, ExpandMore, ExpandLess } from '@mui/icons-material';
+import MediaFolderScopeSelect from './MediaFolderScopeSelect';
 import { MEDIA_SLOT_PRESETS } from '../../lib/mediaSlots';
-import { sortMediaByName } from '../../lib/mediaUtils';
+import { sortMediaByName, listAllKnownFolders } from '../../lib/mediaUtils';
 
 const ROLES = ['stimulus', 'companion', 'choice', 'context'];
 const MEDIA_TYPES = ['image', 'video', 'audio', 'any'];
@@ -34,10 +36,13 @@ export default function MediaSlotsEditor({
   question,
   onChange,
   availableImages = [],
+  currentProject,
 }) {
+  const { tr, zh } = useQuestionEditorText();
   const slots = Array.isArray(question.mediaSlots) ? question.mediaSlots : [];
   const [open, setOpen] = useState(slots.length > 0);
   const pool = sortMediaByName(availableImages || []);
+  const folderOptions = listAllKnownFolders(currentProject?.preloadedImages || availableImages, currentProject?.imageDatasetConfig?.mediaFolderTags || {}, null, currentProject?.imageDatasetConfig?.mediaFolders || []);
 
   const setSlots = (next) => onChange('mediaSlots', next);
   const updateSlot = (index, patch) => {
@@ -63,15 +68,11 @@ export default function MediaSlotsEditor({
         onClick={() => setOpen((v) => !v)}
       >
         <Box>
-          <Typography variant="subtitle2" fontWeight={700}>
-            Media Slots
-            {slots.length > 0 && (
-              <Chip size="small" label={`${slots.length} slot${slots.length === 1 ? '' : 's'}`} sx={{ ml: 1 }} />
+          <Typography variant="subtitle2" fontWeight={700}>{tr("Media Slots")} {slots.length > 0 && (
+              <Chip size="small" label={tr(zh ? `${slots.length} 个素材位` : `${slots.length} slots`)} sx={{ ml: 1 }} />
             )}
           </Typography>
-          <Typography variant="caption" color="text.secondary">
-            Multi-modal stimuli (fixed video + random audio, paired basenames, mixed sets). Leave empty for legacy single-pool assignment.
-          </Typography>
+          <Typography variant="caption" color="text.secondary">{tr("Multi-modal stimuli (fixed video + random audio, paired basenames, mixed sets). Leave empty for legacy single-pool assignment.")} </Typography>
         </Box>
         {open ? <ExpandLess /> : <ExpandMore />}
       </Box>
@@ -79,39 +80,27 @@ export default function MediaSlotsEditor({
       <Collapse in={open}>
         <Box sx={{ px: 1.5, pb: 1.5, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
           <Stack direction="row" flexWrap="wrap" gap={1}>
-            <Button size="small" variant="outlined" onClick={() => applyPreset('fixedVideoRandomAudio')}>
-              Fixed video + random audio
-            </Button>
-            <Button size="small" variant="outlined" onClick={() => applyPreset('randomVideoAudio')}>
-              Random video + audio
-            </Button>
-            <Button size="small" variant="outlined" onClick={() => applyPreset('basenamePair')}>
-              Basename pair
-            </Button>
-            <Button size="small" variant="outlined" onClick={() => applyPreset('mixedSet')}>
-              Mixed set
-            </Button>
-            <Button size="small" onClick={() => { setSlots([]); }}>
-              Clear slots
-            </Button>
+            <Button size="small" variant="outlined" onClick={() => applyPreset('fixedVideoRandomAudio')}>{tr("Fixed video + random audio")} </Button>
+            <Button size="small" variant="outlined" onClick={() => applyPreset('randomVideoAudio')}>{tr("Random video + audio")} </Button>
+            <Button size="small" variant="outlined" onClick={() => applyPreset('basenamePair')}>{tr("Basename pair")} </Button>
+            <Button size="small" variant="outlined" onClick={() => applyPreset('mixedSet')}>{tr("Mixed set")} </Button>
+            <Button size="small" onClick={() => { setSlots([]); }}>{tr("Clear slots")} </Button>
           </Stack>
 
           <FormControl fullWidth size="small" variant="outlined">
-            <InputLabel>Presentation</InputLabel>
-            <Select
-              label="Presentation"
+            <InputLabel>{tr("Presentation")}</InputLabel>
+            <Select inputProps={{ 'aria-label': tr("Presentation") }}
+              label={tr("Presentation")}
               value={question.mediaPresentation || 'stack'}
               onChange={(e) => onChange('mediaPresentation', e.target.value)}
             >
-              <MenuItem value="stack">Stack — show all slots together</MenuItem>
-              <MenuItem value="sequential">Sequential — one slot at a time</MenuItem>
+              <MenuItem value="stack">{tr("Stack — show all slots together")}</MenuItem>
+              <MenuItem value="sequential">{tr("Sequential — one slot at a time")}</MenuItem>
             </Select>
           </FormControl>
 
           {slots.length === 0 && (
-            <Alert severity="info" sx={{ py: 0.5 }}>
-              No slots configured — this question uses the Media Assignment controls above (individual / set / category).
-            </Alert>
+            <Alert severity="info" sx={{ py: 0.5 }}>{tr("No slots configured — this question uses the Media Assignment controls above (individual / set / category).")} </Alert>
           )}
 
           {slots.map((slot, index) => (
@@ -120,67 +109,67 @@ export default function MediaSlotsEditor({
               sx={{ p: 1.5, border: '1px solid', borderColor: 'grey.300', borderRadius: 1, bgcolor: 'grey.50' }}
             >
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                <Typography variant="caption" fontWeight={700}>Slot {index + 1}</Typography>
+                <Typography variant="caption" fontWeight={700}>{tr("Slot")} {index + 1}</Typography>
                 <IconButton
                   size="small"
                   onClick={() => setSlots(slots.filter((_, i) => i !== index))}
-                  aria-label="Remove slot"
+                  aria-label={tr("Remove slot")}
                 >
                   <Delete fontSize="small" />
                 </IconButton>
               </Box>
               <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 1 }}>
                 <TextField
-                  size="small" label="Slot id" value={slot.id || ''}
+                  size="small" label={tr("Slot id")} value={slot.id || ''}
                   onChange={(e) => updateSlot(index, { id: e.target.value.replace(/\s+/g, '_') })}
                 />
                 <FormControl size="small" fullWidth>
-                  <InputLabel>Role</InputLabel>
-                  <Select label="Role" value={slot.role || 'stimulus'} onChange={(e) => updateSlot(index, { role: e.target.value })}>
-                    {ROLES.map((r) => <MenuItem key={r} value={r}>{r}</MenuItem>)}
+                  <InputLabel>{tr("Role")}</InputLabel>
+                  <Select inputProps={{ 'aria-label': tr("Role") }} label={tr("Role")} value={slot.role || 'stimulus'} onChange={(e) => updateSlot(index, { role: e.target.value })}>
+                    {ROLES.map((r) => <MenuItem key={r} value={r}>{tr(r)}</MenuItem>)}
                   </Select>
                 </FormControl>
                 <FormControl size="small" fullWidth>
-                  <InputLabel>Media type</InputLabel>
-                  <Select label="Media type" value={slot.mediaType || 'any'} onChange={(e) => updateSlot(index, { mediaType: e.target.value })}>
-                    {MEDIA_TYPES.map((t) => <MenuItem key={t} value={t}>{t}</MenuItem>)}
+                  <InputLabel>{tr("Media type")}</InputLabel>
+                  <Select inputProps={{ 'aria-label': tr("Media type") }} label={tr("Media type")} value={slot.mediaType || 'any'} onChange={(e) => updateSlot(index, { mediaType: e.target.value })}>
+                    {MEDIA_TYPES.map((t) => <MenuItem key={t} value={t}>{tr(t)}</MenuItem>)}
                   </Select>
                 </FormControl>
                 <FormControl size="small" fullWidth>
-                  <InputLabel>Selection</InputLabel>
-                  <Select label="Selection" value={slot.selection || 'random'} onChange={(e) => updateSlot(index, { selection: e.target.value })}>
-                    {SELECTIONS.map((s) => <MenuItem key={s} value={s}>{s}</MenuItem>)}
+                  <InputLabel>{tr("Selection")}</InputLabel>
+                  <Select inputProps={{ 'aria-label': tr("Selection") }} label={tr("Selection")} value={slot.selection || 'random'} onChange={(e) => updateSlot(index, { selection: e.target.value })}>
+                    {SELECTIONS.map((s) => <MenuItem key={s} value={s}>{tr(s)}</MenuItem>)}
                   </Select>
                 </FormControl>
                 <TextField
-                  size="small" type="number" label="Count" value={slot.count ?? 1}
+                  size="small" type="number" label={tr("Count")} value={slot.count ?? 1}
                   onChange={(e) => updateSlot(index, { count: Math.max(1, parseInt(e.target.value, 10) || 1) })}
                   inputProps={{ min: 1, max: 10 }}
                 />
                 <TextField
-                  size="small" type="number" label="Order" value={slot.order ?? index}
+                  size="small" type="number" label={tr("Order")} value={slot.order ?? index}
                   onChange={(e) => updateSlot(index, { order: parseInt(e.target.value, 10) || 0 })}
                 />
                 <FormControl size="small" fullWidth>
-                  <InputLabel>Match by</InputLabel>
-                  <Select label="Match by" value={slot.matchBy || 'none'} onChange={(e) => updateSlot(index, { matchBy: e.target.value })}>
-                    <MenuItem value="none">none</MenuItem>
-                    <MenuItem value="basename">basename</MenuItem>
+                  <InputLabel>{tr("Match by")}</InputLabel>
+                  <Select inputProps={{ 'aria-label': tr("Match by") }} label={tr("Match by")} value={slot.matchBy || 'none'} onChange={(e) => updateSlot(index, { matchBy: e.target.value })}>
+                    <MenuItem value="none">{tr("none")}</MenuItem>
+                    <MenuItem value="basename">{tr("basename")}</MenuItem>
                   </Select>
                 </FormControl>
                 {(slot.selection === 'set_member') && (
                   <TextField
-                    size="small" label="Set binding" value={slot.setBinding || 'shared'}
+                    size="small" label={tr("Set binding")} value={slot.setBinding || 'shared'}
                     onChange={(e) => updateSlot(index, { setBinding: e.target.value || 'shared' })}
-                    helperText="Same binding = one shared set draw"
+                    helperText={tr("Same binding = one shared set draw")}
                   />
                 )}
               </Box>
               {slot.selection === 'fixed' && (
                 <FormControl fullWidth size="small" sx={{ mt: 1 }}>
-                  <InputLabel>Fixed media</InputLabel>
-                  <Select
-                    label="Fixed media"
+                  <InputLabel>{tr("Fixed media")}</InputLabel>
+                  <Select inputProps={{ 'aria-label': tr("Fixed media") }}
+                    label={tr("Fixed media")}
                     value={slot.mediaRef?.key || slot.mediaRef?.url || ''}
                     onChange={(e) => {
                       const found = pool.find((m) => (m.key || m.url) === e.target.value);
@@ -191,27 +180,22 @@ export default function MediaSlotsEditor({
                       });
                     }}
                   >
-                    <MenuItem value=""><em>Select file…</em></MenuItem>
+                    <MenuItem value=""><em>{tr("Select file…")}</em></MenuItem>
                     {pool.map((m) => (
                       <MenuItem key={m.key || m.url} value={m.key || m.url}>
-                        {m.name || m.url} ({m.type || 'file'})
+                        {m.name || m.url} ({tr(m.type || 'file')})
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
               )}
               {['random', 'set_member', 'category'].includes(slot.selection) && (
-                <TextField
-                  size="small"
-                  fullWidth
-                  sx={{ mt: 1 }}
-                  label="Folder scope (comma-separated, optional)"
-                  value={(slot.mediaFolders || []).join(', ')}
-                  onChange={(e) => {
-                    const folders = e.target.value.split(',').map((s) => s.trim()).filter(Boolean);
-                    updateSlot(index, { mediaFolders: folders });
-                  }}
-                  helperText="Limit this slot’s pool to these media folders"
+                <MediaFolderScopeSelect
+                  folders={folderOptions}
+                  value={slot.mediaFolders || []}
+                  onChange={(folders) => updateSlot(index, { mediaFolders: folders })}
+                  allLabel={tr('All media (all folders)')}
+                  helperText={tr('Limit this slot’s pool to these media folders')}
                 />
               )}
             </Box>
@@ -221,9 +205,7 @@ export default function MediaSlotsEditor({
             size="small"
             startIcon={<Add />}
             onClick={() => setSlots([...slots, emptySlot(slots.length)])}
-          >
-            Add slot
-          </Button>
+          >{tr("Add slot")} </Button>
         </Box>
       </Collapse>
     </Box>

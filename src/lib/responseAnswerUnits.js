@@ -1,3 +1,9 @@
+export function normalizeBooleanAnswer(value) {
+  if ([true, 'true', 'yes', 1, '1'].includes(value)) return 1;
+  if ([false, 'false', 'no', 0, '0'].includes(value)) return 0;
+  return '';
+}
+
 /**
  * Expand a stored question payload into per-trial units for analysis.
  * Multi-trial enriched shape → one unit per answered trial (with that trial's media).
@@ -6,6 +12,10 @@
 
 function isPlainObject(v) {
   return v !== null && typeof v === 'object' && !Array.isArray(v);
+}
+
+export function answerIsPresent(answer) {
+  return hasAnswer(answer);
 }
 
 function hasAnswer(answer) {

@@ -1,6 +1,8 @@
 import React, { useMemo, useRef } from 'react';
 import { Box, Typography, Tooltip } from '@mui/material';
 import { useSurveyTrialNav } from '../contexts/SurveyTrialNavContext';
+import { tf } from '../contexts/adminI18n';
+import { surveyUiStrings } from '../lib/surveyLocale';
 import {
   getStoredTrialsAnswer,
   getTrialsAnswer,
@@ -17,6 +19,7 @@ const QUESTION_GROUP_SIZE = 24;
  * Question-level segments (not every trial) — trial dots stay in TrialShell.
  */
 export default function ProgressChrome({ enabled = true, surveyModel = null }) {
+  const t = surveyUiStrings(surveyModel);
   const nav = useSurveyTrialNav();
   const units = nav?.units || [];
   const furthest = nav?.furthestUnitIndex ?? 0;
@@ -31,7 +34,7 @@ export default function ProgressChrome({ enabled = true, surveyModel = null }) {
     : null;
 
   const pageInfo = useMemo(() => {
-    const pages = surveyModel?.pages || [];
+    const pages = surveyModel?.visiblePages || surveyModel?.pages || [];
     const total = pages.length || 1;
     let index = 1;
     try {
@@ -107,9 +110,6 @@ export default function ProgressChrome({ enabled = true, surveyModel = null }) {
         borderBottom: '1px solid',
         borderColor: 'var(--sp-progress-border, #e0e0e0)',
         bgcolor: 'var(--sp-progress-bg, #ffffff)',
-        position: 'sticky',
-        top: 0,
-        zIndex: 20,
       }}
     >
       <Typography
@@ -122,13 +122,18 @@ export default function ProgressChrome({ enabled = true, surveyModel = null }) {
           color: 'var(--sp-progress-label, #757575)',
         }}
       >
-        Page {pageInfo.index} / {pageInfo.total}
+        {tf(t.progressPage, { current: pageInfo.index, n: pageInfo.total })}
         <Box component="span" sx={{ mx: 0.75, fontWeight: 400, opacity: 0.55 }}>·</Box>
-        Question {(currentQ?.questionIndex ?? 0) + 1} / {questionGroups.length}
+        {tf(t.progressQuestion, { current: (currentQ?.questionIndex ?? 0) + 1, n: questionGroups.length })}
         {currentUnit && currentUnit.trialCount > 1 && (
           <>
             <Box component="span" sx={{ mx: 0.75, fontWeight: 400, opacity: 0.55 }}>·</Box>
-            Trial {currentUnit.trialIndex + 1} / {currentUnit.trialCount}
+            <Box component="span" sx={{ color: 'var(--sp-progress-fg, #1565c0)', fontWeight: 800 }}>
+              {tf(t.progressRound, {
+                current: currentUnit.trialIndex + 1,
+                n: currentUnit.trialCount,
+              })}
+            </Box>
           </>
         )}
       </Typography>
@@ -149,7 +154,7 @@ export default function ProgressChrome({ enabled = true, surveyModel = null }) {
               type="button"
               disabled={groupIdx <= 0}
               onClick={() => setGroupIdx((g) => Math.max(0, g - 1))}
-              aria-label="Previous question group"
+              aria-label={t.progressPreviousGroup}
               sx={{
                 minWidth: 28,
                 minHeight: 28,
@@ -180,7 +185,7 @@ export default function ProgressChrome({ enabled = true, surveyModel = null }) {
               type="button"
               disabled={groupIdx >= qChunks.length - 1}
               onClick={() => setGroupIdx((g) => Math.min(qChunks.length - 1, g + 1))}
-              aria-label="Next question group"
+              aria-label={t.progressNextGroup}
               sx={{
                 minWidth: 28,
                 minHeight: 28,
@@ -260,9 +265,10 @@ export default function ProgressChrome({ enabled = true, surveyModel = null }) {
           const complete = answered >= total && total > 0;
           const multi = total > 1;
           const fillPct = total > 0 ? Math.round((answered / total) * 100) : 0;
+          const questionLabel = tf(t.progressQuestionLabel, { n: group.questionIndex + 1 });
           const label = multi
-            ? `Q${group.questionIndex + 1} · ${answered}/${total} trials`
-            : `Q${group.questionIndex + 1}`;
+            ? `${questionLabel} · ${tf(t.progressTrialCount, { done: answered, n: total })}`
+            : questionLabel;
           const deskW = multi ? Math.min(56, 16 + total * 2) : 16;
           // Compact on phones: still tappable (~22px) without dominating the viewport
           const mobileW = multi ? Math.min(48, 22 + total * 2) : 22;
@@ -271,8 +277,8 @@ export default function ProgressChrome({ enabled = true, surveyModel = null }) {
             <Tooltip
               key={group.questionName}
               title={reached
-                ? (multi ? `${label} — click to jump` : `Question ${group.questionIndex + 1}`)
-                : 'Not reached yet'}
+                ? (multi ? tf(t.progressJump, { label }) : questionLabel)
+                : t.progressNotReached}
             >
               <Box
                 component="button"

@@ -1,0 +1,507 @@
+{
+  "schemaVersion": "1.0.0",
+  "description": "Canonical machine-readable contract for SP-Survey project, survey, question, media, skill, and mutation payloads.",
+  "scalarTypes": {
+    "choice": {
+      "type": ["string", "number", "object"],
+      "description": "SurveyJS choice value or {value,text} item."
+    },
+    "condition": {
+      "type": "string",
+      "description": "SurveyJS expression evaluated against response values."
+    },
+    "color": {
+      "type": "string",
+      "pattern": "^#[0-9a-fA-F]{6}$"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri-reference"
+    }
+  },
+  "entities": {
+    "project": {
+      "required": ["id", "name"],
+      "fields": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "author": { "type": "string" },
+        "year": { "type": ["integer", "string"] },
+        "category": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "website": { "$ref": "#/scalarTypes/url" },
+        "templateId": { "type": "string" },
+        "huggingfaceDataset": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "lastModified": { "type": "string", "format": "date-time" },
+        "draftUpdatedAt": { "type": "string", "format": "date-time" },
+        "publishedVersionId": { "type": "string" },
+        "surveyConfig": { "$ref": "#/entities/survey" },
+        "preloadedImages": { "type": "array", "items": { "$ref": "#/entities/mediaItem" } },
+        "imageDatasetConfig": { "$ref": "#/entities/mediaDataset" }
+      }
+    },
+    "survey": {
+      "required": ["pages"],
+      "fields": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "locale": { "type": "string", "enum": ["en", "zh"], "default": "en" },
+        "logo": { "$ref": "#/scalarTypes/url" },
+        "logoPosition": { "type": "string", "enum": ["left", "right", "top", "bottom"] },
+        "showQuestionNumbers": { "type": "string" },
+        "showProgressBar": { "type": "string" },
+        "progressBarType": { "type": "string" },
+        "autoGrowComment": { "type": "boolean" },
+        "showPreviewBeforeComplete": { "type": "string" },
+        "includeResearcherPractice": { "type": "boolean" },
+        "excludeFlaggedFromAnalysis": { "type": "boolean" },
+        "completedHtml": { "type": "string" },
+        "theme": { "$ref": "#/entities/theme" },
+        "pages": { "type": "array", "items": { "$ref": "#/entities/page" } }
+      }
+    },
+    "page": {
+      "required": ["name", "elements"],
+      "fields": {
+        "name": { "type": "string", "minLength": 1 },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "visibleIf": { "$ref": "#/scalarTypes/condition" },
+        "enableIf": { "$ref": "#/scalarTypes/condition" },
+        "elements": { "type": "array", "items": { "$ref": "#/questionTypes" } }
+      }
+    },
+    "theme": {
+      "fields": {
+        "primaryColor": { "$ref": "#/scalarTypes/color" },
+        "primaryLight": { "$ref": "#/scalarTypes/color" },
+        "primaryDark": { "$ref": "#/scalarTypes/color" },
+        "secondaryColor": { "$ref": "#/scalarTypes/color" },
+        "accentColor": { "$ref": "#/scalarTypes/color" },
+        "successColor": { "$ref": "#/scalarTypes/color" },
+        "backgroundColor": { "$ref": "#/scalarTypes/color" },
+        "cardBackground": { "$ref": "#/scalarTypes/color" },
+        "headerBackground": { "$ref": "#/scalarTypes/color" },
+        "textColor": { "$ref": "#/scalarTypes/color" },
+        "secondaryText": { "$ref": "#/scalarTypes/color" },
+        "disabledText": { "$ref": "#/scalarTypes/color" },
+        "borderColor": { "$ref": "#/scalarTypes/color" },
+        "focusBorder": { "$ref": "#/scalarTypes/color" }
+      }
+    },
+    "mediaItem": {
+      "required": ["url"],
+      "fields": {
+        "id": { "type": "string" },
+        "media_id": { "type": "string" },
+        "url": { "$ref": "#/scalarTypes/url" },
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["image", "video", "audio"] },
+        "folder": { "type": "string" },
+        "size": { "type": "integer", "minimum": 0 },
+        "mimeType": { "type": "string" },
+        "source": { "type": "string" },
+        "metadata": { "type": "object", "additionalProperties": true }
+      }
+    },
+    "mediaDataset": {
+      "fields": {
+        "mediaFolders": { "type": "array", "items": { "type": "string" } },
+        "mediaFolderTags": {
+          "type": "object",
+          "additionalProperties": { "type": "string", "enum": ["set", "category"] }
+        },
+        "templateImportHistory": { "type": "array", "items": { "type": "object" } },
+        "preannotateLabels": { "type": "array", "items": { "type": "string" } },
+        "imageFeatures": { "type": "object", "additionalProperties": true }
+      }
+    },
+    "mediaSlot": {
+      "required": ["id"],
+      "fields": {
+        "id": { "type": "string" },
+        "role": { "type": "string" },
+        "mediaType": { "type": "string", "enum": ["any", "image", "video", "audio"] },
+        "selection": { "type": "string", "enum": ["random", "fixed", "set_member", "category"] },
+        "url": { "$ref": "#/scalarTypes/url" },
+        "folder": { "type": "string" },
+        "setBinding": { "type": "string" },
+        "category": { "type": "string" }
+      }
+    },
+    "skill": {
+      "required": ["id", "name", "sourceHtml", "resultSchema"],
+      "fields": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "sourceHtml": { "type": "string" },
+        "configSchema": { "type": "array", "items": { "$ref": "#/entities/skillConfigField" } },
+        "defaultConfig": { "type": "object", "additionalProperties": true },
+        "resultSchema": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/entities/skillResultField" }
+        },
+        "mediaConstraints": { "type": "object", "additionalProperties": true },
+        "revision": { "type": "integer", "minimum": 1 },
+        "contractVersion": { "type": "integer", "minimum": 1 },
+        "scope": { "type": "string" }
+      }
+    },
+    "skillConfigField": {
+      "required": ["key", "label", "type"],
+      "fields": {
+        "key": { "type": "string" },
+        "label": { "type": "string" },
+        "type": { "type": "string", "enum": ["string", "number", "boolean", "select", "json"] },
+        "options": { "type": "array", "items": { "$ref": "#/scalarTypes/choice" } },
+        "min": { "type": "number" },
+        "max": { "type": "number" }
+      }
+    },
+    "skillResultField": {
+      "required": ["key", "label", "type"],
+      "fields": {
+        "key": { "type": "string" },
+        "label": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": [
+            "number", "rating", "boolean", "choice", "text", "string", "count", "color", "scaleGroup",
+            "points", "path", "polygon", "bbox", "allocation", "rankedList", "multiChoice",
+            "matrix", "mediaMatrix", "mediaChoice", "mediaRankedList", "timeRanges", "timeSeries",
+            "pairwiseChoice", "pairwisePreference", "bestWorst", "compositeBlocks"
+          ]
+        }
+      }
+    }
+  },
+  "questionFields": {
+    "type": { "type": "string" },
+    "name": { "type": "string", "minLength": 1 },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "isRequired": { "type": "boolean" },
+    "visibleIf": { "$ref": "#/scalarTypes/condition" },
+    "enableIf": { "$ref": "#/scalarTypes/condition" },
+    "requiredIf": { "$ref": "#/scalarTypes/condition" },
+    "isAttentionCheck": { "type": "boolean" },
+    "expectedAnswer": {},
+    "maxLength": { "type": "integer", "minimum": 0 },
+    "placeholder": { "type": "string" },
+    "inputType": { "type": "string" },
+    "min": { "type": "number" },
+    "max": { "type": "number" },
+    "step": { "type": "number", "exclusiveMinimum": 0 },
+    "rows": {
+      "type": ["integer", "array"],
+      "description": "comment: integer textarea height. matrix/imagematrix/mediamatrix: array of {value,text}. Never mix the two."
+    },
+    "dimensions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "left", "right"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "label": { "type": "string", "minLength": 1 },
+          "left": { "type": "string", "minLength": 1 },
+          "right": { "type": "string", "minLength": 1 },
+          "min": { "type": "number" },
+          "max": { "type": "number" },
+          "step": { "type": "number", "exclusiveMinimum": 0 }
+        }
+      }
+    },
+    "columns": { "type": "array" },
+    "choices": { "type": "array", "items": { "$ref": "#/scalarTypes/choice" } },
+    "labelTrue": { "type": "string" },
+    "labelFalse": { "type": "string" },
+    "rateMin": { "type": "number" },
+    "rateMax": { "type": "number" },
+    "rateStep": { "type": "number", "exclusiveMinimum": 0 },
+    "minRateDescription": { "type": "string" },
+    "maxRateDescription": { "type": "string" },
+    "scaleMin": { "type": "number" },
+    "scaleMax": { "type": "number" },
+    "scaleStep": { "type": "number", "exclusiveMinimum": 0 },
+    "budget": { "type": "number", "exclusiveMinimum": 0 },
+    "multiSelect": { "type": "boolean" },
+    "allowTie": { "type": "boolean" },
+    "tieLabel": { "type": "string" },
+    "trialCount": { "type": "integer", "minimum": 1 },
+    "trialMediaSets": { "type": "array", "items": { "type": "array" }, "runtimeOnly": true, "agentWritable": false },
+    "spTrialsAnswer": { "type": "object", "runtimeOnly": true, "agentWritable": false },
+    "imageCount": { "type": "integer", "minimum": 1 },
+    "imageSelectionMode": { "type": "string", "enum": ["huggingface_random", "huggingface_manual", "manual", "random"] },
+    "randomImageSelection": { "type": "boolean" },
+    "excludePreviouslyUsedImages": { "type": "boolean" },
+    "selectedImageUrls": { "type": "array", "items": { "$ref": "#/scalarTypes/url" } },
+    "imageLink": { "$ref": "#/scalarTypes/url" },
+    "imageLinks": { "type": "array", "items": { "$ref": "#/scalarTypes/url" } },
+    "imageUrls": { "type": "array", "items": { "$ref": "#/scalarTypes/url" } },
+    "imageNames": { "type": "array", "items": { "type": "string" } },
+    "imageHtml": { "type": "string" },
+    "annotationImageUrl": { "$ref": "#/scalarTypes/url" },
+    "mediaType": { "type": "string", "enum": ["any", "image", "video", "audio"] },
+    "mediaAssignmentMode": { "type": "string", "enum": ["individual", "set", "group", "category"] },
+    "mediaFolders": { "type": "array", "items": { "type": "string" } },
+    "mediaPerCategory": { "type": "integer", "minimum": 1 },
+    "mediaCategoryMode": { "type": "string", "enum": ["all", "single"] },
+    "pairingMode": { "type": "string", "enum": ["random", "balanced", "adaptive", "uncertain", "high_sigma"] },
+    "assignedMediaSetId": { "type": "string" },
+    "assignedMediaGroupId": { "type": "string" },
+    "assignedMediaCategories": { "type": "array", "items": { "type": "string" } },
+    "mediaSlots": { "type": "array", "items": { "$ref": "#/entities/mediaSlot" } },
+    "mediaSlotsResolved": { "type": "array", "items": { "$ref": "#/entities/mediaItem" }, "runtimeOnly": true, "agentWritable": false },
+    "slotIds": { "type": "array", "items": { "type": "string" }, "runtimeOnly": true, "agentWritable": false },
+    "slotUrls": { "type": "array", "items": { "$ref": "#/scalarTypes/url" }, "runtimeOnly": true, "agentWritable": false },
+    "slotTypes": { "type": "array", "items": { "type": "string" }, "runtimeOnly": true, "agentWritable": false },
+    "slotRoles": { "type": "array", "items": { "type": "string" }, "runtimeOnly": true, "agentWritable": false },
+    "slotNames": { "type": "array", "items": { "type": "string" }, "runtimeOnly": true, "agentWritable": false },
+    "mediaPresentation": { "type": "string", "enum": ["stack", "sequential"] },
+    "mediaUrl": { "$ref": "#/scalarTypes/url" },
+    "mediaUrls": { "type": "array", "items": { "$ref": "#/scalarTypes/url" } },
+    "mediaName": { "type": "string" },
+    "mediaNames": { "type": "array", "items": { "type": "string" } },
+    "mediaTypes": { "type": "array", "items": { "type": "string", "enum": ["image", "video", "audio"] } },
+    "mediaItems": { "type": "array", "items": { "$ref": "#/entities/mediaItem" } },
+    "displayMode": { "type": "string", "enum": ["single", "sideBySide", "reveal", "timed"] },
+    "exposureSeconds": { "type": "integer", "minimum": 1, "maximum": 120 },
+    "beforeLabel": { "type": "string" },
+    "afterLabel": { "type": "string" },
+    "imageFit": { "type": "string" },
+    "allowedTools": { "type": "array", "items": { "type": "string", "enum": ["point", "line", "polygon", "bbox"] } },
+    "annotationLabels": { "type": "array", "items": { "type": "string" } },
+    "minAnnotations": { "type": "integer", "minimum": 0 },
+    "maxAnnotations": { "type": "integer", "minimum": 0 },
+    "minSelectedChoices": { "type": "integer", "minimum": 0 },
+    "maxSelectedChoices": { "type": "integer", "minimum": 0 },
+    "skillId": { "type": "string" },
+    "skillConfig": { "type": "object", "additionalProperties": true },
+    "skillRevision": { "type": "integer", "minimum": 0 },
+    "skillContractVersion": { "type": "integer", "minimum": 1 },
+    "skillResultSchema": { "type": "array", "items": { "$ref": "#/entities/skillResultField" } },
+    "skillHtml": { "type": "string", "agentWritable": false, "description": "Legacy/resolved browser runtime HTML. Agent drafts use skillId instead." },
+    "skillAnalysisHtml": { "type": "string", "deprecated": true, "agentWritable": false },
+    "skillAnswerSnapshot": { "runtimeOnly": true, "agentWritable": false },
+    "projectId": { "type": "string", "runtimeOnly": true, "agentWritable": false },
+    "numericMeasure": { "type": "string" },
+    "count": { "type": "integer", "minimum": 0 }
+  },
+  "questionFieldGroups": {
+    "common": ["type", "name", "title", "description", "isRequired", "visibleIf", "enableIf", "requiredIf", "isAttentionCheck", "expectedAnswer", "maxLength"],
+    "choices": ["choices", "minSelectedChoices", "maxSelectedChoices"],
+    "rating": ["rateMin", "rateMax", "rateStep", "minRateDescription", "maxRateDescription"],
+    "slider": ["dimensions", "scaleMin", "scaleMax", "scaleStep"],
+    "allocation": ["choices", "budget"],
+    "stimulus": ["trialCount", "trialMediaSets", "spTrialsAnswer", "imageCount", "imageSelectionMode", "randomImageSelection", "excludePreviouslyUsedImages", "selectedImageUrls", "imageLink", "imageLinks", "imageUrls", "imageNames", "imageHtml", "mediaAssignmentMode", "mediaFolders", "mediaPerCategory", "mediaCategoryMode", "pairingMode", "assignedMediaSetId", "assignedMediaGroupId", "assignedMediaCategories"],
+    "media": ["mediaType", "mediaSlots", "mediaSlotsResolved", "slotIds", "slotUrls", "slotTypes", "slotRoles", "slotNames", "mediaPresentation", "mediaUrl", "mediaUrls", "mediaName", "mediaNames", "mediaTypes", "mediaItems"],
+    "annotation": ["annotationImageUrl", "allowedTools", "annotationLabels", "minAnnotations", "maxAnnotations", "projectId"],
+    "skill": ["skillId", "skillConfig", "skillRevision", "skillContractVersion", "skillResultSchema", "skillHtml", "skillAnalysisHtml", "skillAnswerSnapshot"]
+  },
+  "questionTypes": {
+    "text": { "label": "Text Input", "group": "text", "fieldGroups": ["common"], "fields": ["placeholder", "inputType", "min", "max", "step"], "defaults": {} },
+    "comment": { "label": "Text Multi-line Input", "group": "text", "fieldGroups": ["common"], "fields": ["placeholder", "rows"], "defaults": {} },
+    "number": { "label": "Text Number", "group": "text", "runtimeType": "text", "fieldGroups": ["common"], "fields": ["inputType", "min", "max", "step", "numericMeasure"], "defaults": { "inputType": "number", "min": 0, "max": 100 } },
+    "radiogroup": { "label": "Text Single Choice", "group": "text", "fieldGroups": ["common", "choices"], "fields": [], "defaults": {} },
+    "checkbox": { "label": "Text Multiple Choice", "group": "text", "fieldGroups": ["common", "choices"], "fields": [], "defaults": {} },
+    "ranking": { "label": "Text Ranking", "group": "text", "fieldGroups": ["common", "choices"], "fields": [], "defaults": {} },
+    "rating": { "label": "Text Rating Scale", "group": "text", "fieldGroups": ["common", "rating"], "fields": [], "defaults": { "rateMin": 1, "rateMax": 5 } },
+    "boolean": { "label": "Text Yes/No", "group": "text", "fieldGroups": ["common"], "fields": ["labelTrue", "labelFalse"], "defaults": { "labelTrue": "Yes", "labelFalse": "No" } },
+    "dropdown": { "label": "Text Dropdown", "group": "text", "fieldGroups": ["common", "choices"], "fields": [], "defaults": {} },
+    "matrix": { "label": "Text Matrix", "group": "text", "fieldGroups": ["common"], "fields": ["rows", "columns"], "defaults": { "rows": [], "columns": [] } },
+    "expression": { "label": "Text Instruction", "group": "text", "fieldGroups": ["common"], "fields": [], "defaults": {} },
+    "consent": { "label": "Text Consent", "group": "text", "runtimeType": "boolean", "fieldGroups": ["common"], "fields": ["labelTrue", "labelFalse"], "defaults": { "isRequired": true, "labelTrue": "I agree / I consent", "labelFalse": "I do not agree" } },
+    "slidergroup": { "label": "Text Slider Group", "group": "text", "traits": ["slider"], "fieldGroups": ["common", "slider"], "fields": [], "defaults": { "dimensions": [], "scaleMin": 1, "scaleMax": 7, "scaleStep": 1 } },
+    "pointallocation": { "label": "Text Point Allocation", "group": "text", "traits": ["allocation"], "fieldGroups": ["common", "allocation"], "fields": [], "defaults": { "choices": [], "budget": 100 } },
+    "imagepicker": { "label": "Image Choice", "group": "image", "traits": ["stimulus", "trial", "choice"], "fieldGroups": ["common", "choices", "stimulus"], "fields": ["multiSelect", "allowTie", "tieLabel"], "defaults": { "imageCount": 4, "multiSelect": false, "pairingMode": "random" } },
+    "imageranking": { "label": "Image Ranking", "group": "image", "traits": ["stimulus", "trial"], "fieldGroups": ["common", "stimulus"], "fields": ["choices"], "defaults": { "imageCount": 4, "choices": [] } },
+    "imagerating": { "label": "Image Rating Scale", "group": "image", "traits": ["stimulus", "trial", "rating"], "fieldGroups": ["common", "rating", "stimulus"], "fields": [], "defaults": { "imageCount": 1, "rateMin": 1, "rateMax": 5 } },
+    "imageboolean": { "label": "Image Yes/No", "group": "image", "traits": ["stimulus", "trial"], "fieldGroups": ["common", "stimulus"], "fields": ["labelTrue", "labelFalse"], "defaults": { "imageCount": 1, "labelTrue": "Yes", "labelFalse": "No" } },
+    "imagecheckbox": { "label": "Image Multi-select (text tags)", "group": "image", "traits": ["stimulus", "trial", "choice"], "fieldGroups": ["common", "choices", "stimulus"], "fields": [], "defaults": { "imageCount": 1, "choices": [{ "value": "tag_a", "text": "Tag A" }, { "value": "tag_b", "text": "Tag B" }, { "value": "tag_c", "text": "Tag C" }] } },
+    "imagematrix": { "label": "Image Matrix", "group": "image", "traits": ["stimulus", "trial", "matrix"], "fieldGroups": ["common", "stimulus"], "fields": ["rows", "columns"], "defaults": { "imageCount": 1, "rows": [], "columns": [], "imageLinks": [] } },
+    "image": { "label": "Image Display (single image)", "group": "image", "traits": ["stimulus", "display"], "fieldGroups": ["common", "stimulus"], "fields": ["imageFit"], "defaults": { "imageCount": 1 } },
+    "imageannotation": { "label": "Image Annotation", "group": "image", "traits": ["stimulus", "trial", "annotation"], "fieldGroups": ["common", "stimulus", "annotation"], "fields": [], "defaults": { "imageCount": 1, "allowedTools": ["point", "line", "polygon", "bbox"], "annotationLabels": [], "minAnnotations": 0, "maxAnnotations": 50 } },
+    "imageslidergroup": { "label": "Image Slider Group", "group": "image", "traits": ["stimulus", "trial", "slider"], "fieldGroups": ["common", "stimulus", "slider"], "fields": [], "defaults": { "imageCount": 1, "dimensions": [], "scaleMin": 1, "scaleMax": 7, "scaleStep": 1 } },
+    "imagepointallocation": { "label": "Image Point Allocation", "group": "image", "traits": ["stimulus", "trial", "allocation"], "fieldGroups": ["common", "stimulus", "allocation"], "fields": [], "defaults": { "imageCount": 1, "choices": [], "budget": 100 } },
+    "mediapicker": { "label": "Media Choice", "group": "media", "traits": ["stimulus", "media", "trial", "choice"], "fieldGroups": ["common", "choices", "stimulus", "media"], "fields": ["multiSelect", "allowTie", "tieLabel"], "defaults": { "mediaType": "any", "imageCount": 4, "multiSelect": false, "pairingMode": "random", "mediaSlots": [], "mediaPresentation": "stack" } },
+    "mediaranking": { "label": "Media Ranking", "group": "media", "traits": ["stimulus", "media", "trial"], "fieldGroups": ["common", "stimulus", "media"], "fields": ["choices"], "defaults": { "mediaType": "any", "imageCount": 4, "choices": [], "mediaSlots": [], "mediaPresentation": "stack" } },
+    "mediarating": { "label": "Media Rating Scale", "group": "media", "traits": ["stimulus", "media", "trial", "rating"], "fieldGroups": ["common", "rating", "stimulus", "media"], "fields": [], "defaults": { "mediaType": "any", "imageCount": 1, "rateMin": 1, "rateMax": 5, "mediaSlots": [], "mediaPresentation": "stack" } },
+    "mediaboolean": { "label": "Media Yes/No", "group": "media", "traits": ["stimulus", "media", "trial"], "fieldGroups": ["common", "stimulus", "media"], "fields": ["labelTrue", "labelFalse"], "defaults": { "mediaType": "any", "imageCount": 1, "labelTrue": "Yes", "labelFalse": "No", "mediaSlots": [], "mediaPresentation": "stack" } },
+    "mediacheckbox": { "label": "Media Multi-select (text tags)", "group": "media", "traits": ["stimulus", "media", "trial", "choice"], "fieldGroups": ["common", "choices", "stimulus", "media"], "fields": [], "defaults": { "mediaType": "any", "imageCount": 1, "choices": [{ "value": "tag_a", "text": "Tag A" }, { "value": "tag_b", "text": "Tag B" }, { "value": "tag_c", "text": "Tag C" }], "mediaSlots": [], "mediaPresentation": "stack" } },
+    "mediamatrix": { "label": "Media Matrix", "group": "media", "traits": ["stimulus", "media", "trial", "matrix"], "fieldGroups": ["common", "stimulus", "media"], "fields": ["rows", "columns"], "defaults": { "mediaType": "any", "imageCount": 1, "rows": [], "columns": [], "mediaSlots": [], "mediaPresentation": "stack" } },
+    "mediadisplay": { "label": "Media Display (image / video / audio)", "group": "media", "traits": ["stimulus", "media", "display"], "fieldGroups": ["common", "stimulus", "media"], "fields": ["displayMode", "exposureSeconds", "beforeLabel", "afterLabel", "imageFit"], "defaults": { "mediaType": "any", "imageCount": 1, "displayMode": "single", "exposureSeconds": 5, "beforeLabel": "Before", "afterLabel": "After", "mediaSlots": [], "mediaPresentation": "stack" } },
+    "mediaslidergroup": { "label": "Media Slider Group", "group": "media", "traits": ["stimulus", "media", "trial", "slider"], "fieldGroups": ["common", "stimulus", "media", "slider"], "fields": [], "defaults": { "mediaType": "any", "imageCount": 1, "dimensions": [], "scaleMin": 1, "scaleMax": 7, "scaleStep": 1, "mediaSlots": [], "mediaPresentation": "stack" } },
+    "mediapointallocation": { "label": "Media Point Allocation", "group": "media", "traits": ["stimulus", "media", "trial", "allocation"], "fieldGroups": ["common", "stimulus", "media", "allocation"], "fields": [], "defaults": { "mediaType": "any", "imageCount": 1, "choices": [], "budget": 100, "mediaSlots": [], "mediaPresentation": "stack" } },
+    "skillquestion": { "label": "Advanced Custom Interactive Task", "group": "advanced", "traits": ["stimulus", "skill"], "fieldGroups": ["common", "stimulus", "skill"], "fields": ["mediaType"], "defaults": { "imageCount": 1, "skillConfig": {}, "skillResultSchema": [], "skillRevision": 0, "skillContractVersion": 1 } }
+  },
+  "defaultSurveyConfig": {
+    "title": "",
+    "description": "This survey helps us understand user preferences and opinions.",
+    "logo": "",
+    "logoPosition": "right",
+    "showQuestionNumbers": "off",
+    "showProgressBar": "top",
+    "locale": "en",
+    "progressBarType": "questions",
+    "autoGrowComment": true,
+    "showPreviewBeforeComplete": "showAllQuestions",
+    "includeResearcherPractice": true,
+    "excludeFlaggedFromAnalysis": false,
+    "pages": [
+      {
+        "name": "page1",
+        "title": "Survey Questions",
+        "description": "Please answer the following questions.",
+        "elements": []
+      }
+    ],
+    "completedHtml": "<h3>Thank you for completing the survey.</h3>"
+  },
+  "responseContract": {
+    "version": 2,
+    "questionKeys": [
+      "name", "type", "title", "description", "choices", "rows", "columns", "dimensions",
+      "budget", "rateMin", "rateMax", "scaleMin", "scaleMax", "scaleStep", "rateStep",
+      "inputType", "min", "max", "step", "annotationLabels", "allowedTools",
+      "minAnnotations", "maxAnnotations", "minSelectedChoices", "maxSelectedChoices",
+      "isAttentionCheck", "expectedAnswer", "labelTrue", "labelFalse", "minRateDescription",
+      "maxRateDescription", "multiSelect", "allowTie", "tieLabel", "trialCount", "imageCount",
+      "skillId", "skillRevision", "skillResultSchema", "skillContractVersion", "isRequired",
+      "visibleIf", "enableIf", "requiredIf", "mediaType", "mediaAssignmentMode", "mediaFolders",
+      "mediaPerCategory", "mediaCategoryMode", "excludePreviouslyUsedImages", "imageSelectionMode",
+      "randomImageSelection", "pairingMode", "selectedImageUrls", "mediaSlots",
+      "mediaPresentation", "displayMode", "exposureSeconds", "imageFit", "numericMeasure",
+      "maxLength"
+    ],
+    "skillConfigKeys": [
+      "min", "max", "step", "rateMin", "rateMax", "scaleMin", "scaleMax", "scaleStep",
+      "choices", "options", "rows", "columns", "dimensions", "budget", "labels", "mediaType",
+      "mediaCount"
+    ],
+    "staticMediaKeys": [
+      "imageLink", "imageLinks", "mediaUrl", "mediaUrls", "mediaItems", "beforeLabel", "afterLabel"
+    ]
+  },
+  "operationContracts": {
+    "addPage": {
+      "public": true,
+      "required": ["op", "page"],
+      "properties": {
+        "op": { "const": "addPage" },
+        "page": { "$ref": "#/entities/page" },
+        "index": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "removePage": {
+      "public": true,
+      "required": ["op", "pageName"],
+      "properties": {
+        "op": { "const": "removePage" },
+        "pageName": { "type": "string" }
+      }
+    },
+    "addQuestion": {
+      "public": true,
+      "required": ["op", "pageName", "question"],
+      "properties": {
+        "op": { "const": "addQuestion" },
+        "pageName": { "type": "string" },
+        "question": { "$ref": "#/questionTypes" },
+        "index": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "updateQuestion": {
+      "public": true,
+      "required": ["op", "pageName", "questionName", "patch"],
+      "properties": {
+        "op": { "const": "updateQuestion" },
+        "pageName": { "type": "string" },
+        "questionName": { "type": "string" },
+        "patch": { "type": "object", "additionalProperties": true }
+      }
+    },
+    "removeQuestion": {
+      "public": true,
+      "required": ["op", "pageName", "questionName"],
+      "properties": {
+        "op": { "const": "removeQuestion" },
+        "pageName": { "type": "string" },
+        "questionName": { "type": "string" }
+      }
+    },
+    "setAllRatingScales": {
+      "public": true,
+      "required": ["op"],
+      "properties": {
+        "op": { "const": "setAllRatingScales" },
+        "types": { "type": "array", "items": { "type": "string" } },
+        "rateMin": { "type": "number" },
+        "rateMax": { "type": "number" }
+      }
+    },
+    "replaceConfig": {
+      "public": true,
+      "required": ["op", "surveyConfig"],
+      "properties": {
+        "op": { "const": "replaceConfig" },
+        "surveyConfig": { "$ref": "#/entities/survey" }
+      }
+    },
+    "updateSurvey": {
+      "public": true,
+      "required": ["op", "patch"],
+      "properties": {
+        "op": { "const": "updateSurvey" },
+        "patch": { "type": "object" }
+      }
+    },
+    "updatePage": {
+      "public": true,
+      "required": ["op", "pageName", "patch"],
+      "properties": {
+        "op": { "const": "updatePage" },
+        "pageName": { "type": "string" },
+        "patch": { "type": "object" }
+      }
+    },
+    "setTheme": {
+      "public": true,
+      "required": ["op", "theme"],
+      "properties": {
+        "op": { "const": "setTheme" },
+        "theme": { "type": "object" }
+      }
+    },
+    "reorderPages": {
+      "public": true,
+      "required": ["op", "pageNames"],
+      "properties": {
+        "op": { "const": "reorderPages" },
+        "pageNames": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "reorderQuestions": {
+      "public": true,
+      "required": ["op", "pageName", "questionNames"],
+      "properties": {
+        "op": { "const": "reorderQuestions" },
+        "pageName": { "type": "string" },
+        "questionNames": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "restoreRatingScales": {
+      "public": false,
+      "required": ["op", "previous"],
+      "properties": {
+        "op": { "const": "restoreRatingScales" },
+        "previous": { "type": "array", "items": { "type": "object" } }
+      }
+    }
+  }
+}

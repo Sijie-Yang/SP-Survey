@@ -6,7 +6,9 @@ const path = require('path');
 const cors = require('cors');
 const OpenAI = require('openai');
 const { resolveAiRequest, aiChat, formatAiError } = require('./aiClient');
-const { registerAgentProjectApi } = require('./src/server/agentProjectApi');
+const { registerAgentProjectApi, createProjectIo } = require('./src/server/agentProjectApi');
+const { registerAgentChatApi } = require('./src/server/agentChatRuntime');
+const { registerSiliconLocalApi } = require('./src/server/siliconLocalApi');
 
 // Import multi-agent review system
 const {
@@ -86,19 +88,33 @@ app.post('/api/projects', async (req, res) => {
     const { project, surveyConfig, supabaseConfig } = req.body;
     const filename = `${project.id}.json`;
     const filePath = path.join(PROJECTS_PATH, filename);
+    const existing = (await fs.pathExists(filePath))
+      ? JSON.parse(await fs.readFile(filePath, 'utf8'))
+      : {};
+    const now = new Date().toISOString();
     
     const projectData = {
+      ...existing,
       project,
       surveyConfig,
-      supabaseConfig,
-      savedAt: new Date().toISOString(),
-      version: '2.0'
+      supabaseConfig: supabaseConfig !== undefined ? supabaseConfig : existing.supabaseConfig,
+      savedAt: now,
+      draftUpdatedAt: now,
+      version: '2.0',
     };
     
     await fs.writeFile(filePath, JSON.stringify(projectData, null, 2), 'utf8');
     
     console.log(`✅ Project "${project.name}" saved to ${filePath}`);
-    res.json({ success: true, filename, filePath });
+    res.json({
+      success: true,
+      filename,
+      filePath,
+      savedAt: now,
+      draftUpdatedAt: now,
+      releaseManaged: !!projectData.releaseManaged,
+      publishedVersion: projectData.publishedVersion || 0,
+    });
   } catch (error) {
     console.error('Error saving project:', error);
     res.status(500).json({ success: false, error: error.message });
@@ -116,12 +132,83 @@ app.get('/api/projects/:projectId', async (req, res) => {
       const data = await fs.readFile(filePath, 'utf8');
       const projectData = JSON.parse(data);
       console.log(`✅ Loaded project data for ${projectId}`);
-      res.json({ success: true, project: projectData.project, surveyConfig: projectData.surveyConfig });
+      res.json({
+        success: true,
+        project: projectData.project,
+        surveyConfig: projectData.surveyConfig,
+        savedAt: projectData.savedAt || null,
+        draftUpdatedAt: projectData.draftUpdatedAt || projectData.savedAt || null,
+        releaseManaged: !!projectData.releaseManaged,
+        publishedVersion: projectData.publishedVersion || 0,
+        publishedSurveyConfig: projectData.publishedSurveyConfig || null,
+        publishedMedia: projectData.publishedMedia || null,
+        releaseHistory: projectData.releaseHistory || [],
+      });
     } else {
       res.status(404).json({ success: false, error: 'Project not found' });
     }
   } catch (error) {
     console.error('Error loading project:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.post('/api/projects/:projectId/release', async (req, res) => {
+  try {
+    const { projectId } = req.params;
+    const { expectedDraftUpdatedAt, summary = '', restoreVersion = null } = req.body || {};
+    const filePath = path.join(PROJECTS_PATH, `${projectId}.json`);
+    if (!await fs.pathExists(filePath)) {
+      return res.status(404).json({ success: false, error: 'Project not found' });
+    }
+    const stored = JSON.parse(await fs.readFile(filePath, 'utf8'));
+    const currentStamp = stored.draftUpdatedAt || stored.savedAt || null;
+    if (expectedDraftUpdatedAt && currentStamp && expectedDraftUpdatedAt !== currentStamp) {
+      return res.status(409).json({
+        success: false,
+        error: 'Draft changed after it was read. Save or refresh, then release again.',
+        draftUpdatedAt: currentStamp,
+      });
+    }
+    const history = Array.isArray(stored.releaseHistory) ? stored.releaseHistory.slice() : [];
+    const source = restoreVersion
+      ? history.find((row) => row.version === restoreVersion)
+      : null;
+    if (restoreVersion && !source) {
+      return res.status(400).json({ success: false, error: `Unknown version: ${restoreVersion}` });
+    }
+    const now = new Date().toISOString();
+    const config = JSON.parse(JSON.stringify(source?.config || stored.surveyConfig || { pages: [] }));
+    const media = JSON.parse(JSON.stringify(source?.media_snapshot || {
+      preloadedImages: config.preloadedImages || [],
+      imageDatasetConfig: stored.project?.imageDatasetConfig || {},
+    }));
+    const nextVersion = Number(stored.publishedVersion || 0) + 1;
+    const entry = {
+      version: nextVersion,
+      releasedAt: now,
+      summary: String(summary || '').trim(),
+      config,
+      media_snapshot: media,
+    };
+    const next = {
+      ...stored,
+      releaseManaged: true,
+      publishedVersion: nextVersion,
+      publishedSurveyConfig: config,
+      publishedMedia: media,
+      releaseHistory: [entry, ...history].slice(0, 50),
+      lastReleasedAt: now,
+    };
+    await fs.writeFile(filePath, JSON.stringify(next, null, 2), 'utf8');
+    res.json({
+      success: true,
+      publishedVersion: nextVersion,
+      releaseManaged: true,
+      releasedAt: now,
+    });
+  } catch (error) {
+    console.error('Error releasing project:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
@@ -171,7 +258,16 @@ app.get('/api/projects', async (req, res) => {
 registerAgentProjectApi(app, {
   fs,
   projectsPath: PROJECTS_PATH,
+  skillsPath: SKILLS_PATH,
   clientOrigin: CLIENT_ORIGIN,
+});
+registerAgentChatApi(app, {
+  createProjectIo: () => createProjectIo({ fs, projectsPath: PROJECTS_PATH }),
+});
+registerSiliconLocalApi(app, {
+  fs,
+  projectsPath: PROJECTS_PATH,
+  createProjectIo: () => createProjectIo({ fs, projectsPath: PROJECTS_PATH }),
 });
 
 // Deployment endpoints

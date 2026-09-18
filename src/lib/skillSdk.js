@@ -70,7 +70,7 @@ export const SKILL_SDK_SOURCE = `
 
   window.addEventListener('message', function(e) {
     var d = e.data;
-    if (!d || d.source !== 'sp-survey-host') return;
+    if (e.source !== window.parent || !d || d.source !== 'sp-survey-host') return;
     if (d.type === 'init') applyInitData(d);
   });
 
@@ -103,6 +103,9 @@ export const SKILL_SDK_SOURCE = `
 `;
 
 function wrapSkillHtml(sourceHtml, { touchCss, boot, sdk }) {
+  // Opaque origin + no fetch/XHR/CDN scripts. Media remains available for existing studies.
+  const policy = `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src https: http: data: blob:; media-src https: http: blob: data:; font-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">`;
+  touchCss = policy + touchCss;
   if (/<\/html>/i.test(sourceHtml)) {
     let html = sourceHtml;
     if (/<head[^>]*>/i.test(html)) {
@@ -182,7 +185,7 @@ export const ANALYSIS_SDK_SOURCE = `
 
   window.addEventListener('message', function(e) {
     var d = e.data;
-    if (!d || d.source !== 'sp-survey-host') return;
+    if (e.source !== window.parent || !d || d.source !== 'sp-survey-host') return;
     if (d.type === 'analysis-init') applyInitData(d);
   });
 

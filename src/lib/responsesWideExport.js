@@ -1,3 +1,4 @@
+import { mediaIdentityKey, resolveMediaAnswerKey } from './mediaIdentity.js';
 /**
  * Wide (one-row-per-response) CSV builder for Results Analysis.
  */
@@ -67,10 +68,6 @@ function subKeysFor(q) {
   return null;
 }
 
-function urlToName(v) {
-  return (v && typeof v === 'string') ? v.split('?')[0].split('/').pop() : v;
-}
-
 /**
  * Build UTF-8 BOM CSV string (one row per response).
  */
@@ -131,6 +128,7 @@ export function buildResponsesWideCsv(responses, allQuestions, surveyConfig) {
     'attempt_index',
     'practice_mode',
     'quality_flags',
+    'survey_revision',
     ...headerCols,
   ];
 
@@ -146,6 +144,7 @@ export function buildResponsesWideCsv(responses, allQuestions, surveyConfig) {
       attempt_index: row.survey_metadata?.attempt_index ?? '',
       practice_mode: row.survey_metadata?.practice_mode ? 'true' : 'false',
       quality_flags: flags.join('|'),
+      survey_revision: row.survey_metadata?.survey_revision || '',
     };
 
     for (const q of questions) {
@@ -171,9 +170,10 @@ export function buildResponsesWideCsv(responses, allQuestions, surveyConfig) {
       if (q.type === 'skillquestion' && ans && typeof ans === 'object' && !Array.isArray(ans)) {
         ansForCsv = stripSkillAnswerContext(ans);
       }
-      if (isImageQuestion(q)) {
-        if (Array.isArray(ans)) ansForCsv = ans.map(urlToName);
-        else if (typeof ans === 'string') ansForCsv = urlToName(ans);
+      if (['imagepicker', 'mediapicker', 'imageranking', 'mediaranking'].includes(q.type) && !qData?.trials) {
+        const key = (v) => resolveMediaAnswerKey(v, shownImgs);
+        if (Array.isArray(ans)) ansForCsv = ans.map(key);
+        else if (typeof ans === 'string') ansForCsv = key(ans);
       }
       obj[qName] = typeof ansForCsv === 'object' ? JSON.stringify(ansForCsv) : String(ansForCsv ?? '');
 
@@ -189,7 +189,7 @@ export function buildResponsesWideCsv(responses, allQuestions, surveyConfig) {
           const ranked = Array.isArray(ans) ? ans : [];
           subKeys.forEach((k, i) => {
             const v = ranked[i];
-            obj[`${qName}__${String(k).replace(/\./g, '_')}`] = v == null ? '' : String(urlToName(v) ?? v);
+            obj[`${qName}__${String(k).replace(/\./g, '_')}`] = v == null ? '' : String(q.type === 'ranking' ? v : resolveMediaAnswerKey(v, shownImgs));
           });
         } else if (q.type === 'matrix' || q.type === 'imagematrix' || q.type === 'mediamatrix') {
           const rawObj = (ans && typeof ans === 'object' && !Array.isArray(ans)) ? ans : {};
@@ -213,7 +213,7 @@ export function buildResponsesWideCsv(responses, allQuestions, surveyConfig) {
 
       if (isImageQuestion(q)) {
         const imgNames = Array.isArray(shownImgs)
-          ? shownImgs.map((v) => (v ? String(v).split('?')[0].split('/').pop() : v))
+          ? shownImgs.map(mediaIdentityKey)
           : [shownImgs ?? ''];
         obj[`${qName}__shown_images`] = imgNames.join('|');
         const mediaSet = (typeof qData === 'object' && qData && ('shown_media_set' in qData || 'shown_media_group' in qData))

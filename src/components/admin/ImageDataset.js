@@ -73,6 +73,8 @@ import SpatialIntelligencePanel from './SpatialIntelligencePanel';
 import MediaPreannotatePanel from './MediaPreannotatePanel';
 import MediaPreannotateResults from './MediaPreannotateResults';
 import { useRegion } from '../../contexts/RegionContext';
+import { useMediaLibraryText } from '../../contexts/mediaLibraryI18n';
+import { AdminPageHeader } from './AdminPageLayout';
 import { LOCAL_USER_ID } from '../../lib/appMode';
 
 const MEDIA_PAGE_SIZE = 24;
@@ -84,7 +86,8 @@ function mediaEntryKey(entry, userId, projectId) {
 }
 
 export default function ImageDataset({ currentProject, onProjectUpdate, onConfigChange, onNextStep }) {
-  useRegion();
+  const { t } = useRegion();
+  const tx = useMediaLibraryText();
   const user = { id: LOCAL_USER_ID };
 
   // Direct upload state
@@ -254,7 +257,7 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
         onProgress: (done, total) => setMediaDownloadProgress({ done, total }),
       });
       if (failed > 0 && succeeded === 0) {
-        throw new Error(failures[0]?.error || 'Download failed');
+        throw new Error(failures[0]?.error || tx("Download failed"));
       }
       const failHint = failed > 0
         ? ` ${failed} failed (${failures.slice(0, 2).map((f) => f.name).join(', ')}${failures.length > 2 ? '…' : ''}).`
@@ -417,7 +420,7 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
       if (result.success) {
         setHfStatus({ loading: false, connected: true, error: null, datasetInfo: result.datasetInfo });
       } else {
-        setHfStatus({ loading: false, connected: false, error: result.error || 'Connection failed', datasetInfo: null });
+        setHfStatus({ loading: false, connected: false, error: result.error || tx("Connection failed"), datasetInfo: null });
       }
     } catch (e) {
       setHfStatus({ loading: false, connected: false, error: e.message, datasetInfo: null });
@@ -626,7 +629,7 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
         }
 
         const result = await getImagesFromHuggingFace(hfConfig.token, hfConfig.datasetName, limit, offset);
-        if (!result.success || !result.images) throw new Error(result.error || 'Failed to fetch images');
+        if (!result.success || !result.images) throw new Error(result.error || tx("Failed to fetch images"));
 
         for (let k = 0; k < result.images.length; k++) {
           const gi = offset + k;
@@ -875,14 +878,11 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
 
   return (
     <Box>
-      <Typography variant="h5" sx={{ mb: 1, color: 'primary.main' }}>
-        Media Dataset
-      </Typography>
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Upload images, videos, and audio to Supabase Storage. They will be served to survey participants.
-        Images over 300 KB are automatically compressed. Video/audio are uploaded as-is (max ~100 MB).
-        HuggingFace batch import is available as an optional tool for images.
-      </Typography>
+      <AdminPageHeader
+        icon={<CloudUpload />}
+        title={t.mediaTitle}
+        description={t.mediaDescription}
+      />
 
       <Box sx={{ mb: 2.5, display: 'grid', gap: 1.5, gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' } }}>
         <MediaPairingGuide compact totalFileCount={preloadedCount} pairedSetCount={groupSummary.total} />
@@ -1084,14 +1084,14 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
               ))}
           </Box>
           <FormControl size="small" sx={{ minWidth: 160, mb: 2 }}>
-            <InputLabel id="group-size-filter">Filter by set size</InputLabel>
+            <InputLabel id="group-size-filter">{tx("Filter by set size")}</InputLabel>
             <Select
               labelId="group-size-filter"
-              label="Filter by set size"
+              label={tx("Filter by set size")}
               value={groupSizeFilter}
               onChange={(e) => setGroupSizeFilter(e.target.value)}
             >
-              <MenuItem value="all">All sizes</MenuItem>
+              <MenuItem value="all">{tx("All sizes")}</MenuItem>
               {Object.keys(groupSummary.bySize)
                 .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
                 .map((size) => (
@@ -1104,8 +1104,8 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
               <TableHead>
                 <TableRow sx={{ '& th': { fontWeight: 700, bgcolor: 'grey.50' } }}>
                   <TableCell>Group ID</TableCell>
-                  <TableCell align="center">Size</TableCell>
-                  <TableCell>Types</TableCell>
+                  <TableCell align="center">{tx("Size")}</TableCell>
+                  <TableCell>{tx("Types")}</TableCell>
                   <TableCell>Files (in slot order)</TableCell>
                 </TableRow>
               </TableHead>
@@ -1135,7 +1135,7 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
             </Typography>
           )}
           {filteredPairedGroups.length === 0 && (
-            <Alert severity="warning" sx={{ mt: 1 }}>No groups match this size filter.</Alert>
+            <Alert severity="warning" sx={{ mt: 1 }}>{tx("No groups match this size filter.")}</Alert>
           )}
         </Box>
       )}
@@ -1152,10 +1152,10 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
             <Table size="small">
               <TableHead>
                 <TableRow sx={{ '& th': { fontWeight: 700, bgcolor: 'grey.50' } }}>
-                  <TableCell>Category</TableCell>
-                  <TableCell align="center">Files</TableCell>
-                  <TableCell>Types</TableCell>
-                  <TableCell>Sample filenames</TableCell>
+                  <TableCell>{tx("Category")}</TableCell>
+                  <TableCell align="center">{tx("Files")}</TableCell>
+                  <TableCell>{tx("Types")}</TableCell>
+                  <TableCell>{tx("Sample filenames")}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -1197,9 +1197,7 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
         mediaCount={preloadedCount}
       >
         {preloadedCount === 0 ? (
-          <Alert severity="info" sx={{ mb: 2 }}>
-            No media uploaded yet. Use the import / upload cards above, then organize files with folders on the left.
-          </Alert>
+          <Alert severity="info" sx={{ mb: 2 }}>{tx("No media uploaded yet. Use the import / upload cards above, then organize files with folders on the left.")}</Alert>
         ) : (
         <Box sx={{ mb: 3, p: 3, bgcolor: 'background.paper', borderRadius: 1, border: '1px solid', borderColor: 'divider' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, mb: 2, flexWrap: 'wrap' }}>
@@ -1232,9 +1230,7 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
                 startIcon={<Deselect />}
                 onClick={clearMediaSelection}
                 disabled={!selectedMedia.size}
-              >
-                Clear selection
-              </Button>
+              >{tx("Clear selection")}</Button>
               <Button
                 size="small"
                 variant="outlined"
@@ -1272,16 +1268,14 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
               >
                 Delete selected ({selectedMedia.size})
               </Button>
-              <Button variant="outlined" color="error" onClick={handleClearImages} startIcon={<Delete />} size="small">
-                Clear all
-              </Button>
+              <Button variant="outlined" color="error" onClick={handleClearImages} startIcon={<Delete />} size="small">{tx("Clear all")}</Button>
             </Box>
           </Box>
 
           <Box sx={{ display: 'flex', gap: 2, mb: 2, flexWrap: 'wrap' }}>
             <TextField
               size="small"
-              placeholder="Search by filename…"
+              placeholder={tx("Search by filename…")}
               value={mediaSearch}
               onChange={(e) => setMediaSearch(e.target.value)}
               sx={{ minWidth: 220, flex: 1 }}
@@ -1294,17 +1288,17 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
               }}
             />
             <FormControl size="small" sx={{ minWidth: 140 }}>
-              <InputLabel id="media-filter-label">Type</InputLabel>
+              <InputLabel id="media-filter-label">{tx("Type")}</InputLabel>
               <Select
                 labelId="media-filter-label"
-                label="Type"
+                label={tx("Type")}
                 value={mediaFilter}
                 onChange={(e) => setMediaFilter(e.target.value)}
               >
-                <MenuItem value="all">All types</MenuItem>
-                <MenuItem value="image">Image</MenuItem>
-                <MenuItem value="video">Video</MenuItem>
-                <MenuItem value="audio">Audio</MenuItem>
+                <MenuItem value="all">{tx("All types")}</MenuItem>
+                <MenuItem value="image">{tx("Image")}</MenuItem>
+                <MenuItem value="video">{tx("Video")}</MenuItem>
+                <MenuItem value="audio">{tx("Audio")}</MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -1314,7 +1308,7 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
           {mediaDownloadProgress && (
             <Box sx={{ mb: 2 }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
-                <Typography variant="body2">Downloading…</Typography>
+                <Typography variant="body2">{tx("Downloading…")}</Typography>
                 <Typography variant="body2" color="text.secondary">
                   {mediaDownloadProgress.done} / {mediaDownloadProgress.total}
                 </Typography>
@@ -1328,7 +1322,7 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
           )}
 
           {filteredMedia.length === 0 ? (
-            <Alert severity="info">No media matches your search or filter.</Alert>
+            <Alert severity="info">{tx("No media matches your search or filter.")}</Alert>
           ) : (
             <>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
@@ -1364,7 +1358,7 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
                         sx={{ position: 'absolute', top: 2, left: 2, zIndex: 2, bgcolor: 'rgba(255,255,255,0.85)', borderRadius: 1, p: 0.25 }}
                       />
                       <Box sx={{ position: 'absolute', top: 2, right: 2, zIndex: 2, display: 'flex', gap: 0.25 }}>
-                        <Tooltip title="Download">
+                        <Tooltip title={tx("Download")}>
                           <IconButton
                             className="media-action-btn"
                             size="small"
@@ -1378,7 +1372,7 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
                             <CloudDownload fontSize="small" />
                           </IconButton>
                         </Tooltip>
-                        <Tooltip title="Delete">
+                        <Tooltip title={tx("Delete")}>
                           <IconButton
                             className="media-action-btn"
                             size="small"
@@ -1583,9 +1577,7 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
 
       {onNextStep && (
         <Box sx={{ mt: 4, pt: 3, borderTop: 1, borderColor: 'divider', display: 'flex', justifyContent: 'flex-end' }}>
-          <Button variant="contained" color="primary" size="large" onClick={onNextStep} sx={{ px: 4, py: 1.5, fontWeight: 600 }}>
-            Next: Survey Builder →
-          </Button>
+          <Button variant="contained" color="primary" size="large" onClick={onNextStep} sx={{ px: 4, py: 1.5, fontWeight: 600 }}>{tx("Next: Survey Builder →")}</Button>
         </Box>
       )}
     </Box>

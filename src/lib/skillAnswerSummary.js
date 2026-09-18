@@ -1,3 +1,4 @@
+import { isNoPreference } from './choiceTie';
 /**
  * Human-readable summaries for skill answers (preview-before-complete + results).
  * Pass locale 'en' | 'zh' (default 'en').
@@ -151,7 +152,7 @@ export function summarizeSkillAnswer(answer, locale = 'en') {
     lines.push(c.words(answer.words.join(lang === 'zh' ? '，' : ', ')));
   }
   if (answer.choice != null && answer.choice !== '') {
-    lines.push(c.choice(answer.choice));
+    lines.push(c.choice(isNoPreference(answer) ? (locale === 'zh' ? '两者差不多' : 'About the same') : answer.choice));
   }
   if (typeof answer.text === 'string' && answer.text.trim()) {
     lines.push(c.text(answer.text.trim()));

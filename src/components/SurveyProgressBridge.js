@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { Box } from '@mui/material';
 import ProgressChrome from './ProgressChrome';
 import { useSurveyTrialNav } from '../contexts/SurveyTrialNavContext';
@@ -26,6 +26,25 @@ export default function SurveyProgressBridge({
   const registerUnits = nav?.registerUnits;
   const lastPageNameRef = useRef(null);
   const unitsLen = nav?.units?.length ?? 0;
+  const progressHostRef = useRef(null);
+
+  // The host must stick within the full survey, not inside a bar-height wrapper.
+  // Track wrapping/font/safe-area changes so question jumps clear the whole bar.
+  useLayoutEffect(() => {
+    const host = progressHostRef.current;
+    const shell = host?.closest('.sp-survey-with-progress');
+    if (!host || !shell) return undefined;
+    const measure = () => shell.style.setProperty('--sp-progress-height', `${Math.ceil(host.getBoundingClientRect().height)}px`);
+    measure();
+    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(measure);
+    observer?.observe(host);
+    window.addEventListener('resize', measure);
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener('resize', measure);
+      shell.style.removeProperty('--sp-progress-height');
+    };
+  }, [progressEnabled, surveyModel]);
 
   // Register units once per model — do NOT depend on whole `nav` (it changes every answer
   // and was re-syncing the blue ring back to question 1).
@@ -204,9 +223,10 @@ export default function SurveyProgressBridge({
   if (!progressEnabled) return null;
   return (
     <Box
+      ref={progressHostRef}
       className="sp-progress-chrome-host"
       style={buildProgressChromeCssVars(theme)}
-      sx={{ mb: 1 }}
+      sx={{ mb: 1, position: 'sticky', top: 0, zIndex: 20, boxShadow: '0 2px 6px rgba(0, 0, 0, 0.08)' }}
     >
       <ProgressChrome enabled surveyModel={surveyModel} />
     </Box>

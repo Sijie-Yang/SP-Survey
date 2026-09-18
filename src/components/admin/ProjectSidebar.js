@@ -86,8 +86,11 @@ import {
 } from '../../lib/templateManager';
 import { isLocalSelfHosted, LOCAL_USER_ID } from '../../lib/appMode';
 import { isR2Configured, deleteImagesFromR2, listImagesFromR2, copyImagesInR2 } from '../../lib/r2';
+import { useRegion } from '../../contexts/RegionContext';
+import { tf } from '../../contexts/adminI18n';
 
 export default function ProjectSidebar({ 
+  id,
   open, 
   onClose, 
   onProjectSelect, 
@@ -97,6 +100,7 @@ export default function ProjectSidebar({
   projectStates = {},
   width = 400 
 }) {
+  const { t } = useRegion();
   const [projects, setProjects] = useState([]);
   const [templates, setTemplates] = useState([]);
   const [activeProjectId, setActiveProjectId] = useState(null);
@@ -815,6 +819,7 @@ export default function ProjectSidebar({
   return (
     <>
       <Drawer
+        id={id}
         anchor="left"
         open={open}
         onClose={onClose}
@@ -835,7 +840,7 @@ export default function ProjectSidebar({
         <Box sx={{ p: 1.5 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
             <Typography variant="h6" sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>
-              Projects
+              {t.sidebarProjects}
             </Typography>
             <IconButton onClick={onClose} size="small">
               <Close />
@@ -854,7 +859,7 @@ export default function ProjectSidebar({
               <ListItemText 
                 primary={
                   <Typography variant="subtitle2" sx={{ fontWeight: 'bold', fontSize: '0.9rem' }}>
-                    Project Templates
+                    {t.sidebarTemplates}
                   </Typography>
                 } 
                 sx={{ my: 0 }}
@@ -868,7 +873,7 @@ export default function ProjectSidebar({
                 <Box sx={{ px: 1, pt: 0.5, pb: 1 }}>
                   <TextField
                     size="small"
-                    placeholder="Search templates..."
+                    placeholder={t.sidebarSearchTemplates}
                     fullWidth
                     value={templateSearch}
                     onChange={e => setTemplateSearch(e.target.value)}
@@ -1109,7 +1114,7 @@ export default function ProjectSidebar({
                 <ListItemText 
                   primary={
                     <Typography variant="subtitle2" sx={{ fontWeight: 'bold', fontSize: '0.9rem' }}>
-                      My Projects ({projects.length})
+                      {tf(t.sidebarMyProjects, { n: projects.length })}
                     </Typography>
                   }
                   sx={{ my: 0 }}
@@ -1117,7 +1122,7 @@ export default function ProjectSidebar({
                 {projectsExpanded ? <ExpandLess fontSize="small" /> : <ExpandMore fontSize="small" />}
               </ListItemButton>
               <Box sx={{ display: 'flex', gap: 0.5 }}>
-                <Tooltip title="Import Project">
+                <Tooltip title={t.sidebarImportProject}>
                   <IconButton component="label" size="small" color="primary">
                     <Upload />
                     <input
@@ -1128,7 +1133,7 @@ export default function ProjectSidebar({
                     />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title="Create New Project">
+                <Tooltip title={t.sidebarCreateProject}>
                   <IconButton 
                     onClick={() => setCreateDialog(true)}
                     size="small"
@@ -1147,7 +1152,7 @@ export default function ProjectSidebar({
                     <ListItemText 
                       primary={
                         <Typography variant="caption" color="text.secondary" sx={{ fontStyle: 'italic', fontSize: '0.75rem' }}>
-                          No projects yet. Create your first project!
+                          {t.sidebarNoProjects}
                         </Typography>
                       }
                     />
@@ -1328,15 +1333,15 @@ export default function ProjectSidebar({
       >
         <MenuItem onClick={handleEditProject}>
           <ListItemIcon><Edit /></ListItemIcon>
-          <ListItemText>Edit Project</ListItemText>
+          <ListItemText>{t.sidebarEditProject}</ListItemText>
         </MenuItem>
         <MenuItem onClick={handleDuplicateProject}>
           <ListItemIcon><FileCopy /></ListItemIcon>
-          <ListItemText>Duplicate</ListItemText>
+          <ListItemText>{t.sidebarDuplicate}</ListItemText>
         </MenuItem>
         <MenuItem onClick={handleExportProject}>
           <ListItemIcon><Download /></ListItemIcon>
-          <ListItemText>Export Project</ListItemText>
+          <ListItemText>{t.sidebarExportProject}</ListItemText>
         </MenuItem>
         <MenuItem onClick={handleExportForIde}>
           <ListItemIcon><Code /></ListItemIcon>
@@ -1344,24 +1349,24 @@ export default function ProjectSidebar({
         </MenuItem>
         <MenuItem onClick={handleExportAsTemplate}>
           <ListItemIcon><Description /></ListItemIcon>
-          <ListItemText>Save as Template</ListItemText>
+          <ListItemText>{t.sidebarSaveAsTemplate}</ListItemText>
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleDeleteProject} sx={{ color: 'error.main' }}>
           <ListItemIcon><Delete color="error" /></ListItemIcon>
-          <ListItemText>Delete</ListItemText>
+          <ListItemText>{t.sidebarDelete}</ListItemText>
         </MenuItem>
       </Menu>
 
       {/* Create Project Dialog */}
       <Dialog open={createDialog} onClose={() => setCreateDialog(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>Create New Project</DialogTitle>
+        <DialogTitle>{t.sidebarCreateProject}</DialogTitle>
         <DialogContent>
           {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
           <TextField
             autoFocus
             margin="dense"
-            label="Project Name"
+            label={t.sidebarProjectName}
             fullWidth
             variant="outlined"
             value={newProjectName}
@@ -1370,7 +1375,7 @@ export default function ProjectSidebar({
           />
           <TextField
             margin="dense"
-            label="Description (Optional)"
+            label={t.sidebarDescriptionOptional}
             fullWidth
             multiline
             rows={3}
@@ -1380,8 +1385,8 @@ export default function ProjectSidebar({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setCreateDialog(false)}>Cancel</Button>
-          <Button onClick={handleCreateProject} variant="contained">Create</Button>
+          <Button onClick={() => setCreateDialog(false)}>{t.sidebarCancel}</Button>
+          <Button onClick={handleCreateProject} variant="contained">{t.sidebarCreate}</Button>
         </DialogActions>
       </Dialog>
 
@@ -1420,7 +1425,7 @@ export default function ProjectSidebar({
           <TextField
             autoFocus
             margin="dense"
-            label="Project Name"
+            label={t.sidebarProjectName}
             fullWidth
             variant="outlined"
             value={newProjectName}
@@ -1459,7 +1464,7 @@ export default function ProjectSidebar({
           <TextField
             autoFocus
             margin="dense"
-            label="Project Name"
+            label={t.sidebarProjectName}
             fullWidth
             variant="outlined"
             value={newProjectName}

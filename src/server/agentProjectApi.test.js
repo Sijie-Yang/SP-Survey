@@ -160,4 +160,45 @@ describe('SP-Survey local agent API contract', () => {
 
     await fs.remove(projectsPath);
   });
+
+  test('applies incremental operations to the local draft', async () => {
+    const projectsPath = await fs.mkdtemp(path.join(os.tmpdir(), 'sp-survey-agent-ops-'));
+    const projectId = 'proj_ops';
+    await fs.writeJson(path.join(projectsPath, `${projectId}.json`), {
+      project: { id: projectId, name: 'Ops' },
+      surveyConfig: { pages: [{ name: 'page1', elements: [] }] },
+      savedAt: '2026-01-01T00:00:00.000Z',
+      draftUpdatedAt: '2026-01-01T00:00:00.000Z',
+    });
+    const handlers = {};
+    const app = {
+      use: (route, handler) => { handlers[`USE ${route}`] = handler; },
+      get: (route, handler) => { handlers[`GET ${route}`] = handler; },
+      patch: (route, handler) => { handlers[`PATCH ${route}`] = handler; },
+      post: (route, handler) => { handlers[`POST ${route}`] = handler; },
+    };
+    registerAgentProjectApi(app, { fs, projectsPath, clientOrigin: 'http://localhost:3000' });
+    const response = {
+      statusCode: 200,
+      status(code) { this.statusCode = code; return this; },
+      json(payload) { this.payload = payload; return this; },
+    };
+    await handlers['POST /api/agent/projects/:projectId/operations']({
+      params: { projectId },
+      body: {
+        expectedDraftUpdatedAt: '2026-01-01T00:00:00.000Z',
+        operations: [{
+          op: 'addQuestion',
+          pageName: 'page1',
+          question: { type: 'rating', name: 'comfort', title: 'Comfort' },
+        }],
+      },
+    }, response);
+    expect(response.statusCode).toBe(200);
+    expect(response.payload.applied[0].op).toBe('addQuestion');
+    expect(response.payload.inverse[0].op).toBe('removeQuestion');
+    const updated = await fs.readJson(path.join(projectsPath, `${projectId}.json`));
+    expect(updated.surveyConfig.pages[0].elements[0].name).toBe('comfort');
+    await fs.remove(projectsPath);
+  });
 });

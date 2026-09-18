@@ -1,6 +1,7 @@
 import {
   SP_TRIALS_ANSWER_KEY,
   allTrialsAnswered,
+  canAutoAdvanceTrial,
   buildProgressUnits,
   clampTrialCount,
   clearTrialsAnswerStore,
@@ -23,6 +24,16 @@ describe('trialNavigation', () => {
     expect(supportsTrialLoop('image')).toBe(false);
     expect(supportsTrialLoop('skillquestion')).toBe(false);
     expect(supportsTrialLoop('rating')).toBe(false);
+  });
+
+  test('canAutoAdvanceTrial is single-select image/media choice only', () => {
+    expect(canAutoAdvanceTrial({ type: 'imagepicker' })).toBe(true);
+    expect(canAutoAdvanceTrial({ type: 'mediapicker' })).toBe(true);
+    expect(canAutoAdvanceTrial({ type: 'imagepicker', multiSelect: true })).toBe(false);
+    expect(canAutoAdvanceTrial({ type: 'imagerating' })).toBe(false);
+    expect(canAutoAdvanceTrial({ type: 'imageboolean' })).toBe(false);
+    expect(canAutoAdvanceTrial({ type: 'imageranking' })).toBe(false);
+    expect(canAutoAdvanceTrial({ type: 'imagecheckbox' })).toBe(false);
   });
 
   test('getTrialCount clamps and defaults', () => {

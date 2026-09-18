@@ -1,7 +1,7 @@
 /**
  * Thin catalog of skill resultSchema field types.
  * Used for editor self-check, analysis routing, and export shapes.
- * Unknown types are allowed (warning only) — skills stay free-form.
+ * Legacy unknown types remain readable; new contracts use native result families.
  */
 
 export const SKILL_RESULT_TYPES = {
@@ -214,10 +214,10 @@ export function canonicalizeSkillResultType(type) {
 
 /**
  * Soft-validate a value against a declared result type.
- * Never used to block save — only editor self-check / analysis routing.
+ * Shared by save-time contract checks and interactive answer validation.
  * @returns {{ ok: boolean, detail: string }}
  */
-export function validateSkillResultValue(type, value) {
+function validateSkillResultShape(type, value) {
   const t = canonicalizeSkillResultType(type) || 'text';
   if (value === undefined || value === null) {
     return { ok: false, detail: 'missing' };
@@ -415,11 +415,109 @@ export function validateSkillResultValue(type, value) {
   }
 }
 
+const finiteNumber = (v) => typeof v === 'number' && Number.isFinite(v);
+const optionKey = (v) => String(v && typeof v === 'object' ? (v.value ?? v.id ?? v.key) : v);
+
+/** Shape and declared settings must both match the native analysis family. */
+export function validateSkillResultValue(type, value, field = {}) {
+  const shape = validateSkillResultShape(type, value);
+  if (!shape.ok) return shape;
+  const t = canonicalizeSkillResultType(type);
+  const fail = (detail) => ({ ok: false, detail });
+  const inRange = (n, settings = field) => finiteNumber(n)
+    && (settings.min == null || n >= settings.min) && (settings.max == null || n <= settings.max);
+  for (const key of ['options', 'choices', 'rows', 'columns', 'dimensions']) {
+    if (field[key] != null && !Array.isArray(field[key])) return fail(`${key} must be an array`);
+  }
+  const options = (field.options || field.choices || []).map(optionKey);
+  const allowed = (v) => !options.length || options.includes(String(v));
+  if (['number', 'rating', 'count'].includes(t) && !Array.isArray(value)) {
+    if (!inRange(value)) return fail('expected finite number within min/max');
+    if (t === 'count' && (!Number.isInteger(value) || value < 0)) return fail('count must be a non-negative integer');
+  }
+  if (['choice', 'mediaChoice'].includes(t) && (!String(value).trim() || !allowed(value))) return fail('not a declared option');
+  if (['multiChoice', 'rankedList', 'mediaRankedList'].includes(t)) {
+    if (value.some((v) => !['string', 'number'].includes(typeof v) || !String(v).trim() || !allowed(v))
+      || new Set(value.map(String)).size !== value.length) return fail('items must be unique declared options');
+    if (t !== 'multiChoice' && options.length && value.length !== options.length) return fail('rank every declared option');
+  }
+  if (['points', 'path', 'polygon', 'bbox'].includes(t)) {
+    if (value.some((p) => !p || !inRange(p.x, { min: 0, max: 1 }) || !inRange(p.y, { min: 0, max: 1 }))) {
+      return fail('every coordinate must be a number from 0 to 1');
+    }
+    if (t === 'bbox' && value.length !== 2) return fail('exactly two corners required');
+  }
+  if (t === 'allocation' || t === 'scaleGroup') {
+    if (Object.values(value).some((v) => !finiteNumber(v) || (t === 'allocation' && v < 0))) return fail('invalid numeric values');
+    if (t === 'allocation') {
+      if (Object.keys(value).some((k) => !allowed(k))) return fail('unknown allocation option');
+      if (Object.values(value).reduce((a, b) => a + b, 0) > (field.budget ?? 100) + 1e-8) return fail('exceeds budget');
+    } else {
+      const dims = field.dimensions || field.options || [];
+      if (dims.length && (Object.keys(value).some((k) => !dims.some((d) => optionKey(d) === k))
+        || dims.some((d) => !inRange(value[optionKey(d)], { min: d.min ?? field.min, max: d.max ?? field.max })))) {
+        return fail('complete every declared dimension within its range');
+      }
+      if (!dims.length && Object.values(value).some((v) => !inRange(v))) return fail('outside scale range');
+    }
+  }
+  if (t === 'matrix' || t === 'mediaMatrix') {
+    const entries = Array.isArray(value) ? value.map((c) => [c.row ?? c.row_key, c.column ?? c.value]) : Object.entries(value);
+    const rows = (field.rows || []).map(optionKey);
+    const columns = (field.columns || field.options || []).map(optionKey);
+    if (new Set(entries.map(([r]) => String(r))).size !== entries.length
+      || entries.some(([r, c]) => r == null || c == null || (rows.length && !rows.includes(String(r)))
+        || (columns.length && !columns.includes(String(c))))
+      || (rows.length && rows.some((r) => !entries.some(([key]) => String(key) === r)))) return fail('complete each declared matrix row with a valid column');
+  }
+  if (t === 'compositeBlocks') {
+    if (value.ratings != null && (!Array.isArray(value.ratings) || value.ratings.some((r) => !r || !r.id || !inRange(r.value))
+      || new Set(value.ratings.map((r) => r.id)).size !== value.ratings.length)) return fail('invalid composite ratings');
+    if (value.words != null && (!Array.isArray(value.words) || value.words.some((w) => typeof w !== 'string')
+      || new Set(value.words).size !== value.words.length)) return fail('invalid word selection');
+    if (value.text != null && typeof value.text !== 'string') return fail('invalid text');
+    if (value.choice != null && !['string', 'number'].includes(typeof value.choice)) return fail('invalid choice');
+  }
+  if (t === 'timeRanges') {
+    const segments = Array.isArray(value) ? value : value.segments || value.ranges;
+    if (segments.some((s) => !s || !finiteNumber(s.start ?? s.begin) || !finiteNumber(s.end)
+      || (s.start ?? s.begin) < 0 || s.end <= (s.start ?? s.begin)
+      || (finiteNumber(value.duration) && s.end > value.duration))) return fail('invalid time range');
+  }
+  if (t === 'timeSeries') {
+    const samples = Array.isArray(value) ? value : value.samples || value.series;
+    if (samples.some((s) => !s || !finiteNumber(s.t ?? s.time) || (s.t ?? s.time) < 0 || !inRange(s.v ?? s.value))) return fail('invalid timestamp or rating');
+  }
+  if (t === 'pairwisePreference' && !inRange(typeof value === 'number' ? value : value.preference ?? value.score ?? value.value)) return fail('preference outside range');
+  if (t === 'pairwiseChoice') {
+    const pair = value.shownUrls || [value.left ?? value.imageA, value.right ?? value.imageB];
+    const validWinner = value.winner != null ? pair.includes(value.winner)
+      : value.choice != null ? ['A', 'B'].includes(value.choice)
+        : Number.isInteger(value.chosenIndex) && value.chosenIndex >= 0 && value.chosenIndex < 2;
+    if (pair.length !== 2 || pair[0] === pair[1] || !validWinner) return fail('winner must belong to the two distinct alternatives');
+  }
+  if (t === 'bestWorst') {
+    const best = value.best ?? value.bestIndex ?? value.bestUrl;
+    const worst = value.worst ?? value.worstIndex ?? value.worstUrl;
+    if (best === worst || value.complete === false) return fail('choose different best and worst options');
+    if (value.shownUrls && [value.bestIndex, value.worstIndex].some((v) => v != null
+      && (!Number.isInteger(v) || v < 0 || v >= value.shownUrls.length))) return fail('invalid best/worst index');
+  }
+  return shape;
+}
+
 /**
  * Check an answer object against a resultSchema array.
  * @returns {{ recorded: boolean, fields: Array<{key,label,type,ok,detail}> }}
  */
-export function checkAnswerAgainstResultSchema(answer, resultSchema = []) {
+export function checkAnswerAgainstResultSchema(answer, resultSchema = [], config = {}) {
+  const settings = {};
+  ['options', 'rows', 'columns', 'dimensions', 'budget', 'min', 'max'].forEach((key) => {
+    if (config?.[key] != null) settings[key] = config[key];
+  });
+  if (config?.choices != null && settings.options == null) settings.options = config.choices;
+  if (settings.min == null && (config?.rateMin ?? config?.scaleMin) != null) settings.min = config.rateMin ?? config.scaleMin;
+  if (settings.max == null && (config?.rateMax ?? config?.scaleMax) != null) settings.max = config.rateMax ?? config.scaleMax;
   const recorded = answer != null && typeof answer === 'object'
     && !Array.isArray(answer)
     && Object.keys(answer).length > 0;
@@ -435,7 +533,7 @@ export function checkAnswerAgainstResultSchema(answer, resultSchema = []) {
   const fields = schema.map((f) => {
     const key = f.key;
     const val = answer && typeof answer === 'object' ? answer[key] : undefined;
-    const check = validateSkillResultValue(f.type, val);
+    const check = validateSkillResultValue(f.type, val, { ...f, ...settings });
     return {
       key,
       label: f.label || key,

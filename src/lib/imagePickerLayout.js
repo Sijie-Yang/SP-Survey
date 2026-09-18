@@ -14,7 +14,7 @@
  *      shrink proportionally to each image's natural aspect ratio so a
  *      panoramic photo gets a wider slot and a square photo gets a narrower
  *      slot.
- *   4. Never compress images below MIN_HEIGHT — wrap to a new row first.
+ *   4. Prefer MIN_HEIGHT — wrap first, then shrink oversized images to fit.
  *   5. The image's box is exactly the rendered image's size, so any
  *      absolutely-positioned overlay (e.g. the imagepicker check decorator
  *      or the ranking #N badge) sits on the image, not next to it.
@@ -38,30 +38,32 @@
 const ROOT_SELECTOR = '.sd-imagepicker, .sp-image-gallery, .sd-image';
 const ATTRS_TO_STRIP = ['width', 'height'];
 
-// Desktop defaults. Phones use denser tunables so imagepicker can fit 2–3
-// thumbs per row instead of one luxury full-width image.
+// Desktop defaults. Phones prefer fewer, larger images — especially 2-choice
+// (A/B) which must not shrink into a single cramped row.
 const MIN_HEIGHT = 100;
 const MAX_HEIGHT = 200;
 const MAX_DISPLAY_HEIGHT = 480;
 const ITEM_GAP = 12;       // px — keep in sync with CSS `gap` (desktop)
 const FALLBACK_AR = 4 / 3; // used until an image's natural size is known
-const MOBILE_WIDTH = 600;
+export const MOBILE_WIDTH = 600;
+const MOBILE_STACK_MAX_ITEMS = 2;
 
 let installed = false;
 const pendingRoots = new Set();
 let rafScheduled = false;
 
-/** Viewport-aware sizing so narrow screens pack more images per row. */
-function getLayoutTunables(availableWidth) {
-  const narrow = availableWidth > 0 && availableWidth < MOBILE_WIDTH;
+/** Viewport-aware sizing. Phones keep images large; they do not pack tiny thumbs. */
+export function getLayoutTunables(availableWidth, viewportWidth) {
+  const vp = viewportWidth ?? availableWidth;
+  const narrow = vp > 0 && vp < MOBILE_WIDTH;
   if (narrow) {
     return {
-      minHeight: 72,
-      maxHeight: 132,
+      minHeight: 140,
+      maxHeight: 200,
       // Ranking rows: keep shorter so 4–6 items don't fill the whole phone screen
-      verticalMaxHeight: 96,
-      maxDisplayHeight: 260,
-      itemGap: 8,
+      verticalMaxHeight: 120,
+      maxDisplayHeight: 320,
+      itemGap: 10,
     };
   }
   return {
@@ -71,6 +73,15 @@ function getLayoutTunables(availableWidth) {
     maxDisplayHeight: MAX_DISPLAY_HEIGHT,
     itemGap: ITEM_GAP,
   };
+}
+
+/** 1–2 images on a phone viewport: stack full-width so A/B choices stay readable. */
+export function shouldStackGalleryOnMobile(itemCount, availableWidth, viewportWidth) {
+  const vp = viewportWidth ?? availableWidth;
+  return vp > 0
+    && vp < MOBILE_WIDTH
+    && itemCount > 0
+    && itemCount <= MOBILE_STACK_MAX_ITEMS;
 }
 
 function stripSizeAttrs(img) {
@@ -205,6 +216,40 @@ function applyHorizontalLayout(rows) {
   }
 }
 
+function applyStackedFullWidthLayout(items, availableWidth, tunables) {
+  const { minHeight, maxDisplayHeight } = tunables;
+  for (const it of items) {
+    const ar = it.ar > 0 ? it.ar : FALLBACK_AR;
+    let w = availableWidth;
+    let h = w / ar;
+    h = Math.max(minHeight, Math.min(maxDisplayHeight, h));
+    w = Math.max(1, Math.round(h * ar));
+    if (w > availableWidth) {
+      w = availableWidth;
+      h = w / ar;
+    }
+    h = Math.round(h);
+    if (it.item) {
+      setImportant(it.item, 'flex', '0 0 auto');
+      setImportant(it.item, 'width', '100%');
+      setImportant(it.item, 'max-width', '100%');
+    }
+    if (it.container) {
+      setImportant(it.container, 'width', w + 'px');
+      setImportant(it.container, 'height', h + 'px');
+      setImportant(it.container, 'margin-left', 'auto');
+      setImportant(it.container, 'margin-right', 'auto');
+    }
+    if (it.img) {
+      setImportant(it.img, 'width', w + 'px');
+      setImportant(it.img, 'height', h + 'px');
+      setImportant(it.img, 'object-fit', 'contain');
+      setImportant(it.img, 'max-width', '100%');
+      setImportant(it.img, 'max-height', 'none');
+    }
+  }
+}
+
 function applyVerticalLayout(items, height) {
   const h = Math.round(height);
   for (const it of items) {
@@ -229,8 +274,9 @@ function applyVerticalLayout(items, height) {
   }
 }
 
-function layoutRoot(root) {
+export function layoutImageGallery(root) {
   if (!root || !root.isConnected) return;
+  const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 0;
   const cfg = getRootConfig(root);
 
   // Image-display mode: there are no nested .item elements — the root <div>
@@ -249,9 +295,9 @@ function layoutRoot(root) {
     const ar = getNaturalAR(img);
     const availableWidth = getContentWidth(root);
     if (availableWidth <= 0) return;
-    const { minHeight, maxDisplayHeight } = getLayoutTunables(availableWidth);
+    const { maxDisplayHeight } = getLayoutTunables(availableWidth, viewportWidth);
     let h = ar > 0 ? availableWidth / ar : maxDisplayHeight;
-    h = Math.max(minHeight, Math.min(maxDisplayHeight, h));
+    h = Math.min(maxDisplayHeight, h);
     const w = Math.max(1, Math.round(h * ar));
     setImportant(img, 'width', w + 'px');
     setImportant(img, 'height', Math.round(h) + 'px');
@@ -285,23 +331,40 @@ function layoutRoot(root) {
     };
   });
 
+  const isImagePicker = root.classList.contains('sd-imagepicker');
+  const isCustomGallery = root.classList.contains('sp-image-gallery');
+  const rootWidth = getContentWidth(root);
+  if (rootWidth <= 0) return;
+  const stackMobile = shouldStackGalleryOnMobile(allItems.length, rootWidth, viewportWidth)
+    && (isImagePicker || isCustomGallery)
+    && cfg.mode !== 'vertical';
+  root.classList.toggle('sp-gallery-stack', stackMobile);
+
+  if (stackMobile) {
+    const tunables = getLayoutTunables(rootWidth, viewportWidth);
+    root.style.setProperty('--sp-gallery-gap', `${tunables.itemGap}px`);
+    applyStackedFullWidthLayout(allItems, rootWidth, tunables);
+    return;
+  }
+
   if (cfg.mode === 'vertical') {
     // One item per row at full row width; image gets unified_h height and
     // (unified_h * AR_i) width, centered horizontally within the row.
     const rootWidth = getContentWidth(root);
     if (rootWidth <= 0) return;
-    const { minHeight, verticalMaxHeight, itemGap } = getLayoutTunables(rootWidth);
+    const { verticalMaxHeight, itemGap } = getLayoutTunables(rootWidth, viewportWidth);
     root.style.setProperty('--sp-gallery-gap', `${itemGap}px`);
     // Ranking drag-handle sits beside the image — don't size as if the full row is image.
     const handleGutter = root.classList.contains('sp-image-gallery--with-handle') ? 48 : 0;
-    const availableWidth = Math.max(80, rootWidth - handleGutter);
+    const availableWidth = Math.max(1, rootWidth - handleGutter);
     const maxHeight = verticalMaxHeight;
     let unifiedH = maxHeight;
     for (const it of allItems) {
       const ideal = it.ar > 0 ? availableWidth / it.ar : maxHeight;
       if (ideal < unifiedH) unifiedH = ideal;
     }
-    unifiedH = Math.max(minHeight, Math.min(maxHeight, unifiedH));
+    // A panorama must fit beside the drag handle even below the preferred height.
+    unifiedH = Math.min(maxHeight, unifiedH);
     applyVerticalLayout(allItems, unifiedH);
     return;
   }
@@ -310,9 +373,7 @@ function layoutRoot(root) {
   // imagepicker: SurveyJS often wraps each choice in its own column with
   // width 100%, which would force one image per row if we pack per-parent.
   // Always pack against the gallery root width instead.
-  const isImagePicker = root.classList.contains('sd-imagepicker');
-  const rootWidth = getContentWidth(root);
-  const { minHeight, maxHeight, itemGap } = getLayoutTunables(rootWidth || 800);
+  const { minHeight, maxHeight, itemGap } = getLayoutTunables(rootWidth || 800, viewportWidth);
   root.style.setProperty('--sp-gallery-gap', `${itemGap}px`);
 
   const allRows = [];
@@ -339,7 +400,7 @@ function layoutRoot(root) {
     for (const [parent, items] of byParent.entries()) {
       const availableWidth = getContentWidth(parent);
       if (availableWidth <= 0) continue;
-      const tunables = getLayoutTunables(availableWidth);
+      const tunables = getLayoutTunables(availableWidth, viewportWidth);
       const rows = packRows(items, availableWidth, tunables.minHeight, tunables.itemGap);
       for (const r of rows) {
         const sumAR = r.items.reduce((s, it) => s + it.ar, 0);
@@ -362,7 +423,9 @@ function layoutRoot(root) {
     const ideal = r.sumAR > 0 ? (r.availableWidth - r.totalGap) / r.sumAR : maxHeight;
     if (ideal < unifiedH) unifiedH = ideal;
   }
-  unifiedH = Math.max(minHeight, Math.min(maxHeight, unifiedH));
+  // Packing already tried the minimum height. A single very wide image may
+  // still need to shrink; forcing the minimum here would overflow the viewport.
+  unifiedH = Math.min(maxHeight, unifiedH);
   for (const r of allRows) r.height = unifiedH;
 
   applyHorizontalLayout(allRows);
@@ -377,7 +440,7 @@ function scheduleRoot(root) {
     rafScheduled = false;
     const roots = Array.from(pendingRoots);
     pendingRoots.clear();
-    for (const r of roots) layoutRoot(r);
+    for (const r of roots) layoutImageGallery(r);
   });
 }
 
