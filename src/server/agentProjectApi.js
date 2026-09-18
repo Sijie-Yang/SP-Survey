@@ -1,5 +1,6 @@
 const path = require('path');
 const crypto = require('crypto');
+const { applyOperations, normalizeOperationsArg } = require('./surveyOperations.cjs');
 
 const SECRET_FIELDS = new Set([
   'supabaseconfig',
@@ -153,7 +154,7 @@ const createDefaultSurveyConfig = (name, description = '') => ({
   completedHtml: '<h3>Thank you for completing the survey.</h3>',
 });
 
-const registerAgentProjectApi = (app, { fs, projectsPath, clientOrigin }) => {
+const registerAgentProjectApi = (app, { fs, projectsPath, skillsPath, clientOrigin }) => {
   const backupPath = path.join(projectsPath, '.backups');
 
   app.use('/api/agent', (req, res, next) => {
@@ -190,13 +191,62 @@ const registerAgentProjectApi = (app, { fs, projectsPath, clientOrigin }) => {
       name: 'SP-Survey local agent API',
       workflow: 'Create or list projects, update surveyConfig, validate, then open the returned local URLs.',
       endpoints: {
+        capabilities: 'GET /api/agent/capabilities',
         create: 'POST /api/agent/projects',
         list: 'GET /api/agent/projects',
         read: 'GET /api/agent/projects/:projectId',
         updateSurvey: 'PATCH /api/agent/projects/:projectId/survey',
+        applyOperations: 'POST /api/agent/projects/:projectId/operations',
+        media: 'GET|PATCH /api/agent/projects/:projectId/media',
+        skills: 'GET /api/agent/skills  POST /api/agent/skills',
+        results: 'GET /api/agent/projects/:projectId/results',
+        release: 'POST /api/agent/projects/:projectId/release',
         validate: 'POST /api/agent/projects/:projectId/validate',
         previewUrls: 'GET /api/agent/projects/:projectId/preview-url',
       },
+      notes: [
+        'Loopback only. Never send credentials.',
+        'Saves update the local draft. POST .../release updates the participant snapshot; the user still deploys the participant site.',
+        'Prefer operations over full surveyConfig replace. Models use the researcher\'s own API keys only.',
+      ],
+    });
+  });
+
+  app.get('/api/agent/capabilities', (req, res) => {
+    res.json({
+      success: true,
+      name: 'SP-Survey local agent API',
+      version: '1.1.0',
+      loopbackOnly: true,
+      scopes: ['surveys:read', 'surveys:write', 'surveys:publish', 'media:write', 'results:read'],
+      tools: [
+        'survey_capabilities',
+        'survey_list_projects',
+        'survey_get_draft',
+        'survey_replace_draft',
+        'survey_apply_operations',
+        'survey_validate',
+        'media_list',
+        'survey_update_media_dataset',
+        'skill_list',
+        'skill_save',
+        'survey_list_responses',
+        'survey_publish',
+      ],
+      rules: [
+        'Always read the draft and retain savedAt / draftUpdatedAt before writing.',
+        'Prefer apply_operations over full replace.',
+        'Never send API keys, HuggingFace tokens, fal keys, or Supabase credentials.',
+        'Saves update the local draft. survey_publish / POST .../release updates the local participant snapshot. The user deploys the participant site themselves.',
+        'Use expectedSavedAt or expectedDraftUpdatedAt for optimistic concurrency.',
+        'Do not put skillHtml on questions. Save skills with skill_save, then reference skillId.',
+        'Do not AI-generate media. media_upload is only for researcher-provided files.',
+      ],
+      operationTypes: [
+        'addPage', 'removePage', 'addQuestion', 'updateQuestion', 'removeQuestion',
+        'setAllRatingScales', 'replaceConfig', 'updateSurvey', 'updatePage', 'setTheme',
+        'reorderPages', 'reorderQuestions',
+      ],
     });
   });
 
@@ -257,6 +307,7 @@ const registerAgentProjectApi = (app, { fs, projectsPath, clientOrigin }) => {
         project: sanitizeForAgent(project),
         surveyConfig: sanitizeForAgent(surveyConfig),
         savedAt: now,
+        draftUpdatedAt: now,
         validation,
         urls: buildProjectUrls(projectId, clientOrigin),
       });
@@ -279,6 +330,9 @@ const registerAgentProjectApi = (app, { fs, projectsPath, clientOrigin }) => {
             description: stored.project.description || '',
             lastModified: stored.project.lastModified || stored.savedAt || null,
             savedAt: stored.savedAt || null,
+            draftUpdatedAt: stored.draftUpdatedAt || stored.savedAt || null,
+            releaseManaged: !!stored.releaseManaged,
+            publishedVersion: stored.publishedVersion || 0,
           });
         } catch (error) {
           console.warn(`Skipping invalid project file ${file}:`, error.message);
@@ -299,6 +353,9 @@ const registerAgentProjectApi = (app, { fs, projectsPath, clientOrigin }) => {
         project: sanitizeForAgent(stored.project),
         surveyConfig: sanitizeForAgent(stored.surveyConfig),
         savedAt: stored.savedAt || null,
+        draftUpdatedAt: stored.draftUpdatedAt || stored.savedAt || null,
+        releaseManaged: !!stored.releaseManaged,
+        publishedVersion: stored.publishedVersion || 0,
         validation: validateSurveyConfig(stored.surveyConfig),
         urls: buildProjectUrls(req.params.projectId, clientOrigin),
       });
@@ -309,7 +366,7 @@ const registerAgentProjectApi = (app, { fs, projectsPath, clientOrigin }) => {
 
   app.patch('/api/agent/projects/:projectId/survey', async (req, res) => {
     try {
-      const { surveyConfig, expectedSavedAt } = req.body || {};
+      const { surveyConfig, expectedSavedAt, expectedDraftUpdatedAt } = req.body || {};
       const secretFields = findSecretFields(surveyConfig);
       if (secretFields.length > 0) {
         return res.status(400).json({
@@ -325,11 +382,14 @@ const registerAgentProjectApi = (app, { fs, projectsPath, clientOrigin }) => {
 
       const projectId = req.params.projectId;
       const stored = await readProject(projectId);
-      if (expectedSavedAt && stored.savedAt && expectedSavedAt !== stored.savedAt) {
+      const expectedStamp = expectedDraftUpdatedAt || expectedSavedAt;
+      const currentStamp = stored.draftUpdatedAt || stored.savedAt;
+      if (expectedStamp && currentStamp && expectedStamp !== currentStamp) {
         return res.status(409).json({
           success: false,
           error: 'Project changed after the agent read it. Read the project again before updating.',
           savedAt: stored.savedAt,
+          draftUpdatedAt: stored.draftUpdatedAt || stored.savedAt,
         });
       }
 
@@ -339,6 +399,7 @@ const registerAgentProjectApi = (app, { fs, projectsPath, clientOrigin }) => {
         project: { ...stored.project, lastModified: now },
         surveyConfig: restoreStoredSecrets(surveyConfig, stored.surveyConfig),
         savedAt: now,
+        draftUpdatedAt: now,
       };
 
       await fs.ensureDir(backupPath);
@@ -354,6 +415,7 @@ const registerAgentProjectApi = (app, { fs, projectsPath, clientOrigin }) => {
         success: true,
         projectId,
         savedAt: now,
+        draftUpdatedAt: now,
         validation,
         backup: path.relative(projectsPath, backupFile),
         urls: buildProjectUrls(projectId, clientOrigin),
@@ -381,6 +443,279 @@ const registerAgentProjectApi = (app, { fs, projectsPath, clientOrigin }) => {
       sendError(res, error);
     }
   });
+
+  const persistProject = async (projectId, stored, now) => {
+    await fs.ensureDir(backupPath);
+    const safeTimestamp = now.replace(/[:.]/g, '-');
+    const backupFile = path.join(backupPath, `${projectId}-${safeTimestamp}.json`);
+    if (await fs.pathExists(projectFile(projectId))) {
+      await fs.copy(projectFile(projectId), backupFile, { overwrite: false });
+    }
+    const temporaryFile = `${projectFile(projectId)}.tmp`;
+    await fs.writeFile(temporaryFile, JSON.stringify(stored, null, 2), 'utf8');
+    await fs.move(temporaryFile, projectFile(projectId), { overwrite: true });
+    return path.relative(projectsPath, backupFile);
+  };
+
+  app.post('/api/agent/projects/:projectId/operations', async (req, res) => {
+    try {
+      const projectId = req.params.projectId;
+      const stored = await readProject(projectId);
+      const expectedStamp = req.body?.expectedDraftUpdatedAt || req.body?.expectedSavedAt;
+      const currentStamp = stored.draftUpdatedAt || stored.savedAt;
+      if (expectedStamp && currentStamp && expectedStamp !== currentStamp) {
+        return res.status(409).json({
+          success: false,
+          error: 'Project changed after the agent read it. Read the project again before updating.',
+          savedAt: stored.savedAt,
+          draftUpdatedAt: currentStamp,
+        });
+      }
+      const operations = normalizeOperationsArg(req.body?.operations ?? req.body);
+      if (!Array.isArray(operations)) {
+        return res.status(400).json({ success: false, error: 'operations must be an array of {op, ...}.' });
+      }
+      const secretFields = findSecretFields(operations);
+      if (secretFields.length > 0) {
+        return res.status(400).json({
+          success: false,
+          error: 'Do not send credentials through the agent API.',
+          secretFields,
+        });
+      }
+      const result = applyOperations(stored.surveyConfig, operations);
+      const validation = validateSurveyConfig(result.surveyConfig);
+      if (!validation.valid) {
+        return res.status(400).json({
+          success: false,
+          error: 'Survey validation failed.',
+          validation,
+          applied: result.applied,
+        });
+      }
+      const now = new Date().toISOString();
+      const next = {
+        ...stored,
+        project: { ...stored.project, lastModified: now },
+        surveyConfig: restoreStoredSecrets(result.surveyConfig, stored.surveyConfig),
+        savedAt: now,
+        draftUpdatedAt: now,
+      };
+      const backup = await persistProject(projectId, next, now);
+      res.json({
+        success: true,
+        projectId,
+        savedAt: now,
+        draftUpdatedAt: now,
+        applied: result.applied,
+        inverse: result.inverse,
+        validation,
+        backup,
+        urls: buildProjectUrls(projectId, clientOrigin),
+      });
+    } catch (error) {
+      sendError(res, error);
+    }
+  });
+
+  app.get('/api/agent/projects/:projectId/media', async (req, res) => {
+    try {
+      const stored = await readProject(req.params.projectId);
+      const config = stored.surveyConfig || {};
+      const dataset = stored.project?.imageDatasetConfig || {};
+      res.json({
+        success: true,
+        media: sanitizeForAgent({
+          preloadedImages: config.preloadedImages || [],
+          mediaFolderTags: dataset.mediaFolderTags || {},
+          imageDatasetConfig: dataset,
+        }),
+      });
+    } catch (error) {
+      sendError(res, error);
+    }
+  });
+
+  app.patch('/api/agent/projects/:projectId/media', async (req, res) => {
+    try {
+      const secretFields = findSecretFields(req.body);
+      if (secretFields.length > 0) {
+        return res.status(400).json({
+          success: false,
+          error: 'Do not send credentials through the agent API.',
+          secretFields,
+        });
+      }
+      const stored = await readProject(req.params.projectId);
+      const now = new Date().toISOString();
+      const dataset = { ...(stored.project?.imageDatasetConfig || {}) };
+      if (req.body?.mediaFolderTags && typeof req.body.mediaFolderTags === 'object') {
+        dataset.mediaFolderTags = req.body.mediaFolderTags;
+      }
+      if (req.body?.imageDatasetConfig && typeof req.body.imageDatasetConfig === 'object') {
+        Object.entries(req.body.imageDatasetConfig).forEach(([key, value]) => {
+          if (!isSecretField(key)) dataset[key] = value;
+        });
+      }
+      const surveyConfig = { ...(stored.surveyConfig || {}) };
+      if (Array.isArray(req.body?.preloadedImages)) {
+        surveyConfig.preloadedImages = req.body.preloadedImages;
+      }
+      const next = {
+        ...stored,
+        project: { ...stored.project, imageDatasetConfig: dataset, lastModified: now },
+        surveyConfig,
+        savedAt: now,
+        draftUpdatedAt: now,
+      };
+      const backup = await persistProject(req.params.projectId, next, now);
+      res.json({
+        success: true,
+        savedAt: now,
+        draftUpdatedAt: now,
+        backup,
+        media: sanitizeForAgent({
+          preloadedImages: surveyConfig.preloadedImages || [],
+          mediaFolderTags: dataset.mediaFolderTags || {},
+        }),
+      });
+    } catch (error) {
+      sendError(res, error);
+    }
+  });
+
+  app.get('/api/agent/skills', async (req, res) => {
+    try {
+      if (!skillsPath) {
+        return res.json({ success: true, skills: [] });
+      }
+      await fs.ensureDir(skillsPath);
+      const files = (await fs.readdir(skillsPath)).filter((file) => file.endsWith('.json'));
+      const skills = [];
+      for (const file of files) {
+        try {
+          skills.push(sanitizeForAgent(JSON.parse(await fs.readFile(path.join(skillsPath, file), 'utf8'))));
+        } catch (error) {
+          console.warn(`Skipping invalid skill file ${file}:`, error.message);
+        }
+      }
+      res.json({ success: true, skills });
+    } catch (error) {
+      sendError(res, error);
+    }
+  });
+
+  app.post('/api/agent/skills', async (req, res) => {
+    try {
+      if (!skillsPath) {
+        return res.status(400).json({ success: false, error: 'Local skill storage is not configured.' });
+      }
+      const skill = req.body?.skill;
+      if (!skill || typeof skill !== 'object') {
+        return res.status(400).json({ success: false, error: 'skill object is required.' });
+      }
+      const secretFields = findSecretFields(skill);
+      if (secretFields.length > 0) {
+        return res.status(400).json({
+          success: false,
+          error: 'Do not send credentials through the agent API.',
+          secretFields,
+        });
+      }
+      if (skill.skillHtml || skill.sourceHtml) {
+        const html = String(skill.skillHtml || skill.sourceHtml);
+        if (!html.includes('SPSkill.setAnswer')) {
+          return res.status(400).json({
+            success: false,
+            error: 'Skill HTML must call SPSkill.setAnswer(object).',
+          });
+        }
+      }
+      const now = new Date().toISOString();
+      const id = skill.id || `skill_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
+      const row = {
+        ...skill,
+        id,
+        created_at: skill.created_at || now,
+        updated_at: now,
+      };
+      await fs.ensureDir(skillsPath);
+      await fs.writeFile(path.join(skillsPath, `${id}.json`), JSON.stringify(row, null, 2), 'utf8');
+      res.json({ success: true, skill: sanitizeForAgent(row) });
+    } catch (error) {
+      sendError(res, error);
+    }
+  });
+
+  app.get('/api/agent/projects/:projectId/results', async (req, res) => {
+    try {
+      await readProject(req.params.projectId);
+      res.json({
+        success: true,
+        responses: [],
+        note: 'Self-hosted results stay in the researcher\'s own Supabase or local response files. Use the Results tab, or configure Supabase and query survey_responses for this project_id. This endpoint never returns credentials.',
+      });
+    } catch (error) {
+      sendError(res, error);
+    }
+  });
+
+  app.post('/api/agent/projects/:projectId/release', async (req, res) => {
+    try {
+      const projectId = req.params.projectId;
+      const stored = await readProject(projectId);
+      const expectedStamp = req.body?.expectedDraftUpdatedAt || req.body?.expectedSavedAt;
+      const currentStamp = stored.draftUpdatedAt || stored.savedAt;
+      if (expectedStamp && currentStamp && expectedStamp !== currentStamp) {
+        return res.status(409).json({
+          success: false,
+          error: 'Draft changed after it was read. Read the project again before releasing.',
+          savedAt: stored.savedAt,
+          draftUpdatedAt: currentStamp,
+        });
+      }
+      if (req.body?.confirm !== true) {
+        return res.status(400).json({
+          success: false,
+          error: 'Pass confirm: true to release the current draft as the local participant snapshot.',
+        });
+      }
+      const now = new Date().toISOString();
+      const history = Array.isArray(stored.releaseHistory) ? stored.releaseHistory.slice() : [];
+      const config = JSON.parse(JSON.stringify(stored.surveyConfig || { pages: [] }));
+      const media = {
+        preloadedImages: config.preloadedImages || [],
+        imageDatasetConfig: stored.project?.imageDatasetConfig || {},
+      };
+      const nextVersion = Number(stored.publishedVersion || 0) + 1;
+      const next = {
+        ...stored,
+        releaseManaged: true,
+        publishedVersion: nextVersion,
+        publishedSurveyConfig: config,
+        publishedMedia: media,
+        releaseHistory: [{
+          version: nextVersion,
+          releasedAt: now,
+          summary: String(req.body?.summary || '').trim(),
+          config,
+          media_snapshot: media,
+        }, ...history].slice(0, 50),
+        lastReleasedAt: now,
+      };
+      const backup = await persistProject(projectId, next, now);
+      res.json({
+        success: true,
+        publishedVersion: nextVersion,
+        releaseManaged: true,
+        releasedAt: now,
+        backup,
+        note: 'Local participant snapshot updated. Deploy the participant site yourself; there is no hosted research_releases URL.',
+      });
+    } catch (error) {
+      sendError(res, error);
+    }
+  });
 };
 
 module.exports = {
@@ -393,4 +728,6 @@ module.exports = {
   restoreStoredSecrets,
   sanitizeForAgent,
   validateSurveyConfig,
+  applyOperations,
+  normalizeOperationsArg,
 };

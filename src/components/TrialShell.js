@@ -1,6 +1,9 @@
+import QuestionMediaBoundary, { questionMediaFailed } from './QuestionMediaBoundary';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Box, Button, Typography, Tooltip, useMediaQuery } from '@mui/material';
+import { Alert, Box, Button, LinearProgress, Typography, Tooltip, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { tf } from '../contexts/adminI18n';
+import { surveyUiStrings } from '../lib/surveyLocale';
 import {
   applyMediaToElement,
   getRememberedInjectedMedia,
@@ -21,6 +24,7 @@ import {
   normalizeTrialsAnswer,
   persistTrialsAnswer,
   trialHasAnswer,
+  canAutoAdvanceTrial,
 } from '../lib/trialNavigation';
 
 /** Prefer pre-sampled trialMediaSets; synthesize from image/media stimulus for preview. */
@@ -65,6 +69,12 @@ function writeQuestionProp(question, key, value) {
   } catch { /* ignore */ }
 }
 
+/** Types that keep text/response choices independent of the stimulus media. */
+const TEXT_CHOICE_STIMULUS_TYPES = new Set([
+  'imagecheckbox', 'mediacheckbox',
+  'imagepointallocation', 'mediapointallocation',
+]);
+
 function applyTrialMedia(question, mediaSet) {
   if (!question || !mediaSet?.length) return;
   const type = question.getType?.() || question.type;
@@ -76,6 +86,10 @@ function applyTrialMedia(question, mediaSet) {
     'annotationImageUrl', 'imageLink', 'imageName',
     'assignedMediaSetId', 'assignedMediaGroupId', 'assignedMediaCategories',
   ].forEach((key) => {
+    // Never copy undefined — scratch element omits keys that applyMediaToElement
+    // intentionally leaves alone (e.g. text tags on imagecheckbox).
+    if (element[key] === undefined) return;
+    if (key === 'choices' && TEXT_CHOICE_STIMULUS_TYPES.has(type)) return;
     writeQuestionProp(question, key, element[key]);
   });
   const prev = getRememberedInjectedMedia(question.name);
@@ -102,9 +116,54 @@ function applyTrialMedia(question, mediaSet) {
   }
 }
 
+// Scope navigation to the rendered survey; editor previews can coexist with it.
+const incompleteTrialShells = new WeakMap();
+
+function registerIncompleteShell(shell) {
+  const root = shell?.closest('.sd-root-modern, .sv-root, .sv_default_css');
+  if (!root) return undefined;
+  const shells = incompleteTrialShells.get(root) || new Set();
+  incompleteTrialShells.set(root, shells);
+  shells.add(shell);
+  root.classList.add('sp-trials-incomplete');
+  return () => {
+    shells.delete(shell);
+    root.classList.toggle('sp-trials-incomplete', shells.size > 0);
+  };
+}
+
+export function nextIncompletePageQuestion(survey, current) {
+  const questions = survey?.currentPage?.questions || [];
+  return questions.find((q) => q !== current && q.isVisible !== false && (
+    getTrialCount(q) > 1
+      ? !allTrialsAnswered(getTrialsAnswer(q) || q.value, getTrialCount(q), q)
+      : q.isRequired && q.isEmpty?.()
+  ));
+}
+
+function goSurveyForward(survey) {
+  if (!survey) return;
+  try {
+    if (survey.isLastPage) {
+      if (survey.showPreviewBeforeComplete !== 'no' && survey.showPreviewBeforeComplete) {
+        survey.showPreview?.();
+      } else {
+        survey.completeLastPage?.();
+      }
+      return;
+    }
+    survey.nextPage?.();
+  } catch { /* ignore */ }
+}
+
 function emptyTrialDisplayValue(question) {
   const type = question?.getType?.() || question?.type;
-  if (type === 'imageranking' || type === 'mediaranking') {
+  if (
+    type === 'imageranking'
+    || type === 'mediaranking'
+    || type === 'imagecheckbox'
+    || type === 'mediacheckbox'
+  ) {
     return [];
   }
   if (
@@ -169,6 +228,7 @@ function resolveInitialTrialIndex(question, trialCount, nav, answers) {
 
 function TrialShellInner({ question, Inner, trialCount, nav, ...rest }) {
   const theme = useTheme();
+  const t = surveyUiStrings(question?.survey);
   // Align with SurveyJS --sd-mobile-width (600px)
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -192,9 +252,25 @@ function TrialShellInner({ question, Inner, trialCount, nav, ...rest }) {
   const [mediaEpoch, setMediaEpoch] = useState(0);
   /** True after "Done with trials" (or restored finished question). */
   const [shellDone, setShellDone] = useState(initiallyDone);
+  const [, refreshPageAnswers] = useState(0);
+  useEffect(() => {
+    const update = () => refreshPageAnswers((n) => n + 1);
+    question.survey?.onValueChanged?.add(update);
+    return () => question.survey?.onValueChanged?.remove(update);
+  }, [question]);
+  useEffect(() => {
+    const preload = (trialMediaSets[index + 1] || []).filter((m) =>
+      !m.type || m.type === 'image').slice(0, 6).map((m) => {
+      const image = new Image(); image.src = typeof m === 'string' ? m : m.url; return image;
+    });
+    return () => { preload.forEach((image) => { image.onload = null; image.onerror = null; }); };
+  }, [index, trialMediaSets]);
   const applyingRef = useRef(false);
   const answersRef = useRef(answers);
   const indexRef = useRef(index);
+  const goToRef = useRef(() => {});
+  const autoAdvanceTimerRef = useRef(null);
+  const shellRef = useRef(null);
   answersRef.current = answers;
   indexRef.current = index;
 
@@ -207,9 +283,18 @@ function TrialShellInner({ question, Inner, trialCount, nav, ...rest }) {
 
   const writeFlatValue = useCallback((trialIndex, answersObj) => {
     const flat = answersObj?.trials?.[trialIndex]?.value;
-    const nextVal = (flat === undefined) ? emptyTrialDisplayValue(question) : flat;
+    let nextVal = (flat === undefined) ? emptyTrialDisplayValue(question) : flat;
+    // Copy arrays so SurveyJS always treats trial switches as a new value
+    // (same reference / []→[] no-ops break checkbox UI on trial 2+).
+    if (Array.isArray(nextVal)) nextVal = [...nextVal];
+    else if (nextVal && typeof nextVal === 'object') nextVal = { ...nextVal };
     try {
-      question.value = nextVal;
+      const survey = question.survey;
+      if (survey && typeof survey.setValue === 'function' && question.name) {
+        survey.setValue(question.name, nextVal);
+      } else {
+        question.value = nextVal;
+      }
     } catch (e) {
       console.warn('TrialShell: failed to set flat question.value', e);
     }
@@ -273,14 +358,39 @@ function TrialShellInner({ question, Inner, trialCount, nav, ...rest }) {
       if (applyingRef.current) return;
       const raw = question.value;
       if (isTrialsAnswer(raw)) return;
-      const set = trialMediaSets[indexRef.current] || [];
-      const next = normalizeTrialsAnswer(answersRef.current, trialCount);
-      next.trials[indexRef.current] = {
-        value: raw,
+      const trialIndex = indexRef.current;
+      const wasUnanswered = !trialHasAnswer(answersRef.current?.trials?.[trialIndex], question);
+      const set = trialMediaSets[trialIndex] || [];
+      const normalized = normalizeTrialsAnswer(answersRef.current, trialCount);
+      const next = { ...normalized, trials: [...normalized.trials] };
+      const storedValue = Array.isArray(raw)
+        ? [...raw]
+        : (raw && typeof raw === 'object' ? { ...raw } : raw);
+      next.trials[trialIndex] = {
+        ...(question.trialMediaContexts?.[trialIndex] || question.jsonObj?.trialMediaContexts?.[trialIndex] || {}),
+        value: storedValue,
         shown_images: mediaSetToShownImages(set),
         shown_media_ids: mediaSetToShownIds(set),
       };
-      persistAnswers(next, indexRef.current);
+      persistAnswers(next, trialIndex);
+      if (!trialHasAnswer(next.trials[trialIndex], question)) {
+        window.clearTimeout(autoAdvanceTimerRef.current);
+      }
+      if (
+        wasUnanswered
+        && canAutoAdvanceTrial(question)
+        && trialHasAnswer(next.trials[trialIndex], question)
+        && trialIndex < trialCount - 1
+      ) {
+        window.clearTimeout(autoAdvanceTimerRef.current);
+        autoAdvanceTimerRef.current = window.setTimeout(() => {
+          if (indexRef.current === trialIndex
+            && !questionMediaFailed(question)
+            && trialHasAnswer(answersRef.current?.trials?.[trialIndex], question)) {
+            goToRef.current(trialIndex + 1);
+          }
+        }, 500);
+      }
     };
 
     const survey = question.survey;
@@ -306,6 +416,7 @@ function TrialShellInner({ question, Inner, trialCount, nav, ...rest }) {
     return () => {
       survey?.onValueChanged?.remove(onSurveyValue);
       unregisterProp?.();
+      window.clearTimeout(autoAdvanceTimerRef.current);
     };
   }, [question, trialCount, trialMediaSets, persistAnswers]);
 
@@ -343,22 +454,32 @@ function TrialShellInner({ question, Inner, trialCount, nav, ...rest }) {
   useEffect(() => {
     const survey = question.survey;
     if (!survey?.onCurrentPageChanging) return undefined;
-    const handler = (_sender, options) => {
-      if (options?.isPrevPage) return;
-      if (survey.currentPage !== question.page) return;
+    const validateTrials = (options) => {
+      if (question.isVisible === false) return;
       if (survey.mode === 'display' || survey.isDisplayMode) return;
       if (!allTrialsAnswered(answersRef.current, trialCount, question)) {
         options.allow = false;
         try {
-          question.addError?.('Please complete all trials before continuing.');
+          question.addError?.(t.trialPageNextBlocked);
         } catch { /* ignore */ }
         return;
       }
       if (!shellDone) finishTrials();
     };
+    const handler = (_sender, options) => {
+      if (options?.isPrevPage || survey.currentPage !== question.page) return;
+      validateTrials(options);
+    };
+    const onFinish = (_sender, options) => validateTrials(options);
     survey.onCurrentPageChanging.add(handler);
-    return () => survey.onCurrentPageChanging.remove(handler);
-  }, [question, trialCount, shellDone, finishTrials]);
+    survey.onCompleting?.add(onFinish);
+    survey.onShowingPreview?.add(onFinish);
+    return () => {
+      survey.onCurrentPageChanging.remove(handler);
+      survey.onCompleting?.remove(onFinish);
+      survey.onShowingPreview?.remove(onFinish);
+    };
+  }, [question, trialCount, shellDone, finishTrials, t.trialPageNextBlocked]);
 
   // Respond to ProgressChrome jump requests + page-restore bumps
   useEffect(() => {
@@ -394,8 +515,10 @@ function TrialShellInner({ question, Inner, trialCount, nav, ...rest }) {
 
   const goTo = (nextIndex) => {
     if (nextIndex < 0 || nextIndex >= trialCount) return;
+    if (nextIndex > index && questionMediaFailed(question)) return;
     if (nextIndex > furthest + 1) return;
     if (nextIndex > furthest && !trialHasAnswer(answers.trials?.[index], question)) return;
+    window.clearTimeout(autoAdvanceTimerRef.current);
     // Snapshot current answers into the store before leaving this trial
     persistAnswers(answersRef.current, indexRef.current);
     // Sync nav trial index immediately (before React effect / writeFlatValue)
@@ -424,25 +547,56 @@ function TrialShellInner({ question, Inner, trialCount, nav, ...rest }) {
     if (index > 0) goTo(index - 1);
   };
 
+  goToRef.current = goTo;
+
   const complete = allTrialsAnswered(answers, trialCount, question);
   const onLastTrial = index >= trialCount - 1;
+  const autoAdvance = canAutoAdvanceTrial(question);
   const groups = Math.ceil(trialCount / TRIAL_DOT_GROUP_SIZE);
   const groupStart = groupIdx * TRIAL_DOT_GROUP_SIZE;
   const groupEnd = Math.min(trialCount, groupStart + TRIAL_DOT_GROUP_SIZE);
   // Subscribe so local blue ring clears when top cursor moves to another question
   const viewingUnit = nav?.units?.[nav.currentUnitIndex];
   void (nav?.answerEpoch);
+  const answeredCount = (answers?.trials || []).filter((slot) => trialHasAnswer(slot, question)).length;
+  const remainingCount = Math.max(0, trialCount - answeredCount);
+  const survey = question.survey;
+  const isDisplay = survey?.mode === 'display' || survey?.isDisplayMode;
+  const nextIncomplete = nextIncompletePageQuestion(survey, question);
+  const showPreview = survey?.isLastPage && survey?.showPreviewBeforeComplete
+    && survey.showPreviewBeforeComplete !== 'no';
+
+  useEffect(() => {
+    if (complete || isDisplay) return undefined;
+    return registerIncompleteShell(shellRef.current);
+  }, [question, complete, isDisplay]);
 
   return (
-    <Box className="sp-trial-shell" sx={{ width: '100%' }}>
-      <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 700 }}>
-        Trial {index + 1} of {trialCount}
-        {complete && (
-          <Typography component="span" variant="caption" color="success.main" sx={{ ml: 1 }}>
-            All trials answered
+    <Box ref={shellRef} className="sp-trial-shell" sx={{ width: '100%' }}>
+      <Alert severity={complete ? 'success' : 'info'} sx={{ mb: 1.5, py: 0.75 }}>
+        <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+          {tf(t.trialDoNTimes, { n: trialCount, current: index + 1 })}
+        </Typography>
+        <Typography variant="caption" display="block" sx={{ mt: 0.25 }}>
+          {complete
+            ? tf(t.trialAllDone, { n: trialCount })
+            : tf(t.trialProgressCount, { done: answeredCount, n: trialCount, left: remainingCount })}
+        </Typography>
+        {!complete && (
+          <Typography variant="caption" display="block" sx={{ mt: 0.25 }}>
+            {autoAdvance && !onLastTrial
+              ? t.trialAutoAdvance
+              : onLastTrial
+                ? t.trialLastRound
+                : t.trialUseNext}
           </Typography>
         )}
-      </Typography>
+      </Alert>
+      <LinearProgress
+        variant="determinate"
+        value={Math.round((answeredCount / trialCount) * 100)}
+        sx={{ mb: 1.5, height: 8, borderRadius: 1 }}
+      />
 
       {groups > 1 && (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 1 }}>
@@ -480,27 +634,31 @@ function TrialShellInner({ question, Inner, trialCount, nav, ...rest }) {
           const isViewing = viewingUnit?.questionName === question.name
             && viewingUnit?.trialIndex === i;
           return (
-            <Tooltip key={i} title={reached ? `Trial ${i + 1}` : 'Not reached'}>
-              <Box
-                component="button"
-                type="button"
-                disabled={!reached}
-                onClick={() => reached && goTo(i)}
-                sx={{
-                  width: { xs: 22, sm: 16 },
-                  height: { xs: 22, sm: 16 },
-                  borderRadius: '50%',
-                  border: '2px solid',
-                  borderColor: answered ? 'success.main' : 'grey.400',
-                  bgcolor: answered ? 'success.light' : 'transparent',
-                  boxShadow: isViewing
-                    ? (t) => `0 0 0 1px ${t.palette.background.paper}, 0 0 0 ${isMobile ? 2 : 4}px ${t.palette.primary.main}`
-                    : 'none',
-                  p: 0,
-                  cursor: reached ? 'pointer' : 'not-allowed',
-                  opacity: reached ? 1 : 0.35,
-                }}
-              />
+            <Tooltip key={i} title={reached ? tf(t.trialLabel, { n: i + 1 }) : t.progressNotReached}>
+              <Box component="span" sx={{ display: 'inline-flex' }}>
+                <Box
+                  component="button"
+                  type="button"
+                  disabled={!reached}
+                  aria-label={tf(t.trialLabel, { n: i + 1 })}
+                  aria-current={isViewing ? 'step' : undefined}
+                  onClick={() => reached && goTo(i)}
+                  sx={{
+                    width: { xs: 32, sm: 20 },
+                    height: { xs: 32, sm: 20 },
+                    borderRadius: '50%',
+                    border: '2px solid',
+                    borderColor: answered ? 'success.main' : 'grey.400',
+                    bgcolor: answered ? 'success.light' : 'transparent',
+                    boxShadow: isViewing
+                      ? (t) => `0 0 0 1px ${t.palette.background.paper}, 0 0 0 ${isMobile ? 2 : 4}px ${t.palette.primary.main}`
+                      : 'none',
+                    p: 0,
+                    cursor: reached ? 'pointer' : 'not-allowed',
+                    opacity: reached ? 1 : 0.35,
+                  }}
+                />
+              </Box>
             </Tooltip>
           );
         })}
@@ -517,14 +675,14 @@ function TrialShellInner({ question, Inner, trialCount, nav, ...rest }) {
         />
       </Box>
 
-      <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end', mt: 1 }}>
+      <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end', mt: 1, flexWrap: 'wrap' }}>
         <Button
           size={isMobile ? 'medium' : 'small'}
           variant="outlined"
           disabled={index === 0}
           onClick={handleBack}
         >
-          Back
+          {t.trialBack}
         </Button>
         {!onLastTrial && (
           <Button
@@ -533,7 +691,21 @@ function TrialShellInner({ question, Inner, trialCount, nav, ...rest }) {
             disabled={!trialHasAnswer(answers.trials?.[index], question)}
             onClick={handleNext}
           >
-            Next trial
+            {t.trialNextRound}
+          </Button>
+        )}
+        {complete && !isDisplay && (
+          <Button
+            size={isMobile ? 'medium' : 'small'}
+            variant="contained"
+            color="success"
+            onClick={() => {
+              const next = nextIncompletePageQuestion(survey, question);
+              if (next) { next.focus?.(); document.getElementById(next.id)?.scrollIntoView?.({block: 'start', behavior: 'smooth'}); return; }
+              goSurveyForward(survey);
+            }}
+          >
+            {nextIncomplete ? t.trialContinue : showPreview ? t.trialReviewAnswers : survey?.isLastPage ? t.trialFinishSurvey : t.trialContinue}
           </Button>
         )}
       </Box>
@@ -544,7 +716,7 @@ function TrialShellInner({ question, Inner, trialCount, nav, ...rest }) {
 /** Factory helper: wrap a SurveyJS React question component with TrialShell. */
 export function withTrialShell(Inner) {
   function Wrapped(props) {
-    return <TrialShell {...props} Inner={Inner} />;
+    return <QuestionMediaBoundary question={props.question}><TrialShell {...props} Inner={Inner} /></QuestionMediaBoundary>;
   }
   Wrapped.displayName = `WithTrialShell(${Inner.displayName || Inner.name || 'Question'})`;
   return Wrapped;

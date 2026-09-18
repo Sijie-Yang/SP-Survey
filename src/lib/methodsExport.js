@@ -1,3 +1,5 @@
+import { responseRecordKey } from './responseIdentity.js';
+import { ANALYSIS_ALGORITHM_VERSION, ANALYSIS_NOTES } from './analysisVersion.js';
 import { flattenQuestions, getAttentionCheckQuestions, summarizeQuality } from './quality.js';
 import { computeQuestionIrr, irrLevelForQuestion } from './reliability.js';
 import {
@@ -53,7 +55,7 @@ export function generateMethodsText({
       .map(([id]) => id),
   );
   const effective = excludeFlagged
-    ? responses.filter((r) => !flaggedIds.has(r.id ?? r.participant_id))
+    ? responses.filter((r) => !flaggedIds.has(responseRecordKey(r)))
     : responses;
 
   const attentionQs = getAttentionCheckQuestions(surveyConfig);
@@ -78,6 +80,8 @@ export function generateMethodsText({
 
   const lines = [];
   lines.push('METHODS (auto-generated — review and edit before submission)');
+  lines.push(`Analysis algorithm version: ${ANALYSIS_ALGORITHM_VERSION}`);
+  lines.push(...ANALYSIS_NOTES);
   lines.push('');
   lines.push(
     `We collected perceptual survey data using the SP Survey Platform `
@@ -151,7 +155,11 @@ export function generateMethodsText({
 
   const irrLines = allQuestions
     .map((q) => {
-      const { alpha, interpretation } = computeQuestionIrr(effective, q);
+      const { alpha, interpretation, dimensions } = computeQuestionIrr(effective, q);
+      if (dimensions) {
+        const values = dimensions.filter((d) => d.alpha != null).map((d) => d.label + ': α = ' + d.alpha.toFixed(3));
+        return values.length ? (q.title || q.name) + ' — ' + values.join('; ') : null;
+      }
       if (alpha == null) return null;
       const metric = irrLevelForQuestion(q) === 'interval'
         ? `Krippendorff's α = ${alpha.toFixed(3)}`
@@ -162,6 +170,7 @@ export function generateMethodsText({
   if (irrLines.length) {
     lines.push('');
     lines.push('Inter-rater reliability:');
+    lines.push('Repeated interval ratings by a participant are averaged per ordered stimulus group and dimension. Conflicting nominal repeats are omitted.');
     irrLines.forEach((l) => lines.push(`  • ${l}`));
   }
 
@@ -189,6 +198,10 @@ export function generateMethodsText({
     lines.push('');
     lines.push('Pairwise scoring:');
     tsLines.forEach((l) => lines.push(`  • ${l}`));
+  }
+
+  if (allQuestions.some((q) => q.allowTie)) {
+    lines.push('No-preference responses are recorded as ties and summarized separately. TrueSkill rankings use decisive outcomes only; ties are excluded.');
   }
 
   let bibtex = '';

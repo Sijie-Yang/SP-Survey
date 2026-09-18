@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 
 /** Normalize SurveyJS ItemValue / plain row-column entries. */
 export function normalizeMatrixAxis(items) {
@@ -27,6 +27,7 @@ export default function SurveyJsMatrixControl({
   onChange,
   disabled = false,
 }) {
+  const groupPrefix = useId();
   const rowItems = normalizeMatrixAxis(rows);
   const colItems = normalizeMatrixAxis(columns);
   const current = value && typeof value === 'object' && !Array.isArray(value) ? value : {};
@@ -80,7 +81,7 @@ export default function SurveyJsMatrixControl({
                   {colItems.map((col, colIndex) => {
                     const isChecked = selected === col.value
                       || String(selected) === String(col.value);
-                    const inputId = `${name}_${row.value}_${colIndex}`;
+                    const inputId = `${groupPrefix}_${name}_${row.value}_${colIndex}`;
                     return (
                       <td
                         key={String(col.value)}
@@ -100,7 +101,8 @@ export default function SurveyJsMatrixControl({
                             id={inputId}
                             type="radio"
                             className="sd-visuallyhidden sd-item__control sd-radio__control"
-                            name={`${name}_${row.value}`}
+                            name={`${groupPrefix}_${name}_${row.value}`}
+                            aria-label={`${row.text} — ${col.text}`}
                             value={col.value}
                             checked={isChecked}
                             disabled={disabled}

@@ -1,3 +1,4 @@
+import { sliderGroupAnswerValid } from './sliderScale';
 /**
  * Multi-trial navigation helpers for image/media questions.
  */
@@ -10,6 +11,7 @@ export const TRIAL_DOT_GROUP_SIZE = 30;
 export const TRIAL_LOOP_TYPES = new Set([
   'imagepicker', 'mediapicker',
   'imagerating', 'mediarating', 'imageboolean', 'mediaboolean',
+  'imagecheckbox', 'mediacheckbox',
   'imageranking', 'mediaranking',
   'imagematrix', 'mediamatrix',
   'imageslidergroup', 'mediaslidergroup',
@@ -19,6 +21,19 @@ export const TRIAL_LOOP_TYPES = new Set([
 
 export function supportsTrialLoop(type) {
   return TRIAL_LOOP_TYPES.has(type);
+}
+
+/** Forced-choice pickers only — rating / yes-no stay so people can change their mind. */
+export const AUTO_ADVANCE_TRIAL_TYPES = new Set([
+  'imagepicker', 'mediapicker',
+]);
+
+export function canAutoAdvanceTrial(question) {
+  if (!question) return false;
+  const type = question.type || question.getType?.();
+  if (!AUTO_ADVANCE_TRIAL_TYPES.has(type)) return false;
+  if (question.multiSelect === true) return false;
+  return true;
 }
 
 export function getTrialCount(questionOrElement) {
@@ -128,6 +143,9 @@ export function trialHasAnswer(trial, question = null) {
     return false;
   }
   const type = question?.getType?.() || question?.type;
+  if (['slidergroup', 'imageslidergroup', 'mediaslidergroup'].includes(type)) {
+    return sliderGroupAnswerValid(v, question, true);
+  }
   if (question && isMatrixQuestionType(type)) {
     return matrixValueIsComplete(v, question);
   }

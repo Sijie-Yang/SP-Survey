@@ -3,13 +3,13 @@
  * and ResearcherPractice.
  */
 import {
-  applyMediaToElement,
+  applyMediaAssignmentToElement,
   defaultMediaCount,
   filterPoolForQuestion,
   getImageKey,
   isCuratedMediaMode,
   isRandomMediaQuestion,
-  pickRandomMediaForQuestion,
+  pickMediaForQuestion,
   pickTrialMediaSetsForQuestion,
   rememberInjectedMedia,
   resolveCuratedImages,
@@ -55,7 +55,7 @@ export function resolveQuestionMedia(question, projectImages, options = {}) {
     question.imageCount ?? defaultMediaCount(question),
   );
 
-  if (isCuratedMediaMode(question) && question.selectedImageUrls?.length) {
+  if (isCuratedMediaMode(question)) {
     return {
       images: resolveCuratedImages(question, projectImages).slice(0, count),
       groupKey: null,
@@ -64,7 +64,7 @@ export function resolveQuestionMedia(question, projectImages, options = {}) {
   }
 
   if (random) {
-    return pickRandomMediaForQuestion(
+    return pickMediaForQuestion(
       pool,
       { ...question, imageCount: count },
       usedImageKeys,
@@ -84,8 +84,8 @@ export function resolveQuestionMedia(question, projectImages, options = {}) {
 export function buildSingleQuestionSurvey({
   question,
   projectImages = [],
-  usedImageKeys = null,
-  usedGroupKeys = null,
+  usedImageKeys = new Set(),
+  usedGroupKeys = new Set(),
   randomMedia = false,
   showNavigationButtons = false,
   trackUsed = false,
@@ -96,6 +96,9 @@ export function buildSingleQuestionSurvey({
   }
   const element = normalizeBuilderQuestion(JSON.parse(JSON.stringify(question)));
   if (!element.name) element.name = 'preview_q';
+  // A new preview/practice run must not inherit assignments from an older run.
+  delete element.trialMediaSets;
+  delete element.trialMediaContexts;
 
   const trialCount = getTrialCount(element);
   const pool = filterPoolForQuestion(projectImages || [], element);
@@ -124,6 +127,11 @@ export function buildSingleQuestionSurvey({
     images = assignment.flatMedia || assignment.images || trialMediaSets[0] || [];
     element.trialCount = trialCount;
     element.trialMediaSets = trialMediaSets;
+    element.trialMediaContexts = picked.trialAssignments.map((a) => ({
+      shown_media_set: a.setId || a.groupId || null,
+      shown_media_categories: a.categories || [],
+      shown_media: a.slots || [],
+    }));
   } else {
     assignment = resolveQuestionMedia(element, projectImages, {
       usedImageKeys,
@@ -131,7 +139,7 @@ export function buildSingleQuestionSurvey({
       random: randomMedia,
       folderTags,
     });
-    images = assignment.images || [];
+    images = assignment.flatMedia || assignment.images || [];
     if (trialCount > 1 && images.length) {
       // Curated / non-random: reuse the same stimulus set for every trial.
       trialMediaSets = Array.from({ length: trialCount }, () => (
@@ -142,8 +150,8 @@ export function buildSingleQuestionSurvey({
     }
   }
 
-  if (images.length) {
-    applyMediaToElement(element, images);
+  if (images.length || (randomMedia && isRandomMediaQuestion(element) && !isCuratedMediaMode(element))) {
+    applyMediaAssignmentToElement(element, assignment);
   }
   // Random multi-trial already tracked inside pickTrialMediaSetsForQuestion.
   const multiTrialRandom = trialCount > 1 && randomMedia && !isCuratedMediaMode(element);

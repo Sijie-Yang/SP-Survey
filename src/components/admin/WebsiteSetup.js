@@ -38,8 +38,11 @@ import {
   ContentCopy
 } from '@mui/icons-material';
 import { prepareDeploymentFolder, getDeploymentStatus, testDeployment, uploadToGitHub } from '../../lib/deploymentManager';
+import SurveyPreflight from './SurveyPreflight';
+import ProjectVersions from './ProjectVersions';
+import { getProjectReleaseState } from '../../lib/projectRelease';
 
-export default function WebsiteSetup({ currentProject, surveyConfig }) {
+export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedChanges = false, onReleased }) {
   const [activeStep, setActiveStep] = useState(0);
   const [deploymentStatus, setDeploymentStatus] = useState({
     preparing: false,
@@ -146,10 +149,19 @@ export default function WebsiteSetup({ currentProject, surveyConfig }) {
     }));
 
     try {
+      let deployConfig = surveyConfig;
+      try {
+        const release = await getProjectReleaseState(currentProject.id);
+        if (release.release_managed && release.survey_config_published) {
+          deployConfig = release.survey_config_published;
+        }
+      } catch (error) {
+        console.warn('Could not read local release snapshot; deploying current draft.', error);
+      }
       // Combine project metadata with survey configuration
       const completeConfig = {
         ...currentProject,
-        ...surveyConfig
+        ...deployConfig
       };
       
       const result = await prepareDeploymentFolder(completeConfig);
@@ -1028,6 +1040,12 @@ git push -u origin main`}
 
   return (
     <Box>
+      <SurveyPreflight surveyConfig={surveyConfig} currentProject={currentProject} />
+      <ProjectVersions
+        currentProject={currentProject}
+        hasUnsavedChanges={hasUnsavedChanges}
+        onReleased={onReleased}
+      />
       <Box sx={{ mb: 4 }}>
         <Typography variant="h5" sx={{ mb: 2, color: 'primary.main' }}>
           🌐 Website Setup & Deployment

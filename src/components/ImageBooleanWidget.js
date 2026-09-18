@@ -155,6 +155,7 @@ export default function ImageBooleanWidget({ question, value, onValueChanged, tr
         labelTrue={question?.labelTrue || 'Yes'}
         labelFalse={question?.labelFalse || 'No'}
         value={value}
+        disabled={!!question?.isReadOnly}
         onChange={onValueChanged}
       />
     </Box>

@@ -74,16 +74,18 @@ export function enrichSurveyResponses({
           : (displayedImages[`${questionName}__trials`]?.[trialIndex]
             || displayedImages[questionName]
             || []);
-        const mappedAnswer = mapImageChoiceAnswerToNames(trial?.value, shownImages);
+        const mappedAnswer = mapImageChoiceAnswerToNames(trial?.answer ?? trial?.value, shownImages);
         return {
+          ...(trial?.shown_media_set !== undefined ? { shown_media_set: trial.shown_media_set } : {}),
+          ...(trial?.shown_media_categories !== undefined ? { shown_media_categories: trial.shown_media_categories } : {}),
           trial_index: trialIndex,
           answer: mappedAnswer,
           shown_images: shownImages,
           shown_media_ids: trial?.shown_media_ids?.length
             ? trial.shown_media_ids
             : resolveShownMediaIds(shownImages, preloadedImages),
-          shown_media: buildShownMedia(
-            questionName, displayedMediaSlots, shownImages, preloadedImages,
+          shown_media: trial?.shown_media?.length ? trial.shown_media : buildShownMedia(
+            questionName, {}, shownImages, preloadedImages,
           ),
         };
       });

@@ -1272,6 +1272,8 @@ export default function AdminApp() {
               <WebsiteSetup
                 currentProject={currentProject}
                 surveyConfig={surveyConfig}
+                hasUnsavedChanges={hasUnsavedChanges}
+                onReleased={() => setSnackbar({ open: true, message: 'Participant snapshot released. Deploy the participant site when you are ready.', severity: 'success' })}
               />
             </TabPanel>
 

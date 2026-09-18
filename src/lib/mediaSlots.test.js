@@ -18,6 +18,17 @@ const pool = [
   { name: 'amb.mp3', url: 'https://r2.test/sets/thermal/amb.mp3', type: 'audio', key: 'sets/thermal/amb.mp3', media_id: 'sets/thermal/amb.mp3', folder: 'sets/thermal' },
 ];
 
+test.each(['none', 'basename'])('an empty explicit slot folder never falls back to outside media (%s)', (matchBy) => {
+  const result = resolveMediaSlots(pool, {
+    mediaSlots: [
+      { id: 'primary', role: 'stimulus', selection: 'fixed', mediaType: 'video', mediaRef: { key: 'v/clip01.mp4' }, order: 0 },
+      { id: 'scoped', role: 'companion', selection: 'random', mediaType: 'audio', count: 1, mediaFolders: ['missing'], matchBy, order: 1 },
+    ],
+  }, new Set(), new Set());
+  expect(result.images).toHaveLength(1);
+  expect(result.images[0].type).toBe('video');
+});
+
 describe('resolveMediaSlots', () => {
   test('hasMediaSlots detects non-empty array', () => {
     expect(hasMediaSlots({ mediaSlots: [{ id: 'a' }] })).toBe(true);

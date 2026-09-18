@@ -4,6 +4,9 @@
  */
 
 import { validateSurveyConfig } from './validate';
+import { OPERATION_TYPES } from '../platformSchema';
+
+export { OPERATION_TYPES };
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -22,10 +25,35 @@ function findQuestionIndex(page, questionName) {
  * @param {Array<object>} operations
  * @returns {{ surveyConfig, applied, inverse, validation }}
  */
-export function applyOperations(surveyConfig, operations = []) {
-  if (!Array.isArray(operations)) {
-    throw new Error('operations must be an array');
+export function normalizeOperationsArg(raw) {
+  if (raw == null) return [];
+  if (Array.isArray(raw)) return raw;
+  if (typeof raw !== 'object') return null;
+  if (Array.isArray(raw.operations)) return raw.operations;
+  if (typeof raw.op === 'string') return [raw];
+  if (raw.surveyConfig && typeof raw.surveyConfig === 'object' && Array.isArray(raw.surveyConfig.pages)) {
+    return [{ op: 'replaceConfig', surveyConfig: raw.surveyConfig }];
   }
+  if (Array.isArray(raw.pages)) {
+    return [{ op: 'replaceConfig', surveyConfig: raw }];
+  }
+  if (raw.replaceConfig && typeof raw.replaceConfig === 'object') {
+    const payload = raw.replaceConfig.surveyConfig || raw.replaceConfig;
+    return [{ op: 'replaceConfig', surveyConfig: payload }];
+  }
+  const values = Object.keys(raw)
+    .sort((a, b) => Number(a) - Number(b))
+    .map((key) => raw[key])
+    .filter((item) => item && typeof item === 'object' && typeof item.op === 'string');
+  return values.length ? values : null;
+}
+
+export function applyOperations(surveyConfig, operations = []) {
+  const list = normalizeOperationsArg(operations);
+  if (!Array.isArray(list)) {
+    throw new Error('operations must be an array of {op, ...}. A single replaceConfig object is also accepted.');
+  }
+  operations = list;
 
   let config = clone(surveyConfig || { pages: [] });
   if (!Array.isArray(config.pages)) config.pages = [];
@@ -148,6 +176,68 @@ export function applyOperations(surveyConfig, operations = []) {
         inverse.unshift({ op: 'replaceConfig', surveyConfig: previous });
         break;
       }
+      case 'updateSurvey': {
+        const previous = {};
+        const patch = op.patch && typeof op.patch === 'object' ? op.patch : {};
+        Object.keys(patch).forEach((key) => {
+          if (key === 'pages') return;
+          previous[key] = clone(config[key]);
+          config[key] = clone(patch[key]);
+        });
+        applied.push(op);
+        inverse.unshift({ op: 'updateSurvey', patch: previous });
+        break;
+      }
+      case 'updatePage': {
+        const idx = findPageIndex(config.pages, op.pageName);
+        if (idx < 0) throw new Error(`Page not found: ${op.pageName}`);
+        const previous = clone(config.pages[idx]);
+        const patch = op.patch && typeof op.patch === 'object' ? op.patch : {};
+        config.pages[idx] = {
+          ...previous,
+          ...clone(patch),
+          name: previous.name,
+          elements: Object.prototype.hasOwnProperty.call(patch, 'elements')
+            ? clone(patch.elements)
+            : previous.elements,
+        };
+        applied.push(op);
+        inverse.unshift({ op: 'updatePage', pageName: op.pageName, patch: previous });
+        break;
+      }
+      case 'setTheme': {
+        const previous = clone(config.theme || {});
+        const patch = clone(op.theme || {});
+        config.theme = op.replace === true
+          ? patch
+          : { ...previous, ...patch };
+        applied.push(op);
+        inverse.unshift({ op: 'setTheme', theme: previous, replace: true });
+        break;
+      }
+      case 'reorderPages': {
+        const names = Array.isArray(op.pageNames) ? op.pageNames : [];
+        const previous = config.pages.map((page) => page.name);
+        const next = names.map((name) => config.pages.find((page) => page.name === name)).filter(Boolean);
+        const leftover = config.pages.filter((page) => !names.includes(page.name));
+        config.pages = [...next, ...leftover];
+        applied.push(op);
+        inverse.unshift({ op: 'reorderPages', pageNames: previous });
+        break;
+      }
+      case 'reorderQuestions': {
+        const pageIdx = findPageIndex(config.pages, op.pageName);
+        if (pageIdx < 0) throw new Error(`Page not found: ${op.pageName}`);
+        const page = config.pages[pageIdx];
+        const names = Array.isArray(op.questionNames) ? op.questionNames : [];
+        const previous = (page.elements || []).map((element) => element.name);
+        const next = names.map((name) => (page.elements || []).find((element) => element.name === name)).filter(Boolean);
+        const leftover = (page.elements || []).filter((element) => !names.includes(element.name));
+        page.elements = [...next, ...leftover];
+        applied.push(op);
+        inverse.unshift({ op: 'reorderQuestions', pageName: op.pageName, questionNames: previous });
+        break;
+      }
       default:
         throw new Error(`Unknown operation: ${op.op}`);
     }
@@ -156,13 +246,3 @@ export function applyOperations(surveyConfig, operations = []) {
   const validation = validateSurveyConfig(config);
   return { surveyConfig: config, applied, inverse, validation };
 }
-
-export const OPERATION_TYPES = [
-  'addPage',
-  'removePage',
-  'addQuestion',
-  'updateQuestion',
-  'removeQuestion',
-  'setAllRatingScales',
-  'replaceConfig',
-];
