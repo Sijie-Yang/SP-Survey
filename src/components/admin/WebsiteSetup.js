@@ -37,12 +37,15 @@ import {
   Warning,
   ContentCopy
 } from '@mui/icons-material';
+import { AdminPageHeader } from './AdminPageLayout';
+import { useRegion } from '../../contexts/RegionContext';
 import { prepareDeploymentFolder, getDeploymentStatus, testDeployment, uploadToGitHub } from '../../lib/deploymentManager';
 import SurveyPreflight from './SurveyPreflight';
 import ProjectVersions from './ProjectVersions';
 import { getProjectReleaseState } from '../../lib/projectRelease';
 
 export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedChanges = false, onReleased }) {
+  const { t } = useRegion();
   const [activeStep, setActiveStep] = useState(0);
   const [deploymentStatus, setDeploymentStatus] = useState({
     preparing: false,
@@ -1047,12 +1050,11 @@ git push -u origin main`}
         onReleased={onReleased}
       />
       <Box sx={{ mb: 4 }}>
-        <Typography variant="h5" sx={{ mb: 2, color: 'primary.main' }}>
-          🌐 Website Setup & Deployment
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-          Deploy your survey to Vercel and make it accessible online for participants.
-        </Typography>
+        <AdminPageHeader
+          icon={<Language />}
+          title={t.shareTitle}
+          description={t.shareDescription}
+        />
 
         {/* Benefits Overview */}
         <Alert severity="info" sx={{ mb: 3 }}>

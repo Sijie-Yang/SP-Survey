@@ -3286,7 +3286,7 @@ export default function ResultsAnalysis({
       {/* No survey config */}
       {!loading && !surveyConfig && (
         <Alert severity="info">
-          No survey configured. Please set up your survey in Step 2 – Survey Builder first.
+          No survey configured. Please set up your survey in Survey Builder first.
         </Alert>
       )}
 

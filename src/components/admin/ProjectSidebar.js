@@ -88,6 +88,7 @@ import { isLocalSelfHosted, LOCAL_USER_ID } from '../../lib/appMode';
 import { isR2Configured, deleteImagesFromR2, listImagesFromR2, copyImagesInR2 } from '../../lib/r2';
 
 export default function ProjectSidebar({ 
+  id,
   open, 
   onClose, 
   onProjectSelect, 
@@ -815,6 +816,7 @@ export default function ProjectSidebar({
   return (
     <>
       <Drawer
+        id={id}
         anchor="left"
         open={open}
         onClose={onClose}

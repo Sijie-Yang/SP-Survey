@@ -73,6 +73,7 @@ import SpatialIntelligencePanel from './SpatialIntelligencePanel';
 import MediaPreannotatePanel from './MediaPreannotatePanel';
 import MediaPreannotateResults from './MediaPreannotateResults';
 import { useRegion } from '../../contexts/RegionContext';
+import { AdminPageHeader } from './AdminPageLayout';
 import { LOCAL_USER_ID } from '../../lib/appMode';
 
 const MEDIA_PAGE_SIZE = 24;
@@ -84,7 +85,7 @@ function mediaEntryKey(entry, userId, projectId) {
 }
 
 export default function ImageDataset({ currentProject, onProjectUpdate, onConfigChange, onNextStep }) {
-  useRegion();
+  const { t } = useRegion();
   const user = { id: LOCAL_USER_ID };
 
   // Direct upload state
@@ -875,14 +876,11 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
 
   return (
     <Box>
-      <Typography variant="h5" sx={{ mb: 1, color: 'primary.main' }}>
-        Media Dataset
-      </Typography>
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Upload images, videos, and audio to Supabase Storage. They will be served to survey participants.
-        Images over 300 KB are automatically compressed. Video/audio are uploaded as-is (max ~100 MB).
-        HuggingFace batch import is available as an optional tool for images.
-      </Typography>
+      <AdminPageHeader
+        icon={<CloudUpload />}
+        title={t.mediaTitle}
+        description={t.mediaDescription}
+      />
 
       <Box sx={{ mb: 2.5, display: 'grid', gap: 1.5, gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' } }}>
         <MediaPairingGuide compact totalFileCount={preloadedCount} pairedSetCount={groupSummary.total} />

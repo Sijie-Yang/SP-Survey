@@ -7,6 +7,7 @@ import AdminApp from './AdminApp';
 import SkillEditorPage from './pages/SkillEditorPage';
 import SkillLibraryPage from './pages/SkillLibraryPage';
 import QuestionPreviewPage from './components/admin/QuestionPreviewPage';
+import { RegionProvider } from './contexts/RegionContext';
 
 const theme = createTheme({
   palette: {
@@ -20,6 +21,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <RegionProvider>
       <Router>
         <Routes>
           <Route path="/survey" element={<SurveyApp />} />
@@ -31,6 +33,7 @@ export default function App() {
           <Route path="/" element={<Navigate to="/admin" replace />} />
         </Routes>
       </Router>
+      </RegionProvider>
     </ThemeProvider>
   );
 }
