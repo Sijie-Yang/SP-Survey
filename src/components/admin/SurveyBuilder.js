@@ -81,6 +81,7 @@ import ConfirmDialog from '../layout/ConfirmDialog';
 import QuestionEditor from './QuestionEditor';
 import { AdminPageHeader } from './AdminPageLayout';
 import { useRegion } from '../../contexts/RegionContext';
+import { useQuestionEditorText } from '../../contexts/questionEditorI18n';
 import SurveyThemePreviewPanel from '../SurveyThemePreviewPanel';
 import {
   allocateUniqueName,
@@ -162,6 +163,7 @@ function ThemeColorPart({ step, title, description, children }) {
 
 // Sortable Page Item Component
 function SortablePageItem({ page, pageIndex, onEdit, onDelete, onDuplicate }) {
+  const { tr } = useQuestionEditorText();
   const {
     attributes,
     listeners,
@@ -213,10 +215,10 @@ function SortablePageItem({ page, pageIndex, onEdit, onDelete, onDuplicate }) {
         primary={
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
             <Typography variant="h6">
-              {page.title || `Page ${pageIndex + 1}`}
+              {page.title || tr('Page {number}', { number: pageIndex + 1 })}
             </Typography>
             <Chip
-              label={`${page.elements?.length || 0} questions`}
+              label={tr(page.elements?.length === 1 ? '{count} question' : '{count} questions', { count: page.elements?.length || 0 })}
               size="small"
               color="primary"
               variant="outlined"
@@ -225,7 +227,7 @@ function SortablePageItem({ page, pageIndex, onEdit, onDelete, onDuplicate }) {
         }
         secondary={
           <Typography variant="body2" color="text.secondary">
-            {page.description || 'No description provided'}
+            {page.description || tr('No description provided')}
           </Typography>
         }
       />
@@ -284,6 +286,7 @@ export default function SurveyBuilder({
   onOpenAssistant,
 }) {
   const { t } = useRegion();
+  const { tr } = useQuestionEditorText();
   const [confirmDialog, setConfirmDialog] = useState(null);
   const [selectedPage, setSelectedPage] = useState(null);
 
@@ -598,10 +601,10 @@ export default function SurveyBuilder({
   const deletePage = (pageIndex) => {
     const page = config.pages[pageIndex];
     const questionCount = page?.elements?.length || 0;
-    const pageTitle = page?.title || `Page ${pageIndex + 1}`;
+    const pageTitle = page?.title || tr('Page {number}', { number: pageIndex + 1 });
     const message = questionCount > 0
-      ? `Delete "${pageTitle}" and its ${questionCount} question(s)? This cannot be undone.`
-      : `Delete "${pageTitle}"? This cannot be undone.`;
+      ? tr('Delete "{title}" and its {count} question(s)? This cannot be undone.', { title: pageTitle, count: questionCount })
+      : tr('Delete "{title}"? This cannot be undone.', { title: pageTitle });
     setConfirmDialog({
       title: 'Delete page',
       message,
@@ -828,23 +831,23 @@ export default function SurveyBuilder({
       {/* Survey Settings - Unified Panel */}
       <Accordion defaultExpanded>
         <AccordionSummary expandIcon={<ExpandMore />}>
-          <Typography variant="h6">Survey Settings</Typography>
+          <Typography variant="h6">{t.builderSurveySettings}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             {/* Basic Information */}
             <Box>
               <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 600, mb: 2 }}>
-                📝 Basic Information
+                {t.builderBasicInfo}
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <TextField
                   fullWidth
                   variant="outlined"
-                  label="Survey Title"
+                  label={t.builderSurveyTitle}
                   value={config.title || ''}
                   onChange={(e) => handleBasicInfoChange('title', e.target.value)}
-                  helperText="The main title that appears at the top of your survey"
+                  helperText={t.builderSurveyTitleHelp}
                 />
                 
                 <TextField
@@ -852,10 +855,10 @@ export default function SurveyBuilder({
                   variant="outlined"
                   multiline
                   rows={3}
-                  label="Survey Description"
+                  label={t.builderSurveyDescription}
                   value={config.description || ''}
                   onChange={(e) => handleBasicInfoChange('description', e.target.value)}
-                  helperText="A brief description explaining the purpose of your survey"
+                  helperText={t.builderSurveyDescriptionHelp}
                 />
 
                 <TextField
@@ -863,23 +866,23 @@ export default function SurveyBuilder({
                   variant="outlined"
                   multiline
                   rows={2}
-                  label="Completion Message (optional)"
+                  label={t.builderCompletionMessage}
                   value={config.completionMessage || ''}
                   onChange={(e) => handleBasicInfoChange('completionMessage', e.target.value)}
-                  helperText="Shown to participants after they submit the survey"
+                  helperText={t.builderCompletionMessageHelp}
                 />
 
                 <TextField
                   fullWidth
                   variant="outlined"
                   type="number"
-                  label="Response Quota (optional)"
+                  label={t.builderResponseQuota}
                   value={config.responseQuota ?? ''}
                   onChange={(e) => {
                     const v = e.target.value;
                     handleBasicInfoChange('responseQuota', v === '' ? null : Math.max(1, parseInt(v, 10) || 1));
                   }}
-                  helperText="Close the survey automatically after this many responses (leave empty for unlimited)"
+                  helperText={t.builderResponseQuotaHelp}
                   inputProps={{ min: 1 }}
                 />
               </Box>
@@ -890,7 +893,7 @@ export default function SurveyBuilder({
             {/* Logo Settings */}
             <Box>
               <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 600, mb: 2 }}>
-                🖼️ Logo Settings
+                {t.builderLogoSettings}
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <TextField
@@ -941,7 +944,7 @@ export default function SurveyBuilder({
                   }}
                 />
                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                  ⚙️ Display Settings
+                  {t.builderDisplaySettings}
                 </Typography>
               </Box>
               <Collapse in={!displaySettingsCollapsed} timeout="auto" unmountOnExit>
@@ -1025,7 +1028,7 @@ export default function SurveyBuilder({
                   }}
                 />
                 <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                  🎨 Theme Customization
+                  {t.builderThemeCustomization}
                 </Typography>
               </Box>
               <Collapse in={!themeCustomizationCollapsed} timeout="auto" unmountOnExit>
@@ -1317,12 +1320,12 @@ export default function SurveyBuilder({
       {/* Pages and Questions */}
       <Accordion defaultExpanded>
         <AccordionSummary expandIcon={<ExpandMore />}>
-          <Typography variant="h6">Pages & Questions</Typography>
+          <Typography variant="h6">{t.builderPagesQuestions}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-              Organize your survey into pages. Drag pages to reorder them.
+              {t.builderPagesHelp}
             </Typography>
             <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
               <Button
@@ -1331,7 +1334,7 @@ export default function SurveyBuilder({
                 onClick={addNewPage}
                 size="large"
               >
-                Add New Page
+                {t.builderAddPage}
               </Button>
             </Box>
           </Box>
@@ -1415,9 +1418,9 @@ export default function SurveyBuilder({
       </Snackbar>
       <ConfirmDialog
         open={Boolean(confirmDialog)}
-        title={confirmDialog?.title}
+        title={tr(confirmDialog?.title)}
         message={confirmDialog?.message}
-        confirmLabel={confirmDialog?.confirmLabel}
+        confirmLabel={tr(confirmDialog?.confirmLabel)}
         confirmColor={confirmDialog?.confirmColor || 'error'}
         onConfirm={() => confirmDialog?.onConfirm?.()}
         onCancel={() => setConfirmDialog(null)}

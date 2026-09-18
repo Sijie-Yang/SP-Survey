@@ -6,7 +6,9 @@ const path = require('path');
 const cors = require('cors');
 const OpenAI = require('openai');
 const { resolveAiRequest, aiChat, formatAiError } = require('./aiClient');
-const { registerAgentProjectApi } = require('./src/server/agentProjectApi');
+const { registerAgentProjectApi, createProjectIo } = require('./src/server/agentProjectApi');
+const { registerAgentChatApi } = require('./src/server/agentChatRuntime');
+const { registerSiliconLocalApi } = require('./src/server/siliconLocalApi');
 
 // Import multi-agent review system
 const {
@@ -258,6 +260,14 @@ registerAgentProjectApi(app, {
   projectsPath: PROJECTS_PATH,
   skillsPath: SKILLS_PATH,
   clientOrigin: CLIENT_ORIGIN,
+});
+registerAgentChatApi(app, {
+  createProjectIo: () => createProjectIo({ fs, projectsPath: PROJECTS_PATH }),
+});
+registerSiliconLocalApi(app, {
+  fs,
+  projectsPath: PROJECTS_PATH,
+  createProjectIo: () => createProjectIo({ fs, projectsPath: PROJECTS_PATH }),
 });
 
 // Deployment endpoints

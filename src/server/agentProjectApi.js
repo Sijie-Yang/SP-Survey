@@ -154,16 +154,8 @@ const createDefaultSurveyConfig = (name, description = '') => ({
   completedHtml: '<h3>Thank you for completing the survey.</h3>',
 });
 
-const registerAgentProjectApi = (app, { fs, projectsPath, skillsPath, clientOrigin }) => {
+const createProjectIo = ({ fs, projectsPath }) => {
   const backupPath = path.join(projectsPath, '.backups');
-
-  app.use('/api/agent', (req, res, next) => {
-    if (!isLoopbackAddress(req.socket?.remoteAddress || req.ip)) {
-      return res.status(403).json({ success: false, error: 'The agent API is available only from this machine.' });
-    }
-    next();
-  });
-
   const projectFile = (projectId) => path.join(projectsPath, `${projectId}.json`);
 
   const readProject = async (projectId) => {
@@ -180,6 +172,41 @@ const registerAgentProjectApi = (app, { fs, projectsPath, skillsPath, clientOrig
     }
     return JSON.parse(await fs.readFile(filePath, 'utf8'));
   };
+
+  const persistProject = async (projectId, stored, now) => {
+    await fs.ensureDir(backupPath);
+    const stamp = String(now || new Date().toISOString());
+    const safeTimestamp = stamp.replace(/[:.]/g, '-');
+    const backupFile = path.join(backupPath, `${projectId}-${safeTimestamp}.json`);
+    if (await fs.pathExists(projectFile(projectId))) {
+      await fs.copy(projectFile(projectId), backupFile, { overwrite: false });
+    }
+    const temporaryFile = `${projectFile(projectId)}.tmp`;
+    await fs.writeFile(temporaryFile, JSON.stringify(stored, null, 2), 'utf8');
+    await fs.move(temporaryFile, projectFile(projectId), { overwrite: true });
+    return path.relative(projectsPath, backupFile);
+  };
+
+  return {
+    readProject,
+    persistProject,
+    validateSurveyConfig,
+    sanitizeForAgent,
+    restoreStoredSecrets,
+    projectFile,
+    backupPath,
+  };
+};
+
+const registerAgentProjectApi = (app, { fs, projectsPath, skillsPath, clientOrigin }) => {
+  const { readProject, persistProject, projectFile, backupPath } = createProjectIo({ fs, projectsPath });
+
+  app.use('/api/agent', (req, res, next) => {
+    if (!isLoopbackAddress(req.socket?.remoteAddress || req.ip)) {
+      return res.status(403).json({ success: false, error: 'The agent API is available only from this machine.' });
+    }
+    next();
+  });
 
   const sendError = (res, error) => {
     res.status(error.status || 500).json({ success: false, error: error.message });
@@ -443,19 +470,6 @@ const registerAgentProjectApi = (app, { fs, projectsPath, skillsPath, clientOrig
       sendError(res, error);
     }
   });
-
-  const persistProject = async (projectId, stored, now) => {
-    await fs.ensureDir(backupPath);
-    const safeTimestamp = now.replace(/[:.]/g, '-');
-    const backupFile = path.join(backupPath, `${projectId}-${safeTimestamp}.json`);
-    if (await fs.pathExists(projectFile(projectId))) {
-      await fs.copy(projectFile(projectId), backupFile, { overwrite: false });
-    }
-    const temporaryFile = `${projectFile(projectId)}.tmp`;
-    await fs.writeFile(temporaryFile, JSON.stringify(stored, null, 2), 'utf8');
-    await fs.move(temporaryFile, projectFile(projectId), { overwrite: true });
-    return path.relative(projectsPath, backupFile);
-  };
 
   app.post('/api/agent/projects/:projectId/operations', async (req, res) => {
     try {
@@ -721,6 +735,7 @@ const registerAgentProjectApi = (app, { fs, projectsPath, skillsPath, clientOrig
 module.exports = {
   buildProjectUrls,
   createDefaultSurveyConfig,
+  createProjectIo,
   findSecretFields,
   isLoopbackAddress,
   isSafeProjectId,
