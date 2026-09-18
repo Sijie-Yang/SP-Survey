@@ -9,8 +9,12 @@ Work only in SP-Survey. SP-Survey-Platform is a reference, not the edit target.
 - Create a new project with `POST http://localhost:3001/api/agent/projects` when the user requests one; do not include credentials.
 - Discover projects through the localhost-only API: `GET http://localhost:3001/api/agent/projects`.
 - If the requested project is ambiguous, ask before editing.
-- Read it with `GET /api/agent/projects/:id`; retain its `savedAt` value.
-- Update only through `PATCH /api/agent/projects/:id/survey` with `surveyConfig` and `expectedSavedAt`.
+- Always `GET /api/agent/capabilities` then `GET /api/agent/projects/:id` (retain `savedAt` / `draftUpdatedAt`).
+- Prefer `POST /api/agent/projects/:id/operations` over full `PATCH .../survey` replace.
+- Media: `GET|PATCH /api/agent/projects/:id/media` for folder tags / dataset notes. Never AI-generate images.
+- Skills: `GET /api/agent/skills` and `POST /api/agent/skills` with one typed `resultSchema` field. HTML must call `SPSkill.setAnswer(object)`.
+- Results: `GET /api/agent/projects/:id/results` describes where to read the researcher's own Supabase / local files. Do not expect hosted MCP result dumps.
+- Release: `POST /api/agent/projects/:id/release` with `confirm: true` updates the local participant snapshot. The user still deploys the participant site themselves.
 - Never request, print, add, or change credentials. The API intentionally excludes them.
 - Run validation and inspect the returned local Admin and Local Live Survey URLs after an update.
 

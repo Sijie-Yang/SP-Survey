@@ -124,8 +124,8 @@ function skillFromPreset(skillId) {
 }
 
 export const RANDOM_MEDIA_TYPES = new Set([
-  'imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'image', 'imagematrix',
-  'mediadisplay', 'mediarating', 'mediaboolean', 'mediaranking', 'mediapicker',
+  'imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'imagecheckbox', 'image', 'imagematrix',
+  'mediadisplay', 'mediarating', 'mediaboolean', 'mediacheckbox', 'mediaranking', 'mediapicker',
   'mediamatrix', 'mediaslidergroup', 'mediapointallocation',
   'imageannotation',
   'imageslidergroup', 'imagepointallocation',
@@ -153,7 +153,7 @@ export function shouldInjectMedia(element) {
   // media* / annotation / slots: Serializer defaults randomImageSelection=false, which
   // previously skipped injection even when imageSelectionMode is huggingface_random.
   if ([
-    'mediadisplay', 'mediarating', 'mediaboolean', 'imageannotation',
+    'mediadisplay', 'mediarating', 'mediaboolean', 'mediacheckbox', 'imageannotation',
     'mediamatrix', 'mediaslidergroup', 'mediapointallocation',
   ].includes(element.type) || hasMediaSlots(element)) {
     return true;
@@ -282,8 +282,8 @@ export function defaultMediaCount(element) {
     return element.imageCount || element.skillConfig?.mediaCount || 1;
   }
   if ([
-    'imagerating', 'imagematrix', 'imageboolean', 'image',
-    'mediadisplay', 'mediarating', 'mediaboolean', 'mediamatrix',
+    'imagerating', 'imagematrix', 'imageboolean', 'imagecheckbox', 'image',
+    'mediadisplay', 'mediarating', 'mediaboolean', 'mediacheckbox', 'mediamatrix',
     'mediaslidergroup', 'mediapointallocation', 'imageannotation',
     'imageslidergroup', 'imagepointallocation',
   ].includes(element.type)) {
@@ -302,7 +302,7 @@ export function getMediaTypeFilter(element) {
   if (isMediaStarType(element.type)) {
     return element.mediaType || 'any';
   }
-  if (['imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'image', 'imagematrix', 'imageslidergroup', 'imagepointallocation'].includes(element.type)) {
+  if (['imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'imagecheckbox', 'image', 'imagematrix', 'imageslidergroup', 'imagepointallocation'].includes(element.type)) {
     return 'image';
   }
   return 'any';
@@ -336,11 +336,32 @@ export function filterPoolForQuestion(pool, element) {
   return filterMediaByType(pool, mediaType).map(normalizeMediaEntry).filter(Boolean);
 }
 
+function scopeIndividualMediaPool(pool, element) {
+  const mode = normalizeMediaAssignmentMode(element?.mediaAssignmentMode);
+  const scopeFolders = Array.isArray(element?.mediaFolders) ? element.mediaFolders.map(normalizeFolderPath).filter(Boolean) : [];
+  let workingPool = [...(pool || [])].map((e) => normalizeMediaEntry(e)).filter(Boolean);
+  if (scopeFolders?.length && mode === 'individual') {
+    const scoped = [];
+    scopeFolders.forEach((folder) => {
+      scoped.push(...getRecursiveMedia(workingPool, folder));
+    });
+    const seen = new Set();
+    workingPool = scoped.filter((img) => {
+      const k = getImageKey(img);
+      if (!k || seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    });
+  }
+
+  return workingPool;
+}
+
 /** Admin UI: project-wide vs question-filtered media/set/category counts. */
 export function getMediaPoolStatus(projectPool, question = null, folderTags = {}) {
   const totalFileCount = (projectPool || []).length;
   const matchingFiles = question
-    ? filterPoolForQuestion(projectPool, question)
+    ? scopeIndividualMediaPool(filterPoolForQuestion(projectPool, question), question)
     : (projectPool || []).map((e) => normalizeMediaEntry(e)).filter(Boolean);
   const matchingFileCount = matchingFiles.length;
   const mediaTypeFilter = question ? getMediaTypeFilter(question) : 'any';
@@ -366,7 +387,7 @@ export function getMediaPoolStatus(projectPool, question = null, folderTags = {}
       : 0)
     : null;
   const expectedCategoryTotal = mode === 'category' && matchingCategoryCount > 0
-    ? matchingCategoryCount * mediaPerCategory
+    ? (usesSingleCategoryPerTrial(question) ? 1 : matchingCategoryCount) * mediaPerCategory
     : null;
 
   return {
@@ -382,6 +403,9 @@ export function getMediaPoolStatus(projectPool, question = null, folderTags = {}
     eligibleSetCount,
     filesPerSet,
     mediaPerCategory,
+    eligibleSingleCategoryCount: usesSingleCategoryPerTrial(question)
+      ? [...buildMediaByFolderCategory(matchingFiles, folderTags, { scopeFolders: question?.mediaFolders }).values()].filter((items) => items.length >= mediaPerCategory).length
+      : null,
     expectedCategoryTotal,
     taggedSetCount: pairedSummary.total,
     folderTags,
@@ -401,6 +425,11 @@ export function usesCategoryMediaAssignment(element) {
   return normalizeMediaAssignmentMode(element?.mediaAssignmentMode) === 'category';
 }
 
+/** Missing mode preserves the original draw-from-every-category behavior. */
+export function usesSingleCategoryPerTrial(element) {
+  return usesCategoryMediaAssignment(element) && element?.mediaCategoryMode === 'single';
+}
+
 /** How many files to draw from each tagged category folder (question setting). */
 export function getMediaPerCategory(element) {
   const n = parseInt(element?.mediaPerCategory, 10);
@@ -409,7 +438,7 @@ export function getMediaPerCategory(element) {
 }
 
 /**
- * Expected total media count for category mode = categories × per-category.
+ * Expected category media count: one category per trial, or all categories × per-category.
  * Returns null if not in category mode or no categories.
  */
 export function expectedCategoryImageCount(pool, element, folderTags = {}) {
@@ -418,20 +447,85 @@ export function expectedCategoryImageCount(pool, element, folderTags = {}) {
     scopeFolders: element?.mediaFolders,
   });
   if (!labels.length) return null;
-  return labels.length * getMediaPerCategory(element);
+  return (usesSingleCategoryPerTrial(element) ? 1 : labels.length) * getMediaPerCategory(element);
+}
+
+/** Human-readable gap for preview/admin. Never invent a substitute pool. */
+export function describeMediaAssignmentFailure(element, pool, folderTags = {}, assignment = {}) {
+  const name = element?.name || 'unnamed';
+  const title = element?.title && element.title !== name ? ` (${element.title})` : '';
+  const mode = normalizeMediaAssignmentMode(element?.mediaAssignmentMode) || 'individual';
+  const scoped = filterPoolForQuestion(pool, element);
+  const perCategory = getMediaPerCategory(element);
+  const imageCount = element.imageCount || defaultMediaCount(element);
+  const scopeFolders = Array.isArray(element?.mediaFolders)
+    ? element.mediaFolders.map(normalizeFolderPath).filter(Boolean)
+    : [];
+  const got = (assignment.flatMedia || assignment.images || []).length;
+  const trialSets = assignment.trialMediaSets;
+  if (Array.isArray(trialSets) && trialSets.some((items) => !items?.length)) {
+    const empty = trialSets
+      .map((items, index) => (!items?.length ? index + 1 : null))
+      .filter(Boolean);
+    return `Question "${name}"${title}: trial ${empty.join(', ')} has no matching media.`;
+  }
+  if (mode === 'category') {
+    const byCategory = buildMediaByFolderCategory(scoped, folderTags, { scopeFolders });
+    const labels = [...byCategory.keys()].sort();
+    const available = getFolderCategories(pool, folderTags);
+    if (!labels.length) {
+      const needed = scopeFolders.length ? scopeFolders.join(', ') : 'tagged category folders';
+      return `Question "${name}"${title}: no matching category. Needed ${needed}. Tagged categories: ${available.join(', ') || 'none'}.`;
+    }
+    const counts = labels.map((cat) => `${cat} (have ${(byCategory.get(cat) || []).length}, need ${perCategory})`);
+    if (usesSingleCategoryPerTrial(element)) {
+      const eligible = labels.filter((cat) => (byCategory.get(cat) || []).length >= perCategory);
+      if (!eligible.length) {
+        return `Question "${name}"${title}: no specified category has ${perCategory} image(s). ${counts.join('; ')}.`;
+      }
+    } else {
+      const short = labels.filter((cat) => (byCategory.get(cat) || []).length < perCategory);
+      if (short.length) {
+        return `Question "${name}"${title}: not enough images in ${short.map((cat) => `${cat} (have ${(byCategory.get(cat) || []).length}, need ${perCategory})`).join(', ')}.`;
+      }
+    }
+    const expected = expectedCategoryImageCount(scoped, element, folderTags);
+    if (expected && got < expected) {
+      return `Question "${name}"${title}: category draw returned ${got} image(s), expected ${expected}. ${counts.join('; ')}.`;
+    }
+  }
+  if (mode === 'set') {
+    const eligible = getEligibleMediaSets(scoped, imageCount, folderTags, { scopeFolders });
+    if (!eligible.length) {
+      return `Question "${name}"${title}: no eligible set with ${imageCount} file(s). Scope: ${scopeFolders.join(', ') || 'all tagged sets'}.`;
+    }
+  }
+  if (got < imageCount) {
+    return `Question "${name}"${title}: not enough matching images (have ${scoped.length}, need ${imageCount}).`;
+  }
+  return null;
 }
 
 function pickOnePerCategory(pool, element, globallyUsedImageKeys, folderTags = {}) {
   const byCategory = buildMediaByFolderCategory(pool, folderTags, {
     scopeFolders: element?.mediaFolders,
   });
-  const categories = [...byCategory.keys()].sort((a, b) =>
+  let categories = [...byCategory.keys()].sort((a, b) =>
     String(a).localeCompare(String(b), undefined, { numeric: true, sensitivity: 'base' }),
   );
   const perCategory = getMediaPerCategory(element);
   const excludeUsed = element.excludePreviouslyUsedImages !== false;
   const images = [];
   const assignedCategories = [];
+
+  if (usesSingleCategoryPerTrial(element)) {
+    // Choose among categories that can supply a complete trial after exclusions.
+    // Never fill a short category using files from another category.
+    const eligible = categories.filter((cat) => (byCategory.get(cat) || []).filter((img) => (
+      !excludeUsed || !globallyUsedImageKeys?.has(getImageKey(img))
+    )).length >= perCategory);
+    categories = eligible.length ? [eligible[Math.floor(Math.random() * eligible.length)]] : [];
+  }
 
   for (const cat of categories) {
     let catPool = byCategory.get(cat) || [];
@@ -620,20 +714,7 @@ export function pickRandomMediaForQuestion(
     ? element.mediaFolders.map(normalizeFolderPath).filter(Boolean)
     : null;
 
-  let workingPool = [...(pool || [])].map((e) => normalizeMediaEntry(e)).filter(Boolean);
-  if (scopeFolders?.length && mode === 'individual') {
-    const scoped = [];
-    scopeFolders.forEach((folder) => {
-      scoped.push(...getRecursiveMedia(workingPool, folder));
-    });
-    const seen = new Set();
-    workingPool = scoped.filter((img) => {
-      const k = getImageKey(img);
-      if (!k || seen.has(k)) return false;
-      seen.add(k);
-      return true;
-    });
-  }
+  const workingPool = scopeIndividualMediaPool(pool, element);
 
   if (mode === 'category') {
     return pickOnePerCategory(workingPool, element, globallyUsedImageKeys, folderTags);
@@ -827,7 +908,7 @@ export function applyMediaToElement(element, selectedImages) {
   }
 
   if ([
-    'mediadisplay', 'mediarating', 'mediaboolean',
+    'mediadisplay', 'mediarating', 'mediaboolean', 'mediacheckbox',
     'mediamatrix', 'mediaslidergroup', 'mediapointallocation',
   ].includes(element.type)) {
     setMediaItems(element, selectedImages);
@@ -853,14 +934,14 @@ export function applyMediaToElement(element, selectedImages) {
     return;
   }
 
-  if (['imageboolean', 'imagerating', 'imagematrix', 'imageslidergroup', 'imagepointallocation'].includes(element.type)) {
+  if (['imageboolean', 'imagecheckbox', 'imagerating', 'imagematrix', 'imageslidergroup', 'imagepointallocation'].includes(element.type)) {
     element.imageLinks = selectedImages.map((img) => img.url);
     element.imageNames = selectedImages.map((img) => img.name);
     element.imageHtml = buildImageGalleryHtml(selectedImages);
     element.imageUrls = selectedImages.map((img) => img.url);
     // imagerating / imageboolean / imagematrix widgets read stimulus from choices[].imageLink.
-    // imageslidergroup / imagepointallocation use imageLinks for stimulus; their choices are
-    // response options (dimensions are separate) — never overwrite allocation choices with images.
+    // imagecheckbox / imageslidergroup / imagepointallocation keep text/response choices —
+    // never overwrite those with stimulus images.
     if (['imageboolean', 'imagerating', 'imagematrix'].includes(element.type)) {
       element.choices = selectedImages.map((image, index) => ({
         value: `image_${index}`,
@@ -917,7 +998,9 @@ const INJECTED_MEDIA_SYNC_KEYS = [
   'mediaSlots', 'mediaSlotsResolved', 'slotIds', 'slotUrls', 'slotTypes', 'slotRoles', 'slotNames',
   'imageLinks', 'imageNames', 'imageHtml', 'imageUrls', 'imageLink', 'imageName',
   'annotationImageUrl', 'trialMediaSets', 'skillImages',
-  'assignedMediaSetId', 'assignedMediaGroupId', 'assignedMediaCategories',
+  'skillId', 'skillHtml', 'skillAnalysisHtml', 'skillResultSchema',
+  'skillRevision', 'skillContractVersion', 'skillConfig',
+  'assignedMediaSetId', 'assignedMediaGroupId', 'assignedMediaCategories', 'trialMediaContexts',
 ];
 
 /**
@@ -945,6 +1028,7 @@ export function syncInjectedMediaOntoSurveyModel(surveyModel, surveyJson) {
       try {
         if (typeof q.setPropertyValue === 'function') {
           q.setPropertyValue(key, val);
+          if (key === 'trialMediaContexts') q[key] = val;
         } else {
           q[key] = val;
         }
@@ -955,7 +1039,7 @@ export function syncInjectedMediaOntoSurveyModel(surveyModel, surveyJson) {
 
 /**
  * Ensure skillConfig carries skillId. Media comes from project injection or
- * the admin skill-preview library in builder previews — no SVG demos.
+ * the platform preview media library in builder previews — no SVG demos.
  */
 export function ensureSkillDemoMedia(element) {
   if (element.type !== 'skillquestion') return;
@@ -975,10 +1059,31 @@ export async function resolveSkillQuestions(surveyJson) {
     if (!page.elements) continue;
     for (const el of page.elements) {
       if (el.type !== 'skillquestion' || !el.skillId) continue;
-      let skill = await getSkillById(el.skillId);
-      if (!skill) skill = skillFromPreset(el.skillId);
+      // Prefer presets first (sync) so live surveys don't wait on Supabase for stock skills.
+      let skill = skillFromPreset(el.skillId);
+      if (!skill) {
+        // Heal mistaken preset_skill_* (old normalizer rewrote library ids).
+        const libraryId = String(el.skillId || '').startsWith('preset_skill_')
+          ? String(el.skillId).slice('preset_'.length)
+          : el.skillId;
+        try {
+          skill = await Promise.race([
+            getSkillById(libraryId, el.skillRevision || null),
+            new Promise((resolve) => setTimeout(() => resolve(null), 8000)),
+          ]);
+          if (skill && libraryId !== el.skillId) el.skillId = libraryId;
+        } catch {
+          skill = null;
+        }
+      }
       if (skill) {
         el.skillHtml = skill.sourceHtml || el.skillHtml;
+        if (skill.analysisHtml) el.skillAnalysisHtml = skill.analysisHtml;
+        if (!Array.isArray(el.skillResultSchema) || !el.skillResultSchema.length) {
+          if (skill.resultSchema?.length) el.skillResultSchema = skill.resultSchema;
+        }
+        el.skillRevision = Number(el.skillRevision || skill.revision || skill.currentRevision || 1);
+        el.skillContractVersion = Number(el.skillContractVersion || skill.contractVersion || 1);
         const merged = { ...(skill.defaultConfig || {}), ...(el.skillConfig || {}) };
         delete merged.demoImages;
         const skillKey = String(el.skillId || '').replace(/^preset_/, '');

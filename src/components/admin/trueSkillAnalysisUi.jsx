@@ -21,7 +21,7 @@ import { downloadTextFile } from '../../lib/methodsExport';
 
 export const TRUESKILL_SORT_COLUMNS = [
   { id: 'mu', label: 'μ', align: 'right' },
-  { id: 'muStd5', label: 'Std. μ (0–5)', align: 'right' },
+  { id: 'muStd5', label: 'Relative μ (0–5)', align: 'right' },
   { id: 'sigma', label: 'σ', align: 'right' },
   { id: 'conservative', label: 'μ−3σ', align: 'right' },
   { id: 'games', label: 'Games', align: 'right' },
@@ -47,7 +47,18 @@ const INT_COLS = new Set([
 ]);
 const ASC_DEFAULT_COLS = new Set(['avgRank', 'imageKey']);
 
+function imageDisplayName(key) {
+  const source = String(key || '');
+  const filename = source.split(/[?#]/)[0].split('/').pop() || source;
+  try { return decodeURIComponent(filename); } catch { return filename; }
+}
+
 export function compareTrueSkillRows(a, b, orderBy, order) {
+  if (orderBy === 'imageKey') {
+    const cmp = imageDisplayName(a.imageKey).localeCompare(imageDisplayName(b.imageKey), undefined, { numeric: true })
+      || String(a.imageKey).localeCompare(String(b.imageKey));
+    return order === 'asc' ? cmp : -cmp;
+  }
   const av = a[orderBy];
   const bv = b[orderBy];
   if (av == null && bv == null) return String(a.imageKey).localeCompare(String(b.imageKey));
@@ -70,9 +81,9 @@ export function TrueSkillMuChart({ rankings }) {
       scores={scores}
       domainMin={0}
       domainMax={5}
-      title="Standardized μ distribution (0–5)"
-      caption="Blue bars: histogram of standardized μ (density = count / n / bin width). Orange curve: fitted normal PDF."
-      xLabel="Standardized μ (0–5)"
+      title="Within-question relative μ distribution (0–5)"
+      caption="Within-question min-max scaling, not a comparable 5-point rating scale. Blue: density histogram. Orange: fitted normal PDF."
+      xLabel="Within-question relative μ (0–5)"
       padB={36}
     />
   );
@@ -126,6 +137,7 @@ export function TrueSkillTable({
           <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>{title}</Typography>
           <Typography variant="caption" color="text.secondary" display="block">
             {caption || 'Click a column header to sort (default: μ descending).'}
+            {' '}Sequential pairwise approximation; comparisons from one trial are dependent. Use as an exploratory ranking, not a significance test.
           </Typography>
         </Box>
         {onExport && (
@@ -175,11 +187,13 @@ export function TrueSkillTable({
                       <Box
                         component="img"
                         src={resolveImg(row)}
-                        alt={row.imageKey}
-                        sx={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 0.5 }}
+                        alt={imageDisplayName(row.imageKey)}
+                        sx={{ width: 40, height: 40, flexShrink: 0, objectFit: 'cover', borderRadius: 0.5 }}
                       />
                     )}
-                    <Typography variant="caption">{row.imageKey}</Typography>
+                    <Typography variant="caption" noWrap title={row.imageKey} sx={{ maxWidth: { xs: 160, sm: 280 } }}>
+                      {imageDisplayName(row.imageKey)}
+                    </Typography>
                   </Box>
                 </TableCell>
                 {columns.map((col) => (

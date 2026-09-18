@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import { adminI18n } from './adminI18n';
 
 export const RegionContext = createContext();
 
@@ -12,8 +13,7 @@ export const LANGUAGES = {
   ZH: 'zh',
 };
 
-// UI strings for bilingual support
-export const i18n = {
+const OSS_I18N = {
   en: {
     regionLabel: 'Region',
     globalMode: 'Global',
@@ -72,6 +72,11 @@ export const i18n = {
     aliyunOss: '阿里云 OSS',
     chinaModeBanner: '🇨🇳 中国区模式已启用 — 使用 ModelScope、阿里云 OSS 与 Zeabur',
   },
+};
+
+export const i18n = {
+  en: { ...(adminI18n.en || {}), ...OSS_I18N.en },
+  zh: { ...(adminI18n.zh || {}), ...OSS_I18N.zh },
 };
 
 export function RegionProvider({ children }) {

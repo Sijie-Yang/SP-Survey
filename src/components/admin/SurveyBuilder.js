@@ -88,6 +88,7 @@ import {
   findDuplicateQuestionNames,
   repairDuplicateQuestionNames,
 } from '../../lib/questionNames';
+import { applyOperations, postProcessAiConfig } from '../../lib/designProtocol';
 // Old API functions removed - now using chatApi.js
 import { getConversationHistory } from '../../lib/conversationHistory';
 import { getWorkingMemory } from '../../lib/workingMemory';
@@ -852,8 +853,21 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
   };
 
   // ✅ Post-process AI-generated config to ensure all image questions have correct settings
+  const applyAssistantResult = (result, currentConfig) => {
+    let nextConfig = currentConfig;
+    if (result?.operations) {
+      const applied = applyOperations(currentConfig || { pages: [] }, result.operations);
+      nextConfig = applied.surveyConfig;
+    } else if (result?.surveyConfig) {
+      nextConfig = result.surveyConfig;
+    } else {
+      return null;
+    }
+    return processAIGeneratedConfig(nextConfig);
+  };
+
   const processAIGeneratedConfig = (surveyConfig) => {
-    const imageQuestionTypes = ['imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'image', 'imagematrix', 'imageslidergroup', 'imagepointallocation'];
+    const imageQuestionTypes = ['imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'imagecheckbox', 'image', 'imagematrix', 'imageslidergroup', 'imagepointallocation'];
     
     const processedConfig = JSON.parse(JSON.stringify(surveyConfig)); // Deep clone
     
@@ -888,7 +902,7 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
       });
     }
     
-    return processedConfig;
+    return postProcessAiConfig(processedConfig);
   };
 
   // AI Assistant handlers
@@ -1107,14 +1121,14 @@ export default function SurveyBuilder({ config, onChange, currentProject, onNext
           }));
         }
 
-        // If survey config was generated/adjusted, apply it
-        if (result.surveyConfig) {
+        // If survey config was generated/adjusted, apply incremental ops or full replace
+        const processedConfig = applyAssistantResult(result, config);
+        if (processedConfig) {
           aiUndoSnapshotRef.current = JSON.parse(JSON.stringify(config));
           setAiUndoAvailable(true);
           if (currentProject?.id) {
             sessionStorage.setItem(`ai_undo_${currentProject.id}`, JSON.stringify(config));
           }
-          const processedConfig = processAIGeneratedConfig(result.surveyConfig);
           onChange(processedConfig);
 
           // Update contextual engineering memories for THIS project

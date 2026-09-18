@@ -1,3 +1,11 @@
+import { isNoPreference } from './choiceTie.js';
+import { choiceOutcome, summarizeChoiceOutcomes } from './choiceOutcomes.js';
+import { buildExportDictionary } from './exportDictionary.js';
+import { responseRecordKey } from './responseIdentity.js';
+import { ANALYSIS_ALGORITHM_VERSION, ANALYSIS_NOTES } from './analysisVersion.js';
+import { allocationStatus } from './allocationStats.js';
+import { computeQuestionIrr } from './reliability.js';
+import { mediaIdentityKey, resolveMediaAnswerKey, stimulusUnitKey, stimulusUnitLabel } from './mediaIdentity.js';
 /**
  * Unified Results Analysis export: per-question __long / __summary CSVs,
  * data_quality, manifest, README, and full ZIP file list.
@@ -6,7 +14,7 @@
  *   participant_id, created_at, session_id, attempt_index, practice_mode, quality_flags,
  *   question_name, question_type,
  *   shown_images, shown_media_set, shown_media_categories
- *   (shown_media_ids stay in stored responses for internal joins; not exported)
+ *   (shown_media_ids and source metadata are also exported)
  *
  * Summary (all types, tidy):
  *   question_name, question_type, n_responses,
@@ -15,6 +23,7 @@
  *   metric, value, n
  */
 
+import { dimensionDisplayName } from './sliderScale.js';
 import { average, descriptiveStats } from './stats.js';
 import { computeBordaScores, kendallW } from './rankingStats.js';
 import {
@@ -46,8 +55,8 @@ import {
   mediaFilenameKey,
 } from './skillMediaUtils.js';
 import { computeMaxDiffScores } from './maxdiff.js';
-import { expandQuestionAnswerUnits } from './responseAnswerUnits.js';
-import { summarizeVideoMomentsByVideo } from './videoStats.js';
+import { expandQuestionAnswerUnits, normalizeBooleanAnswer } from './responseAnswerUnits.js';
+import { summarizeVideoMomentsByVideo, aggregateContinuousRatingByVideo } from './videoStats.js';
 import { objectsToCsv, rowsToCsv, exportDateStamp } from './csvUtil.js';
 import { downloadZip } from './zipDownload.js';
 import { downloadTextFile, generateMethodsText } from './methodsExport.js';
@@ -77,6 +86,10 @@ export const LONG_PREFIX = [
   'shown_images',
   'shown_media_set',
   'shown_media_categories',
+  'shown_media_ids',
+  'shown_media_json',
+  'media_metadata_scope',
+  'survey_revision',
 ];
 
 export const SUMMARY_HEADERS = [
@@ -111,11 +124,11 @@ const LONG_EXTRA_BY_FAMILY = {
   // Stimulus + text multi-select: one row per selected tag
   image_checkbox: ['value', 'label'],
   // value = media key the participant chose (options are in shown_*)
-  imagepicker: ['value'],
+  imagepicker: ['value', 'outcome'],
   // Best–Worst MaxDiff: one row per trial with both picks (media keys)
   maxdiff: ['best', 'worst'],
   // Video key moments: one row per marked segment (video in shown_*)
-  video_moments: ['segment_index', 'start', 'end'],
+  video_moments: ['segment_index', 'start', 'end', 'label'],
   // Pairwise A/B slider: one row per trial
   pairwise_slider: ['preference', 'hard_to_decide', 'interpretation'],
   // Emotion color: one row per trial
@@ -141,7 +154,11 @@ const LONG_EXTRA_BY_FAMILY = {
   annotation: ['tool', 'label', 'annotation_json'],
 };
 
+// Internal observation identity survives object spreads but is never serialized to CSV/JSON.
+const ANSWER_UNIT = Symbol('answerUnit');
+
 function shownKeysFromLongRow(row) {
+  if (Array.isArray(row?.[ANSWER_UNIT]?.shownImages) && row[ANSWER_UNIT].shownImages.length) return row[ANSWER_UNIT].shownImages.map(mediaIdentityKey).filter(Boolean);
   return String(row?.shown_images || '')
     .split('|')
     .map((s) => s.trim())
@@ -173,7 +190,7 @@ function questionFamily(type) {
 }
 
 /** Effective long/summary family for skill presets / skillquestion. */
-function exportFamilyForQuestion(question) {
+export function exportFamilyForQuestion(question) {
   if (isForcedChoiceSkill(question?.skillId)) return 'imagepicker';
   if (isMaxDiffSkill(question?.skillId)) return 'maxdiff';
   if (isVideoMomentSkill(question?.skillId)) return 'video_moments';
@@ -269,12 +286,22 @@ function pushTrueSkillSummary(out, question, nResponses, rankings, longObjs, {
   const freq = {};
   longObjs.forEach((r) => {
     const k = r[valueKey];
-    if (!k) return;
+    if (!k || r.outcome === 'tie') return;
     freq[k] = (freq[k] || 0) + 1;
   });
-  Object.entries(freq).forEach(([k, count]) => {
-    out.push(summaryRow(question, nResponses, k, k, 'count', count, nResponses));
-    out.push(summaryRow(question, nResponses, k, k, 'pct', nResponses ? count / nResponses : 0, nResponses));
+  const exposures = {};
+  const seen = new Set();
+  longObjs.forEach((r) => {
+    if (seen.has(r[ANSWER_UNIT])) return;
+    seen.add(r[ANSWER_UNIT]);
+    [...new Set(shownKeysFromLongRow(r))].forEach((key) => { exposures[key] = (exposures[key] || 0) + 1; });
+  });
+  Object.entries(exposures).forEach(([key, n]) => {
+    out.push(summaryRow(question, nResponses, key, key, 'exposure_count', n, n));
+    out.push(summaryRow(question, nResponses, key, key, 'pct', (freq[key] || 0) / n, n));
+  });
+  Object.entries(freq).forEach(([key, count]) => {
+    out.push(summaryRow(question, nResponses, key, key, 'count', count, exposures[key] || null));
   });
 }
 
@@ -375,28 +402,12 @@ function pushEmotionColorSummary(out, question, eligible) {
 /** Continuous video rating: unit = video. */
 function pushContinuousVideoSummary(out, question, eligible) {
   const units = collectAnswerUnits(eligible, question.name);
-  const byVid = {};
-  units.forEach(({ answer, shown_images: shown }) => {
-    const key = videoStimulusKey(answer, shown);
-    if (!byVid[key]) byVid[key] = { means: [], sampleCounts: [], values: [] };
-    const mean = Number(answer?.mean);
-    if (!Number.isNaN(mean)) byVid[key].means.push(mean);
-    const sc = Number(answer?.sampleCount);
-    if (!Number.isNaN(sc)) byVid[key].sampleCounts.push(sc);
-    (answer?.samples || []).forEach((s) => {
-      const v = Number(s?.v);
-      if (!Number.isNaN(v)) byVid[key].values.push(v);
-    });
-  });
-  Object.entries(byVid).forEach(([key, block]) => {
-    const n = Math.max(block.means.length, 1);
+  aggregateContinuousRatingByVideo(units).forEach(({ videoKey: key, answers, agg, means }) => {
+    const n = answers.length;
     out.push(summaryRow(question, n, key, key, 'n_responses', n, n));
-    if (block.means.length) pushStats(out, question, n, key, key, block.means, 'trial_mean', 'trial_mean');
-    if (block.values.length) pushStats(out, question, n, key, key, block.values, 'sample', 'sample');
-    if (block.sampleCounts.length) {
-      const total = block.sampleCounts.reduce((a, b) => a + b, 0);
-      out.push(summaryRow(question, n, key, key, 'total_samples', total, n));
-    }
+    if (means.length) pushStats(out, question, n, key, key, means, 'trial_mean', 'trial_mean');
+    out.push(summaryRow(question, n, key, key, 'equal_response_mean', agg.globalMean, agg.responseCount));
+    out.push(summaryRow(question, n, key, key, 'total_samples', agg.sampleCount, n));
   });
 }
 
@@ -411,7 +422,7 @@ function pushCompositeBlocksSummary(out, question, eligible) {
     (answer?.ratings || []).forEach((d) => {
       const dim = d.id || d.label || `${d.left}/${d.right}` || 'dim';
       const key = `${img}||${dim}`;
-      if (!byUnit[key]) byUnit[key] = { img, dim, label: d.label || dim, nums: [] };
+      if (!byUnit[key]) byUnit[key] = { img, dim, label: dimensionDisplayName(d), nums: [] };
       const n = Number(d.value);
       if (!Number.isNaN(n)) byUnit[key].nums.push(n);
     });
@@ -467,7 +478,7 @@ function pushGenericSkillSummary(out, question, eligible, longObjs) {
   ]);
 
   longObjs.forEach((r) => {
-    const media = shownKeysFromLongRow(r)[0] || '(no_media)';
+    const media = stimulusUnitKey(shownKeysFromLongRow(r));
     if (r.field_type === 'points' || r.field_type === 'polygon' || r.field_type === 'bbox') {
       const label = String(r.label || '').trim() || '(unlabeled)';
       const key = `${media}||${r.field_key || r.field_type}||${label}`;
@@ -743,22 +754,10 @@ function responsesEligibleForQuestion(questionName, responses) {
   });
 }
 
-function imageKeyFromShown(entry) {
-  if (!entry) return '';
-  const s = typeof entry === 'string' ? entry : (entry.url || entry.name || '');
-  return s.split('?')[0].split('/').pop() || s;
-}
+function imageKeyFromShown(entry) { return mediaIdentityKey(entry); }
 
 function resolveImageChoiceKey(value, shownImages) {
-  if (value == null || value === '') return '';
-  const str = String(value);
-  // SurveyJS choice values: image_N (image*) or media_N (media*)
-  const match = str.match(/^(?:image|media)_(\d+)$/);
-  if (match && Array.isArray(shownImages) && shownImages.length) {
-    const img = shownImages[Number(match[1])];
-    if (img != null) return imageKeyFromShown(img) || String(img);
-  }
-  return imageKeyFromShown(str) || str;
+  return resolveMediaAnswerKey(value, shownImages);
 }
 
 function joinPipe(arr) {
@@ -790,11 +789,9 @@ function matrixLabelMap(items) {
   return map;
 }
 
-function normalizeBool(v) {
-  if (v === true || v === 'true' || v === 'yes' || v === 1 || v === '1') return 1;
-  if (v === false || v === 'false' || v === 'no' || v === 0 || v === '0') return 0;
-  return '';
-}
+function normalizeBool(v) { return normalizeBooleanAnswer(v); }
+
+const firstDefined = (...values) => values.find((value) => value !== undefined);
 
 function parsePayload(row, questionName) {
   const qData = row.responses?.[questionName];
@@ -814,10 +811,12 @@ function parsePayload(row, questionName) {
         answer,
         shownImages,
         shownMediaIds: Array.isArray(trial?.shown_media_ids) ? trial.shown_media_ids : [],
-        shownMediaGroup: '',
-        shownMediaSet: '',
-        shownMediaCategories: '',
-        trialIndex,
+        shownMediaGroup: firstDefined(trial?.shown_media_set, trial?.shown_media_group, qData.shown_media_set, qData.shown_media_group, ''),
+        shownMediaSet: firstDefined(trial?.shown_media_set, trial?.shown_media_group, qData.shown_media_set, qData.shown_media_group, row.displayed_media_groups?.[questionName], ''),
+        shownMediaCategories: firstDefined(trial?.shown_media_categories, qData.shown_media_categories, row.displayed_media_categories?.[questionName], []),
+        shownMedia: trial?.shown_media || [],
+        metadataScope: trial?.shown_media_set !== undefined || trial?.shown_media_categories !== undefined ? 'trial' : 'question_fallback',
+        trialIndex: trial?.trial_index ?? trialIndex,
       };
     }).filter(Boolean);
   }
@@ -832,9 +831,10 @@ function parsePayload(row, questionName) {
           answer,
           shownImages: trialShown[trialIndex] || [],
           shownMediaIds: [],
-          shownMediaGroup: '',
-          shownMediaSet: '',
-          shownMediaCategories: '',
+          shownMediaGroup: qData.shown_media_set || qData.shown_media_group || '',
+          shownMediaSet: qData.shown_media_set || qData.shown_media_group || row.displayed_media_groups?.[questionName] || '',
+          shownMediaCategories: qData.shown_media_categories || row.displayed_media_categories?.[questionName] || [],
+          metadataScope: 'question_fallback',
           trialIndex,
         };
       }).filter(Boolean);
@@ -874,6 +874,8 @@ function parsePayload(row, questionName) {
     shownMediaGroup: shownMediaSet,
     shownMediaSet,
     shownMediaCategories,
+    shownMedia: qData.shown_media || [],
+    metadataScope: 'question',
   };
 }
 
@@ -897,8 +899,12 @@ function baseLongFields(row, question, flags, payload = null) {
     trial_index: p?.trialIndex ?? '',
     shown_images: joinPipe(p?.shownImages),
     shown_media_set: p?.shownMediaSet || p?.shownMediaGroup || '',
-    shown_media_categories: p?.shownMediaCategories || '',
-    _payload: p,
+    shown_media_categories: Array.isArray(p?.shownMediaCategories) ? p.shownMediaCategories.join('|') : p?.shownMediaCategories || '',
+    shown_media_ids: JSON.stringify(p?.shownMediaIds || []),
+    shown_media_json: JSON.stringify(p?.shownMedia || []),
+    media_metadata_scope: p?.metadataScope || '',
+    survey_revision: row.survey_metadata?.survey_revision || '',
+    [ANSWER_UNIT]: p,
   };
 }
 
@@ -927,7 +933,7 @@ function summaryRow(
     attribute_key: attributeKey || '',
     attribute_label: attributeLabel || '',
     unit_key: unitKey,
-    unit_label: unitLabel,
+    unit_label: stimulusUnitLabel(unitLabel),
     metric,
     value: value == null || Number.isNaN(value) ? '' : value,
     n: n == null ? '' : n,
@@ -969,7 +975,7 @@ function buildLongObjects(question, responses, surveyConfig) {
     const payloads = payloadsForQuestion(row, question.name);
     for (const payload of payloads) {
     const base = baseLongFields(row, question, flags, payload);
-    delete base._payload;
+
     if (!payload) continue;
 
     const { answer, shownImages } = payload;
@@ -1062,21 +1068,14 @@ function buildLongObjects(question, responses, surveyConfig) {
         });
       });
     } else if (fam === 'imagepicker') {
-      if (forcedChoice) {
-        objects.push({
-          ...base,
-          ...extra,
-          value: chosenKeyFromForcedChoice(answer, shownImages),
-        });
+      const outcome = choiceOutcome(answer, shownImages);
+      if (isNoPreference(answer)) {
+        objects.push({ ...base, ...extra, value: 'tie', outcome: 'tie' });
+      } else if (forcedChoice) {
+        objects.push({ ...base, ...extra, value: chosenKeyFromForcedChoice(answer, shownImages), outcome });
       } else {
         const vals = Array.isArray(answer) ? answer : [answer];
-        vals.forEach((v) => {
-          objects.push({
-            ...base,
-            ...extra,
-            value: resolveImageChoiceKey(v, shownImages),
-          });
-        });
+        vals.forEach((v) => objects.push({ ...base, ...extra, value: resolveImageChoiceKey(v, shownImages), outcome }));
       }
     } else if (fam === 'maxdiff') {
       const { best, worst } = bestWorstKeysFromAnswer(answer, shownImages);
@@ -1108,6 +1107,7 @@ function buildLongObjects(question, responses, surveyConfig) {
             segment_index: i,
             start: seg?.start ?? '',
             end: seg?.end ?? '',
+            label: seg?.label ?? '',
           });
         });
       }
@@ -1184,7 +1184,7 @@ function buildLongObjects(question, responses, surveyConfig) {
             shown_images: shownPipe || base.shown_images,
             ...extra,
             dimension_id: d.id || '',
-            dimension_label: d.label || `${d.left || ''} ↔ ${d.right || ''}` || d.id || '',
+            dimension_label: dimensionDisplayName(d),
             value: d.value ?? '',
             choice,
             words,
@@ -1200,7 +1200,7 @@ function buildLongObjects(question, responses, surveyConfig) {
           ...base,
           ...extra,
           dimension_id: d.id,
-          dimension_label: d.label || `${d.left || ''} ↔ ${d.right || ''}` || d.id,
+          dimension_label: dimensionDisplayName(d),
           value: obj[d.id] ?? '',
         });
       });
@@ -1578,9 +1578,7 @@ function buildSummaryObjects(question, responses) {
   const forcedChoice = isForcedChoiceSkill(question.skillId);
   const eligible = responsesEligibleForQuestion(question.name, responses);
   const longObjs = buildLongObjects(question, responses, null);
-  const nResponses = new Set(
-    longObjs.map((r) => `${r.participant_id}|${r.session_id}|${r.attempt_index}|${r.created_at}`),
-  ).size || eligible.filter((row) => parsePayload(row, question.name)).length;
+  const nResponses = eligible.filter((row) => expandQuestionAnswerUnits(row, question.name).length > 0).length;
 
   const out = [];
 
@@ -1649,7 +1647,7 @@ function buildSummaryObjects(question, responses) {
     )).filter(Boolean);
 
     longObjs.forEach((r) => {
-      const img = shownKeysFromLongRow(r)[0] || '(no_media)';
+      const img = stimulusUnitKey(shownKeysFromLongRow(r));
       const attr = String(r.row_key ?? '');
       if (!attr) return;
       const key = `${img}||${attr}`;
@@ -1703,15 +1701,15 @@ function buildSummaryObjects(question, responses) {
       const rankPositions = {};
       const rankingLists = [];
       for (const row of eligible) {
-        const payload = parsePayload(row, question.name);
-        if (!payload) continue;
-        const ranked = Array.isArray(payload.answer) ? payload.answer : [];
-        if (ranked.length) rankingLists.push(ranked.map(String));
-        ranked.forEach((val, idx) => {
-          const k = String(val);
-          if (!rankPositions[k]) rankPositions[k] = [];
-          rankPositions[k].push(idx + 1);
-        });
+        for (const payload of payloadsForQuestion(row, question.name)) {
+          const ranked = Array.isArray(payload.answer) ? payload.answer : [];
+          if (ranked.length) rankingLists.push(ranked.map(String));
+          ranked.forEach((val, idx) => {
+            const k = String(val);
+            if (!rankPositions[k]) rankPositions[k] = [];
+            rankPositions[k].push(idx + 1);
+          });
+        }
       }
       const items = Object.keys(rankPositions);
       const bordaMap = computeBordaScores(rankPositions, items.length);
@@ -1741,19 +1739,19 @@ function buildSummaryObjects(question, responses) {
       const rankingLists = [];
       const allMatches = [];
       for (const row of eligible) {
-        const payload = parsePayload(row, question.name);
-        if (!payload) continue;
-        const ranked = Array.isArray(payload.answer) ? payload.answer : [];
-        const keys = ranked
-          .map((val) => resolveImageChoiceKey(val, payload.shownImages))
-          .filter(Boolean);
-        if (keys.length < 2) continue;
-        rankingLists.push(keys);
-        allMatches.push(...matchesFromOrderedRanking(keys));
-        keys.forEach((key, rankIdx) => {
-          if (!imageRankPositions[key]) imageRankPositions[key] = [];
-          imageRankPositions[key].push(rankIdx + 1);
-        });
+        for (const payload of payloadsForQuestion(row, question.name)) {
+          const ranked = Array.isArray(payload.answer) ? payload.answer : [];
+          const keys = ranked
+            .map((val) => resolveImageChoiceKey(val, payload.shownImages))
+            .filter(Boolean);
+          if (keys.length < 2) continue;
+          rankingLists.push(keys);
+          allMatches.push(...matchesFromOrderedRanking(keys));
+          keys.forEach((key, rankIdx) => {
+            if (!imageRankPositions[key]) imageRankPositions[key] = [];
+            imageRankPositions[key].push(rankIdx + 1);
+          });
+        }
       }
       const items = Object.keys(imageRankPositions);
       const w = kendallW(rankingLists, items);
@@ -1790,7 +1788,7 @@ function buildSummaryObjects(question, responses) {
       const num = Number(r.value);
       if (Number.isNaN(num)) return;
       const keys = shownKeysFromLongRow(r);
-      (keys.length ? keys : ['(no_media)']).forEach((key) => {
+      [stimulusUnitKey(keys)].forEach((key) => {
         if (!perImage[key]) perImage[key] = [];
         perImage[key].push(num);
       });
@@ -1802,10 +1800,10 @@ function buildSummaryObjects(question, responses) {
     const perImage = {};
     longObjs.forEach((r) => {
       const keys = shownKeysFromLongRow(r);
-      (keys.length ? keys : ['(no_media)']).forEach((key) => {
+      [stimulusUnitKey(keys)].forEach((key) => {
         if (!perImage[key]) perImage[key] = { yes: 0, no: 0 };
         if (r.value_norm === 1 || r.value_norm === '1') perImage[key].yes += 1;
-        else perImage[key].no += 1;
+        else if (r.value_norm === 0 || r.value_norm === '0') perImage[key].no += 1;
       });
     });
     Object.entries(perImage).forEach(([key, { yes, no }]) => {
@@ -1820,7 +1818,7 @@ function buildSummaryObjects(question, responses) {
     const nByUnit = {};
     collectAnswerUnits(eligible, question.name).forEach(({ shown_images: shown }) => {
       const keys = (shown || []).map((s) => mediaFilenameKey(typeof s === 'string' ? s : (s?.url || s))).filter(Boolean);
-      (keys.length ? keys : ['(no_media)']).forEach((unit) => {
+      [stimulusUnitKey(keys)].forEach((unit) => {
         nByUnit[unit] = (nByUnit[unit] || 0) + 1;
       });
     });
@@ -1829,7 +1827,7 @@ function buildSummaryObjects(question, responses) {
       const tag = String(r.value || '');
       if (!tag) return;
       const stims = shownKeysFromLongRow(r);
-      (stims.length ? stims : ['(no_media)']).forEach((unit) => {
+      [stimulusUnitKey(stims)].forEach((unit) => {
         const key = `${unit}||${tag}`;
         counts[key] = (counts[key] || 0) + 1;
       });
@@ -1845,6 +1843,13 @@ function buildSummaryObjects(question, responses) {
       ? computeForcedChoiceTrueSkill(eligible, question.name)
       : computeQuestionTrueSkill(eligible, question.name);
     pushTrueSkillSummary(out, question, nResponses, rankings, longObjs);
+    const outcomes = summarizeChoiceOutcomes(eligible.flatMap((row) => expandQuestionAnswerUnits(row, question.name, { requireAnswer: true })));
+    if (question.allowTie || outcomes.tie) {
+      ['A', 'B', 'tie'].forEach((key) => {
+        out.push(summaryRow(question, nResponses, key, key, 'outcome_count', outcomes[key], outcomes.total));
+        out.push(summaryRow(question, nResponses, key, key, 'outcome_rate', outcomes.total ? outcomes[key] / outcomes.total : 0, outcomes.total));
+      });
+    }
   } else if (fam === 'maxdiff') {
     pushMaxDiffSummary(out, question, nResponses, eligible);
   } else if (fam === 'video_moments') {
@@ -1861,7 +1866,7 @@ function buildSummaryObjects(question, responses) {
     // attribute_* = slider dimension; unit_* = image only (no image__dim join keys).
     const byUnit = {}; // `${img}||${attr}` → { img, attr, attrLabel, nums }
     longObjs.forEach((r) => {
-      const img = shownKeysFromLongRow(r)[0] || '(no_media)';
+      const img = stimulusUnitKey(shownKeysFromLongRow(r));
       const attr = String(r.dimension_id ?? '');
       if (!attr) return;
       const key = `${img}||${attr}`;
@@ -1904,7 +1909,7 @@ function buildSummaryObjects(question, responses) {
     // attribute_* = allocation choice; unit_* = image only (no image__choice join keys).
     const byUnit = {}; // `${img}||${attr}` → { img, attr, attrLabel, nums }
     longObjs.forEach((r) => {
-      const img = shownKeysFromLongRow(r)[0] || '(no_media)';
+      const img = stimulusUnitKey(shownKeysFromLongRow(r));
       const attr = String(r.choice_key ?? '');
       if (!attr) return;
       const key = `${img}||${attr}`;
@@ -1962,7 +1967,7 @@ function buildSummaryObjects(question, responses) {
       const hasShape = !!(shape?.points?.length || tool || r.label);
       if (!hasShape) return;
       shapeCount += 1;
-      const img = shownKeysFromLongRow(r)[0] || '(no_media)';
+      const img = stimulusUnitKey(shownKeysFromLongRow(r));
       const label = String(r.label || '').trim() || '(unlabeled)';
       const labelKey = `${img}||${label}`;
       byImgLabel[labelKey] = (byImgLabel[labelKey] || 0) + 1;
@@ -2004,6 +2009,21 @@ function buildSummaryObjects(question, responses) {
       ));
     });
   }
+
+  if (['points', 'image_points'].includes(fam)) {
+    const units = collectAnswerUnits(eligible, question.name);
+    const compliant = units.filter(({ answer }) => allocationStatus(answer, question).valid).length;
+    const full = units.filter(({ answer }) => allocationStatus(answer, question).full).length;
+    out.push(summaryRow(question, nResponses, 'overall', 'overall', 'budget_full_use_rate',
+      units.length ? full / units.length : null, units.length));
+    out.push(summaryRow(question, nResponses, 'overall', 'overall', 'budget_compliance_rate',
+      units.length ? compliant / units.length : null, units.length));
+  }
+  const irr = computeQuestionIrr(eligible, question);
+  (irr.dimensions || [{ ...irr, id: '', label: '' }]).forEach((d) => {
+    if (d.alpha != null) out.push(summaryRow(question, nResponses, 'overall', 'overall', 'krippendorff_alpha', d.alpha, nResponses, d.id, d.label));
+    if (d.agreement != null) out.push(summaryRow(question, nResponses, 'overall', 'overall', 'agreement_rate', d.agreement, nResponses, d.id, d.label));
+  });
 
   return out;
 }
@@ -2202,7 +2222,7 @@ export function buildDataQualityCsv(responses, surveyConfig, { excludeFlagged = 
 }
 
 function responseKey(row) {
-  return String(row.id ?? `${row.participant_id}|${row.created_at}|${row.survey_metadata?.session_id}`);
+  return responseRecordKey(row);
 }
 
 export function buildManifest({
@@ -2213,11 +2233,15 @@ export function buildManifest({
   questionFiles,
 }) {
   return {
+    analysis_algorithm_version: ANALYSIS_ALGORITHM_VERSION,
+    analysis_notes: ANALYSIS_NOTES,
     project_id: project?.id || null,
     project_name: project?.name || null,
     exported_at: new Date().toISOString(),
     filters: filters || {},
     n_responses_in_export: (responses || []).length,
+    survey_revisions: [...new Set((responses || []).map((r) => r.survey_metadata?.survey_revision || 'historical_unknown'))],
+    response_contracts: Object.fromEntries((responses || []).filter((r) => r.survey_metadata?.survey_revision && r.survey_metadata?.survey_response_contract).map((r) => [r.survey_metadata.survey_revision, r.survey_metadata.survey_response_contract])),
     questions: (questions || [])
       .filter((q) => q?.name && !isDisplayOnly(q))
       .map((q) => {
@@ -2227,7 +2251,7 @@ export function buildManifest({
           collectAnswerUnits(responses || [], q.name).forEach(({ answer }) => {
             const normalized = answer && typeof answer === 'object' && !Array.isArray(answer)
               ? answer : { value: answer };
-            const check = checkAnswerAgainstResultSchema(normalized, q.skillResultSchema || []);
+            const check = checkAnswerAgainstResultSchema(normalized, q.skillResultSchema || [], q.skillConfig);
             if (!check.recorded || check.fields.some((field) => !field.ok)) mismatch += 1;
           });
           if (mismatch) contractWarnings.push(`contract_mismatch: ${mismatch} trial(s)`);
@@ -2257,6 +2281,8 @@ export function buildManifest({
 export function buildExportReadme({ project, filters, nResponses, questionCount }) {
   const lines = [
     'SP Survey Platform — Results export',
+    `Analysis algorithm version: ${ANALYSIS_ALGORITHM_VERSION}`,
+    ...ANALYSIS_NOTES,
     '====================================',
     '',
     `Project: ${project?.name || project?.id || '(unknown)'}`,
@@ -2274,6 +2300,10 @@ export function buildExportReadme({ project, filters, nResponses, questionCount 
     '',
     'Layout',
     '------',
+    'data_dictionary.json describes fields and recorded question settings.',
+    'analysis_plan.json records this export selection and algorithm version.',
+    'responses_raw.json preserves the exact selected submissions, including original text and missing values.',
+    'Spreadsheet-safe CSV prefixes formula-like text with an apostrophe; use raw JSON for lossless reanalysis.',
     'responses_wide.csv     One row per participant/submission',
     'data_quality.csv       Quality flags per response',
     'methods.txt            Methods narrative',
@@ -2303,8 +2333,12 @@ export function buildExportReadme({ project, filters, nResponses, questionCount 
     'Long columns: shown_* = stimulus; extras = answer only',
     '-------------------------------------------------------',
     'shown_images / shown_media_set / shown_media_categories',
-    '  → what was displayed for that row/trial (filenames / set / category tags)',
-    '  Internal media_id keys are not exported (use shown_images for analysis).',
+    '  → what was displayed for that row/trial (stable sources / set / category tags)',
+    '  shown_images uses full source paths (without URL signatures); unit_label is display-only.',
+    '  Multi-stimulus shared answers are grouped by the ordered source list, counted once.',
+    '  media_metadata_scope=question_fallback marks legacy context inherited from the question.',
+    '  n_responses counts submissions; n counts observations for each metric; rates range from 0 to 1.',
+    '  Multi-trial wide subcolumns may be blank: use __trials_json or per-question long files.',
     'choice: value, label',
     'matrix (text): row_key, column_key, value',
     'imagematrix / mediamatrix long: row/column cells + shown_images',
@@ -2314,9 +2348,9 @@ export function buildExportReadme({ project, filters, nResponses, questionCount 
     'imagepointallocation / mediapointallocation long: choice_key + points + shown_images',
     'imagepointallocation / mediapointallocation summary: attribute_* = choice; unit_* = image; metrics = mean/sd/…',
     'text ranking: value, label  (pipe-ordered; label = choice text when set)',
-    'image/media ranking: value only  (pipe-ordered filenames; no separate image labels)',
+    'image/media ranking: value only  (pipe-ordered media sources; no separate image labels)',
     'imagerating* / imageboolean*: value (and value_norm for boolean)',
-    'imagepicker*: value = chosen media key (options are in shown_*)',
+    'imagepicker*: value = chosen media key, or tie for no preference. outcome = A/B/tie for binary trials; A/B follow the recorded shown_images order. Ties count as answered and are excluded from decisive-only TrueSkill rankings.',
     'Forced-Choice A/B (skill): same long/summary as imagepicker (value = chosen key; TrueSkill μ/σ/wins/…)',
     'Best–Worst MaxDiff (skill) long: best, worst (= media keys; one row per trial)',
     'Best–Worst MaxDiff summary: unit_* = image; metrics = rank/mu/… + bws/best/worst/appearances (μ-sorted)',
@@ -2399,6 +2433,9 @@ export function buildResultsExportBundle({
     { path: 'README.txt', content: readme },
     { path: 'manifest.json', content: `${JSON.stringify(manifest, null, 2)}\n` },
     { path: 'responses_wide.csv', content: wideCsv || rowsToCsv([['participant_id']]) },
+    { path: 'responses_raw.json', content: JSON.stringify(filteredResponses || [], null, 2) + '\n' },
+    { path: 'data_dictionary.json', content: JSON.stringify(buildExportDictionary(answerable, (q) => buildQuestionLongTable(q, [], surveyConfig)?.headers || []), null, 2) + '\n' },
+    { path: 'analysis_plan.json', content: JSON.stringify({ algorithm_version: ANALYSIS_ALGORITHM_VERSION, filters: filters || {}, exclude_flagged: !!excludeFlagged, included_response_ids: [...includedKeys], submission_count: (filteredResponses || []).length, participant_count: new Set((filteredResponses || []).map((r) => r.participant_id).filter(Boolean)).size, note: 'Export configuration for reproducibility; this is not a preregistration.' }, null, 2) + '\n' },
     { path: 'data_quality.csv', content: qualityCsv },
     { path: 'methods.txt', content: methodsText || '' },
     ...questionFiles,

@@ -1,6 +1,13 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { questionSettingErrorText, useQuestionEditorText } from '../../contexts/questionEditorI18n';
+import QuestionDataPreview from './QuestionDataPreview';
+import ConfirmDialog from '../layout/ConfirmDialog';
+import useUnsavedChanges from '../../hooks/useUnsavedChanges';
+import { useRegion } from '../../contexts/RegionContext';
+import { validateQuestionSettings } from '../../lib/designProtocol/validate';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import {
   Dialog,
+  Tabs, Tab, useMediaQuery,
   DialogTitle,
   DialogContent,
   DialogActions,
@@ -28,6 +35,7 @@ import {
   Alert,
   InputAdornment,
   Tooltip,
+  Chip,
 } from '@mui/material';
 import {
   Add,
@@ -41,18 +49,17 @@ import {
   applyMediaToElement,
   getMediaPerCategory,
   expectedCategoryImageCount,
+  usesSingleCategoryPerTrial,
   resolveMediaFolderTags,
 } from '../../lib/surveyMediaInjection';
-import { sortMediaByName, normalizeMediaAssignmentMode } from '../../lib/mediaUtils';
+import { sortMediaByName, normalizeMediaAssignmentMode, listAllKnownFolders } from '../../lib/mediaUtils';
+import { normalizeAllowedTools } from '../../lib/annotationTools';
 import { SkillDimensionsEditor, SkillStringListEditor } from './SkillConfigFieldEditors';
-import SkillQuestionFrame from '../SkillQuestionWidget';
 import {
   getSkillMediaConstraints,
   getPresetBuilderTypeOptions,
   resolveBuilderSkill,
 } from '../../lib/presetSkills';
-import { enrichEmotionColorConfig } from '../../lib/emotionColor';
-import { listSkillPreviewMedia, pickPreviewMedia } from '../../lib/skillPreviewMedia';
 import {
   getQuestionMediaConstraints,
   clampQuestionImageCount,
@@ -61,21 +68,37 @@ import {
   supportsTrialCount,
 } from '../../lib/questionTypeConstraints';
 import { clampTrialCount, TRIAL_COUNT_MAX } from '../../lib/trialNavigation';
+import { normalizeSliderQuestion } from '../../lib/sliderScale';
+import {
+  getQuestionTypeDefinition,
+  QUESTION_TYPE_IDS,
+} from '../../lib/platformSchema';
 import MediaPairingGuide from './MediaPairingGuide';
 import MediaCategoryGuide from './MediaCategoryGuide';
 import QuestionParticipantPreview from './QuestionParticipantPreview';
 import MediaSlotsEditor from './MediaSlotsEditor';
+import MediaFolderScopeSelect from './MediaFolderScopeSelect';
 
 const MEDIA_STAR_EDITOR_TYPES = [
-  'mediadisplay', 'mediapicker', 'mediaranking', 'mediarating', 'mediaboolean',
+  'mediadisplay', 'mediapicker', 'mediaranking', 'mediarating', 'mediaboolean', 'mediacheckbox',
   'mediamatrix', 'mediaslidergroup', 'mediapointallocation',
 ];
 
 const CURATED_STIMULUS_TYPES = [
-  'imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'imagematrix',
+  'imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'imagecheckbox', 'imagematrix',
   'image', 'imageslidergroup', 'imagepointallocation',
   ...MEDIA_STAR_EDITOR_TYPES, 'imageannotation',
 ];
+
+function annotationLabelText(label) {
+  if (typeof label === 'string' || typeof label === 'number') return String(label).trim();
+  if (label && typeof label === 'object') return String(label.text ?? label.label ?? label.value ?? '').trim();
+  return '';
+}
+
+function formatAnnotationLabels(labels) {
+  return (Array.isArray(labels) ? labels : []).map(annotationLabelText).filter(Boolean).join(', ');
+}
 
 function SettingsSection({ step, title, hint, children }) {
   return (
@@ -116,6 +139,7 @@ function CuratedMediaPicker({
   onToggle,
   title = 'Select files',
 }) {
+  const { tr, zh } = useQuestionEditorText();
   const [query, setQuery] = useState('');
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -128,13 +152,13 @@ function CuratedMediaPicker({
   return (
     <Box sx={{ mt: 1 }}>
       <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
-        {title} ({selectedImages.length}/{maxCount} selected)
+        {tr(title)} ({selectedImages.length}/{maxCount} {zh ? '已选' : 'selected'})
       </Typography>
       <TextField
         fullWidth
         size="small"
         variant="outlined"
-        placeholder="Search by file name…"
+        placeholder={tr("Search by file name…")}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         InputProps={{
@@ -147,7 +171,7 @@ function CuratedMediaPicker({
         sx={{ mb: 1.5, bgcolor: 'white', '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
       />
       {error && (
-        <Alert severity="error" sx={{ mb: 1.5 }}>{error}</Alert>
+        <Alert severity="error" sx={{ mb: 1.5 }}>{tr(error)}</Alert>
       )}
       {loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
@@ -156,13 +180,13 @@ function CuratedMediaPicker({
       ) : filtered.length === 0 ? (
         <Alert severity="info" sx={{ py: 0.5 }}>
           {availableImages.length === 0
-            ? 'No media available to pick from.'
-            : `No file names match “${query.trim()}”.`}
+            ? (zh ? '没有可供选择的媒体。' : 'No media available to pick from.')
+            : (zh ? `没有匹配“${query.trim()}”的文件名。` : `No file names match “${query.trim()}”.`)}
         </Alert>
       ) : (
         <>
           <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
-            Showing {filtered.length} of {availableImages.length} file{availableImages.length === 1 ? '' : 's'}
+            {zh ? `共 ${availableImages.length} 个文件，显示 ${filtered.length} 个` : `Showing ${filtered.length} of ${availableImages.length} files`}
           </Typography>
           <Grid container spacing={1.5} sx={{ maxHeight: 420, overflow: 'auto' }}>
             {filtered.map((image) => {
@@ -234,13 +258,14 @@ function CuratedMediaPicker({
 
 /** Random vs curated sampling — wording matches project media pool. */
 function SamplingModeSelect({ question, onQuestionPatch }) {
+  const { tr, zh } = useQuestionEditorText();
   const mode = isCuratedSelectionMode(question.imageSelectionMode)
     ? 'huggingface_manual'
     : 'huggingface_random';
   return (
     <FormControl fullWidth variant="outlined">
-      <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>How stimuli are chosen</InputLabel>
-      <Select
+      <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>{tr("How stimuli are chosen")}</InputLabel>
+      <Select inputProps={{ 'aria-label': tr("How stimuli are chosen") }}
         value={mode}
         onChange={(e) => {
           const next = e.target.value;
@@ -249,24 +274,24 @@ function SamplingModeSelect({ question, onQuestionPatch }) {
             randomImageSelection: next === 'huggingface_random',
           });
         }}
-        label="How stimuli are chosen"
+        label={tr("How stimuli are chosen")}
       >
-        <MenuItem value="huggingface_random">Random from project media pool</MenuItem>
-        <MenuItem value="huggingface_manual">Curated list (pick specific files)</MenuItem>
+        <MenuItem value="huggingface_random">{tr(zh ? '从媒体库随机抽取' : 'Random from media library')}</MenuItem>
+        <MenuItem value="huggingface_manual">{tr("Curated list (pick specific files)")}</MenuItem>
       </Select>
     </FormControl>
   );
 }
 
 function StimulusCountField({ question, onChange, constraints }) {
+  const { tr, zh } = useQuestionEditorText();
   if (!constraints?.hasStimuli) return null;
   if (!constraints.countAdjustable) {
     return (
       <Alert severity="info" sx={{ py: 0.75 }}>
-        <strong>Stimulus count:</strong>{' '}
-        {constraints.countLabel || `Fixed at ${constraints.countFixed}`}.
-        {' '}Drawn from the project media pool for each participant.
-      </Alert>
+        <strong>{tr("Stimulus count:")}</strong>{' '}
+        {constraints.countLabel ? tr(constraints.countLabel) : (zh ? `固定为 ${constraints.countFixed}` : `Fixed at ${constraints.countFixed}`)}.
+        {' '}{tr("Drawn from the project media pool for each participant.")} </Alert>
     );
   }
   return (
@@ -274,14 +299,14 @@ function StimulusCountField({ question, onChange, constraints }) {
       fullWidth
       variant="outlined"
       type="number"
-      label={constraints.countLabel || 'Number of stimuli'}
+      label={tr(constraints.countLabel || 'Number of stimuli')}
       value={question.imageCount ?? constraints.defaultCount}
       onChange={(e) => onChange(
         'imageCount',
         clampQuestionImageCount(question.type, question, e.target.value),
       )}
       onFocus={(e) => e.target.select()}
-      helperText="Randomly drawn from the project media pool (or your curated list)"
+      helperText={tr("Randomly drawn from the project media pool (or your curated list)")}
       inputProps={{ min: constraints.countMin, max: constraints.countMax, step: 1 }}
       sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
     />
@@ -289,17 +314,18 @@ function StimulusCountField({ question, onChange, constraints }) {
 }
 
 function TrialCountField({ question, onChange }) {
+  const { tr, zh } = useQuestionEditorText();
   if (!supportsTrialCount(question.type)) return null;
   return (
     <TextField
       fullWidth
       variant="outlined"
       type="number"
-      label="Number of trials (repeat this question)"
+      label={tr("Number of trials (repeat this question)")}
       value={question.trialCount ?? 1}
       onChange={(e) => onChange('trialCount', clampTrialCount(e.target.value))}
       onFocus={(e) => e.target.select()}
-      helperText="Each trial draws a new media set with the same sampling rules. Participants get progress dots and can jump back among reached trials."
+      helperText={tr(zh ? `${clampTrialCount(question.trialCount ?? 1)} 轮作答 × 每轮 ${question.imageCount ?? 1} 个媒体。每轮保存对应素材的答案。选择题自动进入下一轮，评分和是非题可修改答案；媒体不足时可能重复。` : `${clampTrialCount(question.trialCount ?? 1)} response rounds × ${question.imageCount ?? 1} media per round. Each round records one answer for its shown set. Choice auto-advances; rating and yes/no allow review. Repeats may occur if the media pool is too small.`)}
       inputProps={{ min: 1, max: TRIAL_COUNT_MAX, step: 1 }}
       sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
     />
@@ -307,13 +333,13 @@ function TrialCountField({ question, onChange }) {
 }
 
 function AttentionCheckFields({ question, onChange }) {
-  const supported = ['rating', 'radiogroup', 'dropdown', 'boolean', 'imagepicker'].includes(question.type);
+  const { tr } = useQuestionEditorText();
+  const supported = ['rating', 'radiogroup', 'dropdown', 'boolean', 'imagepicker', 'mediapicker'].includes(question.type);
   if (!supported) return null;
+  const isPicker = question.type === 'imagepicker' || question.type === 'mediapicker';
   return (
     <Box sx={{ p: 2, border: 1, borderColor: 'divider', borderRadius: 1, bgcolor: 'grey.50' }}>
-      <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
-        Attention Check (data quality)
-      </Typography>
+      <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>{tr("Attention Check (data quality)")} </Typography>
       <FormControlLabel
         control={
           <Switch
@@ -321,22 +347,22 @@ function AttentionCheckFields({ question, onChange }) {
             onChange={(e) => onChange('isAttentionCheck', e.target.checked)}
           />
         }
-        label="Mark as attention-check question"
+        label={tr("Mark as attention-check question")}
       />
       {question.isAttentionCheck && (
         <TextField
           fullWidth
           size="small"
           sx={{ mt: 1 }}
-          label="Expected answer"
+          label={tr("Expected answer")}
           value={question.expectedAnswer ?? ''}
           onChange={(e) => onChange('expectedAnswer', e.target.value)}
           helperText={
-            question.type === 'imagepicker'
+            tr(isPicker
               ? 'Filename or choice value the participant must select (checked in analysis, not blocked at submit)'
               : question.type === 'boolean'
                 ? 'Use true or false (or the Yes/No label text as stored — usually true/false)'
-                : 'Exact choice value the participant must select (checked in analysis, not blocked at submit)'
+                : 'Exact choice value the participant must select (checked in analysis, not blocked at submit)')
           }
         />
       )}
@@ -345,18 +371,22 @@ function AttentionCheckFields({ question, onChange }) {
 }
 
 function MediaAssignmentFields({ question, onChange, currentProject }) {
+  const { tr, zh } = useQuestionEditorText();
   const mode = question.mediaAssignmentMode === 'group' ? 'set' : (question.mediaAssignmentMode || 'individual');
   const isSet = mode === 'set';
   const isCategory = mode === 'category';
+  const singleCategory = usesSingleCategoryPerTrial(question);
   const count = question.imageCount || 1;
   const folderTags = React.useMemo(
     () => resolveMediaFolderTags(currentProject, { pages: [{ elements: [question] }] }),
     [currentProject, question],
   );
-  const taggedFolderOptions = React.useMemo(() => {
-    const tags = folderTags || {};
-    return Object.keys(tags).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
-  }, [folderTags]);
+  const folderOptions = React.useMemo(() => {
+    if (isSet || isCategory) return Object.keys(folderTags).filter((folder) => folderTags[folder] === (isSet ? 'set' : 'category'));
+    return listAllKnownFolders(currentProject?.preloadedImages || [], folderTags, null, currentProject?.imageDatasetConfig?.mediaFolders || []);
+  }, [currentProject, folderTags, isSet, isCategory]);
+  const hasSlots = question.mediaSlots?.length > 0;
+  const isCurated = isCuratedSelectionMode(question.imageSelectionMode);
   const poolStatus = React.useMemo(() => {
     if (!currentProject?.preloadedImages?.length) {
       return {
@@ -376,30 +406,44 @@ function MediaAssignmentFields({ question, onChange, currentProject }) {
   }, [currentProject?.preloadedImages, question, isSet, count, mode, folderTags]);
 
   const mediaTypeHint = poolStatus.mediaTypeFilter !== 'any'
-    ? ` (${poolStatus.mediaTypeFilter} only)`
+    ? (zh ? `（仅${tr(poolStatus.mediaTypeFilter)}）` : ` (${poolStatus.mediaTypeFilter} only)`)
     : '';
 
   return (
     <>
       <FormControl fullWidth variant="outlined">
-        <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>Media Assignment</InputLabel>
-        <Select
+        <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>{tr("Media Assignment")}</InputLabel>
+        <Select inputProps={{ 'aria-label': tr("Media Assignment") }}
           value={mode}
           onChange={(e) => onChange('mediaAssignmentMode', e.target.value)}
-          label="Media Assignment"
+          label={tr("Media Assignment")}
         >
-          <MenuItem value="individual">Random individual files</MenuItem>
-          <MenuItem value="set">Random fixed sets (tagged folders)</MenuItem>
-          <MenuItem value="category">Per category (tagged folders)</MenuItem>
+          <MenuItem value="individual">{tr("Random individual files")}</MenuItem>
+          <MenuItem value="set">{tr("Random fixed sets (tagged folders)")}</MenuItem>
+          <MenuItem value="category">{tr("Per category (tagged folders)")}</MenuItem>
         </Select>
       </FormControl>
+      {isCategory && !hasSlots && !isCurated && (
+        <FormControl fullWidth sx={{ mt: 1 }}>
+          <InputLabel>{tr('Category selection per trial')}</InputLabel>
+          <Select
+            label={tr('Category selection per trial')}
+            inputProps={{ 'aria-label': tr('Category selection per trial') }}
+            value={singleCategory ? 'single' : 'all'}
+            onChange={(e) => onChange('mediaCategoryMode', e.target.value)}
+          >
+            <MenuItem value="single">{tr('One category per trial')}</MenuItem>
+            <MenuItem value="all">{tr('All selected categories per trial')}</MenuItem>
+          </Select>
+        </FormControl>
+      )}
       {isCategory && (
         <TextField
           fullWidth
           type="number"
           size="small"
           variant="outlined"
-          label="Files per category"
+          label={tr(singleCategory ? 'Files per trial' : 'Files per category')}
           value={question.mediaPerCategory ?? 1}
           onChange={(e) => {
             const n = Math.max(1, Math.min(50, parseInt(e.target.value, 10) || 1));
@@ -407,55 +451,45 @@ function MediaAssignmentFields({ question, onChange, currentProject }) {
           }}
           inputProps={{ min: 1, max: 50 }}
           helperText={
-            poolStatus.matchingCategoryCount > 0
-              ? `${poolStatus.matchingCategoryCount} categor${poolStatus.matchingCategoryCount === 1 ? 'y' : 'ies'} × ${poolStatus.mediaPerCategory} = ${poolStatus.expectedCategoryTotal} file(s) total`
-              : 'How many files to draw from each tagged category folder'
+            singleCategory
+              ? tr('Each trial randomly chooses one selected category and draws {count} files only from it.', { count: question.mediaPerCategory ?? 1 })
+              : tr(poolStatus.matchingCategoryCount > 0
+              ? (zh ? `${poolStatus.matchingCategoryCount} 个分类 × 每类 ${poolStatus.mediaPerCategory} 个文件，共 ${poolStatus.expectedCategoryTotal} 个文件` : `${poolStatus.matchingCategoryCount} categories × ${poolStatus.mediaPerCategory} = ${poolStatus.expectedCategoryTotal} file(s) total`)
+              : 'How many files to draw from each tagged category folder')
           }
           sx={{ mt: 1 }}
         />
       )}
-      {(isSet || isCategory) && taggedFolderOptions.length > 0 && (
-        <FormControl fullWidth variant="outlined" sx={{ mt: 1 }}>
-          <InputLabel shrink sx={{ backgroundColor: 'white', px: 1 }}>Folder scope (optional)</InputLabel>
-          <Select
-            multiple
-            displayEmpty
-            value={Array.isArray(question.mediaFolders) ? question.mediaFolders : []}
-            onChange={(e) => onChange('mediaFolders', e.target.value)}
-            label="Folder scope (optional)"
-            renderValue={(selected) => (selected?.length ? selected.join(', ') : 'All tagged folders')}
-          >
-            {taggedFolderOptions
-              .filter((f) => {
-                const tag = folderTags[f];
-                if (isSet) return tag === 'set';
-                if (isCategory) return tag === 'category';
-                return true;
-              })
-              .map((f) => (
-                <MenuItem key={f} value={f}>{f} ({folderTags[f]})</MenuItem>
-              ))}
-          </Select>
-        </FormControl>
-      )}
+      {!hasSlots && !isCurated && <MediaFolderScopeSelect
+        folders={folderOptions}
+        value={question.mediaFolders || []}
+        onChange={(folders) => onChange('mediaFolders', folders)}
+        allLabel={tr(isSet ? 'All tagged sets' : isCategory ? 'All tagged categories' : 'All media (all folders)')}
+        helperText={tr(isSet
+          ? 'Select one or more set folders. Each draw uses one complete set. Clear the selection to use all sets.'
+          : isCategory
+            ? (singleCategory ? 'Select the categories eligible for each trial. Each trial uses only one of them. Clear to use all categories.' : 'Select one or more category folders. Draw the specified count from each selected category, including subfolders. Clear to use all categories.')
+            : 'Select one or more folders, including their subfolders. Files are drawn from their combined pool. Clear to use all media.')}
+      />}
+      {!isSet && !isCategory && !hasSlots && !isCurated && <Alert severity={poolStatus.matchingFileCount ? 'info' : 'warning'}>
+        {tr('Available in this scope: {count} matching files.', { count: poolStatus.matchingFileCount })}
+        {question.mediaFolders?.length > 0 && !poolStatus.matchingFileCount && ` ${tr('No matching media in the selected folders. Choose other folders or upload media there.')}`}
+      </Alert>}
       {isSet && (
         <>
           {poolStatus.totalFileCount === 0 ? (
-            <Alert severity="warning">No media in project — upload files in Media Dataset first.</Alert>
+            <Alert severity="warning">{tr("No media in project — upload files in Media Dataset first.")}</Alert>
           ) : poolStatus.matchingFileCount === 0 ? (
             <Alert severity="warning">
-              {poolStatus.totalFileCount} file(s) in project, but none match this question&apos;s media type
-              filter{mediaTypeHint}.
+              {zh ? `项目中有 ${poolStatus.totalFileCount} 个文件，但没有符合本题媒体类型筛选条件的文件${mediaTypeHint}。` : `${poolStatus.totalFileCount} file(s) in project, but none match this question's media type filter${mediaTypeHint}.`}
             </Alert>
           ) : (poolStatus.eligibleSetCount ?? poolStatus.eligibleGroupCount) === 0 ? (
             <Alert severity="warning">
-              No eligible set folders (need folders tagged <code>set</code> with exactly {poolStatus.filesPerSet} direct file(s)
-              {mediaTypeHint}). Tag folders in Media Dataset.
+              {zh ? `没有符合条件的分组：需要标记为“分组”的文件夹，且每组直属文件数恰好为 ${poolStatus.filesPerSet}${mediaTypeHint}。请到媒体库设置文件夹标记。` : `No eligible set folders (need folders tagged set with exactly ${poolStatus.filesPerSet} direct file(s)${mediaTypeHint}). Tag folders in Media Dataset.`}
             </Alert>
           ) : (
             <Alert severity="success">
-              {poolStatus.eligibleSetCount ?? poolStatus.eligibleGroupCount} set(s) of size {poolStatus.filesPerSet} available
-              ({poolStatus.matchingFileCount} matching file(s){mediaTypeHint}).
+              {zh ? `可用分组 ${poolStatus.eligibleSetCount ?? poolStatus.eligibleGroupCount} 个，每组 ${poolStatus.filesPerSet} 个文件（共 ${poolStatus.matchingFileCount} 个匹配文件${mediaTypeHint}）。` : `${poolStatus.eligibleSetCount ?? poolStatus.eligibleGroupCount} set(s) of size ${poolStatus.filesPerSet} available (${poolStatus.matchingFileCount} matching file(s)${mediaTypeHint}).`}
             </Alert>
           )}
           <MediaPairingGuide
@@ -473,24 +507,21 @@ function MediaAssignmentFields({ question, onChange, currentProject }) {
       {isCategory && (
         <>
           {poolStatus.totalFileCount === 0 ? (
-            <Alert severity="warning">No media in project — upload files in Media Dataset first.</Alert>
+            <Alert severity="warning">{tr("No media in project — upload files in Media Dataset first.")}</Alert>
+          ) : singleCategory && poolStatus.eligibleSingleCategoryCount === 0 ? (
+            <Alert severity="warning">{tr('No selected category has enough matching files for a complete trial. Reduce the count or add media.')}</Alert>
           ) : poolStatus.matchingCategoryCount > 0 ? (
             <Alert severity="success">
-              Will show <strong>{poolStatus.expectedCategoryTotal}</strong> file(s):
-              {' '}<strong>{poolStatus.mediaPerCategory}</strong> from each of{' '}
-              <strong>{poolStatus.matchingCategoryCount}</strong> categor
-              {poolStatus.matchingCategoryCount === 1 ? 'y' : 'ies'}
-              {' '}({poolStatus.matchingCategoryLabels.map((c) => (
-                <code key={c} style={{ marginRight: 6 }}>{c}</code>
-              ))})
-              {mediaTypeHint && <span>{mediaTypeHint}</span>}
+              {singleCategory ? tr('Each trial randomly chooses one selected category and draws {count} files only from it.', { count: poolStatus.expectedCategoryTotal }) : zh ? `将展示 ${poolStatus.expectedCategoryTotal} 个文件：从 ${poolStatus.matchingCategoryCount} 个分类中，每类抽取 ${poolStatus.mediaPerCategory} 个。` : `Will show ${poolStatus.expectedCategoryTotal} file(s): ${poolStatus.mediaPerCategory} from each of ${poolStatus.matchingCategoryCount} categories.`}
+              {' '}({poolStatus.matchingCategoryLabels.join(', ')}){mediaTypeHint}
             </Alert>
           ) : (
             <Alert severity="warning">
-              No category folders tagged yet (or none match this filter). Tag folders as <code>category</code> in Media Dataset.
+              {zh ? '尚未标记分类文件夹，或没有符合筛选条件的分类。请在媒体库中将文件夹标记为“分类”。' : 'No category folders tagged yet (or none match this filter). Tag folders as category in Media Dataset.'}
             </Alert>
           )}
           <MediaCategoryGuide
+            singleCategory={singleCategory}
             compact
             context="question"
             categoryCount={poolStatus.matchingCategoryCount}
@@ -505,10 +536,9 @@ function MediaAssignmentFields({ question, onChange, currentProject }) {
       )}
       {!isSet && !isCategory && (
         <Typography variant="caption" color="text.secondary" display="block">
-          Randomly samples {count} file(s) from the project media pool
-          {poolStatus.totalFileCount > 0
-            ? ` (${poolStatus.matchingFileCount} matching${mediaTypeHint}).`
-            : ' — upload media in Media Dataset first.'}
+          {zh
+            ? `从媒体库随机抽取 ${count} 个文件。来源：${(currentProject?.preloadedImages || []).some((img) => String(img.key || '').startsWith('skill-preview/')) ? '示例预览库' : '项目媒体库'}；范围内可用 ${poolStatus.matchingFileCount || 0} / 总共 ${poolStatus.totalFileCount || 0}。优先不重复，不足时回退到该范围未过滤池。`
+            : `Random from media library (${count} file(s)). Source: ${(currentProject?.preloadedImages || []).some((img) => String(img.key || '').startsWith('skill-preview/')) ? 'preview sample library' : 'project media library'}; in-scope ${poolStatus.matchingFileCount || 0} / total ${poolStatus.totalFileCount || 0}. Prefer unused files; fall back to the unfiltered range if needed.`}
         </Typography>
       )}
     </>
@@ -518,6 +548,7 @@ function MediaAssignmentFields({ question, onChange, currentProject }) {
 // JSON config field with local text state so invalid intermediate input
 // doesn't corrupt skillConfig; commits on successful parse.
 function SkillJsonField({ label, value, onCommit }) {
+  const { tr } = useQuestionEditorText();
   const [text, setText] = useState(JSON.stringify(value ?? null, null, 2));
   const [invalid, setInvalid] = useState(false);
 
@@ -542,21 +573,38 @@ function SkillJsonField({ label, value, onCommit }) {
       value={text}
       onChange={(e) => handleChange(e.target.value)}
       error={invalid}
-      helperText={invalid ? 'Invalid JSON — changes not applied' : 'JSON value'}
+      helperText={tr(invalid ? 'Invalid JSON — changes not applied' : 'JSON value')}
       sx={{ '& textarea': { fontFamily: 'monospace', fontSize: '0.8rem' } }}
     />
   );
 }
 
-export default function QuestionEditor({ question, onSave, onCancel, images, currentProject, surveyConfig = null }) {
+export default function QuestionEditor({
+  question,
+  onSave,
+  onCancel,
+  images,
+  currentProject,
+  surveyConfig = null,
+  variant = 'dialog',
+  pageName = '',
+  onWorkingCopyChange,
+  onOpenAssistant,
+}) {
+  const { tr } = useQuestionEditorText();
   // Convert ranking with isImageRanking back to imageranking for editing
-  const initialQuestion = { ...question };
+  const initialQuestion = normalizeSliderQuestion({ ...question });
   if (initialQuestion.type === 'ranking' && initialQuestion.isImageRanking) {
     initialQuestion.type = 'imageranking';
   }
   
   const [editedQuestion, setEditedQuestion] = useState(initialQuestion);
+  const [taskFilter, setTaskFilter] = useState('all');
   const [newChoice, setNewChoice] = useState('');
+  // Draft string so trailing commas stay while typing (array join would strip them).
+  const [annotationLabelsText, setAnnotationLabelsText] = useState(
+    () => formatAnnotationLabels(initialQuestion.annotationLabels),
+  );
   
   // Image selection states
   const [availableImages, setAvailableImages] = useState([]);
@@ -564,15 +612,51 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
   const [loadingImages, setLoadingImages] = useState(false);
   const [imageError, setImageError] = useState(null);
   const [builderSkills, setBuilderSkills] = useState([]);
-  const [skillPreviewPool, setSkillPreviewPool] = useState([]);
+  const initialSnapshot = useRef(JSON.stringify(initialQuestion));
+  const dirty = JSON.stringify(editedQuestion) !== initialSnapshot.current || !!newChoice.trim()
+    || annotationLabelsText !== formatAnnotationLabels(initialQuestion.annotationLabels);
+  const guard = useUnsavedChanges(dirty);
+  const { language } = useRegion();
+  const zh = language === 'zh';
+  const mobile = useMediaQuery('(max-width:600px)');
+  const wide = useMediaQuery('(min-width:1000px)');
+  const [editorTab, setEditorTab] = useState(0);
+  const workspace = variant === 'workspace';
+  const settingsRef = useRef(null);
+  const settingsErrors = validateQuestionSettings(editedQuestion);
+  const closeEditor = () => guard.request(onCancel);
+  const focusSetting = (path) => {
+    setEditorTab(0);
+    requestAnimationFrame(() => {
+      const field = [...(settingsRef.current?.querySelectorAll('[name]') || [])]
+        .find((node) => node.getAttribute('name') === path);
+      field?.scrollIntoView?.({ block: 'center', behavior: 'smooth' });
+      field?.focus();
+    });
+  };
 
   useEffect(() => {
     listSkillsForBuilder().then(setBuilderSkills);
   }, []);
 
+  const workingCopyChangeRef = useRef(onWorkingCopyChange);
+  workingCopyChangeRef.current = onWorkingCopyChange;
   useEffect(() => {
-    listSkillPreviewMedia().then(setSkillPreviewPool).catch(() => setSkillPreviewPool([]));
-  }, []);
+    workingCopyChangeRef.current?.({
+      questionName: editedQuestion.name || question?.name || null,
+      pageName: pageName || null,
+      workingCopy: editedQuestion,
+      baseline: question,
+      dirty,
+    });
+  }, [dirty, editedQuestion, pageName, question]);
+
+  useEffect(() => {
+    if (editedQuestion.type === 'imageannotation') {
+      setAnnotationLabelsText(formatAnnotationLabels(editedQuestion.annotationLabels));
+    }
+  }, [editedQuestion.type]);
+
 
   const presetTypeOptions = getPresetBuilderTypeOptions();
   const presetSkillIds = new Set(presetTypeOptions.map((o) => o.value.slice(6)));
@@ -583,8 +667,8 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
     .map((s) => ({
       value: `skill:${s.id}`,
       label: s.scope === 'mine' && !s.is_approved
-        ? `Advanced · My task: ${s.name}`
-        : `Advanced · Library: ${s.name}`,
+        ? (zh ? `高级 · 我的任务：${s.name}` : `Advanced · My task: ${s.name}`)
+        : (zh ? `高级 · 自定义交互：${s.name}` : `Advanced · Custom interactions: ${s.name}`),
       group: 'advanced',
     }));
 
@@ -607,6 +691,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
     { value: 'imageranking', label: 'Image Ranking', group: 'image' },
     { value: 'imagerating', label: 'Image Rating Scale', group: 'image' },
     { value: 'imageboolean', label: 'Image Yes/No', group: 'image' },
+    { value: 'imagecheckbox', label: 'Image Multi-select (text tags)', group: 'image' },
     { value: 'imagematrix', label: 'Image Matrix', group: 'image' },
     { value: 'image', label: 'Image Display (single image)', group: 'image' },
     { value: 'imageannotation', label: 'Image Annotation', group: 'image' },
@@ -616,6 +701,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
     { value: 'mediaranking', label: 'Media Ranking', group: 'media' },
     { value: 'mediarating', label: 'Media Rating Scale', group: 'media' },
     { value: 'mediaboolean', label: 'Media Yes/No', group: 'media' },
+    { value: 'mediacheckbox', label: 'Media Multi-select (text tags)', group: 'media' },
     { value: 'mediamatrix', label: 'Media Matrix', group: 'media' },
     { value: 'mediadisplay', label: 'Media Display (image / video / audio)', group: 'media' },
     { value: 'mediaslidergroup', label: 'Media Slider Group', group: 'media' },
@@ -629,7 +715,20 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
       group: 'advanced',
     },
     ...libraryTypeOptions,
-  ];
+  ].filter(({ value }) => QUESTION_TYPE_IDS.includes(value) || String(value).startsWith('skill:'));
+
+  const taskFamily = (type) => {
+    if (/ranking/.test(type) || type === 'ranking') return 'ranking';
+    if (/allocation/.test(type)) return 'allocation';
+    if (/matrix/.test(type)) return 'matrix';
+    if (/annotation/.test(type)) return 'annotation';
+    if (/rating|slider/.test(type) || type === 'number') return 'rating';
+    if (/picker|checkbox|boolean|choice|forced/.test(type) || ['radiogroup', 'dropdown', 'consent'].includes(type)) return 'choice';
+    if (type.startsWith('skill:') || type === 'skillquestion') return 'advanced';
+    return 'text';
+  };
+  const selectedType = editedQuestion.type === 'skillquestion' && editedQuestion.skillId
+    ? `skill:${editedQuestion.skillId}` : editedQuestion.type || 'text';
 
   const typeMenuGroups = [
     { id: 'text', label: 'Text & choice' },
@@ -645,6 +744,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
     if (
       (field === 'mediaAssignmentMode' && value === 'category')
       || (field === 'mediaPerCategory' && normalizeMediaAssignmentMode(editedQuestion.mediaAssignmentMode) === 'category')
+      || (field === 'mediaCategoryMode' && normalizeMediaAssignmentMode(editedQuestion.mediaAssignmentMode) === 'category')
       || (field === 'mediaFolders' && normalizeMediaAssignmentMode(editedQuestion.mediaAssignmentMode) === 'category')
     ) {
       const nextQ = {
@@ -676,12 +776,21 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
 
     // Set default properties when question type changes to image type
     if (field === 'type') {
+      const schemaDefinition = getQuestionTypeDefinition(value);
+      if (schemaDefinition?.defaults) {
+        Object.assign(
+          updates,
+          JSON.parse(JSON.stringify(schemaDefinition.defaults)),
+          { type: value },
+        );
+      }
       if (String(value).startsWith('skill:')) {
         const skillId = String(value).slice(6);
         const skill = resolveBuilderSkill(skillId, builderSkills);
         updates.type = 'skillquestion';
         updates.skillId = skill?.id || skillId;
         updates.skillHtml = skill?.sourceHtml || '';
+        updates.skillAnalysisHtml = skill?.analysisHtml || '';
         const mediaConstraints = getSkillMediaConstraints(updates.skillId, skill);
         const lockedCount = mediaConstraints.countFixed
           ?? skill?.defaultConfig?.mediaCount
@@ -693,6 +802,8 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
           mediaType: lockedType,
         };
         updates.skillResultSchema = skill?.resultSchema || [];
+        updates.skillRevision = Number(skill?.revision || skill?.currentRevision || 1);
+        updates.skillContractVersion = Number(skill?.contractVersion || 1);
         updates.randomImageSelection = true;
         updates.imageSelectionMode = 'huggingface_random';
         updates.excludePreviouslyUsedImages = true;
@@ -706,8 +817,11 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
         // Blank advanced custom task — no preset HTML until user picks/imports a skill
         updates.skillId = '';
         updates.skillHtml = '';
+        updates.skillAnalysisHtml = '';
         updates.skillConfig = {};
         updates.skillResultSchema = [];
+        updates.skillRevision = 0;
+        updates.skillContractVersion = 1;
         updates.randomImageSelection = true;
         updates.imageSelectionMode = 'huggingface_random';
         updates.excludePreviouslyUsedImages = true;
@@ -715,9 +829,9 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
         return setEditedQuestion({ ...editedQuestion, ...updates });
       }
       // Types that should have 1 image/media by default
-      if (value === 'imagerating' || value === 'imagematrix' || value === 'imageboolean' || value === 'image'
+      if (value === 'imagerating' || value === 'imagematrix' || value === 'imageboolean' || value === 'imagecheckbox' || value === 'image'
         || value === 'imageslidergroup' || value === 'imagepointallocation'
-        || value === 'mediadisplay' || value === 'mediarating' || value === 'mediaboolean'
+        || value === 'mediadisplay' || value === 'mediarating' || value === 'mediaboolean' || value === 'mediacheckbox'
         || value === 'mediamatrix' || value === 'mediaslidergroup' || value === 'mediapointallocation'
         || value === 'imageannotation') {
         if (!editedQuestion.imageCount) updates.imageCount = 1;
@@ -726,6 +840,15 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
         updates.randomImageSelection = true;
         updates.excludePreviouslyUsedImages = true;
         updates.choices = updates.choices || [];
+        if (value === 'imagecheckbox' || value === 'mediacheckbox') {
+          if (!editedQuestion.choices?.length) {
+            updates.choices = [
+              { value: 'tag_a', text: 'Tag A' },
+              { value: 'tag_b', text: 'Tag B' },
+              { value: 'tag_c', text: 'Tag C' },
+            ];
+          }
+        }
         if (MEDIA_STAR_EDITOR_TYPES.includes(value)) {
           updates.mediaType = 'any';
           if (!Array.isArray(editedQuestion.mediaSlots)) updates.mediaSlots = [];
@@ -740,8 +863,8 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
         }
         if (value === 'mediaslidergroup' && !editedQuestion.dimensions?.length) {
           updates.dimensions = [
-            { id: 'd1', label: 'Dimension 1' },
-            { id: 'd2', label: 'Dimension 2' },
+            { id: 'd1', label: 'Dimension 1', left: 'Low', right: 'High' },
+            { id: 'd2', label: 'Dimension 2', left: 'Disagree', right: 'Agree' },
           ];
           updates.scaleMin = 1;
           updates.scaleMax = 7;
@@ -754,7 +877,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
           updates.budget = 100;
         }
         if (value === 'imageannotation') {
-          updates.allowedTools = ['point', 'line', 'region', 'bbox'];
+          updates.allowedTools = ['point', 'line', 'polygon', 'bbox'];
           if (editedQuestion.minAnnotations == null) updates.minAnnotations = 0;
           if (editedQuestion.maxAnnotations == null) updates.maxAnnotations = 50;
           if (!Array.isArray(editedQuestion.annotationLabels)) updates.annotationLabels = [];
@@ -769,6 +892,12 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
         updates.choices = updates.choices || [];
         if (!Array.isArray(editedQuestion.mediaSlots)) updates.mediaSlots = [];
         if (!editedQuestion.mediaPresentation) updates.mediaPresentation = 'stack';
+        if (value === 'mediapicker' && editedQuestion.multiSelect == null) {
+          updates.multiSelect = false;
+        }
+        if (value === 'mediapicker' && !editedQuestion.pairingMode) {
+          updates.pairingMode = 'random';
+        }
       }
       else if (value === 'number') {
         updates.inputType = 'number';
@@ -786,8 +915,8 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
       else if (value === 'slidergroup') {
         if (!editedQuestion.dimensions?.length) {
           updates.dimensions = [
-            { id: 'dim_1', left: 'Negative', right: 'Positive' },
-            { id: 'dim_2', left: 'Unpleasant', right: 'Pleasant' },
+            { id: 'dim_1', label: 'Dimension 1', left: 'Negative', right: 'Positive' },
+            { id: 'dim_2', label: 'Dimension 2', left: 'Unpleasant', right: 'Pleasant' },
           ];
         }
         if (editedQuestion.scaleMin == null) updates.scaleMin = 1;
@@ -800,8 +929,8 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
         updates.excludePreviouslyUsedImages = true;
         if (!editedQuestion.dimensions?.length) {
           updates.dimensions = [
-            { id: 'dim_1', left: 'Negative', right: 'Positive' },
-            { id: 'dim_2', left: 'Unpleasant', right: 'Pleasant' },
+            { id: 'dim_1', label: 'Dimension 1', left: 'Negative', right: 'Positive' },
+            { id: 'dim_2', label: 'Dimension 2', left: 'Unpleasant', right: 'Pleasant' },
           ];
         }
         if (editedQuestion.scaleMin == null) updates.scaleMin = 1;
@@ -839,12 +968,21 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
     });
   };
 
+  const uniqueChoiceValue = (text) => {
+    const base = text.trim().toLowerCase().replace(/\s+/g, '_');
+    const used = new Set((editedQuestion.choices || []).map((c) => String(typeof c === 'object' ? c.value : c)));
+    let value = base;
+    let suffix = 2;
+    while (used.has(value)) value = `${base}_${suffix++}`;
+    return value;
+  };
+
   const addChoice = () => {
     if (!newChoice.trim()) return;
     
     const choices = editedQuestion.choices || [];
     // Use SurveyJS standard format: {value, text}
-    const choiceValue = newChoice.trim().toLowerCase().replace(/\s+/g, '_');
+    const choiceValue = uniqueChoiceValue(newChoice);
     const newChoiceObj = {
       value: choiceValue,
       text: newChoice.trim()
@@ -870,7 +1008,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
     if (!newChoice.trim()) return;
     
     const choices = editedQuestion.choices || [];
-    const newChoices = [...choices, { value: newChoice.toLowerCase().replace(/\s+/g, '_'), text: newChoice.trim() }];
+    const newChoices = [...choices, { value: uniqueChoiceValue(newChoice), text: newChoice.trim() }];
     
     setEditedQuestion({
       ...editedQuestion,
@@ -887,7 +1025,11 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
     });
   };
 
-  const needsChoices = ['radiogroup', 'checkbox', 'dropdown', 'ranking', 'pointallocation', 'imagepointallocation'].includes(editedQuestion.type);
+  const needsChoices = [
+    'radiogroup', 'checkbox', 'dropdown', 'ranking',
+    'pointallocation', 'imagepointallocation', 'mediapointallocation',
+    'imagecheckbox', 'mediacheckbox',
+  ].includes(editedQuestion.type);
   const isStimulusQuestion = isMediaStimulusQuestion(editedQuestion.type)
     || (editedQuestion.type === 'skillquestion' && !!editedQuestion.skillId);
   const mediaConstraints = getQuestionMediaConstraints(editedQuestion.type, editedQuestion);
@@ -1001,39 +1143,73 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
     }
   };
 
+  const Root = workspace ? Box : Dialog;
+  const rootProps = workspace
+    ? {
+      sx: {
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: { xs: '70vh', md: '75vh' },
+        border: '1px solid',
+        borderColor: 'divider',
+        borderRadius: 2,
+        overflow: 'hidden',
+        bgcolor: 'background.paper',
+      },
+    }
+    : {
+      open: true,
+      onClose: closeEditor,
+      maxWidth: 'xl',
+      fullWidth: true,
+      fullScreen: mobile,
+      PaperProps: { sx: { height: mobile ? '100dvh' : '90dvh' } },
+    };
+
   return (
-    <Dialog open={true} onClose={onCancel} maxWidth="md" fullWidth>
-      <DialogTitle>
-        Edit Question
+    <>
+    <Root {...rootProps}>
+
+      <DialogTitle sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
+        {zh ? '编辑题目' : 'Edit Question'}
+        {workspace && pageName ? <Chip size="small" label={pageName} /> : null}
       </DialogTitle>
-      <DialogContent>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+      {!wide && <Tabs value={editorTab} onChange={(_, v) => setEditorTab(v)} variant="fullWidth" aria-label={tr(zh ? '题目编辑视图' : 'Question editor views')}>
+        <Tab label={tr(zh ? '题目设置' : 'Settings')} /><Tab label={tr(zh ? '参与者预览' : 'Participant preview')} />
+        {workspace && mobile ? <Tab label={tr(zh ? '助手' : 'Assistant')} /> : null}
+      </Tabs>}
+      <DialogContent sx={{ p: 0, overflow: 'hidden', display: 'grid', gridTemplateColumns: wide ? 'minmax(0, 1fr) minmax(0, 0.9fr)' : 'minmax(0, 1fr)' }}>
+        <Box ref={settingsRef} sx={{ display: wide || editorTab === 0 ? 'flex' : 'none', flexDirection: 'column', gap: 4, overflowY: 'auto', minWidth: 0, p: { xs: 2, sm: 3 } }}>
           {/* Basic Question Settings */}
           <Box>
-            <Typography variant="h6" sx={{ mb: 3, color: 'primary.main' }}>
-              Basic Settings
-            </Typography>
+            <Typography variant="h6" sx={{ mb: 3, color: 'primary.main' }}>{tr("Basic Settings")} </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-              <TextField
+              <TextField name="name"
                 fullWidth
                 variant="outlined"
-                label="Question Name (Internal ID)"
+                label={tr("Question Name (Internal ID)")}
                 value={editedQuestion.name || ''}
                 onChange={(e) => handleQuestionChange('name', e.target.value)}
-                helperText="Used internally to identify this question (e.g., 'age_group', 'satisfaction_rating')"
+                helperText={tr("Used internally to identify this question (e.g., 'age_group', 'satisfaction_rating')")}
                 sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
               />
               
+              <TextField name="type" select fullWidth label={tr("Find by task")} value={taskFilter} onChange={(e) => setTaskFilter(e.target.value)}
+                helperText={tr("Filter available types by the answer you want to collect. Your current type stays selected until you choose another.")}>
+                {[['all', 'All tasks'], ['choice', 'Choose / Yes–No'], ['rating', 'Rate / Measure'], ['ranking', 'Rank'], ['allocation', 'Allocate points'], ['matrix', 'Matrix'], ['annotation', 'Annotate'], ['text', 'Text / Display'], ['advanced', 'Custom interactions']]
+                  .map(([value, label]) => <MenuItem key={value} value={value}>{tr(label)}</MenuItem>)}
+              </TextField>
               <FormControl fullWidth variant="outlined">
-                <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>Question Type</InputLabel>
+                <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>{tr("Question Type")}</InputLabel>
                 <Select
                   value={editedQuestion.type === 'skillquestion' && editedQuestion.skillId
                     ? `skill:${editedQuestion.skillId}` : (editedQuestion.type || 'text')}
                   onChange={(e) => handleQuestionChange('type', e.target.value)}
-                  label="Question Type"
+                  label={tr("Question Type")}
+                  inputProps={{ 'aria-label': tr('Question Type') }}
                 >
                   {typeMenuGroups.flatMap((group) => {
-                    const items = questionTypes.filter((t) => t.group === group.id);
+                    const items = questionTypes.filter((t) => t.group === group.id && (taskFilter === 'all' || taskFamily(t.value) === taskFilter || t.value === selectedType));
                     if (!items.length) return [];
                     return [
                       <MenuItem
@@ -1048,11 +1224,11 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                           py: 0.75,
                         }}
                       >
-                        {group.label}
+                        {tr(group.label)}
                       </MenuItem>,
                       ...items.map((type) => (
                         <MenuItem key={type.value} value={type.value} sx={{ pl: 3 }}>
-                          {type.label}
+                          {tr(type.label)}
                         </MenuItem>
                       )),
                     ];
@@ -1060,41 +1236,35 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                 </Select>
               </FormControl>
 
-              <TextField
+              <TextField name="title"
                 fullWidth
                 variant="outlined"
-                label="Question Title"
+                label={tr("Question Title")}
                 value={editedQuestion.title || ''}
                 onChange={(e) => handleQuestionChange('title', e.target.value)}
-                helperText="The main question text that participants will see"
+                helperText={tr("The main question text that participants will see")}
                 sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
               />
 
-              <TextField
+              <TextField name="description"
                 fullWidth
                 variant="outlined"
                 multiline
                 rows={2}
-                label="Question Description (Optional)"
+                label={tr("Question Description (Optional)")}
                 value={editedQuestion.description || ''}
                 onChange={(e) => handleQuestionChange('description', e.target.value)}
-                helperText="Additional instructions or context for this question"
+                helperText={tr("Additional instructions or context for this question")}
                 sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
               />
 
               {editedQuestion.type === 'imageannotation' && (
-                <Alert severity="info">
-                  Participants can draw points, lines, regions, and bounding boxes on an image from your sampling settings.
-                  Optionally define class labels, then set tools and min/max counts in the task options below.
-                </Alert>
+                <Alert severity="info">{tr("Participants can draw points, lines, polygons, and bounding boxes on an image from your sampling settings. Optionally define class labels, then set tools and min/max counts in the task options below.")} </Alert>
               )}
 
               {editedQuestion.type === 'skillquestion' && !editedQuestion.skillId && (
                 <Alert severity="warning">
-                  <strong>Advanced custom task.</strong> Most studies only need a ready-made perception task
-                  (Pairwise Preference, Best–Worst, etc.) from the type list above.
-                  To continue here, import or create a task in <strong>My Skill Library</strong>, then re-select it
-                  under <em>Advanced · Library</em>.
+                  <strong>{tr("Advanced custom task.")}</strong> {tr("Most studies only need a ready-made perception task (Pairwise Preference, Best–Worst, etc.) from the type list above. To continue here, import or create a task in")} <strong>{tr("My custom interactions")}</strong>{tr(", then re-select it under")} <em>{tr("Advanced · Custom interactions")}</em>.
                 </Alert>
               )}
 
@@ -1104,15 +1274,14 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                 return (
                   <>
                     <Alert severity="success" sx={{ mt: 0 }}>
-                      <strong>{skillDef?.builderLabel || skillDef?.name || 'Interactive question'}</strong>
+                      <strong>{isPreset ? tr(skillDef?.builderLabel || skillDef?.name || 'Interactive question') : skillDef?.name}</strong>
                       {(skillDef?.builderHint || skillDef?.description) && (
                         <Typography variant="body2" sx={{ mt: 0.5 }}>
-                          {skillDef.builderHint || skillDef.description}
+                          {isPreset ? tr(skillDef.builderHint || skillDef.description) : skillDef.description}
                         </Typography>
                       )}
                       {!isPreset && (
-                        <Typography variant="caption" display="block" sx={{ mt: 0.5 }} color="text.secondary">
-                          Custom / library task · id: {editedQuestion.skillId}
+                        <Typography variant="caption" display="block" sx={{ mt: 0.5 }} color="text.secondary">{tr("Custom / library task · id:")} {editedQuestion.skillId}
                         </Typography>
                       )}
                     </Alert>
@@ -1132,19 +1301,12 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                                 skillConfig: { ...(skillDef.defaultConfig || {}), ...(editedQuestion.skillConfig || {}) },
                               });
                             }}
-                          >
-                            Update now
-                          </Button>
+                          >{tr("Update now")} </Button>
                         )}
-                      >
-                        This question uses an older copy of the task. Update to the latest version
-                        (your current wording settings are kept).
-                      </Alert>
+                      >{tr("This question uses an older copy of the task. Update to the latest version (your current wording settings are kept).")} </Alert>
                     )}
                     <Alert severity="info" sx={{ mt: 1 }}>
-                      <strong>Question Title</strong> is the heading participants see.
-                      Use <strong>Task instructions</strong> in task options below for guidance inside the interactive area.
-                    </Alert>
+                      <strong>{tr("Question Title")}</strong> {tr("is the heading participants see. Use")} <strong>{tr("Task instructions")}</strong> {tr("in task options below for guidance inside the interactive area.")} </Alert>
                   </>
                 );
               })()}
@@ -1157,28 +1319,28 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                     onChange={(e) => handleQuestionChange('isRequired', e.target.checked)}
                   />
                 }
-                label="Required — participants must answer to continue"
+                label={tr("Required — participants must answer to continue")}
               />
 
               {editedQuestion.type === 'boolean' && (
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                   <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                    <TextField
+                    <TextField name="labelTrue"
                       fullWidth
                       variant="outlined"
-                      label="Yes label"
+                      label={tr("Yes label")}
                       value={editedQuestion.labelTrue || ''}
                       onChange={(e) => handleQuestionChange('labelTrue', e.target.value)}
-                      placeholder="Yes"
+                      placeholder={tr("Yes")}
                       sx={{ flex: '1 1 200px', '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                     />
-                    <TextField
+                    <TextField name="labelFalse"
                       fullWidth
                       variant="outlined"
-                      label="No label"
+                      label={tr("No label")}
                       value={editedQuestion.labelFalse || ''}
                       onChange={(e) => handleQuestionChange('labelFalse', e.target.value)}
-                      placeholder="No"
+                      placeholder={tr("No")}
                       sx={{ flex: '1 1 200px', '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                     />
                   </Box>
@@ -1187,23 +1349,15 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
               )}
 
               {editedQuestion.type === 'consent' && (
-                <Alert severity="info" sx={{ py: 0.5 }}>
-                  Participants must accept to continue. Set the consent statement in the Question Title
-                  (and optional Description). The Yes label is the accept action.
-                </Alert>
+                <Alert severity="info" sx={{ py: 0.5 }}>{tr("Participants must accept to continue. Set the consent statement in the Question Title (and optional Description). The Yes label is the accept action.")} </Alert>
               )}
 
               {editedQuestion.type === 'expression' && (
-                <Alert severity="info" sx={{ py: 0.5 }}>
-                  Instruction-only — participants do not answer. Use the title and description above as the message.
-                </Alert>
+                <Alert severity="info" sx={{ py: 0.5 }}>{tr("Instruction-only — participants do not answer. Use the title and description above as the message.")} </Alert>
               )}
 
               {editedQuestion.type === 'slidergroup' && (
-                <Alert severity="info" sx={{ py: 0.5 }}>
-                  This question has no built-in media. Put a <strong>Media Display</strong> on the same page for the stimulus,
-                  or use <strong>Image Slider Group</strong> instead.
-                </Alert>
+                <Alert severity="info" sx={{ py: 0.5 }}>{tr("This question has no built-in media. Put a")} <strong>{tr("Media Display")}</strong> {tr("on the same page for the stimulus, or use")} <strong>{tr("Image Slider Group")}</strong> {tr("instead.")} </Alert>
               )}
             </Box>
           </Box>
@@ -1211,17 +1365,13 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
           {/* Unified stimulus sampling + task options + preview */}
           {isStimulusQuestion && (
             <Box>
-              <Typography variant="h6" sx={{ mb: 1, color: 'primary.main' }}>
-                Stimulus & task settings
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                Configure how stimuli are sampled, then set task-specific options and preview the participant view.
-              </Typography>
+              <Typography variant="h6" sx={{ mb: 1, color: 'primary.main' }}>{tr("Stimulus & task settings")} </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>{tr("Configure how stimuli are sampled, then set task-specific options and preview the participant view.")} </Typography>
 
               <SettingsSection
                 step={1}
-                title="How stimuli are sampled"
-                hint="Exclude reuse, assignment mode, random vs curated list, and stimulus count."
+                title={tr("How stimuli are sampled")}
+                hint={tr("Exclude reuse, assignment mode, random vs curated list, and stimulus count.")}
               >
                 <FormControlLabel
                   control={
@@ -1230,7 +1380,9 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                       onChange={(e) => handleQuestionChange('excludePreviouslyUsedImages', e.target.checked)}
                     />
                   }
-                  label="Do not reuse media already shown earlier in this survey"
+                  label={tr(zh
+                    ? '优先不重复已展示的媒体；范围内不足时会回退到该范围未过滤池'
+                    : 'Prefer unused media; if the filtered pool is too small, fall back to the unfiltered range')}
                 />
 
                 {editedQuestion.type === 'skillquestion' ? (() => {
@@ -1238,9 +1390,9 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                   const mediaConstraintsSkill = getSkillMediaConstraints(editedQuestion.skillId, skillDef);
                   const cfg = editedQuestion.skillConfig || {};
                   const effectiveMediaType = mediaConstraintsSkill.typeFixed || cfg.mediaType || 'image';
-                  const mediaTypeLabel = effectiveMediaType === 'video' ? 'video'
-                    : effectiveMediaType === 'audio' ? 'audio'
-                    : effectiveMediaType === 'any' ? 'media file' : 'image';
+                  const mediaTypeLabel = effectiveMediaType === 'video' ? tr("video")
+                    : effectiveMediaType === 'audio' ? tr("audio")
+                    : effectiveMediaType === 'any' ? (zh ? '媒体文件' : 'media file') : tr("image");
                   const setCfg = (key, value) => handleQuestionChange('skillConfig', { ...cfg, [key]: value });
                   const setMediaCount = (n) => {
                     if (!mediaConstraintsSkill.countAdjustable) return;
@@ -1265,10 +1417,10 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                           fullWidth
                           type="number"
                           variant="outlined"
-                          label={mediaConstraintsSkill.countLabel || `Number of ${mediaTypeLabel}s`}
+                          label={tr(mediaConstraintsSkill.countLabel || (zh ? `${tr(mediaTypeLabel)}数量` : `Number of ${mediaTypeLabel}s`))}
                           value={displayMediaCount}
                           onChange={(e) => setMediaCount(e.target.value)}
-                          helperText={`Randomly drawn from the project ${mediaTypeLabel} pool for each participant`}
+                          helperText={tr(zh ? `为每位参与者从项目${tr(mediaTypeLabel)}库随机抽取` : `Randomly drawn from the project ${mediaTypeLabel} pool for each participant`)}
                           inputProps={{
                             min: mediaConstraintsSkill.countMin,
                             max: mediaConstraintsSkill.countMax,
@@ -1279,23 +1431,23 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                       )}
                       {!mediaConstraintsSkill.countAdjustable && (
                         <Alert severity="info" sx={{ py: 0.75 }}>
-                          <strong>Stimulus count:</strong>{' '}
-                          {mediaConstraintsSkill.countLabel
-                            || `Always ${mediaConstraintsSkill.countFixed} ${mediaTypeLabel}(s)`}.
+                          <strong>{tr("Stimulus count:")}</strong>{' '}
+                          {tr(mediaConstraintsSkill.countLabel)
+                            || (zh ? `固定 ${mediaConstraintsSkill.countFixed} 个${tr(mediaTypeLabel)}` : `Always ${mediaConstraintsSkill.countFixed} ${mediaTypeLabel}(s)`)}.
                         </Alert>
                       )}
                       {mediaConstraintsSkill.typeAdjustable && (
                         <FormControl fullWidth variant="outlined" sx={{ bgcolor: 'white' }}>
-                          <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>Media type filter</InputLabel>
-                          <Select
+                          <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>{tr("Media type filter")}</InputLabel>
+                          <Select inputProps={{ 'aria-label': tr("Media type filter") }}
                             value={cfg.mediaType || 'image'}
-                            label="Media type filter"
+                            label={tr("Media type filter")}
                             onChange={(e) => setCfg('mediaType', e.target.value)}
                           >
-                            <MenuItem value="image">Image</MenuItem>
-                            <MenuItem value="video">Video</MenuItem>
-                            <MenuItem value="audio">Audio</MenuItem>
-                            <MenuItem value="any">Any (mixed)</MenuItem>
+                            <MenuItem value="image">{tr("Image")}</MenuItem>
+                            <MenuItem value="video">{tr("Video")}</MenuItem>
+                            <MenuItem value="audio">{tr("Audio")}</MenuItem>
+                            <MenuItem value="any">{tr("Any (mixed)")}</MenuItem>
                           </Select>
                         </FormControl>
                       )}
@@ -1306,19 +1458,19 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                         if ((editedQuestion.mediaAssignmentMode || 'individual') !== 'individual') return null;
                         return (
                           <FormControl fullWidth variant="outlined" sx={{ bgcolor: 'white' }}>
-                            <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>Sampling Mode</InputLabel>
-                            <Select
+                            <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>{tr("Sampling Mode")}</InputLabel>
+                            <Select inputProps={{ 'aria-label': tr("Sampling Mode") }}
                               value={(() => {
                                 const mode = editedQuestion.pairingMode || 'random';
                                 if (mode === 'uncertain' || mode === 'high_sigma') return 'balanced';
                                 return mode;
                               })()}
                               onChange={(e) => handleQuestionChange('pairingMode', e.target.value)}
-                              label="Sampling Mode"
+                              label={tr("Sampling Mode")}
                             >
-                              <MenuItem value="random">Random — uniform from the pool</MenuItem>
-                              <MenuItem value="balanced">Balanced — prefer least-exposed images</MenuItem>
-                              <MenuItem value="adaptive">Adaptive — μ bands + cold-start for new images</MenuItem>
+                              <MenuItem value="random">{tr("Random — uniform from the pool")}</MenuItem>
+                              <MenuItem value="balanced">{tr("Balanced — prefer least-exposed images")}</MenuItem>
+                              <MenuItem value="adaptive">{tr("Adaptive — μ bands + cold-start for new images")}</MenuItem>
                             </Select>
                           </FormControl>
                         );
@@ -1331,17 +1483,17 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
 
                     {MEDIA_STAR_EDITOR_TYPES.includes(editedQuestion.type) && (
                       <FormControl fullWidth variant="outlined">
-                        <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>Media Type Filter</InputLabel>
-                        <Select
+                        <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>{tr("Media Type Filter")}</InputLabel>
+                        <Select inputProps={{ 'aria-label': tr("Media Type Filter") }}
                           value={editedQuestion.mediaType || 'any'}
-                          label="Media Type Filter"
+                          label={tr("Media Type Filter")}
                           onChange={(e) => handleQuestionChange('mediaType', e.target.value)}
                           disabled={Array.isArray(editedQuestion.mediaSlots) && editedQuestion.mediaSlots.length > 0}
                         >
-                          <MenuItem value="any">Any (image/video/audio)</MenuItem>
-                          <MenuItem value="image">Image only</MenuItem>
-                          <MenuItem value="video">Video only</MenuItem>
-                          <MenuItem value="audio">Audio only</MenuItem>
+                          <MenuItem value="any">{tr("Any (image/video/audio)")}</MenuItem>
+                          <MenuItem value="image">{tr("Image only")}</MenuItem>
+                          <MenuItem value="video">{tr("Video only")}</MenuItem>
+                          <MenuItem value="audio">{tr("Audio only")}</MenuItem>
                         </Select>
                       </FormControl>
                     )}
@@ -1374,12 +1526,13 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                         loading={loadingImages}
                         error={imageError}
                         onToggle={handleImageSelection}
-                        title="Select files"
+                        title={tr("Select files")}
                       />
                     )}
 
                     {MEDIA_STAR_EDITOR_TYPES.includes(editedQuestion.type) && (
                       <MediaSlotsEditor
+                        currentProject={currentProject}
                         question={editedQuestion}
                         onChange={handleQuestionChange}
                         availableImages={availableImages}
@@ -1391,10 +1544,10 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
 
               <SettingsSection
                 step={2}
-                title={editedQuestion.type === 'skillquestion' ? 'Wording & task options' : 'Task options'}
-                hint={editedQuestion.type === 'skillquestion'
+                title={tr(editedQuestion.type === 'skillquestion' ? 'Wording & task options' : 'Task options')}
+                hint={tr(editedQuestion.type === 'skillquestion'
                   ? 'Labels and instructions participants see inside this task.'
-                  : 'Type-specific response and presentation options.'}
+                  : 'Type-specific response and presentation options.')}
               >
                 {editedQuestion.type === 'skillquestion' && (() => {
                   const skillDef = resolveBuilderSkill(editedQuestion.skillId, builderSkills);
@@ -1414,7 +1567,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                               onChange={(e) => setCfg(field.key, e.target.checked)}
                             />
                           }
-                          label={field.label || field.key}
+                          label={tr(field.label || field.key)}
                         />
                       );
                     }
@@ -1425,7 +1578,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                           fullWidth
                           type="number"
                           variant="outlined"
-                          label={field.label || field.key}
+                          label={tr(field.label || field.key)}
                           value={val ?? ''}
                           onChange={(e) => setCfg(field.key, e.target.value === '' ? undefined : Number(e.target.value))}
                           inputProps={{ min: field.min, max: field.max, step: field.step || 1 }}
@@ -1436,7 +1589,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                     if (field.type === 'dimensions') {
                       return (
                         <Box key={field.key}>
-                          <Typography variant="body2" fontWeight={600} sx={{ mb: 1 }}>{field.label || 'Scale dimensions'}</Typography>
+                          <Typography variant="body2" fontWeight={600} sx={{ mb: 1 }}>{tr(field.label || 'Scale dimensions')}</Typography>
                           <SkillDimensionsEditor
                             value={val}
                             onChange={(parsed) => setCfg(field.key, parsed)}
@@ -1449,12 +1602,12 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                     if (field.type === 'stringList') {
                       return (
                         <Box key={field.key}>
-                          <Typography variant="body2" fontWeight={600} sx={{ mb: 1 }}>{field.label || field.key}</Typography>
+                          <Typography variant="body2" fontWeight={600} sx={{ mb: 1 }}>{tr(field.label || field.key)}</Typography>
                           <SkillStringListEditor
                             value={val}
                             onChange={(parsed) => setCfg(field.key, parsed)}
-                            label={field.itemLabel || 'Item'}
-                            placeholder={field.placeholder || 'items'}
+                            label={tr(field.itemLabel || 'Item')}
+                            placeholder={tr(field.placeholder || 'items')}
                           />
                         </Box>
                       );
@@ -1463,7 +1616,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                       return (
                         <SkillJsonField
                           key={field.key}
-                          label={field.label || field.key}
+                          label={tr(field.label || field.key)}
                           value={val}
                           onCommit={(parsed) => setCfg(field.key, parsed)}
                         />
@@ -1472,17 +1625,17 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                     if (field.type === 'select' && Array.isArray(field.options)) {
                       return (
                         <FormControl key={field.key} fullWidth variant="outlined" sx={{ bgcolor: 'white' }}>
-                          <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>{field.label || field.key}</InputLabel>
-                          <Select
+                          <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>{tr(field.label || field.key)}</InputLabel>
+                          <Select inputProps={{ 'aria-label': tr(field.label || field.key) }}
                             value={val ?? field.defaultValue ?? ''}
-                            label={field.label || field.key}
+                            label={tr(field.label || field.key)}
                             onChange={(e) => setCfg(field.key, e.target.value)}
                           >
                             {field.options.map((opt) => {
                               const value = typeof opt === 'object' && opt != null ? opt.value : opt;
                               const label = typeof opt === 'object' && opt != null ? (opt.label || opt.value) : opt;
                               return (
-                                <MenuItem key={String(value)} value={value}>{label}</MenuItem>
+                                <MenuItem key={String(value)} value={value}>{tr(label)}</MenuItem>
                               );
                             })}
                           </Select>
@@ -1494,7 +1647,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                         key={field.key}
                         fullWidth
                         variant="outlined"
-                        label={field.label || field.key}
+                        label={tr(field.label || field.key)}
                         value={val ?? ''}
                         onChange={(e) => setCfg(field.key, e.target.value)}
                         multiline={field.type === 'text'}
@@ -1506,16 +1659,27 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                   return (
                     <>
                       {editableSchema.length === 0 && (
-                        <Alert severity="info" sx={{ py: 0.5 }}>
-                          No extra wording fields for this task. Edit the Question Title above if needed.
-                        </Alert>
+                        <Alert severity="info" sx={{ py: 0.5 }}>{tr("No extra wording fields for this task. Edit the Question Title above if needed.")} </Alert>
                       )}
                       {editableSchema.map((field) => renderSchemaField(field))}
                     </>
                   );
                 })()}
 
-                {editedQuestion.type === 'imagepicker' && (
+                {(['imagepicker', 'mediapicker'].includes(editedQuestion.type) || (editedQuestion.type === 'skillquestion' && ['preset_image_preference_forced', 'image_preference_forced'].includes(editedQuestion.skillId))) && <>
+                  <FormControlLabel control={<Switch checked={!!editedQuestion.allowTie} disabled={!!editedQuestion.multiSelect}
+                    onChange={(e) => handleQuestionChange('allowTie', e.target.checked)} />}
+                    label={tr(zh ? '允许选择无偏好' : 'Allow no preference')} />
+                  <Typography variant="caption" color="text.secondary">
+                    {zh ? '仅在展示两个选项且为单选时显示。平局单独统计，现有 TrueSkill 排名仅使用明确胜负。' : 'Shown only for two options in single-select mode. Ties are counted separately; TrueSkill uses decisive answers only.'}
+                  </Typography>
+                  {editedQuestion.allowTie && <TextField fullWidth label={tr(zh ? '按钮文字' : 'Button text')}
+                    value={editedQuestion.tieLabel || ''} placeholder={tr(zh ? '两者差不多' : 'About the same')}
+                    helperText={tr(zh ? '留空时跟随问卷语言自动显示。' : 'Leave blank to follow the survey language.')}
+                    onChange={(e) => handleQuestionChange('tieLabel', e.target.value)} />}
+                </>}
+
+                {(editedQuestion.type === 'imagepicker' || editedQuestion.type === 'mediapicker') && (
                   <>
                     <FormControlLabel
                       control={
@@ -1524,23 +1688,28 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                           onChange={(e) => handleQuestionChange('multiSelect', e.target.checked)}
                         />
                       }
-                      label="Allow Multiple Selection - participants can choose more than one image"
+                      label={
+                        tr(editedQuestion.type === 'mediapicker'
+                          ? 'Allow Multiple Selection — participants can choose more than one media item'
+                          : 'Allow Multiple Selection — participants can choose more than one image')
+                      }
                     />
                     {(editedQuestion.mediaAssignmentMode || 'individual') === 'individual' && (
                       <FormControl fullWidth variant="outlined">
-                        <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>Sampling Mode</InputLabel>
-                        <Select
+                        <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>{tr("Sampling Mode")}</InputLabel>
+                        <Select inputProps={{ 'aria-label': tr("Sampling Mode") }}
                           value={(() => {
                             const mode = editedQuestion.pairingMode || 'random';
                             if (mode === 'uncertain' || mode === 'high_sigma') return 'balanced';
                             return mode;
                           })()}
                           onChange={(e) => handleQuestionChange('pairingMode', e.target.value)}
-                          label="Sampling Mode"
+                          label={tr("Sampling Mode")}
                         >
-                          <MenuItem value="random">Random — uniform from the pool</MenuItem>
-                          <MenuItem value="balanced">Balanced — prefer least-exposed images</MenuItem>
-                          <MenuItem value="adaptive">Adaptive — μ bands + cold-start for new images</MenuItem>
+                          <MenuItem value="random">{tr("Random — uniform from the pool")}</MenuItem>
+                          <MenuItem value="balanced">{tr("Balanced — prefer least-exposed")} {editedQuestion.type === 'mediapicker' ? tr("media") : tr("images")}
+                          </MenuItem>
+                          <MenuItem value="adaptive">{tr("Adaptive — μ bands + cold-start for new items")}</MenuItem>
                         </Select>
                       </FormControl>
                     )}
@@ -1549,72 +1718,70 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                 )}
 
                 {(editedQuestion.type === 'imageranking' || editedQuestion.type === 'mediaranking') && (
-                  <Alert severity="info" sx={{ py: 0.5 }}>
-                    Participants drag items into ranked order. Stimulus count is set above.
-                  </Alert>
+                  <Alert severity="info" sx={{ py: 0.5 }}>{tr("Participants drag items into ranked order. Stimulus count is set above.")} </Alert>
                 )}
 
                 {editedQuestion.type === 'imagerating' && (
                   <>
-                    <TextField fullWidth variant="outlined" type="number" label="Minimum Rating Value"
-                      value={editedQuestion.rateMin || 1}
+                    <TextField name="rateMin" fullWidth variant="outlined" type="number" label={tr("Minimum Rating Value")}
+                      value={editedQuestion.rateMin ?? 1}
                       onChange={(e) => handleQuestionChange('rateMin', parseInt(e.target.value))}
                       sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }} />
-                    <TextField fullWidth variant="outlined" type="number" label="Maximum Rating Value"
-                      value={editedQuestion.rateMax || 5}
+                    <TextField name="rateMax" fullWidth variant="outlined" type="number" label={tr("Maximum Rating Value")}
+                      value={editedQuestion.rateMax ?? 5}
                       onChange={(e) => handleQuestionChange('rateMax', parseInt(e.target.value))}
                       sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }} />
-                    <TextField fullWidth variant="outlined" label="Minimum Rating Label"
+                    <TextField name="minRateDescription" fullWidth variant="outlined" label={tr("Minimum Rating Label")}
                       value={editedQuestion.minRateDescription || ''}
                       onChange={(e) => handleQuestionChange('minRateDescription', e.target.value)}
-                      placeholder="e.g., Very Poor"
+                      placeholder={tr("e.g., Very Poor")}
                       sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }} />
-                    <TextField fullWidth variant="outlined" label="Maximum Rating Label"
+                    <TextField name="maxRateDescription" fullWidth variant="outlined" label={tr("Maximum Rating Label")}
                       value={editedQuestion.maxRateDescription || ''}
                       onChange={(e) => handleQuestionChange('maxRateDescription', e.target.value)}
-                      placeholder="e.g., Excellent"
+                      placeholder={tr("e.g., Excellent")}
                       sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }} />
                   </>
                 )}
 
                 {editedQuestion.type === 'imageboolean' && (
                   <>
-                    <TextField fullWidth variant="outlined" label="Yes Label"
+                    <TextField name="labelTrue" fullWidth variant="outlined" label={tr("Yes Label")}
                       value={editedQuestion.labelTrue || ''}
                       onChange={(e) => handleQuestionChange('labelTrue', e.target.value)}
-                      placeholder="e.g., Yes, Agree, Like"
+                      placeholder={tr("e.g., Yes, Agree, Like")}
                       sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }} />
-                    <TextField fullWidth variant="outlined" label="No Label"
+                    <TextField name="labelFalse" fullWidth variant="outlined" label={tr("No Label")}
                       value={editedQuestion.labelFalse || ''}
                       onChange={(e) => handleQuestionChange('labelFalse', e.target.value)}
-                      placeholder="e.g., No, Disagree, Dislike"
+                      placeholder={tr("e.g., No, Disagree, Dislike")}
                       sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }} />
                   </>
                 )}
 
+                {(editedQuestion.type === 'imagecheckbox' || editedQuestion.type === 'mediacheckbox') && (
+                  <Alert severity="info" sx={{ py: 0.5 }}>{tr("Participants see the stimulus, then check")} <strong>{tr("any number of text tags")}</strong>
+                    {' '}{tr("(always multi-select). Edit the tag list in")} <strong>{tr("Text tags")}</strong> {tr("below — tags are independent of the sampled media.")} </Alert>
+                )}
+
                 {editedQuestion.type === 'image' && (
                   <Alert severity="info" sx={{ py: 0.5 }}>
-                    <strong>Image Display shows exactly one image</strong> per participant.
-                    To show multiple images, use <strong>Media Display</strong> instead.
-                  </Alert>
+                    <strong>{tr("Image Display shows exactly one image")}</strong> {tr("per participant. To show multiple images, use")} <strong>{tr("Media Display")}</strong> {tr("instead.")} </Alert>
                 )}
 
                 {(editedQuestion.type === 'imagematrix' || editedQuestion.type === 'mediamatrix') && (
-                  <Alert severity="info" sx={{ py: 0.5 }}>
-                    Configure matrix rows and columns in the section below.
-                  </Alert>
+                  <Alert severity="info" sx={{ py: 0.5 }}>{tr("Configure matrix rows and columns in the section below.")} </Alert>
                 )}
 
                 {editedQuestion.type === 'mediadisplay' && (
                   <>
-                    <Alert severity="info" sx={{ py: 0.5 }}>
-                      For <strong>2+ images</strong>, the default gallery layout matches <strong>Image Choice</strong>.
+                    <Alert severity="info" sx={{ py: 0.5 }}>{tr("For")} <strong>{tr("2+ images")}</strong>{tr(", the default gallery layout matches")} <strong>{tr("Image Choice")}</strong>.
                     </Alert>
                     <FormControl fullWidth variant="outlined">
-                      <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>Display Mode</InputLabel>
-                      <Select
+                      <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>{tr("Display Mode")}</InputLabel>
+                      <Select inputProps={{ 'aria-label': tr("Display Mode") }}
                         value={editedQuestion.displayMode || 'single'}
-                        label="Display Mode"
+                        label={tr("Display Mode")}
                         onChange={(e) => {
                           const mode = e.target.value;
                           const updates = { displayMode: mode };
@@ -1624,28 +1791,29 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                           setEditedQuestion({ ...editedQuestion, ...updates });
                         }}
                       >
-                        <MenuItem value="single">Gallery — Image Choice layout (2+ images)</MenuItem>
-                        <MenuItem value="reveal">Before/After drag reveal (2 images)</MenuItem>
-                        <MenuItem value="timed">Timed exposure (hide after N seconds)</MenuItem>
+                        <MenuItem value="single">{tr("Gallery — Image Choice layout (2+ images)")}</MenuItem>
+                        <MenuItem value="sideBySide">{tr("Side by side (2+ images)")}</MenuItem>
+                        <MenuItem value="reveal">{tr("Before/After drag reveal (2 images)")}</MenuItem>
+                        <MenuItem value="timed">{tr("Timed exposure (hide after N seconds)")}</MenuItem>
                       </Select>
                     </FormControl>
                     {editedQuestion.displayMode === 'reveal' && (
                       <Box sx={{ display: 'flex', gap: 2 }}>
-                        <TextField fullWidth variant="outlined" label="Before label"
+                        <TextField name="beforeLabel" fullWidth variant="outlined" label={tr("Before label")}
                           value={editedQuestion.beforeLabel || 'Before'}
                           onChange={(e) => handleQuestionChange('beforeLabel', e.target.value)}
                           sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }} />
-                        <TextField fullWidth variant="outlined" label="After label"
+                        <TextField name="afterLabel" fullWidth variant="outlined" label={tr("After label")}
                           value={editedQuestion.afterLabel || 'After'}
                           onChange={(e) => handleQuestionChange('afterLabel', e.target.value)}
                           sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }} />
                       </Box>
                     )}
                     {editedQuestion.displayMode === 'timed' && (
-                      <TextField fullWidth variant="outlined" type="number" label="Exposure time (seconds)"
+                      <TextField name="exposureSeconds" fullWidth variant="outlined" type="number" label={tr("Exposure time (seconds)")}
                         value={editedQuestion.exposureSeconds ?? 5}
                         onChange={(e) => handleQuestionChange('exposureSeconds', Math.min(Math.max(parseInt(e.target.value, 10) || 5, 1), 120))}
-                        helperText="Participant clicks to start; media hides permanently after this many seconds."
+                        helperText={tr("Participant clicks to start; media hides permanently after this many seconds.")}
                         inputProps={{ min: 1, max: 120, step: 1 }}
                         sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }} />
                     )}
@@ -1654,38 +1822,38 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
 
                 {editedQuestion.type === 'mediarating' && (
                   <>
-                    <TextField fullWidth variant="outlined" type="number" label="Minimum rating"
+                    <TextField name="rateMin" fullWidth variant="outlined" type="number" label={tr("Minimum rating")}
                       value={editedQuestion.rateMin ?? 1}
-                      onChange={(e) => handleQuestionChange('rateMin', parseInt(e.target.value) || 1)}
+                      onChange={(e) => handleQuestionChange('rateMin', e.target.value === '' ? undefined : Number(e.target.value))}
                       sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }} />
-                    <TextField fullWidth variant="outlined" type="number" label="Maximum rating"
+                    <TextField name="rateMax" fullWidth variant="outlined" type="number" label={tr("Maximum rating")}
                       value={editedQuestion.rateMax ?? 5}
-                      onChange={(e) => handleQuestionChange('rateMax', parseInt(e.target.value) || 5)}
+                      onChange={(e) => handleQuestionChange('rateMax', e.target.value === '' ? undefined : Number(e.target.value))}
                       sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }} />
-                    <TextField fullWidth variant="outlined" label="Low-end label"
+                    <TextField name="minRateDescription" fullWidth variant="outlined" label={tr("Low-end label")}
                       value={editedQuestion.minRateDescription || ''}
                       onChange={(e) => handleQuestionChange('minRateDescription', e.target.value)}
-                      placeholder="e.g., Very poor"
+                      placeholder={tr("e.g., Very poor")}
                       sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }} />
-                    <TextField fullWidth variant="outlined" label="High-end label"
+                    <TextField name="maxRateDescription" fullWidth variant="outlined" label={tr("High-end label")}
                       value={editedQuestion.maxRateDescription || ''}
                       onChange={(e) => handleQuestionChange('maxRateDescription', e.target.value)}
-                      placeholder="e.g., Excellent"
+                      placeholder={tr("e.g., Excellent")}
                       sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }} />
                   </>
                 )}
 
                 {editedQuestion.type === 'mediaboolean' && (
                   <>
-                    <TextField fullWidth variant="outlined" label="Yes Label"
+                    <TextField name="labelTrue" fullWidth variant="outlined" label={tr("Yes Label")}
                       value={editedQuestion.labelTrue || ''}
                       onChange={(e) => handleQuestionChange('labelTrue', e.target.value)}
-                      placeholder="e.g., Yes, Agree, Like"
+                      placeholder={tr("e.g., Yes, Agree, Like")}
                       sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }} />
-                    <TextField fullWidth variant="outlined" label="No Label"
+                    <TextField name="labelFalse" fullWidth variant="outlined" label={tr("No Label")}
                       value={editedQuestion.labelFalse || ''}
                       onChange={(e) => handleQuestionChange('labelFalse', e.target.value)}
-                      placeholder="e.g., No, Disagree, Dislike"
+                      placeholder={tr("e.g., No, Disagree, Dislike")}
                       sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }} />
                   </>
                 )}
@@ -1693,50 +1861,68 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                 {editedQuestion.type === 'imageannotation' && (
                   <>
                     <FormControl fullWidth variant="outlined">
-                      <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>Allowed Tools</InputLabel>
-                      <Select
+                      <InputLabel sx={{ backgroundColor: 'white', px: 1 }}>{tr("Allowed Tools")}</InputLabel>
+                      <Select inputProps={{ 'aria-label': tr("Allowed Tools") }}
                         multiple
-                        value={editedQuestion.allowedTools || ['point', 'line', 'region', 'bbox']}
-                        onChange={(e) => handleQuestionChange('allowedTools',
-                          typeof e.target.value === 'string' ? e.target.value.split(',') : e.target.value)}
-                        label="Allowed Tools"
+                        value={normalizeAllowedTools(
+                          editedQuestion.allowedTools || ['point', 'line', 'polygon', 'bbox'],
+                        )}
+                        onChange={(e) => handleQuestionChange(
+                          'allowedTools',
+                          normalizeAllowedTools(
+                            typeof e.target.value === 'string'
+                              ? e.target.value.split(',')
+                              : e.target.value,
+                          ),
+                        )}
+                        label={tr("Allowed Tools")}
                       >
-                        <MenuItem value="point">Point</MenuItem>
-                        <MenuItem value="line">Line</MenuItem>
-                        <MenuItem value="region">Region (polygon)</MenuItem>
-                        <MenuItem value="bbox">Bounding box</MenuItem>
+                        <MenuItem value="point">{tr("Point")}</MenuItem>
+                        <MenuItem value="line">{tr("Line")}</MenuItem>
+                        <MenuItem value="polygon">{tr("Polygon")}</MenuItem>
+                        <MenuItem value="bbox">{tr("Bounding box")}</MenuItem>
                       </Select>
                     </FormControl>
                     <TextField
                       fullWidth
                       variant="outlined"
-                      label="Class labels (optional)"
-                      value={(editedQuestion.annotationLabels || []).join(', ')}
+                      label={tr("Class labels (optional)")}
+                      value={annotationLabelsText}
                       onChange={(e) => {
-                        const labels = e.target.value
+                        const raw = e.target.value;
+                        setAnnotationLabelsText(raw);
+                        const labels = raw
                           .split(',')
                           .map((s) => s.trim())
                           .filter(Boolean);
                         handleQuestionChange('annotationLabels', labels);
                       }}
-                      helperText="Comma-separated labels applied to new shapes (e.g. building, tree, sky). Leave empty for unlabeled annotation."
-                      placeholder="building, tree, sky"
+                      onBlur={() => {
+                        const labels = annotationLabelsText
+                          .split(',')
+                          .map((s) => s.trim())
+                          .filter(Boolean);
+                        handleQuestionChange('annotationLabels', labels);
+                        setAnnotationLabelsText(labels.join(', '));
+                      }}
+                      helperText={tr("Comma-separated labels applied to new shapes (e.g. building, tree, sky). Leave empty for unlabeled annotation.")}
+                      placeholder={tr("building, tree, sky")}
                       sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                     />
                     <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                      <TextField fullWidth variant="outlined" type="number" label="Minimum annotations"
+                      <TextField name="minAnnotations" fullWidth variant="outlined" type="number" label={tr("Minimum annotations")}
                         value={editedQuestion.minAnnotations ?? 0}
                         onChange={(e) => handleQuestionChange('minAnnotations', Math.max(0, parseInt(e.target.value, 10) || 0))}
-                        helperText="Required before continuing (0 = no minimum)"
+                        helperText={tr("Required before continuing (0 = no minimum)")}
                         inputProps={{ min: 0, max: 100, step: 1 }}
                         sx={{ flex: '1 1 200px', '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }} />
-                      <TextField fullWidth variant="outlined" type="number" label="Maximum annotations"
+                      <TextField name="maxAnnotations" fullWidth variant="outlined" type="number" label={tr("Maximum annotations")}
                         value={editedQuestion.maxAnnotations ?? 50}
                         onChange={(e) => {
                           const raw = parseInt(e.target.value, 10);
                           handleQuestionChange('maxAnnotations', Number.isNaN(raw) ? 50 : Math.max(0, raw));
                         }}
-                        helperText="Cap on shapes per participant (0 = unlimited)"
+                        helperText={tr("Cap on shapes per participant (0 = unlimited)")}
                         inputProps={{ min: 0, max: 500, step: 1 }}
                         sx={{ flex: '1 1 200px', '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }} />
                     </Box>
@@ -1752,22 +1938,22 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                       scaleMax={editedQuestion.scaleMax ?? 7}
                     />
                     <Box sx={{ display: 'flex', gap: 2 }}>
-                      <TextField
+                      <TextField name="scaleMin"
                         fullWidth
                         variant="outlined"
                         type="number"
-                        label="Scale minimum"
+                        label={tr("Scale minimum")}
                         value={editedQuestion.scaleMin ?? 1}
-                        onChange={(e) => handleQuestionChange('scaleMin', parseInt(e.target.value, 10) || 0)}
+                        onChange={(e) => handleQuestionChange('scaleMin', e.target.value === '' ? undefined : Number(e.target.value))}
                         sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                       />
-                      <TextField
+                      <TextField name="scaleMax"
                         fullWidth
                         variant="outlined"
                         type="number"
-                        label="Scale maximum"
+                        label={tr("Scale maximum")}
                         value={editedQuestion.scaleMax ?? 7}
-                        onChange={(e) => handleQuestionChange('scaleMax', parseInt(e.target.value, 10) || 7)}
+                        onChange={(e) => handleQuestionChange('scaleMax', e.target.value === '' ? undefined : Number(e.target.value))}
                         sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                       />
                     </Box>
@@ -1775,104 +1961,41 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                 )}
 
                 {(editedQuestion.type === 'imagepointallocation' || editedQuestion.type === 'mediapointallocation') && (
-                  <TextField
+                  <TextField name="budget"
                     fullWidth
                     variant="outlined"
                     type="number"
-                    label="Total points to allocate"
+                    label={tr("Total points to allocate")}
                     value={editedQuestion.budget ?? 100}
                     onChange={(e) => handleQuestionChange('budget', Math.max(1, parseInt(e.target.value, 10) || 100))}
-                    helperText="Point budget shown to participants (they do not have to spend the full amount)"
+                    helperText={tr("Point budget shown to participants (they do not have to spend the full amount)")}
                     inputProps={{ min: 1, step: 1 }}
                     sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                   />
                 )}
 
-                {!['skillquestion', 'imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'image',
-                  'imagematrix', 'mediadisplay', 'mediapicker', 'mediarating', 'mediaboolean', 'mediaranking',
+                {!['skillquestion', 'imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'imagecheckbox', 'image',
+                  'imagematrix', 'mediadisplay', 'mediapicker', 'mediarating', 'mediaboolean', 'mediacheckbox', 'mediaranking',
                   'mediamatrix', 'mediaslidergroup', 'mediapointallocation', 'imageannotation',
                   'imageslidergroup', 'imagepointallocation'].includes(editedQuestion.type) && (
-                  <Alert severity="info" sx={{ py: 0.5 }}>No extra task options for this type.</Alert>
+                  <Alert severity="info" sx={{ py: 0.5 }}>{tr("No extra task options for this type.")}</Alert>
                 )}
               </SettingsSection>
 
-              <SettingsSection
-                step={3}
-                title="Participant preview"
-                hint="What participants will interact with. Uses project media when available."
-              >
-                {editedQuestion.type === 'skillquestion' ? (() => {
-                  const skillDef = resolveBuilderSkill(editedQuestion.skillId, builderSkills);
-                  const cfg = editedQuestion.skillConfig || {};
-                  const mediaConstraintsSkill = getSkillMediaConstraints(editedQuestion.skillId, skillDef);
-                  const effectiveMediaType = mediaConstraintsSkill.typeFixed || cfg.mediaType || 'image';
-                  const displayMediaCount = mediaConstraintsSkill.countFixed
-                    ?? cfg.mediaCount
-                    ?? editedQuestion.imageCount
-                    ?? 1;
-                  const previewHtml = editedQuestion.skillHtml || skillDef?.sourceHtml;
-                  if (!previewHtml) {
-                    return <Alert severity="info" sx={{ py: 0.5 }}>No skill HTML available to preview.</Alert>;
-                  }
-                  const mergedCfgRaw = {
-                    ...(skillDef?.defaultConfig || {}),
-                    ...cfg,
-                    mediaCount: displayMediaCount,
-                    mediaType: effectiveMediaType,
-                  };
-                  const skillKey = String(editedQuestion.skillId || '').replace(/^preset_/, '');
-                  const mergedCfg = skillKey === 'emotion_color_picker'
-                    ? enrichEmotionColorConfig(mergedCfgRaw)
-                    : mergedCfgRaw;
-                  let previewImages = [];
-                  if (currentProject?.preloadedImages?.length) {
-                    previewImages = filterPoolForQuestion(currentProject.preloadedImages, {
-                      ...editedQuestion,
-                      imageCount: displayMediaCount,
-                      skillConfig: mergedCfg,
-                    }).slice(0, displayMediaCount);
-                  }
-                  if (!previewImages.length && skillPreviewPool.length) {
-                    previewImages = pickPreviewMedia(
-                      skillPreviewPool,
-                      effectiveMediaType,
-                      displayMediaCount,
-                    );
-                  }
-                  return (
-                    <>
-                      {!previewImages.length && (
-                        <Alert severity="info" sx={{ py: 0.5, mb: 1 }}>
-                          No project media or admin skill-preview library media available.
-                          Upload project media, or ask an admin to add files to the skill-preview library.
-                        </Alert>
-                      )}
-                      <SkillQuestionFrame
-                        skillHtml={previewHtml}
-                        config={mergedCfg}
-                        images={previewImages}
-                        skillId={editedQuestion.skillId}
-                        readOnly
-                      />
-                    </>
-                  );
-                })() : (
-                  <QuestionParticipantPreview
-                    question={editedQuestion}
-                    currentProject={currentProject}
-                    surveyConfig={surveyConfig}
-                  />
-                )}
-              </SettingsSection>
+
             </Box>
           )}
+
+          {['slidergroup', 'imageslidergroup', 'mediaslidergroup'].includes(editedQuestion.type) && <TextField
+            name="scaleStep" type="number" label={tr("Scale step")} value={editedQuestion.scaleStep ?? 1}
+            onChange={(e) => handleQuestionChange('scaleStep', e.target.value === '' ? undefined : Number(e.target.value))}
+            helperText={tr("Default spacing between scale values; each dimension can override this.")}
+          />}
 
           {/* Slider group (non-image) — image variant uses Card 2 above */}
           {editedQuestion.type === 'slidergroup' && (
             <Box>
-              <Typography variant="h6" sx={{ mb: 3, color: 'primary.main' }}>
-                Task options — semantic differential
-              </Typography>
+              <Typography variant="h6" sx={{ mb: 3, color: 'primary.main' }}>{tr("Task options — semantic differential")} </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                 <SkillDimensionsEditor
                   value={editedQuestion.dimensions || []}
@@ -1881,30 +2004,26 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                   scaleMax={editedQuestion.scaleMax ?? 7}
                 />
                 <Box sx={{ display: 'flex', gap: 2 }}>
-                  <TextField
+                  <TextField name="scaleMin"
                     fullWidth
                     variant="outlined"
                     type="number"
-                    label="Scale minimum"
+                    label={tr("Scale minimum")}
                     value={editedQuestion.scaleMin ?? 1}
-                    onChange={(e) => handleQuestionChange('scaleMin', parseInt(e.target.value, 10) || 0)}
+                    onChange={(e) => handleQuestionChange('scaleMin', e.target.value === '' ? undefined : Number(e.target.value))}
                     sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                   />
-                  <TextField
+                  <TextField name="scaleMax"
                     fullWidth
                     variant="outlined"
                     type="number"
-                    label="Scale maximum"
+                    label={tr("Scale maximum")}
                     value={editedQuestion.scaleMax ?? 7}
-                    onChange={(e) => handleQuestionChange('scaleMax', parseInt(e.target.value, 10) || 7)}
+                    onChange={(e) => handleQuestionChange('scaleMax', e.target.value === '' ? undefined : Number(e.target.value))}
                     sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                   />
                 </Box>
-                <Alert severity="info" sx={{ py: 0.5 }}>
-                  To rate an image / video / audio clip, put a Media Display question on the same page —
-                  it handles media injection; this question collects the ratings.
-                  Or use <strong>Image Slider Group</strong> for built-in image display.
-                </Alert>
+                <Alert severity="info" sx={{ py: 0.5 }}>{tr("To rate an image / video / audio clip, put a Media Display question on the same page — it handles media injection; this question collects the ratings. Or use")} <strong>{tr("Image Slider Group")}</strong> {tr("for built-in image display.")} </Alert>
               </Box>
             </Box>
           )}
@@ -1912,18 +2031,16 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
           {/* Point allocation (non-image) — image variant uses Card 2 above */}
           {editedQuestion.type === 'pointallocation' && (
             <Box>
-              <Typography variant="h6" sx={{ mb: 3, color: 'primary.main' }}>
-                Task options — budget allocation
-              </Typography>
+              <Typography variant="h6" sx={{ mb: 3, color: 'primary.main' }}>{tr("Task options — budget allocation")} </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-                <TextField
+                <TextField name="budget"
                   fullWidth
                   variant="outlined"
                   type="number"
-                  label="Total points to allocate"
+                  label={tr("Total points to allocate")}
                   value={editedQuestion.budget ?? 100}
                   onChange={(e) => handleQuestionChange('budget', Math.max(1, parseInt(e.target.value, 10) || 100))}
-                  helperText="Participants distribute exactly this many points across the choices below (when the question is required)"
+                  helperText={tr("Participants distribute exactly this many points across the choices below (when the question is required)")}
                   inputProps={{ min: 1, step: 1 }}
                   sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                 />
@@ -1935,19 +2052,22 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
           {needsChoices && (
             <Box>
               <Typography variant="h6" sx={{ mb: 3, color: 'primary.main' }}>
-                {['pointallocation', 'imagepointallocation'].includes(editedQuestion.type)
-                  ? 'Allocation categories'
+                {['pointallocation', 'imagepointallocation', 'mediapointallocation'].includes(editedQuestion.type)
+                  ? tr("Allocation categories")
                   : editedQuestion.type === 'ranking'
-                    ? 'Items to rank'
-                    : 'Answer choices'}
+                    ? tr("Items to rank")
+                    : (editedQuestion.type === 'imagecheckbox' || editedQuestion.type === 'mediacheckbox')
+                      ? tr("Text tags (multi-select)")
+                      : tr("Answer choices")}
               </Typography>
               {['pointallocation', 'imagepointallocation'].includes(editedQuestion.type) && (
-                <Alert severity="info" sx={{ mb: 2, py: 0.5 }}>
-                  These are the categories participants distribute points across
-                  {editedQuestion.type === 'imagepointallocation'
+                <Alert severity="info" sx={{ mb: 2, py: 0.5 }}>{tr("These are the categories participants distribute points across")} {editedQuestion.type === 'imagepointallocation'
                     ? ' (independent of the sampled images above)'
                     : ''}.
                 </Alert>
+              )}
+              {(editedQuestion.type === 'imagecheckbox' || editedQuestion.type === 'mediacheckbox') && (
+                <Alert severity="info" sx={{ mb: 2, py: 0.5 }}>{tr("Add the labels participants can check (e.g. greenery, safety, busy). They may select multiple tags per trial.")} </Alert>
               )}
               {(editedQuestion.type === 'radiogroup' || editedQuestion.type === 'dropdown') && (
                 <Box sx={{ mb: 2 }}>
@@ -1959,7 +2079,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                   <TextField
                     fullWidth
                     variant="outlined"
-                    label="Add new choice"
+                    label={tr("Add new choice")}
                     value={newChoice}
                     onChange={(e) => setNewChoice(e.target.value)}
                     onKeyPress={(e) => {
@@ -1968,7 +2088,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                         isRankingQuestion ? addRankingChoice() : addChoice();
                       }
                     }}
-                    helperText="Type a choice and press Enter or click Add"
+                    helperText={tr("Type a choice and press Enter or click Add")}
                     sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                   />
                   <Button
@@ -1976,16 +2096,12 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                     onClick={isRankingQuestion ? addRankingChoice : addChoice}
                     startIcon={<Add />}
                     sx={{ minWidth: 100 }}
-                  >
-                    Add
-                  </Button>
+                  >{tr("Add")} </Button>
                 </Box>
 
                 {(editedQuestion.choices && editedQuestion.choices.length > 0) ? (
                   <Box>
-                    <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-                      Current Choices:
-                    </Typography>
+                    <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>{tr("Current Choices:")} </Typography>
                     <List sx={{ bgcolor: 'background.paper', borderRadius: 1, border: 1, borderColor: 'divider' }}>
                       {editedQuestion.choices.map((choice, index) => (
                         <ListItem key={index} divider={index < editedQuestion.choices.length - 1}>
@@ -2008,9 +2124,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                   </Box>
                 ) : (
                   <Box sx={{ textAlign: 'center', py: 3, bgcolor: 'grey.50', borderRadius: 1 }}>
-                    <Typography variant="body2" color="text.secondary">
-                      No choices added yet. Add some choices above to get started.
-                    </Typography>
+                    <Typography variant="body2" color="text.secondary">{tr("No choices added yet. Add some choices above to get started.")} </Typography>
                   </Box>
                 )}
               </Box>
@@ -2020,20 +2134,16 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
           {/* Matrix Configuration */}
           {(editedQuestion.type === 'matrix' || editedQuestion.type === 'imagematrix' || editedQuestion.type === 'mediamatrix') && (
             <Box>
-              <Typography variant="h6" sx={{ mb: 3, color: 'primary.main' }}>
-                Task options — matrix rows & columns
-              </Typography>
+              <Typography variant="h6" sx={{ mb: 3, color: 'primary.main' }}>{tr("Task options — matrix rows & columns")} </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                 {/* Rows Configuration */}
                 <Box>
-                  <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-                    Rows (Questions)
-                  </Typography>
+                  <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>{tr("Rows (Questions)")} </Typography>
                   <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
                     <TextField
                       fullWidth
                       variant="outlined"
-                      label="Add new row"
+                      label={tr("Add new row")}
                       value={newChoice}
                       onChange={(e) => setNewChoice(e.target.value)}
                       onKeyPress={(e) => {
@@ -2047,7 +2157,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                           setNewChoice('');
                         }
                       }}
-                      helperText="Type a row label and press Enter or click Add"
+                      helperText={tr("Type a row label and press Enter or click Add")}
                       sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                     />
                     <Button
@@ -2062,9 +2172,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                       }}
                       startIcon={<Add />}
                       sx={{ minWidth: 100 }}
-                    >
-                      Add
-                    </Button>
+                    >{tr("Add")} </Button>
                   </Box>
                   {editedQuestion.rows && editedQuestion.rows.length > 0 ? (
                     <List sx={{ bgcolor: 'background.paper', borderRadius: 1, border: 1, borderColor: 'divider' }}>
@@ -2091,24 +2199,20 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                     </List>
                   ) : (
                     <Box sx={{ textAlign: 'center', py: 2, bgcolor: 'grey.50', borderRadius: 1 }}>
-                      <Typography variant="body2" color="text.secondary">
-                        No rows added yet
-                      </Typography>
+                      <Typography variant="body2" color="text.secondary">{tr("No rows added yet")} </Typography>
                     </Box>
                   )}
                 </Box>
 
                 {/* Columns Configuration */}
                 <Box>
-                  <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-                    Columns (Answer Options)
-                  </Typography>
+                  <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>{tr("Columns (Answer Options)")} </Typography>
                   <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
                     <TextField
                       fullWidth
                       variant="outlined"
-                      label="Add new column"
-                      placeholder="e.g., Strongly Agree, Agree, Neutral..."
+                      label={tr("Add new column")}
+                      placeholder={tr("e.g., Strongly Agree, Agree, Neutral...")}
                       onKeyPress={(e) => {
                         if (e.key === 'Enter') {
                           e.preventDefault();
@@ -2121,7 +2225,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                           e.target.value = '';
                         }
                       }}
-                      helperText="Type a column label and press Enter or click Add (value is auto-filled; you can edit it below)"
+                      helperText={tr("Type a column label and press Enter or click Add (value is auto-filled; you can edit it below)")}
                       sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                     />
                     <Button
@@ -2138,9 +2242,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                       }}
                       startIcon={<Add />}
                       sx={{ minWidth: 100 }}
-                    >
-                      Add
-                    </Button>
+                    >{tr("Add")} </Button>
                   </Box>
                   {editedQuestion.columns && editedQuestion.columns.length > 0 ? (
                     <List sx={{ bgcolor: 'background.paper', borderRadius: 1, border: 1, borderColor: 'divider' }}>
@@ -2170,7 +2272,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                                 fullWidth
                                 size="small"
                                 variant="outlined"
-                                label="Label (shown to participants)"
+                                label={tr("Label (shown to participants)")}
                                 value={colObj.text ?? ''}
                                 onChange={(e) => updateColumn('text', e.target.value)}
                                 sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
@@ -2179,10 +2281,10 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                                 fullWidth
                                 size="small"
                                 variant="outlined"
-                                label="Value (stored in data)"
+                                label={tr("Value (stored in data)")}
                                 value={colObj.value ?? ''}
                                 onChange={(e) => updateColumn('value', e.target.value)}
-                                helperText="Used in exports / analysis"
+                                helperText={tr("Used in exports / analysis")}
                                 sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                               />
                               <IconButton
@@ -2202,9 +2304,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
                     </List>
                   ) : (
                     <Box sx={{ textAlign: 'center', py: 2, bgcolor: 'grey.50', borderRadius: 1 }}>
-                      <Typography variant="body2" color="text.secondary">
-                        No columns added yet
-                      </Typography>
+                      <Typography variant="body2" color="text.secondary">{tr("No columns added yet")} </Typography>
                     </Box>
                   )}
                 </Box>
@@ -2215,33 +2315,31 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
           {/* Additional Settings for Specific Question Types */}
           {(editedQuestion.type === 'comment' || editedQuestion.type === 'text' || editedQuestion.type === 'rating' || editedQuestion.type === 'number' || editedQuestion.type === 'consent') && (
             <Box>
-              <Typography variant="h6" sx={{ mb: 3, color: 'primary.main' }}>
-                Task options
-              </Typography>
+              <Typography variant="h6" sx={{ mb: 3, color: 'primary.main' }}>{tr("Task options")} </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                 {editedQuestion.type === 'comment' && (
-                  <TextField
+                  <TextField name="rows"
                     fullWidth
                     variant="outlined"
                     type="number"
-                    label="Number of Rows"
+                    label={tr("Number of Rows")}
                     value={editedQuestion.rows || 3}
                     onChange={(e) => handleQuestionChange('rows', parseInt(e.target.value))}
-                    helperText="How many rows the text area should display"
+                    helperText={tr("How many rows the text area should display")}
                     inputProps={{ min: 1, max: 10 }}
                     sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                   />
                 )}
 
                 {editedQuestion.type === 'text' && (
-                  <TextField
+                  <TextField name="maxLength"
                     fullWidth
                     variant="outlined"
                     type="number"
-                    label="Maximum Length"
+                    label={tr("Maximum Length")}
                     value={editedQuestion.maxLength || ''}
                     onChange={(e) => handleQuestionChange('maxLength', e.target.value ? parseInt(e.target.value) : undefined)}
-                    helperText="Maximum number of characters allowed (leave empty for no limit)"
+                    helperText={tr("Maximum number of characters allowed (leave empty for no limit)")}
                     inputProps={{ min: 1 }}
                     sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                   />
@@ -2249,20 +2347,20 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
 
                 {editedQuestion.type === 'number' && (
                   <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                    <TextField
+                    <TextField name="min"
                       fullWidth
                       variant="outlined"
                       type="number"
-                      label="Minimum"
+                      label={tr("Minimum")}
                       value={editedQuestion.min ?? 0}
                       onChange={(e) => handleQuestionChange('min', e.target.value === '' ? undefined : Number(e.target.value))}
                       sx={{ flex: '1 1 160px', '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                     />
-                    <TextField
+                    <TextField name="max"
                       fullWidth
                       variant="outlined"
                       type="number"
-                      label="Maximum"
+                      label={tr("Maximum")}
                       value={editedQuestion.max ?? 100}
                       onChange={(e) => handleQuestionChange('max', e.target.value === '' ? undefined : Number(e.target.value))}
                       sx={{ flex: '1 1 160px', '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
@@ -2272,50 +2370,48 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
 
                 {editedQuestion.type === 'consent' && (
                   <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                    <TextField
+                    <TextField name="labelTrue"
                       fullWidth
                       variant="outlined"
-                      label="Accept label"
+                      label={tr("Accept label")}
                       value={editedQuestion.labelTrue || 'I agree / I consent'}
                       onChange={(e) => handleQuestionChange('labelTrue', e.target.value)}
                       sx={{ flex: '1 1 200px', '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                     />
-                    <TextField
+                    <TextField name="labelFalse"
                       fullWidth
                       variant="outlined"
-                      label="Decline label"
+                      label={tr("Decline label")}
                       value={editedQuestion.labelFalse || 'I do not agree'}
                       onChange={(e) => handleQuestionChange('labelFalse', e.target.value)}
                       sx={{ flex: '1 1 200px', '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                     />
-                    <Alert severity="info" sx={{ width: '100%', py: 0.5 }}>
-                      Consent is always required. Participants must choose accept to continue.
-                    </Alert>
+                    <Alert severity="info" sx={{ width: '100%', py: 0.5 }}>{tr("Consent is always required. Participants must choose accept to continue.")} </Alert>
                   </Box>
                 )}
 
                 {editedQuestion.type === 'rating' && (
                   <>
                     <AttentionCheckFields question={editedQuestion} onChange={handleQuestionChange} />
-                    <TextField
+                    <TextField name="rateMin"
                       fullWidth
                       variant="outlined"
                       type="number"
-                      label="Minimum Value"
-                      value={editedQuestion.rateMin || 1}
+                      label={tr("Minimum Value")}
+                      value={editedQuestion.rateMin ?? 1}
                       onChange={(e) => handleQuestionChange('rateMin', parseInt(e.target.value))}
-                      helperText="The lowest rating value"
+                      helperText={tr("The lowest rating value")}
                       inputProps={{ min: 0 }}
                       sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                     />
-                    <TextField
+                    <TextField name="rateMax"
                       fullWidth
                       variant="outlined"
                       type="number"
-                      label="Maximum Value"
-                      value={editedQuestion.rateMax || 5}
+                      label={tr("Maximum Value")}
+                      value={editedQuestion.rateMax ?? 5}
                       onChange={(e) => handleQuestionChange('rateMax', parseInt(e.target.value))}
-                      helperText="The highest rating value"
+                      helperText={tr("The highest rating value")}
                       inputProps={{ min: 1 }}
                       sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
                     />
@@ -2325,29 +2421,28 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
             </Box>
           )}
 
-          {/* Non-stimulus: task options live above; Card 3 preview only */}
-          {!isStimulusQuestion && editedQuestion.type && editedQuestion.type !== 'expression' && (
-            <Box>
-              <Typography variant="h6" sx={{ mb: 1, color: 'primary.main' }}>
-                Participant preview
-              </Typography>
-              <SettingsSection
-                step={3}
-                title="Participant preview"
-                hint="Compact SurveyJS preview of this question alone."
-              >
-                <QuestionParticipantPreview
-                  question={editedQuestion}
-                  currentProject={currentProject}
-                  surveyConfig={surveyConfig}
-                />
-              </SettingsSection>
-            </Box>
-          )}
         </Box>
+        <Box sx={{ display: wide || editorTab === 1 ? 'block' : 'none', overflowY: 'auto', minWidth: 0, p: { xs: 1, sm: 2 }, borderLeft: wide ? '1px solid' : 0, borderColor: 'divider' }}>
+          <Typography variant="subtitle2" sx={{ mb: 1 }}>{zh ? '参与者预览（修改设置后自动更新）' : 'Participant preview (updates as you edit)'}</Typography>
+          <QuestionParticipantPreview question={editedQuestion} currentProject={currentProject} surveyConfig={surveyConfig} />
+          <QuestionDataPreview question={editedQuestion} currentProject={currentProject} />
+        </Box>
+        {workspace && mobile && editorTab === 2 ? (
+          <Box sx={{ p: 3 }}>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              {zh ? '助手与题目设置同层，不会挡住未保存内容。' : 'The Assistant stays on the same layer so unsaved settings remain.'}
+            </Typography>
+            <Button variant="contained" onClick={() => onOpenAssistant?.()}>
+              {zh ? '打开助手' : 'Open Assistant'}
+            </Button>
+          </Box>
+        ) : null}
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onCancel}>Cancel</Button>
+      <DialogActions sx={{ flexWrap: 'wrap', px: 2, pb: 'max(12px, env(safe-area-inset-bottom))', '& .MuiButton-root': { minHeight: 44 } }}>
+        {settingsErrors.length > 0 && <Alert severity="error" sx={{ width: '100%', maxHeight: 120, overflowY: 'auto' }}>
+          {settingsErrors.map((e, i) => <Button key={`${e.path}-${i}`} color="error" sx={{ display: 'block', textAlign: 'left', textTransform: 'none' }} onClick={() => focusSetting(e.path)}>{questionSettingErrorText(e.message, language)}</Button>)}
+        </Alert>}
+        <Button onClick={closeEditor}>{zh ? '取消' : 'Cancel'}</Button>
         <Button onClick={() => {
           const questionToSave = { ...editedQuestion };
           
@@ -2362,7 +2457,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
           }
           
           // Handle image types: keep type, generate imageHtml for runtime display
-          if (['imageboolean', 'imagerating', 'imagematrix', 'imageslidergroup', 'imagepointallocation'].includes(questionToSave.type)) {
+          if (['imageboolean', 'imagecheckbox', 'imagerating', 'imagematrix', 'imageslidergroup', 'imagepointallocation'].includes(questionToSave.type)) {
             console.log(`🔄 Processing ${questionToSave.type} - keeping type, generating imageHtml`);
             
             // Set default imageSelectionMode if not set
@@ -2413,9 +2508,9 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
           }
 
           if ([
-            'imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'imagematrix', 'image',
+            'imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'imagecheckbox', 'imagematrix', 'image',
             'imageslidergroup', 'imagepointallocation',
-            'mediadisplay', 'mediapicker', 'mediarating', 'mediaboolean', 'mediaranking',
+            'mediadisplay', 'mediapicker', 'mediarating', 'mediaboolean', 'mediacheckbox', 'mediaranking',
             'mediamatrix', 'mediaslidergroup', 'mediapointallocation', 'imageannotation',
           ].includes(questionToSave.type)) {
             questionToSave.imageCount = clampQuestionImageCount(
@@ -2458,7 +2553,7 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
 
           // Media* / annotation — honor curated vs random (skipped when slots drive selection)
           if ([
-            'mediadisplay', 'mediapicker', 'mediarating', 'mediaboolean', 'mediaranking',
+            'mediadisplay', 'mediapicker', 'mediarating', 'mediaboolean', 'mediacheckbox', 'mediaranking',
             'mediamatrix', 'mediaslidergroup', 'mediapointallocation', 'imageannotation',
           ].includes(questionToSave.type)) {
             if (!questionToSave.imageSelectionMode) {
@@ -2526,11 +2621,17 @@ export default function QuestionEditor({ question, onSave, onCancel, images, cur
             }
           }
           
-          onSave(questionToSave);
-        }} variant="contained">
-          Save Question
+          if (validateQuestionSettings(questionToSave).length) return;
+          onSave(normalizeSliderQuestion(questionToSave));
+        }} variant="contained" disabled={settingsErrors.length > 0}>
+          {zh ? '保存题目' : 'Save Question'}
         </Button>
       </DialogActions>
-    </Dialog>
+    </Root>
+    <ConfirmDialog open={guard.open} onCancel={guard.cancel} onConfirm={guard.discard}
+      title={tr(zh ? '放弃未保存的修改？' : 'Discard unsaved changes?')}
+      message={zh ? '题目设置尚未保存。继续编辑可保留当前内容。' : 'Your question settings have not been saved. Keep editing to retain them.'}
+      confirmLabel={zh ? '放弃修改' : 'Discard changes'} cancelLabel={zh ? '继续编辑' : 'Keep editing'} />
+    </>
   );
 }

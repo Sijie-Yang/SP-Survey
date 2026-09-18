@@ -1,3 +1,5 @@
+import { mediaIdentityKey, resolveMediaAnswerKey } from './mediaIdentity.js';
+import { isNoPreference } from './choiceTie.js';
 /** TrueSkill-style 1v1 rating for imagepicker (any count, single or multi-select). */
 
 import { expandQuestionAnswerUnits } from './responseAnswerUnits.js';
@@ -23,17 +25,18 @@ function erf(x) {
   return sign * y;
 }
 
-function v(t, eps) {
-  const denom = cdf(eps - t);
-  if (denom < 1e-10) return -t - eps;
-  return pdf(eps - t) / denom;
+// Decisive win: t is winner minus loser. Unexpected wins must update more.
+function v(t) {
+  if (t < -8) {
+    const x = -t;
+    return x + 1 / x - 2 / x ** 3 + 10 / x ** 5;
+  }
+  return pdf(t) / cdf(t);
 }
 
-function wFactor(t, eps) {
-  const denom = cdf(eps - t);
-  if (denom < 1e-10) return 1;
-  const vv = v(t, eps);
-  return vv * (vv + eps - t);
+function wFactor(t) {
+  const vv = v(t);
+  return Math.min(1, Math.max(0, vv * (vv + t)));
 }
 
 function ensurePlayer(players, key) {
@@ -43,16 +46,14 @@ function ensurePlayer(players, key) {
   return players.get(key);
 }
 
-export function filenameKey(val) {
-  if (!val || typeof val !== 'string') return String(val ?? '');
-  return val.split('?')[0].split('/').pop();
-}
+export function filenameKey(val) { return mediaIdentityKey(val); }
 
 /**
  * Map imagepicker/mediapicker answer(s) to filename keys from the shown set.
  * Handles enriched filenames/URLs and legacy image_0 / media_0 indices.
  */
 export function answerToSelectedKeys(answer, shownImages) {
+  if (isNoPreference(answer)) return [];
   if (answer === null || answer === undefined || answer === '') return [];
   const shown = (shownImages || []).map((s) => (typeof s === 'string' ? s : s?.url || s?.name || ''));
   const shownKeys = shown.map(filenameKey);
@@ -68,15 +69,8 @@ export function answerToSelectedKeys(answer, shownImages) {
       if (shownKeys[idx]) selected.add(shownKeys[idx]);
       return;
     }
-    const fk = filenameKey(str);
-    const exact = shownKeys.find((k) => k === fk);
-    if (exact) {
-      selected.add(exact);
-      return;
-    }
-    const byUrl = shown.find((s) => filenameKey(s) === fk || s === str || s.includes(fk));
-    if (byUrl) selected.add(filenameKey(byUrl));
-    else if (fk) selected.add(fk);
+    const resolved = resolveMediaAnswerKey(str, shown);
+    if (resolved && (!shownKeys.length || shownKeys.includes(resolved))) selected.add(resolved);
   });
 
   return [...selected];
@@ -128,23 +122,21 @@ export function computeTrueSkillRatings(matches) {
   const players = new Map();
 
   matches.forEach(({ winner, loser }) => {
+    if (!winner || !loser || winner === loser) return;
     const winnerP = ensurePlayer(players, winner);
     const loserP = ensurePlayer(players, loser);
 
-    const c = Math.sqrt(2 * BETA * BETA + winnerP.sigma * winnerP.sigma + loserP.sigma * loserP.sigma);
+    const wSigma2 = winnerP.sigma ** 2 + TAU ** 2;
+    const lSigma2 = loserP.sigma ** 2 + TAU ** 2;
+    const c = Math.sqrt(2 * BETA * BETA + wSigma2 + lSigma2);
     const t = (winnerP.mu - loserP.mu) / c;
-    const eps = 0;
-
-    const vw = v(t, eps);
-    const ww = wFactor(t, eps);
-
-    const wSigma2 = winnerP.sigma * winnerP.sigma;
-    const lSigma2 = loserP.sigma * loserP.sigma;
+    const vw = v(t);
+    const ww = wFactor(t);
 
     winnerP.mu += (wSigma2 / c) * vw;
-    winnerP.sigma = Math.sqrt(Math.max(wSigma2 * (1 - (wSigma2 / (c * c)) * ww) + TAU * TAU, 1e-6));
+    winnerP.sigma = Math.sqrt(Math.max(wSigma2 * (1 - (wSigma2 / (c * c)) * ww), 1e-6));
     loserP.mu -= (lSigma2 / c) * vw;
-    loserP.sigma = Math.sqrt(Math.max(lSigma2 * (1 - (lSigma2 / (c * c)) * ww) + TAU * TAU, 1e-6));
+    loserP.sigma = Math.sqrt(Math.max(lSigma2 * (1 - (lSigma2 / (c * c)) * ww), 1e-6));
 
     winnerP.wins += 1;
     winnerP.games += 1;
@@ -207,6 +199,7 @@ export function matchesFromOrderedRanking(orderedKeys) {
  * shownImages: trial media list (preferred)
  */
 export function matchesFromForcedChoiceAnswer(answer, shownImages) {
+  if (isNoPreference(answer)) return [];
   if (!answer || typeof answer !== 'object' || Array.isArray(answer)) return [];
 
   let rawShown = Array.isArray(shownImages) && shownImages.length ? shownImages : [];

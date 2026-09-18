@@ -6,6 +6,7 @@ import SurveyApp from './SurveyApp';
 import AdminApp from './AdminApp';
 import SkillEditorPage from './pages/SkillEditorPage';
 import SkillLibraryPage from './pages/SkillLibraryPage';
+import QuestionPreviewPage from './components/admin/QuestionPreviewPage';
 
 const theme = createTheme({
   palette: {
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/skills" element={<SkillLibraryPage />} />
           <Route path="/skill-editor" element={<SkillEditorPage />} />
           <Route path="/skill-editor/:id" element={<SkillEditorPage />} />
+          <Route path="/question-preview" element={<QuestionPreviewPage />} />
           <Route path="/" element={<Navigate to="/admin" replace />} />
         </Routes>
       </Router>

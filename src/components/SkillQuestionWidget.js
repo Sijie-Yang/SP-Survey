@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback, useMemo, useContext } from 'react';
 import { Box, Alert } from '@mui/material';
+import { checkAnswerAgainstResultSchema } from '../lib/skillResultTypes';
 import { buildSkillSrcdoc } from '../lib/skillSdk';
 import { toSkillInitPayload } from '../lib/skillPostMessage';
 import { extractAnswerFromIframeMessage } from '../lib/skillAnswerBridge';
@@ -26,6 +27,7 @@ function stableStringify(v) {
 export function skillAnswerPresent(value) {
   if (value == null || value === '') return false;
   if (typeof value !== 'object') return true;
+  if (value.complete === false) return false;
   if (Array.isArray(value)) return value.length > 0;
   const clean = stripSkillAnswerContext(value);
   if (clean == null) return false;
@@ -34,12 +36,17 @@ export function skillAnswerPresent(value) {
   return Object.keys(clean).length > 0;
 }
 
-export default function SkillQuestionFrame({ skillHtml, config, images, value, onChange, readOnly, skillId, resultSchema }) {
+export default function SkillQuestionFrame({ skillHtml, config, images, value, onChange, readOnly, skillId, resultSchema, language }) {
   const region = useContext(RegionContext);
-  const t = region?.t || adminI18n.en;
+  const t = (language && adminI18n[language]) || region?.t || adminI18n.en;
   const resolvedHtml = skillHtml || presetSkillHtml(skillId);
   const iframeRef = useRef(null);
   const [height, setHeight] = useState(200);
+  const [answerError, setAnswerError] = useState('');
+  const schemaRef = useRef(resultSchema);
+  schemaRef.current = resultSchema;
+  const presetRef = useRef(false);
+  presetRef.current = !!getPresetSkill(String(skillId || '').replace(/^preset_/, ''));
   const iframeReadyRef = useRef(false);
   /** Ignore host→iframe value echoes for a window (AI skills often re-render on every init). */
   const skipValueSyncUntilRef = useRef(0);
@@ -118,6 +125,20 @@ export default function SkillQuestionFrame({ skillHtml, config, images, value, o
       // answer was produced while the participant was interacting.
       const extracted = extractAnswerFromIframeMessage(d);
       if (!extracted) return;
+      // Built-in legacy contracts contain metadata fields; custom contracts have one result field.
+      const schema = schemaRef.current;
+      if (!presetRef.current && schema?.length === 1 && extracted.value != null) {
+        const check = checkAnswerAgainstResultSchema(extracted.value, schema, configRef.current);
+        const invalid = check.fields.find((f) => !f.ok);
+        if (!check.recorded || invalid) {
+          setAnswerError(invalid?.detail || 'Incomplete answer');
+          lastEmittedJsonRef.current = '';
+          skipValueSyncUntilRef.current = Date.now() + 600;
+          onChangeRef.current?.(null);
+          return;
+        }
+      }
+      setAnswerError('');
       const json = stableStringify(extracted.value);
       // ChatGPT skills often post 3 alias messages at once — debounce + skip re-init window.
       skipValueSyncUntilRef.current = Date.now() + 600;
@@ -156,7 +177,7 @@ export default function SkillQuestionFrame({ skillHtml, config, images, value, o
       sendInit(true);
     };
     iframe.addEventListener('load', onLoad);
-    if (iframe.contentDocument?.readyState === 'complete') onLoad();
+    // An opaque-origin sandbox cannot be inspected by the parent; rely on load/ready.
     return () => iframe.removeEventListener('load', onLoad);
   }, [srcDoc, sendInit]);
 
@@ -180,10 +201,11 @@ export default function SkillQuestionFrame({ skillHtml, config, images, value, o
 
   return (
     <Box sx={{ width: '100%', position: 'relative', zIndex: 1 }}>
+      {answerError && <Alert severity="warning" sx={{ mb: 1 }}>{(language || region?.language) === 'zh' ? '交互返回的答案不符合题目设置，请重新作答。' : 'This interaction returned an invalid answer. Please try again.'} ({answerError})</Alert>}
       <iframe
         ref={iframeRef}
         title="skill-question"
-        sandbox="allow-scripts allow-same-origin"
+        sandbox="allow-scripts"
         srcDoc={srcDoc}
         scrolling="yes"
         style={{

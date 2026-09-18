@@ -1,27 +1,29 @@
 import React, { useEffect } from 'react';
-import { Box, Typography, Slider, TextField, Chip } from '@mui/material';
+import { Box, Typography, Slider, TextField, Chip, Button } from '@mui/material';
+import { dimensionDisplayName, dimensionIncomplete, dimensionPoles, sliderScale } from '../lib/sliderScale';
 import { ImageGalleryGrid } from './MediaWidgets';
 
 /**
  * Slider group (semantic differential): multiple bipolar dimensions rated
  * on a shared numeric scale. value = { [dimensionId]: number }
- * Defaults every dimension to the scale midpoint until the participant moves it.
+ * UI shows the scale midpoint until touched; values persist only after interaction
+ * (unless autoPersistDefaults is explicitly enabled for legacy callers).
  */
 export function SliderGroupContent({
   dimensions = [],
   scaleMin = 1,
   scaleMax = 7,
+  scaleStep = 1,
+  language = 'en',
   value,
   onChange,
   readOnly,
-  /** Persist midpoint as the answer when the participant never moves a slider. */
-  autoPersistDefaults = true,
+  /** When true, silently persist midpoints (legacy). Default false restores required semantics. */
+  autoPersistDefaults = false,
 }) {
-  const mid = Math.round((Number(scaleMin) + Number(scaleMax)) / 2);
+  const zh = language === 'zh';
   const current = (value && typeof value === 'object' && !Array.isArray(value)) ? value : {};
 
-  // Persist midpoint defaults so submit / required / multi-trial checks see real scores
-  // without requiring the participant to touch every slider.
   useEffect(() => {
     if (!autoPersistDefaults || readOnly || !onChange || !dimensions.length) return;
     let changed = false;
@@ -29,14 +31,14 @@ export function SliderGroupContent({
     dimensions.forEach((d) => {
       if (!d?.id) return;
       if (next[d.id] === undefined || next[d.id] === null || next[d.id] === '') {
-        next[d.id] = mid;
+        next[d.id] = sliderScale(d, { scaleMin, scaleMax, scaleStep }).midpoint;
         changed = true;
       }
     });
     if (changed) onChange(next);
     // Only re-run when scale / dimension set changes — not on every value tweak.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dimensions, scaleMin, scaleMax, mid, readOnly, autoPersistDefaults]);
+  }, [dimensions, scaleMin, scaleMax, scaleStep, readOnly, autoPersistDefaults]);
 
   if (!dimensions.length) {
     return (
@@ -48,10 +50,27 @@ export function SliderGroupContent({
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-      {dimensions.map((d) => {
-        const v = current[d.id] ?? mid;
+      {dimensions.map((d, index) => {
+        const scale = sliderScale(d, { scaleMin, scaleMax, scaleStep });
+        const answered = typeof current[d.id] === 'number' && Number.isFinite(current[d.id]);
+        const v = answered ? current[d.id] : scale.midpoint;
+        const label = answered ? v : (zh ? '尚未评分' : 'Not rated');
+        const title = dimensionDisplayName(d, index, { locale: zh ? 'zh' : 'en' });
+        const incomplete = dimensionIncomplete(d);
+        const poles = dimensionPoles(d);
         return (
           <Box key={d.id} sx={{ px: { xs: 0, sm: 1 } }}>
+            <Typography
+              variant="subtitle2"
+              sx={{ mb: 0.5, lineHeight: 1.35, overflowWrap: 'anywhere', wordBreak: 'break-word' }}
+            >
+              {title}
+            </Typography>
+            {incomplete ? (
+              <Typography variant="caption" color="warning.main" sx={{ display: 'block', mb: 0.5 }}>
+                {zh ? '维度配置不完整：请补全显示名称和两端说明。' : 'Dimension setup is incomplete: add a display name and both pole labels.'}
+              </Typography>
+            ) : null}
             {/* Phones: labels above slider so long bipolar text does not crush mid-row */}
             <Box
               sx={{
@@ -62,21 +81,21 @@ export function SliderGroupContent({
                 mb: 0.5,
               }}
             >
-              <Typography variant="caption" color="text.secondary" sx={{ flex: 1, lineHeight: 1.3 }}>
-                {d.left}
+              <Typography variant="caption" color="text.secondary" sx={{ flex: 1, lineHeight: 1.3, overflowWrap: 'anywhere' }}>
+                {poles.left}
               </Typography>
               <Chip
                 size="small"
-                label={v}
-                color="primary"
+                label={label}
+                color={answered ? "primary" : "default"}
                 sx={{ height: 20, fontSize: '0.72rem', fontWeight: 700, flexShrink: 0 }}
               />
               <Typography
                 variant="caption"
                 color="text.secondary"
-                sx={{ flex: 1, lineHeight: 1.3, textAlign: 'right' }}
+                sx={{ flex: 1, lineHeight: 1.3, textAlign: 'right', overflowWrap: 'anywhere' }}
               >
-                {d.right}
+                {poles.right}
               </Typography>
             </Box>
             <Box
@@ -89,32 +108,37 @@ export function SliderGroupContent({
               }}
             >
               <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'left' }}>
-                {d.left}
+                {poles.left}
               </Typography>
               <Chip
                 size="small"
-                label={v}
-                color="primary"
+                label={label}
+                color={answered ? "primary" : "default"}
                 sx={{ height: 20, fontSize: '0.72rem', fontWeight: 700, justifySelf: 'center' }}
               />
               <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'right' }}>
-                {d.right}
+                {poles.right}
               </Typography>
             </Box>
             <Slider
               value={Number(v)}
-              min={scaleMin}
-              max={scaleMax}
-              step={1}
-              marks
-              disabled={readOnly}
+              min={scale.min}
+              max={scale.max}
+              step={scale.step}
+              marks={scale.valid && (scale.max - scale.min) / scale.step <= 20}
+              disabled={readOnly || !scale.valid}
+              aria-label={`${title}: ${poles.left || d.id} – ${poles.right || d.id}`}
               onChange={(_, val) => onChange?.({ ...current, [d.id]: val })}
               valueLabelDisplay="auto"
             />
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: -1 }}>
-              <Typography variant="caption" color="text.disabled">{scaleMin}</Typography>
-              <Typography variant="caption" color="text.disabled">{scaleMax}</Typography>
+              <Typography variant="caption" color="text.disabled">{scale.min}</Typography>
+              <Typography variant="caption" color="text.disabled">{scale.max}</Typography>
             </Box>
+            {!answered && !readOnly && <Button size="small" sx={{ minHeight: 44 }} disabled={!scale.valid}
+              onClick={() => onChange?.({ ...current, [d.id]: scale.midpoint })}>
+              {zh ? `选择 ${scale.midpoint}` : `Select ${scale.midpoint}`}
+            </Button>}
           </Box>
         );
       })}
@@ -214,10 +238,12 @@ export function ImageSliderGroupContent({
   dimensions = [],
   scaleMin = 1,
   scaleMax = 7,
+  scaleStep = 1,
+  language = 'en',
   value,
   onChange,
   readOnly,
-  autoPersistDefaults = true,
+  autoPersistDefaults = false,
 }) {
   const items = (imageUrls || []).filter(Boolean).map((url, i) => ({
     url,
@@ -236,6 +262,8 @@ export function ImageSliderGroupContent({
         dimensions={dimensions}
         scaleMin={scaleMin}
         scaleMax={scaleMax}
+        scaleStep={scaleStep}
+        language={language}
         value={value}
         onChange={onChange}
         readOnly={readOnly}

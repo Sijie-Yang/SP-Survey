@@ -4,6 +4,8 @@
  */
 
 import { ANNOTATION_TOOLS, normalizeAllowedTools } from '../annotationTools';
+import { PLATFORM_SCHEMA } from '../platformSchema/index.js';
+import { normalizeSliderQuestion } from '../sliderScale';
 
 const MEDIA_STIMULUS_TYPES = [
   'imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'imagecheckbox', 'image',
@@ -52,8 +54,9 @@ export function postProcessAiConfig(surveyConfig) {
   if (!Array.isArray(processedConfig.pages)) return processedConfig;
 
   processedConfig.pages.forEach((page) => {
-    (page.elements || []).forEach((element) => {
-      if (!MEDIA_STIMULUS_TYPES.includes(element.type)) return;
+    page.elements = (page.elements || []).map((raw) => {
+      const element = normalizeSliderQuestion(raw);
+      if (!MEDIA_STIMULUS_TYPES.includes(element.type)) return element;
       if (!element.imageSelectionMode || element.imageSelectionMode === 'random') {
         element.imageSelectionMode = 'huggingface_random';
       }
@@ -73,6 +76,15 @@ export function postProcessAiConfig(surveyConfig) {
       }
       if (element.type === 'imageannotation') {
         element.allowedTools = normalizeAllowedTools(element.allowedTools, ANNOTATION_TOOLS);
+        element.annotationLabels = (Array.isArray(element.annotationLabels) ? element.annotationLabels : [])
+          .map((label) => {
+            if (typeof label === 'string' || typeof label === 'number') return String(label).trim();
+            if (label && typeof label === 'object') {
+              return String(label.text ?? label.label ?? label.value ?? '').trim();
+            }
+            return '';
+          })
+          .filter(Boolean);
       }
       if (MEDIA_STAR_TYPES.includes(element.type)) {
         if (!element.mediaType) element.mediaType = 'any';
@@ -82,9 +94,16 @@ export function postProcessAiConfig(surveyConfig) {
       if (element.type === 'skillquestion') {
         // Prefer preset_* ids; do not keep agent-invented HTML.
         delete element.skillHtml;
-        if (element.skillId && !String(element.skillId).startsWith('preset_')) {
-          element.skillId = `preset_${element.skillId}`;
+        // Bare preset keys (e.g. best_worst_choice) → preset_*.
+        // Library ids (skill_*) must stay unchanged — never rewrite as preset_skill_*.
+        // Also heal drafts already broken by that mistaken rewrite.
+        let sid = element.skillId ? String(element.skillId) : '';
+        if (sid.startsWith('preset_skill_')) {
+          sid = sid.slice('preset_'.length);
+        } else if (sid && !sid.startsWith('preset_') && !sid.startsWith('skill_')) {
+          sid = `preset_${sid}`;
         }
+        if (sid) element.skillId = sid;
         if (element.skillConfig?.mediaCount != null && element.imageCount == null) {
           element.imageCount = Number(element.skillConfig.mediaCount) || 1;
         }
@@ -92,6 +111,7 @@ export function postProcessAiConfig(surveyConfig) {
       delete element.imageSource;
       delete element.huggingFaceConfig;
       delete element.falApiKey;
+      return element;
     });
   });
 
@@ -99,26 +119,8 @@ export function postProcessAiConfig(surveyConfig) {
 }
 
 export function createDefaultSurveyConfig(name, description = '') {
-  return {
-    title: name,
-    description: description || 'This survey helps us understand user preferences and opinions.',
-    logo: '',
-    logoPosition: 'right',
-    showQuestionNumbers: 'off',
-    showProgressBar: 'top',
-    progressBarType: 'questions',
-    autoGrowComment: true,
-    showPreviewBeforeComplete: 'showAllQuestions',
-    includeResearcherPractice: true,
-    excludeFlaggedFromAnalysis: false,
-    pages: [
-      {
-        name: 'page1',
-        title: 'Survey Questions',
-        description: 'Please answer the following questions.',
-        elements: [],
-      },
-    ],
-    completedHtml: '<h3>Thank you for completing the survey.</h3>',
-  };
+  const defaults = JSON.parse(JSON.stringify(PLATFORM_SCHEMA.defaultSurveyConfig));
+  defaults.title = name;
+  if (description) defaults.description = description;
+  return defaults;
 }

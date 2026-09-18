@@ -12,6 +12,20 @@ export {
 } from './validate';
 
 export {
+  evaluateSurveyContract,
+  applyCompatibleTransforms,
+  assessQuestionAnswerability,
+  changedQuestionNames,
+} from './answerability';
+
+export {
+  getGenerationContract,
+  listGenerationContracts,
+  listPresetSkillContracts,
+  GENERATION_CONTRACT_VERSION,
+} from './generationContracts';
+
+export {
   normalizeBuilderQuestion,
   normalizeBuilderSurveyJson,
   postProcessAiConfig,
@@ -20,6 +34,7 @@ export {
 
 export {
   applyOperations,
+  normalizeOperationsArg,
   OPERATION_TYPES,
 } from './operations';
 

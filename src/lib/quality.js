@@ -1,3 +1,4 @@
+import { responseRecordKey } from './responseIdentity.js';
 /** Data-quality evaluation for survey responses. */
 
 export function flattenQuestions(surveyConfig) {
@@ -60,13 +61,14 @@ function filenameFromValue(val) {
 }
 
 function answersMatch(actual, expected, questionType) {
-  const exp = questionType === 'imagepicker'
+  const useFilename = questionType === 'imagepicker' || questionType === 'mediapicker';
+  const exp = useFilename
     ? filenameFromValue(expected)
     : normalizeScalar(expected);
   if (Array.isArray(actual)) {
     return actual.some((v) => answersMatch(v, expected, questionType));
   }
-  const act = questionType === 'imagepicker'
+  const act = useFilename
     ? filenameFromValue(actual)
     : normalizeScalar(actual);
   return act === exp;
@@ -182,7 +184,7 @@ export function summarizeQuality(allResponses, surveyConfig) {
   let flagged = 0;
   allResponses.forEach((row) => {
     const flags = evaluateResponseQuality(row, surveyConfig, allResponses);
-    perResponse[row.id ?? row.participant_id] = flags;
+    perResponse[responseRecordKey(row)] = flags;
     if (flags.length) flagged += 1;
   });
   return {

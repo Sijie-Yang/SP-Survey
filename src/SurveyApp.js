@@ -4,7 +4,8 @@ import { Survey } from "survey-react-ui";
 import "survey-core/defaultV2.min.css";
 import { Box, Alert, CircularProgress, Button, Dialog, DialogTitle, DialogContent, DialogActions, Typography } from '@mui/material';
 import { saveSurveyResponse, isSupabaseConfigured } from './lib/supabase';
-import { findDraftForProject, saveDraft, clearDraft, clearDraftByKey, clearAllDraftsForProject } from './lib/surveyDraft';
+import { findDraftForProject, saveDraft, clearDraft, clearDraftByKey, clearAllDraftsForProject, findPendingSubmission, clearPendingSubmission } from './lib/surveyDraft';
+import { submitWithRecovery } from './lib/recoverableSubmission';
 import { surveyJson, displayedImages } from './config/questions';
 import { surveyConfig } from './config/surveyConfig';
 import { applyAdminThemeToSurveyModel, buildSurveyHostStyle, loadSurveyConfig, convertToSurveyJS, normalizeBuilderSurveyJson } from './lib/surveyStorage';
@@ -151,9 +152,12 @@ export default function SurveyApp() {
   }, [useAdminConfig]);
 
   const submitSurveyResponse = async (completeData, { isRepeatMode, repeatTotal, attemptIndex }) => {
-    const result = await saveSurveyResponse(completeData);
+    const result = await submitWithRecovery(projectIdRef.current, completeData, {
+      isRepeatMode: !!isRepeatMode, repeatTotal: repeatTotal || 1, attemptIndex: attemptIndex || 1,
+    }, saveSurveyResponse);
     if (result.success) {
       discardDraftForProject(projectIdRef.current, completeData.participant_id);
+      clearPendingSubmission(projectIdRef.current, completeData.participant_id);
       if (isRepeatMode && attemptIndex < repeatTotal) {
         submissionGuardRef.current = false;
         draftSavingEnabledRef.current = true;
@@ -293,6 +297,18 @@ export default function SurveyApp() {
         participantIdRef.current = 'p_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
       }
       
+      const pendingFound = !options.skipDraftCheck ? findPendingSubmission(projectId) : null;
+      if (pendingFound?.pending?.completeData && !options.resumeDraft) {
+        participantIdRef.current = pendingFound.pending.participantId
+          || pendingFound.pending.completeData.participant_id
+          || participantIdRef.current;
+        setPendingSubmission(pendingFound.pending.completeData);
+        setSurveyPhase('submit-error');
+        setLoading(false);
+        resumeChoiceRef.current = null;
+        return;
+      }
+
       console.log('📂 Loading survey for project:', projectId);
 
       // Load project object (including Supabase configuration)
@@ -306,7 +322,7 @@ export default function SurveyApp() {
       }
       
       // Load survey configuration (platform mode: Supabase, self-hosted: local server)
-      const adminConfig = await loadSurveyConfig(projectId);
+      const adminConfig = await loadSurveyConfig(projectId, { live: true });
       setCompletionMessage(adminConfig?.completionMessage || '');
 
       // Response quota gate

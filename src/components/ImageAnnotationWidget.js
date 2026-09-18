@@ -1,3 +1,6 @@
+import { workflowText } from '../contexts/workflowI18n';
+import { createAnnotationHistory } from '../lib/annotationHistory';
+import { RegionContext } from '../contexts/RegionContext';
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import {
   Box, Button, Typography, Chip, TextField, CircularProgress, Alert, IconButton,
@@ -297,7 +300,7 @@ export default function ImageAnnotationCanvas({
   value,
   onChange,
   allowedTools = ['point', 'line', 'polygon', 'bbox'],
-  annotationLabels = [],
+  annotationLabels: annotationLabelsProp = [],
   /** Optional { [labelName]: '#rrggbb' } for chip/shape colors */
   labelColors = null,
   readOnly = false,
@@ -307,7 +310,28 @@ export default function ImageAnnotationCanvas({
   falKey = '',
   projectId = '',
   centerContent = false,
+  language: languageProp,
 }) {
+  const region = React.useContext(RegionContext);
+  const language = languageProp || region?.language || 'en';
+  const zh = language === 'zh';
+  const tx = (text) => workflowText(text, language);
+  const annotationLabels = React.useMemo(() => (
+    (Array.isArray(annotationLabelsProp) ? annotationLabelsProp : [])
+      .map((label) => {
+        if (typeof label === 'string' || typeof label === 'number') return String(label).trim();
+        if (label && typeof label === 'object') {
+          return String(label.text ?? label.label ?? label.value ?? '').trim();
+        }
+        return '';
+      })
+      .filter(Boolean)
+  ), [annotationLabelsProp]);
+  const historyRef = useRef(createAnnotationHistory());
+  const emittedShapesRef = useRef(null);
+  const [zoom, setZoom] = useState(1);
+  const [browseMode, setBrowseMode] = useState(false);
+  const [toolsOpen, setToolsOpen] = useState(true);
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
   const imgRef = useRef(null);
@@ -358,7 +382,9 @@ export default function ImageAnnotationCanvas({
 
   useEffect(() => {
     const incoming = (value?.shapes || []).map((s) => (s.id ? s : { ...s, id: newShapeId() }));
+    if (value?.shapes !== emittedShapesRef.current) historyRef.current.reset();
     setShapes(incoming);
+    shapesRef.current = incoming;
   }, [value?.shapes]);
 
   useEffect(() => {
@@ -375,6 +401,10 @@ export default function ImageAnnotationCanvas({
   }, [annotationLabels, activeLabel]);
 
   const emitChange = useCallback((nextShapes) => {
+    const group = dragRef.current?.shapeId ? dragRef.current.origPoints : null;
+    historyRef.current.record(shapesRef.current, group);
+    emittedShapesRef.current = nextShapes;
+    shapesRef.current = nextShapes;
     setShapes(nextShapes);
     onChange?.({ image: imageUrl, shapes: nextShapes });
   }, [imageUrl, onChange]);
@@ -500,11 +530,14 @@ export default function ImageAnnotationCanvas({
     redraw();
     const ro = new ResizeObserver(redraw);
     if (containerRef.current) ro.observe(containerRef.current);
+    if (imgRef.current) ro.observe(imgRef.current);
     return () => ro.disconnect();
-  }, [redraw, imageUrl]);
+  }, [redraw, imageUrl, zoom]);
 
   useEffect(() => {
     if (!imageUrl) return undefined;
+    historyRef.current.reset();
+    setZoom(1);
     setImgError(false);
     clearSelection();
     setDraft(null);
@@ -980,15 +1013,16 @@ export default function ImageAnnotationCanvas({
     confirmDraft();
   };
 
-  const undo = () => {
-    if (draftRef.current) {
-      cancelDraft();
-      return;
-    }
-    const next = shapesRef.current.slice(0, -1);
-    clearSelection();
-    emitChange(next);
-  };
+  const restoreHistory = useCallback((direction) => {
+    if (draftRef.current) { cancelDraft(); return; }
+    const next = historyRef.current[direction](shapesRef.current);
+    emittedShapesRef.current = next;
+    shapesRef.current = next;
+    clearSelection(); setDrag(null); setShapes(next);
+    onChange?.({ image: imageUrl, shapes: next });
+  }, [cancelDraft, clearSelection, imageUrl, onChange]);
+  const undo = () => restoreHistory('undo');
+  const redo = () => restoreHistory('redo');
 
   const clear = () => {
     clearSelection();
@@ -1028,7 +1062,10 @@ export default function ImageAnnotationCanvas({
     if (readOnly) return undefined;
     const onKey = (e) => {
       const tag = (e.target?.tagName || '').toLowerCase();
-      if (tag === 'input' || tag === 'textarea') return;
+      if (tag === 'input' || tag === 'textarea' || e.target?.isContentEditable) return;
+      if ((e.ctrlKey || e.metaKey) && ['z', 'y'].includes(e.key.toLowerCase())) {
+        e.preventDefault(); restoreHistory(e.key.toLowerCase() === 'y' || e.shiftKey ? 'redo' : 'undo'); return;
+      }
 
       if (e.key === 'Escape') {
         e.preventDefault();
@@ -1059,7 +1096,7 @@ export default function ImageAnnotationCanvas({
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [readOnly, confirmDraft, deleteSelected, clearSelection]);
+  }, [readOnly, confirmDraft, deleteSelected, clearSelection, restoreHistory]);
 
   const selectedShapes = shapes.filter((s) => selectedIds.includes(s.id));
   const selectedLabelCommon = (() => {
@@ -1076,28 +1113,28 @@ export default function ImageAnnotationCanvas({
     const draftTool = normalizeAnnotationTool(draft?.tool);
     const activeTool = normalizeAnnotationTool(tool);
     if (draft) {
-      if (draftTool === 'line') return 'Click to add more points · drag vertices to edit · ✓ confirm · ✕ discard';
+      if (draftTool === 'line') return tx("Click to add more points \u00b7 drag vertices to edit \u00b7 \u2713 confirm \u00b7 \u2715 discard");
       if (draftTool === 'polygon') {
         return samMethod
-          ? 'SAM region draft · drag vertices to edit · ✓ save as polygon · ✕ / Esc discard'
-          : 'Click to add vertices · click first point or double-click to close · ✓ confirm (≥3) · ✕ discard';
+          ? tx("SAM region draft \u00b7 drag vertices to edit \u00b7 \u2713 save as polygon \u00b7 \u2715 / Esc discard")
+          : tx("Click to add vertices \u00b7 click first point or double-click to close \u00b7 \u2713 confirm (\u22653) \u00b7 \u2715 discard");
       }
-      if (draftTool === 'bbox') return 'Drag body to move · handles to resize · ✓ confirm · ✕ discard';
-      if (draftTool === 'point') return 'Drag to adjust · ✓ confirm · ✕ discard';
+      if (draftTool === 'bbox') return tx("Drag body to move \u00b7 handles to resize \u00b7 \u2713 confirm \u00b7 \u2715 discard");
+      if (draftTool === 'point') return tx("Drag to adjust \u00b7 \u2713 confirm \u00b7 \u2715 discard");
     }
-    if (samMethod === 'click') return 'SAM Click: click object → polygon draft → ✓ · switch to Select to pick existing';
-    if (samMethod === 'box') return 'SAM Box: drag guide box → polygon draft → ✓ · switch to Select to pick existing';
-    if (samMethod === 'text') return 'SAM Text: one noun + Run → all matches as polygons (all selected for batch label)';
+    if (samMethod === 'click') return tx("SAM Click: click object \u2192 polygon draft \u2192 \u2713 \u00b7 switch to Select to pick existing");
+    if (samMethod === 'box') return tx("SAM Box: drag guide box \u2192 polygon draft \u2192 \u2713 \u00b7 switch to Select to pick existing");
+    if (samMethod === 'text') return tx("SAM Text: one noun + Run \u2192 all matches as polygons (all selected for batch label)");
     if (tool === 'select') {
       if (selectedIds.length === 1) {
-        return 'Edit: drag vertices / move shape · box handles resize · click elsewhere to multi-select or clear';
+        return tx("Edit: drag vertices / move shape \u00b7 box handles resize \u00b7 click elsewhere to multi-select or clear");
       }
-      return 'Select: click toggles multi-select · select one to edit points · Selected row labels all · Delete removes selected';
+      return tx("Select: click toggles multi-select \u00b7 select one to edit points \u00b7 Selected row labels all \u00b7 Delete removes selected");
     }
-    if (activeTool === 'point') return 'Point: click to place (can overlap existing) · ✓ to confirm';
-    if (activeTool === 'line') return 'Line: click to add points · ✓ to confirm (Esc cancels)';
-    if (activeTool === 'polygon') return 'Polygon: click vertices; click first point or double-click to close (≥3)';
-    if (activeTool === 'bbox') return 'Box: drag to draw (can overlap existing) · ✓ to confirm';
+    if (activeTool === 'point') return tx("Point: click to place (can overlap existing) \u00b7 \u2713 to confirm");
+    if (activeTool === 'line') return tx("Line: click to add points \u00b7 \u2713 to confirm (Esc cancels)");
+    if (activeTool === 'polygon') return tx("Polygon: click vertices; click first point or double-click to close (\u22653)");
+    if (activeTool === 'bbox') return tx("Box: drag to draw (can overlap existing) \u00b7 \u2713 to confirm");
     return '';
   })();
 
@@ -1106,7 +1143,14 @@ export default function ImageAnnotationCanvas({
       ref={containerRef}
       sx={centerContent ? { width: '100%' } : undefined}
     >
-      {!readOnly && (
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 1, '& .MuiButton-root': { minHeight: 44, minWidth: 36 } }}>
+        {!readOnly && <Button size="small" onClick={() => setToolsOpen((v) => !v)}>{toolsOpen ? (zh ? '收起工具' : 'Hide tools') : (zh ? '标注工具' : 'Annotation tools')}</Button>}
+        <Button size="small" onClick={() => setZoom((v) => Math.max(1, v - 0.5))} disabled={zoom <= 1} aria-label={zh ? '缩小图片' : 'Zoom out'}>−</Button>
+        <Button size="small" onClick={() => setZoom(1)}>{Math.round(zoom * 100)}%</Button>
+        <Button size="small" onClick={() => setZoom((v) => Math.min(4, v + 0.5))} disabled={zoom >= 4} aria-label={zh ? '放大图片' : 'Zoom in'}>＋</Button>
+        {!readOnly && <Button size="small" variant={browseMode ? 'contained' : 'outlined'} onClick={() => { setBrowseMode((v) => !v); setDrag(null); }}>{browseMode ? (zh ? '返回标注' : 'Resume drawing') : (zh ? '浏览 / 平移' : 'Browse / pan')}</Button>}
+      </Box>
+      {!readOnly && toolsOpen && !browseMode && (
         <Box
           className="sp-annotation-toolbar"
           sx={{
@@ -1117,7 +1161,7 @@ export default function ImageAnnotationCanvas({
             alignItems: 'center',
             width: '100%',
             '& .MuiButton-root': {
-              minHeight: { xs: 40, sm: 30 },
+              minHeight: { xs: 44, sm: 32 },
             },
           }}
         >
@@ -1140,22 +1184,22 @@ export default function ImageAnnotationCanvas({
               onClick={() => switchTool('select')}
               sx={{ fontWeight: 700, minWidth: 72 }}
             >
-              Select
+              {zh ? '选择 / 编辑' : 'Select'}
             </Button>
           </Box>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, alignItems: 'center' }}>
-            <Typography variant="caption" color="text.secondary" sx={{ px: 0.25 }}>Draw</Typography>
+            <Typography variant="caption" color="text.secondary" sx={{ px: 0.25 }}>{zh ? '绘制' : 'Draw'}</Typography>
             {tools.includes('point') && (
-              <Button size="small" variant={!samMethod && tool === 'point' ? 'contained' : 'outlined'} onClick={() => switchTool('point')}>Point</Button>
+              <Button size="small" variant={!samMethod && tool === 'point' ? 'contained' : 'outlined'} onClick={() => switchTool('point')}>{zh ? '点' : 'Point'}</Button>
             )}
             {tools.includes('line') && (
-              <Button size="small" variant={!samMethod && tool === 'line' ? 'contained' : 'outlined'} onClick={() => switchTool('line')}>Line</Button>
+              <Button size="small" variant={!samMethod && tool === 'line' ? 'contained' : 'outlined'} onClick={() => switchTool('line')}>{zh ? '线' : 'Line'}</Button>
             )}
             {tools.includes('polygon') && (
-              <Button size="small" variant={!samMethod && tool === 'polygon' ? 'contained' : 'outlined'} onClick={() => switchTool('polygon')}>Polygon</Button>
+              <Button size="small" variant={!samMethod && tool === 'polygon' ? 'contained' : 'outlined'} onClick={() => switchTool('polygon')}>{zh ? '多边形' : 'Polygon'}</Button>
             )}
             {tools.includes('bbox') && (
-              <Button size="small" variant={!samMethod && tool === 'bbox' ? 'contained' : 'outlined'} onClick={() => switchTool('bbox')}>Box</Button>
+              <Button size="small" variant={!samMethod && tool === 'bbox' ? 'contained' : 'outlined'} onClick={() => switchTool('bbox')}>{zh ? '矩形' : tx("Box")}</Button>
             )}
           </Box>
           {enableSamAssist && (
@@ -1171,7 +1215,7 @@ export default function ImageAnnotationCanvas({
                 borderColor: 'divider',
               }}
             >
-              <Typography variant="caption" color="text.secondary" sx={{ px: 0.25 }}>SAM</Typography>
+              <Typography variant="caption" color="text.secondary" sx={{ px: 0.25 }}>{zh ? '智能分割' : 'Segmentation assist'}</Typography>
               <Button
                 size="small"
                 color="secondary"
@@ -1179,7 +1223,7 @@ export default function ImageAnnotationCanvas({
                 disabled={samBusy}
                 onClick={() => selectSamMethod('click')}
               >
-                {samBusy && samMethod === 'click' ? 'SAM…' : 'Click'}
+                {samBusy && samMethod === 'click' ? 'SAM…' : tx("Click")}
               </Button>
               <Button
                 size="small"
@@ -1188,7 +1232,7 @@ export default function ImageAnnotationCanvas({
                 disabled={samBusy}
                 onClick={() => selectSamMethod('box')}
               >
-                {samBusy && samMethod === 'box' ? 'SAM…' : 'Box'}
+                {samBusy && samMethod === 'box' ? 'SAM…' : tx("Box")}
               </Button>
               <Button
                 size="small"
@@ -1197,18 +1241,19 @@ export default function ImageAnnotationCanvas({
                 disabled={samBusy}
                 onClick={() => selectSamMethod('text')}
               >
-                Text
+                {tx("Text")}
               </Button>
             </Box>
           )}
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, ml: { xs: 0, sm: 'auto' } }}>
-            <Button size="small" onClick={undo} disabled={!shapes.length && !draft}>Undo</Button>
-            <Button size="small" color="error" onClick={clear} disabled={!shapes.length && !draft}>Clear</Button>
-            <Button size="small" color="error" onClick={deleteSelected} disabled={!selectedIds.length || !!draft}>Delete</Button>
+            <Button size="small" onClick={undo} disabled={!historyRef.current.canUndo && !draft}>{zh ? '撤销' : 'Undo'}</Button>
+            <Button size="small" onClick={redo} disabled={!historyRef.current.canRedo || !!draft}>{zh ? '重做' : 'Redo'}</Button>
+            <Button size="small" color="error" onClick={clear} disabled={!shapes.length && !draft}>{zh ? '清空' : 'Clear'}</Button>
+            <Button size="small" color="error" onClick={deleteSelected} disabled={!selectedIds.length || !!draft}>{zh ? '删除' : 'Delete'}</Button>
           </Box>
           {(minAnnotations > 0 || maxAnnotations > 0) && (
             <Typography variant="caption" color="text.secondary" sx={{ alignSelf: 'center' }}>
-              Annotations: {shapes.length}{maxAnnotations > 0 ? ` / ${maxAnnotations}` : ''}{minAnnotations > 0 ? ` (min ${minAnnotations})` : ''}
+              {zh ? '标注数量：' : 'Annotations:'} {shapes.length}{maxAnnotations > 0 ? ` / ${maxAnnotations}` : ''}{minAnnotations > 0 ? (zh ? `（至少 ${minAnnotations} 个）` : ` (min ${minAnnotations})`) : ''}
             </Typography>
           )}
           {toolHint && (
@@ -1218,12 +1263,12 @@ export default function ImageAnnotationCanvas({
           )}
         </Box>
       )}
-      {!readOnly && enableSamAssist && samMethod === 'text' && (
+      {!readOnly && toolsOpen && !browseMode && enableSamAssist && samMethod === 'text' && (
         <Box sx={{ mb: 1, display: 'flex', gap: 1, flexWrap: 'wrap', alignItems: 'center', width: '100%' }}>
           <TextField
             size="small"
-            label="One noun"
-            placeholder="e.g. tree"
+            label={tx("One noun")}
+            placeholder={tx("e.g. tree")}
             value={samPrompt}
             onChange={(e) => setSamPrompt(e.target.value)}
             onKeyDown={(e) => {
@@ -1235,7 +1280,7 @@ export default function ImageAnnotationCanvas({
             sx={{ minWidth: { xs: '100%', sm: 200 }, flex: { xs: '1 1 100%', sm: '0 1 auto' } }}
           />
           <Button size="small" variant="contained" color="secondary" disabled={samBusy} onClick={runSamTextPrompt}>
-            Run
+            {tx("Run")}
           </Button>
           {samBusy && <CircularProgress size={18} />}
         </Box>
@@ -1243,7 +1288,7 @@ export default function ImageAnnotationCanvas({
       {!readOnly && enableSamAssist && samError && (
         <Alert severity="warning" sx={{ mb: 1, py: 0 }} onClose={() => setSamError(null)}>{samError}</Alert>
       )}
-      {!readOnly && annotationLabels?.length > 0 && (
+      {!readOnly && toolsOpen && !browseMode && annotationLabels?.length > 0 && (
         <Box sx={{ mb: 1.5, display: 'flex', flexDirection: 'column', gap: 1, width: '100%' }}>
           <Box
             sx={{
@@ -1262,15 +1307,15 @@ export default function ImageAnnotationCanvas({
             <Chip
               size="small"
               color="primary"
-              label="Active"
+              label={tx("Active")}
               sx={{ fontWeight: 700 }}
             />
             <Typography variant="caption" color="text.secondary" sx={{ mr: 0.5 }}>
-              next new shape · click again for None
+              {tx("next new shape · click again for None")}
             </Typography>
             <Chip
               size="small"
-              label="None"
+              label={tx("None")}
               onClick={() => setActiveLabel('')}
               variant={!activeLabel ? 'filled' : 'outlined'}
               sx={{
@@ -1320,19 +1365,19 @@ export default function ImageAnnotationCanvas({
             <Chip
               size="small"
               color="warning"
-              label={selectedShapes.length ? `Selected ×${selectedShapes.length}` : 'Selected'}
+              label={selectedShapes.length ? `${tx("Selected")} ×${selectedShapes.length}` : tx("Selected")}
               sx={{ fontWeight: 700 }}
             />
             <Typography variant="caption" color="text.secondary" sx={{ mr: 0.5 }}>
               {selectedShapes.length
                 ? (selectedLabelCommon === '__mixed__'
-                  ? 'mixed labels · click a chip to set all · click again for None'
-                  : 'label applies to all selected · click again for None')
-                : 'Select mode: click shapes to multi-select'}
+                  ? tx("mixed labels \u00b7 click a chip to set all \u00b7 click again for None")
+                  : tx("label applies to all selected \u00b7 click again for None"))
+                : tx("Select mode: click shapes to multi-select")}
             </Typography>
             <Chip
               size="small"
-              label="None"
+              label={tx("None")}
               disabled={!selectedShapes.length}
               onClick={() => selectedShapes.length && updateSelectedLabel('')}
               variant={selectedLabelCommon === '' ? 'filled' : 'outlined'}
@@ -1366,24 +1411,24 @@ export default function ImageAnnotationCanvas({
           </Box>
         </Box>
       )}
+      <Box sx={{ width: '100%', overflow: 'auto', maxHeight: '75vh', overscrollBehavior: 'contain' }}>
       <Box sx={{
         position: 'relative',
         display: 'block',
-        maxWidth: '100%',
-        width: 'fit-content',
+        width: `${zoom * 100}%`,
         mx: centerContent ? 'auto' : undefined,
       }}>
         {imgError ? (
           <Box sx={{ p: 3, bgcolor: 'grey.100', borderRadius: 2, textAlign: 'center' }}>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>Image failed to load</Typography>
-            <Button size="small" onClick={() => { setImgError(false); setImgSrc(`${imageUrl}${imageUrl.includes('?') ? '&' : '?'}retry=${Date.now()}`); }}>Retry</Button>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{tx("Image failed to load")}</Typography>
+            <Button size="small" onClick={() => { setImgError(false); setImgSrc(`${imageUrl}${imageUrl.includes('?') ? '&' : '?'}retry=${Date.now()}`); }}>{tx("Retry")}</Button>
           </Box>
         ) : (
           <img
             ref={imgRef}
             src={imgSrc}
             alt="annotate"
-            style={{ maxWidth: '100%', display: 'block', borderRadius: 8 }}
+            style={{ width: '100%', display: 'block', borderRadius: 8 }}
             onLoad={redraw}
             onError={() => setImgError(true)}
           />
@@ -1391,16 +1436,16 @@ export default function ImageAnnotationCanvas({
         {!imgError && (
           <canvas
             ref={canvasRef}
-            onClick={handleClick}
-            onDoubleClick={handleDoubleClick}
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={handlePointerUp}
+            onClick={browseMode ? undefined : handleClick}
+            onDoubleClick={browseMode ? undefined : handleDoubleClick}
+            onPointerDown={browseMode ? undefined : handlePointerDown}
+            onPointerMove={browseMode ? undefined : handlePointerMove}
+            onPointerUp={browseMode ? undefined : handlePointerUp}
             onPointerCancel={() => setDrag(null)}
             style={{
               position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-              cursor: readOnly ? 'default' : 'crosshair',
-              touchAction: 'none',
+              cursor: readOnly || browseMode ? 'grab' : 'crosshair',
+              touchAction: readOnly || browseMode ? 'auto' : 'none',
             }}
           />
         )}
@@ -1443,6 +1488,7 @@ export default function ImageAnnotationCanvas({
             </IconButton>
           </Box>
         )}
+      </Box>
       </Box>
     </Box>
   );

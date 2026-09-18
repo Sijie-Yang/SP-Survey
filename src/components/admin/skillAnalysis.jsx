@@ -1,3 +1,4 @@
+import ChoiceOutcomeSummary from './ChoiceOutcomeSummary';
 /** Preset skill specialized analysis components. */
 
 import React, { useMemo, useContext, useState } from 'react';
@@ -43,6 +44,7 @@ function shortName(str) {
 
 function resolveImageKey(key, resolvedUrl) {
   if (!key) return null;
+  if (resolvedUrl?.has(key)) return resolvedUrl.get(key);
   if (key.startsWith('http') || key.startsWith('/') || key.startsWith('data:')) return key;
   return resolvedUrl?.get(key) || resolvedUrl?.get(shortName(key)) || null;
 }
@@ -172,6 +174,7 @@ export function ForcedChoicePreferenceAnalysis({ answers, question }) {
 
   return (
     <Box>
+      <ChoiceOutcomeSummary units={answers} enabled={question?.allowTie} />
       <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
         TrueSkill (pairwise from forced-choice A/B)
       </Typography>
@@ -408,7 +411,7 @@ export function VideoMomentAnalysis({ answers, questionName }) {
         Key moments by video
       </Typography>
       <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
-        Each tab is one video stimulus. Timeline shows overlap among participants who saw that video.
+        Each tab is one video stimulus. Timeline shows overlap among response units that showed that video; repeated trials are counted separately.
       </Typography>
       {byVideo.length > 1 && (
         <Tabs
@@ -459,7 +462,7 @@ export function VideoMomentAnalysis({ answers, questionName }) {
             <Alert severity="info" sx={{ mb: 1 }}>
               Peak tagging at t={current.agg.peakTime}s
               {' '}
-              ({(current.agg.peakProportion * 100).toFixed(0)}% of participants for this video)
+              ({(current.agg.peakProportion * 100).toFixed(0)}% of response units for this video)
             </Alert>
           )}
         </>
@@ -531,7 +534,7 @@ export function ContinuousVideoRatingAnalysis({ answers, questionName }) {
           <DescriptiveStatsLine nums={current.means} unit="" />
           <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
             {current.answers.length} response(s) · {current.agg.sampleCount} timeline samples
-            · mean {current.agg.globalMean?.toFixed(1) ?? '—'}
+            · equal-response mean {current.agg.globalMean?.toFixed(1) ?? '—'}
           </Typography>
           <ContinuousRatingChart
             timeline={current.agg.timeline}

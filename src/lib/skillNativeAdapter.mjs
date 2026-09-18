@@ -1,14 +1,10 @@
+import { mediaIdentityKey, resolveMediaAnswerKey } from './mediaIdentity.js';
 /**
  * Convert declared Skill fields to equivalent native questions and answer units.
  * This module is deliberately UI/export agnostic and is shared by browser and Worker code.
  */
 
-function mediaKey(value) {
-  if (value == null) return '';
-  const raw = typeof value === 'string' ? value : value.url || value.name || '';
-  const clean = String(raw).split('?')[0];
-  return clean.split('/').pop() || clean;
-}
+function mediaKey(value) { return mediaIdentityKey(value); }
 
 function rootMedia(root, shown = []) {
   const direct = root?.imageUrl || root?.image_url || root?.videoUrl || root?.video_url || root?.mediaUrl;
@@ -44,7 +40,7 @@ export function skillFieldNativeQuestion(question, field) {
   // Apply them before constructing the equivalent native question so Builder,
   // Results Analysis, and export all see the same effective contract.
   const configSettings = {};
-  ['options', 'rows', 'columns', 'dimensions', 'budget', 'labels', 'min', 'max'].forEach((key) => {
+  ['options', 'rows', 'columns', 'dimensions', 'budget', 'labels', 'min', 'max', 'step'].forEach((key) => {
     if (config[key] !== undefined && config[key] !== null) configSettings[key] = config[key];
   });
   if (config.choices != null && configSettings.options == null) configSettings.options = config.choices;
@@ -52,6 +48,7 @@ export function skillFieldNativeQuestion(question, field) {
   if (config.rateMax != null && configSettings.max == null) configSettings.max = config.rateMax;
   if (config.scaleMin != null && configSettings.min == null) configSettings.min = config.scaleMin;
   if (config.scaleMax != null && configSettings.max == null) configSettings.max = config.scaleMax;
+  if (config.scaleStep != null && configSettings.step == null) configSettings.step = config.scaleStep;
   field = { ...field, ...configSettings };
   const media = hasMediaContract(question, field);
   const name = `${question.name}__${field.key}`;
@@ -65,7 +62,7 @@ export function skillFieldNativeQuestion(question, field) {
   switch (field.type) {
     case 'number':
       return media
-        ? { ...base, type: 'mediarating', rateMin: field.min ?? 1, rateMax: field.max ?? 5 }
+        ? { ...base, type: 'mediarating', numericMeasure: true, rateMin: field.min, rateMax: field.max }
         : { ...base, type: 'number', min: field.min, max: field.max };
     case 'rating':
       return media
@@ -86,7 +83,7 @@ export function skillFieldNativeQuestion(question, field) {
     case 'mediaMatrix': return { ...base, type: 'mediamatrix', rows: field.rows || [], columns: field.columns || field.options || [] };
     case 'rankedList': return { ...base, type: 'ranking', choices: optionObjects(field.options) };
     case 'allocation': return { ...base, type: media ? 'mediapointallocation' : 'pointallocation', choices: optionObjects(field.options), budget: field.budget || 100 };
-    case 'scaleGroup': return { ...base, type: media ? 'mediaslidergroup' : 'slidergroup', dimensions: field.dimensions || field.options || [] };
+    case 'scaleGroup': return { ...base, type: media ? 'mediaslidergroup' : 'slidergroup', dimensions: field.dimensions || field.options || [], scaleMin: field.min ?? 1, scaleMax: field.max ?? 7, scaleStep: field.step ?? 1 };
     case 'mediaChoice': return { ...base, type: 'mediapicker' };
     case 'mediaRankedList': return { ...base, type: 'mediaranking' };
     case 'points':
@@ -112,7 +109,7 @@ function spatialAnswer(type, value, label) {
   const shapes = arrays.flatMap((item) => {
     const points = (Array.isArray(item) ? item : item?.points || [])
       .filter((point) => point && Number.isFinite(Number(point.x)) && Number.isFinite(Number(point.y)))
-      .map((point) => ({ x: Number(point.x), y: Number(point.y) }));
+      .map((point) => ({ x: Number(point.x), y: Number(point.y), ...(point.label != null ? { label: point.label } : {}), ...(point.t != null ? { t: point.t } : {}) }));
     if (!points.length) return [];
     if (type === 'points') return points.map((point) => ({ tool: 'point', points: [point], label: item?.label || point.label || label }));
     const tool = type === 'path' ? 'line' : type;
@@ -151,7 +148,7 @@ export function adaptSkillFieldValue(question, field, rootAnswer, shownImages = 
     const winner = value.winner ?? value.choice;
     if (chosenIndex == null && (winner === 'A' || winner === 'B')) chosenIndex = winner === 'A' ? 0 : 1;
     if (chosenIndex == null) {
-      const found = pair.map(mediaKey).findIndex((key) => key === mediaKey(winner));
+      const found = pair.map(mediaKey).findIndex((key) => key === resolveMediaAnswerKey(winner, pair));
       if (found >= 0) chosenIndex = found;
     }
     const choice = chosenIndex === 0 ? 'A' : (chosenIndex === 1 ? 'B' : value.choice);
@@ -161,7 +158,7 @@ export function adaptSkillFieldValue(question, field, rootAnswer, shownImages = 
     const options = value.shownUrls || value.options || shown;
     const resolveIndex = (pick, index) => {
       if (Number.isInteger(index) && index >= 0 && index < options.length) return index;
-      const found = options.map(mediaKey).findIndex((key) => key === mediaKey(pick));
+      const found = options.map(mediaKey).findIndex((key) => key === resolveMediaAnswerKey(pick, options));
       return found >= 0 ? found : undefined;
     };
     return {
@@ -206,10 +203,11 @@ function storedUnits(row, questionName) {
       answer: trial?.answer ?? trial?.value,
       shownImages: trial?.shown_images || trial?.shownImages || trial?.shown_media || [],
       trialIndex: trial?.trial_index ?? index,
+      metadata: trial,
     }));
   }
   if (data && typeof data === 'object' && !Array.isArray(data) && 'answer' in data) {
-    return [{ answer: data.answer, shownImages: data.shown_images || data.shownImages || data.shown_media || [], trialIndex: 0 }];
+    return [{ answer: data.answer, shownImages: data.shown_images || data.shownImages || data.shown_media || [], trialIndex: 0, metadata: data }];
   }
   return [{ answer: data, shownImages: row?.displayed_images?.[questionName] || [], trialIndex: 0 }];
 }
@@ -221,12 +219,12 @@ export function adaptResponsesForSkillField(question, field, responses) {
   (responses || []).forEach((row) => {
     const trials = storedUnits(row, question.name).map((unit) => {
       const adapted = adaptSkillFieldValue(question, field, unit.answer, unit.shownImages);
-      return adapted ? { answer: adapted.answer, shown_images: adapted.shownImages, trial_index: unit.trialIndex } : null;
+      return adapted ? { ...unit.metadata, answer: adapted.answer, shown_images: adapted.shownImages, trial_index: unit.trialIndex } : null;
     }).filter(Boolean);
     if (!trials.length) return;
     const responseValue = trials.length === 1
-      ? { answer: trials[0].answer, shown_images: trials[0].shown_images }
-      : { trials };
+      ? trials[0]
+      : { ...(row.responses?.[question.name] || {}), trials };
     rows.push({
       ...row,
       responses: { ...(row.responses || {}), [nativeQuestion.name]: responseValue },

@@ -432,7 +432,7 @@ export function CorrelationBarChart({
                 {label}
               </text>
               <title>
-                {`${c.feature}: r=${c.r.toFixed(3)}${c.n != null ? ` · n=${c.n}` : ''}${c.p != null ? ` · ${formatP(c.p)}` : ''}${stars ? ` ${stars}` : ''}`}
+                {`${c.feature}: r=${c.r.toFixed(3)}${c.n != null ? ` · n=${c.n}` : ''}${c.p != null ? ` · raw ${formatP(c.p)}` : ''}${c.p_adjusted != null ? ` · FDR ${formatP(c.p_adjusted)}` : ''}${c.ci_low != null && c.ci_high != null ? ` · 95% CI [${c.ci_low.toFixed(3)}, ${c.ci_high.toFixed(3)}]` : ''}${stars ? ` ${stars}` : ''}`}
               </title>
               <rect
                 x={left}
@@ -441,7 +441,7 @@ export function CorrelationBarChart({
                 height={barH}
                 rx={2}
                 fill={fill}
-                opacity={c.p != null && c.p >= 0.05 ? 0.45 : 0.85}
+                opacity={c.p != null && (c.p_adjusted ?? c.p) >= 0.05 ? 0.45 : 0.85}
               />
               <text
                 x={c.r >= 0 ? x1 + 4 : x1 - 4}
