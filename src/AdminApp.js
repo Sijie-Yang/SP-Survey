@@ -66,8 +66,6 @@ import {
   readSidebarOpen,
   writeSidebarOpen,
 } from './hooks/surveyAssistantUtils';
-
-const SiliconSamples = lazy(() => import('./components/admin/SiliconSamples'));
 import { isSupabaseConfigured } from './lib/supabase';
 import { isLocalSelfHosted } from './lib/appMode';
 import { API_ROOT } from './lib/apiConfig';
@@ -81,6 +79,8 @@ import {
   saveProjectFull,
 } from './lib/projectManager';
 import { useNavigate } from 'react-router-dom';
+
+const SiliconSamples = lazy(() => import('./components/admin/SiliconSamples'));
 
 const ADMIN_TABS_VERSION = 2;
 
