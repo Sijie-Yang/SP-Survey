@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, lazy, Suspense } from 'react';
 import { RegionProvider, useRegion } from './contexts/RegionContext';
 import { tf } from './contexts/adminI18n';
 import RegionSwitcher from './components/admin/RegionSwitcher';
@@ -56,7 +56,9 @@ import ProjectSidebar from './components/admin/ProjectSidebar';
 import BackendStatus from './components/admin/BackendStatus';
 import AiAssistantSidebar from './components/admin/AiAssistantSidebar';
 import { AdminEmptyState } from './components/admin/AdminPageLayout';
-import useLocalSurveyAssistant from './hooks/useLocalSurveyAssistant';
+import useSurveyAssistant from './hooks/useSurveyAssistant';
+import { useSiliconTasks } from './hooks/useSiliconTasks';
+import { isAssistantEnabled, isSiliconExperimentalEnabled } from './lib/featureFlags';
 import {
   AI_SIDEBAR_ID,
   AI_SIDEBAR_WIDTH,
@@ -64,6 +66,8 @@ import {
   readSidebarOpen,
   writeSidebarOpen,
 } from './hooks/surveyAssistantUtils';
+
+const SiliconSamples = lazy(() => import('./components/admin/SiliconSamples'));
 import { isSupabaseConfigured } from './lib/supabase';
 import { isLocalSelfHosted } from './lib/appMode';
 import { API_ROOT } from './lib/apiConfig';
@@ -72,6 +76,7 @@ import { demoSurveyConfig } from './lib/demoConfig';
 import {
   migrateExistingConfig,
   getActiveProject,
+  getProjectById,
   setActiveProject,
   saveProjectFull,
 } from './lib/projectManager';
@@ -98,7 +103,7 @@ function TabPanel({ children, value, index, keepMounted = false, ...other }) {
   );
 }
 
-function AdminWorkspaceTabs({ value, onChange }) {
+function AdminWorkspaceTabs({ value, onChange, siliconEnabled = true }) {
   const { t } = useRegion();
   const tabsRef = useRef(null);
   useEffect(() => {
@@ -135,6 +140,7 @@ function AdminWorkspaceTabs({ value, onChange }) {
         <Tab label={t.tabShare} />
         <Tab label={t.tabResults} />
         <Tab label={t.tabPractice} />
+        {siliconEnabled && <Tab label={t.tabSilicon} />}
       </Tabs>
     </Box>
   );
@@ -177,7 +183,11 @@ function AdminWorkspace() {
   const theme = createCustomTheme(currentTheme);
   
   const [tabValue, setTabValue] = useState(0);
+  const [assistantEnabled, setAssistantEnabled] = useState(() => isAssistantEnabled());
+  const [siliconEnabled, setSiliconEnabled] = useState(() => isSiliconExperimentalEnabled());
   const [practiceKeepAlive, setPracticeKeepAlive] = useState(false);
+  const [siliconKeepAlive, setSiliconKeepAlive] = useState(false);
+  const [aiSidebarPanel, setAiSidebarPanel] = useState('assistant');
   const handlePracticeSessionActive = useCallback((active) => {
     setPracticeKeepAlive(!!active);
   }, []);
@@ -274,6 +284,32 @@ function AdminWorkspace() {
   }, [wideLayout]);
   const goToAdminTab = useCallback((nextTab) => {
     setTabValue(nextTab);
+  }, []);
+  const openSiliconTab = useCallback(() => {
+    if (!siliconEnabled) return;
+    setTabValue(7);
+    if (!wideLayout) setAiSidebarOpen(false);
+  }, [siliconEnabled, wideLayout]);
+  useEffect(() => {
+    if (tabValue === 7) setSiliconKeepAlive(true);
+  }, [tabValue]);
+  useEffect(() => {
+    if (!siliconEnabled && tabValue === 7) setTabValue(0);
+  }, [siliconEnabled, tabValue]);
+  useEffect(() => {
+    const syncFlags = () => {
+      setAssistantEnabled(isAssistantEnabled());
+      setSiliconEnabled(isSiliconExperimentalEnabled());
+    };
+    window.addEventListener('sp-feature-flags', syncFlags);
+    return () => window.removeEventListener('sp-feature-flags', syncFlags);
+  }, []);
+  useEffect(() => {
+    const openSilicon = () => {
+      if (isSiliconExperimentalEnabled()) setTabValue(7);
+    };
+    window.addEventListener('sp-open-silicon-tab', openSilicon);
+    return () => window.removeEventListener('sp-open-silicon-tab', openSilicon);
   }, []);
 
   useEffect(() => {
@@ -724,11 +760,46 @@ function AdminWorkspace() {
     }
   };
 
-  const assistant = useLocalSurveyAssistant({
-    config: surveyConfig,
-    onChange: handleSurveyConfigChange,
+  const performSaveRef = useRef(null);
+  const assistant = useSurveyAssistant({
     currentProject,
+    surveyConfig,
+    onSurveyConfigChange: handleSurveyConfigChange,
+    enabled: assistantEnabled && Boolean(currentProject),
+    hasUnsavedChanges,
+    lastSavedConfig,
+    onPrepareWrite: async () => {
+      if (!hasUnsavedChanges) return { ok: true };
+      const result = await performSaveRef.current?.({ silent: true });
+      if (result && result.success === false) {
+        return { ok: false, message: result.error || 'The editor draft could not be saved before the Assistant edit.' };
+      }
+      return { ok: true };
+    },
   });
+  const siliconWatching = siliconEnabled && (
+    tabValue === 7
+    || (aiSidebarOpen && aiSidebarPanel === 'tasks')
+  );
+  const siliconTasks = useSiliconTasks({
+    enabled: siliconEnabled,
+    watch: siliconWatching,
+    onTerminal: (run) => {
+      setSnackbar({
+        open: true,
+        severity: run.status === 'completed' ? 'success' : 'info',
+        message: tf(t.siliconTaskFinished, {
+          project: run.project_name || run.project_id || '',
+          status: run.status,
+        }),
+      });
+    },
+  });
+  const openTaskProject = useCallback(async (projectId) => {
+    if (!projectId) return;
+    const project = await getProjectById(projectId);
+    if (project) setCurrentProject(project);
+  }, []);
 
   const handleProjectUpdate = async (updatedProject) => {
     console.log('🔄 Updating project:', updatedProject.name);
@@ -908,6 +979,7 @@ function AdminWorkspace() {
       saveInFlightRef.current = false;
     }
   }, [currentProject, projectStates, surveyConfig, latestImageDatasetConfig]);
+  performSaveRef.current = performSave;
 
   const handleManualSave = async () => {
     await performSave({ silent: false });
@@ -1359,13 +1431,23 @@ function AdminWorkspace() {
         width={PROJECT_SIDEBAR_WIDTH}
       />
 
-      <AiAssistantSidebar
-        open={aiSidebarOpen}
-        onClose={() => setAiSidebarOpen(false)}
-        assistant={assistant}
-        variant={wideLayout ? 'persistent' : 'temporary'}
-        width={AI_SIDEBAR_WIDTH}
-      />
+      {(assistantEnabled || siliconEnabled) && (
+        <AiAssistantSidebar
+          open={aiSidebarOpen}
+          onClose={() => setAiSidebarOpen(false)}
+          assistant={assistant}
+          variant={wideLayout ? 'persistent' : 'temporary'}
+          width={AI_SIDEBAR_WIDTH}
+          panel={aiSidebarPanel}
+          onPanelChange={setAiSidebarPanel}
+          onOpenSilicon={siliconEnabled ? openSiliconTab : undefined}
+          siliconTasks={siliconEnabled ? siliconTasks : null}
+          siliconEnabled={siliconEnabled}
+          currentProjectId={currentProject?.id}
+          onOpenTaskProject={openTaskProject}
+          hideAssistant={!assistantEnabled}
+        />
+      )}
 
       <Container 
         maxWidth="xl" 
@@ -1396,7 +1478,7 @@ function AdminWorkspace() {
           // Project content
           <Paper sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <AdminWorkspaceTabs value={tabValue} onChange={handleTabChange} />
+              <AdminWorkspaceTabs value={tabValue} onChange={handleTabChange} siliconEnabled={siliconEnabled} />
             </Box>
 
             <TabPanel value={tabValue} index={0}>
@@ -1470,6 +1552,13 @@ function AdminWorkspace() {
                 onSessionActiveChange={handlePracticeSessionActive}
               />
             </TabPanel>
+            {siliconEnabled && (
+              <TabPanel value={tabValue} index={7} keepMounted={siliconKeepAlive}>
+                <Suspense fallback={<Typography>{t.loadingProjectSystem}</Typography>}>
+                  <SiliconSamples currentProject={currentProject} surveyConfig={surveyConfig} />
+                </Suspense>
+              </TabPanel>
+            )}
           </Paper>
         )}
       </Container>
@@ -1477,17 +1566,17 @@ function AdminWorkspace() {
       {/* Preview Dialog */}
       <Dialog open={previewOpen} onClose={() => setPreviewOpen(false)} maxWidth="lg" fullWidth>
         <DialogTitle>
-          📋 Survey Preview - Exact Live Survey Replica
+          {t.previewSurvey}
         </DialogTitle>
         <DialogContent>
           {surveyConfig ? (
             <SurveyPreview config={surveyConfig} currentProject={currentProject} />
           ) : (
-            <Typography>No survey configuration available</Typography>
+            <Typography>{t.noProjectBody}</Typography>
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setPreviewOpen(false)}>Close</Button>
+          <Button onClick={() => setPreviewOpen(false)}>{t.resultsClose}</Button>
         </DialogActions>
       </Dialog>
 

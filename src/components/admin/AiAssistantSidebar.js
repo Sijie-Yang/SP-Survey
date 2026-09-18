@@ -3,6 +3,8 @@ import {
   Box,
   Drawer,
   IconButton,
+  Tab,
+  Tabs,
   Typography,
   Tooltip,
   Menu,
@@ -17,24 +19,37 @@ import {
   Download,
   SmartToy,
   MoreHoriz,
+  ScienceOutlined,
 } from '@mui/icons-material';
 import { useRegion } from '../../contexts/RegionContext';
+import { tf } from '../../contexts/adminI18n';
 import ChatAssistant from './ChatAssistant';
-import { chatPropsFromLocalAssistant } from '../../hooks/useLocalSurveyAssistant';
+import RunningTasksPanel from './RunningTasksPanel';
+import { chatPropsFromAssistant } from '../../hooks/useSurveyAssistant';
 import { AI_SIDEBAR_ID, AI_SIDEBAR_WIDTH } from '../../hooks/surveyAssistantUtils';
 
 export default function AiAssistantSidebar({
   open,
   onClose,
   assistant,
+  onOpenSilicon,
   variant = 'persistent',
   width = AI_SIDEBAR_WIDTH,
+  panel = 'assistant',
+  onPanelChange,
+  siliconTasks = null,
+  siliconEnabled = false,
+  currentProjectId,
+  onOpenTaskProject,
+  hideAssistant = false,
 }) {
   const { t } = useRegion();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [confirmClear, setConfirmClear] = useState(false);
   const [menuAnchor, setMenuAnchor] = useState(null);
-  const chatProps = chatPropsFromLocalAssistant(assistant);
+  const chatProps = chatPropsFromAssistant(assistant);
+  const showTasks = Boolean(siliconEnabled && siliconTasks);
+  const activePanel = hideAssistant ? 'tasks' : panel;
 
   return (
     <Drawer
@@ -91,7 +106,7 @@ export default function AiAssistantSidebar({
           <Box sx={{ minWidth: 0 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
               <Typography variant="subtitle2" sx={{ fontWeight: 600, lineHeight: 1.25 }} noWrap>
-                {t.aiSidebarTitle}
+                {activePanel === 'tasks' ? t.siliconTasksTitle : t.aiSidebarTitle}
               </Typography>
               <Box
                 role="img"
@@ -112,7 +127,7 @@ export default function AiAssistantSidebar({
           </Box>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          {chatProps.messages?.length > 0 && (
+          {(chatProps.messages?.length > 0 || onOpenSilicon) && (
             <Tooltip title={t.aiSidebarMore}>
               <IconButton
                 size="small"
@@ -147,6 +162,12 @@ export default function AiAssistantSidebar({
         onClose={() => setMenuAnchor(null)}
         slotProps={{ paper: { sx: { minWidth: 190, borderRadius: 2.5 } } }}
       >
+        {onOpenSilicon && (
+          <MenuItem onClick={() => { setMenuAnchor(null); onOpenSilicon(); }}>
+            <ListItemIcon><ScienceOutlined fontSize="small" /></ListItemIcon>
+            {t.aiSidebarSilicon}
+          </MenuItem>
+        )}
         {chatProps.messages?.length > 0 && (
           <MenuItem onClick={() => { setMenuAnchor(null); chatProps.onDownloadHistory?.(); }}>
             <ListItemIcon><Download fontSize="small" /></ListItemIcon>
@@ -160,15 +181,41 @@ export default function AiAssistantSidebar({
           </MenuItem>
         )}
       </Menu>
-      <Box sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+
+      {showTasks && !hideAssistant && (
+        <Tabs
+          value={activePanel}
+          onChange={(_event, value) => onPanelChange?.(value)}
+          variant="fullWidth"
+          sx={{ minHeight: 40, borderBottom: '1px solid', borderColor: 'divider', flexShrink: 0 }}
+        >
+          <Tab value="assistant" label={t.aiSidebarTitle} sx={{ minHeight: 40, textTransform: 'none' }} />
+          <Tab
+            value="tasks"
+            label={tf(t.siliconTasksTab, { count: siliconTasks.activeCount })}
+            sx={{ minHeight: 40, textTransform: 'none' }}
+          />
+        </Tabs>
+      )}
+      <Box sx={{ flex: 1, minHeight: 0, display: hideAssistant || activePanel === 'tasks' ? 'none' : 'flex', flexDirection: 'column' }}>
         <ChatAssistant
           variant="content"
           fillHeight
           settingsOpen={settingsOpen}
           onSettingsOpenChange={setSettingsOpen}
+          onOpenSilicon={onOpenSilicon}
           {...chatProps}
         />
       </Box>
+      {showTasks && (
+        <Box sx={{ flex: 1, minHeight: 0, display: activePanel === 'tasks' ? 'flex' : 'none', flexDirection: 'column' }}>
+          <RunningTasksPanel
+            tasks={siliconTasks}
+            currentProjectId={currentProjectId}
+            onOpenProject={onOpenTaskProject}
+          />
+        </Box>
+      )}
       <ConfirmDialog
         open={confirmClear}
         title={t.aiClearHistoryTitle}
