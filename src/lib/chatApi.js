@@ -6,8 +6,6 @@
 import { API_BASE_URL } from './apiConfig';
 import { sendAgentChat } from './agentApi';
 
-const API_BASE = API_BASE_URL;
-
 /**
  * Send a chat message and get AI response
  * @param {string} message - User's message
