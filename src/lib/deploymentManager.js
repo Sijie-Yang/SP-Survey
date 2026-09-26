@@ -1,5 +1,76 @@
+import { Serializer } from 'survey-core';
 import { getImagesFromHuggingFace } from './huggingface';
 import { API_ROOT } from './apiConfig';
+import { stripSecretFields } from './secretFields';
+
+// SP-Survey fields the participant bundle reads in addition to SurveyJS survey properties.
+const SP_SURVEY_PARTICIPANT_FIELDS = [
+  'id',
+  'name',
+  'theme',
+  'settings',
+  'preloadedImages',
+];
+
+export const PARTICIPANT_DEPENDENCIES = [
+  '@dnd-kit/core',
+  '@dnd-kit/sortable',
+  '@dnd-kit/utilities',
+  '@emotion/react',
+  '@emotion/styled',
+  '@mui/icons-material',
+  '@mui/material',
+  '@supabase/supabase-js',
+  'react',
+  'react-dom',
+  'react-scripts',
+  'survey-core',
+  'survey-react-ui',
+];
+
+export const PARTICIPANT_DEV_DEPENDENCIES = ['cross-env'];
+
+const toDependencyPlaceholders = (names) => names.reduce((deps, name) => {
+  deps[name] = '*';
+  return deps;
+}, {});
+
+export const getParticipantConfigFields = () => new Set([
+  ...Serializer.getProperties('survey').map((property) => property.name),
+  ...SP_SURVEY_PARTICIPANT_FIELDS,
+]);
+
+// Only allowlisted fields reach deploymentConfig.js; secret-named keys are stripped at any depth.
+export const buildParticipantDeploymentConfig = (config, { preloadedImages, timestamp } = {}) => {
+  const allowed = getParticipantConfigFields();
+  const participantConfig = {};
+  Object.keys(config || {}).forEach((key) => {
+    if (allowed.has(key) && config[key] !== undefined) participantConfig[key] = config[key];
+  });
+  if (preloadedImages) participantConfig.preloadedImages = preloadedImages;
+  if (participantConfig.preloadedImages?.length > 0 && timestamp) {
+    participantConfig.imagePreloadTimestamp = timestamp;
+  }
+  return stripSecretFields(participantConfig);
+};
+
+const decodeJwtPayload = (token) => {
+  try {
+    const segment = String(token).split('.')[1];
+    if (!segment) return null;
+    const base64 = segment.replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(atob(base64.padEnd(base64.length + ((4 - (base64.length % 4)) % 4), '=')));
+  } catch (error) {
+    return null;
+  }
+};
+
+export const isPrivilegedSupabaseKey = (key) => {
+  const value = String(key || '').trim();
+  if (!value) return false;
+  if (value.startsWith('sb_secret_')) return true;
+  return decodeJwtPayload(value)?.role === 'service_role';
+};
 
 export const prepareDeploymentFolder = async (currentProject) => {
   try {
@@ -113,50 +184,43 @@ const preloadHuggingFaceImages = async (imageDatasetConfig) => {
   }
 };
 
-const generateDeploymentFiles = async (deploymentData) => {
+export const generateDeploymentFiles = async (deploymentData) => {
   const files = {};
   const projectSupabase = deploymentData?.config?.supabaseConfig || {};
   const imageDatasetSupabaseUrl = deploymentData?.config?.imageDatasetConfig?.supabaseUrl || '';
   const imageDatasetSupabaseAnonKey = deploymentData?.config?.imageDatasetConfig?.supabaseAnonKey || '';
   const resolvedSupabaseUrl = projectSupabase.url || imageDatasetSupabaseUrl || 'your-supabase-project-url';
-  const resolvedAnonKey =
+  const candidateAnonKey =
     imageDatasetSupabaseAnonKey ||
     projectSupabase.anonKey ||
     projectSupabase.publicKey ||
-    'your-supabase-anon-key';
+    '';
+  if (isPrivilegedSupabaseKey(candidateAnonKey)) {
+    console.warn('⚠️ The configured Supabase anon key is a service_role/secret key; it was not written to the deployment.');
+  }
+  const resolvedAnonKey = candidateAnonKey && !isPrivilegedSupabaseKey(candidateAnonKey)
+    ? candidateAnonKey
+    : 'your-supabase-anon-key';
   
-  // 1. Package.json for deployment (survey-only, minimal dependencies)
+  // 1. Package.json for deployment (survey-only, minimal dependencies).
+  // Versions are placeholders; /api/create-deployment pins them from the repo's package.json.
   files['package.json'] = JSON.stringify({
     "name": deploymentData.projectName.toLowerCase().replace(/[^a-z0-9-]/g, '-'),
     "version": "1.0.0",
     "private": true,
-    "dependencies": {
-      "@dnd-kit/core": "^6.0.8",
-      "@dnd-kit/sortable": "^7.0.2",
-      "@dnd-kit/utilities": "^3.2.1",
-      "@emotion/react": "^11.11.1",
-      "@emotion/styled": "^11.11.0",
-      "@mui/material": "^5.14.20",
-      "@supabase/supabase-js": "^2.38.4",
-      "react": "^18.2.0",
-      "react-dom": "^18.2.0",
-      "react-scripts": "5.0.1",
-      "survey-core": "^1.9.131",
-      "survey-react-ui": "^1.9.131"
-    },
-    "devDependencies": {
-      "cross-env": "^7.0.3"
-    },
+    "dependencies": toDependencyPlaceholders(PARTICIPANT_DEPENDENCIES),
+    "devDependencies": toDependencyPlaceholders(PARTICIPANT_DEV_DEPENDENCIES),
     "scripts": {
       "start": "react-scripts start",
       "build": "cross-env CI=false react-scripts build",
       "test": "react-scripts test",
       "eject": "react-scripts eject"
     },
+    // root stops ESLint from inheriting the parent repo's config when built under deployments/.
     "eslintConfig": {
+      "root": true,
       "extends": [
-        "react-app",
-        "react-app/jest"
+        "react-app"
       ]
     },
     "browserslist": {
@@ -199,9 +263,6 @@ const generateDeploymentFiles = async (deploymentData) => {
 REACT_APP_SUPABASE_URL=your-supabase-project-url
 REACT_APP_SUPABASE_ANON_KEY=your-supabase-anon-key
 
-# Hugging Face Configuration (Optional)
-REACT_APP_HUGGINGFACE_TOKEN=your-huggingface-token
-
 # Production Settings
 REACT_APP_ENVIRONMENT=production
 GENERATE_SOURCEMAP=false`;
@@ -212,9 +273,6 @@ GENERATE_SOURCEMAP=false`;
 # Please verify values before publishing.
 REACT_APP_SUPABASE_URL=${resolvedSupabaseUrl}
 REACT_APP_SUPABASE_ANON_KEY=${resolvedAnonKey}
-
-# Hugging Face Configuration (Optional)
-REACT_APP_HUGGINGFACE_TOKEN=your-huggingface-token
 
 # Production Settings
 REACT_APP_ENVIRONMENT=production
@@ -253,18 +311,12 @@ Generated on: ${new Date(deploymentData.timestamp).toLocaleString()}
 
   // 5. Project configuration with preloaded images
   if (deploymentData.config) {
-    const configWithPreloadedImages = { ...deploymentData.config };
-    
-    // Add preloaded images to the configuration.
-    // deploymentData.preloadedImages is set only when images were re-fetched from HuggingFace.
-    // Otherwise, configWithPreloadedImages.preloadedImages already carries the Supabase URLs
-    // from currentProject, so we just stamp the deployment timestamp.
-    if (deploymentData.preloadedImages) {
-      configWithPreloadedImages.preloadedImages = deploymentData.preloadedImages;
-      configWithPreloadedImages.imagePreloadTimestamp = deploymentData.timestamp;
-    } else if (configWithPreloadedImages.preloadedImages?.length > 0) {
-      configWithPreloadedImages.imagePreloadTimestamp = deploymentData.timestamp;
-    }
+    // deploymentData.preloadedImages is set only when images were re-fetched from HuggingFace;
+    // otherwise the project's own preloadedImages (Supabase URLs) are kept.
+    const configWithPreloadedImages = buildParticipantDeploymentConfig(deploymentData.config, {
+      preloadedImages: deploymentData.preloadedImages,
+      timestamp: deploymentData.timestamp,
+    });
     
     files['src/config/deploymentConfig.js'] = `// Auto-generated deployment configuration
 // Generated on: ${new Date(deploymentData.timestamp).toLocaleString()}
@@ -555,7 +607,7 @@ export default function SurveyAppClean() {
   return (
     <Box
       className="sp-survey-theme-host"
-      style={buildSurveyHostStyle(surveyConfig.theme || {})}
+      style={buildSurveyHostStyle(deploymentConfig.theme || {})}
       sx={{ minHeight: '100vh' }}
     >
       <Box sx={{ maxWidth: 1200, mx: 'auto', px: 2, py: 3 }}>
@@ -580,10 +632,13 @@ node_modules/
 
 # Misc
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+
+# Environment files and local researcher data (may hold credentials)
+.env*
+!.env.example
+public/projects/
+public/responses/
+.backups/
 
 # Logs
 npm-debug.log*
@@ -624,6 +679,7 @@ This folder contains all the files needed for deployment.
 **Note:** The \`.gitignore\` file is configured to exclude:
 - \`node_modules/\` - Will be reinstalled on Vercel
 - \`build/\` - Will be rebuilt on Vercel
+- \`.env*\` and local project/response data - Set Supabase URL and anon key in Vercel instead
 - IDE and OS temporary files
 
 This keeps your repository clean and avoids uploading large files to GitHub.

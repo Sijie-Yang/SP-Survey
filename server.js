@@ -7,6 +7,8 @@ const cors = require('cors');
 const OpenAI = require('openai');
 const { resolveAiRequest, aiChat, formatAiError } = require('./aiClient');
 const { registerAgentProjectApi } = require('./src/server/agentProjectApi');
+const { copyParticipantPublicAssets } = require('./src/server/deploymentPublicFilter');
+const { alignDeploymentPackageJson } = require('./src/server/deploymentPackage');
 
 // Import multi-agent review system
 const {
@@ -182,6 +184,11 @@ app.post('/api/create-deployment', async (req, res) => {
     if (!projectName || !files) {
       return res.status(400).json({ success: false, error: 'Project name and files are required' });
     }
+
+    if (files['package.json']) {
+      const repoPackage = await fs.readJson(path.join(__dirname, 'package.json'));
+      files['package.json'] = alignDeploymentPackageJson(files['package.json'], repoPackage);
+    }
     
     // Create deployment folder with timestamp
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
@@ -211,7 +218,10 @@ app.post('/api/create-deployment', async (req, res) => {
     }
     
     if (await fs.pathExists(publicPath)) {
-      await fs.copy(publicPath, path.join(deploymentPath, 'public'));
+      const skipped = await copyParticipantPublicAssets(fs, publicPath, path.join(deploymentPath, 'public'));
+      if (skipped.length > 0) {
+        console.log(`🔒 Excluded ${skipped.length} local-only public entries from deployment`);
+      }
     }
     
     // Write deployment-specific files (this will overwrite src/App.js with survey-only version)
