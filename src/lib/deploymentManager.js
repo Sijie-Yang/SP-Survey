@@ -69,6 +69,9 @@ export const resolveParticipantSourceConfig = (currentProject) => {
       || sourceConfig?.preloadedImages,
     ...(mediaFolderTags ? { mediaFolderTags } : {}),
     ...(publishedVersion != null ? { publishedVersion } : {}),
+    // Env generation reads these; the allowlist keeps them out of deploymentConfig.js.
+    supabaseConfig: currentProject?.supabaseConfig || sourceConfig?.supabaseConfig,
+    imageDatasetConfig: currentProject?.imageDatasetConfig || sourceConfig?.imageDatasetConfig,
   };
 };
 

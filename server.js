@@ -329,7 +329,10 @@ app.post('/api/create-deployment', async (req, res) => {
             'AdminApp.js',
             'components/admin'
           ];
-          return !excludePaths.some(excludePath => relativePath.includes(excludePath));
+          if (excludePaths.some((excludePath) => relativePath.includes(excludePath))) return false;
+          // Test fixtures embed fake secrets; they are not part of SurveyApp.
+          if (/\.test\.(js|jsx|mjs)$/.test(relativePath)) return false;
+          return true;
         }
       });
     }
