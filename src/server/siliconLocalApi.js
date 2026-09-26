@@ -1,6 +1,13 @@
 const path = require('path');
 const crypto = require('crypto');
 const { resolveAiRequest, aiChat, formatAiError } = require('../../aiClient');
+const {
+  assignMediaForSurvey,
+  diagnoseMissingMedia,
+  preflightMediaForQuestions,
+  questionNeedsShownMedia,
+  questionWithShownMedia,
+} = require('../lib/siliconMediaAssign');
 
 const DISPLAY_ONLY = new Set(['html', 'expression', 'image', 'mediadisplay']);
 const SUPPORTED = new Set([
@@ -15,22 +22,98 @@ const SUPPORTED = new Set([
   'matrix', 'imagematrix', 'mediamatrix',
   'pointallocation', 'imagepointallocation', 'mediapointallocation',
 ]);
+const MAX_PERSONAS_PER_RUN = 20;
+const MAX_RESPONSES_PER_RUN = 100;
+const MAX_UNITS_PER_RUN = 400;
 
 function createId(prefix) {
   return `${prefix}_${crypto.randomBytes(6).toString('hex')}`;
 }
 
-function collectQuestions(surveyConfig, names = null) {
+function listNamedQuestions(surveyConfig, names = null) {
   const wanted = Array.isArray(names) && names.length ? new Set(names) : null;
   const out = [];
   for (const page of surveyConfig?.pages || []) {
     for (const el of page.elements || []) {
       if (wanted && !wanted.has(el.name)) continue;
-      if (DISPLAY_ONLY.has(el.type) || !SUPPORTED.has(el.type)) continue;
+      if (DISPLAY_ONLY.has(el.type)) continue;
       out.push(el);
     }
   }
   return out;
+}
+
+function collectQuestions(surveyConfig, names = null) {
+  return listNamedQuestions(surveyConfig, names).filter((el) => SUPPORTED.has(el.type));
+}
+
+function unsupportedQuestionReport(surveyConfig, names = null) {
+  return listNamedQuestions(surveyConfig, names)
+    .filter((el) => !SUPPORTED.has(el.type))
+    .map((el) => ({
+      name: el.name,
+      type: el.type,
+      reason: `Type ${el.type || 'unknown'} is outside the Silicon pretest whitelist`,
+    }));
+}
+
+function trialCountOf(question = {}) {
+  const n = Number(question?.trialCount ?? question?.trials ?? 1);
+  return Number.isFinite(n) && n > 1 ? Math.min(200, Math.floor(n)) : 1;
+}
+
+function mediaPool(project = {}) {
+  const config = project.surveyConfig || {};
+  const seen = new Set();
+  const out = [];
+  for (const img of [
+    ...(Array.isArray(project.preloadedImages) ? project.preloadedImages : []),
+    ...(Array.isArray(config.preloadedImages) ? config.preloadedImages : []),
+  ]) {
+    const url = typeof img === 'string' ? img : (img?.url || img?.src || img?.path);
+    if (!url || seen.has(url)) continue;
+    seen.add(url);
+    out.push(typeof img === 'string' ? { url } : img);
+  }
+  return out;
+}
+
+function mediaDataset(project = {}) {
+  return project.imageDatasetConfig
+    || project.surveyConfig?.imageDatasetConfig
+    || {};
+}
+
+function runMediaPool(run, project) {
+  const snap = run?.media_snapshot;
+  if (Array.isArray(snap?.images) && snap.images.length) return snap.images;
+  if (Array.isArray(snap) && snap.length) return snap;
+  return mediaPool(project);
+}
+
+function runMediaDataset(run, project) {
+  return run?.media_snapshot?.dataset || mediaDataset(project);
+}
+
+function urlsToParts(urls = []) {
+  return (urls || [])
+    .map(String)
+    .filter((url) => /^https?:\/\//.test(url))
+    .map((url) => ({ type: 'image_url', image_url: { url } }));
+}
+
+function preflightError(preflight) {
+  const first = preflight.errors[0] || {};
+  const code = first.code === 'folder_empty'
+    ? 'SILICON_FOLDER_EMPTY'
+    : first.code === 'image_unreadable'
+      ? 'SILICON_IMAGE_UNREADABLE'
+      : 'SILICON_NO_MEDIA_SOURCE';
+  const error = new Error(first.error || 'No usable images for the selected questions');
+  error.status = 400;
+  error.code = code;
+  error.details = preflight.errors;
+  return error;
 }
 
 function personaPrompt(attributes = {}, name = 'Persona') {
@@ -117,20 +200,18 @@ function questionPrompt(question) {
   ].filter(Boolean).join('\n');
 }
 
-function mediaParts(question, project) {
-  const images = [
-    ...(question.imageLinks || []),
-    ...(question.images || []),
-    ...((project?.surveyConfig?.preloadedImages || []).filter((img) => {
-      const folder = question.mediaFolder || question.imageFolder;
-      return !folder || img.folder === folder || img.folderPath === folder;
-    }).slice(0, 4)),
-  ];
-  return images.map((img) => {
-    const url = typeof img === 'string' ? img : (img.url || img.src || img.path);
-    if (!url || !/^https?:\/\//.test(url)) return null;
-    return { type: 'image_url', image_url: { url } };
-  }).filter(Boolean).slice(0, 4);
+function assignUnitMedia(run, question, project, unit) {
+  const seed = `${run.seed ?? run.id}:${unit.persona_id}:${unit.repeat_index || unit.repeat || 1}`;
+  const assigned = assignMediaForSurvey({
+    surveyConfig: run.survey_snapshot || project.surveyConfig || { pages: [{ elements: [question] }] },
+    pool: runMediaPool(run, project),
+    seed,
+    dataset: runMediaDataset(run, project),
+    questionNames: [question.name],
+  });
+  const raw = assigned[question.name];
+  const trialSets = Array.isArray(raw?.[0]) ? raw : [raw || []];
+  return trialSets[(Number(unit.trial_index) || 1) - 1] || trialSets[0] || [];
 }
 
 function stripRunSecrets(store) {
@@ -233,12 +314,20 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
     });
   };
 
-  const answerUnit = async (run, persona, question, project) => {
+  const answerUnit = async (run, persona, question, project, unit) => {
     const resolved = resolveAiRequest(runApiKeys.get(run.id) || run.apiKey);
     if (!resolved) throw new Error('API key is required. Add your OpenAI or OpenRouter key in Assistant settings.');
-    const images = mediaParts(question, project);
+    const urls = assignUnitMedia(run, question, project, unit);
+    if (questionNeedsShownMedia(question) && !urls.length) {
+      const diagnosed = diagnoseMissingMedia(question, runMediaPool(run, project));
+      const error = new Error(diagnosed.error);
+      error.code = diagnosed.code;
+      throw error;
+    }
+    const images = urlsToParts(urls);
+    const prompted = questionWithShownMedia(question, urls);
     const userContent = [
-      { type: 'text', text: `${persona.prompt || personaPrompt(persona.attributes, persona.name)}\n\n${questionPrompt(question)}` },
+      { type: 'text', text: `${persona.prompt || personaPrompt(persona.attributes, persona.name)}\n\n${questionPrompt(prompted)}` },
       ...images,
     ];
     const completion = await aiChat(resolved, 'fast', {
@@ -251,7 +340,7 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
     });
     const parsed = parseModelJson(completion.choices?.[0]?.message?.content || '');
     const usage = completion.usage?.total_tokens || 0;
-    return { answer: parsed.answer ?? parsed, tokens: usage, images };
+    return { answer: parsed.answer ?? parsed, tokens: usage, images, urls };
   };
 
   const processRun = async (projectId, runId) => {
@@ -319,17 +408,19 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
         });
         try {
           if (!persona || !question) throw new Error('Missing persona or question');
-          const result = await answerUnit(latest, persona, question, project);
+          const result = await answerUnit(latest, persona, question, project, unit);
           await withStore(projectId, (current) => {
             const row = (current.units[runId] || []).find((item) => item.id === unit.id);
             const runRow = current.runs.find((item) => item.id === runId);
+            const shownUrls = result.urls || [];
             if (row) {
               row.status = 'answer';
               row.answer = result.answer;
+              row.images = shownUrls;
               row.error = null;
               row.finished_at = new Date().toISOString();
             }
-            const participantId = `${runId}:${unit.persona_id}:${unit.repeat}`;
+            const participantId = `${runId}:${unit.persona_id}:${unit.repeat_index || unit.repeat}`;
             const responses = current.responses[runId] || [];
             let response = responses.find((item) => item.participant_id === participantId);
             if (!response) {
@@ -350,9 +441,28 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
               };
               responses.push(response);
             }
-            response.responses[unit.question_name] = { answer: result.answer };
-            if (result.images?.length) {
-              response.displayed_images[unit.question_name] = result.images.map((part) => part.image_url.url);
+            const trialsWanted = trialCountOf(question);
+            if (trialsWanted > 1) {
+              const shown = response.displayed_images[unit.question_name];
+              const sets = Array.isArray(shown?.[0]) || (Array.isArray(shown) && shown.length === 0)
+                ? [...(shown || [])]
+                : (shown ? [shown] : []);
+              while (sets.length < trialsWanted) sets.push([]);
+              sets[(Number(unit.trial_index) || 1) - 1] = shownUrls;
+              response.displayed_images[unit.question_name] = sets;
+              const currentAnswer = response.responses[unit.question_name];
+              const trials = Array.isArray(currentAnswer?.trials) ? [...currentAnswer.trials] : [];
+              trials[(Number(unit.trial_index) || 1) - 1] = {
+                answer: result.answer,
+                value: result.answer,
+                shown_images: shownUrls,
+              };
+              response.responses[unit.question_name] = { trials };
+            } else {
+              response.responses[unit.question_name] = { answer: result.answer };
+              if (shownUrls.length) {
+                response.displayed_images[unit.question_name] = shownUrls;
+              }
             }
             current.responses[runId] = responses;
             if (runRow) {
@@ -431,7 +541,12 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
   };
 
   const sendError = (res, error) => {
-    res.status(error.status || 500).json({ success: false, error: error.message, code: error.code });
+    res.status(error.status || 500).json({
+      success: false,
+      error: error.message,
+      code: error.code,
+      details: error.details,
+    });
   };
 
   app.get('/api/agent/silicon/personas', async (req, res) => {
@@ -519,18 +634,86 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
         });
       }
       const project = await io.readProject(projectId);
-      const questionNames = Array.isArray(req.body.questionNames) ? req.body.questionNames : [];
-      const questions = collectQuestions(project.surveyConfig || {}, questionNames);
-      if (!questions.length) {
-        return res.status(400).json({ success: false, error: 'No supported questions selected', code: 'SILICON_NO_MEDIA_SOURCE' });
+      const requestedNames = Array.isArray(req.body.questionNames)
+        ? req.body.questionNames.filter(Boolean)
+        : [];
+      const supported = collectQuestions(project.surveyConfig || {});
+      const names = requestedNames.length ? requestedNames : supported.map((question) => question.name);
+      const unsupported = unsupportedQuestionReport(project.surveyConfig || {}, names);
+      if (unsupported.length) {
+        return res.status(400).json({
+          success: false,
+          error: `Silicon cannot run these questions: ${unsupported.map((item) => `${item.name} (${item.reason})`).join('; ')}`,
+          code: 'SILICON_UNSUPPORTED_QUESTIONS',
+          details: unsupported,
+        });
       }
-      const repeats = Math.max(1, Number(req.body.repeats) || 1);
+      const questions = collectQuestions(project.surveyConfig || {}, names);
+      if (!questions.length) {
+        return res.status(400).json({
+          success: false,
+          error: 'No Silicon-supported questions in this draft',
+          code: 'SILICON_NO_SUPPORTED_QUESTIONS',
+        });
+      }
+      const limitedPersonaIds = [...new Set(personaIds)].slice(0, MAX_PERSONAS_PER_RUN);
+      const repeats = Math.max(1, Math.min(20, Number(req.body.repeats) || 1));
       const now = new Date().toISOString();
+      const pool = mediaPool(project);
+      const dataset = mediaDataset(project);
+      const preflight = preflightMediaForQuestions({
+        surveyConfig: project.surveyConfig || {},
+        questionNames: questions.map((question) => question.name),
+        pool,
+        dataset,
+      });
+      if (!preflight.ok) {
+        const error = preflightError(preflight);
+        return res.status(400).json({
+          success: false,
+          error: error.message,
+          code: error.code,
+          details: error.details,
+        });
+      }
       const run = await withStore(projectId, (store) => {
-        const selected = store.personas.filter((persona) => personaIds.includes(persona.id));
+        const selected = store.personas.filter((persona) => limitedPersonaIds.includes(persona.id));
         if (!selected.length) {
           const error = new Error('Select at least one persona');
           error.status = 400;
+          throw error;
+        }
+        const envelopes = selected.length * repeats;
+        if (envelopes > MAX_RESPONSES_PER_RUN) {
+          const error = new Error(`A Silicon run is limited to ${MAX_RESPONSES_PER_RUN} responses`);
+          error.status = 400;
+          error.code = 'RUN_TOO_LARGE';
+          throw error;
+        }
+        const units = [];
+        selected.forEach((persona) => {
+          for (let repeat = 1; repeat <= repeats; repeat += 1) {
+            questions.forEach((question) => {
+              const trials = trialCountOf(question);
+              for (let trial = 1; trial <= trials; trial += 1) {
+                units.push({
+                  id: createId('unit'),
+                  run_id: null,
+                  persona_id: persona.id,
+                  question_name: question.name,
+                  repeat,
+                  repeat_index: repeat,
+                  trial_index: trial,
+                  status: 'queued',
+                });
+              }
+            });
+          }
+        });
+        if (units.length > MAX_UNITS_PER_RUN) {
+          const error = new Error(`A Silicon run is limited to ${MAX_UNITS_PER_RUN} answer units`);
+          error.status = 400;
+          error.code = 'RUN_TOO_LARGE';
           throw error;
         }
         const created = {
@@ -541,19 +724,26 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
           persona_ids: selected.map((persona) => persona.id),
           persona_snapshot: selected,
           repeats,
+          seed: Number.isFinite(Number(req.body.seed)) ? Number(req.body.seed) : 42,
           provider: req.body.provider || (apiKey.startsWith('sk-or-') ? 'openrouter' : 'openai'),
           model: req.body.model || '',
           reasoning_effort: req.body.reasoningEffort || req.body.reasoning_effort || null,
           budget_tokens: Number(req.body.budgetTokens || 25000),
           tokens_used: 0,
           progress_done: 0,
-          progress_total: selected.length * repeats * questions.length,
+          progress_total: units.length,
           progress_processed: 0,
           progress_valid: 0,
           progress_failed: 0,
           progress_skipped: 0,
           question_names: questions.map((question) => question.name),
           survey_snapshot: project.surveyConfig || {},
+          media_snapshot: {
+            source: pool.length ? 'project' : 'none',
+            images: pool,
+            dataset,
+            availableCount: pool.length,
+          },
           draft_updated_at: project.draftUpdatedAt || project.savedAt || now,
           source_kind: 'local',
           cancel_requested: false,
@@ -561,21 +751,7 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
           updated_at: now,
           finished_at: null,
         };
-        const units = [];
-        selected.forEach((persona) => {
-          for (let repeat = 1; repeat <= repeats; repeat += 1) {
-            questions.forEach((question) => {
-              units.push({
-                id: createId('unit'),
-                run_id: created.id,
-                persona_id: persona.id,
-                question_name: question.name,
-                repeat,
-                status: 'queued',
-              });
-            });
-          }
-        });
+        units.forEach((unit) => { unit.run_id = created.id; });
         store.runs.unshift(created);
         store.units[created.id] = units;
         store.responses[created.id] = [];
