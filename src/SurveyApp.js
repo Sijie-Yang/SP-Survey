@@ -1041,8 +1041,10 @@ export default function SurveyApp() {
         const totalSeconds = surveyStartedAtRef.current
           ? Math.round((now - surveyStartedAtRef.current) / 1000)
           : null;
+        // Deployed packages have no ?project=; use the baked snapshot id, not "default".
+        const resolvedProjectId = projectIdRef.current || projectId;
         const completeData = {
-          project_id: projectId,
+          project_id: resolvedProjectId,
           participant_id: participantId,
           responses: enrichedResponses,
           raw_responses: responses,
@@ -1055,8 +1057,8 @@ export default function SurveyApp() {
             browser_id: getBrowserId(),
             user_agent: navigator.userAgent,
             screen_resolution: `${window.screen.width}x${window.screen.height}`,
-            survey_version: useAdminConfig ? `2.0-admin-${projectId}` : "1.0-original",
-            project_id: projectId,
+            survey_version: useAdminConfig ? `2.0-admin-${resolvedProjectId}` : "1.0-original",
+            project_id: resolvedProjectId,
             survey_revision: revision.id,
             survey_response_contract: revision.contract,
             published_version: finalSurveyJson._spPublishedVersion || null,

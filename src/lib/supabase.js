@@ -199,9 +199,16 @@ export async function saveSurveyResponse(completeData) {
       displayed_images: completeData.displayed_images,
       survey_metadata: completeData.survey_metadata,
     };
+    // Extra media mirrors ride on the RPC JSONB. The stock insert fallback
+    // only has displayed_images as a column, so keep those keys off that path.
+    const rpcPayload = {
+      ...payload,
+      displayed_media_categories: completeData.displayed_media_categories || null,
+      displayed_media_groups: completeData.displayed_media_groups || null,
+    };
 
     const { data, error } = await supabase.rpc('submit_survey_response', {
-      p_response: payload,
+      p_response: rpcPayload,
     });
     if (!error) {
       if (!data?.id) throw new Error('Submission was not acknowledged. Please retry.');
