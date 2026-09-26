@@ -597,7 +597,7 @@ export default function SurveyAppClean() {
   return (
     <Box
       className="sp-survey-theme-host"
-      style={buildSurveyHostStyle(surveyConfig.theme || {})}
+      style={buildSurveyHostStyle(deploymentConfig.theme || {})}
       sx={{ minHeight: '100vh' }}
     >
       <Box sx={{ maxWidth: 1200, mx: 'auto', px: 2, py: 3 }}>
