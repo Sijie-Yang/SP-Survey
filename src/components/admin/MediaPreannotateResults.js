@@ -1,3 +1,4 @@
+import { useWorkflowText } from '../../contexts/workflowI18n';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Alert,
@@ -24,14 +25,14 @@ import { ImageResolverContext } from './imageResolverContext';
 import AnnotationAnalysis from './AnnotationAnalysis';
 
 function mediaKey(entry) {
-  return entry?.name || entry?.media_id || entry?.url || '';
+  return entry?.media_id || entry?.key || entry?.url || entry?.name || '';
 }
 
 function itemsFromCache(cache, mediaList) {
   const nameSet = new Set((mediaList || []).map((m) => mediaKey(m)));
   const out = [];
   cache.forEach((row, key) => {
-    if (nameSet.has(key) && row.annotation?.shapes?.length) out.push(row);
+    if (nameSet.has(key) && Array.isArray(row.annotation?.shapes)) out.push(row);
   });
   return out;
 }
@@ -44,7 +45,7 @@ function filterLikelyAnnotated(mediaList, featureMap) {
     const { status, records } = featureStatusFromMap(featureMap, entry, [SAM_PREANNOT_MODEL]);
     if (status[SAM_PREANNOT_MODEL] !== 'ready') return false;
     const count = records[SAM_PREANNOT_MODEL]?.features?.sam_shape_count;
-    return count == null || Number(count) > 0;
+    return count == null || Number(count) >= 0;
   });
 }
 
@@ -63,6 +64,7 @@ export default function MediaPreannotateResults({
   /** Accumulated patches from batch SAM (multi-image) */
   batchPatches = [],
 }) {
+  const tx = useWorkflowText();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [exporting, setExporting] = useState(false);
@@ -89,7 +91,7 @@ export default function MediaPreannotateResults({
     };
     const row = {
       mediaEntry: entry,
-      annotation: annotation?.shapes?.length ? annotation : null,
+      annotation: Array.isArray(annotation?.shapes) ? annotation : null,
     };
     if (row.annotation) cacheRef.current.set(key, row);
     else cacheRef.current.delete(key);
@@ -163,7 +165,7 @@ export default function MediaPreannotateResults({
       loaded.forEach(({ mediaEntry, annotation }) => {
         const key = mediaKey(mediaEntry);
         if (!key) return;
-        if (annotation?.shapes?.length) {
+        if (Array.isArray(annotation?.shapes)) {
           cacheRef.current.set(key, { mediaEntry, annotation });
         } else {
           cacheRef.current.delete(key);
@@ -194,7 +196,7 @@ export default function MediaPreannotateResults({
       loaded.forEach(({ mediaEntry, annotation }) => {
         const key = mediaKey(mediaEntry);
         if (!key) return;
-        if (annotation?.shapes?.length) {
+        if (Array.isArray(annotation?.shapes)) {
           cacheRef.current.set(key, { mediaEntry, annotation });
         }
       });
@@ -249,7 +251,8 @@ export default function MediaPreannotateResults({
         items: items.length ? items : null,
         includeImages: true,
       });
-      setExportInfo(`Downloaded ${result.filename} — ${result.annotatedCount} set(s) (JSON + CSV + images + overlay previews).`);
+      if (result.failures?.length) setError(`${result.failures.length} image/overlay downloads failed. See manifest.json; annotation data was exported.`);
+      setExportInfo(`${tx("Downloaded")} ${result.filename} · ${result.annotatedCount} ${tx("annotation set(s)")}`);
     } catch (err) {
       setError(err.message || String(err));
     } finally {
@@ -285,12 +288,9 @@ export default function MediaPreannotateResults({
         }}
         onClick={() => setOpen((v) => !v)}
       >
-        <Typography variant="subtitle1" sx={{ fontWeight: 700, flex: 1, minWidth: 160 }}>
-          Pre-annotate results
-        </Typography>
+        <Typography variant="subtitle1" sx={{ fontWeight: 700, flex: 1, minWidth: 160 }}>{' '}{tx("Pre-annotate results")}{' '}</Typography>
         <Typography variant="caption" color="text.secondary">
-          {headerCount} annotated
-          {mediaList.length ? ` / ${mediaList.length} images` : ''}
+          {headerCount}{' '}{tx("annotated")}{' '}{mediaList.length ? ` / ${mediaList.length} ${tx("images")}` : ''}
         </Typography>
         <Button
           size="small"
@@ -301,9 +301,7 @@ export default function MediaPreannotateResults({
             e.stopPropagation();
             handleExportPackage();
           }}
-        >
-          Download package
-        </Button>
+        >{' '}{tx("Download package")}{' '}</Button>
         <Button
           size="small"
           startIcon={loading ? <CircularProgress size={14} /> : <Refresh />}
@@ -312,19 +310,13 @@ export default function MediaPreannotateResults({
             e.stopPropagation();
             refreshAll();
           }}
-        >
-          Refresh all
-        </Button>
+        >{' '}{tx("Refresh all")}{' '}</Button>
         {open ? <ExpandLess fontSize="small" /> : <ExpandMore fontSize="small" />}
       </Box>
 
       <Collapse in={open}>
         <Box sx={{ p: { xs: 2, sm: 2.5 } }}>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
-            Autosave updates only the image you just annotated — nothing else is re-downloaded.
-            Use Refresh all if you need to reload every file from R2.
-            Download package = JSON + SAM CSV (if any) + analysis CSVs + source images + overlays (*_annotated.jpg with shapes burned in).
-          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>{' '}{tx("Autosave updates only the image you just annotated — nothing else is re-downloaded. Use Refresh all if you need to reload every file from R2. Download package = JSON + SAM CSV (if any) + analysis CSVs + source images + overlays (*_annotated.jpg with shapes burned in).")}{' '}</Typography>
 
           {error && (
             <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError(null)}>{error}</Alert>
@@ -336,16 +328,12 @@ export default function MediaPreannotateResults({
           {loading && !analysis.answers.length && (
             <Box sx={{ py: 4, textAlign: 'center' }}>
               <CircularProgress size={28} />
-              <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                Loading pre-annotations…
-              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>{' '}{tx("Loading pre-annotations…")}{' '}</Typography>
             </Box>
           )}
 
           {!loading && !analysis.answers.length && !error && (
-            <Alert severity="info">
-              No saved pre-annotations yet. Annotate above — this list updates for that one file on each autosave.
-            </Alert>
+            <Alert severity="info">{' '}{tx("No saved pre-annotations yet. Annotate above — this list updates for that one file on each autosave.")}{' '}</Alert>
           )}
 
           {analysis.answers.length > 0 && (
@@ -355,7 +343,7 @@ export default function MediaPreannotateResults({
                 responses={analysis.responses}
                 questionName={PREANNOTATE_QUESTION_NAME}
                 exportProfile="library"
-                unitChipLabel="annotation set(s)"
+                unitChipLabel={tx("annotation set(s)")}
                 extraActions={(
                   <Button
                     size="small"
@@ -363,9 +351,7 @@ export default function MediaPreannotateResults({
                     startIcon={<FolderZip />}
                     disabled={!analysis.responses.length}
                     onClick={handleExportZip}
-                  >
-                    Export ZIP (long + summary)
-                  </Button>
+                  >{' '}{tx("Export ZIP (long + summary)")}{' '}</Button>
                 )}
               />
             </ImageResolverContext.Provider>
