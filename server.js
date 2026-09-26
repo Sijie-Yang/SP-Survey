@@ -8,6 +8,7 @@ const OpenAI = require('openai');
 const { resolveAiRequest, aiChat, formatAiError } = require('./aiClient');
 const { registerAgentProjectApi, createProjectIo } = require('./src/server/agentProjectApi');
 const { registerAgentChatApi } = require('./src/server/agentChatRuntime');
+const { registerAgentCredentialsApi } = require('./src/server/agentCredentialsApi');
 const { registerSiliconLocalApi } = require('./src/server/siliconLocalApi');
 const { copyParticipantPublicAssets } = require('./src/server/deploymentPublicFilter');
 const { alignDeploymentPackageJson } = require('./src/server/deploymentPackage');
@@ -273,8 +274,13 @@ registerAgentProjectApi(app, {
   skillsPath: SKILLS_PATH,
   clientOrigin: CLIENT_ORIGIN,
 });
+registerAgentCredentialsApi(app);
 registerAgentChatApi(app, {
   createProjectIo: () => createProjectIo({ fs, projectsPath: PROJECTS_PATH }),
+  fs,
+  projectsPath: PROJECTS_PATH,
+  skillsPath: SKILLS_PATH,
+  clientOrigin: CLIENT_ORIGIN,
 });
 registerSiliconLocalApi(app, {
   fs,

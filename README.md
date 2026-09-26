@@ -61,7 +61,15 @@ npm run dev
 - Local Live Survey: [http://localhost:3000/survey](http://localhost:3000/survey)
 - Local API: `http://localhost:3001`
 
-Use [`.env.example`](./.env.example) for custom ports. Supabase is optional until media upload or response collection.
+Tabs: Intro · Media · Builder · Server · Share · Results · Practice · Silicon.
+
+Use [`.env.example`](./.env.example) for custom ports. Split Express `PORT` into `.env` and CRA `PORT` / `REACT_APP_API_URL` into `.env.local` so the two processes do not fight. Supabase is optional until media upload or response collection.
+
+**Draft vs release:** Save updates the local draft only. Release writes `publishedSurveyConfig` into `public/projects/<id>.json`. Redeploy the participant site after a release.
+
+The AI Assistant uses your own provider keys (OpenAI, OpenRouter, DeepSeek, Qwen, and the rest of the catalog). There are no free or subsidized models. Silicon pretest also uses those keys and stores run data in `public/projects/<id>.silicon.json` without writing API keys to disk.
+
+Switch Admin language with the top-bar EN / 中文 control. Set the participant survey language in Builder.
 
 ## Use SP-Survey directly with Codex
 
@@ -82,10 +90,17 @@ The localhost-only agent API is available while `npm run dev` is running:
 | List projects | `GET /api/agent/projects` |
 | Read a project | `GET /api/agent/projects/:id` |
 | Update `surveyConfig` | `PATCH /api/agent/projects/:id/survey` |
+| Apply operations | `POST /api/agent/projects/:id/operations` |
 | Validate | `POST /api/agent/projects/:id/validate` |
 | Get preview URLs | `GET /api/agent/projects/:id/preview-url` |
+| Release snapshot | `POST /api/agent/projects/:id/release` |
+| Media | `GET/PATCH /api/agent/projects/:id/media` |
+| Skills | `GET/POST /api/agent/skills` |
+| Results | `GET /api/agent/projects/:id/results` |
+| Assistant chat | `POST /api/agent/chat` |
+| Silicon | `/api/agent/silicon/*` |
 
-Agent reads exclude known credentials. Updates change only `surveyConfig`, preserve stored credentials, create a local backup, and reject invalid structure. Send the returned `savedAt` as `expectedSavedAt` when updating to prevent overwriting a newer edit.
+Agent reads exclude known credentials. Updates change only `surveyConfig`, preserve stored credentials, create a local backup, and reject invalid structure. Send the returned `savedAt` / `draftUpdatedAt` as `expectedSavedAt` or `expectedDraftUpdatedAt` when updating. If Admin is open with unsaved edits, it will warn instead of silently overwriting an agent write.
 
 After every change, check:
 
@@ -117,7 +132,7 @@ Codex can create, review, and update the selected survey directly through the lo
 
 ### 3. Configure Supabase and upload media
 
-Open **Step 1 - Media Dataset**. The top row has three panels:
+Open **Media**. The top row has three panels:
 
 1. **Supabase Storage** — enter Project ID, anon key, and `service_role` key; click **Save**, then **Test**.
 2. **Upload Media** — choose local images, video, or audio and upload them to Supabase Storage.
@@ -129,7 +144,7 @@ Codex can configure media assignment, folders, repeated trials, and question log
 
 ### 4. Design the survey
 
-Open **Step 2 - Survey Builder**. Create pages and questions, configure media assignment, repeated trials, validation, progress, theme, completion text, and response metadata.
+Open **Builder**. Create pages and questions, configure media assignment, repeated trials, validation, progress, theme, completion text, survey language, and response metadata.
 
 This is the main Codex step. Describe the study in natural language; Codex reads the current local project, updates `surveyConfig`, validates it, and returns the local Admin and Local Live Survey URLs. Use the visual editor for manual adjustments.
 
@@ -139,7 +154,7 @@ Check the question preview, Theme Settings preview, full **Preview Survey**, **R
 
 ### 6. Create the Supabase response table
 
-Open **Step 3 - Server Setup**. It uses the Supabase configuration saved in Step 1. Click **Copy SQL Script**, open **Supabase Dashboard → SQL Editor**, paste the following SQL, and click **Run**:
+Open **Server**. It uses the Supabase configuration saved in Media. Click **Copy SQL Script**, open **Supabase Dashboard → SQL Editor**, paste [`supabase/setup.sql`](./supabase/setup.sql), and click **Run**. That script is idempotent and creates `survey_responses`, `count_responses`, `get_pair_stats`, `submit_survey_response`, `image_features`, and the public `survey-images` bucket. The short table-only script below is the minimum if you only need inserts:
 
 ```sql
 CREATE TABLE IF NOT EXISTS survey_responses (

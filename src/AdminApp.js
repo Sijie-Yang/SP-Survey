@@ -889,13 +889,24 @@ function AdminWorkspace() {
     enabled: assistantEnabled && Boolean(currentProject),
     hasUnsavedChanges,
     lastSavedConfig,
-    onPrepareWrite: async () => {
+    onPrepareWrite: async (opts = {}) => {
+      if (opts.surveyConfig) {
+        const result = await performSaveRef.current?.({
+          silent: true,
+          surveyConfig: opts.surveyConfig,
+          expectedDraftUpdatedAt: opts.expectedDraftUpdatedAt,
+        });
+        if (result && result.success === false) {
+          return { ok: false, message: result.error || 'The editor draft could not be saved before the Assistant edit.' };
+        }
+        return { ok: true, draftUpdatedAt: result?.draftUpdatedAt };
+      }
       if (!hasUnsavedChanges) return { ok: true };
       const result = await performSaveRef.current?.({ silent: true });
       if (result && result.success === false) {
         return { ok: false, message: result.error || 'The editor draft could not be saved before the Assistant edit.' };
       }
-      return { ok: true };
+      return { ok: true, draftUpdatedAt: result?.draftUpdatedAt };
     },
   });
   const siliconWatching = siliconEnabled && (
@@ -1021,11 +1032,11 @@ function AdminWorkspace() {
     });
   };
 
-  const performSave = useCallback(async ({ silent = false } = {}) => {
+  const performSave = useCallback(async ({ silent = false, surveyConfig: overrideConfig } = {}) => {
     if (!currentProject || saveInFlightRef.current) return { success: false };
 
     const savedState = projectStates[currentProject.id];
-    const latestSurveyConfig = persistSliderAliases(savedState?.surveyConfig || surveyConfig);
+    const latestSurveyConfig = persistSliderAliases(overrideConfig || savedState?.surveyConfig || surveyConfig);
 
     if (!latestSurveyConfig) return { success: false };
 
@@ -1356,6 +1367,30 @@ function AdminWorkspace() {
                 </Button>
               </Tooltip>
             </Box>
+            {siliconEnabled && (
+              <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                <Tooltip title={t.siliconTasksTitle}>
+                  <Button
+                    color="inherit"
+                    size="small"
+                    onClick={() => openAiSidebar('tasks')}
+                    sx={{
+                      ml: 0.5,
+                      px: 1.25,
+                      py: 0.35,
+                      minWidth: 0,
+                      fontWeight: 700,
+                      textTransform: 'none',
+                      border: '1px solid',
+                      borderColor: 'rgba(255, 255, 255, 0.65)',
+                      bgcolor: 'rgba(255, 255, 255, 0.12)',
+                    }}
+                  >
+                    {tf(t.siliconTasksBadge, { count: siliconTasks.activeCount })}
+                  </Button>
+                </Tooltip>
+              </Box>
+            )}
             <Box sx={{ display: { xs: 'none', md: 'block' } }}>
               <RegionSwitcher />
             </Box>

@@ -1359,74 +1359,38 @@ export default function ChatAssistant({
               <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
                 🔑 API Key
               </Typography>
-          {isPlatformMode ? (
-            <Box sx={{ mb: 3 }}>
-              <ModelsSettings onConfiguredChange={onCredentialsChange} />
-              <Divider sx={{ my: 2 }} />
-              <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 600 }}>
-                {t.aiSidebarCodexTitle}
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
-                {t.aiSidebarCodexBody}
-              </Typography>
-              <Stack direction="row" spacing={1} alignItems="center">
-                {codexStatusLoading ? (
-                  <CircularProgress size={16} />
-                ) : (
-                  <Chip
-                    size="small"
-                    icon={codexConnected ? <CheckCircle /> : undefined}
-                    label={codexConnected ? t.aiSidebarConnected : t.aiSidebarDisconnected}
-                    color={codexConnected ? 'success' : 'default'}
-                    variant={codexConnected ? 'filled' : 'outlined'}
-                  />
-                )}
-                <Button
-                  size="small"
-                  variant="outlined"
-                  startIcon={<AutoAwesome fontSize="small" />}
-                  onClick={() => navigate('/admin/integrations')}
-                >
-                  {t.aiSidebarOpenIntegrations}
-                </Button>
-              </Stack>
+          <Box sx={{ mb: 3 }}>
+            <ModelsSettings onConfiguredChange={onCredentialsChange} />
+            <Divider sx={{ my: 2 }} />
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              Keys stay on this computer. You can also keep a single OpenAI or OpenRouter key below for older flows.
+            </Typography>
+            <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
+              <TextField
+                fullWidth
+                type="password"
+                label="API Key"
+                value={openaiApiKey}
+                onChange={(e) => onApiKeyChange(e.target.value)}
+                placeholder="sk-or-... or sk-..."
+                InputProps={{
+                  endAdornment: apiKeyValid && (
+                    <InputAdornment position="end">
+                      <CheckCircle color="success" />
+                    </InputAdornment>
+                  )
+                }}
+              />
+              <Button
+                variant="contained"
+                onClick={onValidateApiKey}
+                disabled={!openaiApiKey}
+                sx={{ minWidth: 100 }}
+              >
+                Validate
+              </Button>
             </Box>
-          ) : (
-          <>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Use an{' '}
-            <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">OpenAI</a>
-            {' '}or{' '}
-            <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer">OpenRouter</a>
-            {' '}API key. OpenRouter keys start with <code>sk-or-</code>.
-          </Typography>
-          <Box sx={{ display: 'flex', gap: 1, mb: 3 }}>
-            <TextField
-              fullWidth
-              type="password"
-              label="API Key"
-              value={openaiApiKey}
-              onChange={(e) => onApiKeyChange(e.target.value)}
-              placeholder="sk-or-... or sk-..."
-              InputProps={{
-                endAdornment: apiKeyValid && (
-                  <InputAdornment position="end">
-                    <CheckCircle color="success" />
-                  </InputAdornment>
-                )
-              }}
-            />
-            <Button
-              variant="contained"
-              onClick={onValidateApiKey}
-              disabled={!openaiApiKey}
-              sx={{ minWidth: 100 }}
-            >
-              Validate
-            </Button>
           </Box>
-          </>
-          )}
 
           <Divider sx={{ my: 2 }} />
 

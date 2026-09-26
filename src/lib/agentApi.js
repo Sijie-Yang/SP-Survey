@@ -50,6 +50,8 @@ export async function listMcpConnections() {
 }
 
 export async function getCredentialStatus() {
+  const remote = await agentFetch('/api/agent/credentials/status');
+  if (remote?.success) return remote;
   const { key, valid, openrouter } = localKeyHint();
   const providerId = openrouter ? 'openrouter' : 'openai';
   const models = openrouter
@@ -81,8 +83,46 @@ export async function getCredentialStatus() {
   };
 }
 
-export async function saveAiSettings() {
-  return { success: true };
+export async function storeProviderCredential(body) {
+  return agentFetch('/api/agent/credentials/providers', {
+    method: 'POST',
+    body: JSON.stringify(body),
+  });
+}
+
+export async function saveProviderProfile(profile) {
+  return agentFetch('/api/agent/credentials/profiles', {
+    method: 'PUT',
+    body: JSON.stringify(profile),
+  });
+}
+
+export async function deleteProviderCredential(provider) {
+  return agentFetch(`/api/agent/credentials/providers/${encodeURIComponent(provider)}`, {
+    method: 'DELETE',
+  });
+}
+
+export async function saveAiSettings(settings) {
+  return agentFetch('/api/agent/credentials/settings', {
+    method: 'PUT',
+    body: JSON.stringify(settings || {}),
+  });
+}
+
+export async function listProviderCatalog() {
+  return agentFetch('/api/agent/credentials/providers');
+}
+
+export async function listProviderModels(provider) {
+  return agentFetch(`/api/agent/credentials/models?provider=${encodeURIComponent(provider)}`);
+}
+
+export async function fetchProviderModels({ provider, baseUrl, apiKey, protocol } = {}) {
+  return agentFetch('/api/agent/credentials/models', {
+    method: 'POST',
+    body: JSON.stringify({ provider, baseUrl, apiKey, protocol }),
+  });
 }
 
 export async function sendAgentChat({
@@ -176,12 +216,16 @@ export async function answerAiRunApproval() {
   return { success: true };
 }
 
-export async function listAiInbox() {
-  return { success: true, items: [] };
+export async function listAiInbox(sessionId) {
+  if (!sessionId) return { success: true, inbox: [] };
+  return agentFetch(`/api/agent/sessions/${encodeURIComponent(sessionId)}/inbox`);
 }
 
-export async function discardAiInbox() {
-  return { success: true };
+export async function discardAiInbox(sessionId, itemId) {
+  return agentFetch(`/api/agent/sessions/${encodeURIComponent(sessionId)}/inbox`, {
+    method: 'POST',
+    body: JSON.stringify({ action: 'discard', itemId }),
+  });
 }
 
 function runStatusFromEvents(events = [], runId) {
