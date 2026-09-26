@@ -12,6 +12,29 @@ const SP_SURVEY_PARTICIPANT_FIELDS = [
   'preloadedImages',
 ];
 
+export const PARTICIPANT_DEPENDENCIES = [
+  '@dnd-kit/core',
+  '@dnd-kit/sortable',
+  '@dnd-kit/utilities',
+  '@emotion/react',
+  '@emotion/styled',
+  '@mui/icons-material',
+  '@mui/material',
+  '@supabase/supabase-js',
+  'react',
+  'react-dom',
+  'react-scripts',
+  'survey-core',
+  'survey-react-ui',
+];
+
+export const PARTICIPANT_DEV_DEPENDENCIES = ['cross-env'];
+
+const toDependencyPlaceholders = (names) => names.reduce((deps, name) => {
+  deps[name] = '*';
+  return deps;
+}, {});
+
 export const getParticipantConfigFields = () => new Set([
   ...Serializer.getProperties('survey').map((property) => property.name),
   ...SP_SURVEY_PARTICIPANT_FIELDS,
@@ -179,38 +202,25 @@ export const generateDeploymentFiles = async (deploymentData) => {
     ? candidateAnonKey
     : 'your-supabase-anon-key';
   
-  // 1. Package.json for deployment (survey-only, minimal dependencies)
+  // 1. Package.json for deployment (survey-only, minimal dependencies).
+  // Versions are placeholders; /api/create-deployment pins them from the repo's package.json.
   files['package.json'] = JSON.stringify({
     "name": deploymentData.projectName.toLowerCase().replace(/[^a-z0-9-]/g, '-'),
     "version": "1.0.0",
     "private": true,
-    "dependencies": {
-      "@dnd-kit/core": "^6.0.8",
-      "@dnd-kit/sortable": "^7.0.2",
-      "@dnd-kit/utilities": "^3.2.1",
-      "@emotion/react": "^11.11.1",
-      "@emotion/styled": "^11.11.0",
-      "@mui/material": "^5.14.20",
-      "@supabase/supabase-js": "^2.38.4",
-      "react": "^18.2.0",
-      "react-dom": "^18.2.0",
-      "react-scripts": "5.0.1",
-      "survey-core": "^1.9.131",
-      "survey-react-ui": "^1.9.131"
-    },
-    "devDependencies": {
-      "cross-env": "^7.0.3"
-    },
+    "dependencies": toDependencyPlaceholders(PARTICIPANT_DEPENDENCIES),
+    "devDependencies": toDependencyPlaceholders(PARTICIPANT_DEV_DEPENDENCIES),
     "scripts": {
       "start": "react-scripts start",
       "build": "cross-env CI=false react-scripts build",
       "test": "react-scripts test",
       "eject": "react-scripts eject"
     },
+    // root stops ESLint from inheriting the parent repo's config when built under deployments/.
     "eslintConfig": {
+      "root": true,
       "extends": [
-        "react-app",
-        "react-app/jest"
+        "react-app"
       ]
     },
     "browserslist": {

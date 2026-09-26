@@ -8,6 +8,7 @@ const OpenAI = require('openai');
 const { resolveAiRequest, aiChat, formatAiError } = require('./aiClient');
 const { registerAgentProjectApi } = require('./src/server/agentProjectApi');
 const { copyParticipantPublicAssets } = require('./src/server/deploymentPublicFilter');
+const { alignDeploymentPackageJson } = require('./src/server/deploymentPackage');
 
 // Import multi-agent review system
 const {
@@ -182,6 +183,11 @@ app.post('/api/create-deployment', async (req, res) => {
     
     if (!projectName || !files) {
       return res.status(400).json({ success: false, error: 'Project name and files are required' });
+    }
+
+    if (files['package.json']) {
+      const repoPackage = await fs.readJson(path.join(__dirname, 'package.json'));
+      files['package.json'] = alignDeploymentPackageJson(files['package.json'], repoPackage);
     }
     
     // Create deployment folder with timestamp
