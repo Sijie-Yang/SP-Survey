@@ -18,13 +18,13 @@ import { mediaIdentityKey, resolveMediaAnswerKey, stimulusUnitKey, stimulusUnitL
  *
  * Summary (all types, tidy):
  *   question_name, question_type, n_responses,
- *   attribute_key, attribute_label,  ← matrix row / slider dim / etc. (empty when N/A)
+ *   attribute_key, attribute_label,  ← matrix row / slider dim / category (empty when N/A)
  *   unit_key, unit_label,            ← image or choice unit (no image__attr concatenation)
  *   metric, value, n
  */
 
 import { dimensionDisplayName } from './sliderScale.js';
-import { average, descriptiveStats } from './stats.js';
+import { average, descriptiveStats, minMaxScale } from './stats.js';
 import { computeBordaScores, kendallW } from './rankingStats.js';
 import {
   computeQuestionTrueSkill,
@@ -33,6 +33,9 @@ import {
   computeTrueSkillFromMatches,
   matchesFromOrderedRanking,
   matchesFromForcedChoiceAnswer,
+  attachMatchCategory,
+  singleCategoryLabel,
+  splitsTrueSkillByCategory,
   filenameKey,
 } from './trueskill.js';
 import {
@@ -270,18 +273,39 @@ function bestWorstKeysFromAnswer(answer, shownImages) {
   };
 }
 
+function trueSkillExportBoards(result) {
+  if (result?.splitByCategory && result.categories?.length) {
+    return result.categories.map((board) => ({
+      category: board.category || '',
+      rankings: board.rankings || [],
+    }));
+  }
+  const rankings = Array.isArray(result) ? result : (result?.rankings || []);
+  return [{ category: '', rankings }];
+}
+
+function pushTrueSkillMetricRows(out, question, nResponses, rankings, attribute = '') {
+  const sortedTs = [...(rankings || [])].sort((a, b) => (b.mu ?? -Infinity) - (a.mu ?? -Infinity));
+  const attr = attribute || '';
+  sortedTs.forEach((r, idx) => {
+    out.push(summaryRow(question, nResponses, r.imageKey, r.imageKey, 'rank', idx + 1, r.games, attr, attr));
+    out.push(summaryRow(question, nResponses, r.imageKey, r.imageKey, 'mu', r.mu, r.games, attr, attr));
+    out.push(summaryRow(question, nResponses, r.imageKey, r.imageKey, 'sigma', r.sigma, r.games, attr, attr));
+    out.push(summaryRow(question, nResponses, r.imageKey, r.imageKey, 'mu_std5', r.muStd5, r.games, attr, attr));
+    out.push(summaryRow(question, nResponses, r.imageKey, r.imageKey, 'wins', r.wins, r.games, attr, attr));
+    out.push(summaryRow(question, nResponses, r.imageKey, r.imageKey, 'losses', r.losses, r.games, attr, attr));
+    out.push(summaryRow(question, nResponses, r.imageKey, r.imageKey, 'games', r.games, r.games, attr, attr));
+  });
+}
+
 function pushTrueSkillSummary(out, question, nResponses, rankings, longObjs, {
   valueKey = 'value',
+  splitByCategory = false,
+  categories = [],
 } = {}) {
-  const sortedTs = [...(rankings || [])].sort((a, b) => (b.mu ?? -Infinity) - (a.mu ?? -Infinity));
-  sortedTs.forEach((r, idx) => {
-    out.push(summaryRow(question, nResponses, r.imageKey, r.imageKey, 'rank', idx + 1, r.games));
-    out.push(summaryRow(question, nResponses, r.imageKey, r.imageKey, 'mu', r.mu, r.games));
-    out.push(summaryRow(question, nResponses, r.imageKey, r.imageKey, 'sigma', r.sigma, r.games));
-    out.push(summaryRow(question, nResponses, r.imageKey, r.imageKey, 'mu_std5', r.muStd5, r.games));
-    out.push(summaryRow(question, nResponses, r.imageKey, r.imageKey, 'wins', r.wins, r.games));
-    out.push(summaryRow(question, nResponses, r.imageKey, r.imageKey, 'losses', r.losses, r.games));
-    out.push(summaryRow(question, nResponses, r.imageKey, r.imageKey, 'games', r.games, r.games));
+  const boards = trueSkillExportBoards(splitByCategory ? { splitByCategory, categories, rankings } : rankings);
+  boards.forEach((board) => {
+    pushTrueSkillMetricRows(out, question, nResponses, board.rankings, board.category);
   });
   const freq = {};
   longObjs.forEach((r) => {
@@ -684,7 +708,7 @@ function pushGenericSkillSummary(out, question, eligible, longObjs) {
 
 /** MaxDiff summary: TrueSkill (μ-sorted) + classical BWS columns per image. */
 function pushMaxDiffSummary(out, question, nResponses, eligible) {
-  const { rankings: tsRankings } = computeMaxDiffTrueSkill(eligible, question.name);
+  const fitted = computeMaxDiffTrueSkill(eligible, question.name, question);
   const answerUnits = [];
   for (const row of eligible) {
     answerUnits.push(...expandQuestionAnswerUnits(row, question.name, { requireAnswer: true }));
@@ -694,40 +718,78 @@ function pushMaxDiffSummary(out, question, nResponses, eligible) {
     || 4;
   const bwsRows = computeMaxDiffScores(answerUnits, mediaCount);
   const bwsByKey = new Map(bwsRows.map((r) => [r.imageKey, r]));
-  const sortedTs = [...(tsRankings || [])].sort((a, b) => (b.mu ?? -Infinity) - (a.mu ?? -Infinity));
+  const categoryByImage = new Map();
+  answerUnits.forEach((unit) => {
+    const category = singleCategoryLabel(unit.shown_media_categories) || '';
+    if (!category) return;
+    (unit.shown_images || []).forEach((item) => {
+      const key = filenameKey(typeof item === 'string' ? item : item?.url || item?.name || '');
+      if (key && !categoryByImage.has(key)) categoryByImage.set(key, category);
+    });
+  });
 
-  // Prefer TrueSkill order; append BWS-only images with no matches.
+  const boards = trueSkillExportBoards(fitted);
   const seen = new Set();
-  const ordered = [];
-  sortedTs.forEach((r) => {
-    seen.add(r.imageKey);
-    ordered.push({ ts: r, bws: bwsByKey.get(r.imageKey) || null });
-  });
-  bwsRows.forEach((bws) => {
-    if (!seen.has(bws.imageKey)) {
+  boards.forEach((board) => {
+    const sortedTs = [...(board.rankings || [])].sort((a, b) => (b.mu ?? -Infinity) - (a.mu ?? -Infinity));
+    const ordered = [];
+    sortedTs.forEach((row) => {
+      seen.add(row.imageKey);
+      ordered.push({ ts: row, bws: bwsByKey.get(row.imageKey) || null });
+    });
+    bwsRows.forEach((bws) => {
+      if (seen.has(bws.imageKey)) return;
+      if (fitted.splitByCategory && (categoryByImage.get(bws.imageKey) || '') !== board.category) return;
+      seen.add(bws.imageKey);
       ordered.push({ ts: null, bws });
-    }
+    });
+    pushMaxDiffOrderedRows(out, question, nResponses, ordered, board.category, fitted.splitByCategory);
   });
+  if (fitted.splitByCategory) {
+    const leftovers = bwsRows
+      .filter((bws) => !seen.has(bws.imageKey))
+      .map((bws) => ({ ts: null, bws }));
+    pushMaxDiffOrderedRows(out, question, nResponses, leftovers, '', false);
+  }
+}
 
-  ordered.forEach((row, idx) => {
+function pushMaxDiffOrderedRows(out, question, nResponses, ordered, attribute = '', rescaleBws = false) {
+  const attr = attribute || '';
+  let rows = ordered;
+  if (rescaleBws && attr) {
+    const indexes = [];
+    const values = [];
+    ordered.forEach((row, index) => {
+      if (row.bws && Number.isFinite(Number(row.bws.bws))) {
+        indexes.push(index);
+        values.push(Number(row.bws.bws));
+      }
+    });
+    const scaled = minMaxScale(values, 5);
+    rows = ordered.slice();
+    indexes.forEach((index, i) => {
+      rows[index] = { ...rows[index], bws: { ...rows[index].bws, scoreStd5: scaled[i] } };
+    });
+  }
+  rows.forEach((row, idx) => {
     const key = row.ts?.imageKey || row.bws?.imageKey;
     if (!key) return;
     const games = row.ts?.games ?? row.bws?.appearances ?? 0;
-    out.push(summaryRow(question, nResponses, key, key, 'rank', idx + 1, games));
+    out.push(summaryRow(question, nResponses, key, key, 'rank', idx + 1, games, attr, attr));
     if (row.ts) {
-      out.push(summaryRow(question, nResponses, key, key, 'mu', row.ts.mu, row.ts.games));
-      out.push(summaryRow(question, nResponses, key, key, 'sigma', row.ts.sigma, row.ts.games));
-      out.push(summaryRow(question, nResponses, key, key, 'mu_std5', row.ts.muStd5, row.ts.games));
-      out.push(summaryRow(question, nResponses, key, key, 'wins', row.ts.wins, row.ts.games));
-      out.push(summaryRow(question, nResponses, key, key, 'losses', row.ts.losses, row.ts.games));
-      out.push(summaryRow(question, nResponses, key, key, 'games', row.ts.games, row.ts.games));
+      out.push(summaryRow(question, nResponses, key, key, 'mu', row.ts.mu, row.ts.games, attr, attr));
+      out.push(summaryRow(question, nResponses, key, key, 'sigma', row.ts.sigma, row.ts.games, attr, attr));
+      out.push(summaryRow(question, nResponses, key, key, 'mu_std5', row.ts.muStd5, row.ts.games, attr, attr));
+      out.push(summaryRow(question, nResponses, key, key, 'wins', row.ts.wins, row.ts.games, attr, attr));
+      out.push(summaryRow(question, nResponses, key, key, 'losses', row.ts.losses, row.ts.games, attr, attr));
+      out.push(summaryRow(question, nResponses, key, key, 'games', row.ts.games, row.ts.games, attr, attr));
     }
     if (row.bws) {
-      out.push(summaryRow(question, nResponses, key, key, 'bws', row.bws.bws, row.bws.appearances));
-      out.push(summaryRow(question, nResponses, key, key, 'score_std5', row.bws.scoreStd5, row.bws.appearances));
-      out.push(summaryRow(question, nResponses, key, key, 'best', row.bws.best, row.bws.appearances));
-      out.push(summaryRow(question, nResponses, key, key, 'worst', row.bws.worst, row.bws.appearances));
-      out.push(summaryRow(question, nResponses, key, key, 'appearances', row.bws.appearances, row.bws.appearances));
+      out.push(summaryRow(question, nResponses, key, key, 'bws', row.bws.bws, row.bws.appearances, attr, attr));
+      out.push(summaryRow(question, nResponses, key, key, 'score_std5', row.bws.scoreStd5, row.bws.appearances, attr, attr));
+      out.push(summaryRow(question, nResponses, key, key, 'best', row.bws.best, row.bws.appearances, attr, attr));
+      out.push(summaryRow(question, nResponses, key, key, 'worst', row.bws.worst, row.bws.appearances, attr, attr));
+      out.push(summaryRow(question, nResponses, key, key, 'appearances', row.bws.appearances, row.bws.appearances, attr, attr));
       out.push(summaryRow(
         question,
         nResponses,
@@ -736,6 +798,8 @@ function pushMaxDiffSummary(out, question, nResponses, eligible) {
         'pct_best',
         row.bws.appearances ? row.bws.best / row.bws.appearances : 0,
         row.bws.appearances,
+        attr,
+        attr,
       ));
     }
   });
@@ -1746,7 +1810,10 @@ function buildSummaryObjects(question, responses) {
             .filter(Boolean);
           if (keys.length < 2) continue;
           rankingLists.push(keys);
-          allMatches.push(...matchesFromOrderedRanking(keys));
+          allMatches.push(...attachMatchCategory(
+            matchesFromOrderedRanking(keys),
+            payload.shownMediaCategories,
+          ));
           keys.forEach((key, rankIdx) => {
             if (!imageRankPositions[key]) imageRankPositions[key] = [];
             imageRankPositions[key].push(rankIdx + 1);
@@ -1756,7 +1823,10 @@ function buildSummaryObjects(question, responses) {
       const items = Object.keys(imageRankPositions);
       const w = kendallW(rankingLists, items);
       const bordaMap = computeBordaScores(imageRankPositions, items.length);
-      const { rankings: tsRows } = computeTrueSkillFromMatches(allMatches);
+      const fitted = computeTrueSkillFromMatches(allMatches, {
+        splitByCategory: splitsTrueSkillByCategory(question),
+      });
+      const tsRows = fitted.rankings;
       if (w != null) {
         out.push(summaryRow(question, nResponses, 'overall', 'overall', 'kendall_w', w, nResponses));
       }
@@ -1769,17 +1839,21 @@ function buildSummaryObjects(question, responses) {
         out.push(summaryRow(question, nResponses, key, key, 'borda', bordaMap[key]?.borda, ranks.length));
         out.push(summaryRow(question, nResponses, key, key, 'count', ranks.length, ranks.length));
         if (ts?.mu != null) {
-          out.push(summaryRow(question, nResponses, key, key, 'mu', ts.mu, ranks.length));
-          out.push(summaryRow(question, nResponses, key, key, 'sigma', ts.sigma, ranks.length));
-          out.push(summaryRow(question, nResponses, key, key, 'mu_std5', ts.muStd5, ranks.length));
-          out.push(summaryRow(question, nResponses, key, key, 'wins', ts.wins, ranks.length));
-          out.push(summaryRow(question, nResponses, key, key, 'losses', ts.losses, ranks.length));
-          out.push(summaryRow(question, nResponses, key, key, 'games', ts.games, ranks.length));
+          const attr = fitted.splitByCategory ? (ts.category || '') : '';
+          out.push(summaryRow(question, nResponses, key, key, 'mu', ts.mu, ranks.length, attr, attr));
+          out.push(summaryRow(question, nResponses, key, key, 'sigma', ts.sigma, ranks.length, attr, attr));
+          out.push(summaryRow(question, nResponses, key, key, 'mu_std5', ts.muStd5, ranks.length, attr, attr));
+          out.push(summaryRow(question, nResponses, key, key, 'wins', ts.wins, ranks.length, attr, attr));
+          out.push(summaryRow(question, nResponses, key, key, 'losses', ts.losses, ranks.length, attr, attr));
+          out.push(summaryRow(question, nResponses, key, key, 'games', ts.games, ranks.length, attr, attr));
         }
       });
-      const rankedByMu = [...(tsRows || [])].sort((a, b) => (b.mu ?? -Infinity) - (a.mu ?? -Infinity));
-      rankedByMu.forEach((r, idx) => {
-        out.push(summaryRow(question, nResponses, r.imageKey, r.imageKey, 'rank', idx + 1, r.games));
+      trueSkillExportBoards(fitted).forEach((board) => {
+        const rankedByMu = [...(board.rankings || [])].sort((a, b) => (b.mu ?? -Infinity) - (a.mu ?? -Infinity));
+        const attr = fitted.splitByCategory ? (board.category || '') : '';
+        rankedByMu.forEach((r, idx) => {
+          out.push(summaryRow(question, nResponses, r.imageKey, r.imageKey, 'rank', idx + 1, r.games, attr, attr));
+        });
       });
     }
   } else if (fam === 'image_rating') {
@@ -1839,10 +1913,13 @@ function buildSummaryObjects(question, responses) {
       out.push(summaryRow(question, nResponses, unit, unit, 'select_rate', n ? count / n : 0, n, tag, tag));
     });
   } else if (fam === 'imagepicker') {
-    const { rankings } = forcedChoice
-      ? computeForcedChoiceTrueSkill(eligible, question.name)
-      : computeQuestionTrueSkill(eligible, question.name);
-    pushTrueSkillSummary(out, question, nResponses, rankings, longObjs);
+    const fitted = forcedChoice
+      ? computeForcedChoiceTrueSkill(eligible, question.name, question)
+      : computeQuestionTrueSkill(eligible, question.name, question);
+    pushTrueSkillSummary(out, question, nResponses, fitted.rankings, longObjs, {
+      splitByCategory: fitted.splitByCategory,
+      categories: fitted.categories,
+    });
     const outcomes = summarizeChoiceOutcomes(eligible.flatMap((row) => expandQuestionAnswerUnits(row, question.name, { requireAnswer: true })));
     if (question.allowTie || outcomes.tie) {
       ['A', 'B', 'tie'].forEach((key) => {
@@ -2323,7 +2400,9 @@ export function buildExportReadme({ project, filters, nResponses, questionCount 
     SUMMARY_HEADERS.join(', '),
     '',
     '  attribute_key / attribute_label  → matrix row / slider dim / allocation choice /',
-    '                                    annotation label or tool (empty when N/A)',
+    '                                    annotation label or tool (empty when N/A).',
+    '                                    One-category-per-trial TrueSkill uses the category',
+    '                                    folder here; rank, mu, and mu_std5 are inside that category.',
     '  unit_key / unit_label            → image or choice — not image__attr joins',
     '',
     'Long schema prefix (all question types)',

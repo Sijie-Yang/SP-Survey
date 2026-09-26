@@ -2,9 +2,11 @@
  * Client helpers for fal.ai (SAM3 annotation) and streetscape SegFormer (HF).
  */
 
+import { API_BASE_URL } from './apiConfig';
+
 const SERVER_URL =
   process.env.REACT_APP_SERVER_URL ||
-  (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3001');
+  (process.env.NODE_ENV === 'production' ? '' : API_BASE_URL);
 
 /** Streetscape semantic seg — SegFormer Cityscapes (one pass / image). */
 export const SEG_MODEL = 'sp_seg_segformer_cs_v1';

@@ -87,12 +87,22 @@ app.delete('/api/templates/:templateId', async (req, res) => {
 // Project endpoints
 app.post('/api/projects', async (req, res) => {
   try {
-    const { project, surveyConfig, supabaseConfig } = req.body;
+    const { project, surveyConfig, supabaseConfig, expectedSavedAt, expectedDraftUpdatedAt } = req.body;
     const filename = `${project.id}.json`;
     const filePath = path.join(PROJECTS_PATH, filename);
     const existing = (await fs.pathExists(filePath))
       ? JSON.parse(await fs.readFile(filePath, 'utf8'))
       : {};
+    const expectedStamp = expectedDraftUpdatedAt || expectedSavedAt;
+    const currentStamp = existing.draftUpdatedAt || existing.savedAt;
+    if (expectedStamp && currentStamp && expectedStamp !== currentStamp) {
+      return res.status(409).json({
+        success: false,
+        error: 'Project changed after it was read. Reload and save again.',
+        savedAt: existing.savedAt || null,
+        draftUpdatedAt: currentStamp,
+      });
+    }
     const now = new Date().toISOString();
     
     const projectData = {
@@ -661,6 +671,7 @@ app.get('/api/responses', async (req, res) => {
   try {
     const RESPONSES_PATH = path.join(__dirname, 'public', 'responses');
     await fs.ensureDir(RESPONSES_PATH);
+    const projectId = String(req.query.projectId || '').trim();
     const files = (await fs.readdir(RESPONSES_PATH))
       .filter(f => f.endsWith('.json'))
       .sort()
@@ -670,7 +681,9 @@ app.get('/api/responses', async (req, res) => {
     for (const file of files) {
       try {
         const content = await fs.readFile(path.join(RESPONSES_PATH, file), 'utf8');
-        responses.push(JSON.parse(content));
+        const row = JSON.parse(content);
+        if (projectId && String(row.project_id || '') !== projectId) continue;
+        responses.push(row);
       } catch (e) {
         console.error(`Error reading response file ${file}:`, e);
       }
@@ -742,19 +755,38 @@ app.post('/api/responses', async (req, res) => {
   try {
     const responseData = req.body;
     const RESPONSES_PATH = path.join(__dirname, 'public', 'responses');
-    
-    // Ensure responses directory exists
     await fs.ensureDir(RESPONSES_PATH);
-    
-    // Create filename with timestamp
+    const idempotencyKey = responseData?.idempotency_key
+      || (responseData?.participant_id && responseData?.survey_metadata?.completion_code
+        ? `${responseData.participant_id}__${responseData.survey_metadata.completion_code}`
+        : null);
+    if (idempotencyKey) {
+      const files = (await fs.readdir(RESPONSES_PATH)).filter((file) => file.endsWith('.json'));
+      for (const file of files) {
+        try {
+          const existing = JSON.parse(await fs.readFile(path.join(RESPONSES_PATH, file), 'utf8'));
+          const existingKey = existing.idempotency_key
+            || (existing.participant_id && existing.survey_metadata?.completion_code
+              ? `${existing.participant_id}__${existing.survey_metadata.completion_code}`
+              : null);
+          if (existingKey && existingKey === idempotencyKey
+            && String(existing.project_id || '') === String(responseData.project_id || '')) {
+            return res.json({ success: true, filename: file, deduped: true });
+          }
+        } catch {
+          // skip unreadable files
+        }
+      }
+    }
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const filename = `response_${responseData.participant_id}_${timestamp}.json`;
     const filePath = path.join(RESPONSES_PATH, filename);
-    
-    await fs.writeFile(filePath, JSON.stringify(responseData, null, 2), 'utf8');
-    
+    await fs.writeFile(filePath, JSON.stringify({
+      ...responseData,
+      idempotency_key: idempotencyKey,
+    }, null, 2), 'utf8');
     console.log(`✅ Survey response saved to ${filePath}`);
-    res.json({ success: true, filename, filePath });
+    res.json({ success: true, filename, filePath, deduped: false });
   } catch (error) {
     console.error('Error saving survey response:', error);
     res.status(500).json({ success: false, error: error.message });

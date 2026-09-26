@@ -1,17 +1,25 @@
+import ParticipantSurveySurface from './components/ParticipantSurveySurface';
+import { submitWithRecovery } from './lib/recoverableSubmission';
+import { handleSurveyMediaError } from './lib/mediaRecovery';
+import { surveyRevision } from './lib/surveyRevision';
 import React, { useState, useEffect, useRef } from "react";
 import { Model } from "survey-core";
 import { Survey } from "survey-react-ui";
 import "survey-core/defaultV2.min.css";
 import { Box, Alert, CircularProgress, Button, Dialog, DialogTitle, DialogContent, DialogActions, Typography } from '@mui/material';
 import { saveSurveyResponse, isSupabaseConfigured } from './lib/supabase';
-import { findDraftForProject, saveDraft, clearDraft, clearDraftByKey, clearAllDraftsForProject, findPendingSubmission, clearPendingSubmission } from './lib/surveyDraft';
-import { submitWithRecovery } from './lib/recoverableSubmission';
+import {
+  findDraftForProject, saveDraft, clearDraft, clearDraftByKey, clearAllDraftsForProject,
+  findPendingSubmission, clearPendingSubmission, clearPendingByKey,
+  restoreDraftSurveyJson,
+} from './lib/surveyDraft';
 import { surveyJson, displayedImages } from './config/questions';
 import { surveyConfig } from './config/surveyConfig';
-import { applyAdminThemeToSurveyModel, buildSurveyHostStyle, loadSurveyConfig, convertToSurveyJS, normalizeBuilderSurveyJson } from './lib/surveyStorage';
+import { themeJson } from "./theme";
+import { loadSurveyConfig, convertToSurveyJS, generateCustomTheme, normalizeBuilderSurveyJson } from './lib/surveyStorage';
 import registerImageRankingWidget, {
   registerImageRatingWidget, registerImageBooleanWidget, registerImageMatrixWidget,
-  registerAllExtendedWidgets,
+  registerAllExtendedWidgets, captureSkillPreviewAnswers,
 } from './components/SurveyCustomComponents';
 import { getBrowserId, generateCompletionCode } from './lib/browserId';
 import { countProjectResponses, fetchPairStats } from './lib/surveyPublicApi';
@@ -32,9 +40,22 @@ import {
   rehydrateTrialsAnswerStoreFromSurvey,
 } from './lib/trialNavigation';
 import { SurveyTrialNavProvider } from './contexts/SurveyTrialNavContext';
+import { applySurveyLocale, surveyUiStrings, resolveSurveyJsLocale } from './lib/surveyLocale';
+import { tf } from './contexts/adminI18n';
 import SurveyProgressBridge, {
   normalizeShowProgressBar,
 } from './components/SurveyProgressBridge';
+
+/** Fail-open if Supabase / network stalls (keeps Live Survey from hanging on one RPC). */
+function withTimeout(promise, ms, fallback) {
+  let timer;
+  return Promise.race([
+    Promise.resolve(promise).finally(() => clearTimeout(timer)),
+    new Promise((resolve) => {
+      timer = setTimeout(() => resolve(fallback), ms);
+    }),
+  ]);
+}
 
 export default function SurveyApp() {
   const [surveyModel, setSurveyModel] = useState(null);
@@ -50,7 +71,16 @@ export default function SurveyApp() {
   const [surveyPhase, setSurveyPhase] = useState('loading'); // loading | active | submitting | completed | submit-error | closed
   const [completionInfo, setCompletionInfo] = useState(null);
   const [quotaClosed, setQuotaClosed] = useState(false);
+  const [liveClosedMessage, setLiveClosedMessage] = useState(null);
   const [pendingSubmission, setPendingSubmission] = useState(null);
+  const [recoverySaved, setRecoverySaved] = useState(true);
+  const [online, setOnline] = useState(() => navigator.onLine);
+  const submissionInFlight = useRef(false);
+  useEffect(() => {
+    const update = () => setOnline(navigator.onLine);
+    window.addEventListener('online', update); window.addEventListener('offline', update);
+    return () => { window.removeEventListener('online', update); window.removeEventListener('offline', update); };
+  }, []);
   const [resumeDialog, setResumeDialog] = useState(null);
   const [completionMessage, setCompletionMessage] = useState('');
   const repeatSessionRef = useRef(null);
@@ -73,6 +103,15 @@ export default function SurveyApp() {
   const submissionGuardRef = useRef(false);
   const progressChromeEnabledRef = useRef(true);
   const surveyThemeRef = useRef(null);
+  const surveyPhaseRef = useRef('loading');
+  const finalSurveyJsonRef = useRef(null);
+  const imageTrackerRef = useRef({});
+  const participantLocale = surveyModel || resumeDialog?.model || finalSurveyJsonRef.current || pendingSubmission?.survey_metadata?.survey_response_contract;
+  const participantText = surveyUiStrings(participantLocale);
+
+  useEffect(() => {
+    surveyPhaseRef.current = surveyPhase;
+  }, [surveyPhase]);
 
   // Monitor URL changes and reinitialize when project ID changes
   useEffect(() => {
@@ -109,22 +148,55 @@ export default function SurveyApp() {
     initializeSurvey();
   }, [useAdminConfig]);
 
-  // Force reload when page becomes visible (to refresh expired image URLs)
+  // Flush draft on hide; never blind-reinitialize an active / submit-error session.
   useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible' && surveyModel) {
-        console.log('👁️ Page became visible, checking if survey needs refresh...');
-        // Optionally reload survey if it's been hidden for too long
-        const timeSinceLastLoad = Date.now() - (window.lastSurveyLoadTime || 0);
-        if (timeSinceLastLoad > 30 * 60 * 1000) { // 30 minutes
-          console.log('⏰ Survey data is stale (>30min), reloading...');
-          initializeSurvey();
-        }
+    const flushDraftNow = () => {
+      if (!draftSavingEnabledRef.current) return;
+      if (!projectIdRef.current || !participantIdRef.current || !surveyModel) return;
+      if (!finalSurveyJsonRef.current) return;
+      cancelPendingDraftSave();
+      try {
+        saveDraft(projectIdRef.current, participantIdRef.current, {
+          surveyData: collectSurveyDataWithTrials(surveyModel),
+          currentPageNo: surveyModel.currentPageNo,
+          displayedImages: { ...(displayedImagesRef.current || {}) },
+          displayedMediaGroups: { ...(displayedMediaGroupsRef.current || {}) },
+          displayedMediaCategories: { ...(displayedMediaCategoriesRef.current || {}) },
+          finalSurveyJson: JSON.parse(JSON.stringify(finalSurveyJsonRef.current)),
+        });
+      } catch (err) {
+        console.warn('flushDraftNow failed:', err?.message || err);
       }
     };
 
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        flushDraftNow();
+        return;
+      }
+      if (document.visibilityState !== 'visible' || !surveyModel) return;
+      const phase = surveyPhaseRef.current;
+      // Active answering / retry must keep the same stimulus set.
+      if (phase === 'active' || phase === 'submit-error' || phase === 'submitting') {
+        flushDraftNow();
+        return;
+      }
+      const timeSinceLastLoad = Date.now() - (window.lastSurveyLoadTime || 0);
+      if (timeSinceLastLoad > 30 * 60 * 1000) {
+        console.log('⏰ Survey data is stale (>30min) and not in an active session, reloading...');
+        flushDraftNow();
+        initializeSurvey();
+      }
+    };
+
+    const handlePageHide = () => { flushDraftNow(); };
+
     document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('pagehide', handlePageHide);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('pagehide', handlePageHide);
+    };
   }, [surveyModel]);
 
   // ✅ No longer monitoring localStorage (using sessionStorage now)
@@ -135,6 +207,9 @@ export default function SurveyApp() {
       const projectId = urlParams.get('project') || 'default';
       
       if (e.key === `survey_config_${projectId}` && useAdminConfig) {
+        if (['active', 'submitting', 'submit-error'].includes(surveyPhaseRef.current)) {
+          return;
+        }
         console.log(`Project ${projectId} configuration updated, reloading survey...`);
         initializeSurvey();
       }
@@ -143,19 +218,21 @@ export default function SurveyApp() {
     // Listen to storage events
     window.addEventListener('storage', handleStorageChange);
     
-    // Also listen to custom storage events (updates within the same page)
-    window.addEventListener('storage', handleStorageChange);
-
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
   }, [useAdminConfig]);
 
   const submitSurveyResponse = async (completeData, { isRepeatMode, repeatTotal, attemptIndex }) => {
+    if (submissionInFlight.current) return;
+    submissionInFlight.current = true;
     const result = await submitWithRecovery(projectIdRef.current, completeData, {
       isRepeatMode: !!isRepeatMode, repeatTotal: repeatTotal || 1, attemptIndex: attemptIndex || 1,
     }, saveSurveyResponse);
+    submissionInFlight.current = false;
+    setRecoverySaved(result.recoverySaved);
     if (result.success) {
+      // Only clear drafts AFTER a successful save (including idempotent dedupe).
       discardDraftForProject(projectIdRef.current, completeData.participant_id);
       clearPendingSubmission(projectIdRef.current, completeData.participant_id);
       if (isRepeatMode && attemptIndex < repeatTotal) {
@@ -297,6 +374,7 @@ export default function SurveyApp() {
         participantIdRef.current = 'p_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
       }
       
+      // Failed submission recovery (refresh after submit-error)
       const pendingFound = !options.skipDraftCheck ? findPendingSubmission(projectId) : null;
       if (pendingFound?.pending?.completeData && !options.resumeDraft) {
         participantIdRef.current = pendingFound.pending.participantId
@@ -314,22 +392,25 @@ export default function SurveyApp() {
       // Load project object (including Supabase configuration)
       let projectData = null;
       try {
-        const { getProjectById } = await import('./lib/projectManager');
-        projectData = await getProjectById(projectId);
-        console.log('✅ Loaded project data:', projectData);
+        const { getParticipantProject } = await import('./lib/projectManager');
+        projectData = await getParticipantProject(projectId);
+
       } catch (error) {
         console.error('❌ Error loading project data:', error);
+        if (isSupabaseConfigured()) throw error;
       }
       
       // Load survey configuration (platform mode: Supabase, self-hosted: local server)
-      const adminConfig = await loadSurveyConfig(projectId, { live: true });
+      const adminConfig = projectData?._surveyConfig || await loadSurveyConfig(projectId);
       setCompletionMessage(adminConfig?.completionMessage || '');
+
+      setLiveClosedMessage(null);
 
       // Response quota gate
       const responseQuota = Number(adminConfig?.responseQuota) || 0;
       if (responseQuota > 0) {
-        setLoadingMessage('Checking survey availability…');
-        const currentCount = await countProjectResponses(projectId);
+        setLoadingMessage('Checking response quota…');
+        const currentCount = await withTimeout(countProjectResponses(projectId), 8000, null);
         if (currentCount != null && currentCount >= responseQuota) {
           setQuotaClosed(true);
           setSurveyPhase('closed');
@@ -340,7 +421,8 @@ export default function SurveyApp() {
       setQuotaClosed(false);
 
       // Pair stats for adaptive/balanced pairing (best-effort)
-      pairStatsRef.current = await fetchPairStats(projectId);
+      setLoadingMessage('Preparing questions and media…');
+      pairStatsRef.current = await withTimeout(fetchPairStats(projectId), 8000, null);
       
       // Build runtime Supabase config from project sources.
       // Priority: project.supabaseConfig (legacy/system status) -> imageDatasetConfig (current UI flow)
@@ -392,11 +474,29 @@ export default function SurveyApp() {
         }
       }
       
-      if (useAdminConfig && adminConfig) {
+      // Resume path: rebuild from the exact survey JSON that was answered (same stimuli).
+      const resumeDraft = options.resumeDraft || null;
+      if (resumeDraft?.finalSurveyJson) {
+        finalSurveyJson = restoreDraftSurveyJson(resumeDraft, adminConfig);
+        setAdminConfigExists(true);
+        setLoadingMessage('Restoring previous session…');
+        if (resumeDraft.participantId) {
+          participantIdRef.current = resumeDraft.participantId;
+        }
+      } else if (useAdminConfig && adminConfig) {
         // Directly use admin configuration (already in standard SurveyJS format)
         // Use deep copy to avoid modifying the original config
         finalSurveyJson = JSON.parse(JSON.stringify(adminConfig));
+        setLoadingMessage('Resolving interactive skills…');
         await resolveSkillQuestions(finalSurveyJson);
+
+        // Self-hosted Live Survey uses the project's Media Dataset only.
+        let mediaPool = Array.isArray(projectData?.preloadedImages)
+          ? projectData.preloadedImages.filter(Boolean)
+          : [];
+        setLoadingMessage(
+          mediaPool.length ? 'Assigning project media…' : 'Preparing survey…',
+        );
         
         // Process image questions and convert imageranking to ranking for SurveyJS
         if (finalSurveyJson.pages) {
@@ -448,7 +548,7 @@ export default function SurveyApp() {
                   console.log(`✅ Skipping image loading for ${element.type} question "${element.name}" - using manually selected images (${element.choices.length} images)`);
                 }
 
-                if (isManualMode && applyCuratedMediaIfNeeded(element, projectData?.preloadedImages || [])) {
+                if (isManualMode && applyCuratedMediaIfNeeded(element, mediaPool)) {
                   console.log(`✅ Applied curated media for ${element.type} question "${element.name}"`);
                 }
                 
@@ -458,10 +558,13 @@ export default function SurveyApp() {
                     let result;
                     const elementTrialCount = getTrialCount(element);
                     
-                    // PRIORITY 1: Check if project has preloaded images
-                    if (projectData?.preloadedImages && projectData.preloadedImages.length > 0) {
-                      console.log(`📦 Using preloaded media from project (${projectData.preloadedImages.length} available)`);
-                      const pool = filterPoolForQuestion(projectData.preloadedImages, element);
+                    // PRIORITY 1: Project media, else platform preview library (same as Admin Preview)
+                    if (mediaPool.length > 0) {
+                      console.log(
+                        `📦 Using media pool (${mediaPool.length} available`
+                        + `${fromPreviewLibrary ? ', preview library' : ', project'})`,
+                      );
+                      const pool = filterPoolForQuestion(mediaPool, element);
                       const folderTags = resolveMediaFolderTags(projectData, projectData?.config);
 
                       if (elementTrialCount > 1) {
@@ -475,6 +578,11 @@ export default function SurveyApp() {
                           folderTags,
                         );
                         element.trialMediaSets = trialMediaSets;
+                        element.trialMediaContexts = trialAssignments.map((a) => ({
+                          shown_media_set: a.setId || a.groupId || null,
+                          shown_media_categories: a.categories || [],
+                          shown_media: a.slots || [],
+                        }));
                         element.trialCount = elementTrialCount;
                         const assignment = trialAssignments[0] || { images: [] };
                         let selectedImages = assignment.flatMedia || assignment.images || [];
@@ -518,18 +626,21 @@ export default function SurveyApp() {
                       console.log(`✅ Selected ${selectedImages.length} media file(s) from preloaded pool${assignment.groupId ? ` (group: ${assignment.groupId})` : ''}${assignment.categories?.length ? ` (categories: ${assignment.categories.join(', ')})` : ''}`);
                       }
                     }
-                    // PRIORITY 2: Use global imageDatasetConfig if available
+                    // PRIORITY 2: Hugging Face dataset (optional; never block survey forever)
                     else if (projectData?.imageDatasetConfig?.enabled && projectData.imageDatasetConfig.datasetName) {
-                      // Load from Hugging Face using global config
-                      const defaultCount = (element.type === 'imagerating' || element.type === 'imagematrix' || element.type === 'imageboolean' || element.type === 'image' || element.type === 'imageslidergroup' || element.type === 'imagepointallocation') ? 1 : 4;
+                      const defaultCount = (element.type === 'imagerating' || element.type === 'imagematrix' || element.type === 'imageboolean' || element.type === 'imagecheckbox' || element.type === 'image' || element.type === 'imageslidergroup' || element.type === 'imagepointallocation') ? 1 : 4;
                       const imageCount = element.imageCount || defaultCount;
                       console.log(`📥 Fetching ${imageCount} images from Hugging Face dataset (global config): ${projectData.imageDatasetConfig.datasetName}`);
                       const { getRandomImagesFromHuggingFace } = await import('./lib/huggingface');
                       const { huggingFaceToken, datasetName } = projectData.imageDatasetConfig;
                       
                       if (datasetName) {
-                        result = await getRandomImagesFromHuggingFace(huggingFaceToken, datasetName, imageCount);
-                        console.log(`✅ Successfully loaded ${result?.images?.length || 0} images from Hugging Face`);
+                        result = await withTimeout(
+                          getRandomImagesFromHuggingFace(huggingFaceToken, datasetName, imageCount),
+                          12000,
+                          { success: false, images: [] },
+                        );
+                        console.log(`✅ Hugging Face returned ${result?.images?.length || 0} image(s)`);
                       } else {
                         console.warn(`Hugging Face dataset name missing for question: ${element.name}`);
                         continue;
@@ -537,16 +648,19 @@ export default function SurveyApp() {
                     }
                     // PRIORITY 3: Legacy - element-specific config (kept for backward compatibility)
                     else if (element.imageSource === 'huggingface' && element.huggingFaceConfig) {
-                      // Load from Hugging Face using element config (deprecated)
-                      const defaultCount = (element.type === 'imagerating' || element.type === 'imagematrix' || element.type === 'imageboolean' || element.type === 'image' || element.type === 'imageslidergroup' || element.type === 'imagepointallocation') ? 1 : 4;
+                      const defaultCount = (element.type === 'imagerating' || element.type === 'imagematrix' || element.type === 'imageboolean' || element.type === 'imagecheckbox' || element.type === 'image' || element.type === 'imageslidergroup' || element.type === 'imagepointallocation') ? 1 : 4;
                       const imageCount = element.imageCount || defaultCount;
                       console.log(`📥 [Legacy] Fetching ${imageCount} images from element config: ${element.huggingFaceConfig.datasetName}`);
                       const { getRandomImagesFromHuggingFace } = await import('./lib/huggingface');
                       const { huggingFaceToken, datasetName } = element.huggingFaceConfig;
                       
                       if (datasetName) {
-                        result = await getRandomImagesFromHuggingFace(huggingFaceToken, datasetName, imageCount);
-                        console.log(`✅ Successfully loaded ${result?.images?.length || 0} images from Hugging Face`);
+                        result = await withTimeout(
+                          getRandomImagesFromHuggingFace(huggingFaceToken, datasetName, imageCount),
+                          12000,
+                          { success: false, images: [] },
+                        );
+                        console.log(`✅ Hugging Face returned ${result?.images?.length || 0} image(s)`);
                       } else {
                         console.warn(`Hugging Face dataset name missing for question: ${element.name}`);
                         continue;
@@ -650,7 +764,7 @@ export default function SurveyApp() {
 
                 if (element.type === 'imageannotation') {
                   // SAM assist is intentionally disabled for live respondents —
-                  // annotation stays point / line / region / bbox only.
+                  // annotation stays point / line / polygon / bbox only.
                   element.enableSamAssist = false;
                 }
               }
@@ -748,20 +862,41 @@ export default function SurveyApp() {
       }
       {
         const normalizedProgress = normalizeShowProgressBar(finalSurveyJson.showProgressBar);
-        progressChromeEnabledRef.current = normalizedProgress !== 'off';
+        progressChromeEnabledRef.current = finalSurveyJson._spProgressEnabled ?? (normalizedProgress !== 'off');
+        finalSurveyJson._spProgressEnabled = progressChromeEnabledRef.current;
         // ProgressChrome replaces the native SurveyJS bar
         finalSurveyJson.showProgressBar = 'off';
       }
       
       // Create survey model (map builder-only types like number/consent)
       finalSurveyJson = normalizeBuilderSurveyJson(finalSurveyJson);
+      const revision = finalSurveyJson._spRevision || await surveyRevision(resumeDraft?.finalSurveyJson ? finalSurveyJson : (adminConfig || finalSurveyJson), finalSurveyJson);
+      finalSurveyJson._spRevision = revision;
       const model = new Model(finalSurveyJson);
+      applySurveyLocale(model, finalSurveyJson);
       // Re-apply media fields SurveyJS may have stripped (esp. media* + trialMediaSets)
       syncInjectedMediaOntoSurveyModel(model, finalSurveyJson);
       
-      // Use the same theme entry point as both admin previews.
-      surveyThemeRef.current = (useAdminConfig && adminConfig?.theme) ? adminConfig.theme : null;
-      applyAdminThemeToSurveyModel(model, useAdminConfig ? adminConfig : null);
+      // Apply theme - with error handling
+      try {
+        surveyThemeRef.current = (useAdminConfig && adminConfig?.theme) ? adminConfig.theme : null;
+        if (useAdminConfig && adminConfig && adminConfig.theme) {
+          // Use custom theme from admin config
+          const customTheme = generateCustomTheme(adminConfig);
+          if (customTheme) {
+            console.log('Survey: Applying custom theme...');
+            model.applyTheme(customTheme);
+            console.log('✅ Survey applied custom theme successfully');
+          }
+        } else if (themeJson) {
+          // Use default theme
+          console.log('Survey: Applying default theme...');
+          model.applyTheme(themeJson);
+        }
+      } catch (themeError) {
+        console.error('⚠️ Error applying theme, using default styling:', themeError);
+        // Continue without theme - SurveyJS will use default styling
+      }
       
       // Apply survey configuration based on which config we're using
       if (useAdminConfig && adminConfig) {
@@ -813,12 +948,30 @@ export default function SurveyApp() {
       // Handle survey completion
       model.showCompletedPage = false;
 
+      // Freeze Skill answers before SurveyJS rearranges/clones pages for Preview.
+      // Preview components read this snapshot and never re-run the interactive iframe.
+      model.onShowingPreview.add((survey) => {
+        captureSkillPreviewAnswers(survey);
+      });
+
+      // Unified synchronous final flush. Normally question.value and data are
+      // already identical; this also covers restored historical Skill answers.
+      model.onCompleting.add((survey) => {
+        survey.getAllQuestions().forEach((question) => {
+          if (question.getType() !== 'skillquestion' || !question.name) return;
+          const value = question.skillAnswerSnapshot
+            ?? survey.__skillPreviewAnswers?.[question.name]
+            ?? question.value;
+          if (value !== undefined) survey.setValue(question.name, value);
+        });
+      });
+
       model.onComplete.add(async (survey) => {
         if (submissionGuardRef.current) return;
         submissionGuardRef.current = true;
         draftSavingEnabledRef.current = false;
         cancelPendingDraftSave();
-        discardDraftForProject(projectId, participantIdRef.current);
+        // Keep draft until save succeeds — see submitSurveyResponse.
         setSurveyPhase('submitting');
 
         console.log("=== SURVEY COMPLETION STARTED ===");
@@ -848,8 +1001,7 @@ export default function SurveyApp() {
         });
         
         // Check Supabase configuration before saving
-        const currentSupabaseConfig = sessionStorage.getItem('supabase_config');
-        console.log('Current Supabase config in sessionStorage:', currentSupabaseConfig);
+
         
         // Combine user responses with displayed images information
         const attemptIndex = isRepeatMode ? repeatAttemptRef.current : 1;
@@ -880,6 +1032,10 @@ export default function SurveyApp() {
             screen_resolution: `${window.screen.width}x${window.screen.height}`,
             survey_version: useAdminConfig ? `2.0-admin-${projectId}` : "1.0-original",
             project_id: projectId,
+            survey_revision: revision.id,
+            survey_response_contract: revision.contract,
+            published_version: finalSurveyJson._spPublishedVersion || null,
+            survey_draft_updated_at: resumeDraft?.finalSurveyJson ? null : projectData?.draftUpdatedAt || null,
             timing: {
               total_seconds: totalSeconds,
               page_seconds: { ...pageTimingRef.current },
@@ -928,8 +1084,11 @@ export default function SurveyApp() {
         scheduleDraftSave(model, imageTracker, finalSurveyJson);
       });
 
+      finalSurveyJsonRef.current = finalSurveyJson;
+      imageTrackerRef.current = imageTracker;
+
       const existingDraft = !options.skipDraftCheck ? findDraftForProject(projectId) : null;
-      if (existingDraft && !resumeChoiceRef.current) {
+      if (existingDraft && !resumeChoiceRef.current && !options.resumeDraft) {
         setResumeDialog({
           draft: existingDraft.draft,
           draftKey: existingDraft.key,
@@ -942,27 +1101,30 @@ export default function SurveyApp() {
         return;
       }
 
-      if (resumeChoiceRef.current === 'resume' && existingDraft?.draft) {
-        model.data = existingDraft.draft.surveyData || {};
+      // Apply restored answers onto the (draft-stimulus) model.
+      const draftToApply = options.resumeDraft
+        || (resumeChoiceRef.current === 'resume' ? existingDraft?.draft : null);
+      if (draftToApply) {
+        model.data = draftToApply.surveyData || {};
         rehydrateTrialsAnswerStoreFromSurvey(model);
-        if (typeof existingDraft.draft.currentPageNo === 'number') {
-          model.currentPageNo = existingDraft.draft.currentPageNo;
+        if (typeof draftToApply.currentPageNo === 'number') {
+          model.currentPageNo = draftToApply.currentPageNo;
         }
-        if (existingDraft.draft.displayedImages) {
+        if (draftToApply.displayedImages) {
           Object.keys(imageTracker).forEach((k) => delete imageTracker[k]);
-          Object.assign(imageTracker, existingDraft.draft.displayedImages);
-          displayedImagesRef.current = existingDraft.draft.displayedImages;
+          Object.assign(imageTracker, draftToApply.displayedImages);
+          displayedImagesRef.current = draftToApply.displayedImages;
         }
-        if (existingDraft.draft.displayedMediaGroups) {
+        if (draftToApply.displayedMediaGroups) {
           Object.keys(mediaGroupTracker).forEach((k) => delete mediaGroupTracker[k]);
-          Object.assign(mediaGroupTracker, existingDraft.draft.displayedMediaGroups);
+          Object.assign(mediaGroupTracker, draftToApply.displayedMediaGroups);
         }
-        if (existingDraft.draft.displayedMediaCategories) {
+        if (draftToApply.displayedMediaCategories) {
           Object.keys(mediaCategoryTracker).forEach((k) => delete mediaCategoryTracker[k]);
-          Object.assign(mediaCategoryTracker, existingDraft.draft.displayedMediaCategories);
+          Object.assign(mediaCategoryTracker, draftToApply.displayedMediaCategories);
         }
-        if (existingDraft.draft.participantId) {
-          participantIdRef.current = existingDraft.draft.participantId;
+        if (draftToApply.participantId) {
+          participantIdRef.current = draftToApply.participantId;
         }
       }
       resumeChoiceRef.current = null;
@@ -1007,7 +1169,7 @@ export default function SurveyApp() {
     return (
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', gap: 2 }}>
         <CircularProgress />
-        <Typography variant="body2" color="text.secondary">Saving your responses…</Typography>
+        <Typography variant="body2" color="text.secondary">{participantText.participantSaving}</Typography>
       </Box>
     );
   }
@@ -1017,7 +1179,8 @@ export default function SurveyApp() {
       <Box sx={{ maxWidth: 560, mx: 'auto', p: 4, textAlign: 'center' }}>
         <Typography variant="h5" sx={{ mb: 2, fontWeight: 600 }}>Survey closed</Typography>
         <Typography variant="body1" color="text.secondary">
-          This survey is no longer accepting responses. Thank you for your interest.
+          {liveClosedMessage
+            || 'This survey is no longer accepting responses. Thank you for your interest.'}
         </Typography>
       </Box>
     );
@@ -1025,28 +1188,28 @@ export default function SurveyApp() {
 
   if (surveyPhase === 'completed' && completionInfo) {
     const defaultMsg = completionInfo.isRepeatMode
-      ? `All ${completionInfo.repeatTotal} annotation rounds completed!`
-      : 'Thank you for completing the survey!';
+      ? tf(participantText.participantRoundsCompleted, { n: completionInfo.repeatTotal })
+      : participantText.participantCompleted;
     return (
       <Box sx={{ maxWidth: 560, mx: 'auto', p: 4, textAlign: 'center' }}>
-        <Typography variant="h4" sx={{ mb: 2, fontWeight: 600 }}>Thank you!</Typography>
+        <Typography variant="h4" sx={{ mb: 2, fontWeight: 600 }}>{participantText.participantThanks}</Typography>
         <Typography variant="body1" sx={{ mb: 2 }}>
           {completionMessage || defaultMsg}
         </Typography>
         {completionInfo.completionCode && (
           <Typography variant="body1" sx={{ mb: 2, fontWeight: 600, letterSpacing: 1 }}>
-            Completion code: <strong>{completionInfo.completionCode}</strong>
+            {participantText.participantCompletionCode} <strong>{completionInfo.completionCode}</strong>
           </Typography>
         )}
         {completionInfo.participantId && (
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Your participant ID: <strong>{completionInfo.participantId}</strong>
+            {participantText.participantIdLabel} <strong>{completionInfo.participantId}</strong>
           </Typography>
         )}
         <Typography variant="caption" color="text.secondary">
           {completionInfo.storage === 'file'
-            ? 'Responses saved locally.'
-            : 'Responses saved successfully.'}
+            ? participantText.participantSavedLocally
+            : participantText.participantSaved}
         </Typography>
       </Box>
     );
@@ -1056,12 +1219,19 @@ export default function SurveyApp() {
     return (
       <Box sx={{ maxWidth: 560, mx: 'auto', p: 4, textAlign: 'center' }}>
         <Alert severity="error" sx={{ mb: 3, textAlign: 'left' }}>
-          We could not save your responses due to a network or server issue. Your answers are preserved — please try again.
+          {participantText.participantSaveError}
         </Alert>
+        {!online && <Alert severity="warning" sx={{ mb: 2 }}>{resolveSurveyJsLocale(participantLocale) === 'zh-cn' ? '网络已断开。连接恢复后，请点击重试提交。' : 'You are offline. Reconnect, then retry the submission.'}</Alert>}
+        {!recoverySaved && <Alert severity="warning" sx={{ mb: 2 }}>{resolveSurveyJsLocale(participantLocale) === 'zh-cn' ? '浏览器无法保存恢复副本，请保持此页面打开，或下载答卷备份。' : 'This browser could not save a recovery copy. Keep this page open or download your answers.'}</Alert>}
+        <Button sx={{ mb: 2 }} onClick={() => {
+          const url = URL.createObjectURL(new Blob([JSON.stringify(pendingSubmission, null, 2)], { type: 'application/json' }));
+          const a = document.createElement('a'); a.href = url; a.download = 'survey-response-backup.json'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+        }}>{resolveSurveyJsLocale(participantLocale) === 'zh-cn' ? '下载答卷备份' : 'Download answer backup'}</Button>
         <Button
           variant="contained"
           size="large"
           onClick={() => {
+            if (submissionInFlight.current) return;
             submissionGuardRef.current = true;
             setSurveyPhase('submitting');
             submitSurveyResponse(pendingSubmission, {
@@ -1071,7 +1241,7 @@ export default function SurveyApp() {
             });
           }}
         >
-          Retry submission
+          {participantText.participantRetrySubmission}
         </Button>
       </Box>
     );
@@ -1124,7 +1294,7 @@ export default function SurveyApp() {
           
           {useAdminConfig && adminConfigExists && (
             <Alert severity="success" sx={{ py: 0 }}>
-              Live: Updates automatically from Admin Panel
+              Survey loaded from the participant link
             </Alert>
           )}
           
@@ -1160,20 +1330,8 @@ export default function SurveyApp() {
       
       {surveyModel && surveyPhase === 'active' && (
         <SurveyTrialNavProvider>
-          <Box
-            className="sp-survey-theme-host"
-            style={buildSurveyHostStyle(surveyThemeRef.current || {})}
-            sx={{ minHeight: '100vh' }}
-          >
-          <Box
-            sx={{
-              maxWidth: 1200,
-              mx: 'auto',
-              // Phones: horizontal gutters come from SurveyJS .sd-body (see index.css)
-              px: { xs: 0, sm: 2 },
-              py: { xs: 1, sm: 3 },
-            }}
-            className="sp-survey-with-progress"
+          <ParticipantSurveySurface
+            onErrorCapture={(e) => handleSurveyMediaError(e, participantLocale)}
           >
             <SurveyProgressBridge
               surveyModel={surveyModel}
@@ -1186,20 +1344,19 @@ export default function SurveyApp() {
               </Alert>
             )}
             <Survey model={surveyModel} />
-          </Box>
-          </Box>
+          </ParticipantSurveySurface>
         </SurveyTrialNavProvider>
       )}
 
       <Dialog open={!!resumeDialog} onClose={() => {}}>
-        <DialogTitle>Resume previous session?</DialogTitle>
+        <DialogTitle>{participantText.participantResumeTitle}</DialogTitle>
         <DialogContent>
           <Typography variant="body2">
-            We found an unfinished survey from{' '}
-            {resumeDialog?.draft?.savedAt
-              ? new Date(resumeDialog.draft.savedAt).toLocaleString()
-              : 'a previous visit'}.
-            Would you like to continue where you left off?
+            {tf(participantText.participantResumeBody, {
+              date: resumeDialog?.draft?.savedAt
+                ? new Date(resumeDialog.draft.savedAt).toLocaleString(resolveSurveyJsLocale(participantLocale))
+                : participantText.participantPreviousVisit,
+            })}
           </Typography>
         </DialogContent>
         <DialogActions>
@@ -1207,6 +1364,9 @@ export default function SurveyApp() {
             onClick={() => {
               clearDraftByKey(resumeDialog.draftKey);
               clearAllDraftsForProject(projectIdRef.current);
+              if (resumeDialog.draft?.participantId) {
+                clearPendingSubmission(projectIdRef.current, resumeDialog.draft.participantId);
+              }
               participantIdRef.current = 'p_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
               const { model, imageTracker } = resumeDialog;
               setResumeDialog(null);
@@ -1224,39 +1384,25 @@ export default function SurveyApp() {
               setLoading(false);
             }}
           >
-            Start over
+            {participantText.participantStartFresh}
           </Button>
           <Button
             variant="contained"
             onClick={() => {
-              const { draft, model, imageTracker } = resumeDialog;
-              model.data = draft.surveyData || {};
-              rehydrateTrialsAnswerStoreFromSurvey(model);
-              if (typeof draft.currentPageNo === 'number') {
-                model.currentPageNo = draft.currentPageNo;
-              }
-              if (draft.displayedImages) {
-                Object.keys(imageTracker).forEach((k) => delete imageTracker[k]);
-                Object.assign(imageTracker, draft.displayedImages);
-                displayedImagesRef.current = draft.displayedImages;
-              }
-              displayedMediaGroupsRef.current = {
-                ...(draft.displayedMediaGroups || {}),
-              };
-              displayedMediaCategoriesRef.current = {
-                ...(draft.displayedMediaCategories || {}),
-              };
-              if (draft.participantId) {
-                participantIdRef.current = draft.participantId;
-              }
+              const { draft } = resumeDialog;
               setResumeDialog(null);
-              setDisplayedImagesMap(imageTracker);
-              setSurveyModel(model);
-              setSurveyPhase('active');
-              setLoading(false);
+              setSurveyModel(null);
+              setLoading(true);
+              setSurveyPhase('loading');
+              resumeChoiceRef.current = 'resume';
+              // Rebuild Model from the saved stimulus JSON so shown media matches answers.
+              initializeSurvey({
+                resumeDraft: draft,
+                skipDraftCheck: true,
+              });
             }}
           >
-            Continue
+            {participantText.participantResume}
           </Button>
         </DialogActions>
       </Dialog>

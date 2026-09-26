@@ -288,17 +288,23 @@ export const saveProjectToProjectsFolder = async (project, surveyConfig) => {
         project,
         surveyConfig,
         supabaseConfig: getSupabaseConfig(),
+        expectedDraftUpdatedAt: project.draftUpdatedAt || project.savedAt || null,
+        expectedSavedAt: project.savedAt || null,
       }),
     });
     
     const result = await response.json();
     
     if (result.success) {
-      // Temporarily disable localStorage backup to debug refresh issues
-      // saveProjectToStorage(project, surveyConfig);
-      
       console.log(`✅ Project "${project.name}" saved to file system`);
-      return { success: true, filename: result.filename, filePath: result.filePath, project };
+      return {
+        success: true,
+        filename: result.filename,
+        filePath: result.filePath,
+        project,
+        savedAt: result.savedAt,
+        draftUpdatedAt: result.draftUpdatedAt || result.savedAt,
+      };
     } else {
       throw new Error(result.error);
     }

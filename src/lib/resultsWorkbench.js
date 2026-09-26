@@ -109,42 +109,81 @@ function stimulusStats(rows, questionName) {
   return { shown, ties, units };
 }
 
-export function buildTrueSkillReport(question, rows) {
-  const family = analysisFamilyForQuestion(question);
-  const method = defaultMethodForQuestion(question);
-  let matches = [];
-  let computed = { matches: [], rankings: [] };
-  if (method.id === 'trueskill_forced_choice' || String(question?.skillId || '').includes('forced')) {
-    matches = extractForcedChoiceMatches(rows, question.name);
-    computed = computeForcedChoiceTrueSkill(rows, question.name);
-  } else if (method.id === 'trueskill_maxdiff' || family === 'maxdiff') {
-    matches = extractMaxDiffMatches(rows, question.name);
-    computed = computeMaxDiffTrueSkill(rows, question.name);
-  } else {
-    matches = extractPairwiseMatches(rows, question.name);
-    computed = computeQuestionTrueSkill(rows, question.name);
-  }
-  const stats = stimulusStats(rows, question.name);
-  const groups = comparisonGroups(computed.matches || matches);
-  const rankings = (computed.rankings || []).map((row) => ({
+function annotateTrueSkillRankings(rankings, stats) {
+  return (rankings || []).map((row) => ({
     ...row,
     shown: stats.shown.get(row.imageKey) || 0,
     comparisons: row.games || 0,
   }));
+}
+
+export function buildTrueSkillReport(question, rows) {
+  const family = analysisFamilyForQuestion(question);
+  const method = defaultMethodForQuestion(question);
+  let matches = [];
+  let computed = { matches: [], rankings: [], splitByCategory: false, categories: [] };
+  if (method.id === 'trueskill_forced_choice' || String(question?.skillId || '').includes('forced')) {
+    matches = extractForcedChoiceMatches(rows, question.name);
+    computed = computeForcedChoiceTrueSkill(rows, question.name, question);
+  } else if (method.id === 'trueskill_maxdiff' || family === 'maxdiff') {
+    matches = extractMaxDiffMatches(rows, question.name);
+    computed = computeMaxDiffTrueSkill(rows, question.name, question);
+  } else {
+    matches = extractPairwiseMatches(rows, question.name);
+    computed = computeQuestionTrueSkill(rows, question.name, question);
+  }
+  const stats = stimulusStats(rows, question.name);
+  const split = computed.splitByCategory && computed.categories?.length > 0;
   const warnings = [];
   if (!matches.length) warnings.push('insufficient_comparisons');
   if (stats.ties) warnings.push('ties_excluded_from_updates');
-  if (groups.length > 1) warnings.push('disconnected_comparison_groups');
+  let groups;
+  let categories = [];
+  let rankings;
+  if (split) {
+    categories = computed.categories.map((board) => {
+      const boardGroups = comparisonGroups(board.matches);
+      return {
+        category: board.category,
+        label: board.label,
+        rankings: annotateTrueSkillRankings(board.rankings, stats),
+        counts: {
+          nComparisons: (board.matches || []).length,
+          nGroups: boardGroups.length,
+        },
+        groups: boardGroups.map((keys, index) => ({
+          id: `${board.label}:${index + 1}`,
+          category: board.category,
+          mediaKeys: keys,
+          connected: true,
+        })),
+      };
+    });
+    groups = categories.flatMap((board) => board.groups.map((group) => group.mediaKeys));
+    rankings = categories.flatMap((board) => board.rankings);
+    if (categories.some((board) => board.counts.nGroups > 1)) warnings.push('disconnected_comparison_groups');
+  } else {
+    groups = comparisonGroups(computed.matches || matches);
+    rankings = annotateTrueSkillRankings(computed.rankings, stats);
+    if (groups.length > 1) warnings.push('disconnected_comparison_groups');
+  }
+  const nGroups = split
+    ? categories.reduce((sum, board) => sum + board.counts.nGroups, 0)
+    : groups.length;
   return {
     applicable: rankings.length > 0 || matches.length > 0 || stats.units > 0,
     method: method.id,
     algorithmVersion: ANALYSIS_ALGORITHM_VERSION,
-    sortRule: 'conservative = μ − 3σ, then μ',
+    sortRule: split
+      ? 'within each category, conservative = μ − 3σ, then μ'
+      : 'conservative = μ − 3σ, then μ',
+    splitByCategory: split,
     parameters: {
       defaultMu: 25,
       defaultSigma: 25 / 3,
       tiesUpdateRatings: false,
       multiwayExpanded: true,
+      splitByCategory: split,
     },
     counts: {
       nResponses: rows.length,
@@ -152,22 +191,34 @@ export function buildTrueSkillReport(question, rows) {
       nTrials: stats.units,
       nComparisons: (computed.matches || matches).length,
       nTies: stats.ties,
-      nGroups: groups.length,
+      nGroups,
+      nCategories: split ? categories.length : 1,
     },
-    groups: groups.map((keys, index) => ({
-      id: `g${index + 1}`,
-      mediaKeys: keys,
-      connected: true,
-    })),
+    groups: split
+      ? categories.flatMap((board) => board.groups)
+      : groups.map((keys, index) => ({
+        id: `g${index + 1}`,
+        mediaKeys: keys,
+        connected: true,
+      })),
+    categories,
     rankings,
     warnings,
     limitations: [
       'Rank order is not a significance test. Do not write “significantly better” from rank alone.',
       'σ is model uncertainty, not the participant rating standard deviation.',
-      'muStd5 is a 0–5 min-max of μ in this sample only; it is not a cross-study absolute score.',
+      split
+        ? 'muStd5 is a 0–5 min-max of μ inside each category; it is not comparable across categories or studies.'
+        : 'muStd5 is a 0–5 min-max of μ in this sample only; it is not a cross-study absolute score.',
       'Expanded pairs from one ranking or multi-select are dependent; they are not extra participants.',
       'No-preference / ties are counted separately and do not update win/loss ratings.',
-      groups.length > 1 ? 'Disconnected groups cannot support a single cross-group ranking.' : null,
+      split
+        ? 'One category per trial is ranked on its own. Do not read these boards as one pooled order.'
+        : null,
+      !split && groups.length > 1 ? 'Disconnected groups cannot support a single cross-group ranking.' : null,
+      split && categories.some((board) => board.counts.nGroups > 1)
+        ? 'A category with disconnected comparison groups cannot support one ranking inside that category.'
+        : null,
     ].filter(Boolean),
   };
 }
@@ -364,6 +415,10 @@ export function compactResultsForModel(value, { maxChars = 8000 } = {}) {
         ? {
           ...value.question.comparison,
           rankings: (value.question.comparison.rankings || []).slice(0, 20),
+          categories: (value.question.comparison.categories || []).map((board) => ({
+            ...board,
+            rankings: (board.rankings || []).slice(0, 12),
+          })),
         }
         : null,
       evidence: value.question.evidence,
@@ -420,6 +475,12 @@ export function compactResultsForModel(value, { maxChars = 8000 } = {}) {
   }
   if (text.length > maxChars && compact.question?.comparison?.rankings) {
     compact.question.comparison.rankings = compact.question.comparison.rankings.slice(0, 8);
+    if (compact.question.comparison.categories) {
+      compact.question.comparison.categories = compact.question.comparison.categories.map((board) => ({
+        ...board,
+        rankings: (board.rankings || []).slice(0, 4),
+      }));
+    }
     text = JSON.stringify(compact);
   }
   return text;
@@ -429,6 +490,20 @@ export function buildAnalysisFindings(overview, questionMetrics = []) {
   const findings = [];
   for (const question of questionMetrics) {
     if (!question?.nAnswered) continue;
+    if (question.comparison?.splitByCategory && question.comparison.categories?.length) {
+      for (const board of question.comparison.categories) {
+        const top = board.rankings?.[0];
+        if (!top) continue;
+        findings.push({
+          id: `${question.questionName}:top:${board.category || board.label}`,
+          questionName: question.questionName,
+          method: question.method,
+          text: `${question.questionTitle} (${board.label}) ranking is led by ${top.imageKey} (μ=${Number(top.mu).toFixed(2)}, σ=${Number(top.sigma).toFixed(2)}). Rank is within this category.`,
+          evidence: { ...question.evidence, category: board.category || null },
+        });
+      }
+      continue;
+    }
     if (question.comparison?.rankings?.length) {
       const top = question.comparison.rankings[0];
       findings.push({

@@ -58,6 +58,8 @@ export function skillFieldNativeQuestion(question, field) {
     _skillSourceQuestion: question.name,
     _skillFieldKey: field.key,
     _skillFieldType: field.type,
+    mediaAssignmentMode: question?.mediaAssignmentMode,
+    mediaCategoryMode: question?.mediaCategoryMode,
   };
   switch (field.type) {
     case 'number':

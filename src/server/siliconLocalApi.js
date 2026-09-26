@@ -133,10 +133,21 @@ function mediaParts(question, project) {
   }).filter(Boolean).slice(0, 4);
 }
 
+function stripRunSecrets(store) {
+  if (!store?.runs) return store;
+  store.runs = store.runs.map((run) => {
+    if (!run || typeof run !== 'object') return run;
+    const { apiKey, ...rest } = run;
+    return rest;
+  });
+  return store;
+}
+
 function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
   const io = createProjectIo();
   const locks = new Map();
   const processing = new Set();
+  const runApiKeys = new Map();
 
   const storePath = (projectId) => path.join(projectsPath, `${projectId}.silicon.json`);
 
@@ -146,14 +157,23 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
     const file = storePath(projectId);
     if (!await fs.pathExists(file)) return emptyStore();
     try {
-      return { ...emptyStore(), ...JSON.parse(await fs.readFile(file, 'utf8')) };
+      const parsed = { ...emptyStore(), ...JSON.parse(await fs.readFile(file, 'utf8')) };
+      (parsed.runs || []).forEach((run) => {
+        if (run?.id && run.apiKey && !runApiKeys.has(run.id)) {
+          runApiKeys.set(run.id, run.apiKey);
+        }
+      });
+      return stripRunSecrets(parsed);
     } catch {
       return emptyStore();
     }
   };
 
   const writeStore = async (projectId, store) => {
-    await fs.writeFile(storePath(projectId), JSON.stringify(store, null, 2), 'utf8');
+    await fs.writeFile(storePath(projectId), JSON.stringify(stripRunSecrets({
+      ...store,
+      runs: (store.runs || []).map((run) => ({ ...run })),
+    }), null, 2), 'utf8');
   };
 
   const withStore = async (projectId, fn) => {
@@ -213,7 +233,7 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
   };
 
   const answerUnit = async (run, persona, question, project) => {
-    const resolved = resolveAiRequest(run.apiKey);
+    const resolved = resolveAiRequest(runApiKeys.get(run.id) || run.apiKey);
     if (!resolved) throw new Error('API key is required. Add your OpenAI or OpenRouter key in Assistant settings.');
     const images = mediaParts(question, project);
     const userContent = [
@@ -535,7 +555,6 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
           draft_updated_at: project.draftUpdatedAt || project.savedAt || now,
           source_kind: 'local',
           cancel_requested: false,
-          apiKey,
           created_at: now,
           updated_at: now,
           finished_at: null,
@@ -559,6 +578,7 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
         store.units[created.id] = units;
         store.responses[created.id] = [];
         store.events[created.id] = [];
+        runApiKeys.set(created.id, apiKey);
         return created;
       });
       startRun(projectId, run.id);

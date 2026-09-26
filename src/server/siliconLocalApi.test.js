@@ -78,4 +78,25 @@ describe('local Silicon API', () => {
     expect(created.statusCode).toBe(400);
     expect(created.payload.error).toMatch(/API key/i);
   });
+
+  test('does not write Silicon API keys to disk', async () => {
+    const persona = mockRes();
+    await handlers['POST /api/agent/silicon/personas']({
+      body: { projectId: 'proj_demo', name: 'Walker' },
+    }, persona);
+    const created = mockRes();
+    await handlers['POST /api/agent/silicon/runs']({
+      body: {
+        projectId: 'proj_demo',
+        personaIds: [persona.payload.persona.id],
+        questionNames: ['safety'],
+        apiKey: 'sk-test-should-not-persist',
+      },
+    }, created);
+    expect(created.statusCode).toBe(200);
+    expect(created.payload.run.apiKey).toBeUndefined();
+    const stored = JSON.parse(await fs.readFile(path.join(tmp, 'proj_demo.silicon.json'), 'utf8'));
+    expect(JSON.stringify(stored)).not.toContain('sk-test-should-not-persist');
+    expect(stored.runs.every((run) => !run.apiKey)).toBe(true);
+  });
 });

@@ -143,13 +143,18 @@ export async function saveSurveyResponse(completeData) {
     if (!supabase) {
       // ✅ If Supabase is not configured, save to file as fallback (no localStorage!)
       const participantId = completeData.participant_id || generateParticipantId()
+      const completionCode = completeData.survey_metadata?.completion_code || null;
       const responseData = {
         participant_id: participantId,
         project_id: completeData.project_id || null,
         responses: completeData.responses,
+        raw_responses: completeData.raw_responses || null,
         displayed_images: completeData.displayed_images,
         survey_metadata: completeData.survey_metadata,
-        saved_at: new Date().toISOString()
+        saved_at: new Date().toISOString(),
+        idempotency_key: (participantId && completionCode)
+          ? `${participantId}__${completionCode}`
+          : null,
       }
       
       // Save to file via API
@@ -176,22 +181,36 @@ export async function saveSurveyResponse(completeData) {
     }
 
     const participantId = completeData.participant_id || generateParticipantId();
-    const { data, error } = await supabase
+    const projectId = completeData.project_id || null;
+    const payload = {
+      participant_id: participantId,
+      project_id: projectId,
+      responses: completeData.responses,
+      displayed_images: completeData.displayed_images,
+      survey_metadata: completeData.survey_metadata,
+    };
+
+    const { data, error } = await supabase.rpc('submit_survey_response', {
+      p_response: payload,
+    });
+    if (!error) {
+      if (!data?.id) throw new Error('Submission was not acknowledged. Please retry.');
+      console.log('Survey response saved via submit_survey_response:', data);
+      return { success: true, data, storage: 'supabase', deduped: !!data.deduped };
+    }
+
+    const rpcMissing = error.code === 'PGRST202'
+      || error.code === '42883'
+      || /submit_survey_response|Could not find the function/i.test(error.message || '');
+    if (!rpcMissing) throw error;
+
+    const { data: inserted, error: insertError } = await supabase
       .from('survey_responses')
-      .insert([
-        {
-          participant_id: participantId,
-          project_id: completeData.project_id || null,
-          responses: completeData.responses,
-          displayed_images: completeData.displayed_images,
-          survey_metadata: completeData.survey_metadata
-        }
-      ])
-    
-    if (error) throw error
-    
-    console.log('Survey response saved to Supabase:', data)
-    return { success: true, data, storage: 'supabase' }
+      .insert([payload]);
+    if (insertError) throw insertError;
+
+    console.log('Survey response saved to Supabase (insert fallback):', inserted);
+    return { success: true, data: inserted, storage: 'supabase', fallback: 'insert' };
   } catch (error) {
     console.error('Error saving survey response:', error)
     return { success: false, error }

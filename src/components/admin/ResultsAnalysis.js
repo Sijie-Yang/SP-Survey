@@ -6,6 +6,8 @@ import { dimensionDisplayName, sliderScale } from '../../lib/sliderScale';
 import { allocationStatus } from '../../lib/allocationStats';
 import { mediaIdentityKey, resolveMediaAnswerKey, stimulusUnitKey, stimulusUnitLabel } from '../../lib/mediaIdentity';
 import { fetchAdminResponsePage } from '../../lib/adminResults';
+import { API_ROOT } from '../../lib/apiConfig';
+import { listSiliconResponses } from '../../lib/agentApi';
 import React, { useState, useEffect, useMemo, useCallback, useContext } from 'react';
 import {
   Box,
@@ -83,6 +85,9 @@ import {
   computeQuestionTrueSkill,
   computeTrueSkillFromMatches,
   matchesFromOrderedRanking,
+  attachMatchCategory,
+  splitsTrueSkillByCategory,
+  trueSkillBoards,
 } from '../../lib/trueskill';
 import { average, pct, wilsonCI } from '../../lib/stats';
 import { computeBordaScores, kendallW, interpretKendallW } from '../../lib/rankingStats';
@@ -116,6 +121,7 @@ import { getPresetSkillAnalysis } from './skillAnalysis';
 import {
   TrueSkillMuChart,
   TrueSkillTable,
+  TrueSkillBoardStack,
   TRUESKILL_SORT_COLUMNS,
   RANKING_EXTRA_COLUMNS,
 } from './trueSkillAnalysisUi';
@@ -605,12 +611,12 @@ function ImageMatrixAttributeTabs({ question, answers, getImageUrl }) {
 
 function ImagePickerDistribution({ question, allResponses }) {
   const trueskillResult = useMemo(() => {
-    if (!allResponses?.length || !question?.name) return { matches: [], rankings: [] };
+    if (!allResponses?.length || !question?.name) return { matches: [], rankings: [], splitByCategory: false, categories: [] };
     const eligible = responsesEligibleForQuestion(question.name, allResponses);
-    return computeQuestionTrueSkill(eligible, question.name);
-  }, [allResponses, question?.name]);
+    return computeQuestionTrueSkill(eligible, question.name, question);
+  }, [allResponses, question]);
 
-  const { matches, rankings } = trueskillResult;
+  const boards = trueSkillBoards(trueskillResult);
 
   return (
     <Box>
@@ -618,18 +624,31 @@ function ImagePickerDistribution({ question, allResponses }) {
       <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
         TrueSkill (pairwise from selections vs non-selected shown images)
       </Typography>
-      {matches.length === 0 ? (
+      {trueskillResult.matches.length === 0 ? (
         <Alert severity="warning" sx={{ mb: 2 }}>
           Not enough pairwise comparisons for TrueSkill (need participants to select among shown images).
         </Alert>
       ) : (
-        <>
-          <TrueSkillMuChart rankings={rankings} />
-          <TrueSkillTable
-            rankings={rankings}
-            caption="Each selection counts as a win over every non-selected image shown in that trial. Click a column header to sort (default: μ descending)."
-          />
-        </>
+        <TrueSkillBoardStack
+          boards={boards}
+          renderBoard={(board) => (
+            <>
+              <TrueSkillMuChart
+                rankings={board.rankings}
+                title={board.label ? `Relative μ in ${board.label} (0–5)` : undefined}
+                caption={board.label ? 'Min-max of μ inside this category. Blue: density histogram. Orange: fitted normal PDF.' : undefined}
+                xLabel={board.label ? `Relative μ in ${board.label} (0–5)` : undefined}
+              />
+              <TrueSkillTable
+                rankings={board.rankings}
+                title={board.label ? `TrueSkill — ${board.label}` : 'TrueSkill image rankings'}
+                caption={board.label
+                  ? 'Rank and relative μ stay inside this category. Each selection counts as a win over every non-selected image in that trial.'
+                  : 'Each selection counts as a win over every non-selected image shown in that trial. Click a column header to sort (default: μ descending).'}
+              />
+            </>
+          )}
+        />
       )}
     </Box>
   );
@@ -973,13 +992,13 @@ function ShownImagesContext({ imageUrls, label }) {
 function ImageRankingTrueSkillAnalysis({ answers, question, type }) {
   const mediaLabel = type === 'mediaranking' ? 'Media' : 'Image';
 
-  const { matches, rankings, kendallWVal } = useMemo(() => {
+  const { matches, rankings, boards, kendallWVal } = useMemo(() => {
     const imageRankPositions = {};
     const imageUrls = {};
     const rankingLists = [];
     const allMatches = [];
 
-    for (const { answer, shown_images: shown } of answers || []) {
+    for (const { answer, shown_images: shown, shown_media_categories: categories } of answers || []) {
       const ranked = Array.isArray(answer) ? answer : [];
       if (!ranked.length) continue;
       const keys = ranked
@@ -993,7 +1012,7 @@ function ImageRankingTrueSkillAnalysis({ answers, question, type }) {
         .filter(Boolean);
       if (keys.length < 2) continue;
       rankingLists.push(keys);
-      allMatches.push(...matchesFromOrderedRanking(keys));
+      allMatches.push(...attachMatchCategory(matchesFromOrderedRanking(keys), categories));
       keys.forEach((key, rankIdx) => {
         if (!imageRankPositions[key]) imageRankPositions[key] = [];
         imageRankPositions[key].push(rankIdx + 1);
@@ -1004,7 +1023,10 @@ function ImageRankingTrueSkillAnalysis({ answers, question, type }) {
     const nItems = items.length;
     const w = kendallW(rankingLists, items);
     const bordaMap = computeBordaScores(imageRankPositions, nItems);
-    const { matches: m, rankings: tsRows } = computeTrueSkillFromMatches(allMatches);
+    const fitted = computeTrueSkillFromMatches(allMatches, {
+      splitByCategory: splitsTrueSkillByCategory(question),
+    });
+    const { matches: m, rankings: tsRows } = fitted;
 
     const byKey = new Map((tsRows || []).map((r) => [r.imageKey, r]));
     // Include images that only appear in rank stats (edge case: single-item lists)
@@ -1039,8 +1061,15 @@ function ImageRankingTrueSkillAnalysis({ answers, question, type }) {
       };
     });
 
-    return { matches: m, rankings: merged, kendallWVal: w };
-  }, [answers]);
+    const boards = trueSkillBoards(fitted).map((board) => ({
+      ...board,
+      rankings: (board.rankings || []).map((row) => merged.find((item) => item.imageKey === row.imageKey) || row),
+    }));
+    if (!fitted.splitByCategory) {
+      boards[0] = { ...boards[0], rankings: merged };
+    }
+    return { matches: m, rankings: merged, boards, kendallWVal: w };
+  }, [answers, question]);
 
   if (!answers?.length || (!rankings.length && !matches.length)) {
     return <Typography variant="body2" color="text.secondary">No responses yet.</Typography>;
@@ -1066,15 +1095,27 @@ function ImageRankingTrueSkillAnalysis({ answers, question, type }) {
       {matches.length === 0 ? (
         <Alert severity="warning">Not enough ranking comparisons for TrueSkill yet.</Alert>
       ) : (
-        <>
-          <TrueSkillMuChart rankings={rankings.filter((r) => r.mu != null)} />
-          <TrueSkillTable
-            rankings={rankings}
-            columns={rankingColumns}
-            title={`${mediaLabel} TrueSkill + ranking stats`}
-            caption="Higher rank beats lower rank in each trial. Avg rank / Borda / n are classical ranking summaries. Default sort: μ descending."
-          />
-        </>
+        <TrueSkillBoardStack
+          boards={boards}
+          renderBoard={(board) => (
+            <>
+              <TrueSkillMuChart
+                rankings={(board.rankings || []).filter((r) => r.mu != null)}
+                title={board.label ? `Relative μ in ${board.label} (0–5)` : undefined}
+                caption={board.label ? 'Min-max of μ inside this category. Blue: density histogram. Orange: fitted normal PDF.' : undefined}
+                xLabel={board.label ? `Relative μ in ${board.label} (0–5)` : undefined}
+              />
+              <TrueSkillTable
+                rankings={board.rankings}
+                columns={rankingColumns}
+                title={board.label ? `${mediaLabel} TrueSkill — ${board.label}` : `${mediaLabel} TrueSkill + ranking stats`}
+                caption={board.label
+                  ? 'TrueSkill rank and relative μ stay inside this category. Avg rank and Borda describe the recorded ranks.'
+                  : 'Higher rank beats lower rank in each trial. Avg rank / Borda / n are classical ranking summaries. Default sort: μ descending.'}
+              />
+            </>
+          )}
+        />
       )}
     </Box>
   );
@@ -2478,6 +2519,7 @@ export default function ResultsAnalysis({
   const fetchSequence = React.useRef(0);
   const [error, setError] = useState(null);
   const [errorMeta, setErrorMeta] = useState(null);
+  const [loadSkipped, setLoadSkipped] = useState([]);
   const [loadSource, setLoadSource] = useState(null);
   const [searchText, setSearchText] = useState('');
   const [dateFrom, setDateFrom] = useState('');
@@ -2561,32 +2603,38 @@ export default function ResultsAnalysis({
     setLoadProgress(null);
     setError(null);
     setErrorMeta(null);
+    setLoadSkipped([]);
     try {
       if ((adminMode || platformSupabase) && currentProject?.id) {
         const all = await readAllResponsePages(async (offset, after) => {
           if (adminMode) return fetchAdminResponsePage(currentProject.id, 0, after);
-          let query = platformSupabase
-            .from('survey_responses').select('*').eq('project_id', currentProject.id)
-            .order('created_at', { ascending: false, nullsFirst: false }).order('id', { ascending: false })
-            .limit(1000);
-          if (after) query = query.or(responseCursorFilter(after));
-          const { data, error: sbError } = await query;
-          if (sbError) throw sbError;
-          return data || [];
+          let lastError = null;
+          for (const limit of [50, 10, 1]) {
+            let query = platformSupabase
+              .from('survey_responses').select('*').eq('project_id', currentProject.id)
+              .order('created_at', { ascending: false, nullsFirst: false }).order('id', { ascending: false })
+              .limit(limit);
+            if (after) query = query.or(responseCursorFilter(after));
+            const { data, error: sbError } = await query;
+            if (!sbError) return data || [];
+            lastError = sbError;
+          }
+          throw lastError;
         }, { cancelled: () => sequence !== fetchSequence.current,
-          onProgress: (loaded) => setLoadProgress({ loaded, page: Math.ceil(loaded / 1000) }) });
-        setResponses(all);
+          onProgress: (loaded) => setLoadProgress({ loaded, page: Math.ceil(loaded / 50) }) });
+        const skipped = all.filter((row) => row?._unreadable);
+        setResponses(all.filter((row) => !row?._unreadable));
+        setLoadSkipped(skipped);
         setLoadSource('supabase');
-      } else {
-        // Self-hosted fallback: local file server
-        const resp = await fetch('http://localhost:3001/api/responses');
+      } else if (currentProject?.id) {
+        const resp = await fetch(`${API_ROOT}/responses?projectId=${encodeURIComponent(currentProject.id)}`);
         if (resp.ok) {
           const json = await resp.json();
           if (sequence !== fetchSequence.current) return;
           setResponses(json.responses || []);
           setLoadSource('file');
         } else {
-          setError('No data source available. Configure Supabase environment variables.');
+          setError('No data source available. Configure Supabase on the Server tab, or keep the local API running.');
           setLoadSource(null);
         }
       }
@@ -2609,17 +2657,12 @@ export default function ResultsAnalysis({
   }, [currentProject?.id, fetchResponses]);
 
   useEffect(() => {
-    if (dataSource !== 'silicon' || !siliconRunId || !platformSupabase || !currentProject?.id || adminMode) return undefined;
+    if (dataSource !== 'silicon' || !siliconRunId || !currentProject?.id || adminMode) return undefined;
     let cancelled = false;
     (async () => {
-      const { data, error: sbError } = await platformSupabase
-        .from('silicon_responses')
-        .select('*')
-        .eq('project_id', currentProject.id)
-        .eq('run_id', siliconRunId)
-        .order('created_at', { ascending: false });
-      if (cancelled || sbError) return;
-      setResponses((data || []).map((row) => ({
+      const json = await listSiliconResponses(siliconRunId);
+      if (cancelled || !json?.success) return;
+      setResponses((json.responses || []).map((row) => ({
         ...row,
         source: 'silicon',
         survey_metadata: { ...(row.survey_metadata || {}), silicon_run_id: siliconRunId },
@@ -3010,6 +3053,13 @@ export default function ResultsAnalysis({
               {errorMeta.stage ? ` · ${errorMeta.stage}` : ''}
             </Typography>
           )}
+        </Alert>
+      )}
+      {!error && loadSkipped.length > 0 && (
+        <Alert severity="warning" sx={{ mb: 2 }}>
+          {language === 'zh'
+            ? `有 ${loadSkipped.length} 份答卷过大或无法解析，已跳过。其余答卷仍可分析。`
+            : `${loadSkipped.length} response(s) were too large or unreadable and were skipped. The remaining responses are still available.`}
         </Alert>
       )}
 

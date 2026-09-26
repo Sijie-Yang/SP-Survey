@@ -5,16 +5,22 @@ import React, { useMemo, useContext, useState } from 'react';
 import { Box, Typography, Button, Paper, Alert, Tabs, Tab } from '@mui/material';
 import Download from '@mui/icons-material/Download';
 import { ImageResolverContext } from './imageResolverContext';
-import { descriptiveStats, pct } from '../../lib/stats';
+import { descriptiveStats, minMaxScale, pct } from '../../lib/stats';
 import { computeMaxDiffScores } from '../../lib/maxdiff';
 import {
   computeTrueSkillFromMatches,
   matchesFromForcedChoiceAnswer,
   matchesFromMaxDiffAnswer,
+  attachMatchCategory,
+  splitsTrueSkillByCategory,
+  trueSkillBoards,
+  filenameKey,
+  singleCategoryLabel,
 } from '../../lib/trueskill';
 import {
   TrueSkillTable,
   TrueSkillMuChart,
+  TrueSkillBoardStack,
   exportTrueSkillCsv,
   TRUESKILL_SORT_COLUMNS,
   MAXDIFF_EXTRA_COLUMNS,
@@ -163,14 +169,17 @@ function HorizontalBar({ label, count, total, color, index }) {
 
 /** Forced-Choice A/B — same TrueSkill view as Image Choice (winner ≻ other shown). */
 export function ForcedChoicePreferenceAnalysis({ answers, question }) {
-  const { matches, rankings } = useMemo(() => {
+  const fitted = useMemo(() => {
     const allMatches = [];
-    for (const { answer, shown_images: shown } of answers || []) {
+    for (const { answer, shown_images: shown, shown_media_categories: categories } of answers || []) {
       if (!answer || typeof answer !== 'object') continue;
-      allMatches.push(...matchesFromForcedChoiceAnswer(answer, shown));
+      allMatches.push(...attachMatchCategory(matchesFromForcedChoiceAnswer(answer, shown), categories));
     }
-    return computeTrueSkillFromMatches(allMatches);
-  }, [answers]);
+    return computeTrueSkillFromMatches(allMatches, {
+      splitByCategory: splitsTrueSkillByCategory(question),
+    });
+  }, [answers, question]);
+  const boards = trueSkillBoards(fitted);
 
   return (
     <Box>
@@ -180,27 +189,42 @@ export function ForcedChoicePreferenceAnalysis({ answers, question }) {
       </Typography>
       <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
         Each trial: the chosen image beats the other shown image
-        ({matches.length} pairwise outcome{matches.length === 1 ? '' : 's'}).
+        ({fitted.matches.length} pairwise outcome{fitted.matches.length === 1 ? '' : 's'}).
       </Typography>
-      {matches.length === 0 ? (
+      {fitted.matches.length === 0 ? (
         <Alert severity="warning" sx={{ mb: 2 }}>
           Not enough pairwise comparisons for TrueSkill (need participants to pick A or B
           among two shown images).
         </Alert>
       ) : (
-        <>
-          <TrueSkillMuChart rankings={rankings} />
-          <TrueSkillTable
-            rankings={rankings}
-            caption="Forced choice: selected image wins over the other shown image. Click a column header to sort (default: μ descending)."
-            onExport={() => exportTrueSkillCsv(
-              question?.name || 'forced_choice',
-              rankings,
-              'mu',
-              'desc',
-            )}
-          />
-        </>
+        <TrueSkillBoardStack
+          boards={boards}
+          renderBoard={(board) => (
+            <>
+              <TrueSkillMuChart
+                rankings={board.rankings}
+                title={board.label ? `Relative μ in ${board.label} (0–5)` : undefined}
+                caption={board.label ? 'Min-max of μ inside this category. Blue: density histogram. Orange: fitted normal PDF.' : undefined}
+                xLabel={board.label ? `Relative μ in ${board.label} (0–5)` : undefined}
+              />
+              <TrueSkillTable
+                rankings={board.rankings}
+                title={board.label ? `TrueSkill — ${board.label}` : 'TrueSkill image rankings'}
+                caption={board.label
+                  ? 'Rank and relative μ stay inside this category. The selected image wins over the other shown image.'
+                  : 'Forced choice: selected image wins over the other shown image. Click a column header to sort (default: μ descending).'}
+                onExport={() => exportTrueSkillCsv(
+                  question?.name || 'forced_choice',
+                  board.rankings,
+                  'mu',
+                  'desc',
+                  [],
+                  board.label,
+                )}
+              />
+            </>
+          )}
+        />
       )}
     </Box>
   );
@@ -265,59 +289,90 @@ export function PairwisePreferenceAnalysis({ answers }) {
 export function MaxDiffAnalysis({ answers, question, mediaCount = 4 }) {
   const count = question?.skillConfig?.mediaCount || mediaCount;
 
-  const { rankings, matches, tsMerged } = useMemo(() => {
+  const { rankings, matches, boards } = useMemo(() => {
     const bwsRows = computeMaxDiffScores(answers, count);
     const allMatches = [];
-    for (const { answer, shown_images: shown } of answers || []) {
-      if (!answer || typeof answer !== 'object') continue;
-      if (answer.bestIndex == null || answer.worstIndex == null) continue;
-      allMatches.push(...matchesFromMaxDiffAnswer(answer, shown?.length ? shown : answer.shownUrls));
-    }
-    const { matches: m, rankings: tsRows } = computeTrueSkillFromMatches(allMatches);
-    const byKey = new Map((tsRows || []).map((r) => [r.imageKey, r]));
-    const merged = bwsRows.map((row) => {
-      const ts = byKey.get(row.imageKey) || {};
-      return {
-        imageKey: row.imageKey,
-        displayUrl: row.imageUrl || null,
-        bws: row.bws,
-        scoreStd5: row.scoreStd5,
-        best: row.best,
-        worst: row.worst,
-        appearances: row.appearances,
-        mu: ts.mu ?? null,
-        muStd5: ts.muStd5 ?? null,
-        sigma: ts.sigma ?? null,
-        conservative: ts.conservative ?? null,
-        wins: ts.wins ?? 0,
-        losses: ts.losses ?? 0,
-        games: ts.games ?? 0,
-      };
-    });
-    byKey.forEach((ts, key) => {
-      if (!merged.some((r) => r.imageKey === key)) {
-        merged.push({
-          imageKey: key,
-          displayUrl: null,
-          bws: null,
-          scoreStd5: null,
-          best: 0,
-          worst: 0,
-          appearances: 0,
-          ...ts,
+    const categoryByImage = new Map();
+    for (const unit of answers || []) {
+      const answer = unit?.answer;
+      const shown = unit?.shown_images?.length ? unit.shown_images : (answer?.shownUrls || []);
+      const category = singleCategoryLabel(unit?.shown_media_categories);
+      if (category) {
+        shown.forEach((item) => {
+          const key = filenameKey(typeof item === 'string' ? item : item?.url || item?.name || '');
+          if (key && !categoryByImage.has(key)) categoryByImage.set(key, category);
         });
       }
+      if (!answer || typeof answer !== 'object') continue;
+      if (answer.bestIndex == null || answer.worstIndex == null) continue;
+      allMatches.push(...attachMatchCategory(
+        matchesFromMaxDiffAnswer(answer, shown),
+        unit?.shown_media_categories,
+      ));
+    }
+    const fitted = computeTrueSkillFromMatches(allMatches, {
+      splitByCategory: splitsTrueSkillByCategory(question),
     });
-    return { rankings: bwsRows, matches: m, tsMerged: merged };
-  }, [answers, count]);
+    const bwsByKey = new Map(bwsRows.map((row) => [row.imageKey, row]));
+    const mergeRow = (bws, ts) => ({
+      imageKey: ts?.imageKey || bws?.imageKey,
+      displayUrl: bws?.imageUrl || null,
+      bws: bws?.bws ?? null,
+      scoreStd5: bws?.scoreStd5 ?? null,
+      best: bws?.best ?? 0,
+      worst: bws?.worst ?? 0,
+      appearances: bws?.appearances ?? 0,
+      mu: ts?.mu ?? null,
+      muStd5: ts?.muStd5 ?? null,
+      sigma: ts?.sigma ?? null,
+      conservative: ts?.conservative ?? null,
+      wins: ts?.wins ?? 0,
+      losses: ts?.losses ?? 0,
+      games: ts?.games ?? 0,
+    });
+    const scaleWithin = (rows) => {
+      const indexes = [];
+      const values = [];
+      rows.forEach((row, index) => {
+        if (Number.isFinite(row.bws)) {
+          indexes.push(index);
+          values.push(row.bws);
+        }
+      });
+      if (values.length < 2) return rows;
+      const scaled = minMaxScale(values, 5);
+      const next = rows.slice();
+      indexes.forEach((index, i) => {
+        next[index] = { ...next[index], scoreStd5: scaled[i] };
+      });
+      return next;
+    };
+    const sourceBoards = trueSkillBoards(fitted);
+    const built = sourceBoards.map((board) => {
+      const seen = new Set();
+      const rows = (board.rankings || []).map((ts) => {
+        seen.add(ts.imageKey);
+        return mergeRow(bwsByKey.get(ts.imageKey), ts);
+      });
+      bwsRows.forEach((bws) => {
+        if (seen.has(bws.imageKey)) return;
+        if (fitted.splitByCategory && (categoryByImage.get(bws.imageKey) || null) !== board.category) return;
+        seen.add(bws.imageKey);
+        rows.push(mergeRow(bws, null));
+      });
+      return {
+        ...board,
+        rankings: fitted.splitByCategory && board.label ? scaleWithin(rows) : rows,
+      };
+    });
+    return { rankings: bwsRows, matches: fitted.matches, boards: built };
+  }, [answers, count, question]);
 
   if (!rankings.length) {
     return <Typography variant="body2" color="text.secondary">No complete MaxDiff selections yet.</Typography>;
   }
 
   const maxDiffColumns = [...MAXDIFF_EXTRA_COLUMNS, ...TRUESKILL_SORT_COLUMNS];
-  const bwsStdScores = tsMerged.map((r) => r.scoreStd5).filter((v) => v != null && !Number.isNaN(v));
-  const muStdScores = tsMerged.map((r) => r.muStd5).filter((v) => v != null && !Number.isNaN(v));
 
   return (
     <Box>
@@ -331,46 +386,58 @@ export function MaxDiffAnalysis({ answers, question, mediaCount = 4 }) {
       {matches.length === 0 ? (
         <Alert severity="warning">Not enough MaxDiff comparisons for TrueSkill yet.</Alert>
       ) : (
-        <>
-          <Box
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
-              gap: 2,
-              mb: 1,
-            }}
-          >
-            <DensityHistogramChart
-              scores={bwsStdScores}
-              domainMin={0}
-              domainMax={5}
-              title="BWS std (0–5)"
-              xLabel="Standardized BWS (0–5)"
-              padB={36}
-            />
-            <DensityHistogramChart
-              scores={muStdScores}
-              domainMin={0}
-              domainMax={5}
-              title="μ std (0–5)"
-              xLabel="Standardized μ (0–5)"
-              padB={36}
-            />
-          </Box>
-          <TrueSkillTable
-            rankings={tsMerged}
-            columns={maxDiffColumns}
-            title="MaxDiff TrueSkill + BWS stats"
-            caption="Best ≻ others; middles ≻ worst. BWS columns are classical MaxDiff summaries. Default sort: μ descending."
-            onExport={() => exportTrueSkillCsv(
-              question?.name || 'maxdiff',
-              tsMerged,
-              'mu',
-              'desc',
-              MAXDIFF_EXTRA_COLUMNS,
-            )}
-          />
-        </>
+        <TrueSkillBoardStack
+          boards={boards}
+          renderBoard={(board) => {
+            const bwsStdScores = board.rankings.map((r) => r.scoreStd5).filter((v) => v != null && !Number.isNaN(v));
+            const muStdScores = board.rankings.map((r) => r.muStd5).filter((v) => v != null && !Number.isNaN(v));
+            return (
+              <>
+                <Box
+                  sx={{
+                    display: 'grid',
+                    gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+                    gap: 2,
+                    mb: 1,
+                  }}
+                >
+                  <DensityHistogramChart
+                    scores={bwsStdScores}
+                    domainMin={0}
+                    domainMax={5}
+                    title={board.label ? `BWS std in ${board.label} (0–5)` : 'BWS std (0–5)'}
+                    xLabel={board.label ? `BWS in ${board.label} (0–5)` : 'Standardized BWS (0–5)'}
+                    padB={36}
+                  />
+                  <DensityHistogramChart
+                    scores={muStdScores}
+                    domainMin={0}
+                    domainMax={5}
+                    title={board.label ? `μ std in ${board.label} (0–5)` : 'μ std (0–5)'}
+                    xLabel={board.label ? `Relative μ in ${board.label} (0–5)` : 'Standardized μ (0–5)'}
+                    padB={36}
+                  />
+                </Box>
+                <TrueSkillTable
+                  rankings={board.rankings}
+                  columns={maxDiffColumns}
+                  title={board.label ? `MaxDiff TrueSkill — ${board.label}` : 'MaxDiff TrueSkill + BWS stats'}
+                  caption={board.label
+                    ? 'Rank, relative μ, and BWS 0–5 stay inside this category. Best beats the other shown images; each middle image beats worst.'
+                    : 'Best ≻ others; middles ≻ worst. BWS columns are classical MaxDiff summaries. Default sort: μ descending.'}
+                  onExport={() => exportTrueSkillCsv(
+                    question?.name || 'maxdiff',
+                    board.rankings,
+                    'mu',
+                    'desc',
+                    MAXDIFF_EXTRA_COLUMNS,
+                    board.label,
+                  )}
+                />
+              </>
+            );
+          }}
+        />
       )}
     </Box>
   );

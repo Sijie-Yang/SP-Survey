@@ -278,7 +278,11 @@ function AdminWorkspace() {
       return next;
     });
   }, [wideLayout]);
-  const openAiSidebar = useCallback(() => {
+  const [analysisMediaFocus, setAnalysisMediaFocus] = useState(null);
+  const [resultsScope, setResultsScope] = useState(null);
+  const [resultsAnalyzeBusy, setResultsAnalyzeBusy] = useState(false);
+  const openAiSidebar = useCallback((panel = 'assistant') => {
+    setAiSidebarPanel(panel);
     setAiSidebarOpen(true);
     if (!wideLayout) setSidebarOpen(false);
   }, [wideLayout]);
@@ -326,6 +330,108 @@ function AdminWorkspace() {
     }
   }, [currentProject?.id]);
 
+  const remoteSyncInFlightRef = useRef(false);
+  const remoteConflictWarnedAtRef = useRef(null);
+  const draftUpdatedAtRef = useRef(null);
+  const hasUnsavedChangesRef = useRef(false);
+  const currentProjectIdRef = useRef(null);
+
+  useEffect(() => {
+    draftUpdatedAtRef.current = currentProject?.draftUpdatedAt || currentProject?.savedAt || null;
+    hasUnsavedChangesRef.current = hasUnsavedChanges;
+    currentProjectIdRef.current = currentProject?.id || null;
+  }, [currentProject?.draftUpdatedAt, currentProject?.savedAt, currentProject?.id, hasUnsavedChanges]);
+
+  useEffect(() => {
+    if (!currentProject?.id) return undefined;
+
+    const applyRemoteDraft = (latest) => {
+      const config = latest?._surveyConfig;
+      if (!config) return;
+      const projectId = latest.id;
+      const remoteAt = latest.draftUpdatedAt || latest.savedAt || null;
+      setCurrentProject(latest);
+      setSurveyConfig(config);
+      const savedCopy = JSON.parse(JSON.stringify(config));
+      setLastSavedConfig(savedCopy);
+      setHasUnsavedChanges(false);
+      draftUpdatedAtRef.current = remoteAt;
+      setProjectStates((prev) => {
+        const next = {
+          ...prev,
+          [projectId]: {
+            ...(prev[projectId] || {}),
+            surveyConfig: config,
+            lastSavedConfig: savedCopy,
+            hasUnsavedChanges: false,
+          },
+        };
+        saveProjectStatesToStorage(next);
+        return next;
+      });
+      setSnackbar({
+        open: true,
+        message: 'Loaded latest edits from the local agent API.',
+        severity: 'info',
+      });
+    };
+
+    const syncRemoteDraft = async () => {
+      const projectId = currentProjectIdRef.current;
+      if (!projectId || remoteSyncInFlightRef.current || saveInFlightRef.current) return;
+      if (typeof document !== 'undefined' && document.visibilityState === 'hidden') return;
+
+      remoteSyncInFlightRef.current = true;
+      try {
+        const latest = await getProjectById(projectId);
+        if (!latest || currentProjectIdRef.current !== projectId) return;
+
+        const remoteAt = latest.draftUpdatedAt || latest.savedAt || null;
+        const localAt = draftUpdatedAtRef.current;
+        if (!remoteAt || remoteAt === localAt) return;
+
+        if (hasUnsavedChangesRef.current) {
+          if (remoteConflictWarnedAtRef.current !== remoteAt) {
+            remoteConflictWarnedAtRef.current = remoteAt;
+            setSnackbar({
+              open: true,
+              message: 'The local agent updated this project. Save or discard your local edits to load the latest.',
+              severity: 'warning',
+            });
+          }
+          return;
+        }
+
+        applyRemoteDraft(latest);
+      } catch (err) {
+        console.warn('Remote draft sync failed:', err);
+      } finally {
+        remoteSyncInFlightRef.current = false;
+      }
+    };
+
+    const onFocusOrVisible = () => {
+      if (document.visibilityState === 'visible') syncRemoteDraft();
+    };
+    const onAgentRunComplete = (event) => {
+      if (event?.detail?.projectId && event.detail.projectId !== currentProjectIdRef.current) return;
+      setTabValue(2);
+      syncRemoteDraft();
+    };
+
+    window.addEventListener('focus', onFocusOrVisible);
+    window.addEventListener('sp-agent-run-complete', onAgentRunComplete);
+    document.addEventListener('visibilitychange', onFocusOrVisible);
+    const intervalId = window.setInterval(syncRemoteDraft, 4000);
+    syncRemoteDraft();
+
+    return () => {
+      window.removeEventListener('focus', onFocusOrVisible);
+      window.removeEventListener('sp-agent-run-complete', onAgentRunComplete);
+      document.removeEventListener('visibilitychange', onFocusOrVisible);
+      window.clearInterval(intervalId);
+    };
+  }, [currentProject?.id]);
 
   useEffect(() => {
     cleanupDemoImages();
@@ -507,7 +613,14 @@ function AdminWorkspace() {
           if (response.ok) {
             const data = await response.json();
             if (data.success) {
-              if (data.project) fullProject = data.project;
+              if (data.project) {
+                fullProject = {
+                  ...data.project,
+                  savedAt: data.savedAt || data.project.savedAt || null,
+                  draftUpdatedAt: data.draftUpdatedAt || data.savedAt || data.project.draftUpdatedAt || null,
+                  _surveyConfig: data.surveyConfig,
+                };
+              }
               if (!fileSurveyConfig && data.surveyConfig) fileSurveyConfig = data.surveyConfig;
             }
           }
@@ -922,7 +1035,11 @@ function AdminWorkspace() {
 
       if (result.success) {
         setActiveProject(currentProject.id);
-        setCurrentProject(projectToSave);
+        setCurrentProject({
+          ...projectToSave,
+          savedAt: result.savedAt || projectToSave.savedAt,
+          draftUpdatedAt: result.draftUpdatedAt || result.savedAt || projectToSave.draftUpdatedAt,
+        });
 
         const savedConfig = JSON.parse(JSON.stringify(latestSurveyConfig));
         setLastSavedConfig(savedConfig);
@@ -1488,6 +1605,7 @@ function AdminWorkspace() {
             <TabPanel value={tabValue} index={1}>
               <ImageDataset 
                 currentProject={currentProject}
+                focusRequest={analysisMediaFocus?.projectId === currentProject?.id ? analysisMediaFocus : null}
                 onProjectUpdate={handleProjectUpdate}
                 onConfigChange={(hasChanges, latestConfig) => {
                   console.log('🔍 ImageDataset config changed, hasChanges:', hasChanges);
@@ -1539,9 +1657,56 @@ function AdminWorkspace() {
 
             <TabPanel value={tabValue} index={5}>
               <ResultsAnalysis
+                onOpenMedia={(mediaId) => { setAnalysisMediaFocus({ projectId: currentProject.id, mediaId, token: Date.now() }); goToAdminTab(1); }}
                 currentProject={currentProject}
                 surveyConfig={surveyConfig}
                 onSurveyConfigChange={handleResultsConfigSync}
+                analysisBusy={resultsAnalyzeBusy}
+                onScopeChange={(scope) => setResultsScope(scope)}
+                onAnalyzeCurrent={async ({ scope, overview, onSaved }) => {
+                  setResultsScope(scope);
+                  setResultsAnalyzeBusy(true);
+                  openAiSidebar('assistant');
+                  try {
+                    await assistant.handleSendMessage({
+                      assistantMode: 'question',
+                      message: [
+                        'Analyze the current Results scope. Call survey_results_summary with view=overview using the provided analysisScope.',
+                        'Then read any comparison or slider questions with view=question.',
+                        'Write a short report: data included/excluded, quality, main findings with evidence, methods and limits.',
+                        'Do not invent statistics, significance, or causal claims. Do not save or delete anything.',
+                        `Scope JSON: ${JSON.stringify(scope)}`,
+                        overview?.counts ? `Known counts: ${JSON.stringify(overview.counts)}` : '',
+                      ].filter(Boolean).join('\n'),
+                    });
+                    const last = [...(assistant.messages || [])].reverse().find((row) => row.role === 'assistant');
+                    onSaved?.({
+                      scope,
+                      overview,
+                      narrative: last?.content || '',
+                      findings: [],
+                      provider: assistant.selectedRoute,
+                      model: assistant.selectedRoute,
+                      status: 'completed',
+                    });
+                  } finally {
+                    setResultsAnalyzeBusy(false);
+                  }
+                }}
+                onExplainQuestion={async ({ scope, question }) => {
+                  setResultsScope(scope);
+                  openAiSidebar('assistant');
+                  await assistant.handleSendMessage({
+                    assistantMode: 'question',
+                    message: [
+                      `Explain question ${question?.name || scope.questionName} in the current Results scope.`,
+                      'Call survey_results_summary view=question with this questionName.',
+                      'If the method is TrueSkill, explain μ, σ, ties, coverage, and why rank is not significance.',
+                      'If it is a slider, explain each dimension separately.',
+                      `Scope JSON: ${JSON.stringify(scope)}`,
+                    ].join('\n'),
+                  });
+                }}
               />
             </TabPanel>
 

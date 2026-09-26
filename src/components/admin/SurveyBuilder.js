@@ -890,6 +890,23 @@ export default function SurveyBuilder({
 
             <Divider />
 
+            <FormControl size="small" sx={{ minWidth: 220 }}>
+              <InputLabel>{t.builderSurveyLanguage}</InputLabel>
+              <Select
+                label={t.builderSurveyLanguage}
+                value={String(config.locale || 'en').toLowerCase().startsWith('zh') ? 'zh' : 'en'}
+                onChange={(e) => handleBasicInfoChange('locale', e.target.value)}
+              >
+                <MenuItem value="en">{t.builderSurveyLanguageEn}</MenuItem>
+                <MenuItem value="zh">{t.builderSurveyLanguageZh}</MenuItem>
+              </Select>
+              <Typography variant="caption" color="text.secondary" sx={{ mt: 0.75, display: 'block' }}>
+                {t.builderSurveyLanguageHelp}
+              </Typography>
+            </FormControl>
+
+            <Divider />
+
             {/* Logo Settings */}
             <Box>
               <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 600, mb: 2 }}>

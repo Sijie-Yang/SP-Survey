@@ -1,4 +1,5 @@
 import { mediaIdentityKey, resolveMediaAnswerKey } from './mediaIdentity.js';
+import { normalizeMediaAssignmentMode } from './mediaUtils.js';
 import { isNoPreference } from './choiceTie.js';
 /** TrueSkill-style 1v1 rating for imagepicker (any count, single or multi-select). */
 
@@ -47,6 +48,30 @@ function ensurePlayer(players, key) {
 }
 
 export function filenameKey(val) { return mediaIdentityKey(val); }
+
+export function categoryList(value) {
+  if (value == null || value === '') return [];
+  if (Array.isArray(value)) return value.map((item) => String(item ?? '').trim()).filter(Boolean);
+  return String(value).split('|').map((item) => item.trim()).filter(Boolean);
+}
+
+/** The trial's folder tag when exactly one category was shown. */
+export function singleCategoryLabel(value) {
+  const list = categoryList(value);
+  return list.length === 1 ? list[0] : null;
+}
+
+/** One-category-per-trial sampling. Other modes keep a single ranking. */
+export function splitsTrueSkillByCategory(question) {
+  return normalizeMediaAssignmentMode(question?.mediaAssignmentMode) === 'category'
+    && question?.mediaCategoryMode === 'single';
+}
+
+export function attachMatchCategory(matches, categories) {
+  const category = singleCategoryLabel(categories);
+  if (!category || !matches?.length) return matches || [];
+  return matches.map((match) => ({ ...match, category }));
+}
 
 /**
  * Map imagepicker/mediapicker answer(s) to filename keys from the shown set.
@@ -108,8 +133,11 @@ export function extractPairwiseMatches(responses, questionName) {
   const matches = [];
   for (const row of responses) {
     const units = expandQuestionAnswerUnits(row, questionName, { requireAnswer: true });
-    for (const { answer: ans, shown_images: shown } of units) {
-      matches.push(...matchesFromImagePickerAnswer(ans, shown));
+    for (const unit of units) {
+      matches.push(...attachMatchCategory(
+        matchesFromImagePickerAnswer(unit.answer, unit.shown_images),
+        unit.shown_media_categories,
+      ));
     }
   }
   return matches;
@@ -173,9 +201,9 @@ export function attachMuStd5(rankings) {
   }));
 }
 
-export function computeQuestionTrueSkill(responses, questionName) {
+export function computeQuestionTrueSkill(responses, questionName, question = null) {
   const matches = extractPairwiseMatches(responses, questionName);
-  return computeTrueSkillFromMatches(matches);
+  return computeTrueSkillFromMatches(matches, { splitByCategory: splitsTrueSkillByCategory(question) });
 }
 
 /**
@@ -248,16 +276,19 @@ export function extractForcedChoiceMatches(responses, questionName) {
   const matches = [];
   for (const row of responses) {
     const units = expandQuestionAnswerUnits(row, questionName, { requireAnswer: true });
-    for (const { answer: ans, shown_images: shown } of units) {
-      matches.push(...matchesFromForcedChoiceAnswer(ans, shown));
+    for (const unit of units) {
+      matches.push(...attachMatchCategory(
+        matchesFromForcedChoiceAnswer(unit.answer, unit.shown_images),
+        unit.shown_media_categories,
+      ));
     }
   }
   return matches;
 }
 
-export function computeForcedChoiceTrueSkill(responses, questionName) {
+export function computeForcedChoiceTrueSkill(responses, questionName, question = null) {
   const matches = extractForcedChoiceMatches(responses, questionName);
-  return computeTrueSkillFromMatches(matches);
+  return computeTrueSkillFromMatches(matches, { splitByCategory: splitsTrueSkillByCategory(question) });
 }
 
 /**
@@ -302,21 +333,85 @@ export function extractMaxDiffMatches(responses, questionName) {
   const matches = [];
   for (const row of responses) {
     const units = expandQuestionAnswerUnits(row, questionName, { requireAnswer: true });
-    for (const { answer: ans, shown_images: shown } of units) {
-      matches.push(...matchesFromMaxDiffAnswer(ans, shown));
+    for (const unit of units) {
+      matches.push(...attachMatchCategory(
+        matchesFromMaxDiffAnswer(unit.answer, unit.shown_images),
+        unit.shown_media_categories,
+      ));
     }
   }
   return matches;
 }
 
-export function computeMaxDiffTrueSkill(responses, questionName) {
+export function computeMaxDiffTrueSkill(responses, questionName, question = null) {
   const matches = extractMaxDiffMatches(responses, questionName);
-  return computeTrueSkillFromMatches(matches);
+  return computeTrueSkillFromMatches(matches, { splitByCategory: splitsTrueSkillByCategory(question) });
 }
 
-/** Run TrueSkill on an arbitrary list of { winner, loser } matches. */
-export function computeTrueSkillFromMatches(matches) {
-  if (!matches?.length) return { matches: [], rankings: [] };
-  const ratings = computeTrueSkillRatings(matches);
-  return { matches, rankings: attachMuStd5(rankTrueSkillPlayers(ratings)) };
+function categoryBoardsFromMatches(matches) {
+  const groups = new Map();
+  for (const match of matches) {
+    const key = match?.category || '';
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(match);
+  }
+  return [...groups.entries()]
+    .sort(([a], [b]) => {
+      if (!a && b) return 1;
+      if (a && !b) return -1;
+      return String(a).localeCompare(String(b));
+    })
+    .map(([category, groupMatches]) => {
+      const label = category || 'Uncategorized';
+      const ratings = computeTrueSkillRatings(groupMatches);
+      const rankings = attachMuStd5(rankTrueSkillPlayers(ratings)).map((row) => ({
+        ...row,
+        category: category || null,
+        categoryLabel: label,
+      }));
+      return {
+        category: category || null,
+        label,
+        matches: groupMatches,
+        rankings,
+      };
+    });
+}
+
+/**
+ * Run TrueSkill on { winner, loser } matches.
+ * splitByCategory fits each one-category trial group on its own scale.
+ * Rank and muStd5 are min-maxed inside that group. Matches with no category
+ * stay one pooled ranking when every match is unlabeled.
+ */
+export function computeTrueSkillFromMatches(matches, { splitByCategory = false } = {}) {
+  if (!matches?.length) return { matches: [], rankings: [], splitByCategory: false, categories: [] };
+  const canSplit = splitByCategory && matches.some((match) => match?.category);
+  if (!canSplit) {
+    const ratings = computeTrueSkillRatings(matches);
+    return {
+      matches,
+      rankings: attachMuStd5(rankTrueSkillPlayers(ratings)),
+      splitByCategory: false,
+      categories: [],
+    };
+  }
+  const categories = categoryBoardsFromMatches(matches);
+  return {
+    matches,
+    rankings: categories.flatMap((board) => board.rankings),
+    splitByCategory: true,
+    categories,
+  };
+}
+
+/** One board per category when split, otherwise the single ranking. */
+export function trueSkillBoards(result) {
+  if (result?.splitByCategory && result.categories?.length) return result.categories;
+  return [{
+    category: null,
+    label: null,
+    matches: result?.matches || [],
+    rankings: result?.rankings || [],
+  }];
 }
