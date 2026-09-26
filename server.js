@@ -33,7 +33,11 @@ const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:3000';
 
 // Enable CORS for React app
 app.use(cors({
-  origin: CLIENT_ORIGIN,
+  origin: (origin, callback) => {
+    if (!origin || origin === CLIENT_ORIGIN) return callback(null, true);
+    if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) return callback(null, true);
+    return callback(null, false);
+  },
   credentials: true
 }));
 

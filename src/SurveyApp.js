@@ -1285,9 +1285,10 @@ export default function SurveyApp() {
     );
   }
 
-  // Hide the dev panel when opened via a project survey link (participant view)
+  // Hide the researcher switcher for participant links and the deployed package.
   const urlParams = new URLSearchParams(window.location.search);
-  const isParticipantView = !!urlParams.get('project');
+  const isParticipantView = !!urlParams.get('project')
+    || (typeof isDeployedParticipant === 'function' ? isDeployedParticipant() : !!deploymentConfig);
 
   return (
     <Box>
