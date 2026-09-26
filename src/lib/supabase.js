@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { API_ROOT } from './apiConfig';
+import { isDeployedParticipant } from '../config/deploymentConfig';
 
 let supabase = null;
 
@@ -141,7 +142,16 @@ export const isSupabaseConfigured = () => {
 export async function saveSurveyResponse(completeData) {
   try {
     if (!supabase) {
-      // ✅ If Supabase is not configured, save to file as fallback (no localStorage!)
+      // Deployed participant sites have no Express file API. Answers must go
+      // to the researcher's Supabase project through the anon key.
+      if (typeof isDeployedParticipant === 'function' ? isDeployedParticipant() : false) {
+        return {
+          success: false,
+          error: 'Supabase is not configured on the participant site.',
+          storage: 'none',
+        };
+      }
+      // Local Live Survey only: save to file as fallback (no localStorage!)
       const participantId = completeData.participant_id || generateParticipantId()
       const completionCode = completeData.survey_metadata?.completion_code || null;
       const responseData = {

@@ -2,6 +2,7 @@ import { Model } from 'survey-core';
 import 'survey-core/survey.i18n';
 import {
   applySurveyLocale,
+  completionMessageForLocale,
   resolveSurveyJsLocale,
   resolveSurveyUiLanguage,
   resolveUrlSurveyLocale,
@@ -55,5 +56,12 @@ describe('surveyLocale', () => {
     applySurveyLocale(model, { locale: 'en' });
     expect(model.pageNextText).toBe('Next');
     expect(model.completeText).toBe('Complete');
+  });
+
+  test('completionMessage follows the participant locale', () => {
+    expect(completionMessageForLocale('Thank you for taking part.', { locale: 'zh' })).toBe('');
+    expect(completionMessageForLocale('谢谢参与', { locale: 'zh' })).toBe('谢谢参与');
+    expect(completionMessageForLocale('Thank you for taking part.', { locale: 'en' })).toBe('Thank you for taking part.');
+    expect(completionMessageForLocale('谢谢参与', { locale: 'en' })).toBe('');
   });
 });

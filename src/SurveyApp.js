@@ -45,7 +45,7 @@ import {
   rehydrateTrialsAnswerStoreFromSurvey,
 } from './lib/trialNavigation';
 import { SurveyTrialNavProvider } from './contexts/SurveyTrialNavContext';
-import { applySurveyLocale, surveyUiStrings, resolveSurveyJsLocale } from './lib/surveyLocale';
+import { applySurveyLocale, surveyUiStrings, resolveSurveyJsLocale, completionMessageForLocale } from './lib/surveyLocale';
 import { tf } from './contexts/adminI18n';
 import SurveyProgressBridge, {
   normalizeShowProgressBar,
@@ -1219,7 +1219,7 @@ export default function SurveyApp() {
       <Box sx={{ maxWidth: 560, mx: 'auto', p: 4, textAlign: 'center' }}>
         <Typography variant="h4" sx={{ mb: 2, fontWeight: 600 }}>{participantText.participantThanks}</Typography>
         <Typography variant="body1" sx={{ mb: 2 }}>
-          {completionMessage || defaultMsg}
+          {completionMessageForLocale(completionMessage, participantLocale) || defaultMsg}
         </Typography>
         {completionInfo.completionCode && (
           <Typography variant="body1" sx={{ mb: 2, fontWeight: 600, letterSpacing: 1 }}>
@@ -1232,9 +1232,11 @@ export default function SurveyApp() {
           </Typography>
         )}
         <Typography variant="caption" color="text.secondary">
-          {completionInfo.storage === 'file'
-            ? participantText.participantSavedLocally
-            : participantText.participantSaved}
+          {isDeployedParticipant()
+            ? participantText.participantSubmitted
+            : completionInfo.storage === 'file'
+              ? participantText.participantSavedLocally
+              : participantText.participantSaved}
         </Typography>
       </Box>
     );

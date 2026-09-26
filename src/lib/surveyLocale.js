@@ -38,6 +38,17 @@ export function surveyUiStrings(source) {
   return adminI18n[lang] || adminI18n.en;
 }
 
+/** Researcher completionMessage is free text; drop it when it does not match the UI locale. */
+export function completionMessageForLocale(message, source) {
+  const text = String(message || '').trim();
+  if (!text) return '';
+  const lang = resolveSurveyUiLanguage(source);
+  const hasCjk = /[\u3400-\u9fff]/.test(text);
+  if (lang === SURVEY_UI_LANGUAGE_ZH && !hasCjk) return '';
+  if (lang === SURVEY_UI_LANGUAGE_EN && hasCjk && !/[A-Za-z]/.test(text)) return '';
+  return text;
+}
+
 export function applySurveyLocale(model, source) {
   if (!model) return;
   const override = resolveUrlSurveyLocale();
