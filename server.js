@@ -40,15 +40,19 @@ app.use(cors({
 app.use(express.json({ limit: '100mb' }));
 
 const TEMPLATES_PATH = path.join(__dirname, 'public', 'project_templates');
+const USER_TEMPLATES_PATH = path.join(__dirname, 'data', 'local-templates');
 const PROJECTS_PATH = path.join(__dirname, 'public', 'projects');
 const DEPLOYMENTS_PATH = path.join(__dirname, 'deployments');
 const SKILLS_PATH = path.join(__dirname, 'public', 'skills');
+const RESPONSES_PATH = path.join(__dirname, 'public', 'responses');
 
 // Ensure directories exist
 fs.ensureDirSync(TEMPLATES_PATH);
+fs.ensureDirSync(USER_TEMPLATES_PATH);
 fs.ensureDirSync(PROJECTS_PATH);
 fs.ensureDirSync(DEPLOYMENTS_PATH);
 fs.ensureDirSync(SKILLS_PATH);
+fs.ensureDirSync(RESPONSES_PATH);
 
 // Template endpoints
 app.post('/api/templates', async (req, res) => {
@@ -273,6 +277,9 @@ registerAgentProjectApi(app, {
   projectsPath: PROJECTS_PATH,
   skillsPath: SKILLS_PATH,
   clientOrigin: CLIENT_ORIGIN,
+  templatesPath: TEMPLATES_PATH,
+  userTemplatesPath: USER_TEMPLATES_PATH,
+  responsesPath: RESPONSES_PATH,
 });
 registerAgentCredentialsApi(app);
 registerAgentChatApi(app, {

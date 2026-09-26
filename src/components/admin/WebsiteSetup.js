@@ -450,13 +450,17 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
             {deploymentStatus.prepared && (
               <Alert severity="success" sx={{ mb: 3 }}>
                 <Typography variant="subtitle2" sx={{ mb: 1 }}>
-                  ✅ Deployment folder ready!
+                  {zh ? '✅ 部署文件夹已准备好！' : '✅ Deployment folder ready!'}
                 </Typography>
                 <Typography variant="body2" sx={{ mb: 2 }}>
-                  <strong>Location:</strong> {deploymentStatus.deploymentPath}<br/>
+                  <strong>{zh ? '位置：' : 'Location:'}</strong> {deploymentStatus.deploymentPath}<br/>
                   {deploymentStatus.preloadedImageCount > 0 && (
                     <>
-                      <strong>Preloaded Images:</strong> {deploymentStatus.preloadedImageCount} images from Hugging Face<br/>
+                      <strong>{zh ? '已预加载图片：' : 'Preloaded Images:'}</strong>{' '}
+                      {zh
+                        ? `来自 Hugging Face 的 ${deploymentStatus.preloadedImageCount} 张`
+                        : `${deploymentStatus.preloadedImageCount} images from Hugging Face`}
+                      <br/>
                     </>
                   )}
                 </Typography>
@@ -468,14 +472,16 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
               <CardContent>
                 <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Code />
-                  🧪 Test Build
+                  {zh ? '🧪 测试构建' : '🧪 Test Build'}
                 </Typography>
                 <Typography variant="body2" sx={{ mb: 2 }}>
-                  Test your deployment by running npm install and npm run build automatically.
+                  {zh
+                    ? '自动运行 npm install 和 npm run build，检查部署包是否能构建成功。'
+                    : 'Test your deployment by running npm install and npm run build automatically.'}
                 </Typography>
                 {!deploymentStatus.prepared && (
                   <Alert severity="info" sx={{ mt: 2 }}>
-                    Please prepare the deployment folder first
+                    {zh ? '请先准备部署文件夹' : 'Please prepare the deployment folder first'}
                   </Alert>
                 )}
               </CardContent>
@@ -488,7 +494,9 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
                   disabled={testStatus.testing || !deploymentStatus.prepared}
                   sx={{ bgcolor: 'white', color: 'secondary.main', '&:hover': { bgcolor: 'grey.100' } }}
                 >
-                  {testStatus.testing ? 'Testing...' : 'Test Build'}
+                  {testStatus.testing
+                    ? (zh ? '正在测试…' : 'Testing...')
+                    : (zh ? '测试构建' : 'Test Build')}
                 </Button>
               </CardActions>
             </Card>
@@ -497,11 +505,13 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
               <Card sx={{ mb: 3 }}>
                 <CardContent>
                   <Typography variant="subtitle2" sx={{ mb: 2 }}>
-                    🔄 Testing deployment build...
+                    {zh ? '🔄 正在测试部署构建…' : '🔄 Testing deployment build...'}
                   </Typography>
                   <LinearProgress />
                   <Typography variant="body2" sx={{ mt: 1, color: 'text.secondary' }}>
-                    Running npm install and npm run build. This may take a few minutes...
+                    {zh
+                      ? '正在运行 npm install 和 npm run build，可能需要几分钟。'
+                      : 'Running npm install and npm run build. This may take a few minutes...'}
                   </Typography>
                 </CardContent>
               </Card>
@@ -511,7 +521,7 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
               <Card sx={{ mb: 3 }}>
                 <CardContent>
                   <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-                    📋 Build Output
+                    {zh ? '📋 构建输出' : '📋 Build Output'}
                   </Typography>
                   <Box 
                     component="pre" 
@@ -537,11 +547,11 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
             {testStatus.tested && (
               <Alert severity="success" sx={{ mb: 3 }}>
                 <Typography variant="subtitle2" sx={{ mb: 1 }}>
-                  ✅ Build test successful! Your deployment is ready.
+                  {zh ? '✅ 构建测试通过，部署包可用。' : '✅ Build test successful! Your deployment is ready.'}
                 </Typography>
                 {testStatus.previewUrl && (
                   <Typography variant="body2" sx={{ mt: 2 }}>
-                    <strong>🌐 Preview URL:</strong>{' '}
+                    <strong>{zh ? '🌐 预览地址：' : '🌐 Preview URL:'}</strong>{' '}
                     <a 
                       href={testStatus.previewUrl} 
                       target="_blank" 
@@ -552,7 +562,7 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
                     </a>
                     <br/>
                     <Typography variant="caption" sx={{ mt: 1, display: 'block' }}>
-                      Click the link to preview your deployed survey in a new tab
+                      {zh ? '点击链接在新标签页预览已部署的问卷' : 'Click the link to preview your deployed survey in a new tab'}
                     </Typography>
                   </Typography>
                 )}
@@ -562,7 +572,7 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
             {testStatus.error && (
               <Alert severity="error" sx={{ mb: 3 }}>
                 <Typography variant="body2">
-                  <strong>Test Error:</strong> {testStatus.error}
+                  <strong>{zh ? '测试错误：' : 'Test Error:'}</strong> {testStatus.error}
                 </Typography>
               </Alert>
             )}
@@ -572,31 +582,34 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
               <CardContent>
                 <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
                   <GitHub />
-                  📤 Upload to GitHub
+                  {zh ? '📤 上传到 GitHub' : '📤 Upload to GitHub'}
                 </Typography>
                 <Typography variant="body2" sx={{ mb: 2 }}>
-                  Automatically initialize git and push your deployment to GitHub.
+                  {zh
+                    ? '自动初始化 git 并将部署包推送到 GitHub。'
+                    : 'Automatically initialize git and push your deployment to GitHub.'}
                 </Typography>
                 {!deploymentStatus.prepared && (
                   <Alert severity="info" sx={{ mt: 2, mb: 2 }}>
-                    Please prepare the deployment folder first
+                    {zh ? '请先准备部署文件夹' : 'Please prepare the deployment folder first'}
                   </Alert>
                 )}
                 <Alert severity="warning" sx={{ mt: 2, mb: 2, bgcolor: 'warning.light' }}>
                   <Typography variant="caption">
-                    ⚠️ <strong>Note:</strong> If your GitHub repository already has content (e.g., README, LICENSE), 
-                    this will overwrite it with your survey deployment. Make sure the repository is empty or you're okay with replacing its contents.
+                    {zh
+                      ? '⚠️ 注意：如果 GitHub 仓库里已有内容（如 README、LICENSE），这次上传会用问卷部署包覆盖它们。请确认仓库为空，或你接受替换现有内容。'
+                      : '⚠️ Note: If your GitHub repository already has content (e.g., README, LICENSE), this will overwrite it with your survey deployment. Make sure the repository is empty or you are okay with replacing its contents.'}
                   </Typography>
                 </Alert>
                 <TextField
                   fullWidth
-                  label="GitHub Repository URL"
+                  label={zh ? 'GitHub 仓库地址' : 'GitHub Repository URL'}
                   placeholder="https://github.com/yourusername/your-repo.git"
                   value={githubRepoUrl}
                   onChange={(e) => setGithubRepoUrl(e.target.value)}
                   disabled={!deploymentStatus.prepared}
                   sx={{ mb: 2, bgcolor: 'white' }}
-                  helperText="Create the repository on GitHub first, then paste the URL here"
+                  helperText={zh ? '请先在 GitHub 创建仓库，再把地址粘贴到这里' : 'Create the repository on GitHub first, then paste the URL here'}
                 />
               </CardContent>
               <CardActions>
@@ -608,7 +621,9 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
                   disabled={githubStatus.uploading || !githubRepoUrl || !deploymentStatus.prepared}
                   sx={{ bgcolor: 'white', color: 'success.main', '&:hover': { bgcolor: 'grey.100' } }}
                 >
-                  {githubStatus.uploading ? 'Uploading...' : 'Upload to GitHub'}
+                  {githubStatus.uploading
+                    ? (zh ? '正在上传…' : 'Uploading...')
+                    : (zh ? '上传到 GitHub' : 'Upload to GitHub')}
                 </Button>
               </CardActions>
             </Card>
@@ -617,11 +632,13 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
               <Card sx={{ mb: 3 }}>
                 <CardContent>
                   <Typography variant="subtitle2" sx={{ mb: 2 }}>
-                    🔄 Uploading to GitHub...
+                    {zh ? '🔄 正在上传到 GitHub…' : '🔄 Uploading to GitHub...'}
                   </Typography>
                   <LinearProgress />
                   <Typography variant="body2" sx={{ mt: 1, color: 'text.secondary' }}>
-                    Initializing git, committing files, and pushing to GitHub...
+                    {zh
+                      ? '正在初始化 git、提交文件并推送到 GitHub…'
+                      : 'Initializing git, committing files, and pushing to GitHub...'}
                   </Typography>
                 </CardContent>
               </Card>
@@ -630,10 +647,11 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
             {githubStatus.uploaded && (
               <Alert severity="success" sx={{ mb: 3 }}>
                 <Typography variant="subtitle2" sx={{ mb: 1 }}>
-                  ✅ Successfully uploaded to GitHub!
+                  {zh ? '✅ 已成功上传到 GitHub！' : '✅ Successfully uploaded to GitHub!'}
                 </Typography>
                 <Typography variant="body2">
-                  Your deployment is now at: <a href={githubStatus.repoUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>{githubStatus.repoUrl}</a>
+                  {zh ? '部署包现在位于：' : 'Your deployment is now at:'}{' '}
+                  <a href={githubStatus.repoUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>{githubStatus.repoUrl}</a>
                 </Typography>
               </Alert>
             )}
@@ -641,7 +659,7 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
             {githubStatus.error && (
               <Alert severity="error" sx={{ mb: 3 }}>
                 <Typography variant="body2">
-                  <strong>GitHub Error:</strong> {githubStatus.error}
+                  <strong>{zh ? 'GitHub 错误：' : 'GitHub Error:'}</strong> {githubStatus.error}
                 </Typography>
               </Alert>
             )}
@@ -649,7 +667,7 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
             {deploymentStatus.error && (
               <Alert severity="error" sx={{ mb: 3 }}>
                 <Typography variant="body2">
-                  <strong>Error:</strong> {deploymentStatus.error}
+                  <strong>{zh ? '错误：' : 'Error:'}</strong> {deploymentStatus.error}
                 </Typography>
               </Alert>
             )}
@@ -657,7 +675,7 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
 
             <Paper sx={{ p: 2, bgcolor: 'grey.50' }}>
               <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
-                💡 Quick Commands for Manual Operation:
+                {zh ? '💡 手动操作常用命令：' : '💡 Quick Commands for Manual Operation:'}
               </Typography>
               <Box component="pre" sx={{ 
                 bgcolor: 'grey.900', 
@@ -818,32 +836,32 @@ git push -u origin main`}
             <Card sx={{ mb: 3 }}>
               <CardContent>
                 <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-                  📋 Copy These to Vercel Environment Variables
+                  {zh ? '📋 复制到 Vercel 环境变量' : '📋 Copy These to Vercel Environment Variables'}
                 </Typography>
 
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                   <Box sx={{ p: 2, border: '1px solid', borderColor: 'divider', borderRadius: 1 }}>
-                    <Typography variant="body2" sx={{ mb: 1 }}><strong>Name</strong>: REACT_APP_SUPABASE_URL</Typography>
-                    <Typography variant="body2" sx={{ mb: 1, wordBreak: 'break-all' }}><strong>Value</strong>: {supabaseUrlForVercel}</Typography>
+                    <Typography variant="body2" sx={{ mb: 1 }}><strong>{zh ? '名称' : 'Name'}</strong>: REACT_APP_SUPABASE_URL</Typography>
+                    <Typography variant="body2" sx={{ mb: 1, wordBreak: 'break-all' }}><strong>{zh ? '值' : 'Value'}</strong>: {supabaseUrlForVercel}</Typography>
                     <Box sx={{ display: 'flex', gap: 1 }}>
-                      <Button size="small" variant="outlined" startIcon={<ContentCopy />} onClick={() => copyToClipboard('REACT_APP_SUPABASE_URL', 'variable name')}>
-                        Copy Name
+                      <Button size="small" variant="outlined" startIcon={<ContentCopy />} onClick={() => copyToClipboard('REACT_APP_SUPABASE_URL', zh ? '变量名' : 'variable name')}>
+                        {zh ? '复制名称' : 'Copy Name'}
                       </Button>
-                      <Button size="small" variant="contained" startIcon={<ContentCopy />} onClick={() => copyToClipboard(supabaseUrlForVercel, 'URL value')}>
-                        Copy Value
+                      <Button size="small" variant="contained" startIcon={<ContentCopy />} onClick={() => copyToClipboard(supabaseUrlForVercel, zh ? 'URL 值' : 'URL value')}>
+                        {zh ? '复制值' : 'Copy Value'}
                       </Button>
                     </Box>
                   </Box>
 
                   <Box sx={{ p: 2, border: '1px solid', borderColor: 'divider', borderRadius: 1 }}>
-                    <Typography variant="body2" sx={{ mb: 1 }}><strong>Name</strong>: REACT_APP_SUPABASE_ANON_KEY</Typography>
-                    <Typography variant="body2" sx={{ mb: 1, wordBreak: 'break-all' }}><strong>Value</strong>: {supabaseAnonForVercel}</Typography>
+                    <Typography variant="body2" sx={{ mb: 1 }}><strong>{zh ? '名称' : 'Name'}</strong>: REACT_APP_SUPABASE_ANON_KEY</Typography>
+                    <Typography variant="body2" sx={{ mb: 1, wordBreak: 'break-all' }}><strong>{zh ? '值' : 'Value'}</strong>: {supabaseAnonForVercel}</Typography>
                     <Box sx={{ display: 'flex', gap: 1 }}>
-                      <Button size="small" variant="outlined" startIcon={<ContentCopy />} onClick={() => copyToClipboard('REACT_APP_SUPABASE_ANON_KEY', 'variable name')}>
-                        Copy Name
+                      <Button size="small" variant="outlined" startIcon={<ContentCopy />} onClick={() => copyToClipboard('REACT_APP_SUPABASE_ANON_KEY', zh ? '变量名' : 'variable name')}>
+                        {zh ? '复制名称' : 'Copy Name'}
                       </Button>
-                      <Button size="small" variant="contained" startIcon={<ContentCopy />} onClick={() => copyToClipboard(supabaseAnonForVercel, 'anon key value')}>
-                        Copy Value
+                      <Button size="small" variant="contained" startIcon={<ContentCopy />} onClick={() => copyToClipboard(supabaseAnonForVercel, zh ? '匿名密钥值' : 'anon key value')}>
+                        {zh ? '复制值' : 'Copy Value'}
                       </Button>
                     </Box>
                   </Box>
@@ -853,11 +871,23 @@ git push -u origin main`}
 
             <Alert severity="warning" sx={{ mb: 2 }}>
               <Typography variant="body2">
-                <strong>Important:</strong> Vercel will not reliably auto-populate all environment variables from your repository. Always verify
-                <strong> REACT_APP_SUPABASE_URL </strong>
-                and
-                <strong> REACT_APP_SUPABASE_ANON_KEY </strong>
-                manually before deploy/redeploy.
+                {zh ? (
+                  <>
+                    <strong>重要：</strong>Vercel 不会可靠地从仓库自动填入全部环境变量。部署或重新部署前，请手动确认
+                    <strong> REACT_APP_SUPABASE_URL </strong>
+                    和
+                    <strong> REACT_APP_SUPABASE_ANON_KEY </strong>
+                    已正确填写。
+                  </>
+                ) : (
+                  <>
+                    <strong>Important:</strong> Vercel will not reliably auto-populate all environment variables from your repository. Always verify
+                    <strong> REACT_APP_SUPABASE_URL </strong>
+                    and
+                    <strong> REACT_APP_SUPABASE_ANON_KEY </strong>
+                    manually before deploy/redeploy.
+                  </>
+                )}
               </Typography>
             </Alert>
           </Box>
@@ -872,14 +902,16 @@ git push -u origin main`}
             
             <Alert severity="warning" sx={{ mb: 3 }}>
               <Typography variant="body2">
-                ⚠️ <strong>Action required:</strong> Survey config is embedded, but Vercel environment variables still need manual verification.
+                {zh
+                  ? '⚠️ 需要操作：问卷配置已打包进部署包，但 Vercel 环境变量仍需手动核对。'
+                  : '⚠️ Action required: Survey config is embedded, but Vercel environment variables still need manual verification.'}
               </Typography>
             </Alert>
 
             <Card sx={{ mb: 3 }}>
               <CardContent>
                 <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-                  📋 What's Already Configured:
+                  {zh ? '📋 已包含的内容：' : "📋 What's Already Configured:"}
                 </Typography>
                 <List dense>
                   <ListItem>
@@ -887,8 +919,8 @@ git push -u origin main`}
                       <CheckCircle color="success" />
                     </ListItemIcon>
                     <ListItemText 
-                      primary="Survey Configuration" 
-                      secondary="All survey questions, pages, and settings are included in the deployment"
+                      primary={zh ? '问卷配置' : 'Survey Configuration'}
+                      secondary={zh ? '全部题目、页面和设置都已包含在部署包中' : 'All survey questions, pages, and settings are included in the deployment'}
                     />
                   </ListItem>
                   <ListItem>
@@ -896,8 +928,10 @@ git push -u origin main`}
                       <Warning color="warning" />
                     </ListItemIcon>
                     <ListItemText 
-                      primary="Database Connection (manual check required)" 
-                      secondary="In Vercel, confirm REACT_APP_SUPABASE_URL and REACT_APP_SUPABASE_ANON_KEY are present and non-placeholder."
+                      primary={zh ? '数据库连接（需手动检查）' : 'Database Connection (manual check required)'}
+                      secondary={zh
+                        ? '在 Vercel 中确认 REACT_APP_SUPABASE_URL 和 REACT_APP_SUPABASE_ANON_KEY 已填写且不是占位符。'
+                        : 'In Vercel, confirm REACT_APP_SUPABASE_URL and REACT_APP_SUPABASE_ANON_KEY are present and non-placeholder.'}
                     />
                   </ListItem>
                   <ListItem>
@@ -905,8 +939,8 @@ git push -u origin main`}
                       <CheckCircle color="success" />
                     </ListItemIcon>
                     <ListItemText 
-                      primary="Image Dataset" 
-                      secondary="Hugging Face images are preloaded and included in the deployment"
+                      primary={zh ? '图片数据集' : 'Image Dataset'}
+                      secondary={zh ? 'Hugging Face 图片已预加载并包含在部署包中' : 'Hugging Face images are preloaded and included in the deployment'}
                     />
                   </ListItem>
                   <ListItem>
@@ -914,8 +948,8 @@ git push -u origin main`}
                       <CheckCircle color="success" />
                     </ListItemIcon>
                     <ListItemText 
-                      primary="Theme & Styling" 
-                      secondary="Custom colors and branding are pre-configured"
+                      primary={zh ? '主题与样式' : 'Theme & Styling'}
+                      secondary={zh ? '自定义颜色和品牌样式已预配置' : 'Custom colors and branding are pre-configured'}
                     />
                   </ListItem>
                 </List>
@@ -924,22 +958,44 @@ git push -u origin main`}
 
             <Alert severity="info" sx={{ mb: 3 }}>
               <Typography variant="body2" sx={{ mb: 1 }}>
-                <strong>Simple Vercel Setup:</strong>
+                <strong>{zh ? 'Vercel 简要设置：' : 'Simple Vercel Setup:'}</strong>
               </Typography>
               <Typography variant="body2" component="div">
-                1. In Vercel, click <strong>"Import Project"</strong><br/>
-                2. Select your GitHub repository<br/>
-                3. Keep default settings (Framework Preset: Create React App)<br/>
-                4. Open <strong>Project Settings → Environment Variables</strong><br/>
-                5. Ensure <strong>REACT_APP_SUPABASE_URL</strong> and <strong>REACT_APP_SUPABASE_ANON_KEY</strong> are set correctly<br/>
-                6. Click <strong>"Deploy"</strong> (or Redeploy if you updated env vars)
+                {zh ? (
+                  <>
+                    1. 在 Vercel 点击 <strong>Import Project</strong><br/>
+                    2. 选择你的 GitHub 仓库<br/>
+                    3. 保持默认设置（框架预设：Create React App）<br/>
+                    4. 打开 <strong>Project Settings → Environment Variables</strong><br/>
+                    5. 确认 <strong>REACT_APP_SUPABASE_URL</strong> 和 <strong>REACT_APP_SUPABASE_ANON_KEY</strong> 填写正确<br/>
+                    6. 点击 <strong>Deploy</strong>（如果刚改过环境变量，请 Redeploy）
+                  </>
+                ) : (
+                  <>
+                    1. In Vercel, click <strong>"Import Project"</strong><br/>
+                    2. Select your GitHub repository<br/>
+                    3. Keep default settings (Framework Preset: Create React App)<br/>
+                    4. Open <strong>Project Settings → Environment Variables</strong><br/>
+                    5. Ensure <strong>REACT_APP_SUPABASE_URL</strong> and <strong>REACT_APP_SUPABASE_ANON_KEY</strong> are set correctly<br/>
+                    6. Click <strong>"Deploy"</strong> (or Redeploy if you updated env vars)
+                  </>
+                )}
               </Typography>
             </Alert>
 
             <Alert severity="warning">
               <Typography variant="body2">
-                <strong>Note:</strong> If either env var is missing/placeholder, deployed surveys will show:
-                <em> "There was an error saving your responses: Supabase not configured..."</em>
+                {zh ? (
+                  <>
+                    <strong>说明：</strong>如果任一环境变量缺失或仍是占位符，已部署问卷会显示：
+                    <em> “There was an error saving your responses: Supabase not configured...”</em>
+                  </>
+                ) : (
+                  <>
+                    <strong>Note:</strong> If either env var is missing/placeholder, deployed surveys will show:
+                    <em> "There was an error saving your responses: Supabase not configured..."</em>
+                  </>
+                )}
               </Typography>
             </Alert>
           </Box>
@@ -954,14 +1010,16 @@ git push -u origin main`}
             
             <Alert severity="success" sx={{ mb: 3 }}>
               <Typography variant="body2">
-                Your survey is ready to go live! Follow these final steps to ensure everything works perfectly.
+                {zh
+                  ? '问卷已准备发布。按下面几步做完最后检查。'
+                  : 'Your survey is ready to go live! Follow these final steps to ensure everything works perfectly.'}
               </Typography>
             </Alert>
 
             <Card sx={{ mb: 3 }}>
               <CardContent>
                 <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-                  ✅ Pre-Launch Checklist:
+                  {zh ? '✅ 上线前检查清单：' : '✅ Pre-Launch Checklist:'}
                 </Typography>
                 <List dense>
                   <ListItem>
@@ -969,8 +1027,8 @@ git push -u origin main`}
                       <CheckCircle color="success" />
                     </ListItemIcon>
                     <ListItemText 
-                      primary="Test Survey Flow" 
-                      secondary="Complete the entire survey on your deployed site to ensure all questions work"
+                      primary={zh ? '测试问卷流程' : 'Test Survey Flow'}
+                      secondary={zh ? '在已部署站点完整答一遍，确认每道题都能正常作答' : 'Complete the entire survey on your deployed site to ensure all questions work'}
                     />
                   </ListItem>
                   <ListItem>
@@ -978,8 +1036,8 @@ git push -u origin main`}
                       <CheckCircle color="success" />
                     </ListItemIcon>
                     <ListItemText 
-                      primary="Verify Image Loading" 
-                      secondary="Check that all images from Hugging Face load correctly in production"
+                      primary={zh ? '核对图片加载' : 'Verify Image Loading'}
+                      secondary={zh ? '确认生产环境中 Hugging Face 图片都能正常显示' : 'Check that all images from Hugging Face load correctly in production'}
                     />
                   </ListItem>
                   <ListItem>
@@ -987,8 +1045,8 @@ git push -u origin main`}
                       <CheckCircle color="success" />
                     </ListItemIcon>
                     <ListItemText 
-                      primary="Test Data Collection" 
-                      secondary="Submit a test response and verify it's stored in your Supabase database"
+                      primary={zh ? '测试数据收集' : 'Test Data Collection'}
+                      secondary={zh ? '提交一条测试作答，并在 Supabase 中确认已写入' : "Submit a test response and verify it's stored in your Supabase database"}
                     />
                   </ListItem>
                   <ListItem>
@@ -996,8 +1054,8 @@ git push -u origin main`}
                       <CheckCircle color="success" />
                     </ListItemIcon>
                     <ListItemText 
-                      primary="Mobile Responsiveness" 
-                      secondary="Test your survey on mobile devices to ensure good user experience"
+                      primary={zh ? '移动端适配' : 'Mobile Responsiveness'}
+                      secondary={zh ? '在手机上打开问卷，确认阅读和作答体验正常' : 'Test your survey on mobile devices to ensure good user experience'}
                     />
                   </ListItem>
                 </List>
@@ -1007,21 +1065,21 @@ git push -u origin main`}
             <Card sx={{ mb: 3 }}>
               <CardContent>
                 <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-                  🌐 Your Survey URLs:
+                  {zh ? '🌐 问卷地址：' : '🌐 Your Survey URLs:'}
                 </Typography>
                 <Typography variant="body2" sx={{ mb: 2 }}>
-                  After deployment, your survey will be available at:
+                  {zh ? '部署完成后，问卷将出现在：' : 'After deployment, your survey will be available at:'}
                 </Typography>
                 <Paper sx={{ p: 2, bgcolor: 'grey.50' }}>
                   <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
-                    <strong>Admin Panel:</strong> https://your-project.vercel.app/admin
+                    <strong>{zh ? '管理后台：' : 'Admin Panel:'}</strong> https://your-project.vercel.app/admin
                   </Typography>
                   <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
-                    <strong>Live Survey:</strong> https://your-project.vercel.app/survey
+                    <strong>{zh ? '正式问卷：' : 'Live Survey:'}</strong> https://your-project.vercel.app/survey
                   </Typography>
                   {currentProject && (
                     <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
-                      <strong>Project Survey:</strong> https://your-project.vercel.app/survey?project={currentProject.id}
+                      <strong>{zh ? '项目问卷：' : 'Project Survey:'}</strong> https://your-project.vercel.app/survey?project={currentProject.id}
                     </Typography>
                   )}
                 </Paper>
@@ -1031,7 +1089,7 @@ git push -u origin main`}
             <Card>
               <CardContent>
                 <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-                  🔄 Automatic Updates:
+                  {zh ? '🔄 自动更新：' : '🔄 Automatic Updates:'}
                 </Typography>
                 <List dense>
                   <ListItem>
@@ -1039,8 +1097,8 @@ git push -u origin main`}
                       <Public color="primary" />
                     </ListItemIcon>
                     <ListItemText 
-                      primary="Continuous Deployment" 
-                      secondary="Every push to your main branch automatically triggers a new deployment"
+                      primary={zh ? '持续部署' : 'Continuous Deployment'}
+                      secondary={zh ? '每次推送到 main 分支都会自动触发新部署' : 'Every push to your main branch automatically triggers a new deployment'}
                     />
                   </ListItem>
                   <ListItem>
@@ -1048,8 +1106,8 @@ git push -u origin main`}
                       <Speed color="primary" />
                     </ListItemIcon>
                     <ListItemText 
-                      primary="Global CDN" 
-                      secondary="Your survey is served from Vercel's global network for fast loading worldwide"
+                      primary={zh ? '全球 CDN' : 'Global CDN'}
+                      secondary={zh ? '问卷由 Vercel 全球节点分发，各地打开更快' : "Your survey is served from Vercel's global network for fast loading worldwide"}
                     />
                   </ListItem>
                 </List>
@@ -1060,7 +1118,7 @@ git push -u origin main`}
                   startIcon={<Launch />}
                   color="success"
                 >
-                  🎉 Survey is Live!
+                  {zh ? '🎉 问卷已上线！' : '🎉 Survey is Live!'}
                 </Button>
               </CardActions>
             </Card>

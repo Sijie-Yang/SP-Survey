@@ -1169,7 +1169,13 @@ function AdminWorkspace() {
             zIndex: (theme) => theme.zIndex.drawer + 1,
           }}
         >
-          <Toolbar sx={{ gap: { xs: 0.5, sm: 1 }, px: { xs: 1, sm: 2 }, minWidth: 0 }}>
+          <Toolbar sx={{
+            gap: { xs: 0.5, sm: 1 },
+            px: { xs: 1, sm: 2 },
+            minWidth: 0,
+            flexWrap: 'nowrap',
+            overflow: 'hidden',
+          }}>
           <Tooltip title={t.toggleSidebar}>
             <IconButton
               color="inherit"
@@ -1258,7 +1264,7 @@ function AdminWorkspace() {
             </Box>
             
             {currentProject && (
-              <Box sx={{ ml: 2, display: { xs: 'none', md: 'flex' }, minWidth: 0, alignItems: 'center' }}>
+              <Box sx={{ ml: 2, display: { xs: 'none', lg: 'flex' }, minWidth: 0, alignItems: 'center' }}>
                 <FolderOpen sx={{ mr: 1, fontSize: '1.2rem' }} />
                 <Typography variant="subtitle1" noWrap sx={{ fontWeight: 'bold', minWidth: 0 }}>
                   {currentProject.name}
@@ -1269,7 +1275,7 @@ function AdminWorkspace() {
           
           {/* Backend Server Status Monitor — only shown in self-hosted mode */}
           {!process.env.REACT_APP_SUPABASE_URL && (
-            <Box sx={{ mr: { xs: 0, sm: 2 } }}>
+            <Box sx={{ mr: { xs: 0, sm: 2 }, display: { xs: 'none', lg: 'block' }, flexShrink: 0 }}>
               <BackendStatus />
             </Box>
           )}
@@ -1414,12 +1420,16 @@ function AdminWorkspace() {
               px: 1.25,
               py: 0.35,
               minWidth: 0,
+              flexShrink: 0,
+              flexDirection: 'row',
+              whiteSpace: 'nowrap',
               fontWeight: 700,
               letterSpacing: 0.2,
               border: '1px solid',
               borderColor: 'rgba(255, 255, 255, 0.65)',
               bgcolor: 'rgba(255, 255, 255, 0.12)',
               textTransform: 'none',
+              '& .MuiButton-startIcon': { marginRight: 0.5, marginLeft: 0 },
               '&:hover': {
                 borderColor: 'rgba(255, 255, 255, 0.95)',
                 bgcolor: 'rgba(255, 255, 255, 0.22)',

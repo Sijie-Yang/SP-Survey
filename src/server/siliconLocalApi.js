@@ -8,6 +8,10 @@ const {
   questionNeedsShownMedia,
   questionWithShownMedia,
 } = require('../lib/siliconMediaAssign');
+const {
+  siliconAnswerContract,
+  validateInnerSiliconAnswer,
+} = require('../lib/siliconAnswerValidate');
 
 const DISPLAY_ONLY = new Set(['html', 'expression', 'image', 'mediadisplay']);
 const SUPPORTED = new Set([
@@ -197,6 +201,7 @@ function questionPrompt(question) {
     columns.length ? `Columns: ${columns.join(' | ')}` : '',
     'Return JSON only: {"answer": <value matching this question type>}.',
     'Use the choice values, not labels. For checkbox/ranking return an array. For matrix return an object of row->column. For allocation return an object of choice->number.',
+    siliconAnswerContract(question),
   ].filter(Boolean).join('\n');
 }
 
@@ -339,8 +344,15 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
       ],
     });
     const parsed = parseModelJson(completion.choices?.[0]?.message?.content || '');
+    const rawAnswer = parsed.answer ?? parsed;
+    const checked = validateInnerSiliconAnswer(prompted, rawAnswer);
+    if (!checked.ok && !checked.skipped) {
+      const error = new Error(checked.reason || 'Answer failed validation for this question type.');
+      error.code = 'SILICON_ANSWER_INVALID';
+      throw error;
+    }
     const usage = completion.usage?.total_tokens || 0;
-    return { answer: parsed.answer ?? parsed, tokens: usage, images, urls };
+    return { answer: checked.ok ? checked.answer : rawAnswer, tokens: usage, images, urls };
   };
 
   const processRun = async (projectId, runId) => {
