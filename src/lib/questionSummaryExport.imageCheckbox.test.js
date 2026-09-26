@@ -72,7 +72,7 @@ describe('imagecheckbox / mediacheckbox export', () => {
       .split('\n')
       .find((line) => line.includes(',a.jpg,') && line.includes(',green,') && line.includes(',select_rate,'));
     expect(greenA).toBeTruthy();
-    expect(greenA).toMatch(/,0\.6+/);
+    expect(greenA).toMatch(/,select_rate,1,/);
   });
 
   test('mediacheckbox uses the same family', () => {

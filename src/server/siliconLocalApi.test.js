@@ -93,6 +93,9 @@ describe('local Silicon API', () => {
         apiKey: 'sk-test-should-not-persist',
       },
     }, created);
+    if (created.statusCode !== 200) {
+      throw new Error(`create run failed: ${JSON.stringify(created.payload)}`);
+    }
     expect(created.statusCode).toBe(200);
     expect(created.payload.run.apiKey).toBeUndefined();
     const stored = JSON.parse(await fs.readFile(path.join(tmp, 'proj_demo.silicon.json'), 'utf8'));

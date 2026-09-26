@@ -170,6 +170,7 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
   };
 
   const writeStore = async (projectId, store) => {
+    await fs.ensureDir(projectsPath);
     await fs.writeFile(storePath(projectId), JSON.stringify(stripRunSecrets({
       ...store,
       runs: (store.runs || []).map((run) => ({ ...run })),
@@ -421,7 +422,8 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
   };
 
   const startRun = (projectId, runId) => {
-    setImmediate(() => {
+    const later = typeof setImmediate === 'function' ? setImmediate : (fn) => setTimeout(fn, 0);
+    later(() => {
       processRun(projectId, runId).catch((error) => {
         console.error('Silicon run failed:', error.message);
       });
