@@ -4,6 +4,7 @@ import {
   applySurveyLocale,
   resolveSurveyJsLocale,
   resolveSurveyUiLanguage,
+  resolveUrlSurveyLocale,
 } from './surveyLocale';
 
 describe('surveyLocale', () => {
@@ -25,6 +26,20 @@ describe('surveyLocale', () => {
     const model = { locale: 'en' };
     applySurveyLocale(model, { locale: 'zh' });
     expect(model.locale).toBe('zh-cn');
+  });
+
+  test('URL locale override wins over a saved English draft', () => {
+    expect(resolveUrlSurveyLocale('?locale=zh')).toBe('zh');
+    expect(resolveUrlSurveyLocale('?project=demo')).toBe(null);
+    const model = new Model({
+      locale: 'en',
+      elements: [{ type: 'text', name: 'answer', title: 'Title' }],
+    });
+    const previous = window.location.search;
+    window.history.replaceState({}, '', `${window.location.pathname}?locale=zh`);
+    applySurveyLocale(model, { locale: 'en' });
+    expect(model.pageNextText).toBe('下一页');
+    window.history.replaceState({}, '', `${window.location.pathname}${previous}`);
   });
 
   test('saved Builder Chinese locale translates real SurveyJS navigation', () => {

@@ -356,12 +356,14 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
         return (
           <Box>
             <Typography variant="h6" sx={{ mb: 2, color: 'primary.main' }}>
-              📂 Step 1: Prepare Your GitHub Repository
+              {zh ? '📂 步骤 1：准备 GitHub 仓库' : '📂 Step 1: Prepare Your GitHub Repository'}
             </Typography>
             
             <Alert severity="info" sx={{ mb: 3 }}>
               <Typography variant="body2">
-                Click "Prepare Deployment Folder" to automatically create a complete project folder ready for GitHub upload.
+                {zh
+                  ? '点击「准备部署文件夹」自动生成可上传到 GitHub 的完整项目文件夹。'
+                  : 'Click "Prepare Deployment Folder" to automatically create a complete project folder ready for GitHub upload.'}
               </Typography>
             </Alert>
 
@@ -370,10 +372,10 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
               <CardContent>
                 <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
                   <FolderZip />
-                  🚀 One-Click Deployment Preparation
+                  {zh ? '🚀 一键准备部署包' : '🚀 One-Click Deployment Preparation'}
                 </Typography>
                 <Typography variant="body2" sx={{ mb: 2 }}>
-                  This will automatically:
+                  {zh ? '将会自动完成：' : 'This will automatically:'}
                 </Typography>
                 <List dense>
                   <ListItem sx={{ py: 0 }}>
@@ -381,7 +383,7 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
                       <CheckCircle sx={{ color: 'primary.contrastText' }} />
                     </ListItemIcon>
                     <ListItemText 
-                      primary="Copy all source code and assets" 
+                      primary={zh ? '复制全部源码和资源' : 'Copy all source code and assets'} 
                       primaryTypographyProps={{ variant: 'body2' }}
                     />
                   </ListItem>
@@ -390,7 +392,7 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
                       <CheckCircle sx={{ color: 'primary.contrastText' }} />
                     </ListItemIcon>
                     <ListItemText 
-                      primary="Pre-load all Hugging Face images for faster loading" 
+                      primary={zh ? '预加载 Hugging Face 图片以加快访问' : 'Pre-load all Hugging Face images for faster loading'} 
                       primaryTypographyProps={{ variant: 'body2' }}
                     />
                   </ListItem>
@@ -399,7 +401,7 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
                       <CheckCircle sx={{ color: 'primary.contrastText' }} />
                     </ListItemIcon>
                     <ListItemText 
-                      primary="Generate deployment configuration files" 
+                      primary={zh ? '生成部署配置文件' : 'Generate deployment configuration files'} 
                       primaryTypographyProps={{ variant: 'body2' }}
                     />
                   </ListItem>
@@ -408,7 +410,7 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
                       <CheckCircle sx={{ color: 'primary.contrastText' }} />
                     </ListItemIcon>
                     <ListItemText 
-                      primary="Create README and deployment instructions" 
+                      primary={zh ? '生成 README 和部署说明' : 'Create README and deployment instructions'} 
                       primaryTypographyProps={{ variant: 'body2' }}
                     />
                   </ListItem>
@@ -423,7 +425,9 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
                   disabled={deploymentStatus.preparing || !currentProject}
                   sx={{ bgcolor: 'white', color: 'primary.main', '&:hover': { bgcolor: 'grey.100' } }}
                 >
-                  {deploymentStatus.preparing ? 'Preparing...' : 'Prepare Deployment Folder'}
+                  {deploymentStatus.preparing
+                    ? (zh ? '正在准备…' : 'Preparing...')
+                    : (zh ? '准备部署文件夹' : 'Prepare Deployment Folder')}
                 </Button>
               </CardActions>
             </Card>
@@ -433,11 +437,11 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
               <Card sx={{ mb: 3 }}>
                 <CardContent>
                   <Typography variant="subtitle2" sx={{ mb: 2 }}>
-                    🔄 Preparing deployment...
+                    {zh ? '🔄 正在准备部署…' : '🔄 Preparing deployment...'}
                   </Typography>
                   <LinearProgress />
                   <Typography variant="body2" sx={{ mt: 1, color: 'text.secondary' }}>
-                    This may take a few minutes if pre-loading many images from Hugging Face...
+                    {zh ? '如果需要预加载大量图片，可能需要几分钟。' : 'This may take a few minutes if pre-loading many images from Hugging Face...'}
                   </Typography>
                 </CardContent>
               </Card>
@@ -688,19 +692,19 @@ git push -u origin main`}
         return (
           <Box>
             <Typography variant="h6" sx={{ mb: 2, color: 'primary.main' }}>
-              ☁️ Step 2: Configure Vercel Project
+              {zh ? '☁️ 步骤 2：配置 Vercel 项目' : '☁️ Step 2: Configure Vercel Project'}
             </Typography>
             
             <Alert severity="success" sx={{ mb: 3 }}>
               <Typography variant="body2">
-                Vercel provides free hosting for React applications with automatic deployments.
+                {zh ? 'Vercel 可为 React 应用提供免费托管和自动部署。' : 'Vercel provides free hosting for React applications with automatic deployments.'}
               </Typography>
             </Alert>
 
             <Card sx={{ mb: 3 }}>
               <CardContent>
                 <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
-                  🚀 Vercel Deployment Steps:
+                  {zh ? '🚀 Vercel 部署步骤：' : '🚀 Vercel Deployment Steps:'}
                 </Typography>
                 <List dense>
                   <ListItem>
@@ -720,8 +724,8 @@ git push -u origin main`}
                       </Typography>
                     </ListItemIcon>
                     <ListItemText 
-                      primary="Sign up for Vercel" 
-                      secondary="Create a free account at vercel.com using your GitHub account"
+                      primary={zh ? '注册 Vercel' : 'Sign up for Vercel'}
+                      secondary={zh ? '用 GitHub 账号在 vercel.com 创建免费账户' : 'Create a free account at vercel.com using your GitHub account'}
                     />
                   </ListItem>
                   <ListItem>
@@ -741,8 +745,8 @@ git push -u origin main`}
                       </Typography>
                     </ListItemIcon>
                     <ListItemText 
-                      primary="Import Project" 
-                      secondary="Click 'New Project' and import your GitHub repository"
+                      primary={zh ? '导入项目' : 'Import Project'}
+                      secondary={zh ? '点击 New Project 并导入你的 GitHub 仓库' : "Click 'New Project' and import your GitHub repository"}
                     />
                   </ListItem>
                   <ListItem>
@@ -762,8 +766,8 @@ git push -u origin main`}
                       </Typography>
                     </ListItemIcon>
                     <ListItemText 
-                      primary="Configure Build & Environment Variables" 
-                      secondary="Keep React defaults, then manually set REACT_APP_SUPABASE_URL and REACT_APP_SUPABASE_ANON_KEY in Vercel Project Settings → Environment Variables"
+                      primary={zh ? '配置构建和环境变量' : 'Configure Build & Environment Variables'}
+                      secondary={zh ? '保持 React 默认设置，然后在 Vercel 项目设置 → Environment Variables 中填写 REACT_APP_SUPABASE_URL 和 REACT_APP_SUPABASE_ANON_KEY' : 'Keep React defaults, then manually set REACT_APP_SUPABASE_URL and REACT_APP_SUPABASE_ANON_KEY in Vercel Project Settings → Environment Variables'}
                     />
                   </ListItem>
                   <ListItem>
@@ -783,8 +787,8 @@ git push -u origin main`}
                       </Typography>
                     </ListItemIcon>
                     <ListItemText 
-                      primary="Deploy" 
-                      secondary="Click 'Deploy' - Vercel will build and deploy your survey automatically"
+                      primary={zh ? '部署' : 'Deploy'}
+                      secondary={zh ? '点击 Deploy，Vercel 会自动构建并发布问卷' : "Click 'Deploy' - Vercel will build and deploy your survey automatically"}
                     />
                   </ListItem>
                 </List>
@@ -797,7 +801,7 @@ git push -u origin main`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Deploy to Vercel
+                  {zh ? '部署到 Vercel' : 'Deploy to Vercel'}
                 </Button>
                 <Button 
                   variant="outlined" 
@@ -806,7 +810,7 @@ git push -u origin main`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Documentation
+                  {zh ? '文档' : 'Documentation'}
                 </Button>
               </CardActions>
             </Card>
@@ -863,7 +867,7 @@ git push -u origin main`}
         return (
           <Box>
             <Typography variant="h6" sx={{ mb: 2, color: 'primary.main' }}>
-              ⚙️ Step 3: Configure Vercel Project
+              {zh ? '⚙️ 步骤 3：检查 Vercel 配置' : '⚙️ Step 3: Configure Vercel Project'}
             </Typography>
             
             <Alert severity="warning" sx={{ mb: 3 }}>
@@ -945,7 +949,7 @@ git push -u origin main`}
         return (
           <Box>
             <Typography variant="h6" sx={{ mb: 2, color: 'primary.main' }}>
-              🚀 Step 4: Deploy & Test Your Survey
+              {zh ? '🚀 步骤 4：发布并测试问卷' : '🚀 Step 4: Deploy & Test Your Survey'}
             </Typography>
             
             <Alert severity="success" sx={{ mb: 3 }}>
@@ -1228,7 +1232,7 @@ git push -u origin main`}
                 <StepLabel
                   optional={
                     index === steps.length - 1 ? (
-                      <Typography variant="caption">Last step</Typography>
+                      <Typography variant="caption">{zh ? '最后一步' : 'Last step'}</Typography>
                     ) : null
                   }
                   icon={step.icon}
@@ -1249,14 +1253,14 @@ git push -u origin main`}
                         onClick={handleNext}
                         sx={{ mt: 1, mr: 1 }}
                       >
-                        {index === steps.length - 1 ? 'Finish' : 'Continue'}
+                        {index === steps.length - 1 ? (zh ? '完成' : 'Finish') : (zh ? '继续' : 'Continue')}
                       </Button>
                       <Button
                         disabled={index === 0}
                         onClick={handleBack}
                         sx={{ mt: 1, mr: 1 }}
                       >
-                        Back
+                        {zh ? '返回' : 'Back'}
                       </Button>
                     </div>
                   </Box>
@@ -1268,13 +1272,13 @@ git push -u origin main`}
           {activeStep === steps.length && (
             <Paper square elevation={0} sx={{ p: 3, bgcolor: 'success.light', color: 'success.contrastText' }}>
               <Typography variant="h6" sx={{ mb: 2 }}>
-                🎉 Congratulations! Your survey is now live!
+                {zh ? '🎉 问卷已上线！' : '🎉 Congratulations! Your survey is now live!'}
               </Typography>
               <Typography variant="body2" sx={{ mb: 2 }}>
-                You have successfully deployed your survey to Vercel. Participants can now access your survey online.
+                {zh ? '你已把问卷部署到 Vercel，参与者现在可以在线作答。' : 'You have successfully deployed your survey to Vercel. Participants can now access your survey online.'}
               </Typography>
               <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }} variant="outlined">
-                Review Steps Again
+                {zh ? '再看一遍步骤' : 'Review Steps Again'}
               </Button>
             </Paper>
           )}

@@ -38,6 +38,7 @@ import { useRegion } from '../../contexts/RegionContext';
 
 export default function SystemStatus({ surveyConfig, currentProject, onProjectUpdate, onNextStep }) {
   const { t, language } = useRegion();
+  const zh = language === 'zh';
   // Step management - restore from localStorage or default to 0
   const getInitialStep = () => {
     if (currentProject) {
@@ -725,7 +726,6 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
     }
   };
 
-  const zh = language === 'zh';
   const steps = [
     {
       label: zh ? '创建数据表' : 'Create Database Table',
@@ -763,7 +763,7 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
                   <Typography variant="h6" color="primary">
-                    📊 Database Status
+                    {zh ? '📊 数据库状态' : '📊 Database Status'}
                   </Typography>
                   <Button
                     variant="contained"
@@ -772,7 +772,7 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
                     disabled={checking}
                     size="medium"
                   >
-                    {checking ? 'Refreshing...' : 'Refresh Status'}
+                    {checking ? (zh ? '正在刷新…' : 'Refreshing...') : (zh ? '刷新状态' : 'Refresh Status')}
                   </Button>
                 </Box>
                 
@@ -784,7 +784,7 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
                   </Box>
                 ) : (
                   <Alert severity="warning">
-                    ⚠️ Database connection status unknown. Click "Refresh Status" to check.
+                    {zh ? '⚠️ 数据库连接状态未知。点击「刷新状态」检查。' : '⚠️ Database connection status unknown. Click "Refresh Status" to check.'}
                   </Alert>
                 )}
               </CardContent>
@@ -814,7 +814,7 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
                     onClick={checkTableStatus}
                     disabled={tableStatus.checking}
                   >
-                    {tableStatus.checking ? 'Refreshing...' : 'Refresh Status'}
+                    {tableStatus.checking ? (zh ? '正在刷新…' : 'Refreshing...') : (zh ? '刷新状态' : 'Refresh Status')}
                   </Button>
                 </Box>
 

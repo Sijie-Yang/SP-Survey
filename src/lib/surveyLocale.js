@@ -19,6 +19,16 @@ export function resolveSurveyUiLanguage(source) {
   return SURVEY_UI_LANGUAGE_EN;
 }
 
+export function resolveUrlSurveyLocale(search) {
+  try {
+    const raw = search ?? (typeof window !== 'undefined' ? window.location.search : '');
+    const locale = new URLSearchParams(raw || '').get('locale');
+    return locale ? resolveSurveyUiLanguage(locale) : null;
+  } catch {
+    return null;
+  }
+}
+
 export function resolveSurveyJsLocale(source) {
   return resolveSurveyUiLanguage(source) === SURVEY_UI_LANGUAGE_ZH ? 'zh-cn' : 'en';
 }
@@ -30,7 +40,8 @@ export function surveyUiStrings(source) {
 
 export function applySurveyLocale(model, source) {
   if (!model) return;
-  const locale = resolveSurveyJsLocale(source || model);
+  const override = resolveUrlSurveyLocale();
+  const locale = resolveSurveyJsLocale(override || source || model);
   try {
     model.locale = locale;
   } catch { /* ignore */ }

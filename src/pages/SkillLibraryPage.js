@@ -21,16 +21,16 @@ import AdminShell from '../components/layout/AdminShell';
 import ConfirmDialog from '../components/layout/ConfirmDialog';
 
 const STATUS_LABELS = {
-  draft: { label: 'Draft', color: 'default' },
-  pending: { label: 'In Review', color: 'warning' },
-  approved: { label: 'Public', color: 'success' },
+  draft: { en: 'Draft', zh: '草稿', color: 'default' },
+  pending: { en: 'In Review', zh: '审核中', color: 'warning' },
+  approved: { en: 'Public', zh: '公开', color: 'success' },
 };
 
 const CATEGORY_META = {
-  image: { label: 'Image', icon: Image, color: '#1976d2' },
-  video: { label: 'Video', icon: Videocam, color: '#ed6c02' },
-  audio: { label: 'Audio', icon: GraphicEq, color: '#2e7d32' },
-  media: { label: 'Multimedia', icon: Palette, color: '#9c27b0' },
+  image: { en: 'Image', zh: '图片', icon: Image, color: '#1976d2' },
+  video: { en: 'Video', zh: '视频', icon: Videocam, color: '#ed6c02' },
+  audio: { en: 'Audio', zh: '音频', icon: GraphicEq, color: '#2e7d32' },
+  media: { en: 'Multimedia', zh: '多媒体', icon: Palette, color: '#9c27b0' },
 };
 
 export default function SkillLibraryPage() {
@@ -91,7 +91,7 @@ export default function SkillLibraryPage() {
         setConfirmDialog(null);
         try {
           await submitSkillForReview(id);
-          showSnack('Submitted for review');
+          showSnack(zh ? '已提交审核' : 'Submitted for review');
           load();
         } catch (err) { showSnack(err.message, 'error'); }
       },
@@ -102,7 +102,9 @@ export default function SkillLibraryPage() {
     setImporting(presetId);
     try {
       const result = await importPresetSkill(presetId);
-      showSnack(result.updated ? 'Preset updated to the latest version' : 'Added to your library');
+      showSnack(result.updated
+        ? (zh ? '已更新到最新版本' : 'Preset updated to the latest version')
+        : (zh ? '已加入你的交互库' : 'Added to your library'));
       load();
     } catch (err) { showSnack(err.message, 'error'); }
     finally { setImporting(null); }
@@ -147,7 +149,7 @@ export default function SkillLibraryPage() {
 
       <Accordion sx={{ mb: 2 }}><AccordionSummary expandIcon={<ExpandMore />}>{zh ? '从内置交互创建可编辑副本（可选）' : 'Create an editable copy of a built-in task (optional)'}</AccordionSummary><AccordionDetails>
       <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1.5 }}>
-        <Typography variant="subtitle1" fontWeight={700} color="primary.dark">Preset Gallery</Typography>
+        <Typography variant="subtitle1" fontWeight={700} color="primary.dark">{zh ? '内置交互' : 'Preset Gallery'}</Typography>
         {previewMediaPool.length > 0 && (
           <Chip size="small" variant="outlined" color="success"
             label={`Preview media library: ${previewMediaPool.length} files`} sx={{ height: 22, fontSize: '0.7rem' }} />
@@ -157,16 +159,17 @@ export default function SkillLibraryPage() {
         <Table size="small">
           <TableHead>
             <TableRow sx={{ '& th': { fontWeight: 700, bgcolor: 'grey.50' } }}>
-              <TableCell>Name</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell>Media</TableCell>
-              <TableCell align="center">Actions</TableCell>
+              <TableCell>{zh ? '名称' : 'Name'}</TableCell>
+              <TableCell>{zh ? '类型' : 'Type'}</TableCell>
+              <TableCell>{zh ? '说明' : 'Description'}</TableCell>
+              <TableCell>{zh ? '媒体' : 'Media'}</TableCell>
+              <TableCell align="center">{zh ? '操作' : 'Actions'}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {PRESET_SKILLS.map((preset) => {
               const cat = CATEGORY_META[preset.category] || CATEGORY_META.image;
+              const catLabel = zh ? cat.zh : cat.en;
               const CatIcon = cat.icon;
               const imported = importedPresets.includes(preset.id);
               return (
@@ -176,13 +179,13 @@ export default function SkillLibraryPage() {
                       <CatIcon sx={{ fontSize: 16, color: cat.color }} />
                       <Typography variant="body2" fontWeight={600}>{preset.name}</Typography>
                       {imported && (
-                        <Chip size="small" label="Imported" color="success" variant="outlined"
+                        <Chip size="small" label={zh ? '已导入' : 'Imported'} color="success" variant="outlined"
                           sx={{ height: 20, fontSize: '0.68rem' }} />
                       )}
                     </Stack>
                   </TableCell>
                   <TableCell>
-                    <Chip size="small" label={cat.label} sx={{ height: 22, fontSize: '0.7rem' }} />
+                    <Chip size="small" label={catLabel} sx={{ height: 22, fontSize: '0.7rem' }} />
                   </TableCell>
                   <TableCell>
                     <Typography variant="body2" color="text.secondary" noWrap sx={{ maxWidth: 320 }}
@@ -192,23 +195,29 @@ export default function SkillLibraryPage() {
                   </TableCell>
                   <TableCell>
                     <Typography variant="caption" color="text.secondary">
-                      {preset.defaultConfig?.mediaCount || 1} {preset.defaultConfig?.mediaType === 'video' ? 'video'
-                        : preset.defaultConfig?.mediaType === 'audio' ? 'audio'
-                        : preset.defaultConfig?.mediaType === 'any' ? 'media' : 'image'}(s)
+                      {preset.defaultConfig?.mediaCount || 1} {preset.defaultConfig?.mediaType === 'video'
+                        ? (zh ? '个视频' : 'video(s)')
+                        : preset.defaultConfig?.mediaType === 'audio'
+                          ? (zh ? '个音频' : 'audio(s)')
+                          : preset.defaultConfig?.mediaType === 'any'
+                            ? (zh ? '个媒体' : 'media')
+                            : (zh ? '张图片' : 'image(s)')}
                     </Typography>
                   </TableCell>
                   <TableCell align="center">
-                    <Tooltip title="Preview">
+                    <Tooltip title={zh ? '预览' : 'Preview'}>
                       <IconButton size="small" onClick={() => openPreview(preset, preset.id)}>
                         <Visibility fontSize="small" />
                       </IconButton>
                     </Tooltip>
-                    <Tooltip title="View source code">
+                    <Tooltip title={zh ? '查看源码' : 'View source code'}>
                       <IconButton size="small" onClick={() => setCodeView({ name: preset.name, html: preset.sourceHtml })}>
                         <Code fontSize="small" />
                       </IconButton>
                     </Tooltip>
-                    <Tooltip title={imported ? 'Update to latest version' : 'Add to my library'}>
+                    <Tooltip title={imported
+                      ? (zh ? '更新到最新版本' : 'Update to latest version')
+                      : (zh ? '加入我的交互库' : 'Add to my library')}>
                       <span>
                         <IconButton
                           size="small"
@@ -235,7 +244,7 @@ export default function SkillLibraryPage() {
       <Stack direction="row" spacing={1} sx={{ mb: 2 }} alignItems="center">
         <Typography variant="subtitle1" fontWeight={700} color="primary.dark">{zh ? '已保存的自定义交互' : 'Saved custom interactions'}</Typography>
         <Box flex={1} />
-        <Button startIcon={<Refresh />} onClick={load} disabled={loading}>Refresh</Button>
+        <Button startIcon={<Refresh />} onClick={load} disabled={loading}>{zh ? '刷新' : 'Refresh'}</Button>
       </Stack>
 
       {loading ? (
@@ -245,11 +254,11 @@ export default function SkillLibraryPage() {
           <Table size="small">
             <TableHead>
               <TableRow sx={{ '& th': { fontWeight: 700, bgcolor: 'grey.50' } }}>
-                <TableCell>Name</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell>Updated</TableCell>
-                <TableCell align="center">Actions</TableCell>
+                <TableCell>{zh ? '名称' : 'Name'}</TableCell>
+                <TableCell>{zh ? '状态' : 'Status'}</TableCell>
+                <TableCell>{zh ? '说明' : 'Description'}</TableCell>
+                <TableCell>{zh ? '更新时间' : 'Updated'}</TableCell>
+                <TableCell align="center">{zh ? '操作' : 'Actions'}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -270,7 +279,7 @@ export default function SkillLibraryPage() {
                       <Typography variant="caption" color="text.secondary">{s.id}</Typography>
                     </TableCell>
                     <TableCell>
-                      <Chip size="small" label={meta.label} color={meta.color} variant={status === 'draft' ? 'outlined' : 'filled'} />
+                      <Chip size="small" label={zh ? meta.zh : meta.en} color={meta.color} variant={status === 'draft' ? 'outlined' : 'filled'} />
                     </TableCell>
                     <TableCell>
                       <Typography variant="body2" color="text.secondary" noWrap sx={{ maxWidth: 280 }}>
@@ -279,28 +288,28 @@ export default function SkillLibraryPage() {
                     </TableCell>
                     <TableCell>
                       <Typography variant="caption">
-                        {s.updatedAt ? new Date(s.updatedAt).toLocaleString('en-US') : '—'}
+                        {s.updatedAt ? new Date(s.updatedAt).toLocaleString(zh ? 'zh-CN' : 'en-US') : '—'}
                       </Typography>
                     </TableCell>
                     <TableCell align="center">
-                      <Tooltip title="Preview">
+                      <Tooltip title={zh ? '预览' : 'Preview'}>
                         <IconButton size="small" onClick={() => openPreview(s)}>
                           <Visibility fontSize="small" />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip title="Edit">
+                      <Tooltip title={zh ? '编辑' : 'Edit'}>
                         <IconButton size="small" onClick={() => navigate(`/skill-editor/${s.id}`)}>
                           <Edit fontSize="small" />
                         </IconButton>
                       </Tooltip>
                       {status === 'draft' && (
-                        <Tooltip title="Submit for public review">
+                        <Tooltip title={zh ? '提交公开审核' : 'Submit for public review'}>
                           <IconButton size="small" color="primary" onClick={() => handleSubmit(s.id, s.name)}>
                             <Publish fontSize="small" />
                           </IconButton>
                         </Tooltip>
                       )}
-                      <Tooltip title="Delete">
+                      <Tooltip title={zh ? '删除' : 'Delete'}>
                         <IconButton size="small" color="error" onClick={() => handleDelete(s.id, s.name)}>
                           <Delete fontSize="small" />
                         </IconButton>
@@ -320,7 +329,7 @@ export default function SkillLibraryPage() {
           {preview?.skill?.name}
           {preview && previewMediaPool.length > 0 && (
             <Typography variant="caption" color="text.secondary" sx={{ ml: 1 }}>
-              (using platform preview media library)
+              {zh ? '（使用预览媒体库）' : '(using platform preview media library)'}
             </Typography>
           )}
         </DialogTitle>
@@ -328,7 +337,7 @@ export default function SkillLibraryPage() {
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>{preview?.skill?.description}</Typography>
           {preview && !preview.media?.length && (
             <Alert severity="info" sx={{ mb: 2 }}>
-              No media in the platform preview media library. Add files under Admin → 预览媒体库.
+              {zh ? '预览媒体库还没有文件。请先在管理端添加媒体。' : 'No media in the preview media library. Add files in Admin first.'}
             </Alert>
           )}
           {preview && (
@@ -336,14 +345,14 @@ export default function SkillLibraryPage() {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setPreview(null)}>Close</Button>
+          <Button onClick={() => setPreview(null)}>{zh ? '关闭' : 'Close'}</Button>
           {preview?.presetId && (
             <Button
               variant="contained"
               startIcon={<Download />}
               onClick={() => { handleImportPreset(preview.presetId); setPreview(null); }}
             >
-              Add to My Library
+              {zh ? '加入我的交互库' : 'Add to My Library'}
             </Button>
           )}
         </DialogActions>
@@ -353,9 +362,9 @@ export default function SkillLibraryPage() {
       <Dialog open={!!codeView} onClose={() => setCodeView(null)} maxWidth="md" fullWidth
         PaperProps={{ sx: { height: '85vh' } }}>
         <DialogTitle>
-          Source Code — {codeView?.name}
+          {zh ? '源码 — ' : 'Source Code — '}{codeView?.name}
           <Typography variant="caption" color="text.secondary" sx={{ ml: 1 }}>
-            (self-contained HTML running in a sandboxed iframe)
+            {zh ? '（在沙箱 iframe 中运行的独立 HTML）' : '(self-contained HTML running in a sandboxed iframe)'}
           </Typography>
         </DialogTitle>
         <DialogContent dividers sx={{ p: 0, display: 'flex' }}>
@@ -374,9 +383,9 @@ export default function SkillLibraryPage() {
         </DialogContent>
         <DialogActions>
           <Button startIcon={<ContentCopy />} onClick={() => copyCode(codeView?.html || '')}>
-            Copy Code
+            {zh ? '复制代码' : 'Copy Code'}
           </Button>
-          <Button onClick={() => setCodeView(null)}>Close</Button>
+          <Button onClick={() => setCodeView(null)}>{zh ? '关闭' : 'Close'}</Button>
         </DialogActions>
       </Dialog>
 
