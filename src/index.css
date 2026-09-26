@@ -49,6 +49,17 @@ code {
 /* Outer grid: horizontal flow with wrapping. JS gives each item an explicit
    pixel width, but we still need flex-wrap so a row that genuinely cannot
    fit at MIN_HEIGHT splits onto a new row. */
+/* Phone A/B (2 images): one full-width image per row so choices stay large. */
+.sd-imagepicker.sp-gallery-stack {
+  flex-flow: column nowrap !important;
+  align-items: stretch !important;
+}
+
+.sd-imagepicker.sp-gallery-stack .sd-imagepicker__item {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
 .sd-imagepicker {
   display: flex !important;
   flex-flow: row wrap !important;
@@ -430,4 +441,113 @@ iframe[title="skill-question"] {
     line-height: 1.25;
     padding-inline: 8px;
   }
+}
+
+.sp-image-gallery.sp-image-gallery--vertical,
+.sp-image-gallery.sp-gallery-stack {
+  flex-flow: column nowrap;
+  gap: var(--sp-gallery-gap, 12px);
+  align-items: stretch;
+}
+
+.sp-image-gallery.sp-image-gallery--vertical > .sp-image-gallery__item,
+.sp-image-gallery.sp-gallery-stack > .sp-image-gallery__item {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Hide page Next while a multi-trial question on this page is unfinished. */
+.sd-root-modern.sp-trials-incomplete .sd-navigation__next-btn,
+.sd-root-modern.sp-trials-incomplete .sd-navigation__complete-btn,
+.sd-root-modern.sp-trials-incomplete .sd-navigation__preview-btn,
+.sv-root.sp-trials-incomplete input.sv_next_btn,
+.sv-root.sp-trials-incomplete input.sv_complete_btn,
+.sv-root.sp-trials-incomplete input.sv_preview_btn,
+.sv_default_css.sp-trials-incomplete input.sv_next_btn,
+.sv_default_css.sp-trials-incomplete input.sv_complete_btn,
+.sv_default_css.sp-trials-incomplete input.sv_preview_btn {
+  display: none !important;
+}
+
+/* Keep question jumps and browser focus scrolling below the sticky progress bar. */
+.sp-survey-with-progress .sd-question,
+.sp-survey-with-progress .sd-page,
+.sp-survey-with-progress .sv_q,
+.sp-survey-with-progress input,
+.sp-survey-with-progress textarea,
+.sp-survey-with-progress select,
+.sp-survey-with-progress [tabindex] {
+  scroll-margin-top: calc(var(--sp-progress-height, 0px) + 12px);
+}
+
+/* Participant shell + SurveyJS both add horizontal padding — tighten on phones. */
+@media (max-width: 600px) {
+  .sp-survey-with-progress {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .sp-survey-with-progress .sd-body.sd-body--responsive,
+  .sp-survey-with-progress .sd-body.sd-body--static {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-top: 12px !important;
+  }
+
+  /* Slightly denser survey title so ProgressChrome + title don't dominate */
+  .sp-survey-with-progress .sd-title.sd-container-modern__title {
+    margin-bottom: 0 !important;
+    padding-bottom: 4px !important;
+  }
+
+  .sp-survey-with-progress .sd-description {
+    font-size: 0.9em;
+    margin-bottom: 8px !important;
+  }
+
+  .sp-survey-with-progress .sd-action-bar .sd-btn,
+  .sp-survey-with-progress .sd-footer .sd-btn {
+    min-height: 40px;
+  }
+
+  /* Rating: hide inline min/max (custom widget shows them above the scale) */
+  .sp-surveyjs-rating .sd-rating__min-text,
+  .sp-surveyjs-rating .sd-rating__max-text,
+  .sd-rating .sd-rating__min-text,
+  .sd-rating .sd-rating__max-text {
+    display: none !important;
+  }
+
+  /* Boolean / imageboolean: don't overflow the viewport with long labels */
+  .sp-surveyjs-boolean .sd-boolean,
+  .sd-root-modern--mobile .sd-boolean {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+  }
+  .sp-surveyjs-boolean .sd-boolean__label,
+  .sp-surveyjs-boolean .sd-boolean__thumb,
+  .sp-surveyjs-boolean .sd-boolean__thumb-text,
+  .sd-root-modern--mobile .sd-boolean__label,
+  .sd-root-modern--mobile .sd-boolean__thumb,
+  .sd-root-modern--mobile .sd-boolean__thumb-text {
+    white-space: normal !important;
+    text-align: center;
+    font-size: 0.85rem;
+    line-height: 1.25;
+    padding-inline: 8px;
+  }
+}
+
+.sp-media-retry {
+  display: block; position: relative; z-index: 2; margin: 8px auto;
+  min-height: 44px; padding: 8px 12px; border: 1px solid currentColor;
+  border-radius: 6px; background: #fff; color: #9b3418; cursor: pointer;
+  font: inherit; line-height: 1.4; max-width: 100%;
+}
+@media (max-width: 600px) {
+  .sp-survey-with-progress .sd-title.sd-container-modern__title { padding-top: 12px; padding-bottom: 12px; }
+  .sp-survey-with-progress .sd-header__text h3 { font-size: 1.25rem; line-height: 1.4; }
+  .sp-survey-with-progress .sd-description { line-height: 1.5; }
+  .sp-trial-shell .MuiAlert-root { padding: 6px 10px; }
 }

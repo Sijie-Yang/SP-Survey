@@ -4,320 +4,330 @@
   "description": "Single-image perceived safety rating survey. Participants rate street scenes on a 1–10 safety scale and provide contextual judgments. Based on the Streetscore methodology predicting perceived safety of urban streetscapes.",
   "author": "Naik et al.",
   "year": "2014",
-  "category": "Reference Template",
+  "category": "Academic Research",
   "tags": [
     "reference",
-    "ai-generated"
+    "ai-generated",
+    "official"
   ],
+  "isPinned": false,
   "website": "https://www.media.mit.edu/projects/streetscore/overview/",
-  "createdAt": "2026-05-04T00:00:00.000Z",
+  "huggingfaceDataset": null,
+  "createdAt": "2026-05-04T00:00:00+00:00",
   "config": {
-    "title": "Streetscore – Perceived Safety Survey",
-    "description": "Rate each street scene on how safe it feels. Based on: Naik, N., Philipoom, J., Raskar, R., & Hidalgo, C. (2014). Streetscore—Predicting the perceived safety of one million streetscapes. CVPR Workshops 2014.",
-    "logoPosition": "right",
-    "showQuestionNumbers": "off",
-    "showProgressBar": "aboveheader",
-    "progressBarType": "questions",
-    "autoGrowComment": true,
-    "showPreviewBeforeComplete": "showAllQuestions",
     "pages": [
       {
         "name": "page_intro",
         "title": "Instructions",
-        "description": "In this survey, you will see a series of street-level photographs. For each image, please rate how safe the street looks on a scale from 1 (very unsafe) to 10 (very safe). There are no right or wrong answers — we are interested in your personal impression.",
         "elements": [
           {
-            "type": "expression",
             "name": "safety_intro",
+            "type": "expression",
             "title": "How to respond",
             "description": "Use the 1–10 scale to rate perceived safety. Consider factors like lighting, visibility, human presence, and physical environment."
           }
-        ]
+        ],
+        "description": "In this survey, you will see a series of street-level photographs. For each image, please rate how safe the street looks on a scale from 1 (very unsafe) to 10 (very safe). There are no right or wrong answers — we are interested in your personal impression."
       },
       {
         "name": "page_safety_1",
         "title": "Safety Rating",
-        "description": "Look at the street scene below and rate its perceived safety.",
         "elements": [
           {
-            "type": "image",
             "name": "street_image_1",
+            "type": "image",
             "title": "Street Scene",
-            "isRequired": false,
-            "imageCount": 1,
-            "imageSelectionMode": "huggingface_random",
             "imageFit": "cover",
-            "randomImageSelection": true,
-            "imageSource": "huggingface"
-          },
-          {
-            "type": "rating",
-            "name": "safety_score_1",
-            "title": "How safe does this street look?",
-            "isRequired": true,
-            "rateMin": 1,
-            "rateMax": 10,
-            "minRateDescription": "Very unsafe",
-            "maxRateDescription": "Very safe"
-          },
-          {
-            "type": "radiogroup",
-            "name": "safety_reason_1",
-            "title": "What most influences your safety perception of this scene?",
+            "imageCount": 1,
             "isRequired": false,
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true
+          },
+          {
+            "name": "safety_score_1",
+            "type": "rating",
+            "title": "How safe does this street look?",
+            "rateMax": 10,
+            "rateMin": 1,
+            "isRequired": true,
+            "maxRateDescription": "Very safe",
+            "minRateDescription": "Very unsafe"
+          },
+          {
+            "name": "safety_reason_1",
+            "type": "radiogroup",
+            "title": "What most influences your safety perception of this scene?",
             "choices": [
               {
-                "value": "lighting",
-                "text": "Lighting conditions"
+                "text": "Lighting conditions",
+                "value": "lighting"
               },
               {
-                "value": "people",
-                "text": "Presence / absence of people"
+                "text": "Presence / absence of people",
+                "value": "people"
               },
               {
-                "value": "maintenance",
-                "text": "Building / street maintenance"
+                "text": "Building / street maintenance",
+                "value": "maintenance"
               },
               {
-                "value": "greenery",
-                "text": "Greenery and open space"
+                "text": "Greenery and open space",
+                "value": "greenery"
               },
               {
-                "value": "traffic",
-                "text": "Traffic and road design"
+                "text": "Traffic and road design",
+                "value": "traffic"
               },
               {
-                "value": "other",
-                "text": "Other"
+                "text": "Other",
+                "value": "other"
               }
-            ]
+            ],
+            "isRequired": false
           }
-        ]
+        ],
+        "description": "Look at the street scene below and rate its perceived safety."
       },
       {
         "name": "page_safety_2",
         "title": "Safety Rating",
-        "description": "Look at the street scene below and rate its perceived safety.",
         "elements": [
           {
-            "type": "image",
             "name": "street_image_2",
+            "type": "image",
             "title": "Street Scene",
-            "isRequired": false,
-            "imageCount": 1,
-            "imageSelectionMode": "huggingface_random",
             "imageFit": "cover",
-            "randomImageSelection": true,
-            "imageSource": "huggingface"
-          },
-          {
-            "type": "rating",
-            "name": "safety_score_2",
-            "title": "How safe does this street look?",
-            "isRequired": true,
-            "rateMin": 1,
-            "rateMax": 10,
-            "minRateDescription": "Very unsafe",
-            "maxRateDescription": "Very safe"
-          },
-          {
-            "type": "radiogroup",
-            "name": "safety_reason_2",
-            "title": "What most influences your safety perception of this scene?",
+            "imageCount": 1,
             "isRequired": false,
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true
+          },
+          {
+            "name": "safety_score_2",
+            "type": "rating",
+            "title": "How safe does this street look?",
+            "rateMax": 10,
+            "rateMin": 1,
+            "isRequired": true,
+            "maxRateDescription": "Very safe",
+            "minRateDescription": "Very unsafe"
+          },
+          {
+            "name": "safety_reason_2",
+            "type": "radiogroup",
+            "title": "What most influences your safety perception of this scene?",
             "choices": [
               {
-                "value": "lighting",
-                "text": "Lighting conditions"
+                "text": "Lighting conditions",
+                "value": "lighting"
               },
               {
-                "value": "people",
-                "text": "Presence / absence of people"
+                "text": "Presence / absence of people",
+                "value": "people"
               },
               {
-                "value": "maintenance",
-                "text": "Building / street maintenance"
+                "text": "Building / street maintenance",
+                "value": "maintenance"
               },
               {
-                "value": "greenery",
-                "text": "Greenery and open space"
+                "text": "Greenery and open space",
+                "value": "greenery"
               },
               {
-                "value": "traffic",
-                "text": "Traffic and road design"
+                "text": "Traffic and road design",
+                "value": "traffic"
               },
               {
-                "value": "other",
-                "text": "Other"
+                "text": "Other",
+                "value": "other"
               }
-            ]
+            ],
+            "isRequired": false
           }
-        ]
+        ],
+        "description": "Look at the street scene below and rate its perceived safety."
       },
       {
         "name": "page_safety_3",
         "title": "Safety Rating",
-        "description": "Look at the street scene below and rate its perceived safety.",
         "elements": [
           {
-            "type": "image",
             "name": "street_image_3",
+            "type": "image",
             "title": "Street Scene",
-            "isRequired": false,
-            "imageCount": 1,
-            "imageSelectionMode": "huggingface_random",
             "imageFit": "cover",
-            "randomImageSelection": true,
-            "imageSource": "huggingface"
-          },
-          {
-            "type": "rating",
-            "name": "safety_score_3",
-            "title": "How safe does this street look?",
-            "isRequired": true,
-            "rateMin": 1,
-            "rateMax": 10,
-            "minRateDescription": "Very unsafe",
-            "maxRateDescription": "Very safe"
-          },
-          {
-            "type": "radiogroup",
-            "name": "safety_reason_3",
-            "title": "What most influences your safety perception of this scene?",
+            "imageCount": 1,
             "isRequired": false,
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true
+          },
+          {
+            "name": "safety_score_3",
+            "type": "rating",
+            "title": "How safe does this street look?",
+            "rateMax": 10,
+            "rateMin": 1,
+            "isRequired": true,
+            "maxRateDescription": "Very safe",
+            "minRateDescription": "Very unsafe"
+          },
+          {
+            "name": "safety_reason_3",
+            "type": "radiogroup",
+            "title": "What most influences your safety perception of this scene?",
             "choices": [
               {
-                "value": "lighting",
-                "text": "Lighting conditions"
+                "text": "Lighting conditions",
+                "value": "lighting"
               },
               {
-                "value": "people",
-                "text": "Presence / absence of people"
+                "text": "Presence / absence of people",
+                "value": "people"
               },
               {
-                "value": "maintenance",
-                "text": "Building / street maintenance"
+                "text": "Building / street maintenance",
+                "value": "maintenance"
               },
               {
-                "value": "greenery",
-                "text": "Greenery and open space"
+                "text": "Greenery and open space",
+                "value": "greenery"
               },
               {
-                "value": "traffic",
-                "text": "Traffic and road design"
+                "text": "Traffic and road design",
+                "value": "traffic"
               },
               {
-                "value": "other",
-                "text": "Other"
+                "text": "Other",
+                "value": "other"
               }
-            ]
+            ],
+            "isRequired": false
           }
-        ]
+        ],
+        "description": "Look at the street scene below and rate its perceived safety."
       },
       {
         "name": "page_pairwise",
         "title": "Comparative Safety",
-        "description": "Choose the scene that looks safer between the two shown.",
         "elements": [
           {
-            "type": "imagepicker",
             "name": "safety_pairwise",
+            "type": "imagepicker",
             "title": "Which street scene looks safer?",
-            "isRequired": true,
-            "imageCount": 2,
-            "imageSelectionMode": "huggingface_random",
             "imageFit": "cover",
-            "randomImageSelection": true,
-            "imageSource": "huggingface"
+            "imageCount": 2,
+            "isRequired": true,
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true
           }
-        ]
+        ],
+        "description": "Choose the scene that looks safer between the two shown."
       },
       {
         "name": "page_demographics",
         "title": "Background Information (Optional)",
         "elements": [
           {
-            "type": "dropdown",
             "name": "age_group",
-            "title": "Age group",
-            "isRequired": false,
-            "choices": [
-              {
-                "value": "under_18",
-                "text": "Under 18"
-              },
-              {
-                "value": "18_24",
-                "text": "18–24"
-              },
-              {
-                "value": "25_34",
-                "text": "25–34"
-              },
-              {
-                "value": "35_44",
-                "text": "35–44"
-              },
-              {
-                "value": "45_54",
-                "text": "45–54"
-              },
-              {
-                "value": "55_64",
-                "text": "55–64"
-              },
-              {
-                "value": "65_plus",
-                "text": "65 or older"
-              }
-            ]
-          },
-          {
             "type": "dropdown",
-            "name": "gender",
-            "title": "Gender",
-            "isRequired": false,
+            "title": "Age group",
             "choices": [
               {
-                "value": "male",
-                "text": "Male"
+                "text": "Under 18",
+                "value": "under_18"
               },
               {
-                "value": "female",
-                "text": "Female"
+                "text": "18–24",
+                "value": "18_24"
               },
               {
-                "value": "non_binary",
-                "text": "Non-binary / third gender"
+                "text": "25–34",
+                "value": "25_34"
               },
               {
-                "value": "prefer_not",
-                "text": "Prefer not to say"
+                "text": "35–44",
+                "value": "35_44"
+              },
+              {
+                "text": "45–54",
+                "value": "45_54"
+              },
+              {
+                "text": "55–64",
+                "value": "55_64"
+              },
+              {
+                "text": "65 or older",
+                "value": "65_plus"
               }
-            ]
+            ],
+            "isRequired": false
           },
           {
-            "type": "radiogroup",
-            "name": "crime_experience",
-            "title": "Have you personally experienced street crime in the past 5 years?",
-            "isRequired": false,
+            "name": "gender",
+            "type": "dropdown",
+            "title": "Gender",
             "choices": [
               {
-                "value": "yes",
-                "text": "Yes"
+                "text": "Male",
+                "value": "male"
               },
               {
-                "value": "no",
-                "text": "No"
+                "text": "Female",
+                "value": "female"
               },
               {
-                "value": "prefer_not",
-                "text": "Prefer not to say"
+                "text": "Non-binary / third gender",
+                "value": "non_binary"
+              },
+              {
+                "text": "Prefer not to say",
+                "value": "prefer_not"
               }
-            ]
+            ],
+            "isRequired": false
+          },
+          {
+            "name": "crime_experience",
+            "type": "radiogroup",
+            "title": "Have you personally experienced street crime in the past 5 years?",
+            "choices": [
+              {
+                "text": "Yes",
+                "value": "yes"
+              },
+              {
+                "text": "No",
+                "value": "no"
+              },
+              {
+                "text": "Prefer not to say",
+                "value": "prefer_not"
+              }
+            ],
+            "isRequired": false
           }
         ]
       }
-    ]
-  }
+    ],
+    "title": "Streetscore – Perceived Safety Survey",
+    "description": "Rate each street scene on how safe it feels. Based on: Naik, N., Philipoom, J., Raskar, R., & Hidalgo, C. (2014). Streetscore—Predicting the perceived safety of one million streetscapes. CVPR Workshops 2014.",
+    "logoPosition": "right",
+    "autoGrowComment": true,
+    "progressBarType": "questions",
+    "showProgressBar": "aboveheader",
+    "showQuestionNumbers": "off",
+    "showPreviewBeforeComplete": "showAllQuestions"
+  },
+  "imageDatasetConfig": {
+    "mediaFolderTags": {},
+    "mediaFolders": []
+  },
+  "preloadedImages": [],
+  "preloadedSource": null,
+  "preloadedAt": null
 }

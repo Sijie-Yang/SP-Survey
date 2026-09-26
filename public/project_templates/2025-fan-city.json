@@ -4,41 +4,40 @@
   "description": "Template created from project: City Landmark (AI Template)",
   "author": "Fan, Zicheng",
   "year": "2025",
-  "category": "Academic Research",
+  "category": "AI Template",
   "tags": [
     "official"
   ],
+  "isPinned": false,
+  "website": null,
   "huggingfaceDataset": "Zicheng00/Landmark_visibility",
-  "createdAt": "2025-11-26T08:52:48.513Z",
+  "createdAt": "2025-11-26T08:52:48.513+00:00",
   "config": {
-    "title": "Perception of Urban Landmarks Through Street View Images",
-    "description": "This survey investigates public perceptions of city landmarks using street view images, focusing on visual appeal, visibility, accessibility, recognition, and significance. Your insights will aid city planners and architects in understanding how these landmarks contribute to urban identity and community cohesion.",
     "pages": [
       {
         "name": "introduction",
         "title": "Introduction",
-        "description": "Welcome to our survey on urban landmarks! We aim to understand how people perceive the visual appeal, visibility, accessibility, recognition, and cultural significance of city landmarks in street view images. Your responses will contribute to urban development strategies.",
-        "elements": []
+        "elements": [],
+        "description": "Welcome to our survey on urban landmarks! We aim to understand how people perceive the visual appeal, visibility, accessibility, recognition, and cultural significance of city landmarks in street view images. Your responses will contribute to urban development strategies."
       },
       {
         "name": "image_selection_methodology",
         "title": "Image Selection Methodology",
-        "description": "We use stratified random sampling for image selection to ensure diversity and relevance. Images are sourced from Google Street View, selected for clarity, perspective, and urban context. Standardization techniques include adjusting size, resolution, and environmental factors. Selected landmarks are chosen based on their representation of urban identity and frequency in public discourse.",
-        "elements": []
+        "elements": [],
+        "description": "We use stratified random sampling for image selection to ensure diversity and relevance. Images are sourced from Google Street View, selected for clarity, perspective, and urban context. Standardization techniques include adjusting size, resolution, and environmental factors. Selected landmarks are chosen based on their representation of urban identity and frequency in public discourse."
       },
       {
         "name": "demographics",
         "title": "About You",
-        "description": "Please provide some background information about yourself.",
         "elements": [
           {
-            "type": "text",
             "name": "age",
+            "type": "text",
             "title": "What is your age?"
           },
           {
-            "type": "radiogroup",
             "name": "gender",
+            "type": "radiogroup",
             "title": "What is your gender?",
             "choices": [
               "Male",
@@ -48,8 +47,8 @@
             ]
           },
           {
-            "type": "dropdown",
             "name": "education",
+            "type": "dropdown",
             "title": "What is your highest level of education?",
             "choices": [
               "High school",
@@ -60,8 +59,8 @@
             ]
           },
           {
-            "type": "checkbox",
             "name": "familiar_landmarks",
+            "type": "checkbox",
             "title": "Which of these landmarks are you familiar with? (select all that apply)",
             "choices": [
               "Eiffel Tower",
@@ -72,37 +71,37 @@
             ]
           },
           {
-            "type": "radiogroup",
             "name": "resident_status",
+            "type": "radiogroup",
             "title": "Are you a resident of a city?",
             "choices": [
               "Yes",
               "No"
             ]
           }
-        ]
+        ],
+        "description": "Please provide some background information about yourself."
       },
       {
         "name": "landmark_visibility",
         "title": "Landmark Visibility",
-        "description": "Assess the visibility of landmarks in street view images considering various factors.",
         "elements": [
           {
-            "type": "imagerating",
             "name": "visibility_rating",
+            "type": "imagerating",
             "title": "How clearly can you see this landmark in the image?",
-            "imageSelectionMode": "huggingface_random",
-            "imageCount": 1,
             "choices": [],
-            "rateMin": 1,
             "rateMax": 5,
-            "minRateDescription": "Not visible",
+            "rateMin": 1,
+            "imageCount": 1,
+            "imageSelectionMode": "huggingface_random",
             "maxRateDescription": "Very clear",
+            "minRateDescription": "Not visible",
             "randomImageSelection": true
           },
           {
-            "type": "checkbox",
             "name": "visibility_factors",
+            "type": "checkbox",
             "title": "Which factors affect the visibility of this landmark?",
             "choices": [
               "Lighting",
@@ -112,19 +111,17 @@
               "Angle"
             ]
           }
-        ]
+        ],
+        "description": "Assess the visibility of landmarks in street view images considering various factors."
       },
       {
         "name": "landmark_recognition",
         "title": "Landmark Recognition",
-        "description": "Identify and rate the recognizability of landmarks as seen in street view images.",
         "elements": [
           {
-            "type": "imagepicker",
             "name": "identify_landmark",
+            "type": "imagepicker",
             "title": "Identify this landmark from the list:",
-            "imageSelectionMode": "huggingface_random",
-            "imageCount": 1,
             "choices": [
               "Eiffel Tower",
               "Statue of Liberty",
@@ -132,24 +129,26 @@
               "Sydney Opera House",
               "Colosseum"
             ],
-            "randomImageSelection": true
-          },
-          {
-            "type": "imagerating",
-            "name": "recognizability_rating",
-            "title": "Rate the recognizability of this landmark:",
-            "imageSelectionMode": "huggingface_random",
             "imageCount": 1,
-            "choices": [],
-            "rateMin": 1,
-            "rateMax": 5,
-            "minRateDescription": "Not recognizable",
-            "maxRateDescription": "Highly recognizable",
+            "imageSelectionMode": "huggingface_random",
             "randomImageSelection": true
           },
           {
-            "type": "radiogroup",
+            "name": "recognizability_rating",
+            "type": "imagerating",
+            "title": "Rate the recognizability of this landmark:",
+            "choices": [],
+            "rateMax": 5,
+            "rateMin": 1,
+            "imageCount": 1,
+            "imageSelectionMode": "huggingface_random",
+            "maxRateDescription": "Highly recognizable",
+            "minRateDescription": "Not recognizable",
+            "randomImageSelection": true
+          },
+          {
             "name": "perspective_impact",
+            "type": "radiogroup",
             "title": "How does the angle of this street view image impact your recognition of the landmark?",
             "choices": [
               "Not at all",
@@ -159,89 +158,52 @@
               "Very significantly"
             ]
           }
-        ]
+        ],
+        "description": "Identify and rate the recognizability of landmarks as seen in street view images."
       },
       {
         "name": "landmark_beauty",
         "title": "Evaluating Landmark Beauty",
-        "description": "Rate the beauty of these city landmarks as seen in street view images.",
         "elements": [
           {
-            "type": "imagerating",
             "name": "beauty_rating",
+            "type": "imagerating",
             "title": "How beautiful is this landmark?",
-            "imageSelectionMode": "huggingface_random",
-            "imageCount": 3,
             "choices": [],
-            "rateMin": 1,
             "rateMax": 5,
-            "minRateDescription": "Not beautiful",
+            "rateMin": 1,
+            "imageCount": 3,
+            "imageSelectionMode": "huggingface_random",
             "maxRateDescription": "Extremely beautiful",
+            "minRateDescription": "Not beautiful",
             "randomImageSelection": true
           },
           {
-            "type": "imagepicker",
             "name": "beautiful_landmark",
+            "type": "imagepicker",
             "title": "Which landmark do you find most beautiful?",
-            "imageSelectionMode": "huggingface_random",
-            "imageCount": 4,
             "choices": [],
+            "imageCount": 4,
             "multiSelect": false,
+            "imageSelectionMode": "huggingface_random",
             "randomImageSelection": true
           }
-        ]
+        ],
+        "description": "Rate the beauty of these city landmarks as seen in street view images."
       },
       {
         "name": "landmark_accessibility",
         "title": "Landmark Accessibility",
-        "description": "Evaluate the accessibility of landmarks for various modes of transportation.",
         "elements": [
           {
-            "type": "imagematrix",
             "name": "accessibility_matrix",
-            "title": "Rate the accessibility of this landmark:",
-            "imageSelectionMode": "huggingface_random",
-            "imageCount": 1,
-            "choices": [],
-            "columns": [
-              "1",
-              "2",
-              "3",
-              "4",
-              "5"
-            ],
             "rows": [
               "By foot",
               "By car",
               "By public transport"
             ],
-            "randomImageSelection": true,
-            "imageLinks": []
-          },
-          {
-            "type": "imageboolean",
-            "name": "accessible_landmark",
-            "title": "Is this landmark easily accessible?",
-            "imageSelectionMode": "huggingface_random",
-            "imageCount": 1,
-            "choices": [],
-            "labelTrue": "Yes",
-            "labelFalse": "No",
-            "randomImageSelection": true
-          }
-        ]
-      },
-      {
-        "name": "streetscape_elements",
-        "title": "Streetscape Elements Assessment",
-        "description": "Evaluate the presence and quality of streetscape elements such as lighting, signage, seating, and vegetation around the landmarks.",
-        "elements": [
-          {
             "type": "imagematrix",
-            "name": "streetscape_quality",
-            "title": "Rate the quality of these streetscape elements:",
-            "imageSelectionMode": "huggingface_random",
-            "imageCount": 1,
+            "title": "Rate the accessibility of this landmark:",
             "choices": [],
             "columns": [
               "1",
@@ -250,18 +212,55 @@
               "4",
               "5"
             ],
+            "imageCount": 1,
+            "imageLinks": [],
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true
+          },
+          {
+            "name": "accessible_landmark",
+            "type": "imageboolean",
+            "title": "Is this landmark easily accessible?",
+            "choices": [],
+            "labelTrue": "Yes",
+            "imageCount": 1,
+            "labelFalse": "No",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true
+          }
+        ],
+        "description": "Evaluate the accessibility of landmarks for various modes of transportation."
+      },
+      {
+        "name": "streetscape_elements",
+        "title": "Streetscape Elements Assessment",
+        "elements": [
+          {
+            "name": "streetscape_quality",
             "rows": [
               "Lighting",
               "Signage",
               "Seating",
               "Vegetation"
             ],
-            "randomImageSelection": true,
-            "imageLinks": []
+            "type": "imagematrix",
+            "title": "Rate the quality of these streetscape elements:",
+            "choices": [],
+            "columns": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "imageCount": 1,
+            "imageLinks": [],
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true
           },
           {
-            "type": "radiogroup",
             "name": "streetscape_impact",
+            "type": "radiogroup",
             "title": "To what extent do streetscape elements enhance or obstruct landmark visibility?",
             "choices": [
               "Not at all",
@@ -272,29 +271,29 @@
             ]
           },
           {
-            "type": "comment",
             "name": "streetscape_integration",
+            "type": "comment",
             "title": "How do these elements integrate with the landmark's design?",
             "description": "Consider the harmony and visual impact of streetscape elements on landmark visibility."
           }
-        ]
+        ],
+        "description": "Evaluate the presence and quality of streetscape elements such as lighting, signage, seating, and vegetation around the landmarks."
       },
       {
         "name": "landmark_significance",
         "title": "Landmark Significance",
-        "description": "Assess the cultural and personal significance of these landmarks.",
         "elements": [
           {
-            "type": "image",
             "name": "landmark_view",
+            "type": "image",
+            "choices": [],
             "imageUrl": "random",
             "imageSelectionMode": "huggingface_random",
-            "choices": [],
             "randomImageSelection": true
           },
           {
-            "type": "radiogroup",
             "name": "cultural_importance",
+            "type": "radiogroup",
             "title": "How culturally significant do you consider this landmark?",
             "choices": [
               "Not significant",
@@ -305,103 +304,113 @@
             ]
           },
           {
-            "type": "comment",
             "name": "personal_thoughts",
+            "type": "comment",
             "title": "Please share your personal thoughts about this landmark:",
             "description": "Consider aspects like historical relevance, personal experiences, or emotional connections."
           }
-        ]
+        ],
+        "description": "Assess the cultural and personal significance of these landmarks."
       },
       {
         "name": "design_interventions",
         "title": "Design Interventions",
-        "description": "Gather opinions on potential design changes or interventions to improve landmark recognition and accessibility.",
         "elements": [
           {
-            "type": "comment",
             "name": "design_suggestions",
+            "type": "comment",
             "title": "What design changes would you suggest to improve landmark recognition?",
             "description": "Consider aspects like improved lighting, signage, or removal of obstructions."
           },
           {
-            "type": "imagerating",
             "name": "design_intervention_rating",
+            "type": "imagerating",
             "title": "Rate the effectiveness of this design intervention:",
-            "imageSelectionMode": "huggingface_random",
-            "imageCount": 1,
             "choices": [],
-            "rateMin": 1,
             "rateMax": 5,
-            "minRateDescription": "Not effective",
+            "rateMin": 1,
+            "imageCount": 1,
+            "imageSelectionMode": "huggingface_random",
             "maxRateDescription": "Very effective",
+            "minRateDescription": "Not effective",
             "randomImageSelection": true
           }
-        ]
+        ],
+        "description": "Gather opinions on potential design changes or interventions to improve landmark recognition and accessibility."
       },
       {
         "name": "image_quality_assessment",
         "title": "Image Quality Assessment",
-        "description": "Evaluate the visual quality of street view images used in this survey.",
         "elements": [
           {
-            "type": "imagerating",
             "name": "image_clarity",
+            "type": "imagerating",
             "title": "Rate the clarity of this image:",
-            "imageSelectionMode": "huggingface_random",
-            "imageCount": 1,
             "choices": [],
-            "rateMin": 1,
             "rateMax": 5,
-            "minRateDescription": "Very unclear",
+            "rateMin": 1,
+            "imageCount": 1,
+            "imageSelectionMode": "huggingface_random",
             "maxRateDescription": "Very clear",
+            "minRateDescription": "Very unclear",
             "randomImageSelection": true
           },
           {
-            "type": "imagerating",
             "name": "image_composition",
+            "type": "imagerating",
             "title": "Rate the composition of this image:",
-            "imageSelectionMode": "huggingface_random",
-            "imageCount": 1,
             "choices": [],
-            "rateMin": 1,
             "rateMax": 5,
-            "minRateDescription": "Poorly composed",
+            "rateMin": 1,
+            "imageCount": 1,
+            "imageSelectionMode": "huggingface_random",
             "maxRateDescription": "Well composed",
+            "minRateDescription": "Poorly composed",
             "randomImageSelection": true
           },
           {
-            "type": "imagerating",
             "name": "image_angle",
+            "type": "imagerating",
             "title": "Rate the angle of this image:",
-            "imageSelectionMode": "huggingface_random",
-            "imageCount": 1,
             "choices": [],
-            "rateMin": 1,
             "rateMax": 5,
-            "minRateDescription": "Unfavorable angle",
+            "rateMin": 1,
+            "imageCount": 1,
+            "imageSelectionMode": "huggingface_random",
             "maxRateDescription": "Favorable angle",
+            "minRateDescription": "Unfavorable angle",
             "randomImageSelection": true
           }
-        ]
+        ],
+        "description": "Evaluate the visual quality of street view images used in this survey."
       },
       {
         "name": "feedback",
         "title": "Your Feedback",
-        "description": "We value your feedback to improve our surveys.",
         "elements": [
           {
-            "type": "comment",
             "name": "survey_feedback",
+            "type": "comment",
             "title": "Please share any feedback you have about this survey:"
           }
-        ]
+        ],
+        "description": "We value your feedback to improve our surveys."
       },
       {
         "name": "conclusion",
         "title": "Thank You",
-        "description": "Thank you for completing the survey. Your responses are valuable and will contribute to our understanding of urban landmarks.",
-        "elements": []
+        "elements": [],
+        "description": "Thank you for completing the survey. Your responses are valuable and will contribute to our understanding of urban landmarks."
       }
-    ]
-  }
+    ],
+    "title": "Perception of Urban Landmarks Through Street View Images",
+    "description": "This survey investigates public perceptions of city landmarks using street view images, focusing on visual appeal, visibility, accessibility, recognition, and significance. Your insights will aid city planners and architects in understanding how these landmarks contribute to urban identity and community cohesion."
+  },
+  "imageDatasetConfig": {
+    "mediaFolderTags": {},
+    "mediaFolders": []
+  },
+  "preloadedImages": [],
+  "preloadedSource": null,
+  "preloadedAt": null
 }

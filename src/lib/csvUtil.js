@@ -6,7 +6,13 @@ export const CSV_BOM = '\uFEFF';
 
 export function escapeCsvCell(value) {
   if (value == null) return '';
-  const s = String(value);
+  let s = String(value);
+  // Prevent participant text from becoming an Excel/Sheets formula. Numeric
+  // values (including negative decimals) remain numeric; raw JSON stays lossless.
+  if (typeof value === 'string' && (/^[\t\r\n]/.test(s)
+    || (/^[\s]*[=+@-]/.test(s) && !/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/.test(s)))) {
+    s = "'" + s;
+  }
   if (/[",\r\n]/.test(s)) return `"${s.replace(/"/g, '""')}"`;
   return s;
 }
