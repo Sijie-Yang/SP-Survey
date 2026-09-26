@@ -2,6 +2,7 @@
 // Uses API calls to backend server for file operations
 
 import { API_ROOT } from './apiConfig';
+import { sanitizeMediaFolderConfig } from './mediaUtils';
 
 const API_BASE_URL = API_ROOT;
 const TEMPLATES_PATH = '/project_templates';
@@ -51,7 +52,10 @@ export const loadTemplatesFromFiles = async () => {
           // Validate that it's actually a template (has required fields)
           if (template.id && template.name && template.config) {
             console.log(`✅ Successfully loaded template: ${template.name} (ID: ${template.id}, Pages: ${template.config.pages?.length || 0})`);
-            templates.push(template);
+            templates.push({
+              ...template,
+              is_pinned: !!(template.isPinned ?? template.is_pinned),
+            });
           } else {
             console.warn(`⚠️ File ${filename} is not a valid template (missing required fields)`, {
               hasId: !!template.id,
@@ -541,6 +545,10 @@ export const saveProjectAsTemplate = async (project, surveyConfig) => {
       tags: project.tags || ['custom', 'user-created'],
       website: project.website || undefined,
       huggingfaceDataset: project.huggingfaceDataset || undefined,
+      preloadedImages: Array.isArray(project.preloadedImages) ? project.preloadedImages : [],
+      preloadedAt: project.preloadedAt || null,
+      preloadedSource: project.preloadedSource || null,
+      imageDatasetConfig: sanitizeMediaFolderConfig(project.imageDatasetConfig || {}),
       createdAt: new Date().toISOString(),
       config: cleanedConfig
     };

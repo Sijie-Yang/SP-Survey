@@ -37,7 +37,7 @@ import { AdminPageHeader } from './AdminPageLayout';
 import { useRegion } from '../../contexts/RegionContext';
 
 export default function SystemStatus({ surveyConfig, currentProject, onProjectUpdate, onNextStep }) {
-  const { t } = useRegion();
+  const { t, language } = useRegion();
   // Step management - restore from localStorage or default to 0
   const getInitialStep = () => {
     if (currentProject) {
@@ -679,15 +679,16 @@ REVOKE SELECT ON TABLE survey_responses FROM anon, authenticated;`;
     }
   };
 
+  const zh = language === 'zh';
   const steps = [
     {
-      label: 'Create Database Table',
-      description: 'Set up survey_responses table',
+      label: zh ? '创建数据表' : 'Create Database Table',
+      description: zh ? '配置 survey_responses 表' : 'Set up survey_responses table',
       icon: <TableChart />
     },
     {
-      label: 'Test Live Survey',
-      description: 'Test survey and verify responses',
+      label: zh ? '测试 Live Survey' : 'Test Live Survey',
+      description: zh ? '试填问卷并核对答卷写入' : 'Test survey and verify responses',
       icon: <PlayArrow />
     }
   ];

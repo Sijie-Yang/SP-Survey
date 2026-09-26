@@ -19,7 +19,8 @@ import {
   Paper,
   CircularProgress,
   LinearProgress,
-  TextField
+  TextField,
+  Divider,
 } from '@mui/material';
 import {
   CloudUpload,
@@ -35,17 +36,33 @@ import {
   FolderZip,
   Refresh,
   Warning,
-  ContentCopy
+  ContentCopy,
+  Link as LinkIcon,
+  OpenInNew,
 } from '@mui/icons-material';
 import { AdminPageHeader } from './AdminPageLayout';
 import { useRegion } from '../../contexts/RegionContext';
 import { prepareDeploymentFolder, getDeploymentStatus, testDeployment, uploadToGitHub } from '../../lib/deploymentManager';
 import SurveyPreflight from './SurveyPreflight';
 import ProjectVersions from './ProjectVersions';
+import SurveyQrCode from './SurveyQrCode';
 import { getProjectReleaseState } from '../../lib/projectRelease';
+import { validateSurveyConfig } from '../../lib/designProtocol/validate';
+import { getTrialCount } from '../../lib/trialNavigation';
 
 export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedChanges = false, onReleased }) {
-  const { t } = useRegion();
+  const { t, language } = useRegion();
+  const zh = language === 'zh';
+  const report = validateSurveyConfig(surveyConfig);
+  const questions = (surveyConfig?.pages || []).flatMap((p) => p.elements || []);
+  const answerable = questions.filter((q) => !['html', 'expression', 'image', 'mediadisplay'].includes(q.type));
+  const rounds = answerable.reduce((sum, q) => sum + getTrialCount(q), 0);
+  const issues = [...(report.errors || []), ...(report.warnings || [])];
+  const [copied, setCopied] = useState(false);
+  const origin = window.location.origin;
+  const surveyUrl = currentProject
+    ? `${origin}/survey?project=${encodeURIComponent(currentProject.id)}`
+    : null;
   const [activeStep, setActiveStep] = useState(0);
   const [deploymentStatus, setDeploymentStatus] = useState({
     preparing: false,
@@ -302,26 +319,36 @@ export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedC
 
   const steps = [
     {
-      label: 'Prepare Your Repository',
-      description: 'Set up GitHub repository for deployment',
+      label: zh ? '准备仓库' : 'Prepare Your Repository',
+      description: zh ? '为部署准备 GitHub 仓库' : 'Set up GitHub repository for deployment',
       icon: <GitHub />
     },
     {
-      label: 'Connect to Vercel',
-      description: 'Import repository to Vercel',
+      label: zh ? '连接到 Vercel' : 'Connect to Vercel',
+      description: zh ? '将仓库导入 Vercel' : 'Import repository to Vercel',
       icon: <CloudUpload />
     },
     {
-      label: 'Configure & Deploy',
-      description: 'Simple setup (no env vars needed!)',
+      label: zh ? '配置并部署' : 'Configure & Deploy',
+      description: zh ? '简单配置（通常无需环境变量）' : 'Simple setup (no env vars needed!)',
       icon: <Settings />
     },
     {
-      label: 'Deploy & Test',
-      description: 'Launch your survey online',
+      label: zh ? '发布并测试' : 'Deploy & Test',
+      description: zh ? '上线参与者站点' : 'Launch your survey online',
       icon: <Language />
     }
   ];
+
+  const copySurveyLink = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      alert(zh ? '请手动复制链接。' : 'Please copy the link manually.');
+    }
+  };
 
   const getStepContent = (step) => {
     switch (step) {
@@ -1043,30 +1070,153 @@ git push -u origin main`}
 
   return (
     <Box>
+      <AdminPageHeader
+        icon={<LinkIcon />}
+        title={t.shareTitle}
+        description={t.shareDescription}
+      />
+
+      <Card sx={{ mb: 3, border: '2px solid', borderColor: 'primary.main' }}>
+        <CardContent>
+          <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+            <LinkIcon color="primary" />
+            {t.shareYourLink}
+          </Typography>
+          {surveyUrl ? (
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'minmax(0, 1fr)', md: 'minmax(0, 1fr) 232px' }, gap: 3, alignItems: 'start' }}>
+              <Box sx={{ minWidth: 0 }}>
+                <Box
+                  sx={{
+                    p: 2,
+                    bgcolor: 'grey.50',
+                    borderRadius: 1,
+                    border: '1px solid',
+                    borderColor: 'divider',
+                    fontFamily: 'monospace',
+                    fontSize: '0.9rem',
+                    wordBreak: 'break-all',
+                    mb: 2,
+                  }}
+                >
+                  {surveyUrl}
+                </Box>
+                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                  <Button
+                    variant="contained"
+                    startIcon={copied ? <CheckCircle /> : <ContentCopy />}
+                    onClick={() => copySurveyLink(surveyUrl)}
+                    color={copied ? 'success' : 'primary'}
+                  >
+                    {copied ? t.shareCopied : t.shareCopyLink}
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    startIcon={<OpenInNew />}
+                    href={surveyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {t.shareOpenSurvey}
+                  </Button>
+                </Box>
+                {['localhost', '127.0.0.1', '[::1]'].includes(new URL(surveyUrl).hostname) && (
+                  <Alert severity="info" sx={{ mt: 2 }}>{t.shareQrLocalHint}</Alert>
+                )}
+              </Box>
+              <SurveyQrCode key={surveyUrl} surveyUrl={surveyUrl} projectId={currentProject.id} projectName={currentProject.name} />
+            </Box>
+          ) : (
+            <Alert severity="warning">{t.shareNoProject}</Alert>
+          )}
+        </CardContent>
+      </Card>
+
+      <Alert severity={!answerable.length || report.errors?.length ? 'warning' : 'info'} sx={{ mb: 2 }}>
+        {zh
+          ? `${report.pageCount || 0} 页 · ${answerable.length} 道作答题 · 共 ${rounds} 轮`
+          : `${report.pageCount || 0} pages · ${answerable.length} answerable questions · ${rounds} rounds`}
+        {!answerable.length && (
+          <Typography variant="body2">
+            {zh ? '问卷还没有作答题，请先在题目设置中完善。' : 'This survey has no answerable questions. Add questions before inviting participants.'}
+          </Typography>
+        )}
+        {issues.slice(0, 5).map((issue, i) => (
+          <Typography key={i} variant="body2">• {issue.message}</Typography>
+        ))}
+      </Alert>
+      {hasUnsavedChanges && (
+        <Alert severity="warning" sx={{ mb: 2 }}>
+          {zh ? '当前有未保存的修改。请确认顶部显示已保存，再发送分享链接。' : 'There are unsaved changes. Wait for the toolbar to show saved before sending the share link.'}
+        </Alert>
+      )}
       <SurveyPreflight surveyConfig={surveyConfig} currentProject={currentProject} />
       <ProjectVersions
         currentProject={currentProject}
         hasUnsavedChanges={hasUnsavedChanges}
         onReleased={onReleased}
       />
+
+      <Card sx={{ mb: 3 }}>
+        <CardContent>
+          <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 2 }}>
+            {t.shareTips}
+          </Typography>
+          <List dense>
+            <ListItem>
+              <ListItemIcon><CheckCircle color="success" fontSize="small" /></ListItemIcon>
+              <ListItemText primary={t.shareTip1Primary} secondary={t.shareTip1Secondary} />
+            </ListItem>
+            <ListItem>
+              <ListItemIcon><CheckCircle color="success" fontSize="small" /></ListItemIcon>
+              <ListItemText primary={t.shareTip2Primary} secondary={t.shareTip2Secondary} />
+            </ListItem>
+            <ListItem>
+              <ListItemIcon><CheckCircle color="success" fontSize="small" /></ListItemIcon>
+              <ListItemText primary={t.shareTip3Primary} secondary={t.shareTip3Secondary} />
+            </ListItem>
+            <ListItem>
+              <ListItemIcon><CheckCircle color="success" fontSize="small" /></ListItemIcon>
+              <ListItemText primary={t.shareTip4Primary} secondary={t.shareTip4Secondary} />
+            </ListItem>
+          </List>
+        </CardContent>
+      </Card>
+
+      <Divider sx={{ my: 3 }} />
+
       <Box sx={{ mb: 4 }}>
-        <AdminPageHeader
-          icon={<Language />}
-          title={t.shareTitle}
-          description={t.shareDescription}
-        />
+        <Typography variant="h6" sx={{ mb: 1 }}>
+          {zh ? '参与者站点' : 'Participant site'}
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          {zh
+            ? '本地 Live Survey 可直接用上方链接。若要部署独立参与者站，请按下列步骤准备文件夹并发布。'
+            : 'The local Live Survey uses the link above. Fold the steps below if you want to deploy a standalone participant site.'}
+        </Typography>
 
         {/* Benefits Overview */}
         <Alert severity="info" sx={{ mb: 3 }}>
           <Typography variant="subtitle2" sx={{ mb: 1 }}>
-            🚀 Why Deploy to Vercel?
+            {zh ? '为何部署到 Vercel？' : 'Why Deploy to Vercel?'}
           </Typography>
           <Typography variant="body2" component="div">
-            • <strong>Free Hosting:</strong> No cost for personal and small projects<br/>
-            • <strong>Automatic Deployments:</strong> Updates deploy automatically from GitHub<br/>
-            • <strong>Global CDN:</strong> Fast loading times worldwide<br/>
-            • <strong>HTTPS Security:</strong> Secure connections by default<br/>
-            • <strong>Custom Domains:</strong> Use your own domain name (optional)
+            {zh ? (
+              <>
+                • <strong>免费托管：</strong>个人和小项目无需费用<br/>
+                • <strong>自动部署：</strong>从 GitHub 推送后自动更新<br/>
+                • <strong>全球 CDN：</strong>各地访问更快<br/>
+                • <strong>HTTPS：</strong>默认加密连接<br/>
+                • <strong>自定义域名：</strong>可选绑定自己的域名
+              </>
+            ) : (
+              <>
+                • <strong>Free Hosting:</strong> No cost for personal and small projects<br/>
+                • <strong>Automatic Deployments:</strong> Updates deploy automatically from GitHub<br/>
+                • <strong>Global CDN:</strong> Fast loading times worldwide<br/>
+                • <strong>HTTPS Security:</strong> Secure connections by default<br/>
+                • <strong>Custom Domains:</strong> Use your own domain name (optional)
+              </>
+            )}
           </Typography>
         </Alert>
 

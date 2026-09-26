@@ -4,6 +4,7 @@ import { saveSurveyConfig, loadSurveyConfig, deleteSurveyConfig, getSavedConfigL
 import { saveProjectToProjectsFolder, loadProjectsFromFiles } from './fileSystemManager';
 import { projectTemplates, getTemplateById } from './projectTemplates';
 import { API_ROOT } from './apiConfig';
+import { hydrateSkillContractSnapshots } from './skillContracts';
 
 // Active project is now stored in sessionStorage (session-only)
 const ACTIVE_PROJECT_KEY = 'active_project_id';
@@ -293,7 +294,8 @@ export const migrateExistingConfig = async () => {
 /** Save project + survey config to local file system (used by auto-save). */
 export const saveProjectFull = async (project, surveyConfig, supabaseConfig = null) => {
   try {
-    const result = await saveProjectToProjectsFolder(project, surveyConfig, supabaseConfig);
+    const frozenConfig = await hydrateSkillContractSnapshots(surveyConfig);
+    const result = await saveProjectToProjectsFolder(project, frozenConfig, supabaseConfig);
     if (!result.success) throw new Error(result.error || 'Save failed');
     return {
       success: true,

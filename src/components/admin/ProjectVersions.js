@@ -31,7 +31,7 @@ export default function ProjectVersions({ currentProject, hasUnsavedChanges, onR
     } catch (e) { if (seq === request.current) setError(e.message); }
     finally { if (seq === request.current) setLoading(false); }
   }, [projectId]);
-  useEffect(() => { load(); return () => { request.current += 1; }; }, [load, currentProject?.draftUpdatedAt, currentProject?.lastModified]);
+  useEffect(() => { load(); return () => { request.current += 1; }; }, [load, currentProject?.draftUpdatedAt]);
   const config = state?.survey_config_draft;
   const validation = validateSurveyConfig(config || {});
   const diff = state && compareRelease(state.survey_config_published, config, state.published_media?.preloadedImages || [], state.preloaded_images || []);
@@ -47,9 +47,7 @@ export default function ProjectVersions({ currentProject, hasUnsavedChanges, onR
       }, { participants: 1 });
       if (seq !== request.current) return;
       if (report.validation.errors.length || report.questions.some((q) => q.missing)) {
-        throw new Error(zh
-          ? '配置错误或媒体不足，不能发布。请先修复分享页试运行报告中的问题。'
-          : 'Configuration errors or missing media prevent release. Fix the Share Survey check first.');
+        throw new Error(zh ? '配置错误或媒体不足，不能发布。请先修复分享页试运行报告中的问题。' : 'Configuration errors or missing media prevent release. Fix the Share Survey check first.');
       }
       setReview(version || { version: null });
     } catch (e) { if (seq === request.current) setError(e.message); }
@@ -74,42 +72,46 @@ export default function ProjectVersions({ currentProject, hasUnsavedChanges, onR
   return <Box sx={{ p: { xs: 2, sm: 3 }, mb: 3, border: '1px solid', borderColor: 'divider', borderRadius: 2 }}>
     <Typography variant="h6">{zh ? '问卷版本管理' : 'Survey versions'}</Typography>
     {loading && <Typography>{zh ? '正在读取版本…' : 'Loading versions…'}</Typography>}
-    {!!error && <Alert severity="error" sx={{ my: 1 }}>{error}</Alert>}
+    {!!error && <Alert severity="error" sx={{ my: 1 }}>{error}<Typography variant="caption" component="p">{zh ? '若提示列或函数不存在，请先应用 research_releases.sql；其他错误请刷新重试。' : 'If a column or function is missing, apply research_releases.sql first. For other errors, refresh and retry.'}</Typography></Alert>}
     <Button onClick={load} disabled={busy || loading}>{zh ? '刷新版本' : 'Refresh versions'}</Button>
     {state && <>
       <Alert severity="info" sx={{ my: 1 }}>{state.release_managed
         ? (zh ? `参与者当前使用本地 v${state.published_version}。保存只更新草稿；发布后请再自行部署参与者站。` : `Participants use local v${state.published_version}. Saving changes the draft; release updates the participant snapshot. You still deploy the participant site yourself.`)
         : (zh ? '尚未启用：保存仍立即影响本地预览与未发布的参与者配置。首次发布后草稿与正式版本分离。' : 'Not enabled: saves still update the live local snapshot. Your first release separates drafts from the participant version.')}</Alert>
-      {hasUnsavedChanges && <Alert severity="warning" sx={{ my: 1 }}>{zh ? '请先保存草稿，再发布。' : 'Save the draft before releasing.'}</Alert>}
-      {validation.errors?.length > 0 && <Alert severity="warning" sx={{ my: 1 }}>{zh ? '草稿校验未通过，不能发布。' : 'Draft validation failed; release is blocked.'}</Alert>}
-      {dirty && <Box sx={{ my: 1 }}>{showDiff(diff || { added: [], changed: [], removed: [], changedDetails: [], mediaAdded: 0, mediaChanged: 0, mediaRemoved: 0, configChanged: false })}</Box>}
-      <Button variant="contained" disabled={busy || hasUnsavedChanges || validation.errors?.length > 0} onClick={() => startReview()}>
-        {zh ? '发布当前草稿' : 'Release current draft'}
+      {diff && showDiff(diff)}
+      {hasUnsavedChanges && <Alert severity="warning">{zh ? '请先保存当前修改，再刷新版本。' : 'Save your current changes, then refresh versions.'}</Alert>}
+      {validation.errors.length > 0 && <Alert severity="warning" sx={{ my: 1 }}>{zh ? '草稿存在配置错误，请先在题目设置中修复。' : 'Fix draft configuration errors in Survey Builder before releasing.'}</Alert>}
+      <Button variant="contained" disabled={busy || loading || hasUnsavedChanges || !dirty || !validation.valid} sx={{ my: 2, minHeight: 44 }} onClick={() => startReview()}>
+        {zh ? (state.release_managed ? '检查并发布草稿' : '启用版本管理并发布') : (state.release_managed ? 'Review and release draft' : 'Enable versions and release')}
       </Button>
-      {versions.length > 0 && <Accordion sx={{ mt: 2 }} expanded={more} onChange={() => setMore((v) => !v)}>
-        <AccordionSummary expandIcon={<ExpandMore />}><Typography>{zh ? '历史版本' : 'Version history'}</Typography></AccordionSummary>
+      {versions.map((v, i) => <Accordion key={v.version} disableGutters>
+        <AccordionSummary expandIcon={<ExpandMore />}><Typography sx={{ overflowWrap: 'anywhere' }}>v{v.version} · {new Date(v.published_at).toLocaleString()} {v.version === state.published_version && state.release_managed ? (zh ? '· 当前正式版' : '· Live') : ''}</Typography></AccordionSummary>
         <AccordionDetails>
-          {versions.map((row) => (
-            <Box key={row.version} sx={{ mb: 1 }}>
-              <Typography variant="body2">v{row.version} · {row.releasedAt}{row.summary ? ` · ${row.summary}` : ''}</Typography>
-              <Button size="small" disabled={busy || hasUnsavedChanges} onClick={() => startReview(row)}>{zh ? '恢复此版本' : 'Restore this version'}</Button>
-            </Box>
-          ))}
+          <Typography>{v.change_summary || (zh ? '未填写版本说明' : 'No release note')}</Typography>
+          {showDiff(compareRelease(versions[i + 1]?.config, v.config, versions[i + 1]?.media_snapshot?.preloadedImages || [], v.media_snapshot?.preloadedImages || []))}
+          <Typography variant="caption" component="p">{versions[i + 1] ? (zh ? '与上一版本比较' : 'Compared with previous version') : (zh ? '当前列表无上一版本，按空白基线显示' : 'No earlier version loaded; compared with an empty baseline')}</Typography>
+          {!v.media_snapshot && <Alert severity="info">{zh ? '历史快照未记录媒体清单，仅可查看，不能完整恢复。' : 'Legacy snapshot has no media manifest; it can be inspected but not fully restored.'}</Alert>}
+          <Button disabled={busy || hasUnsavedChanges || !v.media_snapshot || v.version === state.published_version} onClick={() => startReview(v)} sx={{ mt: 1, minHeight: 44 }}>{zh ? '恢复为新版本…' : 'Restore as new version…'}</Button>
         </AccordionDetails>
-      </Accordion>}
+      </Accordion>)}
+      {more && <Button disabled={busy || loading} onClick={async () => {
+        const seq = request.current; setLoading(true);
+        try { const next = await getProjectReleaseVersions(projectId, versions.length); if (seq === request.current) { setVersions((old) => [...old, ...next]); setMore(next.length === 20); } }
+        catch (e) { if (seq === request.current) setError(e.message); }
+        finally { if (seq === request.current) setLoading(false); }
+      }}>{zh ? '加载更早版本' : 'Load earlier versions'}</Button>}
     </>}
-    <Dialog open={!!review} onClose={() => !busy && setReview(null)} fullWidth>
-      <DialogTitle>{zh ? '确认发布' : 'Confirm release'}</DialogTitle>
+    <Dialog open={!!review} onClose={() => { if (!busy) setReview(null); }} fullWidth maxWidth="sm">
+      <DialogTitle>{zh ? (review?.version ? `恢复 v${review.version} 并发布新版本` : '发布到参与者链接') : (review?.version ? `Restore v${review.version} as a new release` : 'Release to participant link')}</DialogTitle>
       <DialogContent>
-        <Typography sx={{ mb: 2 }}>{review?.version
-          ? (zh ? `将把 v${review.version} 重新发布为参与者快照。` : `This restores v${review.version} as the participant snapshot.`)
-          : (zh ? '发布后，本地 Live Survey 使用该快照。你仍需自行部署参与者站。' : 'After release, the local Live Survey uses this snapshot. You still deploy the participant site yourself.')}</Typography>
-        <TextField fullWidth label={zh ? '版本说明（可选）' : 'Release note (optional)'} value={summary} onChange={(e) => setSummary(e.target.value)} />
+        <Alert severity="warning" sx={{ mb: 2 }}>{zh ? '这会更新新参与者看到的问卷。已经开始的答卷继续使用原有题目与媒体；历史记录会保留。' : 'New participants will receive this version. Started responses keep their existing questions and media; history is retained.'}
+          {!!review?.version && <Typography variant="body2">{zh ? '恢复还会替换当前草稿和媒体分类。' : 'Restoring also replaces the current draft and media organization.'}</Typography>}
+        </Alert>
+        {review?.version && state ? showDiff(compareRelease(config, review.config, state.preloaded_images || [], review.media_snapshot?.preloadedImages || [])) : diff && showDiff(diff)}
+        <TextField fullWidth multiline minRows={2} label={zh ? '版本说明' : 'Release note'} value={summary} onChange={(e) => setSummary(e.target.value)} sx={{ mt: 2 }} />
+        {!!error && <Alert severity="error" sx={{ mt: 1 }}>{error}</Alert>}
       </DialogContent>
-      <DialogActions>
-        <Button onClick={() => setReview(null)} disabled={busy}>{zh ? '取消' : 'Cancel'}</Button>
-        <Button variant="contained" onClick={release} disabled={busy || hasUnsavedChanges}>{zh ? '发布' : 'Release'}</Button>
-      </DialogActions>
+      <DialogActions><Button disabled={busy} onClick={() => setReview(null)}>{zh ? '取消' : 'Cancel'}</Button><Button variant="contained" disabled={busy || hasUnsavedChanges} onClick={release}>{busy ? (zh ? '发布中…' : 'Releasing…') : (zh ? '确认发布' : 'Confirm release')}</Button></DialogActions>
     </Dialog>
   </Box>;
 }

@@ -44,13 +44,8 @@ import {
   MoreVert,
 } from '@mui/icons-material';
 import { themes, createCustomTheme } from './themes/themeConfig';
-import SurveyBuilder from './components/admin/SurveyBuilder';
-import SurveyPreview from './components/admin/SurveyPreview';
-import SystemStatus from './components/admin/SystemStatus';
-import ImageDataset from './components/admin/ImageDataset';
-import WebsiteSetup from './components/admin/WebsiteSetup';
-import ResultsAnalysis from './components/admin/ResultsAnalysis';
-import ResearcherPractice from './components/admin/ResearcherPractice';
+import { persistSliderAliases } from './lib/sliderScale';
+import ConfirmDialog from './components/layout/ConfirmDialog';
 import AdminIntroduction from './components/admin/AdminIntroduction';
 import ProjectSidebar from './components/admin/ProjectSidebar';
 import BackendStatus from './components/admin/BackendStatus';
@@ -80,7 +75,14 @@ import {
 } from './lib/projectManager';
 import { useNavigate } from 'react-router-dom';
 
+const ImageDataset = lazy(() => import('./components/admin/ImageDataset'));
+const SurveyBuilder = lazy(() => import('./components/admin/SurveyBuilder'));
+const SurveyPreview = lazy(() => import('./components/admin/SurveyPreview'));
+const ResultsAnalysis = lazy(() => import('./components/admin/ResultsAnalysis'));
+const ResearcherPractice = lazy(() => import('./components/admin/ResearcherPractice'));
 const SiliconSamples = lazy(() => import('./components/admin/SiliconSamples'));
+const SystemStatus = lazy(() => import('./components/admin/SystemStatus'));
+const WebsiteSetup = lazy(() => import('./components/admin/WebsiteSetup'));
 
 const ADMIN_TABS_VERSION = 2;
 
@@ -187,6 +189,8 @@ function AdminWorkspace() {
   const [siliconEnabled, setSiliconEnabled] = useState(() => isSiliconExperimentalEnabled());
   const [practiceKeepAlive, setPracticeKeepAlive] = useState(false);
   const [siliconKeepAlive, setSiliconKeepAlive] = useState(false);
+  const [builderKeepAlive, setBuilderKeepAlive] = useState(false);
+  const [confirmDialog, setConfirmDialog] = useState(null);
   const [aiSidebarPanel, setAiSidebarPanel] = useState('assistant');
   const handlePracticeSessionActive = useCallback((active) => {
     setPracticeKeepAlive(!!active);
@@ -416,6 +420,7 @@ function AdminWorkspace() {
     const onAgentRunComplete = (event) => {
       if (event?.detail?.projectId && event.detail.projectId !== currentProjectIdRef.current) return;
       setTabValue(2);
+      setBuilderKeepAlive(true);
       syncRemoteDraft();
     };
 
@@ -728,6 +733,7 @@ function AdminWorkspace() {
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
+    if (newValue === 2) setBuilderKeepAlive(true);
     // Also save current project's tab state
     if (currentProject) {
       saveCurrentProjectState({ tabValue: newValue });
@@ -786,7 +792,9 @@ function AdminWorkspace() {
       setSurveyConfig(savedState.surveyConfig);
       setLastSavedConfig(savedState.lastSavedConfig);
       setHasUnsavedChanges(savedState.hasUnsavedChanges);
-      setTabValue(migrateSavedTabValue(savedState));
+      const restoredTab = migrateSavedTabValue(savedState);
+      setTabValue(restoredTab);
+      if (restoredTab === 2) setBuilderKeepAlive(true);
       return true;
     }
     
@@ -978,47 +986,46 @@ function AdminWorkspace() {
   };
 
   const handleCleanLocalStorage = () => {
-    const confirmMessage = 'Clear all temporary editing states?\n\n' +
-      'This will:\n' +
-      '• Clear all project editing states (sessionStorage)\n' +
-      '• Reload the page to start fresh\n\n' +
-      'Your saved projects will NOT be affected.\n\n' +
-      'Continue?';
-    
-    if (!window.confirm(confirmMessage)) {
-      return;
-    }
-    
-    try {
-      // Clear sessionStorage editing states
-      sessionStorage.removeItem('project_editing_states');
-      console.log('✅ Cleared sessionStorage editing states');
-      
-      setSnackbar({
-        open: true,
-        message: 'Session storage cleared. Reloading...',
-        severity: 'success'
-      });
-      
-      // Reload page after a short delay
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    } catch (error) {
-      console.error('❌ Error cleaning session storage:', error);
-      setSnackbar({
-        open: true,
-        message: 'Error clearing session storage: ' + error.message,
-        severity: 'error'
-      });
-    }
+    setConfirmDialog({
+      title: 'Clear editing state',
+      message:
+        'Clear all temporary editing states?\n\n' +
+        'This will:\n' +
+        '• Clear all project editing states (sessionStorage)\n' +
+        '• Reload the page to start fresh\n\n' +
+        'Your saved projects will NOT be affected.',
+      confirmLabel: 'Clear & reload',
+      confirmColor: 'warning',
+      onConfirm: () => {
+        setConfirmDialog(null);
+        try {
+          sessionStorage.removeItem('project_editing_states');
+          console.log('✅ Cleared sessionStorage editing states');
+          setSnackbar({
+            open: true,
+            message: 'Session storage cleared. Reloading...',
+            severity: 'success'
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        } catch (error) {
+          console.error('❌ Error cleaning session storage:', error);
+          setSnackbar({
+            open: true,
+            message: 'Error clearing session storage: ' + error.message,
+            severity: 'error'
+          });
+        }
+      },
+    });
   };
 
   const performSave = useCallback(async ({ silent = false } = {}) => {
     if (!currentProject || saveInFlightRef.current) return { success: false };
 
     const savedState = projectStates[currentProject.id];
-    const latestSurveyConfig = savedState?.surveyConfig || surveyConfig;
+    const latestSurveyConfig = persistSliderAliases(savedState?.surveyConfig || surveyConfig);
 
     if (!latestSurveyConfig) return { success: false };
 
@@ -1603,6 +1610,7 @@ function AdminWorkspace() {
             </TabPanel>
 
             <TabPanel value={tabValue} index={1}>
+              <Suspense fallback={<Typography>{t.loadingProjectSystem}</Typography>}>
               <ImageDataset 
                 currentProject={currentProject}
                 focusRequest={analysisMediaFocus?.projectId === currentProject?.id ? analysisMediaFocus : null}
@@ -1617,10 +1625,12 @@ function AdminWorkspace() {
                 }}
                 onNextStep={handleNextStep}
               />
+              </Suspense>
             </TabPanel>
 
-            <TabPanel value={tabValue} index={2}>
+            <TabPanel value={tabValue} index={2} keepMounted={builderKeepAlive}>
               {surveyConfig ? (
+                <Suspense fallback={<Typography>{t.loadingProjectSystem}</Typography>}>
                 <SurveyBuilder 
                   key={currentProject?.id || 'no-project'}
                   config={surveyConfig} 
@@ -1630,6 +1640,7 @@ function AdminWorkspace() {
                   hideAssistant
                   onOpenAssistant={openAiSidebar}
                 />
+                </Suspense>
               ) : (
                 <Box sx={{ p: 3, textAlign: 'center' }}>
                   <Typography>Loading survey configuration...</Typography>
@@ -1638,24 +1649,29 @@ function AdminWorkspace() {
             </TabPanel>
 
             <TabPanel value={tabValue} index={3}>
+              <Suspense fallback={<Typography>{t.loadingProjectSystem}</Typography>}>
               <SystemStatus
                 surveyConfig={surveyConfig}
                 currentProject={currentProject}
                 onProjectUpdate={handleProjectUpdate}
                 onNextStep={handleNextStep}
               />
+              </Suspense>
             </TabPanel>
 
             <TabPanel value={tabValue} index={4}>
+              <Suspense fallback={<Typography>{t.loadingProjectSystem}</Typography>}>
               <WebsiteSetup
                 currentProject={currentProject}
                 surveyConfig={surveyConfig}
                 hasUnsavedChanges={hasUnsavedChanges}
                 onReleased={() => setSnackbar({ open: true, message: 'Participant snapshot released. Deploy the participant site when you are ready.', severity: 'success' })}
               />
+              </Suspense>
             </TabPanel>
 
             <TabPanel value={tabValue} index={5}>
+              <Suspense fallback={<Typography>{t.loadingProjectSystem}</Typography>}>
               <ResultsAnalysis
                 onOpenMedia={(mediaId) => { setAnalysisMediaFocus({ projectId: currentProject.id, mediaId, token: Date.now() }); goToAdminTab(1); }}
                 currentProject={currentProject}
@@ -1708,14 +1724,17 @@ function AdminWorkspace() {
                   });
                 }}
               />
+              </Suspense>
             </TabPanel>
 
             <TabPanel value={tabValue} index={6} keepMounted={practiceKeepAlive}>
+              <Suspense fallback={<Typography>{t.loadingProjectSystem}</Typography>}>
               <ResearcherPractice
                 currentProject={currentProject}
                 surveyConfig={surveyConfig}
                 onSessionActiveChange={handlePracticeSessionActive}
               />
+              </Suspense>
             </TabPanel>
             {siliconEnabled && (
               <TabPanel value={tabValue} index={7} keepMounted={siliconKeepAlive}>
@@ -1735,7 +1754,9 @@ function AdminWorkspace() {
         </DialogTitle>
         <DialogContent>
           {surveyConfig ? (
-            <SurveyPreview config={surveyConfig} currentProject={currentProject} />
+            <Suspense fallback={<Typography>{t.loadingProjectSystem}</Typography>}>
+              <SurveyPreview config={surveyConfig} currentProject={currentProject} />
+            </Suspense>
           ) : (
             <Typography>{t.noProjectBody}</Typography>
           )}
@@ -1747,6 +1768,16 @@ function AdminWorkspace() {
 
 
       {/* Snackbar for notifications */}
+      <ConfirmDialog
+        open={Boolean(confirmDialog)}
+        title={confirmDialog?.title}
+        message={confirmDialog?.message}
+        confirmLabel={confirmDialog?.confirmLabel}
+        confirmColor={confirmDialog?.confirmColor || 'primary'}
+        onConfirm={() => confirmDialog?.onConfirm?.()}
+        onCancel={() => setConfirmDialog(null)}
+      />
+
       <Snackbar
         open={snackbar.open}
         autoHideDuration={6000}

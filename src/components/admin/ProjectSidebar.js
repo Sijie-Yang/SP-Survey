@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Drawer,
+  useMediaQuery,
   Box,
   Typography,
   List,
@@ -54,6 +55,7 @@ import {
   Search,
   FilterList,
   Code,
+  PushPin,
 } from '@mui/icons-material';
 import { 
   getUserProjects, 
@@ -85,7 +87,8 @@ import {
   findAvailableTemplateId,
 } from '../../lib/templateManager';
 import { isLocalSelfHosted, LOCAL_USER_ID } from '../../lib/appMode';
-import { isR2Configured, deleteImagesFromR2, listImagesFromR2, copyImagesInR2 } from '../../lib/r2';
+import { isR2Configured, deleteImagesFromR2, listImagesFromR2, copyImagesInR2, projectR2Prefix } from '../../lib/r2';
+import { folderFromR2Key, mediaRelativePathFromListing, inferMediaType, sanitizeMediaFolderConfig } from '../../lib/mediaUtils';
 import { useRegion } from '../../contexts/RegionContext';
 import { tf } from '../../contexts/adminI18n';
 
@@ -101,6 +104,7 @@ export default function ProjectSidebar({
   width = 400 
 }) {
   const { t } = useRegion();
+  const narrow = useMediaQuery('(max-width:899px)');
   const [projects, setProjects] = useState([]);
   const [templates, setTemplates] = useState([]);
   const [activeProjectId, setActiveProjectId] = useState(null);
@@ -164,7 +168,7 @@ export default function ProjectSidebar({
   // Template search / filter / sort
   const [templateSearch, setTemplateSearch] = useState('');
   const [templateCategory, setTemplateCategory] = useState('');
-  const [templateSort, setTemplateSort] = useState('name');
+  const [templateSort, setTemplateSort] = useState('year_desc');
 
   useEffect(() => {
     if (isLocalSelfHosted()) {
@@ -442,10 +446,17 @@ export default function ProjectSidebar({
       return [];
     }
 
-    const allCopies = listed.images.map((img) => ({
-      from: img.key,
-      to: `${templatePrefix}${img.name}`,
-    }));
+    const allCopies = listed.images.map((img) => {
+      const rel = mediaRelativePathFromListing(img, projectPrefix);
+      return {
+        from: img.key,
+        to: `${templatePrefix}${rel}`,
+        rel,
+        name: img.name,
+        type: img.type || inferMediaType(img.name),
+        folder: folderFromR2Key(img.key, projectPrefix) || img.folder || '',
+      };
+    });
     const total = allCopies.length;
     onProgress?.({ current: 0, total });
 
@@ -468,11 +479,18 @@ export default function ProjectSidebar({
       console.warn(`⚠️ ${errors.length} image(s) failed to copy to template:`, errors);
     }
     // Build the preloadedImages payload from successful copies.
-    return copied.map(({ to, url }) => ({
-      url: url || '',
-      name: to.split('/').pop(),
-      key: to,
-    }));
+    const metaByTo = new Map(allCopies.map((c) => [c.to, c]));
+    return copied.map(({ to, url }) => {
+      const meta = metaByTo.get(to) || {};
+      return {
+        url: url || '',
+        name: meta.name || to.split('/').pop(),
+        key: to,
+        type: meta.type || 'image',
+        folder: meta.folder || '',
+        media_id: to,
+      };
+    });
   };
 
   const confirmSaveAsTemplate = async () => {
@@ -556,6 +574,7 @@ export default function ProjectSidebar({
         preloadedImages: templateImages,
         preloadedAt: templateImages.length > 0 ? new Date().toISOString() : null,
         preloadedSource: templateImages.length > 0 ? 'supabase' : null,
+        imageDatasetConfig: sanitizeMediaFolderConfig(projectToTemplate.imageDatasetConfig || {}),
       };
 
       setTemplateProgress({ label: 'Saving template…', current: 0, total: 0 });
@@ -699,33 +718,12 @@ export default function ProjectSidebar({
     try {
       // ── Supabase Storage cleanup ──────────────────────────────────────
       if (isR2Configured()) {
-        const keysToDelete = new Set();
-
-        // 1. Keys from preloadedImages metadata
-        if (deletingProject.preloadedImages?.length > 0) {
-          for (const img of deletingProject.preloadedImages) {
-            if (img.key) keysToDelete.add(img.key);
-            else if (img.url) {
-              try {
-                const u = new URL(img.url);
-                const parts = u.pathname.split('/storage/v1/object/public/survey-images/');
-                if (parts[1]) keysToDelete.add(decodeURIComponent(parts[1]));
-              } catch (_) { /* ignore */ }
-            }
-          }
-        }
-
-        // 2. All objects under the project prefix in Supabase Storage
+        const prefix = projectR2Prefix(currentUserId || 'anonymous', deletingProject.id);
         setDeleteProgress({ label: 'Listing project images…', current: 0, total: 0 });
-        const prefix = `${currentUserId || 'anonymous'}/${deletingProject.id}/`;
         const listResult = await listImagesFromR2(prefix);
-        if (listResult.success) {
-          for (const img of listResult.images) keysToDelete.add(img.key);
-        }
-
-        // Batch the delete so the bar advances smoothly instead of waiting
-        // for the worker to chew through hundreds of keys in one request.
-        const keys = [...keysToDelete];
+        const keys = (listResult.success ? listResult.images : [])
+          .map((img) => img.key)
+          .filter((key) => key && key.startsWith(prefix));
         const total = keys.length;
         if (total > 0) {
           setDeleteProgress({
@@ -736,7 +734,7 @@ export default function ProjectSidebar({
           const BATCH_SIZE = 50;
           for (let i = 0; i < total; i += BATCH_SIZE) {
             const batch = keys.slice(i, i + BATCH_SIZE);
-            await deleteImagesFromR2(batch);
+            await deleteImagesFromR2(batch, { allowedPrefix: prefix });
             const done = Math.min(i + batch.length, total);
             setDeleteProgress({
               label: `Deleting images from Supabase… (${done}/${total})`,
@@ -823,12 +821,12 @@ export default function ProjectSidebar({
         anchor="left"
         open={open}
         onClose={onClose}
-        variant="persistent"
+        variant={narrow ? 'temporary' : 'persistent'}
         sx={{
-          width: width,
+          width: narrow ? 'min(400px, 100vw)' : width,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
-            width: width,
+            width: narrow ? 'min(400px, 100vw)' : width,
             boxSizing: 'border-box',
             top: '64px', // Below AppBar
             height: 'calc(100vh - 64px)',
@@ -927,6 +925,8 @@ export default function ProjectSidebar({
                     return matchSearch && matchCat;
                   });
                   list = [...list].sort((a, b) => {
+                    const pinDiff = Number(!!b.is_pinned) - Number(!!a.is_pinned);
+                    if (pinDiff) return pinDiff;
                     if (templateSort === 'name')      return (a.name || '').localeCompare(b.name || '');
                     if (templateSort === 'name_desc') return (b.name || '').localeCompare(a.name || '');
                     if (templateSort === 'year_desc') return (b.year || '').localeCompare(a.year || '');
@@ -956,7 +956,9 @@ export default function ProjectSidebar({
                           '&:hover': {
                             bgcolor: 'grey.100',
                           },
-                          bgcolor: isUserTemplate(template) ? 'primary.50' : 'transparent',
+                          bgcolor: template.is_pinned
+                            ? 'warning.50'
+                            : isUserTemplate(template) ? 'primary.50' : 'transparent',
                         }}
                         onClick={() => {
                           setSelectedTemplate(template);
@@ -967,7 +969,9 @@ export default function ProjectSidebar({
                         }}
                       >
                         <ListItemIcon sx={{ minWidth: 28, minHeight: 'unset' }}>
-                          {getTemplateIcon(template.category)}
+                          {template.is_pinned
+                            ? <PushPin sx={{ fontSize: 18, color: 'warning.main', transform: 'rotate(45deg)' }} />
+                            : getTemplateIcon(template.category)}
                         </ListItemIcon>
                         <ListItemText
                           primary={
@@ -975,6 +979,15 @@ export default function ProjectSidebar({
                               <Typography variant="body2" sx={{ fontSize: '0.875rem', lineHeight: 1.3 }}>
                                 {template.name}
                               </Typography>
+                              {template.is_pinned && (
+                                <Chip
+                                  label="Pinned"
+                                  size="small"
+                                  color="warning"
+                                  variant="outlined"
+                                  sx={{ height: 16, fontSize: '0.6rem', '& .MuiChip-label': { px: 0.5 } }}
+                                />
+                              )}
                               {/* Show "Pending Review" badge for user's own pending templates */}
                               {false && !template.is_approved && template.user_id === currentUserId && (
                                 <Chip
