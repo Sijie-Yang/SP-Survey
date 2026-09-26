@@ -558,11 +558,10 @@ export default function SurveyApp() {
                     let result;
                     const elementTrialCount = getTrialCount(element);
                     
-                    // PRIORITY 1: Project media, else platform preview library (same as Admin Preview)
+                    // Self-hosted Live Survey uses the project's Media Dataset only.
                     if (mediaPool.length > 0) {
                       console.log(
-                        `📦 Using media pool (${mediaPool.length} available`
-                        + `${fromPreviewLibrary ? ', preview library' : ', project'})`,
+                        `📦 Using project media pool (${mediaPool.length} available)`,
                       );
                       const pool = filterPoolForQuestion(mediaPool, element);
                       const folderTags = resolveMediaFolderTags(projectData, projectData?.config);
