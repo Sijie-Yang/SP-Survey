@@ -213,10 +213,26 @@ export async function deleteSkill(id) {
   return { success: true };
 }
 
+async function loadSkillFromPublic(id) {
+  try {
+    const res = await fetch(`/skills/${encodeURIComponent(id)}.json`);
+    if (!res.ok) return null;
+    return rowToSkill(await res.json());
+  } catch (error) {
+    return null;
+  }
+}
+
 export async function getSkillById(id, revision = null) {
   if (!id) return null;
-  const skills = await apiListSkills();
-  const skill = skills.find((s) => s.id === id) || null;
+  let skill = null;
+  try {
+    const skills = await apiListSkills();
+    skill = skills.find((s) => s.id === id) || null;
+  } catch (error) {
+    skill = null;
+  }
+  if (!skill) skill = await loadSkillFromPublic(id);
   if (!skill) return null;
   const current = Number(skill.currentRevision) || 1;
   if (revision == null || Number(revision) === current) {

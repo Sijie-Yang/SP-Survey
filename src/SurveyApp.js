@@ -17,6 +17,11 @@ import { surveyJson, displayedImages } from './config/questions';
 import { surveyConfig } from './config/surveyConfig';
 import { themeJson } from "./theme";
 import { loadSurveyConfig, convertToSurveyJS, generateCustomTheme, normalizeBuilderSurveyJson } from './lib/surveyStorage';
+import {
+  deploymentConfig,
+  getPreloadedImages,
+  isDeployedParticipant,
+} from './config/deploymentConfig';
 import registerImageRankingWidget, {
   registerImageRatingWidget, registerImageBooleanWidget, registerImageMatrixWidget,
   registerAllExtendedWidgets, captureSkillPreviewAnswers,
@@ -389,19 +394,40 @@ export default function SurveyApp() {
 
       console.log('📂 Loading survey for project:', projectId);
 
+      const deployed = typeof isDeployedParticipant === 'function'
+        ? isDeployedParticipant()
+        : !!deploymentConfig;
+
       // Load project object (including Supabase configuration)
       let projectData = null;
-      try {
-        const { getParticipantProject } = await import('./lib/projectManager');
-        projectData = await getParticipantProject(projectId);
-
-      } catch (error) {
-        console.error('❌ Error loading project data:', error);
-        if (isSupabaseConfigured()) throw error;
+      let adminConfig = null;
+      if (deployed && deploymentConfig) {
+        const snapshot = JSON.parse(JSON.stringify(deploymentConfig));
+        if (snapshot.id && projectId === 'default') {
+          projectIdRef.current = snapshot.id;
+        }
+        adminConfig = snapshot;
+        projectData = {
+          id: snapshot.id || projectIdRef.current,
+          name: snapshot.name || snapshot.title,
+          preloadedImages: Array.isArray(snapshot.preloadedImages) && snapshot.preloadedImages.length
+            ? snapshot.preloadedImages
+            : getPreloadedImages(),
+          mediaFolderTags: snapshot.mediaFolderTags || {},
+          imageDatasetConfig: { mediaFolderTags: snapshot.mediaFolderTags || {} },
+          _surveyConfig: snapshot,
+          publishedVersion: snapshot.publishedVersion || 0,
+        };
+      } else {
+        try {
+          const { getParticipantProject } = await import('./lib/projectManager');
+          projectData = await getParticipantProject(projectId);
+        } catch (error) {
+          console.error('❌ Error loading project data:', error);
+          if (isSupabaseConfigured()) throw error;
+        }
+        adminConfig = projectData?._surveyConfig || await loadSurveyConfig(projectId, { live: true });
       }
-      
-      // Load survey configuration (platform mode: Supabase, self-hosted: local server)
-      const adminConfig = projectData?._surveyConfig || await loadSurveyConfig(projectId);
       setCompletionMessage(adminConfig?.completionMessage || '');
 
       setLiveClosedMessage(null);
@@ -424,9 +450,9 @@ export default function SurveyApp() {
       setLoadingMessage('Preparing questions and media…');
       pairStatsRef.current = await withTimeout(fetchPairStats(projectId), 8000, null);
       
-      // Build runtime Supabase config from project sources.
-      // Priority: project.supabaseConfig (legacy/system status) -> imageDatasetConfig (current UI flow)
-      const runtimeSupabaseConfig = (() => {
+      // Build runtime Supabase config from project sources on the local researcher machine only.
+      // The deployed participant site uses REACT_APP_SUPABASE_URL + REACT_APP_SUPABASE_ANON_KEY.
+      const runtimeSupabaseConfig = deployed ? null : (() => {
         if (projectData?.supabaseConfig?.enabled && projectData?.supabaseConfig?.url && projectData?.supabaseConfig?.secretKey) {
           return {
             enabled: true,
@@ -626,7 +652,7 @@ export default function SurveyApp() {
                       }
                     }
                     // PRIORITY 2: Hugging Face dataset (optional; never block survey forever)
-                    else if (projectData?.imageDatasetConfig?.enabled && projectData.imageDatasetConfig.datasetName) {
+                    else if (!deployed && projectData?.imageDatasetConfig?.enabled && projectData.imageDatasetConfig.datasetName) {
                       const defaultCount = (element.type === 'imagerating' || element.type === 'imagematrix' || element.type === 'imageboolean' || element.type === 'imagecheckbox' || element.type === 'image' || element.type === 'imageslidergroup' || element.type === 'imagepointallocation') ? 1 : 4;
                       const imageCount = element.imageCount || defaultCount;
                       console.log(`📥 Fetching ${imageCount} images from Hugging Face dataset (global config): ${projectData.imageDatasetConfig.datasetName}`);
@@ -646,7 +672,7 @@ export default function SurveyApp() {
                       }
                     }
                     // PRIORITY 3: Legacy - element-specific config (kept for backward compatibility)
-                    else if (element.imageSource === 'huggingface' && element.huggingFaceConfig) {
+                    else if (!deployed && element.imageSource === 'huggingface' && element.huggingFaceConfig) {
                       const defaultCount = (element.type === 'imagerating' || element.type === 'imagematrix' || element.type === 'imageboolean' || element.type === 'imagecheckbox' || element.type === 'image' || element.type === 'imageslidergroup' || element.type === 'imagepointallocation') ? 1 : 4;
                       const imageCount = element.imageCount || defaultCount;
                       console.log(`📥 [Legacy] Fetching ${imageCount} images from element config: ${element.huggingFaceConfig.datasetName}`);
@@ -664,7 +690,7 @@ export default function SurveyApp() {
                         console.warn(`Hugging Face dataset name missing for question: ${element.name}`);
                         continue;
                       }
-                    } else if (element.supabaseConfig) {
+                    } else if (!deployed && element.supabaseConfig) {
                       // Load from Supabase (default/legacy behavior)
                       const { getAllImagesFromSupabase } = await import('./lib/supabase');
                       const { createClient } = await import('@supabase/supabase-js');

@@ -222,6 +222,40 @@ export const getUserProjects = async () => {
   }
 };
 
+// Live / deployed participant view: released snapshot when version-managed.
+export const getParticipantProject = async (projectId) => {
+  try {
+    const response = await fetch(`${API_ROOT}/projects/${projectId}`);
+    const data = await response.json();
+    if (!data.success || !data.project) return null;
+    const surveyConfig = (data.releaseManaged && data.publishedSurveyConfig)
+      ? data.publishedSurveyConfig
+      : data.surveyConfig;
+    const publishedMedia = data.publishedMedia || {};
+    return {
+      ...data.project,
+      _surveyConfig: surveyConfig,
+      preloadedImages: publishedMedia.preloadedImages
+        || surveyConfig?.preloadedImages
+        || data.project.preloadedImages
+        || [],
+      imageDatasetConfig: {
+        ...(data.project.imageDatasetConfig || {}),
+        mediaFolderTags: publishedMedia.imageDatasetConfig?.mediaFolderTags
+          || data.project.imageDatasetConfig?.mediaFolderTags
+          || {},
+      },
+      savedAt: data.savedAt || null,
+      draftUpdatedAt: data.draftUpdatedAt || data.savedAt || null,
+      releaseManaged: !!data.releaseManaged,
+      publishedVersion: data.publishedVersion || 0,
+    };
+  } catch (error) {
+    console.error('Error getting participant project:', error);
+    return null;
+  }
+};
+
 // ✅ getProjectById now fetches from API
 export const getProjectById = async (projectId) => {
   try {

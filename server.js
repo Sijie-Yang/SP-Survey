@@ -317,18 +317,16 @@ app.post('/api/create-deployment', async (req, res) => {
     // Ensure deployment folder exists
     await fs.ensureDir(deploymentPath);
     
-    // Copy source files (excluding admin components and original SurveyApp)
+    // Copy source files (excluding admin). Participant mounts the real SurveyApp.
     const srcPath = path.join(__dirname, 'src');
     const publicPath = path.join(__dirname, 'public');
     
     if (await fs.pathExists(srcPath)) {
       await fs.copy(srcPath, path.join(deploymentPath, 'src'), {
         filter: (src) => {
-          // Exclude admin-related files and original SurveyApp (using SurveyAppClean instead)
           const relativePath = path.relative(srcPath, src);
           const excludePaths = [
             'AdminApp.js',
-            'SurveyApp.js',
             'components/admin'
           ];
           return !excludePaths.some(excludePath => relativePath.includes(excludePath));

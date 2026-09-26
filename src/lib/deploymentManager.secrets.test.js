@@ -7,6 +7,7 @@ import {
   generateDeploymentFiles,
   isPrivilegedSupabaseKey,
   prepareDeploymentFolder,
+  resolveParticipantSourceConfig,
 } from './deploymentManager';
 
 const base64Url = (value) => Buffer.from(JSON.stringify(value)).toString('base64')
@@ -192,6 +193,47 @@ describe('participant deployment never ships credentials', () => {
     expect(lines).toEqual(expect.arrayContaining(['.env*', '!.env.example', 'public/projects/', 'public/responses/', '.backups/']));
     expect(files['.env']).not.toMatch(/HUGGINGFACE/);
     expect(files['.env.example']).not.toMatch(/HUGGINGFACE/);
+  });
+
+  test('participant App mounts SurveyApp and keeps extra Live Survey fields without secrets', async () => {
+    const project = {
+      ...buildProjectWithSecrets(),
+      releaseManaged: true,
+      publishedVersion: 3,
+      locale: 'zh',
+      completionMessage: '谢谢参与',
+      responseQuota: 40,
+      mediaFolderTags: { 'set-a': 'category' },
+      publishedSurveyConfig: {
+        title: 'Released street perception',
+        locale: 'zh',
+        completionMessage: '谢谢参与',
+        responseQuota: 40,
+        pages: [{ name: 'page1', elements: [{ type: 'imagerating', name: 'safety', randomImageSelection: true, imageCount: 1 }] }],
+      },
+    };
+    const files = await generateDeploymentFiles({
+      projectName: 'probe',
+      timestamp: '2026-01-01T00:00:00.000Z',
+      config: project,
+    });
+    expect(files['src/SurveyAppClean.js']).toBeUndefined();
+    expect(files['src/App.js']).toContain('import SurveyApp from "./SurveyApp"');
+    expect(files['src/App.js']).not.toContain('SurveyAppClean');
+    const config = readDeploymentConfig(files);
+    expect(config.completionMessage).toBe('谢谢参与');
+    expect(config.responseQuota).toBe(40);
+    expect(config.mediaFolderTags).toEqual({ 'set-a': 'category' });
+    expect(config.locale).toBe('zh');
+    expect(config.publishedVersion).toBe(3);
+    expect(JSON.stringify(config)).not.toContain(SECRETS.serviceRole);
+    expect(JSON.stringify(config)).not.toContain(SECRETS.huggingFace);
+
+    const resolved = resolveParticipantSourceConfig(project);
+    expect(resolved.title).toBe('Released street perception');
+    expect(resolved.pages[0].elements[0].name).toBe('safety');
+    expect(resolved.mediaFolderTags).toEqual({ 'set-a': 'category' });
+    expect(resolved.publishedVersion).toBe(3);
   });
 
   test('HuggingFace-fetched media replaces the project pool without carrying the token', () => {

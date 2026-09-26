@@ -200,10 +200,12 @@ Return to SP-Survey, check the connection and table status, then submit a test r
 
 ### 7. Generate and deploy the participant website
 
+The participant package is a production build of the same **SurveyApp** used for local Live Survey. It embeds the **released snapshot** (widgets, locale, trials, skills, annotation, set/category sampling, recoverable submit, version stamps, and per-trial category). Only the Supabase URL and anon key are written into the package — never the `service_role` key, Hugging Face tokens, or other researcher credentials.
+
 Open **Step 4 - Website Deployment**:
 
-1. Click **Prepare Deployment Folder**.
-2. Click **Test Build** and open the generated preview.
+1. Release the draft first (Save updates the draft only). Prepare Deployment Folder then bakes that released snapshot.
+2. Click **Test Build** and open the generated preview. Confirm the survey matches local Live Survey.
 3. Create an empty GitHub repository for this participant deployment.
 4. Enter that repository URL and click **Upload to GitHub**, or push the generated folder manually.
 5. In Vercel, create a project by importing that GitHub repository.
@@ -216,7 +218,7 @@ REACT_APP_SUPABASE_ANON_KEY=your-anon-key
 
 Do not add the `service_role` key to GitHub or Vercel. Deploy or redeploy after saving the environment variables.
 
-Open the deployed `/survey` page, complete the survey once, and confirm the new row in **Supabase → Table Editor → survey_responses**. Test the final participant URL before distributing it.
+Open the deployed site (`/` or `/survey`, optional `?locale=zh`), complete the survey once, and confirm the new row in **Supabase → Table Editor → survey_responses**. Test English and Chinese before distributing the URL.
 
 ### 8. Analyze responses
 
