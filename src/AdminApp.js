@@ -65,6 +65,7 @@ import { isSupabaseConfigured } from './lib/supabase';
 import { isLocalSelfHosted } from './lib/appMode';
 import { API_ROOT } from './lib/apiConfig';
 import { loadSurveyConfig } from './lib/surveyStorage';
+import { isUsableSurveyConfig } from './lib/designProtocol/validate';
 import { demoSurveyConfig } from './lib/demoConfig';
 import {
   migrateExistingConfig,
@@ -347,6 +348,20 @@ function AdminWorkspace() {
   }, [currentProject?.draftUpdatedAt, currentProject?.savedAt, currentProject?.id, hasUnsavedChanges]);
 
   useEffect(() => {
+    if (!currentProject?.id || isUsableSurveyConfig(surveyConfig)) return undefined;
+    const fallback = currentProject._surveyConfig;
+    if (isUsableSurveyConfig(fallback)) {
+      setSurveyConfig(fallback);
+      return undefined;
+    }
+    let cancelled = false;
+    loadSurveyConfig(currentProject.id).then((config) => {
+      if (!cancelled && isUsableSurveyConfig(config)) setSurveyConfig(config);
+    });
+    return () => { cancelled = true; };
+  }, [currentProject?.id, currentProject?._surveyConfig, surveyConfig]);
+
+  useEffect(() => {
     if (!currentProject?.id) return undefined;
 
     const applyRemoteDraft = (latest) => {
@@ -547,8 +562,10 @@ function AdminWorkspace() {
         
         if (!stateRestored) {
           // If no saved state, load from file
-          const config = await loadSurveyConfig(migratedProject.id);
-          setSurveyConfig(config || demoSurveyConfig);
+          const config = await loadSurveyConfig(migratedProject.id)
+            || migratedProject._surveyConfig
+            || demoSurveyConfig;
+          setSurveyConfig(config);
         }
         
         setSnackbar({ 
@@ -568,10 +585,13 @@ function AdminWorkspace() {
           const stateRestored = restoreProjectState(activeProject.id);
           
           if (!stateRestored) {
-            // If no saved state, load from file
-            const config = await loadSurveyConfig(activeProject.id);
-            setSurveyConfig(config || demoSurveyConfig);
-            setTabValue(0); // Default to first tab
+            // If no saved state, load from file. Keep a restored tab from a
+            // poisoned session (surveyConfig was null) instead of jumping home.
+            const config = await loadSurveyConfig(activeProject.id)
+              || activeProject._surveyConfig
+              || demoSurveyConfig;
+            setSurveyConfig(config);
+            setLastSavedConfig(JSON.parse(JSON.stringify(config)));
           }
           // If state was restored, tabValue is already set by restoreProjectState
         } else {
@@ -735,7 +755,7 @@ function AdminWorkspace() {
     setTabValue(newValue);
     if (newValue === 2) setBuilderKeepAlive(true);
     // Also save current project's tab state
-    if (currentProject) {
+    if (currentProject && isUsableSurveyConfig(surveyConfig)) {
       saveCurrentProjectState({ tabValue: newValue });
     }
   };
@@ -743,7 +763,7 @@ function AdminWorkspace() {
   const handleNextStep = () => {
     const nextTab = Math.min(tabValue + 1, 5); // Through Results (index 5); Practice is optional
     setTabValue(nextTab);
-    if (currentProject) {
+    if (currentProject && isUsableSurveyConfig(surveyConfig)) {
       saveCurrentProjectState({ tabValue: nextTab });
     }
     // Smooth scroll to top
@@ -753,14 +773,27 @@ function AdminWorkspace() {
   // Save current project's state
   const saveCurrentProjectState = (updates = {}) => {
     if (!currentProject) return;
-    
+    const previous = loadProjectStatesFromStorage()[currentProject.id] || projectStates[currentProject.id] || {};
+    const nextConfig = isUsableSurveyConfig(updates.surveyConfig)
+      ? updates.surveyConfig
+      : (isUsableSurveyConfig(surveyConfig) ? surveyConfig : previous.surveyConfig);
+    const nextSaved = isUsableSurveyConfig(updates.lastSavedConfig)
+      ? updates.lastSavedConfig
+      : (isUsableSurveyConfig(lastSavedConfig) ? lastSavedConfig : previous.lastSavedConfig);
+    if (!isUsableSurveyConfig(nextConfig) && !isUsableSurveyConfig(previous.surveyConfig)) {
+      return;
+    }
+
     const currentState = {
-      surveyConfig,
-      lastSavedConfig,
+      ...previous,
+      surveyConfig: nextConfig,
+      lastSavedConfig: nextSaved,
       hasUnsavedChanges,
       tabValue,
       adminTabsVersion: ADMIN_TABS_VERSION,
-      ...updates
+      ...updates,
+      surveyConfig: nextConfig,
+      lastSavedConfig: nextSaved,
     };
     
     const newStates = {
@@ -784,6 +817,13 @@ function AdminWorkspace() {
     if (savedState) {
       if (onlyWhenUnsaved && !savedState.hasUnsavedChanges) {
         console.log('🔍 Skip restore for clean state, load fresh from file:', projectId);
+        return false;
+      }
+      if (!isUsableSurveyConfig(savedState.surveyConfig)) {
+        console.log('🔍 Skip restore of empty surveyConfig, load fresh from file:', projectId);
+        if (typeof savedState.tabValue === 'number') {
+          setTabValue(migrateSavedTabValue(savedState));
+        }
         return false;
       }
       console.log('🔍 Restoring project state for:', projectId, savedState);

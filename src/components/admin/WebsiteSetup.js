@@ -48,6 +48,7 @@ import ProjectVersions from './ProjectVersions';
 import SurveyQrCode from './SurveyQrCode';
 import { getProjectReleaseState } from '../../lib/projectRelease';
 import { validateSurveyConfig } from '../../lib/designProtocol/validate';
+import { surveyValidationText } from '../../contexts/questionEditorI18n';
 import { getTrialCount } from '../../lib/trialNavigation';
 
 export default function WebsiteSetup({ currentProject, surveyConfig, hasUnsavedChanges = false, onReleased }) {
@@ -1203,7 +1204,7 @@ git push -u origin main`}
           </Typography>
         )}
         {issues.slice(0, 5).map((issue, i) => (
-          <Typography key={i} variant="body2">• {issue.message}</Typography>
+          <Typography key={i} variant="body2">• {surveyValidationText(issue.message, language)}</Typography>
         ))}
       </Alert>
       {hasUnsavedChanges && (

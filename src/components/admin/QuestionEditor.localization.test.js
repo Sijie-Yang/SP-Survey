@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import QuestionEditor from './QuestionEditor';
 import { RegionProvider, useRegion } from '../../contexts/RegionContext';
-import { questionSettingErrorText } from '../../contexts/questionEditorI18n';
+import { questionSettingErrorText, surveyValidationText } from '../../contexts/questionEditorI18n';
 
 jest.mock('../../lib/skillManager', () => ({ listSkillsForBuilder: () => Promise.resolve([]) }));
 jest.mock('./QuestionParticipantPreview', () => () => <div>预览</div>);
@@ -121,4 +121,10 @@ test('validation explains invalid scales in Chinese and preserves duplicate IDs 
   expect(screen.getByRole('button', { name: '量表最小值必须小于最大值。' })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: '保存题目' })).toBeDisabled();
   expect(questionSettingErrorText('choices: duplicate ID "original_id".', 'zh')).toBe('选项中存在重复标识“original_id”。');
+});
+
+test('Share validation messages translate the raw surveyConfig object error', () => {
+  expect(surveyValidationText('surveyConfig must be an object.', 'zh')).toBe('问卷配置无效或尚未加载。');
+  expect(surveyValidationText('surveyConfig must be an object.', 'en')).toBe('surveyConfig must be an object.');
+  expect(surveyValidationText('The survey has no pages.', 'zh')).toBe('问卷还没有页面。');
 });

@@ -450,6 +450,30 @@ function settingName(path) {
     return match ? `第 ${Number(match[2]) + 1} 个${settingNames[match[1]] || match[1]}` : (settingNames[part] || part);
   }).join('的');
 }
+export function surveyValidationText(message, language) {
+  if (!message) return '';
+  if (language !== 'zh') return message;
+  const fixed = {
+    'surveyConfig must be an object.': '问卷配置无效或尚未加载。',
+    'pages must be an array.': '问卷页必须是数组。',
+    'The survey has no pages.': '问卷还没有页面。',
+    'Each page must be an object.': '每一页都必须是对象。',
+    'Page name is recommended.': '建议填写页面名称。',
+    'elements must be an array.': '题目列表必须是数组。',
+    'Page has no questions.': '这一页还没有题目。',
+    'Each element must be an object.': '每一道题都必须是对象。',
+    'Question type is required.': '题目类型为必填。',
+    'Question name is required.': '题目名称为必填。',
+    'Invalid survey configuration.': '问卷配置无效。',
+  };
+  if (fixed[message]) return fixed[message];
+  const duplicate = message.match(/^Duplicate question name; first used at (.+)\.$/);
+  if (duplicate) return `题目名称重复；首次出现在 ${duplicate[1]}。`;
+  const unknownType = message.match(/^Question type "(.+)" is not in the canonical platform schema\.$/);
+  if (unknownType) return `题目类型“${unknownType[1]}”不在当前平台规范中。`;
+  return questionSettingErrorText(message, language);
+}
+
 export function questionSettingErrorText(message, language) {
   if (language !== 'zh') return message;
   const patterns = [

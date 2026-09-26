@@ -82,12 +82,16 @@ export function validateQuestionSettings(q) {
   return errors;
 }
 
+export function isUsableSurveyConfig(surveyConfig) {
+  return Boolean(surveyConfig && typeof surveyConfig === 'object' && !Array.isArray(surveyConfig));
+}
+
 export function validateSurveyConfig(surveyConfig, options = {}) {
   const errors = [];
   const warnings = [];
   let questionCount = 0;
 
-  if (!surveyConfig || typeof surveyConfig !== 'object' || Array.isArray(surveyConfig)) {
+  if (!isUsableSurveyConfig(surveyConfig)) {
     return {
       valid: false,
       errors: [structuredIssue({ path: 'surveyConfig', message: 'surveyConfig must be an object.' })],
