@@ -7,6 +7,7 @@ const cors = require('cors');
 const OpenAI = require('openai');
 const { resolveAiRequest, aiChat, formatAiError } = require('./aiClient');
 const { registerAgentProjectApi } = require('./src/server/agentProjectApi');
+const { copyParticipantPublicAssets } = require('./src/server/deploymentPublicFilter');
 
 // Import multi-agent review system
 const {
@@ -211,7 +212,10 @@ app.post('/api/create-deployment', async (req, res) => {
     }
     
     if (await fs.pathExists(publicPath)) {
-      await fs.copy(publicPath, path.join(deploymentPath, 'public'));
+      const skipped = await copyParticipantPublicAssets(fs, publicPath, path.join(deploymentPath, 'public'));
+      if (skipped.length > 0) {
+        console.log(`🔒 Excluded ${skipped.length} local-only public entries from deployment`);
+      }
     }
     
     // Write deployment-specific files (this will overwrite src/App.js with survey-only version)

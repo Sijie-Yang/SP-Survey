@@ -1,26 +1,6 @@
 const path = require('path');
 const crypto = require('crypto');
-
-const SECRET_FIELDS = new Set([
-  'supabaseconfig',
-  'supabasekey',
-  'supabaseanonkey',
-  'servicerolekey',
-  'anonkey',
-  'huggingfacetoken',
-  'falapikey',
-  'falkey',
-  'openaiapikey',
-  'openrouterapikey',
-  'apikey',
-  'accesstoken',
-  'accesskeyid',
-  'secretkey',
-  'secretaccesskey',
-  'password',
-]);
-
-const isSecretField = (key) => SECRET_FIELDS.has(String(key).toLowerCase());
+const { isSecretField, stripSecretFields, findSecretFields } = require('../lib/secretFields');
 
 const isSafeProjectId = (projectId) => /^[A-Za-z0-9_-]+$/.test(String(projectId || ''));
 
@@ -31,25 +11,7 @@ const isLoopbackAddress = (address) => {
     || value === '::ffff:127.0.0.1';
 };
 
-const sanitizeForAgent = (value) => {
-  if (Array.isArray(value)) return value.map(sanitizeForAgent);
-  if (!value || typeof value !== 'object') return value;
-  return Object.entries(value).reduce((cleaned, [key, child]) => {
-    if (!isSecretField(key)) cleaned[key] = sanitizeForAgent(child);
-    return cleaned;
-  }, {});
-};
-
-const findSecretFields = (value, currentPath = '') => {
-  if (Array.isArray(value)) {
-    return value.flatMap((child, index) => findSecretFields(child, `${currentPath}[${index}]`));
-  }
-  if (!value || typeof value !== 'object') return [];
-  return Object.entries(value).flatMap(([key, child]) => {
-    const childPath = currentPath ? `${currentPath}.${key}` : key;
-    return isSecretField(key) ? [childPath] : findSecretFields(child, childPath);
-  });
-};
+const sanitizeForAgent = stripSecretFields;
 
 // Keep credentials already stored locally when an agent replaces surveyConfig.
 const restoreStoredSecrets = (incoming, stored) => {
