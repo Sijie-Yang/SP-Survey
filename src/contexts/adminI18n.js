@@ -169,7 +169,7 @@ export const adminI18n = {
       'Open the AI sidebar and describe the topic and study design. The Assistant edits the current project draft with conflict-safe operations.',
     introFlow3Title: 'Add media if you skipped it',
     introFlow3Body:
-      'For images/video/audio, use a template, the project Media Dataset, or Admin Preview Media Library. Do not generate synthetic media for upload. For set/category modes, tag folders as set or category.',
+      'For images/video/audio, upload files or import from Hugging Face on the Media tab. Do not generate synthetic media for upload. For set/category modes, tag folders as set or category.',
     introFlow4Title: 'Release and collect responses',
     introFlow4Body:
       'Review the draft in Share Survey and release it explicitly. Legacy projects remain live-on-save only until their first release.',
@@ -185,13 +185,10 @@ export const adminI18n = {
     // Media Dataset
     mediaTitle: 'Media Dataset',
     mediaDescription:
-      'Add media, organize it in folders, then tag folders as set or category for survey assignment. Files are stored on Cloudflare R2.',
+      'Add media, organize it in folders, then tag folders as set or category for survey assignment. Files are stored in your Supabase Storage bucket.',
     mediaAddSection: '1 · Add media',
     mediaOrganizeSection: '2 · Organize in folders',
     mediaTaggedSection: '3 · Tagged for assignment',
-    mediaImportTemplateTitle: 'Import Template / Preview Media',
-    mediaImportTemplateHelp:
-      'Copy media from a published template or the admin preview media library. Existing files are skipped so imports can resume.',
     mediaUploadTitle: 'Upload Media',
     mediaUploadHelpPrefix: 'Upload into the current folder in Media library',
     mediaUploadLimitsHelp:
@@ -209,7 +206,7 @@ export const adminI18n = {
     mediaTaggedCategories: 'Tagged categories ({n})',
     mediaTaggedCategoriesHelp:
       'Folders tagged category. Questions can draw random files from each category.',
-    mediaCheckingR2: 'Checking R2 for existing images…',
+    mediaCheckingR2: 'Checking storage for existing images…',
     mediaLastUpload: 'Last upload:',
     hfImportTitle: 'HF Dataset Import',
     hfImportHelp:
@@ -220,10 +217,10 @@ export const adminI18n = {
     hfPlaceholder: 'owner/dataset',
     saveConfig: 'Save',
     testConnection: 'Test',
-    hfPreload: 'Preload to R2',
-    hfRePreload: 'Re-preload to R2',
+    hfPreload: 'Preload to storage',
+    hfRePreload: 'Re-preload to storage',
     noMediaYet: 'No media uploaded yet',
-    mediaInR2: 'media file(s) in R2',
+    mediaInR2: 'media file(s) in storage',
 
     // Media guides
     guideFixedSets: 'Fixed sets',
@@ -1182,7 +1179,7 @@ export const adminI18n = {
       '打开右侧 AI 助手，描述研究主题与设计。助手会用带冲突保护的增量操作修改当前项目草稿。',
     introFlow3Title: '若未添加媒体则补上',
     introFlow3Body:
-      '需要图片/视频/音频时，请使用模板、项目媒体数据集或 Admin 预览媒体库；不要生成合成媒体再上传。set/category 模式还需给文件夹打标签。',
+      '需要图片/视频/音频时，请在「媒体」页签上传文件或从 Hugging Face 导入；不要生成合成媒体再上传。set/category 模式还需给文件夹打标签。',
     introFlow4Title: '发布并收集答卷',
     introFlow4Body:
       '在「分享问卷」检查草稿并明确发布。旧项目仅在第一次发布前保持保存即上线的兼容行为。',
@@ -1197,12 +1194,10 @@ export const adminI18n = {
 
     mediaTitle: '媒体数据集',
     mediaDescription:
-      '添加媒体、按文件夹整理，再标记为分组或分类，供问卷分配使用。文件存储在 Cloudflare R2。',
+      '添加媒体、按文件夹整理，再标记为分组或分类，供问卷分配使用。文件存储在你的 Supabase Storage 存储桶中。',
     mediaAddSection: '1 · 添加媒体',
     mediaOrganizeSection: '2 · 在文件夹中整理',
     mediaTaggedSection: '3 · 已标记供分配',
-    mediaImportTemplateTitle: '导入模板 / 预览媒体',
-    mediaImportTemplateHelp: '从已发布模板或管理端预览媒体库复制文件。已存在文件会跳过，便于断点续传。',
     mediaUploadTitle: '上传媒体',
     mediaUploadHelpPrefix: '上传到媒体库中的当前文件夹',
     mediaUploadLimitsHelp:
@@ -1219,7 +1214,7 @@ export const adminI18n = {
       '标记为分组的文件夹。题目使用“随机固定分组”且媒体数量匹配时，文件夹内直属文件会一起展示。',
     mediaTaggedCategories: '已标记分类（{n}）',
     mediaTaggedCategoriesHelp: '标记为分类的文件夹。题目可从每个分类中随机抽取文件。',
-    mediaCheckingR2: '正在检查 R2 中的现有图片…',
+    mediaCheckingR2: '正在检查存储中的现有图片…',
     mediaLastUpload: '最近上传：',
     hfImportTitle: 'HF 数据集导入',
     hfImportHelp:
@@ -1230,10 +1225,10 @@ export const adminI18n = {
     hfPlaceholder: 'owner/dataset',
     saveConfig: '保存',
     testConnection: '测试',
-    hfPreload: '预加载到 R2',
-    hfRePreload: '重新预加载到 R2',
+    hfPreload: '预加载到存储',
+    hfRePreload: '重新预加载到存储',
     noMediaYet: '尚未上传媒体',
-    mediaInR2: '个媒体文件在 R2',
+    mediaInR2: '个媒体文件在存储中',
 
     guideFixedSets: '固定分组',
     guideFixedSetsBody:

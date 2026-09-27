@@ -274,7 +274,7 @@ export default function MediaFolderBrowser({
           .filter(Boolean);
         if (keys.length) {
           const del = await deleteImagesFromR2(keys, deleteOpts);
-          if (!del.success) throw new Error(del.error || tx("Failed to delete folder files from R2"));
+          if (!del.success) throw new Error(del.error || tx("Failed to delete folder files from storage"));
         }
       }
       const removeIds = new Set(files.map((e) => e.media_id || e.key || e.name));
@@ -612,7 +612,7 @@ export default function MediaFolderBrowser({
           <Alert severity="warning" sx={{ mt: 1, mb: 1.5 }}>
             {tx('This removes {count} folder(s) from the project{files}. Tags on these folders are cleared. This cannot be undone.', {
               count: foldersPendingDelete.length,
-              files: deletePreview.files.length ? tx(' and permanently deletes {v0} media file(s) in R2', { v0: deletePreview.files.length }) : '',
+              files: deletePreview.files.length ? tx(' and permanently deletes {v0} media file(s) in storage', { v0: deletePreview.files.length }) : '',
             })}
           </Alert>
           <Typography variant="body2" sx={{ mb: 1 }}>{' '}{tx("Folders:")}{' '}{foldersPendingDelete.map((f) => <code key={f} style={{ marginRight: 8 }}>{f}</code>)}

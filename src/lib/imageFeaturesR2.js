@@ -9,7 +9,6 @@ import {
   uploadImageToR2,
   listImagesFromR2,
   isR2Configured,
-  copyImagesInR2,
   getMediaStoragePublicUrl,
   downloadStorageText,
   getR2ServerUrl,
@@ -415,7 +414,7 @@ export async function loadFeatureCsv(r2Prefix, model) {
 
 /** Merge records by media_id (incoming wins) and upload CSV. */
 export async function saveFeatureCsv(r2Prefix, model, records, options = {}) {
-  if (!isR2Configured()) throw new Error('R2 is not configured');
+  if (!isR2Configured()) throw new Error('Supabase Storage is not configured');
   // When the caller already holds the full set (batch job accumulator), skip
   // re-reading R2 so we never merge against a stale cached snapshot.
   const existing = options.replace
@@ -499,7 +498,7 @@ export async function loadBatchRun(r2Prefix, batchRunId) {
 
 /** Persist batch run checkpoint / final log. */
 export async function saveBatchRun(r2Prefix, batchDoc) {
-  if (!isR2Configured()) throw new Error('R2 is not configured');
+  if (!isR2Configured()) throw new Error('Supabase Storage is not configured');
   const id = batchDoc?.batchRunId || newBatchRunId();
   const doc = {
     ...batchDoc,
@@ -545,7 +544,7 @@ export async function loadPreannotationsForMediaList(r2Prefix, mediaEntries, { c
  * (keeps older clients working for root-level files).
  */
 export async function savePreannotation(r2Prefix, mediaEntry, annotationPayload) {
-  if (!isR2Configured()) throw new Error('R2 is not configured');
+  if (!isR2Configured()) throw new Error('Supabase Storage is not configured');
   const entry = normalizeMediaEntry(mediaEntry);
   const mediaId = getMediaId(entry);
   const shapes = annotationPayload?.shapes || [];
@@ -730,50 +729,6 @@ export async function loadFeaturesMapFromR2(r2Prefix, models = FEATURE_MODELS) {
     });
   }));
   return map;
-}
-
-/**
- * After template→project image copy: remap feature CSVs + copy preannotation JSONs.
- */
-export async function copyFeatureCsvsTemplateToProject({
-  templatePrefix,
-  projectPrefix,
-  nameToNewMediaId,
-}) {
-  const results = [];
-  for (const model of FEATURE_MODELS) {
-    // eslint-disable-next-line no-await-in-loop
-    const rows = await loadFeatureCsv(templatePrefix, model);
-    if (!rows.length) continue;
-    const remapped = [];
-    rows.forEach((r) => {
-      const newId = nameToNewMediaId.get(r.name);
-      if (!newId) return;
-      remapped.push({
-        ...r,
-        media_id: newId,
-        name: r.name,
-      });
-    });
-    if (!remapped.length) continue;
-    // eslint-disable-next-line no-await-in-loop
-    const saved = await saveFeatureCsv(projectPrefix, model, remapped);
-    results.push({ model, ...saved });
-  }
-
-  const docs = await listAnnotationDocuments(templatePrefix);
-  let copied = 0;
-  for (const [name, newId] of nameToNewMediaId) {
-    const matches = docs.filter((d) => d.name === name);
-    const ids = new Set(matches.map((d) => d.media_id || d.image));
-    if (ids.size > 1) throw new Error(`Ambiguous template annotation name: ${name}`);
-    const doc = matches.sort((a, b) => Number(b.storage_key.includes('/by-id/')) - Number(a.storage_key.includes('/by-id/')) || String(b.updated_at).localeCompare(String(a.updated_at)))[0];
-    if (!doc) continue;
-    await savePreannotation(projectPrefix, { name, media_id: newId, key: newId, url: getMediaStoragePublicUrl(newId) }, doc);
-    copied += 1;
-  }
-  results.push({ model: 'preannotations', copied, errors: 0 });
-  return results;
 }
 
 /** One-shot: push legacy project JSON imageFeatures into R2 CSVs if R2 is empty. */

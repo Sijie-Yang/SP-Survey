@@ -82,6 +82,14 @@ describe('SP-Survey local agent API contract', () => {
       json(payload) { this.payload = payload; return this; },
     };
 
+    const catalog = { statusCode: 200, status(code) { this.statusCode = code; return this; }, json(payload) { this.payload = payload; return this; } };
+    await handlers['GET /api/agent']({}, catalog);
+    expect(catalog.payload.endpoints).not.toHaveProperty('importMediaFromTemplate');
+    const caps = { statusCode: 200, status(code) { this.statusCode = code; return this; }, json(payload) { this.payload = payload; return this; } };
+    await handlers['GET /api/agent/capabilities']({}, caps);
+    expect(caps.payload.tools).not.toContain('media_import_from_template');
+    expect(handlers['POST /api/agent/projects/:projectId/media/import-template']).toBeUndefined();
+
     await handlers['POST /api/agent/projects']({
       body: {
         name: 'Created by agent',
@@ -265,7 +273,8 @@ describe('SP-Survey local agent API contract', () => {
     }, created);
     expect(created.statusCode).toBe(201);
     expect(created.payload.project.name).toBe('Walk study');
-    expect(created.payload.note).toMatch(/media was not copied/i);
+    expect(created.payload.note).toMatch(/media is not copied/i);
+    expect(created.payload.note).toMatch(/Hugging Face/i);
     expect(created.payload.surveyConfig.pages[0].elements[0].name).toBe('comfort');
     const projectId = created.payload.project.id;
 

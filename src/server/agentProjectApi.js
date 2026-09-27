@@ -330,7 +330,6 @@ const registerAgentProjectApi = (app, {
         updateSurvey: 'PATCH /api/agent/projects/:projectId/survey',
         applyOperations: 'POST /api/agent/projects/:projectId/operations',
         media: 'GET|PATCH /api/agent/projects/:projectId/media',
-        importMediaFromTemplate: 'POST /api/agent/projects/:projectId/media/import-template',
         skills: 'GET /api/agent/skills  POST /api/agent/skills',
         listResponses: 'GET /api/agent/projects/:projectId/responses',
         exportResponses: 'GET /api/agent/projects/:projectId/responses/export',
@@ -371,7 +370,6 @@ const registerAgentProjectApi = (app, {
         'survey_create_from_template',
         'survey_save_as_template',
         'media_list',
-        'media_import_from_template',
         'survey_update_media_dataset',
         'skill_list',
         'skill_save',
@@ -469,7 +467,7 @@ const registerAgentProjectApi = (app, {
         savedAt: created.savedAt,
         draftUpdatedAt: created.draftUpdatedAt,
         validation,
-        note: 'Template media was not copied. Use media_import_from_template if needed.',
+        note: 'Template media is not copied. Upload files or import from Hugging Face on the Media tab.',
         urls: buildProjectUrls(created.project.id, clientOrigin),
       });
     } catch (error) {
@@ -1041,47 +1039,6 @@ const registerAgentProjectApi = (app, {
       const siliconFile = path.join(projectsPath, `${projectId}.silicon.json`);
       if (await fs.pathExists(siliconFile)) await fs.remove(siliconFile);
       res.json({ success: true, projectId, deleted: true });
-    } catch (error) {
-      sendError(res, error);
-    }
-  });
-
-  app.post('/api/agent/projects/:projectId/media/import-template', async (req, res) => {
-    try {
-      if (req.body?.confirm !== true) {
-        return res.status(400).json({
-          success: false,
-          error: 'Set confirm:true to import template media.',
-        });
-      }
-      const stored = await readProject(req.params.projectId);
-      const templateId = req.body?.templateId || stored.project?.templateId;
-      if (!templateId) {
-        return res.status(400).json({
-          success: false,
-          error: 'templateId is required (or project.templateId).',
-        });
-      }
-      const { raw } = await readTemplate(templateId);
-      const surveyConfig = { ...(stored.surveyConfig || {}) };
-      const fromTemplate = templateSurveyConfig(raw).preloadedImages || raw.preloadedImages || [];
-      surveyConfig.preloadedImages = Array.isArray(fromTemplate) ? fromTemplate : [];
-      const now = new Date().toISOString();
-      const next = {
-        ...stored,
-        project: { ...stored.project, templateId, lastModified: now },
-        surveyConfig,
-        savedAt: now,
-        draftUpdatedAt: now,
-      };
-      const backup = await persistProject(req.params.projectId, next, now);
-      res.json({
-        success: true,
-        projectId: req.params.projectId,
-        templateId,
-        files: surveyConfig.preloadedImages,
-        backup,
-      });
     } catch (error) {
       sendError(res, error);
     }

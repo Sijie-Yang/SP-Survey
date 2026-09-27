@@ -261,7 +261,7 @@ export default function ProjectSidebar({
       console.log('🎯 Creating project from template:', selectedTemplate.name);
 
       // The project is created with NO images — copying the template's
-      // R2 folder is deferred to an explicit "Import Template Images"
+      // Template media is not copied; the researcher uploads or imports from Hugging Face.
       // action on the Image Dataset page so this flow stays fast and
       // doesn't burn storage for users who never use the images.
       const projectData = {

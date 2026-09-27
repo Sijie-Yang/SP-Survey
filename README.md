@@ -132,11 +132,12 @@ Codex can create, review, and update the selected survey directly through the lo
 
 ### 3. Configure Supabase and upload media
 
-Open **Media**. The top row has three panels:
+Open **Media**. Configure **Supabase Storage** at the top, then add files with the two panels:
 
-1. **Supabase Storage** — enter Project ID, anon key, and `service_role` key; click **Save**, then **Test**.
-2. **Upload Media** — choose local images, video, or audio and upload them to Supabase Storage.
-3. **HF Dataset Import** — import a Hugging Face dataset and transfer its media to Supabase.
+1. **Upload Media** — choose local images, video, or audio and upload them to Supabase Storage.
+2. **HF Dataset Import** — import a Hugging Face dataset and transfer its media to Supabase.
+
+Templates create a project without copying media. Upload files or import from Hugging Face after creating from a template.
 
 In Supabase **Storage**, create a public bucket named `survey-images`. SP-Survey can also attempt to create it on the first upload. Confirm that uploaded files appear in the Media Library, then organize folders and mark folders as sets or categories when required.
 

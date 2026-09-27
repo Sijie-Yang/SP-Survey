@@ -136,7 +136,7 @@ export default function MediaPreannotateResults({
     if (!r2Prefix || !isR2Configured()) {
       setItems([]);
       cacheRef.current = new Map();
-      setError(isR2Configured() ? null : 'R2 is not configured.');
+      setError(isR2Configured() ? null : 'Supabase Storage is not configured.');
       return;
     }
     if (!mediaList.length) {
@@ -183,7 +183,7 @@ export default function MediaPreannotateResults({
   const refreshAll = useCallback(async () => {
     if (!r2Prefix || !isR2Configured()) {
       setItems([]);
-      setError(isR2Configured() ? null : 'R2 is not configured.');
+      setError(isR2Configured() ? null : 'Supabase Storage is not configured.');
       return;
     }
     cacheRef.current = new Map();
@@ -238,7 +238,7 @@ export default function MediaPreannotateResults({
 
   const handleExportPackage = async () => {
     if (!r2Prefix || !isR2Configured()) {
-      setError('R2 is not configured.');
+      setError('Supabase Storage is not configured.');
       return;
     }
     setExporting(true);
@@ -316,7 +316,7 @@ export default function MediaPreannotateResults({
 
       <Collapse in={open}>
         <Box sx={{ p: { xs: 2, sm: 2.5 } }}>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>{' '}{tx("Autosave updates only the image you just annotated — nothing else is re-downloaded. Use Refresh all if you need to reload every file from R2. Download package = JSON + SAM CSV (if any) + analysis CSVs + source images + overlays (*_annotated.jpg with shapes burned in).")}{' '}</Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>{' '}{tx("Autosave updates only the image you just annotated — nothing else is re-downloaded. Use Refresh all if you need to reload every file from storage. Download package = JSON + SAM CSV (if any) + analysis CSVs + source images + overlays (*_annotated.jpg with shapes burned in).")}{' '}</Typography>
 
           {error && (
             <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError(null)}>{error}</Alert>

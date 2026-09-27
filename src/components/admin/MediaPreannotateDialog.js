@@ -65,7 +65,7 @@ export default function MediaPreannotateDialog({
 
   const handleSave = async () => {
     if (!isR2Configured()) {
-      setError('R2 is not configured.');
+      setError('Supabase Storage is not configured.');
       return;
     }
     setSaving(true);
@@ -92,7 +92,7 @@ export default function MediaPreannotateDialog({
       <DialogTitle>
         Pre-annotate — {entry.name}
         <Typography variant="caption" display="block" color="text.secondary">
-          SAM3 (fal) · saves to R2 · model {SAM_PREANNOT_MODEL}
+          SAM3 (fal) · saves to storage · model {SAM_PREANNOT_MODEL}
         </Typography>
       </DialogTitle>
       <DialogContent dividers>

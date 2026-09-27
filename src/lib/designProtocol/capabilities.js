@@ -44,7 +44,7 @@ export const DESIGN_CAPABILITIES = {
     'media* may use mediaSlots for multi-modal (video+audio+image). Empty mediaSlots = legacy single-pool path.',
     'Match imageCount / skillConfig.mediaCount to stimuli needed. For set mode, imageCount must equal files-per-set folder size.',
     'Never invent media URLs; never send HuggingFace/fal/API keys. Folder tags (set/category) live on the project Media Dataset, not as fake URLs.',
-    'MEDIA SOURCE RULES: Do NOT AI-generate / synthesize / invent images or videos and media_upload them. Prefer media_import_from_template or the project Media Dataset. media_upload only for real files the researcher explicitly provides.',
+    'MEDIA SOURCE RULES: Do NOT AI-generate / synthesize / invent images or videos and media_upload them. Prefer the project Media Dataset (upload or Hugging Face import). media_upload only for real files the researcher explicitly provides.',
   ],
   mediaSamplingDefaults: MEDIA_SAMPLING,
   /**

@@ -43,7 +43,6 @@ import {
   CloudDownload,
   Delete,
   CloudUpload,
-  ContentCopy,
   Search,
   SelectAll,
   Deselect,
@@ -56,8 +55,7 @@ import {
   getImagesFromHuggingFace,
   getImageCountFromDataset,
 } from '../../lib/huggingface';
-import { isR2Configured, resetR2ProxyUnreachable, uploadImageToR2, deleteImagesFromR2, listImagesFromR2, copyImagesInR2, projectR2Prefix, stripTemplateOwnedMedia, r2KeyFromUrl, isTemplateR2Key } from '../../lib/r2';
-import { asyncPool } from '../../lib/asyncPool';
+import { isR2Configured, resetR2ProxyUnreachable, uploadImageToR2, deleteImagesFromR2, listImagesFromR2, projectR2Prefix, stripTemplateOwnedMedia, r2KeyFromUrl, isTemplateR2Key } from '../../lib/r2';
 import {
   inferMediaType, normalizeMediaEntry, getMediaId, MEDIA_ACCEPT,
   analyzeTaggedSets, analyzeTaggedCategories,
@@ -87,89 +85,17 @@ import { SEG_MODEL } from '../../lib/falInference';
 import {
   loadFeaturesMapFromR2,
   featureStatusFromMap,
-  copyFeatureCsvsTemplateToProject,
   migrateLegacyFeaturesToR2,
   FEATURE_MODELS,
   SAM_PREANNOT_MODEL,
 } from '../../lib/imageFeaturesR2';
 import { featureStorageKey } from '../../lib/imageFeaturesStore';
-import { getTemplateById, listTemplates } from '../../lib/templateManager';
-import {
-  computeTemplateImportProgress,
-  buildTemplateCopyTodo,
-  mergeCopiedIntoProjectImages,
-  getTemplateImportHistory,
-  mergeTemplateImportHistory,
-  mergeTemplateMediaFoldersIntoProject,
-  formatTemplateImportStatus,
-  formatTemplateImportButtonLabel,
-  PREVIEW_MEDIA_IMPORT_ID,
-  isPreviewMediaImportId,
-} from '../../lib/templateImageImport';
-import { PREVIEW_MEDIA_PREFIX } from '../../lib/previewMediaLibrary';
 import { useRegion } from '../../contexts/RegionContext';
 import { tf } from '../../contexts/adminI18n';
 import { LOCAL_USER_ID } from '../../lib/appMode';
 import SupabaseStorageConfig from './SupabaseStorageConfig';
 
 const MEDIA_PAGE_SIZE = 24;
-/** Images per R2 copy API request. */
-const R2_COPY_REQUEST_BATCH = 100;
-/** How many copy requests run in parallel (up to BATCH × CONCURRENCY objects in flight). */
-const R2_COPY_CONCURRENCY = 3;
-
-function templateImportProgressLabel(status, tx) {
-  if (status.phase === 'listing') {
-    return isPreviewMediaImportId(status.activeTemplateId)
-      ? tx("Scanning preview media library & project folders…")
-      : tx("Scanning template & project folders…");
-  }
-  if (status.phase === 'features') return tx("Copying feature CSVs (optional metadata)…");
-  if (status.phase === 'saving') return tx("Saving project image list to database…");
-  if (status.total === 0 && status.phase !== 'idle') {
-    return status.activeTemplateName
-      ? tx("All media from \"{v0}\" are already in this project.", { v0: status.activeTemplateName })
-      : tx("All source media are already in this project.");
-  }
-  const shown = Math.min(status.progress, status.total);
-  const pct = status.total > 0 ? Math.round((shown / status.total) * 100) : 0;
-  let label = status.activeTemplateName
-    ? tx("Importing \"{v0}\": {v1} / {v2} ({v3}%)", { v0: status.activeTemplateName, v1: shown, v2: status.total, v3: pct })
-    : tx("Copying {v0} / {v1} ({v2}%)", { v0: shown, v1: status.total, v2: pct });
-  if (status.skipped > 0) label += tx(" · {v0} skipped (already present)", { v0: status.skipped });
-  return label;
-}
-
-/** Copy template images — progress ticks +1 each time the server finishes one file. */
-async function copyTemplateImagesWithRealProgress(todo, setStatus) {
-  const batches = [];
-  for (let i = 0; i < todo.length; i += R2_COPY_REQUEST_BATCH) {
-    batches.push(todo.slice(i, i + R2_COPY_REQUEST_BATCH));
-  }
-
-  const copiedImages = [];
-  const errors = [];
-  const progressRef = { current: 0 };
-
-  await asyncPool(R2_COPY_CONCURRENCY, batches, async (batch) => {
-    const res = await copyImagesInR2(batch, {
-      onProgress: () => {
-        progressRef.current += 1;
-        const done = progressRef.current;
-        setStatus((prev) => ({
-          ...prev,
-          progress: done,
-          phase: 'copying',
-        }));
-      },
-    });
-    if (res.copied?.length) copiedImages.push(...res.copied);
-    if (res.errors?.length) errors.push(...res.errors);
-    return res;
-  });
-
-  return { copiedImages, errors, completed: progressRef.current };
-}
 
 function mediaEntryKey(entry, userId, projectId) {
   const prefix = projectR2Prefix(userId, projectId);
@@ -238,26 +164,6 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
 
   // R2 sync state
   const [r2Syncing, setR2Syncing] = useState(false);
-
-  // Import template images — any project can pull from any template with an R2 folder,
-  // or from the shared platform preview media library (skill-preview/ prefix).
-  const [availableTemplates, setAvailableTemplates] = useState([]);
-  const [selectedTemplateId, setSelectedTemplateId] = useState('');
-  const [previewMediaCount, setPreviewMediaCount] = useState(0);
-  const [templateProgressMap, setTemplateProgressMap] = useState({});
-  const [loadingTemplates, setLoadingTemplates] = useState(false);
-  const [templateImportStatus, setTemplateImportStatus] = useState({
-    loading: false,
-    progress: 0,
-    total: 0,
-    templateTotal: 0,
-    skipped: 0,
-    phase: 'idle', // idle | listing | copying | features | saving
-    activeTemplateId: null,
-    activeTemplateName: null,
-    error: null,
-    success: null,
-  });
 
   // Uploaded media library management
   const [mediaSearch, setMediaSearch] = useState('');
@@ -782,85 +688,6 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
     }
   });
 
-  const templateImportHistory = useMemo(
-    () => getTemplateImportHistory(currentProject),
-    [currentProject?.imageDatasetConfig?.templateImportHistory],
-  );
-
-  const refreshTemplateProgress = async (templateIds) => {
-    if (!projectId || !isR2Configured() || !templateIds?.length) return;
-    const uid = user?.id || 'anonymous';
-    const entries = await Promise.all(
-      templateIds.map(async (id) => {
-        const progress = await computeTemplateImportProgress(id, uid, projectId);
-        return [id, progress];
-      }),
-    );
-    setTemplateProgressMap((prev) => {
-      const next = { ...prev };
-      entries.forEach(([id, progress]) => { next[id] = progress; });
-      return next;
-    });
-  };
-
-  // Load templates that ship with images (any project can import from them).
-  // Also keep the shared preview media library selectable as a source.
-  useEffect(() => {
-    let cancelled = false;
-    setLoadingTemplates(true);
-    Promise.all([
-      listTemplates(user?.id),
-      isR2Configured()
-        ? listImagesFromR2(PREVIEW_MEDIA_PREFIX).then((r) => (
-          r.success
-            ? (r.images || []).filter((img) => {
-              const key = String(img.key || img.name || '');
-              return !key.includes('/features/') && !key.includes('/preannotations/');
-            }).length
-            : 0
-        )).catch(() => 0)
-        : Promise.resolve(0),
-    ]).then(([templates, previewCount]) => {
-      if (cancelled) return;
-      const withImages = templates.filter(
-        (t) => Array.isArray(t.preloadedImages) && t.preloadedImages.length > 0,
-      );
-      setAvailableTemplates(withImages);
-      setPreviewMediaCount(previewCount);
-      setSelectedTemplateId((prev) => {
-        if (prev === PREVIEW_MEDIA_IMPORT_ID && previewCount > 0) return prev;
-        if (prev && withImages.some((t) => t.id === prev)) return prev;
-        if (currentProject?.templateId && withImages.some((t) => t.id === currentProject.templateId)) {
-          return currentProject.templateId;
-        }
-        if (withImages[0]?.id) return withImages[0].id;
-        return previewCount > 0 ? PREVIEW_MEDIA_IMPORT_ID : '';
-      });
-    }).finally(() => {
-      if (!cancelled) setLoadingTemplates(false);
-    });
-    return () => { cancelled = true; };
-  }, [user?.id, currentProject?.templateId]);
-
-  // Refresh import progress only for templates the user actually imported
-  // (plus the currently selected one). Do not scan every catalog template —
-  // shared filenames would falsely look like multi-template imports.
-  useEffect(() => {
-    const ids = new Set(Object.keys(templateImportHistory));
-    if (selectedTemplateId) ids.add(selectedTemplateId);
-    if (ids.size && projectId) refreshTemplateProgress([...ids]);
-    // Do not depend on preloadedImages.length — import already updates progress locally;
-    // re-listing R2 after every large save made the UI feel stuck/slow.
-  }, [selectedTemplateId, projectId, Object.keys(templateImportHistory).join('|')]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const selectedIsPreviewMedia = isPreviewMediaImportId(selectedTemplateId);
-  const selectedTemplate = selectedIsPreviewMedia
-    ? null
-    : (availableTemplates.find((t) => t.id === selectedTemplateId) || null);
-  const selectedProgress = templateProgressMap[selectedTemplateId];
-  const selectedImportHistory = templateImportHistory[selectedTemplateId] || null;
-  const hasImportSources = availableTemplates.length > 0 || previewMediaCount > 0;
-
   // Sync hfConfig from project
   useEffect(() => {
     if (currentProject?.imageDatasetConfig) {
@@ -905,256 +732,7 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
     }
   };
 
-  // ── Import images from source template or preview media library ──────────
-
-  const handleImportFromTemplate = async (templateIdOverride) => {
-    const templateId = templateIdOverride || selectedTemplateId;
-    if (!templateId || !currentProject?.id) return;
-    if (!isR2Configured()) {
-      setTemplateImportStatus((prev) => ({
-        ...prev,
-        error: tx("Supabase Storage is not configured. Save credentials in Supabase Storage Configuration above."),
-      }));
-      return;
-    }
-    if (templateImportStatus.loading) return;
-
-    const fromPreview = isPreviewMediaImportId(templateId);
-    let template = null;
-    if (fromPreview) {
-      template = {
-        id: PREVIEW_MEDIA_IMPORT_ID,
-        name: tx("Preview media library"),
-        imageDatasetConfig: {},
-      };
-    } else {
-      template = availableTemplates.find((t) => t.id === templateId)
-        || (await getTemplateById(templateId));
-      if (!template) {
-        setTemplateImportStatus((prev) => ({ ...prev, error: tx("Template not found.") }));
-        return;
-      }
-    }
-
-    const sourcePrefix = fromPreview
-      ? PREVIEW_MEDIA_PREFIX
-      : `templates/${template.id}/`;
-
-    scrollRef.current = window.scrollY;
-    restoreScrollRef.current = true;
-
-    const r2PublicUrl = (process.env.REACT_APP_R2_PUBLIC_URL || '').replace(/\/$/, '');
-    const uid = user?.id || 'anonymous';
-    const projectPrefix = `${uid}/${currentProject.id}/`;
-
-    setTemplateImportStatus({
-      loading: true,
-      progress: 0,
-      total: 0,
-      templateTotal: 0,
-      skipped: 0,
-      phase: 'listing',
-      activeTemplateId: template.id,
-      activeTemplateName: template.name,
-      error: null,
-      success: null,
-    });
-
-    try {
-      const progress = await computeTemplateImportProgress(template.id, uid, currentProject.id);
-      if (progress.error) throw new Error(progress.error);
-
-      // Record that this import was started (enables Resume after interrupt).
-      // Filename overlap alone is not enough to attribute files to a source.
-      const startHistoryEntry = {
-        templateName: template.name,
-        totalInTemplate: progress.totalInTemplate,
-        importedCount: progress.importedCount,
-        remaining: progress.remaining,
-        isComplete: progress.isComplete,
-        lastImportAt: new Date().toISOString(),
-        lastBatchCopied: 0,
-      };
-      const startConfig = mergeTemplateImportHistory(currentProject, template.id, startHistoryEntry);
-      // Keep UI/history in sync without a full Supabase write (avoids double-saving large image lists).
-      onProjectUpdate({
-        ...currentProject,
-        imageDatasetConfig: startConfig,
-      }, { skipSave: true });
-      if (onConfigChange) onConfigChange(true, startConfig);
-
-      const listed = { success: true, images: progress.templateImages };
-      const existingImages = progress.existingImages || [];
-
-      if (listed.images.length === 0) {
-        setTemplateImportStatus({
-          loading: false,
-          progress: 0,
-          total: 0,
-          templateTotal: 0,
-          skipped: 0,
-          phase: 'idle',
-          activeTemplateId: template.id,
-          activeTemplateName: template.name,
-          error: null,
-          success: fromPreview
-            ? tx("Preview media library is empty.")
-            : tx("\"{v0}\" has no images in its template folder.", { v0: template.name }),
-        });
-        return;
-      }
-
-      const todo = buildTemplateCopyTodo(
-        listed.images,
-        progress.existingPaths || progress.existingNames,
-        projectPrefix,
-        sourcePrefix,
-      );
-      const total = todo.length;
-      const skipCount = listed.images.length - total;
-
-      setTemplateImportStatus((prev) => ({
-        ...prev,
-        templateTotal: listed.images.length,
-        skipped: skipCount,
-        total,
-        progress: 0,
-        phase: total > 0 ? 'copying' : (fromPreview ? 'saving' : 'features'),
-      }));
-
-      const copiedImages = [];
-      const errors = [];
-      if (total > 0) {
-        const copyResult = await copyTemplateImagesWithRealProgress(todo, setTemplateImportStatus);
-        copiedImages.push(...copyResult.copiedImages);
-        errors.push(...copyResult.errors);
-      }
-
-      const finalImages = mergeCopiedIntoProjectImages(
-        mergeMediaLibraryListing(existingImages, currentProject.preloadedImages, projectPrefix),
-        copiedImages,
-        r2PublicUrl,
-        projectPrefix,
-      );
-
-      // Derive progress locally — avoid another full R2 list of source + project.
-      const importedCount = Math.min(
-        listed.images.length,
-        skipCount + copiedImages.length,
-      );
-      const remaining = Math.max(0, listed.images.length - importedCount);
-      const afterProgress = {
-        totalInTemplate: listed.images.length,
-        importedCount,
-        remaining,
-        isComplete: listed.images.length > 0 && remaining === 0,
-        hasStarted: importedCount > 0,
-        error: null,
-      };
-
-      if (!fromPreview) {
-        setTemplateImportStatus((prev) => ({
-          ...prev,
-          phase: 'features',
-          progress: copiedImages.length,
-        }));
-
-        // Copy L0/Seg feature CSVs from template → project (remap media_id by filename)
-        try {
-          const nameToNewMediaId = new Map();
-          finalImages.forEach((img) => {
-            const entry = normalizeMediaEntry(img);
-            if (entry?.name) nameToNewMediaId.set(entry.name, getMediaId(entry));
-          });
-          await copyFeatureCsvsTemplateToProject({
-            templatePrefix: sourcePrefix,
-            projectPrefix,
-            nameToNewMediaId,
-          });
-          const featMap = await loadFeaturesMapFromR2(projectPrefix, FEATURE_MODELS);
-          setR2FeatureMap(featMap);
-        } catch (featErr) {
-          console.warn('Feature CSV copy skipped/failed:', featErr);
-        }
-      }
-
-      const historyEntry = {
-        templateName: template.name,
-        totalInTemplate: afterProgress.totalInTemplate,
-        importedCount: afterProgress.importedCount,
-        remaining: afterProgress.remaining,
-        isComplete: afterProgress.isComplete,
-        lastImportAt: new Date().toISOString(),
-        lastBatchCopied: copiedImages.length,
-      };
-
-      let updatedImageDatasetConfig = mergeTemplateImportHistory(
-        { ...currentProject, imageDatasetConfig: startConfig },
-        template.id,
-        historyEntry,
-      );
-      updatedImageDatasetConfig = mergeTemplateMediaFoldersIntoProject(
-        updatedImageDatasetConfig,
-        (fromPreview ? progress.mediaFolderConfig : template.imageDatasetConfig) || {},
-      );
-
-      setTemplateProgressMap((prev) => ({
-        ...prev,
-        [template.id]: afterProgress,
-      }));
-      if (fromPreview) {
-        setPreviewMediaCount(afterProgress.totalInTemplate);
-      }
-
-      setTemplateImportStatus((prev) => ({
-        ...prev,
-        phase: 'saving',
-        progress: copiedImages.length,
-      }));
-
-      // One full project write (image list can be large — this is the slow DB step).
-      await onProjectUpdate({
-        ...currentProject,
-        preloadedImages: finalImages,
-        preloadedSource: 'supabase',
-        preloadedAt: new Date().toISOString(),
-        imageDatasetConfig: updatedImageDatasetConfig,
-      });
-      if (onConfigChange) onConfigChange(true, updatedImageDatasetConfig);
-
-      const newCount = copiedImages.length;
-      const unit = fromPreview ? 'file' : 'image';
-      setTemplateImportStatus({
-        loading: false,
-        progress: total,
-        total,
-        templateTotal: listed.images.length,
-        skipped: skipCount,
-        phase: 'idle',
-        activeTemplateId: template.id,
-        activeTemplateName: template.name,
-        error: errors.length ? tx("{v0} file(s) failed to copy.", { v0: errors.length }) : null,
-        success: total === 0
-          ? tx("All {v0} {v1}(s) from \"{v2}\" are already in this project.", { v0: listed.images.length, v1: tx(unit), v2: template.name })
-          : tx("Imported {v0} {v1}{v2} from \"{v3}\"{v4}.", { v0: newCount, v1: tx(unit), v2: zh || newCount === 1 ? '' : 's', v3: template.name, v4: skipCount > 0 ? tx(" ({v0} already present — resume supported)", { v0: skipCount }) : '' }),
-      });
-    } catch (err) {
-      setTemplateImportStatus({
-        loading: false,
-        progress: 0,
-        total: 0,
-        templateTotal: 0,
-        skipped: 0,
-        phase: 'idle',
-        activeTemplateId: template?.id || null,
-        activeTemplateName: template?.name || null,
-        error: err.message,
-        success: null,
-      });
-    }
-  };
-
-  // ── Direct upload to Cloudflare R2 ────────────────────────────────────────
+  // ── Direct upload ────────────────────────────────────────
 
   // Compress image to stay under maxBytes using Canvas
   const compressImage = (file, maxBytes = IMAGE_COMPRESS_TARGET_BYTES, quality = 0.85) => {
@@ -1423,7 +1001,7 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
             const uploadResult = await uploadImageToR2(compressed, r2Key);
             if (!uploadResult.success) {
               failCount++;
-              lastFailReason = uploadResult.error || tx("R2 upload failed for {v0}", { v0: relKey });
+              lastFailReason = uploadResult.error || tx("Storage upload failed for {v0}", { v0: relKey });
               continue;
             }
             // Track the key we used so a re-run skips it without an extra R2 list.
@@ -1670,172 +1248,16 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
         />
       </Box>
 
-      {/* ── Import / Upload / HF — three columns ── */}
+      {/* ── Upload / HF — two columns ── */}
       <Box
         sx={{
           mb: 3,
           display: 'grid',
           gap: 2,
           alignItems: 'stretch',
-          gridTemplateColumns: { xs: 'minmax(0, 1fr)', md: 'repeat(3, minmax(0, 1fr))' },
+          gridTemplateColumns: { xs: 'minmax(0, 1fr)', md: 'repeat(2, minmax(0, 1fr))' },
         }}
       >
-        {/* Import Template Images */}
-        <Box sx={{
-          p: 2.5,
-          borderRadius: 1.5,
-          border: '2px solid',
-          borderColor: 'secondary.light',
-          bgcolor: (t) => t.palette.mode === 'dark' ? 'background.paper' : 'action.hover',
-          display: 'flex',
-          flexDirection: 'column',
-          minHeight: 0,
-          minWidth: 0,
-        }}>
-          <Typography variant="subtitle1" sx={{ mb: 0.75, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 1 }}>
-            <ContentCopy fontSize="small" color="secondary" />
-            {t.mediaImportTemplateTitle}
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
-            {t.mediaImportTemplateHelp}
-          </Typography>
-
-          {(() => {
-            const historyIds = Object.keys(templateImportHistory).filter((tid) => {
-              const hist = templateImportHistory[tid];
-              return Boolean(hist?.lastImportAt);
-            });
-            if (historyIds.length === 0) return null;
-            return (
-              <Box sx={{ mb: 1.5, maxHeight: 140, overflow: 'auto' }}>
-                {historyIds.map((tid) => {
-                  const hist = templateImportHistory[tid];
-                  const tpl = isPreviewMediaImportId(tid)
-                    ? { name: tx("Preview media library") }
-                    : availableTemplates.find((t) => t.id === tid);
-                  const live = templateProgressMap[tid];
-                  const total = live?.totalInTemplate
-                    ?? hist?.totalInTemplate
-                    ?? (isPreviewMediaImportId(tid) ? previewMediaCount : tpl?.preloadedImages?.length)
-                    ?? 0;
-                  const imported = live?.importedCount ?? hist?.importedCount ?? 0;
-                  const remaining = live?.remaining ?? hist?.remaining ?? Math.max(0, total - imported);
-                  const isComplete = live?.isComplete ?? hist?.isComplete ?? (total > 0 && remaining === 0);
-                  const name = hist?.templateName || tpl?.name || tid;
-                  const isActive = templateImportStatus.loading && templateImportStatus.activeTemplateId === tid;
-                  return (
-                    <Box key={tid} sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.75, flexWrap: 'wrap' }}>
-                      <Typography variant="caption" sx={{ flex: 1, minWidth: 0 }} noWrap title={name}>
-                        <strong>{name}</strong> · {imported}/{total}
-                      </Typography>
-                      {isComplete ? (
-                        <Chip size="small" color="success" label={tx("Done")} sx={{ height: 20 }} />
-                      ) : (
-                        <Button
-                          size="small"
-                          variant="outlined"
-                          disabled={templateImportStatus.loading}
-                          onClick={() => {
-                            setSelectedTemplateId(tid);
-                            handleImportFromTemplate(tid);
-                          }}
-                          sx={{ py: 0, minHeight: 24 }}
-                        >
-                          {isActive ? '…' : tx("Resume {v0}", { v0: remaining })}
-                        </Button>
-                      )}
-                    </Box>
-                  );
-                })}
-              </Box>
-            );
-          })()}
-
-          {!isR2Configured() ? (
-            <Alert severity="warning" sx={{ mb: 1.5 }}>{tx("R2 not configured.")}</Alert>
-          ) : loadingTemplates ? (
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
-              <CircularProgress size={18} />
-              <Typography variant="body2" color="text.secondary">{tx("Loading…")}</Typography>
-            </Box>
-          ) : !hasImportSources ? (
-            <Alert severity="info" sx={{ mb: 1.5 }}>{' '}{tx("No templates or preview media library files yet.")}{' '}</Alert>
-          ) : (
-            <FormControl size="small" fullWidth sx={{ mb: 1.5 }}>
-              <InputLabel id="template-import-select">{tx("Source")}</InputLabel>
-              <Select
-                labelId="template-import-select"
-                label={tx("Source")}
-                value={selectedTemplateId}
-                onChange={(e) => setSelectedTemplateId(e.target.value)}
-                disabled={templateImportStatus.loading}
-              >
-                <MenuItem value={PREVIEW_MEDIA_IMPORT_ID}>
-                  {(() => {
-                    const live = templateProgressMap[PREVIEW_MEDIA_IMPORT_ID];
-                    const hist = templateImportHistory[PREVIEW_MEDIA_IMPORT_ID];
-                    const status = formatTemplateImportStatus(live, hist)
-                      || (previewMediaCount > 0 ? tx("{v0} files", { v0: previewMediaCount }) : 'empty');
-                    return tx("Preview media library ({v0})", { v0: status });
-                  })()}
-                </MenuItem>
-                {availableTemplates.map((t) => {
-                  const live = templateProgressMap[t.id];
-                  const hist = templateImportHistory[t.id];
-                  const status = formatTemplateImportStatus(live, hist)
-                    || tx("{v0} files", { v0: t.preloadedImages?.length || 0 });
-                  return (
-                    <MenuItem key={t.id} value={t.id}>
-                      {t.name} ({status})
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
-          )}
-
-          {templateImportStatus.loading && (
-            <Box sx={{ mb: 1.5 }}>
-              <Typography variant="caption" display="block" sx={{ mb: 0.5 }}>
-                {templateImportProgressLabel(templateImportStatus, tx)}
-              </Typography>
-              <LinearProgress
-                variant={templateImportStatus.phase === 'copying' && templateImportStatus.total > 0
-                  ? 'determinate'
-                  : 'indeterminate'}
-                value={templateImportStatus.total > 0
-                  ? Math.min((templateImportStatus.progress / templateImportStatus.total) * 100, 100)
-                  : undefined}
-                sx={{ height: 6, borderRadius: 3 }}
-              />
-            </Box>
-          )}
-          {templateImportStatus.success && <Alert severity="success" sx={{ mb: 1.5 }}>{templateImportStatus.success}</Alert>}
-          {templateImportStatus.error && <Alert severity="error" sx={{ mb: 1.5 }}>{templateImportStatus.error}</Alert>}
-
-          <Box sx={{ mt: 'auto' }}>
-            <Button
-              fullWidth
-              variant="contained"
-              color="secondary"
-              onClick={() => handleImportFromTemplate()}
-              disabled={
-                !isR2Configured()
-                || templateImportStatus.loading
-                || directUploadStatus.loading || !!pendingMediaSave
-                || !selectedTemplateId
-                || !hasImportSources
-              }
-              startIcon={templateImportStatus.loading ? <CircularProgress size={16} color="inherit" /> : <ContentCopy />}
-            >
-              {formatTemplateImportButtonLabel(selectedProgress, selectedImportHistory, {
-                loading: templateImportStatus.loading,
-                sourceKind: selectedIsPreviewMedia ? 'preview' : 'template',
-              })}
-            </Button>
-          </Box>
-        </Box>
-
         {/* Upload Media */}
         <Box sx={{
           p: 2.5,
@@ -1926,7 +1348,7 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
               variant="contained"
               color="primary"
               onClick={handleDirectUpload}
-              disabled={templateImportStatus.loading || preloadStatus.loading || !selectedFiles.length || directUploadStatus.loading || !!pendingMediaSave || !isR2Configured()}
+              disabled={preloadStatus.loading || !selectedFiles.length || directUploadStatus.loading || !!pendingMediaSave || !isR2Configured()}
               startIcon={directUploadStatus.loading ? <CircularProgress size={16} color="inherit" /> : <CloudUpload />}
             >
               {t.mediaUploadBtn}{selectedFiles.length > 0 ? ` ${selectedFiles.length}` : ''}
@@ -2000,7 +1422,7 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
           )}
           {preloadStatus.loading && (
             <Box sx={{ mb: 1.5 }}>
-              <Typography variant="caption" display="block" sx={{ mb: 0.5 }}>{' '}{tx("HF → R2…")}{' '}{preloadStatus.progress} / {preloadStatus.total}
+              <Typography variant="caption" display="block" sx={{ mb: 0.5 }}>{' '}{tx("HF → storage…")}{' '}{preloadStatus.progress} / {preloadStatus.total}
               </Typography>
               <LinearProgress
                 variant="determinate"
@@ -2052,7 +1474,7 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
         disabled={directUploadStatus.loading || !!pendingMediaSave}
       >
         {preloadedCount === 0 ? (
-          <Alert severity="info">{' '}{tx("No media uploaded yet. Use the import / upload cards above, then organize files with folders on the left.")}{' '}</Alert>
+          <Alert severity="info">{' '}{tx("No media uploaded yet. Upload files or import from Hugging Face above, then organize files with folders on the left.")}{' '}</Alert>
         ) : (
           <>
 
