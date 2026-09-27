@@ -82,8 +82,8 @@ const SurveyPreview = lazy(() => import('./components/admin/SurveyPreview'));
 const ResultsAnalysis = lazy(() => import('./components/admin/ResultsAnalysis'));
 const ResearcherPractice = lazy(() => import('./components/admin/ResearcherPractice'));
 const SiliconSamples = lazy(() => import('./components/admin/SiliconSamples'));
-const SystemStatus = lazy(() => import('./components/admin/SystemStatus'));
-const WebsiteSetup = lazy(() => import('./components/admin/WebsiteSetup'));
+const HostSetup = lazy(() => import('./components/admin/HostSetup'));
+const ShareSurvey = lazy(() => import('./components/admin/ShareSurvey'));
 
 const ADMIN_TABS_VERSION = 2;
 
@@ -139,7 +139,7 @@ function AdminWorkspaceTabs({ value, onChange, siliconEnabled = true }) {
         <Tab label={t.tabIntro} />
         <Tab label={t.tabMedia} />
         <Tab label={t.tabBuilder} />
-        <Tab label={t.tabServer} />
+        <Tab label={t.tabHost} />
         <Tab label={t.tabShare} />
         <Tab label={t.tabResults} />
         <Tab label={t.tabPractice} />
@@ -1743,22 +1743,23 @@ function AdminWorkspace() {
 
             <TabPanel value={tabValue} index={3}>
               <Suspense fallback={<Typography>{t.loadingProjectSystem}</Typography>}>
-              <SystemStatus
+              <HostSetup
                 surveyConfig={surveyConfig}
                 currentProject={currentProject}
+                hasUnsavedChanges={hasUnsavedChanges}
                 onProjectUpdate={handleProjectUpdate}
-                onNextStep={handleNextStep}
+                onReleased={() => setSnackbar({ open: true, message: language === 'zh' ? '已发布参与者快照。请继续部署参与者站点。' : 'Participant snapshot released. Deploy the participant site when you are ready.', severity: 'success' })}
               />
               </Suspense>
             </TabPanel>
 
             <TabPanel value={tabValue} index={4}>
               <Suspense fallback={<Typography>{t.loadingProjectSystem}</Typography>}>
-              <WebsiteSetup
+              <ShareSurvey
                 currentProject={currentProject}
                 surveyConfig={surveyConfig}
                 hasUnsavedChanges={hasUnsavedChanges}
-                onReleased={() => setSnackbar({ open: true, message: 'Participant snapshot released. Deploy the participant site when you are ready.', severity: 'success' })}
+                onGoToHost={() => goToAdminTab(3)}
               />
               </Suspense>
             </TabPanel>

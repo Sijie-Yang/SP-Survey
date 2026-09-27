@@ -33,6 +33,7 @@ export const createProject = async (projectData) => {
       lastModified: now,
       templateId: projectData.templateId || null,
       supabaseConfig: projectData.supabaseConfig || null,
+      deployedParticipantUrl: projectData.deployedParticipantUrl || '',
       imageDatasetConfig: projectData.imageDatasetConfig || {
         enabled: true,
         huggingFaceToken: '',
@@ -101,6 +102,7 @@ export const duplicateProject = async (sourceProjectId, newName, sourceProject) 
       description: `Copy of ${sourceProject?.name || 'Unknown Project'}`,
       templateId: null, // Duplicated projects are always custom
       supabaseConfig: sourceProject?.supabaseConfig || null,
+      deployedParticipantUrl: sourceProject?.deployedParticipantUrl || '',
       imageDatasetConfig: sourceProject?.imageDatasetConfig || {
         enabled: true,
         huggingFaceToken: '',

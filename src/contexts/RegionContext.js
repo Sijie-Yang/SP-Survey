@@ -42,8 +42,11 @@ const OSS_I18N = {
     supabase: 'Supabase Storage',
     aliyunOss: 'Alibaba Cloud OSS',
     chinaModeBanner: '🇨🇳 China Mode enabled — Using ModelScope, Alibaba Cloud OSS, and Zeabur',
-    tabServer: 'Server',
-    serverTitle: 'Server Setup',
+    tabHost: '3. Host',
+    hostTitle: 'Host',
+    hostDescription:
+      'Set up Supabase, release the participant snapshot, then deploy the participant site and save its URL.',
+    serverTitle: 'Backend / Supabase',
     serverDescription: 'Set up your Supabase database table to store survey responses.',
     mediaDescription:
       'Upload images, videos, and audio to your Supabase Storage. Organize folders and tag them as set or category for survey assignment.',
@@ -60,12 +63,12 @@ const OSS_I18N = {
     introFlow3Body:
       'For images/video/audio, upload in Media Dataset. Do not generate synthetic media for upload. For set/category modes, tag folders as set or category.',
     introFlow4Body:
-      'Review the draft in Share, release a participant snapshot, then deploy the participant site when you are ready.',
+      'On Host, set up Supabase, release a participant snapshot, and deploy the participant site. Then copy the link on Share.',
     introFlow5Body:
       'After data comes in, open Results Analysis to summarize and export. A localhost agent can also read results.',
-    introStep3Blurb: 'Review the draft, release it when ready, then deploy the participant site and copy the link.',
+    introStep3Blurb: 'Set up Supabase, release the participant snapshot, then deploy the participant site and save its URL.',
     shareDescription:
-      'Release a participant snapshot, copy the survey link, then deploy the participant site when you are ready.',
+      'Copy the survey link, download the QR code, and run a pre-launch test before inviting participants.',
     connectCodex: 'Open AI Assistant',
     aiSettingsLocalKeyIntro: 'Connect an OpenAI or OpenRouter API key for this browser. There is no free hosted model.',
     aiSidebarEmptyConnect: 'Open Settings to connect your own API key.',
@@ -98,8 +101,10 @@ const OSS_I18N = {
     supabase: 'Supabase 存储',
     aliyunOss: '阿里云 OSS',
     chinaModeBanner: '🇨🇳 中国区模式已启用 — 使用 ModelScope、阿里云 OSS 与 Zeabur',
-    tabServer: '服务器',
-    serverTitle: '服务器设置',
+    tabHost: '3. 部署',
+    hostTitle: '部署',
+    hostDescription: '配置 Supabase，发布参与者快照，再部署参与者站点并保存其地址。',
+    serverTitle: '后端 / Supabase',
     serverDescription: '配置用于存储问卷回答的 Supabase 数据表。',
     mediaDescription:
       '将图片、视频和音频上传到你的 Supabase Storage。用文件夹整理，并标记为 set 或 category 供问卷调用。',
@@ -116,12 +121,12 @@ const OSS_I18N = {
     introFlow3Body:
       '图片/视频/音频请在媒体数据集中上传。不要生成合成媒体再上传。set/category 模式请给文件夹打对应标签。',
     introFlow4Body:
-      '在分享页检查草稿，发布参与者快照，准备好后再部署参与者站点。',
+      '在「部署」页签配置 Supabase、发布参与者快照并部署参与者站点。然后到「分享」复制链接。',
     introFlow5Body:
       '有数据后打开结果分析进行汇总和导出。本机 agent 也可以读取结果。',
-    introStep3Blurb: '检查草稿，准备好后发布，然后部署参与者站点并复制链接。',
+    introStep3Blurb: '配置 Supabase，发布参与者快照，再部署参与者站点并保存其地址。',
     shareDescription:
-      '发布参与者快照、复制问卷链接，准备好后再部署参与者站点。',
+      '复制问卷链接、下载二维码，并发出问卷前先试跑一次。',
     connectCodex: '打开 AI 助手',
     aiSettingsLocalKeyIntro: '在此浏览器连接 OpenAI 或 OpenRouter API key。没有免费托管模型。',
     aiSidebarEmptyConnect: '打开设置，连接你自己的 API key。',

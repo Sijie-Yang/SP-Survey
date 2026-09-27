@@ -144,7 +144,7 @@ export default function SupabaseStorageConfig({ currentProject, onProjectUpdate,
           zh
             ? <>配置 Supabase 用于媒体存储和答卷收集。管理端上传使用 <strong>service_role</strong>；参与者站点使用 <strong>anon</strong>。</>
             : <>Configure Supabase for image/media storage and survey response collection.
-            Use the <strong>service_role</strong> key here for admin uploads; use the <strong>anon</strong> key for Vercel deployment (Step 4).</>
+            Use the <strong>service_role</strong> key here for admin uploads; use the <strong>anon</strong> key for Vercel deployment (Host tab).</>
         )}
       </Typography>
 

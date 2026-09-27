@@ -1420,7 +1420,7 @@ export default function SurveyBuilder({
               fontWeight: 600
             }}
           >
-            Next: Share Survey →
+            {t.nextHost}
           </Button>
         </Box>
       )}

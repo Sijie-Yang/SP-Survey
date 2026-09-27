@@ -2634,7 +2634,7 @@ export default function ResultsAnalysis({
           setResponses(json.responses || []);
           setLoadSource('file');
         } else {
-          setError('No data source available. Configure Supabase on the Server tab, or keep the local API running.');
+          setError('No data source available. Configure Supabase on the Host tab, or keep the local API running.');
           setLoadSource(null);
         }
       }

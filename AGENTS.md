@@ -14,7 +14,7 @@ Work only in SP-Survey. SP-Survey-Platform is a reference, not the edit target.
 - Media: `GET|PATCH /api/agent/projects/:id/media` for folder tags / dataset notes. Templates create projects without media; users upload files or import from Hugging Face. Never AI-generate images.
 - Skills: `GET /api/agent/skills` and `POST /api/agent/skills` with one typed `resultSchema` field. HTML must call `SPSkill.setAnswer(object)`.
 - Results: `GET /api/agent/projects/:id/results` describes where to read the researcher's own Supabase / local files. Do not expect hosted MCP result dumps.
-- Release: `POST /api/agent/projects/:id/release` with `confirm: true` updates the local participant snapshot. The user still deploys the participant site themselves.
+- Release: `POST /api/agent/projects/:id/release` with `confirm: true` updates the local participant snapshot. The user deploys the participant site from the Host tab (部署) and can save the public URL there. Share (分享) is only for the link, QR code, and pre-launch try-run.
 - Never request, print, add, or change credentials. The API intentionally excludes them.
 - Run validation and inspect the returned local Admin and Local Live Survey URLs after an update.
 

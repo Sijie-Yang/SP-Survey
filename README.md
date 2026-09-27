@@ -61,7 +61,7 @@ npm run dev
 - Local Live Survey: [http://localhost:3000/survey](http://localhost:3000/survey)
 - Local API: `http://localhost:3001`
 
-Tabs: Intro · Media · Builder · Server · Share · Results · Practice · Silicon.
+Tabs: Intro · Media · Builder · Host · Share · Results · Practice · Silicon.
 
 Use [`.env.example`](./.env.example) for custom ports. Split Express `PORT` into `.env` and CRA `PORT` / `REACT_APP_API_URL` into `.env.local` so the two processes do not fight. Supabase is optional until media upload or response collection.
 
@@ -155,7 +155,7 @@ Check the question preview, Theme Settings preview, full **Preview Survey**, **R
 
 ### 6. Create the Supabase response table
 
-Open **Server**. It uses the Supabase configuration saved in Media. Click **Copy SQL Script**, open **Supabase Dashboard → SQL Editor**, paste [`supabase/setup.sql`](./supabase/setup.sql), and click **Run**. That script is idempotent and creates `survey_responses`, `count_responses`, `get_pair_stats`, `submit_survey_response`, `image_features`, and the public `survey-images` bucket. The short table-only script below is the minimum if you only need inserts:
+Open **Host**. It uses the Supabase configuration saved in Media. Click **Copy SQL Script**, open **Supabase Dashboard → SQL Editor**, paste [`supabase/setup.sql`](./supabase/setup.sql), and click **Run**. That script is idempotent and creates `survey_responses`, `count_responses`, `get_pair_stats`, `submit_survey_response`, `image_features`, and the public `survey-images` bucket. The short table-only script below is the minimum if you only need inserts:
 
 ```sql
 CREATE TABLE IF NOT EXISTS survey_responses (
@@ -203,7 +203,7 @@ Return to SP-Survey, check the connection and table status, then submit a test r
 
 The participant package is a production build of the same **SurveyApp** used for local Live Survey. It embeds the **released snapshot** (widgets, locale, trials, skills, annotation, set/category sampling, recoverable submit, version stamps, and per-trial category). Only the Supabase URL and anon key are written into the package — never the `service_role` key, Hugging Face tokens, or other researcher credentials.
 
-Open **Step 4 - Website Deployment**:
+Open **Host** (after the backend table is ready):
 
 1. Release the draft first (Save updates the draft only). Prepare Deployment Folder then bakes that released snapshot.
 2. Click **Test Build** and open the generated preview. Confirm the survey matches local Live Survey.

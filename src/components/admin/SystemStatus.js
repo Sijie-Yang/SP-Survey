@@ -36,7 +36,7 @@ import { applySupabaseConfigFromProject } from '../../lib/supabase';
 import { AdminPageHeader } from './AdminPageLayout';
 import { useRegion } from '../../contexts/RegionContext';
 
-export default function SystemStatus({ surveyConfig, currentProject, onProjectUpdate, onNextStep }) {
+export default function SystemStatus({ surveyConfig, currentProject, onProjectUpdate, onNextStep, onSetupComplete, embedded = false }) {
   const { t, language } = useRegion();
   const zh = language === 'zh';
   // Step management - restore from localStorage or default to 0
@@ -311,18 +311,26 @@ export default function SystemStatus({ surveyConfig, currentProject, onProjectUp
     
     onProjectUpdate(updatedProject);
     
-    // Navigate to next step immediately (before alert)
-    if (onNextStep) {
-      console.log('✅ Navigating to next step (Website Setup)');
-      onNextStep();
-      
-      // Show success message after navigation
+    updateActiveStep(2);
+
+    if (onSetupComplete) {
       setTimeout(() => {
-        alert('✅ Server setup complete!\n\nYour Supabase database is configured and ready to collect survey responses.');
+        onSetupComplete();
+        alert(zh
+          ? '✅ 后端设置完成。\n\n请继续在下方发布问卷版本，再部署参与者站点。'
+          : '✅ Backend setup complete.\n\nNext: release a participant snapshot below, then deploy the participant site.');
+      }, 100);
+    } else if (onNextStep) {
+      onNextStep();
+      setTimeout(() => {
+        alert(zh
+          ? '✅ 后端设置完成。\n\nSupabase 数据表已配置，可以收集答卷。'
+          : '✅ Backend setup complete.\n\nYour Supabase database is configured and ready to collect survey responses.');
       }, 300);
     } else {
-      console.error('❌ onNextStep is not defined!');
-      alert('✅ Server setup complete!\n\nYour Supabase database is configured and ready to collect survey responses.\n\nPlease manually click on "Step 4 - Website Setup" tab above.');
+      alert(zh
+        ? '✅ 后端设置完成。\n\n请继续在「部署」页签发布问卷版本并部署参与者站点。'
+        : '✅ Backend setup complete.\n\nContinue on the Host tab to release a snapshot and deploy the participant site.');
     }
   };
 
@@ -1018,11 +1026,13 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
 
   return (
     <Box>
+      {!embedded && (
       <AdminPageHeader
         icon={<Storage />}
         title={t.serverTitle}
         description={t.serverDescription}
       />
+      )}
 
       {/* Supabase Configuration Status */}
       {!config.url || !config.secretKey ? (
@@ -1111,7 +1121,7 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
         {activeStep === steps.length && (
           <Paper square elevation={0} sx={{ p: 3, bgcolor: 'success.light', color: 'success.contrastText' }}>
             <Typography variant="h6" sx={{ mb: 1 }}>
-              🎉 Server Setup Complete!
+              {zh ? '🎉 后端设置完成！' : '🎉 Backend setup complete!'}
             </Typography>
             <Typography variant="body2" sx={{ mb: 2 }}>
               Your Supabase database is configured and ready to collect survey responses.

@@ -35,7 +35,7 @@ const ASSISTANT_FLOW_META = [
     titleKey: 'introFlow4Title',
     bodyKey: 'introFlow4Body',
     example: 'Give me the live survey link for this project.',
-    action: 'share',
+    action: 'host',
   },
   {
     n: 5,
@@ -112,6 +112,11 @@ function AssistantFlowStep({ step, t, onGoToTab, onOpenAssistant }) {
             {t.openMediaDataset}
           </Button>
         )}
+        {step.action === 'host' && (
+          <Button size="small" variant="outlined" onClick={() => onGoToTab(3)} sx={{ textTransform: 'none', mt: 0.5 }}>
+            {t.openHost}
+          </Button>
+        )}
         {step.action === 'share' && (
           <Button size="small" variant="outlined" onClick={() => onGoToTab(4)} sx={{ textTransform: 'none', mt: 0.5 }}>
             {t.openShareSurvey}
@@ -136,9 +141,9 @@ export default function AdminIntroduction({ onGoToTab, onOpenAssistant }) {
   const stepBlurbs = [
     { index: 1, title: t.introStep1Title, blurb: t.introStep1Blurb },
     { index: 2, title: t.introStep2Title, blurb: t.introStep2Blurb },
-    { index: 3, title: t.tabServer || 'Server', blurb: t.serverDescription },
-    { index: 4, title: t.introStep3Title, blurb: t.introStep3Blurb },
-    { index: 5, title: t.introStep4Title, blurb: t.introStep4Blurb },
+    { index: 3, title: t.introStep3Title, blurb: t.introStep3Blurb },
+    { index: 4, title: t.introStep4Title, blurb: t.introStep4Blurb },
+    { index: 5, title: t.introStep5Title, blurb: t.introStep5Blurb },
     { index: 6, title: t.introAddonTitle, blurb: t.introAddonBlurb },
   ];
 
