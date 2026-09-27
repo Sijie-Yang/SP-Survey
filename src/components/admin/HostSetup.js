@@ -20,6 +20,7 @@ export default function HostSetup({
   hasUnsavedChanges = false,
   onProjectUpdate,
   onReleased,
+  onOpenMediaStorage,
 }) {
   const { t } = useRegion();
   const versionsRef = useRef(null);
@@ -69,6 +70,7 @@ export default function HostSetup({
         currentProject={currentProject}
         onProjectUpdate={onProjectUpdate}
         onSetupComplete={scrollToVersions}
+        onOpenMediaStorage={onOpenMediaStorage}
       />
 
       <Box ref={versionsRef} sx={{ mt: 3 }}>

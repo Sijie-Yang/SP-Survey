@@ -36,7 +36,7 @@ import { applySupabaseConfigFromProject } from '../../lib/supabase';
 import { AdminPageHeader } from './AdminPageLayout';
 import { useRegion } from '../../contexts/RegionContext';
 
-export default function SystemStatus({ surveyConfig, currentProject, onProjectUpdate, onNextStep, onSetupComplete, embedded = false }) {
+export default function SystemStatus({ surveyConfig, currentProject, onProjectUpdate, onNextStep, onSetupComplete, onOpenMediaStorage, embedded = false }) {
   const { t, language } = useRegion();
   const zh = language === 'zh';
   // Step management - restore from localStorage or default to 0
@@ -536,7 +536,9 @@ export default function SystemStatus({ surveyConfig, currentProject, onProjectUp
           creating: false,
           error: errorMsg
         }));
-        alert(`❌ ${errorMsg}\n\nPlease check your Supabase configuration.`);
+        alert(zh
+          ? `❌ ${errorMsg}\n\n请检查 Supabase 配置。`
+          : `❌ ${errorMsg}\n\nPlease check your Supabase configuration.`);
         return;
       }
 
@@ -555,7 +557,7 @@ export default function SystemStatus({ surveyConfig, currentProject, onProjectUp
             exists: true,
             creating: false
           }));
-          alert('✅ Table created successfully!');
+          alert(zh ? '✅ 数据表创建成功！' : '✅ Table created successfully!');
           await checkTableStatus();
           updateActiveStep(2);
           return;
@@ -582,7 +584,7 @@ export default function SystemStatus({ surveyConfig, currentProject, onProjectUp
             exists: true,
             creating: false
           }));
-          alert('✅ Table created successfully!');
+          alert(zh ? '✅ 数据表创建成功！' : '✅ Table created successfully!');
           await checkTableStatus();
           updateActiveStep(2);
           return;
@@ -592,14 +594,18 @@ export default function SystemStatus({ surveyConfig, currentProject, onProjectUp
       }
 
       // Both methods failed - show manual instructions
-      const errorMsg = 'Unable to create table automatically. This usually happens when RLS (Row Level Security) policies are restrictive.';
+      const errorMsg = zh
+        ? '无法自动创建数据表。常见原因是 RLS（行级安全）策略限制了写入。'
+        : 'Unable to create table automatically. This usually happens when RLS (Row Level Security) policies are restrictive.';
       setTableStatus(prev => ({
         ...prev,
         creating: false,
         error: errorMsg
       }));
       
-      alert(`⚠️ ${errorMsg}\n\nPlease create it manually in Supabase SQL Editor:\n\n${getSQLCreationScript()}`);
+      alert(zh
+        ? `⚠️ ${errorMsg}\n\n请在 Supabase SQL Editor 中手动创建：\n\n${getSQLCreationScript()}`
+        : `⚠️ ${errorMsg}\n\nPlease create it manually in Supabase SQL Editor:\n\n${getSQLCreationScript()}`);
       
     } catch (error) {
       console.error('Error creating table:', error);
@@ -610,7 +616,9 @@ export default function SystemStatus({ surveyConfig, currentProject, onProjectUp
         error: errorMsg
       }));
       
-      alert(`❌ Unable to create table automatically.\n\nError: ${errorMsg}\n\nPlease create it manually in Supabase SQL Editor:\n\n${getSQLCreationScript()}`);
+      alert(zh
+        ? `❌ 无法自动创建数据表。\n\n错误：${errorMsg}\n\n请在 Supabase SQL Editor 中手动创建：\n\n${getSQLCreationScript()}`
+        : `❌ Unable to create table automatically.\n\nError: ${errorMsg}\n\nPlease create it manually in Supabase SQL Editor:\n\n${getSQLCreationScript()}`);
     }
   };
 
@@ -722,13 +730,15 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
 
       if (error) throw error;
 
-      alert('✅ Test response saved successfully!\n\nCheck your Supabase dashboard → Table Editor → survey_responses to see the test data.');
+      alert(zh
+        ? '✅ 测试答卷已写入！\n\n请到 Supabase Dashboard → Table Editor → survey_responses 查看。'
+        : '✅ Test response saved successfully!\n\nCheck your Supabase dashboard → Table Editor → survey_responses to see the test data.');
       
       // Refresh table status to update count
       await checkTableStatus();
     } catch (error) {
       console.error('Error testing response:', error);
-      alert(`❌ Failed to save test response: ${error.message}`);
+      alert(zh ? `❌ 测试答卷写入失败：${error.message}` : `❌ Failed to save test response: ${error.message}`);
     } finally {
       setTestingResponse(false);
     }
@@ -805,11 +815,11 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                     <Storage color={tableStatus.exists ? 'success' : 'action'} />
                     <Typography variant="subtitle1">
-                      survey_responses Table
+                      {zh ? 'survey_responses 数据表' : 'survey_responses Table'}
                     </Typography>
                     {tableStatus.exists && (
                       <Chip 
-                        label={`${tableStatus.responseCount} responses`} 
+                        label={zh ? `${tableStatus.responseCount} 条答卷` : `${tableStatus.responseCount} responses`} 
                         size="small" 
                         color="primary"
                       />
@@ -830,31 +840,44 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, p: 2 }}>
                     <CircularProgress size={20} />
                     <Typography variant="body2" color="text.secondary">
-                      Checking database tables...
+                      {zh ? '正在检查数据表…' : 'Checking database tables...'}
                     </Typography>
                   </Box>
                 ) : tableStatus.exists === true ? (
                   <Box>
                     <Alert severity="success" sx={{ mb: 2 }}>
-                      ✅ Table is ready! Survey responses will be automatically saved.
+                      {zh ? '✅ 数据表已就绪，问卷答卷会自动写入。' : '✅ Table is ready! Survey responses will be automatically saved.'}
                     </Alert>
                     <Typography variant="body2" color="text.secondary">
-                      Current responses: <strong>{tableStatus.responseCount}</strong>
+                      {zh ? <>当前答卷：<strong>{tableStatus.responseCount}</strong></> : <>Current responses: <strong>{tableStatus.responseCount}</strong></>}
                     </Typography>
                   </Box>
                 ) : tableStatus.exists === false ? (
                   <Box>
                     <Alert severity="warning" sx={{ mb: 2 }}>
-                      ⚠️ The <strong>survey_responses</strong> table doesn't exist in your database.
+                      {zh
+                        ? <>⚠️ 数据库中还没有 <strong>survey_responses</strong> 表。</>
+                        : <>⚠️ The <strong>survey_responses</strong> table doesn't exist in your database.</>}
                     </Alert>
                     
                     <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                      This table is required to store survey responses. You can create it automatically or manually:
+                      {zh
+                        ? '这张表用于保存问卷答卷。可以自动创建，也可以手动执行 SQL：'
+                        : 'This table is required to store survey responses. You can create it automatically or manually:'}
                     </Typography>
                     
                     <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                      <strong>Option 1:</strong> Click "Create Table" (automatic, recommended)<br/>
-                      <strong>Option 2:</strong> Copy SQL and run manually in Supabase SQL Editor
+                      {zh ? (
+                        <>
+                          <strong>方式 1：</strong>点击「自动创建数据表」（推荐）<br/>
+                          <strong>方式 2：</strong>复制 SQL，在 Supabase SQL Editor 中手动运行
+                        </>
+                      ) : (
+                        <>
+                          <strong>Option 1:</strong> Click "Create Table" (automatic, recommended)<br/>
+                          <strong>Option 2:</strong> Copy SQL and run manually in Supabase SQL Editor
+                        </>
+                      )}
                     </Typography>
 
                     <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
@@ -864,7 +887,9 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
                         disabled={tableStatus.creating}
                         startIcon={tableStatus.creating ? <CircularProgress size={16} /> : <Storage />}
                       >
-                        {tableStatus.creating ? 'Creating...' : 'Create Table Automatically'}
+                        {tableStatus.creating
+                          ? (zh ? '正在创建…' : 'Creating...')
+                          : (zh ? '自动创建数据表' : 'Create Table Automatically')}
                       </Button>
 
                       <Button
@@ -872,10 +897,12 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
                         onClick={() => {
                           const sql = getSQLCreationScript();
                           navigator.clipboard.writeText(sql);
-                          alert('✅ SQL script copied to clipboard!\n\n📝 Steps to create manually:\n1. Go to Supabase Dashboard\n2. Click "SQL Editor" in the left menu\n3. Paste the SQL and click "Run"');
+                          alert(zh
+                            ? '✅ SQL 已复制到剪贴板！\n\n📝 手动创建步骤：\n1. 打开 Supabase Dashboard\n2. 左侧点击「SQL Editor」\n3. 粘贴 SQL 后点击「Run」'
+                            : '✅ SQL script copied to clipboard!\n\n📝 Steps to create manually:\n1. Go to Supabase Dashboard\n2. Click "SQL Editor" in the left menu\n3. Paste the SQL and click "Run"');
                         }}
                       >
-                        Copy SQL Script
+                        {zh ? '复制 SQL 脚本' : 'Copy SQL Script'}
                       </Button>
                     </Box>
 
@@ -897,10 +924,12 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
 
                     {tableStatus.error && (
                       <Alert severity="error" sx={{ mb: 2 }}>
-                        <strong>Error:</strong> {tableStatus.error}
+                        <strong>{zh ? '错误：' : 'Error:'}</strong> {tableStatus.error}
                         <br/><br/>
                         <Typography variant="body2">
-                          💡 <strong>Solution:</strong> Please copy the SQL script above and run it manually in Supabase SQL Editor.
+                          {zh
+                            ? '💡 请复制上方 SQL，在 Supabase SQL Editor 中手动运行。'
+                            : '💡 Please copy the SQL script above and run it manually in Supabase SQL Editor.'}
                         </Typography>
                       </Alert>
                     )}
@@ -908,11 +937,8 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
                 ) : (
                   <Box>
                     <Alert severity="info">
-                      ℹ️ Table status unknown. Click "Refresh" to check.
+                      {zh ? 'ℹ️ 数据表状态未知。请点击「刷新状态」检查。' : 'ℹ️ Table status unknown. Click "Refresh" to check.'}
                     </Alert>
-                    <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
-                      Debug: exists={JSON.stringify(tableStatus.exists)}, checking={JSON.stringify(tableStatus.checking)}
-                    </Typography>
                   </Box>
                 )}
               </CardContent>
@@ -924,17 +950,19 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
         return (
           <Box>
             <Alert severity="success" sx={{ mb: 3 }}>
-              ✅ Database and table are ready!
+              {zh ? '✅ 数据库和数据表已就绪！' : '✅ Database and table are ready!'}
             </Alert>
 
             {/* View Live Survey */}
             <Card variant="outlined" sx={{ mb: 3 }}>
               <CardContent>
                 <Typography variant="subtitle1" sx={{ mb: 2 }}>
-                  🎯 Test Live Survey
+                  {zh ? '🎯 测试 Live Survey' : '🎯 Test Live Survey'}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                  Open your live survey in a new tab, complete it, and verify that responses are saved to the database.
+                  {zh
+                    ? '在新标签页打开正式问卷，完整答一遍，再确认答卷已写入数据库。'
+                    : 'Open your live survey in a new tab, complete it, and verify that responses are saved to the database.'}
                 </Typography>
 
                 <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
@@ -950,7 +978,7 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
                     startIcon={<Visibility />}
                     size="large"
                   >
-                    View Live Survey
+                    {zh ? '打开正式问卷' : 'View Live Survey'}
                   </Button>
 
                   <Button
@@ -961,29 +989,51 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
                     disabled={checking}
                     startIcon={checking ? <CircularProgress size={16} /> : <Refresh />}
                   >
-                    {checking ? 'Refreshing...' : 'Check Response Count'}
+                    {checking
+                      ? (zh ? '正在刷新…' : 'Refreshing...')
+                      : (zh ? '查看答卷数量' : 'Check Response Count')}
                   </Button>
                 </Box>
 
                 {tableStatus.responseCount > 0 ? (
                   <Alert severity="success" sx={{ mt: 2 }}>
-                    <strong>✅ Success!</strong> Database has <strong>{tableStatus.responseCount}</strong> response(s).
+                    {zh
+                      ? <><strong>✅ 成功！</strong>数据库中已有 <strong>{tableStatus.responseCount}</strong> 条答卷。</>
+                      : <><strong>✅ Success!</strong> Database has <strong>{tableStatus.responseCount}</strong> response(s).</>}
                     <br/>
                     <Typography variant="caption" sx={{ mt: 1, display: 'block' }}>
-                      💡 You can view responses in Supabase Dashboard → Table Editor → survey_responses
+                      {zh
+                        ? '💡 可在 Supabase Dashboard → Table Editor → survey_responses 查看答卷'
+                        : '💡 You can view responses in Supabase Dashboard → Table Editor → survey_responses'}
                     </Typography>
                   </Alert>
                 ) : (
                   <Alert severity="info" sx={{ mt: 2 }}>
-                    <strong>📝 Instructions:</strong>
-                    <br/>
-                    1. Click "View Live Survey" to open the survey
-                    <br/>
-                    2. Complete and submit the survey
-                    <br/>
-                    3. Return here and click "Check Response Count"
-                    <br/>
-                    4. Verify that the response count increases
+                    {zh ? (
+                      <>
+                        <strong>📝 操作步骤：</strong>
+                        <br/>
+                        1. 点击「打开正式问卷」
+                        <br/>
+                        2. 完整作答并提交
+                        <br/>
+                        3. 回到这里点击「查看答卷数量」
+                        <br/>
+                        4. 确认数量增加
+                      </>
+                    ) : (
+                      <>
+                        <strong>📝 Instructions:</strong>
+                        <br/>
+                        1. Click "View Live Survey" to open the survey
+                        <br/>
+                        2. Complete and submit the survey
+                        <br/>
+                        3. Return here and click "Check Response Count"
+                        <br/>
+                        4. Verify that the response count increases
+                      </>
+                    )}
                   </Alert>
                 )}
               </CardContent>
@@ -993,10 +1043,12 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
             <Card variant="outlined" sx={{ mb: 3, borderStyle: 'dashed' }}>
               <CardContent>
                 <Typography variant="subtitle2" sx={{ mb: 1, color: 'text.secondary' }}>
-                  🧪 Quick Test (Optional)
+                  {zh ? '🧪 快速测试（可选）' : '🧪 Quick Test (Optional)'}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                  If you prefer, you can run a quick automated test to verify database connectivity.
+                  {zh
+                    ? '也可以先跑一次自动测试，确认数据库连接正常。'
+                    : 'If you prefer, you can run a quick automated test to verify database connectivity.'}
                 </Typography>
 
                 <Button
@@ -1006,14 +1058,18 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
                   startIcon={testingResponse ? <CircularProgress size={16} /> : <PlayArrow />}
                   size="small"
                 >
-                  {testingResponse ? 'Testing...' : 'Run Quick Test'}
+                  {testingResponse
+                    ? (zh ? '正在测试…' : 'Testing...')
+                    : (zh ? '运行快速测试' : 'Run Quick Test')}
                 </Button>
               </CardContent>
             </Card>
 
             <Alert severity="info">
               <Typography variant="body2">
-                After successful testing, click <strong>"Complete Setup"</strong> below to finish.
+                {zh
+                  ? <>测试通过后，点击下方的<strong>「完成设置」</strong>。</>
+                  : <>After successful testing, click <strong>"Complete Setup"</strong> below to finish.</>}
               </Typography>
             </Alert>
           </Box>
@@ -1038,21 +1094,27 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
       {!config.url || !config.secretKey ? (
         <Alert severity="warning" sx={{ mb: 3 }}>
           <Typography variant="subtitle2" sx={{ mb: 1 }}>
-            ⚠️ Supabase Not Configured
+            {zh ? '⚠️ 尚未配置 Supabase' : '⚠️ Supabase Not Configured'}
           </Typography>
-          <Typography variant="body2">
-            Please configure Supabase in <strong>Media Dataset</strong> (Supabase Storage Configuration section) first. 
-            The Supabase configuration is now centralized there for both image storage and response collection.
+          <Typography variant="body2" sx={{ mb: onOpenMediaStorage ? 1.5 : 0 }}>
+            {zh
+              ? '请先在「媒体」页签的 Supabase 存储配置中填写项目地址和密钥。媒体存储和答卷收集共用这一处配置。'
+              : 'Please configure Supabase in Media Dataset (Supabase Storage Configuration) first. That setup is shared for media storage and response collection.'}
           </Typography>
+          {onOpenMediaStorage && (
+            <Button variant="contained" size="small" onClick={onOpenMediaStorage}>
+              {zh ? '打开媒体中的存储配置' : 'Open Supabase storage on Media'}
+            </Button>
+          )}
         </Alert>
       ) : (
         <Alert severity="success" sx={{ mb: 3 }}>
           <Typography variant="subtitle2" sx={{ mb: 1 }}>
-            ✅ Supabase Configured
+            {zh ? '✅ 已配置 Supabase' : '✅ Supabase Configured'}
           </Typography>
           <Typography variant="body2">
-            <strong>Project URL:</strong> {config.url}<br/>
-            Connected and ready to set up database table.
+            <strong>{zh ? '项目地址：' : 'Project URL:'}</strong> {config.url}<br/>
+            {zh ? '已连接，可以继续创建数据表。' : 'Connected and ready to set up database table.'}
           </Typography>
         </Alert>
       )}
@@ -1064,7 +1126,7 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
               <StepLabel
                 optional={
                   index === steps.length - 1 ? (
-                    <Typography variant="caption">Last step</Typography>
+                    <Typography variant="caption">{zh ? '最后一步' : 'Last step'}</Typography>
                   ) : null
                 }
               >
@@ -1088,7 +1150,7 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
                         onClick={handleNext}
                         sx={{ mt: 1, mr: 1 }}
                       >
-                        Continue
+                        {zh ? '继续' : 'Continue'}
                       </Button>
                     )}
                     
@@ -1100,7 +1162,7 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
                         sx={{ mt: 1, mr: 1 }}
                         color="success"
                       >
-                        Complete Setup
+                        {zh ? '完成设置' : 'Complete Setup'}
                       </Button>
                     )}
                     
@@ -1109,7 +1171,7 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
                       onClick={handleBack}
                       sx={{ mt: 1, mr: 1 }}
                     >
-                      Back
+                      {zh ? '返回' : 'Back'}
                     </Button>
                   </div>
                 </Box>
@@ -1124,10 +1186,12 @@ GRANT EXECUTE ON FUNCTION public.submit_survey_response(JSONB) TO anon, authenti
               {zh ? '🎉 后端设置完成！' : '🎉 Backend setup complete!'}
             </Typography>
             <Typography variant="body2" sx={{ mb: 2 }}>
-              Your Supabase database is configured and ready to collect survey responses.
+              {zh
+                ? 'Supabase 数据表已配置，可以收集问卷答卷。'
+                : 'Your Supabase database is configured and ready to collect survey responses.'}
             </Typography>
             <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-              Reset Setup
+              {zh ? '重新设置' : 'Reset Setup'}
             </Button>
           </Paper>
         )}

@@ -494,6 +494,15 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
   const preannotateEntry = preannotateImages[preannotateIndex] || null;
   const handledFocusRef = useRef(null);
   useEffect(() => {
+    if (focusRequest?.scrollTo !== 'supabase-storage' || handledFocusRef.current === focusRequest.token) return;
+    handledFocusRef.current = focusRequest.token;
+    const timer = setTimeout(() => {
+      document.getElementById('media-supabase-storage')?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    }, 200);
+    return () => clearTimeout(timer);
+  }, [focusRequest]);
+
+  useEffect(() => {
     if (!focusRequest?.mediaId || handledFocusRef.current === focusRequest.token) return;
     const entry = (currentProject?.preloadedImages || []).map((m) => normalizeMediaEntry(m, projectPrefix)).find((m) => getMediaId(m) === focusRequest.mediaId);
     if (!entry) return;
@@ -1239,7 +1248,7 @@ export default function ImageDataset({ currentProject, onProjectUpdate, onConfig
         {t.mediaAddSection}
       </Typography>
 
-      <Box sx={{ mb: 2, p: 2.5, borderRadius: 1.5, border: '2px solid', borderColor: 'secondary.light', bgcolor: 'background.paper' }}>
+      <Box id="media-supabase-storage" sx={{ mb: 2, p: 2.5, borderRadius: 1.5, border: '2px solid', borderColor: 'secondary.light', bgcolor: 'background.paper' }}>
         <SupabaseStorageConfig
           compact
           currentProject={currentProject}

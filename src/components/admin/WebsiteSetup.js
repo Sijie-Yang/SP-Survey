@@ -1198,17 +1198,17 @@ git push -u origin main`}
         {existingDeployments.length > 0 && (
           <Box sx={{ mt: 4 }}>
             <Typography variant="h6" sx={{ mb: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
-              📦 Existing Deployment Folders
+              {zh ? '📦 已有部署文件夹' : '📦 Existing Deployment Folders'}
               <Button 
                 size="small" 
                 startIcon={<Refresh />} 
                 onClick={loadExistingDeployments}
               >
-                Refresh
+                {zh ? '刷新' : 'Refresh'}
               </Button>
             </Typography>
             <Typography variant="caption" color="text.secondary" sx={{ mb: 2, display: 'block' }}>
-              Located in: <code style={{ padding: '2px 6px', backgroundColor: '#f5f5f5', borderRadius: '4px' }}>./deployments/</code> folder in your project root
+              {zh ? '位置：项目根目录下的 ' : 'Located in: '}<code style={{ padding: '2px 6px', backgroundColor: '#f5f5f5', borderRadius: '4px' }}>./deployments/</code>{zh ? ' 文件夹' : ' folder in your project root'}
             </Typography>
             <Paper sx={{ p: 2 }}>
               <List dense>
@@ -1243,7 +1243,7 @@ git push -u origin main`}
         {/* Additional Resources */}
         <Box sx={{ mt: 4 }}>
           <Typography variant="h6" sx={{ mb: 2 }}>
-            📚 Additional Resources
+            {zh ? '📚 更多资料' : '📚 Additional Resources'}
           </Typography>
           <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
             <Button 
@@ -1253,7 +1253,7 @@ git push -u origin main`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              Vercel Deployment Guide
+              {zh ? 'Vercel 部署文档' : 'Vercel Deployment Guide'}
             </Button>
             <Button 
               variant="outlined" 
@@ -1262,7 +1262,7 @@ git push -u origin main`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              GitHub Repository Guide
+              {zh ? 'GitHub 仓库文档' : 'GitHub Repository Guide'}
             </Button>
             <Button 
               variant="outlined" 
@@ -1271,7 +1271,7 @@ git push -u origin main`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              React Deployment Docs
+              {zh ? 'React 部署文档' : 'React Deployment Docs'}
             </Button>
           </Box>
         </Box>

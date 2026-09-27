@@ -1748,6 +1748,10 @@ function AdminWorkspace() {
                 currentProject={currentProject}
                 hasUnsavedChanges={hasUnsavedChanges}
                 onProjectUpdate={handleProjectUpdate}
+                onOpenMediaStorage={() => {
+                  setAnalysisMediaFocus({ projectId: currentProject.id, scrollTo: 'supabase-storage', token: Date.now() });
+                  goToAdminTab(1);
+                }}
                 onReleased={() => setSnackbar({ open: true, message: language === 'zh' ? '已发布参与者快照。请继续部署参与者站点。' : 'Participant snapshot released. Deploy the participant site when you are ready.', severity: 'success' })}
               />
               </Suspense>

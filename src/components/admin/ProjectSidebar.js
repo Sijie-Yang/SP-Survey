@@ -103,7 +103,7 @@ export default function ProjectSidebar({
   projectStates = {},
   width = 400 
 }) {
-  const { t } = useRegion();
+  const { t, language } = useRegion();
   const narrow = useMediaQuery('(max-width:899px)');
   const [projects, setProjects] = useState([]);
   const [templates, setTemplates] = useState([]);
@@ -891,13 +891,17 @@ export default function ProjectSidebar({
                         value={templateCategory}
                         onChange={e => setTemplateCategory(e.target.value)}
                         displayEmpty
-                        renderValue={v => v || 'All Categories'}
+                        renderValue={v => ({
+                          'Academic Research': t.sidebarCatAcademic,
+                          'Urban Theory': t.sidebarCatUrban,
+                          'AI Template': t.sidebarCatAi,
+                        }[v] || t.sidebarAllCategories)}
                         sx={{ fontSize: '0.75rem' }}
                       >
-                        <MenuItem value=""><em>All Categories</em></MenuItem>
-                        <MenuItem value="Academic Research">Academic Research</MenuItem>
-                        <MenuItem value="Urban Theory">Urban Theory</MenuItem>
-                        <MenuItem value="AI Template">AI Template</MenuItem>
+                        <MenuItem value=""><em>{t.sidebarAllCategories}</em></MenuItem>
+                        <MenuItem value="Academic Research">{t.sidebarCatAcademic}</MenuItem>
+                        <MenuItem value="Urban Theory">{t.sidebarCatUrban}</MenuItem>
+                        <MenuItem value="AI Template">{t.sidebarCatAi}</MenuItem>
                       </Select>
                     </FormControl>
                     <FormControl size="small" sx={{ flex: 1 }}>
@@ -906,10 +910,10 @@ export default function ProjectSidebar({
                         onChange={e => setTemplateSort(e.target.value)}
                         sx={{ fontSize: '0.75rem' }}
                       >
-                        <MenuItem value="name">Name A–Z</MenuItem>
-                        <MenuItem value="name_desc">Name Z–A</MenuItem>
-                        <MenuItem value="year_desc">Newest</MenuItem>
-                        <MenuItem value="year_asc">Oldest</MenuItem>
+                        <MenuItem value="name">{t.sidebarSortNameAsc}</MenuItem>
+                        <MenuItem value="name_desc">{t.sidebarSortNameDesc}</MenuItem>
+                        <MenuItem value="year_desc">{t.sidebarSortNewest}</MenuItem>
+                        <MenuItem value="year_asc">{t.sidebarSortOldest}</MenuItem>
                       </Select>
                     </FormControl>
                   </Stack>
@@ -938,8 +942,8 @@ export default function ProjectSidebar({
                       <ListItemText secondary={
                         <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.75rem' }}>
                           {templates.length === 0
-                            ? 'No templates found. Create one from a project.'
-                            : 'No templates match your search.'}
+                            ? t.sidebarNoTemplates
+                            : t.sidebarNoTemplateMatch}
                         </Typography>
                       } />
                     </ListItem>
@@ -981,7 +985,7 @@ export default function ProjectSidebar({
                               </Typography>
                               {template.is_pinned && (
                                 <Chip
-                                  label="Pinned"
+                                  label={t.sidebarPinned}
                                   size="small"
                                   color="warning"
                                   variant="outlined"
@@ -1002,13 +1006,13 @@ export default function ProjectSidebar({
                           }
                           secondary={
                             <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.7rem', lineHeight: 1.2 }}>
-                              {template.author || 'Unknown'} • {template.year}
+                              {template.author || t.sidebarUnknownAuthor} • {template.year}
                             </Typography>
                           }
                           sx={{ my: 0 }}
                         />
                         <Box sx={{ display: 'flex', gap: 0.25, ml: 'auto' }}>
-                          <Tooltip title={expandedTemplateMetadata[template.id] ? "Hide Metadata" : "Show Metadata"}>
+                          <Tooltip title={expandedTemplateMetadata[template.id] ? t.sidebarHideMetadata : t.sidebarShowMetadata}>
                             <IconButton
                               size="small"
                               onClick={(e) => {
@@ -1023,7 +1027,7 @@ export default function ProjectSidebar({
                               {expandedTemplateMetadata[template.id] ? <ExpandLess fontSize="small" /> : <InfoOutlined fontSize="small" />}
                             </IconButton>
                           </Tooltip>
-                          <Tooltip title="Preview Template">
+                          <Tooltip title={t.sidebarPreviewTemplate}>
                             <IconButton
                               size="small"
                               onClick={(e) => {
@@ -1036,7 +1040,7 @@ export default function ProjectSidebar({
                               <Preview fontSize="small" />
                             </IconButton>
                           </Tooltip>
-                          <Tooltip title="Copy Template">
+                          <Tooltip title={t.sidebarCopyTemplate}>
                             <IconButton
                               size="small"
                               onClick={(e) => {
@@ -1229,9 +1233,9 @@ export default function ProjectSidebar({
                                   whiteSpace: 'nowrap',
                                   width: '100%'
                                 }}
-                                title={project.description || 'No description'}
+                                title={project.description || t.sidebarNoDescription}
                               >
-                                {project.description || 'No description'}
+                                {project.description || t.sidebarNoDescription}
                               </Typography>
                               <Typography 
                                 variant="caption" 
@@ -1243,14 +1247,14 @@ export default function ProjectSidebar({
                                 }}
                               >
                                 {new Date(project.lastModified).toLocaleDateString()}
-                                {projectStates[project.id]?.hasUnsavedChanges && ' • Unsaved'}
+                                {projectStates[project.id]?.hasUnsavedChanges && (language === 'zh' ? ' • 未保存' : ' • Unsaved')}
                               </Typography>
                             </Box>
                           }
                           sx={{ my: 0 }}
                         />
                         <Box sx={{ display: 'flex', gap: 0.25, ml: 'auto' }}>
-                          <Tooltip title={expandedProjectMetadata[project.id] ? "Hide Metadata" : "Show Metadata"}>
+                          <Tooltip title={expandedProjectMetadata[project.id] ? t.sidebarHideMetadata : t.sidebarShowMetadata}>
                             <IconButton
                               size="small"
                               onClick={(e) => {
@@ -1316,16 +1320,16 @@ export default function ProjectSidebar({
                           )}
                           {project.huggingfaceDataset && (
                             <Typography variant="caption" sx={{ display: 'block', fontSize: '0.7rem' }}>
-                              <strong>HF Dataset:</strong> {project.huggingfaceDataset}
+                              <strong>{language === 'zh' ? 'HF 数据集：' : 'HF Dataset:'}</strong> {project.huggingfaceDataset}
                             </Typography>
                           )}
                           {project.templateId && (
                             <Typography variant="caption" sx={{ display: 'block', fontSize: '0.7rem', mt: 0.5 }}>
-                              <strong>Template:</strong> {project.templateId}
+                              <strong>{language === 'zh' ? '模板：' : 'Template:'}</strong> {project.templateId}
                             </Typography>
                           )}
                           <Typography variant="caption" sx={{ display: 'block', fontSize: '0.65rem', mt: 0.5, opacity: 0.7 }}>
-                            Created: {new Date(project.createdAt).toLocaleDateString()}
+                            {language === 'zh' ? '创建于 ' : 'Created: '}{new Date(project.createdAt).toLocaleDateString()}
                           </Typography>
                         </Box>
                       </Collapse>
@@ -1358,7 +1362,7 @@ export default function ProjectSidebar({
         </MenuItem>
         <MenuItem onClick={handleExportForIde}>
           <ListItemIcon><Code /></ListItemIcon>
-          <ListItemText primary="Export for AI / IDE" secondary="Credentials removed" />
+          <ListItemText primary={t.sidebarExportIde} secondary={t.sidebarExportIdeHelp} />
         </MenuItem>
         <MenuItem onClick={handleExportAsTemplate}>
           <ListItemIcon><Description /></ListItemIcon>
