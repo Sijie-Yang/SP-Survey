@@ -1,7 +1,9 @@
+import { canChooseTie, isNoPreference, noPreferenceLabel, NO_PREFERENCE } from '../lib/choiceTie';
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Box, Typography, Button, Chip } from '@mui/material';
 import { Visibility, TimerOutlined } from '@mui/icons-material';
 import { SurveyJsBooleanControl } from './ImageBooleanWidget';
+import { SurveyJsCheckboxControl } from './ImageCheckboxWidget';
 import { SurveyJsRatingControl } from './ImageRatingWidget';
 
 function isImageMedia(type) {
@@ -32,18 +34,36 @@ export function ImageGalleryGrid({ items = [], vertical = false }) {
   );
 }
 
-export function MediaPlayer({ url, type, name }) {
+export function MediaPlayer({ url, type, name, onReady, onError }) {
   if (!url) return <Typography color="text.secondary">No media selected</Typography>;
   if (type === 'video') {
     return (
-      <video src={url} controls style={{ width: '100%', maxHeight: 400, borderRadius: 8 }} />
+      <video
+        key={url}
+        src={url}
+        controls
+        onCanPlay={onReady}
+        onError={onError}
+        preload={onReady ? 'auto' : 'metadata'}
+        playsInline
+        style={{ display: 'block', width: '100%', maxHeight: 480, borderRadius: 8, background: '#111' }}
+      />
     );
   }
   if (type === 'audio') {
-    return <audio src={url} controls style={{ width: '100%' }} />;
+    return (
+      <audio key={url} src={url} onCanPlay={onReady} onError={onError} preload={onReady ? 'auto' : 'metadata'} controls style={{ display: 'block', width: '100%' }} />
+    );
   }
   return (
-    <img src={url} alt={name || 'media'} style={{ width: '100%', maxHeight: 400, objectFit: 'contain', borderRadius: 8 }} />
+    <img
+      key={url}
+      src={url}
+      alt={name || 'media'}
+      onLoad={onReady}
+      onError={onError}
+      style={{ display: 'block', width: '100%', maxHeight: 480, objectFit: 'contain', borderRadius: 8 }}
+    />
   );
 }
 
@@ -78,7 +98,7 @@ export function MediaSlotLayout({
   if (!list.length) return null;
 
   if (presentation === 'sequential') {
-    return <MediaSequentialSlots slots={list} />;
+    return <MediaSequentialSlots key={list.map((s) => s.url).join('|')} slots={list} />;
   }
 
   const choiceSlots = list.filter((s) => (s.role || 'stimulus') === 'choice');
@@ -248,80 +268,47 @@ export function MediaRevealCompare({ beforeUrl, afterUrl, beforeLabel = 'Before'
 }
 
 /** Timed exposure: participant starts viewing; media hides permanently after N seconds. */
-export function MediaTimedExposure({ url, type, name, exposureSeconds = 5 }) {
-  const [phase, setPhase] = useState('idle'); // idle | showing | done
-  const [remaining, setRemaining] = useState(exposureSeconds);
-
+export function MediaTimedExposure({ url, type, name, exposureSeconds = 5, language = 'en' }) {
+  const zh = language === 'zh';
+  const seconds = Number.isFinite(Number(exposureSeconds)) && Number(exposureSeconds) > 0 ? Number(exposureSeconds) : 5;
+  const [phase, setPhase] = useState('idle');
+  const [ready, setReady] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [attempt, setAttempt] = useState(0);
+  const [remaining, setRemaining] = useState(seconds);
+  const deadline = useRef(0);
+  useEffect(() => { setPhase('idle'); setReady(false); setFailed(false); setRemaining(seconds); }, [url, seconds]);
   useEffect(() => {
     if (phase !== 'showing') return undefined;
-    if (remaining <= 0) {
-      setPhase('done');
-      return undefined;
-    }
-    const t = setTimeout(() => setRemaining((r) => r - 1), 1000);
-    return () => clearTimeout(t);
-  }, [phase, remaining]);
-
-  if (phase === 'idle') {
-    return (
-      <Box sx={{
-        minHeight: { xs: 200, sm: 260 },
-        height: { xs: 'auto', sm: 260 },
-        borderRadius: 2,
-        border: '1px dashed',
-        borderColor: 'divider',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'stretch',
-        justifyContent: 'center',
-        gap: 1.5,
-        bgcolor: 'grey.50',
-        px: 2,
-        py: 2,
-      }}>
-        <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center' }}>
-          You will see the media for {exposureSeconds} second{exposureSeconds === 1 ? '' : 's'}. Watch carefully — it will not be shown again.
-        </Typography>
-        <Button
-          variant="contained"
-          fullWidth
-          startIcon={<Visibility />}
-          sx={{ minHeight: { xs: 44, sm: 36 } }}
-          onClick={() => { setRemaining(exposureSeconds); setPhase('showing'); }}
-        >
-          I'm ready — show it
-        </Button>
-      </Box>
-    );
-  }
-  if (phase === 'showing') {
-    return (
-      <Box sx={{ position: 'relative' }}>
-        <MediaPlayer url={url} type={type} name={name} />
-        <Chip
-          icon={<TimerOutlined />}
-          label={`${remaining}s`}
-          color="primary"
-          sx={{ position: 'absolute', top: 10, right: 10, fontWeight: 700 }}
-        />
-      </Box>
-    );
-  }
-  return (
-    <Box sx={{
-      height: 120, borderRadius: 2, border: '1px dashed', borderColor: 'divider',
-      display: 'flex', alignItems: 'center', justifyContent: 'center', bgcolor: 'grey.100',
-    }}>
-      <Typography variant="body2" color="text.secondary">
-        Viewing time is over — please answer based on your impression.
-      </Typography>
-    </Box>
-  );
+    const tick = () => {
+      const left = Math.max(0, (deadline.current - performance.now()) / 1000);
+      setRemaining(Math.ceil(left));
+      if (left <= 0) setPhase('done');
+    };
+    const timer = setInterval(tick, 100);
+    return () => clearInterval(timer);
+  }, [phase]);
+  return <Box sx={{ whiteSpace: 'normal' }}>
+    {phase !== 'done' && <Box sx={{ display: phase === 'showing' ? 'block' : 'none', position: 'relative' }}>
+      <MediaPlayer key={`${url}_${attempt}`} url={url} type={type} name={name}
+        onReady={() => setReady(true)} onError={() => { setFailed(true); setReady(false); setPhase('idle'); }} />
+      {phase === 'showing' && <Chip icon={<TimerOutlined />} label={`${remaining}s`} sx={{ position: 'absolute', top: 8, right: 8 }} />}
+    </Box>}
+    {phase === 'idle' && <Box sx={{ p: 2, border: '1px dashed', borderColor: 'divider', borderRadius: 2 }}>
+      <Typography sx={{ mb: 1 }}>{zh ? `准备好后点击开始，媒体将展示 ${seconds} 秒。结束后不会再次显示。` : `Start when ready. The media will be shown for ${seconds} seconds and then hidden.`}</Typography>
+      <Typography role="status" variant="body2" sx={{ mb: 1 }}>{failed ? (zh ? '媒体加载失败，请重试。' : 'Media failed to load. Please retry.') : !ready ? (zh ? '正在加载媒体，尚未开始计时…' : 'Loading media. The timer has not started…') : (zh ? '媒体已就绪。' : 'Media ready.')}</Typography>
+      {failed ? <Button sx={{ minHeight: 44 }} onClick={() => { setFailed(false); setAttempt((n) => n + 1); }}>{zh ? '重试加载' : 'Retry loading'}</Button>
+        : <Button fullWidth variant="contained" startIcon={<Visibility />} disabled={!ready} sx={{ minHeight: 44 }} onClick={() => {
+          deadline.current = performance.now() + seconds * 1000; setRemaining(seconds); setPhase('showing');
+        }}>{zh ? '准备好了，开始展示' : "I'm ready — show it"}</Button>}
+    </Box>}
+    {phase === 'done' && <Typography role="status" sx={{ p: 2 }}>{zh ? '展示结束，请根据刚才的印象作答。' : 'Viewing time is over — please answer based on your impression.'}</Typography>}
+  </Box>;
 }
 
 export function MediaDisplayContent({
   mediaUrl, mediaType, mediaName, mediaItems, mediaSlots, mediaPresentation,
-  displayMode = 'single', exposureSeconds = 5, beforeLabel = 'Before', afterLabel = 'After',
+  displayMode = 'single', exposureSeconds = 5, language = 'en', beforeLabel = 'Before', afterLabel = 'After',
 }) {
   const items = mediaItems?.length ? mediaItems : (mediaUrl ? [{ url: mediaUrl, type: mediaType, name: mediaName }] : []);
   if (mediaSlots?.length) {
@@ -370,6 +357,7 @@ export function MediaDisplayContent({
           type={items[0]?.type || mediaType}
           name={items[0]?.name}
           exposureSeconds={exposureSeconds}
+          language={language}
         />
       </Box>
     );
@@ -400,12 +388,13 @@ export function MediaDisplayContent({
 export function MediaRatingContent({
   mediaUrl, mediaType, mediaName, mediaItems, mediaSlots, mediaPresentation,
   value, onChange, rateMin = 1, rateMax = 5,
-  minRateDescription = '', maxRateDescription = '',
+  minRateDescription = '', maxRateDescription = '', disabled = false,
 }) {
   return (
     <Box sx={{ width: '100%' }}>
       {renderStimulus({ mediaUrl, mediaType, mediaName, mediaItems, mediaSlots, mediaPresentation })}
       <SurveyJsRatingControl
+        disabled={disabled}
         rateMin={rateMin}
         rateMax={rateMax}
         minRateDescription={minRateDescription}
@@ -419,7 +408,7 @@ export function MediaRatingContent({
 
 export function MediaBooleanContent({
   mediaUrl, mediaType, mediaName, mediaItems, mediaSlots, mediaPresentation,
-  value, onChange, labelTrue = 'Yes', labelFalse = 'No', name = 'mediaboolean',
+  value, onChange, labelTrue = 'Yes', labelFalse = 'No', name = 'mediaboolean', disabled = false,
 }) {
   return (
     <Box sx={{ width: '100%' }}>
@@ -428,6 +417,7 @@ export function MediaBooleanContent({
         name={name}
         labelTrue={labelTrue}
         labelFalse={labelFalse}
+        disabled={disabled}
         value={value}
         onChange={onChange}
       />
@@ -435,9 +425,28 @@ export function MediaBooleanContent({
   );
 }
 
+/** Stimulus media + text multi-select (which labels apply to this scene). */
+export function MediaCheckboxContent({
+  mediaUrl, mediaType, mediaName, mediaItems, mediaSlots, mediaPresentation,
+  choices = [], value, onChange, name = 'mediacheckbox', disabled = false,
+}) {
+  return (
+    <Box sx={{ width: '100%' }}>
+      {renderStimulus({ mediaUrl, mediaType, mediaName, mediaItems, mediaSlots, mediaPresentation })}
+      <SurveyJsCheckboxControl
+        name={name}
+        choices={choices}
+        value={value}
+        onChange={onChange}
+        disabled={disabled}
+      />
+    </Box>
+  );
+}
+
 /** Choice among media items (video/audio/image). */
 export function MediaPickerContent({
-  mediaItems, mediaSlots, choices, value, onChange, multiSelect = false,
+  mediaItems, mediaSlots, choices, value, onChange, multiSelect = false, disabled = false, language = 'en', allowTie = false, tieLabel = '',
 }) {
   const items = (mediaItems?.length ? mediaItems : (mediaSlots || []).filter((s) => s.role === 'choice' || !s.role))
     .filter((m) => m?.url);
@@ -451,7 +460,9 @@ export function MediaPickerContent({
     ? (Array.isArray(value) ? value : [])
     : value;
 
+  const zh = language === 'zh';
   const toggle = (v) => {
+    if (disabled) return;
     if (!multiSelect) {
       onChange(v);
       return;
@@ -463,7 +474,7 @@ export function MediaPickerContent({
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+    <Box sx={{ display: 'grid', whiteSpace: 'normal', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: 1.5 }}>
       {choiceList.map((c, i) => {
         const url = c.imageLink || items[i]?.url;
         const type = items[i]?.type || inferTypeFromUrl(url);
@@ -473,13 +484,15 @@ export function MediaPickerContent({
         return (
           <Box
             key={v || i}
-            onClick={() => toggle(v)}
+            onClick={type === 'image' ? () => toggle(v) : undefined}
             sx={{
+              minWidth: 0,
+              overflowWrap: 'anywhere',
               border: '2px solid',
               borderColor: isOn ? 'primary.main' : 'divider',
               borderRadius: 2,
               p: 1.5,
-              cursor: 'pointer',
+              cursor: disabled || type !== 'image' ? 'default' : 'pointer',
               bgcolor: isOn ? 'action.selected' : 'background.paper',
             }}
           >
@@ -487,9 +500,19 @@ export function MediaPickerContent({
               {name}
             </Typography>
             <MediaPlayer url={url} type={type} name={name} />
+            <Button fullWidth variant={isOn ? 'contained' : 'outlined'} aria-pressed={isOn} disabled={disabled}
+              aria-label={`${isOn ? (zh ? '已选择' : 'Selected') : (zh ? '选择' : 'Select')} · ${name}`}
+              sx={{ mt: 1, minHeight: 44, whiteSpace: 'normal', overflowWrap: 'anywhere' }} onClick={(event) => { event.stopPropagation(); toggle(v); }}>
+              {isOn ? (zh ? '已选择' : 'Selected') : (zh ? '选择' : 'Select')}
+            </Button>
           </Box>
         );
       })}
+      {canChooseTie({ allowTie, multiSelect }, choiceList.length) && <Box sx={{ gridColumn: '1 / -1', display: 'flex', justifyContent: 'center' }}>
+        <Button variant={isNoPreference(value) ? 'contained' : 'outlined'} aria-pressed={isNoPreference(value)} disabled={disabled}
+          sx={{ minHeight: 44, maxWidth: '100%', whiteSpace: 'normal', overflowWrap: 'anywhere' }}
+          onClick={() => onChange(NO_PREFERENCE)}>{noPreferenceLabel({ tieLabel }, language)}</Button>
+      </Box>}
     </Box>
   );
 }

@@ -6,7 +6,10 @@ const path = require('path');
 const cors = require('cors');
 const OpenAI = require('openai');
 const { resolveAiRequest, aiChat, formatAiError } = require('./aiClient');
-const { registerAgentProjectApi } = require('./src/server/agentProjectApi');
+const { registerAgentProjectApi, createProjectIo } = require('./src/server/agentProjectApi');
+const { registerAgentChatApi } = require('./src/server/agentChatRuntime');
+const { registerAgentCredentialsApi } = require('./src/server/agentCredentialsApi');
+const { registerSiliconLocalApi } = require('./src/server/siliconLocalApi');
 const { copyParticipantPublicAssets } = require('./src/server/deploymentPublicFilter');
 const { alignDeploymentPackageJson } = require('./src/server/deploymentPackage');
 
@@ -30,22 +33,30 @@ const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:3000';
 
 // Enable CORS for React app
 app.use(cors({
-  origin: CLIENT_ORIGIN,
+  origin: (origin, callback) => {
+    if (!origin || origin === CLIENT_ORIGIN) return callback(null, true);
+    if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) return callback(null, true);
+    return callback(null, false);
+  },
   credentials: true
 }));
 
 app.use(express.json({ limit: '100mb' }));
 
 const TEMPLATES_PATH = path.join(__dirname, 'public', 'project_templates');
+const USER_TEMPLATES_PATH = path.join(__dirname, 'data', 'local-templates');
 const PROJECTS_PATH = path.join(__dirname, 'public', 'projects');
 const DEPLOYMENTS_PATH = path.join(__dirname, 'deployments');
 const SKILLS_PATH = path.join(__dirname, 'public', 'skills');
+const RESPONSES_PATH = path.join(__dirname, 'public', 'responses');
 
 // Ensure directories exist
 fs.ensureDirSync(TEMPLATES_PATH);
+fs.ensureDirSync(USER_TEMPLATES_PATH);
 fs.ensureDirSync(PROJECTS_PATH);
 fs.ensureDirSync(DEPLOYMENTS_PATH);
 fs.ensureDirSync(SKILLS_PATH);
+fs.ensureDirSync(RESPONSES_PATH);
 
 // Template endpoints
 app.post('/api/templates', async (req, res) => {
@@ -85,22 +96,46 @@ app.delete('/api/templates/:templateId', async (req, res) => {
 // Project endpoints
 app.post('/api/projects', async (req, res) => {
   try {
-    const { project, surveyConfig, supabaseConfig } = req.body;
+    const { project, surveyConfig, supabaseConfig, expectedSavedAt, expectedDraftUpdatedAt } = req.body;
     const filename = `${project.id}.json`;
     const filePath = path.join(PROJECTS_PATH, filename);
+    const existing = (await fs.pathExists(filePath))
+      ? JSON.parse(await fs.readFile(filePath, 'utf8'))
+      : {};
+    const expectedStamp = expectedDraftUpdatedAt || expectedSavedAt;
+    const currentStamp = existing.draftUpdatedAt || existing.savedAt;
+    if (expectedStamp && currentStamp && expectedStamp !== currentStamp) {
+      return res.status(409).json({
+        success: false,
+        error: 'Project changed after it was read. Reload and save again.',
+        savedAt: existing.savedAt || null,
+        draftUpdatedAt: currentStamp,
+      });
+    }
+    const now = new Date().toISOString();
     
     const projectData = {
+      ...existing,
       project,
       surveyConfig,
-      supabaseConfig,
-      savedAt: new Date().toISOString(),
-      version: '2.0'
+      supabaseConfig: supabaseConfig !== undefined ? supabaseConfig : existing.supabaseConfig,
+      savedAt: now,
+      draftUpdatedAt: now,
+      version: '2.0',
     };
     
     await fs.writeFile(filePath, JSON.stringify(projectData, null, 2), 'utf8');
     
     console.log(`✅ Project "${project.name}" saved to ${filePath}`);
-    res.json({ success: true, filename, filePath });
+    res.json({
+      success: true,
+      filename,
+      filePath,
+      savedAt: now,
+      draftUpdatedAt: now,
+      releaseManaged: !!projectData.releaseManaged,
+      publishedVersion: projectData.publishedVersion || 0,
+    });
   } catch (error) {
     console.error('Error saving project:', error);
     res.status(500).json({ success: false, error: error.message });
@@ -118,12 +153,83 @@ app.get('/api/projects/:projectId', async (req, res) => {
       const data = await fs.readFile(filePath, 'utf8');
       const projectData = JSON.parse(data);
       console.log(`✅ Loaded project data for ${projectId}`);
-      res.json({ success: true, project: projectData.project, surveyConfig: projectData.surveyConfig });
+      res.json({
+        success: true,
+        project: projectData.project,
+        surveyConfig: projectData.surveyConfig,
+        savedAt: projectData.savedAt || null,
+        draftUpdatedAt: projectData.draftUpdatedAt || projectData.savedAt || null,
+        releaseManaged: !!projectData.releaseManaged,
+        publishedVersion: projectData.publishedVersion || 0,
+        publishedSurveyConfig: projectData.publishedSurveyConfig || null,
+        publishedMedia: projectData.publishedMedia || null,
+        releaseHistory: projectData.releaseHistory || [],
+      });
     } else {
       res.status(404).json({ success: false, error: 'Project not found' });
     }
   } catch (error) {
     console.error('Error loading project:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.post('/api/projects/:projectId/release', async (req, res) => {
+  try {
+    const { projectId } = req.params;
+    const { expectedDraftUpdatedAt, summary = '', restoreVersion = null } = req.body || {};
+    const filePath = path.join(PROJECTS_PATH, `${projectId}.json`);
+    if (!await fs.pathExists(filePath)) {
+      return res.status(404).json({ success: false, error: 'Project not found' });
+    }
+    const stored = JSON.parse(await fs.readFile(filePath, 'utf8'));
+    const currentStamp = stored.draftUpdatedAt || stored.savedAt || null;
+    if (expectedDraftUpdatedAt && currentStamp && expectedDraftUpdatedAt !== currentStamp) {
+      return res.status(409).json({
+        success: false,
+        error: 'Draft changed after it was read. Save or refresh, then release again.',
+        draftUpdatedAt: currentStamp,
+      });
+    }
+    const history = Array.isArray(stored.releaseHistory) ? stored.releaseHistory.slice() : [];
+    const source = restoreVersion
+      ? history.find((row) => row.version === restoreVersion)
+      : null;
+    if (restoreVersion && !source) {
+      return res.status(400).json({ success: false, error: `Unknown version: ${restoreVersion}` });
+    }
+    const now = new Date().toISOString();
+    const config = JSON.parse(JSON.stringify(source?.config || stored.surveyConfig || { pages: [] }));
+    const media = JSON.parse(JSON.stringify(source?.media_snapshot || {
+      preloadedImages: config.preloadedImages || [],
+      imageDatasetConfig: stored.project?.imageDatasetConfig || {},
+    }));
+    const nextVersion = Number(stored.publishedVersion || 0) + 1;
+    const entry = {
+      version: nextVersion,
+      releasedAt: now,
+      summary: String(summary || '').trim(),
+      config,
+      media_snapshot: media,
+    };
+    const next = {
+      ...stored,
+      releaseManaged: true,
+      publishedVersion: nextVersion,
+      publishedSurveyConfig: config,
+      publishedMedia: media,
+      releaseHistory: [entry, ...history].slice(0, 50),
+      lastReleasedAt: now,
+    };
+    await fs.writeFile(filePath, JSON.stringify(next, null, 2), 'utf8');
+    res.json({
+      success: true,
+      publishedVersion: nextVersion,
+      releaseManaged: true,
+      releasedAt: now,
+    });
+  } catch (error) {
+    console.error('Error releasing project:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
@@ -173,7 +279,24 @@ app.get('/api/projects', async (req, res) => {
 registerAgentProjectApi(app, {
   fs,
   projectsPath: PROJECTS_PATH,
+  skillsPath: SKILLS_PATH,
   clientOrigin: CLIENT_ORIGIN,
+  templatesPath: TEMPLATES_PATH,
+  userTemplatesPath: USER_TEMPLATES_PATH,
+  responsesPath: RESPONSES_PATH,
+});
+registerAgentCredentialsApi(app);
+registerAgentChatApi(app, {
+  createProjectIo: () => createProjectIo({ fs, projectsPath: PROJECTS_PATH }),
+  fs,
+  projectsPath: PROJECTS_PATH,
+  skillsPath: SKILLS_PATH,
+  clientOrigin: CLIENT_ORIGIN,
+});
+registerSiliconLocalApi(app, {
+  fs,
+  projectsPath: PROJECTS_PATH,
+  createProjectIo: () => createProjectIo({ fs, projectsPath: PROJECTS_PATH }),
 });
 
 // Deployment endpoints
@@ -198,21 +321,22 @@ app.post('/api/create-deployment', async (req, res) => {
     // Ensure deployment folder exists
     await fs.ensureDir(deploymentPath);
     
-    // Copy source files (excluding admin components and original SurveyApp)
+    // Copy source files (excluding admin). Participant mounts the real SurveyApp.
     const srcPath = path.join(__dirname, 'src');
     const publicPath = path.join(__dirname, 'public');
     
     if (await fs.pathExists(srcPath)) {
       await fs.copy(srcPath, path.join(deploymentPath, 'src'), {
         filter: (src) => {
-          // Exclude admin-related files and original SurveyApp (using SurveyAppClean instead)
           const relativePath = path.relative(srcPath, src);
           const excludePaths = [
             'AdminApp.js',
-            'SurveyApp.js',
             'components/admin'
           ];
-          return !excludePaths.some(excludePath => relativePath.includes(excludePath));
+          if (excludePaths.some((excludePath) => relativePath.includes(excludePath))) return false;
+          // Test fixtures embed fake secrets; they are not part of SurveyApp.
+          if (/\.test\.(js|jsx|mjs)$/.test(relativePath)) return false;
+          return true;
         }
       });
     }
@@ -565,6 +689,7 @@ app.get('/api/responses', async (req, res) => {
   try {
     const RESPONSES_PATH = path.join(__dirname, 'public', 'responses');
     await fs.ensureDir(RESPONSES_PATH);
+    const projectId = String(req.query.projectId || '').trim();
     const files = (await fs.readdir(RESPONSES_PATH))
       .filter(f => f.endsWith('.json'))
       .sort()
@@ -574,7 +699,9 @@ app.get('/api/responses', async (req, res) => {
     for (const file of files) {
       try {
         const content = await fs.readFile(path.join(RESPONSES_PATH, file), 'utf8');
-        responses.push(JSON.parse(content));
+        const row = JSON.parse(content);
+        if (projectId && String(row.project_id || '') !== projectId) continue;
+        responses.push(row);
       } catch (e) {
         console.error(`Error reading response file ${file}:`, e);
       }
@@ -646,19 +773,38 @@ app.post('/api/responses', async (req, res) => {
   try {
     const responseData = req.body;
     const RESPONSES_PATH = path.join(__dirname, 'public', 'responses');
-    
-    // Ensure responses directory exists
     await fs.ensureDir(RESPONSES_PATH);
-    
-    // Create filename with timestamp
+    const idempotencyKey = responseData?.idempotency_key
+      || (responseData?.participant_id && responseData?.survey_metadata?.completion_code
+        ? `${responseData.participant_id}__${responseData.survey_metadata.completion_code}`
+        : null);
+    if (idempotencyKey) {
+      const files = (await fs.readdir(RESPONSES_PATH)).filter((file) => file.endsWith('.json'));
+      for (const file of files) {
+        try {
+          const existing = JSON.parse(await fs.readFile(path.join(RESPONSES_PATH, file), 'utf8'));
+          const existingKey = existing.idempotency_key
+            || (existing.participant_id && existing.survey_metadata?.completion_code
+              ? `${existing.participant_id}__${existing.survey_metadata.completion_code}`
+              : null);
+          if (existingKey && existingKey === idempotencyKey
+            && String(existing.project_id || '') === String(responseData.project_id || '')) {
+            return res.json({ success: true, filename: file, deduped: true });
+          }
+        } catch {
+          // skip unreadable files
+        }
+      }
+    }
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const filename = `response_${responseData.participant_id}_${timestamp}.json`;
     const filePath = path.join(RESPONSES_PATH, filename);
-    
-    await fs.writeFile(filePath, JSON.stringify(responseData, null, 2), 'utf8');
-    
+    await fs.writeFile(filePath, JSON.stringify({
+      ...responseData,
+      idempotency_key: idempotencyKey,
+    }, null, 2), 'utf8');
     console.log(`✅ Survey response saved to ${filePath}`);
-    res.json({ success: true, filename, filePath });
+    res.json({ success: true, filename, filePath, deduped: false });
   } catch (error) {
     console.error('Error saving survey response:', error);
     res.status(500).json({ success: false, error: error.message });

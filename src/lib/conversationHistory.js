@@ -92,6 +92,31 @@ export class ConversationHistory {
   }
 
   /**
+   * Replace local display history with the authoritative hosted Agent session.
+   */
+  replaceMessages(messages = []) {
+    this.history = messages.map((message, index) => {
+      const tools = Array.isArray(message.tools) && message.tools.length
+        ? message.tools
+        : (Array.isArray(message.metadata?.tools) ? message.metadata.tools : []);
+      return {
+        id: message.id || `server_${index}_${message.createdAt || Date.now()}`,
+        role: message.role || 'assistant',
+        content: message.content || '',
+        timestamp: message.timestamp || message.createdAt || new Date().toISOString(),
+        ...(tools.length ? { tools } : {}),
+        metadata: {
+          ...(message.metadata || {}),
+          ...(tools.length ? { tools } : {}),
+          recovered: true,
+        },
+      };
+    });
+    this.saveToStorage();
+    return this.getAllMessages();
+  }
+
+  /**
    * Remove a specific message
    */
   removeMessage(messageId) {

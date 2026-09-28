@@ -4,8 +4,7 @@
  */
 
 import { API_BASE_URL } from './apiConfig';
-
-const API_BASE = API_BASE_URL;
+import { sendAgentChat } from './agentApi';
 
 /**
  * Send a chat message and get AI response
@@ -19,8 +18,30 @@ const API_BASE = API_BASE_URL;
  * @param {Object} researchContext - Research context (topic, requirements, scenario)
  * @returns {Promise<Object>} - { success, intent, surveyConfig?, message, error?, multiAgentReview? }
  */
-export async function sendChatMessage(message, currentConfig, conversationHistory, apiKey, enableMultiAgentReview = false, reviewMode = '1v1', customPrompts = null, researchContext = null) {
+export async function sendChatMessage(message, currentConfig, conversationHistory, apiKey, enableMultiAgentReview = false, reviewMode = '1v1', customPrompts = null, researchContext = null, extras = null) {
   try {
+    if (extras?.projectId) {
+      return await sendAgentChat({
+        message,
+        currentConfig,
+        conversationHistory,
+        researchContext,
+        customPrompts,
+        enableMultiAgentReview,
+        reviewMode,
+        projectId: extras.projectId,
+        sessionId: extras.sessionId || null,
+        provider: extras.provider || null,
+        model: extras.model || null,
+        reasoningEffort: extras.reasoningEffort || extras.reasoning_effort || null,
+        assistantMode: extras.assistantMode || 'agent',
+        onStarted: extras.onStarted,
+        onSnapshot: extras.onSnapshot,
+        editorContext: extras.editorContext || null,
+        apiKey,
+      });
+    }
+
     const response = await fetch(`${API_BASE_URL}/api/openai/chat`, {
       method: 'POST',
       headers: {
@@ -34,7 +55,8 @@ export async function sendChatMessage(message, currentConfig, conversationHistor
         enableMultiAgentReview,
         reviewMode,
         customPrompts,
-        researchContext
+        researchContext,
+        assistantMode: extras?.assistantMode || 'agent',
       })
     });
 
@@ -201,4 +223,6 @@ export async function validateApiKey(apiKey) {
     };
   }
 }
+
+export const validateChatApiKey = validateApiKey;
 

@@ -13,782 +13,728 @@
     "hospitality",
     "study2",
     "study3b",
-    "study4"
+    "study4",
+    "official"
   ],
+  "isPinned": false,
   "website": "https://doi.org/10.1016/j.tourman.2026.105481",
-  "createdAt": "2026-07-15T00:00:00.000Z",
-  "imageDatasetConfig": {
-    "mediaFolders": [
-      "study2",
-      "study3b",
-      "study4"
-    ],
-    "mediaFolderTags": {
-      "study2": "set",
-      "study4": "set"
-    }
-  },
+  "huggingfaceDataset": null,
+  "createdAt": "2026-07-15T00:00:00+00:00",
   "config": {
-    "title": "Hotel Booking Preference Survey (Wang & Li, 2027 — Studies 2, 3B, 4)",
-    "description": "Based on: Wang, L., & Li, S. (2027). The temporal shift in consumer hue preferences in hotel booking. Tourism Management, 118, 105481. https://doi.org/10.1016/j.tourman.2026.105481. This combined template covers Study 2 (Ctrip pairwise choice), Study 3B (Fliggy single photo; calibrated luminance/saturation), and Study 4 (Ctrip twin-room pairwise choice + chronotype). Study 1 is lab eye-tracking and is not included. Measurement items from Appendix D (supplementary mmc1). Stimuli from Appendix C Figs. S1–S3. In the paper, Stage 2 surveys were administered in designated morning/evening windows.",
-    "logoPosition": "right",
-    "showQuestionNumbers": "off",
-    "showProgressBar": "aboveheader",
-    "progressBarType": "questions",
-    "autoGrowComment": true,
-    "showPreviewBeforeComplete": "showAllQuestions",
     "pages": [
       {
         "name": "overview",
         "title": "Overview",
         "elements": [
           {
-            "type": "html",
+            "html": "<p><strong>Wang &amp; Li (2027)</strong> — combined Studies 2, 3B, and 4.</p><ul><li><strong>Study 2</strong> (Fig. S1): business-trip scenario; choose Weihao (cool) vs Mingting (warm).</li><li><strong>Study 3B</strong> (Fig. S2): Fliggy weekend scenario; one of four daytime/nighttime × cool/warm photos (not Study 3A Booking.com stimuli).</li><li><strong>Study 4</strong> (Fig. S3): trip-with-friends scenario; choose Anyue (cool) vs Arton (warm); then chronotype (rMEQ).</li><li><strong>Study 1</strong> (eye-tracking) is omitted.</li></ul><p>Need for uniqueness / belonging are asked once (Study 2 order); Study 4 in the paper re-measured them after choice.</p>",
             "name": "overview_note",
-            "html": "<p><strong>Wang &amp; Li (2027)</strong> — combined Studies 2, 3B, and 4.</p><ul><li><strong>Study 2</strong> (Fig. S1): business-trip scenario; choose Weihao (cool) vs Mingting (warm).</li><li><strong>Study 3B</strong> (Fig. S2): Fliggy weekend scenario; one of four daytime/nighttime × cool/warm photos (not Study 3A Booking.com stimuli).</li><li><strong>Study 4</strong> (Fig. S3): trip-with-friends scenario; choose Anyue (cool) vs Arton (warm); then chronotype (rMEQ).</li><li><strong>Study 1</strong> (eye-tracking) is omitted.</li></ul><p>Need for uniqueness / belonging are asked once (Study 2 order); Study 4 in the paper re-measured them after choice.</p>"
+            "type": "html"
           }
         ]
       },
       {
         "name": "emotional_states",
         "title": "Current emotional states",
-        "description": "Study 2 Stage 2 began with current emotional states (Appendix D; Singh, 2006). Study 3A/3B also measured current emotional state as a control.",
         "elements": [
           {
-            "type": "rating",
             "name": "current_emotional_states",
+            "type": "rating",
             "title": "To what extent do you feel happy/depressed?",
-            "description": "1 = not at all, 7 = very much (Appendix D).",
-            "isRequired": true,
-            "rateMin": 1,
             "rateMax": 7,
-            "minRateDescription": "Not at all",
-            "maxRateDescription": "Very much"
+            "rateMin": 1,
+            "isRequired": true,
+            "description": "1 = not at all, 7 = very much (Appendix D).",
+            "maxRateDescription": "Very much",
+            "minRateDescription": "Not at all"
           }
-        ]
+        ],
+        "description": "Study 2 Stage 2 began with current emotional states (Appendix D; Singh, 2006). Study 3A/3B also measured current emotional state as a control."
       },
       {
         "name": "study2_choice",
         "title": "Study 2 — Hotel preference",
-        "description": "Study 2 scenario and DV (verbatim from the article). Stimuli: Appendix C Fig. S1 (folder study2).",
         "elements": [
           {
-            "type": "expression",
             "name": "study2_scenario",
+            "type": "expression",
             "title": "Please imagine the following:",
             "description": "You have an upcoming business trip to conduct on-site visits and work with a partner company. For convenience, you wish to stay at a hotel within walking distance of their office. You open a booking platform and find two suitable hotels, both located within 500 m of the company."
           },
           {
-            "type": "imagepicker",
             "name": "study2_hotel_preference",
+            "type": "imagepicker",
             "title": "If you were to book a room now, which hotel would you choose?",
-            "description": "Study 2 DV (binary). Fixed set: Weihao (cool) vs Mingting (warm), Fig. S1. mediaAssignmentMode=set so both photos are always shown together; left/right was counterbalanced in the article.",
-            "isRequired": true,
+            "imageFit": "cover",
+            "mediaType": "image",
             "imageCount": 2,
-            "mediaAssignmentMode": "set",
+            "isRequired": true,
+            "description": "Study 2 DV (binary). Fixed set: Weihao (cool) vs Mingting (warm), Fig. S1. mediaAssignmentMode=set so both photos are always shown together; left/right was counterbalanced in the article.",
+            "imageSource": "huggingface",
             "mediaFolders": [
               "study2"
             ],
             "imageSelectionMode": "huggingface_random",
-            "imageFit": "cover",
+            "mediaAssignmentMode": "set",
             "randomImageSelection": true,
-            "imageSource": "huggingface",
-            "mediaType": "image",
             "excludePreviouslyUsedImages": true
           }
-        ]
+        ],
+        "description": "Study 2 scenario and DV (verbatim from the article). Stimuli: Appendix C Fig. S1 (folder study2)."
       },
       {
         "name": "need_for_uniqueness",
         "title": "Need for uniqueness",
-        "description": "Ruvio et al. (2008); 1 = strongly disagree, 7 = strongly agree (Appendix D). Measured in Studies 2 and 4.",
         "elements": [
           {
-            "type": "matrix",
             "name": "need_for_uniqueness",
-            "title": "Need for uniqueness",
-            "description": "1 = strongly disagree, 7 = strongly agree (Appendix D).",
-            "isRequired": true,
-            "columns": [
-              {
-                "value": "1",
-                "text": "1"
-              },
-              {
-                "value": "2",
-                "text": "2"
-              },
-              {
-                "value": "3",
-                "text": "3"
-              },
-              {
-                "value": "4",
-                "text": "4"
-              },
-              {
-                "value": "5",
-                "text": "5"
-              },
-              {
-                "value": "6",
-                "text": "6"
-              },
-              {
-                "value": "7",
-                "text": "7"
-              }
-            ],
             "rows": [
               {
-                "value": "nfu_1",
-                "text": "I actively seek to develop my personal uniqueness by buying special products."
+                "text": "I actively seek to develop my personal uniqueness by buying special products.",
+                "value": "nfu_1"
               },
               {
-                "value": "nfu_2",
-                "text": "The more commonplace a product is among the general population, the less interested I am in buying it."
+                "text": "The more commonplace a product is among the general population, the less interested I am in buying it.",
+                "value": "nfu_2"
               },
               {
-                "value": "nfu_3",
-                "text": "I am often on the lookout for new products that will add to my personal uniqueness."
+                "text": "I am often on the lookout for new products that will add to my personal uniqueness.",
+                "value": "nfu_3"
               }
-            ]
+            ],
+            "type": "matrix",
+            "title": "Need for uniqueness",
+            "columns": [
+              {
+                "text": "1",
+                "value": "1"
+              },
+              {
+                "text": "2",
+                "value": "2"
+              },
+              {
+                "text": "3",
+                "value": "3"
+              },
+              {
+                "text": "4",
+                "value": "4"
+              },
+              {
+                "text": "5",
+                "value": "5"
+              },
+              {
+                "text": "6",
+                "value": "6"
+              },
+              {
+                "text": "7",
+                "value": "7"
+              }
+            ],
+            "isRequired": true,
+            "description": "1 = strongly disagree, 7 = strongly agree (Appendix D)."
           }
-        ]
+        ],
+        "description": "Ruvio et al. (2008); 1 = strongly disagree, 7 = strongly agree (Appendix D). Measured in Studies 2 and 4."
       },
       {
         "name": "need_for_belonging",
         "title": "Need for belonging",
-        "description": "Leary et al. (2013); 1 = strongly disagree, 7 = strongly agree (Appendix D). Measured in Studies 2 and 4.",
         "elements": [
           {
-            "type": "matrix",
             "name": "need_for_belonging",
-            "title": "Need for belonging",
-            "description": "1 = strongly disagree, 7 = strongly agree (Appendix D).",
-            "isRequired": true,
-            "columns": [
-              {
-                "value": "1",
-                "text": "1"
-              },
-              {
-                "value": "2",
-                "text": "2"
-              },
-              {
-                "value": "3",
-                "text": "3"
-              },
-              {
-                "value": "4",
-                "text": "4"
-              },
-              {
-                "value": "5",
-                "text": "5"
-              },
-              {
-                "value": "6",
-                "text": "6"
-              },
-              {
-                "value": "7",
-                "text": "7"
-              }
-            ],
             "rows": [
               {
-                "value": "nfb_1",
-                "text": "I try hard not to do things that will make other people avoid or reject me."
+                "text": "I try hard not to do things that will make other people avoid or reject me.",
+                "value": "nfb_1"
               },
               {
-                "value": "nfb_2",
-                "text": "I do not like being alone."
+                "text": "I do not like being alone.",
+                "value": "nfb_2"
               },
               {
-                "value": "nfb_3",
-                "text": "I need to feel that there are people I can turn to in times of need."
+                "text": "I need to feel that there are people I can turn to in times of need.",
+                "value": "nfb_3"
               }
-            ]
+            ],
+            "type": "matrix",
+            "title": "Need for belonging",
+            "columns": [
+              {
+                "text": "1",
+                "value": "1"
+              },
+              {
+                "text": "2",
+                "value": "2"
+              },
+              {
+                "text": "3",
+                "value": "3"
+              },
+              {
+                "text": "4",
+                "value": "4"
+              },
+              {
+                "text": "5",
+                "value": "5"
+              },
+              {
+                "text": "6",
+                "value": "6"
+              },
+              {
+                "text": "7",
+                "value": "7"
+              }
+            ],
+            "isRequired": true,
+            "description": "1 = strongly disagree, 7 = strongly agree (Appendix D)."
           }
-        ]
+        ],
+        "description": "Leary et al. (2013); 1 = strongly disagree, 7 = strongly agree (Appendix D). Measured in Studies 2 and 4."
       },
       {
         "name": "need_for_arousal",
         "title": "Need for arousal",
-        "description": "Chen, Sun et al. (2023); three items (Appendix D). Study 2 alternative mediator.",
         "elements": [
           {
-            "type": "rating",
             "name": "arousal_1",
+            "type": "rating",
             "title": "How much arousal do you need?",
+            "rateMax": 7,
+            "rateMin": 1,
+            "isRequired": true,
             "description": "1 = very little, 7 = very much (Appendix D).",
-            "isRequired": true,
-            "rateMin": 1,
-            "rateMax": 7,
-            "minRateDescription": "Very little",
-            "maxRateDescription": "Very much"
+            "maxRateDescription": "Very much",
+            "minRateDescription": "Very little"
           },
           {
-            "type": "rating",
             "name": "arousal_2",
+            "type": "rating",
             "title": "I really want to cheer up.",
-            "description": "1 = strongly disagree, 7 = strongly agree (Appendix D).",
-            "isRequired": true,
-            "rateMin": 1,
             "rateMax": 7,
-            "minRateDescription": "Strongly disagree",
-            "maxRateDescription": "Strongly agree"
+            "rateMin": 1,
+            "isRequired": true,
+            "description": "1 = strongly disagree, 7 = strongly agree (Appendix D).",
+            "maxRateDescription": "Strongly agree",
+            "minRateDescription": "Strongly disagree"
           },
           {
-            "type": "rating",
             "name": "arousal_3",
+            "type": "rating",
             "title": "I currently feel full of energy.",
-            "description": "1 = strongly disagree, 7 = strongly agree (Appendix D).",
-            "isRequired": true,
-            "rateMin": 1,
             "rateMax": 7,
-            "minRateDescription": "Strongly disagree",
-            "maxRateDescription": "Strongly agree"
+            "rateMin": 1,
+            "isRequired": true,
+            "description": "1 = strongly disagree, 7 = strongly agree (Appendix D).",
+            "maxRateDescription": "Strongly agree",
+            "minRateDescription": "Strongly disagree"
           }
-        ]
+        ],
+        "description": "Chen, Sun et al. (2023); three items (Appendix D). Study 2 alternative mediator."
       },
       {
         "name": "self_control",
         "title": "Self-control",
-        "description": "Tangney et al. (2004); 1 = strongly disagree, 7 = strongly agree (Appendix D). Study 2 alternative mediator.",
         "elements": [
           {
-            "type": "matrix",
             "name": "self_control",
-            "title": "Self-control",
-            "description": "1 = strongly disagree, 7 = strongly agree (Appendix D).",
-            "isRequired": true,
-            "columns": [
-              {
-                "value": "1",
-                "text": "1"
-              },
-              {
-                "value": "2",
-                "text": "2"
-              },
-              {
-                "value": "3",
-                "text": "3"
-              },
-              {
-                "value": "4",
-                "text": "4"
-              },
-              {
-                "value": "5",
-                "text": "5"
-              },
-              {
-                "value": "6",
-                "text": "6"
-              },
-              {
-                "value": "7",
-                "text": "7"
-              }
-            ],
             "rows": [
               {
-                "value": "sc_1",
-                "text": "I am good at resisting temptation and completing plans on time."
+                "text": "I am good at resisting temptation and completing plans on time.",
+                "value": "sc_1"
               },
               {
-                "value": "sc_2",
-                "text": "Even when there are more interesting things, I can still focus on important work/study."
+                "text": "Even when there are more interesting things, I can still focus on important work/study.",
+                "value": "sc_2"
               },
               {
-                "value": "sc_3",
-                "text": "I do not make decisions on impulse."
+                "text": "I do not make decisions on impulse.",
+                "value": "sc_3"
               }
-            ]
+            ],
+            "type": "matrix",
+            "title": "Self-control",
+            "columns": [
+              {
+                "text": "1",
+                "value": "1"
+              },
+              {
+                "text": "2",
+                "value": "2"
+              },
+              {
+                "text": "3",
+                "value": "3"
+              },
+              {
+                "text": "4",
+                "value": "4"
+              },
+              {
+                "text": "5",
+                "value": "5"
+              },
+              {
+                "text": "6",
+                "value": "6"
+              },
+              {
+                "text": "7",
+                "value": "7"
+              }
+            ],
+            "isRequired": true,
+            "description": "1 = strongly disagree, 7 = strongly agree (Appendix D)."
           }
-        ]
+        ],
+        "description": "Tangney et al. (2004); 1 = strongly disagree, 7 = strongly agree (Appendix D). Study 2 alternative mediator."
       },
       {
         "name": "study3b_stimulus",
         "title": "Study 3B — Hotel evaluation",
-        "description": "Study 3B scenario (verbatim). Stimuli: Appendix C Fig. S2 (folder study3b); one of four conditions at random. Study 3A used Booking.com / Fig. 5 and is not included.",
         "elements": [
           {
-            "type": "expression",
             "name": "study3b_scenario",
+            "type": "expression",
             "title": "Please imagine the following:",
             "description": "Please imagine you are planning a weekend getaway with a friend and intend to book a hotel in advance via Fliggy. Upon opening the platform, the following hotel is recommended to you on the homepage."
           },
           {
-            "type": "imagepicker",
             "name": "study3b_hotel_photo",
+            "type": "imagepicker",
             "title": "Please view the recommended hotel photo.",
-            "description": "Study 3B: randomly one of four daytime/nighttime × cool/warm photos (Fig. S2). individual mode — not a fixed set.",
-            "isRequired": true,
+            "imageFit": "cover",
+            "mediaType": "image",
             "imageCount": 1,
-            "mediaAssignmentMode": "individual",
+            "isRequired": true,
+            "description": "Study 3B: randomly one of four daytime/nighttime × cool/warm photos (Fig. S2). individual mode — not a fixed set.",
+            "imageSource": "huggingface",
             "mediaFolders": [
               "study3b"
             ],
             "imageSelectionMode": "huggingface_random",
-            "imageFit": "cover",
+            "mediaAssignmentMode": "individual",
             "randomImageSelection": true,
-            "imageSource": "huggingface",
-            "mediaType": "image",
             "excludePreviouslyUsedImages": true
           },
           {
-            "type": "comment",
             "name": "study3b_open_evaluation",
+            "type": "comment",
             "title": "Please provide an overall evaluation of the hotel room.",
-            "description": "Study 3B open-ended question (minimum 30 characters), as stated in the article.",
             "isRequired": true,
             "validators": [
               {
+                "text": "Please enter at least 30 characters.",
                 "type": "text",
-                "minLength": 30,
-                "text": "Please enter at least 30 characters."
+                "minLength": 30
               }
-            ]
+            ],
+            "description": "Study 3B open-ended question (minimum 30 characters), as stated in the article."
           },
           {
-            "type": "rating",
             "name": "study3b_booking_likelihood",
+            "type": "rating",
             "title": "How likely are you to book this hotel?",
-            "description": "Study 3A/3B DV (Chen, Ahlstrom, & Xiao, 2023): likelihood of booking the hotel; 1 = not at all likely, 7 = very likely. Study 3B used the same questionnaire as Study 3A.",
-            "isRequired": true,
-            "rateMin": 1,
             "rateMax": 7,
-            "minRateDescription": "Not at all likely",
-            "maxRateDescription": "Very likely"
+            "rateMin": 1,
+            "isRequired": true,
+            "description": "Study 3A/3B DV (Chen, Ahlstrom, & Xiao, 2023): likelihood of booking the hotel; 1 = not at all likely, 7 = very likely. Study 3B used the same questionnaire as Study 3A.",
+            "maxRateDescription": "Very likely",
+            "minRateDescription": "Not at all likely"
           },
           {
-            "type": "radiogroup",
             "name": "study3b_window_view_check",
+            "type": "radiogroup",
             "title": "How would you describe the scene outside the window?",
-            "description": "Window-view manipulation check (Pretest 3a/3b; Appendix B).",
-            "isRequired": true,
             "choices": [
               {
-                "value": "1",
-                "text": "Daytime"
+                "text": "Daytime",
+                "value": "1"
               },
               {
-                "value": "2",
-                "text": "Nighttime"
+                "text": "Nighttime",
+                "value": "2"
               }
-            ]
+            ],
+            "isRequired": true,
+            "description": "Window-view manipulation check (Pretest 3a/3b; Appendix B)."
           },
           {
-            "type": "rating",
             "name": "study3b_hue_check",
+            "type": "rating",
             "title": "Please rate the color hue of this hotel photo.",
-            "description": "Hue manipulation check (Study 3A/3B). Exact stem not quoted in the article; 7-point cool–warm scale consistent with reported condition means (higher = warmer).",
-            "isRequired": true,
-            "rateMin": 1,
             "rateMax": 7,
-            "minRateDescription": "Cool",
-            "maxRateDescription": "Warm"
+            "rateMin": 1,
+            "isRequired": true,
+            "description": "Hue manipulation check (Study 3A/3B). Exact stem not quoted in the article; 7-point cool–warm scale consistent with reported condition means (higher = warmer).",
+            "maxRateDescription": "Warm",
+            "minRateDescription": "Cool"
           }
-        ]
+        ],
+        "description": "Study 3B scenario (verbatim). Stimuli: Appendix C Fig. S2 (folder study3b); one of four conditions at random. Study 3A used Booking.com / Fig. 5 and is not included."
       },
       {
         "name": "study4_choice",
         "title": "Study 4 — Hotel preference",
-        "description": "Study 4 scenario and DV (verbatim). Stimuli: Appendix C Fig. S3 (folder study4). Twin rooms for companion-based travel.",
         "elements": [
           {
-            "type": "expression",
             "name": "study4_scenario",
+            "type": "expression",
             "title": "Please imagine the following:",
             "description": "Please imagine you are planning a trip with friends and searching for a hotel at your destination using the Ctrip application. You have discovered two hotels with similar overall conditions."
           },
           {
-            "type": "imagepicker",
             "name": "study4_hotel_preference",
+            "type": "imagepicker",
             "title": "If you were to book a room now for a trip, which hotel would you choose?",
-            "description": "Study 4 DV (binary). Fixed set: Anyue (cool) vs Arton (warm), Fig. S3. mediaAssignmentMode=set so both photos are always shown together.",
-            "isRequired": true,
+            "imageFit": "cover",
+            "mediaType": "image",
             "imageCount": 2,
-            "mediaAssignmentMode": "set",
+            "isRequired": true,
+            "description": "Study 4 DV (binary). Fixed set: Anyue (cool) vs Arton (warm), Fig. S3. mediaAssignmentMode=set so both photos are always shown together.",
+            "imageSource": "huggingface",
             "mediaFolders": [
               "study4"
             ],
             "imageSelectionMode": "huggingface_random",
-            "imageFit": "cover",
+            "mediaAssignmentMode": "set",
             "randomImageSelection": true,
-            "imageSource": "huggingface",
-            "mediaType": "image",
             "excludePreviouslyUsedImages": true
           }
-        ]
+        ],
+        "description": "Study 4 scenario and DV (verbatim). Stimuli: Appendix C Fig. S3 (folder study4). Twin rooms for companion-based travel."
       },
       {
         "name": "chronotype",
         "title": "Chronotype",
-        "description": "Reduced Morningness–Eveningness items (Smith et al., 1989; Wu et al., 2025). Study 4 moderator; listed in Appendix D.",
         "elements": [
           {
-            "type": "rating",
             "name": "chronotype_1",
+            "type": "rating",
             "title": "Generally speaking, do you consider yourself more of a ‘morning person’ or an ‘evening person’?",
-            "description": "1 = definitely a morning type (morning alert and evening tired), 7 = definitely an evening type (morning tired and evening alert) (Appendix D).",
-            "isRequired": true,
-            "rateMin": 1,
             "rateMax": 7,
-            "minRateDescription": "Definitely morning type",
-            "maxRateDescription": "Definitely evening type"
+            "rateMin": 1,
+            "isRequired": true,
+            "description": "1 = definitely a morning type (morning alert and evening tired), 7 = definitely an evening type (morning tired and evening alert) (Appendix D).",
+            "maxRateDescription": "Definitely evening type",
+            "minRateDescription": "Definitely morning type"
           },
           {
-            "type": "dropdown",
             "name": "chronotype_2",
+            "type": "dropdown",
             "title": "At what time of day do you usually feel most energetic and mentally alert?",
-            "description": "Appendix D.",
-            "isRequired": true,
             "choices": [
               {
-                "value": "1",
-                "text": "4:00–8:00"
+                "text": "4:00–8:00",
+                "value": "1"
               },
               {
-                "value": "2",
-                "text": "8:00–12:00"
+                "text": "8:00–12:00",
+                "value": "2"
               },
               {
-                "value": "3",
-                "text": "12:00–15:00"
+                "text": "12:00–15:00",
+                "value": "3"
               },
               {
-                "value": "4",
-                "text": "15:00–18:00"
+                "text": "15:00–18:00",
+                "value": "4"
               },
               {
-                "value": "5",
-                "text": "18:00–21:00"
+                "text": "18:00–21:00",
+                "value": "5"
               },
               {
-                "value": "6",
-                "text": "21:00–00:00"
+                "text": "21:00–00:00",
+                "value": "6"
               },
               {
-                "value": "7",
-                "text": "00:00–04:00"
+                "text": "00:00–04:00",
+                "value": "7"
               }
-            ]
+            ],
+            "isRequired": true,
+            "description": "Appendix D."
           },
           {
-            "type": "dropdown",
             "name": "chronotype_3",
+            "type": "dropdown",
             "title": "At what time in the evening do you typically feel tired and in need of sleep?",
-            "description": "Appendix D.",
-            "isRequired": true,
             "choices": [
               {
-                "value": "1",
-                "text": "20:00–21:30"
+                "text": "20:00–21:30",
+                "value": "1"
               },
               {
-                "value": "2",
-                "text": "21:30–23:00"
+                "text": "21:30–23:00",
+                "value": "2"
               },
               {
-                "value": "3",
-                "text": "23:00–00:30"
+                "text": "23:00–00:30",
+                "value": "3"
               },
               {
-                "value": "4",
-                "text": "00:30–02:00"
+                "text": "00:30–02:00",
+                "value": "4"
               },
               {
-                "value": "5",
-                "text": "02:00–03:30"
+                "text": "02:00–03:30",
+                "value": "5"
               },
               {
-                "value": "6",
-                "text": "03:30–05:00"
+                "text": "03:30–05:00",
+                "value": "6"
               },
               {
-                "value": "7",
-                "text": "05:00–06:30"
+                "text": "05:00–06:30",
+                "value": "7"
               }
-            ]
+            ],
+            "isRequired": true,
+            "description": "Appendix D."
           }
-        ]
+        ],
+        "description": "Reduced Morningness–Eveningness items (Smith et al., 1989; Wu et al., 2025). Study 4 moderator; listed in Appendix D."
       },
       {
         "name": "control_variables",
         "title": "Control variables",
-        "description": "Appendix D control variables.",
         "elements": [
           {
-            "type": "dropdown",
             "name": "education",
+            "type": "dropdown",
             "title": "What is your highest level of educational attainment?",
-            "description": "Socioeconomic Status (Jiang & Jiang, 2020); Appendix D.",
-            "isRequired": true,
             "choices": [
               {
-                "value": "1",
-                "text": "Primary school or below"
+                "text": "Primary school or below",
+                "value": "1"
               },
               {
-                "value": "2",
-                "text": "Junior high school"
+                "text": "Junior high school",
+                "value": "2"
               },
               {
-                "value": "3",
-                "text": "Senior high school/technical secondary school"
+                "text": "Senior high school/technical secondary school",
+                "value": "3"
               },
               {
-                "value": "4",
-                "text": "Junior college"
+                "text": "Junior college",
+                "value": "4"
               },
               {
-                "value": "5",
-                "text": "Bachelor’s degree"
+                "text": "Bachelor’s degree",
+                "value": "5"
               },
               {
-                "value": "6",
-                "text": "Master’s degree"
+                "text": "Master’s degree",
+                "value": "6"
               },
               {
-                "value": "7",
-                "text": "Doctoral degree"
+                "text": "Doctoral degree",
+                "value": "7"
               }
-            ]
+            ],
+            "isRequired": true,
+            "description": "Socioeconomic Status (Jiang & Jiang, 2020); Appendix D."
           },
           {
-            "type": "dropdown",
             "name": "monthly_income",
+            "type": "dropdown",
             "title": "What is your monthly income?",
-            "description": "Socioeconomic Status (Jiang & Jiang, 2020); Appendix D.",
-            "isRequired": true,
             "choices": [
               {
-                "value": "1",
-                "text": "≤3,000 RMB"
+                "text": "≤3,000 RMB",
+                "value": "1"
               },
               {
-                "value": "2",
-                "text": "3,001–5,000 RMB"
+                "text": "3,001–5,000 RMB",
+                "value": "2"
               },
               {
-                "value": "3",
-                "text": "5,001–8,000 RMB"
+                "text": "5,001–8,000 RMB",
+                "value": "3"
               },
               {
-                "value": "4",
-                "text": "8,001–12,000 RMB"
+                "text": "8,001–12,000 RMB",
+                "value": "4"
               },
               {
-                "value": "5",
-                "text": "12,001–20,000 RMB"
+                "text": "12,001–20,000 RMB",
+                "value": "5"
               },
               {
-                "value": "6",
-                "text": "20,001–50,000 RMB"
+                "text": "20,001–50,000 RMB",
+                "value": "6"
               },
               {
-                "value": "7",
-                "text": "≥50,001 RMB"
+                "text": "≥50,001 RMB",
+                "value": "7"
               }
-            ]
+            ],
+            "isRequired": true,
+            "description": "Socioeconomic Status (Jiang & Jiang, 2020); Appendix D."
           },
           {
-            "type": "dropdown",
             "name": "economic_social_class",
-            "title": "Compared to your peers, how would you rate your economic status and social class?",
-            "description": "Socioeconomic Status (Jiang & Jiang, 2020); Appendix D.",
-            "isRequired": true,
-            "choices": [
-              {
-                "value": "1",
-                "text": "Lowest class"
-              },
-              {
-                "value": "2",
-                "text": "Lower class"
-              },
-              {
-                "value": "3",
-                "text": "Lower-middle class"
-              },
-              {
-                "value": "4",
-                "text": "Middle class"
-              },
-              {
-                "value": "5",
-                "text": "Upper-middle class"
-              },
-              {
-                "value": "6",
-                "text": "Upper class"
-              },
-              {
-                "value": "7",
-                "text": "Highest class"
-              }
-            ]
-          },
-          {
-            "type": "text",
-            "name": "booking_frequency",
-            "title": "On average, how many times per year do you book a hotel?",
-            "description": "Booking frequency (Appendix D).",
-            "isRequired": true,
-            "inputType": "number"
-          },
-          {
-            "type": "text",
-            "name": "outdoor_temperature",
-            "title": "What is the current outdoor temperature?",
-            "description": "Temperature (Ketron & Spears, 2020); answer in ℃ (Appendix D).",
-            "isRequired": true,
-            "inputType": "number"
-          },
-          {
-            "type": "text",
-            "name": "indoor_temperature",
-            "title": "What is the current indoor temperature?",
-            "description": "Temperature (Ketron & Spears, 2020); answer in ℃ (Appendix D).",
-            "isRequired": true,
-            "inputType": "number"
-          },
-          {
             "type": "dropdown",
-            "name": "weather",
-            "title": "What is the current outdoor weather?",
-            "description": "Weather Conditions (Motoki et al., 2019); Appendix D.",
-            "isRequired": true,
+            "title": "Compared to your peers, how would you rate your economic status and social class?",
             "choices": [
               {
-                "value": "1",
-                "text": "Sunny"
+                "text": "Lowest class",
+                "value": "1"
               },
               {
-                "value": "2",
-                "text": "Cloudy"
+                "text": "Lower class",
+                "value": "2"
               },
               {
-                "value": "3",
-                "text": "Rainy"
+                "text": "Lower-middle class",
+                "value": "3"
+              },
+              {
+                "text": "Middle class",
+                "value": "4"
+              },
+              {
+                "text": "Upper-middle class",
+                "value": "5"
+              },
+              {
+                "text": "Upper class",
+                "value": "6"
+              },
+              {
+                "text": "Highest class",
+                "value": "7"
               }
-            ]
+            ],
+            "isRequired": true,
+            "description": "Socioeconomic Status (Jiang & Jiang, 2020); Appendix D."
+          },
+          {
+            "name": "booking_frequency",
+            "type": "text",
+            "title": "On average, how many times per year do you book a hotel?",
+            "inputType": "number",
+            "isRequired": true,
+            "description": "Booking frequency (Appendix D)."
+          },
+          {
+            "name": "outdoor_temperature",
+            "type": "text",
+            "title": "What is the current outdoor temperature?",
+            "inputType": "number",
+            "isRequired": true,
+            "description": "Temperature (Ketron & Spears, 2020); answer in ℃ (Appendix D)."
+          },
+          {
+            "name": "indoor_temperature",
+            "type": "text",
+            "title": "What is the current indoor temperature?",
+            "inputType": "number",
+            "isRequired": true,
+            "description": "Temperature (Ketron & Spears, 2020); answer in ℃ (Appendix D)."
+          },
+          {
+            "name": "weather",
+            "type": "dropdown",
+            "title": "What is the current outdoor weather?",
+            "choices": [
+              {
+                "text": "Sunny",
+                "value": "1"
+              },
+              {
+                "text": "Cloudy",
+                "value": "2"
+              },
+              {
+                "text": "Rainy",
+                "value": "3"
+              }
+            ],
+            "isRequired": true,
+            "description": "Weather Conditions (Motoki et al., 2019); Appendix D."
           }
-        ]
+        ],
+        "description": "Appendix D control variables."
       },
       {
         "name": "demographics",
         "title": "Demographics",
-        "description": "Gender and age as reported in Study demographic tables (Appendix G).",
         "elements": [
           {
-            "type": "radiogroup",
             "name": "gender",
+            "type": "radiogroup",
             "title": "Gender",
-            "isRequired": true,
             "choices": [
               {
-                "value": "male",
-                "text": "Male"
+                "text": "Male",
+                "value": "male"
               },
               {
-                "value": "female",
-                "text": "Female"
+                "text": "Female",
+                "value": "female"
               }
-            ]
+            ],
+            "isRequired": true
           },
           {
-            "type": "dropdown",
             "name": "age",
+            "type": "dropdown",
             "title": "Age",
-            "isRequired": true,
             "choices": [
               {
-                "value": "18-25",
-                "text": "18–25"
+                "text": "18–25",
+                "value": "18-25"
               },
               {
-                "value": "26-35",
-                "text": "26–35"
+                "text": "26–35",
+                "value": "26-35"
               },
               {
-                "value": "36-49",
-                "text": "36–49"
+                "text": "36–49",
+                "value": "36-49"
               },
               {
-                "value": "50+",
-                "text": "50 +"
+                "text": "50 +",
+                "value": "50+"
               }
-            ]
+            ],
+            "isRequired": true
           }
-        ]
+        ],
+        "description": "Gender and age as reported in Study demographic tables (Appendix G)."
       }
+    ],
+    "title": "Hotel Booking Preference Survey (Wang & Li, 2027 — Studies 2, 3B, 4)",
+    "description": "Based on: Wang, L., & Li, S. (2027). The temporal shift in consumer hue preferences in hotel booking. Tourism Management, 118, 105481. https://doi.org/10.1016/j.tourman.2026.105481. This combined template covers Study 2 (Ctrip pairwise choice), Study 3B (Fliggy single photo; calibrated luminance/saturation), and Study 4 (Ctrip twin-room pairwise choice + chronotype). Study 1 is lab eye-tracking and is not included. Measurement items from Appendix D (supplementary mmc1). Stimuli from Appendix C Figs. S1–S3. In the paper, Stage 2 surveys were administered in designated morning/evening windows.",
+    "logoPosition": "right",
+    "autoGrowComment": true,
+    "progressBarType": "questions",
+    "showProgressBar": "aboveheader",
+    "showQuestionNumbers": "off",
+    "showPreviewBeforeComplete": "showAllQuestions"
+  },
+  "imageDatasetConfig": {
+    "mediaFolderTags": {
+      "study2": "set",
+      "study4": "set"
+    },
+    "mediaFolders": [
+      "study2",
+      "study3b",
+      "study4"
     ]
   },
-  "preloadedImages": [
-    {
-      "url": "/project_templates/2027-wang-hotel-hue/study2/cool-weihao.jpg",
-      "name": "cool-weihao.jpg",
-      "key": "builtin/2027-wang-hotel-hue/study2/cool-weihao.jpg",
-      "type": "image",
-      "folder": "study2"
-    },
-    {
-      "url": "/project_templates/2027-wang-hotel-hue/study2/warm-mingting.jpg",
-      "name": "warm-mingting.jpg",
-      "key": "builtin/2027-wang-hotel-hue/study2/warm-mingting.jpg",
-      "type": "image",
-      "folder": "study2"
-    },
-    {
-      "url": "/project_templates/2027-wang-hotel-hue/study3b/daytime-cool.jpg",
-      "name": "daytime-cool.jpg",
-      "key": "builtin/2027-wang-hotel-hue/study3b/daytime-cool.jpg",
-      "type": "image",
-      "folder": "study3b"
-    },
-    {
-      "url": "/project_templates/2027-wang-hotel-hue/study3b/daytime-warm.jpg",
-      "name": "daytime-warm.jpg",
-      "key": "builtin/2027-wang-hotel-hue/study3b/daytime-warm.jpg",
-      "type": "image",
-      "folder": "study3b"
-    },
-    {
-      "url": "/project_templates/2027-wang-hotel-hue/study3b/nighttime-cool.jpg",
-      "name": "nighttime-cool.jpg",
-      "key": "builtin/2027-wang-hotel-hue/study3b/nighttime-cool.jpg",
-      "type": "image",
-      "folder": "study3b"
-    },
-    {
-      "url": "/project_templates/2027-wang-hotel-hue/study3b/nighttime-warm.jpg",
-      "name": "nighttime-warm.jpg",
-      "key": "builtin/2027-wang-hotel-hue/study3b/nighttime-warm.jpg",
-      "type": "image",
-      "folder": "study3b"
-    },
-    {
-      "url": "/project_templates/2027-wang-hotel-hue/study4/cool-anyue.jpg",
-      "name": "cool-anyue.jpg",
-      "key": "builtin/2027-wang-hotel-hue/study4/cool-anyue.jpg",
-      "type": "image",
-      "folder": "study4"
-    },
-    {
-      "url": "/project_templates/2027-wang-hotel-hue/study4/warm-arton.jpg",
-      "name": "warm-arton.jpg",
-      "key": "builtin/2027-wang-hotel-hue/study4/warm-arton.jpg",
-      "type": "image",
-      "folder": "study4"
-    }
-  ],
-  "preloadedSource": "builtin",
-  "bundledImageFolder": "2027-wang-hotel-hue"
+  "preloadedImages": [],
+  "preloadedSource": null,
+  "preloadedAt": null
 }

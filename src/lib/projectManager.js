@@ -4,6 +4,7 @@ import { saveSurveyConfig, loadSurveyConfig, deleteSurveyConfig, getSavedConfigL
 import { saveProjectToProjectsFolder, loadProjectsFromFiles } from './fileSystemManager';
 import { projectTemplates, getTemplateById } from './projectTemplates';
 import { API_ROOT } from './apiConfig';
+import { hydrateSkillContractSnapshots } from './skillContracts';
 
 // Active project is now stored in sessionStorage (session-only)
 const ACTIVE_PROJECT_KEY = 'active_project_id';
@@ -32,6 +33,7 @@ export const createProject = async (projectData) => {
       lastModified: now,
       templateId: projectData.templateId || null,
       supabaseConfig: projectData.supabaseConfig || null,
+      deployedParticipantUrl: projectData.deployedParticipantUrl || '',
       imageDatasetConfig: projectData.imageDatasetConfig || {
         enabled: true,
         huggingFaceToken: '',
@@ -100,6 +102,7 @@ export const duplicateProject = async (sourceProjectId, newName, sourceProject) 
       description: `Copy of ${sourceProject?.name || 'Unknown Project'}`,
       templateId: null, // Duplicated projects are always custom
       supabaseConfig: sourceProject?.supabaseConfig || null,
+      deployedParticipantUrl: sourceProject?.deployedParticipantUrl || '',
       imageDatasetConfig: sourceProject?.imageDatasetConfig || {
         enabled: true,
         huggingFaceToken: '',
@@ -190,7 +193,9 @@ export const updateProject = async (projectId, updates) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         project: updatedProject,
-        surveyConfig: data.surveyConfig // Preserve existing surveyConfig
+        surveyConfig: data.surveyConfig,
+        expectedDraftUpdatedAt: data.draftUpdatedAt || data.savedAt || null,
+        expectedSavedAt: data.savedAt || null,
       })
     });
     
@@ -219,12 +224,54 @@ export const getUserProjects = async () => {
   }
 };
 
+// Live / deployed participant view: released snapshot when version-managed.
+export const getParticipantProject = async (projectId) => {
+  try {
+    const response = await fetch(`${API_ROOT}/projects/${projectId}`);
+    const data = await response.json();
+    if (!data.success || !data.project) return null;
+    const surveyConfig = (data.releaseManaged && data.publishedSurveyConfig)
+      ? data.publishedSurveyConfig
+      : data.surveyConfig;
+    const publishedMedia = data.publishedMedia || {};
+    return {
+      ...data.project,
+      _surveyConfig: surveyConfig,
+      preloadedImages: publishedMedia.preloadedImages
+        || surveyConfig?.preloadedImages
+        || data.project.preloadedImages
+        || [],
+      imageDatasetConfig: {
+        ...(data.project.imageDatasetConfig || {}),
+        mediaFolderTags: publishedMedia.imageDatasetConfig?.mediaFolderTags
+          || data.project.imageDatasetConfig?.mediaFolderTags
+          || {},
+      },
+      savedAt: data.savedAt || null,
+      draftUpdatedAt: data.draftUpdatedAt || data.savedAt || null,
+      releaseManaged: !!data.releaseManaged,
+      publishedVersion: data.publishedVersion || 0,
+    };
+  } catch (error) {
+    console.error('Error getting participant project:', error);
+    return null;
+  }
+};
+
 // ✅ getProjectById now fetches from API
 export const getProjectById = async (projectId) => {
   try {
     const response = await fetch(`${API_ROOT}/projects/${projectId}`);
     const data = await response.json();
-    return data.project || null;
+    if (!data.success || !data.project) return null;
+    return {
+      ...data.project,
+      _surveyConfig: data.surveyConfig,
+      savedAt: data.savedAt || null,
+      draftUpdatedAt: data.draftUpdatedAt || data.savedAt || null,
+      releaseManaged: !!data.releaseManaged,
+      publishedVersion: data.publishedVersion || 0,
+    };
   } catch (error) {
     console.error('Error getting project by ID from API:', error);
     return null;
@@ -283,9 +330,14 @@ export const migrateExistingConfig = async () => {
 /** Save project + survey config to local file system (used by auto-save). */
 export const saveProjectFull = async (project, surveyConfig, supabaseConfig = null) => {
   try {
-    const result = await saveProjectToProjectsFolder(project, surveyConfig, supabaseConfig);
+    const frozenConfig = await hydrateSkillContractSnapshots(surveyConfig);
+    const result = await saveProjectToProjectsFolder(project, frozenConfig, supabaseConfig);
     if (!result.success) throw new Error(result.error || 'Save failed');
-    return { success: true };
+    return {
+      success: true,
+      savedAt: result.savedAt,
+      draftUpdatedAt: result.draftUpdatedAt || result.savedAt,
+    };
   } catch (error) {
     console.error('saveProjectFull:', error);
     return { success: false, error: error.message };

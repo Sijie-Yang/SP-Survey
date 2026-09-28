@@ -241,3 +241,10 @@ describe('Skill field export parity with equivalent native questions', () => {
     expect(buildQuestionSummaryCsv(question, responses)).toContain(',mean,7,1');
   });
 });
+
+
+test('custom scale-group analysis preserves configured ranges, step and dimension overrides', () => {
+  const native = skillFieldNativeQuestion({ name: 'custom', skillConfig: { scaleMin: 0, scaleMax: 100, scaleStep: 0.5 } },
+    { key: 'score', type: 'scaleGroup', dimensions: [{ id: 'x', max: 50 }] });
+  expect(native).toMatchObject({ scaleMin: 0, scaleMax: 100, scaleStep: 0.5, dimensions: [{ id: 'x', max: 50 }] });
+});

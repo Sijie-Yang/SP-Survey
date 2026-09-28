@@ -103,3 +103,28 @@ describe('catalog', () => {
     ]));
   });
 });
+
+describe('declared settings and strict result shapes', () => {
+  test.each([
+    ['rating', 99, { min: 1, max: 5 }],
+    ['number', '', {}],
+    ['count', -1, {}],
+    ['count', 1.5, {}],
+    ['choice', 'C', { options: ['A', 'B'] }],
+    ['allocation', { a: 2, b: 'invalid' }, { options: ['a', 'b'] }],
+    ['rankedList', ['a', 'a'], { options: ['a', 'b'] }],
+    ['points', [{ x: 0, y: 0 }, { x: 2, y: 1 }], {}],
+    ['matrix', { r1: 'a' }, { rows: ['r1', 'r2'], columns: ['a'] }],
+    ['timeRanges', [{ start: 3, end: 1 }], {}],
+    ['timeSeries', [{ t: -1, v: 5 }], {}],
+    ['pairwiseChoice', { left: 'a', right: 'b', winner: 'c' }, {}],
+    ['bestWorst', { best: 'a', worst: 'a' }, {}],
+  ])('rejects malformed %s output', (type, value, settings) => {
+    expect(validateSkillResultValue(type, value, settings).ok).toBe(false);
+  });
+
+  test('zero is valid and researcher config overrides schema defaults', () => {
+    expect(checkAnswerAgainstResultSchema({ v: 0 }, [{ key: 'v', type: 'rating', min: 1, max: 5 }], { min: 0 }).fields[0].ok).toBe(true);
+    expect(checkAnswerAgainstResultSchema({ v: 5 }, [{ key: 'v', type: 'rating', min: 1, max: 5 }], { max: 3 }).fields[0].ok).toBe(false);
+  });
+});

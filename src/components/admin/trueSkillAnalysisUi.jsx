@@ -10,8 +10,11 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
   TableSortLabel,
+  Tabs,
+  Tab,
   Paper,
 } from '@mui/material';
 import Download from '@mui/icons-material/Download';
@@ -21,7 +24,7 @@ import { downloadTextFile } from '../../lib/methodsExport';
 
 export const TRUESKILL_SORT_COLUMNS = [
   { id: 'mu', label: 'μ', align: 'right' },
-  { id: 'muStd5', label: 'Std. μ (0–5)', align: 'right' },
+  { id: 'muStd5', label: 'Relative μ (0–5)', align: 'right' },
   { id: 'sigma', label: 'σ', align: 'right' },
   { id: 'conservative', label: 'μ−3σ', align: 'right' },
   { id: 'games', label: 'Games', align: 'right' },
@@ -46,8 +49,20 @@ const INT_COLS = new Set([
   'games', 'nRanks', 'wins', 'losses', 'best', 'worst', 'appearances',
 ]);
 const ASC_DEFAULT_COLS = new Set(['avgRank', 'imageKey']);
+export const TRUESKILL_PAGE_SIZE = 10;
+
+function imageDisplayName(key) {
+  const source = String(key || '');
+  const filename = source.split(/[?#]/)[0].split('/').pop() || source;
+  try { return decodeURIComponent(filename); } catch { return filename; }
+}
 
 export function compareTrueSkillRows(a, b, orderBy, order) {
+  if (orderBy === 'imageKey') {
+    const cmp = imageDisplayName(a.imageKey).localeCompare(imageDisplayName(b.imageKey), undefined, { numeric: true })
+      || String(a.imageKey).localeCompare(String(b.imageKey));
+    return order === 'asc' ? cmp : -cmp;
+  }
   const av = a[orderBy];
   const bv = b[orderBy];
   if (av == null && bv == null) return String(a.imageKey).localeCompare(String(b.imageKey));
@@ -62,19 +77,51 @@ export function compareTrueSkillRows(a, b, orderBy, order) {
   return order === 'asc' ? cmp : -cmp;
 }
 
-export function TrueSkillMuChart({ rankings }) {
+export function TrueSkillMuChart({ rankings, title, caption, xLabel }) {
   if (!rankings?.length) return null;
-  const scores = rankings.map((r) => r.muStd5 ?? 0);
+  const scores = rankings.map((r) => r.muStd5 ?? 0).filter((value) => value != null && !Number.isNaN(value));
+  if (!scores.length) return null;
   return (
     <DensityHistogramChart
       scores={scores}
       domainMin={0}
       domainMax={5}
-      title="Standardized μ distribution (0–5)"
-      caption="Blue bars: histogram of standardized μ (density = count / n / bin width). Orange curve: fitted normal PDF."
-      xLabel="Standardized μ (0–5)"
+      title={title || 'Within-question relative μ distribution (0–5)'}
+      caption={caption || 'Within-question min-max scaling, not a comparable 5-point rating scale. Blue: density histogram. Orange: fitted normal PDF.'}
+      xLabel={xLabel || 'Within-question relative μ (0–5)'}
       padB={36}
     />
+  );
+}
+
+/** Category rankings sit in tabs under one question. A single ranking has no tabs. */
+export function TrueSkillBoardStack({ boards, renderBoard }) {
+  const items = boards || [];
+  const [tab, setTab] = useState(0);
+  if (!items.length) return null;
+  if (items.length === 1) return renderBoard(items[0]);
+  const safeTab = Math.min(tab, items.length - 1);
+  return (
+    <Box>
+      <Tabs
+        value={safeTab}
+        onChange={(_, value) => setTab(value)}
+        variant="scrollable"
+        scrollButtons="auto"
+        sx={{
+          mt: 1,
+          borderBottom: 1,
+          borderColor: 'divider',
+          minHeight: 40,
+          '& .MuiTab-root': { minHeight: 40, textTransform: 'none', fontSize: 13 },
+        }}
+      >
+        {items.map((board, index) => (
+          <Tab key={board.label || `ranking-${index}`} label={board.label} />
+        ))}
+      </Tabs>
+      {renderBoard(items[safeTab])}
+    </Box>
   );
 }
 
@@ -88,6 +135,8 @@ export function TrueSkillTable({
   const resolvedUrl = useContext(ImageResolverContext);
   const [orderBy, setOrderBy] = useState('mu');
   const [order, setOrder] = useState('desc');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(TRUESKILL_PAGE_SIZE);
 
   const sorted = useMemo(() => {
     if (!rankings?.length) return [];
@@ -95,6 +144,11 @@ export function TrueSkillTable({
   }, [rankings, orderBy, order]);
 
   if (!rankings?.length) return null;
+
+  const maxPage = Math.max(0, Math.ceil(sorted.length / rowsPerPage) - 1);
+  const safePage = Math.min(page, maxPage);
+  const pageStart = safePage * rowsPerPage;
+  const visible = sorted.slice(pageStart, pageStart + rowsPerPage);
 
   const resolveImg = (row) => {
     if (row.displayUrl) return row.displayUrl;
@@ -104,6 +158,7 @@ export function TrueSkillTable({
   };
 
   const handleSort = (colId) => {
+    setPage(0);
     if (orderBy === colId) {
       setOrder((prev) => (prev === 'desc' ? 'asc' : 'desc'));
       return;
@@ -126,6 +181,7 @@ export function TrueSkillTable({
           <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>{title}</Typography>
           <Typography variant="caption" color="text.secondary" display="block">
             {caption || 'Click a column header to sort (default: μ descending).'}
+            {' '}Sequential pairwise approximation; comparisons from one trial are dependent. Use as an exploratory ranking, not a significance test.
           </Typography>
         </Box>
         {onExport && (
@@ -166,20 +222,22 @@ export function TrueSkillTable({
             </TableRow>
           </TableHead>
           <TableBody>
-            {sorted.map((row, idx) => (
+            {visible.map((row, idx) => (
               <TableRow key={row.imageKey}>
-                <TableCell>{idx + 1}</TableCell>
+                <TableCell>{pageStart + idx + 1}</TableCell>
                 <TableCell>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     {resolveImg(row) && (
                       <Box
                         component="img"
                         src={resolveImg(row)}
-                        alt={row.imageKey}
-                        sx={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 0.5 }}
+                        alt={imageDisplayName(row.imageKey)}
+                        sx={{ width: 40, height: 40, flexShrink: 0, objectFit: 'cover', borderRadius: 0.5 }}
                       />
                     )}
-                    <Typography variant="caption">{row.imageKey}</Typography>
+                    <Typography variant="caption" noWrap title={row.imageKey} sx={{ maxWidth: { xs: 160, sm: 280 } }}>
+                      {imageDisplayName(row.imageKey)}
+                    </Typography>
                   </Box>
                 </TableCell>
                 {columns.map((col) => (
@@ -192,18 +250,35 @@ export function TrueSkillTable({
           </TableBody>
         </Table>
       </TableContainer>
+      {sorted.length > TRUESKILL_PAGE_SIZE && (
+        <TablePagination
+          component="div"
+          count={sorted.length}
+          page={safePage}
+          rowsPerPage={rowsPerPage}
+          rowsPerPageOptions={[10, 25, 50]}
+          onPageChange={(_, nextPage) => setPage(nextPage)}
+          onRowsPerPageChange={(event) => {
+            setRowsPerPage(Number(event.target.value));
+            setPage(0);
+          }}
+          labelRowsPerPage="Rows per page"
+        />
+      )}
     </Box>
   );
 }
 
-export function exportTrueSkillCsv(questionName, rankings, orderBy = 'mu', order = 'desc', extraHeaders = []) {
+export function exportTrueSkillCsv(questionName, rankings, orderBy = 'mu', order = 'desc', extraHeaders = [], category = null) {
   const sorted = [...(rankings || [])].sort((a, b) => compareTrueSkillRows(a, b, orderBy, order));
   const headers = [
+    ...(category ? ['category'] : []),
     'rank', 'image',
     ...extraHeaders.map((h) => h.id),
     'mu', 'mu_std5', 'sigma', 'conservative', 'wins', 'losses', 'games',
   ];
   const rows = sorted.map((r, idx) => [
+    ...(category ? [category] : []),
     idx + 1,
     r.imageKey,
     ...extraHeaders.map((h) => {
@@ -220,5 +295,6 @@ export function exportTrueSkillCsv(questionName, rankings, orderBy = 'mu', order
     r.games ?? '',
   ]);
   const csv = [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
-  downloadTextFile(csv, `${questionName}_trueskill_${new Date().toISOString().slice(0, 10)}.csv`);
+  const slug = category ? `_${String(category).replace(/[^\w.-]+/g, '_')}` : '';
+  downloadTextFile(csv, `${questionName}${slug}_trueskill_${new Date().toISOString().slice(0, 10)}.csv`);
 }

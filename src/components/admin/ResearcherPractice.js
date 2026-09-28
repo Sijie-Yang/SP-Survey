@@ -1,3 +1,4 @@
+import { useWorkflowText } from '../../contexts/workflowI18n';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Model } from 'survey-core';
 import { Survey } from 'survey-react-ui';
@@ -17,6 +18,7 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
+  IconButton,
   List,
   ListItemButton,
   ListItemIcon,
@@ -27,9 +29,10 @@ import {
   Snackbar,
   Stack,
   TextField,
+  Tooltip,
   Typography,
 } from '@mui/material';
-import { PlayArrow, Stop, SkipNext, Replay } from '@mui/icons-material';
+import { PlayArrow, Stop, SkipNext, Replay, Settings } from '@mui/icons-material';
 import registerImageRankingWidget, {
   registerImageRatingWidget,
   registerImageBooleanWidget,
@@ -38,22 +41,28 @@ import registerImageRankingWidget, {
 import { buildSingleQuestionSurvey } from '../../lib/singleQuestionSurvey';
 import { applyAdminThemeToSurveyModel } from '../../lib/surveyStorage';
 import { saveSurveyResponse, supabase } from '../../lib/supabase';
-import { LOCAL_USER_ID } from '../../lib/appMode';
-import { API_ROOT } from '../../lib/apiConfig';
+import { createPracticeSubmission } from '../../lib/practiceSubmission';
+import { surveyRevision } from '../../lib/surveyRevision';
+// Self-hosted edition has no login; practice rows stay anonymous.
 import { buildResponseMediaUrlMap } from '../../lib/skillMediaUtils';
 import { ImageResolverContext } from './imageResolverContext';
 import {
+  buildQuestionCardProps,
   QuestionCard,
-  collectAnswers,
-  responsesEligibleForQuestion,
 } from './ResultsAnalysis';
+import QuestionEditor from './QuestionEditor';
 import { SurveyTrialNavProvider } from '../../contexts/SurveyTrialNavContext';
 import {
   clearTrialsAnswerStore,
   collectSurveyDataWithTrials,
 } from '../../lib/trialNavigation';
 import { enrichSurveyResponses } from '../../lib/enrichSurveyResponses';
-import { syncInjectedMediaOntoSurveyModel } from '../../lib/surveyMediaInjection';
+import { resolveSkillQuestions, syncInjectedMediaOntoSurveyModel } from '../../lib/surveyMediaInjection';
+import { resolveMediaPoolForPreview } from '../../lib/previewMediaLibrary';
+import { applySurveyLocale } from '../../lib/surveyLocale';
+import { AdminPageHeader } from './AdminPageLayout';
+import { useRegion } from '../../contexts/RegionContext';
+import { tf } from '../../contexts/adminI18n';
 
 let widgetsRegistered = false;
 function ensureWidgets() {
@@ -80,11 +89,36 @@ function isPracticeable(q) {
   return true;
 }
 
+/** Drop Practice-only bookkeeping fields before writing back to surveyConfig. */
+function stripPracticeMeta(question) {
+  if (!question || typeof question !== 'object') return question;
+  const {
+    _pageName,
+    _pageTitle,
+    _pageIndex,
+    _allResponses,
+    ...rest
+  } = question;
+  return rest;
+}
+
+function replaceQuestionInConfig(surveyConfig, originalName, updatedQuestion) {
+  const clean = stripPracticeMeta(updatedQuestion);
+  const pages = (surveyConfig?.pages || []).map((page) => ({
+    ...page,
+    elements: (page.elements || []).map((el) => (
+      el?.name === originalName ? { ...clean } : el
+    )),
+  }));
+  return { ...surveyConfig, pages };
+}
+
 function newSessionId() {
   return `prac_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
 }
 
 const PRACTICE_SESSION_KEY = 'researcher_practice_sessions';
+const PRACTICE_UI_KEY = 'researcher_practice_ui';
 
 function readPracticeStore() {
   try {
@@ -115,6 +149,30 @@ function persistSession(projectId, payload) {
   }
 }
 
+function readPracticeUiStore() {
+  try {
+    return JSON.parse(sessionStorage.getItem(PRACTICE_UI_KEY) || '{}') || {};
+  } catch {
+    return {};
+  }
+}
+
+function loadPracticeUi(projectId) {
+  if (!projectId) return null;
+  return readPracticeUiStore()[projectId] || null;
+}
+
+function persistPracticeUi(projectId, patch) {
+  if (!projectId) return;
+  try {
+    const all = readPracticeUiStore();
+    all[projectId] = { ...(all[projectId] || {}), ...patch, updatedAt: Date.now() };
+    sessionStorage.setItem(PRACTICE_UI_KEY, JSON.stringify(all));
+  } catch (err) {
+    console.warn('Failed to persist practice UI:', err);
+  }
+}
+
 /**
  * Free practice: pick any question and answer anytime.
  * Optional session: multi-question queue with fixed/unlimited repeats; stays alive until Stop.
@@ -122,9 +180,12 @@ function persistSession(projectId, payload) {
 export default function ResearcherPractice({
   currentProject,
   surveyConfig,
+  onSurveyConfigChange,
   onSessionActiveChange,
 }) {
-  const user = { id: LOCAL_USER_ID, email: null };
+  const tx = useWorkflowText();
+  const user = null;
+  const { t, language } = useRegion();
   const projectId = currentProject?.id || null;
   const questions = useMemo(
     () => flattenQuestions(surveyConfig).filter(isPracticeable),
@@ -179,6 +240,8 @@ export default function ResearcherPractice({
   const [roundMeta, setRoundMeta] = useState(null);
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [retrySubmission, setRetrySubmission] = useState(false);
+  const submittingRef = useRef(false);
   const [error, setError] = useState(null);
   const [statusMsg, setStatusMsg] = useState(null); // durable messages only (session start/stop)
   const [toast, setToast] = useState(null); // brief overlay — no layout shift
@@ -196,11 +259,17 @@ export default function ResearcherPractice({
   const [setupUnlimited, setSetupUnlimited] = useState(false);
   const [setupRepeats, setSetupRepeats] = useState(10);
 
+  // Inline question settings (same QuestionEditor as Survey Builder)
+  const [editingQuestion, setEditingQuestion] = useState(null); // { originalName, question }
+
   const usedImageKeysRef = useRef(new Set());
   const usedGroupKeysRef = useRef(new Set());
   const roundMetaRef = useRef(null);
   const sessionRef = useRef(null);
   const hydratedRef = useRef(null);
+  const questionListRef = useRef(null);
+  const selectedItemRef = useRef(null);
+  const restoreScrollRef = useRef(null);
 
   const selectedQuestion = useMemo(
     () => questions.find((q) => q.name === selectedName) || null,
@@ -224,28 +293,20 @@ export default function ResearcherPractice({
   }, [sessionActive, onSessionActiveChange]);
 
   const refreshAnalysisData = useCallback(async () => {
-    if (!projectId) {
+    if (!projectId || !supabase) {
       setPracticeCounts({});
       setAnalysisResponses([]);
       return;
     }
     setCountsLoading(true);
     try {
-      let rows = [];
-      if (supabase) {
-        const { data, error: qErr } = await supabase
-          .from('survey_responses')
-          .select('*')
-          .eq('project_id', projectId)
-          .order('created_at', { ascending: false });
-        if (qErr) throw qErr;
-        rows = data || [];
-      } else {
-        const response = await fetch(`${API_ROOT}/responses`);
-        if (!response.ok) throw new Error(`Local response API returned ${response.status}`);
-        const json = await response.json();
-        rows = (json.responses || []).filter((row) => !row.project_id || row.project_id === projectId);
-      }
+      const { data, error: qErr } = await supabase
+        .from('survey_responses')
+        .select('*')
+        .eq('project_id', projectId)
+        .order('created_at', { ascending: false });
+      if (qErr) throw qErr;
+      const rows = data || [];
       setAnalysisResponses(rows);
       const counts = {};
       rows.forEach((row) => {
@@ -280,15 +341,19 @@ export default function ResearcherPractice({
 
   const analysisPropsForQuestion = useCallback((question) => {
     if (!question?.name) return null;
-    const pool = responsesEligibleForQuestion(question.name, analysisResponses);
-    return {
-      question: { ...question, _allResponses: pool },
-      answers: collectAnswers(question.name, analysisResponses),
-      totalResponses: pool.length,
+    // This panel reports researcher practice attempts only. Formal participant
+    // submissions remain available in Results Analysis and must not distort the
+    // immediate practice feedback.
+    const practiceResponses = analysisResponses.filter((row) => (
+      row.survey_metadata?.practice_mode
+      && row.survey_metadata?.practice_question === question.name
+    ));
+    return buildQuestionCardProps(question, practiceResponses, {
       questionNumber: questionNumberByName.get(question.name) ?? null,
-      allResponses: pool,
-    };
-  }, [analysisResponses, questionNumberByName]);
+      surveyConfig,
+      exportResponses: practiceResponses,
+    });
+  }, [analysisResponses, questionNumberByName, surveyConfig]);
 
   const writeSessionPersist = useCallback((nextSession) => {
     if (!projectId) return;
@@ -358,17 +423,51 @@ export default function ResearcherPractice({
         totalSaved: saved.totalSaved || 0,
       };
       applySession(restored, { persist: false, reload: true });
-      setToast('Practice session restored');
+      setToast(tx("Practice session restored"));
     } else {
       setSession(null);
       sessionRef.current = null;
-      setSelectedName(null);
       setModel(null);
       setRoundMeta(null);
       usedImageKeysRef.current = new Set();
       usedGroupKeysRef.current = new Set();
+      const ui = loadPracticeUi(projectId);
+      if (ui?.selectedName) {
+        setSelectedName(ui.selectedName);
+        restoreScrollRef.current = typeof ui.listScrollTop === 'number' ? ui.listScrollTop : null;
+        setReloadToken((t) => t + 1);
+      } else {
+        setSelectedName(null);
+      }
     }
   }, [projectId, applySession]);
+
+  // Drop restored selection if that question no longer exists in the survey.
+  useEffect(() => {
+    if (!selectedName || !questions.length) return;
+    if (!questions.some((q) => q.name === selectedName)) setSelectedName(null);
+  }, [questions, selectedName]);
+
+  // Remember free-pick (and session) selection across tab switches / remounts.
+  useEffect(() => {
+    if (!projectId || !selectedName) return;
+    persistPracticeUi(projectId, { selectedName });
+  }, [projectId, selectedName]);
+
+  // Restore question-list scroll, then ensure the selected row is visible.
+  useEffect(() => {
+    const listEl = questionListRef.current;
+    if (!listEl) return undefined;
+    const savedTop = restoreScrollRef.current;
+    if (typeof savedTop === 'number') {
+      listEl.scrollTop = savedTop;
+      restoreScrollRef.current = null;
+    }
+    const t = window.setTimeout(() => {
+      selectedItemRef.current?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
+    }, 50);
+    return () => window.clearTimeout(t);
+  }, [selectedName, projectId, questionsByPage.length]);
 
   // Drop session questions that no longer exist; keep survey order
   useEffect(() => {
@@ -380,7 +479,7 @@ export default function ResearcherPractice({
       && valid.every((n, i) => n === session.questionNames[i])) return;
     if (!valid.length) {
       applySession(null);
-      setToast('Session questions were removed — session ended');
+      setToast(tx("Session questions were removed — session ended"));
       return;
     }
     const currentName = session.questionNames[session.queueIndex];
@@ -401,6 +500,53 @@ export default function ResearcherPractice({
     usedGroupKeysRef.current = new Set();
     setReloadToken((t) => t + 1);
   };
+
+  const openQuestionSettings = useCallback((question) => {
+    if (!question?.name) return;
+    if (!surveyConfig || typeof onSurveyConfigChange !== 'function') {
+      setError(t.practiceSettingsUnavailable);
+      return;
+    }
+    setEditingQuestion({
+      originalName: question.name,
+      question: stripPracticeMeta(question),
+    });
+  }, [surveyConfig, onSurveyConfigChange, t.practiceSettingsUnavailable]);
+
+  const saveQuestionSettings = useCallback((updatedQuestion) => {
+    if (!editingQuestion || !surveyConfig || typeof onSurveyConfigChange !== 'function') {
+      setEditingQuestion(null);
+      return;
+    }
+    const originalName = editingQuestion.originalName;
+    const nextName = updatedQuestion?.name || originalName;
+    const nextConfig = replaceQuestionInConfig(surveyConfig, originalName, updatedQuestion);
+    onSurveyConfigChange(nextConfig);
+
+    if (selectedName === originalName && nextName !== originalName) {
+      setSelectedName(nextName);
+      persistPracticeUi(projectId, { selectedName: nextName });
+    }
+
+    if (sessionRef.current?.questionNames?.includes(originalName)) {
+      const cur = sessionRef.current;
+      const questionNames = cur.questionNames.map((n) => (n === originalName ? nextName : n));
+      applySession({ ...cur, questionNames }, { persist: true, reload: false });
+    }
+
+    setEditingQuestion(null);
+    setToast(t.practiceSettingsSaved);
+    // Reload practice widget with the updated question definition.
+    setReloadToken((token) => token + 1);
+  }, [
+    editingQuestion,
+    surveyConfig,
+    onSurveyConfigChange,
+    selectedName,
+    projectId,
+    applySession,
+    t.practiceSettingsSaved,
+  ]);
 
   /** Always order selected names by survey appearance, not click order. */
   const sortBySurveyOrder = useCallback((names) => {
@@ -437,7 +583,7 @@ export default function ResearcherPractice({
       setupSelected.filter((n) => questions.some((q) => q.name === n)),
     );
     if (!names.length) {
-      setError('Select at least one question for the session.');
+      setError(tx("Select at least one question for the session."));
       return;
     }
     const repeats = setupUnlimited ? 1 : Math.max(1, parseInt(setupRepeats, 10) || 1);
@@ -462,7 +608,7 @@ export default function ResearcherPractice({
       ? 'one of each question per round'
       : 'finish one question before the next';
     setToast(
-      setupUnlimited
+      language === 'zh' ? `已开始连续练习，共 ${names.length} 道题${setupUnlimited ? '，不限次数' : '，每题 ' + repeats + ' 次'}` : setupUnlimited
         ? `Session started · ${names.length} Q · ${paceLabel} · unlimited`
         : `Session started · ${names.length} Q · ${paceLabel} · ${repeats}×`,
     );
@@ -473,10 +619,10 @@ export default function ResearcherPractice({
     applySession(null, { persist: true, reload: false });
     setModel(null);
     setRoundMeta(null);
-    setToast('Session stopped. Free practice is available again.');
+    setToast(tx("Session stopped. Free practice is available again."));
   };
 
-  const loadRound = useCallback(() => {
+  const loadRound = useCallback(async () => {
     if (!selectedQuestion) {
       setModel(null);
       return;
@@ -486,9 +632,15 @@ export default function ResearcherPractice({
     try {
       ensureWidgets();
       clearTrialsAnswerStore();
+      const mediaPool = await resolveMediaPoolForPreview(currentProject?.preloadedImages || []);
+      const questionConfig = {
+        pages: [{ elements: [JSON.parse(JSON.stringify(selectedQuestion))] }],
+      };
+      await resolveSkillQuestions(questionConfig);
+      const resolvedQuestion = questionConfig.pages[0].elements[0];
       const built = buildSingleQuestionSurvey({
-        question: selectedQuestion,
-        projectImages: currentProject?.preloadedImages || [],
+        question: resolvedQuestion,
+        projectImages: mediaPool,
         usedImageKeys: usedImageKeysRef.current,
         usedGroupKeys: usedGroupKeysRef.current,
         randomMedia: true,
@@ -504,6 +656,7 @@ export default function ResearcherPractice({
         }
       }
       const m = new Model(built.surveyJson);
+      applySurveyLocale(m, surveyConfig);
       m.showPreviewBeforeComplete = false;
       m.showCompletedPage = false;
       applyAdminThemeToSurveyModel(m, surveyConfig);
@@ -518,11 +671,12 @@ export default function ResearcherPractice({
       };
       setRoundMeta(meta);
       roundMetaRef.current = meta;
+      setRetrySubmission(false);
       setPracticeNavKey((k) => k + 1);
       setModel(m);
     } catch (err) {
       console.error('Practice round failed:', err);
-      setError(err.message || 'Failed to load question');
+      setError(err.message || tx("Failed to load question"));
       setModel(null);
     } finally {
       setLoading(false);
@@ -533,12 +687,24 @@ export default function ResearcherPractice({
   }, [selectedQuestion, currentProject?.preloadedImages, currentProject?.id, currentProject?.imageDatasetConfig, surveyConfig, reloadToken, writeSessionPersist]);
 
   useEffect(() => {
-    loadRound();
+    let cancelled = false;
+    (async () => {
+      await loadRound();
+      if (cancelled) return;
+    })();
+    return () => { cancelled = true; };
   }, [loadRound]);
 
   const enrichAndSave = async (surveyModel) => {
     const meta = roundMetaRef.current;
     if (!meta?.questionName) throw new Error('No active question');
+
+    // A failed response may already have reached the database. Resend the exact request.
+    if (meta.pendingSubmission) {
+      const result = await saveSurveyResponse(meta.pendingSubmission);
+      if (!result.success) throw new Error(result.error?.message || result.error || 'Save failed');
+      return result;
+    }
 
     const questionName = meta.questionName;
     // Multi-trial answers live in trialsAnswerStore / spTrialsAnswer — not model.data alone.
@@ -566,6 +732,7 @@ export default function ResearcherPractice({
     const sess = sessionRef.current;
     const participantId = sess?.participantId
       || `researcher_${user?.id || 'anon'}_free_${Date.now().toString(36)}`;
+    const revision = await surveyRevision(surveyConfig);
 
     const completeData = {
       project_id: currentProject?.id || null,
@@ -589,10 +756,15 @@ export default function ResearcherPractice({
         attempt_in_question: sess?.attemptInQuestion ?? null,
         user_id: user?.id || null,
         user_email: user?.email || null,
+        survey_revision: revision.id,
+        survey_response_contract: revision.contract,
+        survey_draft_updated_at: currentProject?.draftUpdatedAt || null,
       },
     };
 
-    const result = await saveSurveyResponse(completeData);
+    meta.pendingSubmission = createPracticeSubmission(completeData);
+    surveyModel.mode = 'display';
+    const result = await saveSurveyResponse(meta.pendingSubmission);
     if (!result.success) {
       throw new Error(result.error?.message || result.error || 'Save failed');
     }
@@ -630,7 +802,7 @@ export default function ResearcherPractice({
         applySession(null, { persist: true, reload: false });
         setModel(null);
         setRoundMeta(null);
-        setToast(`Session complete — saved ${totalSaved} response(s)`);
+        setToast(language === 'zh' ? `练习完成，已保存 ${totalSaved} 次回答` : `Session complete — saved ${totalSaved} response(s)`);
         refreshAnalysisData();
         return false;
       }
@@ -649,7 +821,7 @@ export default function ResearcherPractice({
         applySession(null, { persist: true, reload: false });
         setModel(null);
         setRoundMeta(null);
-        setToast(`Session complete — saved ${totalSaved} response(s)`);
+        setToast(language === 'zh' ? `练习完成，已保存 ${totalSaved} 次回答` : `Session complete — saved ${totalSaved} response(s)`);
         refreshAnalysisData();
         return false;
       }
@@ -668,12 +840,13 @@ export default function ResearcherPractice({
   };
 
   const submitAnswer = async () => {
-    if (!model || submitting) return;
+    if (!model || submittingRef.current || loading) return;
+    submittingRef.current = true;
     setSubmitting(true);
     setError(null);
     try {
       if (!model.validate(true)) {
-        setError('Please complete the required fields before submitting.');
+        setError(tx("Please complete the required fields before submitting."));
         setSubmitting(false);
         return;
       }
@@ -682,7 +855,7 @@ export default function ResearcherPractice({
         ...prev,
         [selectedName]: (prev[selectedName] || 0) + 1,
       }));
-      setToast('Saved');
+      setToast(tx("Saved"));
       // Refresh analysis so the collapsed Result card updates (free + session).
       refreshAnalysisData();
 
@@ -694,14 +867,16 @@ export default function ResearcherPractice({
       }
     } catch (err) {
       console.error(err);
-      setError(err.message || 'Failed to save response');
+      setError(err.message || tx("Failed to save response"));
+      setRetrySubmission(!!roundMetaRef.current?.pendingSubmission);
     } finally {
+      submittingRef.current = false;
       setSubmitting(false);
     }
   };
 
   const skipWithoutSave = () => {
-    setToast('Skipped');
+    setToast(tx("Skipped"));
     if (sessionActive) {
       advanceSessionAfterAnswer(false);
     } else {
@@ -710,19 +885,18 @@ export default function ResearcherPractice({
   };
 
   if (!currentProject) {
-    return <Alert severity="info">Select a project to practice questions.</Alert>;
+    return <Alert severity="info">{' '}{tx("Select a project to practice questions.")}{' '}</Alert>;
   }
 
   if (!questions.length) {
     return (
-      <Alert severity="warning">
-        This project has no answerable questions yet. Add questions in Survey Builder first.
-      </Alert>
+      <Alert severity="warning">{' '}{tx("This project has no answerable questions yet. Add questions in Survey Builder first.")}{' '}</Alert>
     );
   }
 
   const sessionProgressLabel = (() => {
     if (!session) return null;
+    if (language === 'zh') return `连续练习 · 第 ${session.queueIndex + 1}/${session.questionNames.length} 题 · ${session.paceMode === 'round' ? '第 ' + (session.roundIndex || 1) + ' 轮' : '本题第 ' + session.attemptInQuestion + ' 次'} · 已保存 ${session.totalSaved} 次${session.unlimited ? ' · 不限次数' : ' · 每题 ' + session.repeats + ' 次'}`;
     const qPos = `${session.queueIndex + 1}/${session.questionNames.length}`;
     const pace = session.paceMode === 'round' ? 'round' : 'block';
     if (session.unlimited) {
@@ -739,21 +913,35 @@ export default function ResearcherPractice({
 
   return (
     <ImageResolverContext.Provider value={imageNameToUrl}>
-    <Box sx={{ display: 'flex', gap: 2, minHeight: 480, flexDirection: { xs: 'column', md: 'row' } }}>
-      <Paper variant="outlined" sx={{ width: { xs: '100%', md: 320 }, flexShrink: 0, maxHeight: 640, overflow: 'auto' }}>
+    <Box>
+      <AdminPageHeader
+        icon={<PlayArrow />}
+        title={t.practiceTitle}
+        description={t.practiceDescription}
+      />
+      <Box sx={{ display: 'flex', gap: 2, minHeight: 480, flexDirection: { xs: 'column', md: 'row' } }}>
+      <Paper
+        ref={questionListRef}
+        variant="outlined"
+        onScroll={(e) => {
+          if (!projectId) return;
+          persistPracticeUi(projectId, { listScrollTop: e.currentTarget.scrollTop });
+        }}
+        sx={{ width: { xs: '100%', md: 320 }, flexShrink: 0, maxHeight: 640, overflow: 'auto' }}
+      >
         <Box sx={{ p: 2, pb: 1 }}>
           <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 0.5 }}>
-            <Typography variant="subtitle1" fontWeight={700} sx={{ flex: 1 }}>Questions</Typography>
+            <Typography variant="subtitle1" fontWeight={700} sx={{ flex: 1 }}>{t.practiceQuestions}</Typography>
             {!sessionActive && (
               <Button size="small" variant="outlined" startIcon={<PlayArrow />} onClick={openSetup}>
-                Start session
+                {t.practiceStartSession}
               </Button>
             )}
           </Stack>
           <Typography variant="caption" color="text.secondary" display="block">
             {sessionActive
-              ? 'Session locked — answer the queue, or stop the session to free-pick again.'
-              : 'Click any question to answer freely. Result analysis for the selected question is below (collapsed).'}
+              ? t.practiceSessionLocked
+              : t.practiceFreePick}
           </Typography>
         </Box>
         <Divider />
@@ -782,12 +970,23 @@ export default function ResearcherPractice({
               {group.questions.map((q) => {
                 const count = practiceCounts[q.name] || 0;
                 const inSession = session?.questionNames?.includes(q.name);
+                const isSelected = selectedName === q.name;
+                const pickLocked = sessionActive
+                  && session?.questionNames?.[session.queueIndex] !== q.name;
                 return (
                   <ListItemButton
                     key={q.name}
-                    selected={selectedName === q.name}
-                    disabled={sessionActive && session?.questionNames?.[session.queueIndex] !== q.name}
-                    onClick={() => selectFreeQuestion(q.name)}
+                    ref={isSelected ? selectedItemRef : undefined}
+                    selected={isSelected}
+                    onClick={() => {
+                      if (pickLocked) return;
+                      selectFreeQuestion(q.name);
+                    }}
+                    sx={{
+                      pr: 0.5,
+                      opacity: pickLocked ? 0.55 : 1,
+                      cursor: pickLocked ? 'default' : 'pointer',
+                    }}
                   >
                     <ListItemText
                       primary={
@@ -801,13 +1000,27 @@ export default function ResearcherPractice({
                             color={count > 0 ? 'primary' : 'default'}
                             variant={count > 0 ? 'filled' : 'outlined'}
                             sx={{ height: 20, fontSize: '0.7rem' }}
-                            title="Researcher practice responses for this question"
+                            title={tx("Researcher practice responses for this question")}
                           />
                         </Stack>
                       }
-                      secondary={`${q.type}${inSession ? ' · in session' : ''}`}
+                      secondary={`${q.type}${inSession ? (language === 'zh' ? ' · 练习中' : ' · in session') : ''}`}
                       secondaryTypographyProps={{ noWrap: true, fontSize: 11 }}
                     />
+                    <Tooltip title={t.practiceEditSettings}>
+                      <IconButton
+                        size="small"
+                        edge="end"
+                        aria-label={t.practiceEditSettings}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openQuestionSettings(q);
+                        }}
+                        sx={{ ml: 0.25 }}
+                      >
+                        <Settings fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
                   </ListItemButton>
                 );
               })}
@@ -823,7 +1036,7 @@ export default function ResearcherPractice({
             sx={{ mb: 2 }}
             action={(
               <Button color="inherit" size="small" startIcon={<Stop />} onClick={stopSession}>
-                End session
+                {t.practiceEndSession}
               </Button>
             )}
           >
@@ -832,7 +1045,7 @@ export default function ResearcherPractice({
         )}
 
         {!selectedQuestion && (
-          <Alert severity="info">Choose a question on the left to practice.</Alert>
+          <Alert severity="info">{t.practiceChooseQuestion}</Alert>
         )}
 
         {selectedQuestion && (
@@ -845,8 +1058,16 @@ export default function ResearcherPractice({
                 size="small"
                 color="primary"
                 variant="outlined"
-                label={`Practice total: ${practiceCounts[selectedQuestion.name] || 0}`}
+                label={tf(t.practiceTotal, { n: practiceCounts[selectedQuestion.name] || 0 })}
               />
+              <Button
+                size="small"
+                variant="outlined"
+                startIcon={<Settings />}
+                onClick={() => openQuestionSettings(selectedQuestion)}
+              >
+                {t.practiceEditSettings}
+              </Button>
               {!sessionActive && (
                 <Button
                   size="small"
@@ -854,15 +1075,20 @@ export default function ResearcherPractice({
                   onClick={() => {
                     usedImageKeysRef.current = new Set();
                     usedGroupKeysRef.current = new Set();
-                    setReloadToken((t) => t + 1);
+                    setReloadToken((token) => token + 1);
                   }}
                 >
-                  New round
+                  {t.practiceNewRound}
                 </Button>
               )}
             </Stack>
 
             {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+            {retrySubmission && <Alert severity="info" sx={{ mb: 2 }}>
+              {language === 'zh'
+                ? '本次答案已在当前页面保留。请重试提交以确认保存，不会重复新增记录。'
+                : 'This attempt is kept unchanged on this page. Retry submission to confirm it without creating a duplicate.'}
+            </Alert>}
             {statusMsg && (
               <Alert severity="info" sx={{ mb: 2 }} onClose={() => setStatusMsg(null)}>
                 {statusMsg}
@@ -890,6 +1116,7 @@ export default function ResearcherPractice({
 
               {model && (
                 <Box
+                  inert={submitting || retrySubmission ? '' : undefined}
                   sx={{
                     border: '1px solid',
                     borderColor: 'divider',
@@ -913,22 +1140,19 @@ export default function ResearcherPractice({
             {model && (
               <Stack direction="row" spacing={1} alignItems="center">
                 <Button variant="contained" disabled={submitting || loading} onClick={submitAnswer}>
-                  {submitting ? 'Saving…' : (sessionActive ? 'Submit & Next' : 'Submit')}
+                  {submitting ? tx("Saving…") : (retrySubmission ? (language === 'zh' ? '重试提交' : 'Retry submission') : (sessionActive ? tx("Submit & Next") : tx("Submit")))}
                 </Button>
                 <Button
                   variant="outlined"
                   startIcon={<SkipNext />}
                   disabled={submitting || loading}
                   onClick={skipWithoutSave}
-                >
-                  Skip (no save)
-                </Button>
+                >{' '}{tx("Skip (no save)")}{' '}</Button>
               </Stack>
             )}
 
             {roundMeta?.shownImages?.length > 0 && (
-              <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1.5 }}>
-                Shown media: {roundMeta.shownImages.map((u) => String(u).split('/').pop()).join(', ')}
+              <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1.5 }}>{' '}{tx("Shown media:")}{' '}{roundMeta.shownImages.map((u) => String(u).split('/').pop()).join(', ')}
               </Typography>
             )}
 
@@ -937,9 +1161,7 @@ export default function ResearcherPractice({
               if (!analysisProps) return null;
               return (
                 <Box sx={{ mt: 2.5 }}>
-                  <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
-                    Result analysis
-                  </Typography>
+                  <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>{' '}{tx("Result analysis")}{' '}</Typography>
                   <QuestionCard {...analysisProps} />
                 </Box>
               );
@@ -956,13 +1178,21 @@ export default function ResearcherPractice({
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       />
 
+      {editingQuestion && (
+        <QuestionEditor
+          question={editingQuestion.question}
+          onSave={saveQuestionSettings}
+          onCancel={() => setEditingQuestion(null)}
+          images={surveyConfig?.images || []}
+          currentProject={currentProject}
+          surveyConfig={surveyConfig}
+        />
+      )}
+
       <Dialog open={setupOpen} onClose={() => setSetupOpen(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>Start practice session</DialogTitle>
+        <DialogTitle>{' '}{tx("Start practice session")}{' '}</DialogTitle>
         <DialogContent dividers>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Selected questions always run in survey order (not click order).
-            The Practice tab stays mounted while the session is running.
-          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>{' '}{tx("Selected questions always run in survey order (not click order). The Practice tab stays mounted while the session is running.")}{' '}</Typography>
           <List dense sx={{ maxHeight: 260, overflow: 'auto', mb: 2, border: '1px solid', borderColor: 'divider', borderRadius: 1 }}>
             {questionsByPage.map((group) => {
               const pageNames = group.questions.map((q) => q.name);
@@ -1013,7 +1243,7 @@ export default function ResearcherPractice({
           </List>
 
           <FormControl component="fieldset" sx={{ mb: 2, width: '100%' }}>
-            <FormLabel component="legend">Answering pace</FormLabel>
+            <FormLabel component="legend">{' '}{tx("Answering pace")}{' '}</FormLabel>
             <RadioGroup
               value={setupPaceMode}
               onChange={(e) => setSetupPaceMode(e.target.value)}
@@ -1021,12 +1251,12 @@ export default function ResearcherPractice({
               <FormControlLabel
                 value="round"
                 control={<Radio size="small" />}
-                label="One of each selected question per round"
+                label={tx("One of each selected question per round")}
               />
               <FormControlLabel
                 value="block"
                 control={<Radio size="small" />}
-                label="Finish all repeats of one question, then the next"
+                label={tx("Finish all repeats of one question, then the next")}
               />
             </RadioGroup>
           </FormControl>
@@ -1040,39 +1270,38 @@ export default function ResearcherPractice({
             )}
             label={
               setupPaceMode === 'round'
-                ? 'Unlimited rounds (keep going until you end the session)'
-                : 'Unlimited repeats on each question (stay on current Q until you end)'
+                ? tx("Unlimited rounds (keep going until you end the session)")
+                : tx("Unlimited repeats on each question (stay on current Q until you end)")
             }
           />
           {!setupUnlimited && (
             <TextField
               fullWidth
               type="number"
-              label={setupPaceMode === 'round' ? 'Number of rounds' : 'Repeats per question'}
+              label={setupPaceMode === 'round' ? tx("Number of rounds") : tx("Repeats per question")}
               value={setupRepeats}
               onChange={(e) => setSetupRepeats(e.target.value)}
               inputProps={{ min: 1, max: 9999 }}
               helperText={
                 setupPaceMode === 'round'
-                  ? 'Each round answers every selected question once, in survey order.'
-                  : 'Each selected question is answered this many times before moving on.'
+                  ? tx("Each round answers every selected question once, in survey order.")
+                  : tx("Each selected question is answered this many times before moving on.")
               }
               sx={{ mt: 1 }}
             />
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setSetupOpen(false)}>Cancel</Button>
+          <Button onClick={() => setSetupOpen(false)}>{' '}{tx("Cancel")}{' '}</Button>
           <Button
             variant="contained"
             startIcon={<PlayArrow />}
             disabled={!setupSelected.length}
             onClick={startSessionFromSetup}
-          >
-            Start session
-          </Button>
+          >{' '}{tx("Start session")}{' '}</Button>
         </DialogActions>
       </Dialog>
+      </Box>
     </Box>
     </ImageResolverContext.Provider>
   );

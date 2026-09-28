@@ -134,7 +134,7 @@ export async function fetchUrlBytes(url) {
     }
     return new Uint8Array(await res.arrayBuffer());
   } catch (err) {
-    if (noteR2ProxyFailure(err, 'image-proxy')) throw new Error('R2 proxy unreachable');
+    if (noteR2ProxyFailure(err, 'image-proxy')) throw new Error('Media service unavailable');
     throw err;
   }
 }
@@ -213,7 +213,7 @@ export async function downloadFeatureCsvsZip(r2Prefix, {
   includeSam = false,
 } = {}) {
   if (!isR2Configured() || !r2Prefix) {
-    throw new Error('R2 is not configured.');
+    throw new Error('Supabase Storage is not configured.');
   }
   const wanted = [...models];
   if (includeSam && !wanted.includes(SAM_PREANNOT_MODEL)) {
@@ -245,7 +245,7 @@ export async function downloadFeatureCsvsZip(r2Prefix, {
     'Included:',
     ...files.map((f) => `  ${f.path}`),
     '',
-    missing.length ? `Missing (not on R2): ${missing.join(', ')}` : 'All requested models present.',
+    missing.length ? `Missing (not in storage): ${missing.join(', ')}` : 'All requested models present.',
   ].join('\n');
   files.push({ path: 'README.txt', content: readme });
   downloadZip(outName, files);
@@ -271,7 +271,7 @@ export async function downloadPreannotatePackageZip({
   onProgress,
 } = {}) {
   if (!isR2Configured() || !r2Prefix) {
-    throw new Error('R2 is not configured.');
+    throw new Error('Supabase Storage is not configured.');
   }
 
   let annotatedItems = Array.isArray(items) ? items.filter((it) => it?.annotation?.shapes?.length) : null;

@@ -61,7 +61,15 @@ npm run dev
 - Local Live Survey: [http://localhost:3000/survey](http://localhost:3000/survey)
 - Local API: `http://localhost:3001`
 
-Use [`.env.example`](./.env.example) for custom ports. Supabase is optional until media upload or response collection.
+Tabs: Intro · Media · Builder · Host · Share · Results · Practice · Silicon.
+
+Use [`.env.example`](./.env.example) for custom ports. Split Express `PORT` into `.env` and CRA `PORT` / `REACT_APP_API_URL` into `.env.local` so the two processes do not fight. Supabase is optional until media upload or response collection.
+
+**Draft vs release:** Save updates the local draft only. Release writes `publishedSurveyConfig` into `public/projects/<id>.json`. Redeploy the participant site after a release.
+
+The AI Assistant uses your own provider keys (OpenAI, OpenRouter, DeepSeek, Qwen, and the rest of the catalog). There are no free or subsidized models. Silicon pretest also uses those keys and stores run data in `public/projects/<id>.silicon.json` without writing API keys to disk.
+
+Switch Admin language with the top-bar EN / 中文 control. Set the participant survey language in Builder.
 
 ## Use SP-Survey directly with Codex
 
@@ -82,10 +90,17 @@ The localhost-only agent API is available while `npm run dev` is running:
 | List projects | `GET /api/agent/projects` |
 | Read a project | `GET /api/agent/projects/:id` |
 | Update `surveyConfig` | `PATCH /api/agent/projects/:id/survey` |
+| Apply operations | `POST /api/agent/projects/:id/operations` |
 | Validate | `POST /api/agent/projects/:id/validate` |
 | Get preview URLs | `GET /api/agent/projects/:id/preview-url` |
+| Release snapshot | `POST /api/agent/projects/:id/release` |
+| Media | `GET/PATCH /api/agent/projects/:id/media` |
+| Skills | `GET/POST /api/agent/skills` |
+| Results | `GET /api/agent/projects/:id/results` |
+| Assistant chat | `POST /api/agent/chat` |
+| Silicon | `/api/agent/silicon/*` |
 
-Agent reads exclude known credentials. Updates change only `surveyConfig`, preserve stored credentials, create a local backup, and reject invalid structure. Send the returned `savedAt` as `expectedSavedAt` when updating to prevent overwriting a newer edit.
+Agent reads exclude known credentials. Updates change only `surveyConfig`, preserve stored credentials, create a local backup, and reject invalid structure. Send the returned `savedAt` / `draftUpdatedAt` as `expectedSavedAt` or `expectedDraftUpdatedAt` when updating. If Admin is open with unsaved edits, it will warn instead of silently overwriting an agent write.
 
 After every change, check:
 
@@ -117,11 +132,12 @@ Codex can create, review, and update the selected survey directly through the lo
 
 ### 3. Configure Supabase and upload media
 
-Open **Step 1 - Media Dataset**. The top row has three panels:
+Open **Media**. Configure **Supabase Storage** at the top, then add files with the two panels:
 
-1. **Supabase Storage** — enter Project ID, anon key, and `service_role` key; click **Save**, then **Test**.
-2. **Upload Media** — choose local images, video, or audio and upload them to Supabase Storage.
-3. **HF Dataset Import** — import a Hugging Face dataset and transfer its media to Supabase.
+1. **Upload Media** — choose local images, video, or audio and upload them to Supabase Storage.
+2. **HF Dataset Import** — import a Hugging Face dataset and transfer its media to Supabase.
+
+Templates create a project without copying media. Upload files or import from Hugging Face after creating from a template.
 
 In Supabase **Storage**, create a public bucket named `survey-images`. SP-Survey can also attempt to create it on the first upload. Confirm that uploaded files appear in the Media Library, then organize folders and mark folders as sets or categories when required.
 
@@ -129,7 +145,7 @@ Codex can configure media assignment, folders, repeated trials, and question log
 
 ### 4. Design the survey
 
-Open **Step 2 - Survey Builder**. Create pages and questions, configure media assignment, repeated trials, validation, progress, theme, completion text, and response metadata.
+Open **Builder**. Create pages and questions, configure media assignment, repeated trials, validation, progress, theme, completion text, survey language, and response metadata.
 
 This is the main Codex step. Describe the study in natural language; Codex reads the current local project, updates `surveyConfig`, validates it, and returns the local Admin and Local Live Survey URLs. Use the visual editor for manual adjustments.
 
@@ -139,7 +155,7 @@ Check the question preview, Theme Settings preview, full **Preview Survey**, **R
 
 ### 6. Create the Supabase response table
 
-Open **Step 3 - Server Setup**. It uses the Supabase configuration saved in Step 1. Click **Copy SQL Script**, open **Supabase Dashboard → SQL Editor**, paste the following SQL, and click **Run**:
+Open **Host**. It uses the Supabase configuration saved in Media. Click **Copy SQL Script**, open **Supabase Dashboard → SQL Editor**, paste [`supabase/setup.sql`](./supabase/setup.sql), and click **Run**. That script is idempotent and creates `survey_responses`, `count_responses`, `get_pair_stats`, `submit_survey_response`, `image_features`, and the public `survey-images` bucket. The short table-only script below is the minimum if you only need inserts:
 
 ```sql
 CREATE TABLE IF NOT EXISTS survey_responses (
@@ -185,10 +201,12 @@ Return to SP-Survey, check the connection and table status, then submit a test r
 
 ### 7. Generate and deploy the participant website
 
-Open **Step 4 - Website Deployment**:
+The participant package is a production build of the same **SurveyApp** used for local Live Survey. It embeds the **released snapshot** (widgets, locale, trials, skills, annotation, set/category sampling, recoverable submit, version stamps, and per-trial category). Only the Supabase URL and anon key are written into the package — never the `service_role` key, Hugging Face tokens, or other researcher credentials.
 
-1. Click **Prepare Deployment Folder**.
-2. Click **Test Build** and open the generated preview.
+Open **Host** (after the backend table is ready):
+
+1. Release the draft first (Save updates the draft only). Prepare Deployment Folder then bakes that released snapshot.
+2. Click **Test Build** and open the generated preview. Confirm the survey matches local Live Survey.
 3. Create an empty GitHub repository for this participant deployment.
 4. Enter that repository URL and click **Upload to GitHub**, or push the generated folder manually.
 5. In Vercel, create a project by importing that GitHub repository.
@@ -201,7 +219,7 @@ REACT_APP_SUPABASE_ANON_KEY=your-anon-key
 
 Do not add the `service_role` key to GitHub or Vercel. Deploy or redeploy after saving the environment variables.
 
-Open the deployed `/survey` page, complete the survey once, and confirm the new row in **Supabase → Table Editor → survey_responses**. Test the final participant URL before distributing it.
+Open the deployed site (`/` or `/survey`, optional `?locale=zh`), complete the survey once, and confirm the new row in **Supabase → Table Editor → survey_responses**. Test English and Chinese before distributing the URL.
 
 ### 8. Analyze responses
 

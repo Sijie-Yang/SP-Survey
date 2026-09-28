@@ -397,18 +397,10 @@ function trainTestSplit(X, y, testFrac, rng) {
     idx[i] = idx[j];
     idx[j] = t;
   }
-  const nTest = Math.max(1, Math.floor(X.length * testFrac));
+  const fraction = Number.isFinite(testFrac) ? Math.min(0.5, Math.max(0.05, testFrac)) : 0.25;
+  const nTest = Math.max(1, Math.floor(X.length * fraction));
   const nTrain = X.length - nTest;
-  if (nTrain < 5) {
-    return {
-      Xtrain: X,
-      ytrain: y,
-      Xtest: X,
-      ytest: y,
-      trainIdx: idx,
-      testIdx: idx,
-    };
-  }
+  if (nTrain < 5) throw new Error('Insufficient training rows for a disjoint holdout.');
   const testIdx = idx.slice(0, nTest);
   const trainIdx = idx.slice(nTest);
   return {
@@ -781,8 +773,8 @@ async function fitMlp(X, y, rng, signal, onProgress, {
  * @param {object} [opts]
  * @param {boolean} [opts.impute=true] — fill missing feature cells with column median
  */
-export function buildAblationMatrix(rows, modelFilter = 'all', { impute = true } = {}) {
-  const scored = (rows || []).filter((r) => r.mean_score != null && r.n_ratings > 0);
+export function buildAblationMatrix(rows, modelFilter = 'all', { impute = true, deferImpute = false } = {}) {
+  const scored = (rows || []).filter((r) => Number.isFinite(r.mean_score) && r.n_ratings > 0);
   const keySet = new Set();
   scored.forEach((r) => {
     Object.keys(r).forEach((k) => {
@@ -810,13 +802,20 @@ export function buildAblationMatrix(rows, modelFilter = 'all', { impute = true }
   let droppedIncomplete = 0;
 
   for (const r of scored) {
+    // Imputation can repair partial observations, not invent an entire image's features.
+    if (!featureNames.some((key) => Number.isFinite(perceptionFeatureValue(r, key)))) {
+      droppedIncomplete += 1;
+      continue;
+    }
     const row = [];
     let ok = true;
     let rowImputed = 0;
     for (let j = 0; j < featureNames.length; j += 1) {
       let v = perceptionFeatureValue(r, featureNames[j]);
       if (!Number.isFinite(v)) {
-        if (impute && Number.isFinite(colMedians[j])) {
+        if (deferImpute) {
+          v = NaN;
+        } else if (impute && Number.isFinite(colMedians[j])) {
           v = colMedians[j];
           rowImputed += 1;
         } else {
@@ -846,6 +845,34 @@ export function buildAblationMatrix(rows, modelFilter = 'all', { impute = true }
     droppedIncomplete,
     impute,
   };
+}
+
+/** Fit every preprocessing decision on the training fold only. */
+export async function prepareAblationFold(Xtrain, Xtest, featureNames, vifMax = 10, signal = null) {
+  const medians = featureNames.map((_, j) => {
+    const vals = Xtrain.map((r) => r[j]).filter(Number.isFinite);
+    return vals.length ? median(vals) : null;
+  });
+  const keep = featureNames.map((_, j) => j).filter((j) => medians[j] != null);
+  const names = keep.map((j) => featureNames[j]);
+  let imputedCells = 0;
+  const impute = (rows) => rows.map((r) => keep.map((j) => {
+    if (Number.isFinite(r[j])) return r[j];
+    imputedCells += 1;
+    return medians[j];
+  }));
+  const train = impute(Xtrain);
+  const test = impute(Xtest);
+  const pruned = dropConstantColumns(train, names);
+  if (pruned.featureNames.length < 2) throw new Error('Training fold needs at least two non-constant features.');
+  const screened = await screenByVif(pruned.X, pruned.featureNames, vifMax, 2, signal);
+  const { Xs, means, sds } = standardizeColumns(screened.X);
+  const selected = screened.featureNames.map((name) => names.indexOf(name));
+  const testScaled = test.map((r) => selected.map((j, i) => (r[j] - means[i]) / sds[i]));
+  return { Xtrain: Xs, Xtest: testScaled, featureNames: screened.featureNames,
+    imputedCells, means, sds, medians: Object.fromEntries(featureNames.map((n, j) => [n, medians[j]])),
+    dropped: [...(screened.dropped || []), ...featureNames.filter((n) => !names.includes(n) || pruned.dropped.includes(n))
+      .map((feature) => ({ feature, vif: null }))], vifs: screened.vifs || [] };
 }
 
 async function trainOneModel(modelId, Xtrain, ytrain, Xtest, ytest, names, rng, signal, report, basePct, totalSteps) {
@@ -966,6 +993,17 @@ function kFoldIndices(n, k, rng) {
   return folds;
 }
 
+/** Keep every scene/folder wholly in one split. Exported for deterministic validation. */
+export function groupedFoldIndices(groups, k, rng) {
+  const grouped = new Map();
+  groups.forEach((group, i) => { const key = group || '(root)'; if (!grouped.has(key)) grouped.set(key, []); grouped.get(key).push(i); });
+  if (grouped.size < k) throw new Error(`Need at least ${k} distinct folders for grouped validation; have ${grouped.size}.`);
+  const buckets = Array.from({ length: k }, () => []);
+  const chunks = shuffleInPlace([...grouped.values()], rng).sort((a, b) => b.length - a.length);
+  chunks.forEach((chunk) => { const target = buckets.reduce((best, bucket, i) => bucket.length < buckets[best].length ? i : best, 0); buckets[target].push(...chunk); });
+  return buckets;
+}
+
 /**
  * Run full ablation pipeline. Cancel with signal.abort().
  * @param {number} [folds=1] — 1 = single holdout; ≥2 = K-fold CV (report mean±std Test R²)
@@ -980,6 +1018,7 @@ export async function runPerceptionAblation({
   folds = 1,
   imputeMissing = true,
   seed = 42,
+  groupByFolder = false,
   signal = null,
   onProgress = null,
 } = {}) {
@@ -989,7 +1028,7 @@ export async function runPerceptionAblation({
 
   report('Building feature matrix…', { phase: 'prep', pct: 2 });
   await yieldToUi(signal);
-  const built = buildAblationMatrix(rows, modelFilter, { impute: !!imputeMissing });
+  const built = buildAblationMatrix(rows, modelFilter, { impute: false, deferImpute: !!imputeMissing });
   built.X = built.X.map((row) => Float64Array.from(row, (v) => +v));
   built.y = Float64Array.from(built.y, (v) => +v);
   if (built.n < 12) {
@@ -1002,23 +1041,15 @@ export async function runPerceptionAblation({
     throw new Error('Need ≥2 numeric features for ablation.');
   }
 
-  report(`VIF screening (${built.featureNames.length} features, max VIF=${vifMax})…`, {
-    phase: 'vif',
-    pct: 8,
-  });
-  await yieldToUi(signal);
-  const screened = await screenByVif(built.X, built.featureNames, vifMax, 2, signal);
-  assertNotAborted(signal);
-
-  const pruned = dropConstantColumns(screened.X, screened.featureNames);
-  if (pruned.featureNames.length < 2) {
-    throw new Error('Too few non-constant features left after VIF / variance filter.');
-  }
-
-  const { Xs, means, sds } = standardizeColumns(pruned.X);
+  const preprocessing = [];
+  const prepare = async (Xtrain, Xtest) => {
+    const fold = await prepareAblationFold(Xtrain, Xtest, built.featureNames, vifMax, signal);
+    const { Xtrain: trainedRows, Xtest: heldOutRows, ...metadata } = fold;
+    preprocessing.push(metadata);
+    return fold;
+  };
   const rng = mulberry32(seed);
   const selectedModels = models.filter((id) => ABLATION_MODELS.some((m) => m.id === id));
-  const names = pruned.featureNames;
   const totalSteps = selectedModels.length;
 
   const nFolds = Math.max(1, Math.min(10, Math.floor(Number(folds) || 1)));
@@ -1028,16 +1059,29 @@ export async function runPerceptionAblation({
     : null;
 
   let splitMeta = { nTrain: 0, nTest: 0, foldsUsed: 1 };
+  const splitRecords = [];
+  const foldersById = new Map((rows || []).map((r) => [r.media_id, r.media_folder || '(root)']));
+  const groups = built.mediaIds.map((id) => foldersById.get(id));
+  const recordSplit = (trainIdx, testIdx) => {
+    if (trainIdx.length < 5 || testIdx.length < 2) throw new Error('Each split needs at least 5 training and 2 test images. Use fewer folds or larger groups.');
+    splitRecords.push({ train_media_ids: trainIdx.map((i) => built.mediaIds[i]), test_media_ids: testIdx.map((i) => built.mediaIds[i]) });
+  };
   const foldResultsByModel = Object.fromEntries(selectedModels.map((id) => [id, []]));
   const importanceAcc = Object.fromEntries(selectedModels.map((id) => [id, new Map()]));
 
   if (!useCv) {
-    const split = trainTestSplit(Xs, built.y, testFraction, rng);
+    let split;
+    if (groupByFolder) {
+      const [trainIdx, testIdx] = groupedFoldIndices(groups, 2, rng);
+      split = { trainIdx, testIdx, Xtrain: trainIdx.map((i) => built.X[i]), Xtest: testIdx.map((i) => built.X[i]), ytrain: trainIdx.map((i) => built.y[i]), ytest: testIdx.map((i) => built.y[i]) };
+    } else split = trainTestSplit(built.X, built.y, testFraction, rng);
+    recordSplit(split.trainIdx, split.testIdx);
     splitMeta = {
       nTrain: split.ytrain.length,
       nTest: split.ytest.length,
       foldsUsed: 1,
     };
+    const prepared = await prepare(split.Xtrain, split.Xtest);
     let step = 0;
     for (const modelId of selectedModels) {
       assertNotAborted(signal);
@@ -1047,8 +1091,8 @@ export async function runPerceptionAblation({
       await yieldToUi(signal);
       try {
         const one = await trainOneModel(
-          modelId, split.Xtrain, split.ytrain, split.Xtest, split.ytest,
-          names, rng, signal, report, basePct, totalSteps,
+          modelId, prepared.Xtrain, split.ytrain, prepared.Xtest, split.ytest,
+          prepared.featureNames, rng, signal, report, basePct, totalSteps,
         );
         foldResultsByModel[modelId].push(one);
         (one.importance || []).forEach((f) => {
@@ -1070,20 +1114,22 @@ export async function runPerceptionAblation({
       }
     }
   } else {
-    const foldIdx = kFoldIndices(Xs.length, nFolds, rng);
+    const foldIdx = groupByFolder ? groupedFoldIndices(groups, nFolds, rng) : kFoldIndices(built.X.length, nFolds, rng);
     splitMeta = {
-      nTrain: Math.round(Xs.length * ((nFolds - 1) / nFolds)),
-      nTest: Math.round(Xs.length / nFolds),
+      nTrain: Math.round(built.X.length * ((nFolds - 1) / nFolds)),
+      nTest: Math.round(built.X.length / nFolds),
       foldsUsed: nFolds,
     };
     for (let f = 0; f < nFolds; f += 1) {
       assertNotAborted(signal);
       const testIdx = foldIdx[f];
       const trainIdx = foldIdx.flatMap((arr, i) => (i === f ? [] : arr));
-      const Xtrain = trainIdx.map((i) => Xs[i]);
+      recordSplit(trainIdx, testIdx);
+      const Xtrain = trainIdx.map((i) => built.X[i]);
       const ytrain = trainIdx.map((i) => built.y[i]);
-      const Xtest = testIdx.map((i) => Xs[i]);
+      const Xtest = testIdx.map((i) => built.X[i]);
       const ytest = testIdx.map((i) => built.y[i]);
+      const prepared = await prepare(Xtrain, Xtest);
       let step = 0;
       for (const modelId of selectedModels) {
         step += 1;
@@ -1097,8 +1143,8 @@ export async function runPerceptionAblation({
         await yieldToUi(signal);
         try {
           const one = await trainOneModel(
-            modelId, Xtrain, ytrain, Xtest, ytest,
-            names, rng, signal, report, basePct, totalSteps,
+            modelId, prepared.Xtrain, ytrain, prepared.Xtest, ytest,
+            prepared.featureNames, rng, signal, report, basePct, totalSteps,
           );
           foldResultsByModel[modelId].push(one);
           (one.importance || []).forEach((feat) => {
@@ -1174,26 +1220,26 @@ export async function runPerceptionAblation({
   report('Done', { phase: 'done', pct: 100 });
   return {
     n: built.n,
+    seed, groupByFolder, splits: splitRecords,
+    splitDescription: groupByFolder && !useCv ? 'Two balanced groups of folders; testFraction is not used.' : (groupByFolder ? 'Grouped K-fold by folder' : 'Random image split'),
     nTrain: splitMeta.nTrain,
     nTest: splitMeta.nTest,
     foldsUsed: splitMeta.foldsUsed,
     foldsRequested: nFolds,
     cvFallbackNote,
     nFeaturesIn: built.featureNames.length,
-    nFeaturesOut: pruned.featureNames.length,
+    nFeaturesOut: new Set(preprocessing.flatMap((p) => p.featureNames)).size,
     vifMax,
-    imputedCells: built.imputedCells || 0,
+    imputedCells: preprocessing.reduce((n, p) => n + p.imputedCells, 0),
     imputeMissing: !!imputeMissing,
     droppedIncomplete: built.droppedIncomplete || 0,
-    vifDropped: [
-      ...(screened.dropped || []),
-      ...pruned.dropped.map((f) => ({ feature: f, vif: null })),
-    ],
-    vifKept: (screened.vifs || [])
-      .filter((v) => pruned.featureNames.includes(v.feature))
-      .sort((a, b) => (b.vif || 0) - (a.vif || 0)),
-    featureMeans: Object.fromEntries(pruned.featureNames.map((n, i) => [n, means[i]])),
-    featureSds: Object.fromEntries(pruned.featureNames.map((n, i) => [n, sds[i]])),
+    preprocessingScope: 'training fold only',
+    preprocessing: preprocessing.map(({ Xtrain, Xtest, ...meta }) => meta),
+    vifDropped: preprocessing.flatMap((p, i) => p.dropped.map((v) => ({ ...v, fold: i + 1 }))),
+    vifKept: preprocessing.flatMap((p, i) => p.vifs.map((v) => ({ ...v, fold: i + 1 }))),
+    // For CV use the per-fold metadata above; there is no single fitted transform.
+    featureMeans: useCv ? null : Object.fromEntries(preprocessing[0].featureNames.map((n, i) => [n, preprocessing[0].means[i]])),
+    featureSds: useCv ? null : Object.fromEntries(preprocessing[0].featureNames.map((n, i) => [n, preprocessing[0].sds[i]])),
     results,
   };
 }

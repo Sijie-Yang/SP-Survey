@@ -20,15 +20,17 @@ export const saveSurveyConfig = async (name, config, options = {}) => {
   }
 };
 
-export const loadSurveyConfig = async (projectId) => {
+export const loadSurveyConfig = async (projectId, { live = false } = {}) => {
   try {
     // SP-Survey stores project and survey JSON in its local Express server.
     // Supabase is optional and is used only for media and survey responses.
     const response = await fetch(`${API_ROOT}/projects/${projectId}`);
     if (response.ok) {
       const data = await response.json();
-      if (data.success && data.surveyConfig) {
-        const config = data.surveyConfig;
+      const config = live && data.releaseManaged && data.publishedSurveyConfig
+        ? data.publishedSurveyConfig
+        : data.surveyConfig;
+      if (data.success && config) {
         fixBooleanFields(config);
         return config;
       }

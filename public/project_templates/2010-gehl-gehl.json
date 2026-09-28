@@ -4,340 +4,350 @@
   "description": "Assesses pedestrian-scale street quality across three categories: Protection (from traffic, crime, unpleasant senses), Comfort (for walking, standing, sitting, playing), and Enjoyment (scale, views, greenery, sensory experiences). Operationalises Jan Gehl's 12 quality criteria for outdoor spaces.",
   "author": "Gehl",
   "year": "2010",
-  "category": "Reference Template",
+  "category": "Urban Theory",
   "tags": [
     "reference",
-    "ai-generated"
+    "ai-generated",
+    "official"
   ],
+  "isPinned": false,
   "website": "https://books.google.com.sg/books/about/Cities_for_People.html?id=kqtwtr3QhkIC&redir_esc=y",
-  "createdAt": "2026-05-04T00:00:00.000Z",
+  "huggingfaceDataset": null,
+  "createdAt": "2026-05-04T00:00:00+00:00",
   "config": {
-    "title": "Gehl – Street Quality Assessment",
-    "description": "Rate the street scene on pedestrian-scale quality criteria. Based on Gehl, J. (2010). Cities for People. Island Press. The 12 quality criteria cover Protection, Comfort, and Enjoyment.",
-    "logoPosition": "right",
-    "showQuestionNumbers": "off",
-    "showProgressBar": "aboveheader",
-    "progressBarType": "questions",
-    "autoGrowComment": true,
-    "showPreviewBeforeComplete": "showAllQuestions",
     "pages": [
       {
         "name": "page_protection",
         "title": "Part 1 – Protection",
-        "description": "Rate how well this street scene provides PROTECTION for pedestrians.",
         "elements": [
           {
-            "type": "image",
             "name": "street_img_protection",
+            "type": "image",
             "title": "Street Scene",
-            "isRequired": false,
-            "imageCount": 1,
-            "imageSelectionMode": "huggingface_random",
             "imageFit": "cover",
-            "randomImageSelection": true,
-            "imageSource": "huggingface"
+            "imageCount": 1,
+            "isRequired": false,
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true
           },
           {
-            "type": "matrix",
             "name": "protection_criteria",
-            "title": "Rate each protection criterion for this street scene (1 = Very Poor, 5 = Excellent):",
-            "isRequired": true,
             "rows": [
               {
-                "value": "traffic_protection",
-                "text": "Protection from traffic (safe crossing, buffer from cars)"
+                "text": "Protection from traffic (safe crossing, buffer from cars)",
+                "value": "traffic_protection"
               },
               {
-                "value": "crime_protection",
-                "text": "Protection from crime and violence (visibility, lighting, activity)"
+                "text": "Protection from crime and violence (visibility, lighting, activity)",
+                "value": "crime_protection"
               },
               {
-                "value": "unpleasant_senses",
-                "text": "Protection from unpleasant sensory experiences (noise, pollution, glare)"
+                "text": "Protection from unpleasant sensory experiences (noise, pollution, glare)",
+                "value": "unpleasant_senses"
               }
             ],
+            "type": "matrix",
+            "title": "Rate each protection criterion for this street scene (1 = Very Poor, 5 = Excellent):",
             "columns": [
               {
-                "value": "1",
-                "text": "1\nVery poor"
+                "text": "1\nVery poor",
+                "value": "1"
               },
               {
-                "value": "2",
-                "text": "2"
+                "text": "2",
+                "value": "2"
               },
               {
-                "value": "3",
-                "text": "3"
+                "text": "3",
+                "value": "3"
               },
               {
-                "value": "4",
-                "text": "4"
+                "text": "4",
+                "value": "4"
               },
               {
-                "value": "5",
-                "text": "5\nExcellent"
+                "text": "5\nExcellent",
+                "value": "5"
               }
-            ]
+            ],
+            "isRequired": true
           }
-        ]
+        ],
+        "description": "Rate how well this street scene provides PROTECTION for pedestrians."
       },
       {
         "name": "page_comfort",
         "title": "Part 2 – Comfort",
-        "description": "Rate the COMFORT of this street scene for various pedestrian activities.",
         "elements": [
           {
-            "type": "image",
             "name": "street_img_comfort",
+            "type": "image",
             "title": "Street Scene",
-            "isRequired": false,
-            "imageCount": 1,
-            "imageSelectionMode": "huggingface_random",
             "imageFit": "cover",
-            "randomImageSelection": true,
-            "imageSource": "huggingface"
+            "imageCount": 1,
+            "isRequired": false,
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true
           },
           {
-            "type": "matrix",
             "name": "comfort_criteria",
-            "title": "Rate each comfort criterion for this street scene (1 = Very Poor, 5 = Excellent):",
-            "isRequired": true,
             "rows": [
               {
-                "value": "walking",
-                "text": "Comfort for walking (pavement quality, space, continuity)"
+                "text": "Comfort for walking (pavement quality, space, continuity)",
+                "value": "walking"
               },
               {
-                "value": "standing",
-                "text": "Comfort for standing / waiting (sheltered spots, interest)"
+                "text": "Comfort for standing / waiting (sheltered spots, interest)",
+                "value": "standing"
               },
               {
-                "value": "sitting",
-                "text": "Comfort for sitting (seating availability, sun/shade, views)"
+                "text": "Comfort for sitting (seating availability, sun/shade, views)",
+                "value": "sitting"
               },
               {
-                "value": "seeing",
-                "text": "Opportunities for seeing (sightlines, views, distances)"
+                "text": "Opportunities for seeing (sightlines, views, distances)",
+                "value": "seeing"
               },
               {
-                "value": "talking",
-                "text": "Opportunities for talking and listening (noise level, scale)"
+                "text": "Opportunities for talking and listening (noise level, scale)",
+                "value": "talking"
               },
               {
-                "value": "playing",
-                "text": "Opportunities for play / exercise / physical activity"
+                "text": "Opportunities for play / exercise / physical activity",
+                "value": "playing"
               }
             ],
+            "type": "matrix",
+            "title": "Rate each comfort criterion for this street scene (1 = Very Poor, 5 = Excellent):",
             "columns": [
               {
-                "value": "1",
-                "text": "1\nVery poor"
+                "text": "1\nVery poor",
+                "value": "1"
               },
               {
-                "value": "2",
-                "text": "2"
+                "text": "2",
+                "value": "2"
               },
               {
-                "value": "3",
-                "text": "3"
+                "text": "3",
+                "value": "3"
               },
               {
-                "value": "4",
-                "text": "4"
+                "text": "4",
+                "value": "4"
               },
               {
-                "value": "5",
-                "text": "5\nExcellent"
+                "text": "5\nExcellent",
+                "value": "5"
               }
-            ]
+            ],
+            "isRequired": true
           }
-        ]
+        ],
+        "description": "Rate the COMFORT of this street scene for various pedestrian activities."
       },
       {
         "name": "page_enjoyment",
         "title": "Part 3 – Enjoyment",
-        "description": "Rate the ENJOYMENT qualities of this street scene.",
         "elements": [
           {
-            "type": "image",
             "name": "street_img_enjoyment",
+            "type": "image",
             "title": "Street Scene",
-            "isRequired": false,
-            "imageCount": 1,
-            "imageSelectionMode": "huggingface_random",
             "imageFit": "cover",
-            "randomImageSelection": true,
-            "imageSource": "huggingface"
+            "imageCount": 1,
+            "isRequired": false,
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true
           },
           {
-            "type": "matrix",
             "name": "enjoyment_criteria",
-            "title": "Rate each enjoyment criterion for this street scene (1 = Very Poor, 5 = Excellent):",
-            "isRequired": true,
             "rows": [
               {
-                "value": "human_scale",
-                "text": "Human scale (buildings and spaces sized for people)"
+                "text": "Human scale (buildings and spaces sized for people)",
+                "value": "human_scale"
               },
               {
-                "value": "positive_experiences",
-                "text": "Opportunities for enjoying positive aspects of climate / microclimate"
+                "text": "Opportunities for enjoying positive aspects of climate / microclimate",
+                "value": "positive_experiences"
               },
               {
-                "value": "aesthetic_quality",
-                "text": "Aesthetic quality and positive sensory experience (design, materials, art)"
+                "text": "Aesthetic quality and positive sensory experience (design, materials, art)",
+                "value": "aesthetic_quality"
               },
               {
-                "value": "greenery",
-                "text": "Presence of trees, plants, water, and natural elements"
+                "text": "Presence of trees, plants, water, and natural elements",
+                "value": "greenery"
               }
             ],
+            "type": "matrix",
+            "title": "Rate each enjoyment criterion for this street scene (1 = Very Poor, 5 = Excellent):",
             "columns": [
               {
-                "value": "1",
-                "text": "1\nVery poor"
+                "text": "1\nVery poor",
+                "value": "1"
               },
               {
-                "value": "2",
-                "text": "2"
+                "text": "2",
+                "value": "2"
               },
               {
-                "value": "3",
-                "text": "3"
+                "text": "3",
+                "value": "3"
               },
               {
-                "value": "4",
-                "text": "4"
+                "text": "4",
+                "value": "4"
               },
               {
-                "value": "5",
-                "text": "5\nExcellent"
+                "text": "5\nExcellent",
+                "value": "5"
               }
-            ]
+            ],
+            "isRequired": true
           }
-        ]
+        ],
+        "description": "Rate the ENJOYMENT qualities of this street scene."
       },
       {
         "name": "page_overall",
         "title": "Overall Assessment",
-        "description": "Your overall impression of this street as a pedestrian environment.",
         "elements": [
           {
-            "type": "imagepicker",
             "name": "walkability_pairwise",
+            "type": "imagepicker",
             "title": "Which street scene is more walkable and pedestrian-friendly?",
-            "isRequired": true,
-            "imageCount": 2,
-            "imageSelectionMode": "huggingface_random",
             "imageFit": "cover",
-            "randomImageSelection": true,
-            "imageSource": "huggingface"
+            "imageCount": 2,
+            "isRequired": true,
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true
           },
           {
-            "type": "rating",
             "name": "overall_quality",
+            "type": "rating",
             "title": "Overall pedestrian-scale quality of the streets you have seen",
-            "isRequired": false,
-            "rateMin": 1,
             "rateMax": 5,
-            "minRateDescription": "Very poor",
-            "maxRateDescription": "Excellent"
+            "rateMin": 1,
+            "isRequired": false,
+            "maxRateDescription": "Excellent",
+            "minRateDescription": "Very poor"
           },
           {
-            "type": "comment",
             "name": "open_feedback",
+            "rows": 3,
+            "type": "comment",
             "title": "Any additional observations about the street environments you assessed? (Optional)",
-            "isRequired": false,
-            "rows": 3
+            "isRequired": false
           }
-        ]
+        ],
+        "description": "Your overall impression of this street as a pedestrian environment."
       },
       {
         "name": "page_demographics",
         "title": "Background Information (Optional)",
         "elements": [
           {
-            "type": "dropdown",
             "name": "age_group",
-            "title": "Age group",
-            "isRequired": false,
-            "choices": [
-              {
-                "value": "under_18",
-                "text": "Under 18"
-              },
-              {
-                "value": "18_24",
-                "text": "18–24"
-              },
-              {
-                "value": "25_34",
-                "text": "25–34"
-              },
-              {
-                "value": "35_44",
-                "text": "35–44"
-              },
-              {
-                "value": "45_54",
-                "text": "45–54"
-              },
-              {
-                "value": "55_64",
-                "text": "55–64"
-              },
-              {
-                "value": "65_plus",
-                "text": "65 or older"
-              }
-            ]
-          },
-          {
             "type": "dropdown",
-            "name": "transport_mode",
-            "title": "Primary mode of transport in your daily life",
-            "isRequired": false,
+            "title": "Age group",
             "choices": [
               {
-                "value": "walking",
-                "text": "Walking"
+                "text": "Under 18",
+                "value": "under_18"
               },
               {
-                "value": "cycling",
-                "text": "Cycling"
+                "text": "18–24",
+                "value": "18_24"
               },
               {
-                "value": "public_transit",
-                "text": "Public transit"
+                "text": "25–34",
+                "value": "25_34"
               },
               {
-                "value": "car",
-                "text": "Private car"
+                "text": "35–44",
+                "value": "35_44"
               },
               {
-                "value": "mixed",
-                "text": "Mixed / varies"
+                "text": "45–54",
+                "value": "45_54"
+              },
+              {
+                "text": "55–64",
+                "value": "55_64"
+              },
+              {
+                "text": "65 or older",
+                "value": "65_plus"
               }
-            ]
+            ],
+            "isRequired": false
           },
           {
-            "type": "radiogroup",
-            "name": "urban_planning_background",
-            "title": "Do you have a background in urban planning, architecture, or landscape design?",
-            "isRequired": false,
+            "name": "transport_mode",
+            "type": "dropdown",
+            "title": "Primary mode of transport in your daily life",
             "choices": [
               {
-                "value": "yes",
-                "text": "Yes"
+                "text": "Walking",
+                "value": "walking"
               },
               {
-                "value": "no",
-                "text": "No"
+                "text": "Cycling",
+                "value": "cycling"
+              },
+              {
+                "text": "Public transit",
+                "value": "public_transit"
+              },
+              {
+                "text": "Private car",
+                "value": "car"
+              },
+              {
+                "text": "Mixed / varies",
+                "value": "mixed"
               }
-            ]
+            ],
+            "isRequired": false
+          },
+          {
+            "name": "urban_planning_background",
+            "type": "radiogroup",
+            "title": "Do you have a background in urban planning, architecture, or landscape design?",
+            "choices": [
+              {
+                "text": "Yes",
+                "value": "yes"
+              },
+              {
+                "text": "No",
+                "value": "no"
+              }
+            ],
+            "isRequired": false
           }
         ]
       }
-    ]
-  }
+    ],
+    "title": "Gehl – Street Quality Assessment",
+    "description": "Rate the street scene on pedestrian-scale quality criteria. Based on Gehl, J. (2010). Cities for People. Island Press. The 12 quality criteria cover Protection, Comfort, and Enjoyment.",
+    "logoPosition": "right",
+    "autoGrowComment": true,
+    "progressBarType": "questions",
+    "showProgressBar": "aboveheader",
+    "showQuestionNumbers": "off",
+    "showPreviewBeforeComplete": "showAllQuestions"
+  },
+  "imageDatasetConfig": {
+    "mediaFolderTags": {},
+    "mediaFolders": []
+  },
+  "preloadedImages": [],
+  "preloadedSource": null,
+  "preloadedAt": null
 }

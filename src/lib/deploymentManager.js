@@ -10,6 +10,11 @@ const SP_SURVEY_PARTICIPANT_FIELDS = [
   'theme',
   'settings',
   'preloadedImages',
+  'completionMessage',
+  'responseQuota',
+  'mediaFolderTags',
+  'publishedVersion',
+  'locale',
 ];
 
 export const PARTICIPANT_DEPENDENCIES = [
@@ -21,6 +26,7 @@ export const PARTICIPANT_DEPENDENCIES = [
   '@mui/icons-material',
   '@mui/material',
   '@supabase/supabase-js',
+  'polygon-clipping',
   'react',
   'react-dom',
   'react-scripts',
@@ -40,6 +46,35 @@ export const getParticipantConfigFields = () => new Set([
   ...SP_SURVEY_PARTICIPANT_FIELDS,
 ]);
 
+const resolveMediaFolderTagsFromProject = (config) => (
+  config?.mediaFolderTags
+  || config?.imageDatasetConfig?.mediaFolderTags
+  || config?.publishedMedia?.imageDatasetConfig?.mediaFolderTags
+  || null
+);
+
+// Prefer the released snapshot when one exists; otherwise the current draft/project merge.
+export const resolveParticipantSourceConfig = (currentProject) => {
+  const released = currentProject?.publishedSurveyConfig;
+  const sourceConfig = (currentProject?.releaseManaged && released) ? released : currentProject;
+  const mediaFolderTags = resolveMediaFolderTagsFromProject(currentProject)
+    || resolveMediaFolderTagsFromProject(sourceConfig);
+  const publishedVersion = currentProject?.publishedVersion ?? sourceConfig?.publishedVersion;
+  return {
+    ...(sourceConfig || {}),
+    id: currentProject?.id || sourceConfig?.id,
+    name: currentProject?.name || sourceConfig?.name,
+    preloadedImages: currentProject?.preloadedImages
+      || currentProject?.publishedMedia?.preloadedImages
+      || sourceConfig?.preloadedImages,
+    ...(mediaFolderTags ? { mediaFolderTags } : {}),
+    ...(publishedVersion != null ? { publishedVersion } : {}),
+    // Env generation reads these; the allowlist keeps them out of deploymentConfig.js.
+    supabaseConfig: currentProject?.supabaseConfig || sourceConfig?.supabaseConfig,
+    imageDatasetConfig: currentProject?.imageDatasetConfig || sourceConfig?.imageDatasetConfig,
+  };
+};
+
 // Only allowlisted fields reach deploymentConfig.js; secret-named keys are stripped at any depth.
 export const buildParticipantDeploymentConfig = (config, { preloadedImages, timestamp } = {}) => {
   const allowed = getParticipantConfigFields();
@@ -48,6 +83,10 @@ export const buildParticipantDeploymentConfig = (config, { preloadedImages, time
     if (allowed.has(key) && config[key] !== undefined) participantConfig[key] = config[key];
   });
   if (preloadedImages) participantConfig.preloadedImages = preloadedImages;
+  if (participantConfig.mediaFolderTags == null) {
+    const tags = resolveMediaFolderTagsFromProject(config);
+    if (tags) participantConfig.mediaFolderTags = tags;
+  }
   if (participantConfig.preloadedImages?.length > 0 && timestamp) {
     participantConfig.imagePreloadTimestamp = timestamp;
   }
@@ -76,11 +115,12 @@ export const prepareDeploymentFolder = async (currentProject) => {
   try {
     console.log('🚀 Preparing deployment folder...');
     
-    // 1. Create deployment folder structure
+    // 1. Create deployment folder structure from the released snapshot when present.
+    const sourceConfig = resolveParticipantSourceConfig(currentProject);
     const deploymentData = {
-      projectName: currentProject?.name || 'survey-project',
+      projectName: currentProject?.name || sourceConfig?.name || 'survey-project',
       timestamp: new Date().toISOString(),
-      config: currentProject,
+      config: sourceConfig,
       preloadedImages: null
     };
 
@@ -330,14 +370,17 @@ export const getPreloadedImages = () => {
 export const isImagePreloaded = () => {
   return deploymentConfig.preloadedImages && deploymentConfig.preloadedImages.length > 0;
 };
+
+export const isDeployedParticipant = () => true;
 `;
   }
 
-  // 6. Generate simplified App.js for deployment (Survey only, no Admin)
+  // 6. Participant App.js mounts the same SurveyApp as local Live Survey (no Admin).
   files['src/App.js'] = `import React from "react";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import SurveyAppClean from "./SurveyAppClean";
+import { RegionProvider } from "./contexts/RegionContext";
+import SurveyApp from "./SurveyApp";
 
 const theme = createTheme({
   palette: {
@@ -355,265 +398,10 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <SurveyAppClean />
+      <RegionProvider>
+        <SurveyApp />
+      </RegionProvider>
     </ThemeProvider>
-  );
-}
-`;
-
-  // 7. Generate clean SurveyApp without navigation buttons (deployment-only)
-  files['src/SurveyAppClean.js'] = `import React, { useState, useEffect } from "react";
-import { Model } from "survey-core";
-import { Survey } from "survey-react-ui";
-import "survey-core/defaultV2.min.css";
-import { Box, Alert, CircularProgress, Typography } from '@mui/material';
-import { saveSurveyResponse } from './lib/supabase';
-import { deploymentConfig, getPreloadedImages } from './config/deploymentConfig';
-import { applyAdminThemeToSurveyModel, buildSurveyHostStyle } from './lib/surveyStorage';
-import registerImageRankingWidget, { registerImageRatingWidget, registerImageBooleanWidget, registerImageMatrixWidget } from './components/SurveyCustomComponents';
-
-export default function SurveyAppClean() {
-  const [surveyModel, setSurveyModel] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    initializeSurvey();
-  }, []);
-
-  const initializeSurvey = async () => {
-    try {
-      setLoading(true);
-      console.log('Starting survey initialization...');
-      const imageTracker = {};
-      const globallyUsedImageKeys = new Set();
-      const getImageKey = (image) => image?.name || image?.url;
-      const shouldExcludePreviouslyUsedImages = (element) => element.excludePreviouslyUsedImages !== false;
-      const pickRandomImagesFromPool = (pool, imageCount, excludeUsed) => {
-        const shuffled = [...pool].sort(() => 0.5 - Math.random());
-        if (!excludeUsed) {
-          return shuffled.slice(0, imageCount);
-        }
-        const filtered = shuffled.filter((image) => {
-          const key = getImageKey(image);
-          return key && !globallyUsedImageKeys.has(key);
-        });
-        return filtered.slice(0, imageCount);
-      };
-      const trackGloballyUsedImages = (selectedImages, excludeUsed) => {
-        if (!excludeUsed) return;
-        selectedImages.forEach((image) => {
-          const key = getImageKey(image);
-          if (key) globallyUsedImageKeys.add(key);
-        });
-      };
-      
-      // Register custom components
-      registerImageRankingWidget();
-      registerImageRatingWidget();
-      registerImageBooleanWidget();
-      registerImageMatrixWidget();
-      console.log('Custom widgets registered');
-      
-      // Deep clone deployment configuration to avoid mutations
-      const surveyConfig = JSON.parse(JSON.stringify(deploymentConfig));
-      
-      if (!surveyConfig) {
-        throw new Error('Deployment configuration not found');
-      }
-      
-      if (!surveyConfig.pages || surveyConfig.pages.length === 0) {
-        throw new Error('No pages found in survey configuration');
-      }
-      
-      console.log(\`Survey config loaded: \${surveyConfig.pages.length} pages\`);
-
-      // Process preloaded images if available
-      const preloadedImages = getPreloadedImages();
-      
-      if (preloadedImages && preloadedImages.length > 0) {
-        console.log(\`Using \${preloadedImages.length} preloaded images from deployment\`);
-        
-        // Replace image URLs in survey config with preloaded ones
-        if (surveyConfig.pages) {
-          for (const page of surveyConfig.pages) {
-            if (page.elements) {
-              for (const element of page.elements) {
-                // Handle different image question types
-                if (element.randomImageSelection && preloadedImages.length > 0) {
-                  // Use type-specific defaults if imageCount is not set
-                  const defaultCount = (element.type === 'imagerating' || element.type === 'imagematrix' || element.type === 'imageboolean' || element.type === 'image') ? 1 : 4;
-                  const imageCount = element.imageCount || defaultCount;
-                  const excludeUsed = shouldExcludePreviouslyUsedImages(element);
-                  const selectedImages = pickRandomImagesFromPool(preloadedImages, imageCount, excludeUsed);
-                  trackGloballyUsedImages(selectedImages, excludeUsed);
-                  
-                  if (element.type === 'image') {
-                    element.imageLink = selectedImages[0].url;
-                    element.imageName = selectedImages[0].name || selectedImages[0].url;
-                  } else if (element.type === 'imageboolean' || element.type === 'imagerating' || element.type === 'imagematrix') {
-                    // For imageboolean, imagerating, and imagematrix questions, store imageHtml.
-                    // The .sp-image-gallery class is picked up by
-                    // src/lib/imagePickerLayout.js for uniform per-question
-                    // image heights at natural aspect ratio.
-                    let imagesHtml = '<div class="sp-image-gallery">';
-                    selectedImages.forEach((image) => {
-                      imagesHtml += \`<div class="sp-image-gallery__item"><div class="sp-image-gallery__image-container"><img src="\${image.url}" alt="\${image.name || ''}" /></div></div>\`;
-                    });
-                    imagesHtml += '</div>';
-                    
-                    element.imageHtml = imagesHtml;
-                    element.imageNames = selectedImages.map((img) => img.name || img.url);
-                  } else {
-                    element.choices = selectedImages.map((image, index) => ({
-                      value: \`image_\${index}\`,
-                      imageLink: image.url,
-                      imageName: image.name || image.url
-                    }));
-                    element.imageNames = selectedImages.map((img) => img.name || img.url);
-                  }
-                  imageTracker[element.name] = selectedImages.map((img) => img.name || img.url);
-                  // Default to "contain" so images keep their natural aspect ratio.
-                  if (!element.imageFit) {
-                    element.imageFit = "contain";
-                  }
-                }
-              }
-            }
-          }
-        }
-      } else {
-        console.warn('No preloaded images available');
-      }
-      
-      // Keep custom image widgets as-is (no "See below images:" panel split).
-      // trial=1 and trial>1 both use the same React question components.
-
-      // Create survey model
-      console.log('Creating survey model...');
-      const model = new Model(surveyConfig);
-      console.log('Survey model created successfully');
-      
-      // Keep standalone deployments identical to both admin previews and Live Survey.
-      applyAdminThemeToSurveyModel(model, surveyConfig);
-      
-      // Apply survey configuration
-      model.title = surveyConfig.title || '';
-      model.description = surveyConfig.description || '';
-      model.logo = surveyConfig.logo || '';
-      model.logoPosition = surveyConfig.logoPosition || 'right';
-
-      // Handle survey completion
-      model.onComplete.add(async (survey, options) => {
-        const responses = survey.data;
-        const mapImageChoiceAnswerToNames = (answerValue, shownImages) => {
-          if (!shownImages || shownImages.length === 0) return answerValue;
-          const mapSingleValue = (value) => {
-            if (typeof value !== 'string') return value;
-            const match = value.match(/^image_(\\d+)$/);
-            if (!match) return value;
-            const imageIndex = parseInt(match[1], 10);
-            return shownImages[imageIndex] || value;
-          };
-          if (Array.isArray(answerValue)) return answerValue.map(mapSingleValue);
-          return mapSingleValue(answerValue);
-        };
-        const surveyQuestionTypeMap = {};
-        survey.getAllQuestions().forEach((question) => {
-          surveyQuestionTypeMap[question.name] = question.getType();
-        });
-        const enrichedResponses = Object.entries(responses).reduce((acc, [questionName, answerValue]) => {
-          const shownImages = imageTracker[questionName] || [];
-          acc[questionName] = {
-            type: surveyQuestionTypeMap[questionName] || null,
-            answer: mapImageChoiceAnswerToNames(answerValue, shownImages),
-            shown_images: shownImages
-          };
-          return acc;
-        }, {});
-        
-        const completeData = {
-          responses: enrichedResponses,
-          raw_responses: responses,
-          displayed_images: imageTracker,
-          survey_metadata: {
-            completion_time: new Date().toISOString(),
-            user_agent: navigator.userAgent,
-            screen_resolution: \`\${window.screen.width}x\${window.screen.height}\`,
-            survey_version: deploymentConfig.name || 'deployment',
-            project_id: deploymentConfig.id || 'unknown'
-          }
-        };
-        
-        console.log("Survey completed:", completeData);
-        
-        // Save to Supabase
-        const result = await saveSurveyResponse(completeData);
-        
-        if (result.success) {
-          const storageMessage = result.storage === 'supabase'
-            ? "Thank you for completing the survey! Your responses have been saved to the database."
-            : "Thank you for completing the survey! Your responses have been saved locally.";
-          alert(storageMessage);
-        } else {
-          console.error("Failed to save survey response:", result.error);
-          const errorMessage = result?.error?.message || result?.error || 'Unknown error';
-          alert(\`There was an error saving your responses: \${errorMessage}\`);
-        }
-      });
-
-      setSurveyModel(model);
-      setError(null);
-    } catch (err) {
-      console.error('Error initializing survey:', err);
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
-    return (
-      <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', gap: 2 }}>
-        <CircularProgress />
-        <Typography variant="body2" color="text.secondary">Loading survey...</Typography>
-      </Box>
-    );
-  }
-
-  if (error) {
-    return (
-      <Box sx={{ p: 3, maxWidth: 800, mx: 'auto', mt: 4 }}>
-        <Alert severity="error">
-          <strong>Error loading survey:</strong><br/>
-          {error}
-          <br/><br/>
-          Please check the browser console (F12) for more details.
-        </Alert>
-      </Box>
-    );
-  }
-
-  if (!surveyModel) {
-    return (
-      <Box sx={{ p: 3, maxWidth: 800, mx: 'auto', mt: 4 }}>
-        <Alert severity="warning">
-          Survey model not initialized. Please refresh the page.
-        </Alert>
-      </Box>
-    );
-  }
-
-  return (
-    <Box
-      className="sp-survey-theme-host"
-      style={buildSurveyHostStyle(deploymentConfig.theme || {})}
-      sx={{ minHeight: '100vh' }}
-    >
-      <Box sx={{ maxWidth: 1200, mx: 'auto', px: 2, py: 3 }}>
-        <Survey model={surveyModel} />
-      </Box>
-    </Box>
   );
 }
 `;
@@ -715,7 +503,10 @@ git push -u origin main
 
 ## Step 3: Test Your Survey
 
-- Live Survey: \`https://your-project.vercel.app/\`
+- Participant Live Survey: \`https://your-project.vercel.app/\` (same SurveyApp as local Live Survey)
+- Chinese UI: \`https://your-project.vercel.app/?locale=zh\`
+
+The package embeds the released snapshot. Participants use only the Supabase URL and anon key.
 
 **Note:** This deployment is survey-only. No admin panel is included in the deployed version.
 

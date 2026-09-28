@@ -61,7 +61,10 @@ export function findFeatureRecord(imageFeatures, entry, model) {
   ].filter(Boolean);
   for (const id of candidates) {
     const rec = map[featureStorageKey(id, model)];
-    if (rec) return rec;
+    if (rec) {
+      if (id === entry?.name && rec.media_id && ![getMediaId(entry), entry?.key, entry?.url, entry?.name].includes(rec.media_id)) continue;
+      return rec;
+    }
   }
   return null;
 }

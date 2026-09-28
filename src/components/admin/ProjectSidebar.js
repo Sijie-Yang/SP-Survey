@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Drawer,
+  useMediaQuery,
   Box,
   Typography,
   List,
@@ -54,6 +55,7 @@ import {
   Search,
   FilterList,
   Code,
+  PushPin,
 } from '@mui/icons-material';
 import { 
   getUserProjects, 
@@ -85,9 +87,13 @@ import {
   findAvailableTemplateId,
 } from '../../lib/templateManager';
 import { isLocalSelfHosted, LOCAL_USER_ID } from '../../lib/appMode';
-import { isR2Configured, deleteImagesFromR2, listImagesFromR2, copyImagesInR2 } from '../../lib/r2';
+import { isR2Configured, deleteImagesFromR2, listImagesFromR2, copyImagesInR2, projectR2Prefix } from '../../lib/r2';
+import { folderFromR2Key, mediaRelativePathFromListing, inferMediaType, sanitizeMediaFolderConfig } from '../../lib/mediaUtils';
+import { useRegion } from '../../contexts/RegionContext';
+import { tf } from '../../contexts/adminI18n';
 
 export default function ProjectSidebar({ 
+  id,
   open, 
   onClose, 
   onProjectSelect, 
@@ -97,6 +103,8 @@ export default function ProjectSidebar({
   projectStates = {},
   width = 400 
 }) {
+  const { t, language } = useRegion();
+  const narrow = useMediaQuery('(max-width:899px)');
   const [projects, setProjects] = useState([]);
   const [templates, setTemplates] = useState([]);
   const [activeProjectId, setActiveProjectId] = useState(null);
@@ -160,7 +168,7 @@ export default function ProjectSidebar({
   // Template search / filter / sort
   const [templateSearch, setTemplateSearch] = useState('');
   const [templateCategory, setTemplateCategory] = useState('');
-  const [templateSort, setTemplateSort] = useState('name');
+  const [templateSort, setTemplateSort] = useState('year_desc');
 
   useEffect(() => {
     if (isLocalSelfHosted()) {
@@ -253,7 +261,7 @@ export default function ProjectSidebar({
       console.log('🎯 Creating project from template:', selectedTemplate.name);
 
       // The project is created with NO images — copying the template's
-      // R2 folder is deferred to an explicit "Import Template Images"
+      // Template media is not copied; the researcher uploads or imports from Hugging Face.
       // action on the Image Dataset page so this flow stays fast and
       // doesn't burn storage for users who never use the images.
       const projectData = {
@@ -438,10 +446,17 @@ export default function ProjectSidebar({
       return [];
     }
 
-    const allCopies = listed.images.map((img) => ({
-      from: img.key,
-      to: `${templatePrefix}${img.name}`,
-    }));
+    const allCopies = listed.images.map((img) => {
+      const rel = mediaRelativePathFromListing(img, projectPrefix);
+      return {
+        from: img.key,
+        to: `${templatePrefix}${rel}`,
+        rel,
+        name: img.name,
+        type: img.type || inferMediaType(img.name),
+        folder: folderFromR2Key(img.key, projectPrefix) || img.folder || '',
+      };
+    });
     const total = allCopies.length;
     onProgress?.({ current: 0, total });
 
@@ -464,11 +479,18 @@ export default function ProjectSidebar({
       console.warn(`⚠️ ${errors.length} image(s) failed to copy to template:`, errors);
     }
     // Build the preloadedImages payload from successful copies.
-    return copied.map(({ to, url }) => ({
-      url: url || '',
-      name: to.split('/').pop(),
-      key: to,
-    }));
+    const metaByTo = new Map(allCopies.map((c) => [c.to, c]));
+    return copied.map(({ to, url }) => {
+      const meta = metaByTo.get(to) || {};
+      return {
+        url: url || '',
+        name: meta.name || to.split('/').pop(),
+        key: to,
+        type: meta.type || 'image',
+        folder: meta.folder || '',
+        media_id: to,
+      };
+    });
   };
 
   const confirmSaveAsTemplate = async () => {
@@ -552,6 +574,7 @@ export default function ProjectSidebar({
         preloadedImages: templateImages,
         preloadedAt: templateImages.length > 0 ? new Date().toISOString() : null,
         preloadedSource: templateImages.length > 0 ? 'supabase' : null,
+        imageDatasetConfig: sanitizeMediaFolderConfig(projectToTemplate.imageDatasetConfig || {}),
       };
 
       setTemplateProgress({ label: 'Saving template…', current: 0, total: 0 });
@@ -695,33 +718,12 @@ export default function ProjectSidebar({
     try {
       // ── Supabase Storage cleanup ──────────────────────────────────────
       if (isR2Configured()) {
-        const keysToDelete = new Set();
-
-        // 1. Keys from preloadedImages metadata
-        if (deletingProject.preloadedImages?.length > 0) {
-          for (const img of deletingProject.preloadedImages) {
-            if (img.key) keysToDelete.add(img.key);
-            else if (img.url) {
-              try {
-                const u = new URL(img.url);
-                const parts = u.pathname.split('/storage/v1/object/public/survey-images/');
-                if (parts[1]) keysToDelete.add(decodeURIComponent(parts[1]));
-              } catch (_) { /* ignore */ }
-            }
-          }
-        }
-
-        // 2. All objects under the project prefix in Supabase Storage
+        const prefix = projectR2Prefix(currentUserId || 'anonymous', deletingProject.id);
         setDeleteProgress({ label: 'Listing project images…', current: 0, total: 0 });
-        const prefix = `${currentUserId || 'anonymous'}/${deletingProject.id}/`;
         const listResult = await listImagesFromR2(prefix);
-        if (listResult.success) {
-          for (const img of listResult.images) keysToDelete.add(img.key);
-        }
-
-        // Batch the delete so the bar advances smoothly instead of waiting
-        // for the worker to chew through hundreds of keys in one request.
-        const keys = [...keysToDelete];
+        const keys = (listResult.success ? listResult.images : [])
+          .map((img) => img.key)
+          .filter((key) => key && key.startsWith(prefix));
         const total = keys.length;
         if (total > 0) {
           setDeleteProgress({
@@ -732,7 +734,7 @@ export default function ProjectSidebar({
           const BATCH_SIZE = 50;
           for (let i = 0; i < total; i += BATCH_SIZE) {
             const batch = keys.slice(i, i + BATCH_SIZE);
-            await deleteImagesFromR2(batch);
+            await deleteImagesFromR2(batch, { allowedPrefix: prefix });
             const done = Math.min(i + batch.length, total);
             setDeleteProgress({
               label: `Deleting images from Supabase… (${done}/${total})`,
@@ -815,15 +817,16 @@ export default function ProjectSidebar({
   return (
     <>
       <Drawer
+        id={id}
         anchor="left"
         open={open}
         onClose={onClose}
-        variant="persistent"
+        variant={narrow ? 'temporary' : 'persistent'}
         sx={{
-          width: width,
+          width: narrow ? 'min(400px, 100vw)' : width,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
-            width: width,
+            width: narrow ? 'min(400px, 100vw)' : width,
             boxSizing: 'border-box',
             top: '64px', // Below AppBar
             height: 'calc(100vh - 64px)',
@@ -835,7 +838,7 @@ export default function ProjectSidebar({
         <Box sx={{ p: 1.5 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
             <Typography variant="h6" sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>
-              Projects
+              {t.sidebarProjects}
             </Typography>
             <IconButton onClick={onClose} size="small">
               <Close />
@@ -854,7 +857,7 @@ export default function ProjectSidebar({
               <ListItemText 
                 primary={
                   <Typography variant="subtitle2" sx={{ fontWeight: 'bold', fontSize: '0.9rem' }}>
-                    Project Templates
+                    {t.sidebarTemplates}
                   </Typography>
                 } 
                 sx={{ my: 0 }}
@@ -868,7 +871,7 @@ export default function ProjectSidebar({
                 <Box sx={{ px: 1, pt: 0.5, pb: 1 }}>
                   <TextField
                     size="small"
-                    placeholder="Search templates..."
+                    placeholder={t.sidebarSearchTemplates}
                     fullWidth
                     value={templateSearch}
                     onChange={e => setTemplateSearch(e.target.value)}
@@ -888,13 +891,17 @@ export default function ProjectSidebar({
                         value={templateCategory}
                         onChange={e => setTemplateCategory(e.target.value)}
                         displayEmpty
-                        renderValue={v => v || 'All Categories'}
+                        renderValue={v => ({
+                          'Academic Research': t.sidebarCatAcademic,
+                          'Urban Theory': t.sidebarCatUrban,
+                          'AI Template': t.sidebarCatAi,
+                        }[v] || t.sidebarAllCategories)}
                         sx={{ fontSize: '0.75rem' }}
                       >
-                        <MenuItem value=""><em>All Categories</em></MenuItem>
-                        <MenuItem value="Academic Research">Academic Research</MenuItem>
-                        <MenuItem value="Urban Theory">Urban Theory</MenuItem>
-                        <MenuItem value="AI Template">AI Template</MenuItem>
+                        <MenuItem value=""><em>{t.sidebarAllCategories}</em></MenuItem>
+                        <MenuItem value="Academic Research">{t.sidebarCatAcademic}</MenuItem>
+                        <MenuItem value="Urban Theory">{t.sidebarCatUrban}</MenuItem>
+                        <MenuItem value="AI Template">{t.sidebarCatAi}</MenuItem>
                       </Select>
                     </FormControl>
                     <FormControl size="small" sx={{ flex: 1 }}>
@@ -903,10 +910,10 @@ export default function ProjectSidebar({
                         onChange={e => setTemplateSort(e.target.value)}
                         sx={{ fontSize: '0.75rem' }}
                       >
-                        <MenuItem value="name">Name A–Z</MenuItem>
-                        <MenuItem value="name_desc">Name Z–A</MenuItem>
-                        <MenuItem value="year_desc">Newest</MenuItem>
-                        <MenuItem value="year_asc">Oldest</MenuItem>
+                        <MenuItem value="name">{t.sidebarSortNameAsc}</MenuItem>
+                        <MenuItem value="name_desc">{t.sidebarSortNameDesc}</MenuItem>
+                        <MenuItem value="year_desc">{t.sidebarSortNewest}</MenuItem>
+                        <MenuItem value="year_asc">{t.sidebarSortOldest}</MenuItem>
                       </Select>
                     </FormControl>
                   </Stack>
@@ -922,6 +929,8 @@ export default function ProjectSidebar({
                     return matchSearch && matchCat;
                   });
                   list = [...list].sort((a, b) => {
+                    const pinDiff = Number(!!b.is_pinned) - Number(!!a.is_pinned);
+                    if (pinDiff) return pinDiff;
                     if (templateSort === 'name')      return (a.name || '').localeCompare(b.name || '');
                     if (templateSort === 'name_desc') return (b.name || '').localeCompare(a.name || '');
                     if (templateSort === 'year_desc') return (b.year || '').localeCompare(a.year || '');
@@ -933,8 +942,8 @@ export default function ProjectSidebar({
                       <ListItemText secondary={
                         <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.75rem' }}>
                           {templates.length === 0
-                            ? 'No templates found. Create one from a project.'
-                            : 'No templates match your search.'}
+                            ? t.sidebarNoTemplates
+                            : t.sidebarNoTemplateMatch}
                         </Typography>
                       } />
                     </ListItem>
@@ -951,7 +960,9 @@ export default function ProjectSidebar({
                           '&:hover': {
                             bgcolor: 'grey.100',
                           },
-                          bgcolor: isUserTemplate(template) ? 'primary.50' : 'transparent',
+                          bgcolor: template.is_pinned
+                            ? 'warning.50'
+                            : isUserTemplate(template) ? 'primary.50' : 'transparent',
                         }}
                         onClick={() => {
                           setSelectedTemplate(template);
@@ -962,7 +973,9 @@ export default function ProjectSidebar({
                         }}
                       >
                         <ListItemIcon sx={{ minWidth: 28, minHeight: 'unset' }}>
-                          {getTemplateIcon(template.category)}
+                          {template.is_pinned
+                            ? <PushPin sx={{ fontSize: 18, color: 'warning.main', transform: 'rotate(45deg)' }} />
+                            : getTemplateIcon(template.category)}
                         </ListItemIcon>
                         <ListItemText
                           primary={
@@ -970,6 +983,15 @@ export default function ProjectSidebar({
                               <Typography variant="body2" sx={{ fontSize: '0.875rem', lineHeight: 1.3 }}>
                                 {template.name}
                               </Typography>
+                              {template.is_pinned && (
+                                <Chip
+                                  label={t.sidebarPinned}
+                                  size="small"
+                                  color="warning"
+                                  variant="outlined"
+                                  sx={{ height: 16, fontSize: '0.6rem', '& .MuiChip-label': { px: 0.5 } }}
+                                />
+                              )}
                               {/* Show "Pending Review" badge for user's own pending templates */}
                               {false && !template.is_approved && template.user_id === currentUserId && (
                                 <Chip
@@ -984,13 +1006,13 @@ export default function ProjectSidebar({
                           }
                           secondary={
                             <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.7rem', lineHeight: 1.2 }}>
-                              {template.author || 'Unknown'} • {template.year}
+                              {template.author || t.sidebarUnknownAuthor} • {template.year}
                             </Typography>
                           }
                           sx={{ my: 0 }}
                         />
                         <Box sx={{ display: 'flex', gap: 0.25, ml: 'auto' }}>
-                          <Tooltip title={expandedTemplateMetadata[template.id] ? "Hide Metadata" : "Show Metadata"}>
+                          <Tooltip title={expandedTemplateMetadata[template.id] ? t.sidebarHideMetadata : t.sidebarShowMetadata}>
                             <IconButton
                               size="small"
                               onClick={(e) => {
@@ -1005,7 +1027,7 @@ export default function ProjectSidebar({
                               {expandedTemplateMetadata[template.id] ? <ExpandLess fontSize="small" /> : <InfoOutlined fontSize="small" />}
                             </IconButton>
                           </Tooltip>
-                          <Tooltip title="Preview Template">
+                          <Tooltip title={t.sidebarPreviewTemplate}>
                             <IconButton
                               size="small"
                               onClick={(e) => {
@@ -1018,7 +1040,7 @@ export default function ProjectSidebar({
                               <Preview fontSize="small" />
                             </IconButton>
                           </Tooltip>
-                          <Tooltip title="Copy Template">
+                          <Tooltip title={t.sidebarCopyTemplate}>
                             <IconButton
                               size="small"
                               onClick={(e) => {
@@ -1109,7 +1131,7 @@ export default function ProjectSidebar({
                 <ListItemText 
                   primary={
                     <Typography variant="subtitle2" sx={{ fontWeight: 'bold', fontSize: '0.9rem' }}>
-                      My Projects ({projects.length})
+                      {tf(t.sidebarMyProjects, { n: projects.length })}
                     </Typography>
                   }
                   sx={{ my: 0 }}
@@ -1117,7 +1139,7 @@ export default function ProjectSidebar({
                 {projectsExpanded ? <ExpandLess fontSize="small" /> : <ExpandMore fontSize="small" />}
               </ListItemButton>
               <Box sx={{ display: 'flex', gap: 0.5 }}>
-                <Tooltip title="Import Project">
+                <Tooltip title={t.sidebarImportProject}>
                   <IconButton component="label" size="small" color="primary">
                     <Upload />
                     <input
@@ -1128,7 +1150,7 @@ export default function ProjectSidebar({
                     />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title="Create New Project">
+                <Tooltip title={t.sidebarCreateProject}>
                   <IconButton 
                     onClick={() => setCreateDialog(true)}
                     size="small"
@@ -1147,7 +1169,7 @@ export default function ProjectSidebar({
                     <ListItemText 
                       primary={
                         <Typography variant="caption" color="text.secondary" sx={{ fontStyle: 'italic', fontSize: '0.75rem' }}>
-                          No projects yet. Create your first project!
+                          {t.sidebarNoProjects}
                         </Typography>
                       }
                     />
@@ -1211,9 +1233,9 @@ export default function ProjectSidebar({
                                   whiteSpace: 'nowrap',
                                   width: '100%'
                                 }}
-                                title={project.description || 'No description'}
+                                title={project.description || t.sidebarNoDescription}
                               >
-                                {project.description || 'No description'}
+                                {project.description || t.sidebarNoDescription}
                               </Typography>
                               <Typography 
                                 variant="caption" 
@@ -1225,14 +1247,14 @@ export default function ProjectSidebar({
                                 }}
                               >
                                 {new Date(project.lastModified).toLocaleDateString()}
-                                {projectStates[project.id]?.hasUnsavedChanges && ' • Unsaved'}
+                                {projectStates[project.id]?.hasUnsavedChanges && (language === 'zh' ? ' • 未保存' : ' • Unsaved')}
                               </Typography>
                             </Box>
                           }
                           sx={{ my: 0 }}
                         />
                         <Box sx={{ display: 'flex', gap: 0.25, ml: 'auto' }}>
-                          <Tooltip title={expandedProjectMetadata[project.id] ? "Hide Metadata" : "Show Metadata"}>
+                          <Tooltip title={expandedProjectMetadata[project.id] ? t.sidebarHideMetadata : t.sidebarShowMetadata}>
                             <IconButton
                               size="small"
                               onClick={(e) => {
@@ -1298,16 +1320,16 @@ export default function ProjectSidebar({
                           )}
                           {project.huggingfaceDataset && (
                             <Typography variant="caption" sx={{ display: 'block', fontSize: '0.7rem' }}>
-                              <strong>HF Dataset:</strong> {project.huggingfaceDataset}
+                              <strong>{language === 'zh' ? 'HF 数据集：' : 'HF Dataset:'}</strong> {project.huggingfaceDataset}
                             </Typography>
                           )}
                           {project.templateId && (
                             <Typography variant="caption" sx={{ display: 'block', fontSize: '0.7rem', mt: 0.5 }}>
-                              <strong>Template:</strong> {project.templateId}
+                              <strong>{language === 'zh' ? '模板：' : 'Template:'}</strong> {project.templateId}
                             </Typography>
                           )}
                           <Typography variant="caption" sx={{ display: 'block', fontSize: '0.65rem', mt: 0.5, opacity: 0.7 }}>
-                            Created: {new Date(project.createdAt).toLocaleDateString()}
+                            {language === 'zh' ? '创建于 ' : 'Created: '}{new Date(project.createdAt).toLocaleDateString()}
                           </Typography>
                         </Box>
                       </Collapse>
@@ -1328,40 +1350,40 @@ export default function ProjectSidebar({
       >
         <MenuItem onClick={handleEditProject}>
           <ListItemIcon><Edit /></ListItemIcon>
-          <ListItemText>Edit Project</ListItemText>
+          <ListItemText>{t.sidebarEditProject}</ListItemText>
         </MenuItem>
         <MenuItem onClick={handleDuplicateProject}>
           <ListItemIcon><FileCopy /></ListItemIcon>
-          <ListItemText>Duplicate</ListItemText>
+          <ListItemText>{t.sidebarDuplicate}</ListItemText>
         </MenuItem>
         <MenuItem onClick={handleExportProject}>
           <ListItemIcon><Download /></ListItemIcon>
-          <ListItemText>Export Project</ListItemText>
+          <ListItemText>{t.sidebarExportProject}</ListItemText>
         </MenuItem>
         <MenuItem onClick={handleExportForIde}>
           <ListItemIcon><Code /></ListItemIcon>
-          <ListItemText primary="Export for AI / IDE" secondary="Credentials removed" />
+          <ListItemText primary={t.sidebarExportIde} secondary={t.sidebarExportIdeHelp} />
         </MenuItem>
         <MenuItem onClick={handleExportAsTemplate}>
           <ListItemIcon><Description /></ListItemIcon>
-          <ListItemText>Save as Template</ListItemText>
+          <ListItemText>{t.sidebarSaveAsTemplate}</ListItemText>
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleDeleteProject} sx={{ color: 'error.main' }}>
           <ListItemIcon><Delete color="error" /></ListItemIcon>
-          <ListItemText>Delete</ListItemText>
+          <ListItemText>{t.sidebarDelete}</ListItemText>
         </MenuItem>
       </Menu>
 
       {/* Create Project Dialog */}
       <Dialog open={createDialog} onClose={() => setCreateDialog(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>Create New Project</DialogTitle>
+        <DialogTitle>{t.sidebarCreateProject}</DialogTitle>
         <DialogContent>
           {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
           <TextField
             autoFocus
             margin="dense"
-            label="Project Name"
+            label={t.sidebarProjectName}
             fullWidth
             variant="outlined"
             value={newProjectName}
@@ -1370,7 +1392,7 @@ export default function ProjectSidebar({
           />
           <TextField
             margin="dense"
-            label="Description (Optional)"
+            label={t.sidebarDescriptionOptional}
             fullWidth
             multiline
             rows={3}
@@ -1380,8 +1402,8 @@ export default function ProjectSidebar({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setCreateDialog(false)}>Cancel</Button>
-          <Button onClick={handleCreateProject} variant="contained">Create</Button>
+          <Button onClick={() => setCreateDialog(false)}>{t.sidebarCancel}</Button>
+          <Button onClick={handleCreateProject} variant="contained">{t.sidebarCreate}</Button>
         </DialogActions>
       </Dialog>
 
@@ -1420,7 +1442,7 @@ export default function ProjectSidebar({
           <TextField
             autoFocus
             margin="dense"
-            label="Project Name"
+            label={t.sidebarProjectName}
             fullWidth
             variant="outlined"
             value={newProjectName}
@@ -1459,7 +1481,7 @@ export default function ProjectSidebar({
           <TextField
             autoFocus
             margin="dense"
-            label="Project Name"
+            label={t.sidebarProjectName}
             fullWidth
             variant="outlined"
             value={newProjectName}

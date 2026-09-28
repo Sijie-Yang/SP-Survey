@@ -26,7 +26,10 @@ export function computeBordaScores(rankingsByItem, nItems) {
 export function kendallW(rankings, items) {
   const m = rankings.length; // judges
   const n = items.length; // items
-  if (m < 2 || n < 2) return null;
+  if (m < 2 || n < 2 || new Set(items).size !== n) return null;
+  const itemSet = new Set(items);
+  if (rankings.some((r) => !Array.isArray(r) || r.length !== n
+    || new Set(r).size !== n || r.some((item) => !itemSet.has(item)))) return null;
 
   const rankSums = {};
   items.forEach((item) => { rankSums[item] = 0; });
@@ -45,7 +48,7 @@ export function kendallW(rankings, items) {
 }
 
 export function interpretKendallW(w) {
-  if (w == null) return 'Insufficient data for agreement test';
+  if (w == null) return 'Requires at least two complete rankings of the same items, without ties';
   if (w >= 0.7) return 'Strong agreement among participants (W ≥ 0.70)';
   if (w >= 0.5) return 'Moderate agreement (W ≥ 0.50)';
   if (w >= 0.3) return 'Fair agreement — interpret with caution';

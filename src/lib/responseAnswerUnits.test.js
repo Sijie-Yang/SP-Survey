@@ -31,6 +31,7 @@ describe('expandQuestionAnswerUnits', () => {
       answer: 4,
       shown_images: [],
       shown_media: [],
+      shown_media_categories: [],
       shown_media_ids: [],
       trial_index: 0,
       participant_id: 'p2',

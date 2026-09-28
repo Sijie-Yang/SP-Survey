@@ -6,7 +6,7 @@ import { generateDeploymentFiles, PARTICIPANT_DEPENDENCIES } from './deploymentM
 const repoRoot = path.resolve(__dirname, '..', '..');
 const repoPackage = JSON.parse(fs.readFileSync(path.join(repoRoot, 'package.json'), 'utf8'));
 const srcRoot = path.join(repoRoot, 'src');
-const EXCLUDED_FROM_DEPLOYMENT = ['AdminApp.js', 'SurveyApp.js', 'components/admin'];
+const EXCLUDED_FROM_DEPLOYMENT = ['AdminApp.js', 'components/admin'];
 
 const generate = () => generateDeploymentFiles({ projectName: 'probe', timestamp: 'now', config: { pages: [] } });
 

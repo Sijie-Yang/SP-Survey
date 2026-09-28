@@ -12,690 +12,699 @@
     "pairwise",
     "perception",
     "personality",
-    "specs"
+    "specs",
+    "official"
   ],
+  "isPinned": false,
   "website": "https://doi.org/10.1016/j.landurbplan.2026.105618",
   "huggingfaceDataset": "matiasqr/greenery-perception",
-  "createdAt": "2026-07-15T00:00:00.000Z",
+  "createdAt": "2026-07-15T00:00:00+00:00",
   "config": {
-    "title": "Greenery Perception Survey (Quintana et al., 2026)",
-    "description": "Based on: Quintana, M., Liu, F., Torkko, J., Gu, Y., Liang, X., Hou, Y., Ito, K., Zhu, Y., Abdelrahman, M., Toivonen, T., Lu, Y., & Biljecki, F. (2026). It is not always greener on the other side: Greenery perception across demographics and personalities in multiple cities. Landscape and Urban Planning, 271, 105618. https://doi.org/10.1016/j.landurbplan.2026.105618. Survey structure follows SPECS (Quintana et al., 2025): demographics, Big Five, and greenery pairwise comparisons (“Which place looks greener?”).",
     "logo": "https://github.com/matqr/specs/raw/main/img/specs-logo.png",
-    "logoPosition": "right",
-    "showQuestionNumbers": "off",
-    "showProgressBar": "aboveheader",
-    "progressBarType": "questions",
-    "autoGrowComment": true,
-    "showPreviewBeforeComplete": "showAllQuestions",
     "pages": [
       {
         "name": "overview",
         "title": "Overview",
         "elements": [
           {
-            "type": "html",
+            "html": "<p><strong>Quintana et al. (2026)</strong> — <em>It is not always greener on the other side: Greenery perception across demographics and personalities in multiple cities</em>. <em>Landscape and Urban Planning</em>, 271, 105618. <a href=\"https://doi.org/10.1016/j.landurbplan.2026.105618\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1016/j.landurbplan.2026.105618</a></p><p>This template reproduces the <strong>greenery-focused</strong> branch of the SPECS survey: demographics + Big Five personality, then pairwise ratings for <strong>“Which place looks greener?”</strong> (5 pairs; left / right / equal).</p><p>Related dataset &amp; code: <a href=\"https://github.com/matqr/specs\" target=\"_blank\" rel=\"noopener\">SPECS</a>, <a href=\"https://github.com/matqr/greenery-perception\" target=\"_blank\" rel=\"noopener\">greenery-perception</a>, <a href=\"https://huggingface.co/datasets/matiasqr/specs\" target=\"_blank\" rel=\"noopener\">HF: matiasqr/specs</a>, <a href=\"https://huggingface.co/datasets/matiasqr/greenery-perception\" target=\"_blank\" rel=\"noopener\">HF: matiasqr/greenery-perception</a>.</p><p>Full multi-indicator SPECS instrument is also available as template <code>2025-quintana-specs</code>.</p>",
             "name": "overview_html",
-            "html": "<p><strong>Quintana et al. (2026)</strong> — <em>It is not always greener on the other side: Greenery perception across demographics and personalities in multiple cities</em>. <em>Landscape and Urban Planning</em>, 271, 105618. <a href=\"https://doi.org/10.1016/j.landurbplan.2026.105618\" target=\"_blank\" rel=\"noopener\">https://doi.org/10.1016/j.landurbplan.2026.105618</a></p><p>This template reproduces the <strong>greenery-focused</strong> branch of the SPECS survey: demographics + Big Five personality, then pairwise ratings for <strong>“Which place looks greener?”</strong> (5 pairs; left / right / equal).</p><p>Related dataset &amp; code: <a href=\"https://github.com/matqr/specs\" target=\"_blank\" rel=\"noopener\">SPECS</a>, <a href=\"https://github.com/matqr/greenery-perception\" target=\"_blank\" rel=\"noopener\">greenery-perception</a>, <a href=\"https://huggingface.co/datasets/matiasqr/specs\" target=\"_blank\" rel=\"noopener\">HF: matiasqr/specs</a>, <a href=\"https://huggingface.co/datasets/matiasqr/greenery-perception\" target=\"_blank\" rel=\"noopener\">HF: matiasqr/greenery-perception</a>.</p><p>Full multi-indicator SPECS instrument is also available as template <code>2025-quintana-specs</code>.</p>"
+            "type": "html"
           }
         ]
       },
       {
         "name": "demographics",
         "title": "Demographic questions",
-        "description": "Onboarding demographics (SPECS / Quintana et al., 2025). This greenery study uses the same participant battery (Table 1).",
         "elements": [
           {
-            "type": "radiogroup",
             "name": "gender",
-            "title": "What is your gender?",
-            "isRequired": true,
-            "choices": [
-              {
-                "value": "male",
-                "text": "Male"
-              },
-              {
-                "value": "female",
-                "text": "Female"
-              },
-              {
-                "value": "non-binary",
-                "text": "Non-binary"
-              },
-              {
-                "value": "prefer_not_to_say",
-                "text": "Prefer not to say"
-              }
-            ]
-          },
-          {
             "type": "radiogroup",
-            "name": "age_group",
-            "title": "What is your age group?",
-            "isRequired": true,
+            "title": "What is your gender?",
             "choices": [
               {
-                "value": "21-29",
-                "text": "21-29"
+                "text": "Male",
+                "value": "male"
               },
               {
-                "value": "30-39",
-                "text": "30-39"
+                "text": "Female",
+                "value": "female"
               },
               {
-                "value": "40-49",
-                "text": "40-49"
+                "text": "Non-binary",
+                "value": "non-binary"
               },
               {
-                "value": "above_50",
-                "text": "Above 50"
+                "text": "Prefer not to say",
+                "value": "prefer_not_to_say"
               }
-            ]
+            ],
+            "isRequired": true
           },
           {
-            "type": "text",
+            "name": "age_group",
+            "type": "radiogroup",
+            "title": "What is your age group?",
+            "choices": [
+              {
+                "text": "21-29",
+                "value": "21-29"
+              },
+              {
+                "text": "30-39",
+                "value": "30-39"
+              },
+              {
+                "text": "40-49",
+                "value": "40-49"
+              },
+              {
+                "text": "Above 50",
+                "value": "above_50"
+              }
+            ],
+            "isRequired": true
+          },
+          {
             "name": "nationality",
+            "type": "text",
             "title": "What is your nationality?",
             "isRequired": true
           },
           {
-            "type": "text",
             "name": "country",
+            "type": "text",
             "title": "Which country do you currently live in?",
             "isRequired": true
           },
           {
-            "type": "text",
             "name": "city",
+            "type": "text",
             "title": "Which city do you currently live in?",
             "isRequired": true
           },
           {
-            "type": "radiogroup",
             "name": "living_time",
+            "type": "radiogroup",
             "title": "How long have you lived in the country you’re currently living in?",
-            "isRequired": true,
             "choices": [
               {
-                "value": "less_than_1_year",
-                "text": "Less than 1 year"
+                "text": "Less than 1 year",
+                "value": "less_than_1_year"
               },
               {
-                "value": "1-3_years",
-                "text": "1-3 years"
+                "text": "1-3 years",
+                "value": "1-3_years"
               },
               {
-                "value": "3-5_years",
-                "text": "3-5 years"
+                "text": "3-5 years",
+                "value": "3-5_years"
               },
               {
-                "value": "above_5_years",
-                "text": "Above 5 years"
+                "text": "Above 5 years",
+                "value": "above_5_years"
               }
-            ]
+            ],
+            "isRequired": true
           },
           {
-            "type": "radiogroup",
             "name": "ahi",
-            "title": "What is your annual household income (AHI)? (Singapore as an example)",
-            "isRequired": true,
             "rows": [
               {
-                "value": "singapore",
-                "text": "Singapore"
+                "text": "Singapore",
+                "value": "singapore"
+              }
+            ],
+            "type": "radiogroup",
+            "title": "What is your annual household income (AHI)? (Singapore as an example)",
+            "choices": [
+              {
+                "text": "$0 - $9,999",
+                "value": "$0_-_$9,999"
+              },
+              {
+                "text": "$10,000 - $24,999",
+                "value": "$10,000_-_$24,999"
+              },
+              {
+                "text": "$25,000 - $44,999",
+                "value": "$25,000_-_$44,999"
+              },
+              {
+                "text": "$45,000 - $62,999",
+                "value": "$45,000_-_$62,999"
+              },
+              {
+                "text": "$63,000 - $81,999",
+                "value": "$63,000_-_$81,999"
+              },
+              {
+                "text": "$82,000 - $99,999",
+                "value": "$82,000_-_$99,999"
+              },
+              {
+                "text": "$100,000 - $119,999",
+                "value": "$100,000_-_$119,999"
+              },
+              {
+                "text": "$120,000 - $139,999",
+                "value": "$120,000_-_$139,999"
+              },
+              {
+                "text": "$140,000 - $159,999",
+                "value": "$140,000_-_$159,999"
+              },
+              {
+                "text": "$160,000 - $179,999",
+                "value": "$160,000_-_$179,999"
+              },
+              {
+                "text": "$180,000 - $999,999",
+                "value": "$180,000_-_$999,999"
+              },
+              {
+                "text": "Prefer not to answer",
+                "value": "prefer_not_to_answer"
               }
             ],
             "columns": [],
-            "choices": [
-              {
-                "value": "$0_-_$9,999",
-                "text": "$0 - $9,999"
-              },
-              {
-                "value": "$10,000_-_$24,999",
-                "text": "$10,000 - $24,999"
-              },
-              {
-                "value": "$25,000_-_$44,999",
-                "text": "$25,000 - $44,999"
-              },
-              {
-                "value": "$45,000_-_$62,999",
-                "text": "$45,000 - $62,999"
-              },
-              {
-                "value": "$63,000_-_$81,999",
-                "text": "$63,000 - $81,999"
-              },
-              {
-                "value": "$82,000_-_$99,999",
-                "text": "$82,000 - $99,999"
-              },
-              {
-                "value": "$100,000_-_$119,999",
-                "text": "$100,000 - $119,999"
-              },
-              {
-                "value": "$120,000_-_$139,999",
-                "text": "$120,000 - $139,999"
-              },
-              {
-                "value": "$140,000_-_$159,999",
-                "text": "$140,000 - $159,999"
-              },
-              {
-                "value": "$160,000_-_$179,999",
-                "text": "$160,000 - $179,999"
-              },
-              {
-                "value": "$180,000_-_$999,999",
-                "text": "$180,000 - $999,999"
-              },
-              {
-                "value": "prefer_not_to_answer",
-                "text": "Prefer not to answer"
-              }
-            ]
+            "isRequired": true
           },
           {
-            "type": "text",
             "name": "individual_num",
+            "type": "text",
             "title": "How many individuals reside in your household, including yourself?",
             "isRequired": true
           },
           {
-            "type": "radiogroup",
             "name": "edu_level",
+            "type": "radiogroup",
             "title": "What is highest level of education?",
-            "isRequired": true,
             "choices": [
               {
-                "value": "less_than_secondary/high_school",
-                "text": "Less than Secondary/High school"
+                "text": "Less than Secondary/High school",
+                "value": "less_than_secondary/high_school"
               },
               {
-                "value": "secondary/high_school_graduate_or_equivalent",
-                "text": "Secondary/High school graduate or equivalent"
+                "text": "Secondary/High school graduate or equivalent",
+                "value": "secondary/high_school_graduate_or_equivalent"
               },
               {
-                "value": "college_or_vocational_training_or_diploma",
-                "text": "College or Vocational training or Diploma"
+                "text": "College or Vocational training or Diploma",
+                "value": "college_or_vocational_training_or_diploma"
               },
               {
-                "value": "bachelor's_degree",
-                "text": "Bachelor's degree"
+                "text": "Bachelor's degree",
+                "value": "bachelor's_degree"
               },
               {
-                "value": "master's_degree",
-                "text": "Master's degree"
+                "text": "Master's degree",
+                "value": "master's_degree"
               },
               {
-                "value": "doctorate_or_professional_degree",
-                "text": "Doctorate or professional degree"
+                "text": "Doctorate or professional degree",
+                "value": "doctorate_or_professional_degree"
               },
               {
-                "value": "other",
-                "text": "Other"
+                "text": "Other",
+                "value": "other"
               }
-            ]
+            ],
+            "isRequired": true
           },
           {
-            "type": "radiogroup",
             "name": "race",
+            "type": "radiogroup",
             "title": "Which race or ethnicity best describes you?",
-            "isRequired": true,
             "choices": [
               {
-                "value": "asian_or_pacific_islander",
-                "text": "Asian or Pacific Islander"
+                "text": "Asian or Pacific Islander",
+                "value": "asian_or_pacific_islander"
               },
               {
-                "value": "black_or_african_american",
-                "text": "Black or African American"
+                "text": "Black or African American",
+                "value": "black_or_african_american"
               },
               {
-                "value": "hispanic_or_latino",
-                "text": "Hispanic or Latino"
+                "text": "Hispanic or Latino",
+                "value": "hispanic_or_latino"
               },
               {
-                "value": "native_american_or_alaska_native",
-                "text": "Native American or Alaska Native"
+                "text": "Native American or Alaska Native",
+                "value": "native_american_or_alaska_native"
               },
               {
-                "value": "white_or_caucasian",
-                "text": "White or Caucasian"
+                "text": "White or Caucasian",
+                "value": "white_or_caucasian"
               },
               {
-                "value": "middle_eastern_or_north_african",
-                "text": "Middle Eastern or North African"
+                "text": "Middle Eastern or North African",
+                "value": "middle_eastern_or_north_african"
               },
               {
-                "value": "a_race/ethnicity_not_listed_here",
-                "text": "A race/ethnicity not listed here"
+                "text": "A race/ethnicity not listed here",
+                "value": "a_race/ethnicity_not_listed_here"
               }
-            ]
+            ],
+            "isRequired": true
           }
-        ]
+        ],
+        "description": "Onboarding demographics (SPECS / Quintana et al., 2025). This greenery study uses the same participant battery (Table 1)."
       },
       {
         "name": "personality",
         "title": "Personality (Big Five Inventory)",
-        "description": "Big Five personality items (bounded [1, 7] in SPECS Table 1). Wording from the SPECS onboarding survey (Quintana et al., 2025).",
         "elements": [
           {
-            "type": "radiogroup",
             "name": "personality_1",
+            "type": "radiogroup",
             "title": "How well do the following statements describe your personality: I see myself as someone who is reserved.",
-            "isRequired": true,
-            "description": "",
             "choices": [
               {
-                "value": "disagree_strongly",
-                "text": "Disagree strongly"
+                "text": "Disagree strongly",
+                "value": "disagree_strongly"
               },
               {
-                "value": "disagree_a_little",
-                "text": "Disagree a little"
+                "text": "Disagree a little",
+                "value": "disagree_a_little"
               },
               {
-                "value": "neither_agree_nor_disagree",
-                "text": "Neither agree nor disagree"
+                "text": "Neither agree nor disagree",
+                "value": "neither_agree_nor_disagree"
               },
               {
-                "value": "agree_a_little",
-                "text": "Agree a little"
+                "text": "Agree a little",
+                "value": "agree_a_little"
               },
               {
-                "value": "agree_strongly",
-                "text": "Agree strongly"
+                "text": "Agree strongly",
+                "value": "agree_strongly"
               }
-            ]
+            ],
+            "isRequired": true,
+            "description": ""
           },
           {
-            "type": "radiogroup",
             "name": "personality_2",
+            "type": "radiogroup",
             "title": "How well do the following statements describe your personality: I see myself as someone who is generally trusting.",
-            "isRequired": true,
-            "description": "",
             "choices": [
               {
-                "value": "disagree_strongly",
-                "text": "Disagree strongly"
+                "text": "Disagree strongly",
+                "value": "disagree_strongly"
               },
               {
-                "value": "disagree_a_little",
-                "text": "Disagree a little"
+                "text": "Disagree a little",
+                "value": "disagree_a_little"
               },
               {
-                "value": "neither_agree_nor_disagree",
-                "text": "Neither agree nor disagree"
+                "text": "Neither agree nor disagree",
+                "value": "neither_agree_nor_disagree"
               },
               {
-                "value": "agree_a_little",
-                "text": "Agree a little"
+                "text": "Agree a little",
+                "value": "agree_a_little"
               },
               {
-                "value": "agree_strongly",
-                "text": "Agree strongly"
+                "text": "Agree strongly",
+                "value": "agree_strongly"
               }
-            ]
+            ],
+            "isRequired": true,
+            "description": ""
           },
           {
-            "type": "radiogroup",
             "name": "personality_3",
+            "type": "radiogroup",
             "title": "How well do the following statements describe your personality: I see myself as someone who tends to be lazy.",
-            "isRequired": true,
-            "description": "",
             "choices": [
               {
-                "value": "disagree_strongly",
-                "text": "Disagree strongly"
+                "text": "Disagree strongly",
+                "value": "disagree_strongly"
               },
               {
-                "value": "disagree_a_little",
-                "text": "Disagree a little"
+                "text": "Disagree a little",
+                "value": "disagree_a_little"
               },
               {
-                "value": "neither_agree_nor_disagree",
-                "text": "Neither agree nor disagree"
+                "text": "Neither agree nor disagree",
+                "value": "neither_agree_nor_disagree"
               },
               {
-                "value": "agree_a_little",
-                "text": "Agree a little"
+                "text": "Agree a little",
+                "value": "agree_a_little"
               },
               {
-                "value": "agree_strongly",
-                "text": "Agree strongly"
+                "text": "Agree strongly",
+                "value": "agree_strongly"
               }
-            ]
+            ],
+            "isRequired": true,
+            "description": ""
           },
           {
-            "type": "radiogroup",
             "name": "personality_4",
+            "type": "radiogroup",
             "title": "How well do the following statements describe your personality: I see myself as someone who is relaxed, handles stress well.",
-            "isRequired": true,
-            "description": "",
             "choices": [
               {
-                "value": "disagree_strongly",
-                "text": "Disagree strongly"
+                "text": "Disagree strongly",
+                "value": "disagree_strongly"
               },
               {
-                "value": "disagree_a_little",
-                "text": "Disagree a little"
+                "text": "Disagree a little",
+                "value": "disagree_a_little"
               },
               {
-                "value": "neither_agree_nor_disagree",
-                "text": "Neither agree nor disagree"
+                "text": "Neither agree nor disagree",
+                "value": "neither_agree_nor_disagree"
               },
               {
-                "value": "agree_a_little",
-                "text": "Agree a little"
+                "text": "Agree a little",
+                "value": "agree_a_little"
               },
               {
-                "value": "agree_strongly",
-                "text": "Agree strongly"
+                "text": "Agree strongly",
+                "value": "agree_strongly"
               }
-            ]
+            ],
+            "isRequired": true,
+            "description": ""
           },
           {
-            "type": "radiogroup",
             "name": "personality_5",
+            "type": "radiogroup",
             "title": "How well do the following statements describe your personality: I see myself as someone who has few artistic interests.",
-            "isRequired": true,
-            "description": "",
             "choices": [
               {
-                "value": "disagree_strongly",
-                "text": "Disagree strongly"
+                "text": "Disagree strongly",
+                "value": "disagree_strongly"
               },
               {
-                "value": "disagree_a_little",
-                "text": "Disagree a little"
+                "text": "Disagree a little",
+                "value": "disagree_a_little"
               },
               {
-                "value": "neither_agree_nor_disagree",
-                "text": "Neither agree nor disagree"
+                "text": "Neither agree nor disagree",
+                "value": "neither_agree_nor_disagree"
               },
               {
-                "value": "agree_a_little",
-                "text": "Agree a little"
+                "text": "Agree a little",
+                "value": "agree_a_little"
               },
               {
-                "value": "agree_strongly",
-                "text": "Agree strongly"
+                "text": "Agree strongly",
+                "value": "agree_strongly"
               }
-            ]
+            ],
+            "isRequired": true,
+            "description": ""
           },
           {
-            "type": "radiogroup",
             "name": "personality_6",
+            "type": "radiogroup",
             "title": "How well do the following statements describe your personality: I see myself as someone who is outgoing, sociable.",
-            "isRequired": true,
-            "description": "",
             "choices": [
               {
-                "value": "disagree_strongly",
-                "text": "Disagree strongly"
+                "text": "Disagree strongly",
+                "value": "disagree_strongly"
               },
               {
-                "value": "disagree_a_little",
-                "text": "Disagree a little"
+                "text": "Disagree a little",
+                "value": "disagree_a_little"
               },
               {
-                "value": "neither_agree_nor_disagree",
-                "text": "Neither agree nor disagree"
+                "text": "Neither agree nor disagree",
+                "value": "neither_agree_nor_disagree"
               },
               {
-                "value": "agree_a_little",
-                "text": "Agree a little"
+                "text": "Agree a little",
+                "value": "agree_a_little"
               },
               {
-                "value": "agree_strongly",
-                "text": "Agree strongly"
+                "text": "Agree strongly",
+                "value": "agree_strongly"
               }
-            ]
+            ],
+            "isRequired": true,
+            "description": ""
           },
           {
-            "type": "radiogroup",
             "name": "personality_7",
+            "type": "radiogroup",
             "title": "How well do the following statements describe your personality: I see myself as someone who tends to find fault with others.",
-            "isRequired": true,
-            "description": "",
             "choices": [
               {
-                "value": "disagree_strongly",
-                "text": "Disagree strongly"
+                "text": "Disagree strongly",
+                "value": "disagree_strongly"
               },
               {
-                "value": "disagree_a_little",
-                "text": "Disagree a little"
+                "text": "Disagree a little",
+                "value": "disagree_a_little"
               },
               {
-                "value": "neither_agree_nor_disagree",
-                "text": "Neither agree nor disagree"
+                "text": "Neither agree nor disagree",
+                "value": "neither_agree_nor_disagree"
               },
               {
-                "value": "agree_a_little",
-                "text": "Agree a little"
+                "text": "Agree a little",
+                "value": "agree_a_little"
               },
               {
-                "value": "agree_strongly",
-                "text": "Agree strongly"
+                "text": "Agree strongly",
+                "value": "agree_strongly"
               }
-            ]
+            ],
+            "isRequired": true,
+            "description": ""
           },
           {
-            "type": "radiogroup",
             "name": "personality_8",
+            "type": "radiogroup",
             "title": "How well do the following statements describe your personality: I see myself as someone who does a thorough job.",
-            "isRequired": true,
-            "description": "",
             "choices": [
               {
-                "value": "disagree_strongly",
-                "text": "Disagree strongly"
+                "text": "Disagree strongly",
+                "value": "disagree_strongly"
               },
               {
-                "value": "disagree_a_little",
-                "text": "Disagree a little"
+                "text": "Disagree a little",
+                "value": "disagree_a_little"
               },
               {
-                "value": "neither_agree_nor_disagree",
-                "text": "Neither agree nor disagree"
+                "text": "Neither agree nor disagree",
+                "value": "neither_agree_nor_disagree"
               },
               {
-                "value": "agree_a_little",
-                "text": "Agree a little"
+                "text": "Agree a little",
+                "value": "agree_a_little"
               },
               {
-                "value": "agree_strongly",
-                "text": "Agree strongly"
+                "text": "Agree strongly",
+                "value": "agree_strongly"
               }
-            ]
+            ],
+            "isRequired": true,
+            "description": ""
           },
           {
-            "type": "radiogroup",
             "name": "personality_9",
+            "type": "radiogroup",
             "title": "How well do the following statements describe your personality: I see myself as someone who gets nervous easily.",
-            "isRequired": true,
-            "description": "",
             "choices": [
               {
-                "value": "disagree_strongly",
-                "text": "Disagree strongly"
+                "text": "Disagree strongly",
+                "value": "disagree_strongly"
               },
               {
-                "value": "disagree_a_little",
-                "text": "Disagree a little"
+                "text": "Disagree a little",
+                "value": "disagree_a_little"
               },
               {
-                "value": "neither_agree_nor_disagree",
-                "text": "Neither agree nor disagree"
+                "text": "Neither agree nor disagree",
+                "value": "neither_agree_nor_disagree"
               },
               {
-                "value": "agree_a_little",
-                "text": "Agree a little"
+                "text": "Agree a little",
+                "value": "agree_a_little"
               },
               {
-                "value": "agree_strongly",
-                "text": "Agree strongly"
+                "text": "Agree strongly",
+                "value": "agree_strongly"
               }
-            ]
+            ],
+            "isRequired": true,
+            "description": ""
           },
           {
-            "type": "radiogroup",
             "name": "personality_10",
+            "type": "radiogroup",
             "title": "How well do the following statements describe your personality: I see myself as someone who has an active imagination.",
-            "isRequired": true,
-            "description": "",
             "choices": [
               {
-                "value": "disagree_strongly",
-                "text": "Disagree strongly"
+                "text": "Disagree strongly",
+                "value": "disagree_strongly"
               },
               {
-                "value": "disagree_a_little",
-                "text": "Disagree a little"
+                "text": "Disagree a little",
+                "value": "disagree_a_little"
               },
               {
-                "value": "neither_agree_nor_disagree",
-                "text": "Neither agree nor disagree"
+                "text": "Neither agree nor disagree",
+                "value": "neither_agree_nor_disagree"
               },
               {
-                "value": "agree_a_little",
-                "text": "Agree a little"
+                "text": "Agree a little",
+                "value": "agree_a_little"
               },
               {
-                "value": "agree_strongly",
-                "text": "Agree strongly"
+                "text": "Agree strongly",
+                "value": "agree_strongly"
               }
-            ]
+            ],
+            "isRequired": true,
+            "description": ""
           }
-        ]
+        ],
+        "description": "Big Five personality items (bounded [1, 7] in SPECS Table 1). Wording from the SPECS onboarding survey (Quintana et al., 2025)."
       },
       {
         "name": "greenery_pairwise",
         "title": "Greenery perception (pairwise)",
-        "description": "Five pairwise comparisons for the green indicator (SPECS: 5 questions per indicator). Connect the Hugging Face dataset matiasqr/specs or matiasqr/greenery-perception for imagery.",
         "elements": [
           {
-            "type": "imagepicker",
             "name": "green_1",
+            "type": "imagepicker",
             "title": "Which place looks greener?",
-            "description": "Greenery indicator (verbatim from Quintana et al., 2026 / SPECS). Pairwise left vs right street-view scenes. Original SPECS UI also offered “Both are the same to me” (equal); if neither scene is greener, skip or note in comments if enabled. Coding in SPECS Table 1: left / right / equal.",
-            "isRequired": true,
-            "imageCount": 2,
-            "imageSelectionMode": "huggingface_random",
             "imageFit": "cover",
-            "randomImageSelection": true,
+            "imageCount": 2,
+            "isRequired": true,
+            "description": "Greenery indicator (verbatim from Quintana et al., 2026 / SPECS). Pairwise left vs right street-view scenes. Original SPECS UI also offered “Both are the same to me” (equal); if neither scene is greener, skip or note in comments if enabled. Coding in SPECS Table 1: left / right / equal.",
             "imageSource": "huggingface",
             "multiSelect": false,
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
             "excludePreviouslyUsedImages": true
           },
           {
-            "type": "boolean",
             "name": "green_1_equal",
+            "type": "boolean",
             "title": "Both are the same to me",
-            "description": "SPECS equal option (Table 1). Set Yes if the two places look equally green (overrides the image pick for analysis).",
-            "isRequired": false,
             "labelTrue": "Yes — equal",
-            "labelFalse": "No — I preferred one side"
+            "isRequired": false,
+            "labelFalse": "No — I preferred one side",
+            "description": "SPECS equal option (Table 1). Set Yes if the two places look equally green (overrides the image pick for analysis)."
           },
           {
-            "type": "imagepicker",
             "name": "green_2",
+            "type": "imagepicker",
             "title": "Which place looks greener?",
-            "description": "Greenery indicator (verbatim from Quintana et al., 2026 / SPECS). Pairwise left vs right street-view scenes. Original SPECS UI also offered “Both are the same to me” (equal); if neither scene is greener, skip or note in comments if enabled. Coding in SPECS Table 1: left / right / equal.",
-            "isRequired": true,
-            "imageCount": 2,
-            "imageSelectionMode": "huggingface_random",
             "imageFit": "cover",
-            "randomImageSelection": true,
+            "imageCount": 2,
+            "isRequired": true,
+            "description": "Greenery indicator (verbatim from Quintana et al., 2026 / SPECS). Pairwise left vs right street-view scenes. Original SPECS UI also offered “Both are the same to me” (equal); if neither scene is greener, skip or note in comments if enabled. Coding in SPECS Table 1: left / right / equal.",
             "imageSource": "huggingface",
             "multiSelect": false,
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
             "excludePreviouslyUsedImages": true
           },
           {
-            "type": "boolean",
             "name": "green_2_equal",
+            "type": "boolean",
             "title": "Both are the same to me",
-            "description": "SPECS equal option (Table 1). Set Yes if the two places look equally green (overrides the image pick for analysis).",
-            "isRequired": false,
             "labelTrue": "Yes — equal",
-            "labelFalse": "No — I preferred one side"
+            "isRequired": false,
+            "labelFalse": "No — I preferred one side",
+            "description": "SPECS equal option (Table 1). Set Yes if the two places look equally green (overrides the image pick for analysis)."
           },
           {
-            "type": "imagepicker",
             "name": "green_3",
+            "type": "imagepicker",
             "title": "Which place looks greener?",
-            "description": "Greenery indicator (verbatim from Quintana et al., 2026 / SPECS). Pairwise left vs right street-view scenes. Original SPECS UI also offered “Both are the same to me” (equal); if neither scene is greener, skip or note in comments if enabled. Coding in SPECS Table 1: left / right / equal.",
-            "isRequired": true,
-            "imageCount": 2,
-            "imageSelectionMode": "huggingface_random",
             "imageFit": "cover",
-            "randomImageSelection": true,
+            "imageCount": 2,
+            "isRequired": true,
+            "description": "Greenery indicator (verbatim from Quintana et al., 2026 / SPECS). Pairwise left vs right street-view scenes. Original SPECS UI also offered “Both are the same to me” (equal); if neither scene is greener, skip or note in comments if enabled. Coding in SPECS Table 1: left / right / equal.",
             "imageSource": "huggingface",
             "multiSelect": false,
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
             "excludePreviouslyUsedImages": true
           },
           {
-            "type": "boolean",
             "name": "green_3_equal",
+            "type": "boolean",
             "title": "Both are the same to me",
-            "description": "SPECS equal option (Table 1). Set Yes if the two places look equally green (overrides the image pick for analysis).",
-            "isRequired": false,
             "labelTrue": "Yes — equal",
-            "labelFalse": "No — I preferred one side"
+            "isRequired": false,
+            "labelFalse": "No — I preferred one side",
+            "description": "SPECS equal option (Table 1). Set Yes if the two places look equally green (overrides the image pick for analysis)."
           },
           {
-            "type": "imagepicker",
             "name": "green_4",
-            "title": "Which place looks greener?",
-            "description": "Greenery indicator (verbatim from Quintana et al., 2026 / SPECS). Pairwise left vs right street-view scenes. Original SPECS UI also offered “Both are the same to me” (equal); if neither scene is greener, skip or note in comments if enabled. Coding in SPECS Table 1: left / right / equal.",
-            "isRequired": true,
-            "imageCount": 2,
-            "imageSelectionMode": "huggingface_random",
-            "imageFit": "cover",
-            "randomImageSelection": true,
-            "imageSource": "huggingface",
-            "multiSelect": false,
-            "excludePreviouslyUsedImages": true
-          },
-          {
-            "type": "boolean",
-            "name": "green_4_equal",
-            "title": "Both are the same to me",
-            "description": "SPECS equal option (Table 1). Set Yes if the two places look equally green (overrides the image pick for analysis).",
-            "isRequired": false,
-            "labelTrue": "Yes — equal",
-            "labelFalse": "No — I preferred one side"
-          },
-          {
             "type": "imagepicker",
-            "name": "green_5",
             "title": "Which place looks greener?",
-            "description": "Greenery indicator (verbatim from Quintana et al., 2026 / SPECS). Pairwise left vs right street-view scenes. Original SPECS UI also offered “Both are the same to me” (equal); if neither scene is greener, skip or note in comments if enabled. Coding in SPECS Table 1: left / right / equal.",
-            "isRequired": true,
-            "imageCount": 2,
-            "imageSelectionMode": "huggingface_random",
             "imageFit": "cover",
-            "randomImageSelection": true,
+            "imageCount": 2,
+            "isRequired": true,
+            "description": "Greenery indicator (verbatim from Quintana et al., 2026 / SPECS). Pairwise left vs right street-view scenes. Original SPECS UI also offered “Both are the same to me” (equal); if neither scene is greener, skip or note in comments if enabled. Coding in SPECS Table 1: left / right / equal.",
             "imageSource": "huggingface",
             "multiSelect": false,
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
             "excludePreviouslyUsedImages": true
           },
           {
+            "name": "green_4_equal",
             "type": "boolean",
-            "name": "green_5_equal",
             "title": "Both are the same to me",
-            "description": "SPECS equal option (Table 1). Set Yes if the two places look equally green (overrides the image pick for analysis).",
-            "isRequired": false,
             "labelTrue": "Yes — equal",
-            "labelFalse": "No — I preferred one side"
+            "isRequired": false,
+            "labelFalse": "No — I preferred one side",
+            "description": "SPECS equal option (Table 1). Set Yes if the two places look equally green (overrides the image pick for analysis)."
+          },
+          {
+            "name": "green_5",
+            "type": "imagepicker",
+            "title": "Which place looks greener?",
+            "imageFit": "cover",
+            "imageCount": 2,
+            "isRequired": true,
+            "description": "Greenery indicator (verbatim from Quintana et al., 2026 / SPECS). Pairwise left vs right street-view scenes. Original SPECS UI also offered “Both are the same to me” (equal); if neither scene is greener, skip or note in comments if enabled. Coding in SPECS Table 1: left / right / equal.",
+            "imageSource": "huggingface",
+            "multiSelect": false,
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "excludePreviouslyUsedImages": true
+          },
+          {
+            "name": "green_5_equal",
+            "type": "boolean",
+            "title": "Both are the same to me",
+            "labelTrue": "Yes — equal",
+            "isRequired": false,
+            "labelFalse": "No — I preferred one side",
+            "description": "SPECS equal option (Table 1). Set Yes if the two places look equally green (overrides the image pick for analysis)."
           }
-        ]
+        ],
+        "description": "Five pairwise comparisons for the green indicator (SPECS: 5 questions per indicator). Connect the Hugging Face dataset matiasqr/specs or matiasqr/greenery-perception for imagery."
       }
-    ]
-  }
+    ],
+    "title": "Greenery Perception Survey (Quintana et al., 2026)",
+    "description": "Based on: Quintana, M., Liu, F., Torkko, J., Gu, Y., Liang, X., Hou, Y., Ito, K., Zhu, Y., Abdelrahman, M., Toivonen, T., Lu, Y., & Biljecki, F. (2026). It is not always greener on the other side: Greenery perception across demographics and personalities in multiple cities. Landscape and Urban Planning, 271, 105618. https://doi.org/10.1016/j.landurbplan.2026.105618. Survey structure follows SPECS (Quintana et al., 2025): demographics, Big Five, and greenery pairwise comparisons (“Which place looks greener?”).",
+    "logoPosition": "right",
+    "autoGrowComment": true,
+    "progressBarType": "questions",
+    "showProgressBar": "aboveheader",
+    "showQuestionNumbers": "off",
+    "showPreviewBeforeComplete": "showAllQuestions"
+  },
+  "imageDatasetConfig": {
+    "mediaFolderTags": {},
+    "mediaFolders": []
+  },
+  "preloadedImages": [],
+  "preloadedSource": null,
+  "preloadedAt": null
 }

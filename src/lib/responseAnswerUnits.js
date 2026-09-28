@@ -1,3 +1,9 @@
+export function normalizeBooleanAnswer(value) {
+  if ([true, 'true', 'yes', 1, '1'].includes(value)) return 1;
+  if ([false, 'false', 'no', 0, '0'].includes(value)) return 0;
+  return '';
+}
+
 /**
  * Expand a stored question payload into per-trial units for analysis.
  * Multi-trial enriched shape → one unit per answered trial (with that trial's media).
@@ -6,6 +12,10 @@
 
 function isPlainObject(v) {
   return v !== null && typeof v === 'object' && !Array.isArray(v);
+}
+
+export function answerIsPresent(answer) {
+  return hasAnswer(answer);
 }
 
 function hasAnswer(answer) {
@@ -27,11 +37,18 @@ function hasAnswer(answer) {
   return true;
 }
 
+function categoryList(value) {
+  if (Array.isArray(value)) return value;
+  if (value == null || value === '') return [];
+  return [value];
+}
+
 function unitFromParts({
   answer,
   shown_images = [],
   shown_media = [],
   shown_media_ids = [],
+  shown_media_categories = [],
   trial_index = 0,
   participant_id = '',
 }, requireAnswer) {
@@ -44,6 +61,7 @@ function unitFromParts({
     shown_images,
     shown_media,
     shown_media_ids,
+    shown_media_categories: categoryList(shown_media_categories),
     trial_index,
     participant_id,
   };
@@ -96,6 +114,7 @@ export function expandQuestionAnswerUnits(row, questionName, { requireAnswer = t
         shown_images,
         shown_media,
         shown_media_ids,
+        shown_media_categories: trial?.shown_media_categories,
         trial_index: trial?.trial_index ?? trialIndex,
         participant_id,
       }, requireAnswer);
@@ -112,6 +131,7 @@ export function expandQuestionAnswerUnits(row, questionName, { requireAnswer = t
   let shown_images = [];
   let shown_media = [];
   let shown_media_ids = [];
+  let shown_media_categories = [];
 
   if (isPlainObject(qData) && 'answer' in qData) {
     answer = qData.answer;
@@ -120,9 +140,13 @@ export function expandQuestionAnswerUnits(row, questionName, { requireAnswer = t
       : (row.displayed_images?.[questionName] || []);
     shown_media = Array.isArray(qData.shown_media) ? qData.shown_media : [];
     shown_media_ids = Array.isArray(qData.shown_media_ids) ? qData.shown_media_ids : [];
+    shown_media_categories = qData.shown_media_categories
+      ?? row.displayed_media_categories?.[questionName]
+      ?? [];
   } else {
     answer = qData;
     shown_images = row.displayed_images?.[questionName] || [];
+    shown_media_categories = row.displayed_media_categories?.[questionName] || [];
   }
 
   const unit = unitFromParts({
@@ -130,6 +154,7 @@ export function expandQuestionAnswerUnits(row, questionName, { requireAnswer = t
     shown_images,
     shown_media,
     shown_media_ids,
+    shown_media_categories,
     trial_index: 0,
     participant_id,
   }, requireAnswer);

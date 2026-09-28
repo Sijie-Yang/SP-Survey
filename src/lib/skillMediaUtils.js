@@ -1,9 +1,7 @@
+import { mediaIdentityKey } from './mediaIdentity.js';
 /** Resolve media URLs from skill question answers for results analysis. */
 
-export function mediaFilenameKey(val) {
-  if (!val || typeof val !== 'string') return String(val ?? '');
-  return val.split('?')[0].split('/').pop() || val;
-}
+export function mediaFilenameKey(val) { return mediaIdentityKey(val); }
 
 const ANSWER_URL_FIELDS = [
   'imageA', 'imageB', 'imageUrl', 'videoUrl', 'posterUrl', 'bestUrl', 'worstUrl',
@@ -85,6 +83,10 @@ export function buildResponseMediaUrlMap(responses) {
     for (const qData of Object.values(row.responses || {})) {
       if (!qData || typeof qData !== 'object') continue;
       (qData.shown_images || []).forEach((u) => addUrlToMap(map, u));
+      (qData.trials || []).forEach((trial) => {
+        (trial.shown_images || []).forEach((u) => addUrlToMap(map, u));
+        (trial.shown_media || []).forEach((m) => addUrlToMap(map, m?.url));
+      });
       if (qData.answer && typeof qData.answer === 'object') {
         extractSkillShownImages(qData.answer).forEach((u) => addUrlToMap(map, u));
       }
@@ -126,8 +128,8 @@ export function isVideoMomentSkill(skillId) {
 /** Filename key for the video stimulus on a key-moments / continuous-rating answer. */
 export function videoStimulusKey(answer, shownImages = []) {
   const candidates = [
-    answer?.videoName,
     answer?.videoUrl,
+    answer?.videoName,
     ...(Array.isArray(shownImages) ? shownImages : []),
     answer?.posterUrl,
   ];

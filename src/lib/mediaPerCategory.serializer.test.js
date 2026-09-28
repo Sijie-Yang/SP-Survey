@@ -29,6 +29,7 @@ describe('mediaPerCategory SurveyJS serialization', () => {
           name: 'q1',
           mediaAssignmentMode: 'category',
           mediaPerCategory: 3,
+          mediaCategoryMode: 'single',
           mediaFolders: ['cats/urban'],
           randomImageSelection: true,
         }],
@@ -36,6 +37,7 @@ describe('mediaPerCategory SurveyJS serialization', () => {
     });
     const q = model.getQuestionByName('q1');
     expect(q.mediaAssignmentMode).toBe('category');
+    expect(q.mediaCategoryMode).toBe('single');
     expect(Number(q.mediaPerCategory)).toBe(3);
     expect([...(q.mediaFolders || [])]).toEqual(['cats/urban']);
 
@@ -44,6 +46,7 @@ describe('mediaPerCategory SurveyJS serialization', () => {
     const q2 = restored.getQuestionByName('q1');
     expect(Number(q2.mediaPerCategory)).toBe(3);
     expect(q2.mediaAssignmentMode).toBe('category');
+    expect(q2.mediaCategoryMode).toBe('single');
   });
 
   test('missing mediaPerCategory defaults to 1', () => {
@@ -58,5 +61,6 @@ describe('mediaPerCategory SurveyJS serialization', () => {
       }],
     });
     expect(Number(model.getQuestionByName('q2').mediaPerCategory)).toBe(1);
+    expect(model.getQuestionByName('q2').mediaCategoryMode).toBe('all');
   });
 });

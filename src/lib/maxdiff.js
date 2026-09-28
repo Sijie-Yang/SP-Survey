@@ -1,11 +1,9 @@
+import { mediaIdentityKey } from './mediaIdentity.js';
 /** Best-Worst Scaling (MaxDiff) scoring. */
 
 import { minMaxScale } from './stats.js';
 
-function filenameKey(val) {
-  if (!val || typeof val !== 'string') return String(val ?? '');
-  return val.split('?')[0].split('/').pop();
-}
+function filenameKey(val) { return mediaIdentityKey(val); }
 
 /**
  * Compute BWS scores from MaxDiff answers.

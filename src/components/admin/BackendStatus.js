@@ -20,12 +20,17 @@ import {
   Info
 } from '@mui/icons-material';
 import { API_ROOT, API_BASE_URL } from '../../lib/apiConfig';
+import ConfirmDialog from '../layout/ConfirmDialog';
+import { useRegion } from '../../contexts/RegionContext';
 
 /**
  * Backend Status Monitor Component
  * Monitors the backend server status and displays it in the admin panel header
  */
 export default function BackendStatus() {
+  const { language } = useRegion();
+  const zh = language === 'zh';
+  const [confirmDialog, setConfirmDialog] = useState(null);
   const [status, setStatus] = useState('checking'); // 'online', 'offline', 'checking'
   const [lastCheck, setLastCheck] = useState(null);
   const [errorCount, setErrorCount] = useState(0);
@@ -124,19 +129,19 @@ export default function BackendStatus() {
       // If restart endpoint doesn't work, fallback to copy command
       console.warn('Auto-restart failed, showing manual instructions:', error);
       
-      const confirmed = window.confirm(
-        '⚠️ Backend Server is Offline\n\n' +
-        'Auto-restart requires the server to be running.\n\n' +
-        'Would you like to:\n' +
-        '✅ Copy the startup command to clipboard?\n\n' +
-        'You can then paste and run it in your terminal.'
-      );
-      
-      if (confirmed) {
-        await copyStartCommand();
-      }
-      
-      setIsRestarting(false);
+      setConfirmDialog({
+        title: zh ? '后端离线' : 'Backend server is offline',
+        message: zh
+          ? '自动重启需要后端正在运行。是否复制启动命令到剪贴板？可在终端粘贴后运行。'
+          : 'Auto-restart requires the server to be running. Copy the startup command to the clipboard so you can paste it in a terminal?',
+        confirmLabel: zh ? '复制命令' : 'Copy command',
+        onConfirm: async () => {
+          setConfirmDialog(null);
+          await copyStartCommand();
+          setIsRestarting(false);
+        },
+      });
+      return;
     }
   };
 
@@ -145,7 +150,7 @@ export default function BackendStatus() {
     switch (status) {
       case 'online':
         return {
-          label: 'Backend Online',
+          label: zh ? '后端在线' : 'Backend Online',
           color: 'success',
           icon: <CheckCircle sx={{ fontSize: '1rem' }} />,
           bgcolor: 'success.light',
@@ -153,7 +158,7 @@ export default function BackendStatus() {
         };
       case 'offline':
         return {
-          label: 'Backend Offline',
+          label: zh ? '后端离线' : 'Backend Offline',
           color: 'error',
           icon: <ErrorIcon sx={{ fontSize: '1rem' }} />,
           bgcolor: 'error.main',
@@ -162,7 +167,7 @@ export default function BackendStatus() {
         };
       case 'checking':
         return {
-          label: 'Checking...',
+          label: zh ? '检查中…' : 'Checking...',
           color: 'default',
           icon: <CircularProgress size={12} sx={{ color: 'inherit' }} />,
           bgcolor: 'action.hover',
@@ -342,9 +347,17 @@ export default function BackendStatus() {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDetailsOpen(false)}>Close</Button>
+          <Button onClick={() => setDetailsOpen(false)}>{zh ? '关闭' : 'Close'}</Button>
         </DialogActions>
       </Dialog>
+      <ConfirmDialog
+        open={Boolean(confirmDialog)}
+        title={confirmDialog?.title}
+        message={confirmDialog?.message}
+        confirmLabel={confirmDialog?.confirmLabel}
+        onConfirm={() => confirmDialog?.onConfirm?.()}
+        onCancel={() => { setConfirmDialog(null); setIsRestarting(false); }}
+      />
     </>
   );
 }

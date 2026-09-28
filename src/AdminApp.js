@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { RegionProvider } from './contexts/RegionContext';
+import React, { useState, useEffect, useRef, useCallback, lazy, Suspense } from 'react';
+import { RegionProvider, useRegion } from './contexts/RegionContext';
+import { tf } from './contexts/adminI18n';
 import RegionSwitcher from './components/admin/RegionSwitcher';
 import {
   AppBar,
+  useMediaQuery,
   Toolbar,
   Typography,
   Container,
@@ -21,7 +23,9 @@ import {
   Tooltip,
   Menu,
   MenuItem,
-  Divider
+  Divider,
+  ListItemIcon,
+  ListItemText,
 } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import {
@@ -35,29 +39,53 @@ import {
   Palette,
   Check,
   EditNote,
+  AutoAwesome,
+  OpenInNew,
+  MoreVert,
 } from '@mui/icons-material';
 import { themes, createCustomTheme } from './themes/themeConfig';
-import SurveyBuilder from './components/admin/SurveyBuilder';
-import SurveyPreview from './components/admin/SurveyPreview';
-import SystemStatus from './components/admin/SystemStatus';
-import ImageDataset from './components/admin/ImageDataset';
-import WebsiteSetup from './components/admin/WebsiteSetup';
-import ResultsAnalysis from './components/admin/ResultsAnalysis';
-import ResearcherPractice from './components/admin/ResearcherPractice';
+import { persistSliderAliases } from './lib/sliderScale';
+import ConfirmDialog from './components/layout/ConfirmDialog';
+import AdminIntroduction from './components/admin/AdminIntroduction';
 import ProjectSidebar from './components/admin/ProjectSidebar';
 import BackendStatus from './components/admin/BackendStatus';
+import AiAssistantSidebar from './components/admin/AiAssistantSidebar';
+import { AdminEmptyState } from './components/admin/AdminPageLayout';
+import useSurveyAssistant from './hooks/useSurveyAssistant';
+import { useSiliconTasks } from './hooks/useSiliconTasks';
+import { isAssistantEnabled, isSiliconExperimentalEnabled } from './lib/featureFlags';
+import {
+  AI_SIDEBAR_ID,
+  AI_SIDEBAR_WIDTH,
+  PROJECT_SIDEBAR_WIDTH,
+  readSidebarOpen,
+  writeSidebarOpen,
+} from './hooks/surveyAssistantUtils';
 import { isSupabaseConfigured } from './lib/supabase';
 import { isLocalSelfHosted } from './lib/appMode';
 import { API_ROOT } from './lib/apiConfig';
 import { loadSurveyConfig } from './lib/surveyStorage';
+import { isUsableSurveyConfig } from './lib/designProtocol/validate';
 import { demoSurveyConfig } from './lib/demoConfig';
 import {
   migrateExistingConfig,
   getActiveProject,
+  getProjectById,
   setActiveProject,
   saveProjectFull,
 } from './lib/projectManager';
 import { useNavigate } from 'react-router-dom';
+
+const ImageDataset = lazy(() => import('./components/admin/ImageDataset'));
+const SurveyBuilder = lazy(() => import('./components/admin/SurveyBuilder'));
+const SurveyPreview = lazy(() => import('./components/admin/SurveyPreview'));
+const ResultsAnalysis = lazy(() => import('./components/admin/ResultsAnalysis'));
+const ResearcherPractice = lazy(() => import('./components/admin/ResearcherPractice'));
+const SiliconSamples = lazy(() => import('./components/admin/SiliconSamples'));
+const HostSetup = lazy(() => import('./components/admin/HostSetup'));
+const ShareSurvey = lazy(() => import('./components/admin/ShareSurvey'));
+
+const ADMIN_TABS_VERSION = 2;
 
 function TabPanel({ children, value, index, keepMounted = false, ...other }) {
   const active = value === index;
@@ -78,7 +106,75 @@ function TabPanel({ children, value, index, keepMounted = false, ...other }) {
   );
 }
 
-export default function AdminApp() {
+function AdminWorkspaceTabs({ value, onChange, siliconEnabled = true }) {
+  const { t } = useRegion();
+  const tabsRef = useRef(null);
+  useEffect(() => {
+    const selected = tabsRef.current?.querySelector('.Mui-selected');
+    selected?.scrollIntoView({ inline: 'nearest', block: 'nearest', behavior: 'smooth' });
+  }, [value]);
+  const tabSx = {
+    minHeight: 40,
+    minWidth: 0,
+    px: 1.25,
+    py: 0.5,
+    whiteSpace: 'nowrap',
+    fontSize: '0.875rem',
+  };
+  return (
+    <Box ref={tabsRef} sx={{ minWidth: 0 }}>
+      <Tabs
+        value={value}
+        onChange={onChange}
+        aria-label="admin tabs"
+        variant="scrollable"
+        scrollButtons="auto"
+        allowScrollButtonsMobile
+        sx={{
+          minHeight: 40,
+          '& .MuiTabs-flexContainer': { gap: 0.25 },
+          '& .MuiTab-root': tabSx,
+        }}
+      >
+        <Tab label={t.tabIntro} />
+        <Tab label={t.tabMedia} />
+        <Tab label={t.tabBuilder} />
+        <Tab label={t.tabHost} />
+        <Tab label={t.tabShare} />
+        <Tab label={t.tabResults} />
+        <Tab label={t.tabPractice} />
+        {siliconEnabled && <Tab label={t.tabSilicon} />}
+      </Tabs>
+    </Box>
+  );
+}
+
+function formatSaveStatusLabel(t, saveStatus, lastSavedAt) {
+  if (saveStatus === 'saving') return t.saveStatusSaving;
+  if (saveStatus === 'error') return t.saveStatusError;
+  if (saveStatus === 'unsaved') return t.saveStatusUnsaved;
+  if (lastSavedAt) {
+    const secs = Math.floor((Date.now() - lastSavedAt) / 1000);
+    if (secs < 10) return t.saveStatusJustNow;
+    if (secs < 60) return tf(t.saveStatusSecsAgo, { n: secs });
+    return tf(t.saveStatusMinsAgo, { n: Math.floor(secs / 60) });
+  }
+  return t.saveStatusAllSaved;
+}
+
+function migrateSavedTabValue(savedState) {
+  if (!savedState) return 0;
+  if (savedState.adminTabsVersion === ADMIN_TABS_VERSION) {
+    return savedState.tabValue !== undefined ? savedState.tabValue : 0;
+  }
+  // v1: 0 Media … 5 Practice. Intro is now index 0.
+  return typeof savedState.tabValue === 'number' ? savedState.tabValue + 1 : 0;
+}
+
+function AdminWorkspace() {
+  const { t, language, setLanguage } = useRegion();
+  const compactToolbar = useMediaQuery('(max-width:899px)');
+  const wideLayout = useMediaQuery('(min-width:1200px)');
   const navigate = useNavigate();
 
   // Theme state
@@ -86,10 +182,17 @@ export default function AdminApp() {
     return localStorage.getItem('sp-survey-theme') || 'default';
   });
   const [themeMenuAnchor, setThemeMenuAnchor] = useState(null);
+  const [toolsMenuAnchor, setToolsMenuAnchor] = useState(null);
   const theme = createCustomTheme(currentTheme);
   
   const [tabValue, setTabValue] = useState(0);
+  const [assistantEnabled, setAssistantEnabled] = useState(() => isAssistantEnabled());
+  const [siliconEnabled, setSiliconEnabled] = useState(() => isSiliconExperimentalEnabled());
   const [practiceKeepAlive, setPracticeKeepAlive] = useState(false);
+  const [siliconKeepAlive, setSiliconKeepAlive] = useState(false);
+  const [builderKeepAlive, setBuilderKeepAlive] = useState(false);
+  const [confirmDialog, setConfirmDialog] = useState(null);
+  const [aiSidebarPanel, setAiSidebarPanel] = useState('assistant');
   const handlePracticeSessionActive = useCallback((active) => {
     setPracticeKeepAlive(!!active);
   }, []);
@@ -153,9 +256,70 @@ export default function AdminApp() {
   };
   
   // Project management states
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(!compactToolbar);
+  const [aiSidebarOpen, setAiSidebarOpen] = useState(() => (
+    typeof window !== 'undefined' ? readSidebarOpen(window.localStorage) : false
+  ));
   const [currentProject, setCurrentProject] = useState(null);
   const [projectLoading, setProjectLoading] = useState(true);
+
+  useEffect(() => {
+    if (compactToolbar) setSidebarOpen(false);
+  }, [compactToolbar]);
+  useEffect(() => {
+    writeSidebarOpen(typeof window !== 'undefined' ? window.localStorage : null, aiSidebarOpen);
+  }, [aiSidebarOpen]);
+  const toggleProjectSidebar = useCallback(() => {
+    setSidebarOpen((open) => {
+      const next = !open;
+      if (next && !wideLayout) setAiSidebarOpen(false);
+      return next;
+    });
+  }, [wideLayout]);
+  const toggleAiSidebar = useCallback(() => {
+    setAiSidebarOpen((open) => {
+      const next = !open;
+      if (next && !wideLayout) setSidebarOpen(false);
+      return next;
+    });
+  }, [wideLayout]);
+  const [analysisMediaFocus, setAnalysisMediaFocus] = useState(null);
+  const [resultsScope, setResultsScope] = useState(null);
+  const [resultsAnalyzeBusy, setResultsAnalyzeBusy] = useState(false);
+  const openAiSidebar = useCallback((panel = 'assistant') => {
+    setAiSidebarPanel(panel);
+    setAiSidebarOpen(true);
+    if (!wideLayout) setSidebarOpen(false);
+  }, [wideLayout]);
+  const goToAdminTab = useCallback((nextTab) => {
+    setTabValue(nextTab);
+  }, []);
+  const openSiliconTab = useCallback(() => {
+    if (!siliconEnabled) return;
+    setTabValue(7);
+    if (!wideLayout) setAiSidebarOpen(false);
+  }, [siliconEnabled, wideLayout]);
+  useEffect(() => {
+    if (tabValue === 7) setSiliconKeepAlive(true);
+  }, [tabValue]);
+  useEffect(() => {
+    if (!siliconEnabled && tabValue === 7) setTabValue(0);
+  }, [siliconEnabled, tabValue]);
+  useEffect(() => {
+    const syncFlags = () => {
+      setAssistantEnabled(isAssistantEnabled());
+      setSiliconEnabled(isSiliconExperimentalEnabled());
+    };
+    window.addEventListener('sp-feature-flags', syncFlags);
+    return () => window.removeEventListener('sp-feature-flags', syncFlags);
+  }, []);
+  useEffect(() => {
+    const openSilicon = () => {
+      if (isSiliconExperimentalEnabled()) setTabValue(7);
+    };
+    window.addEventListener('sp-open-silicon-tab', openSilicon);
+    return () => window.removeEventListener('sp-open-silicon-tab', openSilicon);
+  }, []);
 
   useEffect(() => {
     if (!currentProject?.id) {
@@ -171,6 +335,123 @@ export default function AdminApp() {
     }
   }, [currentProject?.id]);
 
+  const remoteSyncInFlightRef = useRef(false);
+  const remoteConflictWarnedAtRef = useRef(null);
+  const draftUpdatedAtRef = useRef(null);
+  const hasUnsavedChangesRef = useRef(false);
+  const currentProjectIdRef = useRef(null);
+
+  useEffect(() => {
+    draftUpdatedAtRef.current = currentProject?.draftUpdatedAt || currentProject?.savedAt || null;
+    hasUnsavedChangesRef.current = hasUnsavedChanges;
+    currentProjectIdRef.current = currentProject?.id || null;
+  }, [currentProject?.draftUpdatedAt, currentProject?.savedAt, currentProject?.id, hasUnsavedChanges]);
+
+  useEffect(() => {
+    if (!currentProject?.id || isUsableSurveyConfig(surveyConfig)) return undefined;
+    const fallback = currentProject._surveyConfig;
+    if (isUsableSurveyConfig(fallback)) {
+      setSurveyConfig(fallback);
+      return undefined;
+    }
+    let cancelled = false;
+    loadSurveyConfig(currentProject.id).then((config) => {
+      if (!cancelled && isUsableSurveyConfig(config)) setSurveyConfig(config);
+    });
+    return () => { cancelled = true; };
+  }, [currentProject?.id, currentProject?._surveyConfig, surveyConfig]);
+
+  useEffect(() => {
+    if (!currentProject?.id) return undefined;
+
+    const applyRemoteDraft = (latest) => {
+      const config = latest?._surveyConfig;
+      if (!config) return;
+      const projectId = latest.id;
+      const remoteAt = latest.draftUpdatedAt || latest.savedAt || null;
+      setCurrentProject(latest);
+      setSurveyConfig(config);
+      const savedCopy = JSON.parse(JSON.stringify(config));
+      setLastSavedConfig(savedCopy);
+      setHasUnsavedChanges(false);
+      draftUpdatedAtRef.current = remoteAt;
+      setProjectStates((prev) => {
+        const next = {
+          ...prev,
+          [projectId]: {
+            ...(prev[projectId] || {}),
+            surveyConfig: config,
+            lastSavedConfig: savedCopy,
+            hasUnsavedChanges: false,
+          },
+        };
+        saveProjectStatesToStorage(next);
+        return next;
+      });
+      setSnackbar({
+        open: true,
+        message: 'Loaded latest edits from the local agent API.',
+        severity: 'info',
+      });
+    };
+
+    const syncRemoteDraft = async () => {
+      const projectId = currentProjectIdRef.current;
+      if (!projectId || remoteSyncInFlightRef.current || saveInFlightRef.current) return;
+      if (typeof document !== 'undefined' && document.visibilityState === 'hidden') return;
+
+      remoteSyncInFlightRef.current = true;
+      try {
+        const latest = await getProjectById(projectId);
+        if (!latest || currentProjectIdRef.current !== projectId) return;
+
+        const remoteAt = latest.draftUpdatedAt || latest.savedAt || null;
+        const localAt = draftUpdatedAtRef.current;
+        if (!remoteAt || remoteAt === localAt) return;
+
+        if (hasUnsavedChangesRef.current) {
+          if (remoteConflictWarnedAtRef.current !== remoteAt) {
+            remoteConflictWarnedAtRef.current = remoteAt;
+            setSnackbar({
+              open: true,
+              message: 'The local agent updated this project. Save or discard your local edits to load the latest.',
+              severity: 'warning',
+            });
+          }
+          return;
+        }
+
+        applyRemoteDraft(latest);
+      } catch (err) {
+        console.warn('Remote draft sync failed:', err);
+      } finally {
+        remoteSyncInFlightRef.current = false;
+      }
+    };
+
+    const onFocusOrVisible = () => {
+      if (document.visibilityState === 'visible') syncRemoteDraft();
+    };
+    const onAgentRunComplete = (event) => {
+      if (event?.detail?.projectId && event.detail.projectId !== currentProjectIdRef.current) return;
+      setTabValue(2);
+      setBuilderKeepAlive(true);
+      syncRemoteDraft();
+    };
+
+    window.addEventListener('focus', onFocusOrVisible);
+    window.addEventListener('sp-agent-run-complete', onAgentRunComplete);
+    document.addEventListener('visibilitychange', onFocusOrVisible);
+    const intervalId = window.setInterval(syncRemoteDraft, 4000);
+    syncRemoteDraft();
+
+    return () => {
+      window.removeEventListener('focus', onFocusOrVisible);
+      window.removeEventListener('sp-agent-run-complete', onAgentRunComplete);
+      document.removeEventListener('visibilitychange', onFocusOrVisible);
+      window.clearInterval(intervalId);
+    };
+  }, [currentProject?.id]);
 
   useEffect(() => {
     cleanupDemoImages();
@@ -281,8 +562,10 @@ export default function AdminApp() {
         
         if (!stateRestored) {
           // If no saved state, load from file
-          const config = await loadSurveyConfig(migratedProject.id);
-          setSurveyConfig(config || demoSurveyConfig);
+          const config = await loadSurveyConfig(migratedProject.id)
+            || migratedProject._surveyConfig
+            || demoSurveyConfig;
+          setSurveyConfig(config);
         }
         
         setSnackbar({ 
@@ -302,10 +585,13 @@ export default function AdminApp() {
           const stateRestored = restoreProjectState(activeProject.id);
           
           if (!stateRestored) {
-            // If no saved state, load from file
-            const config = await loadSurveyConfig(activeProject.id);
-            setSurveyConfig(config || demoSurveyConfig);
-            setTabValue(0); // Default to first tab
+            // If no saved state, load from file. Keep a restored tab from a
+            // poisoned session (surveyConfig was null) instead of jumping home.
+            const config = await loadSurveyConfig(activeProject.id)
+              || activeProject._surveyConfig
+              || demoSurveyConfig;
+            setSurveyConfig(config);
+            setLastSavedConfig(JSON.parse(JSON.stringify(config)));
           }
           // If state was restored, tabValue is already set by restoreProjectState
         } else {
@@ -352,7 +638,14 @@ export default function AdminApp() {
           if (response.ok) {
             const data = await response.json();
             if (data.success) {
-              if (data.project) fullProject = data.project;
+              if (data.project) {
+                fullProject = {
+                  ...data.project,
+                  savedAt: data.savedAt || data.project.savedAt || null,
+                  draftUpdatedAt: data.draftUpdatedAt || data.savedAt || data.project.draftUpdatedAt || null,
+                  _surveyConfig: data.surveyConfig,
+                };
+              }
               if (!fileSurveyConfig && data.surveyConfig) fileSurveyConfig = data.surveyConfig;
             }
           }
@@ -460,16 +753,17 @@ export default function AdminApp() {
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
+    if (newValue === 2) setBuilderKeepAlive(true);
     // Also save current project's tab state
-    if (currentProject) {
+    if (currentProject && isUsableSurveyConfig(surveyConfig)) {
       saveCurrentProjectState({ tabValue: newValue });
     }
   };
 
   const handleNextStep = () => {
-    const nextTab = Math.min(tabValue + 1, 4); // Max to Step 5 (index 4)
+    const nextTab = Math.min(tabValue + 1, 5); // Through Results (index 5); Practice is optional
     setTabValue(nextTab);
-    if (currentProject) {
+    if (currentProject && isUsableSurveyConfig(surveyConfig)) {
       saveCurrentProjectState({ tabValue: nextTab });
     }
     // Smooth scroll to top
@@ -479,13 +773,27 @@ export default function AdminApp() {
   // Save current project's state
   const saveCurrentProjectState = (updates = {}) => {
     if (!currentProject) return;
-    
+    const previous = loadProjectStatesFromStorage()[currentProject.id] || projectStates[currentProject.id] || {};
+    const nextConfig = isUsableSurveyConfig(updates.surveyConfig)
+      ? updates.surveyConfig
+      : (isUsableSurveyConfig(surveyConfig) ? surveyConfig : previous.surveyConfig);
+    const nextSaved = isUsableSurveyConfig(updates.lastSavedConfig)
+      ? updates.lastSavedConfig
+      : (isUsableSurveyConfig(lastSavedConfig) ? lastSavedConfig : previous.lastSavedConfig);
+    if (!isUsableSurveyConfig(nextConfig) && !isUsableSurveyConfig(previous.surveyConfig)) {
+      return;
+    }
+
     const currentState = {
-      surveyConfig,
-      lastSavedConfig,
+      ...previous,
+      surveyConfig: nextConfig,
+      lastSavedConfig: nextSaved,
       hasUnsavedChanges,
       tabValue,
-      ...updates
+      adminTabsVersion: ADMIN_TABS_VERSION,
+      ...updates,
+      surveyConfig: nextConfig,
+      lastSavedConfig: nextSaved,
     };
     
     const newStates = {
@@ -511,13 +819,22 @@ export default function AdminApp() {
         console.log('🔍 Skip restore for clean state, load fresh from file:', projectId);
         return false;
       }
+      if (!isUsableSurveyConfig(savedState.surveyConfig)) {
+        console.log('🔍 Skip restore of empty surveyConfig, load fresh from file:', projectId);
+        if (typeof savedState.tabValue === 'number') {
+          setTabValue(migrateSavedTabValue(savedState));
+        }
+        return false;
+      }
       console.log('🔍 Restoring project state for:', projectId, savedState);
       console.log('🔍 Restoring tabValue:', savedState.tabValue);
       
       setSurveyConfig(savedState.surveyConfig);
       setLastSavedConfig(savedState.lastSavedConfig);
       setHasUnsavedChanges(savedState.hasUnsavedChanges);
-      setTabValue(savedState.tabValue !== undefined ? savedState.tabValue : 0);
+      const restoredTab = migrateSavedTabValue(savedState);
+      setTabValue(restoredTab);
+      if (restoredTab === 2) setBuilderKeepAlive(true);
       return true;
     }
     
@@ -604,6 +921,58 @@ export default function AdminApp() {
     }
   };
 
+  const performSaveRef = useRef(null);
+  const assistant = useSurveyAssistant({
+    currentProject,
+    surveyConfig,
+    onSurveyConfigChange: handleSurveyConfigChange,
+    enabled: assistantEnabled && Boolean(currentProject),
+    hasUnsavedChanges,
+    lastSavedConfig,
+    onPrepareWrite: async (opts = {}) => {
+      if (opts.surveyConfig) {
+        const result = await performSaveRef.current?.({
+          silent: true,
+          surveyConfig: opts.surveyConfig,
+          expectedDraftUpdatedAt: opts.expectedDraftUpdatedAt,
+        });
+        if (result && result.success === false) {
+          return { ok: false, message: result.error || 'The editor draft could not be saved before the Assistant edit.' };
+        }
+        return { ok: true, draftUpdatedAt: result?.draftUpdatedAt };
+      }
+      if (!hasUnsavedChanges) return { ok: true };
+      const result = await performSaveRef.current?.({ silent: true });
+      if (result && result.success === false) {
+        return { ok: false, message: result.error || 'The editor draft could not be saved before the Assistant edit.' };
+      }
+      return { ok: true, draftUpdatedAt: result?.draftUpdatedAt };
+    },
+  });
+  const siliconWatching = siliconEnabled && (
+    tabValue === 7
+    || (aiSidebarOpen && aiSidebarPanel === 'tasks')
+  );
+  const siliconTasks = useSiliconTasks({
+    enabled: siliconEnabled,
+    watch: siliconWatching,
+    onTerminal: (run) => {
+      setSnackbar({
+        open: true,
+        severity: run.status === 'completed' ? 'success' : 'info',
+        message: tf(t.siliconTaskFinished, {
+          project: run.project_name || run.project_id || '',
+          status: run.status,
+        }),
+      });
+    },
+  });
+  const openTaskProject = useCallback(async (projectId) => {
+    if (!projectId) return;
+    const project = await getProjectById(projectId);
+    if (project) setCurrentProject(project);
+  }, []);
+
   const handleProjectUpdate = async (updatedProject) => {
     console.log('🔄 Updating project:', updatedProject.name);
     console.log('🔄 Current tabValue:', tabValue);
@@ -638,13 +1007,22 @@ export default function AdminApp() {
   };
 
   // ✅ Simplified - only clears sessionStorage editing states
-  // Theme handlers
-  const handleThemeMenuOpen = (event) => {
-    setThemeMenuAnchor(event.currentTarget);
+  // Theme / tools handlers
+  const handleToolsMenuOpen = (event) => {
+    setToolsMenuAnchor(event.currentTarget);
+  };
+
+  const handleToolsMenuClose = () => {
+    setToolsMenuAnchor(null);
   };
 
   const handleThemeMenuClose = () => {
     setThemeMenuAnchor(null);
+  };
+
+  const handleThemeFromTools = () => {
+    setThemeMenuAnchor(toolsMenuAnchor);
+    handleToolsMenuClose();
   };
 
   const handleThemeChange = (themeKey) => {
@@ -659,47 +1037,46 @@ export default function AdminApp() {
   };
 
   const handleCleanLocalStorage = () => {
-    const confirmMessage = 'Clear all temporary editing states?\n\n' +
-      'This will:\n' +
-      '• Clear all project editing states (sessionStorage)\n' +
-      '• Reload the page to start fresh\n\n' +
-      'Your saved projects will NOT be affected.\n\n' +
-      'Continue?';
-    
-    if (!window.confirm(confirmMessage)) {
-      return;
-    }
-    
-    try {
-      // Clear sessionStorage editing states
-      sessionStorage.removeItem('project_editing_states');
-      console.log('✅ Cleared sessionStorage editing states');
-      
-      setSnackbar({
-        open: true,
-        message: 'Session storage cleared. Reloading...',
-        severity: 'success'
-      });
-      
-      // Reload page after a short delay
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    } catch (error) {
-      console.error('❌ Error cleaning session storage:', error);
-      setSnackbar({
-        open: true,
-        message: 'Error clearing session storage: ' + error.message,
-        severity: 'error'
-      });
-    }
+    setConfirmDialog({
+      title: 'Clear editing state',
+      message:
+        'Clear all temporary editing states?\n\n' +
+        'This will:\n' +
+        '• Clear all project editing states (sessionStorage)\n' +
+        '• Reload the page to start fresh\n\n' +
+        'Your saved projects will NOT be affected.',
+      confirmLabel: 'Clear & reload',
+      confirmColor: 'warning',
+      onConfirm: () => {
+        setConfirmDialog(null);
+        try {
+          sessionStorage.removeItem('project_editing_states');
+          console.log('✅ Cleared sessionStorage editing states');
+          setSnackbar({
+            open: true,
+            message: 'Session storage cleared. Reloading...',
+            severity: 'success'
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        } catch (error) {
+          console.error('❌ Error cleaning session storage:', error);
+          setSnackbar({
+            open: true,
+            message: 'Error clearing session storage: ' + error.message,
+            severity: 'error'
+          });
+        }
+      },
+    });
   };
 
-  const performSave = useCallback(async ({ silent = false } = {}) => {
+  const performSave = useCallback(async ({ silent = false, surveyConfig: overrideConfig } = {}) => {
     if (!currentProject || saveInFlightRef.current) return { success: false };
 
     const savedState = projectStates[currentProject.id];
-    const latestSurveyConfig = savedState?.surveyConfig || surveyConfig;
+    const latestSurveyConfig = persistSliderAliases(overrideConfig || savedState?.surveyConfig || surveyConfig);
 
     if (!latestSurveyConfig) return { success: false };
 
@@ -716,7 +1093,11 @@ export default function AdminApp() {
 
       if (result.success) {
         setActiveProject(currentProject.id);
-        setCurrentProject(projectToSave);
+        setCurrentProject({
+          ...projectToSave,
+          savedAt: result.savedAt || projectToSave.savedAt,
+          draftUpdatedAt: result.draftUpdatedAt || result.savedAt || projectToSave.draftUpdatedAt,
+        });
 
         const savedConfig = JSON.parse(JSON.stringify(latestSurveyConfig));
         setLastSavedConfig(savedConfig);
@@ -773,6 +1154,7 @@ export default function AdminApp() {
       saveInFlightRef.current = false;
     }
   }, [currentProject, projectStates, surveyConfig, latestImageDatasetConfig]);
+  performSaveRef.current = performSave;
 
   const handleManualSave = async () => {
     await performSave({ silent: false });
@@ -809,62 +1191,51 @@ export default function AdminApp() {
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, [hasUnsavedChanges, saveStatus]);
 
-  const formatSaveStatusLabel = () => {
-    if (saveStatus === 'saving') return 'Saving…';
-    if (saveStatus === 'error') return 'Save failed — click Save to retry';
-    if (saveStatus === 'unsaved') return 'Unsaved changes';
-    if (lastSavedAt) {
-      const secs = Math.floor((Date.now() - lastSavedAt) / 1000);
-      if (secs < 10) return 'Auto-saved just now';
-      if (secs < 60) return `Auto-saved ${secs}s ago`;
-      return `Auto-saved ${Math.floor(secs / 60)}m ago`;
-    }
-    return 'All changes saved';
-  };
-
-
-
   if (projectLoading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <Typography>Loading project system...</Typography>
+        <Typography>{t.loadingProjectSystem}</Typography>
       </Box>
     );
   }
 
   return (
-    <RegionProvider>
     <ThemeProvider theme={theme}>
     <Box sx={{ flexGrow: 1 }}>
-        <AppBar 
-          position="fixed" 
-          sx={{ 
+        <AppBar
+          position="fixed"
+          color="primary"
+          sx={{
             zIndex: (theme) => theme.zIndex.drawer + 1,
-            bgcolor: 'primary.main',
-            transition: 'background-color 0.3s ease',
-            '&:hover': {
-              bgcolor: 'primary.dark'
-            }
           }}
         >
-          <Toolbar>
-          <Tooltip title="Toggle Project Sidebar">
+          <Toolbar sx={{
+            gap: { xs: 0.5, sm: 1 },
+            px: { xs: 1, sm: 2 },
+            minWidth: 0,
+            flexWrap: 'nowrap',
+            overflow: 'hidden',
+          }}>
+          <Tooltip title={t.toggleSidebar}>
             <IconButton
               color="inherit"
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              sx={{ mr: 2 }}
+              onClick={toggleProjectSidebar}
+              aria-expanded={sidebarOpen}
+              aria-controls="admin-project-sidebar"
+              sx={{ mr: { xs: 0, sm: 2 } }}
             >
               <MenuIcon />
             </IconButton>
           </Tooltip>
           
-          <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, minWidth: 0 }}>
             <Box
               component="img"
               src="/logo-header.png"
               alt="SP-Survey"
               sx={{
-                height: '35px',
+                height: { xs: 26, sm: 35 },
+                maxWidth: { xs: 92, sm: 150 },
                 objectFit: 'contain'
               }}
             />
@@ -877,7 +1248,7 @@ export default function AdminApp() {
               rel="noopener noreferrer"
               sx={{
                 ml: 1.5,
-                display: 'flex',
+                display: { xs: 'none', lg: 'flex' },
                 alignItems: 'center',
                 gap: 0.5,
                 px: 1,
@@ -933,9 +1304,9 @@ export default function AdminApp() {
             </Box>
             
             {currentProject && (
-              <Box sx={{ ml: 2, display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ ml: 2, display: { xs: 'none', lg: 'flex' }, minWidth: 0, alignItems: 'center' }}>
                 <FolderOpen sx={{ mr: 1, fontSize: '1.2rem' }} />
-                <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+                <Typography variant="subtitle1" noWrap sx={{ fontWeight: 'bold', minWidth: 0 }}>
                   {currentProject.name}
                 </Typography>
               </Box>
@@ -944,23 +1315,18 @@ export default function AdminApp() {
           
           {/* Backend Server Status Monitor — only shown in self-hosted mode */}
           {!process.env.REACT_APP_SUPABASE_URL && (
-            <Box sx={{ mr: 2 }}>
+            <Box sx={{ mr: { xs: 0, sm: 2 }, display: { xs: 'none', lg: 'block' }, flexShrink: 0 }}>
               <BackendStatus />
             </Box>
           )}
 
-          {/* Region / Language Switcher */}
-          <Box sx={{ mr: 1 }}>
-            <RegionSwitcher />
-          </Box>
-          
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mr: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mr: { xs: 0, sm: 1 }, flexShrink: 0 }}>
             {currentProject && (
-              <Typography variant="caption" sx={{ opacity: 0.9, minWidth: 140, textAlign: 'right' }}>
-                {formatSaveStatusLabel()}
+              <Typography variant="caption" sx={{ display: { xs: 'none', lg: 'block' }, opacity: 0.9, minWidth: 140, textAlign: 'right' }}>
+                {formatSaveStatusLabel(t, saveStatus, lastSavedAt)}
               </Typography>
             )}
-            <Tooltip title={hasUnsavedChanges ? "Save unsaved changes" : "Save project configuration"}>
+            <Tooltip title={hasUnsavedChanges ? t.saveTooltipDirty : t.saveTooltip}>
               <IconButton
                 type="button"
                 color="inherit"
@@ -998,43 +1364,7 @@ export default function AdminApp() {
               </IconButton>
             </Tooltip>
             
-            <Tooltip title="Clear session editing states (sessionStorage)">
-              <IconButton
-                color="inherit"
-                onClick={handleCleanLocalStorage}
-                size="small"
-                sx={{
-                  border: 1,
-                  borderColor: 'rgba(255, 255, 255, 0.5)',
-                  '&:hover': {
-                    borderColor: 'rgba(255, 255, 255, 0.8)',
-                    bgcolor: 'rgba(255, 255, 255, 0.1)'
-                  }
-                }}
-              >
-                <CleaningServices fontSize="small" />
-              </IconButton>
-            </Tooltip>
-            
-            <Tooltip title="Change Theme">
-              <IconButton
-                color="inherit"
-                onClick={handleThemeMenuOpen}
-                size="small"
-                sx={{
-                  border: 1,
-                  borderColor: 'rgba(255, 255, 255, 0.5)',
-                  '&:hover': {
-                    borderColor: 'rgba(255, 255, 255, 0.8)',
-                    bgcolor: 'rgba(255, 255, 255, 0.1)'
-                  }
-                }}
-              >
-                <Palette fontSize="small" />
-              </IconButton>
-            </Tooltip>
-            
-            <Tooltip title="Preview Survey">
+            <Tooltip title={t.previewSurvey}>
               <IconButton
                 color="inherit"
                 onClick={() => setPreviewOpen(true)}
@@ -1052,10 +1382,70 @@ export default function AdminApp() {
                 <Preview fontSize="small" />
               </IconButton>
             </Tooltip>
+
+            <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+              <Tooltip title={aiSidebarOpen ? t.toggleAiSidebarOpen : t.toggleAiSidebarClosed}>
+                <Button
+                  color="inherit"
+                  size="small"
+                  startIcon={<AutoAwesome />}
+                  onClick={toggleAiSidebar}
+                  aria-expanded={aiSidebarOpen}
+                  aria-controls={AI_SIDEBAR_ID}
+                  sx={{
+                    ml: 0.5,
+                    px: 1.25,
+                    py: 0.35,
+                    minWidth: 0,
+                    fontWeight: 700,
+                    letterSpacing: 0.4,
+                    border: '1px solid',
+                    borderColor: aiSidebarOpen ? 'rgba(255, 255, 255, 0.95)' : 'rgba(255, 255, 255, 0.65)',
+                    bgcolor: aiSidebarOpen ? 'rgba(255, 255, 255, 0.22)' : 'rgba(255, 255, 255, 0.12)',
+                    textTransform: 'none',
+                    '&:hover': {
+                      borderColor: 'rgba(255, 255, 255, 0.95)',
+                      bgcolor: 'rgba(255, 255, 255, 0.22)',
+                    },
+                  }}
+                >
+                  {t.aiLabel}
+                </Button>
+              </Tooltip>
+            </Box>
+            {siliconEnabled && (
+              <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                <Tooltip title={t.siliconTasksTitle}>
+                  <Button
+                    color="inherit"
+                    size="small"
+                    onClick={() => openAiSidebar('tasks')}
+                    sx={{
+                      ml: 0.5,
+                      px: 1.25,
+                      py: 0.35,
+                      minWidth: 0,
+                      fontWeight: 700,
+                      textTransform: 'none',
+                      border: '1px solid',
+                      borderColor: 'rgba(255, 255, 255, 0.65)',
+                      bgcolor: 'rgba(255, 255, 255, 0.12)',
+                    }}
+                  >
+                    {tf(t.siliconTasksBadge, { count: siliconTasks.activeCount })}
+                  </Button>
+                </Tooltip>
+              </Box>
+            )}
+            <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+              <RegionSwitcher />
+            </Box>
           </Box>
-          
+
           <Button
             color="inherit"
+            size="small"
+            startIcon={<OpenInNew />}
             onClick={() => {
               if (currentProject) {
                 window.open(`/survey?project=${currentProject.id}`, '_blank');
@@ -1065,28 +1455,100 @@ export default function AdminApp() {
             }}
             disabled={!currentProject || !surveyConfig}
             sx={{
-              bgcolor: 'rgba(255,255,255,0.1)',
-              '&:hover': { bgcolor: 'rgba(255,255,255,0.2)' },
-              fontWeight: 'bold',
-              px: 2,
+              display: { xs: 'none', md: 'inline-flex' },
               mr: 1,
+              px: 1.25,
+              py: 0.35,
+              minWidth: 'max-content',
+              width: 'auto',
+              flex: '0 0 auto',
+              flexWrap: 'nowrap',
+              flexDirection: 'row',
+              alignItems: 'center',
+              whiteSpace: 'nowrap',
+              fontWeight: 700,
+              letterSpacing: 0.2,
+              border: '1px solid',
+              borderColor: 'rgba(255, 255, 255, 0.65)',
+              bgcolor: 'rgba(255, 255, 255, 0.12)',
+              textTransform: 'none',
+              '& .MuiButton-startIcon': {
+                display: { xs: 'none', lg: 'inline-flex' },
+                marginRight: 0.5,
+                marginLeft: 0,
+                flexShrink: 0,
+              },
+              '&:hover': {
+                borderColor: 'rgba(255, 255, 255, 0.95)',
+                bgcolor: 'rgba(255, 255, 255, 0.22)',
+              },
+              '&.Mui-disabled': {
+                borderColor: 'rgba(255, 255, 255, 0.25)',
+                color: 'rgba(255, 255, 255, 0.4)',
+              },
             }}
           >
-            🚀 View Live Survey
+            {t.viewLive}
           </Button>
 
-          <Tooltip title="我的 Skill 库">
+          <Tooltip title={t.moreTools}>
             <IconButton
               color="inherit"
-              onClick={() => navigate('/skills')}
+              onClick={handleToolsMenuOpen}
               size="small"
-              sx={{ mr: 1, border: 1, borderColor: 'rgba(255,255,255,0.4)', '&:hover': { bgcolor: 'rgba(255,255,255,0.15)' } }}
+              aria-label={t.moreTools}
+              aria-controls={toolsMenuAnchor ? 'workspace-tools-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={toolsMenuAnchor ? 'true' : undefined}
+              sx={{ border: 1, borderColor: 'rgba(255,255,255,0.4)', '&:hover': { bgcolor: 'rgba(255,255,255,0.15)' } }}
             >
-              <EditNote fontSize="small" />
+              <MoreVert fontSize="small" />
             </IconButton>
           </Tooltip>
         </Toolbar>
       </AppBar>
+
+      <Menu
+        id="workspace-tools-menu"
+        anchorEl={toolsMenuAnchor}
+        open={Boolean(toolsMenuAnchor)}
+        onClose={handleToolsMenuClose}
+        PaperProps={{ sx: { mt: 1, minWidth: 240 } }}
+      >
+        {compactToolbar && (
+          <MenuItem onClick={() => { handleToolsMenuClose(); openAiSidebar(); }}>{t.aiLabel}</MenuItem>
+        )}
+        {compactToolbar && (
+          <MenuItem
+            disabled={!currentProject || !surveyConfig}
+            onClick={() => {
+              handleToolsMenuClose();
+              window.open('/survey?project=' + encodeURIComponent(currentProject.id), '_blank', 'noopener,noreferrer');
+            }}
+          >
+            {t.viewLive}
+          </MenuItem>
+        )}
+        {compactToolbar && (
+          <MenuItem onClick={() => { setLanguage(language === 'zh' ? 'en' : 'zh'); handleToolsMenuClose(); }}>
+            {language === 'zh' ? 'Switch to English' : '切换为中文'}
+          </MenuItem>
+        )}
+        {compactToolbar && <MenuItem disabled>{formatSaveStatusLabel(t, saveStatus, lastSavedAt)}</MenuItem>}
+        {compactToolbar && <Divider />}
+        <MenuItem onClick={handleThemeFromTools}>
+          <ListItemIcon><Palette fontSize="small" /></ListItemIcon>
+          <ListItemText primary={t.changeTheme} />
+        </MenuItem>
+        <MenuItem onClick={() => { handleToolsMenuClose(); navigate('/skills'); }}>
+          <ListItemIcon><EditNote fontSize="small" /></ListItemIcon>
+          <ListItemText primary={t.skillsLibrary} />
+        </MenuItem>
+        <MenuItem onClick={() => { handleToolsMenuClose(); handleCleanLocalStorage(); }}>
+          <ListItemIcon><CleaningServices fontSize="small" /></ListItemIcon>
+          <ListItemText primary={t.clearEditingState} />
+        </MenuItem>
+      </Menu>
 
       {/* Theme Selector Menu */}
       <Menu
@@ -1110,7 +1572,7 @@ export default function AdminApp() {
         <Box sx={{ px: 2, py: 1, borderBottom: 1, borderColor: 'divider' }}>
           <Typography variant="subtitle2" sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: 1 }}>
             <Palette fontSize="small" />
-            Choose Theme
+            {t.chooseTheme}
           </Typography>
         </Box>
         {Object.entries(themes).map(([key, themeData]) => (
@@ -1175,6 +1637,7 @@ export default function AdminApp() {
 
       {/* Project Sidebar */}
       <ProjectSidebar
+        id="admin-project-sidebar"
         open={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
         onProjectSelect={handleProjectSelect}
@@ -1182,54 +1645,68 @@ export default function AdminApp() {
         currentProject={currentProject}
         surveyConfig={surveyConfig}
         projectStates={projectStates}
-        width={400}
+        width={PROJECT_SIDEBAR_WIDTH}
       />
+
+      {(assistantEnabled || siliconEnabled) && (
+        <AiAssistantSidebar
+          open={aiSidebarOpen}
+          onClose={() => setAiSidebarOpen(false)}
+          assistant={assistant}
+          variant={wideLayout ? 'persistent' : 'temporary'}
+          width={AI_SIDEBAR_WIDTH}
+          panel={aiSidebarPanel}
+          onPanelChange={setAiSidebarPanel}
+          onOpenSilicon={siliconEnabled ? openSiliconTab : undefined}
+          siliconTasks={siliconEnabled ? siliconTasks : null}
+          siliconEnabled={siliconEnabled}
+          currentProjectId={currentProject?.id}
+          onOpenTaskProject={openTaskProject}
+          hideAssistant={!assistantEnabled}
+        />
+      )}
 
       <Container 
         maxWidth="xl" 
         sx={{ 
           mt: 10, // Increase top spacing to accommodate fixed AppBar
-          ml: sidebarOpen ? '400px' : 0,
-          transition: 'margin-left 0.3s ease',
-          width: sidebarOpen ? 'calc(100% - 400px)' : '100%'
+          ml: { xs: 0, md: sidebarOpen ? `${PROJECT_SIDEBAR_WIDTH}px` : 0 },
+          mr: wideLayout && aiSidebarOpen ? `${AI_SIDEBAR_WIDTH}px` : 0,
+          transition: 'margin 0.3s ease, width 0.3s ease',
+          width: {
+            xs: '100%',
+            md: `calc(100% - ${(sidebarOpen ? PROJECT_SIDEBAR_WIDTH : 0) + (wideLayout && aiSidebarOpen ? AI_SIDEBAR_WIDTH : 0)}px)`,
+          },
+          minWidth: 0
         }}
       >
         {!currentProject ? (
-          // Empty state - no project selected
-          <Paper sx={{ p: 4, textAlign: 'center' }}>
-            <FolderOpen sx={{ fontSize: '4rem', color: 'text.secondary', mb: 2 }} />
-            <Typography variant="h5" sx={{ mb: 2 }}>
-              No Project Selected
-            </Typography>
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-              Create a new project or select an existing one from the sidebar to get started.
-            </Typography>
-            <Button
-              variant="contained"
-              startIcon={<MenuIcon />}
-              onClick={() => setSidebarOpen(true)}
-              size="large"
-            >
-              Open Project Sidebar
-            </Button>
-          </Paper>
+          <AdminEmptyState
+            icon={<FolderOpen sx={{ fontSize: '4rem' }} />}
+            title={t.noProjectTitle}
+            description={t.noProjectBody}
+            actionLabel={t.openProjectSidebar}
+            onAction={() => {
+              if (!wideLayout) setAiSidebarOpen(false);
+              setSidebarOpen(true);
+            }}
+          />
         ) : (
           // Project content
           <Paper sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs value={tabValue} onChange={handleTabChange} aria-label="admin tabs" variant="scrollable" scrollButtons="auto">
-                <Tab label="Step 1 - Media Dataset" />
-                <Tab label="Step 2 - Survey Builder" />
-                <Tab label="Step 3 - Server Setup" />
-                <Tab label="Step 4 - Website Deployment" />
-                <Tab label="Step 5 - Results Analysis" />
-                <Tab label="Researcher Practice" />
-              </Tabs>
+              <AdminWorkspaceTabs value={tabValue} onChange={handleTabChange} siliconEnabled={siliconEnabled} />
             </Box>
 
             <TabPanel value={tabValue} index={0}>
+              <AdminIntroduction onGoToTab={goToAdminTab} onOpenAssistant={openAiSidebar} />
+            </TabPanel>
+
+            <TabPanel value={tabValue} index={1}>
+              <Suspense fallback={<Typography>{t.loadingProjectSystem}</Typography>}>
               <ImageDataset 
                 currentProject={currentProject}
+                focusRequest={analysisMediaFocus?.projectId === currentProject?.id ? analysisMediaFocus : null}
                 onProjectUpdate={handleProjectUpdate}
                 onConfigChange={(hasChanges, latestConfig) => {
                   console.log('🔍 ImageDataset config changed, hasChanges:', hasChanges);
@@ -1241,17 +1718,22 @@ export default function AdminApp() {
                 }}
                 onNextStep={handleNextStep}
               />
+              </Suspense>
             </TabPanel>
 
-            <TabPanel value={tabValue} index={1}>
+            <TabPanel value={tabValue} index={2} keepMounted={builderKeepAlive}>
               {surveyConfig ? (
+                <Suspense fallback={<Typography>{t.loadingProjectSystem}</Typography>}>
                 <SurveyBuilder 
                   key={currentProject?.id || 'no-project'}
                   config={surveyConfig} 
                   onChange={handleSurveyConfigChange}
                   currentProject={currentProject}
                   onNextStep={handleNextStep}
+                  hideAssistant
+                  onOpenAssistant={openAiSidebar}
                 />
+                </Suspense>
               ) : (
                 <Box sx={{ p: 3, textAlign: 'center' }}>
                   <Typography>Loading survey configuration...</Typography>
@@ -1259,37 +1741,106 @@ export default function AdminApp() {
               )}
             </TabPanel>
 
-            <TabPanel value={tabValue} index={2}>
-              <SystemStatus
-                surveyConfig={surveyConfig}
-                currentProject={currentProject}
-                onProjectUpdate={handleProjectUpdate}
-                onNextStep={handleNextStep}
-              />
-            </TabPanel>
-
             <TabPanel value={tabValue} index={3}>
-              <WebsiteSetup
-                currentProject={currentProject}
+              <Suspense fallback={<Typography>{t.loadingProjectSystem}</Typography>}>
+              <HostSetup
                 surveyConfig={surveyConfig}
+                currentProject={currentProject}
+                hasUnsavedChanges={hasUnsavedChanges}
+                onProjectUpdate={handleProjectUpdate}
+                onOpenMediaStorage={() => {
+                  setAnalysisMediaFocus({ projectId: currentProject.id, scrollTo: 'supabase-storage', token: Date.now() });
+                  goToAdminTab(1);
+                }}
+                onReleased={() => setSnackbar({ open: true, message: language === 'zh' ? '已发布参与者快照。请继续部署参与者站点。' : 'Participant snapshot released. Deploy the participant site when you are ready.', severity: 'success' })}
               />
+              </Suspense>
             </TabPanel>
 
             <TabPanel value={tabValue} index={4}>
+              <Suspense fallback={<Typography>{t.loadingProjectSystem}</Typography>}>
+              <ShareSurvey
+                currentProject={currentProject}
+                surveyConfig={surveyConfig}
+                hasUnsavedChanges={hasUnsavedChanges}
+                onGoToHost={() => goToAdminTab(3)}
+              />
+              </Suspense>
+            </TabPanel>
+
+            <TabPanel value={tabValue} index={5}>
+              <Suspense fallback={<Typography>{t.loadingProjectSystem}</Typography>}>
               <ResultsAnalysis
+                onOpenMedia={(mediaId) => { setAnalysisMediaFocus({ projectId: currentProject.id, mediaId, token: Date.now() }); goToAdminTab(1); }}
                 currentProject={currentProject}
                 surveyConfig={surveyConfig}
                 onSurveyConfigChange={handleResultsConfigSync}
+                analysisBusy={resultsAnalyzeBusy}
+                onScopeChange={(scope) => setResultsScope(scope)}
+                onAnalyzeCurrent={async ({ scope, overview, onSaved }) => {
+                  setResultsScope(scope);
+                  setResultsAnalyzeBusy(true);
+                  openAiSidebar('assistant');
+                  try {
+                    await assistant.handleSendMessage({
+                      assistantMode: 'question',
+                      message: [
+                        'Analyze the current Results scope. Call survey_results_summary with view=overview using the provided analysisScope.',
+                        'Then read any comparison or slider questions with view=question.',
+                        'Write a short report: data included/excluded, quality, main findings with evidence, methods and limits.',
+                        'Do not invent statistics, significance, or causal claims. Do not save or delete anything.',
+                        `Scope JSON: ${JSON.stringify(scope)}`,
+                        overview?.counts ? `Known counts: ${JSON.stringify(overview.counts)}` : '',
+                      ].filter(Boolean).join('\n'),
+                    });
+                    const last = [...(assistant.messages || [])].reverse().find((row) => row.role === 'assistant');
+                    onSaved?.({
+                      scope,
+                      overview,
+                      narrative: last?.content || '',
+                      findings: [],
+                      provider: assistant.selectedRoute,
+                      model: assistant.selectedRoute,
+                      status: 'completed',
+                    });
+                  } finally {
+                    setResultsAnalyzeBusy(false);
+                  }
+                }}
+                onExplainQuestion={async ({ scope, question }) => {
+                  setResultsScope(scope);
+                  openAiSidebar('assistant');
+                  await assistant.handleSendMessage({
+                    assistantMode: 'question',
+                    message: [
+                      `Explain question ${question?.name || scope.questionName} in the current Results scope.`,
+                      'Call survey_results_summary view=question with this questionName.',
+                      'If the method is TrueSkill, explain μ, σ, ties, coverage, and why rank is not significance.',
+                      'If it is a slider, explain each dimension separately.',
+                      `Scope JSON: ${JSON.stringify(scope)}`,
+                    ].join('\n'),
+                  });
+                }}
               />
+              </Suspense>
             </TabPanel>
 
-            <TabPanel value={tabValue} index={5} keepMounted={practiceKeepAlive}>
+            <TabPanel value={tabValue} index={6} keepMounted={practiceKeepAlive}>
+              <Suspense fallback={<Typography>{t.loadingProjectSystem}</Typography>}>
               <ResearcherPractice
                 currentProject={currentProject}
                 surveyConfig={surveyConfig}
                 onSessionActiveChange={handlePracticeSessionActive}
               />
+              </Suspense>
             </TabPanel>
+            {siliconEnabled && (
+              <TabPanel value={tabValue} index={7} keepMounted={siliconKeepAlive}>
+                <Suspense fallback={<Typography>{t.loadingProjectSystem}</Typography>}>
+                  <SiliconSamples currentProject={currentProject} surveyConfig={surveyConfig} />
+                </Suspense>
+              </TabPanel>
+            )}
           </Paper>
         )}
       </Container>
@@ -1297,22 +1848,34 @@ export default function AdminApp() {
       {/* Preview Dialog */}
       <Dialog open={previewOpen} onClose={() => setPreviewOpen(false)} maxWidth="lg" fullWidth>
         <DialogTitle>
-          📋 Survey Preview - Exact Live Survey Replica
+          {t.previewSurvey}
         </DialogTitle>
         <DialogContent>
           {surveyConfig ? (
-            <SurveyPreview config={surveyConfig} currentProject={currentProject} />
+            <Suspense fallback={<Typography>{t.loadingProjectSystem}</Typography>}>
+              <SurveyPreview config={surveyConfig} currentProject={currentProject} />
+            </Suspense>
           ) : (
-            <Typography>No survey configuration available</Typography>
+            <Typography>{t.noProjectBody}</Typography>
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setPreviewOpen(false)}>Close</Button>
+          <Button onClick={() => setPreviewOpen(false)}>{t.resultsClose}</Button>
         </DialogActions>
       </Dialog>
 
 
       {/* Snackbar for notifications */}
+      <ConfirmDialog
+        open={Boolean(confirmDialog)}
+        title={confirmDialog?.title}
+        message={confirmDialog?.message}
+        confirmLabel={confirmDialog?.confirmLabel}
+        confirmColor={confirmDialog?.confirmColor || 'primary'}
+        onConfirm={() => confirmDialog?.onConfirm?.()}
+        onCancel={() => setConfirmDialog(null)}
+      />
+
       <Snackbar
         open={snackbar.open}
         autoHideDuration={6000}
@@ -1328,6 +1891,13 @@ export default function AdminApp() {
       </Snackbar>
     </Box>
     </ThemeProvider>
+  );
+}
+
+export default function AdminApp() {
+  return (
+    <RegionProvider>
+      <AdminWorkspace />
     </RegionProvider>
   );
 }

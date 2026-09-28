@@ -37,9 +37,4 @@ export async function deleteSurveyResponse({ id, filename, projectId }) {
   throw new Error('Cannot delete response: missing record id');
 }
 
-/** Stable key for React lists + quality lookup. */
-export function responseRecordKey(row) {
-  if (row?.id != null) return String(row.id);
-  if (row?._filename) return row._filename;
-  return row?.participant_id || 'unknown';
-}
+export { responseRecordKey } from './responseIdentity';

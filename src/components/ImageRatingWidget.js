@@ -14,10 +14,11 @@ export function SurveyJsRatingControl({
   maxRateDescription = '',
   value,
   onChange,
+  disabled = false,
 }) {
   const groupId = useId();
-  const min = Number(rateMin) || 1;
-  const max = Number(rateMax) || 5;
+  const min = Number.isFinite(Number(rateMin)) ? Number(rateMin) : 1;
+  const max = Number.isFinite(Number(rateMax)) ? Number(rateMax) : 5;
   const lo = Math.min(min, max);
   const hi = Math.max(min, max);
   const values = [];
@@ -96,7 +97,8 @@ export function SurveyJsRatingControl({
                 name={groupId}
                 value={v}
                 checked={isSelected}
-                onChange={() => onChange?.(v)}
+                disabled={disabled}
+                onChange={() => { if (!disabled) onChange?.(v); }}
               />
               <span className="sd-rating__item-text">{v}</span>
             </label>
@@ -168,6 +170,7 @@ export default function ImageRatingWidget({ question, value, onValueChanged, tri
         minRateDescription={question.minRateDescription || ''}
         maxRateDescription={question.maxRateDescription || ''}
         value={value}
+        disabled={!!question?.isReadOnly}
         onChange={onValueChanged}
       />
     </Box>

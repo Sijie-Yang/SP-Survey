@@ -13,6 +13,9 @@ import {
   buildMediaByFolderCategory,
   normalizeMediaAssignmentMode,
   isFolderOrDescendant,
+  folderFromR2Key,
+  normalizeMediaEntry,
+  normalizeProjectRelativeFolder,
 } from './mediaUtils';
 import { FIXTURE_POOL, FIXTURE_TAGS, makePool } from './__fixtures__/mediaPool';
 
@@ -118,5 +121,34 @@ describe('mediaUtils folder/set/category contracts', () => {
     expect(normalizeMediaAssignmentMode('set')).toBe('set');
     expect(normalizeMediaAssignmentMode('category')).toBe('category');
     expect(normalizeMediaAssignmentMode('weird')).toBe('individual');
+  });
+
+  test('folderFromR2Key strips userId/projectId even without projectPrefix', () => {
+    const key = 'aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee/proj_123_abc/street/a.jpg';
+    expect(folderFromR2Key(key, null)).toBe('street');
+    expect(folderFromR2Key(key, 'aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee/proj_123_abc/')).toBe('street');
+    expect(folderFromR2Key('templates/tpl1/study2/x.jpg', null)).toBe('study2');
+  });
+
+  test('normalizeMediaEntry fixes ownership-prefixed folder fields for set matching', () => {
+    const entry = normalizeMediaEntry({
+      name: 'a.jpg',
+      url: 'https://cdn.example/a.jpg',
+      key: 'aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee/proj_1/sets/s1/a.jpg',
+      folder: 'aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee/proj_1/sets/s1',
+    });
+    expect(entry.folder).toBe('sets/s1');
+    expect(normalizeProjectRelativeFolder('user-id/proj_x/street')).toBe('street');
+    const pool = [
+      normalizeMediaEntry({
+        name: 'a.jpg',
+        key: 'aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee/proj_1/sets/s1/a.jpg',
+      }),
+      normalizeMediaEntry({
+        name: 'b.jpg',
+        key: 'aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee/proj_1/sets/s1/b.jpg',
+      }),
+    ];
+    expect(getEligibleMediaSets(pool, 2, { 'sets/s1': 'set' })).toHaveLength(1);
   });
 });
