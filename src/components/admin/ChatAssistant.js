@@ -1013,7 +1013,7 @@ export default function ChatAssistant({
                 size="small"
                 variant="text"
                 color="warning"
-                onClick={onRevertAiChange}
+                onClick={() => onRevertAiChange?.()}
                 sx={{ borderRadius: 999, textTransform: 'none' }}
               >
                 {t.aiSidebarUndo}
