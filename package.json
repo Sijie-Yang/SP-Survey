@@ -6,6 +6,7 @@
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
+    "@earendil-works/pi-ai": "0.85.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.1",
@@ -47,7 +48,10 @@
     "dev:safe": "concurrently \"npm run server:watch\" \"npm start\"",
     "build": "cross-env CI=false react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test:server": "node scripts/sync-harness-model-catalog.mjs --check && node --test \"src/server/**/*.test.mjs\"",
+    "eject": "react-scripts eject",
+    "catalog:sync": "node scripts/sync-harness-model-catalog.mjs",
+    "catalog:check": "node scripts/sync-harness-model-catalog.mjs --check"
   },
   "eslintConfig": {
     "extends": [
