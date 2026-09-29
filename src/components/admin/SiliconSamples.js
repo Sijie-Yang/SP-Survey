@@ -39,6 +39,7 @@ import {
   siliconRunOutcome,
   siliconRunPlan,
 } from '../../lib/siliconSupport';
+import { routeOptions } from './ModelsSettings';
 
 const STATUS_LABEL = {
   allComplete: 'siliconStatusAllComplete',
@@ -156,22 +157,10 @@ export default function SiliconSamples({ currentProject, surveyConfig = null }) 
     if (p.error || r.error) setError(p.error || r.error || '');
     const status = await getCredentialStatus();
     if (status.success !== false) {
-      const options = [];
-      (status.directory || []).forEach((provider) => {
-        if (!provider.configured || provider.authUnsupported) return;
-        if (provider.shared && !provider.userConfigured) return;
-        (provider.models || []).forEach((model) => {
-          const vision = !!(model.vision || (model.input || []).includes('image'));
-          if (!vision || !model.id) return;
-          options.push({
-            value: `${provider.id}::${model.id}`,
-            provider: provider.id,
-            model: model.id,
-            label: `${provider.displayName} / ${model.label || model.name || model.id}`,
-            reasoningEfforts: model.reasoningEfforts || false,
-            defaultEffort: model.defaultEffort || '',
-          });
-        });
+      const options = routeOptions(status.directory || [], {
+        configuredOnly: true,
+        visionOnly: true,
+        userOwnedOnly: true,
       });
       setVisionRoutes(options);
       const def = status.siliconRoute;

@@ -37,13 +37,8 @@ function validEffort(model, ...candidates) {
     || firstEffort(model);
 }
 
-export function sharedModelSuffix(language = 'en') {
-  return language === 'zh' ? ' (免费)' : ' (Free)';
-}
-
-export function buildAssistantModelOptions(directory = [], { language = 'en' } = {}) {
+export function buildAssistantModelOptions(directory = []) {
   const options = [];
-  const suffix = sharedModelSuffix(language);
   (directory || []).forEach((provider) => {
     if (!provider.configured || provider.authUnsupported) return;
     (provider.models || []).forEach((model) => {
@@ -52,8 +47,8 @@ export function buildAssistantModelOptions(directory = [], { language = 'en' } =
         value: routeKey(provider.id, model.id),
         provider: provider.id,
         model: model.id,
-        label: `${provider.displayName || provider.id} / ${model.label || model.name || model.id}${model.shared && !provider.userConfigured ? suffix : ''}`,
-        shared: Boolean(model.shared || (provider.shared && !provider.userConfigured)),
+        label: `${provider.displayName || provider.id} / ${model.label || model.name || model.id}`,
+        vision: Boolean(model.vision || (model.input || []).includes('image')),
         reasoningEfforts: model.reasoningEfforts || false,
         defaultEffort: model.defaultEffort || '',
       });
@@ -298,7 +293,6 @@ export function credentialConfigured(status) {
     status?.openai?.configured
     || status?.assistantConfigured
     || (status?.configuredProviders || []).length
-    || (status?.subsidizedRoutes || []).length
     || (status?.providers || []).some((row) => row.key_hint)
   );
 }

@@ -50,37 +50,15 @@ export async function listMcpConnections() {
 }
 
 export async function getCredentialStatus() {
-  const remote = await agentFetch('/api/agent/credentials/status');
-  if (remote?.success) return remote;
-  const { key, valid, openrouter } = localKeyHint();
-  const providerId = openrouter ? 'openrouter' : 'openai';
-  const models = openrouter
-    ? [
-      { id: 'openai/gpt-4o', label: 'GPT-4o', vision: true, input: ['text', 'image'] },
-      { id: 'openai/gpt-4o-mini', label: 'GPT-4o mini', vision: true, input: ['text', 'image'] },
-    ]
-    : [
-      { id: 'gpt-4o', label: 'GPT-4o', vision: true, input: ['text', 'image'] },
-      { id: 'gpt-4o-mini', label: 'GPT-4o mini', vision: true, input: ['text', 'image'] },
-    ];
-  const directory = key && valid
-    ? [{
-      id: providerId,
-      configured: true,
-      userConfigured: true,
-      displayName: openrouter ? 'OpenRouter' : 'OpenAI',
-      models,
-    }]
-    : [];
-  return {
-    success: true,
-    assistantConfigured: Boolean(key && valid),
-    openai: { configured: Boolean(key && valid && !openrouter) },
-    configuredProviders: directory.map((row) => row.id),
-    directory,
-    defaultRoute: directory[0] ? { provider: directory[0].id, model: models[0].id } : null,
-    siliconRoute: directory[0] ? { provider: directory[0].id, model: models[0].id } : null,
-  };
+  try {
+    return await agentFetch('/api/agent/credentials/status');
+  } catch (error) {
+    return {
+      success: false,
+      code: 'LOCAL_SERVER_UNREACHABLE',
+      error: 'The local SP-Survey server is not running. Start it with npm run dev.',
+    };
+  }
 }
 
 export async function storeProviderCredential(body) {
