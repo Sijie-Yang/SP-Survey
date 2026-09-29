@@ -32,6 +32,7 @@ import {
   Save,
 } from '@mui/icons-material';
 import AgentsEditor from './AgentsEditor';
+import ModelsSettings from './ModelsSettings';
 import {
   isAssistantEnabled,
   isSiliconExperimentalEnabled,
@@ -185,28 +186,33 @@ export default function AssistantSettingsDialog({
                   ))}
                 </TextField>
               </Box>
-              <Typography variant="h6" sx={{ mb: 0.5, fontWeight: 600 }}>{t.modelsTitle}</Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                {t.aiSettingsLocalKeyIntro}
-              </Typography>
-              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  type="password"
-                  label={t.modelsKeyInput}
-                  value={openaiApiKey}
-                  onChange={(event) => onApiKeyChange(event.target.value)}
-                  InputProps={{
-                    endAdornment: apiKeyValid ? (
-                      <InputAdornment position="end"><CheckCircle color="success" /></InputAdornment>
-                    ) : null,
-                  }}
-                />
-                <Button variant="contained" onClick={onValidateApiKey} disabled={!openaiApiKey}>
-                  {t.aiSettingsValidate}
-                </Button>
-              </Stack>
+              <ModelsSettings onConfiguredChange={onCredentialsChange} />
+              {openaiApiKey && (
+                <Box sx={{ mt: 3 }}>
+                  <Typography variant="subtitle2" sx={{ mb: 0.5 }}>{t.aiSettingsLegacyKeyTitle}</Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                    {t.aiSettingsLocalKeyIntro}
+                  </Typography>
+                  <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
+                    <TextField
+                      fullWidth
+                      size="small"
+                      type="password"
+                      label={t.modelsKeyInput}
+                      value={openaiApiKey}
+                      onChange={(event) => onApiKeyChange(event.target.value)}
+                      InputProps={{
+                        endAdornment: apiKeyValid ? (
+                          <InputAdornment position="end"><CheckCircle color="success" /></InputAdornment>
+                        ) : null,
+                      }}
+                    />
+                    <Button variant="contained" onClick={onValidateApiKey} disabled={!openaiApiKey}>
+                      {t.aiSettingsValidate}
+                    </Button>
+                  </Stack>
+                </Box>
+              )}
             </Box>
           )}
 

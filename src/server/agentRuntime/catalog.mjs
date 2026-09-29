@@ -119,8 +119,8 @@ export function normalizeModelRecord(model, fallback = {}) {
 export function extraHeaders(providerId) {
   if (providerId === 'openrouter' || providerId === 'vercel-ai-gateway') {
     return {
-      'HTTP-Referer': 'https://sp-survey.org',
-      'X-Title': 'SP-Survey-Platform',
+      'HTTP-Referer': 'https://github.com/Sijie-Yang/SP-Survey',
+      'X-Title': 'SP-Survey',
     };
   }
   return {};

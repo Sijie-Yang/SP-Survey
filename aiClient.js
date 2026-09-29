@@ -1,71 +1,33 @@
 /**
- * AI client — uses the API key provided by the user (OpenAI or OpenRouter BYOK).
+ * AI client — routes every call through the Platform-aligned provider catalog
+ * and pi-ai adapters, using only the researcher's own provider keys.
  */
-const OpenAI = require('openai');
 
-const OPENROUTER_BASE = 'https://openrouter.ai/api/v1';
-
-const OPENROUTER_MODELS = {
-  fast: 'openai/gpt-4o-mini',
-  default: 'openai/gpt-4o',
-  strong: 'openai/gpt-4o',
-};
-
-const OPENAI_MODELS = {
-  fast: 'gpt-4o-mini',
-  default: 'gpt-4o',
-  strong: 'gpt-4o',
-};
-
-const PROVIDER_BASES = {
-  openai: undefined,
-  openrouter: OPENROUTER_BASE,
-  deepseek: 'https://api.deepseek.com/v1',
-  'qwen-dashscope': 'https://dashscope.aliyuncs.com/compatible-mode/v1',
-  moonshot: 'https://api.moonshot.cn/v1',
-  zhipu: 'https://open.bigmodel.cn/api/paas/v4',
-  minimax: 'https://api.minimax.chat/v1',
-  anthropic: 'https://api.anthropic.com',
-  gemini: 'https://generativelanguage.googleapis.com/v1beta/openai',
-  groq: 'https://api.groq.com/openai/v1',
-  mistral: 'https://api.mistral.ai/v1',
-  together: 'https://api.together.xyz/v1',
-  fireworks: 'https://api.fireworks.ai/inference/v1',
-};
-
-function providerHeaders(provider) {
-  if (provider === 'openrouter' || provider === 'vercel-ai-gateway') return openRouterHeaders();
-  if (provider === 'anthropic') return { 'anthropic-version': '2023-06-01' };
-  return undefined;
+function detectLegacyProvider(apiKey) {
+  const key = String(apiKey || '').trim();
+  if (key.startsWith('sk-or-')) return 'openrouter';
+  if (key.startsWith('sk-ant-')) return 'anthropic';
+  return 'openai';
 }
 
-/** @returns {{ client, models, provider, protocol } | null} */
+function loadRuntime() {
+  return import('./src/server/agentRuntime/localRoutes.mjs');
+}
+
+/**
+ * @param {string} userApiKey Browser-supplied legacy key (optional when a provider key is saved).
+ * @param {{ provider?: string, model?: string, store?: object, vision?: boolean }} extras
+ *   Pass `store: {}` to use only `userApiKey` (for example when validating a new key).
+ */
 function resolveAiRequest(userApiKey, extras = {}) {
-  const trimmed = userApiKey?.trim();
-  if (!trimmed) return null;
-
-  const provider = extras.provider
-    || (trimmed.startsWith('sk-or-') ? 'openrouter' : trimmed.startsWith('sk-ant-') ? 'anthropic' : 'openai');
-  const protocol = extras.protocol || (provider === 'anthropic' ? 'anthropic-messages' : 'openai-completions');
-  const baseURL = extras.baseUrl || PROVIDER_BASES[provider];
+  const apiKey = String(userApiKey || '').trim();
+  if (!apiKey && !extras.provider && !extras.store) return null;
   return {
-    client: new OpenAI({
-      apiKey: trimmed,
-      baseURL,
-      defaultHeaders: providerHeaders(provider),
-    }),
-    models: provider === 'openrouter' ? OPENROUTER_MODELS : OPENAI_MODELS,
-    provider,
-    protocol,
-    apiKey: trimmed,
-    baseURL,
-  };
-}
-
-function openRouterHeaders() {
-  return {
-    'HTTP-Referer': process.env.APP_URL || 'http://localhost:3002',
-    'X-Title': process.env.APP_NAME || 'SP-Survey-Platform',
+    apiKey,
+    provider: extras.provider || (apiKey ? detectLegacyProvider(apiKey) : ''),
+    model: extras.model || '',
+    vision: Boolean(extras.vision),
+    store: extras.store || null,
   };
 }
 
@@ -78,52 +40,38 @@ function formatAiError(error) {
   return msg;
 }
 
-async function anthropicChat(resolved, options) {
-  const model = options.model || 'claude-sonnet-4-5';
-  const url = `${String(resolved.baseURL || 'https://api.anthropic.com').replace(/\/$/, '')}/v1/messages`;
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      'x-api-key': resolved.apiKey,
-      'anthropic-version': '2023-06-01',
-    },
-    body: JSON.stringify({
-      model,
-      max_tokens: options.max_tokens || 4096,
-      system: (options.messages || []).filter((row) => row.role === 'system').map((row) => row.content).join('\n'),
-      messages: (options.messages || []).filter((row) => row.role !== 'system').map((row) => ({
-        role: row.role === 'tool' ? 'user' : row.role,
-        content: typeof row.content === 'string' ? row.content : JSON.stringify(row.content || ''),
-      })),
-    }),
+async function resolveRoute(resolved, options = {}) {
+  const runtime = await loadRuntime();
+  const store = resolved.store || await require('./src/server/agentCredentialsApi').readStore();
+  return runtime.resolveLocalRoute(store, {
+    provider: resolved.provider,
+    model: options.model || resolved.model,
+    apiKey: resolved.apiKey,
+    vision: resolved.vision,
   });
-  const body = await response.json();
-  if (!response.ok) throw new Error(body?.error?.message || `Anthropic ${response.status}`);
-  return {
-    choices: [{
-      message: {
-        role: 'assistant',
-        content: (body.content || []).map((part) => part.text || '').join('\n'),
-      },
-    }],
-    usage: body.usage,
-  };
 }
 
-/** tier: 'fast' | 'default' | 'strong' */
-async function aiChat(resolved, tier, options) {
+/** tier is kept for older callers; the catalog default model is used when no model is given. */
+async function aiChat(resolved, _tier, options = {}) {
   if (!resolved) throw new Error('API key is required');
-  const model = options.model || resolved.models[tier] || resolved.models.default;
-  const { model: _drop, ...rest } = options;
-  if (resolved.protocol === 'anthropic-messages') {
-    return anthropicChat(resolved, { ...rest, model });
-  }
-  return resolved.client.chat.completions.create({ ...rest, model });
+  const runtime = await loadRuntime();
+  const route = await resolveRoute(resolved, options);
+  return runtime.chatCompletion(route, {
+    messages: options.messages || [],
+    tools: options.tools || [],
+    effort: options.reasoningEffort || options.effort,
+    maxTokens: options.max_tokens || options.maxTokens,
+    temperature: options.temperature,
+    json: options.response_format?.type === 'json_object' || Boolean(options.json),
+    signal: options.signal,
+    retryPolicy: options.retryPolicy,
+  });
 }
 
 module.exports = {
   resolveAiRequest,
+  resolveRoute,
   aiChat,
   formatAiError,
+  detectLegacyProvider,
 };

@@ -56,10 +56,10 @@ const OSS_I18N = {
       'Design with the AI Assistant sidebar first (your own API key). Localhost Codex / Cursor remains an optional advanced path.',
     introFlowTitle: 'Recommended: in-browser AI Assistant',
     introFlowLead:
-      'Store an OpenAI or OpenRouter key, then talk to the Assistant from the right sidebar on any Admin tab. Models stay on your key — this app does not provide free or subsidized models.',
+      'Save a key for any supported provider (DeepSeek, OpenAI, Anthropic, Google, OpenRouter, and more), then talk to the Assistant from the right sidebar on any Admin tab. Models stay on your key — this app does not provide free or subsidized models.',
     introFlow1Title: 'Save an API key',
     introFlow1Body:
-      'Open the AI sidebar Settings and add your OpenAI or OpenRouter key. Validate it, then describe the survey you want.',
+      'Open the AI sidebar Settings, add a provider with your own key, pick a model, then describe the survey you want.',
     introFlow3Body:
       'For images/video/audio, upload in Media Dataset. Do not generate synthetic media for upload. For set/category modes, tag folders as set or category.',
     introFlow4Body:
@@ -70,7 +70,6 @@ const OSS_I18N = {
     shareDescription:
       'Copy the survey link, download the QR code, and run a pre-launch test before inviting participants.',
     connectCodex: 'Open AI Assistant',
-    aiSettingsLocalKeyIntro: 'Connect an OpenAI or OpenRouter API key for this browser. There is no free hosted model.',
     aiSidebarEmptyConnect: 'Open Settings to connect your own API key.',
   },
   zh: {
@@ -114,10 +113,10 @@ const OSS_I18N = {
       '先用右侧 AI 助手边栏设计问卷（使用你自己的 API key）。本机 Codex / Cursor 仍是可选的进阶路径。',
     introFlowTitle: '推荐：浏览器内 AI 助手',
     introFlowLead:
-      '保存 OpenAI 或 OpenRouter key，然后在任意 Admin 标签页从右侧边栏与助手对话。模型只走你的 key，本应用不提供免费或补贴模型。',
+      '为任一支持的提供方（DeepSeek、OpenAI、Anthropic、Google、OpenRouter 等）保存 key，然后在任意 Admin 标签页从右侧边栏与助手对话。模型只走你的 key，本应用不提供免费或补贴模型。',
     introFlow1Title: '保存 API key',
     introFlow1Body:
-      '打开 AI 边栏设置，添加你的 OpenAI 或 OpenRouter key 并验证，然后描述你想要的问卷。',
+      '打开 AI 边栏设置，用你自己的 key 添加提供方并选择模型，然后描述你想要的问卷。',
     introFlow3Body:
       '图片/视频/音频请在媒体数据集中上传。不要生成合成媒体再上传。set/category 模式请给文件夹打对应标签。',
     introFlow4Body:
@@ -128,7 +127,6 @@ const OSS_I18N = {
     shareDescription:
       '复制问卷链接、下载二维码，并发出问卷前先试跑一次。',
     connectCodex: '打开 AI 助手',
-    aiSettingsLocalKeyIntro: '在此浏览器连接 OpenAI 或 OpenRouter API key。没有免费托管模型。',
     aiSidebarEmptyConnect: '打开设置，连接你自己的 API key。',
   },
 };

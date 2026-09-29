@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 
-const DATA_DIR = path.join(__dirname, '..', '..', 'data');
+const DATA_DIR = process.env.SP_SURVEY_DATA_DIR || path.join(__dirname, '..', '..', 'data');
 const STORE_PATH = path.join(DATA_DIR, 'ai-credentials.json');
 
 function hintFor(key) {
@@ -28,6 +28,16 @@ async function loadCatalog() {
   return import('./agentRuntime/catalog.mjs');
 }
 
+async function loadRuntime() {
+  const [catalog, registry, routes, ssrf] = await Promise.all([
+    import('./agentRuntime/catalog.mjs'),
+    import('./agentRuntime/registry.mjs'),
+    import('./agentRuntime/localRoutes.mjs'),
+    import('./agentRuntime/ssrf.mjs'),
+  ]);
+  return { catalog, registry, routes, ssrf };
+}
+
 async function readStore() {
   await fs.ensureDir(DATA_DIR);
   if (!await fs.pathExists(STORE_PATH)) return emptyStore();
@@ -43,108 +53,55 @@ async function writeStore(store) {
   await fs.writeFile(STORE_PATH, JSON.stringify(store, null, 2), 'utf8');
 }
 
-function publicCatalog(catalog, { providerId = null, summariesOnly = false } = {}) {
-  return catalog.listCatalogProviders()
-    .filter((provider) => !providerId || provider.id === providerId)
-    .map((provider) => ({
-      id: provider.id,
-      displayName: provider.displayName,
-      label: provider.displayName,
-      recommended: !!provider.recommended,
-      auth: provider.auth,
-      authHint: provider.authHint || null,
-      protocol: provider.protocol,
-      defaultBaseUrl: provider.defaultBaseUrl,
-      keyDocs: provider.keyDocs || null,
-      group: provider.group,
-      configurable: catalog.isApiKeyAuth(provider.id),
-      defaultModels: provider.defaultModels,
-      modelCount: (provider.models || []).length,
-      catalog: summariesOnly
-        ? []
-        : (provider.models || []).map((model) => catalog.normalizeModelRecord(model)),
-    }));
-}
-
-function directoryFromStore(catalog, store) {
-  const creds = store.providers || {};
-  return catalog.listCatalogProviders().map((provider) => {
-    const saved = creds[provider.id] || null;
-    const models = (saved?.models?.length
-      ? saved.models
-      : (saved || provider.recommended) ? (provider.models || []) : [])
-      .map((model) => catalog.normalizeModelRecord(model, { provider: provider.id }));
-    return {
-      id: provider.id,
-      displayName: saved?.displayName || provider.displayName,
-      label: saved?.displayName || provider.displayName,
-      recommended: !!provider.recommended,
-      auth: provider.auth,
-      authHint: provider.authHint || null,
-      protocol: saved?.protocol || provider.protocol || 'openai-completions',
-      defaultBaseUrl: provider.defaultBaseUrl,
-      baseUrl: saved?.baseUrl || provider.defaultBaseUrl || '',
-      keyDocs: provider.keyDocs || null,
-      group: provider.group,
-      configurable: catalog.isApiKeyAuth(provider.id),
-      configured: Boolean(saved?.apiKey),
-      userConfigured: Boolean(saved?.apiKey),
-      custom: Boolean(saved?.custom),
-      hint: saved?.hint || '',
-      defaultModels: provider.defaultModels,
-      models,
-      modelCount: (provider.models || []).length,
-      catalog: Boolean(provider.models?.length),
-    };
-  });
-}
-
-function resolveProviderRequest(store, { provider, apiKey, baseUrl, model } = {}) {
-  const saved = (provider && store.providers?.[provider]) || null;
-  const key = String(apiKey || saved?.apiKey || '').trim();
-  if (!key) return null;
-  const resolvedProvider = provider || saved?.provider || (key.startsWith('sk-or-') ? 'openrouter' : 'openai');
+function routeFor({ registry, routes }, store, directory, kind) {
+  const settings = store.settings || {};
+  const vision = kind === 'silicon';
+  const configured = directory.filter((row) => row.configured && row.userConfigured);
+  const preferred = vision
+    ? (settings.silicon_provider || settings.default_provider || settings.assistant_provider)
+    : (settings.assistant_provider || settings.default_provider);
+  const provider = configured.find((row) => row.id === preferred) || configured[0] || null;
+  if (!provider) return null;
+  const saved = store.providers?.[provider.id];
+  const profile = saved ? routes.profileFromSaved(saved) : {};
+  const requested = provider.id === preferred
+    ? (vision ? settings.silicon_model : settings.assistant_model)
+    : '';
   return {
-    provider: resolvedProvider,
-    apiKey: key,
-    baseUrl: baseUrl || saved?.baseUrl || '',
-    protocol: saved?.protocol || 'openai-completions',
-    model: model || '',
-    headers: saved?.headers || {},
+    provider: provider.id,
+    model: registry.availableModelId(provider.id, requested, { profile, vision }),
+    reasoningEffort: (vision ? settings.silicon_reasoning_effort : settings.assistant_reasoning_effort) || null,
   };
 }
+
+const SAVED_PROVIDER_FIELDS = ['baseUrl', 'displayName', 'protocol', 'models', 'custom', 'retryPolicy', 'compat', 'defaultInput'];
 
 function registerAgentCredentialsApi(app) {
   app.get('/api/agent/credentials/status', async (_req, res) => {
     try {
-      const catalog = await loadCatalog();
+      const runtime = await loadRuntime();
+      const { catalog, registry, routes } = runtime;
       const store = await readStore();
-      const directory = directoryFromStore(catalog, store);
+      const directory = routes.localDirectory(store);
       const configured = directory.filter((row) => row.configured && row.userConfigured);
       const settings = store.settings || {};
-      const assistantProvider = settings.assistant_provider || configured[0]?.id || '';
-      const siliconProvider = settings.silicon_provider || configured[0]?.id || '';
-      const assistant = directory.find((row) => row.id === assistantProvider) || configured[0] || null;
-      const silicon = directory.find((row) => row.id === siliconProvider) || configured[0] || null;
+      const defaultRoute = routeFor(runtime, store, directory, 'assistant');
+      const siliconRoute = routeFor(runtime, store, directory, 'silicon');
       res.json({
         success: true,
         catalogVersion: catalog.CATALOG_VERSION,
-        catalog: publicCatalog(catalog, { summariesOnly: true }),
+        catalog: registry.publicCatalog({ summariesOnly: true }),
         directory,
         configuredProviders: configured.map((row) => row.id),
         assistantConfigured: configured.length > 0,
         openai: { configured: configured.some((row) => row.id === 'openai') },
-        defaultRoute: assistant ? {
-          provider: assistant.id,
-          model: settings.assistant_model || assistant.defaultModels?.assistant || assistant.models[0]?.id || '',
-          reasoningEffort: settings.assistant_reasoning_effort || null,
-        } : null,
-        siliconRoute: silicon ? {
-          provider: silicon.id,
-          model: settings.silicon_model || silicon.defaultModels?.silicon || silicon.models[0]?.id || '',
-          reasoningEffort: settings.silicon_reasoning_effort || null,
-        } : null,
-        settings,
+        defaultRoute,
+        siliconRoute,
+        settings: {
+          ...settings,
+          ...(defaultRoute ? { assistant_model: defaultRoute.model } : {}),
+          ...(siliconRoute ? { silicon_model: siliconRoute.model } : {}),
+        },
       });
     } catch (error) {
       res.status(500).json({ success: false, error: error.message });
@@ -158,7 +115,7 @@ function registerAgentCredentialsApi(app) {
         success: true,
         catalogVersion: catalog.CATALOG_VERSION,
         protocols: catalog.PROTOCOLS,
-        providers: publicCatalog(catalog, {
+        providers: (await import('./agentRuntime/registry.mjs')).publicCatalog({
           providerId: req.query.provider || null,
           summariesOnly: !req.query.provider,
         }),
@@ -181,18 +138,39 @@ function registerAgentCredentialsApi(app) {
       if (!apiKey && catalog.isApiKeyAuth(provider)) {
         return res.status(400).json({ success: false, error: 'API key is required' });
       }
-      store.providers[provider] = {
-        provider,
-        apiKey,
-        hint: hintFor(apiKey),
-        baseUrl: req.body?.baseUrl || previous.baseUrl || '',
-        displayName: req.body?.displayName || previous.displayName || '',
-        protocol: req.body?.protocol || previous.protocol || 'openai-completions',
-        models: Array.isArray(req.body?.models) ? req.body.models : (previous.models || []),
-        custom: Boolean(req.body?.custom),
-        retryPolicy: req.body?.retryPolicy || previous.retryPolicy || null,
-        updatedAt: new Date().toISOString(),
-      };
+      const { authUnsupported } = catalog;
+      const unsupported = authUnsupported(provider);
+      if (unsupported) {
+        return res.status(400).json({ success: false, error: unsupported.message, code: unsupported.code });
+      }
+      const installed = Boolean(catalog.catalogProvider(provider));
+      const custom = !installed;
+      if (custom && !String(req.body?.baseUrl || previous.baseUrl || '').trim()) {
+        return res.status(400).json({ success: false, error: 'A custom provider needs a base URL.', code: 'BASE_URL_REQUIRED' });
+      }
+      if (req.body?.baseUrl) {
+        const { assertSafeBaseUrl } = await import('./agentRuntime/ssrf.mjs');
+        try {
+          assertSafeBaseUrl(req.body.baseUrl);
+        } catch (error) {
+          return res.status(400).json({ success: false, error: error.message, code: error.code });
+        }
+      }
+      const next = { ...previous, provider, apiKey, hint: hintFor(apiKey), custom };
+      SAVED_PROVIDER_FIELDS.forEach((field) => {
+        if (field === 'custom' || req.body?.[field] === undefined) return;
+        next[field] = req.body[field];
+      });
+      if (installed) {
+        delete next.protocol;
+        delete next.models;
+        delete next.displayName;
+      } else {
+        next.protocol = next.protocol || 'openai-completions';
+        next.models = Array.isArray(next.models) ? next.models : [];
+      }
+      next.updatedAt = new Date().toISOString();
+      store.providers[provider] = next;
       if (!store.settings.assistant_provider) store.settings.assistant_provider = provider;
       if (!store.settings.silicon_provider) store.settings.silicon_provider = provider;
       await writeStore(store);
@@ -220,9 +198,12 @@ function registerAgentCredentialsApi(app) {
     const store = await readStore();
     const provider = String(req.body?.provider || '').trim();
     if (!provider) return res.status(400).json({ success: false, error: 'provider is required' });
+    const patch = Object.fromEntries(SAVED_PROVIDER_FIELDS
+      .filter((field) => req.body?.[field] !== undefined)
+      .map((field) => [field, req.body[field]]));
     store.providers[provider] = {
       ...(store.providers[provider] || {}),
-      ...req.body,
+      ...patch,
       provider,
       updatedAt: new Date().toISOString(),
     };
@@ -232,12 +213,14 @@ function registerAgentCredentialsApi(app) {
 
   app.get('/api/agent/credentials/models', async (req, res) => {
     try {
-      const catalog = await loadCatalog();
+      const { registry, routes } = await loadRuntime();
       const providerId = String(req.query.provider || '');
-      const provider = catalog.catalogProvider(providerId);
+      const store = await readStore();
+      const saved = store.providers?.[providerId];
       res.json({
         success: true,
-        models: (provider?.models || []).map((model) => catalog.normalizeModelRecord(model, { provider: providerId })),
+        source: 'catalog',
+        models: registry.resolveModels(providerId, saved ? routes.profileFromSaved(saved) : {}),
       });
     } catch (error) {
       res.status(500).json({ success: false, error: error.message });
@@ -246,41 +229,59 @@ function registerAgentCredentialsApi(app) {
 
   app.post('/api/agent/credentials/models', async (req, res) => {
     try {
-      const catalog = await loadCatalog();
+      const { catalog, registry, ssrf } = await loadRuntime();
       const providerId = String(req.body?.provider || '');
-      const provider = catalog.catalogProvider(providerId);
-      const baseUrl = req.body?.baseUrl || provider?.defaultBaseUrl;
-      const apiKey = String(req.body?.apiKey || '').trim();
-      if (!apiKey || !baseUrl) {
+      if (catalog.catalogProvider(providerId)) {
         return res.json({
           success: true,
-          models: (provider?.models || []).map((model) => catalog.normalizeModelRecord(model, { provider: providerId })),
+          fetched: false,
+          source: 'catalog',
+          models: registry.resolveModels(providerId),
         });
       }
-      const url = new URL(baseUrl.replace(/\/$/, ''));
-      if (!url.pathname.endsWith('/models')) url.pathname = `${url.pathname.replace(/\/$/, '')}/models`;
-      const response = await fetch(url.toString(), {
+      const protocol = req.body?.protocol || 'openai-completions';
+      if (protocol !== 'openai-completions' && protocol !== 'openai-responses') {
+        return res.json({ success: false, code: 'DISCOVERY_UNSUPPORTED', error: 'This protocol does not support model discovery.' });
+      }
+      const store = await readStore();
+      const saved = store.providers?.[providerId] || {};
+      const apiKey = String(req.body?.apiKey || saved.apiKey || '').trim();
+      let endpoint;
+      try {
+        endpoint = ssrf.assertSafeBaseUrl(req.body?.baseUrl || saved.baseUrl);
+      } catch (error) {
+        return res.status(400).json({ success: false, code: error.code, error: error.message });
+      }
+      const response = await fetch(`${endpoint}/models`, {
         headers: {
-          Authorization: `Bearer ${apiKey}`,
+          ...(apiKey ? { Authorization: `Bearer ${apiKey}` } : {}),
           ...catalog.extraHeaders(providerId),
         },
+        redirect: 'manual',
       });
+      ssrf.assertProviderResponseNotRedirect(response);
       if (!response.ok) {
-        return res.status(response.status).json({
+        return res.json({
           success: false,
-          code: response.status === 401 ? 'MISSING_CREDENTIAL' : 'DISCOVERY_UNSUPPORTED',
-          error: `Provider returned ${response.status}`,
+          code: response.status === 401 ? 'MISSING_CREDENTIAL' : 'DISCOVERY_FAILED',
+          error: `Discovery failed (${response.status}).`,
         });
       }
-      const body = await response.json();
-      const models = (body.data || body.models || []).map((model) => catalog.normalizeModelRecord({
-        id: model.id,
-        name: model.name || model.id,
-        input: model.architecture?.input_modalities || ['text'],
+      const body = await response.json().catch(() => null);
+      const rows = body?.data || body?.models;
+      if (!Array.isArray(rows)) {
+        return res.json({ success: false, code: 'MALFORMED_JSON', error: 'Provider returned malformed JSON.' });
+      }
+      const models = rows.filter((row) => row?.id).map((row) => catalog.normalizeModelRecord({
+        id: row.id,
+        name: row.name || row.display_name || row.id,
+        contextWindow: row.context_window || row.context_length,
+        maxTokens: row.max_output_tokens || row.max_tokens,
+        input: row.architecture?.input_modalities?.includes('image') ? ['text', 'image'] : ['text'],
       }, { provider: providerId }));
-      res.json({ success: true, models });
+      res.json({ success: true, fetched: true, models, empty: models.length === 0 });
     } catch (error) {
-      res.status(400).json({ success: false, code: 'MALFORMED_JSON', error: error.message });
+      res.status(400).json({ success: false, code: error.code || 'DISCOVERY_FAILED', error: error.message });
     }
   });
 }
@@ -288,6 +289,6 @@ function registerAgentCredentialsApi(app) {
 module.exports = {
   registerAgentCredentialsApi,
   readStore,
-  resolveProviderRequest,
   hintFor,
+  STORE_PATH,
 };

@@ -1,6 +1,7 @@
 const path = require('path');
 const crypto = require('crypto');
-const { resolveAiRequest, aiChat, formatAiError } = require('../../aiClient');
+const { resolveAiRequest, resolveRoute, aiChat, formatAiError } = require('../../aiClient');
+const { readStore: readCredentialStore } = require('./agentCredentialsApi');
 const {
   assignMediaForSurvey,
   diagnoseMissingMedia,
@@ -320,8 +321,12 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
   };
 
   const answerUnit = async (run, persona, question, project, unit) => {
-    const resolved = resolveAiRequest(runApiKeys.get(run.id) || run.apiKey);
-    if (!resolved) throw new Error('API key is required. Add your OpenAI or OpenRouter key in Assistant settings.');
+    const resolved = resolveAiRequest(runApiKeys.get(run.id) || run.apiKey || '', {
+      provider: run.provider,
+      model: run.model,
+      vision: true,
+    });
+    if (!resolved) throw new Error('API key is required. Add a provider key in Assistant settings.');
     const urls = assignUnitMedia(run, question, project, unit);
     if (questionNeedsShownMedia(question) && !urls.length) {
       const diagnosed = diagnoseMissingMedia(question, runMediaPool(run, project));
@@ -337,6 +342,7 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
     ];
     const completion = await aiChat(resolved, 'fast', {
       model: run.model,
+      reasoningEffort: run.reasoning_effort || undefined,
       temperature: 0.4,
       messages: [
         { role: 'system', content: 'You are a silicon pretest respondent. Answer only as JSON.' },
@@ -639,11 +645,16 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
       if (!projectId || !personaIds.length) {
         return res.status(400).json({ success: false, error: 'projectId and personaIds are required' });
       }
-      if (!apiKey) {
-        return res.status(400).json({
-          success: false,
-          error: 'API key is required. Add your OpenAI or OpenRouter key in Assistant settings.',
-        });
+      let siliconRoute;
+      try {
+        siliconRoute = await resolveRoute(resolveAiRequest(apiKey, {
+          provider: String(req.body?.provider || ''),
+          model: String(req.body?.model || ''),
+          vision: true,
+          store: await readCredentialStore(),
+        }));
+      } catch (error) {
+        return res.status(400).json({ success: false, error: formatAiError(error), code: error.code });
       }
       const project = await io.readProject(projectId);
       const requestedNames = Array.isArray(req.body.questionNames)
@@ -737,8 +748,8 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
           persona_snapshot: selected,
           repeats,
           seed: Number.isFinite(Number(req.body.seed)) ? Number(req.body.seed) : 42,
-          provider: req.body.provider || (apiKey.startsWith('sk-or-') ? 'openrouter' : 'openai'),
-          model: req.body.model || '',
+          provider: siliconRoute.provider,
+          model: siliconRoute.model,
           reasoning_effort: req.body.reasoningEffort || req.body.reasoning_effort || null,
           budget_tokens: Number(req.body.budgetTokens || 25000),
           tokens_used: 0,
@@ -768,7 +779,7 @@ function registerSiliconLocalApi(app, { fs, projectsPath, createProjectIo }) {
         store.units[created.id] = units;
         store.responses[created.id] = [];
         store.events[created.id] = [];
-        runApiKeys.set(created.id, apiKey);
+        if (apiKey) runApiKeys.set(created.id, apiKey);
         return created;
       });
       startRun(projectId, run.id);
