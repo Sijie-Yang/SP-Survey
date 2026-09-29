@@ -2,12 +2,14 @@ import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'r
 import { getConversationHistory } from '../lib/conversationHistory';
 import { getWorkingMemory } from '../lib/workingMemory';
 import { getSessionLearning } from '../lib/sessionLearning';
-import { sendChatMessage, validateChatApiKey, triggerMultiAgentReviewStream } from '../lib/chatApi';
+import { sendChatMessage, validateChatApiKey } from '../lib/chatApi';
 import { postProcessAiConfig } from '../lib/designProtocol';
 import { runSurveyQualityChecks } from '../lib/surveyQualityChecks';
 import {
   answerAiRunApproval,
+  applyAgentReview,
   archiveAiSession,
+  estimateAgentReview,
   cancelAiRun,
   discardAiInbox,
   listAiInbox,
@@ -42,6 +44,7 @@ import {
 } from './surveyAssistantUtils';
 import { classifyUserIntent, initialLoadingStatus, shouldPrepareWrite } from './taskIntent';
 import { RegionContext } from '../contexts/RegionContext';
+import { DEFAULT_REVIEW_OPTIONS, normalizeClientReviewOptions, reviewDefaultMessage } from '../lib/reviewMode';
 
 function loadProjectFlag(projectId, key, fallback) {
   if (!projectId || typeof window === 'undefined') return fallback;
@@ -55,16 +58,19 @@ function loadProjectString(projectId, key, fallback) {
   return window.localStorage.getItem(`${key}_${projectId}`) || fallback;
 }
 
-function loadProjectNumber(projectId, key, fallback) {
-  if (!projectId || typeof window === 'undefined') return fallback;
-  const stored = window.localStorage.getItem(`${key}_${projectId}`);
-  return stored ? parseInt(stored, 10) : fallback;
-}
-
-const ASSISTANT_MODES = new Set(['agent', 'generate', 'adjust', 'question']);
+const ASSISTANT_MODES = new Set(['agent', 'generate', 'adjust', 'question', 'review']);
 
 function normalizeAssistantMode(value) {
   return ASSISTANT_MODES.has(value) ? value : 'agent';
+}
+
+function loadReviewOptions(projectId) {
+  if (!projectId || typeof window === 'undefined') return { ...DEFAULT_REVIEW_OPTIONS };
+  try {
+    return normalizeClientReviewOptions(JSON.parse(window.localStorage.getItem(`reviewOptions_${projectId}`) || 'null'));
+  } catch {
+    return { ...DEFAULT_REVIEW_OPTIONS };
+  }
 }
 
 export default function useSurveyAssistant({
@@ -114,12 +120,10 @@ export default function useSurveyAssistant({
   const [conversationMessages, setConversationMessages] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
   const [contextEnabled, setContextEnabled] = useState(() => loadProjectFlag(projectId, 'contextEnabled', true));
-  const [multiAgentReviewEnabled, setMultiAgentReviewEnabled] = useState(() => (
-    loadProjectFlag(projectId, 'multiAgentReviewEnabled', false)
-  ));
-  const [reviewMode, setReviewMode] = useState(() => loadProjectString(projectId, 'reviewMode', '1v1'));
-  const [maxReviewRounds, setMaxReviewRounds] = useState(() => loadProjectNumber(projectId, 'maxReviewRounds', 3));
   const [customPrompts, setCustomPrompts] = useState(null);
+  const [reviewOptions, setReviewOptionsState] = useState(() => loadReviewOptions(projectId));
+  const [reviewEstimate, setReviewEstimate] = useState(null);
+  const [reviewApplying, setReviewApplying] = useState('');
 
   const conversationHistoryRef = useRef(null);
   const workingMemoryRef = useRef(null);
@@ -389,10 +393,8 @@ export default function useSurveyAssistant({
     if (!enabled || !projectId) return undefined;
     isLoadingProjectSettings.current = true;
     setContextEnabled(loadProjectFlag(projectId, 'contextEnabled', true));
-    setMultiAgentReviewEnabled(loadProjectFlag(projectId, 'multiAgentReviewEnabled', false));
-    setReviewMode(loadProjectString(projectId, 'reviewMode', '1v1'));
-    setMaxReviewRounds(loadProjectNumber(projectId, 'maxReviewRounds', 3));
     setAssistantMode(normalizeAssistantMode(loadProjectString(projectId, 'assistantMode', 'agent')));
+    setReviewOptionsState(loadReviewOptions(projectId));
     const timer = setTimeout(() => {
       isLoadingProjectSettings.current = false;
     }, 100);
@@ -404,20 +406,8 @@ export default function useSurveyAssistant({
     window.localStorage.setItem(`contextEnabled_${projectId}`, contextEnabled.toString());
   }, [enabled, contextEnabled, projectId]);
 
-  useEffect(() => {
-    if (!enabled || !projectId || isLoadingProjectSettings.current) return;
-    window.localStorage.setItem(`multiAgentReviewEnabled_${projectId}`, multiAgentReviewEnabled.toString());
-  }, [enabled, multiAgentReviewEnabled, projectId]);
 
-  useEffect(() => {
-    if (!enabled || !projectId || isLoadingProjectSettings.current) return;
-    window.localStorage.setItem(`reviewMode_${projectId}`, reviewMode);
-  }, [enabled, reviewMode, projectId]);
 
-  useEffect(() => {
-    if (!enabled || !projectId || isLoadingProjectSettings.current) return;
-    window.localStorage.setItem(`maxReviewRounds_${projectId}`, maxReviewRounds.toString());
-  }, [enabled, maxReviewRounds, projectId]);
 
   useEffect(() => {
     if (!enabled || !projectId || isLoadingProjectSettings.current) return;
@@ -506,6 +496,41 @@ export default function useSurveyAssistant({
     );
     if (provider && model) persistAssistantDefault(provider, model, effort);
   }, [persistAssistantDefault, selectedRoute]);
+
+  const setReviewOptions = useCallback((patch) => {
+    setReviewOptionsState((current) => {
+      const next = normalizeClientReviewOptions({
+        ...current,
+        ...(typeof patch === 'function' ? patch(current) : patch),
+      });
+      if (typeof window !== 'undefined' && projectIdRef.current) {
+        window.localStorage.setItem(`reviewOptions_${projectIdRef.current}`, JSON.stringify(next));
+      }
+      return next;
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!enabled || !harnessMode || assistantMode !== 'review' || !projectId) {
+      setReviewEstimate(null);
+      return undefined;
+    }
+    const { provider, model } = parseRoute(selectedRoute);
+    let cancelled = false;
+    const timer = setTimeout(async () => {
+      const estimate = await estimateAgentReview({
+        projectId,
+        provider,
+        model,
+        review: reviewOptions,
+      }).catch(() => null);
+      if (!cancelled) setReviewEstimate(estimate?.success ? estimate : null);
+    }, 300);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [assistantMode, currentProject?.draftUpdatedAt, enabled, harnessMode, projectId, reviewOptions, selectedRoute]);
 
   const refreshConversation = useCallback(() => {
     if (conversationHistoryRef.current) {
@@ -649,9 +674,11 @@ export default function useSurveyAssistant({
   }, []);
 
   const handleSendMessage = useCallback(async (override = {}) => {
-    const outgoing = String(override.message != null ? override.message : userMessage).trim();
     const sendMode = override.assistantMode || assistantMode;
+    const typed = String(override.message != null ? override.message : userMessage).trim();
+    const outgoing = typed || (sendMode === 'review' ? reviewDefaultMessage(language) : '');
     if (!outgoing) return;
+    const reviewWrites = sendMode === 'review' && reviewOptions.applyMode === 'apply';
     const request = {
       projectId: projectIdRef.current,
       generation: generationRef.current,
@@ -681,9 +708,10 @@ export default function useSurveyAssistant({
 
     const intent = classifyUserIntent(outgoing, sendMode);
     const editorDirty = Boolean(hasUnsavedChanges || editorSelection?.dirty || editorSelection?.pageDirty);
+    const prepareWrite = reviewWrites || shouldPrepareWrite({ assistantMode: sendMode, message: outgoing });
     if (
       editorDirty
-      && shouldPrepareWrite({ assistantMode: sendMode, message: outgoing })
+      && prepareWrite
       && !(override.skipConflict && override.workingCopyCommitted)
     ) {
       setWriteConflict({ message: outgoing, assistantMode: sendMode });
@@ -691,7 +719,7 @@ export default function useSurveyAssistant({
     }
 
     if (
-      shouldPrepareWrite({ assistantMode: sendMode, message: outgoing })
+      prepareWrite
       && typeof onPrepareWrite === 'function'
       && !override.workingCopyCommitted
     ) {
@@ -715,7 +743,7 @@ export default function useSurveyAssistant({
     refreshConversation();
 
     const currentUserMessage = outgoing;
-    if (intent.write) {
+    if (intent.write || reviewWrites) {
       const undo = {
         runId: null,
         before: JSON.parse(JSON.stringify(lastSavedConfig || surveyConfigRef.current || {})),
@@ -767,8 +795,6 @@ export default function useSurveyAssistant({
         surveyConfigRef.current,
         enrichedHistory,
         openaiApiKey,
-        platformMode ? false : multiAgentReviewEnabled,
-        reviewMode,
         customPrompts,
         researchContext,
         {
@@ -778,6 +804,8 @@ export default function useSurveyAssistant({
           model: routeModel || null,
           reasoningEffort: selectedEffort || null,
           assistantMode: sendMode,
+          review: sendMode === 'review' ? reviewOptions : null,
+          language,
           editorContext: {
             ...(editorSelection || {}),
             hasUnsavedChanges: Boolean(hasUnsavedChanges || editorSelection?.dirty),
@@ -802,7 +830,7 @@ export default function useSurveyAssistant({
             if (snapshot?.currentRunId) setActiveRunId(snapshot.currentRunId);
             setLoadingStatus(loadingStatusFromEvents(snapshot?.events || [], {
               runId: snapshot?.currentRunId || activeRunId,
-              readOnly: !intent.write,
+              readOnly: !intent.write && !reviewWrites,
             }));
             if (
               Array.isArray(snapshot?.messages)
@@ -906,18 +934,6 @@ export default function useSurveyAssistant({
           });
         }
 
-        if (!restoredServerTranscript && result.multiAgentReview?.conversationMessages) {
-          result.multiAgentReview.conversationMessages.forEach((msg) => {
-            if (conversationHistoryRef.current && msg.content) {
-              conversationHistoryRef.current.addMessage(msg.role || 'assistant', msg.content, {
-                ...(msg.metadata || {}),
-                timestamp: msg.timestamp || new Date().toISOString(),
-                isMultiAgent: true,
-              });
-            }
-          });
-        }
-
         if (!restoredServerTranscript) refreshConversation();
 
         if (result.researchContext && request.projectId) {
@@ -1006,145 +1022,6 @@ export default function useSurveyAssistant({
             );
           }
 
-          if (!platformMode && multiAgentReviewEnabled && (result.intent === 'generate' || result.intent === 'adjust')) {
-            setLoadingStatus('Starting Multi-Agent Review...');
-            try {
-              const customAgents = request.projectId && window.localStorage.getItem(`customAgents_${request.projectId}`)
-                ? JSON.parse(window.localStorage.getItem(`customAgents_${request.projectId}`))
-                : null;
-              const reviewResearchContext = request.projectId
-                ? JSON.parse(window.localStorage.getItem(`researchContext_${request.projectId}`) || '{}')
-                : {};
-
-              await triggerMultiAgentReviewStream(
-                processedConfig,
-                openaiApiKey,
-                reviewMode,
-                maxReviewRounds,
-                (eventType, data) => {
-                  if (!stillCurrent() || !conversationHistoryRef.current) return;
-                  switch (eventType) {
-                    case 'start':
-                      conversationHistoryRef.current.addMessage('system',
-                        `\n🔄 **Multi-Agent Review Started**\n\nMode: ${data.mode}\nExperts: ${data.totalAgents}\nMax Rounds: ${data.maxRounds}\n`,
-                        { type: 'review-start', isMultiAgent: true },
-                      );
-                      break;
-                    case 'round-start':
-                      conversationHistoryRef.current.addMessage('system',
-                        `\n📋 **Review Round ${data.round}**\n`,
-                        { type: 'round-header', isMultiAgent: true, round: data.round },
-                      );
-                      setLoadingStatus(`Review Round ${data.round}...`);
-                      break;
-                    case 'agent-start':
-                      setLoadingStatus(`${data.emoji} ${data.name} reviewing...`);
-                      break;
-                    case 'agent-review':
-                      conversationHistoryRef.current.addMessage('assistant', data.formatted, {
-                        type: 'agent-review',
-                        isMultiAgent: true,
-                        agentId: data.agentId,
-                        round: data.round,
-                      });
-                      refreshConversation();
-                      break;
-                    case 'round-summary':
-                      conversationHistoryRef.current.addMessage('assistant', data.formatted, {
-                        type: 'round-summary',
-                        isMultiAgent: true,
-                        round: data.round,
-                      });
-                      refreshConversation();
-                      break;
-                    case 'revision-start':
-                      conversationHistoryRef.current.addMessage('system',
-                        `\n🔧 **Survey Designer**: Addressing feedback and revising survey...\n`,
-                        { type: 'revision-start', isMultiAgent: true, round: data.round },
-                      );
-                      refreshConversation();
-                      setLoadingStatus('Revising survey...');
-                      break;
-                    case 'revision-thinking': {
-                      const stepTitle = data.step === 1 ? 'Understanding Expert Feedback'
-                        : data.step === 2 ? 'Planning Changes' : 'Executing Revision';
-                      conversationHistoryRef.current.addMessage('assistant',
-                        `**${'🧠📐🔨'[data.step - 1]} Revision Step ${data.step}: ${stepTitle}**\n\n${data.content}`,
-                        { type: 'revision-thinking', step: data.step, isMultiAgent: true },
-                      );
-                      refreshConversation();
-                      break;
-                    }
-                    case 'revision-complete':
-                      if (data.chainOfThoughts) {
-                        if (data.chainOfThoughts.step1_understanding) {
-                          conversationHistoryRef.current.addMessage('assistant',
-                            `**🧠 Revision Step 1: Understanding Expert Feedback**\n\n${data.chainOfThoughts.step1_understanding}`,
-                            { type: 'revision-cot', step: 1, isMultiAgent: true },
-                          );
-                        }
-                        if (data.chainOfThoughts.step2_planning) {
-                          conversationHistoryRef.current.addMessage('assistant',
-                            `**📐 Revision Step 2: Planning Changes**\n\n${data.chainOfThoughts.step2_planning}`,
-                            { type: 'revision-cot', step: 2, isMultiAgent: true },
-                          );
-                        }
-                        if (data.chainOfThoughts.step3_execution) {
-                          conversationHistoryRef.current.addMessage('assistant',
-                            `**🔨 Revision Step 3: Executing Revision**\n\n${data.chainOfThoughts.step3_execution}`,
-                            { type: 'revision-cot', step: 3, isMultiAgent: true },
-                          );
-                        }
-                      }
-                      conversationHistoryRef.current.addMessage('assistant',
-                        '🔧 **Survey Designer**: Survey revised based on expert feedback. Ready for next review round.',
-                        { type: 'revision-complete', isMultiAgent: true, round: data.round },
-                      );
-                      refreshConversation();
-                      if (data.surveyConfig) {
-                        applySurveyConfig(postProcessAiConfig(data.surveyConfig), request);
-                      }
-                      break;
-                    case 'complete':
-                      conversationHistoryRef.current.addMessage('system',
-                        `\n🎯 **Review Complete**\n\n${data.reason}\n\nFinal Rating: ${data.finalRating}/10\nFinal Verdict: ${data.finalVerdict?.toUpperCase()}\n`,
-                        { type: 'review-complete', isMultiAgent: true },
-                      );
-                      refreshConversation();
-                      if (data.surveyConfig) {
-                        applySurveyConfig(postProcessAiConfig(data.surveyConfig), request);
-                      }
-                      break;
-                    case 'error':
-                    case 'agent-error':
-                    case 'revision-error':
-                      conversationHistoryRef.current.addMessage('system',
-                        `❌ Error: ${data.error || data.message}`,
-                        { type: 'error', isMultiAgent: true },
-                      );
-                      refreshConversation();
-                      break;
-                    default:
-                      break;
-                  }
-                },
-                customAgents,
-                currentUserMessage,
-                reviewResearchContext,
-                request.projectId,
-              );
-            } catch (error) {
-              if (stillCurrent()) {
-                conversationHistoryRef.current?.addMessage('system',
-                  `❌ Multi-Agent Review failed: ${error.message}`,
-                  { type: 'error', isMultiAgent: true },
-                );
-                refreshConversation();
-              }
-            } finally {
-              if (stillCurrent()) setLoadingStatus('');
-            }
-          }
         }
       } else if (stillCurrent()) {
         conversationHistoryRef.current?.addMessage('assistant',
@@ -1186,23 +1063,89 @@ export default function useSurveyAssistant({
     contextEnabled,
     currentProject?.category,
     customPrompts,
-    maxReviewRounds,
-    multiAgentReviewEnabled,
     openaiApiKey,
     platformMode,
     harnessMode,
     refreshConversation,
-    reviewMode,
     selectedEffort,
     selectedRoute,
     currentProject,
     editorSelection,
     handleAssistantModeChange,
     hasUnsavedChanges,
+    language,
     lastSavedConfig,
     onPrepareWrite,
+    reviewOptions,
     userMessage,
   ]);
+
+  const handleApplyReview = useCallback(async (runId, rounds = []) => {
+    if (!runId || reviewApplying) return;
+    const request = { projectId: projectIdRef.current, generation: generationRef.current };
+    const storage = typeof window !== 'undefined' ? window.sessionStorage : null;
+    if (hasUnsavedChanges && typeof onPrepareWrite === 'function') {
+      const prepared = await onPrepareWrite();
+      if (prepared && prepared.ok === false) {
+        conversationHistoryRef.current?.addMessage('assistant',
+          prepared.message || '⚠️ Save or reconcile the editor draft before applying review revisions.',
+          { actionType: 'system', error: true },
+        );
+        refreshConversation();
+        return;
+      }
+    }
+    setReviewApplying(`${runId}:${rounds.join(',') || 'all'}`);
+    const before = JSON.parse(JSON.stringify(surveyConfigRef.current || lastSavedConfig || {}));
+    try {
+      const result = await applyAgentReview(runId, rounds);
+      if (isStaleAssistantRequest(request, { projectId: projectIdRef.current, generation: generationRef.current })) return;
+      if (Array.isArray(result?.messages) && result.messages.length) {
+        const restored = conversationHistoryRef.current?.replaceMessages
+          ? conversationHistoryRef.current.replaceMessages(result.messages)
+          : result.messages;
+        setConversationMessages(restored);
+      }
+      if (!result?.success) {
+        const conflict = result?.status === 409 && result?.code === 'DRAFT_WRITE_CONFLICT';
+        conversationHistoryRef.current?.addMessage('assistant',
+          conflict
+            ? (language === 'zh'
+              ? '⚠️ 评审后草稿已被修改，未应用修订。请重新运行评审。'
+              : '⚠️ The draft changed after this review, so the revision was not applied. Run the review again.')
+            : `⚠️ ${result?.error || 'Applying the review revision failed.'}`,
+          { actionType: 'system', error: true },
+        );
+        refreshConversation();
+        return;
+      }
+      const afterConfig = result.surveyConfig
+        || await loadSurveyConfigForProject(request.projectId).catch(() => null);
+      if (!afterConfig) return;
+      const processed = postProcessAiConfig(afterConfig);
+      const undo = {
+        runId,
+        before,
+        afterSignature: JSON.stringify(processed),
+        persisted: true,
+        draftUpdatedAt: result.draftUpdatedAt || null,
+      };
+      aiUndoSnapshotRef.current = undo;
+      setAiUndoAvailable(true);
+      writeUndoSnapshot(storage, request.projectId, undo);
+      setRunDiffs((current) => ({ ...current, [runId]: summarizeDraftDiff(before, processed) }));
+      applySurveyConfig(processed, request, {
+        persisted: true,
+        draftUpdatedAt: result.draftUpdatedAt,
+        source: 'assistant',
+      });
+      window.dispatchEvent(new CustomEvent('sp-agent-run-complete', {
+        detail: { projectId: request.projectId, sessionId: aiSessionId, runId },
+      }));
+    } finally {
+      setReviewApplying('');
+    }
+  }, [aiSessionId, applySurveyConfig, hasUnsavedChanges, language, lastSavedConfig, onPrepareWrite, refreshConversation, reviewApplying]);
 
   const handleResolveWriteConflict = useCallback(async (action) => {
     const pending = writeConflict;
@@ -1328,11 +1271,13 @@ export default function useSurveyAssistant({
     effortOptions: assistantEffortOptions,
     routeUnavailable,
     blockReason,
-    canSend: !blockReason && Boolean(userMessage.trim()) && !isLoading,
+    canSend: !blockReason && (Boolean(userMessage.trim()) || assistantMode === 'review') && !isLoading,
+    reviewOptions,
+    reviewEstimate,
+    reviewApplying,
+    setReviewOptions,
+    handleApplyReview,
     contextEnabled,
-    multiAgentReviewEnabled,
-    reviewMode,
-    maxReviewRounds,
     recommendations,
     conversationHistoryRef,
     workingMemoryRef,
@@ -1346,9 +1291,6 @@ export default function useSurveyAssistant({
     setUserMessage,
     setOpenaiApiKey,
     setContextEnabled,
-    setMultiAgentReviewEnabled,
-    setReviewMode,
-    setMaxReviewRounds,
     setCustomPrompts,
     setAssistantMode,
     handleAssistantModeChange,
@@ -1384,9 +1326,6 @@ export function chatPropsFromAssistant(assistant) {
     credentialHint: assistant.credentialHint,
     isPlatformMode: assistant.isPlatformMode,
     contextEnabled: assistant.contextEnabled,
-    multiAgentReviewEnabled: assistant.multiAgentReviewEnabled,
-    reviewMode: assistant.reviewMode,
-    maxReviewRounds: assistant.maxReviewRounds,
     recommendations: assistant.recommendations,
     currentProject: assistant.currentProject,
     conversationHistoryRef: assistant.conversationHistoryRef,
@@ -1403,9 +1342,6 @@ export function chatPropsFromAssistant(assistant) {
     onApiKeyChange: assistant.setOpenaiApiKey,
     onValidateApiKey: assistant.handleValidateApiKey,
     onContextToggle: assistant.setContextEnabled,
-    onMultiAgentReviewToggle: assistant.setMultiAgentReviewEnabled,
-    onReviewModeChange: assistant.setReviewMode,
-    onMaxReviewRoundsChange: assistant.setMaxReviewRounds,
     onClearHistory: assistant.handleClearHistory,
     onDownloadHistory: assistant.handleDownloadHistory,
     onPromptsChange: assistant.setCustomPrompts,
@@ -1430,5 +1366,10 @@ export function chatPropsFromAssistant(assistant) {
     onClearEditorFocus: assistant.onClearEditorFocus,
     routeUnavailable: assistant.routeUnavailable,
     blockReason: assistant.blockReason,
+    reviewOptions: assistant.reviewOptions,
+    reviewEstimate: assistant.reviewEstimate,
+    reviewApplying: assistant.reviewApplying,
+    onReviewOptionsChange: assistant.setReviewOptions,
+    onApplyReview: assistant.handleApplyReview,
   };
 }

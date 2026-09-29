@@ -131,8 +131,6 @@ export async function sendAgentChat({
   conversationHistory,
   researchContext,
   customPrompts,
-  enableMultiAgentReview = false,
-  reviewMode = '1v1',
   projectId,
   sessionId,
   provider,
@@ -142,6 +140,8 @@ export async function sendAgentChat({
   onStarted,
   onSnapshot,
   editorContext = null,
+  review = null,
+  language = null,
   apiKey = '',
 }) {
   const { key } = localKeyHint();
@@ -153,8 +153,6 @@ export async function sendAgentChat({
       conversationHistory,
       researchContext,
       customPrompts,
-      enableMultiAgentReview,
-      reviewMode,
       projectId,
       sessionId,
       provider,
@@ -162,6 +160,8 @@ export async function sendAgentChat({
       reasoningEffort,
       assistantMode,
       editorContext,
+      ...(review ? { review } : {}),
+      ...(language ? { language } : {}),
       apiKey: apiKey || key,
     }),
   });
@@ -170,6 +170,20 @@ export async function sendAgentChat({
   }
   onStarted?.(started);
   return waitForAgentRun(started.sessionId, started.runId, { started, onSnapshot });
+}
+
+export async function estimateAgentReview({ projectId, provider, model, review }) {
+  return agentFetch('/api/agent/review/estimate', {
+    method: 'POST',
+    body: JSON.stringify({ projectId, provider, model, review }),
+  });
+}
+
+export async function applyAgentReview(runId, rounds = []) {
+  return agentFetch(`/api/agent/runs/${encodeURIComponent(runId)}/review/apply`, {
+    method: 'POST',
+    body: JSON.stringify({ rounds }),
+  });
 }
 
 export async function listAiSessions(projectId) {

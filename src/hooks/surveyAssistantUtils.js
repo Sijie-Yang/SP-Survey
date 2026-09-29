@@ -1,3 +1,5 @@
+import { activeReviewStep } from '../lib/reviewMode';
+
 export const AI_SESSION_PREFIX = 'ai_session_';
 export const AI_UNDO_PREFIX = 'ai_undo_';
 export const AI_ROUTE_PREFIX = 'ai_route_';
@@ -247,6 +249,12 @@ export function loadingStatusFromEvents(events = [], { runId, readOnly = false }
     && candidate.payload.id === event.payload?.id
   )));
   if (activeCall?.payload?.verification) return 'Verifying saved draft…';
+  const reviewStep = activeReviewStep(scoped);
+  if (reviewStep) {
+    return reviewStep.role === 'revision'
+      ? `Review round ${reviewStep.round}: revising…`
+      : `Review round ${reviewStep.round}: ${reviewStep.role}…`;
+  }
   const stageEvent = recent.find((event) => event?.type === 'run.stage');
   if (stageEvent?.payload?.stage === 'repair_config') {
     return assistantStageLabel('repair_config', stageEvent.payload);

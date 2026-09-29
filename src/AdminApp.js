@@ -869,12 +869,26 @@ function AdminWorkspace() {
     console.log('🔍 Removed project state for:', projectId);
   };
 
-  const handleSurveyConfigChange = (newConfig) => {
+  const handleSurveyConfigChange = (newConfig, metadata = {}) => {
     console.log('🔍 Survey config changed, updating state...');
     console.log('🔍 New config title:', newConfig?.title);
     console.log('🔍 Pages count:', newConfig?.pages?.length);
-    
+    const persisted = metadata.persisted === true;
+    const savedCopy = persisted ? JSON.parse(JSON.stringify(newConfig)) : null;
+
     setSurveyConfig(newConfig);
+    if (persisted) {
+      setLastSavedConfig(savedCopy);
+      setHasUnsavedChanges(false);
+      setSaveStatus('saved');
+      setLastSavedAt(Date.now());
+      if (metadata.draftUpdatedAt) {
+        draftUpdatedAtRef.current = metadata.draftUpdatedAt;
+        setCurrentProject((prev) => (prev?.id === currentProject?.id
+          ? { ...prev, draftUpdatedAt: metadata.draftUpdatedAt, savedAt: metadata.draftUpdatedAt }
+          : prev));
+      }
+    }
     
     // Save current project state immediately (including new configuration)
     if (currentProject) {
@@ -884,7 +898,7 @@ function AdminWorkspace() {
       if (!newStates[currentProject.id]) {
         newStates[currentProject.id] = {
           surveyConfig: newConfig,
-          lastSavedConfig: lastSavedConfig,
+          lastSavedConfig: persisted ? savedCopy : lastSavedConfig,
           hasUnsavedChanges: false,
           tabValue: tabValue
         };
@@ -892,7 +906,8 @@ function AdminWorkspace() {
         newStates[currentProject.id] = {
           ...newStates[currentProject.id],
           surveyConfig: newConfig,
-          tabValue: tabValue
+          tabValue: tabValue,
+          ...(persisted ? { lastSavedConfig: savedCopy, hasUnsavedChanges: false } : {}),
         };
       }
       setProjectStates(newStates);
@@ -1127,7 +1142,7 @@ function AdminWorkspace() {
             severity: 'success',
           });
         }
-        return { success: true };
+        return { success: true, draftUpdatedAt: result.draftUpdatedAt || result.savedAt || null };
       }
 
       setSaveStatus('error');

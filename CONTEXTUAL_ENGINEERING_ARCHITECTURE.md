@@ -961,290 +961,33 @@ Expected:
 
 ---
 
-## 🤖 Multi-Agent Review System
+## 🤖 Multi-Agent Review (Review mode)
 
-### Overview
+Multi-agent review is the **Review** mode in the Assistant composer, next to
+Agent / Generate / Adjust / Question. Those four modes are single-agent; only
+Review is multi-agent. The legacy post-generate review stream
+(`/api/openai/multi-agent-review-stream`, `src/lib/multiAgentReview.js`) has
+been removed.
 
-The Multi-Agent Review System conducts collaborative expert review of surveys using 5 specialized AI agents. After generating or adjusting a survey, the system automatically triggers a multi-round review process where agents provide feedback and the survey-designer iteratively improves the survey until approval or maximum rounds are reached.
-
-### Agent Roles
-
-**🔬 Urban Scientist**
-- Research design and methodology
-- Scientific rigor and validity
-- Sampling strategy and data collection
-- Integration with urban theory
-
-**🏙️ Urban Designer**
-- Streetscape design elements coverage
-- Visual quality assessment criteria
-- Design intervention evaluation
-- Public space design considerations
-
-**🧠 Perception Psychologist**
-- Question wording and cognitive load
-- Response bias and anchoring effects
-- Scale appropriateness and rating methods
-- Participant understanding and clarity
-
-**👤 Test Participant**
-- User experience and survey usability
-- Question clarity from user perspective
-- Interface usability and flow
-- Motivation and completion likelihood
-
-**📊 Data Analyst**
-- Data quality and completeness
-- Statistical analysis readiness
-- Variable measurement and operationalization
-- Data export and analysis workflow
-
-### Review Modes
-
-**1v1 Mode (Individual Reviews)**
-- Each agent reviews independently
-- Provides individual ratings (1-10) and verdict (approve/revise/major-revision)
-- Lists strengths, concerns, and specific suggestions
-- Suitable for detailed, focused feedback
-
-**Group Discussion Mode**
-- Agents discuss together
-- Build on each other's insights
-- Identify consensus areas and disagreements
-- Provides collaborative recommendations
-- Suitable for complex, nuanced issues
-
-### Review Process Flow
-
-```
-┌─────────────────────────────────────────────────┐
-│  1. Survey Generated/Adjusted                   │
-└────────────────┬────────────────────────────────┘
-                 ↓
-┌─────────────────────────────────────────────────┐
-│  2. Multi-Agent Review Triggered (if enabled)   │
-│     Round 1 begins                               │
-└────────────────┬────────────────────────────────┘
-                 ↓
-┌─────────────────────────────────────────────────┐
-│  3. Each Agent Reviews Survey                   │
-│     - Urban Scientist: 8/10, revise             │
-│     - Urban Designer: 7/10, revise              │
-│     - Psychologist: 6/10, major-revision        │
-│     - Test Participant: 7/10, revise            │
-│     - Data Analyst: 8/10, approve               │
-└────────────────┬────────────────────────────────┘
-                 ↓
-┌─────────────────────────────────────────────────┐
-│  4. Consolidate Feedback                        │
-│     - Average Rating: 7.2/10                    │
-│     - Verdict: revise (only 1/5 approve)        │
-│     - Top Concerns identified                   │
-│     - Top Suggestions identified                │
-└────────────────┬────────────────────────────────┘
-                 ↓
-┌─────────────────────────────────────────────────┐
-│  5. Check Termination Conditions                │
-│     ✗ Not approved yet                          │
-│     ✗ Max rounds not reached                    │
-│     → Continue to revision                      │
-└────────────────┬────────────────────────────────┘
-                 ↓
-┌─────────────────────────────────────────────────┐
-│  6. Survey-Designer Revises Survey              │
-│     Based on consolidated feedback              │
-└────────────────┬────────────────────────────────┘
-                 ↓
-┌─────────────────────────────────────────────────┐
-│  7. Round 2 begins                              │
-│     Repeat steps 3-6                            │
-└────────────────┬────────────────────────────────┘
-                 ↓
-┌─────────────────────────────────────────────────┐
-│  8. Termination (one of):                       │
-│     ✅ Approved (70%+ agents approve)           │
-│     ✅ Max rounds reached (3 rounds)            │
-│     ✅ No improvement detected                  │
-└─────────────────────────────────────────────────┘
-```
-
-### Termination Logic
-
-The review process terminates when any of these conditions are met:
-
-1. **Approval Threshold**: ≥70% of agents approve (verdict: "approve")
-2. **Maximum Rounds**: 3 review rounds completed
-3. **No Improvement**: Same concerns appear in consecutive rounds
-
-### Configuration
-
-Located in `src/lib/multiAgentReview.js`:
-
-```javascript
-const REVIEW_CONFIG = {
-  maxRounds: 3,  // Maximum review rounds
-  minApprovalScore: 0.7,  // 70% approval needed
-  enableOneOnOne: true,  // Enable 1v1 review mode
-  enableGroupDiscussion: true,  // Enable group mode
-  autoTriggerAfterGenerate: true,  // Auto after generate
-  autoTriggerAfterAdjust: true  // Auto after adjust
-};
-```
-
-### UI Integration
-
-**Settings Dialog Controls**:
-- Toggle: Enable/Disable Multi-Agent Review
-- Mode Selection: 1v1 Reviews vs Group Discussion
-- Agent List: Shows all 5 expert agents and their expertise
-
-**Conversation Display**:
-- All agent reviews appear in the chat interface
-- Round headers clearly separate review rounds
-- Each agent message shows their emoji, name, and feedback
-- Consolidated feedback summarizes each round
-- Final termination message explains the outcome
-
-### API Endpoints
-
-**Standalone Review**:
-```javascript
-POST /api/openai/multi-agent-review
-Body: {
-  surveyConfig: {...},
-  apiKey: "sk-...",
-  mode: "1v1" | "group"
-}
-Response: {
-  success: true,
-  totalRounds: 2,
-  finalRating: "8.5",
-  finalVerdict: "approve",
-  approved: true,
-  conversationMessages: [...],
-  terminationReason: "Survey approved..."
-}
-```
-
-**Integrated with Chat**:
-```javascript
-POST /api/openai/chat
-Body: {
-  message: "Create a thermal comfort survey",
-  currentConfig: null,
-  conversationHistory: [...],
-  apiKey: "sk-...",
-  enableMultiAgentReview: true,  // ← Enable review
-  reviewMode: "1v1"  // ← Choose mode
-}
-Response: {
-  success: true,
-  intent: "generate",
-  surveyConfig: {...},
-  message: "Generated new survey...",
-  multiAgentReview: {
-    enabled: true,
-    totalRounds: 2,
-    finalRating: "8.5",
-    conversationMessages: [...]  // All agent conversations
-  }
-}
-```
-
-### Example Review Output
-
-```
-🔄 Multi-Agent Review - Round 1
-
-🔬 Urban Scientist - Round 1
-Rating: 8/10 | Verdict: revise
-
-✅ Strengths:
-- Clear research objectives
-- Appropriate question types for streetscape assessment
-
-⚠️ Concerns:
-- Missing demographic questions for contextual analysis
-- Sample size considerations not addressed
-
-💡 Suggestions:
-- Add age, gender, and occupation questions
-- Include instructions about target sample size
-
----
-
-🏙️ Urban Designer - Round 1
-Rating: 7/10 | Verdict: revise
-
-✅ Strengths:
-- Good coverage of visual elements
-- Appropriate use of image-based questions
-
-⚠️ Concerns:
-- Missing questions about street furniture and vegetation
-- No assessment of accessibility features
-
-💡 Suggestions:
-- Add imagerating for street furniture quality
-- Include questions about pedestrian accessibility
-
----
-
-📊 Review Summary - Round 1
-
-Overall Rating: 7.2/10
-Verdict: REVISE
-Approval: 1 approve | 4 revise | 0 major revision
-
-🔴 Top Concerns:
-1. Missing demographic questions
-2. Incomplete coverage of design elements
-3. No accessibility assessment
-
-💡 Top Suggestions:
-1. Add age, gender, occupation questions
-2. Include street furniture assessment
-3. Add accessibility evaluation questions
-
-⏭️ Proceeding to next revision round...
-
----
-
-🔧 Survey Designer: Addressing feedback and revising survey...
-
-🔧 Survey Designer: Survey revised based on expert feedback. Ready for next review round.
-
----
-
-[Round 2 begins...]
-```
-
-### Benefits
-
-1. **Quality Assurance**: Multiple expert perspectives ensure comprehensive survey quality
-2. **Automatic Improvement**: Iterative refinement without manual intervention
-3. **Transparency**: All agent feedback visible in conversation history
-4. **Expertise Coverage**: 5 different domains ensure holistic evaluation
-5. **Flexible Modes**: Choose between individual reviews or group discussion
-6. **Smart Termination**: Stops when approved or no further improvement possible
-
-### Implementation Files
-
-```
-src/lib/
-├── multiAgentReview.js       # Core review system and agent definitions
-└── chatApi.js                 # API client with review support
-
-server.js                      # Backend implementation
-├── conductMultiAgentReview()  # Main review orchestration
-└── /api/openai/multi-agent-review  # Standalone endpoint
-
-src/components/admin/
-├── SurveyBuilder.js           # Integration and state management
-└── ChatAssistant.js           # UI controls and display
-```
-
----
+- Roles: Scientist, Participant, Planner, Psychologist, Analyst (all on by
+  default, individually toggleable, with a reviewer cap).
+- Methods: Linear individual review, or Group discussion (round-robin; each
+  role sees the earlier turns).
+- Each round, every role returns a rating and comments. If the average meets
+  the accept threshold, the review stops. Otherwise a revision step writes a
+  Summary, a Planning list, and design-protocol operations (Revise). The
+  revised survey is reviewed again, up to the maximum number of rounds.
+- Revisions are either applied each round through `survey_apply_operations`
+  with `expectedDraftUpdatedAt`, or proposed only ("review only") and applied
+  later from the chat card via `POST /api/agent/runs/:id/review/apply`.
+- Reviewers are read-only sub-runs of the local tool loop in
+  `src/server/agentChatRuntime.js`; orchestration is in
+  `src/server/agentReview.js`. Everything runs on loopback with the
+  researcher's own API key; free/shared model ids are refused, and survey
+  credentials are stripped before anything reaches a reviewer.
+- `POST /api/agent/review/estimate` returns model-call, token, and cost bounds
+  before a run. Review results persist in the session event log
+  (`data/agent-sessions.json`).
 
 ## 🧠 Chain of Thoughts (CoT) Three-Step Generation
 
@@ -1363,47 +1106,6 @@ Survey configuration generated
 
 - Frontend: `src/components/admin/SurveyBuilder.js` lines 726-756
   - Display CoT steps in conversation
-
----
-
-## ⚙️ Configurable Multi-Agent Review
-
-### Dynamic Configuration
-
-Users can now customize the Multi-Agent Review system:
-
-#### **Maximum Review Rounds**
-
-- **Default**: 3 rounds
-- **Configurable Range**: 1-10 rounds
-- **Location**: AI Assistant Settings → Multi-Agent Review section
-- **Persistence**: Saved to `localStorage`
-
-#### **How to Configure**
-
-1. Open AI Assistant Settings (⚙️ icon)
-2. Enable "Multi-Agent Review"
-3. Adjust "Maximum Review Rounds" slider (1-10)
-4. Select review mode: 1v1 or Group Discussion
-5. Settings are automatically saved
-
-#### **Dynamic Termination**
-
-The review process respects the configured maximum:
-
-```javascript
-// Termination conditions
-1. Approval Threshold: ≥70% agents approve
-2. Maximum Rounds: User-configured (1-10)
-3. No Improvement: Same concerns repeated
-```
-
-#### **Code Location**
-
-- State Management: `src/components/admin/SurveyBuilder.js` lines 234-282
-- UI Controls: `src/components/admin/ChatAssistant.js` lines 649-665
-- Backend Logic: `server.js` lines 1219-1239
-- Termination: `src/lib/multiAgentReview.js` lines 272-302
 
 ---
 
