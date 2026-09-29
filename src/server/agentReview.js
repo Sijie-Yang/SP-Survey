@@ -923,6 +923,18 @@ function reviewFromEvents(events = [], runId = null) {
   let review = null;
   for (const event of events || []) {
     const type = event?.type || '';
+    if (type === 'run.status' && review && ['cancelled', 'failed'].includes(event.payload?.status)) {
+      const eventRunId = event.runId || event.run_id || null;
+      if (review.status === 'running' && (!eventRunId || eventRunId === review.runId)) {
+        review.status = event.payload.status;
+        review.active = null;
+        review.rounds.forEach((entry) => {
+          entry.reviews.forEach((item) => { if (item.status === 'start') item.status = 'cancelled'; });
+          if (entry.revision?.status === 'start') entry.revision.status = 'cancelled';
+        });
+      }
+      continue;
+    }
     if (!type.startsWith('review.')) continue;
     const eventRunId = event.runId || event.run_id || null;
     if (runId && eventRunId !== runId) continue;

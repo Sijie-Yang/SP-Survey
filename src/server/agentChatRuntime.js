@@ -254,6 +254,11 @@ function eventsToMessages(events) {
       if (event.type === 'review.result' && event.payload?.summary) card.content = event.payload.summary;
       return;
     }
+    if (event.type === 'run.status' && reviewCards.has(runId)) {
+      const card = reviewCards.get(runId);
+      card.reviewEvents.push(event);
+      card.metadata.review = review.reviewFromEvents(card.reviewEvents, runId);
+    }
     if (isReviewSubRunEvent(event)) {
       const card = reviewCards.get(runId);
       if (!card) return;

@@ -299,6 +299,7 @@ describe('review mode on the local runtime', () => {
     const detail = await waitFor(started.body.sessionId, (d) => ['cancelled', 'completed', 'failed'].includes(d.run?.status));
     expect(detail.run.status).toBe('cancelled');
     expect(detail.events.some((event) => event.type === 'review.result')).toBe(false);
+    expect(detail.messages.find((message) => message.metadata?.review).metadata.review.status).toBe('cancelled');
     expect(calls).toBeLessThan(5);
   });
 
