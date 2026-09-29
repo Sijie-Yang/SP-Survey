@@ -31,7 +31,6 @@ import {
   RestartAlt,
   Save,
 } from '@mui/icons-material';
-import AgentsEditor from './AgentsEditor';
 import {
   isAssistantEnabled,
   isSiliconExperimentalEnabled,
@@ -62,12 +61,6 @@ export default function AssistantSettingsDialog({
   newScenario,
   setNewScenario,
   onAddCustomScenario,
-  multiAgentReviewEnabled,
-  onMultiAgentReviewToggle,
-  reviewMode,
-  onReviewModeChange,
-  maxReviewRounds,
-  onMaxReviewRoundsChange,
   currentProject,
   prompts,
   promptsModified,
@@ -345,64 +338,9 @@ export default function AssistantSettingsDialog({
                   <Typography variant="subtitle2">{t.aiSettingsMultiAgent}</Typography>
                   <Chip size="small" variant="outlined" label={t.aiSettingsExperimental} />
                 </Stack>
-                {isPlatformMode ? (
-                  <Typography variant="body2" color="text.secondary">
-                    {t.aiSettingsMultiAgentUnavailable}
-                  </Typography>
-                ) : (
-                  <>
-                    <FormControlLabel
-                      control={(
-                        <Switch
-                          checked={multiAgentReviewEnabled}
-                          onChange={(event) => onMultiAgentReviewToggle?.(event.target.checked)}
-                        />
-                      )}
-                      label={t.aiSettingsMultiAgentToggle}
-                    />
-                    {multiAgentReviewEnabled && (
-                      <Stack spacing={1.5} sx={{ mt: 1.5 }}>
-                        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
-                          <Button
-                            fullWidth
-                            size="small"
-                            variant={reviewMode === '1v1' ? 'contained' : 'outlined'}
-                            onClick={() => onReviewModeChange?.('1v1')}
-                          >
-                            {t.aiSettingsIndependentReview}
-                          </Button>
-                          <Button
-                            fullWidth
-                            size="small"
-                            variant={reviewMode === 'group' ? 'contained' : 'outlined'}
-                            onClick={() => onReviewModeChange?.('group')}
-                          >
-                            {t.aiSettingsGroupReview}
-                          </Button>
-                        </Stack>
-                        <TextField
-                          size="small"
-                          type="number"
-                          label={t.aiSettingsReviewRounds}
-                          value={maxReviewRounds}
-                          inputProps={{ min: 1, max: 10 }}
-                          onChange={(event) => {
-                            const value = Number(event.target.value);
-                            if (value >= 1 && value <= 10) onMaxReviewRoundsChange?.(value);
-                          }}
-                        />
-                        <Accordion disableGutters elevation={0} sx={{ '&::before': { display: 'none' } }}>
-                          <AccordionSummary expandIcon={<ExpandMore />}>
-                            <Typography variant="body2" sx={{ fontWeight: 600 }}>{t.aiSettingsEditAgents}</Typography>
-                          </AccordionSummary>
-                          <AccordionDetails sx={{ px: 0 }}>
-                            <AgentsEditor currentProject={currentProject} />
-                          </AccordionDetails>
-                        </Accordion>
-                      </Stack>
-                    )}
-                  </>
-                )}
+                <Typography variant="body2" color="text.secondary">
+                  {t.aiSettingsMultiAgentUnavailable}
+                </Typography>
               </Box>
 
               {!isPlatformMode && (

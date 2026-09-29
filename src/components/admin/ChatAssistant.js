@@ -7,24 +7,10 @@ import {
   TextField,
   IconButton,
   Typography,
-  Paper,
   CircularProgress,
   Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  FormControlLabel,
-  Switch,
   Chip,
-  List,
-  ListItem,
-  ListItemText,
-  Divider,
   Tooltip,
-  InputAdornment,
-  Tabs,
-  Tab,
   Accordion,
   AccordionSummary,
   AccordionDetails,
@@ -38,8 +24,6 @@ import {
 import ConfirmDialog from '../layout/ConfirmDialog';
 import {
   ExpandMore,
-  Save,
-  RestartAlt,
 } from '@mui/icons-material';
 import {
   Send,
@@ -48,28 +32,16 @@ import {
   SmartToy,
   Clear,
   Download,
-  CheckCircle,
   TipsAndUpdates,
-  History,
-  Close,
-  Code,
-  Memory,
-  WorkHistory,
-  Chat,
-  Refresh,
-  AutoAwesome,
   ContentCopy,
 } from '@mui/icons-material';
 import { PROMPTS } from '../../config/prompts';
-import AgentsEditor from './AgentsEditor';
 import { listMcpConnections } from '../../lib/agentApi';
-import ModelsSettings from './ModelsSettings';
 import AssistantSettingsDialog from './AssistantSettingsDialog';
 import {
   assistantStageLabel,
   collapseRepeatedToolErrors,
   formatToolDiagnostics,
-  isDraftWriteTool,
   processHeadline,
   processTranscriptKey,
   readProcessExpanded,
@@ -79,6 +51,8 @@ import {
   writeResultFromTools,
 } from '../../hooks/surveyAssistantUtils';
 import ChatMarkdown from './ChatMarkdown';
+import { ReviewCard, ReviewComposerOptions } from './ReviewPanel';
+import { reviewRoleEmoji, reviewRoleLabel } from '../../lib/reviewMode';
 
 function messageTools(msg) {
   const tools = msg?.tools || msg?.metadata?.tools;
@@ -127,6 +101,14 @@ function localizeLoadingStatus(status, t) {
   if (!status) return '';
   const using = String(status).match(/^Using (.+)[.…]$/);
   if (using) return (t.aiSidebarStatusUsingTool || 'Using {tool}…').replace('{tool}', using[1]);
+  const reviewRevising = String(status).match(/^Review round (\d+): revising…$/);
+  if (reviewRevising) return (t.aiReviewStatusRevising || status).replace('{round}', reviewRevising[1]);
+  const reviewRole = String(status).match(/^Review round (\d+): ([a-z]+)…$/);
+  if (reviewRole) {
+    return (t.aiReviewStatusRound || status)
+      .replace('{round}', reviewRole[1])
+      .replace('{role}', reviewRoleLabel(reviewRole[2], t));
+  }
   const step = String(status).match(/^Working on step (\d+)[.…]$/);
   if (step) return (t.aiSidebarStatusStep || 'Working on step {step}…').replace('{step}', step[1]);
   const map = {
@@ -165,9 +147,6 @@ export default function ChatAssistant({
   assistantMode = 'agent',
   onAssistantModeChange,
   contextEnabled,
-  multiAgentReviewEnabled = false,
-  reviewMode = '1v1',
-  maxReviewRounds = 3,
   recommendations = [],
   currentProject,
   conversationHistoryRef,
@@ -181,9 +160,6 @@ export default function ChatAssistant({
   onApiKeyChange,
   onValidateApiKey,
   onContextToggle,
-  onMultiAgentReviewToggle,
-  onReviewModeChange,
-  onMaxReviewRoundsChange,
   onClearHistory,
   onDownloadHistory,
   onPromptsChange,
@@ -214,18 +190,19 @@ export default function ChatAssistant({
   onClearEditorFocus,
   steerTarget = 'next-step',
   onSteerTargetChange,
+  reviewOptions = null,
+  reviewEstimate = null,
+  reviewApplying = '',
+  onReviewOptionsChange,
+  onApplyReview,
 }) {
   const { t } = useRegion();
   const navigate = useNavigate();
   const [internalSettingsOpen, setInternalSettingsOpen] = React.useState(false);
   const settingsOpen = settingsOpenProp ?? internalSettingsOpen;
   const setSettingsOpen = onSettingsOpenChange || setInternalSettingsOpen;
-  const [activeTab, setActiveTab] = React.useState(0);
   const [codexConnected, setCodexConnected] = React.useState(false);
   const [codexStatusLoading, setCodexStatusLoading] = React.useState(Boolean(isPlatformMode));
-  const [conversationData, setConversationData] = React.useState(null);
-  const [workingMemoryData, setWorkingMemoryData] = React.useState(null);
-  const [sessionLearningData, setSessionLearningData] = React.useState(null);
 
   React.useEffect(() => {
     let cancelled = false;
@@ -478,11 +455,12 @@ export default function ChatAssistant({
     }
   }, [currentProject?.id]);
   
+  const reviewActive = assistantMode === 'review';
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       if (isLoading && userMessage.trim()) onSteerMessage?.();
-      else if (!sendBlocked && userMessage.trim()) onSendMessage();
+      else if (!sendBlocked && (userMessage.trim() || reviewActive)) onSendMessage();
     }
   };
   
@@ -518,7 +496,9 @@ export default function ChatAssistant({
     ? (t.aiSidebarSteerPlaceholder || 'Add an instruction to the running Agent…')
     : blockReason === 'no-project'
     ? t.aiSidebarSelectProject
-    : (apiKeyValid && !routeUnavailable ? t.aiSidebarComposerPlaceholder : t.aiSidebarComposerDisabled);
+    : (apiKeyValid && !routeUnavailable
+      ? (reviewActive ? (t.aiReviewPlaceholder || t.aiSidebarComposerPlaceholder) : t.aiSidebarComposerPlaceholder)
+      : t.aiSidebarComposerDisabled);
 
   const emptyTitle = t.aiSidebarEmptyTitle;
   const emptyBody = blockReason === 'no-project'
@@ -791,6 +771,7 @@ export default function ChatAssistant({
                                         >
                                           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1 }}>
                                             <Typography variant="caption" sx={{ fontWeight: 600 }}>
+                                              {tool.review?.role ? `${reviewRoleEmoji(tool.review.role)} ${reviewRoleLabel(tool.review.role, t)} · ` : ''}
                                               {tool.name || t.aiSidebarToolUnknown}
                                               {tool.repeatCount > 1 ? ` ×${tool.repeatCount}` : ''}
                                             </Typography>
@@ -844,6 +825,16 @@ export default function ChatAssistant({
                                   </AccordionDetails>
                                 </Accordion>
                               )}
+                              {!isUser && msg.metadata?.review ? (
+                                <ReviewCard
+                                  review={msg.metadata.review}
+                                  runId={msg.runId || msg.metadata.review.runId}
+                                  t={t}
+                                  isLoading={isLoading}
+                                  applying={reviewApplying}
+                                  onApply={onApplyReview}
+                                />
+                              ) : null}
                               {!isUser && msg.metadata?.questionModeWriteRefused && msg.metadata?.pendingWrite ? (
                                 <Button
                                   size="small"
@@ -912,9 +903,9 @@ export default function ChatAssistant({
                                     {msg.content}
                                   </Typography>
                                 ) : null
-                              ) : (
+                              ) : (msg.metadata?.review ? null : (
                                 <ChatMarkdown>{msg.content}</ChatMarkdown>
-                              )}
+                              ))}
                             </>
                           );
                         })()}
@@ -1055,6 +1046,15 @@ export default function ChatAssistant({
             },
           }}
         >
+          {reviewActive ? (
+            <ReviewComposerOptions
+              t={t}
+              options={reviewOptions}
+              estimate={reviewEstimate}
+              onChange={onReviewOptionsChange}
+              disabled={isLoading}
+            />
+          ) : null}
           <TextField
             fullWidth
             multiline
@@ -1099,6 +1099,7 @@ export default function ChatAssistant({
                 <MenuItem value="generate">{t.aiSidebarModeGenerate}</MenuItem>
                 <MenuItem value="adjust">{t.aiSidebarModeAdjust}</MenuItem>
                 <MenuItem value="question">{t.aiSidebarModeQuestion}</MenuItem>
+                <MenuItem value="review">{t.aiSidebarModeReview || 'Review'}</MenuItem>
               </Select>
               {modelOptions.length > 0 ? (
                 <Select
@@ -1182,7 +1183,7 @@ export default function ChatAssistant({
                 <IconButton
                   color={isLoading ? 'error' : 'primary'}
                   onClick={isLoading ? onCancelRun : onSendMessage}
-                  disabled={isLoading ? !onCancelRun : (sendBlocked || !userMessage.trim())}
+                  disabled={isLoading ? !onCancelRun : (sendBlocked || (!userMessage.trim() && !reviewActive))}
                   aria-label={isLoading ? (t.aiSidebarStop || 'Stop') : t.aiSidebarSend}
                   sx={{
                     width: 36,
@@ -1303,12 +1304,6 @@ export default function ChatAssistant({
         newScenario={newScenario}
         setNewScenario={setNewScenario}
         onAddCustomScenario={addCustomScenario}
-        multiAgentReviewEnabled={multiAgentReviewEnabled}
-        onMultiAgentReviewToggle={onMultiAgentReviewToggle}
-        reviewMode={reviewMode}
-        onReviewModeChange={onReviewModeChange}
-        maxReviewRounds={maxReviewRounds}
-        onMaxReviewRoundsChange={onMaxReviewRoundsChange}
         currentProject={currentProject}
         prompts={prompts}
         promptsModified={promptsModified}
@@ -1319,711 +1314,6 @@ export default function ChatAssistant({
         onClearHistory={handleClearClick}
       />
 
-      {/* Legacy settings markup is retained temporarily for local-data compatibility. */}
-      <Dialog
-        open={false}
-        onClose={() => setSettingsOpen(false)}
-        maxWidth="lg"
-        fullWidth
-      >
-        <DialogTitle>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Typography variant="h6">AI Assistant Settings & Data</Typography>
-            <IconButton size="small" onClick={() => setSettingsOpen(false)}>
-              <Close />
-            </IconButton>
-          </Box>
-          
-          <Tabs 
-            value={activeTab} 
-            onChange={(e, newValue) => setActiveTab(newValue)}
-            variant="scrollable"
-            scrollButtons="auto"
-            sx={{ mt: 2, borderBottom: 1, borderColor: 'divider' }}
-          >
-            <Tab icon={<Settings fontSize="small" />} label="Settings" iconPosition="start" />
-            <Tab icon={<TipsAndUpdates fontSize="small" />} label="Research" iconPosition="start" />
-            <Tab icon={<SmartToy fontSize="small" />} label="Advanced: Agents" iconPosition="start" />
-            <Tab icon={<Code fontSize="small" />} label="Advanced: Prompts" iconPosition="start" />
-            <Tab icon={<Chat fontSize="small" />} label="Advanced: Conversation" iconPosition="start" />
-            <Tab icon={<WorkHistory fontSize="small" />} label="Advanced: Memory" iconPosition="start" />
-            <Tab icon={<Memory fontSize="small" />} label="Advanced: Learning" iconPosition="start" />
-          </Tabs>
-        </DialogTitle>
-        
-        <DialogContent dividers sx={{ minHeight: 400, maxHeight: '70vh', overflow: 'auto' }}>
-          {/* Tab 0: Settings */}
-          {activeTab === 0 && (
-            <Box>
-              {/* API Key Configuration */}
-              <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
-                🔑 API Key
-              </Typography>
-          <Box sx={{ mb: 3 }}>
-            <ModelsSettings onConfiguredChange={onCredentialsChange} />
-            <Divider sx={{ my: 2 }} />
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-              Keys stay on this computer. You can also keep a single OpenAI or OpenRouter key below for older flows.
-            </Typography>
-            <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
-              <TextField
-                fullWidth
-                type="password"
-                label="API Key"
-                value={openaiApiKey}
-                onChange={(e) => onApiKeyChange(e.target.value)}
-                placeholder="sk-or-... or sk-..."
-                InputProps={{
-                  endAdornment: apiKeyValid && (
-                    <InputAdornment position="end">
-                      <CheckCircle color="success" />
-                    </InputAdornment>
-                  )
-                }}
-              />
-              <Button
-                variant="contained"
-                onClick={onValidateApiKey}
-                disabled={!openaiApiKey}
-                sx={{ minWidth: 100 }}
-              >
-                Validate
-              </Button>
-            </Box>
-          </Box>
-
-          <Divider sx={{ my: 2 }} />
-
-          {/* Contextual Engineering */}
-          <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
-            🧠 Contextual Engineering
-          </Typography>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={contextEnabled}
-                onChange={(e) => onContextToggle(e.target.checked)}
-                color="primary"
-              />
-            }
-            label={
-              <Box>
-                <Typography variant="body2">
-                  Enable multi-turn conversations and memory
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  AI will remember your preferences and conversation history
-                </Typography>
-              </Box>
-            }
-          />
-
-          {contextEnabled && (
-            <Box sx={{ mt: 2, p: 2, bgcolor: '#f5f5f5', borderRadius: 1 }}>
-              <Typography variant="caption" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                <History fontSize="small" />
-                <strong>What's included:</strong>
-              </Typography>
-              <List dense>
-                <ListItem>
-                  <ListItemText 
-                    primary="Conversation History"
-                    secondary="Remembers previous messages in this session"
-                    primaryTypographyProps={{ variant: 'body2' }}
-                    secondaryTypographyProps={{ variant: 'caption' }}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemText 
-                    primary="Working Memory"
-                    secondary="Learns your preferences (rating scales, image counts, etc.)"
-                    primaryTypographyProps={{ variant: 'body2' }}
-                    secondaryTypographyProps={{ variant: 'caption' }}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemText 
-                    primary="Session Learning"
-                    secondary="Tracks expertise level and provides personalized recommendations"
-                    primaryTypographyProps={{ variant: 'body2' }}
-                    secondaryTypographyProps={{ variant: 'caption' }}
-                  />
-                </ListItem>
-              </List>
-            </Box>
-          )}
-
-          <Divider sx={{ my: 2 }} />
-
-          {/* Multi-Agent Review */}
-          <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
-            🤖 Multi-Agent Review
-          </Typography>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={multiAgentReviewEnabled}
-                onChange={(e) => onMultiAgentReviewToggle && onMultiAgentReviewToggle(e.target.checked)}
-                color="primary"
-              />
-            }
-            label={
-              <Box>
-                <Typography variant="body2">
-                  Auto-trigger expert review after generate/adjust
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  5 expert agents will review and help improve your survey
-                </Typography>
-              </Box>
-            }
-          />
-
-          {multiAgentReviewEnabled && (
-            <Box sx={{ mt: 2, p: 2, bgcolor: '#f5f5f5', borderRadius: 1 }}>
-              <Typography variant="caption" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-                <SmartToy fontSize="small" />
-                <strong>Review Mode:</strong>
-              </Typography>
-              
-              <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
-                <Button
-                  variant={reviewMode === '1v1' ? 'contained' : 'outlined'}
-                  size="small"
-                  onClick={() => onReviewModeChange && onReviewModeChange('1v1')}
-                  sx={{ flex: 1 }}
-                >
-                  1v1 Reviews
-                </Button>
-                <Button
-                  variant={reviewMode === 'group' ? 'contained' : 'outlined'}
-                  size="small"
-                  onClick={() => onReviewModeChange && onReviewModeChange('group')}
-                  sx={{ flex: 1 }}
-                >
-                  Group Discussion
-                </Button>
-              </Box>
-
-              <Box sx={{ mb: 2 }}>
-                <TextField
-                  label="Maximum Review Rounds"
-                  type="number"
-                  size="small"
-                  fullWidth
-                  value={maxReviewRounds}
-                  onChange={(e) => {
-                    const value = parseInt(e.target.value, 10);
-                    if (value >= 1 && value <= 10) {
-                      onMaxReviewRoundsChange && onMaxReviewRoundsChange(value);
-                    }
-                  }}
-                  inputProps={{ min: 1, max: 10, step: 1 }}
-                  helperText="Number of review rounds before auto-termination (1-10)"
-                />
-              </Box>
-
-              <Typography variant="caption" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                <strong>Expert Agents:</strong>
-              </Typography>
-              <List dense>
-                <ListItem>
-                  <ListItemText 
-                    primary="🔬 Urban Scientist"
-                    secondary="Research design, methodology, scientific rigor"
-                    primaryTypographyProps={{ variant: 'body2' }}
-                    secondaryTypographyProps={{ variant: 'caption' }}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemText 
-                    primary="🏙️ Urban Designer"
-                    secondary="Streetscape quality, design elements, placemaking"
-                    primaryTypographyProps={{ variant: 'body2' }}
-                    secondaryTypographyProps={{ variant: 'caption' }}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemText 
-                    primary="🧠 Perception Psychologist"
-                    secondary="Question wording, cognitive load, response bias"
-                    primaryTypographyProps={{ variant: 'body2' }}
-                    secondaryTypographyProps={{ variant: 'caption' }}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemText 
-                    primary="👤 Test Participant"
-                    secondary="User experience, survey usability, engagement"
-                    primaryTypographyProps={{ variant: 'body2' }}
-                    secondaryTypographyProps={{ variant: 'caption' }}
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemText 
-                    primary="📊 Data Analyst"
-                    secondary="Data quality, statistical analysis, measurement"
-                    primaryTypographyProps={{ variant: 'body2' }}
-                    secondaryTypographyProps={{ variant: 'caption' }}
-                  />
-                </ListItem>
-              </List>
-
-              <Divider sx={{ my: 1 }} />
-
-              <Typography variant="caption" color="text.secondary">
-                {reviewMode === '1v1' 
-                  ? '1v1 Mode: Each agent reviews independently and provides individual feedback'
-                  : 'Group Mode: Agents discuss together and build on each other\'s insights'}
-              </Typography>
-            </Box>
-          )}
-            </Box>
-          )}
-          
-          {/* Tab 1: Research Context */}
-          {activeTab === 1 && (
-            <Box>
-              <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
-                <TipsAndUpdates />
-                Research Context
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                Define your research topic and requirements to keep AI generation aligned with your goals.
-              </Typography>
-              
-              {/* Research Topic */}
-              <TextField
-                fullWidth
-                label="Research Topic"
-                placeholder="e.g., Thermal comfort in urban streetscapes"
-                value={researchContext.topic}
-                onChange={(e) => setResearchContext({ ...researchContext, topic: e.target.value })}
-                sx={{ mb: 3 }}
-                helperText="A brief description of your main research topic"
-              />
-              
-              {/* Research Requirements */}
-              <TextField
-                fullWidth
-                multiline
-                rows={4}
-                label="Research Requirements for Survey Design"
-                placeholder="e.g., Survey should focus on people's thermal perception of street environments, including subjective thermal comfort ratings, preference assessments, and demographic information."
-                value={researchContext.requirements}
-                onChange={(e) => setResearchContext({ ...researchContext, requirements: e.target.value })}
-                sx={{ mb: 3 }}
-                helperText="Detailed requirements and objectives for your survey design"
-              />
-              
-              {/* Survey Scenario */}
-              <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 600 }}>
-                Survey Scenario Type
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                Select the type of visual content your survey will focus on
-              </Typography>
-              
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
-                {[...predefinedScenarios, ...researchContext.customScenarios].map((scenario) => (
-                  <Chip
-                    key={scenario}
-                    label={scenario}
-                    onClick={() => setResearchContext({ ...researchContext, scenario })}
-                    color={researchContext.scenario === scenario ? 'primary' : 'default'}
-                    variant={researchContext.scenario === scenario ? 'filled' : 'outlined'}
-                    onDelete={
-                      researchContext.customScenarios.includes(scenario)
-                        ? () => setResearchContext({
-                            ...researchContext,
-                            customScenarios: researchContext.customScenarios.filter(s => s !== scenario),
-                            scenario: researchContext.scenario === scenario ? 'street view' : researchContext.scenario
-                          })
-                        : undefined
-                    }
-                  />
-                ))}
-              </Box>
-              
-              {/* Add Custom Scenario */}
-              <Box sx={{ display: 'flex', gap: 1 }}>
-                <TextField
-                  size="small"
-                  placeholder="Add custom scenario..."
-                  value={newScenario}
-                  onChange={(e) => setNewScenario(e.target.value)}
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter' && newScenario.trim()) {
-                      if (![...predefinedScenarios, ...researchContext.customScenarios].includes(newScenario.trim().toLowerCase())) {
-                        setResearchContext({
-                          ...researchContext,
-                          customScenarios: [...researchContext.customScenarios, newScenario.trim().toLowerCase()]
-                        });
-                        setNewScenario('');
-                      }
-                    }
-                  }}
-                  sx={{ flexGrow: 1 }}
-                />
-                <Button
-                  variant="outlined"
-                  onClick={() => {
-                    if (newScenario.trim() && ![...predefinedScenarios, ...researchContext.customScenarios].includes(newScenario.trim().toLowerCase())) {
-                      setResearchContext({
-                        ...researchContext,
-                        customScenarios: [...researchContext.customScenarios, newScenario.trim().toLowerCase()]
-                      });
-                      setNewScenario('');
-                    }
-                  }}
-                  disabled={!newScenario.trim()}
-                >
-                  Add
-                </Button>
-              </Box>
-              
-              <Alert severity="info" sx={{ mt: 3 }}>
-                <Typography variant="body2">
-                  💡 This information will be included in all AI operations (generate, adjust, revision, and review) to ensure consistency with your research goals.
-                </Typography>
-              </Alert>
-            </Box>
-          )}
-          
-          {/* Tab 2: Agents */}
-          {activeTab === 2 && (
-            <Box>
-              <Typography variant="h6" sx={{ mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
-                <SmartToy />
-                Multi-Agent Review Agents
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                Customize the AI expert agents that review your surveys. Add, edit, or remove agents to fit your specific needs.
-              </Typography>
-              <AgentsEditor currentProject={currentProject} />
-            </Box>
-          )}
-          
-          {/* Tab 3: Prompts */}
-          {activeTab === 3 && (
-            <Box>
-              <Box sx={{ mb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
-                <Alert severity="info" sx={{ flex: 1 }}>
-                  <strong>System Prompts</strong> - Edit these prompts to customize AI behavior. Changes are saved locally.
-                </Alert>
-                <ButtonGroup variant="contained" size="small">
-                  <Button 
-                    startIcon={<Save />} 
-                    onClick={handleSavePrompts}
-                    disabled={!promptsModified}
-                    color="primary"
-                  >
-                    Save
-                  </Button>
-                  <Button 
-                    startIcon={<RestartAlt />} 
-                    onClick={handleResetPrompts}
-                    color="secondary"
-                  >
-                    Reset
-                  </Button>
-                </ButtonGroup>
-              </Box>
-              
-              <Accordion defaultExpanded>
-                <AccordionSummary expandIcon={<ExpandMore />}>
-                  <Typography variant="subtitle2">Generate Survey Prompt</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <TextField
-                    fullWidth
-                    multiline
-                    rows={20}
-                    value={prompts.generate}
-                    onChange={(e) => handlePromptChange('generate', e.target.value)}
-                    variant="outlined"
-                    sx={{ fontFamily: 'monospace', fontSize: '0.75rem' }}
-                  />
-                  <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
-                    📍 Used in: POST /api/openai/chat (intent: generate) | Model: GPT-4o
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-              
-              <Accordion>
-                <AccordionSummary expandIcon={<ExpandMore />}>
-                  <Typography variant="subtitle2">Adjust Survey Prompt</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <TextField
-                    fullWidth
-                    multiline
-                    rows={18}
-                    value={prompts.adjust}
-                    onChange={(e) => handlePromptChange('adjust', e.target.value)}
-                    variant="outlined"
-                    sx={{ fontFamily: 'monospace', fontSize: '0.75rem' }}
-                  />
-                  <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
-                    📍 Used in: POST /api/openai/chat (intent: adjust) | Model: GPT-4o | Includes current survey config
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-              
-              <Accordion>
-                <AccordionSummary expandIcon={<ExpandMore />}>
-                  <Typography variant="subtitle2">Intent Detection Prompt</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <TextField
-                    fullWidth
-                    multiline
-                    rows={8}
-                    value={prompts.intentDetection}
-                    onChange={(e) => handlePromptChange('intentDetection', e.target.value)}
-                    variant="outlined"
-                    sx={{ fontFamily: 'monospace', fontSize: '0.75rem' }}
-                  />
-                  <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
-                    📍 Used in: POST /api/openai/chat (before intent processing) | Model: GPT-4o-mini
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-              
-              <Accordion>
-                <AccordionSummary expandIcon={<ExpandMore />}>
-                  <Typography variant="subtitle2">Question Answering Prompt</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <TextField
-                    fullWidth
-                    multiline
-                    rows={25}
-                    value={prompts.question}
-                    onChange={(e) => handlePromptChange('question', e.target.value)}
-                    variant="outlined"
-                    sx={{ fontFamily: 'monospace', fontSize: '0.75rem' }}
-                  />
-                  <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
-                    📍 Used in: POST /api/openai/chat (intent: question) | Model: GPT-4o
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-            </Box>
-          )}
-          
-          {/* Tab 4: Conversation History */}
-          {activeTab === 4 && (
-            <Box>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                <Typography variant="subtitle1" fontWeight={600}>
-                  💬 Conversation History
-                </Typography>
-                <Box>
-                  <IconButton size="small" onClick={() => {
-                    if (conversationHistoryRef?.current) {
-                      const data = conversationHistoryRef.current.getAllMessages();
-                      setConversationData(data);
-                    }
-                  }} title="Refresh">
-                    <Refresh />
-                  </IconButton>
-                  <IconButton size="small" onClick={onDownloadHistory} title="Download">
-                    <Download />
-                  </IconButton>
-                  <IconButton size="small" onClick={onClearHistory} title="Clear">
-                    <Clear />
-                  </IconButton>
-                </Box>
-              </Box>
-              
-              {conversationData && conversationData.length > 0 ? (
-                <Box>
-                  <Alert severity="info" sx={{ mb: 2 }}>
-                    <strong>{conversationData.length} messages</strong> in current session
-                    {currentProject && ` (Project: ${currentProject.name})`}
-                  </Alert>
-                  
-                  <Paper variant="outlined" sx={{ maxHeight: 400, overflow: 'auto', p: 2, bgcolor: '#f5f5f5' }}>
-                    {conversationData.map((msg, idx) => (
-                      <Box key={idx} sx={{ mb: 2, pb: 2, borderBottom: idx < conversationData.length - 1 ? 1 : 0, borderColor: 'divider' }}>
-                        <Typography variant="caption" color="text.secondary">
-                          {msg.role === 'user' ? '👤 User' : '🤖 Assistant'} • {new Date(msg.timestamp).toLocaleString()}
-                        </Typography>
-                        <Typography variant="body2" sx={{ mt: 0.5, whiteSpace: 'pre-wrap', fontFamily: msg.role === 'system' ? 'monospace' : 'inherit' }}>
-                          {msg.content}
-                        </Typography>
-                        {msg.metadata && (
-                          <Chip 
-                            label={msg.metadata.actionType || msg.metadata.type || 'message'} 
-                            size="small" 
-                            sx={{ mt: 1 }}
-                          />
-                        )}
-                      </Box>
-                    ))}
-                  </Paper>
-                </Box>
-              ) : (
-                <Alert severity="warning">
-                  No conversation history available. Start chatting to see messages here.
-                </Alert>
-              )}
-            </Box>
-          )}
-          
-          {/* Tab 5: Working Memory */}
-          {activeTab === 5 && (
-            <Box>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                <Typography variant="subtitle1" fontWeight={600}>
-                  🧠 Working Memory
-                </Typography>
-                <Box>
-                  <IconButton size="small" onClick={() => {
-                    if (workingMemoryRef?.current) {
-                      const data = workingMemoryRef.current.export ? workingMemoryRef.current.export() : null;
-                      setWorkingMemoryData(data);
-                    }
-                  }} title="Refresh">
-                    <Refresh />
-                  </IconButton>
-                  <IconButton size="small" onClick={() => {
-                    if (workingMemoryRef?.current && workingMemoryRef.current.clear) {
-                      setConfirmDialog({
-                        title: 'Clear working memory',
-                        message: 'Clear working memory for this project?',
-                        confirmLabel: 'Clear',
-                        confirmColor: 'error',
-                        onConfirm: () => {
-                          setConfirmDialog(null);
-                          workingMemoryRef.current.clear();
-                          setWorkingMemoryData(null);
-                        },
-                      });
-                    }
-                  }} title="Clear">
-                    <Clear />
-                  </IconButton>
-                </Box>
-              </Box>
-              
-              {workingMemoryData ? (
-                <Box>
-                  <Alert severity="info" sx={{ mb: 2 }}>
-                    <strong>Project-specific memory</strong> - Resets when session ends
-                    {currentProject && ` (Project: ${currentProject.name})`}
-                  </Alert>
-                  
-                  <Paper variant="outlined" sx={{ p: 2, bgcolor: '#f5f5f5', mb: 2 }}>
-                    <pre style={{ margin: 0, fontSize: '0.85rem', overflow: 'auto', maxHeight: 400 }}>
-                      {JSON.stringify(workingMemoryData, null, 2)}
-                    </pre>
-                  </Paper>
-                  
-                  {workingMemoryData.surveyGoal && (
-                    <Alert severity="success">
-                      <strong>Survey Goal:</strong> {workingMemoryData.surveyGoal}
-                    </Alert>
-                  )}
-                </Box>
-              ) : (
-                <Alert severity="warning">
-                  No working memory data available. Generate or adjust a survey to populate this.
-                </Alert>
-              )}
-            </Box>
-          )}
-          
-          {/* Tab 6: Session Learning */}
-          {activeTab === 6 && (
-            <Box>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                <Typography variant="subtitle1" fontWeight={600}>
-                  🎓 Session Learning
-                </Typography>
-                <Box>
-                  <IconButton size="small" onClick={() => {
-                    if (sessionLearningRef?.current) {
-                      const data = sessionLearningRef.current.export ? sessionLearningRef.current.export() : null;
-                      setSessionLearningData(data);
-                    }
-                  }} title="Refresh">
-                    <Refresh />
-                  </IconButton>
-                  <IconButton size="small" onClick={() => {
-                    if (sessionLearningRef?.current) {
-                      const data = sessionLearningRef.current.export ? sessionLearningRef.current.export() : null;
-                      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-                      const url = URL.createObjectURL(blob);
-                      const a = document.createElement('a');
-                      a.href = url;
-                      a.download = `session-learning-${new Date().toISOString()}.json`;
-                      a.click();
-                    }
-                  }} title="Download">
-                    <Download />
-                  </IconButton>
-                </Box>
-              </Box>
-              
-              {sessionLearningData ? (
-                <Box>
-                  <Alert severity="info" sx={{ mb: 2 }}>
-                    <strong>Cross-session learning</strong> - Persists across browser sessions (localStorage)
-                  </Alert>
-                  
-                  {sessionLearningData.userExpertise !== undefined && (
-                    <Paper variant="outlined" sx={{ p: 2, mb: 2 }}>
-                      <Typography variant="subtitle2" gutterBottom>User Profile</Typography>
-                      <Typography variant="body2">
-                        <strong>Expertise Level:</strong> {sessionLearningData.userExpertise}
-                      </Typography>
-                      <Typography variant="body2">
-                        <strong>Completed Surveys:</strong> {sessionLearningData.stats?.totalProjects || 0}
-                      </Typography>
-                      <Typography variant="body2">
-                        <strong>Avg Iterations:</strong> {sessionLearningData.stats?.avgIterations?.toFixed(1) || 'N/A'}
-                      </Typography>
-                    </Paper>
-                  )}
-                  
-                  {sessionLearningData.preferences && Object.keys(sessionLearningData.preferences).length > 0 && (
-                    <Paper variant="outlined" sx={{ p: 2, mb: 2 }}>
-                      <Typography variant="subtitle2" gutterBottom>Learned Preferences</Typography>
-                      <List dense>
-                        {Object.entries(sessionLearningData.preferences).map(([key, value]) => (
-                          <ListItem key={key}>
-                            <ListItemText 
-                              primary={key}
-                              secondary={typeof value === 'object' ? JSON.stringify(value) : String(value)}
-                            />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </Paper>
-                  )}
-                  
-                  <Paper variant="outlined" sx={{ p: 2, bgcolor: '#f5f5f5' }}>
-                    <Typography variant="subtitle2" gutterBottom>Full Data</Typography>
-                    <pre style={{ margin: 0, fontSize: '0.85rem', overflow: 'auto', maxHeight: 300 }}>
-                      {JSON.stringify(sessionLearningData, null, 2)}
-                    </pre>
-                  </Paper>
-                </Box>
-              ) : (
-                <Alert severity="warning">
-                  No session learning data available. Use the system to populate this.
-                </Alert>
-              )}
-            </Box>
-          )}
-        </DialogContent>
-        
-        <DialogActions>
-          <Button onClick={() => setSettingsOpen(false)}>Close</Button>
-        </DialogActions>
-      </Dialog>
       <Snackbar
         open={promptSnackbar.open}
         autoHideDuration={4000}
