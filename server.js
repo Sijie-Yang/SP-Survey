@@ -842,8 +842,8 @@ app.post('/api/openai/validate-key', async (req, res) => {
     if (!apiKey) {
       return res.status(400).json({ success: false, error: 'API key is required' });
     }
-    const ai = resolveAiRequest(apiKey);
-    await aiChat(ai, 'fast', { messages: [{ role: 'user', content: 'Hi' }], max_tokens: 5 });
+    const ai = resolveAiRequest(apiKey, { provider: req.body.provider, model: req.body.model, store: {} });
+    await aiChat(ai, 'fast', { messages: [{ role: 'user', content: 'Hi' }], max_tokens: 5, retryPolicy: { maxRetries: 0 } });
     console.log(`✅ API key validated (${ai.provider})`);
     res.json({ success: true, valid: true, provider: ai.provider });
   } catch (error) {

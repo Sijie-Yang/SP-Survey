@@ -2,10 +2,13 @@ const crypto = require('crypto');
 const fs = require('fs-extra');
 const path = require('path');
 const { applyOperations, normalizeOperationsArg } = require('./surveyOperations.cjs');
-const { resolveAiRequest, aiChat, formatAiError } = require('../../aiClient');
-const { readStore, resolveProviderRequest } = require('./agentCredentialsApi');
+const { resolveAiRequest, resolveRoute, aiChat, formatAiError } = require('../../aiClient');
+const { readStore } = require('./agentCredentialsApi');
 
-const SESSION_PATH = path.join(__dirname, '..', '..', 'data', 'agent-sessions.json');
+const SESSION_PATH = path.join(
+  process.env.SP_SURVEY_DATA_DIR || path.join(__dirname, '..', '..', 'data'),
+  'agent-sessions.json',
+);
 const sessions = new Map();
 let sessionsHydrated = false;
 
@@ -419,25 +422,25 @@ async function executeTool(name, args, ctx) {
 
 async function resolveChatModel(ctx) {
   const store = await readStore();
-  const request = resolveProviderRequest(store, {
+  const resolved = resolveAiRequest(ctx.apiKey, {
     provider: ctx.provider,
-    apiKey: ctx.apiKey,
-    baseUrl: ctx.baseUrl,
     model: ctx.model,
+    store,
   });
-  if (!request) return null;
-  return resolveAiRequest(request.apiKey, {
-    provider: request.provider,
-    baseUrl: request.baseUrl,
-    protocol: request.protocol,
-  });
+  if (!resolved) return { error: 'API key is required. Add a provider key in Assistant settings.' };
+  try {
+    const route = await resolveRoute(resolved);
+    return { resolved: { ...resolved, provider: route.provider, model: route.model }, route };
+  } catch (error) {
+    return { error: formatAiError(error), code: error.code };
+  }
 }
 
 async function runDesignerChat(session, run, ctx) {
-  const resolved = await resolveChatModel(ctx);
+  const { resolved, error: routeError } = await resolveChatModel(ctx);
   if (!resolved) {
     run.status = 'failed';
-    run.error = 'API key is required. Add a provider key in Assistant settings.';
+    run.error = routeError;
     pushEvent(session, 'error', { message: run.error }, run.id);
     pushEvent(session, 'run.status', { status: 'failed' }, run.id);
     await persistSessions();
@@ -476,10 +479,10 @@ async function runDesignerChat(session, run, ctx) {
     let completion;
     try {
       completion = await aiChat(resolved, 'default', {
-        model: ctx.model,
+        model: resolved.model,
         messages: history,
         tools: toolsForMode(ctx.assistantMode),
-        tool_choice: 'auto',
+        reasoningEffort: ctx.reasoningEffort,
       });
     } catch (error) {
       if (step < 2) {
@@ -510,6 +513,7 @@ async function runDesignerChat(session, run, ctx) {
         history.push({
           role: 'tool',
           tool_call_id: call.id,
+          name,
           content: JSON.stringify(result).slice(0, 12000),
         });
       }
@@ -584,9 +588,9 @@ function registerAgentChatApi(app, deps) {
         projectId,
         apiKey,
         provider: req.body.provider || '',
-        baseUrl: req.body.baseUrl || '',
         message,
         model: req.body.model || '',
+        reasoningEffort: req.body.reasoningEffort || '',
         assistantMode: req.body.assistantMode || 'agent',
         conversationHistory: req.body.conversationHistory || [],
         researchContext: req.body.researchContext || {},

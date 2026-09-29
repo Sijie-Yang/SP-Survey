@@ -1,6 +1,9 @@
 const fs = require('fs-extra');
 const os = require('os');
 const path = require('path');
+
+process.env.SP_SURVEY_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), 'silicon-keys-'));
+
 const { createProjectIo } = require('./agentProjectApi');
 const { registerSiliconLocalApi } = require('./siliconLocalApi');
 
