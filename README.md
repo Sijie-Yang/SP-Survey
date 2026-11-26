@@ -1,261 +1,139 @@
 <div align="center">
 
-# SP-Survey
+# SP-Survey · SP-Scheme
 
-[![Stars](https://img.shields.io/github/stars/Sijie-Yang/SP-Survey?style=social)](https://github.com/Sijie-Yang/SP-Survey)
+**The open standard for AI-built perception experiments.**
+
+AI now lets anyone build a perception survey in minutes.
+SP-Scheme makes those surveys **comparable, auditable and poolable**, so studies run by different people in different cities add up.
+
 [![Website](https://img.shields.io/badge/🌐-sp--survey.org-blue)](https://sp-survey.org)
-[![Paper](https://img.shields.io/badge/📄-Paper-9cf)](https://www.sciencedirect.com/science/article/pii/S0360132325000514)
-[![License](https://img.shields.io/badge/License-CC_BY_4.0-green)](https://creativecommons.org/licenses/by/4.0/)
+[![License](https://img.shields.io/badge/code-MIT-green)](./LICENSE)
+[![Spec](https://img.shields.io/badge/spec-SP--Scheme_2.0-orange)](./kit/SP-SCHEME.md)
+[![Studies](https://img.shields.io/badge/studies-28_published-purple)](./kit/library/studies.json)
+[![Papers](https://img.shields.io/badge/papers-1,529_indexed-lightgrey)](./kit/library/papers.csv)
 
-<img src="./public/fig_introduction.png" alt="SP-Survey" width="100%">
-
-Visual survey design, media experiments, participant deployment, and research analysis in one self-hosted application.
-
-**No login · Local project files · Your Supabase · Your deployment**
-
-[Hosted platform](https://sp-survey.org) · [Paper](https://www.sciencedirect.com/science/article/pii/S0360132325000514) · [Discussions](https://github.com/Sijie-Yang/SP-Survey/discussions) · [Issues](https://github.com/Sijie-Yang/SP-Survey/issues)
+[中文说明](#中文说明) · [Quick start](#quick-start-with-your-ai) · [Study library](#the-study-library) · [Spec](./kit/SP-SCHEME.md) · [Hosted platform](https://sp-survey.org)
 
 </div>
 
-## Community
+---
 
-- English: [GitHub Discussions](https://github.com/Sijie-Yang/SP-Survey/discussions) for questions, ideas, and study showcases.
-- 中文：扫描二维码加入 SP-Survey 微信群。二维码有效期至 9/21，入群后会更新。
+## Why a standard
 
-<div align="center">
-<img src="./public/wechat-group-cn.jpg" alt="SP-Survey 中文微信群" width="200">
-</div>
+Ask Claude, ChatGPT or Codex to "replicate Place Pulse with my street photos" and you get a working page. Ask ten researchers to do it and you get ten question wordings, ten home-made randomisers and ten data formats that cannot be compared. Urban perception research has the same problem at scale: hundreds of studies, few that can be pooled.
 
-## Features
+SP-Scheme is a small contract between an AI-built survey page and the code that runs it. **The AI designs the experience. The standard fixes the parts that must be right:**
 
-- Standard, image, ranking, matrix, annotation, and custom-skill questions.
-- Random media, curated media, fixed sets, categories, and repeated trials.
-- SAM pre-annotate (click / box / text), batch SAM Text, label manager, review queue, and ZIP / feature CSV downloads.
-- Select-mode geometry editing for points, lines, polygons, and boxes.
-- Typed custom Skills with native-parity analysis/export.
-- Supabase/Hugging Face media workflows and advanced research analysis.
-- Unified theme behavior across question preview, full preview, Researcher Practice, and Live Survey.
-- Response quality checks, reliability, TrueSkill, perception analysis, ablation, and CSV export.
-- Participant-only deployment with response and shown-media metadata.
-
-The hosted Platform and this repository share survey/research features. The difference is infrastructure:
-
-| | Hosted Platform | SP-Survey |
+| | What SP-Scheme fixes | Why AI alone can't |
 |---|---|---|
-| Access | Account and managed projects | No login; open `/admin` |
-| Storage | Managed | Local project JSON + your Supabase |
-| Participant site | Hosted | Deploy it yourself |
+| **Questions** | Every recorded answer is a declared question with one of ~30 typed shapes (pairwise choice, rating, sliders, ranking, matrix, annotation…), checked on every answer | Free-form pages record free-form data |
+| **Stimuli** | Images are drawn per participant by seeded, tested code; `"balanced"` shows every image equally often across participants (server-claimed numbers) | Balance needs a counter shared by all participants; one page can't do it, and home-made shuffles are often biased |
+| **Data** | One response format: answer + exactly which files were shown, per round | Analysis, pooling and dataset release need the same columns everywhere |
+| **Provenance** | Studies start from a published instrument in the library, list their differences from the original, and cite one versioned runtime | Reviewers can audit a tested library; they can't audit a one-off script |
 
-## Quick start
+The same `index.html` runs **self-hosted** (your server, your Supabase, your data) or on **[sp-survey.org](https://sp-survey.org)** (recruitment links, dashboards, citable dataset packages), unchanged.
 
-Requirements: Node.js 18+ and npm.
+## Quick start with your AI
 
 ```bash
-git clone https://github.com/Sijie-Yang/SP-Survey.git
-cd SP-Survey
-npm install
-npm run dev
+git clone https://github.com/Sijie-Yang/SP-Survey.git && cd SP-Survey
 ```
 
-- Admin: [http://localhost:3000/admin](http://localhost:3000/admin)
-- Local Live Survey: [http://localhost:3000/survey](http://localhost:3000/survey)
-- Local API: `http://localhost:3001`
+Open the folder in **Claude Code** or **Codex** and say what you want. The repository ships an agent skill ([`.claude/skills/sp-scheme`](./.claude/skills/sp-scheme/SKILL.md), also read through [`AGENTS.md`](./AGENTS.md)), so the agent follows the standard on its own:
 
-Tabs: Intro · Media · Builder · Host · Share · Results · Practice · Silicon.
+> *"Replicate Place Pulse 2.0 safety comparisons with the street photos in ~/photos/singapore, in English and Chinese. Show me the page on my phone."*
 
-Use [`.env.example`](./.env.example) for custom ports. Split Express `PORT` into `.env` and CRA `PORT` / `REACT_APP_API_URL` into `.env.local` so the two processes do not fight. Supabase is optional until media upload or response collection.
+> *"I want to know whether trees make streets feel cooler. Design a short experiment from published studies, 10 minutes per person."*
 
-**Draft vs release:** Save updates the local draft only. Release writes `publishedSurveyConfig` into `public/projects/<id>.json`. Redeploy the participant site after a release.
+> *"Here is a paper PDF. Add its questionnaire to the study library and open a pull request."*
 
-The AI Assistant uses your own provider keys (OpenAI, OpenRouter, DeepSeek, Qwen, and the rest of the catalog). There are no free or subsidized models. Silicon pretest also uses those keys and stores run data in `public/projects/<id>.silicon.json` without writing API keys to disk.
+No agent? The same steps by hand (Node 18+, no install):
 
-Switch Admin language with the top-bar EN / 中文 control. Set the participant survey language in Builder.
-
-## Use SP-Survey directly with Codex
-
-Open the SP-Survey folder in Codex and describe the study. Codex can create, read, and update local projects directly; export/import is not required.
-
-```text
-Open my current streetscape project. Give each participant 10 random images,
-ask safety and visual-comfort ratings from 1–7, then run the checks and open
-the local Live Survey for me to review. Preserve my media and Supabase settings.
+```bash
+node kit/sp.mjs library safety                          # published studies + matching papers
+node kit/sp.mjs new my-study --from 2016-dubey-place    # a running study with the original questions
+cp ~/photos/*.jpg my-study/stimuli/
+node kit/sp.mjs check my-study                          # validates the page, lists media, explains the draws
+node kit/sp.mjs serve my-study                          # http://localhost:4173 — responses saved locally
+node kit/sp.mjs export my-study                         # answers_long.csv + image_scores.csv
 ```
 
-The localhost-only agent API is available while `npm run dev` is running:
+## Go live
 
-| Action | Endpoint |
+**Self-host (your data never leaves your accounts)**
+
+1. Create a free [Supabase](https://supabase.com) project → SQL Editor → run [`kit/supabase.sql`](./kit/supabase.sql).
+2. Put the project URL and the **anon** key in `my-study/sp-config.json` (never the service-role key).
+3. Deploy the folder to any static host: Cloudflare Pages, Netlify, Vercel, GitHub Pages, a university web server.
+4. Download data: `SUPABASE_URL=… SUPABASE_SERVICE_ROLE_KEY=… node kit/sp.mjs export my-study`.
+
+Prolific / MTurk style links work: `?PROLIFIC_PID=…` becomes the participant id, and `completionUrl` in `sp-config.json` sends people back when they finish.
+
+**Or use the hosted platform.** Zip the folder and drop it into Studio on [sp-survey.org](https://sp-survey.org), or connect your agent to `https://sp-survey.org/mcp`. You get recruitment links per country, live results, AI-assisted analysis and a citable dataset package, with no server to run.
+
+## How it works
+
+```mermaid
+flowchart LR
+  A["Your AI<br/>(Claude, Codex, ChatGPT…)"] -->|writes| P["index.html<br/>+ sp-scheme JSON"]
+  L["Study library<br/>28 published instruments"] --> A
+  P --> R["sp-site.js<br/>typed answers · seeded / balanced draws"]
+  R --> S[("Your Supabase<br/>survey_responses")]
+  P -.same page.-> H["sp-survey.org<br/>Studio · recruitment · dashboards"]
+  S --> E["sp.mjs export<br/>answers_long.csv · image_scores.csv"]
+```
+
+| File | What it is |
 |---|---|
-| Discover the API | `GET /api/agent` |
-| Create a project | `POST /api/agent/projects` |
-| List projects | `GET /api/agent/projects` |
-| Read a project | `GET /api/agent/projects/:id` |
-| Update `surveyConfig` | `PATCH /api/agent/projects/:id/survey` |
-| Apply operations | `POST /api/agent/projects/:id/operations` |
-| Validate | `POST /api/agent/projects/:id/validate` |
-| Get preview URLs | `GET /api/agent/projects/:id/preview-url` |
-| Release snapshot | `POST /api/agent/projects/:id/release` |
-| Media | `GET/PATCH /api/agent/projects/:id/media` |
-| Skills | `GET/POST /api/agent/skills` |
-| Results | `GET /api/agent/projects/:id/results` |
-| Assistant chat | `POST /api/agent/chat` |
-| Silicon | `/api/agent/silicon/*` |
+| [`kit/SP-SCHEME.md`](./kit/SP-SCHEME.md) | The standard: page contract, question types, answer shapes, media rules (identical to the text sp-survey.org gives models) |
+| [`kit/sp-site.js`](./kit/sp-site.js) | Runtime (one file, no dependencies): `window.SPSite`, answer checks, Fisher–Yates and balanced draws, storage, resume after reload |
+| [`kit/sp.mjs`](./kit/sp.mjs) | `library`, `new`, `check`, `serve`, `export` |
+| [`kit/supabase.sql`](./kit/supabase.sql) | Response table, idempotent submit, balanced-draw claims (same schema as the platform) |
+| [`kit/library/`](./kit/library/) | 28 published study instruments + an index of 1,529 perception papers |
+| [`.claude/skills/sp-scheme`](./.claude/skills/sp-scheme/SKILL.md) | Agent skill: design → page → check → deploy → analyse → contribute |
 
-Agent reads exclude known credentials. Updates change only `surveyConfig`, preserve stored credentials, create a local backup, and reject invalid structure. Send the returned `savedAt` / `draftUpdatedAt` as `expectedSavedAt` or `expectedDraftUpdatedAt` when updating. If Admin is open with unsaved edits, it will warn instead of silently overwriting an agent write.
+Responses are stored as one row per participant: `responses` (answer per question; repeated rounds as `{trials:[{value, shown_images}]}`), `displayed_images`, and `survey_metadata` (balanced-draw number and claim, timing, URL parameters, runtime version). `node --test kit/kit.test.mjs` checks the balance guarantee, the export and every library study.
 
-After every change, check:
+## The study library
 
-1. Question preview and Theme Settings preview.
-2. Full Preview Survey.
-3. Researcher Practice for media or annotation studies.
-4. Local Live Survey, including mobile width.
-5. Response fields required by the analysis plan.
+28 instruments rebuilt from published papers, each with its original wording and scales and an explicit list of differences from the original: Place Pulse 1.0 and 2.0, Streetscore, UrbanGems, SPECS, Scenic-Or-Not, Ewing & Handy's urban design qualities, Gehl's 12 criteria, Attention Restoration Theory, bikeability, playability, greenery, thermal comfort, window views, hotel hue… Plus [`papers.csv`](./kit/library/papers.csv): 1,529 perception studies from the paper library on sp-survey.org (kept up to date by a weekly literature scan and manual review).
 
-`Export for AI / IDE` remains available for sharing a credential-free project outside the local workspace.
+**The library grows by contribution.** Give your agent a paper and ask it to add the study (skill step 6); it rebuilds the questionnaire, lists the differences and opens a pull request. Every merged study becomes something anyone can replicate in one command, and every replication cites the original.
 
-## Complete survey workflow
+## Classic app
 
-### 1. Create a Supabase project
+The full visual builder this repository started as (Builder, Media, Host, Results, SAM annotation, Silicon pretests) is still here and still works: `npm install && npm run dev`, then see [docs/classic-app.md](./docs/classic-app.md). It is no longer the recommended starting point.
 
-Create a project at [supabase.com](https://supabase.com). In **Project Settings → API**, copy:
+## 中文说明
 
-- Project ID or Project URL;
-- anon key for the participant website;
-- `service_role` key for local administrator uploads and analysis.
+**SP-Scheme 是给"AI 做感知实验"定的开放标准。** 现在用 Claude、ChatGPT 或 Codex 几分钟就能做出一个问卷页面，但每个人做出来的题目写法、随机方式和数据格式都不一样，结果没法比较，也没法合并。SP-Scheme 只规定三件必须做对的事：
 
-Do not give keys to Codex. Enter them only in the SP-Survey interface.
+1. 每道题有固定的类型和答案格式；
+2. 图片由经过测试的代码按参与者抽取，可以设为均衡，让每张图被看的次数相同；
+3. 统一的数据格式，记录每个回答和当时展示的图片。
 
-### 2. Create the local SP-Survey project
+页面长什么样完全交给 AI 设计。
 
-Run `npm run dev`, then create a project in `/admin` or ask Codex to create one through the local agent API. Projects are local JSON files under `public/projects/` and are not committed.
+用法：把仓库用 Claude Code 或 Codex 打开，直接说"用我的新加坡街景复现 Place Pulse 2.0 的安全感对比"。仓库自带 skill，AI 会按标准一步步完成：选研究、生成页面、校验、本地试跑、部署到你自己的 Supabase、导出数据。同一个页面也可以原样上传到 [sp-survey.org](https://sp-survey.org)，用平台的招募链接和分析功能。
 
-Codex can create, review, and update the selected survey directly through the local agent API. If several projects have similar names, identify the intended project before asking Codex to edit it.
-
-### 3. Configure Supabase and upload media
-
-Open **Media**. Configure **Supabase Storage** at the top, then add files with the two panels:
-
-1. **Upload Media** — choose local images, video, or audio and upload them to Supabase Storage.
-2. **HF Dataset Import** — import a Hugging Face dataset and transfer its media to Supabase.
-
-Templates create a project without copying media. Upload files or import from Hugging Face after creating from a template.
-
-In Supabase **Storage**, create a public bucket named `survey-images`. SP-Survey can also attempt to create it on the first upload. Confirm that uploaded files appear in the Media Library, then organize folders and mark folders as sets or categories when required.
-
-Codex can configure media assignment, folders, repeated trials, and question logic. The user should enter credentials and select private local files.
-
-### 4. Design the survey
-
-Open **Builder**. Create pages and questions, configure media assignment, repeated trials, validation, progress, theme, completion text, survey language, and response metadata.
-
-This is the main Codex step. Describe the study in natural language; Codex reads the current local project, updates `surveyConfig`, validates it, and returns the local Admin and Local Live Survey URLs. Use the visual editor for manual adjustments.
-
-### 5. Preview and practice
-
-Check the question preview, Theme Settings preview, full **Preview Survey**, **Researcher Practice**, and local **View Live Survey**. Test mobile width and confirm that media, trial navigation, required questions, theme, and saved metadata agree in every view. This localhost page is a preview; the public participant link is created in Step 7.
-
-### 6. Create the Supabase response table
-
-Open **Host**. It uses the Supabase configuration saved in Media. Click **Copy SQL Script**, open **Supabase Dashboard → SQL Editor**, paste [`supabase/setup.sql`](./supabase/setup.sql), and click **Run**. That script is idempotent and creates `survey_responses`, `count_responses`, `get_pair_stats`, `submit_survey_response`, `image_features`, and the public `survey-images` bucket. The short table-only script below is the minimum if you only need inserts:
-
-```sql
-CREATE TABLE IF NOT EXISTS survey_responses (
-  id BIGSERIAL PRIMARY KEY,
-  participant_id TEXT NOT NULL,
-  project_id TEXT,
-  responses JSONB NOT NULL,
-  displayed_images JSONB,
-  survey_metadata JSONB,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
-CREATE INDEX IF NOT EXISTS idx_survey_responses_created_at
-ON survey_responses(created_at DESC);
-
-CREATE INDEX IF NOT EXISTS idx_survey_responses_participant_id
-ON survey_responses(participant_id);
-
-CREATE INDEX IF NOT EXISTS idx_survey_responses_project_id
-ON survey_responses(project_id);
-
-ALTER TABLE survey_responses ENABLE ROW LEVEL SECURITY;
-
-DROP POLICY IF EXISTS "Allow anonymous inserts to survey_responses"
-ON survey_responses;
-
-CREATE POLICY "Allow anonymous inserts to survey_responses"
-ON survey_responses
-FOR INSERT
-TO anon, authenticated
-WITH CHECK (true);
-
-GRANT INSERT ON TABLE survey_responses TO anon, authenticated;
-GRANT USAGE, SELECT ON SEQUENCE survey_responses_id_seq TO anon, authenticated;
-
-DROP POLICY IF EXISTS "Allow public read survey_responses"
-ON survey_responses;
-
-REVOKE SELECT ON TABLE survey_responses FROM anon, authenticated;
-```
-
-Return to SP-Survey, check the connection and table status, then submit a test response. Participants can insert responses; anonymous users cannot read all responses. The local administrator uses the `service_role` key for Results Analysis.
-
-### 7. Generate and deploy the participant website
-
-The participant package is a production build of the same **SurveyApp** used for local Live Survey. It embeds the **released snapshot** (widgets, locale, trials, skills, annotation, set/category sampling, recoverable submit, version stamps, and per-trial category). Only the Supabase URL and anon key are written into the package — never the `service_role` key, Hugging Face tokens, or other researcher credentials.
-
-Open **Host** (after the backend table is ready):
-
-1. Release the draft first (Save updates the draft only). Prepare Deployment Folder then bakes that released snapshot.
-2. Click **Test Build** and open the generated preview. Confirm the survey matches local Live Survey.
-3. Create an empty GitHub repository for this participant deployment.
-4. Enter that repository URL and click **Upload to GitHub**, or push the generated folder manually.
-5. In Vercel, create a project by importing that GitHub repository.
-6. In **Vercel Project Settings → Environment Variables**, add:
-
-```text
-REACT_APP_SUPABASE_URL=https://your-project.supabase.co
-REACT_APP_SUPABASE_ANON_KEY=your-anon-key
-```
-
-Do not add the `service_role` key to GitHub or Vercel. Deploy or redeploy after saving the environment variables.
-
-Open the deployed site (`/` or `/survey`, optional `?locale=zh`), complete the survey once, and confirm the new row in **Supabase → Table Editor → survey_responses**. Test English and Chinese before distributing the URL.
-
-### 8. Analyze responses
-
-Return to **Results Analysis** in the local Admin application. Use the locally stored `service_role` configuration to load responses, inspect quality and researcher-practice records, run the required analyses, and export CSV files.
-
-Templates are stored in [`public/project_templates/`](./public/project_templates/). `Export for AI / IDE` is only for sharing a credential-free project outside the local workspace.
-
-## Security
-
-- Never commit or deploy the `service_role` key.
-- The participant website receives only the Supabase URL and anon key.
-- `.env`, local projects, backups, responses, and participant data are ignored by Git.
-- Review consent, retention, access control, and institutional requirements before data collection.
-
-## Development
-
-```bash
-CI=true npm test -- --watchAll=false --runInBand
-npm run build
-```
-
-Changes to participant interactions must cover the builder, question preview, full preview, Researcher Practice, Live Survey, response metadata, analysis/export, and tests. Keep the self-hosted boundary: no login, no Platform project ownership, no managed R2 dependency.
+研究库目前收录 28 个已发表研究的原版问卷，另有 1,529 篇感知研究论文的索引。把一篇论文交给你的 AI，它可以帮你把这项研究加进库里并提交 PR。
 
 ## Citation
 
+If you run a study with SP-Scheme, cite the original study you replicated and the software ([`CITATION.cff`](./CITATION.cff)):
+
 ```bibtex
-@article{yang2025thermal,
-  title={Thermal comfort in sight: Thermal affordance and its visual assessment for sustainable streetscape design},
-  author={Yang, Sijie and Chong, Adrian and Liu, Pengyuan and Biljecki, Filip},
-  journal={Building and Environment},
-  pages={112569},
-  year={2025},
-  publisher={Elsevier}
+@software{spsurvey,
+  title  = {SP-Survey and the SP-Scheme standard for perception experiments},
+  author = {{Urban Analytics Lab, National University of Singapore} and Yang, Sijie},
+  year   = {2026},
+  url    = {https://github.com/Sijie-Yang/SP-Survey}
 }
 ```
 
-## License
+The SP-Survey platform paper is a manuscript under review; this section will be updated once it is published.
 
-[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — Urban Analytics Lab, National University of Singapore.
+## License & community
+
+Code: [MIT](./LICENSE). Spec, documentation and study library: CC BY 4.0. Questions, ideas and study showcases: [GitHub Discussions](https://github.com/Sijie-Yang/SP-Survey/discussions). Built by the [Urban Analytics Lab](https://ual.sg), National University of Singapore.

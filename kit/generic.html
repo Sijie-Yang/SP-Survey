@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="__LANG__">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>__TITLE__</title>
+<script type="application/json" id="sp-scheme">
+__SCHEME__
+</script>
+<!-- sp-site-preview:start -->
+<!-- Self-hosted runtime. sp-survey.org removes this block on upload and supplies its own SPSite. -->
+<script src="sp-site.js"></script>
+<!-- sp-site-preview:end -->
+<style>
+  :root { --bg: #f7f7f5; --card: #fff; --ink: #1c1c1c; --muted: #666; --line: #ddd; --accent: #0f766e; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px 16px 80px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; margin: 16px 0; }
+  h1 { font-size: 26px; line-height: 1.25; margin: 0 0 8px; }
+  h2 { font-size: 19px; line-height: 1.3; margin: 0 0 6px; }
+  .desc { color: var(--muted); margin: 0 0 12px; white-space: pre-line; }
+  .progress { height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+  .progress div { height: 100%; background: var(--accent); transition: width .2s; }
+  .media { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin: 10px 0; }
+  .media img, .media video { width: 100%; border-radius: 8px; display: block; background: #eee; }
+  .pick { padding: 0; border: 4px solid transparent; border-radius: 12px; background: none; cursor: pointer; }
+  .pick:hover, .pick:focus-visible { border-color: var(--accent); outline: none; }
+  .pick.on { border-color: var(--accent); }
+  .opts { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+  .opt { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 8px 14px; cursor: pointer; font: inherit; }
+  .opt.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .poles { display: flex; justify-content: space-between; color: var(--muted); font-size: 13px; }
+  input[type=range] { width: 100%; }
+  input[type=text], input[type=number], textarea, select { width: 100%; font: inherit; padding: 8px; border: 1px solid var(--line); border-radius: 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  td, th { border-bottom: 1px solid var(--line); padding: 6px 4px; text-align: center; }
+  td:first-child { text-align: left; }
+  .rank li { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+  .rank img { width: 120px; border-radius: 6px; }
+  .nav { display: flex; justify-content: flex-end; gap: 10px; }
+  .btn { padding: 12px 22px; border: 0; border-radius: 999px; background: var(--accent); color: #fff; font: 600 16px system-ui, sans-serif; cursor: pointer; }
+  .error { color: #b91c1c; min-height: 1.2em; }
+</style>
+</head>
+<body>
+<main id="app"><p>Loading…</p></main>
+<script>
+// Generic SP-Scheme page: shows every declared question in order, one screen per question
+// (one screen per round for repeated questions). Ask your AI to restyle it freely.
+SPSite.onReady(function (ctx) {
+  var zh = (ctx.survey.language || '').indexOf('zh') === 0;
+  var L = zh ? { next: '下一步', start: '开始', finish: '提交', need: '请先回答这一题。', round: '第 {a} / {b} 轮', agree: '我同意', disagree: '我不同意' }
+             : { next: 'Next', start: 'Start', finish: 'Submit', need: 'Please answer this question first.', round: 'Round {a} of {b}', agree: 'I agree', disagree: 'I do not agree' };
+  var app = document.getElementById('app');
+  var esc = function (s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; };
+  var steps = [{ intro: true }];
+  ctx.questions.forEach(function (q) {
+    if (q.kind === 'unsupported') return;
+    var n = q.trialCount > 1 ? q.trialCount : 1;
+    for (var t = 0; t < n; t += 1) steps.push({ q: q, trial: q.trialCount > 1 ? t : null });
+  });
+  var at = 0;
+
+  function mediaHtml(list) {
+    return '<div class="media">' + (list || []).map(function (m, i) {
+      if (m.type === 'video') return '<video src="' + m.url + '" controls playsinline></video>';
+      if (m.type === 'audio') return '<audio src="' + m.url + '" controls></audio>';
+      return '<img alt="Image ' + (i + 1) + '" src="' + m.url + '">';
+    }).join('') + '</div>';
+  }
+
+  function render() {
+    var step = steps[at];
+    var pct = Math.round(100 * at / steps.length);
+    var head = '<div class="progress"><div style="width:' + pct + '%"></div></div>';
+    if (step.intro) {
+      app.innerHTML = head + '<div class="card"><h1>' + esc(ctx.survey.title) + '</h1><p class="desc">' + esc(ctx.survey.description) + '</p><div class="nav"><button class="btn" id="go">' + L.start + '</button></div></div>';
+      document.getElementById('go').onclick = function () { at += 1; render(); };
+      return;
+    }
+    var q = step.q, t = step.trial;
+    var media = t != null ? q.trials[t].media : q.media;
+    var choices = t != null ? q.trials[t].choices : q.choices;
+    var value;
+    var opts = t != null ? { trial: t } : undefined;
+    var html = head + '<div class="card"><h2>' + esc(q.title) + '</h2>' + (q.description ? '<p class="desc">' + esc(q.description) + '</p>' : '')
+      + (t != null ? '<p class="desc">' + L.round.replace('{a}', t + 1).replace('{b}', q.trialCount) + '</p>' : '');
+    var body = document.createElement('div');
+    var pickedOnly = false; // image choice: the click itself answers and moves on
+
+    if (q.kind === 'display') {
+      html += mediaHtml(media);
+    } else if (q.kind === 'choice' && /^(image|media)/.test(q.type)) {
+      pickedOnly = true;
+      html += '<div class="media" id="picks"></div>';
+    } else if (/^(image|media)/.test(q.type)) {
+      html += mediaHtml(media);
+    }
+    html += '<div id="ctl"></div><p class="error" id="err"></p><div class="nav"><button class="btn" id="next">' + (at === steps.length - 1 ? L.finish : L.next) + '</button></div></div>';
+    app.innerHTML = html;
+    var ctl = document.getElementById('ctl');
+    var err = document.getElementById('err');
+    var nextBtn = document.getElementById('next');
+
+    function optButtons(list, multi) {
+      var box = document.createElement('div'); box.className = 'opts';
+      var chosen = multi ? [] : null;
+      list.forEach(function (c) {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'opt'; b.textContent = c.text;
+        b.onclick = function () {
+          if (multi) { var i = chosen.indexOf(c.value); if (i < 0) chosen.push(c.value); else chosen.splice(i, 1); b.classList.toggle('on'); value = chosen.slice(); }
+          else { [].forEach.call(box.children, function (x) { x.classList.remove('on'); }); b.classList.add('on'); value = c.value; }
+        };
+        box.appendChild(b);
+      });
+      return box;
+    }
+
+    if (pickedOnly) {
+      nextBtn.style.display = 'none';
+      choices.forEach(function (c, i) {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'pick';
+        b.innerHTML = c.imageUrl ? '<img alt="Option ' + (i + 1) + '" src="' + c.imageUrl + '">' : esc(c.text);
+        b.onclick = function () { value = c.value; go(); };
+        document.getElementById('picks').appendChild(b);
+      });
+    } else if (q.kind === 'boolean') {
+      var labels = [{ value: true, text: q.labelTrue || (q.type === 'consent' ? L.agree : (zh ? '是' : 'Yes')) }, { value: false, text: q.labelFalse || (q.type === 'consent' ? L.disagree : (zh ? '否' : 'No')) }];
+      ctl.appendChild(optButtons(labels.map(function (l) { return { value: l.value, text: l.text }; }), false));
+    } else if (q.kind === 'rating') {
+      var vals = q.rateValues || [];
+      if (!vals.length) for (var r = q.rateMin; r <= q.rateMax; r += 1) vals.push({ value: r, text: String(r) });
+      ctl.appendChild(optButtons(vals, false));
+      if (q.minLabel || q.maxLabel) { var p = document.createElement('div'); p.className = 'poles'; p.innerHTML = '<span>' + esc(q.minLabel) + '</span><span>' + esc(q.maxLabel) + '</span>'; ctl.appendChild(p); }
+    } else if (q.kind === 'choice') {
+      ctl.appendChild(optButtons(choices || [], false));
+    } else if (q.kind === 'multiChoice') {
+      ctl.appendChild(optButtons(choices || [], true));
+    } else if (q.kind === 'text') {
+      var input = document.createElement(q.type === 'comment' ? 'textarea' : 'input');
+      if (input.tagName === 'INPUT') input.type = 'text'; else input.rows = 4;
+      input.oninput = function () { value = input.value; };
+      ctl.appendChild(input);
+    } else if (q.kind === 'number') {
+      var num = document.createElement('input'); num.type = 'number';
+      if (q.min != null) num.min = q.min; if (q.max != null) num.max = q.max;
+      num.oninput = function () { value = num.value === '' ? undefined : Number(num.value); };
+      ctl.appendChild(num);
+    } else if (q.kind === 'sliders') {
+      value = {};
+      q.dimensions.forEach(function (d) {
+        var mid = Math.round((d.min + d.max) / 2); value[d.id] = mid;
+        var row = document.createElement('div');
+        row.innerHTML = '<strong>' + esc(d.label) + '</strong><input type="range" min="' + d.min + '" max="' + d.max + '" step="' + d.step + '" value="' + mid + '"><div class="poles"><span>' + esc(d.left) + '</span><span>' + esc(d.right) + '</span></div>';
+        row.querySelector('input').oninput = function (e) { value[d.id] = Number(e.target.value); };
+        ctl.appendChild(row);
+      });
+    } else if (q.kind === 'matrix') {
+      value = {};
+      var tbl = '<table><tr><th></th>' + q.columns.map(function (c) { return '<th>' + esc(c.text) + '</th>'; }).join('') + '</tr>'
+        + q.rows.map(function (row, ri) { return '<tr><td>' + esc(row.text) + '</td>' + q.columns.map(function (c) { return '<td><input type="radio" name="r' + ri + '" data-row="' + esc(row.value) + '" value="' + esc(c.value) + '" aria-label="' + esc(row.text + ': ' + c.text) + '"></td>'; }).join('') + '</tr>'; }).join('') + '</table>';
+      ctl.innerHTML = tbl;
+      ctl.onchange = function (e) { if (e.target.dataset.row) value[e.target.dataset.row] = e.target.value; };
+    } else if (q.kind === 'ranking') {
+      var order = (choices || []).filter(function (c) { return !c.tie; }).slice();
+      value = order.map(function (c) { return c.value; });
+      var ol = document.createElement('ol'); ol.className = 'rank';
+      var draw = function () {
+        ol.innerHTML = '';
+        order.forEach(function (c, i) {
+          var li = document.createElement('li');
+          li.innerHTML = (c.imageUrl ? '<img alt="" src="' + c.imageUrl + '">' : '<span>' + esc(c.text) + '</span>') + ' <button type="button" class="opt" aria-label="up">↑</button><button type="button" class="opt" aria-label="down">↓</button>';
+          li.querySelectorAll('button')[0].onclick = function () { if (i > 0) { order.splice(i - 1, 0, order.splice(i, 1)[0]); draw(); } };
+          li.querySelectorAll('button')[1].onclick = function () { if (i < order.length - 1) { order.splice(i + 1, 0, order.splice(i, 1)[0]); draw(); } };
+          ol.appendChild(li);
+        });
+        value = order.map(function (c) { return c.value; });
+      };
+      draw();
+      ctl.appendChild(ol);
+    } else if (q.kind === 'allocation') {
+      value = {};
+      (choices || []).forEach(function (c) {
+        var row = document.createElement('div');
+        row.innerHTML = '<label>' + esc(c.text) + ' <input type="number" min="0" max="' + q.budget + '" value="0"></label>';
+        value[c.value] = 0;
+        row.querySelector('input').oninput = function (e) { value[c.value] = Number(e.target.value) || 0; };
+        ctl.appendChild(row);
+      });
+      var hint = document.createElement('p'); hint.className = 'desc'; hint.textContent = (zh ? '总分 ' : 'Total ') + q.budget; ctl.appendChild(hint);
+    } else {
+      ctl.innerHTML = '<p class="desc">' + esc(q.type) + ': this generic page cannot show this question type. Ask your AI to add it.</p>';
+    }
+
+    function go() {
+      if (q.kind === 'display') { at += 1; return at < steps.length ? render() : finish(); }
+      if (value === undefined || value === '' || value === null) {
+        if (q.required) { err.textContent = L.need; return; }
+        at += 1; return at < steps.length ? render() : finish();
+      }
+      SPSite.answer(q.name, value, opts).then(function (r) {
+        if (!r.ok) { err.textContent = r.error; return; }
+        at += 1;
+        if (at < steps.length) render(); else finish();
+      });
+    }
+    nextBtn.onclick = go;
+  }
+
+  function finish() {
+    SPSite.complete().then(function (r) {
+      if (r.ok) return;
+      var name = (r.missing || [])[0];
+      var i = steps.findIndex(function (s) { return s.q && s.q.name === name; });
+      at = i > 0 ? i : steps.length - 1;
+      render();
+      document.getElementById('err').textContent = r.error || L.need;
+    });
+  }
+  render();
+});
+</script>
+</body>
+</html>

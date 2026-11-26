@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Street perception study</title>
+<script type="application/json" id="sp-scheme">
+{
+  "format": "sp-scheme-package",
+  "spScheme": "2.0",
+  "survey": {
+    "title": "Street perception study",
+    "description": "You will compare street images and rate one scene. About 3 minutes.",
+    "locale": "en",
+    "pages": [
+      {
+        "name": "welcome",
+        "elements": [
+          {
+            "type": "consent",
+            "name": "consent",
+            "title": "I agree to take part in this study",
+            "isRequired": true
+          }
+        ]
+      },
+      {
+        "name": "duel",
+        "elements": [
+          {
+            "type": "imagepicker",
+            "name": "safety_duel",
+            "title": "Which street feels safer to walk alone at night?",
+            "imageCount": 2,
+            "trialCount": 3,
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "excludePreviouslyUsedImages": true,
+            "choices": [],
+            "isRequired": true,
+            "mediaFolders": [
+              "streets"
+            ],
+            "pairingMode": "balanced"
+          }
+        ]
+      },
+      {
+        "name": "scales",
+        "elements": [
+          {
+            "type": "imageslidergroup",
+            "name": "scene_scales",
+            "title": "How does this street feel?",
+            "imageCount": 1,
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "excludePreviouslyUsedImages": true,
+            "scaleMin": 1,
+            "scaleMax": 7,
+            "dimensions": [
+              {
+                "id": "safety",
+                "label": "Safety",
+                "left": "Very unsafe",
+                "right": "Very safe"
+              },
+              {
+                "id": "lively",
+                "label": "Liveliness",
+                "left": "Dull",
+                "right": "Lively"
+              }
+            ],
+            "isRequired": true,
+            "mediaFolders": [
+              "streets"
+            ],
+            "pairingMode": "balanced"
+          }
+        ]
+      }
+    ]
+  }
+}
+</script>
+<!-- sp-site-preview:start -->
+<!-- Self-hosted: sp-site.js is the real runtime (media, balanced draws, storage). The preview shim below is only used where sp-site.js is missing (a model's preview). sp-survey.org removes this whole block on upload and supplies its own SPSite. -->
+<script src="sp-site.js"></script>
+<script>
+(function () {
+  if (window.SPSite) return;
+  var KIND = { text: 'text', comment: 'text', number: 'number', rating: 'rating', imagerating: 'rating', mediarating: 'rating',
+    boolean: 'boolean', consent: 'boolean', imageboolean: 'boolean', mediaboolean: 'boolean',
+    radiogroup: 'choice', dropdown: 'choice', imagepicker: 'choice', mediapicker: 'choice',
+    checkbox: 'multiChoice', imagecheckbox: 'multiChoice', mediacheckbox: 'multiChoice',
+    ranking: 'ranking', imageranking: 'ranking', mediaranking: 'ranking',
+    slidergroup: 'sliders', imageslidergroup: 'sliders', mediaslidergroup: 'sliders',
+    matrix: 'matrix', imagematrix: 'matrix', mediamatrix: 'matrix',
+    pointallocation: 'allocation', imagepointallocation: 'allocation', mediapointallocation: 'allocation',
+    imageannotation: 'annotation', html: 'display', expression: 'display', image: 'display', mediadisplay: 'display' };
+  var MEDIA_CHOICE = { imagepicker: 'image_', imageranking: 'image_', mediaranking: 'image_', mediapicker: 'media_' };
+  var COLORS = ['#8fb3d9', '#d9a38f', '#9fd98f', '#d9cf8f', '#b38fd9', '#8fd9cf'];
+  var questions = [], survey = {}, answers = {}, ready = false, waiters = [], lang = 'en', drawn = 0;
+  function text(v) { if (v == null) return ''; if (typeof v === 'object') return String(v[lang] || v['default'] || ''); return String(v); }
+  function items(list) {
+    return (list || []).map(function (c) {
+      if (c && typeof c === 'object') return { value: String(c.value != null ? c.value : c.text), text: text(c.text != null ? c.text : c.value) };
+      return { value: String(c), text: String(c) };
+    });
+  }
+  function image(label) {
+    drawn += 1;
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420"><rect width="640" height="420" fill="' + COLORS[drawn % COLORS.length] + '"/><text x="320" y="225" font-size="40" text-anchor="middle" fill="#222" font-family="sans-serif">' + label + '</text></svg>';
+    return { url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg), name: 'placeholder_' + drawn + '.jpg', type: 'image' };
+  }
+  function build(scheme) {
+    var s = (scheme && scheme.survey) || scheme || {};
+    lang = s.locale || 'en';
+    survey = { title: text(s.title), description: text(s.description), language: lang, preview: true };
+    (s.pages || []).forEach(function (page) {
+      (page.elements || []).forEach(function (el) {
+        if (!el || !el.name) return;
+        var kind = (el.type === 'text' && el.inputType === 'number') ? 'number' : (KIND[el.type] || 'unsupported');
+        var q = { name: el.name, page: page.name || null, type: el.type, kind: kind, title: text(el.title) || el.name,
+          description: text(el.description), required: !!el.isRequired, trialCount: Math.max(1, Math.floor(Number(el.trialCount) || 1)) };
+        if (kind === 'number') { q.min = el.min != null ? el.min : null; q.max = el.max != null ? el.max : null; }
+        if (kind === 'rating') { q.rateMin = Number(el.rateMin != null ? el.rateMin : 1); q.rateMax = Number(el.rateMax != null ? el.rateMax : 5); if (el.rateValues) q.rateValues = items(el.rateValues); else if (el.rateLabels) q.rateValues = el.rateLabels.map(function (t, i) { return { value: q.rateMin + i * (Number(el.rateStep) || 1), text: text(t) }; }); q.minLabel = text(el.minRateDescription); q.maxLabel = text(el.maxRateDescription); }
+        if (kind === 'boolean') { q.labelTrue = text(el.labelTrue); q.labelFalse = text(el.labelFalse); }
+        if (kind === 'sliders') q.dimensions = (el.dimensions || []).map(function (d) { return { id: String(d.id), label: text(d.label), left: text(d.left), right: text(d.right), min: d.min != null ? d.min : (el.scaleMin != null ? el.scaleMin : 1), max: d.max != null ? d.max : (el.scaleMax != null ? el.scaleMax : 7), step: d.step != null ? d.step : (el.scaleStep || 1) }; });
+        if (kind === 'matrix') { q.rows = items(el.rows); q.columns = items(el.columns); }
+        if (kind === 'allocation') q.budget = Number(el.budget != null ? el.budget : 100);
+        if (kind === 'annotation') { q.tools = el.allowedTools || ['point', 'line', 'polygon', 'bbox']; q.labels = items(el.annotationLabels).map(function (l) { return l.text; }); q.minShapes = el.minAnnotations || 0; q.maxShapes = el.maxAnnotations || 50; }
+        var media = /^(image|media)/.test(el.type) ? Number(el.imageCount) || (MEDIA_CHOICE[el.type] ? 4 : 1) : 0;
+        function draw(t) { var m = []; for (var i = 0; i < media; i += 1) m.push(image((q.trialCount > 1 ? 'Trial ' + (t + 1) + ' · ' : '') + 'Image ' + (i + 1))); return m; }
+        function choicesFor(m) {
+          var list;
+          if (MEDIA_CHOICE[el.type]) list = m.map(function (x, i) { return { value: MEDIA_CHOICE[el.type] + i, text: x.name, imageUrl: x.url }; });
+          else if (/^(choice|multiChoice|ranking|allocation)$/.test(kind)) list = items(el.choices);
+          if (list && el.allowTie && el.tieLabel) list.push({ value: String(el.tieLabel), text: String(el.tieLabel), tie: true });
+          return list;
+        }
+        if (q.trialCount > 1) {
+          q.trials = [];
+          for (var t = 0; t < q.trialCount; t += 1) { var m = draw(t); q.trials.push({ media: m, choices: choicesFor(m) }); }
+        } else {
+          q.media = draw(0);
+          var c = choicesFor(q.media);
+          if (c) q.choices = c;
+        }
+        questions.push(q);
+      });
+    });
+  }
+  function find(name) { for (var i = 0; i < questions.length; i += 1) if (questions[i].name === name) return questions[i]; return null; }
+  function panel() {
+    var box = document.getElementById('sp-preview-data');
+    if (!box) {
+      box = document.createElement('details');
+      box.id = 'sp-preview-data';
+      box.style.cssText = 'position:fixed;right:8px;bottom:8px;max-width:min(420px,90vw);max-height:45vh;overflow:auto;background:#111;color:#9f9;font:12px monospace;border-radius:6px;padding:6px 10px;opacity:.92;z-index:2147483647';
+      box.innerHTML = '<summary style="cursor:pointer;color:#fff">SP-Scheme preview · recorded data</summary><pre style="margin:6px 0 0;white-space:pre-wrap"></pre>';
+      document.body.appendChild(box);
+    }
+    box.querySelector('pre').textContent = JSON.stringify(answers, null, 2);
+    return box;
+  }
+  function done(result) { return Promise.resolve(result); }
+  window.SPSite = {
+    version: 'preview',
+    platform: false,
+    onReady: function (cb) { if (ready) cb({ questions: questions, survey: survey, answers: answers }); else waiters.push(cb); },
+    getQuestions: function () { return questions; },
+    getQuestion: find,
+    getSurvey: function () { return survey; },
+    getAnswers: function () { return answers; },
+    allowedHosts: [],
+    getMedia: function (folder) {
+      // On the platform: the files of a survey-level mediaFolders entry. The preview has none.
+      var all = (survey && survey.mediaFolders) || [];
+      if (folder === undefined) { var out = {}; all.forEach(function (f) { out[f] = []; }); return out; }
+      console.warn('[SPSite preview] getMedia(' + folder + '): the preview has no media library; the platform fills this in');
+      return [];
+    },
+    onSubmit: function () { /* the platform hands intercepted result posts here */ },
+    onRequest: function () { /* the platform lets the page answer its own requests here */ },
+    answer: function (name, value, options) {
+      var q = find(name);
+      if (!q) { console.warn('[SPSite preview] unknown question', name); return done({ ok: false, error: 'Unknown question "' + name + '"' }); }
+      var key = options && options.key, shown = options && options.shown;
+      if (key != null || (shown != null && !(q.trialCount > 1 && options.trial != null))) {
+        // Page-drawn media: one record per item, replaced when the same key comes again.
+        var rec = answers[name] && answers[name].trials ? answers[name] : { trials: [] };
+        var list = [].concat(shown == null ? [] : shown).map(String);
+        var at = key == null ? -1 : rec.trials.findIndex(function (x) { return x.key === String(key); });
+        if (value == null) { if (at >= 0) rec.trials.splice(at, 1); }
+        else { var e = { value: value, shown_images: list, shown_media_ids: list }; if (key != null) e.key = String(key); if (at >= 0) rec.trials[at] = e; else rec.trials.push(e); }
+        if (rec.trials.length) answers[name] = rec; else delete answers[name];
+      } else if (q.trialCount > 1) {
+        var t = options && options.trial;
+        if (typeof t !== 'number' || t < 0 || t >= q.trialCount) return done({ ok: false, error: name + ' repeats ' + q.trialCount + ' times: pass { trial: 0…' + (q.trialCount - 1) + ' }' });
+        var cur = answers[name] || { trials: [] };
+        while (cur.trials.length < q.trialCount) cur.trials.push({ value: null, shown_images: [] });
+        cur.trials[t] = { value: value == null ? null : value, shown_images: value == null ? [] : q.trials[t].media.map(function (m) { return m.url.slice(0, 40) + '…'; }) };
+        answers[name] = cur;
+      } else if (value == null) { delete answers[name]; } else { answers[name] = value; }
+      panel();
+      return done({ ok: true });
+    },
+    complete: function () {
+      var missing = questions.filter(function (q) {
+        if (!q.required || q.kind === 'display') return false;
+        var v = answers[q.name];
+        if (q.trialCount > 1) return !v || v.trials.some(function (x) { return x.value == null; });
+        return v == null || v === '' || (typeof v === 'object' && !Object.keys(v).length);
+      }).map(function (q) { return q.name; });
+      if (missing.length) return done({ ok: false, missing: missing, error: 'Required questions are unanswered: ' + missing.join(', ') });
+      var box = panel();
+      box.open = true;
+      box.querySelector('summary').textContent = 'Preview finished · on SP-Survey these answers are submitted now';
+      return done({ ok: true });
+    }
+  };
+  function start() {
+    var node = document.getElementById('sp-scheme');
+    try { build(JSON.parse(node ? node.textContent : '{}')); } catch (err) { console.error('[SPSite preview] invalid sp-scheme JSON', err); }
+    ready = true;
+    var d = { questions: questions, survey: survey, answers: answers };
+    waiters.splice(0).forEach(function (cb) { cb(d); });
+    document.dispatchEvent(new CustomEvent('spsite-ready', { detail: d }));
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else setTimeout(start, 0);
+})();
+</script>
+<!-- sp-site-preview:end -->
+<style>
+  body { margin: 0; font-family: system-ui, sans-serif; background: #0f172a; color: #f8fafc; }
+  main { max-width: 880px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1, h2 { line-height: 1.25; }
+  .duel { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .duel button { padding: 0; border: 4px solid transparent; border-radius: 12px; background: none; cursor: pointer; }
+  .duel button:hover, .duel button:focus-visible { border-color: #38bdf8; outline: none; }
+  img { width: 100%; display: block; border-radius: 8px; }
+  .btn { margin-top: 16px; padding: 12px 20px; border: 0; border-radius: 999px; background: #38bdf8; color: #0f172a; font-size: 16px; font-weight: 700; cursor: pointer; }
+  .scale { margin: 18px 0; }
+  .scale input { width: 100%; }
+  .poles { display: flex; justify-content: space-between; font-size: 13px; opacity: .8; }
+  .error { color: #fca5a5; min-height: 1.2em; }
+</style>
+</head>
+<body>
+<main id="app"><p>Loading…</p></main>
+<script>
+SPSite.onReady(function (ctx) {
+  var app = document.getElementById('app');
+  var esc = function (s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; };
+  var screens = [welcome, duel, scales];
+  var screen = 0;
+  var trial = 0;
+  function next() { screen += 1; trial = 0; if (screen < screens.length) screens[screen](); }
+
+  function welcome() {
+    var q = SPSite.getQuestion('consent');
+    app.innerHTML = '<h1>' + esc(ctx.survey.title) + '</h1><p>' + esc(ctx.survey.description) + '</p>'
+      + '<label><input type="checkbox" id="agree"> ' + esc(q.title) + '</label><br>'
+      + '<button class="btn" id="go">Start</button><p class="error" id="err"></p>';
+    document.getElementById('go').onclick = function () {
+      if (!document.getElementById('agree').checked) { document.getElementById('err').textContent = 'Please agree to continue.'; return; }
+      SPSite.answer('consent', true).then(function (r) { if (r.ok) next(); });
+    };
+  }
+
+  function duel() {
+    var q = SPSite.getQuestion('safety_duel');
+    var round = q.trials[trial];
+    app.innerHTML = '<h2>' + esc(q.title) + '</h2><p>Round ' + (trial + 1) + ' of ' + q.trialCount + '</p><div class="duel"></div>';
+    round.choices.forEach(function (choice, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.innerHTML = '<img alt="Street ' + (i + 1) + '" src="' + choice.imageUrl + '">';
+      b.onclick = function () {
+        SPSite.answer('safety_duel', choice.value, { trial: trial }).then(function (r) {
+          if (!r.ok) return;
+          trial += 1;
+          if (trial < q.trialCount) duel(); else next();
+        });
+      };
+      app.querySelector('.duel').appendChild(b);
+    });
+  }
+
+  function scales() {
+    var q = SPSite.getQuestion('scene_scales');
+    var values = {};
+    app.innerHTML = '<h2>' + esc(q.title) + '</h2><img alt="Street" src="' + q.media[0].url + '"><div id="dims"></div>'
+      + '<button class="btn" id="finish">Finish</button><p class="error" id="err"></p>';
+    q.dimensions.forEach(function (d) {
+      var mid = Math.round((d.min + d.max) / 2);
+      values[d.id] = mid;
+      var row = document.createElement('div');
+      row.className = 'scale';
+      row.innerHTML = '<strong>' + esc(d.label) + '</strong><input type="range" min="' + d.min + '" max="' + d.max + '" step="' + d.step + '" value="' + mid + '">'
+        + '<div class="poles"><span>' + esc(d.left) + '</span><span>' + esc(d.right) + '</span></div>';
+      row.querySelector('input').oninput = function (e) { values[d.id] = Number(e.target.value); };
+      document.getElementById('dims').appendChild(row);
+    });
+    document.getElementById('finish').onclick = function () {
+      SPSite.answer('scene_scales', values)
+        .then(function (r) { if (!r.ok) throw new Error(r.error); return SPSite.complete(); })
+        .then(function (r) {
+          if (!r.ok) { document.getElementById('err').textContent = r.error; return; }
+          app.innerHTML = '<h2>Submitting…</h2>';
+        })
+        .catch(function (err) { document.getElementById('err').textContent = err.message; });
+    };
+  }
+
+  welcome();
+});
+</script>
+</body>
+</html>

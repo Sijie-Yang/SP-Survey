@@ -1,4 +1,16 @@
-# SP-Survey agent workflow
+# SP-Survey agent guide
+
+## New studies: use the SP-Scheme kit (default)
+
+For any request to build, replicate, run or analyse a perception experiment, follow `.claude/skills/sp-scheme/SKILL.md` (Codex: read it now; Claude Code loads it as a skill). In short:
+
+- Read `kit/SP-SCHEME.md`; start from `node kit/sp.mjs library` / `node kit/sp.mjs new <folder> --from <id>` when a published study fits.
+- Never re-implement randomisation, answer checks or storage: `kit/sp-site.js` does them. Never hard-code or generate stimulus images.
+- `node kit/sp.mjs check <folder>` must show no ✗; `node kit/sp.mjs serve <folder>` and click through at phone and desktop width before handing over.
+- Never ask for, print or store credentials. `sp-config.json` holds only the Supabase URL and anon key; the service-role key is set by the researcher in their own shell for `export`.
+- Changes to `kit/`: run `node --test kit/kit.test.mjs`.
+
+## Classic app (only when the user works in /admin)
 
 Work only in SP-Survey. SP-Survey-Platform is a reference, not the edit target.
 

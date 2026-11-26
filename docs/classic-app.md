@@ -1,0 +1,237 @@
+# SP-Survey classic app (self-hosted admin)
+
+The full visual builder that SP-Survey started as. It still works and is still maintained for existing users, but new studies are easier with the [SP-Scheme kit](../README.md). Paths below are relative to the repository root.
+
+## Features
+
+- Standard, image, ranking, matrix, annotation, and custom-skill questions.
+- Random media, curated media, fixed sets, categories, and repeated trials.
+- SAM pre-annotate (click / box / text), batch SAM Text, label manager, review queue, and ZIP / feature CSV downloads.
+- Select-mode geometry editing for points, lines, polygons, and boxes.
+- Typed custom Skills with native-parity analysis/export.
+- Supabase/Hugging Face media workflows and advanced research analysis.
+- Unified theme behavior across question preview, full preview, Researcher Practice, and Live Survey.
+- Response quality checks, reliability, TrueSkill, perception analysis, ablation, and CSV export.
+- Participant-only deployment with response and shown-media metadata.
+
+The hosted Platform and this repository share survey/research features. The difference is infrastructure:
+
+| | Hosted Platform | SP-Survey |
+|---|---|---|
+| Access | Account and managed projects | No login; open `/admin` |
+| Storage | Managed | Local project JSON + your Supabase |
+| Participant site | Hosted | Deploy it yourself |
+
+## Quick start
+
+Requirements: Node.js 18+ and npm.
+
+```bash
+git clone https://github.com/Sijie-Yang/SP-Survey.git
+cd SP-Survey
+npm install
+npm run dev
+```
+
+- Admin: [http://localhost:3000/admin](http://localhost:3000/admin)
+- Local Live Survey: [http://localhost:3000/survey](http://localhost:3000/survey)
+- Local API: `http://localhost:3001`
+
+Tabs: Intro · Media · Builder · Host · Share · Results · Practice · Silicon.
+
+Use [`.env.example`](../.env.example) for custom ports. Split Express `PORT` into `.env` and CRA `PORT` / `REACT_APP_API_URL` into `.env.local` so the two processes do not fight. Supabase is optional until media upload or response collection.
+
+**Draft vs release:** Save updates the local draft only. Release writes `publishedSurveyConfig` into `public/projects/<id>.json`. Redeploy the participant site after a release.
+
+The AI Assistant uses your own provider keys (OpenAI, OpenRouter, DeepSeek, Qwen, and the rest of the catalog). There are no free or subsidized models. Silicon pretest also uses those keys and stores run data in `public/projects/<id>.silicon.json` without writing API keys to disk.
+
+Switch Admin language with the top-bar EN / 中文 control. Set the participant survey language in Builder.
+
+## Use SP-Survey directly with Codex
+
+Open the SP-Survey folder in Codex and describe the study. Codex can create, read, and update local projects directly; export/import is not required.
+
+```text
+Open my current streetscape project. Give each participant 10 random images,
+ask safety and visual-comfort ratings from 1–7, then run the checks and open
+the local Live Survey for me to review. Preserve my media and Supabase settings.
+```
+
+The localhost-only agent API is available while `npm run dev` is running:
+
+| Action | Endpoint |
+|---|---|
+| Discover the API | `GET /api/agent` |
+| Create a project | `POST /api/agent/projects` |
+| List projects | `GET /api/agent/projects` |
+| Read a project | `GET /api/agent/projects/:id` |
+| Update `surveyConfig` | `PATCH /api/agent/projects/:id/survey` |
+| Apply operations | `POST /api/agent/projects/:id/operations` |
+| Validate | `POST /api/agent/projects/:id/validate` |
+| Get preview URLs | `GET /api/agent/projects/:id/preview-url` |
+| Release snapshot | `POST /api/agent/projects/:id/release` |
+| Media | `GET/PATCH /api/agent/projects/:id/media` |
+| Skills | `GET/POST /api/agent/skills` |
+| Results | `GET /api/agent/projects/:id/results` |
+| Assistant chat | `POST /api/agent/chat` |
+| Silicon | `/api/agent/silicon/*` |
+
+Agent reads exclude known credentials. Updates change only `surveyConfig`, preserve stored credentials, create a local backup, and reject invalid structure. Send the returned `savedAt` / `draftUpdatedAt` as `expectedSavedAt` or `expectedDraftUpdatedAt` when updating. If Admin is open with unsaved edits, it will warn instead of silently overwriting an agent write.
+
+After every change, check:
+
+1. Question preview and Theme Settings preview.
+2. Full Preview Survey.
+3. Researcher Practice for media or annotation studies.
+4. Local Live Survey, including mobile width.
+5. Response fields required by the analysis plan.
+
+`Export for AI / IDE` remains available for sharing a credential-free project outside the local workspace.
+
+## Complete survey workflow
+
+### 1. Create a Supabase project
+
+Create a project at [supabase.com](https://supabase.com). In **Project Settings → API**, copy:
+
+- Project ID or Project URL;
+- anon key for the participant website;
+- `service_role` key for local administrator uploads and analysis.
+
+Do not give keys to Codex. Enter them only in the SP-Survey interface.
+
+### 2. Create the local SP-Survey project
+
+Run `npm run dev`, then create a project in `/admin` or ask Codex to create one through the local agent API. Projects are local JSON files under `public/projects/` and are not committed.
+
+Codex can create, review, and update the selected survey directly through the local agent API. If several projects have similar names, identify the intended project before asking Codex to edit it.
+
+### 3. Configure Supabase and upload media
+
+Open **Media**. Configure **Supabase Storage** at the top, then add files with the two panels:
+
+1. **Upload Media** — choose local images, video, or audio and upload them to Supabase Storage.
+2. **HF Dataset Import** — import a Hugging Face dataset and transfer its media to Supabase.
+
+Templates create a project without copying media. Upload files or import from Hugging Face after creating from a template.
+
+In Supabase **Storage**, create a public bucket named `survey-images`. SP-Survey can also attempt to create it on the first upload. Confirm that uploaded files appear in the Media Library, then organize folders and mark folders as sets or categories when required.
+
+Codex can configure media assignment, folders, repeated trials, and question logic. The user should enter credentials and select private local files.
+
+### 4. Design the survey
+
+Open **Builder**. Create pages and questions, configure media assignment, repeated trials, validation, progress, theme, completion text, survey language, and response metadata.
+
+This is the main Codex step. Describe the study in natural language; Codex reads the current local project, updates `surveyConfig`, validates it, and returns the local Admin and Local Live Survey URLs. Use the visual editor for manual adjustments.
+
+### 5. Preview and practice
+
+Check the question preview, Theme Settings preview, full **Preview Survey**, **Researcher Practice**, and local **View Live Survey**. Test mobile width and confirm that media, trial navigation, required questions, theme, and saved metadata agree in every view. This localhost page is a preview; the public participant link is created in Step 7.
+
+### 6. Create the Supabase response table
+
+Open **Host**. It uses the Supabase configuration saved in Media. Click **Copy SQL Script**, open **Supabase Dashboard → SQL Editor**, paste [`supabase/setup.sql`](../supabase/setup.sql), and click **Run**. That script is idempotent and creates `survey_responses`, `count_responses`, `get_pair_stats`, `submit_survey_response`, `image_features`, and the public `survey-images` bucket. The short table-only script below is the minimum if you only need inserts:
+
+```sql
+CREATE TABLE IF NOT EXISTS survey_responses (
+  id BIGSERIAL PRIMARY KEY,
+  participant_id TEXT NOT NULL,
+  project_id TEXT,
+  responses JSONB NOT NULL,
+  displayed_images JSONB,
+  survey_metadata JSONB,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_survey_responses_created_at
+ON survey_responses(created_at DESC);
+
+CREATE INDEX IF NOT EXISTS idx_survey_responses_participant_id
+ON survey_responses(participant_id);
+
+CREATE INDEX IF NOT EXISTS idx_survey_responses_project_id
+ON survey_responses(project_id);
+
+ALTER TABLE survey_responses ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Allow anonymous inserts to survey_responses"
+ON survey_responses;
+
+CREATE POLICY "Allow anonymous inserts to survey_responses"
+ON survey_responses
+FOR INSERT
+TO anon, authenticated
+WITH CHECK (true);
+
+GRANT INSERT ON TABLE survey_responses TO anon, authenticated;
+GRANT USAGE, SELECT ON SEQUENCE survey_responses_id_seq TO anon, authenticated;
+
+DROP POLICY IF EXISTS "Allow public read survey_responses"
+ON survey_responses;
+
+REVOKE SELECT ON TABLE survey_responses FROM anon, authenticated;
+```
+
+Return to SP-Survey, check the connection and table status, then submit a test response. Participants can insert responses; anonymous users cannot read all responses. The local administrator uses the `service_role` key for Results Analysis.
+
+### 7. Generate and deploy the participant website
+
+The participant package is a production build of the same **SurveyApp** used for local Live Survey. It embeds the **released snapshot** (widgets, locale, trials, skills, annotation, set/category sampling, recoverable submit, version stamps, and per-trial category). Only the Supabase URL and anon key are written into the package — never the `service_role` key, Hugging Face tokens, or other researcher credentials.
+
+Open **Host** (after the backend table is ready):
+
+1. Release the draft first (Save updates the draft only). Prepare Deployment Folder then bakes that released snapshot.
+2. Click **Test Build** and open the generated preview. Confirm the survey matches local Live Survey.
+3. Create an empty GitHub repository for this participant deployment.
+4. Enter that repository URL and click **Upload to GitHub**, or push the generated folder manually.
+5. In Vercel, create a project by importing that GitHub repository.
+6. In **Vercel Project Settings → Environment Variables**, add:
+
+```text
+REACT_APP_SUPABASE_URL=https://your-project.supabase.co
+REACT_APP_SUPABASE_ANON_KEY=your-anon-key
+```
+
+Do not add the `service_role` key to GitHub or Vercel. Deploy or redeploy after saving the environment variables.
+
+Open the deployed site (`/` or `/survey`, optional `?locale=zh`), complete the survey once, and confirm the new row in **Supabase → Table Editor → survey_responses**. Test English and Chinese before distributing the URL.
+
+### 8. Analyze responses
+
+Return to **Results Analysis** in the local Admin application. Use the locally stored `service_role` configuration to load responses, inspect quality and researcher-practice records, run the required analyses, and export CSV files.
+
+Templates are stored in [`public/project_templates/`](../public/project_templates/). `Export for AI / IDE` is only for sharing a credential-free project outside the local workspace.
+
+## Security
+
+- Never commit or deploy the `service_role` key.
+- The participant website receives only the Supabase URL and anon key.
+- `.env`, local projects, backups, responses, and participant data are ignored by Git.
+- Review consent, retention, access control, and institutional requirements before data collection.
+
+## Development
+
+```bash
+CI=true npm test -- --watchAll=false --runInBand
+npm run build
+```
+
+Changes to participant interactions must cover the builder, question preview, full preview, Researcher Practice, Live Survey, response metadata, analysis/export, and tests. Keep the self-hosted boundary: no login, no Platform project ownership, no managed R2 dependency.
+
+## Citation
+
+```bibtex
+@article{yang2025thermal,
+  title={Thermal comfort in sight: Thermal affordance and its visual assessment for sustainable streetscape design},
+  author={Yang, Sijie and Chong, Adrian and Liu, Pengyuan and Biljecki, Filip},
+  journal={Building and Environment},
+  pages={112569},
+  year={2025},
+  publisher={Elsevier}
+}
+```
+
+## License
+
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — Urban Analytics Lab, National University of Singapore.
