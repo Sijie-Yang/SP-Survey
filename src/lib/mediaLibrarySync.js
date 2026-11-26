@@ -1,5 +1,12 @@
 import { normalizeMediaEntry, sortMediaByName } from './mediaUtils';
 
+/** Objects whose key sits under this library prefix. A broader listing must not leak in. */
+export function imagesInLibraryPrefix(listed = [], prefix = '') {
+  const norm = String(prefix || '').replace(/^\/+/, '').replace(/\/?$/, '/');
+  if (!norm || norm === '/') return [];
+  return (listed || []).filter((file) => String(file?.key || '').replace(/^\/+/, '').startsWith(norm));
+}
+
 /** R2 owns file presence and URLs; the saved library owns organization and metadata. */
 export function mergeMediaLibraryListing(listed = [], saved = [], prefix = '') {
   const byKey = new Map();

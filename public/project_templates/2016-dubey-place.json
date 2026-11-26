@@ -1,7 +1,7 @@
 {
   "id": "2016-dubey-place",
   "name": "Place Pulse 2.0 - Urban Perception (6 Dimensions)",
-  "description": "Pairwise comparison survey measuring six perceptual dimensions of street scenes: safety, liveliness, beauty, wealth, depressingness, and boringness. Replicates the crowdsourcing methodology of the Place Pulse 2.0 dataset (1.17M comparisons, 56 cities).",
+  "description": "Pairwise comparison survey measuring six perceptual dimensions of street scenes: safety, liveliness, beauty, wealth, depressingness, and boringness. Replicates the crowdsourcing methodology of the Place Pulse 2.0 dataset (1.17M comparisons, 56 cities). Bundled images are photographs from the paper PDF (62 scenes), not the original full stimulus set.",
   "author": "Dubey et al.",
   "year": "2016",
   "category": "Academic Research",
@@ -11,6 +11,9 @@
     "official"
   ],
   "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": null,
   "website": "https://arxiv.org/abs/1608.01769",
   "huggingfaceDataset": null,
   "createdAt": "2026-05-04T00:00:00+00:00",
@@ -23,7 +26,7 @@
           {
             "name": "safe",
             "type": "imagepicker",
-            "title": "Which street scene looks safer?",
+            "title": "Which place looks safer?",
             "imageFit": "cover",
             "imageCount": 2,
             "isRequired": true,
@@ -41,7 +44,7 @@
           {
             "name": "lively",
             "type": "imagepicker",
-            "title": "Which street scene looks more lively?",
+            "title": "Which place looks livelier?",
             "imageFit": "cover",
             "imageCount": 2,
             "isRequired": true,
@@ -59,7 +62,7 @@
           {
             "name": "beautiful",
             "type": "imagepicker",
-            "title": "Which street scene looks more beautiful?",
+            "title": "Which place looks more beautiful?",
             "imageFit": "cover",
             "imageCount": 2,
             "isRequired": true,
@@ -77,7 +80,7 @@
           {
             "name": "wealthy",
             "type": "imagepicker",
-            "title": "Which street scene looks more wealthy?",
+            "title": "Which place looks wealthier?",
             "imageFit": "cover",
             "imageCount": 2,
             "isRequired": true,
@@ -95,7 +98,7 @@
           {
             "name": "depressing",
             "type": "imagepicker",
-            "title": "Which street scene looks more depressing?",
+            "title": "Which place looks more depressing?",
             "imageFit": "cover",
             "imageCount": 2,
             "isRequired": true,
@@ -113,7 +116,7 @@
           {
             "name": "boring",
             "type": "imagepicker",
-            "title": "Which street scene looks more boring?",
+            "title": "Which place looks more boring?",
             "imageFit": "cover",
             "imageCount": 2,
             "isRequired": true,
@@ -219,7 +222,39 @@
     "progressBarType": "questions",
     "showProgressBar": "aboveheader",
     "showQuestionNumbers": "off",
-    "showPreviewBeforeComplete": "showAllQuestions"
+    "showPreviewBeforeComplete": "showAllQuestions",
+    "spAnalysisRecommendation": {
+      "citation": "Dubey et al. 2016; Salesses et al. 2013",
+      "items": [
+        {
+          "questions": [
+            "safe",
+            "lively",
+            "boring",
+            "wealthy",
+            "depressing",
+            "beautiful"
+          ],
+          "method": "qscore_pairwise",
+          "minPerImage": 4,
+          "scale": "0-10"
+        },
+        {
+          "questions": [
+            "safe",
+            "lively",
+            "boring",
+            "wealthy",
+            "depressing",
+            "beautiful"
+          ],
+          "method": "trueskill_pairwise",
+          "tieHandling": "exclude",
+          "runs": 1,
+          "scale": "0-10"
+        }
+      ]
+    }
   },
   "imageDatasetConfig": {
     "mediaFolderTags": {},

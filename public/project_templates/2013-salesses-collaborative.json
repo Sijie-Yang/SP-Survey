@@ -1,0 +1,122 @@
+{
+  "id": "2013-salesses-collaborative",
+  "name": "Place Pulse 1.0",
+  "description": "Rebuilt from the published description of Salesses, Schechtner & Hidalgo (2013). Pairwise comparisons of street views from New York, Boston, Linz and Salzburg on safety, class and uniqueness, scored with Q-scores. Differences from the original study: (1) The original website allowed unlimited votes; this template asks 10 pairs per question (survey rounds with \"continue voting\" are not available). (2) Bundled images are photographs from the paper PDF (7 scenes), not the original full stimulus set.",
+  "author": "Salesses, Schechtner & Hidalgo",
+  "year": "2013",
+  "category": "Academic Research",
+  "tags": [
+    "official",
+    "paper"
+  ],
+  "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": null,
+  "website": "https://doi.org/10.1371/journal.pone.0068400",
+  "huggingfaceDataset": null,
+  "createdAt": "2026-10-02T00:00:00+00:00",
+  "imageDatasetConfig": {
+    "mediaFolderTags": {},
+    "mediaFolders": []
+  },
+  "preloadedImages": [],
+  "preloadedSource": null,
+  "preloadedAt": null,
+  "config": {
+    "title": "Place Pulse 1.0",
+    "description": "For each pair of street views, click the place that better matches the question. Choose \"Equal\" if you cannot decide.",
+    "logoPosition": "right",
+    "autoGrowComment": true,
+    "progressBarType": "questions",
+    "showProgressBar": "aboveheader",
+    "showQuestionNumbers": "off",
+    "spAnalysisRecommendation": {
+      "citation": "Salesses et al. 2013",
+      "items": [
+        {
+          "questions": [
+            "safer",
+            "upper_class",
+            "unique"
+          ],
+          "method": "qscore_pairwise",
+          "scale": "0-10",
+          "minPerImage": 4
+        },
+        {
+          "questions": [
+            "safer",
+            "upper_class",
+            "unique"
+          ],
+          "method": "trueskill_pairwise",
+          "tieHandling": "draw",
+          "scale": "0-10"
+        }
+      ]
+    },
+    "pages": [
+      {
+        "name": "page_safer",
+        "elements": [
+          {
+            "name": "safer",
+            "type": "imagepicker",
+            "title": "Which place looks safer?",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 2,
+            "trialCount": 10,
+            "pairingMode": "balanced",
+            "allowTie": true,
+            "tieLabel": "Equal"
+          }
+        ]
+      },
+      {
+        "name": "page_upper_class",
+        "elements": [
+          {
+            "name": "upper_class",
+            "type": "imagepicker",
+            "title": "Which place looks more upper-class?",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 2,
+            "trialCount": 10,
+            "pairingMode": "balanced",
+            "allowTie": true,
+            "tieLabel": "Equal"
+          }
+        ]
+      },
+      {
+        "name": "page_unique",
+        "elements": [
+          {
+            "name": "unique",
+            "type": "imagepicker",
+            "title": "Which place looks more unique?",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 2,
+            "trialCount": 10,
+            "pairingMode": "balanced",
+            "allowTie": true,
+            "tieLabel": "Equal"
+          }
+        ]
+      }
+    ]
+  }
+}

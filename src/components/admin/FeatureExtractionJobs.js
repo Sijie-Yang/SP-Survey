@@ -1,3 +1,4 @@
+import { useMediaLibraryText } from '../../contexts/mediaLibraryI18n';
 /**
  * Shared L0 / SegFormer batch jobs writing features to R2 CSV.
  * Used by project Media Dataset and admin Template image dialog.
@@ -20,6 +21,7 @@ import {
   runL0Extraction,
   runSegExtraction,
 } from '../../lib/runFeatureExtraction';
+import { downloadFeatureCsvsZip } from '../../lib/mediaLibraryDownload';
 
 /**
  * @param {{
@@ -37,12 +39,14 @@ export default function FeatureExtractionJobs({
   onFeaturesUpdated,
   compact = false,
 }) {
+  const tx = useMediaLibraryText();
   const [busy, setBusy] = useState(null);
   const [progress, setProgress] = useState({ done: 0, total: 0 });
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
   const [featureMap, setFeatureMap] = useState({});
   const [loadingMap, setLoadingMap] = useState(false);
+  const [downloadingCsv, setDownloadingCsv] = useState(false);
   const abortRef = useRef(false);
 
   const images = useMemo(() => normalizeImageList(rawImages), [rawImages]);
@@ -76,6 +80,24 @@ export default function FeatureExtractionJobs({
 
   const requestStop = () => { abortRef.current = true; };
 
+  const downloadCsvs = async () => {
+    if (!r2Prefix || !isR2Configured()) return;
+    setDownloadingCsv(true);
+    setError(null);
+    setMessage(null);
+    try {
+      const { filename, included, missing } = await downloadFeatureCsvsZip(r2Prefix, {
+        models: [L0_MODEL, SEG_MODEL],
+      });
+      const missHint = missing.length ? tx(" Missing: {v0}.", { v0: missing.join(', ') }) : '';
+      setMessage(tx("Downloaded {v0} ({v1}).{v2}", { v0: filename, v1: included.join(', '), v2: missHint }));
+    } catch (err) {
+      setError(err.message || String(err));
+    } finally {
+      setDownloadingCsv(false);
+    }
+  };
+
   const runL0 = async () => {
     abortRef.current = false;
     setBusy('l0');
@@ -99,11 +121,11 @@ export default function FeatureExtractionJobs({
       onFeaturesUpdated?.(result.featureMap);
       await reloadMap();
       setMessage(result.stopped
-        ? `L0 stopped. Wrote ${result.done}/${result.total} to the feature CSV.`
+        ? tx("L0 stopped. Wrote {v0}/{v1} to R2 CSV.", { v0: result.done, v1: result.total })
         : result.total === 0
-          ? `All ${result.skipped} image(s) already have L0 features.`
-          : `L0 done for ${result.done} image(s) → Supabase features/${L0_MODEL}.csv`
-            + (result.skipped ? ` (skipped ${result.skipped} ready)` : ''));
+          ? tx("All {v0} image(s) already have L0 features.", { v0: result.skipped })
+          : tx("L0 done for {v0} image(s) → R2 features/{v1}.csv", { v0: result.done, v1: L0_MODEL })
+            + (result.skipped ? tx(" (skipped {v0} ready)", { v0: result.skipped }) : ''));
     } catch (err) {
       setError(err.message || String(err));
     }
@@ -131,11 +153,11 @@ export default function FeatureExtractionJobs({
       onFeaturesUpdated?.(result.featureMap);
       await reloadMap();
       setMessage(result.stopped
-        ? `Seg stopped. Wrote ${result.done}/${result.total} to the feature CSV.`
+        ? tx("Seg stopped. Wrote {v0}/{v1} to R2 CSV.", { v0: result.done, v1: result.total })
         : result.total === 0
-          ? 'All images already have Seg features in Supabase Storage.'
-          : `SegFormer done for ${result.done} image(s) → Supabase features/${SEG_MODEL}.csv`
-            + (result.skipped ? ` (skipped ${result.skipped} ready)` : ''));
+          ? tx("All images already have Seg features on R2.")
+          : tx("SegFormer done for {v0} image(s) → R2 features/{v1}.csv", { v0: result.done, v1: SEG_MODEL })
+            + (result.skipped ? tx(" (skipped {v0} ready)", { v0: result.skipped }) : ''));
     } catch (err) {
       setError(err.message || String(err));
     }
@@ -147,25 +169,31 @@ export default function FeatureExtractionJobs({
       {message && <Alert severity="success" onClose={() => setMessage(null)} sx={compact ? { py: 0 } : undefined}>{message}</Alert>}
       {error && <Alert severity="error" onClose={() => setError(null)} sx={compact ? { py: 0 } : undefined}>{error}</Alert>}
       {!compact && (
-        <Typography variant="body2" color="text.secondary">
-          Features are stored in the survey-images bucket as CSV under <code>{r2Prefix}features/</code>.
-          {loadingMap ? ' Loading existing CSV…' : ''}
+        <Typography variant="body2" color="text.secondary">{' '}{tx("Features stored on R2 as CSV under")}{' '}<code>{r2Prefix}features/</code>{' '}{tx("(keyed by media_id / filename — migrates with template→project).")}{' '}{loadingMap ? tx(" Loading existing CSV…") : ''}
         </Typography>
       )}
       {compact && loadingMap && (
-        <Typography variant="caption" color="text.secondary">Loading status…</Typography>
+        <Typography variant="caption" color="text.secondary">{tx("Loading status…")}</Typography>
       )}
 
       <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" useFlexGap>
-        <Chip size="small" label={`L0 ${l0Ready}/${images.length}`} color={l0Ready ? 'success' : 'default'} />
+        <Chip size="small" label={tx("L0 {v0}/{v1}", { v0: l0Ready, v1: images.length })} color={l0Ready ? 'success' : 'default'} />
         <Button size="small" variant="contained" disabled={!!busy || !images.length} onClick={runL0}>
-          {compact ? 'Run L0' : 'Extract L0 features'}
+          {compact ? tx("Run L0") : tx("Extract L0 features")}
         </Button>
-        {busy === 'l0' && <Button size="small" color="warning" variant="outlined" onClick={requestStop}>Stop</Button>}
+        {busy === 'l0' && <Button size="small" color="warning" variant="outlined" onClick={requestStop}>{tx("Stop")}</Button>}
+        <Button
+          size="small"
+          variant="outlined"
+          disabled={!!busy || downloadingCsv || !r2Prefix || !isR2Configured()}
+          onClick={downloadCsvs}
+        >
+          {downloadingCsv ? tx("Downloading…") : (compact ? tx("Download CSVs") : tx("Download L0 + Seg CSV"))}
+        </Button>
       </Stack>
 
       <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" useFlexGap>
-        <Chip size="small" label={`Seg ${segReady}/${images.length}`} color={segReady ? 'success' : 'default'} />
+        <Chip size="small" label={tx("Seg {v0}/{v1}", { v0: segReady, v1: images.length })} color={segReady ? 'success' : 'default'} />
         <Button
           size="small"
           variant="contained"
@@ -173,25 +201,21 @@ export default function FeatureExtractionJobs({
           disabled={!!busy || !images.length || !String(hfToken || '').trim()}
           onClick={runSeg}
         >
-          {compact ? 'Run Seg' : 'Run streetscape segmentation'}
+          {compact ? tx("Run Seg") : tx("Run streetscape segmentation")}
         </Button>
-        {busy === 'seg' && <Button size="small" color="warning" variant="outlined" onClick={requestStop}>Stop</Button>}
+        {busy === 'seg' && <Button size="small" color="warning" variant="outlined" onClick={requestStop}>{tx("Stop")}</Button>}
       </Stack>
       {!compact && (
-        <Typography variant="caption" color="text.secondary">
-          Seg: {SEGFORMER_HF_MODEL} via HuggingFace — needs HF token.
-        </Typography>
+        <Typography variant="caption" color="text.secondary">{' '}{tx("Seg:")}{' '}{SEGFORMER_HF_MODEL}{' '}{tx("via HuggingFace — needs HF token.")}{' '}</Typography>
       )}
       {compact && !String(hfToken || '').trim() && (
-        <Typography variant="caption" color="warning.main">
-          Seg needs HF token
-        </Typography>
+        <Typography variant="caption" color="warning.main">{' '}{tx("Seg needs HF token")}{' '}</Typography>
       )}
 
       {busy && (
         <Box>
           <Typography variant="caption">
-            {busy === 'l0' ? 'L0…' : 'Seg…'} {progress.done}/{progress.total}
+            {busy === 'l0' ? tx("L0…") : tx("Seg…")} {progress.done}/{progress.total}
           </Typography>
           <LinearProgress
             variant={progress.total ? 'determinate' : 'indeterminate'}

@@ -1,7 +1,7 @@
 {
   "id": "2025-yang-thermal",
   "name": "Thermal Comfort in Sight",
-  "description": "Apply SVI for thermal comfort assessment in Singapore.",
+  "description": "Pairwise street view comparison of thermal affordance (VATA) and 19 visual-perceptual indicators from Yang et al. (2025): 18 comparisons per indicator, TrueSkill repeated 20 times and normalised to 0–5.",
   "author": "Yang et al.",
   "year": "2025",
   "category": "Academic Research",
@@ -9,6 +9,9 @@
     "official"
   ],
   "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-yang-thermal/5890_103.923391521569_1.33170633586357.jpg",
   "website": "https://www.sciencedirect.com/science/article/abs/pii/S0360132325000514",
   "huggingfaceDataset": "sijiey/Thermal-Affordance-Dataset",
   "createdAt": "2025-10-17T01:04:49.114+00:00",
@@ -16,56 +19,43 @@
     "logo": "https://api.surveyjs.io/private/Surveys/files?name=8fb3943d-2606-4486-88ad-a41ad27f4570",
     "pages": [
       {
-        "name": "demographics",
-        "title": "Part 1: Streetscape Comfort Perception",
-        "elements": [
-          {
-            "name": "comfort_intro",
-            "type": "expression",
-            "title": "Among the provided street view images, which place do you perceive to be the most comfortable?",
-            "isRequired": false,
-            "description": "You need to pick one image in each question."
-          },
-          {
-            "name": "comfort",
-            "type": "imagepicker",
-            "title": "Comfort",
-            "imageFit": "cover",
-            "imageCount": 4,
-            "isRequired": true,
-            "description": "choose the most comfortable one.",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          }
-        ],
-        "description": "Please choose the image which you find to have the most comfortable streetscape."
-      },
-      {
         "name": "page_1760605955437",
-        "title": "Part 2: Streetscape Thermal Comfort (Heat Comfort) Perception",
+        "title": "Part 1: Visual Assessment of Thermal Affordance",
         "elements": [
           {
             "name": "thermal_comfort_intro",
             "type": "expression",
-            "title": "Among the provided street view images, which place do you perceive to have the best thermal comfort (heat comfort) ?",
+            "title": "Visual Assessment of Thermal Affordance (VATA). Choose the image in each pair.",
             "isRequired": false,
-            "description": "You need to pick one image in each set."
+            "description": "The first comparison is outdoor thermal comfort. The next one asks which place feels comfortable overall, and is not part of the original VATA item."
           },
           {
             "name": "thermal_comfort",
             "type": "imagepicker",
-            "title": "Thermal_Comfort",
+            "title": "Which street view image do you perceive as having a more comfortable outdoor thermal environment for you?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the most thermal (heat) -comfortable one.",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "trialCount": 18
+          },
+          {
+            "name": "comfort",
+            "type": "imagepicker",
+            "title": "Which street view image do you perceive as a more comfortable place overall?",
+            "imageFit": "cover",
+            "imageCount": 2,
+            "isRequired": false,
+            "description": "Overall comfort, not heat alone. Choose the more comfortable place. This comparison is an optional extension and is not one of the original study indicators.",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
             "randomImageSelection": true
           }
         ],
-        "description": "Please choose the image in which you think to have the best thermal comfort (heat comfort)."
+        "description": "First compare outdoor thermal comfort. Then compare which place feels comfortable overall; that second comparison is not part of the original study."
       },
       {
         "name": "page_1760605955438",
@@ -74,18 +64,31 @@
           {
             "name": "environment_intro",
             "type": "expression",
-            "title": "Among the provided street view images, which place do you perceive to exhibit the following environmental parameters most?",
+            "title": "Microclimate inference and environmental evaluation. Choose the image in each pair.",
             "isRequired": false,
             "description": "There are nine parameters in total, and you need to pick one image for each parameter."
           },
           {
             "name": "temperature",
             "type": "imagepicker",
-            "title": "Temperature",
+            "title": "Which street view image do you perceive exhibits a higher outdoor temperature?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the one with highest temperature.",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "trialCount": 18
+          },
+          {
+            "name": "artificial_heat_sources",
+            "type": "imagepicker",
+            "title": "Which street view image do you perceive as showing more artificial heat sources, such as buildings and cars?",
+            "imageFit": "cover",
+            "imageCount": 2,
+            "isRequired": false,
+            "description": "Choose the image with more artificial heat sources (buildings, cars and similar). This comparison is an optional extension and is not one of the original study indicators.",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
             "randomImageSelection": true
@@ -93,98 +96,93 @@
           {
             "name": "sunlight_intensity",
             "type": "imagepicker",
-            "title": "Sunlight Intensity",
+            "title": "Which street view image do you perceive exhibits a higher sunlight intensity?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the one with highest sunlight intensity.",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          },
-          {
-            "name": "artificial_heat_sources",
-            "type": "imagepicker",
-            "title": "Artificial Heat Sources",
-            "imageFit": "cover",
-            "imageCount": 4,
-            "isRequired": true,
-            "description": "choose the one with most artificial heat sources (building, car...).",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "trialCount": 18
           },
           {
             "name": "humidity",
             "type": "imagepicker",
-            "title": "Humidity",
+            "title": "Which street view image do you perceive exhibits a higher humidity?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the one with highest humidity.",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "trialCount": 18
           },
           {
             "name": "wind_velocity",
             "type": "imagepicker",
-            "title": "Wind Velocity",
+            "title": "Which street view image do you perceive exhibits a higher wind speed?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the one with highest wind velocity.",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "trialCount": 18
           },
           {
             "name": "traffic_flow",
             "type": "imagepicker",
-            "title": "Traffic Flow",
+            "title": "Which street view image do you think showcases higher traffic flow?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the one with highest traffic flow (car, people, bike...).",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "trialCount": 18
           },
           {
             "name": "greenery",
             "type": "imagepicker",
-            "title": "Greenery",
+            "title": "Which street view image do you think showcases a higher greenery rate?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the one with most greenery.",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "trialCount": 18
           },
           {
             "name": "shading_area",
             "type": "imagepicker",
-            "title": "Shading Area",
+            "title": "Which street view image do you think showcases more shading areas?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the one with largest shading area.",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "trialCount": 18
           },
           {
             "name": "construction_material_comfort",
             "type": "imagepicker",
-            "title": "Construction Material Comfort",
+            "title": "Which street view image do you think showcases higher construction material comfort?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the one with most comfortable construction material (plant, wall, fence, window...).",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "trialCount": 18
           }
         ],
         "description": "Please choose the image in which you think to exhibit the following environmental parameters most, there are nine parameters in this section."
@@ -196,69 +194,74 @@
           {
             "name": "design_intro",
             "type": "expression",
-            "title": "Among the provided street view images, which place do you perceive to showcase the following design quality features most?",
+            "title": "Streetscape design quality. Choose the image in each pair.",
             "isRequired": false,
             "description": "There are five streetscape design quality features in total, and you need to pick one image for each design quality feature."
           },
           {
             "name": "impressive",
             "type": "imagepicker",
-            "title": "Impressive",
+            "title": "Which street view image stands out to you as a more impressive place?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the most impressive one.",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "trialCount": 18
           },
           {
             "name": "enclosure",
             "type": "imagepicker",
-            "title": "Enclosure",
+            "title": "Which street view image stands out to you as a more enclosed space?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the most enclosed one.",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "trialCount": 18
           },
           {
             "name": "human_friendly",
             "type": "imagepicker",
-            "title": "Human-friendly",
+            "title": "Which street view image stands out to you as more accommodating for human scale?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the most human-friendly one.",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "trialCount": 18
           },
           {
             "name": "transparency",
             "type": "imagepicker",
-            "title": "Transparency",
+            "title": "Which street view image stands out to you as a more transparent space?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the most transparent one.",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "trialCount": 18
           },
           {
             "name": "complexity",
             "type": "imagepicker",
-            "title": "Complexity",
+            "title": "Which street view image stands out to you as a more complex environment?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the most complex one.",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "trialCount": 18
           }
         ],
         "description": "Please choose the image in which you think to showcase the following design quality features most, there are five design quality features in this section."
@@ -270,81 +273,87 @@
           {
             "name": "emotion_intro",
             "type": "expression",
-            "title": "Among the provided street view images, which place do you perceive to have following emotions most?",
+            "title": "Evoked emotion. Choose the image in each pair.",
             "isRequired": false,
             "description": "There are six emotion types in total, and you need to pick one image for each emotion type."
           },
           {
             "name": "safe",
             "type": "imagepicker",
-            "title": "Safe",
+            "title": "Which street view image do you feel evokes a more safe atmosphere?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the most safe one.",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "trialCount": 18
           },
           {
             "name": "lively",
             "type": "imagepicker",
-            "title": "Lively",
+            "title": "Which street view image do you feel evokes a more lively atmosphere?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the most lively one.",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "trialCount": 18
           },
           {
             "name": "beautiful",
             "type": "imagepicker",
-            "title": "Beautiful",
+            "title": "Which street view image do you feel evokes a more beautiful atmosphere?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the most beautiful one.",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "trialCount": 18
           },
           {
             "name": "wealthy",
             "type": "imagepicker",
-            "title": "Wealthy",
+            "title": "Which street view image do you feel evokes a more wealthy atmosphere?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the most wealthy one.",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "trialCount": 18
           },
           {
             "name": "boring",
             "type": "imagepicker",
-            "title": "Boring",
+            "title": "Which street view image do you feel evokes a more boring atmosphere?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the most boring one.",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "trialCount": 18
           },
           {
             "name": "depressing",
             "type": "imagepicker",
-            "title": "Depressing",
+            "title": "Which street view image do you feel evokes a more depressing atmosphere?",
             "imageFit": "cover",
-            "imageCount": 4,
+            "imageCount": 2,
             "isRequired": true,
             "description": "choose the most depressing one.",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "trialCount": 18
           }
         ],
         "description": "Please choose the image in which you think to make people have following emotions most, there are six emotional types in this section."
@@ -373,7 +382,42 @@
     "progressBarType": "questions",
     "showProgressBar": "aboveheader",
     "showQuestionNumbers": "off",
-    "showPreviewBeforeComplete": "showAllQuestions"
+    "showPreviewBeforeComplete": "showAllQuestions",
+    "spAnalysisRecommendation": {
+      "citation": "Yang et al. 2025",
+      "items": [
+        {
+          "questions": [
+            "thermal_comfort",
+            "comfort",
+            "temperature",
+            "artificial_heat_sources",
+            "sunlight_intensity",
+            "humidity",
+            "wind_velocity",
+            "traffic_flow",
+            "greenery",
+            "shading_area",
+            "construction_material_comfort",
+            "impressive",
+            "enclosure",
+            "human_friendly",
+            "transparency",
+            "complexity",
+            "safe",
+            "beautiful",
+            "lively",
+            "wealthy",
+            "boring",
+            "depressing"
+          ],
+          "method": "trueskill_pairwise",
+          "tieHandling": "exclude",
+          "runs": 20,
+          "scale": "0-5"
+        }
+      ]
+    }
   },
   "imageDatasetConfig": {
     "mediaFolderTags": {},

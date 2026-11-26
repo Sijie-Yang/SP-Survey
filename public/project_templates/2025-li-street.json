@@ -1,7 +1,7 @@
 {
   "id": "2025-li-street",
   "name": "Street Multi-Activity Potential (SMAP)",
-  "description": "Streets are essential public spaces hosting a variety of social, cultural, and economic activities that collectively form urban vitality. However, due to limitations in research methodology and data, existing studies often oversimplify street activities by focusing solely on pedestrian flows. This study introduces a novel approach using Multimodal Large Language Models (MLLMs) and multi-view graph-based community detection to systematically evaluate street multi-activity potential (SMAP). Utilizing diverse urban data, we quantified the SMAP based on six common pedestrian activities (sitting, standing, walking, jogging, exercising, and street vending) in Beijing's central urban area. Results reveal significant spatial disparities in the suitability scores of different activity types, challenging the conventional reliance on walking as a proxy for street activities. By applying community detection algorithm with multi-view graph fusion and reinforcement learning, we identified 245 SMAP areas and uncovered their underlying spatial network patterns in Beijing. Assessment of SMAP areas' total potential and diversity of potential reveals the complex relationship between the two dimensions. By further identifying high total potential SMAP areas with varied levels of diversity, we discovered their distinct patterns in semantic features and spatial distributions. Overall, this study develops a novel and scalable framework for evaluating street spaces and observing their potential for diverse activities, which will guide future planning to support activity diversity and enhance urban vitality.",
+  "description": "Streets are essential public spaces hosting a variety of social, cultural, and economic activities that collectively form urban vitality. However, due to limitations in research methodology and data, existing studies often oversimplify street activities by focusing solely on pedestrian flows. This study introduces a novel approach using Multimodal Large Language Models (MLLMs) and multi-view graph-based community detection to systematically evaluate street multi-activity potential (SMAP). Utilizing diverse urban data, we quantified the SMAP based on six common pedestrian activities (sitting, standing, walking, jogging, exercising, and street vending) in Beijing's central urban area. Results reveal significant spatial disparities in the suitability scores of different activity types, challenging the conventional reliance on walking as a proxy for street activities. By applying community detection algorithm with multi-view graph fusion and reinforcement learning, we identified 245 SMAP areas and uncovered their underlying spatial network patterns in Beijing. Assessment of SMAP areas' total potential and diversity of potential reveals the complex relationship between the two dimensions. By further identifying high total potential SMAP areas with varied levels of diversity, we discovered their distinct patterns in semantic features and spatial distributions. Overall, this study develops a novel and scalable framework for evaluating street spaces and observing their potential for diverse activities, which will guide future planning to support activity diversity and enhance urban vitality. In the paper, a multimodal LLM produced the main scores; 1,044 resident questionnaires over 500 locations were used to validate them. This template reproduces that validation questionnaire.",
   "author": "Li et al.",
   "year": "2025",
   "category": "Academic Research",
@@ -10,6 +10,9 @@
     "official"
   ],
   "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-li-street/image_000008.jpg",
   "website": "https://www.sciencedirect.com/science/article/abs/pii/S0198971525001036",
   "huggingfaceDataset": "lajitong424/SMAP_svi",
   "createdAt": "2026-07-11T00:01:39.737+00:00",
@@ -20,17 +23,6 @@
         "name": "page1",
         "title": "Street Multi-Activity Potential (SMAP)",
         "elements": [
-          {
-            "name": "smap_images",
-            "type": "image",
-            "title": "See images below",
-            "imageFit": "cover",
-            "imageCount": 4,
-            "isRequired": false,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          },
           {
             "name": "smap",
             "rows": [
@@ -47,19 +39,19 @@
                 "value": "walking"
               },
               {
-                "text": "Jagging",
+                "text": "Jogging",
                 "value": "jagging"
               },
               {
-                "text": "Exercise",
+                "text": "Exercising",
                 "value": "exercise"
               },
               {
-                "text": "Vendors",
+                "text": "Street vending",
                 "value": "vendors"
               }
             ],
-            "type": "matrix",
+            "type": "imagematrix",
             "title": "Do you think this section of street space is suitable for the following activities: (1 means very unsuitable, 5 means very suitable)",
             "columns": [
               {
@@ -87,7 +79,8 @@
             "isRequired": true,
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "imageFit": "cover"
           }
         ],
         "description": "Multi-view graph-based community detection to systematically evaluate street multi-activity potential (SMAP)."
@@ -103,11 +96,22 @@
       "showPreviewBeforeComplete": "showAllQuestions"
     },
     "description": "Multi-view graph-based community detection to systematically evaluate street multi-activity potential (SMAP).",
-    "logoPosition": "right"
+    "logoPosition": "right",
+    "spAnalysisRecommendation": {
+      "citation": "Li et al. 2025",
+      "items": [
+        {
+          "questions": [
+            "smap"
+          ],
+          "method": "matrix_rows"
+        }
+      ]
+    }
   },
   "imageDatasetConfig": {
-    "mediaFolderTags": {},
-    "mediaFolders": []
+    "mediaFolders": [],
+    "mediaFolderTags": {}
   },
   "preloadedImages": [],
   "preloadedSource": null,

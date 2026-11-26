@@ -1,4 +1,4 @@
-import { buildProjectMediaKey, inferMediaType, MEDIA_FILE_RE, MAX_AV_MEDIA_BYTES, joinFolderPath, normalizeFolderPath } from './mediaUtils';
+import { buildProjectMediaKey, inferMediaType, MEDIA_FILE_RE, MAX_AV_MEDIA_BYTES, joinFolderPath, normalizeFolderPath } from './mediaUtils.js';
 
 /** Resolve the original File's directory before compression creates a new File. */
 export function uploadFolderForFile(file, baseFolder = '') {

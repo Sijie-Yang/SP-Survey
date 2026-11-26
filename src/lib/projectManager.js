@@ -347,3 +347,35 @@ export const saveProjectFull = async (project, surveyConfig, supabaseConfig = nu
 export const loadSurveyConfigForProject = async (projectId) => {
   return loadSurveyConfig(projectId);
 };
+
+export const clearActiveProject = () => {
+  sessionStorage.removeItem(ACTIVE_PROJECT_KEY);
+};
+
+/** Local projects have no cheap stamp endpoint; callers load the whole project. */
+export const getProjectDraftStamp = async () => undefined;
+
+/**
+ * Save a draft only if nobody changed it since `expectedDraftUpdatedAt`
+ * (the local agent API answers 409 on a conflict).
+ */
+export const saveProjectDraftOptimistic = async (
+  projectId,
+  surveyConfig,
+  { expectedDraftUpdatedAt = null } = {},
+) => {
+  try {
+    const res = await fetch(`${API_ROOT}/agent/projects/${encodeURIComponent(projectId)}/survey`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ surveyConfig, expectedDraftUpdatedAt }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.status === 409) return { success: false, conflict: true, error: data.error || 'Draft changed' };
+    if (!res.ok || !data.success) return { success: false, error: data.error || `HTTP ${res.status}` };
+    return { success: true, savedAt: data.savedAt, draftUpdatedAt: data.draftUpdatedAt || data.savedAt };
+  } catch (error) {
+    console.error('saveProjectDraftOptimistic:', error);
+    return { success: false, error: error.message };
+  }
+};

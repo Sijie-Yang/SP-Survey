@@ -1,7 +1,7 @@
 {
   "id": "2017-seresinhe-scenic",
   "name": "Scenic Beauty of Outdoor Places",
-  "description": "Perceived scenic beauty assessment of outdoor environments using deep learning-aligned human judgments. Participants rate street scenes and outdoor places on beauty, naturalness, and green quality. Based on Seresinhe et al. (2017) using the Scenic-Or-Not dataset.",
+  "description": "Perceived scenic beauty assessment of outdoor environments using deep learning-aligned human judgments. Participants rate street scenes and outdoor places on beauty, naturalness, and green quality. Based on Seresinhe et al. (2017) using the Scenic-Or-Not dataset. Bundled images are photographs from the paper PDF (29 scenes), not the original full stimulus set.",
   "author": "Seresinhe et al.",
   "year": "2017",
   "category": "Urban Theory",
@@ -11,6 +11,9 @@
     "official"
   ],
   "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": null,
   "website": "https://doi.org/10.1098/rsos.170170",
   "huggingfaceDataset": null,
   "createdAt": "2026-05-04T00:00:00+00:00",
@@ -21,26 +24,50 @@
         "title": "Scenic Beauty Rating",
         "elements": [
           {
-            "name": "scene_image_1",
-            "type": "image",
-            "title": "Outdoor Scene",
-            "imageFit": "cover",
-            "imageCount": 1,
-            "isRequired": false,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          },
-          {
             "name": "scenic_beauty_1",
-            "type": "rating",
+            "type": "imagerating",
             "title": "How scenic / beautiful is this outdoor place?",
             "rateMax": 10,
             "rateMin": 1,
             "isRequired": true,
             "maxRateDescription": "Extremely scenic",
-            "minRateDescription": "Not at all scenic"
-          },
+            "minRateDescription": "Not at all scenic",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "imageCount": 1
+          }
+        ],
+        "description": "Rate the scenic beauty of the street scene shown below."
+      },
+      {
+        "name": "page_beauty_2",
+        "title": "Scenic Beauty Rating",
+        "elements": [
+          {
+            "name": "scenic_beauty_2",
+            "type": "imagerating",
+            "title": "How scenic / beautiful is this outdoor place?",
+            "rateMax": 10,
+            "rateMin": 1,
+            "isRequired": true,
+            "maxRateDescription": "Extremely scenic",
+            "minRateDescription": "Not at all scenic",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "imageCount": 1
+          }
+        ],
+        "description": "Rate the scenic beauty of the street scene shown below."
+      },
+      {
+        "name": "page_extension",
+        "title": "Optional extension (not in original study)",
+        "description": "These items are not part of Scenic-Or-Not, which asked only for a 1–10 scenicness rating.",
+        "elements": [
           {
             "name": "scene_qualities_1",
             "rows": [
@@ -65,7 +92,7 @@
                 "value": "human_scale"
               }
             ],
-            "type": "matrix",
+            "type": "imagematrix",
             "title": "Rate the following qualities of this scene (1 = Very Low, 5 = Very High):",
             "columns": [
               {
@@ -89,35 +116,12 @@
                 "value": "5"
               }
             ],
-            "isRequired": false
-          }
-        ],
-        "description": "Rate the scenic beauty of the street scene shown below."
-      },
-      {
-        "name": "page_beauty_2",
-        "title": "Scenic Beauty Rating",
-        "elements": [
-          {
-            "name": "scene_image_2",
-            "type": "image",
-            "title": "Outdoor Scene",
-            "imageFit": "cover",
-            "imageCount": 1,
             "isRequired": false,
+            "imageFit": "cover",
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          },
-          {
-            "name": "scenic_beauty_2",
-            "type": "rating",
-            "title": "How scenic / beautiful is this outdoor place?",
-            "rateMax": 10,
-            "rateMin": 1,
-            "isRequired": true,
-            "maxRateDescription": "Extremely scenic",
-            "minRateDescription": "Not at all scenic"
+            "randomImageSelection": true,
+            "imageCount": 1
           },
           {
             "name": "scene_qualities_2",
@@ -143,7 +147,7 @@
                 "value": "human_scale"
               }
             ],
-            "type": "matrix",
+            "type": "imagematrix",
             "title": "Rate the following qualities of this scene (1 = Very Low, 5 = Very High):",
             "columns": [
               {
@@ -167,46 +171,36 @@
                 "value": "5"
               }
             ],
-            "isRequired": false
-          }
-        ],
-        "description": "Rate the scenic beauty of the street scene shown below."
-      },
-      {
-        "name": "page_pairwise_beauty",
-        "title": "Comparative Beauty",
-        "elements": [
+            "isRequired": false,
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "imageCount": 1
+          },
           {
             "name": "beauty_pairwise",
             "type": "imagepicker",
             "title": "Which outdoor place looks more beautiful / scenic?",
             "imageFit": "cover",
             "imageCount": 2,
-            "isRequired": true,
+            "isRequired": false,
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
             "randomImageSelection": true
-          }
-        ],
-        "description": "Choose the scene you find more beautiful between the two shown."
-      },
-      {
-        "name": "page_green_view",
-        "title": "Green Exposure Assessment",
-        "elements": [
+          },
           {
             "name": "green_view_pairwise",
             "type": "imagepicker",
-            "title": "Which scene has more visible greenery / natural elements?",
+            "title": "Which of these scenes has the most visible greenery / natural elements?",
             "imageFit": "cover",
             "imageCount": 4,
-            "isRequired": true,
+            "isRequired": false,
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
             "randomImageSelection": true
           }
-        ],
-        "description": "Choose the scene that provides the greatest sense of nature and greenery."
+        ]
       },
       {
         "name": "page_demographics",
@@ -306,7 +300,20 @@
     "progressBarType": "questions",
     "showProgressBar": "aboveheader",
     "showQuestionNumbers": "off",
-    "showPreviewBeforeComplete": "showAllQuestions"
+    "showPreviewBeforeComplete": "showAllQuestions",
+    "spAnalysisRecommendation": {
+      "citation": "Seresinhe et al. 2017",
+      "items": [
+        {
+          "questions": [
+            "scenic_beauty_1",
+            "scenic_beauty_2"
+          ],
+          "method": "scalar_distribution",
+          "minPerImage": 12
+        }
+      ]
+    }
   },
   "imageDatasetConfig": {
     "mediaFolderTags": {},

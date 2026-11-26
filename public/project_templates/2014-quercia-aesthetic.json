@@ -1,0 +1,189 @@
+{
+  "id": "2014-quercia-aesthetic",
+  "name": "UrbanGems",
+  "description": "Rebuilt from the published description of Quercia, O'Hare & Cramer (2014). Pairwise comparisons of London street scenes on beauty, quiet and happiness, analysed as the share of times each scene was chosen. Differences from the original study: (1) The original site let participants continue after the first round of 10 pairs; this template asks one round (4 + 3 + 3 pairs). (2) The short questionnaire wording is not in the paper. (3) Bundled images are photographs from the paper PDF (19 scenes), not the original full stimulus set.",
+  "author": "Quercia, O'Hare & Cramer",
+  "year": "2014",
+  "category": "Academic Research",
+  "tags": [
+    "official",
+    "paper"
+  ],
+  "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": null,
+  "website": "https://doi.org/10.1145/2531602.2531613",
+  "huggingfaceDataset": null,
+  "createdAt": "2026-10-02T00:00:00+00:00",
+  "imageDatasetConfig": {
+    "mediaFolderTags": {},
+    "mediaFolders": []
+  },
+  "preloadedImages": [],
+  "preloadedSource": null,
+  "preloadedAt": null,
+  "config": {
+    "title": "UrbanGems",
+    "description": "Click the place that better matches each question.",
+    "logoPosition": "right",
+    "autoGrowComment": true,
+    "progressBarType": "questions",
+    "showProgressBar": "aboveheader",
+    "showQuestionNumbers": "off",
+    "spAnalysisRecommendation": {
+      "citation": "Quercia et al. 2014",
+      "items": [
+        {
+          "questions": [
+            "beautiful",
+            "quiet",
+            "happy"
+          ],
+          "method": "choice_share"
+        },
+        {
+          "questions": [
+            "beautiful",
+            "quiet",
+            "happy"
+          ],
+          "method": "trueskill_pairwise",
+          "tieHandling": "exclude",
+          "scale": "0-10"
+        }
+      ]
+    },
+    "pages": [
+      {
+        "name": "page_beautiful",
+        "elements": [
+          {
+            "name": "beautiful",
+            "type": "imagepicker",
+            "title": "Which place is more beautiful?",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 2,
+            "trialCount": 4
+          }
+        ]
+      },
+      {
+        "name": "page_quiet",
+        "elements": [
+          {
+            "name": "quiet",
+            "type": "imagepicker",
+            "title": "Which place is more quiet?",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 2,
+            "trialCount": 3
+          }
+        ]
+      },
+      {
+        "name": "page_happy",
+        "elements": [
+          {
+            "name": "happy",
+            "type": "imagepicker",
+            "title": "Which place is more happy?",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 2,
+            "trialCount": 3
+          }
+        ]
+      },
+      {
+        "name": "page_about_you",
+        "elements": [
+          {
+            "name": "age_group",
+            "type": "radiogroup",
+            "title": "What is your age group? (wording not in paper)",
+            "choices": [
+              {
+                "value": "18_24",
+                "text": "18–24"
+              },
+              {
+                "value": "25_34",
+                "text": "25–34"
+              },
+              {
+                "value": "35_44",
+                "text": "35–44"
+              },
+              {
+                "value": "45_54",
+                "text": "45–54"
+              },
+              {
+                "value": "55_64",
+                "text": "55–64"
+              },
+              {
+                "value": "65_plus",
+                "text": "65+"
+              }
+            ],
+            "isRequired": false
+          },
+          {
+            "name": "gender",
+            "type": "radiogroup",
+            "title": "What is your gender? (wording not in paper)",
+            "choices": [
+              {
+                "value": "female",
+                "text": "Female"
+              },
+              {
+                "value": "male",
+                "text": "Male"
+              },
+              {
+                "value": "other",
+                "text": "Other"
+              },
+              {
+                "value": "prefer_not",
+                "text": "Prefer not to say"
+              }
+            ],
+            "isRequired": false
+          },
+          {
+            "name": "live_in_london",
+            "type": "radiogroup",
+            "title": "Do you live in London?",
+            "choices": [
+              {
+                "value": "yes",
+                "text": "Yes"
+              },
+              {
+                "value": "no",
+                "text": "No"
+              }
+            ],
+            "isRequired": false
+          }
+        ],
+        "title": "About you"
+      }
+    ]
+  }
+}

@@ -16,6 +16,9 @@
     "official"
   ],
   "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": null,
   "website": "https://doi.org/10.1016/j.landurbplan.2026.105618",
   "huggingfaceDataset": "matiasqr/greenery-perception",
   "createdAt": "2026-07-15T00:00:00+00:00",
@@ -584,16 +587,9 @@
             "multiSelect": false,
             "imageSelectionMode": "huggingface_random",
             "randomImageSelection": true,
-            "excludePreviouslyUsedImages": true
-          },
-          {
-            "name": "green_1_equal",
-            "type": "boolean",
-            "title": "Both are the same to me",
-            "labelTrue": "Yes — equal",
-            "isRequired": false,
-            "labelFalse": "No — I preferred one side",
-            "description": "SPECS equal option (Table 1). Set Yes if the two places look equally green (overrides the image pick for analysis)."
+            "excludePreviouslyUsedImages": true,
+            "allowTie": true,
+            "tieLabel": "Both are the same to me"
           },
           {
             "name": "green_2",
@@ -607,16 +603,9 @@
             "multiSelect": false,
             "imageSelectionMode": "huggingface_random",
             "randomImageSelection": true,
-            "excludePreviouslyUsedImages": true
-          },
-          {
-            "name": "green_2_equal",
-            "type": "boolean",
-            "title": "Both are the same to me",
-            "labelTrue": "Yes — equal",
-            "isRequired": false,
-            "labelFalse": "No — I preferred one side",
-            "description": "SPECS equal option (Table 1). Set Yes if the two places look equally green (overrides the image pick for analysis)."
+            "excludePreviouslyUsedImages": true,
+            "allowTie": true,
+            "tieLabel": "Both are the same to me"
           },
           {
             "name": "green_3",
@@ -630,16 +619,9 @@
             "multiSelect": false,
             "imageSelectionMode": "huggingface_random",
             "randomImageSelection": true,
-            "excludePreviouslyUsedImages": true
-          },
-          {
-            "name": "green_3_equal",
-            "type": "boolean",
-            "title": "Both are the same to me",
-            "labelTrue": "Yes — equal",
-            "isRequired": false,
-            "labelFalse": "No — I preferred one side",
-            "description": "SPECS equal option (Table 1). Set Yes if the two places look equally green (overrides the image pick for analysis)."
+            "excludePreviouslyUsedImages": true,
+            "allowTie": true,
+            "tieLabel": "Both are the same to me"
           },
           {
             "name": "green_4",
@@ -653,16 +635,9 @@
             "multiSelect": false,
             "imageSelectionMode": "huggingface_random",
             "randomImageSelection": true,
-            "excludePreviouslyUsedImages": true
-          },
-          {
-            "name": "green_4_equal",
-            "type": "boolean",
-            "title": "Both are the same to me",
-            "labelTrue": "Yes — equal",
-            "isRequired": false,
-            "labelFalse": "No — I preferred one side",
-            "description": "SPECS equal option (Table 1). Set Yes if the two places look equally green (overrides the image pick for analysis)."
+            "excludePreviouslyUsedImages": true,
+            "allowTie": true,
+            "tieLabel": "Both are the same to me"
           },
           {
             "name": "green_5",
@@ -676,16 +651,9 @@
             "multiSelect": false,
             "imageSelectionMode": "huggingface_random",
             "randomImageSelection": true,
-            "excludePreviouslyUsedImages": true
-          },
-          {
-            "name": "green_5_equal",
-            "type": "boolean",
-            "title": "Both are the same to me",
-            "labelTrue": "Yes — equal",
-            "isRequired": false,
-            "labelFalse": "No — I preferred one side",
-            "description": "SPECS equal option (Table 1). Set Yes if the two places look equally green (overrides the image pick for analysis)."
+            "excludePreviouslyUsedImages": true,
+            "allowTie": true,
+            "tieLabel": "Both are the same to me"
           }
         ],
         "description": "Five pairwise comparisons for the green indicator (SPECS: 5 questions per indicator). Connect the Hugging Face dataset matiasqr/specs or matiasqr/greenery-perception for imagery."
@@ -698,11 +666,28 @@
     "progressBarType": "questions",
     "showProgressBar": "aboveheader",
     "showQuestionNumbers": "off",
-    "showPreviewBeforeComplete": "showAllQuestions"
+    "showPreviewBeforeComplete": "showAllQuestions",
+    "spAnalysisRecommendation": {
+      "citation": "Quintana et al. 2026",
+      "items": [
+        {
+          "questions": [
+            "green_1",
+            "green_2",
+            "green_3",
+            "green_4",
+            "green_5"
+          ],
+          "method": "qscore_pairwise",
+          "minPerImage": 4,
+          "scale": "0-1"
+        }
+      ]
+    }
   },
   "imageDatasetConfig": {
-    "mediaFolderTags": {},
-    "mediaFolders": []
+    "mediaFolders": [],
+    "mediaFolderTags": {}
   },
   "preloadedImages": [],
   "preloadedSource": null,

@@ -1,0 +1,538 @@
+{
+  "id": "1990-nasar-evaluative",
+  "name": "The Evaluative Image of the City via Map Annotation",
+  "description": "Rebuilt from the published description of Nasar (1990). Residents and visitors named up to five visually pleasant and five unpleasant areas. Interviewers turned those descriptions into personal evaluative maps. The published Knoxville sample was 160 residents and 120 visitors; Chattanooga was 60 and 60. Those counts are literature context, not quotas for a new survey. Differences from the original study: (1) Participants draw the areas themselves. The original interviews used verbal descriptions, with a map as an aid in the face-to-face visitor interviews. (2) The live age and income bands are mutually exclusive. The published age labels leave age 20 unlabeled, and the published income bands do not state whether a boundary dollar belongs in the lower or upper band. The paper does not say whether income is personal or household, or which year it refers to. (3) Gender options beyond male and female, and the “prefer not to say” choices, are modern adaptations. Ethnicity uses the Black, White and Other categories reported for these US samples and should be replaced for a study elsewhere. (4) Years lived, familiarity, visit count and length of stay are platform extensions. They are not Table 2 columns. Education, occupation and travel mode are not included.",
+  "author": "Nasar",
+  "year": "1990",
+  "category": "Academic Research",
+  "tags": [
+    "official",
+    "paper"
+  ],
+  "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": "/project_templates/cover_images/1990-nasar-evaluative.svg",
+  "website": "https://doi.org/10.1080/01944369008975742",
+  "huggingfaceDataset": null,
+  "createdAt": "2026-10-02T00:00:00+00:00",
+  "imageDatasetConfig": {
+    "mediaFolders": [],
+    "mediaFolderTags": {}
+  },
+  "preloadedImages": [],
+  "preloadedSource": null,
+  "preloadedAt": null,
+  "config": {
+    "title": "The Evaluative Image of the City",
+    "description": "You will confirm a city, describe your connection to it, and mark areas you find visually pleasant or unpleasant.",
+    "logoPosition": "right",
+    "autoGrowComment": true,
+    "progressBarType": "questions",
+    "showProgressBar": "aboveheader",
+    "showQuestionNumbers": "off",
+    "spMapTaskOrder": {
+      "valueName": "map_task_order",
+      "firstPage": "page_liked",
+      "secondPage": "page_disliked"
+    },
+    "spAnalysisRecommendation": {
+      "citation": "Nasar 1990",
+      "items": [
+        {
+          "questions": [
+            "liked_areas",
+            "disliked_areas"
+          ],
+          "method": "geographic_evaluative_map",
+          "likedQuestion": "liked_areas",
+          "dislikedQuestion": "disliked_areas"
+        }
+      ]
+    },
+    "pages": [
+      {
+        "name": "page_intro",
+        "elements": [
+          {
+            "name": "intro",
+            "type": "expression",
+            "title": "About this survey",
+            "description": "The two map tasks use the same study extent. About half of participants see pleasant areas first. Your order stays the same if you go back or refresh. The survey does not read your location and does not ask for a home address."
+          },
+          {
+            "name": "city",
+            "type": "radiogroup",
+            "title": "Which city are you evaluating?",
+            "choices": [
+              {
+                "value": "knoxville",
+                "text": "Knoxville"
+              },
+              {
+                "value": "chattanooga",
+                "text": "Chattanooga"
+              }
+            ],
+            "isRequired": true,
+            "description": "These are the two cities in the published study. A new project can replace them with its own preset cities. Participants cannot switch to an arbitrary city."
+          }
+        ],
+        "title": "Introduction"
+      },
+      {
+        "name": "page_relation",
+        "elements": [
+          {
+            "name": "resident_or_visitor",
+            "type": "radiogroup",
+            "title": "What is your connection to this city?",
+            "choices": [
+              {
+                "value": "resident",
+                "text": "Resident"
+              },
+              {
+                "value": "visitor",
+                "text": "Visitor"
+              },
+              {
+                "value": "works_or_studies",
+                "text": "I work or study here but do not live here (platform extension, not in Table 2)"
+              }
+            ],
+            "isRequired": true
+          },
+          {
+            "name": "familiarity",
+            "type": "radiogroup",
+            "title": "How familiar are you with this city? (platform extension)",
+            "choices": [
+              {
+                "value": "low",
+                "text": "Slightly familiar"
+              },
+              {
+                "value": "moderate",
+                "text": "Moderately familiar"
+              },
+              {
+                "value": "high",
+                "text": "Very familiar"
+              },
+              {
+                "value": "prefer_not",
+                "text": "Prefer not to say"
+              }
+            ],
+            "isRequired": false
+          },
+          {
+            "name": "years_in_city",
+            "type": "text",
+            "title": "How many years have you lived in the city? (platform extension; not a Table 2 column)",
+            "isRequired": false,
+            "inputType": "number",
+            "visibleIf": "{resident_or_visitor} = 'resident'"
+          },
+          {
+            "name": "visit_count",
+            "type": "text",
+            "title": "About how many times have you visited? (platform extension)",
+            "isRequired": false,
+            "inputType": "number",
+            "visibleIf": "{resident_or_visitor} = 'visitor'"
+          },
+          {
+            "name": "stay_days",
+            "type": "text",
+            "title": "About how many days was your most recent stay? (platform extension)",
+            "isRequired": false,
+            "inputType": "number",
+            "visibleIf": "{resident_or_visitor} = 'visitor'"
+          }
+        ],
+        "title": "Your connection to the city"
+      },
+      {
+        "name": "page_liked",
+        "elements": [
+          {
+            "name": "liked_areas",
+            "type": "mapannotation",
+            "title": "Mark up to five areas you find visually pleasant.",
+            "isRequired": true,
+            "description": "Draw each area on the map. Name the place and say why you marked it. Zero areas must be confirmed with “No area to mark”. Online drawing is a digitization of the original interviewer-made evaluative maps.",
+            "mapTools": [
+              "polygon",
+              "rectangle",
+              "point"
+            ],
+            "mapLabel": "liked",
+            "cityQuestion": "city",
+            "studyAreaId": "knoxville-1990",
+            "studyAreas": [
+              {
+                "id": "knoxville-1990",
+                "revision": 1,
+                "cityId": "knoxville",
+                "label": "Knoxville preset rectangle. This is a starting study extent, not the city administrative boundary.",
+                "center": [
+                  -83.9,
+                  35.965
+                ],
+                "zoom": 12,
+                "boundary": {
+                  "type": "Polygon",
+                  "coordinates": [
+                    [
+                      [
+                        -84.05,
+                        35.88
+                      ],
+                      [
+                        -83.75,
+                        35.88
+                      ],
+                      [
+                        -83.75,
+                        36.05
+                      ],
+                      [
+                        -84.05,
+                        36.05
+                      ],
+                      [
+                        -84.05,
+                        35.88
+                      ]
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "chattanooga-1990",
+                "revision": 1,
+                "cityId": "chattanooga",
+                "label": "Chattanooga preset rectangle. This is a starting study extent, not the city administrative boundary.",
+                "center": [
+                  -85.3,
+                  35.05
+                ],
+                "zoom": 12,
+                "boundary": {
+                  "type": "Polygon",
+                  "coordinates": [
+                    [
+                      [
+                        -85.4,
+                        34.98
+                      ],
+                      [
+                        -85.2,
+                        34.98
+                      ],
+                      [
+                        -85.2,
+                        35.12
+                      ],
+                      [
+                        -85.4,
+                        35.12
+                      ],
+                      [
+                        -85.4,
+                        34.98
+                      ]
+                    ]
+                  ]
+                }
+              }
+            ],
+            "minAnnotations": 0,
+            "maxAnnotations": 5
+          }
+        ]
+      },
+      {
+        "name": "page_disliked",
+        "elements": [
+          {
+            "name": "disliked_areas",
+            "type": "mapannotation",
+            "title": "Mark up to five areas you find visually unpleasant.",
+            "isRequired": true,
+            "description": "Draw each area on the map. Name the place and say why you marked it. Zero areas must be confirmed with “No area to mark”. Online drawing is a digitization of the original interviewer-made evaluative maps.",
+            "mapTools": [
+              "polygon",
+              "rectangle",
+              "point"
+            ],
+            "mapLabel": "disliked",
+            "cityQuestion": "city",
+            "studyAreaId": "knoxville-1990",
+            "studyAreas": [
+              {
+                "id": "knoxville-1990",
+                "revision": 1,
+                "cityId": "knoxville",
+                "label": "Knoxville preset rectangle. This is a starting study extent, not the city administrative boundary.",
+                "center": [
+                  -83.9,
+                  35.965
+                ],
+                "zoom": 12,
+                "boundary": {
+                  "type": "Polygon",
+                  "coordinates": [
+                    [
+                      [
+                        -84.05,
+                        35.88
+                      ],
+                      [
+                        -83.75,
+                        35.88
+                      ],
+                      [
+                        -83.75,
+                        36.05
+                      ],
+                      [
+                        -84.05,
+                        36.05
+                      ],
+                      [
+                        -84.05,
+                        35.88
+                      ]
+                    ]
+                  ]
+                }
+              },
+              {
+                "id": "chattanooga-1990",
+                "revision": 1,
+                "cityId": "chattanooga",
+                "label": "Chattanooga preset rectangle. This is a starting study extent, not the city administrative boundary.",
+                "center": [
+                  -85.3,
+                  35.05
+                ],
+                "zoom": 12,
+                "boundary": {
+                  "type": "Polygon",
+                  "coordinates": [
+                    [
+                      [
+                        -85.4,
+                        34.98
+                      ],
+                      [
+                        -85.2,
+                        34.98
+                      ],
+                      [
+                        -85.2,
+                        35.12
+                      ],
+                      [
+                        -85.4,
+                        35.12
+                      ],
+                      [
+                        -85.4,
+                        34.98
+                      ]
+                    ]
+                  ]
+                }
+              }
+            ],
+            "minAnnotations": 0,
+            "maxAnnotations": 5
+          }
+        ]
+      },
+      {
+        "name": "page_improvement",
+        "elements": [
+          {
+            "name": "knoxville_improvement",
+            "type": "radiogroup",
+            "title": "Which element is most in need of visual improvement in Knoxville?",
+            "choices": [
+              {
+                "value": "industry",
+                "text": "Industry"
+              },
+              {
+                "value": "highways",
+                "text": "Highways"
+              },
+              {
+                "value": "signs_billboards",
+                "text": "Signs and billboards"
+              },
+              {
+                "value": "buildings",
+                "text": "Buildings"
+              },
+              {
+                "value": "poles_wires",
+                "text": "Utility poles and wires"
+              },
+              {
+                "value": "riverfront",
+                "text": "Riverfront"
+              },
+              {
+                "value": "parking",
+                "text": "Parking lots"
+              },
+              {
+                "value": "buses",
+                "text": "Buses"
+              },
+              {
+                "value": "railways",
+                "text": "Railways"
+              },
+              {
+                "value": "service_stations",
+                "text": "Service stations"
+              }
+            ],
+            "isRequired": false,
+            "showOtherItem": true,
+            "otherText": "Other",
+            "visibleIf": "{city} = 'knoxville'",
+            "description": "This list follows Appendix A. A Table 1 style display may later place buses, railways and service stations under Other. The saved answer keeps the specific choice."
+          },
+          {
+            "name": "chattanooga_improvement",
+            "type": "comment",
+            "isRequired": false,
+            "visibleIf": "{city} = 'chattanooga'",
+            "title": "If you could change one thing, what would you change to improve the appearance of Chattanooga?"
+          }
+        ],
+        "title": "What most needs to change"
+      },
+      {
+        "name": "page_demographics",
+        "elements": [
+          {
+            "name": "gender",
+            "type": "radiogroup",
+            "title": "Gender",
+            "choices": [
+              {
+                "value": "male",
+                "text": "Male"
+              },
+              {
+                "value": "female",
+                "text": "Female"
+              },
+              {
+                "value": "self_describe",
+                "text": "Prefer to self-describe (adaptation)"
+              },
+              {
+                "value": "prefer_not",
+                "text": "Prefer not to say (adaptation)"
+              }
+            ],
+            "isRequired": false,
+            "description": "The published table reports Male and Female. Self-describe and prefer-not-to-say are adaptations and should be reported as such."
+          },
+          {
+            "name": "ethnicity",
+            "type": "radiogroup",
+            "title": "Race / ethnicity for this US sample",
+            "choices": [
+              {
+                "value": "black",
+                "text": "Black"
+              },
+              {
+                "value": "white",
+                "text": "White"
+              },
+              {
+                "value": "other",
+                "text": "Other"
+              },
+              {
+                "value": "prefer_not",
+                "text": "Prefer not to say (adaptation)"
+              }
+            ],
+            "isRequired": false,
+            "description": "Black, White and Other are the categories in Table 2 for these two US cities. Replace them when the study is elsewhere. Do not treat this list as a global classification."
+          },
+          {
+            "name": "age_band",
+            "type": "radiogroup",
+            "title": "Age",
+            "choices": [
+              {
+                "value": "under_21",
+                "text": "Under 21"
+              },
+              {
+                "value": "21_39",
+                "text": "21–39"
+              },
+              {
+                "value": "40_60",
+                "text": "40–60"
+              },
+              {
+                "value": "61_plus",
+                "text": "61 or older"
+              },
+              {
+                "value": "prefer_not",
+                "text": "Prefer not to say"
+              }
+            ],
+            "isRequired": false,
+            "description": "Table 2 prints Under 20, 21–39, 40–60 and Over 60, which leaves age 20 unlabeled. These live bands are mutually exclusive: 20 is included in Under 21, and 60 stays in 40–60."
+          },
+          {
+            "name": "income",
+            "type": "radiogroup",
+            "title": "Income in US dollars",
+            "choices": [
+              {
+                "value": "under_10000",
+                "text": "Under $10,000"
+              },
+              {
+                "value": "10000_24999",
+                "text": "$10,000–$24,999"
+              },
+              {
+                "value": "25000_or_more",
+                "text": "$25,000 or more"
+              },
+              {
+                "value": "no_response",
+                "text": "No response"
+              },
+              {
+                "value": "prefer_not",
+                "text": "Prefer not to say (adaptation)"
+              }
+            ],
+            "isRequired": false,
+            "description": "Table 2 prints $0–$10,000, $10,000–$24,999 and Over $25,000, so the boundary dollars are ambiguous. These live bands do not overlap. The paper does not say whether the amount is personal or household, or which year it covers. Do not label it as household income from the paper."
+          }
+        ],
+        "title": "About you"
+      }
+    ]
+  }
+}

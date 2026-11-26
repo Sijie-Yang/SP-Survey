@@ -21,6 +21,10 @@ import { AdminPageHeader } from './AdminPageLayout';
 import { useRegion } from '../../contexts/RegionContext';
 import SurveyPreflight from './SurveyPreflight';
 import SurveyQrCode from './SurveyQrCode';
+import ParameterLinks from './ParameterLinks';
+import RecruitmentLinks from './RecruitmentLinks';
+import { captureParamNames, normalizeConditions } from '../../lib/surveyRuntimeContext';
+import { isChineseLanguage, uiPair } from '../../lib/uiLanguages';
 import { validateSurveyConfig } from '../../lib/designProtocol/validate';
 import { surveyValidationText } from '../../contexts/questionEditorI18n';
 import { getTrialCount } from '../../lib/trialNavigation';
@@ -28,7 +32,8 @@ import { isLocalhostSurveyUrl, resolveShareSurveyUrl } from '../../lib/shareSurv
 
 export default function ShareSurvey({ currentProject, surveyConfig, hasUnsavedChanges = false, onGoToHost }) {
   const { t, language } = useRegion();
-  const zh = language === 'zh';
+  const zh = isChineseLanguage(language);
+  const hasParameterLinks = captureParamNames(surveyConfig).length > 0 || normalizeConditions(surveyConfig).length > 1;
   const report = validateSurveyConfig(surveyConfig);
   const questions = (surveyConfig?.pages || []).flatMap((p) => p.elements || []);
   const answerable = questions.filter((q) => !['html', 'expression', 'image', 'mediadisplay'].includes(q.type));
@@ -146,6 +151,28 @@ export default function ShareSurvey({ currentProject, surveyConfig, hasUnsavedCh
         </Alert>
       )}
       <SurveyPreflight surveyConfig={surveyConfig} currentProject={currentProject} />
+
+      {surveyUrl && hasParameterLinks && (
+        <Card sx={{ mb: 3 }}>
+          <CardContent>
+            <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 2 }}>
+              {uiPair(language, 'Parameter links', '参数链接')}
+            </Typography>
+            <ParameterLinks surveyUrl={surveyUrl} surveyConfig={surveyConfig} projectId={currentProject?.id} />
+          </CardContent>
+        </Card>
+      )}
+
+      {surveyUrl && (
+        <Card sx={{ mb: 3 }}>
+          <CardContent>
+            <Typography variant="subtitle1" fontWeight={700} sx={{ mb: 2 }}>
+              {uiPair(language, 'Recruitment platform', '招募平台')}
+            </Typography>
+            <RecruitmentLinks surveyUrl={surveyUrl} surveyConfig={surveyConfig} projectId={currentProject?.id} />
+          </CardContent>
+        </Card>
+      )}
 
       <Card sx={{ mb: 3 }}>
         <CardContent>

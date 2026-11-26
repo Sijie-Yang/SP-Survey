@@ -8,6 +8,7 @@ import {
   getEligibleMediaSets, getRecursiveMedia, normalizeFolderPath,
   buildMediaByFolderCategory,
 } from './mediaUtils';
+import { shuffled } from './shuffle.js';
 
 /** All media* types that participate in slots + random injection. */
 export const MEDIA_STAR_TYPES = [
@@ -85,8 +86,7 @@ function pickRandomFromPool(pool, count, mediaType, excludeKeys) {
     });
     if (filtered.length >= count) candidates = filtered;
   }
-  const shuffled = [...candidates].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, Math.max(0, count));
+  return shuffled(candidates).slice(0, Math.max(0, count));
 }
 
 function matchByBasename(pool, stem, mediaType, excludeKeys) {
@@ -122,8 +122,7 @@ function pickSharedSet(pool, folderTags, scopeFolders, setSize, globallyUsedSetK
     }
   }
   if (!eligible.length) return null;
-  const shuffled = [...eligible].sort(() => 0.5 - Math.random());
-  return shuffled[0];
+  return shuffled(eligible)[0];
 }
 
 function memberFromSet(setMembers, mediaType, excludeKeys) {

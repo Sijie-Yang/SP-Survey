@@ -2,6 +2,7 @@ import {
   getLayoutTunables,
   layoutImageGallery,
   MOBILE_WIDTH,
+  readViewportLayoutHost,
   shouldStackGalleryOnMobile,
 } from './imagePickerLayout';
 
@@ -94,5 +95,50 @@ describe('rendered gallery sizing', () => {
     layoutImageGallery(root);
     expect(root.classList.contains('sp-gallery-stack')).toBe(false);
     expect(root.firstChild.style.width).toBe('200px');
+  });
+
+  test('a saved media cap replaces the desktop image height', () => {
+    window.innerWidth = 1400;
+    const host = document.createElement('div');
+    host.setAttribute('data-sp-viewport-layout', '');
+    host.setAttribute('data-sp-viewport-width', '1280');
+    host.setAttribute('data-sp-media-max-height', '120');
+    const root = document.createElement('div');
+    root.className = 'sd-imagepicker';
+    let width = 900;
+    Object.defineProperty(root, 'clientWidth', { get: () => width });
+    root.innerHTML = '<div class="sd-imagepicker__item"><div class="sd-imagepicker__image-container"><img class="sd-imagepicker__image" /></div></div>';
+    const img = root.querySelector('img');
+    Object.defineProperty(img, 'naturalWidth', { value: 100 });
+    Object.defineProperty(img, 'naturalHeight', { value: 100 });
+    host.appendChild(root);
+    document.body.appendChild(host);
+    expect(readViewportLayoutHost(root).mediaMaxHeight).toBe(120);
+    layoutImageGallery(root);
+    expect(parseFloat(img.style.height)).toBe(120);
+    host.removeAttribute('data-sp-media-max-height');
+    layoutImageGallery(root);
+    expect(parseFloat(img.style.height)).toBe(200);
+  });
+
+  test('mobile frame width stacks choices even when the browser window is wide', () => {
+    window.innerWidth = 1400;
+    const host = document.createElement('div');
+    host.setAttribute('data-sp-viewport-layout', '');
+    host.setAttribute('data-sp-viewport-width', '390');
+    const root = document.createElement('div');
+    root.className = 'sd-imagepicker';
+    Object.defineProperty(root, 'clientWidth', { get: () => 360 });
+    root.innerHTML = Array.from({ length: 2 }, () => (
+      '<div class="sd-imagepicker__item"><div class="sd-imagepicker__image-container"><img class="sd-imagepicker__image" /></div></div>'
+    )).join('');
+    root.querySelectorAll('img').forEach((img) => {
+      Object.defineProperty(img, 'naturalWidth', { value: 100 });
+      Object.defineProperty(img, 'naturalHeight', { value: 100 });
+    });
+    host.appendChild(root);
+    document.body.appendChild(host);
+    layoutImageGallery(root);
+    expect(root.classList.contains('sp-gallery-stack')).toBe(true);
   });
 });

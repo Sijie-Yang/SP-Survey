@@ -1,184 +1,90 @@
 import ChoiceOutcomeSummary from './ChoiceOutcomeSummary';
-import { readAllResponsePages, responseCursorFilter } from '../../lib/responsePagination';
+import { isChineseLanguage, uiPair } from '../../lib/uiLanguages';
+import { readAllResponsePages } from '../../lib/responsePagination';
 import { recordedRevisionSelection, recordedSurveyConfig } from '../../lib/recordedSurvey';
 import { responseWithinDateRange } from '../../lib/responseIdentity';
 import { dimensionDisplayName, sliderScale } from '../../lib/sliderScale';
 import { allocationStatus } from '../../lib/allocationStats';
 import { mediaIdentityKey, resolveMediaAnswerKey, stimulusUnitKey, stimulusUnitLabel } from '../../lib/mediaIdentity';
-import { fetchAdminResponsePage } from '../../lib/adminResults';
+import { countOwnerResponses, createResponseLoadSession, fetchAdminResponsePage, fetchOwnerResponsePage } from '../../lib/adminResults';
+import React, { useState, useEffect, useMemo, useCallback, useContext, useRef } from 'react';
+import { Box, Typography, Paper, Card, CardContent, Button, IconButton, Chip, CircularProgress, Alert, Divider, Tooltip, Grid, Table, TableBody, TableCell, TableContainer, TablePagination, TableHead, TableRow, Collapse, TextField, InputAdornment, Switch, FormControlLabel, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Tabs, Tab } from '@mui/material';
+import { Refresh, Download, Assessment, ExpandMore, ExpandLess, Search, QuestionAnswer, Image as ImageIcon, TextFields, Star, CheckBox, RadioButtonChecked, LinearScale, TableChart, VerifiedUser, Description, DeleteOutline } from '@mui/icons-material';
 import { API_ROOT } from '../../lib/apiConfig';
 import { listSiliconResponses } from '../../lib/agentApi';
-import React, { useState, useEffect, useMemo, useCallback, useContext } from 'react';
-import {
-  Box,
-  Typography,
-  Paper,
-  Card,
-  CardContent,
-  Button,
-  IconButton,
-  Chip,
-  CircularProgress,
-  Alert,
-  Divider,
-  Tooltip,
-  Grid,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TablePagination,
-  TableHead,
-  TableRow,
-  Collapse,
-  TextField,
-  InputAdornment,
-  Switch,
-  FormControlLabel,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Tabs,
-  Tab,
-} from '@mui/material';
-import {
-  Refresh,
-  Download,
-  Assessment,
-  People,
-  ExpandMore,
-  ExpandLess,
-  Storage,
-  Cloud,
-  Search,
-  QuestionAnswer,
-  Image as ImageIcon,
-  TextFields,
-  Star,
-  CheckBox,
-  RadioButtonChecked,
-  LinearScale,
-  TableChart,
-  VerifiedUser,
-  Description,
-  DeleteOutline,
-} from '@mui/icons-material';
 import { supabase as platformSupabase } from '../../lib/supabase';
 import AnnotationAnalysis from './AnnotationAnalysis';
 import ImagePerceptionPanel from './ImagePerceptionPanel';
 import { getPresetSkill } from '../../lib/presetSkills';
 import { ImageResolverContext } from './imageResolverContext';
-import {
-  summarizeQuality,
-  QUALITY_FLAG_LABELS,
-  attentionCheckQuestionStats,
-} from '../../lib/quality';
+import { summarizeQuality, QUALITY_FLAG_LABELS, attentionCheckQuestionStats } from '../../lib/quality';
 import { computeQuestionIrr } from '../../lib/reliability';
 import { expandQuestionAnswerUnits, normalizeBooleanAnswer } from '../../lib/responseAnswerUnits';
+import { siteMatchLevel } from '../../lib/spSite';
+import { SP_SITE_REQUESTS_KEY, SP_SITE_STATE_KEY } from '../SpSiteSurvey';
 import { supportsTrialCount } from '../../lib/questionTypeConstraints';
-import {
-  computeQuestionTrueSkill,
-  computeTrueSkillFromMatches,
-  matchesFromOrderedRanking,
-  attachMatchCategory,
-  splitsTrueSkillByCategory,
-  trueSkillBoards,
-} from '../../lib/trueskill';
+import { computeTrueSkillFromMatches, matchesFromOrderedRanking, attachMatchCategory, splitsTrueSkillByCategory, trueSkillBoards } from '../../lib/trueskill';
 import { average, pct, wilsonCI } from '../../lib/stats';
 import { computeBordaScores, kendallW, interpretKendallW } from '../../lib/rankingStats';
 import { wordFrequency, textLengthStats } from '../../lib/textStats';
-import { generateMethodsText, downloadTextFile } from '../../lib/methodsExport';
 import { createAnalysisScope, defaultAnalysisTimezone } from '../../lib/analysisScope';
+import { rowMatchesDemographicFilters, listStudyAreas, resolveEvaluativeMapPair } from '../../lib/mapAnnotation';
+import DemographicFilterBar from './DemographicFilterBar';
+import GeographicEvaluativePanel, { AnalysisProgressBar, useGeographicEvaluativeMaps } from './GeographicEvaluativePanel';
 import { computeResultsOverview } from '../../lib/resultsWorkbench';
-import { createResultsReport, readResultsReport, reportStaleness, writeResultsReport } from '../../lib/resultsReportStore';
-import {
-  ResultsFilterForm,
-  ResultsFilterShell,
-  ResultsReportCard,
-  ResultsScopeChips,
-  ResultsToolbar,
-  ResultsViewTabs,
-} from './ResultsWorkbenchChrome';
+import { createResultsReport, deleteResultsReport, readResultsReport, reportStaleness, writeResultsReport } from '../../lib/resultsReportStore';
+import { ResultsFilterForm, ResultsFilterShell, ResultsReportCard, ResultsScopeChips, ResultsToolbar, ResultsViewTabs } from './ResultsWorkbenchChrome';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { buildResponsesWideCsv, downloadResponsesWideCsv } from '../../lib/responsesWideExport';
-import {
-  downloadQuestionExportZip,
-  downloadResultsExportZip,
-  downloadDataQualityCsv,
-} from '../../lib/questionSummaryExport';
-import {
-  DensityHistogramChart,
-  DescriptiveStatsLine,
-  SemanticProfileChart,
-  WordFrequencyChart,
-} from './analysisCharts';
+import { collectShownStimuli, downloadQuestionExportZip, downloadResultsExportZip, downloadSiteResultsZip, downloadDataQualityCsv } from '../../lib/questionSummaryExport';
+import { methodsFacts } from '../../lib/journalMethods';
+import { DensityHistogramChart, DescriptiveStatsLine, SemanticProfileChart, WordFrequencyChart } from './analysisCharts';
 import { getPresetSkillAnalysis } from './skillAnalysis';
-import {
-  TrueSkillMuChart,
-  TrueSkillTable,
-  TrueSkillBoardStack,
-  TRUESKILL_SORT_COLUMNS,
-  RANKING_EXTRA_COLUMNS,
-} from './trueSkillAnalysisUi';
-import {
-  enrichSkillAnswers,
-  buildResponseMediaUrlMap,
-  stripSkillAnswerContext,
-  formatSkillAnswerForDisplay,
-  filterAnswersForSkill,
-  imageStimulusKey,
-  mediaFilenameKey,
-} from '../../lib/skillMediaUtils';
+import { TrueSkillMuChart, TrueSkillTable, TrueSkillBoardStack, TRUESKILL_SORT_COLUMNS, RANKING_EXTRA_COLUMNS } from './trueSkillAnalysisUi';
+import { enrichSkillAnswers, buildResponseMediaUrlMap, stripSkillAnswerContext, formatSkillAnswerForDisplay, filterAnswersForSkill, imageStimulusKey, mediaFilenameKey } from '../../lib/skillMediaUtils';
 import SkillArchetypeFieldSummary from './SkillArchetypeFieldSummary';
-import {
-  ARCHETYPE_SKILL_RESULT_TYPES,
-  canonicalizeSkillResultType,
-  checkAnswerAgainstResultSchema,
-} from '../../lib/skillResultTypes';
+import { ARCHETYPE_SKILL_RESULT_TYPES, canonicalizeSkillResultType, checkAnswerAgainstResultSchema } from '../../lib/skillResultTypes';
 import { getSkillById } from '../../lib/skillManager';
-
 import { deleteSurveyResponse, responseRecordKey } from '../../lib/surveyResponses';
 import { AdminPageHeader } from './AdminPageLayout';
 import { useRegion } from '../../contexts/RegionContext';
+import PaperMethodsPanel, { PairwiseAnalysis } from './PaperMethodsPanel';
+import ConditionWordingSummary from './ConditionWordingSummary';
 import { tf } from '../../contexts/adminI18n';
-import {
-  adaptResponsesForSkillField,
-  adaptSkillAnswerEntries,
-  skillFieldNativeQuestion,
-} from '../../lib/skillNativeAdapter.mjs';
+import AiQuestionAnalysis from './AiQuestionAnalysis';
+import { aiAnalysisExportFiles, buildAnalysisRecords, evaluateAnalysis, readSavedAnalyses } from '../../lib/aiQuestionAnalysis';
+import { runAnalysisInSandbox } from '../../lib/aiAnalysisSandbox';
+import { saveQuestionAnalysis } from '../../lib/aiQuestionAnalysisStore';
+import DatasetPackageDialog from './DatasetPackageDialog';
+import FigureDownloadButton from './FigureDownloadButton';
+import { figureSvgFiles, figureZipFiles, figuresForSurvey } from '../../lib/journalFigures';
+import { downloadZip } from '../../lib/zipDownload';
+import SiliconAgreementCard from './SiliconAgreementCard';
+import SpBenchTaskCard from './SpBenchTaskCard';
+import VariantContrastCard from './VariantContrastCard';
+import CitePlatformButton from './CitePlatformButton';
+import { answeredYes, collectStimuli, downloadDatasetPackage, fetchStimulusFiles, freeTextQuestionNames, reuseConsentQuestions } from '../../lib/datasetPackage';
+import { saveDatasetRelease } from '../../lib/datasetReleaseStore';
+import { adaptResponsesForSkillField, adaptSkillAnswerEntries, skillFieldNativeQuestion } from '../../lib/skillNativeAdapter.mjs';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 const RATING_COLORS = ['#f44336', '#ff9800', '#ffc107', '#8bc34a', '#4caf50'];
-const BAR_COLORS = [
-  '#1976d2', '#2196f3', '#0288d1', '#0097a7', '#00838f',
-  '#388e3c', '#689f38', '#f57c00', '#e64a19', '#7b1fa2'
-];
+const BAR_COLORS = ['#1976d2', '#2196f3', '#0288d1', '#0097a7', '#00838f', '#388e3c', '#689f38', '#f57c00', '#e64a19', '#7b1fa2'];
 /** High-contrast palette for matrix stacked distributions (avoid similar blues). */
-const MATRIX_DIST_COLORS = [
-  '#1565c0', '#c62828', '#2e7d32', '#f9a825', '#6a1b9a',
-  '#00838f', '#ef6c00', '#ad1457', '#4527a0', '#558b2f',
-];
-
+const MATRIX_DIST_COLORS = ['#1565c0', '#c62828', '#2e7d32', '#f9a825', '#6a1b9a', '#00838f', '#ef6c00', '#ad1457', '#4527a0', '#558b2f'];
 function matrixDistColor(index) {
   return MATRIX_DIST_COLORS[index % MATRIX_DIST_COLORS.length];
 }
-
 function columnKeysAreNumeric(colKeys) {
-  return (colKeys || []).length > 0
-    && colKeys.every((c) => c !== '' && c != null && !Number.isNaN(Number(c)));
+  return (colKeys || []).length > 0 && colKeys.every(c => c !== '' && c != null && !Number.isNaN(Number(c)));
 }
 
 /** Weighted mean from column-value → count map when column keys are numeric. */
 function meanFromColumnCounts(cols, colKeys) {
   let sum = 0;
   let n = 0;
-  (colKeys || []).forEach((c) => {
+  (colKeys || []).forEach(c => {
     const count = cols?.[c] || 0;
     if (!count) return;
     sum += Number(c) * count;
@@ -188,17 +94,12 @@ function meanFromColumnCounts(cols, colKeys) {
 }
 
 /** Questions that show content only — excluded from coverage stats. */
-const DISPLAY_ONLY_QUESTION_TYPES = new Set([
-  'expression', // Text Instruction
-  'image',
-  'html',
-  'mediadisplay',
-]);
-
+const DISPLAY_ONLY_QUESTION_TYPES = new Set(['expression',
+// Text Instruction
+'image', 'html', 'mediadisplay']);
 function isDisplayOnlyQuestion(question) {
   return DISPLAY_ONLY_QUESTION_TYPES.has(question?.type);
 }
-
 function isAnswerableQuestion(question) {
   return !!question?.name && !isDisplayOnlyQuestion(question);
 }
@@ -209,7 +110,7 @@ function isAnswerableQuestion(question) {
  * count for the single question they practiced (survey_metadata.practice_question).
  */
 export function responsesEligibleForQuestion(questionName, responses) {
-  return (responses || []).filter((row) => {
+  return (responses || []).filter(row => {
     if (row.survey_metadata?.practice_mode) {
       return row.survey_metadata?.practice_question === questionName;
     }
@@ -223,7 +124,9 @@ export function responsesEligibleForQuestion(questionName, responses) {
 export function collectAnswers(questionName, responses) {
   const result = [];
   for (const row of responsesEligibleForQuestion(questionName, responses)) {
-    result.push(...expandQuestionAnswerUnits(row, questionName, { requireAnswer: true }));
+    result.push(...expandQuestionAnswerUnits(row, questionName, {
+      requireAnswer: true
+    }));
   }
   return result;
 }
@@ -232,7 +135,9 @@ export function collectAnswers(questionName, responses) {
 export function collectShownMedia(questionName, responses) {
   const result = [];
   for (const row of responsesEligibleForQuestion(questionName, responses)) {
-    result.push(...expandQuestionAnswerUnits(row, questionName, { requireAnswer: false }));
+    result.push(...expandQuestionAnswerUnits(row, questionName, {
+      requireAnswer: false
+    }));
   }
   return result;
 }
@@ -242,31 +147,34 @@ export function collectShownMedia(questionName, responses) {
  * Researcher Practice both use this so answer units, denominators, Skill
  * adapters, media context, and per-question exports cannot drift.
  */
-export function buildQuestionCardProps(
-  question,
-  responses,
-  { questionNumber = null, surveyConfig = null, exportResponses = responses } = {},
-) {
+export function buildQuestionCardProps(question, responses, {
+  questionNumber = null,
+  surveyConfig = null,
+  exportResponses = responses
+} = {}) {
   if (!question?.name) return null;
   const pool = responsesEligibleForQuestion(question.name, responses);
-  const answers = question.type === 'mediadisplay'
-    ? collectShownMedia(question.name, responses)
-    : collectAnswers(question.name, responses);
+  const answers = question.type === 'mediadisplay' ? collectShownMedia(question.name, responses) : collectAnswers(question.name, responses);
   return {
-    question: { ...question, _allResponses: pool },
+    question: {
+      ...question,
+      _allResponses: pool
+    },
     answers,
     totalResponses: pool.length,
     questionNumber,
     allResponses: pool,
     exportResponses,
-    surveyConfig,
+    surveyConfig
   };
 }
 
 // Frequency map: { choice: count }
 function frequencyMap(answers, getValue) {
   const freq = {};
-  for (const { answer } of answers) {
+  for (const {
+    answer
+  } of answers) {
     const vals = Array.isArray(answer) ? answer : [answer];
     for (const v of vals) {
       const key = getValue ? getValue(v) : String(v);
@@ -275,11 +183,12 @@ function frequencyMap(answers, getValue) {
   }
   return freq;
 }
-
-function imageKeyFromShown(entry) { return mediaIdentityKey(entry); }
-
-function resolveImageChoiceKey(value, shownImages) { return resolveMediaAnswerKey(value, shownImages); }
-
+function imageKeyFromShown(entry) {
+  return mediaIdentityKey(entry);
+}
+function resolveImageChoiceKey(value, shownImages) {
+  return resolveMediaAnswerKey(value, shownImages);
+}
 function resolveImageChoiceUrl(value, shownImages) {
   if (value == null || value === '') return null;
   const str = String(value);
@@ -287,14 +196,13 @@ function resolveImageChoiceUrl(value, shownImages) {
   if (match && Array.isArray(shownImages) && shownImages.length) {
     const img = shownImages[Number(match[1])];
     if (img == null) return null;
-    return typeof img === 'string' ? img : (img.url || img.name || null);
+    return typeof img === 'string' ? img : img.url || img.name || null;
   }
   if (str.startsWith('http') || str.startsWith('/')) return str;
-  const fromShown = (shownImages || []).find((s) => imageKeyFromShown(s) === imageKeyFromShown(str));
-  if (fromShown) return typeof fromShown === 'string' ? fromShown : (fromShown.url || null);
+  const fromShown = (shownImages || []).find(s => imageKeyFromShown(s) === imageKeyFromShown(str));
+  if (fromShown) return typeof fromShown === 'string' ? fromShown : fromShown.url || null;
   return str;
 }
-
 function typeIcon(type) {
   const icons = {
     rating: <Star fontSize="small" />,
@@ -311,178 +219,215 @@ function typeIcon(type) {
     image_matrix: <ImageIcon fontSize="small" />,
     slidergroup: <LinearScale fontSize="small" />,
     imageslidergroup: <ImageIcon fontSize="small" />,
-    imagepointallocation: <ImageIcon fontSize="small" />,
+    imagepointallocation: <ImageIcon fontSize="small" />
   };
   return icons[type] || <QuestionAnswer fontSize="small" />;
 }
-
-
-function HorizontalBar({ label, count, total, color, index }) {
+function HorizontalBar({
+  label,
+  count,
+  total,
+  color,
+  index
+}) {
   const width = pct(count, total);
-  return (
-    <Box sx={{ mb: 1 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.3 }}>
-        <Typography variant="body2" sx={{ maxWidth: '60%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+  return <Box sx={{
+    mb: 1
+  }}>
+      <Box sx={{
+      display: 'flex',
+      justifyContent: 'space-between',
+      mb: 0.3
+    }}>
+        <Typography variant="body2" sx={{
+        maxWidth: '60%',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap'
+      }}>
           {label}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {count} ({width}%)
         </Typography>
       </Box>
-      <Box sx={{ height: 14, bgcolor: 'grey.100', borderRadius: 1, overflow: 'hidden' }}>
-        <Box
-          sx={{
-            height: '100%',
-            width: `${width}%`,
-            bgcolor: color || BAR_COLORS[index % BAR_COLORS.length],
-            borderRadius: 1,
-            transition: 'width 0.6s ease'
-          }}
-        />
+      <Box sx={{
+      height: 14,
+      bgcolor: 'grey.100',
+      borderRadius: 1,
+      overflow: 'hidden'
+    }}>
+        <Box sx={{
+        height: '100%',
+        width: `${width}%`,
+        bgcolor: color || BAR_COLORS[index % BAR_COLORS.length],
+        borderRadius: 1,
+        transition: 'width 0.6s ease'
+      }} />
       </Box>
-    </Box>
-  );
+    </Box>;
 }
-
-function RatingDistribution({ answers, rateMin = 1, rateMax = 5 }) {
+function RatingDistribution({
+  answers,
+  rateMin = 1,
+  rateMax = 5
+}) {
   const nums = answers.map(a => Number(a.answer)).filter(n => !isNaN(n));
   const avg = average(nums);
   const freq = {};
   for (let i = rateMin; i <= rateMax; i++) freq[i] = 0;
-  nums.forEach(n => { if (freq[n] !== undefined) freq[n]++; });
+  nums.forEach(n => {
+    if (freq[n] !== undefined) freq[n]++;
+  });
   const colorStops = RATING_COLORS.slice(0, rateMax - rateMin + 1);
-
-  return (
-    <Box>
-      {avg !== null && (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-          <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
+  return <Box>
+      {avg !== null && <Box sx={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1,
+      mb: 1
+    }}>
+          <Typography variant="h4" sx={{
+        fontWeight: 'bold',
+        color: 'primary.main'
+      }}>
             {avg.toFixed(2)}
           </Typography>
           <Typography variant="body2" color="text.secondary">/ {rateMax} average</Typography>
-        </Box>
-      )}
+        </Box>}
       <DescriptiveStatsLine nums={nums} />
-      {nums.length >= 3 && (
-        <DensityHistogramChart
-          scores={nums}
-          domainMin={rateMin}
-          domainMax={rateMax}
-          title="Rating distribution"
-          xLabel={`Rating (${rateMin}–${rateMax})`}
-          padB={48}
-          chartH={220}
-        />
-      )}
-      {Object.entries(freq).map(([score, count], idx) => (
-        <HorizontalBar
-          key={score}
-          label={`${score} star${Number(score) !== 1 ? 's' : ''}`}
-          count={count}
-          total={nums.length}
-          color={colorStops[idx]}
-        />
-      ))}
-    </Box>
-  );
+      {nums.length >= 3 && <DensityHistogramChart scores={nums} domainMin={rateMin} domainMax={rateMax} title="Rating distribution" xLabel={`Rating (${rateMin}–${rateMax})`} padB={48} chartH={220} />}
+      {Object.entries(freq).map(([score, count], idx) => <HorizontalBar key={score} label={`${score} star${Number(score) !== 1 ? 's' : ''}`} count={count} total={nums.length} color={colorStops[idx]} />)}
+    </Box>;
 }
-
-function ChoiceDistribution({ answers, choices, isCheckbox = false }) {
+function ChoiceDistribution({
+  answers,
+  choices,
+  isCheckbox = false
+}) {
   const freq = frequencyMap(answers);
   const sorted = Object.entries(freq).sort((a, b) => b[1] - a[1]);
   const respondentCount = answers.length;
   const totalSelections = sorted.reduce((s, [, c]) => s + c, 0);
-
   const labelMap = {};
   if (choices) {
     for (const c of choices) {
       const val = typeof c === 'object' ? c.value : c;
-      const text = typeof c === 'object' ? (c.text || c.value) : c;
+      const text = typeof c === 'object' ? c.text || c.value : c;
       labelMap[String(val)] = String(text);
     }
   }
-
-  return (
-    <Box>
-      <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
+  return <Box>
+      <Typography variant="caption" color="text.secondary" sx={{
+      display: 'block',
+      mb: 1
+    }}>
         n={respondentCount} responses
-        {isCheckbox && totalSelections > 0 && (
-          <> · {totalSelections} total selections · avg {(totalSelections / respondentCount).toFixed(1)} per person</>
-        )}
+        {isCheckbox && totalSelections > 0 && <> · {totalSelections} total selections · avg {(totalSelections / respondentCount).toFixed(1)} per person</>}
       </Typography>
-      {sorted.map(([value, count], idx) => (
-        <HorizontalBar
-          key={value}
-          label={`${labelMap[value] || value}${isCheckbox ? ` (${pct(count, totalSelections)}% of selections)` : ''}`}
-          count={count}
-          total={isCheckbox ? respondentCount : respondentCount}
-          index={idx}
-        />
-      ))}
-      {sorted.length === 0 && (
-        <Typography variant="body2" color="text.secondary">No responses yet.</Typography>
-      )}
-    </Box>
-  );
+      {sorted.map(([value, count], idx) => <HorizontalBar key={value} label={`${labelMap[value] || value}${isCheckbox ? ` (${pct(count, totalSelections)}% of selections)` : ''}`} count={count} total={isCheckbox ? respondentCount : respondentCount} index={idx} />)}
+      {sorted.length === 0 && <Typography variant="body2" color="text.secondary">No responses yet.</Typography>}
+    </Box>;
 }
 
 // ── imagepicker distribution ──────────────────────────────────────────────────
 // Choices: { value, imageLink?, text? }. Answer = value (may be a URL or filename).
-function IrrSummary({ responses, question }) {
-  const { alpha, agreement, interpretation, dimensions } = computeQuestionIrr(responses, question);
-  if (dimensions) return <Box>{dimensions.map((d) => (
-    <Typography key={d.id} variant="caption" display="block">
+function IrrSummary({
+  responses,
+  question
+}) {
+  const {
+    alpha,
+    agreement,
+    interpretation,
+    dimensions
+  } = computeQuestionIrr(responses, question);
+  if (dimensions) return <Box>{dimensions.map(d => <Typography key={d.id} variant="caption" display="block">
       {d.label}: {d.alpha == null ? 'Insufficient overlapping ratings' : 'α = ' + d.alpha.toFixed(3)}
-    </Typography>))}<Typography variant="caption">Repeated ratings by the same participant are averaged per stimulus and dimension.</Typography></Box>;
+    </Typography>)}<Typography variant="caption">Repeated ratings by the same participant are averaged per stimulus and dimension.</Typography></Box>;
   if (alpha == null && agreement == null) return null;
-  return (
-    <Alert severity={alpha != null && alpha >= 0.667 ? 'success' : 'info'} sx={{ mb: 2 }}>
-      <Typography variant="body2" sx={{ fontWeight: 600 }}>Inter-rater reliability</Typography>
-      {alpha != null && (
-        <Typography variant="body2">Krippendorff&apos;s α = {alpha.toFixed(3)} — {interpretation}</Typography>
-      )}
-      {agreement != null && (
-        <Typography variant="caption" color="text.secondary" display="block">
+  return <Alert severity={alpha != null && alpha >= 0.667 ? 'success' : 'info'} sx={{
+    mb: 2
+  }}>
+      <Typography variant="body2" sx={{
+      fontWeight: 600
+    }}>Inter-rater reliability</Typography>
+      {alpha != null && <Typography variant="body2">Krippendorff&apos;s α = {alpha.toFixed(3)} — {interpretation}</Typography>}
+      {agreement != null && <Typography variant="caption" color="text.secondary" display="block">
           Units with complete agreement among raters: {(agreement * 100).toFixed(1)}%
-        </Typography>
-      )}
-    </Alert>
-  );
+        </Typography>}
+    </Alert>;
 }
-
-function CompactImageRanking({ title, items, getImageUrl, formatLabel, maxValue }) {
+function CompactImageRanking({
+  title,
+  items,
+  getImageUrl,
+  formatLabel,
+  maxValue
+}) {
   if (!items?.length) return null;
-  const peak = maxValue ?? Math.max(...items.map((i) => i.value), 0.001);
-
-  return (
-    <Box sx={{ mb: 3 }}>
-      {title && (
-        <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>{title}</Typography>
-      )}
-      {items.map(({ key, url, value, label }, idx) => (
-        <Box key={key} sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
-          {getImageUrl?.(url || key) ? (
-            <Box component="img" src={getImageUrl(url || key)} alt={key} sx={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 1 }} />
-          ) : (
-            <Box sx={{ width: 48, height: 48, bgcolor: 'grey.100', borderRadius: 1 }} />
-          )}
-          <Box sx={{ flex: 1 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.3 }}>
-              <Typography variant="body2" noWrap sx={{ maxWidth: '50%' }}>{stimulusUnitLabel(key) || shortName(url || key)}</Typography>
+  const peak = maxValue ?? Math.max(...items.map(i => i.value), 0.001);
+  return <Box sx={{
+    mb: 3
+  }}>
+      {title && <Typography variant="subtitle2" sx={{
+      fontWeight: 600,
+      mb: 1
+    }}>{title}</Typography>}
+      {items.map(({
+      key,
+      url,
+      value,
+      label
+    }, idx) => <Box key={key} sx={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1.5,
+      mb: 1.5
+    }}>
+          {getImageUrl?.(url || key) ? <Box component="img" src={getImageUrl(url || key)} alt={key} sx={{
+        width: 48,
+        height: 48,
+        objectFit: 'cover',
+        borderRadius: 1
+      }} /> : <Box sx={{
+        width: 48,
+        height: 48,
+        bgcolor: 'grey.100',
+        borderRadius: 1
+      }} />}
+          <Box sx={{
+        flex: 1
+      }}>
+            <Box sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          mb: 0.3
+        }}>
+              <Typography variant="body2" noWrap sx={{
+            maxWidth: '50%'
+          }}>{stimulusUnitLabel(key) || shortName(url || key)}</Typography>
               <Typography variant="caption" color="text.secondary">
                 {formatLabel ? formatLabel(value, label) : `${(value * 100).toFixed(0)}%`}
               </Typography>
             </Box>
-            <Box sx={{ height: 12, bgcolor: 'grey.100', borderRadius: 1, overflow: 'hidden' }}>
-              <Box sx={{ height: '100%', width: `${Math.round((value / peak) * 100)}%`, bgcolor: BAR_COLORS[idx % BAR_COLORS.length], borderRadius: 1 }} />
+            <Box sx={{
+          height: 12,
+          bgcolor: 'grey.100',
+          borderRadius: 1,
+          overflow: 'hidden'
+        }}>
+              <Box sx={{
+            height: '100%',
+            width: `${Math.round(value / peak * 100)}%`,
+            bgcolor: BAR_COLORS[idx % BAR_COLORS.length],
+            borderRadius: 1
+          }} />
             </Box>
           </Box>
-        </Box>
-      ))}
-    </Box>
-  );
+        </Box>)}
+    </Box>;
 }
-
 function compareByColumnProportions(a, b, colKeys) {
   for (let i = colKeys.length - 1; i >= 0; i -= 1) {
     const col = colKeys[i];
@@ -494,14 +439,24 @@ function compareByColumnProportions(a, b, colKeys) {
 }
 
 /** One bottom tab per matrix attribute (row); ranking inside is by image only. */
-function ImageMatrixAttributeTabs({ question, answers, getImageUrl }) {
+function ImageMatrixAttributeTabs({
+  question,
+  answers,
+  getImageUrl
+}) {
   const perImage = useMemo(() => {
     const map = {};
-    for (const { answer, shown_images } of answers || []) {
+    for (const {
+      answer,
+      shown_images
+    } of answers || []) {
       if (typeof answer !== 'object' || !answer || !shown_images?.length) continue;
       const img = shown_images[0];
       const key = stimulusUnitKey(shown_images);
-      if (!map[key]) map[key] = { url: img, rows: {} };
+      if (!map[key]) map[key] = {
+        url: img,
+        rows: {}
+      };
       for (const [row, val] of Object.entries(answer)) {
         if (!map[key].rows[row]) map[key].rows[row] = {};
         const colKey = String(val);
@@ -510,36 +465,32 @@ function ImageMatrixAttributeTabs({ question, answers, getImageUrl }) {
     }
     return map;
   }, [answers]);
-
   const rowDefs = question.rows || [];
   const colDefs = question.columns || [];
-  const rowKeys = rowDefs.length
-    ? rowDefs.map((r) => (typeof r === 'object' ? r.value : r))
-    : [...new Set(Object.values(perImage).flatMap((d) => Object.keys(d.rows)))];
-  const colKeys = colDefs.length
-    ? colDefs.map((c) => (typeof c === 'object' ? c.value : c))
-    : [...new Set(Object.values(perImage).flatMap((d) => Object.values(d.rows).flatMap((r) => Object.keys(r))))];
-
+  const rowKeys = rowDefs.length ? rowDefs.map(r => typeof r === 'object' ? r.value : r) : [...new Set(Object.values(perImage).flatMap(d => Object.keys(d.rows)))];
+  const colKeys = colDefs.length ? colDefs.map(c => typeof c === 'object' ? c.value : c) : [...new Set(Object.values(perImage).flatMap(d => Object.values(d.rows).flatMap(r => Object.keys(r))))];
   const [tab, setTab] = useState(0);
   const safeTab = Math.min(tab, Math.max(0, rowKeys.length - 1));
-
   if (!rowKeys.length || !Object.keys(perImage).length) {
     return <Typography variant="body2" color="text.secondary">No responses yet.</Typography>;
   }
-
   const lastCol = colKeys[colKeys.length - 1];
   const numericCols = columnKeysAreNumeric(colKeys);
   const row = rowKeys[safeTab];
-  const rowDef = rowDefs.find((r) => (typeof r === 'object' ? r.value : r) === row);
-  const rowLabel = rowDef ? (typeof rowDef === 'object' ? (rowDef.text || rowDef.value) : rowDef) : row;
-
+  const rowDef = rowDefs.find(r => (typeof r === 'object' ? r.value : r) === row);
+  const rowLabel = rowDef ? typeof rowDef === 'object' ? rowDef.text || rowDef.value : rowDef : row;
   const imageStats = Object.entries(perImage).map(([key, data]) => {
     const cols = data.rows[row] || {};
     const total = Object.values(cols).reduce((s, v) => s + v, 0);
     const mean = numericCols ? meanFromColumnCounts(cols, colKeys) : null;
-    return { key, url: data.url, cols, total, mean };
-  }).filter((s) => s.total > 0);
-
+    return {
+      key,
+      url: data.url,
+      cols,
+      total,
+      mean
+    };
+  }).filter(s => s.total > 0);
   const sorted = [...imageStats].sort((a, b) => {
     if (numericCols) {
       const diff = (b.mean ?? -Infinity) - (a.mean ?? -Infinity);
@@ -547,223 +498,177 @@ function ImageMatrixAttributeTabs({ question, answers, getImageUrl }) {
     }
     return compareByColumnProportions(a, b, colKeys);
   });
-
-  const maxMean = numericCols
-    ? Math.max(...sorted.map((s) => s.mean ?? 0), Number(colKeys[colKeys.length - 1]) || 1)
-    : 1;
-
-  const rankedItems = sorted.map(({ key, url, cols, total, mean }) => {
-    const colParts = colKeys.map((c) => {
-      const colDef = colDefs.find((col) => (typeof col === 'object' ? col.value : col) === c);
-      const cLabel = colDef ? (typeof colDef === 'object' ? (colDef.text || colDef.value) : colDef) : c;
+  const maxMean = numericCols ? Math.max(...sorted.map(s => s.mean ?? 0), Number(colKeys[colKeys.length - 1]) || 1) : 1;
+  const rankedItems = sorted.map(({
+    key,
+    url,
+    cols,
+    total,
+    mean
+  }) => {
+    const colParts = colKeys.map(c => {
+      const colDef = colDefs.find(col => (typeof col === 'object' ? col.value : col) === c);
+      const cLabel = colDef ? typeof colDef === 'object' ? colDef.text || colDef.value : colDef : c;
       return `${cLabel}: ${pct(cols[c] || 0, total)}%`;
     });
     const meanPart = numericCols && mean != null ? `avg ${mean.toFixed(2)} · ` : '';
     return {
       key,
       url,
-      value: numericCols
-        ? (mean ?? 0)
-        : (total > 0 ? (cols[lastCol] || 0) / total : 0),
-      label: `${meanPart}${colParts.join(' · ')}`,
+      value: numericCols ? mean ?? 0 : total > 0 ? (cols[lastCol] || 0) / total : 0,
+      label: `${meanPart}${colParts.join(' · ')}`
     };
   });
-
-  return (
-    <Box>
-      {numericCols && (
-        <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
+  return <Box>
+      {numericCols && <Typography variant="caption" color="text.secondary" display="block" sx={{
+      mb: 1
+    }}>
           Column values are numeric — images ranked by mean on this attribute.
-        </Typography>
-      )}
-      <CompactImageRanking
-        title={null}
-        items={rankedItems}
-        getImageUrl={getImageUrl}
-        maxValue={numericCols ? maxMean : 1}
-        formatLabel={(_, label) => label}
-      />
-      <Tabs
-        value={safeTab}
-        onChange={(_, v) => setTab(v)}
-        variant="scrollable"
-        scrollButtons="auto"
-        sx={{
-          mt: 1,
-          borderTop: 1,
-          borderColor: 'divider',
-          minHeight: 40,
-          '& .MuiTab-root': { minHeight: 40, textTransform: 'none', fontSize: 13 },
-        }}
-      >
-        {rowKeys.map((rk) => {
-          const def = rowDefs.find((r) => (typeof r === 'object' ? r.value : r) === rk);
-          const label = def ? (typeof def === 'object' ? (def.text || def.value) : def) : rk;
-          return <Tab key={rk} label={label} />;
-        })}
+        </Typography>}
+      <CompactImageRanking title={null} items={rankedItems} getImageUrl={getImageUrl} maxValue={numericCols ? maxMean : 1} formatLabel={(_, label) => label} />
+      <Tabs value={safeTab} onChange={(_, v) => setTab(v)} variant="scrollable" scrollButtons="auto" sx={{
+      mt: 1,
+      borderTop: 1,
+      borderColor: 'divider',
+      minHeight: 40,
+      '& .MuiTab-root': {
+        minHeight: 40,
+        textTransform: 'none',
+        fontSize: 13
+      }
+    }}>
+        {rowKeys.map(rk => {
+        const def = rowDefs.find(r => (typeof r === 'object' ? r.value : r) === rk);
+        const label = def ? typeof def === 'object' ? def.text || def.value : def : rk;
+        return <Tab key={rk} label={label} />;
+      })}
       </Tabs>
-      <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
+      <Typography variant="caption" color="text.secondary" sx={{
+      mt: 0.5,
+      display: 'block'
+    }}>
         Attribute: {rowLabel}
       </Typography>
-    </Box>
-  );
+    </Box>;
 }
-
-function ImagePickerDistribution({ question, allResponses }) {
-  const trueskillResult = useMemo(() => {
-    if (!allResponses?.length || !question?.name) return { matches: [], rankings: [], splitByCategory: false, categories: [] };
-    const eligible = responsesEligibleForQuestion(question.name, allResponses);
-    return computeQuestionTrueSkill(eligible, question.name, question);
-  }, [allResponses, question]);
-
-  const boards = trueSkillBoards(trueskillResult);
-
-  return (
-    <Box>
+function ImagePickerDistribution({
+  question,
+  allResponses,
+  surveyConfig
+}) {
+  return <Box>
       <ChoiceOutcomeSummary units={collectAnswers(question.name, allResponses)} enabled={question.allowTie} />
-      <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
-        TrueSkill (pairwise from selections vs non-selected shown images)
-      </Typography>
-      {trueskillResult.matches.length === 0 ? (
-        <Alert severity="warning" sx={{ mb: 2 }}>
-          Not enough pairwise comparisons for TrueSkill (need participants to select among shown images).
-        </Alert>
-      ) : (
-        <TrueSkillBoardStack
-          boards={boards}
-          renderBoard={(board) => (
-            <>
-              <TrueSkillMuChart
-                rankings={board.rankings}
-                title={board.label ? `Relative μ in ${board.label} (0–5)` : undefined}
-                caption={board.label ? 'Min-max of μ inside this category. Blue: density histogram. Orange: fitted normal PDF.' : undefined}
-                xLabel={board.label ? `Relative μ in ${board.label} (0–5)` : undefined}
-              />
-              <TrueSkillTable
-                rankings={board.rankings}
-                title={board.label ? `TrueSkill — ${board.label}` : 'TrueSkill image rankings'}
-                caption={board.label
-                  ? 'Rank and relative μ stay inside this category. Each selection counts as a win over every non-selected image in that trial.'
-                  : 'Each selection counts as a win over every non-selected image shown in that trial. Click a column header to sort (default: μ descending).'}
-              />
-            </>
-          )}
-        />
-      )}
-    </Box>
-  );
+      <PairwiseAnalysis question={question} responses={allResponses} surveyConfig={surveyConfig} />
+    </Box>;
 }
-
-function NumberDistribution({ answers, question }) {
-  const nums = answers.map((a) => Number(a.answer)).filter((n) => !Number.isNaN(n));
+function NumberDistribution({
+  answers,
+  question
+}) {
+  const nums = answers.map(a => Number(a.answer)).filter(n => !Number.isNaN(n));
   if (!nums.length) {
     return <Typography variant="body2" color="text.secondary">No numeric responses yet.</Typography>;
   }
-  const domainMin = question?.min != null && question.min !== ''
-    ? Number(question.min)
-    : Math.min(...nums);
-  const domainMax = question?.max != null && question.max !== ''
-    ? Number(question.max)
-    : Math.max(...nums);
+  const domainMin = question?.min != null && question.min !== '' ? Number(question.min) : Math.min(...nums);
+  const domainMax = question?.max != null && question.max !== '' ? Number(question.max) : Math.max(...nums);
   const lo = Number.isFinite(domainMin) ? domainMin : Math.min(...nums);
   const hi = Number.isFinite(domainMax) && domainMax > lo ? domainMax : Math.max(...nums, lo + 1);
-  return (
-    <Box>
+  return <Box>
       <DescriptiveStatsLine nums={nums} unit="" />
-      <DensityHistogramChart
-        scores={nums}
-        domainMin={lo}
-        domainMax={hi}
-        title="Numeric response distribution"
-        xLabel={question?.title || 'Value'}
-      />
-    </Box>
-  );
+      <DensityHistogramChart scores={nums} domainMin={lo} domainMax={hi} title="Numeric response distribution" xLabel={question?.title || 'Value'} />
+    </Box>;
 }
-
-function AttentionCheckPassRate({ question, allResponses }) {
+function AttentionCheckPassRate({
+  question,
+  allResponses
+}) {
   if (!question?.isAttentionCheck) return null;
   const stats = attentionCheckQuestionStats(question, allResponses || []);
   if (stats.answered === 0) {
-    return (
-      <Alert severity="info" sx={{ mb: 2 }}>
+    return <Alert severity="info" sx={{
+      mb: 2
+    }}>
         Attention check — no answered responses yet (expected: {String(question.expectedAnswer)}).
-      </Alert>
-    );
+      </Alert>;
   }
   const ratePct = Math.round((stats.passRate || 0) * 100);
   const severity = ratePct >= 80 ? 'success' : ratePct >= 50 ? 'warning' : 'error';
-  return (
-    <Alert severity={severity} sx={{ mb: 2 }}>
-      <Typography variant="body2" sx={{ fontWeight: 600 }}>Attention check pass rate</Typography>
+  return <Alert severity={severity} sx={{
+    mb: 2
+  }}>
+      <Typography variant="body2" sx={{
+      fontWeight: 600
+    }}>Attention check pass rate</Typography>
       <Typography variant="body2">
         {stats.passed} / {stats.answered} passed ({ratePct}%) · {stats.failed} failed
       </Typography>
       <Typography variant="caption" color="text.secondary" display="block">
         Expected answer: {String(question.expectedAnswer)}
       </Typography>
-    </Alert>
-  );
+    </Alert>;
 }
-
-function TextAnswers({ answers, maxVisible = 5, showWordFreq = true }) {
+function TextAnswers({
+  answers,
+  maxVisible = 5,
+  showWordFreq = true
+}) {
   const [showAll, setShowAll] = useState(false);
   const texts = answers.map(a => String(a.answer)).filter(Boolean);
   const visible = showAll ? texts : texts.slice(0, maxVisible);
   const lenStats = textLengthStats(texts);
   const words = showWordFreq ? wordFrequency(texts, 20) : [];
-
-  return (
-    <Box>
-      {lenStats.n > 0 && (
-        <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
+  return <Box>
+      {lenStats.n > 0 && <Typography variant="caption" color="text.secondary" sx={{
+      display: 'block',
+      mb: 1
+    }}>
           Length: mean {lenStats.mean?.toFixed(0)} chars · median {lenStats.median?.toFixed(0)} chars · n={lenStats.n}
-        </Typography>
-      )}
+        </Typography>}
       {words.length > 0 && <WordFrequencyChart words={words} totalResponses={texts.length} />}
-      {visible.map((text, idx) => (
-        <Paper
-          key={idx}
-          variant="outlined"
-          sx={{ p: 1.5, mb: 1, bgcolor: 'grey.50', borderRadius: 1 }}
-        >
+      {visible.map((text, idx) => <Paper key={idx} variant="outlined" sx={{
+      p: 1.5,
+      mb: 1,
+      bgcolor: 'grey.50',
+      borderRadius: 1
+    }}>
           <Typography variant="body2">{text}</Typography>
-        </Paper>
-      ))}
-      {texts.length === 0 && (
-        <Typography variant="body2" color="text.secondary">No responses yet.</Typography>
-      )}
-      {texts.length > maxVisible && (
-        <Button size="small" onClick={() => setShowAll(v => !v)} sx={{ mt: 0.5 }}>
+        </Paper>)}
+      {texts.length === 0 && <Typography variant="body2" color="text.secondary">No responses yet.</Typography>}
+      {texts.length > maxVisible && <Button size="small" onClick={() => setShowAll(v => !v)} sx={{
+      mt: 0.5
+    }}>
           {showAll ? `Show less` : `Show all ${texts.length} responses`}
-        </Button>
-      )}
-    </Box>
-  );
+        </Button>}
+    </Box>;
 }
-
-function BooleanDistribution({ answers, showWilson = true }) {
+function BooleanDistribution({
+  answers,
+  showWilson = true
+}) {
   const trueCount = answers.filter(a => normalizeBooleanAnswer(a.answer) === 1).length;
   const falseCount = answers.filter(a => normalizeBooleanAnswer(a.answer) === 0).length;
   const total = trueCount + falseCount;
   const ci = wilsonCI(trueCount, total);
-
-  return (
-    <Box>
-      {showWilson && total > 0 && (
-        <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
+  return <Box>
+      {showWilson && total > 0 && <Typography variant="caption" color="text.secondary" sx={{
+      display: 'block',
+      mb: 1
+    }}>
           Yes rate: {(ci.p * 100).toFixed(1)}% · 95% CI [{(ci.low * 100).toFixed(1)}%, {(ci.high * 100).toFixed(1)}%] · n={total}
-        </Typography>
-      )}
+        </Typography>}
       <HorizontalBar label="Yes / True" count={trueCount} total={total} color="#4caf50" />
       <HorizontalBar label="No / False" count={falseCount} total={total} color="#f44336" />
-    </Box>
-  );
+    </Box>;
 }
-
-function MatrixDistribution({ answers, rows, columns }) {
+function MatrixDistribution({
+  answers,
+  rows,
+  columns
+}) {
   const rowData = {};
-  for (const { answer } of answers) {
+  for (const {
+    answer
+  } of answers) {
     if (typeof answer !== 'object' || !answer) continue;
     for (const [row, val] of Object.entries(answer)) {
       if (!rowData[row]) rowData[row] = {};
@@ -771,10 +676,8 @@ function MatrixDistribution({ answers, rows, columns }) {
       rowData[row][key] = (rowData[row][key] || 0) + 1;
     }
   }
-
-  const rowKeys = rows ? rows.map(r => (typeof r === 'object' ? r.value : r)) : Object.keys(rowData);
-  const colKeys = columns ? columns.map(c => (typeof c === 'object' ? c.value : c)) : [];
-
+  const rowKeys = rows ? rows.map(r => typeof r === 'object' ? r.value : r) : Object.keys(rowData);
+  const colKeys = columns ? columns.map(c => typeof c === 'object' ? c.value : c) : [];
   if (!colKeys.length) {
     const seen = new Set();
     for (const row of Object.values(rowData)) {
@@ -782,117 +685,141 @@ function MatrixDistribution({ answers, rows, columns }) {
     }
     colKeys.push(...seen);
   }
-
-  const colLabel = (col) => {
+  const colLabel = col => {
     if (!columns) return String(col);
-    const def = columns.find((c) => (typeof c === 'object' ? c.value : c) === col);
+    const def = columns.find(c => (typeof c === 'object' ? c.value : c) === col);
     if (!def) return String(col);
-    return typeof def === 'object' ? (def.text || def.value) : def;
+    return typeof def === 'object' ? def.text || def.value : def;
   };
-
   const allNumeric = columnKeysAreNumeric(colKeys);
-  const rowMeans = allNumeric ? rowKeys.map((row) => {
+  const rowMeans = allNumeric ? rowKeys.map(row => {
     const counts = rowData[row] || {};
     const mean = meanFromColumnCounts(counts, colKeys);
     const n = Object.values(counts).reduce((s, v) => s + v, 0);
-    return { row, mean, n };
+    return {
+      row,
+      mean,
+      n
+    };
   }).sort((a, b) => (b.mean ?? 0) - (a.mean ?? 0)) : [];
-
   if (!rowKeys.length) return <Typography variant="body2" color="text.secondary">No data.</Typography>;
-
-  return (
-    <Box>
-      {allNumeric && rowMeans.length > 0 && (
-        <Box sx={{ mb: 2 }}>
-          <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>Row means (numeric columns)</Typography>
-          {rowMeans.map(({ row, mean, n }) => {
-            const rowLabel = rows
-              ? (rows.find(r => (typeof r === 'object' ? r.value : r) === row) || row)
-              : row;
-            const label = typeof rowLabel === 'object' ? (rowLabel.text || rowLabel.value) : rowLabel;
-            return (
-              <Box key={row} sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.8 }}>
-                <Typography variant="body2" sx={{ width: 140, flexShrink: 0 }} noWrap>{label}</Typography>
-                <Typography variant="body2" color="primary.main" sx={{ width: 60 }}>{mean?.toFixed(2) ?? '—'}</Typography>
+  return <Box>
+      {allNumeric && rowMeans.length > 0 && <Box sx={{
+      mb: 2
+    }}>
+          <Typography variant="subtitle2" sx={{
+        fontWeight: 600,
+        mb: 1
+      }}>Row means (numeric columns)</Typography>
+          {rowMeans.map(({
+        row,
+        mean,
+        n
+      }) => {
+        const rowLabel = rows ? rows.find(r => (typeof r === 'object' ? r.value : r) === row) || row : row;
+        const label = typeof rowLabel === 'object' ? rowLabel.text || rowLabel.value : rowLabel;
+        return <Box key={row} sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1,
+          mb: 0.8
+        }}>
+                <Typography variant="body2" sx={{
+            width: 140,
+            flexShrink: 0
+          }} noWrap>{label}</Typography>
+                <Typography variant="body2" color="primary.main" sx={{
+            width: 60
+          }}>{mean?.toFixed(2) ?? '—'}</Typography>
                 <Typography variant="caption" color="text.secondary">n={n}</Typography>
-              </Box>
-            );
-          })}
-        </Box>
-      )}
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, mb: 1.5 }}>
-        {colKeys.map((col, idx) => (
-          <Box key={col} sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
-            <Box sx={{ width: 12, height: 12, borderRadius: 0.5, bgcolor: matrixDistColor(idx), flexShrink: 0 }} />
+              </Box>;
+      })}
+        </Box>}
+      <Box sx={{
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: 1.5,
+      mb: 1.5
+    }}>
+        {colKeys.map((col, idx) => <Box key={col} sx={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 0.75
+      }}>
+            <Box sx={{
+          width: 12,
+          height: 12,
+          borderRadius: 0.5,
+          bgcolor: matrixDistColor(idx),
+          flexShrink: 0
+        }} />
             <Typography variant="caption" color="text.secondary">{colLabel(col)}</Typography>
-          </Box>
-        ))}
+          </Box>)}
       </Box>
-      <TableContainer component={Paper} variant="outlined" sx={{ maxWidth: '100%', overflowX: 'auto' }}>
+      <TableContainer component={Paper} variant="outlined" sx={{
+      maxWidth: '100%',
+      overflowX: 'auto'
+    }}>
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell sx={{ fontWeight: 'bold' }}>Question Row</TableCell>
-              {colKeys.map(col => (
-                <TableCell key={col} align="center" sx={{ fontWeight: 'bold' }}>{colLabel(col)}</TableCell>
-              ))}
-              <TableCell align="center" sx={{ fontWeight: 'bold', minWidth: 160 }}>Distribution</TableCell>
+              <TableCell sx={{
+              fontWeight: 'bold'
+            }}>Question Row</TableCell>
+              {colKeys.map(col => <TableCell key={col} align="center" sx={{
+              fontWeight: 'bold'
+            }}>{colLabel(col)}</TableCell>)}
+              <TableCell align="center" sx={{
+              fontWeight: 'bold',
+              minWidth: 160
+            }}>Distribution</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rowKeys.map(row => {
-              const rowLabel = rows
-                ? (rows.find(r => (typeof r === 'object' ? r.value : r) === row) || row)
-                : row;
-              const label = typeof rowLabel === 'object' ? (rowLabel.text || rowLabel.value) : rowLabel;
-              const total = Object.values(rowData[row] || {}).reduce((a, b) => a + b, 0);
-              return (
-                <TableRow key={row}>
+            const rowLabel = rows ? rows.find(r => (typeof r === 'object' ? r.value : r) === row) || row : row;
+            const label = typeof rowLabel === 'object' ? rowLabel.text || rowLabel.value : rowLabel;
+            const total = Object.values(rowData[row] || {}).reduce((a, b) => a + b, 0);
+            return <TableRow key={row}>
                   <TableCell>{label}</TableCell>
                   {colKeys.map(col => {
-                    const count = rowData[row]?.[col] || 0;
-                    return (
-                      <TableCell key={col} align="center">
+                const count = rowData[row]?.[col] || 0;
+                return <TableCell key={col} align="center">
                         <Typography variant="body2">{count}</Typography>
-                        {total > 0 && (
-                          <Typography variant="caption" color="text.secondary">
+                        {total > 0 && <Typography variant="caption" color="text.secondary">
                             {pct(count, total)}%
-                          </Typography>
-                        )}
-                      </TableCell>
-                    );
-                  })}
+                          </Typography>}
+                      </TableCell>;
+              })}
                   <TableCell align="center">
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        height: 16,
-                        borderRadius: 1,
-                        overflow: 'hidden',
-                        bgcolor: 'grey.200',
-                        border: '1px solid',
-                        borderColor: 'grey.300',
-                      }}
-                    >
+                    <Box sx={{
+                  display: 'flex',
+                  height: 16,
+                  borderRadius: 1,
+                  overflow: 'hidden',
+                  bgcolor: 'grey.200',
+                  border: '1px solid',
+                  borderColor: 'grey.300'
+                }}>
                       {colKeys.map((col, idx) => {
-                        const count = rowData[row]?.[col] || 0;
-                        const w = total > 0 ? (count / total) * 100 : 0;
-                        return w > 0 ? (
-                          <Tooltip key={col} title={`${colLabel(col)}: ${pct(count, total)}% (${count})`}>
-                            <Box sx={{ width: `${w}%`, bgcolor: matrixDistColor(idx), minWidth: w > 0 ? 2 : 0 }} />
-                          </Tooltip>
-                        ) : null;
-                      })}
+                    const count = rowData[row]?.[col] || 0;
+                    const w = total > 0 ? count / total * 100 : 0;
+                    return w > 0 ? <Tooltip key={col} title={`${colLabel(col)}: ${pct(count, total)}% (${count})`}>
+                            <Box sx={{
+                        width: `${w}%`,
+                        bgcolor: matrixDistColor(idx),
+                        minWidth: w > 0 ? 2 : 0
+                      }} />
+                          </Tooltip> : null;
+                  })}
                     </Box>
                   </TableCell>
-                </TableRow>
-              );
-            })}
+                </TableRow>;
+          })}
           </TableBody>
         </Table>
       </TableContainer>
-    </Box>
-  );
+    </Box>;
 }
 
 // Context: carries a resolver function (filename | url) → displayable URL
@@ -922,94 +849,113 @@ function useResolvedUrl(value) {
 }
 
 // Single image item — thumbnail if resolvable, name chip otherwise
-function ImageItem({ value, badge }) {
+function ImageItem({
+  value,
+  badge
+}) {
   const resolvedUrl = useResolvedUrl(value);
   const [hover, setHover] = useState(false);
   const [imgError, setImgError] = useState(false);
   const name = shortName(value);
-
   if (resolvedUrl && !imgError) {
-    return (
-      <Box sx={{ position: 'relative', display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 0.5 }}>
-        <Box
-          component="img"
-          src={resolvedUrl}
-          alt={name}
-          onError={() => setImgError(true)}
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-          sx={{
-            width: 100, height: 100, objectFit: 'cover', borderRadius: 1.5,
-            border: '2px solid', borderColor: hover ? 'primary.main' : 'divider',
-            cursor: 'zoom-in', transition: 'all 0.2s',
-            boxShadow: hover ? 3 : 1,
-            transform: hover ? 'scale(1.05)' : 'scale(1)',
-          }}
-        />
-        {badge !== undefined && (
-          <Chip label={badge} size="small" color="primary" sx={{ fontSize: '0.7rem', height: 20 }} />
-        )}
+    return <Box sx={{
+      position: 'relative',
+      display: 'inline-flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: 0.5
+    }}>
+        <Box component="img" src={resolvedUrl} alt={name} onError={() => setImgError(true)} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} sx={{
+        width: 100,
+        height: 100,
+        objectFit: 'cover',
+        borderRadius: 1.5,
+        border: '2px solid',
+        borderColor: hover ? 'primary.main' : 'divider',
+        cursor: 'zoom-in',
+        transition: 'all 0.2s',
+        boxShadow: hover ? 3 : 1,
+        transform: hover ? 'scale(1.05)' : 'scale(1)'
+      }} />
+        {badge !== undefined && <Chip label={badge} size="small" color="primary" sx={{
+        fontSize: '0.7rem',
+        height: 20
+      }} />}
         <Typography variant="caption" color="text.secondary" sx={{
-          maxWidth: 100, textOverflow: 'ellipsis', overflow: 'hidden',
-          whiteSpace: 'nowrap', fontSize: '0.65rem', textAlign: 'center'
-        }}>
+        maxWidth: 100,
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        fontSize: '0.65rem',
+        textAlign: 'center'
+      }}>
           {name}
         </Typography>
-      </Box>
-    );
+      </Box>;
   }
 
   // Fallback: display as labelled name chip (when URL can't be resolved or image fails)
-  return (
-    <Chip
-      icon={<ImageIcon fontSize="small" />}
-      label={badge !== undefined ? `${badge} ${name}` : name}
-      size="small"
-      variant="outlined"
-      color="primary"
-      sx={{ maxWidth: 220, fontSize: '0.72rem' }}
-    />
-  );
+  return <Chip icon={<ImageIcon fontSize="small" />} label={badge !== undefined ? `${badge} ${name}` : name} size="small" variant="outlined" color="primary" sx={{
+    maxWidth: 220,
+    fontSize: '0.72rem'
+  }} />;
 }
 
 // Image group header — shows all images in a set, with an optional title
-function ShownImagesContext({ imageUrls, label }) {
+function ShownImagesContext({
+  imageUrls,
+  label
+}) {
   if (!imageUrls || imageUrls.length === 0) return null;
-  return (
-    <Box sx={{ mb: 2 }}>
-      <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
+  return <Box sx={{
+    mb: 2
+  }}>
+      <Typography variant="caption" color="text.secondary" sx={{
+      display: 'block',
+      mb: 1
+    }}>
         {label || 'Image(s) shown:'}
       </Typography>
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, alignItems: 'flex-start' }}>
-        {imageUrls.map((v, i) => (
-          <ImageItem key={v + i} value={v} index={i} />
-        ))}
+      <Box sx={{
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: 2,
+      alignItems: 'flex-start'
+    }}>
+        {imageUrls.map((v, i) => <ImageItem key={v + i} value={v} index={i} />)}
       </Box>
-    </Box>
-  );
+    </Box>;
 }
-
-function ImageRankingTrueSkillAnalysis({ answers, question, type }) {
+function ImageRankingTrueSkillAnalysis({
+  answers,
+  question,
+  type
+}) {
   const mediaLabel = type === 'mediaranking' ? 'Media' : 'Image';
-
-  const { matches, rankings, boards, kendallWVal } = useMemo(() => {
+  const {
+    matches,
+    rankings,
+    boards,
+    kendallWVal
+  } = useMemo(() => {
     const imageRankPositions = {};
     const imageUrls = {};
     const rankingLists = [];
     const allMatches = [];
-
-    for (const { answer, shown_images: shown, shown_media_categories: categories } of answers || []) {
+    for (const {
+      answer,
+      shown_images: shown,
+      shown_media_categories: categories
+    } of answers || []) {
       const ranked = Array.isArray(answer) ? answer : [];
       if (!ranked.length) continue;
-      const keys = ranked
-        .map((val) => {
-          const key = resolveImageChoiceKey(val, shown);
-          if (!key) return null;
-          const url = resolveImageChoiceUrl(val, shown);
-          if (url && !imageUrls[key]) imageUrls[key] = url;
-          return key;
-        })
-        .filter(Boolean);
+      const keys = ranked.map(val => {
+        const key = resolveImageChoiceKey(val, shown);
+        if (!key) return null;
+        const url = resolveImageChoiceUrl(val, shown);
+        if (url && !imageUrls[key]) imageUrls[key] = url;
+        return key;
+      }).filter(Boolean);
       if (keys.length < 2) continue;
       rankingLists.push(keys);
       allMatches.push(...attachMatchCategory(matchesFromOrderedRanking(keys), categories));
@@ -1018,19 +964,20 @@ function ImageRankingTrueSkillAnalysis({ answers, question, type }) {
         imageRankPositions[key].push(rankIdx + 1);
       });
     }
-
     const items = Object.keys(imageRankPositions);
     const nItems = items.length;
     const w = kendallW(rankingLists, items);
     const bordaMap = computeBordaScores(imageRankPositions, nItems);
     const fitted = computeTrueSkillFromMatches(allMatches, {
-      splitByCategory: splitsTrueSkillByCategory(question),
+      splitByCategory: splitsTrueSkillByCategory(question)
     });
-    const { matches: m, rankings: tsRows } = fitted;
-
-    const byKey = new Map((tsRows || []).map((r) => [r.imageKey, r]));
+    const {
+      matches: m,
+      rankings: tsRows
+    } = fitted;
+    const byKey = new Map((tsRows || []).map(r => [r.imageKey, r]));
     // Include images that only appear in rank stats (edge case: single-item lists)
-    items.forEach((key) => {
+    items.forEach(key => {
       if (!byKey.has(key)) {
         byKey.set(key, {
           imageKey: key,
@@ -1040,90 +987,78 @@ function ImageRankingTrueSkillAnalysis({ answers, question, type }) {
           conservative: null,
           wins: 0,
           losses: 0,
-          games: 0,
+          games: 0
         });
       }
     });
-
-    const merged = [...byKey.values()].map((row) => {
+    const merged = [...byKey.values()].map(row => {
       const ranks = imageRankPositions[row.imageKey] || [];
       const avg = ranks.length ? average(ranks) : null;
-      const sd = ranks.length > 1
-        ? Math.sqrt(ranks.reduce((s, r) => s + (r - avg) ** 2, 0) / ranks.length)
-        : 0;
+      const sd = ranks.length > 1 ? Math.sqrt(ranks.reduce((s, r) => s + (r - avg) ** 2, 0) / ranks.length) : 0;
       return {
         ...row,
         displayUrl: imageUrls[row.imageKey] || null,
         avgRank: avg,
         rankSd: sd,
         borda: bordaMap[row.imageKey]?.borda ?? null,
-        nRanks: ranks.length,
+        nRanks: ranks.length
       };
     });
-
-    const boards = trueSkillBoards(fitted).map((board) => ({
+    const boards = trueSkillBoards(fitted).map(board => ({
       ...board,
-      rankings: (board.rankings || []).map((row) => merged.find((item) => item.imageKey === row.imageKey) || row),
+      rankings: (board.rankings || []).map(row => merged.find(item => item.imageKey === row.imageKey) || row)
     }));
     if (!fitted.splitByCategory) {
-      boards[0] = { ...boards[0], rankings: merged };
+      boards[0] = {
+        ...boards[0],
+        rankings: merged
+      };
     }
-    return { matches: m, rankings: merged, boards, kendallWVal: w };
+    return {
+      matches: m,
+      rankings: merged,
+      boards,
+      kendallWVal: w
+    };
   }, [answers, question]);
-
-  if (!answers?.length || (!rankings.length && !matches.length)) {
+  if (!answers?.length || !rankings.length && !matches.length) {
     return <Typography variant="body2" color="text.secondary">No responses yet.</Typography>;
   }
-
   const rankingColumns = [...RANKING_EXTRA_COLUMNS, ...TRUESKILL_SORT_COLUMNS];
-
-  return (
-    <Box>
-      <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
+  return <Box>
+      <Typography variant="subtitle2" sx={{
+      fontWeight: 600,
+      mb: 1
+    }}>
         {mediaLabel} ranking — TrueSkill
       </Typography>
-      <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
+      <Typography variant="caption" color="text.secondary" display="block" sx={{
+      mb: 1
+    }}>
         From each full ranking, every higher-ranked image beats every lower-ranked image
         ({matches.length} pairwise outcomes).
       </Typography>
-      {kendallWVal == null && <Alert severity="info" sx={{ mb: 2 }}>{interpretKendallW(null)}. Ranks and Borda scores are descriptive within the shown sets.</Alert>}
-      {kendallWVal != null && (
-        <Alert severity={kendallWVal >= 0.5 ? 'success' : 'info'} sx={{ mb: 2 }}>
+      {kendallWVal == null && <Alert severity="info" sx={{
+      mb: 2
+    }}>{interpretKendallW(null)}. Ranks and Borda scores are descriptive within the shown sets.</Alert>}
+      {kendallWVal != null && <Alert severity={kendallWVal >= 0.5 ? 'success' : 'info'} sx={{
+      mb: 2
+    }}>
           Kendall&apos;s W = {kendallWVal.toFixed(3)} — {interpretKendallW(kendallWVal)}
-        </Alert>
-      )}
-      {matches.length === 0 ? (
-        <Alert severity="warning">Not enough ranking comparisons for TrueSkill yet.</Alert>
-      ) : (
-        <TrueSkillBoardStack
-          boards={boards}
-          renderBoard={(board) => (
-            <>
-              <TrueSkillMuChart
-                rankings={(board.rankings || []).filter((r) => r.mu != null)}
-                title={board.label ? `Relative μ in ${board.label} (0–5)` : undefined}
-                caption={board.label ? 'Min-max of μ inside this category. Blue: density histogram. Orange: fitted normal PDF.' : undefined}
-                xLabel={board.label ? `Relative μ in ${board.label} (0–5)` : undefined}
-              />
-              <TrueSkillTable
-                rankings={board.rankings}
-                columns={rankingColumns}
-                title={board.label ? `${mediaLabel} TrueSkill — ${board.label}` : `${mediaLabel} TrueSkill + ranking stats`}
-                caption={board.label
-                  ? 'TrueSkill rank and relative μ stay inside this category. Avg rank and Borda describe the recorded ranks.'
-                  : 'Higher rank beats lower rank in each trial. Avg rank / Borda / n are classical ranking summaries. Default sort: μ descending.'}
-              />
-            </>
-          )}
-        />
-      )}
-    </Box>
-  );
+        </Alert>}
+      {matches.length === 0 ? <Alert severity="warning">Not enough ranking comparisons for TrueSkill yet.</Alert> : <TrueSkillBoardStack boards={boards} renderBoard={board => <>
+              <TrueSkillMuChart rankings={(board.rankings || []).filter(r => r.mu != null)} title={board.label ? `Relative μ in ${board.label} (0–5)` : undefined} caption={board.label ? 'Min-max of μ inside this category. Blue: density histogram. Orange: fitted normal PDF.' : undefined} xLabel={board.label ? `Relative μ in ${board.label} (0–5)` : undefined} />
+              <TrueSkillTable rankings={board.rankings} columns={rankingColumns} title={board.label ? `${mediaLabel} TrueSkill — ${board.label}` : `${mediaLabel} TrueSkill + ranking stats`} caption={board.label ? 'TrueSkill rank and relative μ stay inside this category. Avg rank and Borda describe the recorded ranks.' : 'Higher rank beats lower rank in each trial. Avg rank / Borda / n are classical ranking summaries. Default sort: μ descending.'} />
+            </>} />}
+    </Box>;
 }
-
-function ImageQuestionAnalysis({ answers, type, question }) {
+function ImageQuestionAnalysis({
+  answers,
+  type,
+  question
+}) {
   const resolvedUrl = useContext(ImageResolverContext);
-  const getImageUrl = (value) => {
+  const getImageUrl = value => {
     if (!value) return null;
     if (resolvedUrl?.has(value)) return resolvedUrl.get(value);
     if (typeof value === 'string' && (value.startsWith('http') || value.startsWith('/'))) return value;
@@ -1141,115 +1076,113 @@ function ImageQuestionAnalysis({ answers, type, question }) {
     const rateMax = question.rateMax ?? 5;
     const rateMin = question.rateMin ?? 1;
     const perImage = {};
-
-    for (const { answer, shown_images } of answers) {
+    for (const {
+      answer,
+      shown_images
+    } of answers) {
       const rating = Number(answer);
       if (Number.isNaN(rating) || !shown_images?.length) continue;
       for (const img of [shown_images[0]]) {
         const key = stimulusUnitKey(shown_images);
-        if (!perImage[key]) perImage[key] = { url: img, ratings: [] };
+        if (!perImage[key]) perImage[key] = {
+          url: img,
+          ratings: []
+        };
         perImage[key].ratings.push(rating);
       }
     }
-
     if (question.numericMeasure) {
-      return <Box>{Object.entries(perImage).map(([key, block]) => <Box key={key} sx={{ mb: 2 }}>
+      return <Box>{Object.entries(perImage).map(([key, block]) => <Box key={key} sx={{
+          mb: 2
+        }}>
         <Typography variant="subtitle2">{stimulusUnitLabel(key)}</Typography>
-        <NumberDistribution question={question} answers={block.ratings.map((answer) => ({answer}))} />
+        <NumberDistribution question={question} answers={block.ratings.map(answer => ({
+            answer
+          }))} />
       </Box>)}</Box>;
     }
-
-    const rankedItems = Object.entries(perImage)
-      .map(([key, { url, ratings }]) => {
-        const avg = average(ratings);
-        return {
-          key,
-          url,
-          value: avg ?? rateMin,
-          label: (avg?.toFixed(2) ?? '–') + (question.numericMeasure ? '' : ' / ' + rateMax) + ' · n=' + ratings.length,
-        };
-      })
-      .sort((a, b) => b.value - a.value);
-
+    const rankedItems = Object.entries(perImage).map(([key, {
+      url,
+      ratings
+    }]) => {
+      const avg = average(ratings);
+      return {
+        key,
+        url,
+        value: avg ?? rateMin,
+        label: (avg?.toFixed(2) ?? '–') + (question.numericMeasure ? '' : ' / ' + rateMax) + ' · n=' + ratings.length
+      };
+    }).sort((a, b) => b.value - a.value);
     const mediaNoun = type === 'mediarating' ? 'media' : 'image';
-    return (
-      <Box>
-        <CompactImageRanking
-          title={`Average rating by ${mediaNoun}`}
-          items={rankedItems}
-          getImageUrl={getImageUrl}
-          maxValue={question.numericMeasure ? undefined : rateMax}
-          formatLabel={(_, label) => label}
-        />
-        {rankedItems.length === 0 && (
-          <Typography variant="body2" color="text.secondary">No responses yet.</Typography>
-        )}
-      </Box>
-    );
+    return <Box>
+        <CompactImageRanking title={`Average rating by ${mediaNoun}`} items={rankedItems} getImageUrl={getImageUrl} maxValue={question.numericMeasure ? undefined : rateMax} formatLabel={(_, label) => label} />
+        {rankedItems.length === 0 && <Typography variant="body2" color="text.secondary">No responses yet.</Typography>}
+      </Box>;
   }
 
   // ── image_boolean / media_boolean ─────────────────────────────────────────
   if (type === 'image_boolean' || type === 'imageboolean' || type === 'mediaboolean') {
     const perImage = {};
-
-    for (const { answer, shown_images } of answers) {
+    for (const {
+      answer,
+      shown_images
+    } of answers) {
       if (!shown_images?.length) continue;
       for (const img of [shown_images[0]]) {
         const key = stimulusUnitKey(shown_images);
-        if (!perImage[key]) perImage[key] = { url: img, yes: 0, no: 0 };
-        if (normalizeBooleanAnswer(answer) === 1) perImage[key].yes += 1;
-        else if (normalizeBooleanAnswer(answer) === 0) perImage[key].no += 1;
+        if (!perImage[key]) perImage[key] = {
+          url: img,
+          yes: 0,
+          no: 0
+        };
+        if (normalizeBooleanAnswer(answer) === 1) perImage[key].yes += 1;else if (normalizeBooleanAnswer(answer) === 0) perImage[key].no += 1;
       }
     }
-
-    const rankedItems = Object.entries(perImage)
-      .map(([key, { url, yes, no }]) => {
-        const total = yes + no;
-        const rate = total > 0 ? yes / total : 0;
-        return {
-          key,
-          url,
-          value: rate,
-          label: `${pct(yes, total)}% yes (${yes}/${total})`,
-        };
-      })
-      .sort((a, b) => b.value - a.value);
-
+    const rankedItems = Object.entries(perImage).map(([key, {
+      url,
+      yes,
+      no
+    }]) => {
+      const total = yes + no;
+      const rate = total > 0 ? yes / total : 0;
+      return {
+        key,
+        url,
+        value: rate,
+        label: `${pct(yes, total)}% yes (${yes}/${total})`
+      };
+    }).sort((a, b) => b.value - a.value);
     const mediaNoun = type === 'mediaboolean' ? 'media' : 'image';
-    return (
-      <Box>
-        <CompactImageRanking
-          title={`Yes rate by ${mediaNoun}`}
-          items={rankedItems}
-          getImageUrl={getImageUrl}
-          maxValue={1}
-          formatLabel={(_, label) => label}
-        />
-        {rankedItems.length === 0 && (
-          <Typography variant="body2" color="text.secondary">No responses yet.</Typography>
-        )}
-      </Box>
-    );
+    return <Box>
+        <CompactImageRanking title={`Yes rate by ${mediaNoun}`} items={rankedItems} getImageUrl={getImageUrl} maxValue={1} formatLabel={(_, label) => label} />
+        {rankedItems.length === 0 && <Typography variant="body2" color="text.secondary">No responses yet.</Typography>}
+      </Box>;
   }
 
   // ── imagecheckbox / mediacheckbox: stimulus × text-tag select rates ────────
   if (type === 'image_checkbox' || type === 'imagecheckbox' || type === 'mediacheckbox') {
     const choiceMeta = {};
-    (question?.choices || []).forEach((c) => {
+    (question?.choices || []).forEach(c => {
       const v = typeof c === 'object' ? String(c.value ?? c.text ?? '') : String(c);
       if (!v) return;
       choiceMeta[v] = typeof c === 'object' ? String(c.text ?? c.label ?? c.value ?? v) : v;
     });
     const perImage = {};
-    for (const { answer, shown_images } of answers) {
-      const selected = Array.isArray(answer) ? answer.map(String)
-        : (answer == null || answer === '' ? [] : [String(answer)]);
+    for (const {
+      answer,
+      shown_images
+    } of answers) {
+      const selected = Array.isArray(answer) ? answer.map(String) : answer == null || answer === '' ? [] : [String(answer)];
       const stims = shown_images?.length ? shown_images : ['(no_media)'];
       for (const img of [stims[0]]) {
         const key = stimulusUnitKey(stims);
-        if (!perImage[key]) perImage[key] = { url: img, n: 0, counts: {} };
+        if (!perImage[key]) perImage[key] = {
+          url: img,
+          n: 0,
+          counts: {}
+        };
         perImage[key].n += 1;
-        selected.forEach((opt) => {
+        selected.forEach(opt => {
           perImage[key].counts[opt] = (perImage[key].counts[opt] || 0) + 1;
           if (!choiceMeta[opt]) choiceMeta[opt] = opt;
         });
@@ -1257,71 +1190,62 @@ function ImageQuestionAnalysis({ answers, type, question }) {
     }
     const mediaNoun = type === 'mediacheckbox' ? 'media' : 'image';
     const blocks = Object.entries(perImage).map(([key, block]) => {
-      const items = Object.keys(choiceMeta).map((opt) => {
+      const items = Object.keys(choiceMeta).map(opt => {
         const count = block.counts[opt] || 0;
         const rate = block.n > 0 ? count / block.n : 0;
         return {
           key: opt,
           url: null,
           value: rate,
-          label: `${choiceMeta[opt]} · ${pct(count, block.n)}% (${count}/${block.n})`,
+          label: `${choiceMeta[opt]} · ${pct(count, block.n)}% (${count}/${block.n})`
         };
       }).sort((a, b) => b.value - a.value);
-      return { key, url: block.url, n: block.n, items };
+      return {
+        key,
+        url: block.url,
+        n: block.n,
+        items
+      };
     }).sort((a, b) => String(a.key).localeCompare(String(b.key)));
-
     if (!blocks.length) {
       return <Typography variant="body2" color="text.secondary">No responses yet.</Typography>;
     }
-    return (
-      <Box>
-        {blocks.map((block) => (
-          <Box key={block.key} sx={{ mb: 2.5 }}>
-            <Typography variant="caption" sx={{ overflowWrap: 'anywhere' }}>{stimulusUnitLabel(block.key)}</Typography>
-            {(typeof block.url === 'string' && (block.url.startsWith('http') || block.url.startsWith('/'))) ? (
-              <Box
-                component="img"
-                src={getImageUrl(block.url) || block.url}
-                alt=""
-                sx={{ width: 72, height: 72, objectFit: 'cover', borderRadius: 1, mb: 1, display: 'block' }}
-              />
-            ) : (
-              <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>
+    return <Box>
+        {blocks.map(block => <Box key={block.key} sx={{
+        mb: 2.5
+      }}>
+            <Typography variant="caption" sx={{
+          overflowWrap: 'anywhere'
+        }}>{stimulusUnitLabel(block.key)}</Typography>
+            {typeof block.url === 'string' && (block.url.startsWith('http') || block.url.startsWith('/')) ? <Box component="img" src={getImageUrl(block.url) || block.url} alt="" sx={{
+          width: 72,
+          height: 72,
+          objectFit: 'cover',
+          borderRadius: 1,
+          mb: 1,
+          display: 'block'
+        }} /> : <Typography variant="caption" color="text.secondary" sx={{
+          display: 'block',
+          mb: 0.5
+        }}>
                 {block.key}
-              </Typography>
-            )}
-            <CompactImageRanking
-              title={`Select rate by tag · ${mediaNoun} n=${block.n}`}
-              items={block.items}
-              getImageUrl={() => null}
-              maxValue={1}
-              formatLabel={(_, label) => label}
-            />
-          </Box>
-        ))}
-      </Box>
-    );
+              </Typography>}
+            <CompactImageRanking title={`Select rate by tag · ${mediaNoun} n=${block.n}`} items={block.items} getImageUrl={() => null} maxValue={1} formatLabel={(_, label) => label} />
+          </Box>)}
+      </Box>;
   }
 
   // ── image_matrix / mediamatrix ────────────────────────────────────────────
   if (type === 'image_matrix' || type === 'imagematrix' || type === 'mediamatrix') {
-    return (
-      <ImageMatrixAttributeTabs
-        question={question}
-        answers={answers}
-        getImageUrl={getImageUrl}
-      />
-    );
+    return <ImageMatrixAttributeTabs question={question} answers={answers} getImageUrl={getImageUrl} />;
   }
 
   // ── fallback ──────────────────────────────────────────────────────────────
-  const allShownImages = [...new Set(answers.flatMap((a) => a.shown_images || []))];
-  return (
-    <Box>
+  const allShownImages = [...new Set(answers.flatMap(a => a.shown_images || []))];
+  return <Box>
       <ShownImagesContext imageUrls={allShownImages} />
       <ChoiceDistribution answers={answers} />
-    </Box>
-  );
+    </Box>;
 }
 
 // ─── Skill question analysis ──────────────────────────────────────────────────
@@ -1334,165 +1258,132 @@ function ImageQuestionAnalysis({ answers, type, question }) {
 
 function getPath(obj, path) {
   if (!obj || typeof obj !== 'object') return undefined;
-  return String(path).split('.').reduce(
-    (o, k) => (o && typeof o === 'object' ? o[k] : undefined),
-    obj,
-  );
+  return String(path).split('.').reduce((o, k) => o && typeof o === 'object' ? o[k] : undefined, obj);
 }
-
 function skillFieldStimulusMeta(entry) {
   const key = skillAnswerStimulusKey(entry);
   if (!key || key === '(no_media)') return null;
   const answer = entry?.answer;
   const shown = entry?.shown_images || [];
-  const url = answer?.imageUrl || answer?.videoUrl
-    || (typeof shown[0] === 'string' ? shown[0] : shown[0]?.url)
-    || key;
-  return { key, url };
+  const url = answer?.imageUrl || answer?.videoUrl || (typeof shown[0] === 'string' ? shown[0] : shown[0]?.url) || key;
+  return {
+    key,
+    url
+  };
 }
-
-function SkillFieldSummary({ field, answers }) {
+function SkillFieldSummary({
+  field,
+  answers
+}) {
   const resolvedUrl = useContext(ImageResolverContext);
-  const getImageUrl = (value) => {
+  const getImageUrl = value => {
     if (!value) return null;
     if (resolvedUrl?.has(value)) return resolvedUrl.get(value);
     if (typeof value === 'string' && (value.startsWith('http') || value.startsWith('/'))) return value;
     const key = imageKeyFromShown(value);
     return resolvedUrl?.get(key) || resolvedUrl?.get(value) || null;
   };
-
-  const values = answers
-    .map((a) => getPath(a.answer, field.key))
-    .filter((v) => v !== undefined && v !== null);
-
-  const header = (
-    <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
+  const values = answers.map(a => getPath(a.answer, field.key)).filter(v => v !== undefined && v !== null);
+  const header = <Typography variant="subtitle2" sx={{
+    fontWeight: 600,
+    mb: 1
+  }}>
       {field.label || field.key}
-      <Typography component="span" variant="caption" color="text.secondary" sx={{ ml: 1 }}>
+      <Typography component="span" variant="caption" color="text.secondary" sx={{
+      ml: 1
+    }}>
         n={values.length}
       </Typography>
-    </Typography>
-  );
-
+    </Typography>;
   if (!values.length) {
-    return (
-      <Box sx={{ mb: 2.5 }}>
+    return <Box sx={{
+      mb: 2.5
+    }}>
         {header}
         <Typography variant="body2" color="text.secondary">No data.</Typography>
-      </Box>
-    );
+      </Box>;
   }
-
-  const archetypeBody = (
-    <SkillArchetypeFieldSummary field={field} answers={answers} />
-  );
+  const archetypeBody = <SkillArchetypeFieldSummary field={field} answers={answers} />;
   if (archetypeBody && ARCHETYPE_SKILL_RESULT_TYPES.includes(canonicalizeSkillResultType(field.type))) {
-    return (
-      <Box sx={{ mb: 2.5 }}>
+    return <Box sx={{
+      mb: 2.5
+    }}>
         {header}
         {archetypeBody}
-      </Box>
-    );
+      </Box>;
   }
 
   // Media-native ranking (same pattern as imagerating / mediaboolean), not text histograms.
   const perMedia = {};
-  answers.forEach((entry) => {
+  answers.forEach(entry => {
     const stim = skillFieldStimulusMeta(entry);
     if (!stim) return;
     const raw = getPath(entry.answer, field.key);
     if (raw === undefined || raw === null) return;
-    if (!perMedia[stim.key]) perMedia[stim.key] = { url: stim.url, vals: [] };
+    if (!perMedia[stim.key]) perMedia[stim.key] = {
+      url: stim.url,
+      vals: []
+    };
     perMedia[stim.key].vals.push(raw);
   });
   const mediaKeys = Object.keys(perMedia);
-
   let body = null;
-
   if (mediaKeys.length > 1 && (field.type === 'number' || field.type === 'count')) {
-    const rankedItems = mediaKeys.map((key) => {
-      const { url, vals } = perMedia[key];
-      const nums = field.type === 'count'
-        ? vals.map((v) => (Array.isArray(v) ? v.length : Number(v))).filter((n) => !Number.isNaN(n))
-        : vals.map(Number).filter((n) => !Number.isNaN(n));
+    const rankedItems = mediaKeys.map(key => {
+      const {
+        url,
+        vals
+      } = perMedia[key];
+      const nums = field.type === 'count' ? vals.map(v => Array.isArray(v) ? v.length : Number(v)).filter(n => !Number.isNaN(n)) : vals.map(Number).filter(n => !Number.isNaN(n));
       const avg = average(nums);
       return {
         key,
         url,
         value: avg ?? 0,
-        label: `${avg?.toFixed(2) ?? '–'} · n=${nums.length}`,
+        label: `${avg?.toFixed(2) ?? '–'} · n=${nums.length}`
       };
     }).sort((a, b) => b.value - a.value);
-    const maxValue = Math.max(...rankedItems.map((i) => i.value), 1);
-    body = (
-      <CompactImageRanking
-        title={`${field.label || field.key} by media`}
-        items={rankedItems}
-        getImageUrl={getImageUrl}
-        maxValue={maxValue}
-        formatLabel={(_, label) => label}
-      />
-    );
+    const maxValue = Math.max(...rankedItems.map(i => i.value), 1);
+    body = <CompactImageRanking title={`${field.label || field.key} by media`} items={rankedItems} getImageUrl={getImageUrl} maxValue={maxValue} formatLabel={(_, label) => label} />;
   } else if (mediaKeys.length > 1 && field.type === 'boolean') {
-    const rankedItems = mediaKeys.map((key) => {
-      const { url, vals } = perMedia[key];
-      const yes = vals.filter((v) => v === true || v === 'true').length;
+    const rankedItems = mediaKeys.map(key => {
+      const {
+        url,
+        vals
+      } = perMedia[key];
+      const yes = vals.filter(v => v === true || v === 'true').length;
       const total = vals.length;
       const rate = total > 0 ? yes / total : 0;
       return {
         key,
         url,
         value: rate,
-        label: `${pct(yes, total)}% yes (${yes}/${total})`,
+        label: `${pct(yes, total)}% yes (${yes}/${total})`
       };
     }).sort((a, b) => b.value - a.value);
-    body = (
-      <CompactImageRanking
-        title={`${field.label || field.key} — yes rate by media`}
-        items={rankedItems}
-        getImageUrl={getImageUrl}
-        maxValue={1}
-        formatLabel={(_, label) => label}
-      />
-    );
+    body = <CompactImageRanking title={`${field.label || field.key} — yes rate by media`} items={rankedItems} getImageUrl={getImageUrl} maxValue={1} formatLabel={(_, label) => label} />;
   } else if (field.type === 'number') {
-    const nums = values.map(Number).filter((n) => !isNaN(n));
+    const nums = values.map(Number).filter(n => !isNaN(n));
     const distinct = [...new Set(nums)].sort((a, b) => a - b);
     const min = Math.min(...nums);
     const max = Math.max(...nums);
-    body = (
-      <Box>
+    body = <Box>
         <DescriptiveStatsLine nums={nums} />
-        {nums.length >= 3 && (
-          <DensityHistogramChart scores={nums} domainMin={min} domainMax={max} padB={40} chartH={180} />
-        )}
-        {distinct.length > 1 && distinct.length <= 10 && distinct.map((v, idx) => (
-          <HorizontalBar
-            key={v}
-            label={String(v)}
-            count={nums.filter((n) => n === v).length}
-            total={nums.length}
-            index={idx}
-          />
-        ))}
-      </Box>
-    );
+        {nums.length >= 3 && <DensityHistogramChart scores={nums} domainMin={min} domainMax={max} padB={40} chartH={180} />}
+        {distinct.length > 1 && distinct.length <= 10 && distinct.map((v, idx) => <HorizontalBar key={v} label={String(v)} count={nums.filter(n => n === v).length} total={nums.length} index={idx} />)}
+      </Box>;
   } else if (field.type === 'boolean') {
-    const yes = values.filter((v) => v === true || v === 'true').length;
-    body = (
-      <Box>
+    const yes = values.filter(v => v === true || v === 'true').length;
+    body = <Box>
         <HorizontalBar label="Yes" count={yes} total={values.length} color="#4caf50" />
         <HorizontalBar label="No" count={values.length - yes} total={values.length} color="#f44336" />
-      </Box>
-    );
+      </Box>;
   } else if (field.type === 'count') {
-    const lengths = values.map((v) => (Array.isArray(v) ? v.length : Number(v))).filter((n) => !Number.isNaN(n));
+    const lengths = values.map(v => Array.isArray(v) ? v.length : Number(v)).filter(n => !Number.isNaN(n));
     const avg = average(lengths);
-    body = (
-      <Typography variant="body2" color="text.secondary">
+    body = <Typography variant="body2" color="text.secondary">
         {lengths.reduce((a, b) => a + b, 0)} items total · avg {avg !== null ? avg.toFixed(1) : '—'} per participant
-      </Typography>
-    );
+      </Typography>;
   } else if (field.type === 'color') {
     const freq = {};
     for (const v of values) {
@@ -1500,23 +1391,18 @@ function SkillFieldSummary({ field, answers }) {
       if (hex) freq[hex] = (freq[hex] || 0) + 1;
     }
     const sorted = Object.entries(freq).sort((a, b) => b[1] - a[1]);
-    body = (
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-        {sorted.map(([hex, count]) => (
-          <Chip
-            key={hex}
-            size="small"
-            label={`${hex} × ${count}`}
-            sx={{
-              bgcolor: hex,
-              color: '#fff',
-              textShadow: '0 0 3px rgba(0,0,0,0.7)',
-              fontFamily: 'monospace',
-            }}
-          />
-        ))}
-      </Box>
-    );
+    body = <Box sx={{
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: 1
+    }}>
+        {sorted.map(([hex, count]) => <Chip key={hex} size="small" label={`${hex} × ${count}`} sx={{
+        bgcolor: hex,
+        color: '#fff',
+        textShadow: '0 0 3px rgba(0,0,0,0.7)',
+        fontFamily: 'monospace'
+      }} />)}
+      </Box>;
   } else if (field.type === 'scaleGroup') {
     // value = [{ id, left, right, label?, value }] OR { dimensionId: number }
     const dims = {}; // id → { left, right, label, values: [] }
@@ -1525,7 +1411,12 @@ function SkillFieldSummary({ field, answers }) {
         for (const d of v) {
           if (!d || d.value === undefined) continue;
           const id = d.id || d.label || `${d.left}/${d.right}`;
-          if (!dims[id]) dims[id] = { left: d.left, right: d.right, label: d.label, values: [] };
+          if (!dims[id]) dims[id] = {
+            left: d.left,
+            right: d.right,
+            label: d.label,
+            values: []
+          };
           const n = Number(d.value);
           if (!isNaN(n)) dims[id].values.push(n);
         }
@@ -1533,21 +1424,28 @@ function SkillFieldSummary({ field, answers }) {
         Object.entries(v).forEach(([id, raw]) => {
           const n = Number(raw);
           if (!Number.isFinite(n)) return;
-          if (!dims[id]) dims[id] = { label: id, values: [] };
+          if (!dims[id]) dims[id] = {
+            label: id,
+            values: []
+          };
           dims[id].values.push(n);
         });
       }
     }
-    const allVals = Object.values(dims).flatMap((d) => d.values);
+    const allVals = Object.values(dims).flatMap(d => d.values);
     const scaleMax = Math.max(7, ...allVals);
-    body = (
-      <Box>
+    body = <Box>
         {Object.entries(dims).map(([id, d]) => {
-          const avg = average(d.values);
-          const w = avg !== null ? Math.round(((avg - 1) / (scaleMax - 1)) * 100) : 0;
-          return (
-            <Box key={id} sx={{ mb: 1.2 }}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.3 }}>
+        const avg = average(d.values);
+        const w = avg !== null ? Math.round((avg - 1) / (scaleMax - 1) * 100) : 0;
+        return <Box key={id} sx={{
+          mb: 1.2
+        }}>
+              <Box sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            mb: 0.3
+          }}>
                 <Typography variant="body2">
                   {dimensionDisplayName(d)}
                 </Typography>
@@ -1555,16 +1453,26 @@ function SkillFieldSummary({ field, answers }) {
                   {avg !== null ? avg.toFixed(2) : '—'} / {scaleMax}
                 </Typography>
               </Box>
-              <Box sx={{ height: 10, bgcolor: 'grey.100', borderRadius: 1, overflow: 'hidden' }}>
-                <Box sx={{ height: '100%', width: `${w}%`, bgcolor: 'primary.main', borderRadius: 1 }} />
+              <Box sx={{
+            height: 10,
+            bgcolor: 'grey.100',
+            borderRadius: 1,
+            overflow: 'hidden'
+          }}>
+                <Box sx={{
+              height: '100%',
+              width: `${w}%`,
+              bgcolor: 'primary.main',
+              borderRadius: 1
+            }} />
               </Box>
-            </Box>
-          );
-        })}
-      </Box>
-    );
+            </Box>;
+      })}
+      </Box>;
   } else if (field.type === 'text') {
-    body = <TextAnswers answers={values.map((v) => ({ answer: String(v) }))} />;
+    body = <TextAnswers answers={values.map(v => ({
+      answer: String(v)
+    }))} />;
   } else {
     // 'choice' and anything else: frequency distribution of stringified values
     const freq = {};
@@ -1573,79 +1481,126 @@ function SkillFieldSummary({ field, answers }) {
       freq[key] = (freq[key] || 0) + 1;
     }
     const sorted = Object.entries(freq).sort((a, b) => b[1] - a[1]);
-    body = (
-      <Box>
-        {sorted.map(([value, count], idx) => (
-          <HorizontalBar key={value} label={value} count={count} total={values.length} index={idx} />
-        ))}
-      </Box>
-    );
+    body = <Box>
+        {sorted.map(([value, count], idx) => <HorizontalBar key={value} label={value} count={count} total={values.length} index={idx} />)}
+      </Box>;
   }
-
-  return (
-    <Box sx={{ mb: 2.5 }}>
+  return <Box sx={{
+    mb: 2.5
+  }}>
       {header}
       {body}
-    </Box>
-  );
+    </Box>;
 }
 
 // Keys that carry media context rather than measurements — excluded from
 // the auto-inferred schema.
 function inferSkillResultSchema(sampleAnswer) {
   if (!sampleAnswer || typeof sampleAnswer !== 'object') return [];
-  return Object.entries(stripSkillAnswerContext(sampleAnswer))
-    .map(([k, v]) => {
-      if (typeof v === 'number') return { key: k, label: k, type: 'number' };
-      if (typeof v === 'boolean') return { key: k, label: k, type: 'boolean' };
-      if (Array.isArray(v)) {
-        if (v.length >= 1 && v.every((p) => p && typeof p === 'object'
-          && Number.isFinite(Number(p.x)) && Number.isFinite(Number(p.y)))) {
-          const kl = k.toLowerCase();
-          if (/bbox|bounding|\brect\b|\bbox\b/.test(kl) || /(^|_)box(_|$)/.test(kl)) {
-            return { key: k, label: k, type: 'bbox' };
-          }
-          if (/polygon|poly|region|area|mask/.test(kl)) {
-            return { key: k, label: k, type: 'polygon' };
-          }
-          if (v.some((p) => p.t != null) || /path|route|trace|line/.test(kl)) {
-            return { key: k, label: k, type: 'path' };
-          }
-          if (v.length >= 3) return { key: k, label: k, type: 'polygon' };
-          if (v.length === 2) return { key: k, label: k, type: 'bbox' };
-          return { key: k, label: k, type: 'points' };
+  return Object.entries(stripSkillAnswerContext(sampleAnswer)).map(([k, v]) => {
+    if (typeof v === 'number') return {
+      key: k,
+      label: k,
+      type: 'number'
+    };
+    if (typeof v === 'boolean') return {
+      key: k,
+      label: k,
+      type: 'boolean'
+    };
+    if (Array.isArray(v)) {
+      if (v.length >= 1 && v.every(p => p && typeof p === 'object' && Number.isFinite(Number(p.x)) && Number.isFinite(Number(p.y)))) {
+        const kl = k.toLowerCase();
+        if (/bbox|bounding|\brect\b|\bbox\b/.test(kl) || /(^|_)box(_|$)/.test(kl)) {
+          return {
+            key: k,
+            label: k,
+            type: 'bbox'
+          };
         }
-        if (v.length >= 1 && v.every((x) => typeof x === 'string' || typeof x === 'number')) {
-          if (/rank|order|priority/i.test(k) || v.length >= 3) {
-            return { key: k, label: k, type: 'rankedList' };
-          }
+        if (/polygon|poly|region|area|mask/.test(kl)) {
+          return {
+            key: k,
+            label: k,
+            type: 'polygon'
+          };
         }
-        return { key: k, label: k, type: 'count' };
+        if (v.some(p => p.t != null) || /path|route|trace|line/.test(kl)) {
+          return {
+            key: k,
+            label: k,
+            type: 'path'
+          };
+        }
+        if (v.length >= 3) return {
+          key: k,
+          label: k,
+          type: 'polygon'
+        };
+        if (v.length === 2) return {
+          key: k,
+          label: k,
+          type: 'bbox'
+        };
+        return {
+          key: k,
+          label: k,
+          type: 'points'
+        };
       }
-      if (v && typeof v === 'object') {
-        const vals = Object.values(v);
-        if (vals.length && vals.every((x) => Number.isFinite(Number(x)))) {
-          if (/alloc|budget|weight|points/i.test(k)) {
-            return { key: k, label: k, type: 'allocation' };
-          }
-          return { key: k, label: k, type: 'scaleGroup' };
+      if (v.length >= 1 && v.every(x => typeof x === 'string' || typeof x === 'number')) {
+        if (/rank|order|priority/i.test(k) || v.length >= 3) {
+          return {
+            key: k,
+            label: k,
+            type: 'rankedList'
+          };
         }
       }
-      if (typeof v === 'string') {
-        if (/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(v)) {
-          return { key: k, label: k, type: 'color' };
+      return {
+        key: k,
+        label: k,
+        type: 'count'
+      };
+    }
+    if (v && typeof v === 'object') {
+      const vals = Object.values(v);
+      if (vals.length && vals.every(x => Number.isFinite(Number(x)))) {
+        if (/alloc|budget|weight|points/i.test(k)) {
+          return {
+            key: k,
+            label: k,
+            type: 'allocation'
+          };
         }
-        return { key: k, label: k, type: 'choice' };
+        return {
+          key: k,
+          label: k,
+          type: 'scaleGroup'
+        };
       }
-      return null;
-    })
-    .filter(Boolean);
+    }
+    if (typeof v === 'string') {
+      if (/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(v)) {
+        return {
+          key: k,
+          label: k,
+          type: 'color'
+        };
+      }
+      return {
+        key: k,
+        label: k,
+        type: 'choice'
+      };
+    }
+    return null;
+  }).filter(Boolean);
 }
-
 function inferSkillResultSchemaFromAnswers(answers) {
   const votes = new Map();
-  (answers || []).forEach((entry) => {
-    inferSkillResultSchema(entry?.answer).forEach((field) => {
+  (answers || []).forEach(entry => {
+    inferSkillResultSchema(entry?.answer).forEach(field => {
       if (!votes.has(field.key)) votes.set(field.key, new Map());
       const byType = votes.get(field.key);
       byType.set(field.type, (byType.get(field.type) || 0) + 1);
@@ -1657,71 +1612,90 @@ function inferSkillResultSchemaFromAnswers(answers) {
     const sorted = [...byType.entries()].sort((a, b) => b[1] - a[1]);
     winningVotes += sorted[0][1];
     totalVotes += sorted.reduce((sum, [, count]) => sum + count, 0);
-    return { key, label: key, type: sorted[0][0] };
+    return {
+      key,
+      label: key,
+      type: sorted[0][0]
+    };
   });
-  return { schema, confidence: totalVotes ? winningVotes / totalVotes : 0 };
+  return {
+    schema,
+    confidence: totalVotes ? winningVotes / totalVotes : 0
+  };
 }
-
-function SkillRawResponses({ answers, maxVisible = 10 }) {
-  const { t } = useRegion();
+function SkillRawResponses({
+  answers,
+  maxVisible = 10
+}) {
+  const {
+    t
+  } = useRegion();
   const [showAll, setShowAll] = useState(false);
   const [showJson, setShowJson] = useState(false);
   const visible = showAll ? answers : answers.slice(0, maxVisible);
-
   if (!answers.length) {
     return <Typography variant="body2" color="text.secondary">{t.resultsSkillNoResponses}</Typography>;
   }
-
-  return (
-    <Box sx={{ mt: 1 }}>
-      <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
+  return <Box sx={{
+    mt: 1
+  }}>
+      <Typography variant="caption" color="text.secondary" sx={{
+      display: 'block',
+      mb: 1
+    }}>
         {t.resultsSkillRawHint}
       </Typography>
       {showJson && visible.map((entry, idx) => {
-        const shown = entry.shown_images?.length ? entry.shown_images : [];
-        return (
-          <Paper key={idx} variant="outlined" sx={{ p: 1.5, mb: 1, bgcolor: 'grey.50', borderRadius: 1 }}>
-            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>
-              {tf(t.resultsSkillResponseN, { n: idx + 1 })}
+      const shown = entry.shown_images?.length ? entry.shown_images : [];
+      return <Paper key={idx} variant="outlined" sx={{
+        p: 1.5,
+        mb: 1,
+        bgcolor: 'grey.50',
+        borderRadius: 1
+      }}>
+            <Typography variant="caption" color="text.secondary" sx={{
+          display: 'block',
+          mb: 0.5
+        }}>
+              {tf(t.resultsSkillResponseN, {
+            n: idx + 1
+          })}
             </Typography>
-            {showJson && (
-              <Typography
-                component="pre"
-                variant="body2"
-                sx={{
-                  m: 0,
-                  whiteSpace: 'pre-wrap',
-                  wordBreak: 'break-word',
-                  fontFamily: 'monospace',
-                  fontSize: '0.8rem',
-                }}
-              >
+            {showJson && <Typography component="pre" variant="body2" sx={{
+          m: 0,
+          whiteSpace: 'pre-wrap',
+          wordBreak: 'break-word',
+          fontFamily: 'monospace',
+          fontSize: '0.8rem'
+        }}>
                 {formatSkillAnswerForDisplay(entry.answer)}
-              </Typography>
-            )}
-            {shown.length > 0 && (
-              <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1 }}>
+              </Typography>}
+            {shown.length > 0 && <Typography variant="caption" color="text.secondary" sx={{
+          display: 'block',
+          mt: 1
+        }}>
                 {t.resultsSkillStimulusMedia}{' '}
-                {shown.map((u) => shortName(u)).join(' · ')}
-              </Typography>
-            )}
-          </Paper>
-        );
-      })}
-      <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mt: 0.5 }}>
-        <Button size="small" onClick={() => setShowJson((v) => !v)}>
+                {shown.map(u => shortName(u)).join(' · ')}
+              </Typography>}
+          </Paper>;
+    })}
+      <Box sx={{
+      display: 'flex',
+      gap: 1,
+      flexWrap: 'wrap',
+      mt: 0.5
+    }}>
+        <Button size="small" onClick={() => setShowJson(v => !v)}>
           {showJson ? t.resultsSkillHideRawJson : t.resultsSkillShowRawJson}
         </Button>
-        {showJson && answers.length > maxVisible && (
-          <Button size="small" onClick={() => setShowAll((v) => !v)}>
-            {showAll ? t.resultsSkillShowLess : tf(t.resultsSkillShowAllN, { n: answers.length })}
-          </Button>
-        )}
+        {showJson && answers.length > maxVisible && <Button size="small" onClick={() => setShowAll(v => !v)}>
+            {showAll ? t.resultsSkillShowLess : tf(t.resultsSkillShowAllN, {
+          n: answers.length
+        })}
+          </Button>}
       </Box>
-    </Box>
-  );
+    </Box>;
 }
-
 function skillAnswerStimulusKey(entry) {
   const answer = entry?.answer;
   const shown = entry?.shown_images || [];
@@ -1733,18 +1707,14 @@ function skillAnswerStimulusKey(entry) {
 }
 
 /** The single native analysis renderer used by native questions and Skill fields. */
-function renderNativeQuestionAnalysisBody(question, answers, allResponses) {
+function renderNativeQuestionAnalysisBody(question, answers, allResponses, surveyConfig) {
   const type = question?.type || 'text';
-  if (type === 'rating') return (
-    <><IrrSummary responses={allResponses} question={question} /><RatingDistribution answers={answers} rateMin={question.rateMin ?? 1} rateMax={question.rateMax ?? 5} /></>
-  );
+  if (type === 'rating') return <><IrrSummary responses={allResponses} question={question} /><RatingDistribution answers={answers} rateMin={question.rateMin ?? 1} rateMax={question.rateMax ?? 5} /></>;
   if (type === 'number') return <NumberDistribution answers={answers} question={question} />;
   if (type === 'radiogroup' || type === 'dropdown') return <ChoiceDistribution answers={answers} choices={question.choices} />;
   if (type === 'checkbox') return <ChoiceDistribution answers={answers} choices={question.choices} isCheckbox />;
   if (type === 'boolean' || type === 'consent') return <BooleanDistribution answers={answers} />;
-  if (type === 'comment' || type === 'text') return question.inputType === 'number'
-    ? <NumberDistribution answers={answers} question={question} />
-    : <TextAnswers answers={answers} />;
+  if (type === 'comment' || type === 'text') return question.inputType === 'number' ? <NumberDistribution answers={answers} question={question} /> : <TextAnswers answers={answers} />;
   if (type === 'matrix') return <MatrixDistribution answers={answers} rows={question.rows} columns={question.columns} />;
   if (type === 'ranking') return <RankingDistribution answers={answers} choices={question.choices} />;
   if (type === 'slidergroup') return <><IrrSummary responses={allResponses} question={question} /><SliderGroupAnalysis question={question} answers={answers} /></>;
@@ -1752,27 +1722,90 @@ function renderNativeQuestionAnalysisBody(question, answers, allResponses) {
   if (type === 'pointallocation') return <PointAllocationAnalysis question={question} answers={answers} />;
   if (type === 'imagepointallocation' || type === 'mediapointallocation') return <ImagePointAllocationAnalysis question={question} answers={answers} />;
   if (type === 'imageannotation') return <AnnotationAnalysis answers={answers} questionName={question.name} responses={allResponses} />;
-  if (type === 'imagepicker' || type === 'mediapicker') return (
-    <><IrrSummary responses={allResponses} question={question} /><ImagePickerDistribution question={question} allResponses={allResponses} /></>
-  );
-  if (['image_rating', 'imagerating', 'image_ranking', 'imageranking', 'mediaranking', 'image_boolean', 'imageboolean', 'image_checkbox', 'imagecheckbox', 'mediacheckbox', 'image_matrix', 'imagematrix', 'mediamatrix', 'mediarating', 'mediaboolean'].includes(type)) return (
-    <>
+  if (type === 'mapannotation') return null;
+  if (type === 'imagepicker' || type === 'mediapicker') return <><IrrSummary responses={allResponses} question={question} /><ImagePickerDistribution question={question} allResponses={allResponses} surveyConfig={surveyConfig} /></>;
+  if (['image_rating', 'imagerating', 'image_ranking', 'imageranking', 'mediaranking', 'image_boolean', 'imageboolean', 'image_checkbox', 'imagecheckbox', 'mediacheckbox', 'image_matrix', 'imagematrix', 'mediamatrix', 'mediarating', 'mediaboolean'].includes(type)) return <>
       {['imagerating', 'image_rating', 'mediarating'].includes(type) && <IrrSummary responses={allResponses} question={question} />}
       <ImageQuestionAnalysis answers={answers} type={type} question={question} />
-    </>
-  );
+    </>;
   return null;
 }
 
+/**
+ * A question an SP-Scheme page records in its own format: the platform keeps
+ * the values and exports them, and says plainly that it does not analyse them.
+ */
+const SITE_RECORD_SHOW_CHARS = 60000;
+function recordText(value) {
+  const text = JSON.stringify(value, null, 2) ?? '';
+  return text.length > SITE_RECORD_SHOW_CHARS ? `${text.slice(0, SITE_RECORD_SHOW_CHARS)}\n…` : text;
+}
+
+/** What an SP-Scheme page saved and sent for one participant, as recorded. */
+export function SitePageRecords({ row, zh = false }) {
+  const state = row?.responses?.[SP_SITE_STATE_KEY];
+  const stateKeys = state && typeof state === 'object' ? Object.keys(state) : [];
+  const requests = Array.isArray(row?.responses?.[SP_SITE_REQUESTS_KEY]) ? row.responses[SP_SITE_REQUESTS_KEY] : [];
+  if (!stateKeys.length && !requests.length) return null;
+  const pre = { m: 0, p: 1, maxHeight: 320, overflow: 'auto', fontSize: '0.8rem', whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', bgcolor: 'grey.50', borderRadius: 1 };
+  return <Box sx={{ mt: 2 }} data-testid="results-site-records">
+    <Typography fontWeight={700}>{zh ? '页面记录' : 'Page records'}</Typography>
+    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
+      {zh ? '页面自己保存和发出的数据，原样记录，也在导出的原始 JSON 里。' : 'What the page saved and sent, as recorded; also in the raw JSON of the export.'}
+    </Typography>
+    {stateKeys.map(key => <Box key={key} sx={{ mb: 1.5 }}>
+      <Typography variant="body2" sx={{ fontWeight: 600, fontFamily: 'monospace' }}>
+        {key.startsWith('sp-media:') ? (zh ? `媒体库图片（${key.slice(9)}）` : `Media library images (${key.slice(9)})`) : key}
+      </Typography>
+      <Box component="pre" sx={pre}>{recordText(state[key])}</Box>
+    </Box>)}
+    {requests.length > 0 && <Box sx={{ mb: 1.5 }}>
+      <Typography variant="body2" sx={{ fontWeight: 600 }}>{zh ? `页面发出的请求（${requests.length} 条）` : `Requests the page sent (${requests.length})`}</Typography>
+      <Box component="pre" sx={pre}>{recordText(requests)}</Box>
+    </Box>}
+  </Box>;
+}
+
+function CustomRecordAnalysis({ question, answers, allResponses, site = false, task = false, hideNotice = false }) {
+  const { language } = useRegion();
+  const zh = isChineseLanguage(language);
+  const records = (answers || []).filter((a) => a !== undefined && a !== null);
+  const sample = records.slice(0, 5).map((a) => {
+    try { return JSON.stringify(a); } catch { return String(a); }
+  });
+  return <Box data-testid="custom-record-analysis">
+      {!hideNotice && <Alert severity="warning" sx={{ mb: 1.5 }}>
+        {task ? (zh
+          ? `这是高级自定义任务：交互由你自己的 HTML 定义，平台不知道它的含义，所以不做分析也不做统计。回答已原样记录，请导出 CSV 或 JSON 后自行分析。共 ${records.length} 条记录。`
+          : `This is an advanced custom task: its interaction is your own HTML, so the platform does not know what the answers mean and does not analyse or summarise them. Answers are recorded as sent; export the CSV or JSON and analyse them yourself. ${records.length} record(s).`) : site ? (zh
+          ? `这份问卷是原样导入的页面（不符合 SP-Scheme），平台不知道它的题目含义，所以不分析也不统计。页面保存和发出的数据已原样记录，请导出 CSV 或 JSON 后自行分析。共 ${records.length} 条记录。`
+          : `This survey is a page imported as it is (it does not match SP-Scheme), so the platform does not know what its answers mean and does not analyse or summarise them. What the page saved and sent is recorded as it is; export the CSV or JSON and analyse it yourself. ${records.length} record(s).`) : zh
+          ? `这道题由页面按自己的格式记录（custom），平台不做任何分析，也不做统计。请导出 CSV 或 JSON 后自行处理。共 ${records.length} 条记录。`
+          : `This question is recorded in the page's own format (custom). The platform does not analyse or summarise it; export the CSV or JSON and process it yourself. ${records.length} record(s).`}
+      </Alert>}
+      {sample.length > 0 && <Box component="pre" sx={{ m: 0, p: 1, bgcolor: 'grey.50', border: '1px solid', borderColor: 'divider', borderRadius: 1, fontSize: 12, maxHeight: 200, overflow: 'auto', whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+          {sample.join('\n')}
+          {records.length > sample.length ? `\n… ${records.length - sample.length} more` : ''}
+        </Box>}
+    </Box>;
+}
+
 /** Render an adapted Skill field through the same chart components as its native question type. */
-function NativeSkillFieldAnalysis({ sourceQuestion, field, answers, allResponses, showHeader = true }) {
+function NativeSkillFieldAnalysis({
+  sourceQuestion,
+  field,
+  answers,
+  allResponses,
+  surveyConfig,
+  showHeader = true
+}) {
   const question = skillFieldNativeQuestion(sourceQuestion, field);
   const adaptedAnswers = adaptSkillAnswerEntries(sourceQuestion, field, answers);
   const adaptedStored = adaptResponsesForSkillField(sourceQuestion, field, allResponses || []);
   const type = question?.type;
   let body = null;
   if (question && adaptedAnswers.length) {
-    body = renderNativeQuestionAnalysisBody(question, adaptedAnswers, adaptedStored.responses);
+    body = renderNativeQuestionAnalysisBody(question, adaptedAnswers, adaptedStored.responses, surveyConfig);
     if (!body && type === 'skillquestion') {
       const PresetAnalysis = getPresetSkillAnalysis(question.skillId);
       body = PresetAnalysis ? <PresetAnalysis answers={adaptedAnswers} question={question} /> : null;
@@ -1783,25 +1816,33 @@ function NativeSkillFieldAnalysis({ sourceQuestion, field, answers, allResponses
     body = <SkillArchetypeFieldSummary field={field} answers={answers} />;
   }
   if (!showHeader) return body;
-  return (
-    <Box sx={{ mb: 2.5 }}>
-      <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1 }}>
+  return <Box sx={{
+    mb: 2.5
+  }}>
+      <Typography variant="subtitle2" sx={{
+      fontWeight: 700,
+      mb: 1
+    }}>
         {field.label || field.key}
-        <Typography component="span" variant="caption" color="text.secondary" sx={{ ml: 1 }}>
-          {(type || field.type || 'field')} · n={adaptedAnswers.length || answers.length}
+        <Typography component="span" variant="caption" color="text.secondary" sx={{
+        ml: 1
+      }}>
+          {type || field.type || 'field'} · n={adaptedAnswers.length || answers.length}
         </Typography>
       </Typography>
       {body}
-    </Box>
-  );
+    </Box>;
 }
-
-function SkillQuestionAnalysis({ question, answers, allResponses }) {
-  const { t } = useRegion();
-  const [resolvedSchema, setResolvedSchema] = useState(
-    () => (Array.isArray(question.skillResultSchema) ? question.skillResultSchema : []),
-  );
-
+function SkillQuestionAnalysis({
+  question,
+  answers,
+  allResponses,
+  surveyConfig
+}) {
+  const {
+    t
+  } = useRegion();
+  const [resolvedSchema, setResolvedSchema] = useState(() => Array.isArray(question.skillResultSchema) ? question.skillResultSchema : []);
   useEffect(() => {
     let cancelled = false;
     const skillId = question.skillId;
@@ -1818,47 +1859,40 @@ function SkillQuestionAnalysis({ question, answers, allResponses }) {
         // The frozen schema/raw answer remains usable if the library entry is unavailable.
       }
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [question.skillId, question.skillRevision, question.skillResultSchema]);
-
-  const enrichedAnswers = useMemo(
-    () => filterAnswersForSkill(enrichSkillAnswers(answers), question.skillId),
-    [answers, question.skillId],
-  );
+  const enrichedAnswers = useMemo(() => filterAnswersForSkill(enrichSkillAnswers(answers), question.skillId), [answers, question.skillId]);
   const droppedCount = answers.length - enrichedAnswers.length;
   // Historical contracts allowed scalar/array answers. Preserve the raw value,
   // but wrap it in memory so typed analysis can use the normal object pipeline.
-  const objAnswers = enrichedAnswers.map((entry) => ({
+  const objAnswers = enrichedAnswers.map(entry => ({
     ...entry,
     originalAnswer: entry.answer,
-    answer: (entry.answer && typeof entry.answer === 'object' && !Array.isArray(entry.answer))
-      ? entry.answer
-      : { value: entry.answer },
+    answer: entry.answer && typeof entry.answer === 'object' && !Array.isArray(entry.answer) ? entry.answer : {
+      value: entry.answer
+    }
   }));
   const PresetAnalysis = getPresetSkillAnalysis(question.skillId);
-
   if (PresetAnalysis) {
     if (!objAnswers.length) {
       return <Typography variant="body2" color="text.secondary">{t.resultsSkillNoResponses}</Typography>;
     }
-    return (
-      <Box>
+    return <Box>
         <IrrSummary responses={allResponses} question={question} />
-        {droppedCount > 0 && (
-          <Alert severity="warning" sx={{ mb: 2 }}>
+        {droppedCount > 0 && <Alert severity="warning" sx={{
+        mb: 2
+      }}>
             Ignored {droppedCount} response{droppedCount === 1 ? '' : 's'} with the wrong answer shape
             (cross-contamination from an older bug when multiple skills shared one page).
-          </Alert>
-        )}
+          </Alert>}
         <PresetAnalysis answers={objAnswers} question={question} />
-      </Box>
-    );
+      </Box>;
   }
-
   if (!objAnswers.length) {
     return <Typography variant="body2" color="text.secondary">{t.resultsSkillNoResponses}</Typography>;
   }
-
   let schema = resolvedSchema;
   if (!schema?.length && question.skillId?.startsWith('preset_')) {
     schema = getPresetSkill(question.skillId.replace(/^preset_/, ''))?.resultSchema;
@@ -1869,78 +1903,67 @@ function SkillQuestionAnalysis({ question, answers, allResponses }) {
     schema = inferredContract.schema;
   }
   if (Array.isArray(schema)) {
-    schema = schema.filter((f) => f.key !== 'mode');
+    schema = schema.filter(f => f.key !== 'mode');
   }
-  const contractMismatchCount = objAnswers.filter(({ answer }) => {
+  const contractMismatchCount = objAnswers.filter(({
+    answer
+  }) => {
     const check = checkAnswerAgainstResultSchema(answer, schema || [], question.skillConfig);
-    return !check.recorded || check.fields.some((field) => !field.ok);
+    return !check.recorded || check.fields.some(field => !field.ok);
   }).length;
 
   // Like imagerating / preset skills: charts rank or overlay by media inside each field.
   // No text-style "response list / readable summary" subsections.
-  const chartSchema = (schema || []).filter((f) => {
+  const chartSchema = (schema || []).filter(f => {
     if (!f?.key) return false;
     if (skillFieldNativeQuestion(question, f)) return true;
-    if (['path', 'points', 'polygon', 'bbox', 'box', 'weights', 'allocations'].includes(f.key)
-      && f.type === 'count') return false;
+    if (['path', 'points', 'polygon', 'bbox', 'box', 'weights', 'allocations'].includes(f.key) && f.type === 'count') return false;
     return true;
   });
-  const nativeParityContract = !inferredContract
-    && chartSchema.length === 1
-    && !!skillFieldNativeQuestion(question, chartSchema[0]);
-
-  return (
-    <Box>
-      {droppedCount > 0 && (
-        <Alert severity="warning" sx={{ mb: 2 }}>
+  const nativeParityContract = !inferredContract && chartSchema.length === 1 && !!skillFieldNativeQuestion(question, chartSchema[0]);
+  return <Box>
+      {droppedCount > 0 && <Alert severity="warning" sx={{
+      mb: 2
+    }}>
           Ignored {droppedCount} response{droppedCount === 1 ? '' : 's'} with the wrong answer shape
           (cross-contamination from an older bug when multiple skills shared one page).
-        </Alert>
-      )}
-      {contractMismatchCount > 0 && (
-        <Alert severity="warning" sx={{ mb: 2 }}>
+        </Alert>}
+      {contractMismatchCount > 0 && <Alert severity="warning" sx={{
+      mb: 2
+    }}>
           contract_mismatch: {contractMismatchCount} response{contractMismatchCount === 1 ? '' : 's'} did not match the frozen Skill result schema. Raw JSON is preserved below.
-        </Alert>
-      )}
-      {inferredContract && (
-        <Alert severity="info" sx={{ mb: 2 }}>
+        </Alert>}
+      {inferredContract && <Alert severity="info" sx={{
+      mb: 2
+    }}>
           Missing historical contract: inferred from {objAnswers.length} responses with {Math.round(inferredContract.confidence * 100)}% field-type agreement. This inference is read-only and was not written back.
-        </Alert>
-      )}
-      {chartSchema.length > 0 ? (
-        <Box sx={{ mb: 1 }}>
-          {chartSchema.map((field) => (
-            <NativeSkillFieldAnalysis
-              key={field.key}
-              sourceQuestion={question}
-              field={field}
-              answers={objAnswers}
-              allResponses={allResponses}
-              showHeader={chartSchema.length > 1}
-            />
-          ))}
-        </Box>
-      ) : (
-        <Typography variant="body2" color="text.secondary">
+        </Alert>}
+      {chartSchema.length > 0 ? <Box sx={{
+      mb: 1
+    }}>
+          {chartSchema.map(field => <NativeSkillFieldAnalysis key={field.key} sourceQuestion={question} field={field} answers={objAnswers} allResponses={allResponses} surveyConfig={surveyConfig} showHeader={chartSchema.length > 1} />)}
+        </Box> : <Typography variant="body2" color="text.secondary">
           {t.resultsSkillNoResponses}
-        </Typography>
-      )}
+        </Typography>}
       {!nativeParityContract && <SkillRawResponses answers={enrichedAnswers} maxVisible={10} />}
-    </Box>
-  );
+    </Box>;
 }
 
 // ─── Text ranking analysis ────────────────────────────────────────────────────
 // answer = [choiceValue_rank1, choiceValue_rank2, ...]
-function RankingDistribution({ answers, choices }) {
+function RankingDistribution({
+  answers,
+  choices
+}) {
   const labelMap = {};
-  (choices || []).forEach((c) => {
-    if (typeof c === 'object' && c !== null) labelMap[c.value] = c.text || c.value;
-    else labelMap[c] = c;
+  (choices || []).forEach(c => {
+    if (typeof c === 'object' && c !== null) labelMap[c.value] = c.text || c.value;else labelMap[c] = c;
   });
   const rankPositions = {};
   const rankingLists = [];
-  for (const { answer } of answers) {
+  for (const {
+    answer
+  } of answers) {
     const ranked = Array.isArray(answer) ? answer : [];
     if (ranked.length) rankingLists.push(ranked);
     ranked.forEach((val, idx) => {
@@ -1951,60 +1974,80 @@ function RankingDistribution({ answers, choices }) {
   const items = Object.keys(rankPositions);
   const nItems = items.length;
   const bordaMap = computeBordaScores(rankPositions, nItems);
-  const sorted = Object.entries(rankPositions)
-    .map(([val, ranks]) => ({
-      val,
-      avg: average(ranks),
-      sd: ranks.length > 1 ? Math.sqrt(ranks.reduce((s, r) => s + (r - average(ranks)) ** 2, 0) / ranks.length) : 0,
-      borda: bordaMap[val]?.borda,
-      n: ranks.length,
-    }))
-    .sort((a, b) => (a.avg ?? 999) - (b.avg ?? 999));
+  const sorted = Object.entries(rankPositions).map(([val, ranks]) => ({
+    val,
+    avg: average(ranks),
+    sd: ranks.length > 1 ? Math.sqrt(ranks.reduce((s, r) => s + (r - average(ranks)) ** 2, 0) / ranks.length) : 0,
+    borda: bordaMap[val]?.borda,
+    n: ranks.length
+  })).sort((a, b) => (a.avg ?? 999) - (b.avg ?? 999));
   const maxRank = sorted.length;
   const w = kendallW(rankingLists, items);
-
-  return (
-    <Box>
-      {w != null && (
-        <Alert severity={w >= 0.5 ? 'success' : 'info'} sx={{ mb: 2 }}>
+  return <Box>
+      {w != null && <Alert severity={w >= 0.5 ? 'success' : 'info'} sx={{
+      mb: 2
+    }}>
           Kendall&apos;s W = {w.toFixed(3)} — {interpretKendallW(w)}
-        </Alert>
-      )}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+        </Alert>}
+      <Box sx={{
+      display: 'flex',
+      justifyContent: 'space-between',
+      mb: 1
+    }}>
         <Typography variant="caption" color="text.secondary">
           Average rank (1 = top) · Borda score · SD · use card Export for CSV
         </Typography>
       </Box>
-      {sorted.map(({ val, avg, sd, borda, n }, idx) => (
-        <Box key={val} sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
-          <Chip size="small" label={`#${idx + 1}`} color={idx === 0 ? 'primary' : 'default'} sx={{ width: 44 }} />
-          <Typography variant="body2" sx={{ width: 160, flexShrink: 0 }} noWrap>
+      {sorted.map(({
+      val,
+      avg,
+      sd,
+      borda,
+      n
+    }, idx) => <Box key={val} sx={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1.5,
+      mb: 1
+    }}>
+          <Chip size="small" label={`#${idx + 1}`} color={idx === 0 ? 'primary' : 'default'} sx={{
+        width: 44
+      }} />
+          <Typography variant="body2" sx={{
+        width: 160,
+        flexShrink: 0
+      }} noWrap>
             {labelMap[val] || val}
           </Typography>
-          <Box sx={{ flex: 1, height: 10, bgcolor: 'grey.100', borderRadius: 1, overflow: 'hidden' }}>
+          <Box sx={{
+        flex: 1,
+        height: 10,
+        bgcolor: 'grey.100',
+        borderRadius: 1,
+        overflow: 'hidden'
+      }}>
             <Box sx={{
-              height: '100%',
-              width: `${pct(maxRank - (avg ?? maxRank) + 1, maxRank)}%`,
-              bgcolor: BAR_COLORS[idx % BAR_COLORS.length],
-            }} />
+          height: '100%',
+          width: `${pct(maxRank - (avg ?? maxRank) + 1, maxRank)}%`,
+          bgcolor: BAR_COLORS[idx % BAR_COLORS.length]
+        }} />
           </Box>
-          <Typography variant="caption" color="text.secondary" sx={{ width: 150, textAlign: 'right' }}>
+          <Typography variant="caption" color="text.secondary" sx={{
+        width: 150,
+        textAlign: 'right'
+      }}>
             avg {avg?.toFixed(2) ?? '–'} ±{sd?.toFixed(2)} · Borda {borda?.toFixed(1)} · n={n}
           </Typography>
-        </Box>
-      ))}
-      {sorted.length === 0 && (
-        <Typography variant="body2" color="text.secondary">No responses yet.</Typography>
-      )}
-    </Box>
-  );
+        </Box>)}
+      {sorted.length === 0 && <Typography variant="body2" color="text.secondary">No responses yet.</Typography>}
+    </Box>;
 }
 
 // ─── Native slider group / point allocation analysis ─────────────────────────
 
 function useImageUrlResolver() {
   const resolvedUrl = useContext(ImageResolverContext);
-  return (value) => {
+  return value => {
     if (!value) return null;
     if (resolvedUrl?.has(value)) return resolvedUrl.get(value);
     if (typeof value === 'string' && (value.startsWith('http') || value.startsWith('/'))) return value;
@@ -2017,31 +2060,38 @@ function useImageUrlResolver() {
  * Bottom tab per slider dimension (attribute); ranking inside is by image only
  * (imageslidergroup / mediaslidergroup).
  */
-function ImageSliderGroupAnalysis({ question, answers }) {
+function ImageSliderGroupAnalysis({
+  question,
+  answers
+}) {
   const getImageUrl = useImageUrlResolver();
   const dims = question.dimensions || [];
   const [tab, setTab] = useState(0);
-
-  const dimKeys = dims.length
-    ? dims.map((d) => d.id)
-    : [...new Set(
-      (answers || []).flatMap(({ answer }) => (
-        answer && typeof answer === 'object' ? Object.keys(answer) : []
-      )),
-    )];
+  const dimKeys = dims.length ? dims.map(d => d.id) : [...new Set((answers || []).flatMap(({
+    answer
+  }) => answer && typeof answer === 'object' ? Object.keys(answer) : []))];
   const safeTab = Math.min(tab, Math.max(0, dimKeys.length - 1));
   const dimId = dimKeys[safeTab];
-  const dimDef = dims.find((d) => d.id === dimId);
-  const { min: scaleMin, max: scaleMax } = sliderScale(dimDef, question);
-  const dimTitle = dimDef
-    ? dimensionDisplayName(dimDef, safeTab)
-    : dimId;
-
-  const { allVals, rankedItems } = useMemo(() => {
-    if (!dimId) return { allVals: [], rankedItems: [] };
+  const dimDef = dims.find(d => d.id === dimId);
+  const {
+    min: scaleMin,
+    max: scaleMax
+  } = sliderScale(dimDef, question);
+  const dimTitle = dimDef ? dimensionDisplayName(dimDef, safeTab) : dimId;
+  const {
+    allVals,
+    rankedItems
+  } = useMemo(() => {
+    if (!dimId) return {
+      allVals: [],
+      rankedItems: []
+    };
     const vals = [];
     const perImage = {};
-    for (const { answer, shown_images } of answers || []) {
+    for (const {
+      answer,
+      shown_images
+    } of answers || []) {
       if (!shown_images?.length || typeof answer !== 'object' || !answer) continue;
       if (answer[dimId] == null || answer[dimId] === '') continue;
       const val = Number(answer[dimId]);
@@ -2049,441 +2099,548 @@ function ImageSliderGroupAnalysis({ question, answers }) {
       vals.push(val);
       const img = shown_images[0];
       const key = stimulusUnitKey(shown_images);
-      if (!perImage[key]) perImage[key] = { url: img, vals: [] };
+      if (!perImage[key]) perImage[key] = {
+        url: img,
+        vals: []
+      };
       perImage[key].vals.push(val);
     }
-    const ranked = Object.entries(perImage)
-      .map(([key, { url, vals: imgVals }]) => {
-        const avg = average(imgVals);
-        return {
-          key,
-          url,
-          value: avg ?? scaleMin,
-          label: `${avg?.toFixed(2) ?? '–'} / ${scaleMax} · n=${imgVals.length}`,
-        };
-      })
-      .sort((a, b) => b.value - a.value);
-    return { allVals: vals, rankedItems: ranked };
+    const ranked = Object.entries(perImage).map(([key, {
+      url,
+      vals: imgVals
+    }]) => {
+      const avg = average(imgVals);
+      return {
+        key,
+        url,
+        value: avg ?? scaleMin,
+        label: `${avg?.toFixed(2) ?? '–'} / ${scaleMax} · n=${imgVals.length}`
+      };
+    }).sort((a, b) => b.value - a.value);
+    return {
+      allVals: vals,
+      rankedItems: ranked
+    };
   }, [answers, dimId, scaleMin, scaleMax]);
-
   if (!dimKeys.length) {
     return <Typography variant="body2" color="text.secondary">No dimensions configured.</Typography>;
   }
-
   const mean = average(allVals);
-  const sd = allVals.length > 1
-    ? Math.sqrt(allVals.reduce((s, v) => s + (v - mean) ** 2, 0) / allVals.length)
-    : 0;
-
-  return (
-    <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+  const sd = allVals.length > 1 ? Math.sqrt(allVals.reduce((s, v) => s + (v - mean) ** 2, 0) / allVals.length) : 0;
+  return <Box>
+      <Box sx={{
+      display: 'flex',
+      justifyContent: 'space-between',
+      mb: 0.5
+    }}>
         <Typography variant="caption" color="text.secondary">{dimDef?.left || ''}</Typography>
         <Typography variant="caption" fontWeight={700}>
-          {mean != null
-            ? `avg ${mean.toFixed(2)} ± ${sd.toFixed(2)} (n=${allVals.length})`
-            : 'no data'}
+          {mean != null ? `avg ${mean.toFixed(2)} ± ${sd.toFixed(2)} (n=${allVals.length})` : 'no data'}
         </Typography>
         <Typography variant="caption" color="text.secondary">{dimDef?.right || ''}</Typography>
       </Box>
       {allVals.length > 0 && <DescriptiveStatsLine nums={allVals} />}
-      {allVals.length >= 3 && (
-        <DensityHistogramChart
-          scores={allVals}
-          domainMin={scaleMin}
-          domainMax={scaleMax}
-          title={`${dimTitle} — score distribution`}
-          caption="Blue bars: histogram (density). Orange curve: fitted normal PDF."
-          xLabel={`Score (${scaleMin}–${scaleMax})`}
-          padB={40}
-          chartH={200}
-        />
-      )}
-      {rankedItems.length > 0 && (
-        <CompactImageRanking
-          title={null}
-          items={rankedItems}
-          getImageUrl={getImageUrl}
-          maxValue={scaleMax}
-          formatLabel={(_, label) => label}
-        />
-      )}
-      {allVals.length === 0 && (
-        <Typography variant="body2" color="text.secondary">No responses yet.</Typography>
-      )}
-      <Tabs
-        value={safeTab}
-        onChange={(_, v) => setTab(v)}
-        variant="scrollable"
-        scrollButtons="auto"
-        sx={{
-          mt: 1,
-          borderTop: 1,
-          borderColor: 'divider',
-          minHeight: 40,
-          '& .MuiTab-root': { minHeight: 40, textTransform: 'none', fontSize: 13 },
-        }}
-      >
+      {allVals.length >= 3 && <DensityHistogramChart scores={allVals} domainMin={scaleMin} domainMax={scaleMax} title={`${dimTitle} — score distribution`} caption="Blue bars: histogram (density). Orange curve: fitted normal PDF." xLabel={`Score (${scaleMin}–${scaleMax})`} padB={40} chartH={200} />}
+      {rankedItems.length > 0 && <CompactImageRanking title={null} items={rankedItems} getImageUrl={getImageUrl} maxValue={scaleMax} formatLabel={(_, label) => label} />}
+      {allVals.length === 0 && <Typography variant="body2" color="text.secondary">No responses yet.</Typography>}
+      <Tabs value={safeTab} onChange={(_, v) => setTab(v)} variant="scrollable" scrollButtons="auto" sx={{
+      mt: 1,
+      borderTop: 1,
+      borderColor: 'divider',
+      minHeight: 40,
+      '& .MuiTab-root': {
+        minHeight: 40,
+        textTransform: 'none',
+        fontSize: 13
+      }
+    }}>
         {dimKeys.map((id, index) => {
-          const def = dims.find((d) => d.id === id);
-          const label = def ? dimensionDisplayName(def, index) : id;
-          return <Tab key={id} label={label} />;
-        })}
+        const def = dims.find(d => d.id === id);
+        const label = def ? dimensionDisplayName(def, index) : id;
+        return <Tab key={id} label={label} />;
+      })}
       </Tabs>
-      <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
+      <Typography variant="caption" color="text.secondary" sx={{
+      mt: 0.5,
+      display: 'block'
+    }}>
         Attribute: {dimTitle}
       </Typography>
-    </Box>
-  );
+    </Box>;
 }
 
 /**
  * Bottom tab per allocation choice (attribute); ranking inside is by image only
  * (imagepointallocation / mediapointallocation).
  */
-function ImagePointAllocationAnalysis({ question, answers }) {
+function ImagePointAllocationAnalysis({
+  question,
+  answers
+}) {
   const getImageUrl = useImageUrlResolver();
-  const choices = (question.choices || []).map((c) => (typeof c === 'object' ? c : { value: c, text: c }));
+  const choices = (question.choices || []).map(c => typeof c === 'object' ? c : {
+    value: c,
+    text: c
+  });
   const budget = question.budget || 100;
   const [tab, setTab] = useState(0);
-
-  const choiceKeys = choices.length
-    ? choices.map((c) => c.value)
-    : [...new Set(
-      (answers || []).flatMap(({ answer }) => (
-        answer && typeof answer === 'object' ? Object.keys(answer) : []
-      )),
-    )];
+  const choiceKeys = choices.length ? choices.map(c => c.value) : [...new Set((answers || []).flatMap(({
+    answer
+  }) => answer && typeof answer === 'object' ? Object.keys(answer) : []))];
   const safeTab = Math.min(tab, Math.max(0, choiceKeys.length - 1));
   const choiceKey = choiceKeys[safeTab];
-  const choiceDef = choices.find((c) => c.value === choiceKey);
-  const choiceLabel = choiceDef ? (choiceDef.text || choiceDef.value) : choiceKey;
-
+  const choiceDef = choices.find(c => c.value === choiceKey);
+  const choiceLabel = choiceDef ? choiceDef.text || choiceDef.value : choiceKey;
   let compliant = 0;
-  (answers || []).forEach(({ answer }) => {
+  (answers || []).forEach(({
+    answer
+  }) => {
     if (!answer || typeof answer !== 'object') return;
     if (allocationStatus(answer, question).valid) compliant += 1;
   });
-
   const rankedItems = useMemo(() => {
     if (!choiceKey) return [];
     const perImage = {};
-    for (const { answer, shown_images } of answers || []) {
+    for (const {
+      answer,
+      shown_images
+    } of answers || []) {
       if (!shown_images?.length || typeof answer !== 'object' || !answer) continue;
       const pts = Number(answer[choiceKey]);
       if (Number.isNaN(pts)) continue;
       const img = shown_images[0];
       const key = stimulusUnitKey(shown_images);
-      if (!perImage[key]) perImage[key] = { url: img, vals: [] };
+      if (!perImage[key]) perImage[key] = {
+        url: img,
+        vals: []
+      };
       perImage[key].vals.push(pts);
     }
-    return Object.entries(perImage)
-      .map(([key, { url, vals }]) => {
-        const avg = average(vals);
-        return {
-          key,
-          url,
-          value: avg ?? 0,
-          label: `${avg?.toFixed(1) ?? '–'} / ${budget} pts · n=${vals.length}`,
-        };
-      })
-      .sort((a, b) => b.value - a.value);
+    return Object.entries(perImage).map(([key, {
+      url,
+      vals
+    }]) => {
+      const avg = average(vals);
+      return {
+        key,
+        url,
+        value: avg ?? 0,
+        label: `${avg?.toFixed(1) ?? '–'} / ${budget} pts · n=${vals.length}`
+      };
+    }).sort((a, b) => b.value - a.value);
   }, [answers, choiceKey, budget]);
-
   if (!choiceKeys.length) {
     return <Typography variant="body2" color="text.secondary">No allocation choices configured.</Typography>;
   }
-
-  return (
-    <Box>
-      <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
+  return <Box>
+      <Typography variant="caption" color="text.secondary" sx={{
+      display: 'block',
+      mb: 1
+    }}>
         Within budget (partial use allowed): {compliant}/{answers.length} ({pct(compliant, answers.length)}%) ·
-        Full budget used: {answers.filter(({ answer }) => allocationStatus(answer, question).full).length}/{answers.length}
+        Full budget used: {answers.filter(({
+        answer
+      }) => allocationStatus(answer, question).full).length}/{answers.length}
       </Typography>
-      {rankedItems.length > 0 ? (
-        <CompactImageRanking
-          title={null}
-          items={rankedItems}
-          getImageUrl={getImageUrl}
-          maxValue={budget}
-          formatLabel={(_, label) => label}
-        />
-      ) : (
-        <Typography variant="body2" color="text.secondary">No responses yet.</Typography>
-      )}
-      <Tabs
-        value={safeTab}
-        onChange={(_, v) => setTab(v)}
-        variant="scrollable"
-        scrollButtons="auto"
-        sx={{
-          mt: 1,
-          borderTop: 1,
-          borderColor: 'divider',
-          minHeight: 40,
-          '& .MuiTab-root': { minHeight: 40, textTransform: 'none', fontSize: 13 },
-        }}
-      >
-        {choiceKeys.map((ck) => {
-          const def = choices.find((c) => c.value === ck);
-          return <Tab key={ck} label={def ? (def.text || def.value) : ck} />;
-        })}
+      {rankedItems.length > 0 ? <CompactImageRanking title={null} items={rankedItems} getImageUrl={getImageUrl} maxValue={budget} formatLabel={(_, label) => label} /> : <Typography variant="body2" color="text.secondary">No responses yet.</Typography>}
+      <Tabs value={safeTab} onChange={(_, v) => setTab(v)} variant="scrollable" scrollButtons="auto" sx={{
+      mt: 1,
+      borderTop: 1,
+      borderColor: 'divider',
+      minHeight: 40,
+      '& .MuiTab-root': {
+        minHeight: 40,
+        textTransform: 'none',
+        fontSize: 13
+      }
+    }}>
+        {choiceKeys.map(ck => {
+        const def = choices.find(c => c.value === ck);
+        return <Tab key={ck} label={def ? def.text || def.value : ck} />;
+      })}
       </Tabs>
-      <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
+      <Typography variant="caption" color="text.secondary" sx={{
+      mt: 0.5,
+      display: 'block'
+    }}>
         Attribute: {choiceLabel}
       </Typography>
-    </Box>
-  );
+    </Box>;
 }
-
-function SliderGroupAnalysis({ question, answers }) {
+function SliderGroupAnalysis({
+  question,
+  answers
+}) {
   const dims = question.dimensions || [];
   const firstScale = sliderScale(dims[0], question);
-  const comparable = dims.every((d) => { const scale = sliderScale(d, question); return scale.min === firstScale.min && scale.max === firstScale.max; });
-  const stats = dims.map((d) => {
-    const vals = answers
-      .map((a) => (a.answer && a.answer[d.id] != null && a.answer[d.id] !== '' ? Number(a.answer[d.id]) : NaN))
-      .filter(Number.isFinite);
+  const comparable = dims.every(d => {
+    const scale = sliderScale(d, question);
+    return scale.min === firstScale.min && scale.max === firstScale.max;
+  });
+  const stats = dims.map(d => {
+    const vals = answers.map(a => a.answer && a.answer[d.id] != null && a.answer[d.id] !== '' ? Number(a.answer[d.id]) : NaN).filter(Number.isFinite);
     const mean = vals.length ? vals.reduce((s, v) => s + v, 0) / vals.length : null;
     const sd = vals.length > 1 ? Math.sqrt(vals.reduce((s, v) => s + (v - mean) ** 2, 0) / vals.length) : 0;
-    return { ...d, mean, sd, n: vals.length, vals, scale: sliderScale(d, question) };
+    return {
+      ...d,
+      mean,
+      sd,
+      n: vals.length,
+      vals,
+      scale: sliderScale(d, question)
+    };
   });
-
-  return (
-    <Box>
-      {comparable ? <SemanticProfileChart dimensions={stats} scaleMin={firstScale.min} scaleMax={firstScale.max} />
-        : <Alert severity="info" sx={{ mb: 2 }}>Dimensions use different ranges. Read each distribution on its own scale.</Alert>}
-      {stats.map((s) => (
-        <Box key={s.id} sx={{ mb: 2 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.25 }}>
+  return <Box>
+      {comparable ? <SemanticProfileChart dimensions={stats} scaleMin={firstScale.min} scaleMax={firstScale.max} /> : <Alert severity="info" sx={{
+      mb: 2
+    }}>Dimensions use different ranges. Read each distribution on its own scale.</Alert>}
+      {stats.map(s => <Box key={s.id} sx={{
+      mb: 2
+    }}>
+          <Box sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        mb: 0.25
+      }}>
             <Typography variant="caption" color="text.secondary">{s.left}</Typography>
             <Typography variant="caption" fontWeight={700}>
               {s.mean !== null ? `avg ${s.mean.toFixed(2)} ± ${s.sd.toFixed(2)} (n=${s.n})` : 'no data'}
             </Typography>
             <Typography variant="caption" color="text.secondary">{s.right}</Typography>
           </Box>
-          {s.vals?.length >= 3 && (
-            <DensityHistogramChart
-              scores={s.vals}
-              domainMin={s.scale.min}
-              domainMax={s.scale.max}
-              title={`${dimensionDisplayName(s)} distribution`}
-              padB={40}
-              chartH={180}
-            />
-          )}
-        </Box>
-      ))}
-    </Box>
-  );
+          {s.vals?.length >= 3 && <DensityHistogramChart scores={s.vals} domainMin={s.scale.min} domainMax={s.scale.max} title={`${dimensionDisplayName(s)} distribution`} padB={40} chartH={180} />}
+        </Box>)}
+    </Box>;
 }
-
-function PointAllocationAnalysis({ question, answers }) {
-  const choices = (question.choices || []).map((c) => (typeof c === 'object' ? c : { value: c, text: c }));
+function PointAllocationAnalysis({
+  question,
+  answers
+}) {
+  const choices = (question.choices || []).map(c => typeof c === 'object' ? c : {
+    value: c,
+    text: c
+  });
   const budget = question.budget || 100;
   let compliant = 0;
-  const stats = choices.map((c) => {
-    const vals = answers
-      .map((a) => (a.answer && typeof a.answer === 'object' ? Number(a.answer[c.value]) || 0 : 0));
+  const stats = choices.map(c => {
+    const vals = answers.map(a => a.answer && typeof a.answer === 'object' ? Number(a.answer[c.value]) || 0 : 0);
     const mean = vals.length ? vals.reduce((s, v) => s + v, 0) / vals.length : 0;
     const sd = vals.length > 1 ? Math.sqrt(vals.reduce((s, v) => s + (v - mean) ** 2, 0) / vals.length) : 0;
-    return { ...c, mean, sd, vals };
+    return {
+      ...c,
+      mean,
+      sd,
+      vals
+    };
   });
-  answers.forEach(({ answer }) => {
+  answers.forEach(({
+    answer
+  }) => {
     if (!answer || typeof answer !== 'object') return;
     if (allocationStatus(answer, question).valid) compliant += 1;
   });
-  const maxMean = Math.max(...stats.map((s) => s.mean), 1);
-  const allInOne = answers.filter(({ answer }) => {
+  const maxMean = Math.max(...stats.map(s => s.mean), 1);
+  const allInOne = answers.filter(({
+    answer
+  }) => {
     if (!answer || typeof answer !== 'object') return false;
     const vals = Object.values(answer).map(Number);
     const max = Math.max(...vals);
     return max >= budget * 0.99;
   }).length;
-
-  return (
-    <Box>
-      <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
+  return <Box>
+      <Typography variant="caption" color="text.secondary" sx={{
+      display: 'block',
+      mb: 1
+    }}>
         Within budget (partial use allowed): {compliant}/{answers.length} ({pct(compliant, answers.length)}%) ·
-        Full budget used: {answers.filter(({ answer }) => allocationStatus(answer, question).full).length}/{answers.length} ·
+        Full budget used: {answers.filter(({
+        answer
+      }) => allocationStatus(answer, question).full).length}/{answers.length} ·
         All-in-one allocation: {allInOne} ({pct(allInOne, answers.length)}%)
       </Typography>
-      {stats.map((s) => (
-        <Box key={s.value} sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1 }}>
-          <Typography variant="caption" sx={{ width: 140, flexShrink: 0 }} noWrap>{s.text}</Typography>
-          <Box sx={{ flex: 1, height: 14, bgcolor: 'grey.100', borderRadius: 1, overflow: 'hidden' }}>
-            <Box sx={{ width: `${(s.mean / maxMean) * 100}%`, height: '100%', bgcolor: 'primary.main' }} />
+      {stats.map(s => <Box key={s.value} sx={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1.5,
+      mb: 1
+    }}>
+          <Typography variant="caption" sx={{
+        width: 140,
+        flexShrink: 0
+      }} noWrap>{s.text}</Typography>
+          <Box sx={{
+        flex: 1,
+        height: 14,
+        bgcolor: 'grey.100',
+        borderRadius: 1,
+        overflow: 'hidden'
+      }}>
+            <Box sx={{
+          width: `${s.mean / maxMean * 100}%`,
+          height: '100%',
+          bgcolor: 'primary.main'
+        }} />
           </Box>
-          <Typography variant="caption" fontWeight={700} sx={{ width: 110, textAlign: 'right' }}>
+          <Typography variant="caption" fontWeight={700} sx={{
+        width: 110,
+        textAlign: 'right'
+      }}>
             {s.mean.toFixed(1)} ± {s.sd.toFixed(1)}
           </Typography>
-        </Box>
-      ))}
-    </Box>
-  );
+        </Box>)}
+    </Box>;
+}
+
+// The page code the AI analysis reads field meanings from: the uploaded page
+// for a site survey, the task's own HTML for an advanced custom task.
+const taskHtmlCache = new Map();
+export async function analysisPageHtml(question, surveyConfig) {
+  const skillId = question?.type === 'skillquestion' ? String(question.skillId || '') : '';
+  if (!skillId || skillId.startsWith('preset_')) return surveyConfig?.spSite?.html || '';
+  const key = `${skillId}@${question.skillRevision || ''}`;
+  if (!taskHtmlCache.has(key)) {
+    taskHtmlCache.set(key, getSkillById(skillId, question.skillRevision || null).then((skill) => skill?.sourceHtml || '').catch(() => ''));
+  }
+  return taskHtmlCache.get(key);
 }
 
 // ─── Question Card ────────────────────────────────────────────────────────────
 
-export function QuestionCard({ question, answers, totalResponses, questionNumber, allResponses, surveyConfig, exportResponses, onExplain, defaultExpanded = false }) {
-  const { t } = useRegion();
+export function QuestionCard({
+  question,
+  answers,
+  totalResponses,
+  questionNumber,
+  allResponses,
+  surveyConfig,
+  exportResponses,
+  onExplain,
+  aiAnalysis = null,
+  onSaveAiAnalysis = null,
+  defaultExpanded = false
+}) {
+  const {
+    t,
+    language
+  } = useRegion();
   const [expanded, setExpanded] = useState(defaultExpanded);
   const [exportError, setExportError] = useState('');
   const [exporting, setExporting] = useState(false);
   const exportLock = React.useRef(false);
   const type = question.type || 'text';
+  // A page imported as it is: the platform does not know its questions, so nothing is analysed.
+  // A page built to SP-Scheme declares its own questions and is analysed as usual.
+  const siteSurvey = Boolean(surveyConfig?.spSite?.convertedFrom);
+  // An advanced custom task (a skill question that is not a built-in preset) is the researcher's own HTML.
+  const customTask = type === 'skillquestion' && !String(question.skillId || '').startsWith('preset_');
+  const presetSkill = type === 'skillquestion' && !customTask ? getPresetSkill(question.skillId) : null;
+  // A custom question or task is recorded as sent and analysed by the researcher.
+  const unanalysedType = siteSurvey || type === 'custom' || customTask;
+  // An AI analysis the researcher generated turns the card back into an analysed one.
+  const aiReady = unanalysedType && Boolean(onSaveAiAnalysis) && !isDisplayOnlyQuestion(question);
+  const aiRecords = useMemo(() => (aiReady ? buildAnalysisRecords(allResponses, question, { site: siteSurvey }) : []), [aiReady, allResponses, question, siteSurvey]);
+  const unanalysed = unanalysedType && !aiAnalysis;
+  // A custom task's own HTML tells the model what the recorded fields mean.
+  const [taskHtml, setTaskHtml] = useState('');
+  useEffect(() => {
+    if (!aiReady || !customTask) return undefined;
+    let cancelled = false;
+    analysisPageHtml(question, surveyConfig).then(html => { if (!cancelled) setTaskHtml(html); });
+    return () => { cancelled = true; };
+  }, [aiReady, customTask, question, surveyConfig]);
+  const pageHtml = customTask ? taskHtml : (surveyConfig?.spSite?.html || '');
+  const zh = isChineseLanguage(language);
+  const typeLabel = customTask ? (zh ? '高级自定义任务' : 'Advanced custom task')
+    : presetSkill ? `${zh ? '交互题' : 'Interactive'} · ${presetSkill.builderLabel || presetSkill.name}` : type;
   const trialUnitCount = answers.length;
-  const participantCount = useMemo(() => new Set((allResponses || [])
-    .filter((row) => expandQuestionAnswerUnits(row, question.name).length > 0)
-    .map((row, i) => row.participant_id || row.id || 'row_' + i)).size, [allResponses, question.name]);
   // Answer rate is per submission; charts/stats use per-trial units in `answers`.
-  const responseCount = (allResponses || []).filter((row) => expandQuestionAnswerUnits(row, question.name).length > 0).length;
-
+  const {
+    participantCount,
+    responseCount
+  } = useMemo(() => {
+    const answered = (allResponses || []).filter(row => expandQuestionAnswerUnits(row, question.name).length > 0);
+    return {
+      responseCount: answered.length,
+      participantCount: new Set(answered.map((row, i) => row.participant_id || row.id || 'row_' + i)).size
+    };
+  }, [allResponses, question.name]);
+  const withAi = body => aiReady
+    ? <AiQuestionAnalysis question={question} records={aiRecords} otherQuestions={question.pageOnly ? (surveyConfig?.spSite?.pageQuestions || []) : (surveyConfig?.pages || []).flatMap(page => page.elements || [])} pageHtml={pageHtml} saved={aiAnalysis} onSave={entry => onSaveAiAnalysis(question.name, entry)}>{body}</AiQuestionAnalysis>
+    : body;
   const renderAnalysis = () => {
-    if (type === 'skillquestion') {
-      return <SkillQuestionAnalysis question={question} answers={answers} allResponses={allResponses} />;
+    if (question.pageOnly) return withAi(null);
+    if (customTask) {
+      if (aiReady) return withAi(<CustomRecordAnalysis question={question} answers={answers} allResponses={allResponses} task hideNotice />);
+      return <CustomRecordAnalysis question={question} answers={answers} allResponses={allResponses} task />;
     }
-    const nativeBody = renderNativeQuestionAnalysisBody(question, answers, allResponses);
+    if (type === 'skillquestion') {
+      return <SkillQuestionAnalysis question={question} answers={answers} allResponses={allResponses} surveyConfig={surveyConfig} />;
+    }
+    if (type === 'mapannotation') {
+      const questions = (surveyConfig?.pages || []).flatMap(page => page.elements || []);
+      return <GeographicEvaluativePanel question={question} responses={allResponses || []} surveyConfig={surveyConfig} questions={questions} />;
+    }
+    if (type === 'custom' || (siteSurvey && !isDisplayOnlyQuestion(question))) {
+      if (aiReady) return withAi(<CustomRecordAnalysis question={question} answers={answers} allResponses={allResponses} site={siteSurvey} hideNotice />);
+      return <CustomRecordAnalysis question={question} answers={answers} allResponses={allResponses} site={siteSurvey} />;
+    }
+    const nativeBody = renderNativeQuestionAnalysisBody(question, answers, allResponses, surveyConfig);
     if (nativeBody) return nativeBody;
     if (isDisplayOnlyQuestion(question) || ['expression', 'image', 'html', 'mediadisplay'].includes(type)) {
-      return (
-        <Typography variant="body2" color="text.secondary">
+      return <Typography variant="body2" color="text.secondary">
           Display-only question — no participant answers are collected.
-        </Typography>
-      );
+        </Typography>;
     }
-    return (
-      <Typography variant="body2" color="text.secondary">
+    return <Typography variant="body2" color="text.secondary">
         Unrecognized or unsupported question type &quot;{type}&quot; — no dedicated analysis view.
         Check CSV export for raw answer data.
-      </Typography>
-    );
+      </Typography>;
   };
-
   const responseRate = pct(responseCount, totalResponses);
   const displayOnly = isDisplayOnlyQuestion(question);
   const canExport = !displayOnly && responseCount > 0;
-
-  return (
-    <Card variant="outlined" sx={{ mb: 2 }}>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          p: 2,
-          cursor: 'pointer',
-          '&:hover': { bgcolor: 'grey.50' }
-        }}
-        onClick={() => setExpanded(v => !v)}
-      >
-        <Box
-          sx={{
-            width: 32,
-            height: 32,
-            borderRadius: '50%',
-            bgcolor: displayOnly ? 'grey.300' : 'primary.main',
-            color: displayOnly ? 'text.secondary' : 'white',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            mr: 1.5,
-            flexShrink: 0,
-            fontSize: displayOnly ? '1rem' : '0.85rem',
-            fontWeight: 'bold'
-          }}
-        >
-          {displayOnly ? <TextFields sx={{ fontSize: 18 }} /> : questionNumber}
+  return <Card variant="outlined" data-site-unanalysed={unanalysed || undefined} sx={{
+    mb: 2,
+    ...(unanalysed ? { bgcolor: 'grey.50', color: 'text.secondary' } : null)
+  }}>
+      <Box sx={{
+      display: 'flex',
+      alignItems: 'center',
+      p: 2,
+      cursor: 'pointer',
+      '&:hover': {
+        bgcolor: 'grey.50'
+      }
+    }} onClick={() => setExpanded(v => !v)}>
+        <Box sx={{
+        width: 32,
+        height: 32,
+        borderRadius: '50%',
+        bgcolor: displayOnly || unanalysed ? 'grey.300' : 'primary.main',
+        color: displayOnly || unanalysed ? 'text.secondary' : 'white',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        mr: 1.5,
+        flexShrink: 0,
+        fontSize: displayOnly ? '1rem' : '0.85rem',
+        fontWeight: 'bold'
+      }}>
+          {displayOnly ? <TextFields sx={{
+          fontSize: 18
+        }} /> : questionNumber}
         </Box>
 
-        <Box sx={{ flexGrow: 1, minWidth: 0 }}>
-          <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 0.3 }}>
+        <Box sx={{
+        flexGrow: 1,
+        minWidth: 0
+      }}>
+          <Typography variant="subtitle2" sx={{
+          fontWeight: 'bold',
+          mb: 0.3
+        }}>
             {question.title || question.name}
           </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Chip
-              icon={typeIcon(type)}
-              label={type}
-              size="small"
-              variant="outlined"
-              sx={{ fontSize: '0.7rem' }}
-            />
-            {question.isAttentionCheck && (
-              <Chip label="Attention check" size="small" color="warning" variant="outlined" sx={{ fontSize: '0.7rem' }} />
-            )}
-            {displayOnly ? (
-              <Typography variant="caption" color="text.secondary">
+          <ConditionWordingSummary question={question} surveyConfig={surveyConfig} responses={allResponses} />
+          <Box sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1
+        }}>
+            <Chip icon={typeIcon(type)} label={typeLabel} size="small" variant="outlined" sx={{
+            fontSize: '0.7rem'
+          }} />
+            {unanalysed && !displayOnly && <Chip label={aiReady ? (isChineseLanguage(language) ? '可生成 AI 分析' : 'AI analysis available') : (isChineseLanguage(language) ? '自行分析' : 'Analyse yourself')} size="small" variant="outlined" sx={{
+            fontSize: '0.7rem'
+          }} />}
+            {aiAnalysis && unanalysedType && <Chip label={isChineseLanguage(language) ? 'AI 分析' : 'AI analysis'} size="small" color="secondary" variant="outlined" sx={{
+            fontSize: '0.7rem'
+          }} />}
+            {question.isAttentionCheck && <Chip label="Attention check" size="small" color="warning" variant="outlined" sx={{
+            fontSize: '0.7rem'
+          }} />}
+            {displayOnly ? <Typography variant="caption" color="text.secondary">
                 Display / instruction
-              </Typography>
-            ) : (
-              <Typography variant="caption" color="text.secondary">
-                {tf(t.resultsCounts, { answered: responseCount, total: totalResponses, rate: responseRate, people: participantCount })}
-                {supportsTrialCount(type) && (
-                  <> · {trialUnitCount} trial ratings</>
-                )}
-              </Typography>
-            )}
+              </Typography> : question.pageOnly ? <Typography variant="caption" color="text.secondary">
+                {isChineseLanguage(language) ? `${aiRecords.length} 份答卷有页面记录` : `${aiRecords.length} submission(s) with page records`}
+              </Typography> : <Typography variant="caption" color="text.secondary">
+                {tf(t.resultsCounts, {
+              answered: responseCount,
+              total: totalResponses,
+              rate: responseRate,
+              people: participantCount
+            })}
+                {supportsTrialCount(type) && <> · {trialUnitCount} trial ratings</>}
+              </Typography>}
           </Box>
         </Box>
 
-        {onExplain && (
-          <Button
-            size="small"
-            variant="outlined"
-            sx={{ mr: 1, flexShrink: 0 }}
-            onClick={(e) => {
-              e.stopPropagation();
-              onExplain(question);
-            }}
-          >
+        {onExplain && !unanalysed && <Button size="small" variant="outlined" sx={{
+        mr: 1,
+        flexShrink: 0
+      }} onClick={e => {
+        e.stopPropagation();
+        onExplain(question);
+      }}>
             {t.resultsExplainQuestion}
-          </Button>
-        )}
+          </Button>}
 
-        {canExport && (
-          <Button
-            size="small"
-            variant="outlined"
-            startIcon={<Download />}
-            sx={{ mr: 1, flexShrink: 0 }}
-            disabled={exporting}
-            onClick={async (e) => {
-              e.stopPropagation();
-              if (exportLock.current) return;
-              exportLock.current = true; setExporting(true); setExportError('');
-              try {
-                await new Promise((resolve) => setTimeout(resolve, 30));
-                downloadQuestionExportZip(question, exportResponses || allResponses, surveyConfig);
-              } catch (err) { setExportError(err.message || 'Export failed'); }
-              finally { exportLock.current = false; setExporting(false); }
-            }}
-          >
+        {canExport && !unanalysedType && <FigureDownloadButton question={question} responses={exportResponses || allResponses} questionNumber={questionNumber} language={language} onError={setExportError} />}
+        {canExport && <Button size="small" variant="outlined" startIcon={<Download />} sx={{
+        mr: 1,
+        flexShrink: 0
+      }} disabled={exporting} onClick={async e => {
+        e.stopPropagation();
+        if (exportLock.current) return;
+        exportLock.current = true;
+        setExporting(true);
+        setExportError('');
+        try {
+          await new Promise(resolve => setTimeout(resolve, 30));
+          let extra = [];
+          if (aiAnalysis) {
+            const records = buildAnalysisRecords(exportResponses || allResponses, question, { site: siteSurvey });
+            const run = await evaluateAnalysis(aiAnalysis, records, runAnalysisInSandbox, { pageHtml });
+            if (run.ok) extra = aiAnalysisExportFiles(question, aiAnalysis, run.error ? run.platformBlocks : run.blocks);
+          }
+          downloadQuestionExportZip(question, exportResponses || allResponses, surveyConfig, extra);
+        } catch (err) {
+          setExportError(err.message || 'Export failed');
+        } finally {
+          exportLock.current = false;
+          setExporting(false);
+        }
+      }}>
             Export
-          </Button>
-        )}
+          </Button>}
 
-        <IconButton size="small" aria-label={`${expanded ? 'Collapse' : 'Expand'} analysis: ${question.name}`} aria-expanded={expanded} sx={{ minWidth: 44, minHeight: 44 }}>
+        <IconButton size="small" aria-label={`${expanded ? 'Collapse' : 'Expand'} analysis: ${question.name}`} aria-expanded={expanded} sx={{
+        minWidth: 44,
+        minHeight: 44
+      }}>
           {expanded ? <ExpandLess /> : <ExpandMore />}
         </IconButton>
       </Box>
 
-      {exporting && <Typography role="status" sx={{ p: 1 }}>{t.resultsPreparingExport}</Typography>}
+      {exporting && <Typography role="status" sx={{
+      p: 1
+    }}>{t.resultsPreparingExport}</Typography>}
       {exportError && <Alert severity="error" onClose={() => setExportError('')}>{exportError}</Alert>}
-      <Collapse in={expanded}>
+      <Collapse in={expanded} mountOnEnter unmountOnExit>
         <Divider />
         <CardContent>
-          {answers.some((a) => a.shown_images?.length > 1) && !['imagepicker', 'mediapicker', 'imageranking', 'mediaranking', 'skillquestion'].includes(type) && (
-            <Alert severity="info" sx={{ mb: 2 }}>{t.resultsGroupExplanation}</Alert>
-          )}
-          <AttentionCheckPassRate question={question} allResponses={allResponses} />
-          {responseCount === 0 && !isDisplayOnlyQuestion(question) ? (
-            <Typography variant="body2" color="text.secondary">No responses for this question yet.</Typography>
-          ) : (
-            renderAnalysis()
-          )}
+          {!unanalysedType && answers.some(a => a.shown_images?.length > 1) && !['imagepicker', 'mediapicker', 'imageranking', 'mediaranking', 'skillquestion'].includes(type) && <Alert severity="info" sx={{
+          mb: 2
+        }}>{t.resultsGroupExplanation}</Alert>}
+          {!unanalysedType && <AttentionCheckPassRate question={question} allResponses={allResponses} />}
+          {responseCount === 0 && !isDisplayOnlyQuestion(question) && !(aiReady && aiRecords.length) ? <Typography variant="body2" color="text.secondary">No responses for this question yet.</Typography> : <>
+              {renderAnalysis()}
+              {responseCount > 0 && !unanalysedType && <PaperMethodsPanel question={question} allResponses={allResponses} surveyConfig={surveyConfig} />}
+            </>}
         </CardContent>
       </Collapse>
-    </Card>
-  );
+    </Card>;
 }
 
 // Wide CSV lives in src/lib/responsesWideExport.js
@@ -2491,17 +2648,12 @@ export function QuestionCard({ question, answers, totalResponses, questionNumber
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 function readExcludeFlaggedFromConfig(surveyConfig) {
-  return typeof surveyConfig?.excludeFlaggedFromAnalysis === 'boolean'
-    ? surveyConfig.excludeFlaggedFromAnalysis
-    : false; // default OFF for new projects
+  return typeof surveyConfig?.excludeFlaggedFromAnalysis === 'boolean' ? surveyConfig.excludeFlaggedFromAnalysis : false; // default OFF for new projects
 }
 
 function readIncludePracticeFromConfig(surveyConfig) {
-  return typeof surveyConfig?.includeResearcherPractice === 'boolean'
-    ? surveyConfig.includeResearcherPractice
-    : false;
+  return typeof surveyConfig?.includeResearcherPractice === 'boolean' ? surveyConfig.includeResearcherPractice : false;
 }
-
 export default function ResultsAnalysis({
   currentProject,
   surveyConfig: currentSurveyConfig,
@@ -2510,12 +2662,29 @@ export default function ResultsAnalysis({
   onScopeChange,
   onAnalyzeCurrent,
   onExplainQuestion,
-  analysisBusy = false,
+  onProjectUpdated,
+  analysisBusy = false
 }) {
-  const { t, language } = useRegion();
+  const {
+    t,
+    language
+  } = useRegion();
   const [responses, setResponses] = useState([]);
+  // AI analyses the researcher generated, saved in the project's metadata.
+  const [savedAnalyses, setSavedAnalyses] = useState(() => readSavedAnalyses(currentProject));
+  useEffect(() => {
+    setSavedAnalyses(readSavedAnalyses(currentProject));
+  }, [currentProject]);
+  const handleSaveAiAnalysis = useCallback(async (questionName, entry) => {
+    const projectId = currentProject?.id;
+    const metadata = await saveQuestionAnalysis(projectId, questionName, entry);
+    setSavedAnalyses(readSavedAnalyses({ metadata }));
+    onProjectUpdated?.({ metadata });
+  }, [currentProject?.id, onProjectUpdated]);
   const [loading, setLoading] = useState(false);
   const [loadProgress, setLoadProgress] = useState(null);
+  const [preparedCards, setPreparedCards] = useState(null);
+  const [analysisProgress, setAnalysisProgress] = useState(null);
   const fetchSequence = React.useRef(0);
   const [error, setError] = useState(null);
   const [errorMeta, setErrorMeta] = useState(null);
@@ -2527,8 +2696,7 @@ export default function ResultsAnalysis({
   const [sessionFilter, setSessionFilter] = useState('');
   const [requestedRevision, setRevisionFilter] = useState('');
   const revisionFilter = recordedRevisionSelection(responses, requestedRevision);
-  const surveyConfig = useMemo(() => recordedSurveyConfig(responses, currentSurveyConfig, revisionFilter),
-    [revisionFilter, responses, currentSurveyConfig]);
+  const surveyConfig = useMemo(() => recordedSurveyConfig(responses, currentSurveyConfig, revisionFilter), [revisionFilter, responses, currentSurveyConfig]);
   const [recordPage, setRecordPage] = useState(0);
   const [recordsPerPage, setRecordsPerPage] = useState(25);
   const [includePractice, setIncludePractice] = useState(() => readIncludePracticeFromConfig(surveyConfig));
@@ -2542,88 +2710,136 @@ export default function ResultsAnalysis({
   const [perceptionOpen, setPerceptionOpen] = useState(false);
   const [dataSource, setDataSource] = useState('human');
   const [siliconRunId, setSiliconRunId] = useState('');
+  const [siliconAgreementFiles, setSiliconAgreementFiles] = useState([]);
+  const [demographicFilters, setDemographicFilters] = useState([]);
   const [savedReport, setSavedReport] = useState(null);
+  const [reportError, setReportError] = useState(null);
+  const reportProjectRef = useRef(currentProject?.id);
+  reportProjectRef.current = currentProject?.id;
   const compactLayout = useMediaQuery('(max-width:600px)');
   const timezone = defaultAnalysisTimezone();
-
   useEffect(() => {
     let prefs = {};
-    try { prefs = JSON.parse(localStorage.getItem('sp-analysis-prefs:' + currentProject?.id) || '{}'); } catch { /* storage unavailable */ }
+    try {
+      prefs = JSON.parse(localStorage.getItem('sp-analysis-prefs:' + currentProject?.id) || '{}');
+    } catch {/* storage unavailable */}
     setExcludeFlagged(prefs.excludeFlagged ?? readExcludeFlaggedFromConfig(surveyConfig));
     setIncludePractice(prefs.includePractice ?? readIncludePracticeFromConfig(surveyConfig));
-    setDateFrom(''); setDateTo(''); setSessionFilter(''); setRevisionFilter(''); setSearchText(''); setRecordPage(0);
+    setDateFrom('');
+    setDateTo('');
+    setSessionFilter('');
+    setRevisionFilter('');
+    setSearchText('');
+    setRecordPage(0);
     setView('overview');
     setSelectedQuestionName('');
     setPerceptionOpen(false);
     setDataSource('human');
     setSiliconRunId('');
     setSavedReport(readResultsReport(currentProject?.id));
+    setReportError(null);
   }, [currentProject?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const saveAnalysisPreference = (key, value) => {
     try {
       const storageKey = 'sp-analysis-prefs:' + currentProject?.id;
       const previous = JSON.parse(localStorage.getItem(storageKey) || '{}');
-      localStorage.setItem(storageKey, JSON.stringify({ ...previous, [key]: value }));
-    } catch { /* preference remains usable for this session */ }
+      localStorage.setItem(storageKey, JSON.stringify({
+        ...previous,
+        [key]: value
+      }));
+    } catch {/* preference remains usable for this session */}
   };
-  const handleExcludeFlaggedChange = (checked) => {
+  const handleExcludeFlaggedChange = checked => {
     setExcludeFlagged(checked);
     saveAnalysisPreference('excludeFlagged', checked);
   };
-  const handleIncludePracticeChange = (checked) => {
+  const handleIncludePracticeChange = checked => {
     setIncludePractice(checked);
     saveAnalysisPreference('includePractice', checked);
   };
   const resetFilters = () => {
-    setDateFrom(''); setDateTo(''); setSessionFilter(''); setRevisionFilter(''); setSearchText(''); setRecordPage(0);
-    handleExcludeFlaggedChange(false); handleIncludePracticeChange(true);
+    setDateFrom('');
+    setDateTo('');
+    setSessionFilter('');
+    setRevisionFilter('');
+    setSearchText('');
+    setRecordPage(0);
+    handleExcludeFlaggedChange(false);
+    handleIncludePracticeChange(true);
   };
   const [detailTarget, setDetailTarget] = useState(null);
   const [exporting, setExporting] = useState(false);
   const [exportError, setExportError] = useState('');
   const exportLock = React.useRef(false);
-  const runExport = async (download) => {
+  const runExport = async download => {
     if (exportLock.current) return;
     exportLock.current = true;
-    setExporting(true); setExportError('');
+    setExporting(true);
+    setExportError('');
     try {
-      await new Promise((resolve) => setTimeout(resolve, 30));
+      await new Promise(resolve => setTimeout(resolve, 30));
       await download();
-    } catch (err) { setExportError(err.message || 'Export failed. Please retry.'); }
-    finally { exportLock.current = false; setExporting(false); }
+    } catch (err) {
+      setExportError(err.message || 'Export failed. Please retry.');
+    } finally {
+      exportLock.current = false;
+      setExporting(false);
+    }
   };
-
+  const loadAbort = React.useRef(null);
   const fetchResponses = useCallback(async () => {
+    loadAbort.current?.abort();
+    const abort = new AbortController();
+    loadAbort.current = abort;
     const sequence = ++fetchSequence.current;
     setResponses([]);
     setDetailTarget(null);
     setDeleteTarget(null);
     setLoading(true);
-    setLoadProgress(null);
+    setLoadProgress({ loaded: 0, total: null, page: 0 });
     setError(null);
     setErrorMeta(null);
     setLoadSkipped([]);
     try {
       if ((adminMode || platformSupabase) && currentProject?.id) {
-        const all = await readAllResponsePages(async (offset, after) => {
-          if (adminMode) return fetchAdminResponsePage(currentProject.id, 0, after);
-          let lastError = null;
-          for (const limit of [50, 10, 1]) {
-            let query = platformSupabase
-              .from('survey_responses').select('*').eq('project_id', currentProject.id)
-              .order('created_at', { ascending: false, nullsFirst: false }).order('id', { ascending: false })
-              .limit(limit);
-            if (after) query = query.or(responseCursorFilter(after));
-            const { data, error: sbError } = await query;
-            if (!sbError) return data || [];
-            lastError = sbError;
+        const loadSession = createResponseLoadSession();
+        let pages = 0;
+        let committed = 0;
+        const publish = (loaded, page) => {
+          if (sequence !== fetchSequence.current) return;
+          setLoadProgress({
+            loaded,
+            total: Number.isFinite(loadSession.total) ? loadSession.total : null,
+            page
+          });
+        };
+        let countStarted = false;
+        const startCount = () => {
+          if (countStarted || adminMode || abort.signal.aborted) return;
+          countStarted = true;
+          countOwnerResponses(currentProject.id, { signal: abort.signal }).then(total => {
+            if (!Number.isFinite(total)) return;
+            loadSession.total = total;
+            publish(committed, pages);
+          }).catch(() => {});
+        };
+        const all = await readAllResponsePages(async (offset, after) => adminMode ? fetchAdminResponsePage(currentProject.id, 0, after, loadSession, { signal: abort.signal }) : fetchOwnerResponsePage(currentProject.id, after, loadSession, {
+          onProgress: loaded => {
+            publish(committed + loaded, pages + 1);
+            if (loaded > 0) startCount();
+          },
+          signal: abort.signal,
+        }), {
+          cancelled: () => sequence !== fetchSequence.current,
+          onProgress: loaded => {
+            committed = loaded;
+            publish(loaded, ++pages);
+            if (loaded > 0) startCount();
           }
-          throw lastError;
-        }, { cancelled: () => sequence !== fetchSequence.current,
-          onProgress: (loaded) => setLoadProgress({ loaded, page: Math.ceil(loaded / 50) }) });
-        const skipped = all.filter((row) => row?._unreadable);
-        setResponses(all.filter((row) => !row?._unreadable));
+        });
+        const skipped = all.filter(row => row?._unreadable);
+        setResponses(all.filter(row => !row?._unreadable));
         setLoadSkipped(skipped);
         setLoadSource('supabase');
       } else if (currentProject?.id) {
@@ -2639,23 +2855,27 @@ export default function ResultsAnalysis({
         }
       }
     } catch (err) {
-      if (sequence !== fetchSequence.current) return;
+      if (sequence !== fetchSequence.current || err?.name === 'AbortError') return;
       setError(`Failed to load responses: ${err.message}`);
       setErrorMeta({
         requestId: err.requestId || null,
         stage: err.stage || null,
-        code: err.code || null,
+        code: err.code || null
       });
     } finally {
-      if (sequence === fetchSequence.current) { setLoading(false); setLoadProgress(null); }
+      if (sequence === fetchSequence.current) {
+        setLoading(false);
+        setLoadProgress(null);
+      }
     }
   }, [currentProject?.id, adminMode]);
-
   useEffect(() => {
     if (currentProject?.id) fetchResponses();
-    return () => { fetchSequence.current += 1; };
+    return () => {
+      fetchSequence.current += 1;
+      loadAbort.current?.abort();
+    };
   }, [currentProject?.id, fetchResponses]);
-
   useEffect(() => {
     if (dataSource !== 'silicon' || !siliconRunId || !currentProject?.id || adminMode) return undefined;
     let cancelled = false;
@@ -2665,10 +2885,15 @@ export default function ResultsAnalysis({
       setResponses((json.responses || []).map((row) => ({
         ...row,
         source: 'silicon',
-        survey_metadata: { ...(row.survey_metadata || {}), silicon_run_id: siliconRunId },
+        survey_metadata: {
+          ...(row.survey_metadata || {}),
+          silicon_run_id: siliconRunId
+        }
       })));
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [adminMode, currentProject?.id, dataSource, siliconRunId]);
 
   // Flatten all questions from survey pages
@@ -2676,14 +2901,7 @@ export default function ResultsAnalysis({
     if (!surveyConfig?.pages) return [];
     return surveyConfig.pages.flatMap(page => page.elements || []);
   }, [surveyConfig]);
-
-  const answerableQuestions = useMemo(
-    () => allQuestions.filter(isAnswerableQuestion),
-    [allQuestions],
-  );
-
-  const displayOnlyQuestionCount = allQuestions.length - answerableQuestions.length;
-
+  const answerableQuestions = useMemo(() => allQuestions.filter(isAnswerableQuestion), [allQuestions]);
   const answerableNumberByName = useMemo(() => {
     const map = new Map();
     let n = 0;
@@ -2695,9 +2913,8 @@ export default function ResultsAnalysis({
     }
     return map;
   }, [allQuestions]);
-
   const dateFilteredResponses = useMemo(() => {
-    return responses.filter((row) => {
+    return responses.filter(row => {
       if (currentProject?.id && row.project_id && row.project_id !== currentProject.id) return false;
       if (!responseWithinDateRange(row, dateFrom, dateTo)) return false;
       if (revisionFilter && (row.survey_metadata?.survey_revision || 'historical_unknown') !== revisionFilter) return false;
@@ -2711,7 +2928,6 @@ export default function ResultsAnalysis({
       return true;
     });
   }, [responses, currentProject?.id, dataSource, dateFrom, dateTo, sessionFilter, revisionFilter, includePractice]);
-
   const handleDeleteResponse = async () => {
     if (adminMode || !deleteTarget) return;
     setDeleting(true);
@@ -2720,9 +2936,9 @@ export default function ResultsAnalysis({
       await deleteSurveyResponse({
         id: deleteTarget.id,
         filename: deleteTarget._filename,
-        projectId: currentProject?.id,
+        projectId: currentProject?.id
       });
-      setResponses((prev) => prev.filter((r) => responseRecordKey(r) !== responseRecordKey(deleteTarget)));
+      setResponses(prev => prev.filter(r => responseRecordKey(r) !== responseRecordKey(deleteTarget)));
       setDeleteTarget(null);
     } catch (err) {
       setDeleteError(err.message || 'Failed to delete response');
@@ -2730,8 +2946,7 @@ export default function ResultsAnalysis({
       setDeleting(false);
     }
   };
-
-  const formatResponseTime = (row) => {
+  const formatResponseTime = row => {
     const ts = row.created_at || row.survey_metadata?.completion_time || row.saved_at;
     if (!ts) return '—';
     try {
@@ -2740,53 +2955,58 @@ export default function ResultsAnalysis({
       return ts;
     }
   };
-
-  const qualitySummary = useMemo(
-    () => summarizeQuality(dateFilteredResponses, surveyConfig || {}),
-    [dateFilteredResponses, surveyConfig],
-  );
-
+  const qualitySummary = useMemo(() => summarizeQuality(dateFilteredResponses, surveyConfig || {}), [dateFilteredResponses, surveyConfig]);
   const filteredResponses = useMemo(() => {
-    if (!excludeFlagged || !surveyConfig) return dateFilteredResponses;
-    return dateFilteredResponses.filter((row) => {
-      const key = responseRecordKey(row);
-      return !(qualitySummary.perResponse[key]?.length);
+    return dateFilteredResponses.filter(row => {
+      if (excludeFlagged && surveyConfig) {
+        const key = responseRecordKey(row);
+        if (qualitySummary.perResponse[key]?.length) return false;
+      }
+      return rowMatchesDemographicFilters(row, demographicFilters);
     });
-  }, [dateFilteredResponses, excludeFlagged, surveyConfig, qualitySummary]);
-
-  const revisionOptions = [...new Set(responses.map((r) => r.survey_metadata?.survey_revision || 'historical_unknown'))];
-  useEffect(() => { setRecordPage(0); }, [dateFrom, dateTo, sessionFilter, revisionFilter, includePractice, dateFilteredResponses.length]);
+  }, [dateFilteredResponses, excludeFlagged, surveyConfig, qualitySummary, demographicFilters]);
+  const mapSpec = useMemo(() => {
+    const rec = (surveyConfig?.spAnalysisRecommendation?.items || []).find(item => item.method === 'geographic_evaluative_map') || {};
+    const pair = resolveEvaluativeMapPair(allQuestions, rec);
+    const liked = pair.positive;
+    const area = listStudyAreas(liked)[0] || listStudyAreas(pair.negative)[0];
+    if (!liked || !area) return null;
+    return {
+      likedQuestion: liked.name,
+      dislikedQuestion: pair.mode === 'intensity' ? undefined : pair.negative?.name,
+      studyArea: area,
+      cellMeters: 250,
+      mode: pair.mode === 'intensity' ? 'intensity' : 'paired'
+    };
+  }, [allQuestions, surveyConfig]);
+  const mapEntries = useMemo(() => mapSpec ? [{ id: 'all', rows: filteredResponses, spec: mapSpec }] : [], [filteredResponses, mapSpec]);
+  const { maps: overviewMaps, progress: mapProgress } = useGeographicEvaluativeMaps(mapEntries);
+  const mapSample = overviewMaps?.all || null;
+  const revisionOptions = [...new Set(responses.map(r => r.survey_metadata?.survey_revision || 'historical_unknown'))];
+  useEffect(() => {
+    setRecordPage(0);
+  }, [dateFrom, dateTo, sessionFilter, revisionFilter, includePractice, dateFilteredResponses.length]);
   const sessionOptions = useMemo(() => {
     const ids = new Set();
-    responses.forEach((r) => {
+    responses.forEach(r => {
       if (r.survey_metadata?.session_id) ids.add(r.survey_metadata.session_id);
     });
     return [...ids];
   }, [responses]);
-
-  const practiceCount = useMemo(
-    () => responses.filter((r) => r.survey_metadata?.practice_mode).length,
-    [responses],
-  );
+  const practiceCount = useMemo(() => responses.filter(r => r.survey_metadata?.practice_mode).length, [responses]);
 
   // Filter questions by search
   const filteredQuestions = useMemo(() => {
     if (!searchText.trim()) return allQuestions;
     const lower = searchText.toLowerCase();
-    return allQuestions.filter(
-      q =>
-        (q.title || '').toLowerCase().includes(lower) ||
-        (q.name || '').toLowerCase().includes(lower)
-    );
+    return allQuestions.filter(q => (q.title || '').toLowerCase().includes(lower) || (q.name || '').toLowerCase().includes(lower));
   }, [allQuestions, searchText]);
 
   // Pre-collect answers + per-question denominators (practice only inflates that question)
   const questionAnswers = useMemo(() => {
     const map = {};
     for (const q of allQuestions) {
-      map[q.name] = q.type === 'mediadisplay'
-        ? collectShownMedia(q.name, filteredResponses)
-        : collectAnswers(q.name, filteredResponses);
+      map[q.name] = q.type === 'mediadisplay' ? collectShownMedia(q.name, filteredResponses) : collectAnswers(q.name, filteredResponses);
     }
     return map;
   }, [allQuestions, filteredResponses]);
@@ -2795,30 +3015,24 @@ export default function ResultsAnalysis({
   const totalResponses = filteredResponses.length;
   const sessionStats = useMemo(() => {
     const sessions = {};
-    filteredResponses.forEach((r) => {
+    filteredResponses.forEach(r => {
       const sid = r.survey_metadata?.session_id;
       if (!sid) return;
-      if (!sessions[sid]) sessions[sid] = { count: 0, participant: r.participant_id };
+      if (!sessions[sid]) sessions[sid] = {
+        count: 0,
+        participant: r.participant_id
+      };
       sessions[sid].count += 1;
     });
     return Object.entries(sessions);
   }, [filteredResponses]);
-  const answeredQuestions = answerableQuestions.filter(
-    (q) => (questionAnswers[q.name]?.length || 0) > 0,
-  ).length;
-
+  const answeredQuestions = answerableQuestions.filter(q => (questionAnswers[q.name]?.length || 0) > 0).length;
   const dateRange = useMemo(() => {
     if (!filteredResponses.length) return null;
-    const dates = filteredResponses
-      .map(r => r.created_at || r.survey_metadata?.completion_time)
-      .filter(Boolean)
-      .map(d => new Date(d))
-      .sort((a, b) => a - b);
+    const dates = filteredResponses.map(r => r.created_at || r.survey_metadata?.completion_time).filter(Boolean).map(d => new Date(d)).sort((a, b) => a - b);
     if (!dates.length) return null;
     const fmt = d => d.toLocaleDateString();
-    return dates.length === 1
-      ? fmt(dates[0])
-      : `${fmt(dates[0])} – ${fmt(dates[dates.length - 1])}`;
+    return dates.length === 1 ? fmt(dates[0]) : `${fmt(dates[0])} – ${fmt(dates[dates.length - 1])}`;
   }, [filteredResponses]);
 
   // Build name → URL lookup from preloadedImages + media URLs stored in responses
@@ -2834,7 +3048,6 @@ export default function ResultsAnalysis({
     }
     return map;
   }, [currentProject?.preloadedImages, filteredResponses]);
-
   const analysisScope = useMemo(() => createAnalysisScope({
     projectId: currentProject?.id,
     dataSource,
@@ -2846,399 +3059,504 @@ export default function ResultsAnalysis({
     sessionId: sessionFilter || null,
     includePractice: dataSource === 'practice' ? true : includePractice,
     excludeFlagged,
-  }), [currentProject?.id, dataSource, siliconRunId, revisionFilter, dateFrom, dateTo, timezone, sessionFilter, includePractice, excludeFlagged]);
-
+    demographicFilters
+  }), [currentProject?.id, dataSource, siliconRunId, revisionFilter, dateFrom, dateTo, timezone, sessionFilter, includePractice, excludeFlagged, demographicFilters]);
+  // SP-Scheme pages: say how much of the data the platform can analyse.
+  const siteMatch = useMemo(() => (surveyConfig?.spSite?.html ? siteMatchLevel(surveyConfig) : null), [surveyConfig]);
+  const siteConverted = Boolean(surveyConfig?.spSite?.convertedFrom);
+  // A page imported as it is declares no questions: the overview shows a dash
+  // (older imports may carry the question names a model once saw on it).
+  const sitePageQuestions = siteConverted && !answerableQuestions.length ? (Array.isArray(surveyConfig?.spSite?.pageQuestions) ? surveyConfig.spSite.pageQuestions : []) : null;
+  // A page imported as it is has no question cards: the page as a whole gets
+  // one (older imports: each question a model once saw), analysed from the page records.
+  const sitePageCards = useMemo(() => {
+    if (!siteConverted || answerableQuestions.length) return [];
+    const seen = Array.isArray(surveyConfig?.spSite?.pageQuestions) ? surveyConfig.spSite.pageQuestions.filter(q => q?.name) : [];
+    const list = seen.length ? seen : [{ name: 'page', title: isChineseLanguage(language) ? '整份页面记录' : 'All page records', type: '' }];
+    return list.map(q => ({ ...q, name: `__page__${q.name}`, pageName: q.name, type: q.type || 'custom', pageOnly: true }));
+  }, [siteConverted, answerableQuestions.length, surveyConfig, language]);
+  const siteCapturedCount = useMemo(() => (responses || []).reduce((n, row) => {
+    const list = row?.responses?.[SP_SITE_REQUESTS_KEY];
+    return n + (Array.isArray(list) ? list.length : Number(row?.survey_metadata?.sp_site?.captured_requests) || 0);
+  }, 0), [responses]);
   const workbenchOverview = useMemo(() => computeResultsOverview({
     scope: analysisScope,
     rows: filteredResponses,
     surveyConfig,
-    qualitySummary,
+    qualitySummary
   }), [analysisScope, filteredResponses, surveyConfig, qualitySummary]);
-
   useEffect(() => {
     onScopeChange?.(analysisScope, workbenchOverview);
   }, [analysisScope, workbenchOverview, onScopeChange]);
-
   const reportState = reportStaleness(savedReport, analysisScope, workbenchOverview.scope?.snapshotId);
-
-  const handleAnalyze = () => {
-    onAnalyzeCurrent?.({
-      scope: workbenchOverview.scope || analysisScope,
-      overview: workbenchOverview,
-      onSaved: (report) => {
-        const next = writeResultsReport(currentProject?.id, createResultsReport({
-          scope: workbenchOverview.scope,
-          overview: workbenchOverview,
-          ...(report || {}),
-        }));
-        setSavedReport(next);
-      },
-    });
+  const handleAnalyze = async () => {
+    const projectId = currentProject?.id;
+    setReportError(null);
+    try {
+      await onAnalyzeCurrent?.({
+        scope: workbenchOverview.scope || analysisScope,
+        overview: workbenchOverview,
+        onSaved: report => {
+          if (!report || reportProjectRef.current !== projectId) return;
+          try {
+            const next = writeResultsReport(projectId, createResultsReport({
+              scope: workbenchOverview.scope,
+              overview: workbenchOverview,
+              ...report
+            }));
+            if (next) setSavedReport(next);
+          } catch {
+            setReportError(t.resultsReportSaveError);
+          }
+        }
+      });
+    } catch {
+      if (reportProjectRef.current === projectId) setReportError(t.resultsReportSaveError);
+    }
   };
-
-  const handleExplainQuestion = (question) => {
+  const handleDeleteReport = () => {
+    try {
+      deleteResultsReport(currentProject?.id);
+      setSavedReport(null);
+      setReportError(null);
+    } catch {
+      setReportError(t.resultsReportDeleteError);
+    }
+  };
+  const handleExplainQuestion = question => {
     setSelectedQuestionName(question?.name || '');
     setView('questions');
     onExplainQuestion?.({
-      scope: { ...analysisScope, questionName: question?.name || selectedQuestionName },
+      scope: {
+        ...analysisScope,
+        questionName: question?.name || selectedQuestionName
+      },
       question,
-      overview: workbenchOverview,
+      overview: workbenchOverview
     });
   };
-
-  const selectedQuestion = allQuestions.find((q) => q.name === selectedQuestionName) || filteredQuestions[0] || null;
-
-  return (
-    <ImageResolverContext.Provider value={imageNameToUrl}>
+  const selectedQuestion = allQuestions.find(q => q.name === selectedQuestionName) || filteredQuestions[0] || null;
+  const heavyQuestionPrep = view === 'questions' && !loading && filteredResponses.length * Math.max(allQuestions.length, 1) > 2500;
+  const questionCardProps = useMemo(() => {
+    const map = new Map();
+    if (view !== 'questions' || loading || heavyQuestionPrep) return map;
+    for (const question of allQuestions) {
+      map.set(question.name, buildQuestionCardProps(question, filteredResponses, {
+        questionNumber: answerableNumberByName.get(question.name) ?? null,
+        surveyConfig,
+        exportResponses: filteredResponses
+      }));
+    }
+    return map;
+  }, [view, loading, heavyQuestionPrep, allQuestions, filteredResponses, answerableNumberByName, surveyConfig]);
+  useEffect(() => {
+    if (!heavyQuestionPrep) {
+      setPreparedCards(null);
+      setAnalysisProgress(null);
+      return undefined;
+    }
+    let cancelled = false;
+    let index = 0;
+    const map = new Map();
+    const total = allQuestions.length;
+    const tick = () => {
+      if (cancelled) return;
+      const started = performance.now();
+      while (index < total && performance.now() - started < 24) {
+        const question = allQuestions[index];
+        map.set(question.name, buildQuestionCardProps(question, filteredResponses, {
+          questionNumber: answerableNumberByName.get(question.name) ?? null,
+          surveyConfig,
+          exportResponses: filteredResponses
+        }));
+        index += 1;
+      }
+      if (index < total) {
+        setAnalysisProgress({ loaded: index, total });
+        window.setTimeout(tick, 0);
+        return;
+      }
+      setPreparedCards(map);
+      setAnalysisProgress(null);
+    };
+    setPreparedCards(null);
+    setAnalysisProgress({ loaded: 0, total: allQuestions.length });
+    const timer = window.setTimeout(tick, 0);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+    };
+  }, [heavyQuestionPrep, allQuestions, filteredResponses, answerableNumberByName, surveyConfig]);
+  const readyQuestionCards = heavyQuestionPrep ? preparedCards : questionCardProps;
+  const exportBlocked = exporting || loading || !filteredResponses.length;
+  const buildAiAnalysisFiles = async () => {
+    const files = [];
+    const questions = [...allQuestions, ...sitePageCards];
+    for (const question of questions) {
+      const saved = savedAnalyses[question.name];
+      if (!saved) continue;
+      const records = buildAnalysisRecords(filteredResponses, question, { site: siteConverted });
+      if (!records.length) continue;
+      const run = await evaluateAnalysis(saved, records, runAnalysisInSandbox, { pageHtml: await analysisPageHtml(question, surveyConfig) });
+      if (run.ok) files.push(...aiAnalysisExportFiles(question, saved, run.error ? run.platformBlocks : run.blocks));
+    }
+    return files;
+  };
+  const [datasetOpen, setDatasetOpen] = useState(false);
+  // Facts for the journal-style Methods draft in the Cite dialog (computed only when that tab opens).
+  const getMethodsFacts = useCallback(() => {
+    if (!surveyConfig || siteConverted) throw new Error('No survey to describe');
+    let stimuli = [];
+    try { stimuli = collectShownStimuli(answerableQuestions, filteredResponses, surveyConfig); } catch { stimuli = []; }
+    return methodsFacts({
+      surveyConfig, responses: filteredResponses, allResponses: dateFilteredResponses, excludeFlagged, stimuli,
+      templateMeta: currentProject?.templateMeta || null,
+    });
+  }, [surveyConfig, siteConverted, answerableQuestions, filteredResponses, dateFilteredResponses, excludeFlagged, currentProject]);
+  const exportFilters = () => ({
+    date_from: dateFrom || null,
+    date_to: dateTo || null,
+    session_id: sessionFilter || null,
+    survey_revision: revisionFilter || null,
+    include_practice: includePractice,
+    exclude_flagged: excludeFlagged,
+    data_source: dataSource
+  });
+  // Citable dataset package: the full export plus README, license, citation
+  // and stimulus manifest. The form is saved with the project for next time.
+  const buildDatasetPackage = async (meta, onStep) => {
+    try {
+      const metadata = await saveDatasetRelease(currentProject?.id, meta);
+      onProjectUpdated?.({ metadata });
+    } catch {
+      // Saving the form is a convenience; the package does not depend on it.
+    }
+    let stimulusRows = null;
+    let stimulusFiles = [];
+    if (meta.includeImages) {
+      const stimuli = collectStimuli(allQuestions, filteredResponses, surveyConfig);
+      const resolveUrl = source => /^(https?:|blob:|data:)/.test(source) ? source : imageNameToUrl.get(source) || imageNameToUrl.get(mediaIdentityKey(source)) || '';
+      const fetched = await fetchStimulusFiles(stimuli, {
+        resolveUrl,
+        onProgress: (done, total) => onStep(uiPair(language, `Downloading images ${done}/${total}…`, `正在下载图片 ${done}/${total}…`))
+      });
+      stimulusRows = fetched.rows;
+      stimulusFiles = fetched.files;
+    }
+    onStep(uiPair(language, 'Building the package…', '正在打包…'));
+    await new Promise(resolve => setTimeout(resolve, 30));
+    return downloadDatasetPackage({
+      meta,
+      project: currentProject,
+      surveyConfig,
+      questions: allQuestions,
+      filteredResponses,
+      dateFilteredResponses,
+      filters: exportFilters(),
+      excludeFlagged,
+      report: savedReport || null,
+      aiAnalysisFiles: await buildAiAnalysisFiles(),
+      siteConverted,
+      stimulusRows,
+      stimulusFiles
+    });
+  };
+  const datasetItem = {
+    id: 'dataset',
+    label: uiPair(language, 'Citable dataset package (ZIP)…', '可引用的数据集包（ZIP）…'),
+    disabled: exportBlocked || !surveyConfig,
+    onClick: () => setDatasetOpen(true)
+  };
+  // Two choices only: the answers table, or everything in one ZIP. An uploaded
+  // SP-Scheme page is not analysed, so it gets a single ZIP of its answers.
+  const exportItems = siteConverted ? [{
+    id: 'site',
+    label: t.resultsExportSiteAnswers,
+    disabled: exportBlocked,
+    onClick: () => runExport(async () => downloadSiteResultsZip({
+      project: currentProject,
+      filteredResponses,
+      wideCsv: buildResponsesWideCsv(filteredResponses, allQuestions, surveyConfig),
+      aiAnalysisFiles: await buildAiAnalysisFiles()
+    }))
+  }, datasetItem] : [{
+    id: 'csv',
+    label: t.resultsExportTable,
+    disabled: exportBlocked,
+    onClick: () => runExport(() => downloadResponsesWideCsv(filteredResponses, allQuestions, surveyConfig))
+  }, {
+    id: 'bundle',
+    label: t.resultsExportBundle,
+    disabled: exportBlocked || !surveyConfig,
+    onClick: () => runExport(async () => {
+      const wideCsv = buildResponsesWideCsv(filteredResponses, allQuestions, surveyConfig);
+      const aiAnalysisFiles = await buildAiAnalysisFiles();
+      downloadResultsExportZip({
+        aiAnalysisFiles,
+        figureFiles: figureSvgFiles(figuresForSurvey(allQuestions, filteredResponses, { numberByName: answerableNumberByName }), { projectName: currentProject?.name || '' }),
+        siliconAgreementFiles: dataSource === 'human' ? siliconAgreementFiles : [],
+        project: currentProject,
+        surveyConfig,
+        questions: allQuestions,
+        filteredResponses,
+        dateFilteredResponses,
+        excludeFlagged,
+        wideCsv,
+        report: savedReport || null,
+        filters: exportFilters()
+      });
+    })
+  }, {
+    id: 'figures',
+    label: uiPair(language, 'All figures (SVG + PNG, ZIP)', '全部论文图（SVG + PNG，ZIP）'),
+    disabled: exportBlocked || !surveyConfig,
+    onClick: () => runExport(async () => {
+      const figures = figuresForSurvey(allQuestions, filteredResponses, { numberByName: answerableNumberByName });
+      if (!figures.length) throw new Error(uiPair(language, 'No question in this survey has a figure to export.', '这份问卷没有可以导出的图。'));
+      const folder = `figures_${currentProject?.id || 'survey'}`;
+      const files = await figureZipFiles(figures, { png: true, dir: folder, projectName: currentProject?.name || '' });
+      downloadZip(`${folder}.zip`, files);
+    })
+  }, datasetItem];
+  return <ImageResolverContext.Provider value={imageNameToUrl}>
     <Box>
-      <AdminPageHeader
-        icon={<Assessment />}
-        title={t.resultsTitle}
-        description={(
-          <>
-            {t.resultsDescriptionPrefix}{' '}
-            <strong>{currentProject?.name}</strong>.
-          </>
-        )}
-        actions={(
-          <>
-          <Tooltip title={t.resultsRefresh}>
-            <IconButton onClick={fetchResponses} disabled={loading} color="primary">
-              <Refresh />
-            </IconButton>
-          </Tooltip>
-          <ResultsToolbar
-            t={t}
-            onOpenFilters={() => setFiltersOpen(true)}
-            onAnalyze={handleAnalyze}
-            analyzeDisabled={analysisBusy || loading || !filteredResponses.length}
-            analyzeBusy={analysisBusy}
-            exportItems={[
-              {
-                id: 'report',
-                label: t.resultsExportReport,
-                disabled: !savedReport,
-                onClick: () => downloadTextFile(JSON.stringify(savedReport, null, 2), `results_report_${currentProject?.id || 'survey'}.json`),
-              },
-              {
-                id: 'summary',
-                label: t.resultsExportSummary,
-                disabled: exporting || loading || !filteredResponses.length,
-                onClick: () => runExport(() => downloadResponsesWideCsv(filteredResponses, allQuestions, surveyConfig)),
-              },
-              {
-                id: 'raw',
-                label: t.resultsExportRaw,
-                disabled: exporting || loading || !filteredResponses.length,
-                onClick: () => runExport(() => downloadResponsesWideCsv(filteredResponses, allQuestions, surveyConfig)),
-              },
-              {
-                id: 'bundle',
-                label: t.resultsExportBundle,
-                disabled: exporting || loading || !filteredResponses.length || !surveyConfig,
-                onClick: () => runExport(() => {
-                  const wideCsv = buildResponsesWideCsv(filteredResponses, allQuestions, surveyConfig);
-                  downloadResultsExportZip({
-                    project: currentProject,
-                    surveyConfig,
-                    questions: allQuestions,
-                    filteredResponses,
-                    dateFilteredResponses,
-                    excludeFlagged,
-                    wideCsv,
-                    filters: {
-                      date_from: dateFrom || null,
-                      date_to: dateTo || null,
-                      session_id: sessionFilter || null,
-                      survey_revision: revisionFilter || null,
-                      include_practice: includePractice,
-                      exclude_flagged: excludeFlagged,
-                      data_source: dataSource,
-                    },
-                  });
-                }),
-              },
-              {
-                id: 'methods',
-                label: t.resultsExportMethods,
-                disabled: exporting || loading || !filteredResponses.length || !surveyConfig,
-                onClick: () => runExport(() => {
-                  const { methodsText, bibtex } = generateMethodsText({
-                    project: currentProject,
-                    surveyConfig,
-                    responses: dateFilteredResponses,
-                    templateMeta: currentProject?.templateMeta || null,
-                    excludeFlagged,
-                  });
-                  downloadTextFile(methodsText, `methods_${currentProject?.id || 'survey'}.txt`);
-                  if (bibtex) downloadTextFile(bibtex, `references_${currentProject?.id || 'survey'}.bib`);
-                }),
-              },
-            ]}
-          />
-          </>
-        )}
-      />
+      <AdminPageHeader icon={<Assessment />} title={t.resultsTitle} description={t.resultsDescription} />
+      {currentProject?.ownResponseSupabase?.enabled && <Alert severity="info" sx={{ mb: 2 }}>{uiPair(language, 'Responses for this project are stored in your Supabase, not on SP-Survey. This page does not copy or analyze them.', '本项目的回答写入你的 Supabase，不在 SP-Survey 上。此页不会复制或分析这些回答。')}</Alert>}
+      <ResultsToolbar citeAction={<CitePlatformButton language={language} getMethodsFacts={getMethodsFacts} />} refreshAction={<Tooltip title={t.resultsRefresh} placement="top" disableInteractive>
+        <IconButton aria-label={t.resultsRefresh} onClick={fetchResponses} disabled={loading} size="small">
+          <Refresh />
+        </IconButton>
+      </Tooltip>} t={t} onOpenFilters={() => setFiltersOpen(true)} onAnalyze={onAnalyzeCurrent ? handleAnalyze : undefined} analyzeDisabled={analysisBusy || loading || !filteredResponses.length} analyzeBusy={analysisBusy} exportItems={exportItems} exportHelp={siteConverted ? t.resultsExportSiteHelp : undefined} />
+      <Paper variant="outlined" sx={{
+        p: {
+          xs: 1.5,
+          sm: 2.5
+        },
+        borderRadius: 1.5,
+        minWidth: 0
+      }}>
+        <Box sx={{
+          mb: 2
+        }}>
+          <Box sx={{
+            mb: 1.5
+          }}>
+            <ResultsViewTabs t={t} value={view} onChange={setView} />
+          </Box>
+          <ResultsScopeChips scope={analysisScope} counts={{
+            nIncluded: filteredResponses.length,
+            nLoaded: responses.length
+          }} t={t} tf={tf} />
+          {demographicFilters.length > 0 && <Chip size="small" variant="outlined" sx={{
+            mt: 1
+          }} label={tf(t.resultsAttributeFilters, {
+            n: demographicFilters.length
+          })} onClick={() => setFiltersOpen(true)} onDelete={() => setDemographicFilters([])} />}
+          {loadSource && loadSource !== 'supabase' && <Typography variant="caption" color="text.secondary" sx={{
+            display: 'block',
+            mt: 1
+          }}>
+            {loadSource === 'supabase' ? t.resultsConnectedSupabase : t.resultsLocalFiles}
+          </Typography>}
+        </Box>
+        <Box sx={{
+          minWidth: 0
+        }}>
 
-      <ResultsFilterShell
-        open={filtersOpen}
-        onClose={() => setFiltersOpen(false)}
-        t={t}
-        onReset={resetFilters}
-      >
-        <ResultsFilterForm
-          t={t}
-          tf={tf}
-          dateFrom={dateFrom}
-          dateTo={dateTo}
-          timezone={timezone}
-          sessionFilter={sessionFilter}
-          sessionOptions={sessionOptions}
-          revisionFilter={revisionFilter}
-          revisionOptions={revisionOptions}
-          includePractice={includePractice}
-          excludeFlagged={excludeFlagged}
-          practiceCount={practiceCount}
-          dataSource={dataSource}
-          siliconRunId={siliconRunId}
-          onChange={(patch) => {
-            if (patch.dateFrom != null) setDateFrom(patch.dateFrom);
-            if (patch.dateTo != null) setDateTo(patch.dateTo);
-            if (patch.sessionFilter != null) setSessionFilter(patch.sessionFilter);
-            if (patch.revisionFilter != null) setRevisionFilter(patch.revisionFilter);
-            if (patch.includePractice != null) handleIncludePracticeChange(patch.includePractice);
-            if (patch.excludeFlagged != null) handleExcludeFlaggedChange(patch.excludeFlagged);
-            if (patch.dataSource != null) setDataSource(patch.dataSource);
-            if (patch.siliconRunId != null) setSiliconRunId(patch.siliconRunId);
-          }}
-        />
+
+      <DatasetPackageDialog open={datasetOpen} onClose={() => setDatasetOpen(false)} onBuild={buildDatasetPackage} project={currentProject} language={language} nSubmissions={filteredResponses.length} siteConverted={siteConverted} freeTextNames={freeTextQuestionNames(allQuestions)} reuseQuestions={datasetOpen ? reuseConsentQuestions(allQuestions).map(q => ({ ...q, yes: filteredResponses.filter(r => answeredYes(r, q.name)).length })) : []} />
+      <ResultsFilterShell open={filtersOpen} onClose={() => setFiltersOpen(false)} t={t} onReset={() => {
+            resetFilters();
+            setDemographicFilters([]);
+          }}>
+        <ResultsFilterForm t={t} tf={tf} dateFrom={dateFrom} dateTo={dateTo} timezone={timezone} sessionFilter={sessionFilter} sessionOptions={sessionOptions} revisionFilter={revisionFilter} revisionOptions={revisionOptions} includePractice={includePractice} excludeFlagged={excludeFlagged} practiceCount={practiceCount} dataSource={dataSource} siliconRunId={siliconRunId} onChange={patch => {
+              if (patch.dateFrom != null) setDateFrom(patch.dateFrom);
+              if (patch.dateTo != null) setDateTo(patch.dateTo);
+              if (patch.sessionFilter != null) setSessionFilter(patch.sessionFilter);
+              if (patch.revisionFilter != null) setRevisionFilter(patch.revisionFilter);
+              if (patch.includePractice != null) handleIncludePracticeChange(patch.includePractice);
+              if (patch.excludeFlagged != null) handleExcludeFlaggedChange(patch.excludeFlagged);
+              if (patch.dataSource != null) setDataSource(patch.dataSource);
+              if (patch.siliconRunId != null) setSiliconRunId(patch.siliconRunId);
+            }} />
+        <Box sx={{
+              mt: 2
+            }}>
+          <DemographicFilterBar questions={allQuestions} questionNumbers={answerableNumberByName} filters={demographicFilters} onChange={setDemographicFilters} />
+        </Box>
       </ResultsFilterShell>
 
-      {exporting && <Alert severity="info" sx={{ mb: 2 }} icon={<CircularProgress size={18} />}>{t.resultsPreparingExport}</Alert>}
-      {exportError && <Alert severity="error" sx={{ mb: 2 }} onClose={() => setExportError('')}>{exportError}</Alert>}
-      <Box sx={{ mb: 2 }}>
-        <ResultsScopeChips scope={analysisScope} counts={{ nIncluded: filteredResponses.length, nLoaded: responses.length }} t={t} tf={tf} />
-      </Box>
-      <ResultsViewTabs t={t} value={view} onChange={setView} />
-      {revisionOptions.length > 1 && <Alert severity="info" sx={{ mb: 2 }}>{t.resultsMixedRevisions}</Alert>}
-      {dateFilteredResponses.some((r) => !r.survey_metadata?.survey_response_contract?.questions) && <Alert severity="warning" sx={{ mb: 2 }}>{language === 'zh' ? '部分历史答卷没有保存题目定义，无法还原当时的全部设置。当前分析可能使用现有题目作为参考，请结合原始 JSON 复核。' : 'Some historical responses have no recorded question definitions. Their original settings cannot be fully restored; analysis may use current settings as a reference. Verify against raw JSON.'}</Alert>}
-      {dateFrom && dateTo && dateFrom > dateTo && <Alert severity="warning" sx={{ mb: 2 }}>Start date must be on or before end date.</Alert>}
-      {/* Data source badge */}
-      {loadSource && (
-        <Box sx={{ mb: 2 }}>
-          <Chip
-            icon={loadSource === 'supabase' ? <Cloud /> : <Storage />}
-            label={loadSource === 'supabase' ? t.resultsConnectedSupabase : t.resultsLocalFiles}
-            color={loadSource === 'supabase' ? 'success' : 'info'}
-            variant="outlined"
-            size="small"
-          />
-        </Box>
-      )}
-
-      {error && (
-        <Alert
-          severity="error"
-          sx={{ mb: 2 }}
-          action={(
-            <Button color="inherit" size="small" onClick={fetchResponses} disabled={loading}>
-              {language === 'zh' ? '重试' : 'Retry'}
-            </Button>
-          )}
-        >
+      {exporting && <Alert severity="info" sx={{
+            mb: 2
+          }} icon={<CircularProgress size={18} />}>{t.resultsPreparingExport}</Alert>}
+      {exportError && <Alert severity="error" sx={{
+            mb: 2
+          }} onClose={() => setExportError('')}>{exportError}</Alert>}
+      {mapProgress && <AnalysisProgressBar label={tf(t.resultsAnalysisProgress, { loaded: mapProgress.loaded, total: mapProgress.total })} loaded={mapProgress.loaded} total={mapProgress.total} />}
+      {mapSample?.ok && <Typography variant="body2" color="text.secondary" sx={{
+            mb: 2
+          }}>
+        {mapSample.mode === 'intensity' ? `Map overlap N ${mapSample.denominator ?? 0}, unfamiliar ${mapSample.unfamiliar}, skipped ${mapSample.skipped}, missing ${mapSample.missing}. Strength is the share of completed people who covered each cell.` : `Map paired N ${mapSample.pairedN}, unfamiliar ${mapSample.unfamiliar}, skipped ${mapSample.skipped}, missing ${mapSample.missing}. Explicit “no area” is included in the paired count.`}
+      </Typography>}
+      {revisionOptions.length > 1 && <Alert severity="info" sx={{
+            mb: 2
+          }}>{t.resultsMixedRevisions}</Alert>}
+      {dateFilteredResponses.some(r => !r.survey_metadata?.survey_response_contract?.questions) && <Alert severity="warning" sx={{
+            mb: 2
+          }}>{uiPair(language, 'Some historical responses have no recorded question definitions. Their original settings cannot be fully restored; analysis may use current settings as a reference. Verify against raw JSON.', '部分历史答卷没有保存题目定义，无法还原当时的全部设置。当前分析可能使用现有题目作为参考，请结合原始 JSON 复核。')}</Alert>}
+      {dateFrom && dateTo && dateFrom > dateTo && <Alert severity="warning" sx={{
+            mb: 2
+          }}>Start date must be on or before end date.</Alert>}
+      {error && <Alert severity="error" sx={{
+            mb: 2
+          }} action={<Button color="inherit" size="small" onClick={fetchResponses} disabled={loading}>
+              {uiPair(language, 'Retry', '重试')}
+            </Button>}>
           {error}
-          {errorMeta?.requestId && (
-            <Typography variant="caption" display="block" sx={{ mt: 0.5 }}>
-              {language === 'zh' ? '请求编号' : 'Request'} {errorMeta.requestId}
+          {errorMeta?.requestId && <Typography variant="caption" display="block" sx={{
+              mt: 0.5
+            }}>
+              {uiPair(language, 'Request', '请求编号')} {errorMeta.requestId}
               {errorMeta.stage ? ` · ${errorMeta.stage}` : ''}
-            </Typography>
-          )}
-        </Alert>
-      )}
-      {!error && loadSkipped.length > 0 && (
-        <Alert severity="warning" sx={{ mb: 2 }}>
-          {language === 'zh'
-            ? `有 ${loadSkipped.length} 份答卷过大或无法解析，已跳过。其余答卷仍可分析。`
-            : `${loadSkipped.length} response(s) were too large or unreadable and were skipped. The remaining responses are still available.`}
-        </Alert>
-      )}
+            </Typography>}
+        </Alert>}
+      {!error && loadSkipped.length > 0 && <Alert severity="warning" sx={{
+            mb: 2
+          }}>
+          {isChineseLanguage(language) ? `有 ${loadSkipped.length} 份答卷过大或无法解析，已跳过。其余答卷仍可分析。` : `${loadSkipped.length} response(s) were too large or unreadable and were skipped. The remaining responses are still available.`}
+        </Alert>}
 
-      {sessionStats.length > 0 && view === 'overview' && (
-        <Alert severity="info" sx={{ mb: 2 }}>
+      {sessionStats.length > 0 && view === 'overview' && <Alert severity="info" sx={{
+            mb: 2
+          }}>
           Research sessions: {sessionStats.length} ({sessionStats.map(([sid, s]) => `${sid.slice(-6)}: ${s.count} rounds`).join(', ')})
-        </Alert>
-      )}
+        </Alert>}
 
-      {view === 'overview' && (
-        <Box sx={{ mb: 3 }}>
-          <ResultsReportCard
-            t={t}
-            report={savedReport}
-            staleness={reportState}
-            onUpdate={handleAnalyze}
-            onViewEvidence={(finding) => {
-              setSelectedQuestionName(finding.questionName || finding.evidence?.questionName || '');
-              setView('questions');
-            }}
-          />
-        </Box>
-      )}
+      {siteMatch && <Alert severity={!siteConverted && siteMatch.level === 'full' ? 'info' : 'warning'} sx={{
+            mb: 2
+          }} data-testid="results-site-match">
+          {siteConverted && (isChineseLanguage(language)
+            ? `这份问卷是原样导入的页面（不符合 SP-Scheme），平台不知道它的题目含义，所以不默认分析。作答已原样记录：页面自己保存的作答在 __sp_page_state，页面发出的数据在 __sp_requests。可以在“题目”里点“生成分析”，由模型写分析代码、平台算法出图并写进导出（结果需自行核对）；也可以导出 CSV 或 JSON 后自行分析。`
+            : `This survey is a page imported as it is (it does not match SP-Scheme), so the platform does not know what its answers mean and does not analyse them by default. Records are kept as they are: what the page saved in its own storage is under __sp_page_state and what it sent under __sp_requests. Under Questions, "Generate analysis" has the model write analysis code that the platform's algorithms chart and add to the export (check its result yourself); or export the CSV or JSON and analyse it yourself.`)}
+          {!siteConverted && siteMatch.level === 'full' && (isChineseLanguage(language)
+            ? `这份问卷是 SP-Scheme 页面；全部 ${siteMatch.total} 道题都是平台题型，下面的分析适用。`
+            : `This survey is an SP-Scheme page; all ${siteMatch.total} questions use platform types, so the analysis below applies.`)}
+          {!siteConverted && siteMatch.level === 'partial' && (isChineseLanguage(language)
+            ? `这份问卷是 SP-Scheme 页面：${siteMatch.native} 道题可以分析；另外 ${siteMatch.custom} 道题按页面自己的格式原样记录（custom），平台不分析，请导出后自行处理。`
+            : `This survey is an SP-Scheme page: ${siteMatch.native} question(s) are analysed below; ${siteMatch.custom} are recorded in the page's own format (custom) and are not analysed. Export them and process them yourself.`)}
+          {!siteConverted && siteMatch.level === 'custom' && (isChineseLanguage(language)
+            ? `这份问卷是 SP-Scheme 页面，全部 ${siteMatch.total} 道题按页面自己的格式原样记录（custom）。平台不做任何分析，请导出后自行处理。`
+            : `This survey is an SP-Scheme page and all ${siteMatch.total} questions are recorded in the page's own format (custom). Nothing is analysed here; export the data and process it yourself.`)}
+          {!siteConverted && siteMatch.level === 'none' && (isChineseLanguage(language)
+            ? `这份问卷是 SP-Scheme 页面，没有声明任何题目。平台只原样记录页面发出的请求（共 ${siteCapturedCount} 条，在导出的 __sp_requests 里），不做任何分析，请导出后自行处理。`
+            : `This survey is an SP-Scheme page with no questions declared. The platform only records the requests the page sent (${siteCapturedCount} in total, under __sp_requests in the export) and analyses nothing; export the data and process it yourself.`)}
+        </Alert>}
 
-      {/* Data quality panel */}
-      {view === 'data' && !loading && dateFilteredResponses.length > 0 && surveyConfig && (
-        <Accordion defaultExpanded={false} sx={{ mb: 2 }}>
-          <AccordionSummary expandIcon={<ExpandMore />}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap', width: '100%', pr: 1 }}>
-              <VerifiedUser color="primary" fontSize="small" />
-              <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>{t.resultsDataQuality}</Typography>
-              <Chip label={tf(t.resultsClean, { n: qualitySummary.clean })} color="success" size="small" variant="outlined" />
-              <Chip label={tf(t.resultsFlagged, { n: qualitySummary.flagged })} color="warning" size="small" variant="outlined" />
-              <Chip label={tf(t.resultsInAnalysis, { n: filteredResponses.length })} size="small" variant="outlined" />
-            </Box>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5, flexWrap: 'wrap' }}>
-              <Button
-                size="small"
-                variant="outlined"
-                startIcon={<Download />}
-                onClick={() => {
-                  const includedKeys = new Set(
-                    (filteredResponses || []).map((r) => responseRecordKey(r)),
-                  );
-                  downloadDataQualityCsv(dateFilteredResponses, surveyConfig, {
-                    excludeFlagged,
-                    includedKeys,
-                  });
-                }}
-              >
-                {t.resultsExportCsv}
-              </Button>
-              <Box flex={1} />
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={excludeFlagged}
-                    onChange={(e) => handleExcludeFlaggedChange(e.target.checked)}
-
-                    size="small"
-                  />
-                }
-                label={t.resultsExcludeFlagged}
-              />
-            </Box>
-            <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
-              Flags: {Object.entries(QUALITY_FLAG_LABELS).map(([k, v]) => `${k} (${v})`).join(' · ')}
-            </Typography>
-            {qualitySummary.flagged > 0 && (
-              <TableContainer>
-                <Table size="small">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Participant</TableCell>
-                      <TableCell>Flags</TableCell>
-                      <TableCell>Duration (s)</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {dateFilteredResponses
-                      .filter((r) => (qualitySummary.perResponse[responseRecordKey(r)] || []).length)
-                      .slice(0, 20)
-                      .map((r) => {
-                        const key = responseRecordKey(r);
-                        const flags = qualitySummary.perResponse[key] || [];
-                        return (
-                          <TableRow key={key}>
-                            <TableCell>{r.participant_id}</TableCell>
-                            <TableCell>
-                              {flags.map((f) => (
-                                <Chip key={f} label={QUALITY_FLAG_LABELS[f] || f} size="small" sx={{ mr: 0.5, mb: 0.5 }} />
-                              ))}
-                            </TableCell>
-                            <TableCell>{r.survey_metadata?.timing?.total_seconds ?? '—'}</TableCell>
-                          </TableRow>
-                        );
-                      })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            )}
-          </AccordionDetails>
-        </Accordion>
-      )}
-
-      {/* Overview cards */}
-      {view === 'overview' && <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid size={{ xs: 12, sm: 4 }}>
-          <Paper variant="outlined" sx={{ p: 2, textAlign: 'center' }}>
-            <People sx={{ fontSize: 32, color: 'primary.main', mb: 0.5 }} />
-            <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+      {/* Overview metrics */}
+      {view === 'overview' && <Grid container spacing={2} sx={{
+            mb: 3
+          }}>
+        <Grid size={{
+              xs: 12,
+              sm: 4
+            }}>
+          <Box sx={{
+                px: 1,
+                py: 0.5
+              }}>
+            <Typography variant="h4" sx={{
+                  fontWeight: 700,
+                  fontSize: 28
+                }}>
               {loading || error ? '–' : totalResponses}
             </Typography>
             <Typography variant="body2" color="text.secondary">{t.resultsTotalResponses}</Typography>
-            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
+            <Typography variant="caption" color="text.secondary" sx={{
+                  display: 'block',
+                  mt: 0.5
+                }}>
               {workbenchOverview.counts?.nParticipants || 0} {t.resultsParticipants}
               {' · '}
               {workbenchOverview.counts?.nTrials || 0} {t.resultsTrials}
               {dateRange ? ` · ${dateRange}` : ''}
             </Typography>
-          </Paper>
+          </Box>
         </Grid>
-        <Grid size={{ xs: 12, sm: 4 }}>
-          <Paper variant="outlined" sx={{ p: 2, textAlign: 'center' }}>
-            <Assessment sx={{ fontSize: 32, color: 'success.main', mb: 0.5 }} />
-            <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-              {loading ? '–' : answerableQuestions.length}
+        <Grid size={{
+              xs: 12,
+              sm: 4
+            }}>
+          <Box sx={{
+                px: 1,
+                py: 0.5
+              }}>
+            <Typography variant="h4" sx={{
+                  fontWeight: 700,
+                  fontSize: 28
+                }}>
+              {loading ? '–' : sitePageQuestions ? (sitePageQuestions.length || '–') : answerableQuestions.length}
             </Typography>
-            <Typography variant="body2" color="text.secondary">{t.resultsAnswerableQuestions}</Typography>
-            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
-              {answeredQuestions} {t.resultsWithResponses}
-              {displayOnlyQuestionCount > 0
-                ? ` · ${displayOnlyQuestionCount} display/instruction excluded`
-                : ''}
-            </Typography>
-          </Paper>
+            <Typography variant="body2" color="text.secondary">{sitePageQuestions ? (isChineseLanguage(language) ? '页面题目（平台不分析）' : 'Questions on the page (not analysed)') : t.resultsAnswerableQuestions}</Typography>
+            {sitePageQuestions && !sitePageQuestions.length && <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
+                {isChineseLanguage(language) ? '题目由页面自己管理，每位参与者的数据见“回答记录”。' : 'The page manages its own questions; see Response records for each participant.'}
+              </Typography>}
+          </Box>
         </Grid>
-        <Grid size={{ xs: 12, sm: 4 }}>
-          <Paper variant="outlined" sx={{ p: 2, textAlign: 'center' }}>
-            <QuestionAnswer sx={{ fontSize: 32, color: 'warning.main', mb: 0.5 }} />
-            <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-              {loading || !totalResponses || !answerableQuestions.length
-                ? '–'
-                : `${pct(answeredQuestions, answerableQuestions.length)}%`}
+        <Grid size={{
+              xs: 12,
+              sm: 4
+            }}>
+          <Box sx={{
+                px: 1,
+                py: 0.5
+              }}>
+            <Typography variant="h4" sx={{
+                  fontWeight: 700,
+                  fontSize: 28
+                }}>
+              {loading || !totalResponses || !answerableQuestions.length || sitePageQuestions ? '–' : `${pct(answeredQuestions, answerableQuestions.length)}%`}
             </Typography>
-            <Typography variant="body2" color="text.secondary">{t.resultsQuestionCoverage}</Typography>
-            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
-              {t.resultsCoverageHelp}
-            </Typography>
-          </Paper>
+            <Tooltip title={t.resultsCoverageHelp} describeChild>
+              <Typography tabIndex={0} variant="body2" color="text.secondary" sx={{
+                    width: 'fit-content'
+                  }}>{t.resultsQuestionCoverage}</Typography>
+            </Tooltip>
+          </Box>
         </Grid>
       </Grid>}
 
       {/* Response records — view & delete */}
-      {view === 'data' && !loading && dateFilteredResponses.length > 0 && (
-        <Accordion defaultExpanded={false} sx={{ mb: 3 }}>
-          <AccordionSummary expandIcon={<ExpandMore />}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
-              <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+      {view === 'records' && !loading && dateFilteredResponses.length > 0 && <Box>
+          <Box sx={{
+              mb: 2
+            }}>
+            <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                flexWrap: 'wrap'
+              }}>
+              <Typography variant="subtitle1" sx={{
+                  fontWeight: 700
+                }}>
                 {t.resultsResponseRecords}
               </Typography>
-              <Chip
-                size="small"
-                variant="outlined"
-                label={tf(t.resultsSubmissions, { n: dateFilteredResponses.length })}
-              />
+              <Chip size="small" variant="outlined" label={tf(t.resultsSubmissions, {
+                  n: dateFilteredResponses.length
+                })} />
             </Box>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+          </Box>
+          <Box>
+            <Typography variant="body2" color="text.secondary" sx={{
+                mb: 1.5
+              }}>
               {adminMode ? t.resultsRecordsViewHelp : t.resultsRecordsHelp}
             </Typography>
-            {deleteError && (
-              <Alert severity="error" sx={{ mb: 1.5 }} onClose={() => setDeleteError(null)}>
+            {deleteError && <Alert severity="error" sx={{
+                mb: 1.5
+              }} onClose={() => setDeleteError(null)}>
                 {deleteError}
-              </Alert>
-            )}
+              </Alert>}
             <TableContainer>
               <Table size="small">
                 <TableHead>
@@ -3251,87 +3569,184 @@ export default function ResultsAnalysis({
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {dateFilteredResponses.slice(recordPage * recordsPerPage, (recordPage + 1) * recordsPerPage).map((row) => {
-                    const key = responseRecordKey(row);
-                    const qKey = responseRecordKey(row);
-                    const flags = surveyConfig
-                      ? (qualitySummary.perResponse[qKey] || [])
-                      : [];
-                    return (
-                      <TableRow key={key} hover>
-                        <TableCell sx={{ fontFamily: 'monospace', fontSize: '0.8rem' }}>
+                  {dateFilteredResponses.slice(recordPage * recordsPerPage, (recordPage + 1) * recordsPerPage).map(row => {
+                      const key = responseRecordKey(row);
+                      const qKey = responseRecordKey(row);
+                      const flags = surveyConfig ? qualitySummary.perResponse[qKey] || [] : [];
+                      return <TableRow key={key} hover>
+                        <TableCell sx={{
+                          fontFamily: 'monospace',
+                          fontSize: '0.8rem'
+                        }}>
                           {row.participant_id || '—'}
-                          {row.survey_metadata?.practice_mode && (
-                            <Chip
-                              size="small"
-                              label={row.survey_metadata?.practice_question
-                                ? `practice: ${row.survey_metadata.practice_question}`
-                                : 'practice'}
-                              color="secondary"
-                              variant="outlined"
-                              sx={{ ml: 1, height: 20, fontSize: '0.65rem' }}
-                            />
-                          )}
+                          {row.survey_metadata?.practice_mode && <Chip size="small" label={row.survey_metadata?.practice_question ? `practice: ${row.survey_metadata.practice_question}` : 'practice'} color="secondary" variant="outlined" sx={{
+                            ml: 1,
+                            height: 20,
+                            fontSize: '0.65rem'
+                          }} />}
                         </TableCell>
                         <TableCell>{formatResponseTime(row)}</TableCell>
-                        <TableCell sx={{ fontFamily: 'monospace' }}>
+                        <TableCell sx={{
+                          fontFamily: 'monospace'
+                        }}>
                           {row.survey_metadata?.completion_code || '—'}
                         </TableCell>
                         <TableCell>
-                          {flags.length === 0 ? (
-                            <Chip label="clean" color="success" size="small" variant="outlined" />
-                          ) : (
-                            flags.map((f) => (
-                              <Chip
-                                key={f}
-                                label={QUALITY_FLAG_LABELS[f] || f}
-                                color="warning"
-                                size="small"
-                                sx={{ mr: 0.5, mb: 0.5 }}
-                              />
-                            ))
-                          )}
+                          {flags.length === 0 ? <Chip label="clean" color="success" size="small" variant="outlined" /> : flags.map(f => <Chip key={f} label={QUALITY_FLAG_LABELS[f] || f} color="warning" size="small" sx={{
+                            mr: 0.5,
+                            mb: 0.5
+                          }} />)}
                         </TableCell>
                         <TableCell align="right">
                           <Button size="small" onClick={() => setDetailTarget(row)}>{t.resultsViewResponse}</Button>
                           {!adminMode && <Tooltip title="Delete this response">
-                            <IconButton
-                              size="small"
-                              color="error"
-                              onClick={() => {
-                                setDeleteError(null);
-                                setDeleteTarget(row);
-                              }}
-                            >
+                            <IconButton size="small" color="error" onClick={() => {
+                              setDeleteError(null);
+                              setDeleteTarget(row);
+                            }}>
                               <DeleteOutline fontSize="small" />
                             </IconButton>
                           </Tooltip>}
                         </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                      </TableRow>;
+                    })}
                 </TableBody>
               </Table>
             </TableContainer>
-            <TablePagination component="div" count={dateFilteredResponses.length} page={Math.min(recordPage, Math.max(0, Math.ceil(dateFilteredResponses.length / recordsPerPage) - 1))}
-              rowsPerPage={recordsPerPage} rowsPerPageOptions={[25, 50, 100]} labelRowsPerPage={t.resultsRowsPerPage}
-              onPageChange={(_, page) => setRecordPage(page)} onRowsPerPageChange={(e) => { setRecordsPerPage(Number(e.target.value)); setRecordPage(0); }} />
-          </AccordionDetails>
-        </Accordion>
-      )}
+            <TablePagination component="div" count={dateFilteredResponses.length} page={Math.min(recordPage, Math.max(0, Math.ceil(dateFilteredResponses.length / recordsPerPage) - 1))} rowsPerPage={recordsPerPage} rowsPerPageOptions={[25, 50, 100]} labelRowsPerPage={t.resultsRowsPerPage} onPageChange={(_, page) => setRecordPage(page)} onRowsPerPageChange={e => {
+                setRecordsPerPage(Number(e.target.value));
+                setRecordPage(0);
+              }} />
+          </Box>
+        </Box>}
+
+      {/* Data quality panel */}
+      {view === 'quality' && !loading && dateFilteredResponses.length > 0 && surveyConfig && <Box>
+          <Box sx={{
+              mb: 2
+            }}>
+            <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                flexWrap: 'wrap',
+                width: '100%',
+                pr: 1
+              }}>
+              <VerifiedUser color="primary" fontSize="small" />
+              <Typography variant="subtitle1" sx={{
+                  fontWeight: 700
+                }}>{t.resultsDataQuality}</Typography>
+              <Chip label={tf(t.resultsClean, {
+                  n: qualitySummary.clean
+                })} color="success" size="small" variant="outlined" />
+              <Chip label={tf(t.resultsFlagged, {
+                  n: qualitySummary.flagged
+                })} color="warning" size="small" variant="outlined" />
+              <Chip label={tf(t.resultsInAnalysis, {
+                  n: filteredResponses.length
+                })} size="small" variant="outlined" />
+            </Box>
+          </Box>
+          <Box>
+            <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                mb: 1.5,
+                flexWrap: 'wrap'
+              }}>
+              <Button size="small" variant="outlined" startIcon={<Download />} onClick={() => {
+                  const includedKeys = new Set((filteredResponses || []).map(r => responseRecordKey(r)));
+                  downloadDataQualityCsv(dateFilteredResponses, surveyConfig, {
+                    excludeFlagged,
+                    includedKeys
+                  });
+                }}>
+                {t.resultsExportCsv}
+              </Button>
+              <Box flex={1} />
+              <FormControlLabel control={<Switch checked={excludeFlagged} onChange={e => handleExcludeFlaggedChange(e.target.checked)} size="small" />} label={t.resultsExcludeFlagged} />
+            </Box>
+            <Typography variant="caption" color="text.secondary" display="block" sx={{
+                mb: 1
+              }}>
+              Flags: {Object.entries(QUALITY_FLAG_LABELS).map(([k, v]) => `${k} (${v})`).join(' · ')}
+            </Typography>
+            {qualitySummary.flagged > 0 && <TableContainer>
+                <Table size="small">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Participant</TableCell>
+                      <TableCell>Flags</TableCell>
+                      <TableCell>Duration (s)</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {dateFilteredResponses.filter(r => (qualitySummary.perResponse[responseRecordKey(r)] || []).length).slice(0, 20).map(r => {
+                      const key = responseRecordKey(r);
+                      const flags = qualitySummary.perResponse[key] || [];
+                      return <TableRow key={key}>
+                            <TableCell>{r.participant_id}</TableCell>
+                            <TableCell>
+                              {flags.map(f => <Chip key={f} label={QUALITY_FLAG_LABELS[f] || f} size="small" sx={{
+                            mr: 0.5,
+                            mb: 0.5
+                          }} />)}
+                            </TableCell>
+                            <TableCell>{r.survey_metadata?.timing?.total_seconds ?? '—'}</TableCell>
+                          </TableRow>;
+                    })}
+                  </TableBody>
+                </Table>
+              </TableContainer>}
+          </Box>
+        </Box>}
+
+      {reportError && <Alert severity="error" sx={{
+            mb: 2
+          }} onClose={() => setReportError(null)}>{reportError}</Alert>}
+      {view === 'overview' && dataSource === 'human' && !adminMode && !siteConverted && answerableQuestions.length > 0 && filteredResponses.length > 0 && <SiliconAgreementCard
+          projectId={currentProject?.id}
+          projectName={currentProject?.name || ''}
+          questions={answerableQuestions}
+          humanRows={filteredResponses}
+          language={language}
+          numberByName={answerableNumberByName}
+          benchTasks={currentProject?.metadata?.spBenchTasks}
+          onResult={setSiliconAgreementFiles} />}
+      {view === 'overview' && !siteConverted && answerableQuestions.length > 0 && filteredResponses.length > 0 && <VariantContrastCard
+          questions={answerableQuestions}
+          responses={filteredResponses}
+          language={language}
+          numberByName={answerableNumberByName}
+          projectName={currentProject?.name || ''} />}
+      {view === 'overview' && dataSource === 'human' && !adminMode && !siteConverted && filteredResponses.length > 0 && <SpBenchTaskCard
+          project={currentProject}
+          questions={answerableQuestions}
+          humanRows={filteredResponses}
+          language={language}
+          numberByName={answerableNumberByName}
+          onProjectUpdated={onProjectUpdated} />}
+      {view === 'overview' && savedReport && <Box sx={{
+            mb: 3
+          }}>
+          <ResultsReportCard t={t} report={savedReport} onDelete={handleDeleteReport} updateDisabled={analysisBusy || loading || !filteredResponses.length} staleness={reportState} onUpdate={onAnalyzeCurrent ? handleAnalyze : undefined} onViewEvidence={finding => {
+              setSelectedQuestionName(finding.questionName || finding.evidence?.questionName || '');
+              setView('questions');
+            }} />
+        </Box>}
 
       {/* Loading */}
-      {loading && (
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1.5, py: 6 }}>
-          <CircularProgress />
-          {loadProgress && (
-            <Typography variant="body2" color="text.secondary">
-              Loading responses… {loadProgress.loaded.toLocaleString()} so far
-              {loadProgress.page > 1 ? ` (page ${loadProgress.page})` : ''}
-            </Typography>
-          )}
-        </Box>
-      )}
+      {loading && <AnalysisProgressBar
+          label={!loadProgress?.loaded
+            ? t.resultsLoadStarting
+            : Number.isFinite(loadProgress.total)
+              ? tf(t.resultsLoadProgress, { loaded: loadProgress.loaded.toLocaleString(), total: loadProgress.total.toLocaleString() })
+              : tf(t.resultsLoadProgressUnknown, { loaded: loadProgress.loaded.toLocaleString() })}
+          loaded={loadProgress?.loaded || 0}
+          total={Number.isFinite(loadProgress?.total) ? loadProgress.total : null}
+        />}
 
       {/* No survey config */}
       {!loading && !surveyConfig && (
@@ -3341,114 +3756,110 @@ export default function ResultsAnalysis({
       )}
 
       {/* No responses yet */}
-      {!loading && surveyConfig && totalResponses === 0 && !error && (
-        <Alert severity="info" sx={{ mb: 2 }}>
+      {!loading && surveyConfig && (['records', 'quality'].includes(view) ? dateFilteredResponses.length : totalResponses) === 0 && !error && <Alert severity="info" sx={{
+            mb: 2
+          }}>
           {responses.length ? t.resultsFilteredEmpty : t.resultsEmpty}
-        </Alert>
-      )}
+        </Alert>}
 
       {/* Per-question analysis */}
-      {view === 'questions' && !loading && surveyConfig && allQuestions.length > 0 && (
-        <>
-          <Box sx={{ mb: 2 }}>
-            <Button size="small" variant="outlined" onClick={() => setPerceptionOpen((open) => !open)}>
+      {view === 'questions' && !loading && analysisProgress && <AnalysisProgressBar label={tf(t.resultsAnalysisProgress, { loaded: analysisProgress.loaded, total: analysisProgress.total })} loaded={analysisProgress.loaded} total={analysisProgress.total} />}
+      {view === 'questions' && !loading && !analysisProgress && readyQuestionCards && surveyConfig && allQuestions.length > 0 && <>
+          <Box sx={{
+              mb: 2
+            }}>
+            <Button size="small" variant="outlined" onClick={() => setPerceptionOpen(open => !open)}>
               {perceptionOpen ? t.resultsDeepPerception : t.resultsOpenPerception}
             </Button>
           </Box>
-          {perceptionOpen && (
-            <ImagePerceptionPanel
-              onOpenMedia={onOpenMedia}
-              currentProject={currentProject}
-              responses={filteredResponses}
-              questions={allQuestions}
-            />
-          )}
+          {perceptionOpen && <ImagePerceptionPanel onOpenMedia={onOpenMedia} currentProject={currentProject} responses={filteredResponses} questions={allQuestions} />}
 
-          {compactLayout ? (
-            <TextField
-              select
-              size="small"
-              label={t.resultsSelectQuestion}
-              value={selectedQuestion?.name || ''}
-              onChange={(e) => setSelectedQuestionName(e.target.value)}
-              SelectProps={{ native: true }}
-              sx={{ mb: 2, width: '100%' }}
-            >
-              {filteredQuestions.map((q) => (
-                <option key={q.name} value={q.name}>
+          {compactLayout ? <TextField select size="small" label={t.resultsSelectQuestion} value={selectedQuestion?.name || ''} onChange={e => setSelectedQuestionName(e.target.value)} SelectProps={{
+              native: true
+            }} sx={{
+              mb: 2,
+              width: '100%'
+            }}>
+              {filteredQuestions.map(q => <option key={q.name} value={q.name}>
                   {(answerableNumberByName.get(q.name) ? `${answerableNumberByName.get(q.name)}. ` : '') + (q.title || q.name)}
-                </option>
-              ))}
-            </TextField>
-          ) : (
-          <TextField
-            size="small"
-            placeholder={t.resultsQuestionSearch}
-            value={searchText}
-            onChange={e => setSearchText(e.target.value)}
-            InputProps={{ startAdornment: <InputAdornment position="start"><Search fontSize="small" /></InputAdornment> }}
-            sx={{ mb: 2, width: '100%', maxWidth: 320 }}
-          />
-          )}
+                </option>)}
+            </TextField> : <TextField size="small" placeholder={t.resultsQuestionSearch} value={searchText} onChange={e => setSearchText(e.target.value)} InputProps={{
+              startAdornment: <InputAdornment position="start"><Search fontSize="small" /></InputAdornment>
+            }} sx={{
+              mb: 2,
+              width: '100%',
+              maxWidth: 320
+            }} />}
 
-          {filteredQuestions.length === 0 && (
-            <Typography variant="body2" color="text.secondary">No questions match your search.</Typography>
-          )}
+          {filteredQuestions.length === 0 && <Typography variant="body2" color="text.secondary">No questions match your search.</Typography>}
 
           {surveyConfig.pages?.map(page => {
-            const pageQuestions = filteredQuestions.filter(q =>
-              (page.elements || []).some(e => e.name === q.name)
-              && (!compactLayout || !selectedQuestion || q.name === selectedQuestion.name)
-            );
-            if (!pageQuestions.length) return null;
-            return (
-              <Box key={page.name} sx={{ mb: 3 }}>
-                <Typography
-                  variant="overline"
-                  color="text.secondary"
-                  sx={{ display: 'block', mb: 1.5, fontWeight: 'bold', letterSpacing: 1 }}
-                >
+              const pageQuestions = filteredQuestions.filter(q => (page.elements || []).some(e => e.name === q.name) && (!compactLayout || !selectedQuestion || q.name === selectedQuestion.name));
+              if (!pageQuestions.length) return null;
+              return <Box key={page.name} sx={{
+                mb: 3
+              }}>
+                <Typography variant="overline" color="text.secondary" sx={{
+                  display: 'block',
+                  mb: 1.5,
+                  fontWeight: 'bold',
+                  letterSpacing: 1
+                }}>
                   {page.title || page.name}
                 </Typography>
-                {pageQuestions.map((question) => (
-                  <QuestionCard
-                    key={question.name}
-                    defaultExpanded={compactLayout || question.name === selectedQuestionName}
-                    onExplain={handleExplainQuestion}
-                    {...buildQuestionCardProps(question, filteredResponses, {
-                      questionNumber: answerableNumberByName.get(question.name) ?? null,
-                      surveyConfig,
-                      exportResponses: filteredResponses,
-                    })}
-                  />
-                ))}
-              </Box>
-            );
-          })}
-        </>
-      )}
+                {pageQuestions.map(question => <QuestionCard key={question.name} defaultExpanded={compactLayout || question.name === selectedQuestionName} onExplain={onExplainQuestion ? handleExplainQuestion : undefined} aiAnalysis={savedAnalyses[question.name] || null} onSaveAiAnalysis={handleSaveAiAnalysis} {...readyQuestionCards.get(question.name)} />)}
+              </Box>;
+            })}
+        </>}
+      {view === 'questions' && !loading && surveyConfig && allQuestions.length === 0 && sitePageCards.length > 0 && <Box data-testid="results-site-page-cards">
+          <Typography variant="overline" color="text.secondary" sx={{ display: 'block', mb: 1.5, fontWeight: 'bold', letterSpacing: 1 }}>
+            {isChineseLanguage(language) ? '页面题目（答案在页面记录里）' : 'Questions on the page (answers are in the page records)'}
+          </Typography>
+          {sitePageCards.map((question, index) => <QuestionCard key={question.name} question={question} answers={[]} totalResponses={filteredResponses.length} questionNumber={index + 1} allResponses={filteredResponses} surveyConfig={surveyConfig} exportResponses={filteredResponses} defaultExpanded={sitePageCards.length === 1} aiAnalysis={savedAnalyses[question.name] || null} onSaveAiAnalysis={handleSaveAiAnalysis} />)}
+        </Box>}
+
+        </Box>
+      </Paper>
 
       <Dialog open={!!detailTarget} onClose={() => setDetailTarget(null)} maxWidth="md" fullWidth>
         <DialogTitle>{t.resultsSubmissionDetail} · {detailTarget?.participant_id}</DialogTitle>
         <DialogContent dividers>
-          <Typography variant="body2" sx={{ mb: 2 }}>
+          <Typography variant="body2" sx={{
+            mb: 2
+          }}>
             {detailTarget && formatResponseTime(detailTarget)} · {t.resultsDetailSession}: {detailTarget?.survey_metadata?.session_id || '—'}
             {' · '}{t.resultsRevision}: {detailTarget?.survey_metadata?.survey_revision || t.resultsHistoricalRevision}
           </Typography>
-          <Alert severity="info" sx={{ mb: 2 }}>
+          <Alert severity="info" sx={{
+            mb: 2
+          }}>
             {t.resultsQuality}: {(qualitySummary.perResponse[responseRecordKey(detailTarget)] || []).join(', ') || 'clean'}
           </Alert>
-          {allQuestions.map((q) => {
-            const units = expandQuestionAnswerUnits(detailTarget, q.name, { requireAnswer: false });
+          {allQuestions.map(q => {
+            const units = expandQuestionAnswerUnits(detailTarget, q.name, {
+              requireAnswer: false
+            });
             if (!units.length) return null;
-            return <Box key={q.name} sx={{ mb: 2 }}>
+            return <Box key={q.name} sx={{
+              mb: 2
+            }}>
               <Typography fontWeight={700}>{typeof q.title === 'string' ? q.title : q.name}</Typography>
-              {units.map((unit, i) => <Box key={i} sx={{ p: 1, borderBottom: '1px solid', borderColor: 'divider' }}>
+              {units.map((unit, i) => <Box key={i} sx={{
+                p: 1,
+                borderBottom: '1px solid',
+                borderColor: 'divider'
+              }}>
                 <Typography variant="caption">{t.resultsRecordTrial} {unit.trial_index + 1} · {unit.shown_images.map(stimulusUnitLabel).join(' + ') || t.resultsNoMedia}</Typography>
-                <Box component="pre" sx={{ m: 0, whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', fontSize: '0.85rem' }}>{JSON.stringify(unit.answer, null, 2)}</Box>
+                <Box component="pre" sx={{
+                  m: 0,
+                  whiteSpace: 'pre-wrap',
+                  overflowWrap: 'anywhere',
+                  fontSize: '0.85rem'
+                }}>{JSON.stringify(unit.answer, null, 2)}</Box>
               </Box>)}
             </Box>;
           })}
+          {detailTarget && <SitePageRecords row={detailTarget} zh={isChineseLanguage(language)} />}
         </DialogContent>
         <DialogActions><Button onClick={() => setDetailTarget(null)}>{t.resultsClose}</Button></DialogActions>
       </Dialog>
@@ -3459,9 +3870,7 @@ export default function ResultsAnalysis({
           <DialogContentText>
             Permanently delete the submission from{' '}
             <strong>{deleteTarget?.participant_id || 'this participant'}</strong>
-            {deleteTarget?.survey_metadata?.completion_code
-              ? ` (code: ${deleteTarget.survey_metadata.completion_code})`
-              : ''}
+            {deleteTarget?.survey_metadata?.completion_code ? ` (code: ${deleteTarget.survey_metadata.completion_code})` : ''}
             ? This cannot be undone.
           </DialogContentText>
         </DialogContent>
@@ -3475,6 +3884,5 @@ export default function ResultsAnalysis({
         </DialogActions>
       </Dialog>
     </Box>
-    </ImageResolverContext.Provider>
-  );
+    </ImageResolverContext.Provider>;
 }

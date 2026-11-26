@@ -1,0 +1,69 @@
+{
+  "id": "2026-kang-decoding",
+  "name": "Safety Choice (Eye-Tracking Study)",
+  "description": "Rebuilt from the published description of Kang et al. (2026). Participants choose the safer of two Helsingborg street views; the participant ID from the link (?pid=...) and per-trial timestamps allow linking to eye-tracker recordings. Images chosen at least 3 times are labelled safe. Differences from the original study: (1) Eye tracking is not part of the platform; record it separately and join on pid and the trial timestamps. (2) Bundled images are photographs from the paper PDF (8 scenes), not the original full stimulus set.",
+  "author": "Kang et al.",
+  "year": "2026",
+  "category": "Academic Research",
+  "tags": [
+    "official",
+    "paper"
+  ],
+  "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": null,
+  "website": "https://doi.org/10.1016/j.compenvurbsys.2025.102356",
+  "huggingfaceDataset": null,
+  "createdAt": "2026-10-02T00:00:00+00:00",
+  "imageDatasetConfig": {
+    "mediaFolderTags": {},
+    "mediaFolders": []
+  },
+  "preloadedImages": [],
+  "preloadedSource": null,
+  "preloadedAt": null,
+  "config": {
+    "title": "Street Safety Choice",
+    "description": "For each pair, choose the place that looks safer.",
+    "logoPosition": "right",
+    "autoGrowComment": true,
+    "progressBarType": "questions",
+    "showProgressBar": "aboveheader",
+    "showQuestionNumbers": "off",
+    "captureUrlParams": [
+      "pid"
+    ],
+    "spAnalysisRecommendation": {
+      "citation": "Kang et al. 2026",
+      "items": [
+        {
+          "questions": [
+            "safer"
+          ],
+          "method": "choice_share",
+          "threshold": 3
+        }
+      ]
+    },
+    "pages": [
+      {
+        "name": "page_choice",
+        "elements": [
+          {
+            "name": "safer",
+            "type": "imagepicker",
+            "title": "Which place looks safer?",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 2,
+            "trialCount": 10
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -32,6 +32,33 @@ export function catalogModel(providerId, modelId) {
   return (provider.models || []).find((m) => m.id === modelId) || null;
 }
 
+// Model ids that upstream retired in a catalog update, mapped to their
+// successor. Saved settings (admin subsidy routes, personal choices) can still
+// hold the old id; they keep working instead of silently disappearing.
+const QWEN_RETIRED = {
+  'deepseek-v3.2': 'deepseek-v4.1-flash',
+  'deepseek-v4-flash': 'deepseek-v4-flash-0731',
+  'deepseek-v4-flash-vision-exp': 'deepseek-v4.1-flash',
+};
+const RETIRED_MODELS = {
+  deepseek: {
+    'deepseek-chat': 'deepseek-flash',
+    'deepseek-reasoner': 'deepseek-flash',
+    'deepseek-v4-flash': 'deepseek-flash',
+    'deepseek-v4-flash-vision-exp': 'deepseek-flash',
+  },
+  'qwen-dashscope': QWEN_RETIRED,
+  'qwen-token-plan': QWEN_RETIRED,
+  'qwen-token-plan-cn': QWEN_RETIRED,
+};
+
+export function currentModelId(providerId, modelId) {
+  const id = String(modelId || '');
+  if (!id || catalogModel(providerId, id)) return id;
+  const next = RETIRED_MODELS[providerId]?.[id];
+  return next && catalogModel(providerId, next) ? next : id;
+}
+
 export function isApiKeyAuth(providerId) {
   const provider = catalogProvider(providerId);
   if (!provider) return true;

@@ -3,6 +3,7 @@
 
 import { API_ROOT } from './apiConfig';
 import { sanitizeMediaFolderConfig } from './mediaUtils';
+import { stripOwnResponseSupabase } from './ownResponseSupabase';
 
 const API_BASE_URL = API_ROOT;
 const TEMPLATES_PATH = '/project_templates';
@@ -190,8 +191,8 @@ export const exportProjectToExternal = async (project, surveyConfig) => {
   try {
     const filename = `${project.name.replace(/[^a-zA-Z0-9]/g, '-')}-${new Date().toISOString().split('T')[0]}.json`;
     const projectData = {
-      project: project,
-      surveyConfig: surveyConfig,
+      project: stripOwnResponseSupabase(project),
+      surveyConfig: stripOwnResponseSupabase(surveyConfig),
       supabaseConfig: getSupabaseConfig(),
       savedAt: new Date().toISOString(),
       version: '2.0'
@@ -449,7 +450,7 @@ export const saveProjectAsTemplate = async (project, surveyConfig) => {
     console.log('🧹 Cleaning project data for template creation...');
     
     // ✅ Deep clean surveyConfig: remove ALL Supabase and sensitive data
-    const cleanedConfig = JSON.parse(JSON.stringify(surveyConfig));
+    const cleanedConfig = stripOwnResponseSupabase(JSON.parse(JSON.stringify(surveyConfig)));
     
     // ====== Root level cleanup ======
     const rootFieldsToRemove = [

@@ -12,7 +12,7 @@ export const isMediaStorageConfigured = isR2Configured;
 
 function ensureClient() {
   reinitializeSupabase();
-  if (!supabase) throw new Error('Supabase is not configured. Set credentials on the Host tab.');
+  if (!supabase) throw new Error('Supabase is not configured. Set it up on the Dataset tab (Supabase storage).');
   return supabase;
 }
 

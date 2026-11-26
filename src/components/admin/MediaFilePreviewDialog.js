@@ -1,3 +1,4 @@
+import { useMediaLibraryText } from '../../contexts/mediaLibraryI18n';
 /**
  * Lightbox-style preview for media library entries (image / video / audio).
  */
@@ -33,6 +34,7 @@ export default function MediaFilePreviewDialog({
   items = null,
   onNavigate = null,
 }) {
+  const tx = useMediaLibraryText();
   const list = useMemo(
     () => (Array.isArray(items) ? items.filter((m) => m?.url) : []),
     [items],
@@ -79,11 +81,11 @@ export default function MediaFilePreviewDialog({
           <Chip
             size="small"
             icon={typeIcon(type)}
-            label={type || 'media'}
+            label={tx(type || 'media')}
             sx={{ bgcolor: 'grey.800', color: 'grey.100', '& .MuiChip-icon': { color: 'grey.300' } }}
           />
           <Typography variant="subtitle1" fontWeight={600} noWrap title={entry?.name} sx={{ minWidth: 0, flex: 1 }}>
-            {entry?.name || 'Media'}
+            {entry?.name || tx("Media")}
           </Typography>
           {list.length > 1 && index >= 0 && (
             <Typography variant="caption" color="grey.400">
@@ -91,7 +93,7 @@ export default function MediaFilePreviewDialog({
             </Typography>
           )}
           {entry?.url && (
-            <Tooltip title="Open in new tab">
+            <Tooltip title={tx("Open in new tab")}>
               <IconButton
                 size="small"
                 component="a"
@@ -106,7 +108,7 @@ export default function MediaFilePreviewDialog({
           )}
         </Stack>
         <IconButton
-          aria-label="Close"
+          aria-label={tx("Close")}
           onClick={onClose}
           sx={{ position: 'absolute', right: 8, top: 8, color: 'grey.300' }}
         >
@@ -116,7 +118,7 @@ export default function MediaFilePreviewDialog({
       <DialogContent dividers sx={{ borderColor: 'grey.800', position: 'relative', minHeight: 200 }}>
         {canPrev && (
           <IconButton
-            aria-label="Previous"
+            aria-label={tx("Previous")}
             onClick={() => onNavigate(list[index - 1])}
             sx={{
               position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)',
@@ -129,7 +131,7 @@ export default function MediaFilePreviewDialog({
         )}
         {canNext && (
           <IconButton
-            aria-label="Next"
+            aria-label={tx("Next")}
             onClick={() => onNavigate(list[index + 1])}
             sx={{
               position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)',
@@ -157,7 +159,7 @@ export default function MediaFilePreviewDialog({
         </Box>
         {(entry?.folder || entry?.key) && (
           <Typography variant="caption" color="grey.500" sx={{ display: 'block', mt: 1.5 }}>
-            {[entry.folder && `folder: ${entry.folder}`, entry.key && `key: ${entry.key}`]
+            {[entry.folder && tx("folder: {v0}", { v0: entry.folder }), entry.key && tx("key: {v0}", { v0: entry.key })]
               .filter(Boolean)
               .join(' · ')}
           </Typography>

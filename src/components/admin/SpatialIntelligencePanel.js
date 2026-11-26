@@ -1,3 +1,4 @@
+import { useMediaLibraryText } from '../../contexts/mediaLibraryI18n';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Box, Button, TextField, Typography,
@@ -12,7 +13,7 @@ import {
   mergeSpatialIntoConfig,
   pickSpatialSettings,
 } from '../../lib/spatialSettingsStore';
-import { LOCAL_USER_ID } from '../../lib/appMode';
+import { useAuth } from '../../contexts/AuthContext';
 import FeatureExtractionJobs from './FeatureExtractionJobs';
 
 function keyHint(key) {
@@ -42,7 +43,8 @@ export default function SpatialIntelligencePanel({
   onConfigChange,
   onFeaturesUpdated,
 }) {
-  const user = { id: LOCAL_USER_ID };
+  const tx = useMediaLibraryText();
+  const { user } = useAuth();
   const cfg = currentProject?.imageDatasetConfig || {};
   const savedFalKey = cfg.falApiKey || '';
   const savedHfToken = cfg.huggingFaceToken || '';
@@ -146,11 +148,11 @@ export default function SpatialIntelligencePanel({
     setEditingHf(!spatial.huggingFaceToken);
     setBusy(null);
     if (userResult.success) {
-      setMessage('Settings saved to this project and this browser.');
+      setMessage(tx("Settings saved to this project and your account (syncs across computers when logged in)."));
     } else if (user?.id) {
-      setMessage('Settings saved to this project. Browser defaults could not be saved.');
+      setMessage(tx("Settings saved to this project. Account sync unavailable — run supabase/spatial_intelligence.sql for user_spatial_settings."));
     } else {
-      setMessage('Settings saved to this project.');
+      setMessage(tx("Settings saved to this project. Log in with Supabase to sync across computers."));
     }
   };
 
@@ -171,7 +173,7 @@ export default function SpatialIntelligencePanel({
     setError(null);
     try {
       await testFalKey(falKey);
-      setMessage('Fal API key looks valid.');
+      setMessage(tx("Fal API key looks valid."));
     } catch (err) {
       setError(err.message || String(err));
     } finally {
@@ -185,8 +187,8 @@ export default function SpatialIntelligencePanel({
     try {
       const info = await testHuggingFaceToken(hfKey);
       setMessage(info.name
-        ? `HuggingFace token valid (user: ${info.name}).`
-        : 'HuggingFace token looks valid.');
+        ? tx("HuggingFace token valid (user: {v0}).", { v0: info.name })
+        : tx("HuggingFace token looks valid."));
     } catch (err) {
       setError(err.message || String(err));
     } finally {
@@ -196,12 +198,8 @@ export default function SpatialIntelligencePanel({
 
   return (
     <Box sx={{ mb: 3 }}>
-      <Typography variant="overline" color="text.secondary" sx={{ display: 'block', mb: 1, letterSpacing: 1 }}>
-        Spatial intelligence (Optional)
-      </Typography>
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
-        API keys for feature extraction. Live surveys never use SAM — SAM3 is only under Media library → Pre-annotate.
-        {!userSettingsLoaded ? ' Loading account settings…' : ''}
+      <Typography variant="overline" color="text.secondary" sx={{ display: 'block', mb: 1, letterSpacing: 1 }}>{' '}{tx("Spatial intelligence (Optional)")}{' '}</Typography>
+      <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>{' '}{tx("API keys for feature extraction. Live surveys never use SAM — SAM3 is only under Media library → Pre-annotate.")}{' '}{!userSettingsLoaded ? ` ${tx('Loading account settings…')}` : ''}
       </Typography>
 
       {(message || error) && (
@@ -221,16 +219,12 @@ export default function SpatialIntelligencePanel({
       >
         {/* HF token */}
         <Box sx={cardSx('info.light')}>
-          <Typography variant="subtitle1" sx={{ mb: 0.75, fontWeight: 700 }}>
-            HuggingFace token
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
-            Needed for SegFormer streetscape segmentation.
-          </Typography>
+          <Typography variant="subtitle1" sx={{ mb: 0.75, fontWeight: 700 }}>{' '}{tx("HuggingFace token")}{' '}</Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>{' '}{tx("Needed for SegFormer streetscape segmentation.")}{' '}</Typography>
           {!editingHf && (savedHfToken || hfKey) ? (
             <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', flexWrap: 'wrap', mb: 1.5 }}>
-              <Chip label={`HF saved · …${keyHint(savedHfToken || hfKey)}`} color="success" size="small" />
-              <Button size="small" onClick={() => setEditingHf(true)}>Replace</Button>
+              <Chip label={tx("HF saved · …{v0}", { v0: keyHint(savedHfToken || hfKey) })} color="success" size="small" />
+              <Button size="small" onClick={() => setEditingHf(true)}>{tx("Replace")}</Button>
             </Box>
           ) : (
             <TextField
@@ -245,27 +239,19 @@ export default function SpatialIntelligencePanel({
             />
           )}
           <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mt: 'auto' }}>
-            <Button size="small" variant="outlined" disabled={!hfKey || busy === 'test-hf'} onClick={handleTestHf}>
-              Test HF
-            </Button>
-            <Button size="small" color="error" variant="text" disabled={!savedHfToken && !hfKey} onClick={clearHfKey}>
-              Clear
-            </Button>
+            <Button size="small" variant="outlined" disabled={!hfKey || busy === 'test-hf'} onClick={handleTestHf}>{' '}{tx("Test HF")}{' '}</Button>
+            <Button size="small" color="error" variant="text" disabled={!savedHfToken && !hfKey} onClick={clearHfKey}>{' '}{tx("Clear")}{' '}</Button>
           </Box>
         </Box>
 
         {/* fal key */}
         <Box sx={cardSx('success.light')}>
-          <Typography variant="subtitle1" sx={{ mb: 0.75, fontWeight: 700 }}>
-            fal.ai API key
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
-            For SAM3 pre-annotation in Media library only (not surveys).
-          </Typography>
+          <Typography variant="subtitle1" sx={{ mb: 0.75, fontWeight: 700 }}>{' '}{tx("fal.ai API key")}{' '}</Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>{' '}{tx("For SAM3 pre-annotation in Media library only (not surveys).")}{' '}</Typography>
           {!editingFal && (savedFalKey || falKey) ? (
             <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', flexWrap: 'wrap', mb: 1.5 }}>
-              <Chip label={`fal saved · …${keyHint(savedFalKey || falKey)}`} color="success" size="small" />
-              <Button size="small" onClick={() => setEditingFal(true)}>Replace</Button>
+              <Chip label={tx("fal saved · …{v0}", { v0: keyHint(savedFalKey || falKey) })} color="success" size="small" />
+              <Button size="small" onClick={() => setEditingFal(true)}>{tx("Replace")}</Button>
             </Box>
           ) : (
             <TextField
@@ -285,26 +271,18 @@ export default function SpatialIntelligencePanel({
               variant="contained"
               disabled={busy === 'save-settings'}
               onClick={() => saveAllSettings()}
-            >
-              Save settings
-            </Button>
-            <Button size="small" variant="outlined" disabled={!falKey || busy === 'test-fal'} onClick={handleTestFal}>
-              Test fal
-            </Button>
-            <Button size="small" color="error" variant="text" disabled={!savedFalKey && !falKey} onClick={clearFalKey}>
-              Clear
-            </Button>
+            >{' '}{tx("Save settings")}{' '}</Button>
+            <Button size="small" variant="outlined" disabled={!falKey || busy === 'test-fal'} onClick={handleTestFal}>{' '}{tx("Test fal")}{' '}</Button>
+            <Button size="small" color="error" variant="text" disabled={!savedFalKey && !falKey} onClick={clearFalKey}>{' '}{tx("Clear")}{' '}</Button>
           </Box>
           {busy === 'save-settings' && (
-            <Typography variant="caption" color="text.secondary" sx={{ mt: 1 }}>Saving…</Typography>
+            <Typography variant="caption" color="text.secondary" sx={{ mt: 1 }}>{tx("Saving…")}</Typography>
           )}
         </Box>
 
         {/* Feature jobs */}
         <Box sx={cardSx('primary.light')}>
-          <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 700 }}>
-            Feature extraction
-          </Typography>
+          <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 700 }}>{' '}{tx("Feature extraction")}{' '}</Typography>
           <FeatureExtractionJobs
             compact
             r2Prefix={r2Prefix}

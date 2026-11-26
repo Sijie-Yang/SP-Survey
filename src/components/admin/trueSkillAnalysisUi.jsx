@@ -46,7 +46,7 @@ export const MAXDIFF_EXTRA_COLUMNS = [
 ];
 
 const INT_COLS = new Set([
-  'games', 'nRanks', 'wins', 'losses', 'best', 'worst', 'appearances',
+  'games', 'nRanks', 'wins', 'losses', 'ties', 'mark', 'best', 'worst', 'appearances',
 ]);
 const ASC_DEFAULT_COLS = new Set(['avgRank', 'imageKey']);
 export const TRUESKILL_PAGE_SIZE = 10;

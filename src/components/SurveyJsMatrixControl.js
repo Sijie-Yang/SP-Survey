@@ -56,6 +56,10 @@ export default function SurveyJsMatrixControl({
     <div className="sd-matrix sd-table-wrapper sp-surveyjs-matrix">
       <fieldset>
         <table className="sd-table sd-matrix__table sd-table--align-middle">
+          <colgroup>
+            <col className="sp-matrix-row-col" />
+            {colItems.map((col) => <col key={String(col.value)} />)}
+          </colgroup>
           <thead>
             <tr>
               <td />
@@ -76,7 +80,7 @@ export default function SurveyJsMatrixControl({
               return (
                 <tr key={String(row.value)} className="sd-table__row">
                   <td className="sd-table__cell sd-table__cell--row-text">
-                    {row.text}
+                    <span className="sp-matrix-row-label">{row.text}</span>
                   </td>
                   {colItems.map((col, colIndex) => {
                     const isChecked = selected === col.value

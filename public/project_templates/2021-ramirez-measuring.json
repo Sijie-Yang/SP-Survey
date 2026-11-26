@@ -1,0 +1,297 @@
+{
+  "id": "2021-ramirez-measuring",
+  "name": "Heterogeneous Perception of Safety",
+  "description": "Rebuilt from the published description of Ramírez, Hurtubia, Lobel & Rossetti (2021). Participants give their demographics once and then compare Place Pulse 2.0 image pairs on safety (required) and four optional perceptions, with explicit \"equally\" answers for ordinal logit models. Differences from the original study: (1) The original allowed unlimited pairs after the demographics; this template asks 15 safety pairs and 5 pairs for each other perception (survey rounds are not available). (2) Bundled images are photographs from the paper PDF (4 scenes), not the original full stimulus set.",
+  "author": "Ramírez, Hurtubia, Lobel & Rossetti",
+  "year": "2021",
+  "category": "Academic Research",
+  "tags": [
+    "official",
+    "paper"
+  ],
+  "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": null,
+  "website": "https://doi.org/10.1016/j.landurbplan.2020.104002",
+  "huggingfaceDataset": null,
+  "createdAt": "2026-10-02T00:00:00+00:00",
+  "imageDatasetConfig": {
+    "mediaFolderTags": {},
+    "mediaFolders": []
+  },
+  "preloadedImages": [],
+  "preloadedSource": null,
+  "preloadedAt": null,
+  "config": {
+    "title": "Perception of Urban Places",
+    "description": "Tell us a little about yourself, then compare pairs of street views.",
+    "logoPosition": "right",
+    "autoGrowComment": true,
+    "progressBarType": "questions",
+    "showProgressBar": "aboveheader",
+    "showQuestionNumbers": "off",
+    "spAnalysisRecommendation": {
+      "citation": "Ramírez et al. 2021",
+      "items": [
+        {
+          "questions": [
+            "safer",
+            "walkable",
+            "livable",
+            "beautiful",
+            "wealthier"
+          ],
+          "method": "long_export",
+          "groupBy": [
+            "gender",
+            "transport_mode"
+          ]
+        },
+        {
+          "questions": [
+            "safer",
+            "walkable",
+            "livable",
+            "beautiful",
+            "wealthier"
+          ],
+          "method": "trueskill_pairwise",
+          "tieHandling": "draw",
+          "scale": "0-10"
+        }
+      ]
+    },
+    "pages": [
+      {
+        "name": "page_demographics",
+        "elements": [
+          {
+            "name": "gender",
+            "type": "radiogroup",
+            "title": "Gender",
+            "choices": [
+              {
+                "value": "female",
+                "text": "Female"
+              },
+              {
+                "value": "male",
+                "text": "Male"
+              },
+              {
+                "value": "other",
+                "text": "Other"
+              },
+              {
+                "value": "prefer_not",
+                "text": "Prefer not to say"
+              }
+            ],
+            "isRequired": true
+          },
+          {
+            "name": "age_group",
+            "type": "radiogroup",
+            "title": "Age",
+            "choices": [
+              {
+                "value": "18_24",
+                "text": "18–24"
+              },
+              {
+                "value": "25_34",
+                "text": "25–34"
+              },
+              {
+                "value": "35_44",
+                "text": "35–44"
+              },
+              {
+                "value": "45_54",
+                "text": "45–54"
+              },
+              {
+                "value": "55_64",
+                "text": "55–64"
+              },
+              {
+                "value": "65_plus",
+                "text": "65+"
+              }
+            ],
+            "isRequired": true
+          },
+          {
+            "name": "nationality",
+            "type": "text",
+            "title": "Nationality",
+            "isRequired": true
+          },
+          {
+            "name": "country_of_residence",
+            "type": "text",
+            "title": "Current country of residence",
+            "isRequired": true
+          },
+          {
+            "name": "education",
+            "type": "radiogroup",
+            "title": "Educational level",
+            "choices": [
+              {
+                "value": "primary",
+                "text": "Primary"
+              },
+              {
+                "value": "secondary",
+                "text": "Secondary"
+              },
+              {
+                "value": "technical",
+                "text": "Technical / vocational"
+              },
+              {
+                "value": "university",
+                "text": "University"
+              },
+              {
+                "value": "postgraduate",
+                "text": "Postgraduate"
+              }
+            ],
+            "isRequired": true
+          },
+          {
+            "name": "transport_mode",
+            "type": "radiogroup",
+            "title": "Main transportation mode used",
+            "choices": [
+              {
+                "value": "walk",
+                "text": "Walking"
+              },
+              {
+                "value": "bicycle",
+                "text": "Bicycle"
+              },
+              {
+                "value": "public_transport",
+                "text": "Public transport"
+              },
+              {
+                "value": "car",
+                "text": "Car"
+              },
+              {
+                "value": "motorcycle",
+                "text": "Motorcycle"
+              },
+              {
+                "value": "other",
+                "text": "Other"
+              }
+            ],
+            "isRequired": true
+          }
+        ],
+        "title": "About you"
+      },
+      {
+        "name": "page_safer",
+        "elements": [
+          {
+            "name": "safer",
+            "type": "imagepicker",
+            "title": "Which place looks safer?",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 2,
+            "trialCount": 15,
+            "allowTie": true,
+            "tieLabel": "Equally safe"
+          }
+        ]
+      },
+      {
+        "name": "page_walkable",
+        "elements": [
+          {
+            "name": "walkable",
+            "type": "imagepicker",
+            "title": "Which place looks more walkable?",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": false,
+            "imageCount": 2,
+            "trialCount": 5,
+            "allowTie": true,
+            "tieLabel": "Equally walkable"
+          }
+        ]
+      },
+      {
+        "name": "page_livable",
+        "elements": [
+          {
+            "name": "livable",
+            "type": "imagepicker",
+            "title": "Which place looks more livable?",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": false,
+            "imageCount": 2,
+            "trialCount": 5,
+            "allowTie": true,
+            "tieLabel": "Equally livable"
+          }
+        ]
+      },
+      {
+        "name": "page_beautiful",
+        "elements": [
+          {
+            "name": "beautiful",
+            "type": "imagepicker",
+            "title": "Which place looks more beautiful?",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": false,
+            "imageCount": 2,
+            "trialCount": 5,
+            "allowTie": true,
+            "tieLabel": "Equally beautiful"
+          }
+        ]
+      },
+      {
+        "name": "page_wealthier",
+        "elements": [
+          {
+            "name": "wealthier",
+            "type": "imagepicker",
+            "title": "Which place looks wealthier?",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": false,
+            "imageCount": 2,
+            "trialCount": 5,
+            "allowTie": true,
+            "tieLabel": "Equally wealthy"
+          }
+        ]
+      }
+    ]
+  }
+}

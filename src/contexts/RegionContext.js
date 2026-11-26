@@ -1,5 +1,7 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { adminI18n } from './adminI18n';
+import { interfaceDictionary, normalizeUiLanguage } from '../lib/uiLanguages';
+import { onLocaleBundleLoaded } from './localeBundles';
 
 export const RegionContext = createContext();
 
@@ -72,6 +74,17 @@ const OSS_I18N = {
     connectCodex: 'Open AI Assistant',
     aiSettingsLocalKeyIntro: 'Connect an OpenAI or OpenRouter API key for this browser. There is no free hosted model.',
     aiSidebarEmptyConnect: 'Open Settings to connect your own API key.',
+    guideShareHeadline: 'Release, deploy and share',
+    guideShareWhy: 'Turns your draft into the participant version. You deploy the participant site yourself (for example on Vercel), and responses go to your own Supabase.',
+    guideShareDo: 'On Host: set up Supabase, fix anything the pre-launch check flags, release the snapshot, then deploy the participant site and save its URL. On Share: copy the link or download the QR code.',
+    guideShareEmpty: 'Not released yet. Release on Host, then deploy the participant site.',
+    guideTourTabsBody: 'Work left to right: Media, Builder, Host, Share, Results. Practice and Silicon help you test.',
+    guideTourMoreBody: 'Theme, Skills library and GitHub.',
+    guideTourLiveBody: 'Opens the local Live Survey in a new tab. The public link is the participant site you deploy on Host.',
+    guideAiSetupHint: 'The Assistant uses your own API key (DeepSeek, OpenRouter, OpenAI and others), stored by your local SP-Survey server.',
+    guideMcpTitle: 'Advanced: Codex, Cursor or Claude Code on this computer',
+    guideMcpBody: 'Open the SP-Survey folder in your coding agent while npm run dev is running. It edits the same local draft through the localhost agent API, with the same checks. Example prompt:',
+    guideMcpExample: 'Use the SP-Survey local agent API (GET http://localhost:3001/api/agent first). Create a survey about <your topic>.\nAdd question types <question types>.\nMy media is <description> in the folder <folder>.',
   },
   zh: {
     regionLabel: '区域',
@@ -130,6 +143,17 @@ const OSS_I18N = {
     connectCodex: '打开 AI 助手',
     aiSettingsLocalKeyIntro: '在此浏览器连接 OpenAI 或 OpenRouter API key。没有免费托管模型。',
     aiSidebarEmptyConnect: '打开设置，连接你自己的 API key。',
+    guideShareHeadline: '发布、部署并分享',
+    guideShareWhy: '把草稿变成参与者版本。参与者站点由你自己部署（例如 Vercel），答卷写入你自己的 Supabase。',
+    guideShareDo: '在「部署」页：配置 Supabase，处理发布前检查提示的问题，发布快照，再部署参与者站点并保存地址。在「分享」页：复制链接或下载二维码。',
+    guideShareEmpty: '尚未发布。请先在「部署」页发布，再部署参与者站点。',
+    guideTourTabsBody: '从左到右：媒体、设计、部署、分享、结果。「试填」和「硅基」用于测试。',
+    guideTourMoreBody: '主题、Skill 库和 GitHub。',
+    guideTourLiveBody: '在新标签页打开本机的线上问卷预览。公开链接是你在「部署」页部署的参与者站点。',
+    guideAiSetupHint: 'AI 助手使用你自己的 API 密钥（DeepSeek、OpenRouter、OpenAI 等），由本机 SP-Survey 服务保存。',
+    guideMcpTitle: '进阶：本机的 Codex、Cursor 或 Claude Code',
+    guideMcpBody: '在 npm run dev 运行时，用编程 agent 打开 SP-Survey 文件夹。它通过本机 agent API 编辑同一份草稿，检查规则相同。示例提示词：',
+    guideMcpExample: '使用 SP-Survey 本地 agent API（先 GET http://localhost:3001/api/agent）。创建一份关于 <你的主题> 的问卷。\n加入题型 <题型说明>。\n我的媒体是 <描述>，在文件夹 <文件夹> 里。',
   },
 };
 
@@ -143,7 +167,7 @@ export function RegionProvider({ children }) {
     () => localStorage.getItem('sp-survey-region') || REGIONS.GLOBAL
   );
   const [language, setLanguageState] = useState(
-    () => localStorage.getItem('sp-survey-language') || LANGUAGES.EN
+    () => normalizeUiLanguage(localStorage.getItem('sp-survey-language') || LANGUAGES.EN)
   );
 
   const setRegion = (r) => {
@@ -160,15 +184,32 @@ export function RegionProvider({ children }) {
   };
 
   const setLanguage = (l) => {
-    setLanguageState(l);
-    localStorage.setItem('sp-survey-language', l);
+    const next = normalizeUiLanguage(l);
+    setLanguageState(next);
+    localStorage.setItem('sp-survey-language', next);
   };
 
+  // Re-render once a lazily loaded language bundle arrives (UI or survey language).
+  const [bundleVersion, setBundleVersion] = useState(0);
+  useEffect(() => onLocaleBundleLoaded(() => setBundleVersion((n) => n + 1)), []);
+
   const isChinaMode = region === REGIONS.CHINA;
-  const t = i18n[language];
+  const t = useMemo(() => {
+    // Self-hosted wording (Host tab, your own Supabase) wins over the shared text.
+    const base = interfaceDictionary(language);
+    const overlay = String(language).toLowerCase().startsWith('zh') ? OSS_I18N.zh : (language === 'en' ? OSS_I18N.en : null);
+    return overlay ? { ...base, ...overlay } : base;
+  }, [language, bundleVersion]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // A stable value keeps every useRegion() consumer from re-rendering when
+  // the provider's parent re-renders.
+  const value = useMemo(
+    () => ({ region, setRegion, language, setLanguage, isChinaMode, t, bundleVersion }),
+    [region, language, isChinaMode, t, bundleVersion], // eslint-disable-line react-hooks/exhaustive-deps
+  );
 
   return (
-    <RegionContext.Provider value={{ region, setRegion, language, setLanguage, isChinaMode, t }}>
+    <RegionContext.Provider value={value}>
       {children}
     </RegionContext.Provider>
   );

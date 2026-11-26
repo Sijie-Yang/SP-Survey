@@ -81,6 +81,34 @@ describe('surveyMediaInjection set/category picking', () => {
     expect(assignment.images).toEqual([]);
   });
 
+  test('sample category mode compares two categories and can redraw a breed', () => {
+    jest.spyOn(Math, 'random').mockRestore();
+    const pool = makePool(['a', 'b', 'c'].flatMap((folder) => [1, 2, 3, 4].map((i) => ({ name: `${folder}-${i}.jpg`, folder }))));
+    const tags = { a: 'category', b: 'category', c: 'category' };
+    const question = categoryQuestion({
+      mediaCategoryMode: 'sample',
+      mediaPerCategory: 1,
+      imageCount: 2,
+      mediaFolders: ['a', 'b', 'c'],
+    });
+    expect(expectedCategoryImageCount(pool, question, tags)).toBe(2);
+    const assignment = pickRandomMediaForQuestion(pool, question, new Set(), new Set(), null, tags);
+    expect(assignment.images).toHaveLength(2);
+    expect(new Set(assignment.images.map((img) => img.folder)).size).toBe(2);
+    expect(assignment.categories).toHaveLength(2);
+
+    const seen = new Map();
+    for (let i = 0; i < 40; i += 1) {
+      const draw = pickRandomMediaForQuestion(pool, { ...question, excludePreviouslyUsedImages: false }, new Set(), new Set(), null, tags);
+      draw.images.forEach((img) => {
+        const names = seen.get(img.folder) || new Set();
+        names.add(img.name);
+        seen.set(img.folder, names);
+      });
+    }
+    expect([...seen.values()].some((names) => names.size > 1)).toBe(true);
+  });
+
   test('pickRandomMediaForQuestion category mode draws per category', () => {
     const assignment = pickRandomMediaForQuestion(
       FIXTURE_POOL,
@@ -109,10 +137,12 @@ describe('surveyMediaInjection set/category picking', () => {
     const used = new Set();
     const first = pickRandomMediaForQuestion(pool, question, used, new Set(), null, tags);
     expect(first.images).toHaveLength(2);
-    expect(first.categories).toEqual(['a']);
+    // Which complete category comes first is up to the shuffle; the two draws must use both.
+    expect(['a', 'b']).toContain(first.categories[0]);
+    expect(first.categories).toHaveLength(1);
     first.images.forEach((img) => used.add(img.media_id));
     const second = pickRandomMediaForQuestion(pool, question, used, new Set(), null, tags);
-    expect(second.categories).toEqual(['b']);
+    expect(second.categories).toEqual([first.categories[0] === 'a' ? 'b' : 'a']);
     second.images.forEach((img) => used.add(img.media_id));
     expect(pickRandomMediaForQuestion(pool, question, used, new Set(), null, tags).images).toEqual([]);
     const repeat = pickRandomMediaForQuestion(pool, { ...question, excludePreviouslyUsedImages: false }, used, new Set(), null, tags);

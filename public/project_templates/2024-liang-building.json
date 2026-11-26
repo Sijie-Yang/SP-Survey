@@ -9,6 +9,9 @@
     "official"
   ],
   "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000032.jpg",
   "website": "https://doi.org/10.1016/j.buildenv.2024.111875",
   "huggingfaceDataset": "seshing/sp-survey-building-facades-examples",
   "createdAt": "2026-05-20T02:18:47.285+00:00",
@@ -28,7 +31,9 @@
             "isRequired": true,
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Equal"
           },
           {
             "name": "original",
@@ -39,7 +44,9 @@
             "isRequired": true,
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Equal"
           },
           {
             "name": "ordered",
@@ -50,7 +57,9 @@
             "isRequired": true,
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Equal"
           },
           {
             "name": "pleasing",
@@ -61,7 +70,9 @@
             "isRequired": true,
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Equal"
           },
           {
             "name": "boring",
@@ -72,51 +83,31 @@
             "isRequired": true,
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          },
-          {
-            "name": "style_image",
-            "type": "image",
-            "title": "See below image:",
-            "imageFit": "cover",
-            "imageCount": 1,
-            "isRequired": false,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Equal"
           },
           {
             "name": "stype",
-            "type": "radiogroup",
-            "title": "Given the building facade below, how would you categorise its architectural style on the following scales?",
-            "choices": [
-              {
-                "text": "Historical",
-                "value": "historical"
-              },
-              {
-                "text": "Somewhat Historical",
-                "value": "somewhat_historical"
-              },
-              {
-                "text": "No Significant Style",
-                "value": "no_significant_style"
-              },
-              {
-                "text": "Somewhat Modern",
-                "value": "somewhat_modern"
-              },
-              {
-                "text": "Modern",
-                "value": "modern"
-              }
-            ],
+            "type": "imagerating",
+            "title": "How would you categorise the architectural style of this building facade?",
             "imageFit": "cover",
             "imageCount": 1,
             "isRequired": true,
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "rateMin": 1,
+            "rateMax": 5,
+            "rateLabels": [
+              "Historical",
+              "Somewhat Historical",
+              "No Significant Style",
+              "Somewhat Modern",
+              "Modern"
+            ],
+            "minRateDescription": "Historical",
+            "maxRateDescription": "Modern"
           }
         ],
         "description": ""
@@ -132,7 +123,34 @@
       "showPreviewBeforeComplete": "showAllQuestions"
     },
     "description": "In this study, we integrate a traditional survey-based evaluation framework with machine learning techniques to analyse human perception of over 250,000 building images from Singapore, San Francisco, and Amsterdam.",
-    "logoPosition": "right"
+    "logoPosition": "right",
+    "spAnalysisRecommendation": {
+      "citation": "Liang et al. 2024",
+      "items": [
+        {
+          "questions": [
+            "complex",
+            "original",
+            "ordered",
+            "pleasing",
+            "boring"
+          ],
+          "method": "trueskill_pairwise",
+          "tieHandling": "draw",
+          "runs": 1,
+          "scale": "0-10"
+        },
+        {
+          "questions": [
+            "stype"
+          ],
+          "method": "scalar_distribution",
+          "labels": {
+            "stype": "Style (1 = historical … 5 = modern)"
+          }
+        }
+      ]
+    }
   },
   "imageDatasetConfig": {
     "mediaFolderTags": {},

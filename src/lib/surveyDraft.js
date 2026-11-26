@@ -5,6 +5,11 @@ const PENDING_PREFIX = 'survey_pending_';
 export function restoreDraftSurveyJson(draft, currentConfig) {
   if (!draft?.finalSurveyJson) return null;
   const restored = JSON.parse(JSON.stringify(draft.finalSurveyJson));
+  // Drafts keep the SP-Scheme site's metadata only; the page comes from the current config.
+  if (restored.spSite && !restored.spSite.html) {
+    if (currentConfig?.spSite?.html) restored.spSite = currentConfig.spSite;
+    else delete restored.spSite;
+  }
   if (currentConfig?.locale != null) restored.locale = currentConfig.locale;
   // Older snapshots disabled the native bar without recording the custom bar's setting.
   // Recover that UI preference from current settings; new snapshots keep it explicitly.
@@ -43,8 +48,12 @@ export function saveDraft(projectId, participantId, payload) {
   if (!projectId || !participantId) return;
   const key = buildDraftKey(projectId, participantId);
   try {
+    const finalSurveyJson = payload?.finalSurveyJson?.spSite?.html
+      ? { ...payload.finalSurveyJson, spSite: { ...payload.finalSurveyJson.spSite, html: undefined } }
+      : payload?.finalSurveyJson;
     localStorage.setItem(key, JSON.stringify({
       ...payload,
+      ...(finalSurveyJson ? { finalSurveyJson } : {}),
       participantId,
       projectId,
       savedAt: new Date().toISOString(),

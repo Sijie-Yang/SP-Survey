@@ -63,7 +63,7 @@ export async function runSurveyPreflight(config, project, { participants = 5, on
   details.forEach((d, i) => {
     const q = questions[i];
     if (q.visibleIf || q.enableIf || q.requiredIf) d.warnings.push('Conditional logic needs a participant preview; this check visits every configured question.');
-    if (q.pairingMode && q.pairingMode !== 'random') d.warnings.push('This check has no live exposure/rating history. Balanced/adaptive allocation must also be checked during a pilot.');
+    if (q.pairingMode && q.pairingMode !== 'random') d.warnings.push('Balanced sampling is not simulated here: it shares images out across real participants. This check draws at random.');
     if (q.type === 'skillquestion') d.warnings.push('This checks the answer contract only. Verify the actual custom interaction in participant preview.');
     if (!d.displayOnly && d.example === undefined) d.warnings.push('No validated example answer is available. Test this task manually in participant preview.');
     if (!d.displayOnly && d.example !== undefined) {

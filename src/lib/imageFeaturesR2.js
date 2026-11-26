@@ -773,3 +773,47 @@ export function featureStatusFromMap(map, mediaEntry, models = FEATURE_MODELS) {
   });
   return { mediaId, status, records };
 }
+
+/**
+ * After template→project image copy: remap feature CSVs + copy preannotation JSONs.
+ */
+export async function copyFeatureCsvsTemplateToProject({
+  templatePrefix,
+  projectPrefix,
+  nameToNewMediaId,
+}) {
+  const results = [];
+  for (const model of FEATURE_MODELS) {
+    // eslint-disable-next-line no-await-in-loop
+    const rows = await loadFeatureCsv(templatePrefix, model);
+    if (!rows.length) continue;
+    const remapped = [];
+    rows.forEach((r) => {
+      const newId = nameToNewMediaId.get(r.name);
+      if (!newId) return;
+      remapped.push({
+        ...r,
+        media_id: newId,
+        name: r.name,
+      });
+    });
+    if (!remapped.length) continue;
+    // eslint-disable-next-line no-await-in-loop
+    const saved = await saveFeatureCsv(projectPrefix, model, remapped);
+    results.push({ model, ...saved });
+  }
+
+  const docs = await listAnnotationDocuments(templatePrefix);
+  let copied = 0;
+  for (const [name, newId] of nameToNewMediaId) {
+    const matches = docs.filter((d) => d.name === name);
+    const ids = new Set(matches.map((d) => d.media_id || d.image));
+    if (ids.size > 1) throw new Error(`Ambiguous template annotation name: ${name}`);
+    const doc = matches.sort((a, b) => Number(b.storage_key.includes('/by-id/')) - Number(a.storage_key.includes('/by-id/')) || String(b.updated_at).localeCompare(String(a.updated_at)))[0];
+    if (!doc) continue;
+    await savePreannotation(projectPrefix, { name, media_id: newId, key: newId, url: getMediaStoragePublicUrl(newId) }, doc);
+    copied += 1;
+  }
+  results.push({ model: 'preannotations', copied, errors: 0 });
+  return results;
+}

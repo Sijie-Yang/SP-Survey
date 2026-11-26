@@ -2,6 +2,7 @@
  * Hugging Face Dataset Integration
  * Provides functions to connect to and retrieve images from Hugging Face datasets
  */
+import { shuffled } from './shuffle.js';
 
 /**
  * Extract the best available image URL from Hugging Face API response
@@ -601,8 +602,7 @@ export const getRandomImagesFromHuggingFace = async (token, datasetName, count =
     console.log(`✅ Fetched ${response.images.length} images from batch`);
     
     // Randomly select the requested number of images from the batch
-    const shuffled = [...response.images].sort(() => 0.5 - Math.random());
-    const selectedImages = shuffled.slice(0, Math.min(count, shuffled.length));
+    const selectedImages = shuffled(response.images).slice(0, Math.min(count, response.images.length));
     
     console.log(`🎯 Selected ${selectedImages.length} random images`);
 

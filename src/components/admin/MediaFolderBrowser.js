@@ -118,6 +118,9 @@ export default function MediaFolderBrowser({
   onMoveComplete,
   openMoveSignal = 0,
   children = null,
+  headerActions = null,
+  headerContent = null,
+  showFileMoveAction = true,
   mediaCount = 0,
   disabled = false,
   /** Override R2 prefix (e.g. templates/{id}/). Default: projectR2Prefix(userId, projectId). */
@@ -408,8 +411,8 @@ export default function MediaFolderBrowser({
       elevation={0}
       sx={{
         mb: 3,
-        border: '2px solid',
-        borderColor: 'primary.light',
+        border: '1px solid',
+        borderColor: 'divider',
         borderRadius: 1.5,
         bgcolor: 'background.paper',
         overflow: 'hidden',
@@ -417,19 +420,22 @@ export default function MediaFolderBrowser({
     >
       <Box
         sx={{
-          px: 2.5,
+          px: { xs: 1.5, sm: 2.5 },
           pt: 2,
           pb: 1.5,
           borderBottom: '1px solid',
           borderColor: 'divider',
-          bgcolor: (t) => (t.palette.mode === 'dark' ? 'grey.900' : 'action.hover'),
+          bgcolor: 'background.paper',
         }}
       >
-        <Typography variant="subtitle1" sx={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
-          <Folder color="primary" fontSize="small" />{' '}{tx("Media library")}{' '}<Chip size="small" color="primary" variant="outlined" label={tx("{v0} file(s)", { v0: mediaCount || pool.length })} />
-          <Chip size="small" variant="outlined" label={currentFolder || '/'} sx={{ fontFamily: 'monospace' }} />
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>{' '}{tx("Left: folders (create, delete, tag as set / category). Right: files in the current folder.")}{' '}</Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 1.5 }}>
+          <Typography variant="subtitle1" sx={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap', minWidth: 0 }}>
+            <Folder color="primary" fontSize="small" />{' '}{tx("Media library")}{' '}<Chip size="small" color="primary" variant="outlined" label={tx("{v0} file(s)", { v0: mediaCount || pool.length })} />
+            <Chip size="small" variant="outlined" label={currentFolder || '/'} sx={{ fontFamily: 'monospace', maxWidth: '100%' }} />
+          </Typography>
+          {headerActions && <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>{headerActions}</Box>}
+        </Box>
+        {headerContent || <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>{' '}{tx("Left: folders (create, delete, tag as set / category). Right: files in the current folder.")}{' '}</Typography>}
       </Box>
 
       {status && (
@@ -452,9 +458,10 @@ export default function MediaFolderBrowser({
             width: { xs: '100%', md: 268 },
             flexShrink: 0,
             alignSelf: 'stretch',
-            borderRight: { md: '1px solid' },
+            borderRight: { xs: 'none', md: '1px solid' },
+            borderRightColor: { md: 'divider' },
             borderBottom: { xs: '1px solid', md: 'none' },
-            borderColor: 'divider',
+            borderBottomColor: { xs: 'divider' },
             bgcolor: (t) => (t.palette.mode === 'dark' ? 'grey.900' : 'grey.50'),
             display: 'flex',
             flexDirection: 'column',
@@ -540,7 +547,7 @@ export default function MediaFolderBrowser({
           <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 1.5 }} alignItems="center">
             <Typography variant="subtitle2" sx={{ fontWeight: 700, mr: 0.5 }}>{' '}{tx("Files in")}{' '}{currentFolder || tx('root')}
             </Typography>
-            <Button
+            {((showFileMoveAction && selectedMediaEntries.length > 0) || selectedFolders.size > 0) && <Button
               size="small"
               variant="outlined"
               startIcon={<DriveFileMove />}
@@ -552,7 +559,7 @@ export default function MediaFolderBrowser({
                   selectedMediaEntries.length ? tx("{v0} file", { v0: selectedMediaEntries.length }) : null,
                 ].filter(Boolean).join(', ')})`
                 : ''}
-            </Button>
+            </Button>}
           </Stack>
           <Box sx={{ flex: 1, minHeight: 0 }}>
             {children}

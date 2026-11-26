@@ -3,6 +3,8 @@
  * Runs in the browser via Canvas — no API / no neural net.
  */
 
+import { getR2ServerUrl, isR2ProxyUnreachable, noteR2ProxyFailure } from './r2';
+
 export const L0_MODEL = 'sp_l0_v1';
 export const L0_MAX_SIDE = 512;
 
@@ -121,10 +123,12 @@ function needsCorsProxy(url) {
   }
 }
 
-/** Fetch a public Supabase Storage image as a canvas-safe blob URL. */
+/** Fetch cross-origin image via public URL (CORS) or Express/CF proxy → blob URL (canvas-safe). */
 async function resolveLoadableUrl(url) {
   if (!needsCorsProxy(url)) return { src: url, revoke: null };
 
+  // Prefer direct public fetch (R2.dev usually allows CORS) so CRA-only local
+  // dev does not require Express :3001 image-proxy.
   try {
     const direct = await fetch(url, { mode: 'cors', cache: 'no-store' });
     if (direct.ok) {
@@ -133,14 +137,36 @@ async function resolveLoadableUrl(url) {
       return { src: objectUrl, revoke: () => URL.revokeObjectURL(objectUrl) };
     }
   } catch {
-    /* report a useful CORS/storage error below */
+    /* fall through to proxy */
   }
-  throw new Error('Could not load the image from Supabase Storage. Ensure survey-images is public and allows browser CORS.');
+
+  if (isR2ProxyUnreachable()) {
+    throw new Error('R2 image-proxy unreachable; cannot load cross-origin image for features');
+  }
+
+  const proxy = `${getR2ServerUrl()}/api/r2/image-proxy?url=${encodeURIComponent(url)}`;
+  try {
+    const res = await fetch(proxy);
+    if (!res.ok) {
+      const text = await res.text();
+      let msg = text.slice(0, 200);
+      try {
+        msg = JSON.parse(text).error || msg;
+      } catch { /* ignore */ }
+      throw new Error(msg || `Image proxy failed (HTTP ${res.status})`);
+    }
+    const blob = await res.blob();
+    const objectUrl = URL.createObjectURL(blob);
+    return { src: objectUrl, revoke: () => URL.revokeObjectURL(objectUrl) };
+  } catch (err) {
+    noteR2ProxyFailure(err, 'image-proxy');
+    throw err;
+  }
 }
 
 /**
  * Load image URL into ImageData.
- * Cross-origin Supabase URLs are fetched as blobs to avoid canvas tainting.
+ * Cross-origin R2 URLs go through /api/r2/image-proxy to avoid CORS tainting.
  */
 export async function loadImageData(url, maxSide = L0_MAX_SIDE, timeoutMs = 20000) {
   const { src, revoke } = await resolveLoadableUrl(url);

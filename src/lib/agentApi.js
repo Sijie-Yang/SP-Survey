@@ -83,6 +83,29 @@ export async function getCredentialStatus() {
   };
 }
 
+export async function translateSurveyText(body) {
+  return agentFetch('/api/agent/translate', {
+    method: 'POST',
+    body: JSON.stringify(body),
+  });
+}
+
+/** Ask the Assistant model to write the analysis code for one Results question. */
+export async function writeQuestionAnalysis(body) {
+  return agentFetch('/api/agent/results/ai-analysis', {
+    method: 'POST',
+    body: JSON.stringify(body),
+  });
+}
+
+/** Fetch a published survey page on the server (no CORS), with its same-site scripts inlined. */
+export async function fetchSurveyPage(url) {
+  return agentFetch('/api/agent/sp-scheme/fetch-page', {
+    method: 'POST',
+    body: JSON.stringify({ url }),
+  });
+}
+
 export async function storeProviderCredential(body) {
   return agentFetch('/api/agent/credentials/providers', {
     method: 'POST',
@@ -143,6 +166,8 @@ export async function sendAgentChat({
   onSnapshot,
   editorContext = null,
   apiKey = '',
+  review = null,
+  language = null,
 }) {
   const { key } = localKeyHint();
   const started = await agentFetch('/api/agent/chat', {
@@ -163,6 +188,8 @@ export async function sendAgentChat({
       assistantMode,
       editorContext,
       apiKey: apiKey || key,
+      ...(review ? { review } : {}),
+      ...(language ? { language } : {}),
     }),
   });
   if (!started?.success || !started?.queued || !started?.sessionId || !started?.runId) {
@@ -187,6 +214,20 @@ export async function archiveAiSession(sessionId) {
 
 export async function getAiRun(runId) {
   return agentFetch(`/api/agent/runs/${encodeURIComponent(runId)}`);
+}
+
+export async function estimateAgentReview({ projectId, provider, model, review }) {
+  return agentFetch('/api/agent/review/estimate', {
+    method: 'POST',
+    body: JSON.stringify({ projectId, provider, model, review }),
+  });
+}
+
+export async function applyAgentReview(runId, rounds = []) {
+  return agentFetch(`/api/agent/runs/${encodeURIComponent(runId)}/review/apply`, {
+    method: 'POST',
+    body: JSON.stringify({ rounds }),
+  });
 }
 
 export async function cancelAiRun(runId) {
@@ -295,7 +336,15 @@ export async function waitForAgentRun(sessionId, runId, {
     }
     await new Promise((resolve) => setTimeout(resolve, intervalMs));
   }
-  return { success: false, error: 'Assistant run timed out', sessionId, runId };
+  // Stop the run so it does not keep writing the draft after the browser gave up.
+  await cancelAiRun(currentRunId).catch(() => null);
+  return {
+    success: false,
+    sessionId,
+    runId: currentRunId,
+    code: 'AGENT_RUN_TIMEOUT',
+    error: 'The Agent timed out and was stopped so it would not keep writing the draft.',
+  };
 }
 
 export async function listSiliconPersonas(projectId) {
@@ -363,4 +412,45 @@ export async function getSiliconCompare(runId) {
 
 export async function exportSiliconRun(runId) {
   return agentFetch(`/api/agent/silicon/runs/${encodeURIComponent(runId)}/export`);
+}
+
+export async function approveMcpOAuth({
+  client_id,
+  redirect_uri,
+  code_challenge,
+  code_challenge_method = 'S256',
+  scopes,
+  resource,
+  state,
+}) {
+  return agentFetch('/oauth/approve', {
+    method: 'POST',
+    body: JSON.stringify({
+      client_id,
+      redirect_uri,
+      code_challenge,
+      code_challenge_method,
+      scopes,
+      resource,
+      state,
+    }),
+  });
+}
+
+export async function publishProjectViaApi(projectId, summary) {
+  return agentFetch(`/api/agent/projects/${encodeURIComponent(projectId)}/publish`, {
+    method: 'POST',
+    body: JSON.stringify({ summary }),
+  });
+}
+
+/**
+ * Switch a study between its SP-Scheme page and the classic editor
+ * (direction 'classic' keeps the page as a backup; 'spscheme' brings it back).
+ */
+export async function switchSpSchemeEditor(projectId, direction) {
+  return agentFetch('/api/agent/sp-scheme/switch', {
+    method: 'POST',
+    body: JSON.stringify({ projectId, direction }),
+  });
 }

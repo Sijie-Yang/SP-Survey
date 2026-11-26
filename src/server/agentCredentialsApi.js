@@ -114,6 +114,33 @@ function resolveProviderRequest(store, { provider, apiKey, baseUrl, model } = {}
   };
 }
 
+/**
+ * The Assistant's provider, model and key, chosen the same way as
+ * /api/agent/credentials/status: the saved Assistant setting, else the first
+ * configured provider and its default model. Null when no key is stored.
+ */
+/** A saved model id, or the model that replaced it when the provider retired it. */
+async function currentModel(providerId, modelId) {
+  const catalog = await loadCatalog();
+  return catalog.currentModelId(providerId, modelId);
+}
+
+async function resolveAssistantRoute({ provider, model } = {}) {
+  const catalog = await loadCatalog();
+  const store = await readStore();
+  const directory = directoryFromStore(catalog, store);
+  const configured = directory.filter((row) => row.configured && row.userConfigured);
+  const settings = store.settings || {};
+  const providerId = provider || settings.assistant_provider || configured[0]?.id || '';
+  const row = directory.find((item) => item.id === providerId) || null;
+  const request = resolveProviderRequest(store, { provider: providerId });
+  if (!row || !request) return null;
+  const modelId = model
+    || (providerId === settings.assistant_provider ? settings.assistant_model : '')
+    || row.defaultModels?.assistant || row.models?.[0]?.id || '';
+  return { ...request, provider: providerId, model: catalog.currentModelId(providerId, modelId), settings };
+}
+
 function registerAgentCredentialsApi(app) {
   app.get('/api/agent/credentials/status', async (_req, res) => {
     try {
@@ -136,12 +163,12 @@ function registerAgentCredentialsApi(app) {
         openai: { configured: configured.some((row) => row.id === 'openai') },
         defaultRoute: assistant ? {
           provider: assistant.id,
-          model: settings.assistant_model || assistant.defaultModels?.assistant || assistant.models[0]?.id || '',
+          model: catalog.currentModelId(assistant.id, settings.assistant_model || assistant.defaultModels?.assistant || assistant.models[0]?.id || ''),
           reasoningEffort: settings.assistant_reasoning_effort || null,
         } : null,
         siliconRoute: silicon ? {
           provider: silicon.id,
-          model: settings.silicon_model || silicon.defaultModels?.silicon || silicon.models[0]?.id || '',
+          model: catalog.currentModelId(silicon.id, settings.silicon_model || silicon.defaultModels?.silicon || silicon.models[0]?.id || ''),
           reasoningEffort: settings.silicon_reasoning_effort || null,
         } : null,
         settings,
@@ -288,6 +315,8 @@ function registerAgentCredentialsApi(app) {
 module.exports = {
   registerAgentCredentialsApi,
   readStore,
+  currentModel,
+  resolveAssistantRoute,
   resolveProviderRequest,
   hintFor,
 };

@@ -1,3 +1,4 @@
+import { QUESTION_TYPE_IDS } from '../platformSchema';
 import {
   sanitizeForAgent,
   findSecretFields,
@@ -78,10 +79,11 @@ describe('designProtocol validate', () => {
 });
 
 describe('designProtocol normalize + operations', () => {
-  test('capabilities expose the same 34 base types as the Builder', () => {
-    expect(DESIGN_CAPABILITIES.questionTypes).toHaveLength(34);
+  test('capabilities expose the same base types as the Builder', () => {
+    // Follow QUESTION_TYPE_IDS. mapannotation made a frozen length of 34 stale.
+    expect([...DESIGN_CAPABILITIES.questionTypes]).toEqual([...QUESTION_TYPE_IDS]);
     expect(DESIGN_CAPABILITIES.questionTypes).toEqual(expect.arrayContaining([
-      'number', 'expression', 'skillquestion', 'imageannotation', 'mediamatrix',
+      'number', 'expression', 'skillquestion', 'imageannotation', 'mapannotation', 'mediamatrix',
       'imagecheckbox', 'mediacheckbox',
     ]));
   });

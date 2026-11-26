@@ -3,8 +3,15 @@ import {
   Alert,
   Box,
   Button,
-  Card,
-  CardContent,
+  Checkbox,
+  FormControlLabel,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Paper,
+  Tooltip,
   Chip,
   FormControl,
   InputLabel,
@@ -15,6 +22,8 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { Add, DeleteOutline, HelpOutline, PeopleOutline, QuestionAnswerOutlined, ScienceOutlined, Tune } from '@mui/icons-material';
+import { AdminActionBar, AdminActionButton, AdminPageHeader } from './AdminPageLayout';
 import { useRegion } from '../../contexts/RegionContext';
 import { tf } from '../../contexts/adminI18n';
 import {
@@ -65,10 +74,13 @@ const MEDIA_ERROR = {
 };
 
 export default function SiliconSamples({ currentProject, surveyConfig = null }) {
-  const { t } = useRegion();
+  const { t, language } = useRegion();
   const projectId = currentProject?.id;
   const [personas, setPersonas] = useState([]);
   const [runs, setRuns] = useState([]);
+  const [personaDialogOpen, setPersonaDialogOpen] = useState(false);
+  const [configDialog, setConfigDialog] = useState(null);
+  const [questionSearch, setQuestionSearch] = useState('');
   const [name, setName] = useState('');
   const [city, setCity] = useState('');
   const [notes, setNotes] = useState('');
@@ -88,17 +100,23 @@ export default function SiliconSamples({ currentProject, surveyConfig = null }) 
   const questionInitRef = useRef(null);
   projectIdRef.current = projectId;
   const questionReport = siliconQuestionReport(surveyConfig || currentProject?._surveyConfig || {});
+  const numberedQuestions = collectQuestions(surveyConfig || currentProject?._surveyConfig || {}).filter((q) => q?.name);
+  const reportByName = new Map([...questionReport.supported, ...questionReport.unverified, ...questionReport.unsupported].map((q) => [q.name, q]));
+  const questionRows = numberedQuestions.map((q, index) => {
+    const title = typeof q.title === 'object' && q.title
+      ? q.title[language] || q.title.default || q.name : q.title || q.name;
+    return { ...reportByName.get(q.name), number: index + 1, title };
+  });
+  const visibleQuestions = questionRows.filter((q) => `${q.number} ${q.title} ${q.name}`.toLowerCase().includes(questionSearch.trim().toLowerCase()));
   const supportedNames = questionReport.supported.map((item) => item.name).join('\0');
   const pretestNames = selectedQuestionNames;
   const hasUnsupported = questionReport.supported.length === 0 && questionReport.unsupported.length > 0;
   const hasNoSelectedQuestions = selectedQuestionNames.length === 0;
-  const isPartialPretest = questionReport.unsupported.length > 0 && pretestNames.length > 0;
-  const selectedPersonas = personas.filter((persona) => selectedIds.includes(persona.id));
-  const selectedRoute = visionRoutes.find((route) => route.value === overrideRoute);
+  const isPartialPretest = (questionReport.unsupported.length > 0 || questionReport.unverified.length > 0) && pretestNames.length > 0;
   const startPlan = siliconPlanSummary({
     personaCount: selectedIds.length,
     repeats: Number(repeats) || 1,
-    questions: collectQuestions(surveyConfig || currentProject?._surveyConfig || {}, pretestNames),
+    questions: pretestNames.length ? collectQuestions(surveyConfig || currentProject?._surveyConfig || {}, pretestNames) : [],
   });
 
   const reuseRun = async (run) => {
@@ -133,7 +151,10 @@ export default function SiliconSamples({ currentProject, surveyConfig = null }) 
       listSiliconRuns(projectId),
     ]);
     if (projectIdRef.current !== projectId) return;
-    if (p.success) setPersonas(p.personas || []);
+    if (p.success) {
+      setPersonas(p.personas || []);
+      setSelectedIds((current) => current.filter((id) => (p.personas || []).some((persona) => persona.id === id)));
+    }
     if (r.success) {
       const listed = r.runs || [];
       setRuns(listed);
@@ -194,11 +215,14 @@ export default function SiliconSamples({ currentProject, surveyConfig = null }) 
         return names;
       }
       const valid = current.filter((name) => names.includes(name));
-      return valid.length ? valid : names;
+      return valid;
     });
   }, [projectId, supportedNames]);
   useEffect(() => {
     setSelectedIds([]);
+    setConfigDialog(null);
+    setPersonaDialogOpen(false);
+    setQuestionSearch('');
     setCompare(null);
     setCompareCounts({});
     setError('');
@@ -208,6 +232,7 @@ export default function SiliconSamples({ currentProject, surveyConfig = null }) 
   const addPersona = async () => {
     if (!name.trim()) return;
     setBusy(true);
+    setError('');
     const result = await saveSiliconPersona({
       projectId,
       name: name.trim(),
@@ -218,6 +243,7 @@ export default function SiliconSamples({ currentProject, surveyConfig = null }) 
       setError(result.error || 'Could not save persona');
       return;
     }
+    setPersonaDialogOpen(false);
     setName('');
     setCity('');
     setNotes('');
@@ -317,170 +343,27 @@ export default function SiliconSamples({ currentProject, surveyConfig = null }) 
 
   return (
     <Box>
-      <Typography variant="h5" gutterBottom>{t.siliconPageTitle}</Typography>
-      <Alert severity="info" sx={{ mb: 2 }}>{t.siliconDisclaimer}</Alert>
+      <AdminPageHeader icon={<ScienceOutlined />} title={t.siliconPageTitle} description={t.siliconDescription} />
+      <AdminActionBar label={t.siliconPageTitle} primaryAction={<Button size="small" variant="contained" onClick={startRun} disabled={busy || !selectedIds.length || !overrideRoute || hasUnsupported || hasNoSelectedQuestions}>{t.siliconStart}</Button>}>
+        <AdminActionButton startIcon={<QuestionAnswerOutlined />} aria-haspopup="dialog" onClick={() => setConfigDialog('questions')}>{t.siliconQuestions} · {selectedQuestionNames.length}</AdminActionButton>
+        <AdminActionButton startIcon={<PeopleOutline />} aria-haspopup="dialog" onClick={() => setConfigDialog('personas')}>{t.siliconPersonas} · {selectedIds.length}</AdminActionButton>
+        <AdminActionButton startIcon={<Tune />} aria-haspopup="dialog" onClick={() => setConfigDialog('settings')}>{t.siliconRunSettings}</AdminActionButton>
+        <AdminActionButton startIcon={<HelpOutline />} aria-haspopup="dialog" onClick={() => setConfigDialog('details')}>{t.siliconRunDetails}</AdminActionButton>
+      </AdminActionBar>
       {error && <Alert severity="warning" sx={{ mb: 2 }} onClose={() => setError('')}>{error}</Alert>}
-      <Card variant="outlined" sx={{ mb: 2 }}>
-        <CardContent>
-          <Typography fontWeight={700} sx={{ mb: 1 }}>{t.siliconRun}</Typography>
+      <Paper variant="outlined" sx={{ p: { xs: 2, sm: 2.5 }, borderRadius: 1.5 }}>
+        <Stack spacing={1}>
+          <Typography variant="body2">{tf(t.siliconConfigSummary, startPlan)}</Typography>
           <Typography variant="body2" color="text.secondary">
-            {t.siliconDraftVersion}: {currentProject?.draftUpdatedAt || currentProject?.updated_at || '—'}
+            {visionRoutes.find((route) => route.value === overrideRoute)?.label || t.siliconNeedVlm}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {t.siliconModelLabel}: {selectedRoute?.label || t.modelsSelectVision}
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-            {t.siliconSelectedPersonas}: {selectedPersonas.length
-              ? selectedPersonas.map((persona) => persona.name).join(', ')
-              : t.siliconPickPersona}
-          </Typography>
-          {questionReport.supported.length === 0 && questionReport.unsupported.length === 0 ? (
-            <Typography variant="body2" color="text.secondary">{t.siliconNoAnswerable}</Typography>
-          ) : (
-            <>
-              <Typography variant="caption" sx={{ fontWeight: 700 }}>{t.siliconSupportedQs}</Typography>
-              <Stack direction="row" spacing={0.5} sx={{ flexWrap: 'wrap', mb: 1 }}>
-                {questionReport.supported.map((item) => (
-                  <Chip
-                    key={item.name}
-                    size="small"
-                    color={selectedQuestionNames.includes(item.name) ? 'primary' : 'default'}
-                    onClick={() => setSelectedQuestionNames((current) => (
-                      current.includes(item.name)
-                        ? current.filter((name) => name !== item.name)
-                        : [...current, item.name]
-                    ))}
-                    label={`${item.name} (${item.type})`}
-                    sx={{ mb: 0.5 }}
-                  />
-                ))}
-              </Stack>
-              {questionReport.unverified?.length > 0 && (
-                <>
-                  <Typography variant="caption" sx={{ fontWeight: 700 }}>{t.siliconUnverifiedQs}</Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                    {questionReport.unverified.map((item) => `${item.name} (${item.type})`).join(', ')}
-                  </Typography>
-                </>
-              )}
-              <Typography variant="caption" sx={{ fontWeight: 700 }}>{t.siliconUnsupportedQs}</Typography>
-              {questionReport.unsupported.length === 0 ? (
-                <Typography variant="body2" color="text.secondary">—</Typography>
-              ) : (
-                questionReport.unsupported.map((item) => (
-                  <Typography key={item.name} variant="body2" color="warning.main">
-                    {item.name} ({item.type}): {item.reason}
-                  </Typography>
-                ))
-              )}
-            </>
-          )}
-          {isPartialPretest && (
-            <Alert severity="warning" sx={{ mt: 1 }}>{t.siliconPartialPretest}</Alert>
-          )}
-          {hasUnsupported && (
-            <Alert severity="warning" sx={{ mt: 1 }}>{t.siliconCannotStart}</Alert>
-          )}
-        </CardContent>
-      </Card>
-
-      <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} alignItems="stretch">
-        <Card variant="outlined" sx={{ flex: 1 }}>
-          <CardContent>
-            <Typography fontWeight={700} sx={{ mb: 1 }}>{t.siliconPersonas}</Typography>
-            <Stack spacing={1} sx={{ mb: 2 }}>
-              <TextField size="small" label={t.siliconName} value={name} onChange={(e) => setName(e.target.value)} />
-              <TextField size="small" label={t.siliconCity} value={city} onChange={(e) => setCity(e.target.value)} />
-              <TextField size="small" label={t.siliconNotes} value={notes} onChange={(e) => setNotes(e.target.value)} multiline minRows={2} />
-              <Button variant="outlined" onClick={addPersona} disabled={busy}>{t.siliconAddPersona}</Button>
-            </Stack>
-            {personas.map((p) => (
-              <Stack key={p.id} direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
-                <Chip
-                  label={p.name}
-                  color={selectedIds.includes(p.id) ? 'primary' : 'default'}
-                  onClick={() => togglePersona(p.id)}
-                />
-                <Button size="small" color="error" onClick={() => deleteSiliconPersona(p.id).then(refresh)}>
-                  {t.siliconRemove}
-                </Button>
-              </Stack>
-            ))}
-          </CardContent>
-        </Card>
-
-        <Card variant="outlined" sx={{ flex: 1 }}>
-          <CardContent>
-            <Typography fontWeight={700} sx={{ mb: 1 }}>{t.siliconRun}</Typography>
-            <FormControl size="small" fullWidth sx={{ mb: 2 }}>
-              <InputLabel>{t.siliconOverrideModel}</InputLabel>
-              <Select
-                label={t.siliconOverrideModel}
-                value={visionRoutes.some((route) => route.value === overrideRoute) ? overrideRoute : ''}
-                onChange={(event) => {
-                  const value = event.target.value;
-                  setOverrideRoute(value);
-                  const hit = visionRoutes.find((route) => route.value === value);
-                  setOverrideEffort(hit?.defaultEffort || '');
-                }}
-              >
-                <MenuItem value="" disabled>{t.modelsSelectVision}</MenuItem>
-                {visionRoutes.map((route) => (
-                  <MenuItem key={route.value} value={route.value}>{route.label}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            {visionRoutes.find((route) => route.value === overrideRoute)?.reasoningEfforts && (
-              <FormControl size="small" fullWidth sx={{ mb: 2 }}>
-                <InputLabel>{t.siliconEffort}</InputLabel>
-                <Select
-                  label={t.siliconEffort}
-                  value={overrideEffort}
-                  onChange={(event) => setOverrideEffort(event.target.value)}
-                >
-                  {Object.keys(visionRoutes.find((route) => route.value === overrideRoute).reasoningEfforts).map((effort) => (
-                    <MenuItem key={effort} value={effort}>{effort}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            )}
-            <TextField
-              size="small"
-              type="number"
-              label={t.siliconRepeats}
-              value={repeats}
-              onChange={(e) => setRepeats(e.target.value)}
-              sx={{ mb: 2, width: 140 }}
-            />
-            <TextField
-              size="small"
-              type="number"
-              label={t.siliconBudget}
-              value={budgetTokens}
-              inputProps={{ min: 512, max: 100000, step: 1000 }}
-              onChange={(e) => setBudgetTokens(e.target.value)}
-              sx={{ mb: 2, ml: { xs: 0, sm: 1 }, width: 160 }}
-            />
-            <Stack direction="row" spacing={1} alignItems="center" sx={{ flexWrap: 'wrap' }}>
-              <Button variant="contained" onClick={startRun} disabled={busy || !overrideRoute || hasUnsupported || hasNoSelectedQuestions}>{t.siliconStart}</Button>
-              <Typography variant="body2" color="text.secondary">
-                {tf(t.siliconConfigSummary, startPlan)}
-              </Typography>
-            </Stack>
-            {busy && <LinearProgress sx={{ mt: 2 }} />}
-            <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-              {t.siliconNeedVlm}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-              {t.siliconDraftSnapshot}
-            </Typography>
-          </CardContent>
-        </Card>
-      </Stack>
-
-      <Card variant="outlined" sx={{ mt: 2 }}>
-        <CardContent>
-          <Typography fontWeight={700} sx={{ mb: 1 }}>{t.siliconRuns}</Typography>
+          {!selectedIds.length && <Typography variant="body2" color="text.secondary">{t.siliconPickPersona}</Typography>}
+          {hasNoSelectedQuestions && <Typography variant="body2" color="text.secondary">{t.siliconSelectQuestions}</Typography>}
+          {isPartialPretest && <Alert severity="warning">{t.siliconPartialPretest}</Alert>}
+          {busy && <LinearProgress />}
+        </Stack>
+        <Box sx={{ mt: runs.length || compare ? 3 : 0 }}>
+          {runs.length > 0 && <Typography variant="subtitle2" sx={{ mb: 1.5 }}>{t.siliconRuns} · {runs.length}</Typography>}
           {(runs || []).map((run) => {
             const counts = compareCounts[run.id] || {};
             const outcome = siliconRunOutcome(run, counts);
@@ -593,8 +476,144 @@ export default function SiliconSamples({ currentProject, surveyConfig = null }) 
               )}
             </Box>
           )}
-        </CardContent>
-      </Card>
+        </Box>
+      </Paper>
+      <Dialog open={configDialog === 'questions'} onClose={() => setConfigDialog(null)} fullWidth maxWidth="sm">
+        <DialogTitle>{t.siliconQuestions}</DialogTitle>
+        <DialogContent dividers>
+          <TextField size="small" fullWidth label={t.siliconSearchQuestions} value={questionSearch} onChange={(e) => setQuestionSearch(e.target.value)} sx={{ mb: 1.5 }} />
+          <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
+            <Button size="small" onClick={() => setSelectedQuestionNames(questionReport.supported.map((q) => q.name))}>{t.siliconSelectAll}</Button>
+            <Button size="small" onClick={() => setSelectedQuestionNames([])}>{t.siliconClearSelection}</Button>
+            <Typography variant="caption" color="text.secondary">{tf(t.siliconSelectedCount, { n: selectedQuestionNames.length })}</Typography>
+          </Stack>
+          {!questionRows.length && <Typography variant="body2" color="text.secondary">{t.siliconNoAnswerable}</Typography>}
+          {questionRows.length > 0 && !visibleQuestions.length && <Typography variant="body2" color="text.secondary">{t.siliconNoMatchingQuestions}</Typography>}
+          {visibleQuestions.map((q) => (
+            <Box key={q.name} sx={{ py: 1, borderBottom: '1px solid', borderColor: 'divider' }}>
+              <FormControlLabel
+                sx={{ m: 0, alignItems: 'flex-start', width: '100%', '& .MuiFormControlLabel-label': { minWidth: 0, flex: 1 } }}
+                disabled={!q.supported}
+                control={<Checkbox size="small" checked={q.supported && selectedQuestionNames.includes(q.name)} onChange={() => setSelectedQuestionNames((current) => current.includes(q.name) ? current.filter((name) => name !== q.name) : [...current, q.name])} />}
+                label={<Box sx={{ pt: 0.5, overflowWrap: 'anywhere' }}>
+                  <Typography variant="caption" color="primary.main" fontWeight={700}>{tf(t.siliconQuestionNumber, { n: q.number })}</Typography>
+                  <Typography variant="body2">{q.title}</Typography>
+                  <Typography variant="caption" color="text.secondary">{q.name} ({q.type})</Typography>
+                  {!q.supported && <Typography variant="caption" color="warning.main" sx={{ display: 'block' }}>{q.verified === false ? t.siliconUnverifiedQs : q.reason}</Typography>}
+                </Box>}
+              />
+            </Box>
+          ))}
+        </DialogContent>
+        <DialogActions><Button onClick={() => setConfigDialog(null)}>{t.resultsClose}</Button></DialogActions>
+      </Dialog>
+      <Dialog open={configDialog === 'personas'} onClose={() => setConfigDialog(null)} fullWidth maxWidth="sm">
+        <DialogTitle>{t.siliconPersonas}</DialogTitle>
+        <DialogContent dividers>
+          {error && <Alert severity="warning" sx={{ mb: 2 }}>{error}</Alert>}
+          <AdminActionButton startIcon={<Add />} onClick={() => setPersonaDialogOpen(true)} sx={{ mb: 2 }}>{t.siliconAddPersona}</AdminActionButton>
+          {!personas.length && <Typography variant="body2" color="text.secondary">{t.siliconPickPersona}</Typography>}
+          {personas.map((p) => (
+            <Stack key={p.id} direction="row" alignItems="center" sx={{ minWidth: 0 }}>
+              <FormControlLabel sx={{ m: 0, flex: 1, minWidth: 0, overflowWrap: 'anywhere' }} control={<Checkbox size="small" checked={selectedIds.includes(p.id)} onChange={() => togglePersona(p.id)} />} label={p.name} />
+              <Tooltip title={t.siliconRemove}>
+                <IconButton size="small" disabled={busy} aria-label={`${t.siliconRemove}: ${p.name}`} onClick={async () => {
+                  setBusy(true);
+                  try {
+                    const result = await deleteSiliconPersona(p.id);
+                    if (result.success) await refresh(); else setError(result.error || t.siliconRemoveFailed);
+                  } catch { setError(t.siliconRemoveFailed); } finally { setBusy(false); }
+                }}><DeleteOutline fontSize="small" /></IconButton>
+              </Tooltip>
+            </Stack>
+          ))}
+        </DialogContent>
+        <DialogActions><Button onClick={() => setConfigDialog(null)}>{t.resultsClose}</Button></DialogActions>
+      </Dialog>
+      <Dialog open={configDialog === 'settings'} onClose={() => setConfigDialog(null)} fullWidth maxWidth="sm">
+        <DialogTitle>{t.siliconRunSettings}</DialogTitle>
+        <DialogContent dividers>
+            <FormControl size="small" fullWidth sx={{ mb: 2 }}>
+              <InputLabel>{t.siliconOverrideModel}</InputLabel>
+              <Select
+                label={t.siliconOverrideModel}
+                value={visionRoutes.some((route) => route.value === overrideRoute) ? overrideRoute : ''}
+                onChange={(event) => {
+                  const value = event.target.value;
+                  setOverrideRoute(value);
+                  const hit = visionRoutes.find((route) => route.value === value);
+                  setOverrideEffort(hit?.defaultEffort || '');
+                }}
+              >
+                <MenuItem value="" disabled>{t.modelsSelectVision}</MenuItem>
+                {visionRoutes.map((route) => (
+                  <MenuItem key={route.value} value={route.value}>{route.label}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            {visionRoutes.find((route) => route.value === overrideRoute)?.reasoningEfforts && (
+              <FormControl size="small" fullWidth sx={{ mb: 2 }}>
+                <InputLabel>{t.siliconEffort}</InputLabel>
+                <Select
+                  label={t.siliconEffort}
+                  value={overrideEffort}
+                  onChange={(event) => setOverrideEffort(event.target.value)}
+                >
+                  {Object.keys(visionRoutes.find((route) => route.value === overrideRoute).reasoningEfforts).map((effort) => (
+                    <MenuItem key={effort} value={effort}>{effort}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            )}
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1.5} sx={{ mb: 2 }}>
+            <TextField
+              size="small"
+              type="number"
+              label={t.siliconRepeats}
+              value={repeats}
+              onChange={(e) => setRepeats(e.target.value)}
+              sx={{ flex: 1, minWidth: 0 }}
+            />
+            <TextField
+              size="small"
+              type="number"
+              label={t.siliconBudget}
+              value={budgetTokens}
+              inputProps={{ min: 512, max: 100000, step: 1000 }}
+              onChange={(e) => setBudgetTokens(e.target.value)}
+              sx={{ flex: 1, minWidth: 0 }}
+            />
+            </Stack>
+
+        </DialogContent>
+        <DialogActions><Button onClick={() => setConfigDialog(null)}>{t.resultsClose}</Button></DialogActions>
+      </Dialog>
+      <Dialog open={configDialog === 'details'} onClose={() => setConfigDialog(null)} fullWidth maxWidth="sm">
+        <DialogTitle>{t.siliconRunDetails}</DialogTitle>
+        <DialogContent dividers>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{t.siliconDisclaimer}</Typography>
+          <Typography variant="body2" color="text.secondary">{t.siliconDraftSnapshot}</Typography>
+          <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1, overflowWrap: 'anywhere' }}>
+            {t.siliconDraftVersion}: {currentProject?.draftUpdatedAt || currentProject?.updated_at || '—'}
+          </Typography>
+        </DialogContent>
+        <DialogActions><Button onClick={() => setConfigDialog(null)}>{t.resultsClose}</Button></DialogActions>
+      </Dialog>
+      <Dialog open={personaDialogOpen} onClose={() => !busy && setPersonaDialogOpen(false)} fullWidth maxWidth="sm">
+        <DialogTitle>{t.siliconAddPersona}</DialogTitle>
+        <DialogContent>
+          {error && <Alert severity="warning" sx={{ mb: 2 }}>{error}</Alert>}
+            <Stack spacing={1} sx={{ pt: 1 }}>
+              <TextField size="small" label={t.siliconName} value={name} onChange={(e) => setName(e.target.value)} />
+              <TextField size="small" label={t.siliconCity} value={city} onChange={(e) => setCity(e.target.value)} />
+              <TextField size="small" label={t.siliconNotes} value={notes} onChange={(e) => setNotes(e.target.value)} multiline minRows={2} />
+            </Stack>
+        </DialogContent>
+        <DialogActions>
+          <Button disabled={busy} onClick={() => setPersonaDialogOpen(false)}>{t.siliconCancel}</Button>
+          <Button variant="contained" disabled={busy || !name.trim()} onClick={addPersona}>{t.siliconAddPersona}</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

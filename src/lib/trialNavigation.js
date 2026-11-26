@@ -1,3 +1,4 @@
+import { allocationReadyToAdvance } from './allocationStats';
 import { sliderGroupAnswerValid } from './sliderScale';
 /**
  * Multi-trial navigation helpers for image/media questions.
@@ -23,22 +24,63 @@ export function supportsTrialLoop(type) {
   return TRIAL_LOOP_TYPES.has(type);
 }
 
-/** Forced-choice pickers only — rating / yes-no stay so people can change their mind. */
+/**
+ * Single-response and rating-style trials advance like a choice.
+ * Text, long answers, multi-select, ranking, and annotation stay on Next:
+ * those answers are not finished on the first change.
+ */
 export const AUTO_ADVANCE_TRIAL_TYPES = new Set([
   'imagepicker', 'mediapicker',
+  'imagerating', 'mediarating',
+  'imageboolean', 'mediaboolean',
+  'imagematrix', 'mediamatrix',
+  'imageslidergroup', 'mediaslidergroup',
+  'imagepointallocation', 'mediapointallocation',
 ]);
+
+/** Sliders and point budgets keep emitting until the gesture is released. */
+const COMPOSITE_AUTO_ADVANCE_TYPES = new Set([
+  'imageslidergroup', 'mediaslidergroup',
+  'imagepointallocation', 'mediapointallocation',
+]);
+
+const ALLOCATION_AUTO_ADVANCE_TYPES = new Set([
+  'imagepointallocation', 'mediapointallocation',
+]);
+
+export function questionTypeName(question) {
+  return question?.getType?.() || question?.type || '';
+}
 
 export function canAutoAdvanceTrial(question) {
   if (!question) return false;
-  const type = question.type || question.getType?.();
+  const type = questionTypeName(question);
   if (!AUTO_ADVANCE_TRIAL_TYPES.has(type)) return false;
   if (question.multiSelect === true) return false;
   return true;
 }
 
+export function isCompositeAutoAdvance(question) {
+  return COMPOSITE_AUTO_ADVANCE_TYPES.has(questionTypeName(question));
+}
+
+/**
+ * True when this trial should move on. Composite types wait until the answer
+ * is complete: every slider dimension, every matrix row, or a finished
+ * point budget. Text and other non-advancing types are never ready.
+ */
+export function trialReadyForAutoAdvance(trial, question) {
+  if (!canAutoAdvanceTrial(question)) return false;
+  if (!trialHasAnswer(trial, question)) return false;
+  if (ALLOCATION_AUTO_ADVANCE_TYPES.has(questionTypeName(question))) {
+    return allocationReadyToAdvance(trial?.value, question);
+  }
+  return true;
+}
+
 export function getTrialCount(questionOrElement) {
   if (!questionOrElement) return 1;
-  const type = questionOrElement.type || questionOrElement.getType?.();
+  const type = questionOrElement.getType?.() || questionOrElement.type;
   if (!supportsTrialLoop(type)) return 1;
   const raw = questionOrElement.trialCount;
   const n = parseInt(raw, 10);

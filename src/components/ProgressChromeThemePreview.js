@@ -63,7 +63,7 @@ export default function ProgressChromeThemePreview({ theme = null, showProgress 
         {q.trialCount > 1 && (
           <>
             <Box component="span" sx={{ mx: 0.75, fontWeight: 400, opacity: 0.55 }}>·</Box>
-            Trial {q.trialIndex + 1} / {q.trialCount}
+            Round {q.trialIndex + 1} / {q.trialCount}
           </>
         )}
       </Typography>

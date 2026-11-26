@@ -78,6 +78,8 @@ export function enrichSurveyResponses({
         return {
           ...(trial?.shown_media_set !== undefined ? { shown_media_set: trial.shown_media_set } : {}),
           ...(trial?.shown_media_categories !== undefined ? { shown_media_categories: trial.shown_media_categories } : {}),
+          ...(trial?.shown_at ? { shown_at: trial.shown_at } : {}),
+          ...(trial?.answered_at ? { answered_at: trial.answered_at } : {}),
           trial_index: trialIndex,
           answer: mappedAnswer,
           shown_images: shownImages,

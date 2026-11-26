@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography,
   Alert, CircularProgress, Chip, Box, TextField,
@@ -12,6 +12,8 @@ import {
 } from '../../lib/imageFeaturesR2';
 import { getMediaId, normalizeMediaEntry } from '../../lib/mediaUtils';
 import { isR2Configured } from '../../lib/r2';
+
+const PREANNOTATE_TOOLS = ['point', 'line', 'polygon', 'bbox'];
 
 /**
  * Researcher SAM3 pre-annotation dialog for one media library image.
@@ -32,10 +34,10 @@ export default function MediaPreannotateDialog({
   const [value, setValue] = useState({ image: '', shapes: [] });
   const [labelsText, setLabelsText] = useState(DEFAULT_SAM_LABELS.join(', '));
 
-  const labels = labelsText
+  const labels = useMemo(() => labelsText
     .split(/[,，]/)
     .map((s) => s.trim())
-    .filter(Boolean);
+    .filter(Boolean), [labelsText]);
 
   useEffect(() => {
     if (!open || !entry?.url || !r2Prefix) return undefined;
@@ -115,24 +117,27 @@ export default function MediaPreannotateDialog({
           <Chip size="small" label={`media_id: ${getMediaId(entry)}`} variant="outlined" />
           <Chip size="small" label={`shapes: ${value?.shapes?.length || 0}`} />
         </Box>
-        {loading ? (
-          <Box sx={{ py: 6, textAlign: 'center' }}>
-            <CircularProgress size={28} />
-            <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>Loading…</Typography>
-          </Box>
-        ) : (
+        {/* Keep the canvas (and its toolbar) mounted while loading; just lock input. */}
+        <Box sx={{ position: 'relative' }}>
           <ImageAnnotationCanvas
             imageUrl={entry.url}
             value={value}
             onChange={setValue}
-            allowedTools={['point', 'line', 'polygon', 'bbox']}
+            allowedTools={PREANNOTATE_TOOLS}
             annotationLabels={labels.length ? labels : DEFAULT_SAM_LABELS}
             enableSamAssist={!!String(falKey || '').trim()}
             falKey={falKey}
             projectId={projectId}
             maxAnnotations={80}
+            inputLocked={loading}
           />
-        )}
+          {loading && (
+            <Box sx={{ position: 'absolute', top: 12, right: 12, display: 'flex', alignItems: 'center', gap: 1, bgcolor: 'background.paper', borderRadius: 1, px: 1, py: 0.5, boxShadow: 1 }}>
+              <CircularProgress size={16} />
+              <Typography variant="body2" color="text.secondary">Loading…</Typography>
+            </Box>
+          )}
+        </Box>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} disabled={saving}>Cancel</Button>

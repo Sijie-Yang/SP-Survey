@@ -6,7 +6,7 @@ import {
   OPERATION_TYPES,
   PLATFORM_SCHEMA_HASH,
   QUESTION_TYPE_IDS,
-} from '../platformSchema';
+} from '../platformSchema/index.js';
 
 export const AGENT_SCOPES = {
   READ: 'surveys:read',
@@ -79,11 +79,11 @@ export const DESIGN_CAPABILITIES = {
         },
       },
       category: {
-        meaning: 'mediaCategoryMode=all (default): draw mediaPerCategory files from each selected category. single: each trial randomly selects one eligible category and draws mediaPerCategory files only from it. Eligible categories must have enough unused files for a complete trial.',
+        meaning: 'mediaCategoryMode=all (default): draw mediaPerCategory files from each selected category. single: each trial randomly selects one eligible category and draws mediaPerCategory files only from it. sample: each trial randomly selects enough eligible categories to fill imageCount (imageCount / mediaPerCategory, at least one) and draws mediaPerCategory files from each, so imageCount 2 compares two categories. Eligible categories must have enough unused files for a complete trial.',
         fields: {
           mediaAssignmentMode: 'category',
           mediaPerCategory: 1,
-          mediaCategoryMode: 'all | single (per trial)',
+          mediaCategoryMode: 'all | single (per trial) | sample (imageCount categories per trial)',
           mediaFolders: 'optional subset of category-tagged folders',
         },
       },
@@ -98,7 +98,7 @@ export const DESIGN_CAPABILITIES = {
       ],
     },
     relatedFields: [
-      'excludePreviouslyUsedImages', 'pairingMode (random|balanced|adaptive)',
+      'excludePreviouslyUsedImages', 'pairingMode (random|balanced: balanced shows every image equally often across participants)',
       'mediaType (any|image|video|audio)', 'mediaPresentation (stack|sequential)',
       'assignedMediaSetId / assignedMediaGroupId (runtime fill)', 'trialCount',
     ],

@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { isChineseLanguage, lookupPhrase } from '../lib/uiLanguages';
 import { useRegion } from './RegionContext';
 const zh = {
   "Select a project to practice questions.": "请选择一个项目开始练习。",
@@ -17,7 +18,7 @@ const zh = {
   "SAM3": "智能分割辅助",
   "Labels & Batch fold away · canvas stays · batch default replaces same Text prompt": "标签与批量设置可折叠；批处理默认替换同一提示词的结果",
   "Updating labels across project images…": "正在更新项目中的标注标签…",
-  "No images to pre-annotate. Upload images above, or set the type filter to Image.": "没有可标注的图片，请先上传图片或将类型筛选改为图片。",
+  "No images for this choice. Pick All images or another folder in Annotate.": "这个范围里没有图片。请在「标注」中选择全部图片或其他文件夹。",
   "Add a fal API key in Spatial Intelligence to enable SAM assist. Manual drawing still works.": "在图像分析设置中添加 fal API 密钥即可使用智能分割；手动标注可直接使用。",
   "shape": "个区域",
   "active": "已启用",
@@ -135,6 +136,7 @@ const zh = {
   "Please complete the required fields before submitting.": "请先完成必答项再提交。",
   "Failed to save response": "保存失败，请重试",
   "Failed to load question": "题目加载失败",
+  "Condition": "实验条件",
   "Select at least one question for the session.": "请至少选择一道练习题。",
   "Unlimited": "不限次数",
   "Repeats per question": "每题练习次数",
@@ -236,9 +238,9 @@ const zh = {
   "Run": "开始分割",
   "Image failed to load": "图片加载失败",
   "Retry": "重试",
-  "Click to add more points · drag vertices to edit · ✓ confirm · ✕ discard": "点击添加点，拖动顶点编辑；✓ 确认，✕ 取消",
+  "Click to add more points · Ctrl+Z or Backspace removes the last point · drag vertices to edit · ✓ confirm · ✕ discard": "点击添加点；Ctrl+Z 或退格删除最后一点；拖动顶点编辑；✓ 确认，✕ 取消",
   "SAM region draft · drag vertices to edit · ✓ save as polygon · ✕ / Esc discard": "分割结果预览：拖动顶点调整；✓ 保存，✕ 或 Esc 取消",
-  "Click to add vertices · click first point or double-click to close · ✓ confirm (≥3) · ✕ discard": "点击添加顶点，点击首点或双击闭合；至少 3 点后确认",
+  "Click to add vertices · Ctrl+Z or Backspace removes the last point · click first point or double-click to close · ✓ confirm (≥3) · ✕ discards": "点击添加顶点；Ctrl+Z 或退格删除最后一点；点击首点或双击闭合；至少 3 点后确认",
   "Drag body to move · handles to resize · ✓ confirm · ✕ discard": "拖动区域移动，拖动控制点调整大小；✓ 确认，✕ 取消",
   "Drag to adjust · ✓ confirm · ✕ discard": "拖动调整；✓ 确认，✕ 取消",
   "SAM Click: click object → polygon draft → ✓ · switch to Select to pick existing": "点击物体生成分割预览，再确认；切换选择模式可编辑已有区域",
@@ -252,5 +254,7 @@ const zh = {
   "Box: drag to draw (can overlap existing) · ✓ to confirm": "拖动绘制矩形，可与已有标注重叠；✓ 确认"
 };
 const friendly = { 'SAM3': 'Segmentation assist', 'Multi-model ablation': 'Prediction model comparison', 'Run ablation': 'Run model comparison', 'L0 only': 'Basic image features', 'Seg only': 'Semantic segmentation features', 'SAM pre-annot only': 'Researcher annotation features', 'All models': 'All features' };
-export function workflowText(text, language) { return (language === 'zh' ? zh[text] : friendly[text]) || text; }
+export function workflowText(text, language) {
+  return lookupPhrase(language, text) || (isChineseLanguage(language) ? zh[text] : friendly[text]) || text;
+}
 export function useWorkflowText() { const { language } = useRegion(); return useCallback((text) => workflowText(text, language), [language]); }

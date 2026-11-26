@@ -79,6 +79,8 @@ import {
   writeResultFromTools,
 } from '../../hooks/surveyAssistantUtils';
 import ChatMarkdown from './ChatMarkdown';
+import { ReviewCard, ReviewComposerOptions } from './ReviewPanel';
+import { reviewRoleEmoji, reviewRoleLabel } from '../../lib/reviewMode';
 
 function messageTools(msg) {
   const tools = msg?.tools || msg?.metadata?.tools;
@@ -127,6 +129,14 @@ function localizeLoadingStatus(status, t) {
   if (!status) return '';
   const using = String(status).match(/^Using (.+)[.…]$/);
   if (using) return (t.aiSidebarStatusUsingTool || 'Using {tool}…').replace('{tool}', using[1]);
+  const reviewRevising = String(status).match(/^Review round (\d+): revising…$/);
+  if (reviewRevising) return (t.aiReviewStatusRevising || status).replace('{round}', reviewRevising[1]);
+  const reviewRole = String(status).match(/^Review round (\d+): ([a-z]+)…$/);
+  if (reviewRole) {
+    return (t.aiReviewStatusRound || status)
+      .replace('{round}', reviewRole[1])
+      .replace('{role}', reviewRoleLabel(reviewRole[2], t));
+  }
   const step = String(status).match(/^Working on step (\d+)[.…]$/);
   if (step) return (t.aiSidebarStatusStep || 'Working on step {step}…').replace('{step}', step[1]);
   const map = {
@@ -164,6 +174,8 @@ export default function ChatAssistant({
   isPlatformMode = false,
   assistantMode = 'agent',
   onAssistantModeChange,
+  modeSwitch = null,
+  onModeSwitchChoice,
   contextEnabled,
   multiAgentReviewEnabled = false,
   reviewMode = '1v1',
@@ -214,6 +226,13 @@ export default function ChatAssistant({
   onClearEditorFocus,
   steerTarget = 'next-step',
   onSteerTargetChange,
+  reviewOptions = null,
+  reviewSettings = null,
+  onReviewSettingsChange,
+  reviewEstimate = null,
+  reviewApplying = '',
+  onReviewOptionsChange,
+  onApplyReview,
 }) {
   const { t } = useRegion();
   const navigate = useNavigate();
@@ -478,11 +497,12 @@ export default function ChatAssistant({
     }
   }, [currentProject?.id]);
   
+  const reviewActive = Boolean(isPlatformMode && assistantMode === 'review' && reviewSettings?.enabled !== false);
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       if (isLoading && userMessage.trim()) onSteerMessage?.();
-      else if (!sendBlocked && userMessage.trim()) onSendMessage();
+      else if (!sendBlocked && (userMessage.trim() || reviewActive)) onSendMessage();
     }
   };
   
@@ -518,7 +538,9 @@ export default function ChatAssistant({
     ? (t.aiSidebarSteerPlaceholder || 'Add an instruction to the running Agent…')
     : blockReason === 'no-project'
     ? t.aiSidebarSelectProject
-    : (apiKeyValid && !routeUnavailable ? t.aiSidebarComposerPlaceholder : t.aiSidebarComposerDisabled);
+    : (apiKeyValid && !routeUnavailable
+      ? (reviewActive ? (t.aiReviewPlaceholder || t.aiSidebarComposerPlaceholder) : t.aiSidebarComposerPlaceholder)
+      : t.aiSidebarComposerDisabled);
 
   const emptyTitle = t.aiSidebarEmptyTitle;
   const emptyBody = blockReason === 'no-project'
@@ -791,6 +813,7 @@ export default function ChatAssistant({
                                         >
                                           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1 }}>
                                             <Typography variant="caption" sx={{ fontWeight: 600 }}>
+                                              {tool.review?.role ? `${reviewRoleEmoji(tool.review.role)} ${reviewRoleLabel(tool.review.role, t)} · ` : ''}
                                               {tool.name || t.aiSidebarToolUnknown}
                                               {tool.repeatCount > 1 ? ` ×${tool.repeatCount}` : ''}
                                             </Typography>
@@ -844,6 +867,16 @@ export default function ChatAssistant({
                                   </AccordionDetails>
                                 </Accordion>
                               )}
+                              {!isUser && msg.metadata?.review ? (
+                                <ReviewCard
+                                  review={msg.metadata.review}
+                                  runId={msg.runId || msg.metadata.review.runId}
+                                  t={t}
+                                  isLoading={isLoading}
+                                  applying={reviewApplying}
+                                  onApply={onApplyReview}
+                                />
+                              ) : null}
                               {!isUser && msg.metadata?.questionModeWriteRefused && msg.metadata?.pendingWrite ? (
                                 <Button
                                   size="small"
@@ -912,9 +945,9 @@ export default function ChatAssistant({
                                     {msg.content}
                                   </Typography>
                                 ) : null
-                              ) : (
+                              ) : (msg.metadata?.review ? null : (
                                 <ChatMarkdown>{msg.content}</ChatMarkdown>
-                              )}
+                              ))}
                             </>
                           );
                         })()}
@@ -1022,7 +1055,7 @@ export default function ChatAssistant({
                 size="small"
                 variant="text"
                 color="warning"
-                onClick={onRevertAiChange}
+                onClick={() => onRevertAiChange?.()}
                 sx={{ borderRadius: 999, textTransform: 'none' }}
               >
                 {t.aiSidebarUndo}
@@ -1055,6 +1088,15 @@ export default function ChatAssistant({
             },
           }}
         >
+          {reviewActive ? (
+            <ReviewComposerOptions
+              t={t}
+              options={reviewOptions}
+              estimate={reviewEstimate}
+              onChange={onReviewOptionsChange}
+              disabled={isLoading}
+            />
+          ) : null}
           <TextField
             fullWidth
             multiline
@@ -1078,28 +1120,41 @@ export default function ChatAssistant({
               },
             }}
           />
+          {/* Self-hosted: both modes run on the local server too. */}
+          {(
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              data-testid="ai-mode-hint"
+              sx={{ display: 'block', px: 1.5, lineHeight: 1.4 }}
+            >
+              {assistantMode === 'spscheme'
+                ? (t.aiSidebarModeSpSchemeHint || 'SP-Scheme: the AI writes the whole participant page.')
+                : (t.aiSidebarModeClassicHint || 'Classic: the AI builds the survey question by question in the classic editor.')}
+            </Typography>
+          )}
           <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1} sx={{ px: 1, pb: 0.75 }}>
             <Stack direction="row" alignItems="center" spacing={0.5} sx={{ minWidth: 0, overflow: 'hidden' }}>
-              <Select
-                variant="standard"
-                disableUnderline
-                size="small"
-                value={assistantMode}
-                onChange={(event) => onAssistantModeChange?.(event.target.value)}
-                disabled={isLoading}
-                inputProps={{ 'aria-label': t.aiSidebarMode }}
-                sx={{
-                  maxWidth: 104,
-                  fontSize: '0.75rem',
-                  fontWeight: 600,
-                  '& .MuiSelect-select': { py: 0.5, pl: 0.75, pr: 2.5 },
-                }}
-              >
-                <MenuItem value="agent">{t.aiSidebarModeAgent}</MenuItem>
-                <MenuItem value="generate">{t.aiSidebarModeGenerate}</MenuItem>
-                <MenuItem value="adjust">{t.aiSidebarModeAdjust}</MenuItem>
-                <MenuItem value="question">{t.aiSidebarModeQuestion}</MenuItem>
-              </Select>
+              {(
+                <Select
+                  variant="standard"
+                  disableUnderline
+                  size="small"
+                  value={assistantMode}
+                  onChange={(event) => onAssistantModeChange?.(event.target.value)}
+                  disabled={isLoading}
+                  inputProps={{ 'aria-label': t.aiSidebarMode }}
+                  sx={{
+                    maxWidth: 104,
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    '& .MuiSelect-select': { py: 0.5, pl: 0.75, pr: 2.5 },
+                  }}
+                >
+                  <MenuItem value="spscheme">{t.aiSidebarModeSpScheme || 'SP-Scheme'}</MenuItem>
+                  <MenuItem value="agent">{t.aiSidebarModeClassic || 'Classic'}</MenuItem>
+                </Select>
+              )}
               {modelOptions.length > 0 ? (
                 <Select
                   variant="standard"
@@ -1150,7 +1205,7 @@ export default function ChatAssistant({
                   ))}
                 </Select>
               )}
-              {credentialHint && apiKeyValid && !isPlatformMode && (
+              {credentialHint && apiKeyValid && !isPlatformMode && !modelOptions.length && (
                 <Typography variant="caption" color="text.secondary" noWrap>{credentialHint}</Typography>
               )}
             </Stack>
@@ -1163,8 +1218,8 @@ export default function ChatAssistant({
                 onChange={(event) => onSteerTargetChange?.(event.target.value)}
                 sx={{ maxWidth: 148, fontSize: '0.75rem', '& .MuiSelect-select': { py: 0.5, pl: 0.5, pr: 2.25 } }}
               >
-                <MenuItem value="next-step">补充当前任务</MenuItem>
-                <MenuItem value="after-run">完成后执行</MenuItem>
+                <MenuItem value="next-step">{t.aiSteerTargetNow || 'Add to current task'}</MenuItem>
+                <MenuItem value="after-run">{t.aiSteerTargetAfter || 'Run after this task'}</MenuItem>
               </Select>
             )}
             {isLoading && userMessage.trim() && (
@@ -1174,7 +1229,7 @@ export default function ChatAssistant({
                 onClick={onSteerMessage}
                 sx={{ minWidth: 0, borderRadius: 999, textTransform: 'none' }}
               >
-                {steerTarget === 'after-run' ? '完成后执行' : (t.aiSidebarSteer || 'Steer')}
+                {steerTarget === 'after-run' ? (t.aiSteerTargetAfter || 'Run after this task') : (t.aiSidebarSteer || 'Steer')}
               </Button>
             )}
             <Tooltip title={isLoading ? (t.aiSidebarStop || 'Stop') : t.aiSidebarSend}>
@@ -1182,7 +1237,7 @@ export default function ChatAssistant({
                 <IconButton
                   color={isLoading ? 'error' : 'primary'}
                   onClick={isLoading ? onCancelRun : onSendMessage}
-                  disabled={isLoading ? !onCancelRun : (sendBlocked || !userMessage.trim())}
+                  disabled={isLoading ? !onCancelRun : (sendBlocked || (!userMessage.trim() && !reviewActive))}
                   aria-label={isLoading ? (t.aiSidebarStop || 'Stop') : t.aiSidebarSend}
                   sx={{
                     width: 36,
@@ -1280,6 +1335,42 @@ export default function ChatAssistant({
         chatBody
       )}
 
+      <Dialog
+        open={Boolean(modeSwitch)}
+        onClose={() => onModeSwitchChoice?.('cancel')}
+        maxWidth="xs"
+        fullWidth
+        data-testid="ai-mode-switch-dialog"
+      >
+        <DialogTitle>
+          {modeSwitch?.to === 'agent'
+            ? (t.aiModeSwitchClassicTitle || 'Switch this study to Classic?')
+            : (t.aiModeSwitchSpSchemeTitle || 'Bring back the SP-Scheme page?')}
+        </DialogTitle>
+        <DialogContent>
+          <Typography variant="body2" sx={{ whiteSpace: 'pre-line' }}>
+            {modeSwitch?.to === 'agent'
+              ? (t.aiModeSwitchClassicBody || 'The current SP-Scheme page is saved as a backup (switch back to SP-Scheme to bring it back). The study becomes a classic survey: the questions the page declared stay as classic questions, and the AI changes them question by question.')
+              : (t.aiModeSwitchSpSchemeBody || 'This study has a saved SP-Scheme page from before it became classic. Bring it back (the classic questions are replaced), or keep the classic survey and let the AI write a new page.')}
+          </Typography>
+          {modeSwitch?.error && <Alert severity="error" sx={{ mt: 1.5 }}>{modeSwitch.error}</Alert>}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => onModeSwitchChoice?.('cancel')} disabled={modeSwitch?.busy}>
+            {t.sidebarCancel || 'Cancel'}
+          </Button>
+          {modeSwitch?.to === 'spscheme' && (
+            <Button onClick={() => onModeSwitchChoice?.('keep')} disabled={modeSwitch?.busy}>
+              {t.aiModeSwitchKeepClassic || 'Keep classic, new page'}
+            </Button>
+          )}
+          <Button variant="contained" onClick={() => onModeSwitchChoice?.('switch')} disabled={modeSwitch?.busy}>
+            {modeSwitch?.to === 'agent'
+              ? (t.aiModeSwitchClassicConfirm || 'Back up and switch')
+              : (t.aiModeSwitchRestore || 'Bring the page back')}
+          </Button>
+        </DialogActions>
+      </Dialog>
       <AssistantSettingsDialog
         open={settingsOpen}
         onClose={() => setSettingsOpen(false)}
@@ -1287,6 +1378,8 @@ export default function ChatAssistant({
         isPlatformMode={isPlatformMode}
         assistantMode={assistantMode}
         onAssistantModeChange={onAssistantModeChange}
+        reviewSettings={reviewSettings}
+        onReviewSettingsChange={onReviewSettingsChange}
         onCredentialsChange={onCredentialsChange}
         codexConnected={codexConnected}
         codexStatusLoading={codexStatusLoading}

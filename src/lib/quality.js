@@ -1,4 +1,5 @@
 import { responseRecordKey } from './responseIdentity.js';
+import { pairwiseOutcomes, samePositionParticipants } from './paperMethods.js';
 /** Data-quality evaluation for survey responses. */
 
 export function flattenQuestions(surveyConfig) {
@@ -162,12 +163,28 @@ export function checkDuplicateBrowserFlag(response, allResponses) {
  * Evaluate quality flags for one response.
  * @returns {string[]} flag ids
  */
+/** Opt-in (`qualityChecks.samePosition`): every two-image choice on the same screen side. */
+function checkSamePositionFlag(response, surveyConfig) {
+  const setting = surveyConfig?.qualityChecks?.samePosition;
+  if (!setting) return [];
+  const minTrials = Number(setting.minTrials) > 1 ? Number(setting.minTrials) : 5;
+  const pickers = [];
+  const walk = (els) => (els || []).forEach((e) => {
+    if (e?.type === 'imagepicker' || e?.type === 'mediapicker') pickers.push(e.name);
+    if (e?.elements) walk(e.elements);
+  });
+  (surveyConfig.pages || []).forEach((p) => walk(p.elements));
+  const outcomes = pickers.flatMap((name) => pairwiseOutcomes([response], name, { equalQuestionName: null }));
+  return samePositionParticipants(outcomes, minTrials).length ? ['same_position'] : [];
+}
+
 export function evaluateResponseQuality(response, surveyConfig, allResponses = []) {
   const flags = [
     ...checkAttentionFlags(response, surveyConfig),
     ...checkTooFastFlag(response, allResponses),
     ...checkStraightLiningFlags(response, surveyConfig),
     ...checkDuplicateBrowserFlag(response, allResponses),
+    ...checkSamePositionFlag(response, surveyConfig),
   ];
   return [...new Set(flags)];
 }
@@ -177,6 +194,7 @@ export const QUALITY_FLAG_LABELS = {
   too_fast: 'Completed too quickly',
   straight_lining: 'Straight-lining detected',
   duplicate_browser: 'Duplicate browser submission',
+  same_position: 'Always chose the same side',
 };
 
 export function summarizeQuality(allResponses, surveyConfig) {

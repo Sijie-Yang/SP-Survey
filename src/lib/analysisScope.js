@@ -1,8 +1,9 @@
 import { ANALYSIS_ALGORITHM_VERSION } from './analysisVersion.js';
 import { recordedRevisionSelection } from './recordedSurvey.js';
 import { responseRecordKey } from './responseIdentity.js';
+import { rowMatchesDemographicFilters } from './mapAnnotation.js';
 
-export const ANALYSIS_SCOPE_VERSION = '1.0.0';
+export const ANALYSIS_SCOPE_VERSION = '1.1.0';
 export const DATA_SOURCES = Object.freeze(['human', 'practice', 'silicon']);
 
 function text(value) {
@@ -44,6 +45,7 @@ export function createAnalysisScope(raw = {}) {
     questionName: text(raw.questionName),
     dimensionId: text(raw.dimensionId),
     mediaKey: text(raw.mediaKey),
+    demographicFilters: Array.isArray(raw.demographicFilters) ? raw.demographicFilters : [],
     snapshotId: text(raw.snapshotId),
     generatedAt: text(raw.generatedAt),
     algorithmVersion: text(raw.algorithmVersion) || ANALYSIS_ALGORITHM_VERSION,
@@ -67,6 +69,7 @@ export function analysisScopeKey(scope) {
     questionName: next.questionName,
     dimensionId: next.dimensionId,
     mediaKey: next.mediaKey,
+    demographicFilters: next.demographicFilters,
   });
 }
 
@@ -135,7 +138,7 @@ export function rowMatchesAnalysisScope(row, scope, { flagged = false } = {}) {
     if (start != null && ts < start) return false;
     if (end != null && ts >= end) return false;
   }
-  return true;
+  return rowMatchesDemographicFilters(row, next.demographicFilters);
 }
 
 export function filterRowsByScope(rows, scope, { flaggedKeys = new Set() } = {}) {
@@ -184,5 +187,6 @@ export function toToolFilters(scope) {
     dimensionId: next.dimensionId,
     mediaKey: next.mediaKey,
     untimedPolicy: next.untimedPolicy,
+    demographicFilters: next.demographicFilters,
   };
 }

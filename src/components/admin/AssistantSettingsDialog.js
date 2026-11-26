@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   Chip,
+  CircularProgress,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -24,6 +25,7 @@ import {
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import {
+  AutoAwesome,
   CheckCircle,
   Close,
   Download,
@@ -31,7 +33,9 @@ import {
   RestartAlt,
   Save,
 } from '@mui/icons-material';
+import { ReviewSettingsControls } from './ReviewPanel';
 import AgentsEditor from './AgentsEditor';
+import ModelsSettings from './ModelsSettings';
 import {
   isAssistantEnabled,
   isSiliconExperimentalEnabled,
@@ -62,6 +66,8 @@ export default function AssistantSettingsDialog({
   newScenario,
   setNewScenario,
   onAddCustomScenario,
+  reviewSettings = null,
+  onReviewSettingsChange,
   multiAgentReviewEnabled,
   onMultiAgentReviewToggle,
   reviewMode,
@@ -165,48 +171,88 @@ export default function AssistantSettingsDialog({
         <Box sx={{ flex: 1, minWidth: 0, overflowY: 'auto', p: { xs: 2, sm: 3 } }}>
           {section === 0 && (
             <Box sx={{ maxWidth: 680 }}>
-              <Box sx={{ mb: 2.5 }}>
-                <Typography variant="subtitle2" sx={{ mb: 0.75 }}>{t.aiSidebarMode}</Typography>
-                <TextField
-                  select
-                  fullWidth
-                  size="small"
-                  value={assistantMode || 'agent'}
-                  onChange={(event) => onAssistantModeChange?.(event.target.value)}
-                  inputProps={{ 'aria-label': t.aiSidebarMode }}
-                >
-                  {[
-                    ['agent', t.aiSidebarModeAgent],
-                    ['generate', t.aiSidebarModeGenerate],
-                    ['adjust', t.aiSidebarModeAdjust],
-                    ['question', t.aiSidebarModeQuestion],
-                  ].map(([value, label]) => (
-                    <MenuItem key={value} value={value}>{label}</MenuItem>
-                  ))}
-                </TextField>
-              </Box>
-              <Typography variant="h6" sx={{ mb: 0.5, fontWeight: 600 }}>{t.modelsTitle}</Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                {t.aiSettingsLocalKeyIntro}
-              </Typography>
-              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  type="password"
-                  label={t.modelsKeyInput}
-                  value={openaiApiKey}
-                  onChange={(event) => onApiKeyChange(event.target.value)}
-                  InputProps={{
-                    endAdornment: apiKeyValid ? (
-                      <InputAdornment position="end"><CheckCircle color="success" /></InputAdornment>
-                    ) : null,
-                  }}
-                />
-                <Button variant="contained" onClick={onValidateApiKey} disabled={!openaiApiKey}>
-                  {t.aiSettingsValidate}
-                </Button>
-              </Stack>
+              {isPlatformMode && (
+                <Box sx={{ mb: 2.5 }}>
+                  <Typography variant="subtitle2" sx={{ mb: 0.75 }}>{t.aiSidebarMode}</Typography>
+                  <TextField
+                    select
+                    fullWidth
+                    size="small"
+                    value={assistantMode || 'agent'}
+                    onChange={(event) => onAssistantModeChange?.(event.target.value)}
+                    inputProps={{ 'aria-label': t.aiSidebarMode }}
+                  >
+                    {[
+                      ['spscheme', t.aiSidebarModeSpScheme || 'SP-Scheme'],
+                      ['agent', t.aiSidebarModeClassic || 'Classic'],
+                    ].map(([value, label]) => (
+                      <MenuItem key={value} value={value}>{label}</MenuItem>
+                    ))}
+                  </TextField>
+                </Box>
+              )}
+              {isPlatformMode ? (
+                <ModelsSettings onConfiguredChange={onCredentialsChange} />
+              ) : (
+                <>
+                  <Typography variant="h6" sx={{ mb: 0.5, fontWeight: 600 }}>{t.modelsTitle}</Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                    {t.aiSettingsLocalKeyIntro}
+                  </Typography>
+                  <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
+                    <TextField
+                      fullWidth
+                      size="small"
+                      type="password"
+                      label={t.modelsKeyInput}
+                      value={openaiApiKey}
+                      onChange={(event) => onApiKeyChange(event.target.value)}
+                      InputProps={{
+                        endAdornment: apiKeyValid ? (
+                          <InputAdornment position="end"><CheckCircle color="success" /></InputAdornment>
+                        ) : null,
+                      }}
+                    />
+                    <Button variant="contained" onClick={onValidateApiKey} disabled={!openaiApiKey}>
+                      {t.aiSettingsValidate}
+                    </Button>
+                  </Stack>
+                </>
+              )}
+
+              {isPlatformMode && (
+                <>
+                  <Divider sx={{ my: 3 }} />
+                  <Box sx={{ p: 2, border: '1px solid', borderColor: 'divider', borderRadius: 3 }}>
+                    <Stack direction="row" spacing={1.5} alignItems="center" justifyContent="space-between">
+                      <Box>
+                        <Typography variant="subtitle2">{t.aiSidebarCodexTitle}</Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{ mt: 0.25 }}>
+                          {t.aiSidebarCodexBody}
+                        </Typography>
+                      </Box>
+                      {codexStatusLoading ? (
+                        <CircularProgress size={18} />
+                      ) : (
+                        <Chip
+                          size="small"
+                          variant="outlined"
+                          color={codexConnected ? 'success' : 'default'}
+                          label={codexConnected ? t.aiSidebarConnected : t.aiSidebarDisconnected}
+                        />
+                      )}
+                    </Stack>
+                    <Button
+                      size="small"
+                      startIcon={<AutoAwesome fontSize="small" />}
+                      onClick={onOpenIntegrations}
+                      sx={{ mt: 1.5, borderRadius: 999, textTransform: 'none' }}
+                    >
+                      {t.aiSidebarOpenIntegrations}
+                    </Button>
+                  </Box>
+                </>
+              )}
             </Box>
           )}
 
@@ -346,9 +392,12 @@ export default function AssistantSettingsDialog({
                   <Chip size="small" variant="outlined" label={t.aiSettingsExperimental} />
                 </Stack>
                 {isPlatformMode ? (
-                  <Typography variant="body2" color="text.secondary">
-                    {t.aiSettingsMultiAgentUnavailable}
-                  </Typography>
+                  <>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+                      {t.aiSettingsMultiAgentUnavailable}
+                    </Typography>
+                    <ReviewSettingsControls t={t} settings={reviewSettings} onChange={onReviewSettingsChange} />
+                  </>
                 ) : (
                   <>
                     <FormControlLabel

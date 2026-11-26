@@ -1,0 +1,178 @@
+{
+  "id": "2017-liu-machine",
+  "name": "Facade Quality and Street-Wall Continuity",
+  "description": "Rebuilt from the published description of Liu, Silva, Wu & Wang (2017). Trained raters score Beijing street views for facade quality (1–4 rubric) and street-wall continuity; an optional on-site page records the same two judgements for a site passed in the link (?site=...). Differences from the original study: (1) In the paper both judgements were made on the same image; here the two questions draw their images independently. (2) The on-site page is shown only when the link contains ?site=...; it replaces the original paper forms. (3) Bundled images are photographs from the paper PDF (7 scenes), not the original full stimulus set.",
+  "author": "Liu, Silva, Wu & Wang",
+  "year": "2017",
+  "category": "Academic Research",
+  "tags": [
+    "official",
+    "paper"
+  ],
+  "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": null,
+  "website": "https://doi.org/10.1016/j.compenvurbsys.2017.06.003",
+  "huggingfaceDataset": null,
+  "createdAt": "2026-10-02T00:00:00+00:00",
+  "imageDatasetConfig": {
+    "mediaFolderTags": {},
+    "mediaFolders": []
+  },
+  "preloadedImages": [],
+  "preloadedSource": null,
+  "preloadedAt": null,
+  "config": {
+    "title": "Facade Quality and Street-Wall Continuity",
+    "description": "Rate each street view using the rubric shown with the question.",
+    "logoPosition": "right",
+    "autoGrowComment": true,
+    "progressBarType": "questions",
+    "showProgressBar": "aboveheader",
+    "showQuestionNumbers": "off",
+    "captureUrlParams": [
+      "site"
+    ],
+    "spAnalysisRecommendation": {
+      "citation": "Liu et al. 2017",
+      "items": [
+        {
+          "questions": [
+            "facade_quality"
+          ],
+          "method": "scalar_distribution"
+        },
+        {
+          "questions": [
+            "facade_quality"
+          ],
+          "method": "rater_agreement",
+          "raterQuestion": "rater_id"
+        },
+        {
+          "questions": [
+            "site_facade_quality"
+          ],
+          "method": "param_aggregation",
+          "param": "site"
+        }
+      ]
+    },
+    "pages": [
+      {
+        "name": "page_rater",
+        "elements": [
+          {
+            "name": "rater_id",
+            "type": "text",
+            "title": "Rater ID",
+            "isRequired": true
+          },
+          {
+            "name": "background",
+            "type": "radiogroup",
+            "title": "Professional background",
+            "choices": [
+              {
+                "value": "planning",
+                "text": "Urban planning / urban design"
+              },
+              {
+                "value": "architecture",
+                "text": "Architecture"
+              },
+              {
+                "value": "landscape",
+                "text": "Landscape architecture"
+              },
+              {
+                "value": "geography",
+                "text": "Geography / GIS"
+              },
+              {
+                "value": "other",
+                "text": "Other"
+              }
+            ],
+            "isRequired": true
+          }
+        ],
+        "title": "About you"
+      },
+      {
+        "name": "page_rating",
+        "elements": [
+          {
+            "name": "facade_quality",
+            "type": "imagerating",
+            "title": "Rate the construction and maintenance quality of the building facade.",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 1,
+            "trialCount": 20,
+            "rateMin": 1,
+            "rateMax": 4,
+            "rateLabels": [
+              "1 – Built with low-quality materials, in many cases bare cement and colour plate; low-level precision, sometimes unfinished; seriously deteriorated with a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons.",
+              "2 – Built with low quality, not very fine-textured materials; low-level industrial precision or craftsmanship; a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons.",
+              "3 – Built with lower quality, not very fine-textured materials; no high level of industrial precision or craftsmanship; may have a few obvious cracks, breakage, corrosion, dirt and stain or messy add-ons but generally a neat and clean look.",
+              "4 – Built with high quality, fine-textured materials; high industrial precision or fine craftsmanship (components and material pieces well aligned, small gaps); well maintained without obvious cracks, breakage, corrosion, dirt and stain or messy add-ons."
+            ],
+            "description": "4 – Built with high quality, fine-textured materials; high industrial precision or fine craftsmanship (components and material pieces well aligned, small gaps); well maintained without obvious cracks, breakage, corrosion, dirt and stain or messy add-ons. 3 – Built with lower quality, not very fine-textured materials; no high level of industrial precision or craftsmanship; may have a few obvious cracks, breakage, corrosion, dirt and stain or messy add-ons but generally a neat and clean look. 2 – Built with low quality, not very fine-textured materials; low-level industrial precision or craftsmanship; a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons. 1 – Built with low-quality materials, in many cases bare cement and colour plate; low-level precision, sometimes unfinished; seriously deteriorated with a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons."
+          },
+          {
+            "name": "street_wall_continuity",
+            "type": "imageboolean",
+            "title": "Is the street wall continuous?",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 1,
+            "trialCount": 20,
+            "labelTrue": "Continuous",
+            "labelFalse": "Discontinuous",
+            "description": "Continuous: Building facades progress through the image without any interruption, blockage or significant setback, at least at the eye height. Discontinuous: There is a wide gap between two adjacent buildings; there is a significant setback of a wide building; or there is a solid wall blocking the building from the street. If the wall is carefully designed and visually attractive, it can be considered continuous."
+          }
+        ],
+        "title": "Street views"
+      },
+      {
+        "name": "page_on_site",
+        "elements": [
+          {
+            "name": "site_facade_quality",
+            "type": "rating",
+            "title": "Rate the construction and maintenance quality of the building facade. (the street in front of you)",
+            "rateMin": 1,
+            "rateMax": 4,
+            "rateLabels": [
+              "1 – Built with low-quality materials, in many cases bare cement and colour plate; low-level precision, sometimes unfinished; seriously deteriorated with a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons.",
+              "2 – Built with low quality, not very fine-textured materials; low-level industrial precision or craftsmanship; a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons.",
+              "3 – Built with lower quality, not very fine-textured materials; no high level of industrial precision or craftsmanship; may have a few obvious cracks, breakage, corrosion, dirt and stain or messy add-ons but generally a neat and clean look.",
+              "4 – Built with high quality, fine-textured materials; high industrial precision or fine craftsmanship (components and material pieces well aligned, small gaps); well maintained without obvious cracks, breakage, corrosion, dirt and stain or messy add-ons."
+            ],
+            "description": "4 – Built with high quality, fine-textured materials; high industrial precision or fine craftsmanship (components and material pieces well aligned, small gaps); well maintained without obvious cracks, breakage, corrosion, dirt and stain or messy add-ons. 3 – Built with lower quality, not very fine-textured materials; no high level of industrial precision or craftsmanship; may have a few obvious cracks, breakage, corrosion, dirt and stain or messy add-ons but generally a neat and clean look. 2 – Built with low quality, not very fine-textured materials; low-level industrial precision or craftsmanship; a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons. 1 – Built with low-quality materials, in many cases bare cement and colour plate; low-level precision, sometimes unfinished; seriously deteriorated with a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons.",
+            "isRequired": true
+          },
+          {
+            "name": "site_street_wall_continuity",
+            "type": "boolean",
+            "title": "Is the street wall continuous? (the street in front of you)",
+            "labelTrue": "Continuous",
+            "labelFalse": "Discontinuous",
+            "description": "Continuous: Building facades progress through the image without any interruption, blockage or significant setback, at least at the eye height. Discontinuous: There is a wide gap between two adjacent buildings; there is a significant setback of a wide building; or there is a solid wall blocking the building from the street. If the wall is carefully designed and visually attractive, it can be considered continuous.",
+            "isRequired": true
+          }
+        ],
+        "visibleIf": "{url_site} notempty",
+        "title": "On-site validation"
+      }
+    ]
+  }
+}

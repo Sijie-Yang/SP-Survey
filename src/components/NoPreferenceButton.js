@@ -1,7 +1,8 @@
 import React, { useEffect, useReducer } from 'react';
 import { Box, Button } from '@mui/material';
-import { canChooseTie, isNoPreference, noPreferenceLabel, NO_PREFERENCE } from '../lib/choiceTie';
+import { canChooseTie, isNoPreference, NO_PREFERENCE } from '../lib/choiceTie';
 import { resolveSurveyUiLanguage } from '../lib/surveyLocale';
+import { uiPair } from '../lib/uiLanguages';
 
 /** Subscribe to the model so single-round selections and restored answers repaint too. */
 export default function NoPreferenceButton({ question, count }) {
@@ -11,7 +12,9 @@ export default function NoPreferenceButton({ question, count }) {
     question.survey?.onValueChanged?.add(changed);
     return () => question.survey?.onValueChanged?.remove(changed);
   }, [question]);
-  const label = noPreferenceLabel(question, resolveSurveyUiLanguage(question.survey));
+  const lang = resolveSurveyUiLanguage(question.survey);
+  const custom = String(question?.tieLabel || '').trim();
+  const label = custom || uiPair(lang, 'About the same', '两者差不多');
   useEffect(() => { if (question.allowTie && question.noneItem) question.noneText = label; }, [question, label]);
   if (!canChooseTie(question, count)) return null;
   return <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1.5 }}>

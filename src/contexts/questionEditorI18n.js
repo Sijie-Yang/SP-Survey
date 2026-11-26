@@ -1,4 +1,5 @@
 import { useCallback, useContext } from 'react';
+import { isChineseLanguage, lookupPhrase } from '../lib/uiLanguages';
 import { RegionContext } from './RegionContext';
 
 // Editor chrome only. Never apply translations to stored question/answer values.
@@ -7,6 +8,8 @@ export const questionEditorZh = {
   "Category selection per trial": "每轮分类抽取方式",
   "One category per trial": "每轮单个分类",
   "All selected categories per trial": "每轮多个分类（全部已选分类）",
+  "A sample of categories per trial": "每轮抽取若干分类",
+  "Each trial randomly chooses {count} categories and draws {per} file(s) from each.": "每轮随机抽取 {count} 个分类，每个分类抽取 {per} 个文件。",
   "Files per trial": "每轮抽取文件数",
   "Each trial randomly chooses one selected category and draws {count} files only from it.": "每个 trial 随机选定一个分类，仅从该分类中抽取 {count} 个文件。",
   "Select the categories eligible for each trial. Each trial uses only one of them. Clear to use all categories.": "选择每轮可用的分类；每轮只使用其中一个。清除选择即恢复全部分类。",
@@ -73,7 +76,9 @@ export const questionEditorZh = {
   "Images to rank": "待排序图片数",
   "Media files to rank": "待排序媒体数",
   "Media files shown as choices": "媒体选项数量",
-  "Images to rate": "待评分图片数",
+  "Images shown each round": "每轮同屏展示的图片数",
+  "Media files shown each round": "每轮同屏展示的媒体数",
+  "Shown together in one round. This is not how many answers are recorded in total. The number of trials sets that.": "每一轮同时出示的数量，不是一共要回答的次数。一共回答几轮，由作答轮数决定。",
   "Images shown": "展示的图片数",
   "Images shown above text multi-select": "文字多选区域上方展示的图片数",
   "Images shown above the matrix": "矩阵上方展示的图片数",
@@ -90,9 +95,23 @@ export const questionEditorZh = {
   "Drawn from the project media pool for each participant.": "为每位参与者从项目媒体库抽取。",
   "Number of stimuli": "素材数量",
   "Randomly drawn from the project media pool (or your curated list)": "从项目媒体库随机抽取，或使用你手动指定的文件",
-  "Number of trials (repeat this question)": "轮次数（重复作答本题）",
+  "Number of trials": "作答轮数",
   "Attention Check (data quality)": "注意力检查（数据质量）",
   "Mark as attention-check question": "将本题设为注意力检查题",
+  "When to show this page": "何时显示这一页",
+  "Always show": "总是显示",
+  "Only when the link has {param}": "只在链接带 {param} 参数时显示",
+  "Only when the link has no {param}": "只在链接不带 {param} 参数时显示",
+  "Link parameters are listed in Survey settings; the Share tab builds a link for each value.": "可选的参数来自「问卷设置 → 记录的链接参数」；在「分享」页可以为每个取值生成专属链接。",
+  "To show a page only for some links, first add a link parameter (e.g. site) in Survey settings.": "如果想让这一页只对部分链接显示，先在「问卷设置 → 记录的链接参数」里添加参数（例如 site）。",
+  "This page has a custom display rule": "这一页有自定义显示规则",
+  "Custom display rule": "自定义显示规则",
+  "Only links with {param}": "仅限带 {param} 的链接",
+  "Only links without {param}": "仅限不带 {param} 的链接",
+  "Wording per condition": "按实验条件显示不同题干",
+  "Participants see the wording for their condition. Leave a row empty to use the question title above. Answers are saved under this one question, with the condition recorded.": "参与者只看到自己所在条件的题干。留空则使用上面的题干。所有条件的答案都保存在这一道题下，并记录参与者所在的条件。",
+  "Reverse-code (wording asks for the opposite)": "反向计分（措辞是反着问的）",
+  "Condition wording": "按条件改写",
   "Expected answer": "预期答案",
   "Filename or choice value the participant must select (checked in analysis, not blocked at submit)": "填写参与者应选中的文件名或选项值；在分析时检查，不阻止提交",
   "Use true or false (or the Yes/No label text as stored — usually true/false)": "填写 true 或 false（或实际存储的“是／否”文字；通常为 true/false）",
@@ -117,7 +136,7 @@ export const questionEditorZh = {
   "Question Title": "题干",
   "The main question text that participants will see": "参与者看到的主要问题文字",
   "Question Description (Optional)": "题目说明（可选）",
-  "Additional instructions or context for this question": "补充本题的作答说明或背景",
+  "Shown under the question. A blank line starts a new paragraph. **bold** and lines starting with - become bold and lists.": "显示在题干下方。空一行会分段；**加粗**以及以 - 开头的行会显示为加粗和列表。",
   "Participants can draw points, lines, polygons, and bounding boxes on an image from your sampling settings. Optionally define class labels, then set tools and min/max counts in the task options below.": "参与者可在抽取的图片上标注点、线、多边形和矩形框。可先定义分类标签，再在下方设置可用工具及标注数量上下限。",
   "Advanced custom task.": "高级自定义任务。",
   "Most studies only need a ready-made perception task (Pairwise Preference, Best–Worst, etc.) from the type list above. To continue here, import or create a task in": "多数研究可直接选择上方的内置交互题，例如成对偏好、最佳／最差选择。若需自定义，请先在",
@@ -131,6 +150,12 @@ export const questionEditorZh = {
   "Task instructions": "作答说明",
   "in task options below for guidance inside the interactive area.": "处填写。",
   "Required — participants must answer to continue": "必答题：参与者完成后才能继续",
+  "When to show this question": "何时显示这道题",
+  "Always show": "始终显示",
+  "Show when the answer is": "选择这个答案时显示",
+  "Choose an earlier single-choice or dropdown question. Only participants who pick the answer below see this question. Questions that stay hidden are left out of the progress bar.": "选择前面的单选题或下拉题。只有选了下面这个答案的参与者才会看到这道题。没有显示出来的题目不会出现在进度条里。",
+  "This question has a custom display rule": "这道题使用了自定义显示规则",
+  "Shows when {question} is {answer}": "当「{question}」选择「{answer}」时显示",
   "Yes label": "“是”按钮文字",
   "No label": "“否”按钮文字",
   "Yes": "是",
@@ -215,6 +240,13 @@ export const questionEditorZh = {
   "Class labels (optional)": "分类标签（可选）",
   "Comma-separated labels applied to new shapes (e.g. building, tree, sky). Leave empty for unlabeled annotation.": "用逗号分隔新标注可用的分类标签，例如建筑、树木、天空。留空则不区分分类。",
   "building, tree, sky": "建筑, 树木, 天空",
+  "Ask for a note on each annotation (optional)": "为每个标注请参与者写一句理由（可选）",
+  "e.g. Why do you like this place?": "例如：你为什么喜欢这里？",
+  "Shown as a short text field for the selected annotation; stored as the shape's note. Notes are optional.": "选中某个标注时显示一个短文本框，内容保存为该标注的 note；不填也可以提交。",
+  "Label for every scale point (optional)": "为每个量表点设置文字（可选）",
+  "One label per line, from the lowest to the highest value. Used only when the count matches the scale; answers stay numeric.": "每行一个，从最低分到最高分。只有行数与量表点数一致时生效；保存的答案仍是数字。",
+  "Require video/audio to play to the end before answering": "视频/音频必须播放完才能作答",
+  "Minimum viewing time (seconds)": "最短观看时间（秒）",
   "Minimum annotations": "最少标注数量",
   "Required before continuing (0 = no minimum)": "达到此数量后才能继续（0 表示不限）",
   "Maximum annotations": "最多标注数量",
@@ -428,14 +460,16 @@ export const questionEditorZh = {
 
 export function questionEditorText(text, language, values = {}) {
   if (typeof text !== 'string') return text;
-  const translated = language === 'zh' ? (questionEditorZh[text.replace(/\s+/g, ' ').trim()] ?? text) : text;
+  const key = text.replace(/\s+/g, ' ').trim();
+  const translated = lookupPhrase(language, text) ?? lookupPhrase(language, key)
+    ?? (isChineseLanguage(language) ? (questionEditorZh[key] ?? text) : text);
   return translated.replace(/\{(\w+)\}/g, (match, key) => Object.hasOwn(values, key) ? String(values[key]) : match);
 }
 
 export function useQuestionEditorText() {
   const language = useContext(RegionContext)?.language || 'en';
   const tr = useCallback((text, values) => questionEditorText(text, language, values), [language]);
-  return { tr, zh: language === 'zh' };
+  return { tr, zh: isChineseLanguage(language) };
 }
 
 const settingNames = {
@@ -475,7 +509,7 @@ export function surveyValidationText(message, language) {
 }
 
 export function questionSettingErrorText(message, language) {
-  if (language !== 'zh') return message;
+  if (!isChineseLanguage(language)) return message;
   const patterns = [
     [/^(.+) must be a finite number\.$/, m => `${settingName(m[1])}必须是有效数字。`],
     [/^(.+) must not exceed (.+)\.$/, m => `${settingName(m[1])}不能大于${settingName(m[2])}。`],

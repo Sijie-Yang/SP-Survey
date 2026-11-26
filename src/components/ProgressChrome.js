@@ -27,10 +27,16 @@ export default function ProgressChrome({ enabled = true, surveyModel = null }) {
   void (nav?.answerEpoch); // re-render when answers change (green fill)
 
   const questionGroups = useMemo(() => groupUnitsByQuestion(units), [units]);
+  const visibleGroups = questionGroups.filter((group) => {
+    const question = surveyModel?.getQuestionByName?.(group.questionName);
+    return !question || question.isVisible !== false;
+  });
+  const visibleIndex = new Map(visibleGroups.map((group, index) => [group.questionName, index]));
 
   const currentUnit = units[current] || null;
   const currentQ = currentUnit
-    ? questionGroups.find((g) => g.questionName === currentUnit.questionName)
+    ? visibleGroups.find((g) => g.questionName === currentUnit.questionName)
+      || questionGroups.find((g) => g.questionName === currentUnit.questionName)
     : null;
 
   const pageInfo = useMemo(() => {
@@ -51,14 +57,21 @@ export default function ProgressChrome({ enabled = true, surveyModel = null }) {
   }, [surveyModel, surveyModel?.currentPage, surveyModel?.currentPageNo, current]);
 
   const [groupIdx, setGroupIdx] = React.useState(0);
-  const qChunks = useMemo(() => chunkArray(questionGroups, QUESTION_GROUP_SIZE), [questionGroups]);
+  const [, setVisibilityTick] = React.useState(0);
+  React.useEffect(() => {
+    if (!surveyModel?.onQuestionVisibleChanged) return undefined;
+    const bump = () => setVisibilityTick((tick) => tick + 1);
+    surveyModel.onQuestionVisibleChanged.add(bump);
+    return () => surveyModel.onQuestionVisibleChanged.remove(bump);
+  }, [surveyModel]);
+  const qChunks = useMemo(() => chunkArray(visibleGroups, QUESTION_GROUP_SIZE), [visibleGroups]);
 
   React.useEffect(() => {
     if (!currentQ || qChunks.length <= 1) return;
-    const qi = questionGroups.findIndex((g) => g.questionName === currentQ.questionName);
+    const qi = visibleGroups.findIndex((g) => g.questionName === currentQ.questionName);
     const g = Math.floor(Math.max(0, qi) / QUESTION_GROUP_SIZE);
     if (g !== groupIdx) setGroupIdx(g);
-  }, [currentQ?.questionName, qChunks.length, questionGroups]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [currentQ?.questionName, qChunks.length, visibleGroups]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // High-water answered counts — never flash to 0 on Next-trial flat-value clears.
   const answeredFloorRef = useRef(new Map());
@@ -70,7 +83,7 @@ export default function ProgressChrome({ enabled = true, surveyModel = null }) {
 
   const activeChunk = qChunks[Math.min(groupIdx, qChunks.length - 1)] || qChunks[0] || [];
   const questionProgress = computeQuestionProgress(
-    questionGroups,
+    visibleGroups,
     surveyModel,
     furthest,
     answeredFloorRef.current,
@@ -124,7 +137,7 @@ export default function ProgressChrome({ enabled = true, surveyModel = null }) {
       >
         {tf(t.progressPage, { current: pageInfo.index, n: pageInfo.total })}
         <Box component="span" sx={{ mx: 0.75, fontWeight: 400, opacity: 0.55 }}>·</Box>
-        {tf(t.progressQuestion, { current: (currentQ?.questionIndex ?? 0) + 1, n: questionGroups.length })}
+        {tf(t.progressQuestion, { current: (visibleIndex.get(currentQ?.questionName) ?? 0) + 1, n: visibleGroups.length })}
         {currentUnit && currentUnit.trialCount > 1 && (
           <>
             <Box component="span" sx={{ mx: 0.75, fontWeight: 400, opacity: 0.55 }}>·</Box>
@@ -265,7 +278,7 @@ export default function ProgressChrome({ enabled = true, surveyModel = null }) {
           const complete = answered >= total && total > 0;
           const multi = total > 1;
           const fillPct = total > 0 ? Math.round((answered / total) * 100) : 0;
-          const questionLabel = tf(t.progressQuestionLabel, { n: group.questionIndex + 1 });
+          const questionLabel = tf(t.progressQuestionLabel, { n: (visibleIndex.get(group.questionName) ?? group.questionIndex) + 1 });
           const label = multi
             ? `${questionLabel} · ${tf(t.progressTrialCount, { done: answered, n: total })}`
             : questionLabel;
