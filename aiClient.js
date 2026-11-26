@@ -17,6 +17,13 @@ const OPENAI_MODELS = {
   strong: 'gpt-4o',
 };
 
+// Anthropic retires claude-sonnet-4-5 on 2026-11-30 (issue #14).
+const ANTHROPIC_MODELS = {
+  fast: 'claude-haiku-5-5',
+  default: 'claude-sonnet-5-5',
+  strong: 'claude-sonnet-5-5',
+};
+
 const PROVIDER_BASES = {
   openai: undefined,
   openrouter: OPENROUTER_BASE,
@@ -54,7 +61,9 @@ function resolveAiRequest(userApiKey, extras = {}) {
       baseURL,
       defaultHeaders: providerHeaders(provider),
     }),
-    models: provider === 'openrouter' ? OPENROUTER_MODELS : OPENAI_MODELS,
+    models: provider === 'openrouter' ? OPENROUTER_MODELS
+      : protocol === 'anthropic-messages' ? ANTHROPIC_MODELS
+        : OPENAI_MODELS,
     provider,
     protocol,
     apiKey: trimmed,
@@ -79,7 +88,7 @@ function formatAiError(error) {
 }
 
 async function anthropicChat(resolved, options) {
-  const model = options.model || 'claude-sonnet-4-5';
+  const model = options.model || ANTHROPIC_MODELS.default;
   const url = `${String(resolved.baseURL || 'https://api.anthropic.com').replace(/\/$/, '')}/v1/messages`;
   const response = await fetch(url, {
     method: 'POST',
