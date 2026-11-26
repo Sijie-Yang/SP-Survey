@@ -10,7 +10,7 @@ const { registerAgentProjectApi, createProjectIo } = require('./src/server/agent
 const { registerAgentChatApi } = require('./src/server/agentChatRuntime');
 const { registerAgentCredentialsApi } = require('./src/server/agentCredentialsApi');
 const { registerSiliconLocalApi } = require('./src/server/siliconLocalApi');
-const { registerAgentPlatformExtrasApi, registerMediaProxy } = require('./src/server/agentPlatformExtrasApi');
+const { registerAgentPlatformExtrasApi, registerMediaProxy, registerStreetLevelHelperApi } = require('./src/server/agentPlatformExtrasApi');
 const { copyParticipantPublicAssets } = require('./src/server/deploymentPublicFilter');
 const { alignDeploymentPackageJson } = require('./src/server/deploymentPackage');
 
@@ -309,6 +309,9 @@ registerAgentPlatformExtrasApi(app, {
   createProjectIo: () => createProjectIo({ fs, projectsPath: PROJECTS_PATH }),
 });
 registerMediaProxy(app);
+registerStreetLevelHelperApi(app, {
+  createProjectIo: () => createProjectIo({ fs, projectsPath: PROJECTS_PATH }),
+});
 
 // Deployment endpoints
 app.post('/api/create-deployment', async (req, res) => {
