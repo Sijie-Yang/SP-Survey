@@ -1,3 +1,4 @@
+import { useWorkflowText } from '../../contexts/workflowI18n';
 /**
  * Add / rename / recolor / delete labels for SAM pre-annotate (project-wide).
  */
@@ -18,6 +19,7 @@ export default function PreannotateLabelManager({
   onChange,
   disabled = false,
 }) {
+  const tx = useWorkflowText();
   const defs = normalizeLabelDefs(labels);
   const [editOpen, setEditOpen] = useState(false);
   const [editIndex, setEditIndex] = useState(-1);
@@ -91,7 +93,7 @@ export default function PreannotateLabelManager({
   return (
     <Box>
       <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.75 }}>
-        Project labels — add / edit name & color / delete. Rename & delete apply across this project&apos;s annotations.
+{' '}{tx("Project labels \u2014 add / edit name & color / delete. Rename & delete apply across this project's annotations.")}{' '}
       </Typography>
       <Stack direction="row" flexWrap="wrap" useFlexGap spacing={0.75} sx={{ mb: 1 }}>
         {defs.map((d, i) => (
@@ -120,7 +122,7 @@ export default function PreannotateLabelManager({
       <Stack direction="row" spacing={1} alignItems="center">
         <TextField
           size="small"
-          placeholder="New label"
+          placeholder={tx("New label")}
           value={addName}
           disabled={disabled}
           onChange={(e) => setAddName(e.target.value)}
@@ -139,18 +141,18 @@ export default function PreannotateLabelManager({
           disabled={disabled || !addName.trim()}
           onClick={addLabel}
         >
-          Add
+          {' '}{tx("Add")}{' '}
         </Button>
       </Stack>
 
       <Dialog open={editOpen} onClose={() => setEditOpen(false)} maxWidth="xs" fullWidth>
         <DialogTitle sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <Edit fontSize="small" /> Edit label
+          <Edit fontSize="small" /> {' '}{tx("Edit label")}{' '}
         </DialogTitle>
         <DialogContent>
           <Stack spacing={2} sx={{ pt: 1 }}>
             <TextField
-              label="Name"
+              label={tx("Name")}
               size="small"
               fullWidth
               value={draftName}
@@ -158,7 +160,7 @@ export default function PreannotateLabelManager({
               autoFocus
             />
             <Stack direction="row" spacing={1.5} alignItems="center">
-              <Typography variant="body2" color="text.secondary">Color</Typography>
+              <Typography variant="body2" color="text.secondary">{' '}{tx("Color")}{' '}</Typography>
               <Box
                 component="input"
                 type="color"
@@ -185,38 +187,38 @@ export default function PreannotateLabelManager({
               </Stack>
             </Stack>
             <Typography variant="caption" color="text.secondary">
-              Renaming remaps this label on every annotated image in the project.
+              {' '}{tx("Renaming remaps this label on every annotated image in the project.")}{' '}
             </Typography>
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setEditOpen(false)}>Cancel</Button>
-          <Button variant="contained" onClick={commitEdit} disabled={!draftName.trim()}>Save</Button>
+          <Button onClick={() => setEditOpen(false)}>{' '}{tx("Cancel")}{' '}</Button>
+          <Button variant="contained" onClick={commitEdit} disabled={!draftName.trim()}>{' '}{tx("Save")}{' '}</Button>
         </DialogActions>
       </Dialog>
 
       <Dialog open={deleteOpen} onClose={() => setDeleteOpen(false)} maxWidth="xs" fullWidth>
-        <DialogTitle>Delete label from project?</DialogTitle>
+        <DialogTitle>{' '}{tx("Delete label from project?")}{' '}</DialogTitle>
         <DialogContent>
           <Typography variant="body2" sx={{ mb: 1.5 }}>
-            Remove “{defs[deleteIndex]?.name}” from the project palette.
+            {' '}{tx("Remove label from palette:")}{' '} {defs[deleteIndex]?.name}
           </Typography>
           <RadioGroup value={deleteMode} onChange={(e) => setDeleteMode(e.target.value)}>
             <FormControlLabel
               value="clear"
               control={<Radio size="small" />}
-              label="Keep shapes — set their label to None"
+              label={tx("Keep shapes \u2014 set their label to None")}
             />
             <FormControlLabel
               value="delete_shapes"
               control={<Radio size="small" />}
-              label="Delete all shapes that use this label"
+              label={tx("Delete all shapes that use this label")}
             />
           </RadioGroup>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDeleteOpen(false)}>Cancel</Button>
-          <Button color="error" variant="contained" onClick={commitDelete}>Delete</Button>
+          <Button onClick={() => setDeleteOpen(false)}>{' '}{tx("Cancel")}{' '}</Button>
+          <Button color="error" variant="contained" onClick={commitDelete}>{' '}{tx("Delete")}{' '}</Button>
         </DialogActions>
       </Dialog>
     </Box>

@@ -1120,7 +1120,8 @@ export default function ChatAssistant({
               },
             }}
           />
-          {isPlatformMode && (
+          {/* Self-hosted: both modes run on the local server too. */}
+          {(
             <Typography
               variant="caption"
               color="text.secondary"
@@ -1134,7 +1135,7 @@ export default function ChatAssistant({
           )}
           <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1} sx={{ px: 1, pb: 0.75 }}>
             <Stack direction="row" alignItems="center" spacing={0.5} sx={{ minWidth: 0, overflow: 'hidden' }}>
-              {isPlatformMode && (
+              {(
                 <Select
                   variant="standard"
                   disableUnderline
@@ -1154,7 +1155,7 @@ export default function ChatAssistant({
                   <MenuItem value="agent">{t.aiSidebarModeClassic || 'Classic'}</MenuItem>
                 </Select>
               )}
-              {isPlatformMode && modelOptions.length > 0 ? (
+              {modelOptions.length > 0 ? (
                 <Select
                   variant="standard"
                   disableUnderline
@@ -1204,7 +1205,7 @@ export default function ChatAssistant({
                   ))}
                 </Select>
               )}
-              {credentialHint && apiKeyValid && !isPlatformMode && (
+              {credentialHint && apiKeyValid && !isPlatformMode && !modelOptions.length && (
                 <Typography variant="caption" color="text.secondary" noWrap>{credentialHint}</Typography>
               )}
             </Stack>

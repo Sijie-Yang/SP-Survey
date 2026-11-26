@@ -1,4 +1,4 @@
-/** OSS has no platform-admin response API. Kept so Results Analysis can share Platform code. */
+/** Results loading. Self-hosted: no platform-admin API; owner pages read the researcher's own Supabase. */
 import { supabase } from './supabase';
 import { restoreResponseContracts } from './slimResponses';
 import { loadSurveyResponsePage, RESPONSE_INTERACTIVE_BATCH, RESPONSE_INTERACTIVE_KEY_PAGE } from './responsePageLoader';
@@ -39,26 +39,33 @@ function restorePage({ responses, contracts: received, mode }, loadSession) {
   return restoreResponseContracts(responses, contracts);
 }
 
-const SUPABASE_URL = (process.env.REACT_APP_SUPABASE_URL || '').replace(/\/$/, '');
-const SUPABASE_ANON_KEY = process.env.REACT_APP_SUPABASE_ANON_KEY;
+/**
+ * Self-hosted: responses live in the researcher's own Supabase, read with the
+ * key saved on the Media tab (the same client lib/supabase.js builds), not a
+ * platform sign-in.
+ */
+function ownSupabase() {
+  const url = String(supabase?.supabaseUrl || '').replace(/\/$/, '');
+  const key = supabase?.supabaseKey || '';
+  return url && key ? { url, key } : null;
+}
 
 /**
  * Exact row count for the loading bar. Null when the count header is unavailable.
  * `filters` adds PostgREST filters, e.g. { 'survey_metadata->>practice_mode': 'eq.true' }.
  */
 export async function countOwnerResponses(projectId, { signal, filters = null } = {}) {
-  const { data: { session } = {} } = supabase ? await supabase.auth.getSession() : {};
-  const token = session?.access_token || SUPABASE_ANON_KEY;
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !token || !projectId) return null;
+  const own = ownSupabase();
+  if (!own || !projectId) return null;
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/survey_responses?${new URLSearchParams({
+    const res = await fetch(`${own.url}/rest/v1/survey_responses?${new URLSearchParams({
       ...(filters || {}),
       project_id: `eq.${projectId}`,
       select: 'id',
     })}`, {
       headers: {
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${token}`,
+        apikey: own.key,
+        Authorization: `Bearer ${own.key}`,
         Prefer: 'count=exact',
         Range: '0-0',
       },
@@ -76,12 +83,14 @@ export async function countOwnerResponses(projectId, { signal, filters = null } 
 
 /** Owner Results: same page loader as the admin Worker, through PostgREST with the owner's session (RLS). */
 export async function fetchOwnerResponsePage(projectId, after = null, loadSession = createResponseLoadSession(), { onProgress, signal } = {}) {
-  const { data: { session } = {} } = supabase ? await supabase.auth.getSession() : {};
-  const token = session?.access_token || SUPABASE_ANON_KEY;
+  const own = ownSupabase();
+  if (!own) {
+    throw new AdminResultsError('Supabase is not configured. Save it on the Media tab.', { code: 'SUPABASE_NOT_CONFIGURED', stage: 'oss' });
+  }
   const rest = async ({ path, method = 'GET', query = '', body }) => {
-    const res = await fetch(`${SUPABASE_URL}${path}${query}`, {
+    const res = await fetch(`${own.url}${path}${query}`, {
       method,
-      headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      headers: { apikey: own.key, Authorization: `Bearer ${own.key}`, 'Content-Type': 'application/json' },
       body: body == null ? undefined : JSON.stringify(body),
       cache: 'no-store',
       signal: perRequestSignal(signal),

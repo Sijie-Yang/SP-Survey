@@ -48,7 +48,7 @@ The hosted Platform and this repository share survey/research features. The diff
 
 ## Quick start
 
-Requirements: Node.js 18+ and npm.
+Requirements: Node.js 22+ (or 20.19+) and npm.
 
 ```bash
 git clone https://github.com/Sijie-Yang/SP-Survey.git
@@ -57,7 +57,8 @@ npm install
 npm run dev
 ```
 
-- Admin: [http://localhost:3000/admin](http://localhost:3000/admin)
+- Studio (simple workspace: describe a study, the AI writes the SP-Scheme page): [http://localhost:3000/studio](http://localhost:3000/studio)
+- Admin (classic editor): [http://localhost:3000/admin](http://localhost:3000/admin)
 - Local Live Survey: [http://localhost:3000/survey](http://localhost:3000/survey)
 - Local API: `http://localhost:3001`
 
@@ -67,7 +68,7 @@ Use [`.env.example`](./.env.example) for custom ports. Split Express `PORT` into
 
 **Draft vs release:** Save updates the local draft only. Release writes `publishedSurveyConfig` into `public/projects/<id>.json`. Redeploy the participant site after a release.
 
-The AI Assistant uses your own provider keys (OpenAI, OpenRouter, DeepSeek, Qwen, and the rest of the catalog). There are no free or subsidized models. Silicon pretest also uses those keys and stores run data in `public/projects/<id>.silicon.json` without writing API keys to disk.
+The AI Assistant has two modes, the same as on the hosted platform: **SP-Scheme** (the AI writes the whole participant page; it is checked and saved only when it passes) and **Classic** (question by question in the classic editor). Studio and the classic editor share one conversation per study. The Assistant uses your own provider keys (OpenAI, OpenRouter, DeepSeek, Qwen, and the rest of the catalog). There are no free or subsidized models. Silicon pretest also uses those keys and stores run data in `public/projects/<id>.silicon.json` without writing API keys to disk.
 
 Switch Admin language with the top-bar EN / 中文 control. Set the participant survey language in Builder.
 

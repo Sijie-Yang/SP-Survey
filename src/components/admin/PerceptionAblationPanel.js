@@ -1,4 +1,6 @@
-import React, { useMemo, useRef, useState } from 'react';
+import { useWorkflowText } from '../../contexts/workflowI18n';
+import { downloadPerceptionFile, materializePerceptionRows } from '../../lib/imagePerceptionJoin';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Box, Button, Typography, FormControlLabel, Checkbox, FormGroup,
   TextField, LinearProgress, Alert, Paper, Table, TableBody, TableCell,
@@ -6,7 +8,7 @@ import {
 } from '@mui/material';
 import { PlayArrow, Stop } from '@mui/icons-material';
 import {
-  ABLATION_MODELS, runPerceptionAblation, isAbortError, diagnoseFit,
+  ABLATION_MODELS, buildAblationMatrix, runPerceptionAblation, isAbortError, diagnoseFit,
 } from '../../lib/perceptionAblation';
 import { ImportanceBarChart } from './analysisCharts';
 
@@ -19,12 +21,12 @@ function formatR2(m) {
   return base;
 }
 
-function diagnosisChip(diagnosis) {
-  if (diagnosis === 'overfit') {
-    return <Chip size="small" color="warning" label="overfit" sx={{ ml: 0.5, height: 20 }} />;
+function diagnosisChip(diagnosis, tx) {
+  if (diagnosis === tx("overfit")) {
+    return <Chip size="small" color="warning" label={tx("overfit")} sx={{ ml: 0.5, height: 20 }} />;
   }
   if (diagnosis === 'weak_fit') {
-    return <Chip size="small" color="default" label="weak fit" sx={{ ml: 0.5, height: 20 }} />;
+    return <Chip size="small" color="default" label={tx("weak fit")} sx={{ ml: 0.5, height: 20 }} />;
   }
   return null;
 }
@@ -39,12 +41,14 @@ export default function PerceptionAblationPanel({
   scoreLabel = 'Score',
   disabled = false,
 }) {
+  const tx = useWorkflowText();
   const [selectedModels, setSelectedModels] = useState(() => (
     ABLATION_MODELS.map((m) => m.id)
   ));
   const [vifMax, setVifMax] = useState(10);
   const [testFraction, setTestFraction] = useState(0.25);
   const [folds, setFolds] = useState(1);
+  const [groupByFolder, setGroupByFolder] = useState(false);
   const [imputeMissing, setImputeMissing] = useState(true);
   const [running, setRunning] = useState(false);
   const [progress, setProgress] = useState(null);
@@ -53,11 +57,19 @@ export default function PerceptionAblationPanel({
   const [showVif, setShowVif] = useState(false);
   const abortRef = useRef(null);
   const runIdRef = useRef(0);
+  useEffect(() => {
+    runIdRef.current += 1; abortRef.current?.abort();
+    setResult(null); setError(null); setRunning(false); setProgress(null);
+    return () => { abortRef.current?.abort(); };
+  }, [rows, modelFilter]);
 
   const scoredN = useMemo(
     () => (rows || []).filter((r) => r.mean_score != null && r.n_ratings > 0).length,
     [rows],
   );
+  const usableN = useMemo(() => buildAblationMatrix(rows, modelFilter, {
+    impute: false, deferImpute: imputeMissing,
+  }).n, [rows, modelFilter, imputeMissing]);
 
   const toggleModel = (id) => {
     setSelectedModels((prev) => (
@@ -72,7 +84,7 @@ export default function PerceptionAblationPanel({
   const handleRun = async () => {
     if (running) return;
     if (!selectedModels.length) {
-      setError('Select at least one model.');
+      setError(tx("Select at least one model."));
       return;
     }
     abortRef.current?.abort();
@@ -82,7 +94,7 @@ export default function PerceptionAblationPanel({
     runIdRef.current = runId;
     setRunning(true);
     setError(null);
-    setProgress({ message: 'Starting…', pct: 0 });
+    setProgress({ message: tx("Starting…"), pct: 0 });
     setResult(null);
     try {
       const out = await runPerceptionAblation({
@@ -92,7 +104,7 @@ export default function PerceptionAblationPanel({
         vifMax: Number(vifMax) || 10,
         testFraction: Math.min(0.5, Math.max(0.1, Number(testFraction) || 0.25)),
         folds: Math.max(1, Math.min(10, Math.floor(Number(folds) || 1))),
-        imputeMissing,
+        imputeMissing, groupByFolder,
         signal: controller.signal,
         onProgress: (p) => {
           if (runIdRef.current !== runId) return;
@@ -100,12 +112,12 @@ export default function PerceptionAblationPanel({
         },
       });
       if (runIdRef.current === runId && !controller.signal.aborted) {
-        setResult(out);
+        setResult({ ...out, input_rows: materializePerceptionRows(rows, modelFilter), model_filter: modelFilter, score_label: scoreLabel, requested_models: [...selectedModels] });
       }
     } catch (err) {
       if (runIdRef.current !== runId) return;
       if (isAbortError(err)) {
-        setError('Stopped.');
+        setError(tx("Stopped."));
         setProgress(null);
       } else {
         setError(err?.message || String(err));
@@ -120,18 +132,16 @@ export default function PerceptionAblationPanel({
 
   return (
     <Paper variant="outlined" sx={{ p: 2, mb: 2 }}>
-      <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
-        Multi-model ablation
+      <FormControlLabel control={<Checkbox checked={groupByFolder} disabled={running} onChange={(e) => { setGroupByFolder(e.target.checked); setResult(null); }} />} label={tx("Keep each folder in one validation split")} />
+      {groupByFolder && <Alert severity="info" sx={{ mb: 1 }}>{' '}{tx("Use folders only when they represent independent scenes or locations. With one holdout, folders are balanced into two groups; the test fraction is ignored. At least two folders are required.")}{' '}</Alert>}
+      {result && <Button size="small" onClick={() => downloadPerceptionFile(JSON.stringify({ format: 'sp_perception_model_run_v1', exported_at: new Date().toISOString(), ...result }, null, 2), `perception_models_${Date.now()}.json`)}>{' '}{tx("Export model run + split IDs")}{' '}</Button>}
+      <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>{' '}{tx("Multi-model ablation")}{' '}</Typography>
+      <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>{' '}{tx("VIF screen → predict")}{' '}{scoreLabel}{' '}{tx("(regression). Metrics are")}{' '}<strong>R² / RMSE / MAE</strong>
+        {' '}{' '}{tx("— not classification accuracy. MLP = multilayer perceptron (neural net),")}{' '}<strong>{' '}{tx("not NLP")}{' '}</strong>{' '}{tx(". Small n often favors Ridge / Lasso / RF over MLP. Uses Features filter (")}{' '}{tx({ all: 'All models', l0: 'Basic image features', seg: 'Semantic segmentation features', sam: 'Researcher annotation features' }[modelFilter])}).
       </Typography>
-      <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
-        VIF screen → predict {scoreLabel} (regression). Metrics are <strong>R² / RMSE / MAE</strong>
-        {' '}— not classification accuracy. MLP = multilayer perceptron (neural net), <strong>not NLP</strong>.
-        Small n often favors Ridge / Lasso / RF over MLP. Uses Features filter ({modelFilter}).
-      </Typography>
-      {scoredN > 0 && scoredN < 50 && (
+      {scoredN > 0 && usableN < 50 && (
         <Alert severity="info" sx={{ mb: 1.5, py: 0.5 }}>
-          Only {scoredN} scored images — prefer Ridge / Lasso / RF; treat MLP as exploratory.
-        </Alert>
+          {usableN}{' '}{tx("of")}{' '}{scoredN}{' '}{tx("scored images have usable features. At least 12 are needed to run models.")}{' '}{' '}{' '}{tx("Entirely missing feature rows are excluded; imputation only fills partial observations.")}{' '}</Alert>
       )}
 
       <FormGroup row sx={{ mb: 1.5, gap: 0.5 }}>
@@ -147,7 +157,7 @@ export default function PerceptionAblationPanel({
               />
             )}
             label={(
-              <Typography variant="body2">{m.label}</Typography>
+              <Typography variant="body2">{tx(m.label)}</Typography>
             )}
           />
         ))}
@@ -156,27 +166,27 @@ export default function PerceptionAblationPanel({
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, alignItems: 'flex-start', mb: 1.5 }}>
         <TextField
           size="small"
-          label="Max VIF"
+          label={tx("Max VIF")}
           type="number"
           value={vifMax}
           onChange={(e) => setVifMax(e.target.value)}
           disabled={running}
-          helperText="Drop collinear features above this VIF"
+          helperText={tx("Drop collinear features above this VIF")}
           FormHelperTextProps={{ sx: { mx: 0, mt: 0.5, lineHeight: 1.3 } }}
           inputProps={{ min: 2, max: 50, step: 0.5 }}
           sx={{ width: 160 }}
         />
         <TextField
           size="small"
-          label="Test holdout"
+          label={tx("Test holdout")}
           type="number"
           value={testFraction}
           onChange={(e) => setTestFraction(e.target.value)}
           disabled={running || Number(folds) > 1}
           helperText={
             Number(folds) > 1
-              ? 'Ignored when K-fold > 1'
-              : 'Fraction held out once for Test R²'
+              ? tx("Ignored when K-fold > 1")
+              : tx("Fraction held out once for Test R²")
           }
           FormHelperTextProps={{ sx: { mx: 0, mt: 0.5, lineHeight: 1.3 } }}
           inputProps={{ min: 0.1, max: 0.5, step: 0.05 }}
@@ -184,12 +194,12 @@ export default function PerceptionAblationPanel({
         />
         <TextField
           size="small"
-          label="K-fold"
+          label={tx("K-fold")}
           type="number"
           value={folds}
           onChange={(e) => setFolds(e.target.value)}
           disabled={running}
-          helperText="1 = single split; ≥2 = mean±std R²"
+          helperText={tx("1 = single split; ≥2 = mean±std R²")}
           FormHelperTextProps={{ sx: { mx: 0, mt: 0.5, lineHeight: 1.3 } }}
           inputProps={{ min: 1, max: 10, step: 1 }}
           sx={{ width: 160 }}
@@ -204,9 +214,9 @@ export default function PerceptionAblationPanel({
               disabled={running}
             />
           )}
-          label={<Typography variant="body2">Median impute missing features</Typography>}
+          label={<Typography variant="body2">{' '}{tx("Median impute missing features")}{' '}</Typography>}
         />
-        <Chip size="small" label={`Scored rows: ${scoredN}`} sx={{ mt: 1 }} />
+        <Chip size="small" label={`${tx("Usable rows")}: ${usableN} / ${scoredN}`} sx={{ mt: 1 }} />
         <Box sx={{ flex: 1 }} />
         {!running ? (
           <Button
@@ -214,11 +224,9 @@ export default function PerceptionAblationPanel({
             size="small"
             startIcon={<PlayArrow />}
             onClick={handleRun}
-            disabled={disabled || scoredN < 12 || !selectedModels.length}
+            disabled={disabled || usableN < 12 || !selectedModels.length}
             sx={{ mt: 0.5 }}
-          >
-            Run ablation
-          </Button>
+          >{' '}{tx("Run ablation")}{' '}</Button>
         ) : (
           <Button
             variant="outlined"
@@ -227,9 +235,7 @@ export default function PerceptionAblationPanel({
             startIcon={<Stop />}
             onClick={handleStop}
             sx={{ mt: 0.5 }}
-          >
-            Stop
-          </Button>
+          >{' '}{tx("Stop")}{' '}</Button>
         )}
       </Box>
 
@@ -241,13 +247,13 @@ export default function PerceptionAblationPanel({
             sx={{ mb: 0.5 }}
           />
           <Typography variant="caption" color="text.secondary">
-            {progress?.message || 'Running…'}
+            {progress?.message || tx("Running…")}
           </Typography>
         </Box>
       )}
 
       {error && (
-        <Alert severity={error === 'Stopped.' ? 'warning' : 'error'} sx={{ mb: 1.5 }}>
+        <Alert severity={error === tx("Stopped.") ? 'warning' : 'error'} sx={{ mb: 1.5 }}>
           {error}
         </Alert>
       )}
@@ -260,19 +266,14 @@ export default function PerceptionAblationPanel({
             </Alert>
           )}
           {result.nTest < 15 && result.foldsUsed <= 1 && (
-            <Alert severity="warning" sx={{ mb: 1.5, py: 0.5 }}>
-              Test n={result.nTest} is small — Test R² is noisy. Try K-fold ≥ 5 for mean±std.
-            </Alert>
+            <Alert severity="warning" sx={{ mb: 1.5, py: 0.5 }}>{' '}{tx("Test n=")}{' '}{result.nTest}{' '}{tx("is small — Test R² is noisy. Try K-fold ≥ 5 for mean±std.")}{' '}</Alert>
           )}
-          <Typography variant="body2" sx={{ mb: 1 }}>
-            Kept <strong>{result.nFeaturesOut}</strong> / {result.nFeaturesIn} features after VIF
-            (dropped {result.vifDropped?.length || 0}).
-            {' '}n={result.n}
+          <Typography variant="body2" sx={{ mb: 1 }}>{' '}{tx("Used")}{' '}<strong>{result.nFeaturesOut}</strong> / {result.nFeaturesIn}{' '}{tx("features across training folds. Imputation, VIF and scaling are fitted separately on each training fold.")}{' '}{' '}n={result.n}
             {result.foldsUsed > 1
               ? ` · ${result.foldsUsed}-fold CV (≈${result.nTrain} train / ${result.nTest} test per fold)`
               : ` · Train n=${result.nTrain}, test n=${result.nTest}`}
             {result.imputeMissing
-              ? ` · imputed ${result.imputedCells || 0} missing cell(s)`
+              ? ` · imputed ${result.imputedCells || 0} missing cell(s) across folds`
               : null}
             {result.droppedIncomplete
               ? ` · dropped ${result.droppedIncomplete} incomplete row(s)`
@@ -280,7 +281,7 @@ export default function PerceptionAblationPanel({
             .
             {' '}
             <Button size="small" onClick={() => setShowVif((v) => !v)}>
-              {showVif ? 'Hide VIF' : 'Show VIF'}
+              {showVif ? tx('Hide VIF') : tx('Show VIF')}
             </Button>
           </Typography>
 
@@ -288,13 +289,13 @@ export default function PerceptionAblationPanel({
             <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 2 }}>
               {!!result.vifDropped?.length && (
                 <Box sx={{ flex: 1, minWidth: 200 }}>
-                  <Typography variant="caption" color="text.secondary">Dropped (high VIF)</Typography>
+                  <Typography variant="caption" color="text.secondary">{' '}{tx("Dropped (high VIF)")}{' '}</Typography>
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mt: 0.5 }}>
                     {result.vifDropped.map((d) => (
                       <Chip
-                        key={d.feature}
+                        key={`${d.fold}-${d.feature}`}
                         size="small"
-                        label={`${d.feature}${d.vif != null ? ` (${d.vif.toFixed(1)})` : ''}`}
+                        label={`${tx("Fold")} ${d.fold}: ${d.feature}${d.vif != null ? ` (${d.vif.toFixed(1)})` : ''}`}
                         variant="outlined"
                       />
                     ))}
@@ -302,13 +303,13 @@ export default function PerceptionAblationPanel({
                 </Box>
               )}
               <Box sx={{ flex: 1, minWidth: 200 }}>
-                <Typography variant="caption" color="text.secondary">Kept VIF</Typography>
+                <Typography variant="caption" color="text.secondary">{' '}{tx("Kept VIF")}{' '}</Typography>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mt: 0.5 }}>
                   {(result.vifKept || []).slice(0, 24).map((d) => (
                     <Chip
-                      key={d.feature}
+                      key={`${d.fold}-${d.feature}`}
                       size="small"
-                      label={`${d.feature}${d.vif != null ? ` (${d.vif.toFixed(1)})` : ''}`}
+                      label={`${tx("Fold")} ${d.fold}: ${d.feature}${d.vif != null ? ` (${d.vif.toFixed(1)})` : ''}`}
                       color="success"
                       variant="outlined"
                     />
@@ -322,15 +323,13 @@ export default function PerceptionAblationPanel({
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell>Model</TableCell>
-                  <TableCell align="right">
-                    Test R²
-                    {result.foldsUsed > 1 ? ' (mean±std)' : ''}
+                  <TableCell>{' '}{tx("Model")}{' '}</TableCell>
+                  <TableCell align="right">{' '}{tx("Test R²")}{' '}{result.foldsUsed > 1 ? ' (mean±std)' : ''}
                   </TableCell>
-                  <TableCell align="right">Test RMSE</TableCell>
-                  <TableCell align="right">Test MAE</TableCell>
-                  <TableCell align="right">Train R²</TableCell>
-                  <TableCell>Fit</TableCell>
+                  <TableCell align="right">{' '}{tx("Test RMSE")}{' '}</TableCell>
+                  <TableCell align="right">{' '}{tx("Test MAE")}{' '}</TableCell>
+                  <TableCell align="right">{' '}{tx("Train R²")}{' '}</TableCell>
+                  <TableCell>{' '}{tx("Fit")}{' '}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -339,10 +338,10 @@ export default function PerceptionAblationPanel({
                   return (
                     <TableRow key={r.model}>
                       <TableCell>
-                        {r.label}
+                        {tx(r.label)}
                         {r.note ? (
                           <Typography variant="caption" color="text.secondary" display="block">
-                            {r.note}
+                            {tx(r.note)}
                           </Typography>
                         ) : null}
                       </TableCell>
@@ -354,7 +353,7 @@ export default function PerceptionAblationPanel({
                         {Number.isFinite(r.test?.mae) ? r.test.mae.toFixed(3) : '—'}
                       </TableCell>
                       <TableCell align="right">{formatR2(r.train)}</TableCell>
-                      <TableCell>{diagnosisChip(diagnosis)}</TableCell>
+                      <TableCell>{diagnosisChip(diagnosis, tx)}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -365,8 +364,8 @@ export default function PerceptionAblationPanel({
           {result.results.map((r) => (
             <ImportanceBarChart
               key={`imp-${r.model}`}
-              title={`${r.label} — top features`}
-              caption="Relative importance (normalized to the strongest feature in this model)."
+              title={`${tx(r.label)} — ${tx("top features")}`}
+              caption={tx("Relative importance (normalized to the strongest feature in this model).")}
               items={r.importance || []}
               maxItems={12}
             />

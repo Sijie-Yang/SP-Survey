@@ -3,7 +3,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const { applyOperations, normalizeOperationsArg } = require('./surveyOperations.cjs');
 const { resolveAiRequest, aiChat, formatAiError } = require('../../aiClient');
-const { readStore, resolveProviderRequest } = require('./agentCredentialsApi');
+const { currentModel, readStore, resolveProviderRequest, resolveAssistantRoute } = require('./agentCredentialsApi');
 
 const SESSION_PATH = path.join(__dirname, '..', '..', 'data', 'agent-sessions.json');
 const sessions = new Map();
@@ -148,7 +148,23 @@ function createId(prefix) {
   return `${prefix}_${crypto.randomBytes(6).toString('hex')}`;
 }
 
-function toolsForMode(mode) {
+const SP_SCHEME_READ_TOOLS = new Set(['survey_capabilities', 'survey_get_draft', 'survey_validate', 'survey_preview_url', 'media_list']);
+let spSchemeModule = null;
+/** src/server/spSchemeLocal.mjs (ESM), loaded once. */
+function loadSpScheme() {
+  if (!spSchemeModule) {
+    spSchemeModule = import(require('url').pathToFileURL(path.join(__dirname, 'spSchemeLocal.mjs')).href);
+  }
+  return spSchemeModule;
+}
+
+function toolsForMode(mode, spScheme = null) {
+  if (mode === 'spscheme') {
+    return [
+      ...TOOLS.filter((tool) => SP_SCHEME_READ_TOOLS.has(tool.function.name)),
+      ...(spScheme ? [spScheme.SP_SCHEME_WRITE_TOOL_SCHEMA] : []),
+    ];
+  }
   const writeTools = new Set(['survey_apply_operations', 'survey_submit_generated_draft', 'survey_publish']);
   if (mode === 'question') return TOOLS.filter((tool) => !writeTools.has(tool.function.name));
   if (mode === 'generate') return TOOLS.filter((tool) => tool.function.name !== 'survey_apply_operations');
@@ -301,11 +317,43 @@ async function executeTool(name, args, ctx) {
   const writeBlocked = ctx.assistantMode === 'question'
     && ['survey_apply_operations', 'survey_submit_generated_draft', 'survey_publish'].includes(name);
   if (writeBlocked) return { ok: false, error: 'Question mode is read-only.' };
+  const allowed = toolsForMode(ctx.assistantMode, ctx.spScheme).map((tool) => tool.function.name);
+  if (!allowed.includes(name)) return { ok: false, error: `${name} is not available in this mode.` };
+
+  if (name === 'sp_scheme_write_page') {
+    const route = await resolveSpSchemeRoute(ctx);
+    if (!route) return { ok: false, saved: false, error: 'API key is required.' };
+    const result = await ctx.spScheme.runSpSchemeWriteTool({
+      projectId: ctx.projectId,
+      request: args.request,
+      route,
+      readProject,
+      saveDraft: async (projectId, stored, nextConfig) => {
+        const now = new Date().toISOString();
+        await persistProject(projectId, {
+          ...stored,
+          surveyConfig: ctx.restoreStoredSecrets ? ctx.restoreStoredSecrets(nextConfig, stored.surveyConfig || {}) : nextConfig,
+          project: { ...(stored.project || {}), lastModified: now },
+          savedAt: now,
+          draftUpdatedAt: now,
+        }, now);
+        return readProject(projectId);
+      },
+    });
+    if (result.saved) {
+      ctx.surveyConfig = result.surveyConfig;
+      ctx.draftMutated = true;
+      ctx.draftUpdatedAt = result.draftUpdatedAt;
+    }
+    // The page itself is not sent back to the model.
+    const { surveyConfig: _page, ...forModel } = result;
+    return forModel;
+  }
 
   if (name === 'survey_capabilities') {
     return {
       name: 'SP-Survey local agent API',
-      tools: toolsForMode(ctx.assistantMode).map((tool) => tool.function.name),
+      tools: allowed,
       draftUpdatedAt: project.draftUpdatedAt || project.savedAt || null,
       rules: [
         'Always read the draft and retain draftUpdatedAt before writing.',
@@ -418,6 +466,14 @@ async function executeTool(name, args, ctx) {
 }
 
 async function resolveChatModel(ctx) {
+  if (!ctx.provider && !ctx.apiKey) {
+    // No model picked in the chat box: use the saved Assistant setting.
+    const saved = await resolveAssistantRoute();
+    if (saved) {
+      ctx.provider = saved.provider;
+      if (!ctx.model) ctx.model = saved.model;
+    }
+  }
   const store = await readStore();
   const request = resolveProviderRequest(store, {
     provider: ctx.provider,
@@ -426,11 +482,42 @@ async function resolveChatModel(ctx) {
     model: ctx.model,
   });
   if (!request) return null;
+  if (ctx.model) ctx.model = await currentModel(request.provider, ctx.model);
   return resolveAiRequest(request.apiKey, {
     provider: request.provider,
     baseUrl: request.baseUrl,
     protocol: request.protocol,
   });
+}
+
+/** The researcher's key and model for the SP-Scheme page writer. */
+async function resolveSpSchemeRoute(ctx) {
+  const store = await readStore();
+  const request = resolveProviderRequest(store, {
+    provider: ctx.provider,
+    apiKey: ctx.apiKey,
+    baseUrl: ctx.baseUrl,
+    model: ctx.model,
+  });
+  if (!request) return null;
+  let model = request.model;
+  if (!model) model = (await resolveAssistantRoute({ provider: request.provider }))?.model || '';
+  return {
+    apiKey: request.apiKey,
+    provider: request.provider,
+    baseUrl: request.baseUrl,
+    protocol: request.protocol,
+    model,
+  };
+}
+
+/** The mode of the session's last researcher message, if any. */
+function previousMode(session) {
+  for (let i = session.events.length - 1; i >= 0; i -= 1) {
+    const event = session.events[i];
+    if (event.type === 'user.message') return event.payload?.assistantMode || 'agent';
+  }
+  return '';
 }
 
 async function runDesignerChat(session, run, ctx) {
@@ -444,9 +531,13 @@ async function runDesignerChat(session, run, ctx) {
     return;
   }
   pushEvent(session, 'run.status', { status: 'running' }, run.id);
+  const spScheme = await loadSpScheme();
+  if (ctx.assistantMode === 'spscheme') ctx.spScheme = spScheme;
+  const switchNote = spScheme.modeSwitchNote(previousMode(session), ctx.assistantMode);
   const editor = ctx.editorContext ? `\nEditor context: ${JSON.stringify(ctx.editorContext).slice(0, 4000)}` : '';
+  const system = ctx.assistantMode === 'spscheme' ? spScheme.SP_SCHEME_SYSTEM : SYSTEM;
   const history = [
-    { role: 'system', content: SYSTEM + editor },
+    { role: 'system', content: system + editor + switchNote },
     ...(ctx.researchContext?.topic ? [{
       role: 'system',
       content: `Research context: ${JSON.stringify(ctx.researchContext)}`,
@@ -454,7 +545,7 @@ async function runDesignerChat(session, run, ctx) {
     ...((ctx.conversationHistory || []).slice(-16)),
     { role: 'user', content: ctx.message },
   ];
-  pushEvent(session, 'user.message', { content: ctx.message }, run.id);
+  pushEvent(session, 'user.message', { content: ctx.message, assistantMode: ctx.assistantMode }, run.id);
 
   let finalText = '';
   for (let step = 0; step < 16; step += 1) {
@@ -478,7 +569,7 @@ async function runDesignerChat(session, run, ctx) {
       completion = await aiChat(resolved, 'default', {
         model: ctx.model,
         messages: history,
-        tools: toolsForMode(ctx.assistantMode),
+        tools: toolsForMode(ctx.assistantMode, ctx.spScheme),
         tool_choice: 'auto',
       });
     } catch (error) {

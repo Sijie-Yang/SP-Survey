@@ -43,6 +43,7 @@ import {
   OpenInNew,
   MoreVert,
   GitHub,
+  SpaceDashboardOutlined,
 } from '@mui/icons-material';
 import { themes, createCustomTheme } from './themes/themeConfig';
 import ConfirmDialog from './components/layout/ConfirmDialog';
@@ -71,6 +72,7 @@ import {
   parseAdminDeepLink,
   savedAdminTab,
   stripAdminDeepLink,
+  studioPathForProject,
 } from './lib/adminDeepLink';
 import useSurveyAssistant from './hooks/useSurveyAssistant';
 import { useSiliconTasks } from './hooks/useSiliconTasks';
@@ -244,6 +246,8 @@ function AdminLoadingLabel() {
 export default function AdminApp() {
   const { t, language, setLanguage } = useRegion();
   const compactToolbar = useMediaQuery('(max-width:899px)');
+  // The Studio button hides below 600px; the More menu offers it there.
+  const phoneToolbar = useMediaQuery('(max-width:599px)');
   // Self-hosted: one local user, no sign-in.
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -1401,6 +1405,29 @@ export default function AdminApp() {
     await performSave({ silent: false });
   };
 
+  // True once nothing is left unsaved: waits for a save that is already
+  // running, then saves the edits made since (or retries a failed save).
+  const saveBeforeLeaving = async () => {
+    if (!currentProject) return true;
+    if (saveInFlightRef.current && savePromiseRef.current) {
+      const running = await savePromiseRef.current.catch(() => null);
+      if (running?.success && !running.editedDuringSave) return true;
+    } else if (!hasUnsavedChangesRef.current) {
+      return true;
+    }
+    const result = await performSaveRef.current?.({ silent: true });
+    return Boolean(result?.success);
+  };
+
+  // Studio reads the stored draft, so pending edits are saved first.
+  const openStudio = async () => {
+    if (!(await saveBeforeLeaving())) {
+      setSnackbar({ open: true, message: uiPair(language, 'Your latest changes are not saved yet. Save them, then open Studio again.', '最新的修改还没保存。请先保存，再打开工作台。'), severity: 'warning' });
+      return;
+    }
+    navigate(studioPathForProject(currentProject?.id));
+  };
+
 
 
 
@@ -1613,6 +1640,27 @@ export default function AdminApp() {
               <RegionSwitcher variant="public" />
             </Box>
           </Box>
+
+          <Tooltip title={currentProject
+            ? uiPair(language, 'Open this study in Studio', '在工作台打开这个研究')
+            : uiPair(language, 'Open Studio', '打开工作台')}
+          >
+            <Button
+              color="inherit"
+              size="small"
+              startIcon={<SpaceDashboardOutlined />}
+              onClick={openStudio}
+              data-testid="admin-studio"
+              sx={{
+                ...toolbarButtonSx,
+                ...toolbarIconUntilWideSx,
+                display: { xs: 'none', sm: 'inline-flex' },
+                mr: 0.5,
+              }}
+            >
+              <ToolbarLabel>{uiPair(language, 'Studio', '工作台')}</ToolbarLabel>
+            </Button>
+          </Tooltip>
           
 
           <Tooltip title={t.viewLive}>
@@ -1667,6 +1715,12 @@ export default function AdminApp() {
         onClose={handleToolsMenuClose}
         PaperProps={{ sx: { mt: 1, minWidth: 240 } }}
       >
+        {phoneToolbar && (
+          <MenuItem onClick={() => { handleToolsMenuClose(); openStudio(); }}>
+            <ListItemIcon><SpaceDashboardOutlined fontSize="small" /></ListItemIcon>
+            <ListItemText primary={uiPair(language, 'Studio', '工作台')} />
+          </MenuItem>
+        )}
         {compactToolbar && assistantEnabled && <MenuItem onClick={() => { handleToolsMenuClose(); openAiSidebar('assistant'); }}>{t.aiLabel}</MenuItem>}
         {compactToolbar && siliconEnabled && (
           <MenuItem onClick={() => { handleToolsMenuClose(); openAiSidebar('tasks'); }}>

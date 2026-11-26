@@ -336,7 +336,15 @@ export async function waitForAgentRun(sessionId, runId, {
     }
     await new Promise((resolve) => setTimeout(resolve, intervalMs));
   }
-  return { success: false, error: 'Assistant run timed out', sessionId, runId };
+  // Stop the run so it does not keep writing the draft after the browser gave up.
+  await cancelAiRun(currentRunId).catch(() => null);
+  return {
+    success: false,
+    sessionId,
+    runId: currentRunId,
+    code: 'AGENT_RUN_TIMEOUT',
+    error: 'The Agent timed out and was stopped so it would not keep writing the draft.',
+  };
 }
 
 export async function listSiliconPersonas(projectId) {

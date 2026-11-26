@@ -64,7 +64,7 @@ export function toSkillInitPayload(config, images, value) {
   if (safeConfig.injectedImages?.length) {
     safeImages = safeConfig.injectedImages;
   }
-  // No SVG / built-in demo fallback — use project media or admin skill-preview library.
+  // No SVG / built-in demo fallback — use project media or platform preview library.
 
   const safeValue = safeJsonClone(value, null);
 

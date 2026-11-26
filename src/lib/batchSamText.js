@@ -15,7 +15,7 @@ import {
   newShapeId,
   withShapeProvenance,
 } from './imageFeaturesR2';
-import { normalizeMediaEntry } from './mediaUtils';
+import { normalizeMediaEntry, getMediaId } from './mediaUtils';
 import {
   dedupeShapesByOverlap,
   isSamTextShapeForPrompt,
@@ -105,17 +105,17 @@ export async function runBatchSamText({
   const completedNames = new Set(
     (existingBatch?.images || [])
       .filter((img) => img.status === 'done' || img.status === 'skipped')
-      .map((img) => img.name),
+      .map((img) => img.media_id || img.url || img.name),
   );
   const failureNames = new Set(
-    (existingBatch?.failures || []).map((f) => f.name).filter(Boolean),
+    (existingBatch?.failures || []).map((f) => f.media_id || f.url || f.name).filter(Boolean),
   );
 
   let targets = list;
   if (retryFailuresOnly && existingBatch) {
-    targets = list.filter((m) => failureNames.has(m.name));
+    targets = list.filter((m) => failureNames.has(getMediaId(m)) || failureNames.has(m.url) || (list.filter((x) => x.name === m.name).length === 1 && failureNames.has(m.name)));
   } else if (resumeId && existingBatch) {
-    targets = list.filter((m) => !completedNames.has(m.name));
+    targets = list.filter((m) => !(completedNames.has(getMediaId(m)) || completedNames.has(m.url) || (list.filter((x) => x.name === m.name).length === 1 && completedNames.has(m.name))));
   }
 
   const stepTotal = Math.max(1, targets.length * jobList.length);
@@ -168,7 +168,7 @@ export async function runBatchSamText({
   };
 
   const upsertImageRecord = (rec) => {
-    const idx = summary.images.findIndex((x) => x.name === rec.name);
+    const idx = summary.images.findIndex((x) => (x.media_id || x.url || x.name) === (rec.media_id || rec.url || rec.name));
     if (idx >= 0) summary.images[idx] = { ...summary.images[idx], ...rec };
     else summary.images.push(rec);
   };
@@ -187,7 +187,7 @@ export async function runBatchSamText({
     } catch (err) {
       loadError = err.message || String(err);
       summary.failed += 1;
-      summary.failures.push({ name: entry.name, error: loadError, kind: 'load' });
+      summary.failures.push({ media_id: getMediaId(entry), name: entry.name, error: loadError, kind: 'load' });
       for (let j = 0; j < jobList.length; j += 1) {
         tick({
           name: entry.name,
@@ -308,6 +308,7 @@ export async function runBatchSamText({
         imageError = err.message || String(err);
         summary.failed += 1;
         summary.failures.push({
+          media_id: getMediaId(entry),
           name: entry.name,
           prompt: job.prompt,
           label: job.label,
@@ -367,7 +368,7 @@ export async function runBatchSamText({
         });
       } catch (err) {
         summary.failed += 1;
-        summary.failures.push({ name: entry.name, error: err.message || String(err), kind: 'save' });
+        summary.failures.push({ media_id: getMediaId(entry), name: entry.name, error: err.message || String(err), kind: 'save' });
         upsertImageRecord({
           name: entry.name,
           url: entry.url,

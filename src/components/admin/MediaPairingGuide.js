@@ -1,8 +1,11 @@
+import { useQuestionEditorText } from '../../contexts/questionEditorI18n';
 /**
  * Guide: organize media with folders tagged set.
  */
 import React from 'react';
 import { Alert, Box, Typography } from '@mui/material';
+import { useRegion } from '../../contexts/RegionContext';
+import { tf } from '../../contexts/adminI18n';
 
 export default function MediaPairingGuide({
   compact = false,
@@ -15,51 +18,52 @@ export default function MediaPairingGuide({
   eligibleSetCount = null,
   filesPerSet = null,
 }) {
+  const { t } = useRegion();
+  const { tr, zh } = useQuestionEditorText();
   const eligible = eligibleSetCount ?? eligibleGroupCount;
   const body = (
     <Box>
       <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
-        Fixed sets
+        {t.guideFixedSets}
       </Typography>
       <Typography variant={compact ? 'body2' : 'body1'} sx={{ mb: 1 }}>
-        Tag folders as <code>set</code>. Each tagged folder&apos;s <em>direct</em> files are shown together
-        (set size must match the question&apos;s media count
-        {filesPerSet != null ? ` — currently ${filesPerSet}` : ''}).
+        {t.guideFixedSetsBody}
+        {filesPerSet != null ? ` (${filesPerSet})` : ''}
       </Typography>
       <Box
         sx={{
           p: 1.25,
           mb: 0.5,
           borderRadius: 1,
-          bgcolor: (t) => (t.palette.mode === 'dark' ? 'grey.900' : 'rgba(255,255,255,0.65)'),
+          bgcolor: (theme) => (theme.palette.mode === 'dark' ? 'grey.900' : 'rgba(255,255,255,0.65)'),
           border: '1px dashed',
           borderColor: 'divider',
         }}
       >
         <Typography variant="caption" color="text.secondary" display="block" sx={{ fontWeight: 700, mb: 0.5 }}>
-          Example
+          {t.guideExample}
         </Typography>
-        <Typography variant="body2" component="div" sx={{ fontSize: compact ? '0.8rem' : undefined }}>
-          1. Create folders <code>block01</code>, <code>block02</code>, <code>block03</code><br />
-          2. Put 2 images in each folder (same count)<br />
-          3. Check those folders → click <strong>Set</strong><br />
-          4. In Survey Builder, choose media mode <strong>Random fixed sets</strong> with count = 2<br />
-          → each respondent sees <em>one whole folder</em> (both images together)
+        <Typography
+          variant="body2"
+          component="div"
+          sx={{ fontSize: compact ? '0.8rem' : undefined, whiteSpace: 'pre-line' }}
+        >
+          {t.guideFixedSetsExample}
         </Typography>
       </Box>
       {context === 'question' && eligible != null && (
         <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 0.75 }}>
-          Eligible sets: {eligible}
-          {pairedSetCount != null ? ` · tagged: ${pairedSetCount}` : ''}
-          {matchingFileCount != null ? ` · matching files: ${matchingFileCount}` : ''}
-          {mediaTypeFilter && mediaTypeFilter !== 'any' ? ` (${mediaTypeFilter})` : ''}
-          {totalFileCount != null ? ` · project: ${totalFileCount}` : ''}
+          {zh ? '可用分组：' : 'Eligible sets: '}{eligible}
+          {pairedSetCount != null ? (zh ? ` · 已标记：${pairedSetCount}` : ` · tagged: ${pairedSetCount}`) : ''}
+          {matchingFileCount != null ? (zh ? ` · 匹配文件：${matchingFileCount}` : ` · matching files: ${matchingFileCount}`) : ''}
+          {mediaTypeFilter && mediaTypeFilter !== 'any' ? ` (${tr(mediaTypeFilter)})` : ''}
+          {totalFileCount != null ? (zh ? ` · 项目文件：${totalFileCount}` : ` · project: ${totalFileCount}`) : ''}
         </Typography>
       )}
       {context === 'dataset' && pairedSetCount > 0 && (
         <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 0.75 }}>
-          Currently tagged sets: {pairedSetCount}
-          {totalFileCount != null ? ` · project files: ${totalFileCount}` : ''}
+          {tf(t.guideTaggedSets, { n: pairedSetCount })}
+          {totalFileCount != null ? tf(t.guideProjectFiles, { n: totalFileCount }) : ''}
         </Typography>
       )}
     </Box>

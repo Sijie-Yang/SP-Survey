@@ -38,7 +38,7 @@ export function preannotationsToAnalysisInputs(items) {
       const file = url.split('?')[0].split('/').pop();
       if (file) imageNameToUrl.set(file, url);
     }
-    if (!annotation?.shapes?.length) return;
+    if (!Array.isArray(annotation?.shapes)) return;
     annotatedCount += 1;
     const answer = {
       shapes: annotation.shapes,
