@@ -1,10 +1,10 @@
 # SP-Survey agent guide
 
-## New studies: use the SP-Scheme kit (default)
+## New surveys: use the kit with your own AI (default)
 
-For any request to build, replicate, run or analyse a perception experiment, follow `.claude/skills/sp-scheme/SKILL.md` (Codex: read it now; Claude Code loads it as a skill). In short:
+For any request to build, run or analyse a survey, follow `.claude/skills/sp-survey/SKILL.md` (Codex: read it now; Claude Code loads it as a skill). In short:
 
-- Read `kit/SP-SCHEME.md`; start from `node kit/sp.mjs library` / `node kit/sp.mjs new <folder> --from <id>` when a published study fits.
+- Read `kit/SP-SCHEME.md`; start from `node kit/sp.mjs templates` / `node kit/sp.mjs new <folder> --template <id>` when a template fits.
 - Never re-implement randomisation, answer checks or storage: `kit/sp-site.js` does them. Never hard-code or generate stimulus images.
 - `node kit/sp.mjs check <folder>` must show no ✗; `node kit/sp.mjs serve <folder>` and click through at phone and desktop width before handing over.
 - Never ask for, print or store credentials. `sp-config.json` holds only the Supabase URL and anon key; the service-role key is set by the researcher in their own shell for `export`.

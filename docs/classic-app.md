@@ -1,6 +1,6 @@
 # SP-Survey classic app (self-hosted admin)
 
-The full visual builder that SP-Survey started as. It still works and is still maintained for existing users, but new studies are easier with the [SP-Scheme kit](../README.md). Paths below are relative to the repository root.
+The full visual builder that SP-Survey started as. It still works and is still maintained for existing users, but new surveys are easier with your own AI and the kit (see the [README](../README.md)). Paths below are relative to the repository root.
 
 ## Features
 

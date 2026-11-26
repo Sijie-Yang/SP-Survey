@@ -1,131 +1,127 @@
 <div align="center">
 
-# SP-Survey · SP-Scheme
+# SP-Survey
 
-**The open standard for AI-built perception experiments.**
+**Visual perception surveys, built by your own AI, run on your own server.**
 
-AI now lets anyone build a perception survey in minutes.
-SP-Scheme makes those surveys **comparable, auditable and poolable**, so studies run by different people in different cities add up.
+Tell Claude Code or Codex what you want to measure. SP-Survey gives it the templates, the survey runtime and the data pipeline, so the survey it builds draws images correctly, records answers properly and lands in your own database.
 
 [![Website](https://img.shields.io/badge/🌐-sp--survey.org-blue)](https://sp-survey.org)
 [![License](https://img.shields.io/badge/code-MIT-green)](./LICENSE)
-[![Spec](https://img.shields.io/badge/spec-SP--Scheme_2.0-orange)](./kit/SP-SCHEME.md)
-[![Studies](https://img.shields.io/badge/studies-28_published-purple)](./kit/library/studies.json)
-[![Papers](https://img.shields.io/badge/papers-1,529_indexed-lightgrey)](./kit/library/papers.csv)
+[![Templates](https://img.shields.io/badge/templates-28_published_studies-purple)](./kit/templates/templates.json)
 
-[中文说明](#中文说明) · [Quick start](#quick-start-with-your-ai) · [Study library](#the-study-library) · [Spec](./kit/SP-SCHEME.md) · [Hosted platform](https://sp-survey.org)
+[中文说明](#中文说明) · [Quick start](#quick-start) · [Templates](#templates) · [Hosted version](https://sp-survey.org)
 
 </div>
 
 ---
 
-## Why a standard
+## What it is
 
-Ask Claude, ChatGPT or Codex to "replicate Place Pulse with my street photos" and you get a working page. Ask ten researchers to do it and you get ten question wordings, ten home-made randomisers and ten data formats that cannot be compared. Urban perception research has the same problem at scale: hundreds of studies, few that can be pooled.
+SP-Survey is an open-source tool for image-based surveys in urban research and beyond: "which street looks safer?", rate a scene, sliders, rankings, annotation. [sp-survey.org](https://sp-survey.org) is the hosted version. This repository is the **self-hosted version for the AI era**: your AI is the survey builder, and SP-Survey supplies the parts an AI should not improvise.
 
-SP-Scheme is a small contract between an AI-built survey page and the code that runs it. **The AI designs the experience. The standard fixes the parts that must be right:**
+| You (with your AI) | SP-Survey takes care of |
+|---|---|
+| Describe the study, or pick a template from a published paper | ~30 question types with answers checked on every submit |
+| Let the AI design the page: any layout, language, style | Images drawn per participant: random, or **balanced** so every image is shown equally often |
+| Preview on your laptop and phone | Recording exactly which images each person saw, per round |
+| Deploy anywhere static | Responses in **your own Supabase**: nobody else holds your participants' data |
+| Ask the AI to analyse | Export to tidy CSV + per-image scores, ready for pandas / R |
 
-| | What SP-Scheme fixes | Why AI alone can't |
-|---|---|---|
-| **Questions** | Every recorded answer is a declared question with one of ~30 typed shapes (pairwise choice, rating, sliders, ranking, matrix, annotation…), checked on every answer | Free-form pages record free-form data |
-| **Stimuli** | Images are drawn per participant by seeded, tested code; `"balanced"` shows every image equally often across participants (server-claimed numbers) | Balance needs a counter shared by all participants; one page can't do it, and home-made shuffles are often biased |
-| **Data** | One response format: answer + exactly which files were shown, per round | Analysis, pooling and dataset release need the same columns everywhere |
-| **Provenance** | Studies start from a published instrument in the library, list their differences from the original, and cite one versioned runtime | Reviewers can audit a tested library; they can't audit a one-off script |
+The same survey page also runs on [sp-survey.org](https://sp-survey.org) unchanged, if you would rather not run a server.
 
-The same `index.html` runs **self-hosted** (your server, your Supabase, your data) or on **[sp-survey.org](https://sp-survey.org)** (recruitment links, dashboards, citable dataset packages), unchanged.
-
-## Quick start with your AI
+## Quick start
 
 ```bash
 git clone https://github.com/Sijie-Yang/SP-Survey.git && cd SP-Survey
 ```
 
-Open the folder in **Claude Code** or **Codex** and say what you want. The repository ships an agent skill ([`.claude/skills/sp-scheme`](./.claude/skills/sp-scheme/SKILL.md), also read through [`AGENTS.md`](./AGENTS.md)), so the agent follows the standard on its own:
+**With Claude Code or Codex** (recommended): open the folder and just ask. The repo ships an agent skill ([`.claude/skills/sp-survey`](./.claude/skills/sp-survey/SKILL.md), also read via [`AGENTS.md`](./AGENTS.md)), so the agent knows the whole workflow:
 
-> *"Replicate Place Pulse 2.0 safety comparisons with the street photos in ~/photos/singapore, in English and Chinese. Show me the page on my phone."*
+> *"Make a survey where people pick which of two street photos looks safer, using the photos in ~/photos/singapore. English and Chinese. Show it to me on my phone."*
 
-> *"I want to know whether trees make streets feel cooler. Design a short experiment from published studies, 10 minutes per person."*
+> *"Start from the Place Pulse 2.0 template, keep only safety and liveliness, 15 pairs each."*
 
-> *"Here is a paper PDF. Add its questionnaire to the study library and open a pull request."*
+> *"Here are 300 responses. Rank the streets by perceived safety and make a figure."*
 
-No agent? The same steps by hand (Node 18+, no install):
+**By hand** (Node 18+, nothing to install):
 
 ```bash
-node kit/sp.mjs library safety                          # published studies + matching papers
-node kit/sp.mjs new my-study --from 2016-dubey-place    # a running study with the original questions
-cp ~/photos/*.jpg my-study/stimuli/
-node kit/sp.mjs check my-study                          # validates the page, lists media, explains the draws
-node kit/sp.mjs serve my-study                          # http://localhost:4173 — responses saved locally
-node kit/sp.mjs export my-study                         # answers_long.csv + image_scores.csv
+node kit/sp.mjs templates safety                          # templates from published studies
+node kit/sp.mjs new my-survey --template 2016-dubey-place # a working survey with the original questions
+cp ~/photos/*.jpg my-survey/stimuli/
+node kit/sp.mjs check my-survey                           # checks the page and explains how images are drawn
+node kit/sp.mjs serve my-survey                           # preview at http://localhost:4173, test answers saved locally
+node kit/sp.mjs export my-survey                          # answers_long.csv + image_scores.csv
 ```
 
-## Go live
-
-**Self-host (your data never leaves your accounts)**
+## Publish
 
 1. Create a free [Supabase](https://supabase.com) project → SQL Editor → run [`kit/supabase.sql`](./kit/supabase.sql).
-2. Put the project URL and the **anon** key in `my-study/sp-config.json` (never the service-role key).
-3. Deploy the folder to any static host: Cloudflare Pages, Netlify, Vercel, GitHub Pages, a university web server.
-4. Download data: `SUPABASE_URL=… SUPABASE_SERVICE_ROLE_KEY=… node kit/sp.mjs export my-study`.
+2. Put the project URL and the **anon** key in `my-survey/sp-config.json` (never the service-role key).
+3. Deploy the folder to any static host: Cloudflare Pages, Netlify, Vercel, GitHub Pages, your university web server. Share the link.
+4. Download responses: `SUPABASE_URL=… SUPABASE_SERVICE_ROLE_KEY=… node kit/sp.mjs export my-survey`.
 
-Prolific / MTurk style links work: `?PROLIFIC_PID=…` becomes the participant id, and `completionUrl` in `sp-config.json` sends people back when they finish.
+Recruitment platforms work out of the box: `?PROLIFIC_PID=…` (or `?participant=`, `?pid=`, `?workerId=`) becomes the participant id, and `completionUrl` in `sp-config.json` sends people back when they finish.
 
-**Or use the hosted platform.** Zip the folder and drop it into Studio on [sp-survey.org](https://sp-survey.org), or connect your agent to `https://sp-survey.org/mcp`. You get recruitment links per country, live results, AI-assisted analysis and a citable dataset package, with no server to run.
+**Prefer hosted?** Zip the folder and drop it into Studio on [sp-survey.org](https://sp-survey.org), or connect your agent to `https://sp-survey.org/mcp`. You get recruitment links, live results, AI-assisted analysis and a citable dataset package without running anything.
 
 ## How it works
 
 ```mermaid
 flowchart LR
-  A["Your AI<br/>(Claude, Codex, ChatGPT…)"] -->|writes| P["index.html<br/>+ sp-scheme JSON"]
-  L["Study library<br/>28 published instruments"] --> A
-  P --> R["sp-site.js<br/>typed answers · seeded / balanced draws"]
-  R --> S[("Your Supabase<br/>survey_responses")]
-  P -.same page.-> H["sp-survey.org<br/>Studio · recruitment · dashboards"]
-  S --> E["sp.mjs export<br/>answers_long.csv · image_scores.csv"]
+  T["Template<br/>(published study)"] --> A["Your AI<br/>Claude Code · Codex"]
+  A -->|builds| P["index.html<br/>questions declared in JSON"]
+  P --> R["sp-site.js<br/>checks answers · draws images"]
+  R --> S[("Your Supabase")]
+  S --> E["sp.mjs export<br/>CSV · per-image scores"]
+  P -.same page.-> H["sp-survey.org"]
 ```
 
-| File | What it is |
+| File | What it does |
 |---|---|
-| [`kit/SP-SCHEME.md`](./kit/SP-SCHEME.md) | The standard: page contract, question types, answer shapes, media rules (identical to the text sp-survey.org gives models) |
-| [`kit/sp-site.js`](./kit/sp-site.js) | Runtime (one file, no dependencies): `window.SPSite`, answer checks, Fisher–Yates and balanced draws, storage, resume after reload |
-| [`kit/sp.mjs`](./kit/sp.mjs) | `library`, `new`, `check`, `serve`, `export` |
-| [`kit/supabase.sql`](./kit/supabase.sql) | Response table, idempotent submit, balanced-draw claims (same schema as the platform) |
-| [`kit/library/`](./kit/library/) | 28 published study instruments + an index of 1,529 perception papers |
-| [`.claude/skills/sp-scheme`](./.claude/skills/sp-scheme/SKILL.md) | Agent skill: design → page → check → deploy → analyse → contribute |
+| [`kit/SP-SCHEME.md`](./kit/SP-SCHEME.md) | How a survey page declares its questions and records answers (the format sp-survey.org uses) |
+| [`kit/sp-site.js`](./kit/sp-site.js) | Survey runtime, one file, no dependencies: answer checks, random and balanced image draws, saving, resume after reload |
+| [`kit/sp.mjs`](./kit/sp.mjs) | `templates`, `new`, `check`, `serve`, `export` |
+| [`kit/supabase.sql`](./kit/supabase.sql) | Response table, duplicate-safe submit, balanced-draw numbers |
+| [`kit/templates/`](./kit/templates/) | 28 templates rebuilt from published studies |
+| [`.claude/skills/sp-survey`](./.claude/skills/sp-survey/SKILL.md) | The agent workflow: design → page → check → publish → analyse |
 
-Responses are stored as one row per participant: `responses` (answer per question; repeated rounds as `{trials:[{value, shown_images}]}`), `displayed_images`, and `survey_metadata` (balanced-draw number and claim, timing, URL parameters, runtime version). `node --test kit/kit.test.mjs` checks the balance guarantee, the export and every library study.
+Balanced draws: each new participant gets a number from your database, and the runtime turns it into that person's images with a seeded queue, so after any number of participants every image has been shown the same number of times (± 1) and nobody sees an image twice. `node --test kit/kit.test.mjs` checks this, the export and every template.
 
-## The study library
+## Templates
 
-28 instruments rebuilt from published papers, each with its original wording and scales and an explicit list of differences from the original: Place Pulse 1.0 and 2.0, Streetscore, UrbanGems, SPECS, Scenic-Or-Not, Ewing & Handy's urban design qualities, Gehl's 12 criteria, Attention Restoration Theory, bikeability, playability, greenery, thermal comfort, window views, hotel hue… Plus [`papers.csv`](./kit/library/papers.csv): 1,529 perception studies from the paper library on sp-survey.org (kept up to date by a weekly literature scan and manual review).
+28 surveys rebuilt from published papers, each with its original wording and scales and a note on how it differs from the original: Place Pulse 1.0 and 2.0, Streetscore, UrbanGems, SPECS, Scenic-Or-Not, Ewing & Handy's urban design qualities, Gehl's 12 quality criteria, Attention Restoration Theory, bikeability, places for play, greenery, thermal comfort, window views, hotel hue and more. The full, growing library is on [sp-survey.org](https://sp-survey.org).
 
-**The library grows by contribution.** Give your agent a paper and ask it to add the study (skill step 6); it rebuilds the questionnaire, lists the differences and opens a pull request. Every merged study becomes something anyone can replicate in one command, and every replication cites the original.
+Have a paper whose survey should be a template? Give it to your agent (skill step 6), or [request it](https://sp-survey.org/request-template).
 
 ## Classic app
 
-The full visual builder this repository started as (Builder, Media, Host, Results, SAM annotation, Silicon pretests) is still here and still works: `npm install && npm run dev`, then see [docs/classic-app.md](./docs/classic-app.md). It is no longer the recommended starting point.
+The visual builder this repository started as (Builder, Media, Host, Results, SAM annotation, Silicon pretests) is still here and still works: `npm install && npm run dev`, then see [docs/classic-app.md](./docs/classic-app.md).
 
 ## 中文说明
 
-**SP-Scheme 是给"AI 做感知实验"定的开放标准。** 现在用 Claude、ChatGPT 或 Codex 几分钟就能做出一个问卷页面，但每个人做出来的题目写法、随机方式和数据格式都不一样，结果没法比较，也没法合并。SP-Scheme 只规定三件必须做对的事：
+**SP-Survey 开源版：让你自己的 AI 帮你做街景、图片感知问卷，并部署在你自己的服务器上。**
 
-1. 每道题有固定的类型和答案格式；
-2. 图片由经过测试的代码按参与者抽取，可以设为均衡，让每张图被看的次数相同；
-3. 统一的数据格式，记录每个回答和当时展示的图片。
+用 Claude Code 或 Codex 打开这个仓库，直接说出你的需求，比如"做一个问卷，让参与者从两张街景里选出看起来更安全的那张，图片在 ~/photos 里，要中英文"。仓库自带 skill，AI 会按 SP-Survey 的流程完成整件事：选模板、设计页面、本地预览、部署、收数据、导出分析。
 
-页面长什么样完全交给 AI 设计。
+页面的样子由 AI 按你的想法设计。必须做对的部分由 SP-Survey 的代码负责，包括：
 
-用法：把仓库用 Claude Code 或 Codex 打开，直接说"用我的新加坡街景复现 Place Pulse 2.0 的安全感对比"。仓库自带 skill，AI 会按标准一步步完成：选研究、生成页面、校验、本地试跑、部署到你自己的 Supabase、导出数据。同一个页面也可以原样上传到 [sp-survey.org](https://sp-survey.org)，用平台的招募链接和分析功能。
+- 约 30 种题型，每个答案都会校验；
+- 图片按参与者抽取，可以设为**均衡**，让每张图被看到的次数一样；
+- 记录每个人当时看到的是哪几张图；
+- 数据存在**你自己的 Supabase**；
+- 导出整理好的 CSV 和每张图的得分。
 
-研究库目前收录 28 个已发表研究的原版问卷，另有 1,529 篇感知研究论文的索引。把一篇论文交给你的 AI，它可以帮你把这项研究加进库里并提交 PR。
+仓库附带 28 个按已发表论文复原的问卷模板（Place Pulse、Streetscore、SPECS 等）。同一个问卷页面也可以原样上传到 [sp-survey.org](https://sp-survey.org)，直接使用平台的招募链接和在线分析。
 
 ## Citation
 
-If you run a study with SP-Scheme, cite the original study you replicated and the software ([`CITATION.cff`](./CITATION.cff)):
+Please cite the software ([`CITATION.cff`](./CITATION.cff)) and, if you used a template, the original study:
 
 ```bibtex
 @software{spsurvey,
-  title  = {SP-Survey and the SP-Scheme standard for perception experiments},
+  title  = {SP-Survey},
   author = {{Urban Analytics Lab, National University of Singapore} and Yang, Sijie},
   year   = {2026},
   url    = {https://github.com/Sijie-Yang/SP-Survey}
@@ -136,4 +132,4 @@ The SP-Survey platform paper is a manuscript under review; this section will be 
 
 ## License & community
 
-Code: [MIT](./LICENSE). Spec, documentation and study library: CC BY 4.0. Questions, ideas and study showcases: [GitHub Discussions](https://github.com/Sijie-Yang/SP-Survey/discussions). Built by the [Urban Analytics Lab](https://ual.sg), National University of Singapore.
+Code: [MIT](./LICENSE). Documentation and templates: CC BY 4.0. Questions and showcases: [GitHub Discussions](https://github.com/Sijie-Yang/SP-Survey/discussions). Built by the [Urban Analytics Lab](https://ual.sg), National University of Singapore.

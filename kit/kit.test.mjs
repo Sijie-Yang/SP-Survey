@@ -52,10 +52,10 @@ test('export: image choices resolve to the chosen file, ratings average per file
   assert.equal(scores.find((s) => s.file === 'c.jpg').mean_rating, '5.000');
 });
 
-test('every library study builds a page that passes the check', async () => {
-  const { loadStudies, writeGenericPage } = await import('./sp.mjs');
+test('every template builds a page that passes the check', async () => {
+  const { loadTemplates, writeGenericPage } = await import('./sp.mjs');
   const os = await import('node:os');
-  for (const study of loadStudies()) {
+  for (const study of loadTemplates()) {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sp-study-'));
     writeGenericPage(dir, study.survey);
     fs.copyFileSync(path.join(KIT, 'sp-site.js'), path.join(dir, 'sp-site.js'));

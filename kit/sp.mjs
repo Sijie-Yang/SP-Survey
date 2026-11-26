@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // SP-Survey Kit command line. Node 18+, no dependencies.
 //
-//   node kit/sp.mjs library [words]   published studies to start from + paper search
-//   node kit/sp.mjs new <folder> [--from <id>]   start a study from the example or a published study
+//   node kit/sp.mjs templates [words] survey templates rebuilt from published studies
+//   node kit/sp.mjs new <folder> [--template <id>]   start a survey from the example or a template
 //   node kit/sp.mjs check <folder>    check the page, list media into media.json, explain the draws
 //   node kit/sp.mjs serve <folder>    run it locally; responses go to <folder>-responses/
 //   node kit/sp.mjs export <folder>   download responses (Supabase or local) as CSV + JSON + per-image scores
@@ -204,7 +204,7 @@ function cmdCheck(arg) {
 }
 
 // ---------- new / library ----------
-export function loadStudies() { return readJson(path.join(KIT, 'library', 'studies.json'), { studies: [] }).studies; }
+export function loadTemplates() { return readJson(path.join(KIT, 'templates', 'templates.json'), { templates: [] }).templates; }
 
 export function writeGenericPage(dir, survey) {
   const pkg = { format: 'sp-scheme-package', spScheme: '2.0', survey };
@@ -220,9 +220,9 @@ function cmdNew(arg, flags) {
   const dir = path.resolve(arg);
   if (fs.existsSync(dir) && fs.readdirSync(dir).length) die(`${dir} is not empty`);
   let folder = 'streets';
-  if (flags.from) {
-    const study = loadStudies().find((s) => s.id === flags.from);
-    if (!study) die(`No study "${flags.from}". List them with: node kit/sp.mjs library`);
+  if ((flags.template || flags.from)) {
+    const study = loadTemplates().find((s) => s.id === (flags.template || flags.from));
+    if (!study) die(`No template "${(flags.template || flags.from)}". List them with: node kit/sp.mjs templates`);
     fs.mkdirSync(path.join(dir, 'stimuli'), { recursive: true });
     writeGenericPage(dir, { ...study.survey, id: study.id });
     fs.writeFileSync(path.join(dir, 'sp-config.json'), `${JSON.stringify({ projectId: '', supabaseUrl: '', supabaseAnonKey: '', completionUrl: '', thankYou: '' }, null, 2)}\n`);
@@ -231,7 +231,7 @@ function cmdNew(arg, flags) {
       `# ${study.title}`, '',
       `Original study: ${study.authors} (${study.year}). ${study.link || ''}`, '',
       study.description || '', '',
-      'Built with SP-Survey Kit from the SP-Scheme study library. Cite the original study and SP-Survey (see CITATION.cff in the SP-Survey repository).', '',
+      'Made with an SP-Survey template. Cite the original study and SP-Survey (see CITATION.cff in the SP-Survey repository).', '',
     ].join('\n'));
     folder = 'stimuli';
   } else {
@@ -242,21 +242,15 @@ function cmdNew(arg, flags) {
   const cfg = readJson(cfgFile, {});
   cfg.projectId = path.basename(dir).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'my-study';
   fs.writeFileSync(cfgFile, `${JSON.stringify(cfg, null, 2)}\n`);
-  console.log(`✓ Created ${dir}${flags.from ? ` from ${flags.from}` : ''}\n  1. Put your images in ${path.join(arg, folder)}/\n  2. node kit/sp.mjs check ${arg}\n  3. node kit/sp.mjs serve ${arg}`);
+  console.log(`✓ Created ${dir}${(flags.template || flags.from) ? ` from template ${(flags.template || flags.from)}` : ''}\n  1. Put your images in ${path.join(arg, folder)}/\n  2. node kit/sp.mjs check ${arg}\n  3. node kit/sp.mjs serve ${arg}`);
 }
 
-function cmdLibrary(words) {
+function cmdTemplates(words) {
   const q = (words || []).join(' ').toLowerCase();
-  const studies = loadStudies().filter((s) => !q || `${s.id} ${s.title} ${s.authors} ${s.description}`.toLowerCase().includes(q));
-  console.log(`Studies you can start from (node kit/sp.mjs new <folder> --from <id>):\n`);
-  studies.forEach((s) => console.log(`  ${s.id.padEnd(30)} ${s.title} — ${s.authors} (${s.year})`));
-  const csvFile = path.join(KIT, 'library', 'papers.csv');
-  if (fs.existsSync(csvFile)) {
-    const lines = readText(csvFile).split('\n').slice(1).filter(Boolean);
-    const hits = q ? lines.filter((l) => l.toLowerCase().includes(q)) : lines;
-    console.log(`\n${hits.length} of ${lines.length} papers in kit/library/papers.csv match${q ? ` "${q}"` : ''}.`);
-    if (q) hits.slice(0, 15).forEach((l) => console.log(`  ${l.slice(0, 150)}`));
-  }
+  const list = loadTemplates().filter((t) => !q || `${t.id} ${t.title} ${t.authors} ${t.description}`.toLowerCase().includes(q));
+  console.log(`Templates (node kit/sp.mjs new <folder> --template <id>). More at https://sp-survey.org\n`);
+  list.forEach((t) => console.log(`  ${t.id.padEnd(30)} ${t.title} — ${t.authors} (${t.year})`));
+  if (!list.length) console.log('  none match; try fewer words');
 }
 
 // ---------- serve ----------
@@ -449,14 +443,14 @@ if (isMain) {
   const { pos, flags } = parse(process.argv.slice(2));
   const [cmd, arg] = pos;
   if (cmd === 'new') cmdNew(arg, flags);
-  else if (cmd === 'library') cmdLibrary(pos.slice(1));
+  else if (cmd === 'templates' || cmd === 'library') cmdTemplates(pos.slice(1));
   else if (cmd === 'check') cmdCheck(arg);
   else if (cmd === 'serve') cmdServe(arg, flags);
   else if (cmd === 'export') await cmdExport(arg, flags);
   else {
     console.log(`SP-Survey Kit
-  node kit/sp.mjs library [words]    list the published studies you can start from (and search 1,500+ papers)
-  node kit/sp.mjs new <folder> [--from <study id>]   start a study (from the example or a published study)
+  node kit/sp.mjs templates [words]  list survey templates rebuilt from published studies
+  node kit/sp.mjs new <folder> [--template <id>]   start a survey (from the example or a template)
   node kit/sp.mjs check <folder>     check the page and the media, write media.json
   node kit/sp.mjs serve <folder>     try it locally (port 4173; --port 8080)
   node kit/sp.mjs export <folder>    responses → CSV (Supabase via SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY, else local; --out dir)`);
