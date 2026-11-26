@@ -2,6 +2,7 @@ import {
   SP_TRIALS_ANSWER_KEY,
   allTrialsAnswered,
   canAutoAdvanceTrial,
+  trialReadyForAutoAdvance,
   buildProgressUnits,
   clampTrialCount,
   clearTrialsAnswerStore,
@@ -26,14 +27,55 @@ describe('trialNavigation', () => {
     expect(supportsTrialLoop('rating')).toBe(false);
   });
 
-  test('canAutoAdvanceTrial is single-select image/media choice only', () => {
-    expect(canAutoAdvanceTrial({ type: 'imagepicker' })).toBe(true);
-    expect(canAutoAdvanceTrial({ type: 'mediapicker' })).toBe(true);
+  test('canAutoAdvanceTrial matches choice for rating-style trials and skips text', () => {
+    [
+      'imagepicker', 'mediapicker',
+      'imagerating', 'mediarating',
+      'imageboolean', 'mediaboolean',
+      'imagematrix', 'mediamatrix',
+      'imageslidergroup', 'mediaslidergroup',
+      'imagepointallocation', 'mediapointallocation',
+    ].forEach((type) => expect(canAutoAdvanceTrial({ type })).toBe(true));
     expect(canAutoAdvanceTrial({ type: 'imagepicker', multiSelect: true })).toBe(false);
-    expect(canAutoAdvanceTrial({ type: 'imagerating' })).toBe(false);
-    expect(canAutoAdvanceTrial({ type: 'imageboolean' })).toBe(false);
     expect(canAutoAdvanceTrial({ type: 'imageranking' })).toBe(false);
+    expect(canAutoAdvanceTrial({ type: 'mediaranking' })).toBe(false);
     expect(canAutoAdvanceTrial({ type: 'imagecheckbox' })).toBe(false);
+    expect(canAutoAdvanceTrial({ type: 'mediacheckbox' })).toBe(false);
+    expect(canAutoAdvanceTrial({ type: 'imageannotation' })).toBe(false);
+    expect(canAutoAdvanceTrial({ type: 'text' })).toBe(false);
+    expect(canAutoAdvanceTrial({ type: 'comment' })).toBe(false);
+    expect(canAutoAdvanceTrial({ getType: () => 'comment' })).toBe(false);
+  });
+
+  test('auto-advance waits until a composite answer is complete', () => {
+    const sliders = {
+      type: 'imageslidergroup',
+      scaleMin: 1,
+      scaleMax: 7,
+      dimensions: [{ id: 'a' }, { id: 'b' }],
+    };
+    expect(trialReadyForAutoAdvance({ value: { a: 3 } }, sliders)).toBe(false);
+    expect(trialReadyForAutoAdvance({ value: { a: 3, b: 5 } }, sliders)).toBe(true);
+
+    const matrix = { type: 'imagematrix', rows: ['r1', 'r2'] };
+    expect(trialReadyForAutoAdvance({ value: { r1: 'c1' } }, matrix)).toBe(false);
+    expect(trialReadyForAutoAdvance({ value: { r1: 'c1', r2: 'c2' } }, matrix)).toBe(true);
+
+    const budget = { type: 'imagepointallocation', budget: 100, choices: ['a', 'b', 'c'] };
+    expect(trialReadyForAutoAdvance({ value: { a: 40 } }, budget)).toBe(false);
+    expect(trialReadyForAutoAdvance({ value: { a: 100 } }, budget)).toBe(true);
+    expect(trialReadyForAutoAdvance({ value: { a: 20, b: 10, c: 0 } }, budget)).toBe(true);
+    expect(trialReadyForAutoAdvance({ value: { only: 4 } }, {
+      type: 'mediapointallocation',
+      budget: 10,
+      choices: ['only'],
+    })).toBe(true);
+
+    expect(trialReadyForAutoAdvance({ value: 4 }, { type: 'imagerating' })).toBe(true);
+    expect(trialReadyForAutoAdvance({ value: false }, { type: 'imageboolean' })).toBe(true);
+    expect(trialReadyForAutoAdvance({ value: 'hello' }, { type: 'text' })).toBe(false);
+    expect(trialReadyForAutoAdvance({ value: 'a long answer' }, { type: 'comment' })).toBe(false);
+    expect(trialReadyForAutoAdvance({ value: ['a'] }, { type: 'imagecheckbox' })).toBe(false);
   });
 
   test('getTrialCount clamps and defaults', () => {

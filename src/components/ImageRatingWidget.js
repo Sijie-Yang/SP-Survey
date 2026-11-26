@@ -15,6 +15,7 @@ export function SurveyJsRatingControl({
   value,
   onChange,
   disabled = false,
+  rateLabels = null,
 }) {
   const groupId = useId();
   const min = Number.isFinite(Number(rateMin)) ? Number(rateMin) : 1;
@@ -29,6 +30,49 @@ export function SurveyJsRatingControl({
     : Number(value);
 
   const hasEdgeLabels = !!(minRateDescription || maxRateDescription);
+  const pointLabels = Array.isArray(rateLabels) && rateLabels.length === values.length
+    && rateLabels.some((l) => String(l ?? '').trim())
+    ? rateLabels.map((l) => String(l ?? '').trim())
+    : null;
+
+  if (pointLabels) {
+    return (
+      <Box
+        component="fieldset"
+        role="radiogroup"
+        aria-label="Rating"
+        className="sp-surveyjs-rating sp-rating-labelled"
+        sx={{ mt: 1.5, border: 0, p: 0, m: 0, display: 'flex', flexDirection: 'column', gap: 0.75 }}
+      >
+        {values.map((v, i) => {
+          const isSelected = selected === v;
+          return (
+            <Box
+              component="label"
+              key={v}
+              sx={{
+                display: 'flex', alignItems: 'center', gap: 1.25, px: 1.5, py: 1, minHeight: 44,
+                border: '1px solid', borderColor: isSelected ? 'primary.main' : 'divider', borderRadius: 1,
+                bgcolor: isSelected ? 'action.selected' : 'transparent',
+                cursor: disabled ? 'default' : 'pointer',
+              }}
+            >
+              <input
+                type="radio"
+                name={groupId}
+                value={v}
+                checked={isSelected}
+                disabled={disabled}
+                onChange={() => { if (!disabled) onChange?.(v); }}
+              />
+              <Typography variant="body2" component="span" sx={{ fontWeight: 600, minWidth: 24 }}>{v}</Typography>
+              <Typography variant="body2" component="span">{pointLabels[i]}</Typography>
+            </Box>
+          );
+        })}
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -169,6 +213,7 @@ export default function ImageRatingWidget({ question, value, onValueChanged, tri
         rateMax={question.rateMax ?? 5}
         minRateDescription={question.minRateDescription || ''}
         maxRateDescription={question.maxRateDescription || ''}
+        rateLabels={question.rateLabels}
         value={value}
         disabled={!!question?.isReadOnly}
         onChange={onValueChanged}

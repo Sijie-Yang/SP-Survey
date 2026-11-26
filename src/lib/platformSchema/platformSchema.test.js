@@ -54,16 +54,21 @@ describe('canonical platform schema', () => {
     expect(ENTITY_SCHEMAS.page.required).toEqual(['name', 'elements']);
   });
 
-  test('covers exactly the 34 base types exposed by QuestionEditor', () => {
+  test('covers exactly the base types exposed by QuestionEditor', () => {
     const source = read('src/components/admin/QuestionEditor.js');
     const start = source.indexOf('const questionTypes = [');
-    const end = source.indexOf('\n  ];', start);
+    // The list is closed by ].filter(, not `];`. The old marker is gone, so a
+    // search for it scanned default choice values (tag_a, row1, "1"…"5") as types.
+    const end = source.indexOf('].filter(', start);
+    expect(end).toBeGreaterThan(start);
     const editorTypes = [...source.slice(start, end).matchAll(/\{\s*value:\s*'([^']+)'/g)]
       .map((match) => match[1]);
 
-    expect(QUESTION_TYPE_IDS).toHaveLength(34);
-    expect(QUESTION_TYPE_IDS).toEqual(editorTypes);
-    expect(new Set(QUESTION_TYPE_IDS).size).toBe(34);
+    // Types only an SP-Scheme page can declare are not offered in the editor.
+    const siteOnly = ['custom'];
+    const editable = QUESTION_TYPE_IDS.filter((id) => !siteOnly.includes(id));
+    expect(editable).toEqual(editorTypes);
+    expect(new Set(QUESTION_TYPE_IDS).size).toBe(QUESTION_TYPE_IDS.length);
   });
 
   test.each(QUESTION_TYPE_IDS)('%s has complete field metadata', (type) => {

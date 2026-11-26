@@ -15,6 +15,23 @@ export function reportStorageKey(projectId) {
   return `${PREFIX}${projectId || 'unknown'}`;
 }
 
+export function hasReportContent(report) {
+  return Boolean(
+    (typeof report?.narrative === 'string' && report.narrative.trim())
+    || (Array.isArray(report?.findings) && report.findings.some((finding) => typeof finding?.text === 'string' && finding.text.trim()))
+  );
+}
+
+// Use the completed request's output, never a render's previous chat transcript.
+export function reportFromAnalysisResult(result, { scope, overview } = {}) {
+  if (result?.success !== true || (result.status && result.status !== 'completed')
+    || typeof result.message !== 'string' || !result.message.trim()) return null;
+  return createResultsReport({
+    scope, overview, narrative: result.message.trim(),
+    provider: result.provider, model: result.model, runId: result.runId,
+  });
+}
+
 export function createResultsReport({
   scope,
   overview,
@@ -55,10 +72,17 @@ export function readResultsReport(projectId) {
 }
 
 export function writeResultsReport(projectId, report) {
+  if (report?.status !== 'completed' || !hasReportContent(report)) return null;
   const db = storage();
-  if (!db || !projectId || !report) return report;
+  if (!db || !projectId) throw new Error('Report storage is unavailable');
   db.setItem(reportStorageKey(projectId), JSON.stringify(report));
   return report;
+}
+
+export function deleteResultsReport(projectId) {
+  const db = storage();
+  if (!db || !projectId) throw new Error('Report storage is unavailable');
+  db.removeItem(reportStorageKey(projectId));
 }
 
 export function reportStaleness(report, currentScope, currentSnapshotId) {

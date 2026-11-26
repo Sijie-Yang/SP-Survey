@@ -10,6 +10,9 @@
     "official"
   ],
   "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-quintana-specs/Abuja/7ad50ef7-aa93-4fb6-939a-cbea4eddf9b6.jpeg",
   "website": "https://arxiv.org/abs/2505.12758",
   "huggingfaceDataset": "matiasqr/specs/svi",
   "createdAt": "2026-07-12T01:17:17.431+00:00",
@@ -558,7 +561,9 @@
             "imageSource": "huggingface",
             "multiSelect": false,
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Both are the same to me"
           },
           {
             "name": "livelier",
@@ -570,7 +575,9 @@
             "imageSource": "huggingface",
             "multiSelect": false,
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Both are the same to me"
           },
           {
             "name": "wealthier",
@@ -582,7 +589,9 @@
             "imageSource": "huggingface",
             "multiSelect": false,
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Both are the same to me"
           },
           {
             "name": "beautiful",
@@ -594,7 +603,9 @@
             "imageSource": "huggingface",
             "multiSelect": false,
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Both are the same to me"
           },
           {
             "name": "boring",
@@ -606,7 +617,9 @@
             "imageSource": "huggingface",
             "multiSelect": false,
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Both are the same to me"
           },
           {
             "name": "depressing",
@@ -618,7 +631,9 @@
             "imageSource": "huggingface",
             "multiSelect": false,
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Both are the same to me"
           },
           {
             "name": "live_nearby",
@@ -630,7 +645,9 @@
             "imageSource": "huggingface",
             "multiSelect": false,
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Both are the same to me"
           },
           {
             "name": "live_nearby_1",
@@ -642,7 +659,9 @@
             "imageSource": "huggingface",
             "multiSelect": false,
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Both are the same to me"
           },
           {
             "name": "live_nearby_2",
@@ -654,7 +673,9 @@
             "imageSource": "huggingface",
             "multiSelect": false,
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Both are the same to me"
           },
           {
             "name": "live_nearby_3",
@@ -666,7 +687,9 @@
             "imageSource": "huggingface",
             "multiSelect": false,
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Both are the same to me"
           }
         ],
         "description": "The second section of the survey consisted of 10 subjective indicators: Safe, lively, wealthy, beautiful, boring, depressing, live nearby, walk, cycle, and green."
@@ -682,17 +705,68 @@
       "showPreviewBeforeComplete": "showAllQuestions"
     },
     "description": "We conducted a large-scale urban visual perception survey of streetscapes worldwide using street view imagery, examining how demographics -- including gender, age, income, education, race and ethnicity, and, for the first time, personality traits -- shape perceptions among 1,000 participants with balanced demographics from five countries and 45 nationalities.",
-    "logoPosition": "right"
+    "logoPosition": "right",
+    "spAnalysisRecommendation": {
+      "citation": "Quintana et al. 2025",
+      "items": [
+        {
+          "questions": [
+            "safer",
+            "livelier",
+            "wealthier",
+            "beautiful",
+            "boring",
+            "depressing",
+            "live_nearby",
+            "live_nearby_1",
+            "live_nearby_2",
+            "live_nearby_3"
+          ],
+          "method": "qscore_pairwise",
+          "minPerImage": 4,
+          "scale": "0-10",
+          "labels": {
+            "live_nearby_1": "walk",
+            "live_nearby_2": "cycle",
+            "live_nearby_3": "green"
+          },
+          "groupBy": [
+            "gender",
+            "age_group",
+            "country",
+            "edu_level",
+            "ahi",
+            "bfi"
+          ],
+          "bfi10": {
+            "items": [
+              "personality_1",
+              "personality_2",
+              "personality_3",
+              "personality_4",
+              "personality_5",
+              "personality_6",
+              "personality_7",
+              "personality_8",
+              "personality_9",
+              "personality_10"
+            ],
+            "key": "Extraversion 1R,6; Agreeableness 2,7R; Conscientiousness 3R,8; Neuroticism 4R,9; Openness 5R,10"
+          },
+          "test": "welch_anova"
+        }
+      ]
+    }
   },
   "imageDatasetConfig": {
-    "mediaFolderTags": {},
     "mediaFolders": [
       "Abuja",
       "Amsterdam",
       "San_Francisco",
       "Santiago",
       "Singapore"
-    ]
+    ],
+    "mediaFolderTags": {}
   },
   "preloadedImages": [],
   "preloadedSource": null,

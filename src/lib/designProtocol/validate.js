@@ -3,8 +3,8 @@
  * Pure module — no I/O.
  */
 
-import { isKnownQuestionType, questionHasTrait } from '../platformSchema';
-import { describeDimensionIncomplete, matrixItemLabel } from '../sliderScale';
+import { isKnownQuestionType, questionHasTrait } from '../platformSchema/index.js';
+import { describeDimensionIncomplete, matrixItemLabel } from '../sliderScale.js';
 import { evaluateSurveyContract } from './answerability.js';
 
 function structuredIssue(issue, severity = 'error') {

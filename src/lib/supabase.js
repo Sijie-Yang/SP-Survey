@@ -110,6 +110,16 @@ function initializeSupabase() {
 // Initialize on module load
 console.log('=== Supabase Module Loading ===');
 initializeSupabase();
+// The emailed link lands on /login?reset=1 with a recovery session.
+export const requestPasswordReset = (email) =>
+  supabase?.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/login?reset=1` });
+
+export const resendSignupConfirmation = (email) =>
+  supabase?.auth.resend({ type: 'signup', email, options: { emailRedirectTo: `${window.location.origin}/login` } });
+
+export const updatePassword = (password) => supabase?.auth.updateUser({ password });
+
+export const getSession = () => supabase?.auth.getSession();
 
 // Export function to re-initialize (useful after config changes)
 export const reinitializeSupabase = initializeSupabase;

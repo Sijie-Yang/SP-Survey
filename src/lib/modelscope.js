@@ -3,6 +3,7 @@
  * Chinese-friendly alternative to HuggingFace for image datasets.
  * API reference: https://modelscope.cn/docs
  */
+import { shuffled } from './shuffle.js';
 
 const MS_API_BASE = 'https://www.modelscope.cn/api/v1';
 const MS_CDN_BASE = 'https://modelscope.cn';
@@ -208,8 +209,7 @@ export const getRandomImagesFromModelScope = async (token, datasetName, count = 
     }
 
     // Shuffle and pick
-    const shuffled = [...allFiles].sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, Math.min(count, shuffled.length));
+    const selected = shuffled(allFiles).slice(0, Math.min(count, allFiles.length));
 
     const images = selected.map((filePath, i) => ({
       url: buildFileUrl(namespace, name, filePath),

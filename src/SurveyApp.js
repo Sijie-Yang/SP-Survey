@@ -1,4 +1,6 @@
 import ParticipantSurveySurface from './components/ParticipantSurveySurface';
+import ViewportLayoutFrame from './components/ViewportLayoutFrame';
+import PlatformBadge from './components/PlatformBadge';
 import { submitWithRecovery } from './lib/recoverableSubmission';
 import { handleSurveyMediaError } from './lib/mediaRecovery';
 import { surveyRevision } from './lib/surveyRevision';
@@ -7,7 +9,7 @@ import { Model } from "survey-core";
 import { Survey } from "survey-react-ui";
 import "survey-core/defaultV2.min.css";
 import { Box, Alert, CircularProgress, Button, Dialog, DialogTitle, DialogContent, DialogActions, Typography } from '@mui/material';
-import { saveSurveyResponse, isSupabaseConfigured } from './lib/supabase';
+import { isSupabaseConfigured } from './lib/supabase';
 import {
   findDraftForProject, saveDraft, clearDraft, clearDraftByKey, clearAllDraftsForProject,
   findPendingSubmission, clearPendingSubmission, clearPendingByKey,
@@ -27,16 +29,24 @@ import registerImageRankingWidget, {
   registerAllExtendedWidgets, captureSkillPreviewAnswers,
 } from './components/SurveyCustomComponents';
 import { getBrowserId, generateCompletionCode } from './lib/browserId';
-import { countProjectResponses, fetchPairStats } from './lib/surveyPublicApi';
+import { applyMapTaskOrder } from './lib/mapAnnotation';
+import { claimBalanceNumber, completeBalanceClaim, countProjectResponses, fetchConditionCounts, recruitmentParticipantDone } from './lib/surveyPublicApi';
+import { balanceResponseMetadata, createBalancePlan, forgetBalanceNumber, localBalanceNumber, recallBalanceNumber, rememberBalanceNumber } from './lib/balancedDraw';
+import { shuffled } from './lib/shuffle';
+import RecruitmentReturn from './components/RecruitmentReturn';
+import { normalizeRecruitment, readRecruitmentContext, recruitmentCodeFor, recruitmentDoneHere, recruitmentMetadata, recruitmentReturnUrl, rememberRecruitmentDone } from './lib/recruitment';
+import { applyRuntimeVariables, conditionFromUrl, hasConditions, resolveRuntimeContext, runtimeMetadata } from './lib/surveyRuntimeContext';
+import { clearMediaWatchLog, mediaWatchMetadata } from './lib/mediaWatch';
 import {
   isRandomMediaQuestion, defaultMediaCount, filterPoolForQuestion, applyMediaToElement, resolveSkillQuestions,
   ensureSkillDemoMedia, pickMediaForQuestion, trackMediaAssignment, getImageKey, usesSetMediaAssignment,
   applyMediaAssignmentToElement, hasMediaSlots,
   usesCategoryMediaAssignment, buildMediaAssignmentLogEntry, shouldInjectMedia, applyCuratedMediaIfNeeded,
-  resolveMediaFolderTags, pickTrialMediaSetsForQuestion, syncInjectedMediaOntoSurveyModel,
+  resolveMediaFolderTags, pickTrialMediaSetsForQuestion, syncInjectedMediaOntoSurveyModel, balanceGroupsForSurvey,
   clearInjectedMediaStore,
 } from './lib/surveyMediaInjection';
 import { getSkillMediaUrls } from './lib/skillMediaUtils';
+import { participantLocationKey } from './lib/publicSlug';
 import { enrichSurveyResponses } from './lib/enrichSurveyResponses';
 import {
   clearTrialsAnswerStore,
@@ -45,7 +55,23 @@ import {
   rehydrateTrialsAnswerStoreFromSurvey,
 } from './lib/trialNavigation';
 import { SurveyTrialNavProvider } from './contexts/SurveyTrialNavContext';
-import { applySurveyLocale, surveyUiStrings, resolveSurveyJsLocale, completionMessageForLocale } from './lib/surveyLocale';
+import SpSiteSurvey, { SP_SITE_REQUESTS_KEY } from './components/SpSiteSurvey';
+import { siteMatchLevel } from './lib/spSite';
+import { applySurveyLocale, surveyUiStrings, resolveSurveyJsLocale, resolveSurveyUiLanguage, completionMessageForLocale } from './lib/surveyLocale';
+import { loadLocaleBundle } from './lib/uiLanguages';
+import {
+  ANSWER_LANGUAGE_QUESTION,
+  applyAnswerLanguageChrome,
+  applyLanguageToSurveyModel,
+  participantMayUseLanguage,
+  placeLanguageChoiceQuestion,
+  questionLanguagesForSubmission,
+  readTranslations,
+  resolveParticipantLanguage,
+  surveyLanguageMetadata,
+  textForLanguage,
+} from './lib/surveyTranslations';
+import { newResponseRowId, submitParticipantResponse } from './lib/ownResponseSupabase';
 import { tf } from './contexts/adminI18n';
 import SurveyProgressBridge, {
   normalizeShowProgressBar,
@@ -64,6 +90,7 @@ function withTimeout(promise, ms, fallback) {
 
 export default function SurveyApp() {
   const [surveyModel, setSurveyModel] = useState(null);
+  const [publishedSurveyJson, setPublishedSurveyJson] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loadingMessage, setLoadingMessage] = useState('Loading survey…');
   const [error, setError] = useState(null);
@@ -76,9 +103,14 @@ export default function SurveyApp() {
   const [surveyPhase, setSurveyPhase] = useState('loading'); // loading | active | submitting | completed | submit-error | closed
   const [completionInfo, setCompletionInfo] = useState(null);
   const [quotaClosed, setQuotaClosed] = useState(false);
+  // Recruitment platform (Prolific etc.): the setting and the platform participant on this link.
+  const recruitmentRef = useRef({ setting: null, context: null });
+  const [recruitmentDone, setRecruitmentDone] = useState(false);
   const [liveClosedMessage, setLiveClosedMessage] = useState(null);
   const [pendingSubmission, setPendingSubmission] = useState(null);
   const [recoverySaved, setRecoverySaved] = useState(true);
+  const [submitError, setSubmitError] = useState('');
+  const responseSinkRef = useRef({ enabled: false });
   const [online, setOnline] = useState(() => navigator.onLine);
   const submissionInFlight = useRef(false);
   useEffect(() => {
@@ -88,6 +120,12 @@ export default function SurveyApp() {
   }, []);
   const [resumeDialog, setResumeDialog] = useState(null);
   const [completionMessage, setCompletionMessage] = useState('');
+  const answerLanguageRef = useRef('en');
+  // The project's media library, for an SP-Scheme page that draws media itself.
+  const siteMediaPoolRef = useRef([]);
+  // True when an SP-Scheme page's empty library was replaced by the platform preview library.
+  const sitePreviewLibraryRef = useRef(false);
+  const questionLanguageRef = useRef({});
   const repeatSessionRef = useRef(null);
   const repeatParticipantRef = useRef(null);
   const repeatAttemptRef = useRef(1);
@@ -103,7 +141,8 @@ export default function SurveyApp() {
   const surveyStartedAtRef = useRef(null);
   const pageEnteredAtRef = useRef(null);
   const pageTimingRef = useRef({});
-  const pairStatsRef = useRef(null);
+  // This participant's balanced-sampling plan (questions whose Sampling Mode is Balanced).
+  const balancePlanRef = useRef(null);
   const lastPageNameRef = useRef(null);
   const submissionGuardRef = useRef(false);
   const progressChromeEnabledRef = useRef(true);
@@ -121,15 +160,14 @@ export default function SurveyApp() {
   // Monitor URL changes and reinitialize when project ID changes
   useEffect(() => {
     const checkUrlChange = () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const projectId = urlParams.get('project') || 'default';
+      const locationKey = participantLocationKey(window.location);
       
-      if (currentProjectId !== projectId && currentProjectId !== null) {
-        console.log(`🔄 Project ID changed from ${currentProjectId} to ${projectId}, reloading...`);
-        setCurrentProjectId(projectId);
+      if (currentProjectId !== locationKey && currentProjectId !== null) {
+        console.log(`🔄 Survey link changed from ${currentProjectId} to ${locationKey}, reloading...`);
+        setCurrentProjectId(locationKey);
         initializeSurvey();
       } else if (currentProjectId === null) {
-        setCurrentProjectId(projectId);
+        setCurrentProjectId(locationKey);
       }
     };
 
@@ -168,6 +206,8 @@ export default function SurveyApp() {
           displayedMediaGroups: { ...(displayedMediaGroupsRef.current || {}) },
           displayedMediaCategories: { ...(displayedMediaCategoriesRef.current || {}) },
           finalSurveyJson: JSON.parse(JSON.stringify(finalSurveyJsonRef.current)),
+          answerLanguage: answerLanguageRef.current,
+          questionAnswerLanguages: { ...questionLanguageRef.current },
         });
       } catch (err) {
         console.warn('flushDraftNow failed:', err?.message || err);
@@ -231,15 +271,26 @@ export default function SurveyApp() {
   const submitSurveyResponse = async (completeData, { isRepeatMode, repeatTotal, attemptIndex }) => {
     if (submissionInFlight.current) return;
     submissionInFlight.current = true;
+    if (responseSinkRef.current?.enabled && !completeData.own_response_row_id) {
+      completeData.own_response_row_id = newResponseRowId();
+    }
     const result = await submitWithRecovery(projectIdRef.current, completeData, {
       isRepeatMode: !!isRepeatMode, repeatTotal: repeatTotal || 1, attemptIndex: attemptIndex || 1,
-    }, saveSurveyResponse);
+    }, (payload) => submitParticipantResponse(payload, responseSinkRef.current));
     submissionInFlight.current = false;
     setRecoverySaved(result.recoverySaved);
     if (result.success) {
+      setSubmitError('');
       // Only clear drafts AFTER a successful save (including idempotent dedupe).
       discardDraftForProject(projectIdRef.current, completeData.participant_id);
       clearPendingSubmission(projectIdRef.current, completeData.participant_id);
+      if (completeData.survey_metadata?.recruitment) rememberRecruitmentDone(projectIdRef.current, completeData.survey_metadata.recruitment);
+      // Balanced sampling: this participant's number is done and is never handed out again.
+      const balanceDone = completeData.survey_metadata?.balanced_draw;
+      if (balanceDone) {
+        forgetBalanceNumber(projectIdRef.current);
+        if (balanceDone.claim_id) completeBalanceClaim(balanceDone.claim_id);
+      }
       if (isRepeatMode && attemptIndex < repeatTotal) {
         submissionGuardRef.current = false;
         draftSavingEnabledRef.current = true;
@@ -267,6 +318,7 @@ export default function SurveyApp() {
     }
     submissionGuardRef.current = false;
     setPendingSubmission(completeData);
+    setSubmitError(result.storage === 'own-supabase' ? (result.error?.message || '') : '');
     setSurveyPhase('submit-error');
   };
 
@@ -295,6 +347,8 @@ export default function SurveyApp() {
         displayedMediaGroups: { ...(displayedMediaGroupsRef.current || {}) },
         displayedMediaCategories: { ...(displayedMediaCategoriesRef.current || {}) },
         finalSurveyJson: JSON.parse(JSON.stringify(finalSurveyJson)),
+        answerLanguage: answerLanguageRef.current,
+        questionAnswerLanguages: { ...questionLanguageRef.current },
       });
     }, 800);
   };
@@ -360,7 +414,7 @@ export default function SurveyApp() {
           element,
           globallyUsedImageKeys,
           globallyUsedGroupKeys,
-          pairStatsRef.current,
+          balancePlanRef.current,
           folderTags,
         );
         // Slot path already tracks keys; legacy still needs trackMediaAssignment
@@ -370,10 +424,13 @@ export default function SurveyApp() {
         return assignment;
       };
 
-      // Get project ID from URL parameters
+      // Project-id links stay on ?project=. Custom links are /s/{slug}.
       const urlParams = new URLSearchParams(window.location.search);
-      const projectId = urlParams.get('project') || 'default';
+      let projectId = urlParams.get('project');
+      if (!projectId) projectId = 'default';
       projectIdRef.current = projectId;
+      // Self-hosted: responses always go to this deployment's own Supabase.
+      responseSinkRef.current = { enabled: false };
       
       if (!participantIdRef.current) {
         participantIdRef.current = 'p_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
@@ -405,6 +462,7 @@ export default function SurveyApp() {
         const snapshot = JSON.parse(JSON.stringify(deploymentConfig));
         if (snapshot.id && projectId === 'default') {
           projectIdRef.current = snapshot.id;
+          projectId = snapshot.id;
         }
         adminConfig = snapshot;
         projectData = {
@@ -418,10 +476,12 @@ export default function SurveyApp() {
           _surveyConfig: snapshot,
           publishedVersion: snapshot.publishedVersion || 0,
         };
+        siteMediaPoolRef.current = projectData.preloadedImages.filter(Boolean);
       } else {
         try {
           const { getParticipantProject } = await import('./lib/projectManager');
           projectData = await getParticipantProject(projectId);
+          siteMediaPoolRef.current = Array.isArray(projectData?.preloadedImages) ? projectData.preloadedImages.filter(Boolean) : [];
         } catch (error) {
           console.error('❌ Error loading project data:', error);
           if (isSupabaseConfigured()) throw error;
@@ -429,8 +489,28 @@ export default function SurveyApp() {
         adminConfig = projectData?._surveyConfig || await loadSurveyConfig(projectId, { live: true });
       }
       setCompletionMessage(adminConfig?.completionMessage || '');
+      // Self-hosted pages use the project's own media library only.
+      sitePreviewLibraryRef.current = false;
 
       setLiveClosedMessage(null);
+
+      // Recruitment platform: a platform participant who already completed is not asked again.
+      {
+        const setting = normalizeRecruitment(adminConfig);
+        const context = readRecruitmentContext(setting, window.location.search);
+        recruitmentRef.current = { setting, context, locale: adminConfig?.locale || '' };
+        setRecruitmentDone(false);
+        if (context) {
+          const done = recruitmentDoneHere(projectId, context)
+            || await withTimeout(recruitmentParticipantDone(projectId, context.platform, context.id), 8000, null);
+          if (done === true) {
+            setRecruitmentDone(true);
+            setSurveyPhase('closed');
+            setLoading(false);
+            return;
+          }
+        }
+      }
 
       // Response quota gate
       const responseQuota = Number(adminConfig?.responseQuota) || 0;
@@ -446,9 +526,8 @@ export default function SurveyApp() {
       }
       setQuotaClosed(false);
 
-      // Pair stats for adaptive/balanced pairing (best-effort)
       setLoadingMessage('Preparing questions and media…');
-      pairStatsRef.current = await withTimeout(fetchPairStats(projectId), 8000, null);
+      balancePlanRef.current = null;
       
       // Build runtime Supabase config from project sources on the local researcher machine only.
       // The deployed participant site uses REACT_APP_SUPABASE_URL + REACT_APP_SUPABASE_ANON_KEY.
@@ -523,6 +602,30 @@ export default function SurveyApp() {
         setLoadingMessage(
           mediaPool.length ? 'Assigning project media…' : 'Preparing survey…',
         );
+
+        // Balanced sampling: the participant's number decides which stretch of each balanced
+        // library they get, so every image ends up shown equally often. Surveys without a
+        // balanced question skip this entirely.
+        const balanceGroups = mediaPool.length
+          ? balanceGroupsForSurvey(finalSurveyJson, mediaPool, resolveMediaFolderTags(projectData, projectData?.config))
+          : [];
+        if (balanceGroups.length) {
+          const balanceProjectId = projectIdRef.current || projectId;
+          const practiceRun = parseInt(urlParams.get('repeat') || '0', 10) > 1
+            || Boolean(finalSurveyJson.repeatConfig?.enabled);
+          let balance = practiceRun ? null : recallBalanceNumber(balanceProjectId);
+          if (!balance && !practiceRun) {
+            const claimed = await withTimeout(claimBalanceNumber(balanceProjectId), 6000, null);
+            if (claimed) {
+              balance = { n: claimed.n, claim: 'server', claim_id: claimed.claimId };
+              rememberBalanceNumber(balanceProjectId, balance);
+            }
+          }
+          if (!balance) balance = { n: localBalanceNumber(), claim: 'local', claim_id: null };
+          finalSurveyJson._spBalance = balance;
+          balancePlanRef.current = createBalancePlan(balanceGroups, { number: balance.n, seed: balanceProjectId });
+          console.log(`⚖️ Balanced sampling: participant number ${balance.n} (${balance.claim})`);
+        }
         
         // Process image questions and convert imageranking to ranking for SurveyJS
         if (finalSurveyJson.pages) {
@@ -599,7 +702,7 @@ export default function SurveyApp() {
                           elementTrialCount,
                           globallyUsedImageKeys,
                           globallyUsedGroupKeys,
-                          pairStatsRef.current,
+                          balancePlanRef.current,
                           folderTags,
                         );
                         element.trialMediaSets = trialMediaSets;
@@ -613,7 +716,7 @@ export default function SurveyApp() {
                         let selectedImages = assignment.flatMedia || assignment.images || [];
                         if (!selectedImages.length && pool.length > 0 && element.type === 'skillquestion' && !usesSetMediaAssignment(element)) {
                           const imageCount = element.imageCount || defaultMediaCount(element);
-                          selectedImages = [...pool].sort(() => 0.5 - Math.random()).slice(0, imageCount);
+                          selectedImages = shuffled(pool).slice(0, imageCount);
                         }
                         result = {
                           success: selectedImages.length > 0 || trialMediaSets.some((s) => s?.length),
@@ -632,7 +735,7 @@ export default function SurveyApp() {
                       // Skill questions: reuse pool images rather than falling back to demo media
                       if (!selectedImages.length && pool.length > 0 && element.type === 'skillquestion' && !usesSetMediaAssignment(element)) {
                         const imageCount = element.imageCount || defaultMediaCount(element);
-                        selectedImages = [...pool].sort(() => 0.5 - Math.random()).slice(0, imageCount);
+                        selectedImages = shuffled(pool).slice(0, imageCount);
                         assignment = { images: selectedImages, groupKey: null, groupId: null };
                         trackMediaAssignment(assignment, element, globallyUsedImageKeys, globallyUsedGroupKeys);
                         console.log(`♻️ Pool exhausted, reusing ${selectedImages.length} images for skill question`);
@@ -897,8 +1000,39 @@ export default function SurveyApp() {
       finalSurveyJson = normalizeBuilderSurveyJson(finalSurveyJson);
       const revision = finalSurveyJson._spRevision || await surveyRevision(resumeDraft?.finalSurveyJson ? finalSurveyJson : (adminConfig || finalSurveyJson), finalSurveyJson);
       finalSurveyJson._spRevision = revision;
+      if (!finalSurveyJson._spRuntimeContext) {
+        const runtimeConfig = {
+          conditions: finalSurveyJson.conditions ?? adminConfig?.conditions,
+          captureUrlParams: finalSurveyJson.captureUrlParams ?? adminConfig?.captureUrlParams,
+        };
+        finalSurveyJson._spRuntimeContext = await resolveRuntimeContext(runtimeConfig, {
+          projectId,
+          search: window.location.search,
+          override: conditionFromUrl(window.location.search),
+          fetchCounts: hasConditions(runtimeConfig) ? () => withTimeout(fetchConditionCounts(projectId), 5000, null) : null,
+        });
+      }
+      const runtimeContext = finalSurveyJson._spRuntimeContext;
+      clearMediaWatchLog();
+      finalSurveyJson = applyMapTaskOrder(finalSurveyJson, `${projectId || 'preview'}:${getBrowserId()}`);
+      // UI strings for extra languages are code-split; fetch the ones this
+      // survey can show before building the model (bounded so it never blocks).
+      {
+        const surveyLanguages = new Set([resolveSurveyUiLanguage(finalSurveyJson)]);
+        try {
+          const translations = readTranslations(finalSurveyJson);
+          (translations.enabledLanguages || []).forEach((code) => surveyLanguages.add(code));
+          if (translations.sourceLanguage) surveyLanguages.add(translations.sourceLanguage);
+        } catch { /* untranslated survey */ }
+        await withTimeout(
+          Promise.all([...surveyLanguages].map((code) => loadLocaleBundle(code).catch(() => {}))),
+          4000,
+          null,
+        );
+      }
       const model = new Model(finalSurveyJson);
       applySurveyLocale(model, finalSurveyJson);
+      applyRuntimeVariables(model, runtimeContext);
       // Re-apply media fields SurveyJS may have stripped (esp. media* + trialMediaSets)
       syncInjectedMediaOntoSurveyModel(model, finalSurveyJson);
       
@@ -954,6 +1088,29 @@ export default function SurveyApp() {
           });
         }
       }
+
+      const chooseAnswerLanguage = (requested) => (
+        participantMayUseLanguage(finalSurveyJson, requested)
+          ? resolveParticipantLanguage(finalSurveyJson, requested)
+          : resolveParticipantLanguage(finalSurveyJson, null)
+      );
+      const applyChosenLanguage = (chosen) => {
+        const pageNo = model.currentPageNo;
+        answerLanguageRef.current = chosen;
+        applyLanguageToSurveyModel(model, finalSurveyJson, chosen);
+        applyAnswerLanguageChrome(model, finalSurveyJson, chosen);
+        placeLanguageChoiceQuestion(model, finalSurveyJson);
+        if (model.currentPageNo !== pageNo) model.currentPageNo = pageNo;
+        const sourceCompletion = finalSurveyJson.completionMessage || adminConfig?.completionMessage || '';
+        setCompletionMessage(textForLanguage(
+          readTranslations(finalSurveyJson),
+          'survey.completionMessage',
+          chosen,
+          sourceCompletion,
+        ));
+      };
+      questionLanguageRef.current = {};
+      applyChosenLanguage(chooseAnswerLanguage(urlParams.get('lang')));
 
       // Repeat annotation mode setup
       const urlRepeat = parseInt(urlParams.get('repeat') || '0', 10);
@@ -1046,6 +1203,7 @@ export default function SurveyApp() {
         const completeData = {
           project_id: resolvedProjectId,
           participant_id: participantId,
+          language: answerLanguageRef.current,
           responses: enrichedResponses,
           raw_responses: responses,
           displayed_images,
@@ -1055,6 +1213,7 @@ export default function SurveyApp() {
             completion_time: new Date().toISOString(),
             completion_code: completionCode,
             browser_id: getBrowserId(),
+            map_task_order: finalSurveyJson.spMapTaskOrder?.order || null,
             user_agent: navigator.userAgent,
             screen_resolution: `${window.screen.width}x${window.screen.height}`,
             survey_version: useAdminConfig ? `2.0-admin-${resolvedProjectId}` : "1.0-original",
@@ -1062,11 +1221,25 @@ export default function SurveyApp() {
             survey_revision: revision.id,
             survey_response_contract: revision.contract,
             published_version: finalSurveyJson._spPublishedVersion || null,
+            ...(finalSurveyJson.spSite ? { sp_site: { id: finalSurveyJson.spSite.id || null, version: finalSurveyJson.spSite.version || null, allowed_hosts: finalSurveyJson.spSite.allowedHosts || [], match: siteMatchLevel(finalSurveyJson).level, captured_requests: Array.isArray(responses?.[SP_SITE_REQUESTS_KEY]) ? responses[SP_SITE_REQUESTS_KEY].length : 0, preview_media_library: sitePreviewLibraryRef.current } } : {}),
             survey_draft_updated_at: resumeDraft?.finalSurveyJson ? null : projectData?.draftUpdatedAt || null,
             timing: {
               total_seconds: totalSeconds,
               page_seconds: { ...pageTimingRef.current },
             },
+            ...runtimeMetadata(runtimeContext),
+            ...(isRepeatMode ? {} : recruitmentMetadata(recruitmentRef.current.context)),
+            ...balanceResponseMetadata(finalSurveyJson._spBalance),
+            ...surveyLanguageMetadata({
+              answerLanguage: answerLanguageRef.current,
+              questionAnswerLanguages: questionLanguagesForSubmission(
+                survey.getAllQuestions(),
+                answerLanguageRef.current,
+                questionLanguageRef.current,
+              ),
+              publishedVersion: finalSurveyJson._spPublishedVersion || null,
+            }),
+            ...mediaWatchMetadata(),
             ...(isRepeatMode ? {
               session_id: repeatSessionRef.current,
               attempt_index: attemptIndex,
@@ -1088,7 +1261,19 @@ export default function SurveyApp() {
         await submitSurveyResponse(completeData, { isRepeatMode, repeatTotal, attemptIndex });
       });
 
-      model.onValueChanged.add(() => {
+      model.onValueChanged.add((sender, options) => {
+        if (options?.name === ANSWER_LANGUAGE_QUESTION) {
+          questionLanguageRef.current[options.name] = answerLanguageRef.current;
+          const requested = options.value;
+          if (finalSurveyJson && participantMayUseLanguage(finalSurveyJson, requested)) {
+            const pageNo = sender.currentPageNo;
+            const chosen = resolveParticipantLanguage(finalSurveyJson, requested);
+            if (chosen !== answerLanguageRef.current) applyChosenLanguage(chosen);
+            if (sender.currentPageNo !== pageNo) sender.currentPageNo = pageNo;
+          }
+        } else if (options?.name) {
+          questionLanguageRef.current[options.name] = answerLanguageRef.current;
+        }
         scheduleDraftSave(model, imageTracker, finalSurveyJson);
       });
 
@@ -1153,6 +1338,10 @@ export default function SurveyApp() {
         if (draftToApply.participantId) {
           participantIdRef.current = draftToApply.participantId;
         }
+        if (draftToApply.questionAnswerLanguages) {
+          questionLanguageRef.current = { ...draftToApply.questionAnswerLanguages };
+        }
+        applyChosenLanguage(chooseAnswerLanguage(draftToApply.answerLanguage || urlParams.get('lang')));
       }
       resumeChoiceRef.current = null;
 
@@ -1172,6 +1361,7 @@ export default function SurveyApp() {
       window.lastSurveyLoadTime = Date.now();
       console.log('✅ Survey initialized successfully at:', new Date(window.lastSurveyLoadTime).toISOString());
       
+      setPublishedSurveyJson(finalSurveyJson);
       setSurveyModel(model);
       setSurveyPhase('active');
       setError(null);
@@ -1192,12 +1382,35 @@ export default function SurveyApp() {
     );
   }
 
-  if (surveyPhase === 'submitting') {
+  // A recorded-as-is page (converted, or declaring no questions) stays on screen
+  // while it submits and after: it may still be showing the participant its own end.
+  const recruitment = recruitmentRef.current;
+  const recruitmentReturn = completionInfo && !completionInfo.isRepeatMode
+    ? recruitmentReturnUrl(recruitment.setting, recruitment.context, 'complete') : '';
+  // A page that stays open still hands the participant back to the recruitment platform.
+  const siteStaysOpen = !recruitmentReturn && Boolean(surveyModel && publishedSurveyJson?.spSite?.html
+    && (publishedSurveyJson.spSite.convertedFrom || siteMatchLevel(publishedSurveyJson).level === 'none')
+    && !completionInfo?.isRepeatMode);
+
+  if (surveyPhase === 'submitting' && !siteStaysOpen) {
     return (
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', gap: 2 }}>
         <CircularProgress />
         <Typography variant="body2" color="text.secondary">{participantText.participantSaving}</Typography>
       </Box>
+    );
+  }
+
+  if (recruitmentDone || (quotaClosed && recruitment.context)) {
+    const outcome = recruitmentDone ? 'complete' : 'quota_full';
+    return (
+      <RecruitmentReturn
+        outcome={recruitmentDone ? 'already_done' : 'quota_full'}
+        returnUrl={recruitmentReturnUrl(recruitment.setting, recruitment.context, outcome)}
+        code={recruitmentCodeFor(recruitment.setting, outcome)}
+        platform={recruitment.setting?.platform}
+        locale={participantLocale || recruitment.locale}
+      />
     );
   }
 
@@ -1213,7 +1426,20 @@ export default function SurveyApp() {
     );
   }
 
-  if (surveyPhase === 'completed' && completionInfo) {
+  if (surveyPhase === 'completed' && completionInfo && recruitmentReturn) {
+    return (
+      <RecruitmentReturn
+        outcome="complete"
+        returnUrl={recruitmentReturn}
+        code={recruitmentCodeFor(recruitment.setting, 'complete')}
+        platform={recruitment.setting?.platform}
+        locale={participantLocale || recruitment.locale}
+        message={completionMessage}
+      />
+    );
+  }
+
+  if (surveyPhase === 'completed' && completionInfo && !siteStaysOpen) {
     const defaultMsg = completionInfo.isRepeatMode
       ? tf(participantText.participantRoundsCompleted, { n: completionInfo.repeatTotal })
       : participantText.participantCompleted;
@@ -1240,6 +1466,7 @@ export default function SurveyApp() {
               ? participantText.participantSavedLocally
               : participantText.participantSaved}
         </Typography>
+        <PlatformBadge surveyJson={publishedSurveyJson} locale={participantLocale} sx={{ mt: 3 }} />
       </Box>
     );
   }
@@ -1248,7 +1475,7 @@ export default function SurveyApp() {
     return (
       <Box sx={{ maxWidth: 560, mx: 'auto', p: 4, textAlign: 'center' }}>
         <Alert severity="error" sx={{ mb: 3, textAlign: 'left' }}>
-          {participantText.participantSaveError}
+          {submitError || participantText.participantSaveError}
         </Alert>
         {!online && <Alert severity="warning" sx={{ mb: 2 }}>{resolveSurveyJsLocale(participantLocale) === 'zh-cn' ? '网络已断开。连接恢复后，请点击重试提交。' : 'You are offline. Reconnect, then retry the submission.'}</Alert>}
         {!recoverySaved && <Alert severity="warning" sx={{ mb: 2 }}>{resolveSurveyJsLocale(participantLocale) === 'zh-cn' ? '浏览器无法保存恢复副本，请保持此页面打开，或下载答卷备份。' : 'This browser could not save a recovery copy. Keep this page open or download your answers.'}</Alert>}
@@ -1358,7 +1585,19 @@ export default function SurveyApp() {
       </Box>
       )}
       
-      {surveyModel && surveyPhase === 'active' && (
+      {surveyModel && (surveyPhase === 'active' || (siteStaysOpen && (surveyPhase === 'submitting' || surveyPhase === 'completed'))) && publishedSurveyJson?.spSite?.html && (
+        <SpSiteSurvey
+          model={surveyModel}
+          surveyJson={publishedSurveyJson}
+          language={answerLanguageRef.current}
+          mediaPool={siteMediaPoolRef.current}
+          previewLibrary={sitePreviewLibraryRef.current}
+          status={surveyPhase}
+          completionCode={completionInfo?.completionCode || ''}
+        />
+      )}
+
+      {surveyModel && surveyPhase === 'active' && !publishedSurveyJson?.spSite?.html && (
         <SurveyTrialNavProvider>
           <ParticipantSurveySurface
             onErrorCapture={(e) => handleSurveyMediaError(e, participantLocale)}
@@ -1373,7 +1612,10 @@ export default function SurveyApp() {
                 Research annotation mode: Round {repeatProgress.current} of {repeatProgress.total}
               </Alert>
             )}
-            <Survey model={surveyModel} />
+            <ViewportLayoutFrame config={publishedSurveyJson} surveyModel={surveyModel}>
+              <Survey model={surveyModel} />
+            </ViewportLayoutFrame>
+            <PlatformBadge surveyJson={publishedSurveyJson} locale={participantLocale} />
           </ParticipantSurveySurface>
         </SurveyTrialNavProvider>
       )}
@@ -1398,7 +1640,7 @@ export default function SurveyApp() {
                 clearPendingSubmission(projectIdRef.current, resumeDialog.draft.participantId);
               }
               participantIdRef.current = 'p_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-              const { model, imageTracker } = resumeDialog;
+              const { model, imageTracker, finalSurveyJson } = resumeDialog;
               setResumeDialog(null);
               resumeChoiceRef.current = 'fresh';
               draftSavingEnabledRef.current = true;
@@ -1409,6 +1651,9 @@ export default function SurveyApp() {
               displayedMediaGroupsRef.current = {};
               displayedMediaCategoriesRef.current = {};
               setDisplayedImagesMap(imageTracker);
+              // This branch bypasses initializeSurvey's final state update. Keep
+              // the latest published layout paired with the fresh survey model.
+              setPublishedSurveyJson(finalSurveyJson);
               setSurveyModel(model);
               setSurveyPhase('active');
               setLoading(false);

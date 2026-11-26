@@ -1,0 +1,112 @@
+{
+  "id": "2019-yao-human",
+  "name": "Human–Machine Scoring (human-only version)",
+  "description": "Rebuilt from the published description of Yao et al. (2019). Participants score street views from 0 to 100 on six perceptions (safe, lively, beautiful, wealthy, boring, depressing). Differences from the original study: (1) In the original, a random-forest model learned each rater's scoring and showed a recommended score after the first 50 images; this template has no model. (2) Slider end labels are not in the paper. (3) Bundled images are photographs from the paper PDF (9 scenes), not the original full stimulus set.",
+  "author": "Yao et al.",
+  "year": "2019",
+  "category": "Academic Research",
+  "tags": [
+    "official",
+    "paper"
+  ],
+  "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": null,
+  "website": "https://doi.org/10.1080/13658816.2019.1643024",
+  "huggingfaceDataset": null,
+  "createdAt": "2026-10-02T00:00:00+00:00",
+  "imageDatasetConfig": {
+    "mediaFolderTags": {},
+    "mediaFolders": []
+  },
+  "preloadedImages": [],
+  "preloadedSource": null,
+  "preloadedAt": null,
+  "config": {
+    "title": "Street View Perception Scoring",
+    "description": "Score each street view from 0 to 100 on each of the six perceptions.",
+    "logoPosition": "right",
+    "autoGrowComment": true,
+    "progressBarType": "questions",
+    "showProgressBar": "aboveheader",
+    "showQuestionNumbers": "off",
+    "spAnalysisRecommendation": {
+      "citation": "Yao et al. 2019",
+      "items": [
+        {
+          "questions": [
+            "perception_scores"
+          ],
+          "method": "robust_median"
+        },
+        {
+          "questions": [
+            "perception_scores"
+          ],
+          "method": "rater_agreement"
+        }
+      ]
+    },
+    "pages": [
+      {
+        "name": "page_scoring",
+        "elements": [
+          {
+            "name": "perception_scores",
+            "type": "imageslidergroup",
+            "title": "Score this street view on each perception (0–100).",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 1,
+            "trialCount": 50,
+            "dimensions": [
+              {
+                "id": "safe",
+                "label": "Safe",
+                "left": "0",
+                "right": "100"
+              },
+              {
+                "id": "lively",
+                "label": "Lively",
+                "left": "0",
+                "right": "100"
+              },
+              {
+                "id": "beautiful",
+                "label": "Beautiful",
+                "left": "0",
+                "right": "100"
+              },
+              {
+                "id": "wealthy",
+                "label": "Wealthy",
+                "left": "0",
+                "right": "100"
+              },
+              {
+                "id": "boring",
+                "label": "Boring",
+                "left": "0",
+                "right": "100"
+              },
+              {
+                "id": "depressing",
+                "label": "Depressing",
+                "left": "0",
+                "right": "100"
+              }
+            ],
+            "scaleMin": 0,
+            "scaleMax": 100,
+            "scaleStep": 1
+          }
+        ]
+      }
+    ]
+  }
+}

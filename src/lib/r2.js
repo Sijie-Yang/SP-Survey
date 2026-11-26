@@ -1,5 +1,6 @@
 /** Re-export Supabase-backed media storage with R2-compatible names. */
 import { isTemplateR2Key } from './mediaStorage';
+import { API_BASE_URL } from './apiConfig';
 
 export {
   isR2Configured,
@@ -18,9 +19,13 @@ export {
   filterDeletableR2Keys,
 } from './mediaStorage';
 
-/** Self-host: no separate R2 proxy — callers fetch public Supabase URLs directly. */
+/**
+ * Self-host: media is read straight from the public Supabase URLs; the local
+ * server (npm run dev) only helps with a CORS fallback (/api/r2/image-proxy)
+ * and street-level short links (/api/street-level/expand).
+ */
 export function getR2ServerUrl() {
-  return '';
+  return API_BASE_URL;
 }
 
 export function isR2ProxyUnreachable() {
@@ -60,4 +65,9 @@ export function isTemplateOwnedMediaEntry(entry) {
 
 export function stripTemplateOwnedMedia(preloadedImages = []) {
   return (preloadedImages || []).filter((e) => !isTemplateOwnedMediaEntry(e));
+}
+
+/** Self-host: no account session; local API calls need no auth header. */
+export async function authHeaders(extra = {}) {
+  return { ...extra };
 }

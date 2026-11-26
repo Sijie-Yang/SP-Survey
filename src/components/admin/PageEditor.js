@@ -1,3 +1,4 @@
+import DescriptionMarkdownEditor from './DescriptionMarkdownEditor';
 import useUnsavedChanges from '../../hooks/useUnsavedChanges';
 import React, { useEffect, useState, useRef } from 'react';
 import {
@@ -7,6 +8,8 @@ import {
   DialogActions,
   Button,
   TextField,
+  Alert,
+  MenuItem,
   Box,
   Typography,
   Card,
@@ -50,6 +53,7 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import QuestionEditor from './QuestionEditor';
 import { useQuestionEditorText } from '../../contexts/questionEditorI18n';
+import { captureParamNames, describeChoiceVisibleIf, pageRuleToVisibleIf, parsePageRule } from '../../lib/surveyRuntimeContext';
 import { getPresetSkill } from '../../lib/presetSkills';
 
 function skillQuestionTypeLabel(question) {
@@ -61,7 +65,7 @@ function skillQuestionTypeLabel(question) {
 }
 
 // Sortable Question Item Component
-function SortableQuestionItem({ question, questionIndex, onEdit, onDelete, onDuplicate }) {
+function SortableQuestionItem({ question, questionIndex, surveyQuestions = [], onEdit, onDelete, onDuplicate }) {
   const { tr } = useQuestionEditorText();
   const {
     attributes,
@@ -120,6 +124,7 @@ function SortableQuestionItem({ question, questionIndex, onEdit, onDelete, onDup
       mediaslidergroup: 'Media Slider Group',
       mediapointallocation: 'Media Point Allocation',
       imageannotation: 'Image Annotation',
+      mapannotation: 'Map Annotation',
       slidergroup: 'Text Slider Group',
       imageslidergroup: 'Image Slider Group',
       pointallocation: 'Text Point Allocation',
@@ -173,6 +178,9 @@ function SortableQuestionItem({ question, questionIndex, onEdit, onDelete, onDup
               color="secondary"
               variant="outlined"
             />
+            {Array.isArray(question.conditionVariants) && question.conditionVariants.length > 0 && (
+              <Chip label={tr('Condition wording')} size="small" color="primary" variant="outlined" />
+            )}
             {question.isRequired && (
               <Chip
                 label={tr("Required")}
@@ -181,6 +189,14 @@ function SortableQuestionItem({ question, questionIndex, onEdit, onDelete, onDup
                 variant="outlined"
               />
             )}
+            {(() => {
+              const shown = describeChoiceVisibleIf(question.visibleIf, surveyQuestions);
+              if (shown.kind === 'answer') {
+                return <Chip label={tr('Shows when {question} is {answer}', { question: shown.question, answer: shown.answer })} size="small" color="primary" variant="outlined" />;
+              }
+              if (shown.kind === 'custom') return <Chip label={tr('This question has a custom display rule')} size="small" variant="outlined" />;
+              return null;
+            })()}
           </Box>
         }
         secondary={
@@ -237,6 +253,42 @@ function SortableQuestionItem({ question, questionIndex, onEdit, onDelete, onDup
   );
 }
 
+function PageVisibilityField({ page, surveyConfig, onChange }) {
+  const { tr } = useQuestionEditorText();
+  const rule = parsePageRule(page.visibleIf);
+  if (!rule) {
+    return (
+      <Alert severity="info" action={<Button size="small" onClick={() => onChange(undefined)}>{tr('Always show')}</Button>}>
+        {tr('This page has a custom display rule')}: <code>{page.visibleIf}</code>
+      </Alert>
+    );
+  }
+  const params = captureParamNames(surveyConfig);
+  if (rule.param && !params.includes(rule.param)) params.push(rule.param);
+  const value = rule.kind === 'always' ? 'always' : `${rule.kind}:${rule.param}`;
+  return (
+    <TextField
+      select
+      fullWidth
+      label={tr('When to show this page')}
+      value={value}
+      onChange={(e) => {
+        const [kind, param] = e.target.value.split(':');
+        onChange(pageRuleToVisibleIf({ kind, param }));
+      }}
+      helperText={params.length
+        ? tr('Link parameters are listed in Survey settings; the Share tab builds a link for each value.')
+        : tr('To show a page only for some links, first add a link parameter (e.g. site) in Survey settings.')}
+    >
+      <MenuItem value="always">{tr('Always show')}</MenuItem>
+      {params.flatMap((p) => [
+        <MenuItem key={`with_param:${p}`} value={`with_param:${p}`}>{tr('Only when the link has {param}', { param: p })}</MenuItem>,
+        <MenuItem key={`without_param:${p}`} value={`without_param:${p}`}>{tr('Only when the link has no {param}', { param: p })}</MenuItem>,
+      ])}
+    </TextField>
+  );
+}
+
 export default function PageEditor({ page, pageIndex, onSave, onCancel, images, currentProject, surveyConfig, onSelectionChange, onWorkspaceChange }) {
   const { tr } = useQuestionEditorText();
   const [editedPage, setEditedPage] = useState({ ...page });
@@ -244,6 +296,10 @@ export default function PageEditor({ page, pageIndex, onSave, onCancel, images, 
 
   const initialPage = useRef(JSON.stringify(page));
   const pageDirty = JSON.stringify(editedPage) !== initialPage.current;
+  const onSelectionChangeRef = useRef(onSelectionChange);
+  const onWorkspaceChangeRef = useRef(onWorkspaceChange);
+  onSelectionChangeRef.current = onSelectionChange;
+  onWorkspaceChangeRef.current = onWorkspaceChange;
   useEffect(() => {
     const selection = {
       pageName: editedPage?.name || page?.name,
@@ -252,12 +308,12 @@ export default function PageEditor({ page, pageIndex, onSave, onCancel, images, 
       pageDirty,
       dirty: pageDirty,
     };
-    onSelectionChange?.(selection);
-    onWorkspaceChange?.({
+    onSelectionChangeRef.current?.(selection);
+    onWorkspaceChangeRef.current?.({
       open: false,
       ...selection,
     });
-  }, [editedPage, page?.name, pageDirty, selectedQuestion, onSelectionChange, onWorkspaceChange]);
+  }, [editedPage, page?.name, pageDirty, selectedQuestion]);
   const guard = useUnsavedChanges(pageDirty);
   const closeEditor = () => guard.request(onCancel);
   const [confirmDialog, setConfirmDialog] = useState(null);
@@ -397,17 +453,8 @@ export default function PageEditor({ page, pageIndex, onSave, onCancel, images, 
                 sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
               />
               
-              <TextField
-                fullWidth
-                variant="outlined"
-                multiline
-                rows={3}
-                label={tr("Page Description")}
-                value={editedPage.description || ''}
-                onChange={(e) => handlePageChange('description', e.target.value)}
-                helperText={tr("Optional description to explain what this page is about")}
-                sx={{ '& .MuiInputLabel-root': { backgroundColor: 'white', px: 1 } }}
-              />
+              <DescriptionMarkdownEditor label={tr("Page Description")} value={editedPage.description || ''} onChange={(value) => handlePageChange('description', value)} />
+              <PageVisibilityField page={editedPage} surveyConfig={surveyConfig} onChange={(v) => handlePageChange('visibleIf', v)} />
             </Box>
           </Box>
 
@@ -445,6 +492,7 @@ export default function PageEditor({ page, pageIndex, onSave, onCancel, images, 
                         key={`question-${questionIndex}`}
                         question={question}
                         questionIndex={questionIndex}
+                        surveyQuestions={(surveyConfig?.pages || [{ elements: editedPage.elements }]).flatMap((item) => (item.name === editedPage.name ? editedPage.elements : item.elements) || [])}
                         onEdit={setSelectedQuestion}
                         onDuplicate={duplicateQuestion}
                         onDelete={deleteQuestion}
@@ -493,7 +541,12 @@ export default function PageEditor({ page, pageIndex, onSave, onCancel, images, 
           }}
           images={images}
           currentProject={currentProject}
-          surveyConfig={surveyConfig}
+          surveyConfig={{
+            ...(surveyConfig || {}),
+            pages: (surveyConfig?.pages || []).some((item) => item.name === editedPage.name)
+              ? (surveyConfig?.pages || []).map((item) => (item.name === editedPage.name ? editedPage : item))
+              : [...(surveyConfig?.pages || []), editedPage],
+          }}
         />
       )}
       <ConfirmDialog open={guard.open} onCancel={guard.cancel} onConfirm={guard.discard}

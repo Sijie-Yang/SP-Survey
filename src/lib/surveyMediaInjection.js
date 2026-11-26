@@ -14,6 +14,8 @@ import {
   hasMediaSlots, resolveMediaSlots, legacyAssignmentToSlots,
   applyResolvedSlotsToElement, MEDIA_STAR_TYPES, isMediaStarType,
 } from './mediaSlots';
+import { shuffled } from './shuffle.js';
+import { getTrialCount } from './trialNavigation';
 
 export {
   hasMediaSlots, resolveMediaSlots, legacyAssignmentToSlots,
@@ -317,7 +319,7 @@ export function pickMediaForQuestion(
   element,
   globallyUsedImageKeys,
   globallyUsedSetKeys,
-  pairStats = null,
+  balance = null,
   folderTags = {},
 ) {
   if (hasMediaSlots(element)) {
@@ -326,7 +328,7 @@ export function pickMediaForQuestion(
     );
   }
   const assignment = pickRandomMediaForQuestion(
-    pool, element, globallyUsedImageKeys, globallyUsedSetKeys, pairStats, folderTags,
+    pool, element, globallyUsedImageKeys, globallyUsedSetKeys, balance, folderTags,
   );
   return legacyAssignmentToSlots(assignment);
 }
@@ -430,6 +432,24 @@ export function usesSingleCategoryPerTrial(element) {
   return usesCategoryMediaAssignment(element) && element?.mediaCategoryMode === 'single';
 }
 
+/** Each trial draws imageCount files split across that many category folders. */
+export function usesSampledCategoriesPerTrial(element) {
+  return usesCategoryMediaAssignment(element) && element?.mediaCategoryMode === 'sample';
+}
+
+/**
+ * How many category folders a sample-mode trial should use.
+ * imageCount 2 and mediaPerCategory 1 means two categories (one file each).
+ */
+export function categorySampleCount(element, eligibleCount = Infinity) {
+  const per = getMediaPerCategory(element);
+  const raw = Number(element?.imageCount);
+  const fromImageCount = Number.isFinite(raw) && raw > 0 ? Math.floor(raw / per) : 2;
+  const wanted = Math.max(1, fromImageCount || 2);
+  const cap = Number.isFinite(eligibleCount) ? eligibleCount : wanted;
+  return Math.max(0, Math.min(wanted, cap));
+}
+
 /** How many files to draw from each tagged category folder (question setting). */
 export function getMediaPerCategory(element) {
   const n = parseInt(element?.mediaPerCategory, 10);
@@ -447,7 +467,12 @@ export function expectedCategoryImageCount(pool, element, folderTags = {}) {
     scopeFolders: element?.mediaFolders,
   });
   if (!labels.length) return null;
-  return (usesSingleCategoryPerTrial(element) ? 1 : labels.length) * getMediaPerCategory(element);
+  const folders = usesSingleCategoryPerTrial(element)
+    ? 1
+    : usesSampledCategoriesPerTrial(element)
+      ? categorySampleCount(element, labels.length)
+      : labels.length;
+  return folders * getMediaPerCategory(element);
 }
 
 /** Human-readable gap for preview/admin. Never invent a substitute pool. */
@@ -478,10 +503,13 @@ export function describeMediaAssignmentFailure(element, pool, folderTags = {}, a
       return `Question "${name}"${title}: no matching category. Needed ${needed}. Tagged categories: ${available.join(', ') || 'none'}.`;
     }
     const counts = labels.map((cat) => `${cat} (have ${(byCategory.get(cat) || []).length}, need ${perCategory})`);
-    if (usesSingleCategoryPerTrial(element)) {
+    if (usesSingleCategoryPerTrial(element) || usesSampledCategoriesPerTrial(element)) {
       const eligible = labels.filter((cat) => (byCategory.get(cat) || []).length >= perCategory);
-      if (!eligible.length) {
-        return `Question "${name}"${title}: no specified category has ${perCategory} image(s). ${counts.join('; ')}.`;
+      const needed = usesSampledCategoriesPerTrial(element)
+        ? categorySampleCount(element)
+        : 1;
+      if (eligible.length < needed) {
+        return `Question "${name}"${title}: need ${needed} categor${needed === 1 ? 'y' : 'ies'} with ${perCategory} image(s); ${eligible.length} can supply a full draw. ${counts.join('; ')}.`;
       }
     } else {
       const short = labels.filter((cat) => (byCategory.get(cat) || []).length < perCategory);
@@ -518,13 +546,16 @@ function pickOnePerCategory(pool, element, globallyUsedImageKeys, folderTags = {
   const images = [];
   const assignedCategories = [];
 
-  if (usesSingleCategoryPerTrial(element)) {
+  if (usesSingleCategoryPerTrial(element) || usesSampledCategoriesPerTrial(element)) {
     // Choose among categories that can supply a complete trial after exclusions.
     // Never fill a short category using files from another category.
     const eligible = categories.filter((cat) => (byCategory.get(cat) || []).filter((img) => (
       !excludeUsed || !globallyUsedImageKeys?.has(getImageKey(img))
     )).length >= perCategory);
-    categories = eligible.length ? [eligible[Math.floor(Math.random() * eligible.length)]] : [];
+    const take = usesSampledCategoriesPerTrial(element)
+      ? categorySampleCount(element, eligible.length)
+      : 1;
+    categories = shuffled(eligible).slice(0, take);
   }
 
   for (const cat of categories) {
@@ -536,8 +567,7 @@ function pickOnePerCategory(pool, element, globallyUsedImageKeys, folderTags = {
       });
     }
     if (!catPool.length) continue;
-    const shuffled = [...catPool].sort(() => 0.5 - Math.random());
-    const take = shuffled.slice(0, Math.min(perCategory, shuffled.length));
+    const take = shuffled(catPool).slice(0, Math.min(perCategory, catPool.length));
     if (!take.length) continue;
     images.push(...take);
     assignedCategories.push(cat);
@@ -562,133 +592,61 @@ export function getGroupTrackingKey(group) {
   return group?.setKey || group?.groupKey || group?.setId || group?.groupId || null;
 }
 
-const DEFAULT_TS_MU = 25;
-
-/** Normalize legacy / invalid pairingMode values. */
+/**
+ * Sampling mode of a question: 'random' or 'balanced'.
+ * 'adaptive' (and the older 'uncertain' / 'high_sigma') depended on rating statistics
+ * that were never collected, so they now mean 'balanced'.
+ */
 export function normalizePairingMode(mode) {
-  // Legacy "uncertain" (high-σ) ≈ exposure balancing with current stats
-  if (mode === 'uncertain' || mode === 'high_sigma') return 'balanced';
-  if (mode === 'balanced' || mode === 'adaptive' || mode === 'random') return mode;
+  if (mode === 'balanced' || mode === 'adaptive' || mode === 'uncertain' || mode === 'high_sigma') return 'balanced';
   return 'random';
 }
 
-function pickLeastExposed(candidates, imageCount, pairStats) {
-  if (!candidates?.length) return [];
-  const exposure = (img) => {
-    const key = getImageKey(img);
-    return pairStats?.[key]?.exposures ?? 0;
-  };
-  const sorted = [...candidates].sort((a, b) => exposure(a) - exposure(b) || Math.random() - 0.5);
-  // Prefer the least-exposed band, then shuffle within it for variety
-  if (sorted.length <= imageCount) return sorted;
-  const bandSize = Math.min(sorted.length, Math.max(imageCount * 2, Math.ceil(sorted.length / 2)));
-  const band = sorted.slice(0, bandSize);
-  return [...band].sort(() => 0.5 - Math.random()).slice(0, imageCount);
+/** Does this question draw its media in balanced mode? (media-slot and category questions do not.) */
+export function usesBalancedDraw(element) {
+  if (!element || hasMediaSlots(element)) return false;
+  if (normalizePairingMode(element.pairingMode) !== 'balanced') return false;
+  return normalizeMediaAssignmentMode(element.mediaAssignmentMode) !== 'category';
 }
 
 /**
- * Adaptive sampling (best-effort for multi-image TrueSkill learning):
- *
- * A) Rated images (have μ): sort by μ → equal-count quantile buckets (2–6) →
- *    pick a bucket uniformly → random draw. Equal chance for low/mid/high bands.
- *
- * B) New images (no μ / never shown): never “1 bucket among N” (that starves them).
- *    Instead each trial chooses one of:
- *      1. all-new set — when many are new (new-vs-new cold start)
- *      2. 1 new + (k−1) from one μ bucket — places a new image inside a coherent band
- *      3. pure μ-bucket set — band learning without new images
- *    Probabilities scale with unseen share, with a floor so a few new images still appear.
+ * The balanced queues a survey needs: one per library that balanced questions
+ * draw from. Questions that share a library (and do not allow repeats) share a
+ * queue, so one participant never gets the same image in two of them.
+ * Returns `[{ id, keys, perPerson, questions }]` for createBalancePlan.
  */
-function pickSimilarMuSet(candidates, imageCount, pairStats) {
-  if (!candidates?.length) return [];
-  if (candidates.length <= imageCount) {
-    return [...candidates].sort(() => 0.5 - Math.random());
-  }
-
-  const shuffleTake = (list, n) => [...list].sort(() => 0.5 - Math.random()).slice(0, n);
-
-  const unseen = [];
-  const rated = [];
-  candidates.forEach((img) => {
-    const key = getImageKey(img);
-    const row = key ? pairStats?.[key] : null;
-    const hasMu = row?.mu != null && Number.isFinite(Number(row.mu));
-    const exposed = (row?.exposures ?? 0) > 0;
-    if (!row || (!hasMu && !exposed)) {
-      unseen.push(img);
+export function balanceGroupsForSurvey(surveyJson, mediaPool, folderTags = {}) {
+  const groups = new Map();
+  (surveyJson?.pages || []).forEach((page) => (page.elements || []).forEach((element) => {
+    if (!element?.name || !shouldInjectMedia(element) || !usesBalancedDraw(element)) return;
+    const imageCount = element.imageCount || defaultMediaCount(element);
+    const trials = getTrialCount(element);
+    const workingPool = scopeIndividualMediaPool(filterPoolForQuestion(mediaPool, element), element);
+    let keys;
+    let perPerson;
+    let kind;
+    if (normalizeMediaAssignmentMode(element.mediaAssignmentMode) === 'set') {
+      const scopeFolders = Array.isArray(element.mediaFolders)
+        ? element.mediaFolders.map(normalizeFolderPath).filter(Boolean)
+        : null;
+      keys = getEligibleMediaSets(workingPool, imageCount, folderTags, { scopeFolders }).map(getGroupTrackingKey);
+      perPerson = trials;
+      kind = `set${imageCount}`;
     } else {
-      rated.push({
-        img,
-        mu: hasMu ? Number(row.mu) : DEFAULT_TS_MU,
-      });
+      keys = workingPool.map(getImageKey);
+      perPerson = trials * imageCount;
+      kind = 'file';
     }
-  });
-
-  const buildMuBuckets = (ratedList) => {
-    if (ratedList.length < imageCount) return [];
-    const sorted = [...ratedList].sort((a, b) => a.mu - b.mu || Math.random() - 0.5);
-    const numBuckets = Math.min(6, Math.max(2, Math.floor(sorted.length / imageCount)));
-    const bucketSize = Math.ceil(sorted.length / numBuckets);
-    const buckets = [];
-    for (let b = 0; b < numBuckets; b += 1) {
-      const start = b * bucketSize;
-      const slice = sorted.slice(start, Math.min(sorted.length, start + bucketSize));
-      if (slice.length >= imageCount) {
-        buckets.push(slice.map((r) => r.img));
-      } else if (slice.length && buckets.length) {
-        // merge undersized final slice into previous bucket
-        buckets[buckets.length - 1] = [...buckets[buckets.length - 1], ...slice.map((r) => r.img)];
-      }
-    }
-    return buckets;
-  };
-
-  const pickFromMuBucket = () => {
-    const buckets = buildMuBuckets(rated);
-    if (!buckets.length) {
-      return shuffleTake(rated.map((r) => r.img), imageCount);
-    }
-    const bucket = buckets[Math.floor(Math.random() * buckets.length)];
-    return shuffleTake(bucket, imageCount);
-  };
-
-  // --- mostly / entirely new pool ---
-  if (rated.length < imageCount) {
-    return shuffleTake(unseen.length ? unseen : candidates, imageCount);
-  }
-
-  const share = unseen.length / candidates.length; // 0..1
-  const roll = Math.random();
-
-  if (unseen.length > 0) {
-    // (1) All-new trial: likely when new images are a large fraction of the pool
-    const pAllNew = Math.min(0.45, share);
-    if (unseen.length >= imageCount && roll < pAllNew) {
-      return shuffleTake(unseen, imageCount);
-    }
-
-    // (2) Inject one new into a μ-band trial — floor so small unseen sets are not starved
-    //     e.g. 5% new → ~25% mixed trials; 20% new → ~40%; capped at 50%
-    const pMixed = Math.min(0.5, Math.max(0.25, share * 2));
-    if (roll < pAllNew + pMixed) {
-      const newbie = shuffleTake(unseen, 1)[0];
-      const band = pickFromMuBucket().filter((img) => getImageKey(img) !== getImageKey(newbie));
-      const rest = shuffleTake(band, imageCount - 1);
-      // if band somehow collided, fill from rated
-      while (rest.length < imageCount - 1) {
-        const fill = rated.map((r) => r.img).find((img) => (
-          getImageKey(img) !== getImageKey(newbie)
-          && !rest.some((x) => getImageKey(x) === getImageKey(img))
-        ));
-        if (!fill) break;
-        rest.push(fill);
-      }
-      return shuffleTake([newbie, ...rest], imageCount);
-    }
-  }
-
-  // (3) Pure μ-band trial
-  return pickFromMuBucket();
+    keys = [...new Set(keys.filter(Boolean))].sort();
+    if (keys.length < 2) return;
+    const shared = element.excludePreviouslyUsedImages !== false;
+    const id = `${kind}|${shared ? 'shared' : `own:${element.name}`}|${keys.length}|${keys.join('\u241f')}`;
+    const group = groups.get(id) || { id, keys, perPerson: 0, questions: [] };
+    group.perPerson += perPerson;
+    group.questions.push(element.name);
+    groups.set(id, group);
+  }));
+  return [...groups.values()];
 }
 
 /**
@@ -697,19 +655,21 @@ function pickSimilarMuSet(candidates, imageCount, pairStats) {
  * (groupKey/groupId mirror setKey/setId for older callers.)
  *
  * folderTags: project imageDatasetConfig.mediaFolderTags
+ * balance: the participant's plan from createBalancePlan (live survey only). Without
+ *   one, a balanced question draws at random, as in previews.
  */
 export function pickRandomMediaForQuestion(
   pool,
   element,
   globallyUsedImageKeys,
   globallyUsedSetKeys,
-  pairStats = null,
+  balance = null,
   folderTags = {},
 ) {
   const imageCount = element.imageCount || defaultMediaCount(element);
   const excludeUsed = element.excludePreviouslyUsedImages !== false;
-  const pairingMode = normalizePairingMode(element.pairingMode || 'random');
   const mode = normalizeMediaAssignmentMode(element.mediaAssignmentMode);
+  const balanced = Boolean(balance?.take) && usesBalancedDraw(element);
   const scopeFolders = Array.isArray(element.mediaFolders)
     ? element.mediaFolders.map(normalizeFolderPath).filter(Boolean)
     : null;
@@ -734,27 +694,16 @@ export function pickRandomMediaForQuestion(
       return { images: [], setKey: null, setId: null, groupKey: null, groupId: null };
     }
 
+    // Balanced: the next set of this participant's queue (unless it was used up or is gone).
     let picked = null;
-    if (pairingMode === 'balanced' && pairStats) {
-      const exposure = (s) => pairStats?.[s.setKey]?.exposures
-        ?? pairStats?.[s.setId]?.exposures
-        ?? 0;
-      const sorted = [...eligible].sort((a, b) => exposure(a) - exposure(b) || Math.random() - 0.5);
-      picked = sorted[0];
-    } else if (pairingMode === 'adaptive' && pairStats) {
-      // Adaptive on sets: prefer least-exposed sets (same as balanced without per-file μ)
-      const exposure = (s) => pairStats?.[s.setKey]?.exposures
-        ?? pairStats?.[s.setId]?.exposures
-        ?? 0;
-      const sorted = [...eligible].sort((a, b) => exposure(a) - exposure(b) || Math.random() - 0.5);
-      picked = sorted[0];
-    } else {
-      const shuffled = [...eligible].sort(() => 0.5 - Math.random());
-      picked = shuffled[0];
+    if (balanced) {
+      const key = balance.take(element.name, 1)?.[0];
+      picked = key ? eligible.find((g) => getGroupTrackingKey(g) === key) || null : null;
     }
+    if (!picked) picked = shuffled(eligible)[0];
 
     return {
-      images: picked.members,
+      images: element.randomizeSetOrder ? shuffled(picked.members) : picked.members,
       setKey: picked.setKey,
       setId: picked.setId,
       groupKey: picked.setKey,
@@ -771,29 +720,34 @@ export function pickRandomMediaForQuestion(
     if (filtered.length >= imageCount) candidates = filtered;
   }
 
-  if (pairingMode === 'balanced' && candidates.length >= imageCount) {
-    return {
-      images: pickLeastExposed(candidates, imageCount, pairStats),
-      setKey: null,
-      setId: null,
-      groupKey: null,
-      groupId: null,
-    };
+  if (balanced) {
+    // Balanced: the next images of this participant's queue. An image that is gone from the
+    // library, or that this person already saw in a question outside the queue, is replaced at random.
+    const byKey = new Map(workingPool.map((img) => [getImageKey(img), img]));
+    const keys = balance.take(element.name, imageCount);
+    if (keys) {
+      const taken = new Set();
+      const images = [];
+      keys.forEach((key) => {
+        const img = byKey.get(key);
+        const repeat = excludeUsed && globallyUsedImageKeys?.has(key);
+        if (img && !repeat && !taken.has(key)) {
+          taken.add(key);
+          images.push(img);
+        }
+      });
+      if (images.length < imageCount) {
+        const spare = shuffled(candidates.filter((img) => !taken.has(getImageKey(img))));
+        images.push(...spare.slice(0, imageCount - images.length));
+      }
+      if (images.length === imageCount) {
+        return { images, setKey: null, setId: null, groupKey: null, groupId: null };
+      }
+    }
   }
 
-  if (pairingMode === 'adaptive' && candidates.length >= imageCount) {
-    return {
-      images: pickSimilarMuSet(candidates, imageCount, pairStats),
-      setKey: null,
-      setId: null,
-      groupKey: null,
-      groupId: null,
-    };
-  }
-
-  const shuffled = [...candidates].sort(() => 0.5 - Math.random());
   return {
-    images: shuffled.slice(0, imageCount),
+    images: shuffled(candidates).slice(0, imageCount),
     setKey: null,
     setId: null,
     groupKey: null,
@@ -822,7 +776,7 @@ export function pickTrialMediaSetsForQuestion(
   trialCount,
   globallyUsedImageKeys,
   globallyUsedSetKeys,
-  pairStats = null,
+  balance = null,
   folderTags = {},
 ) {
   const n = Math.max(1, parseInt(trialCount, 10) || 1);
@@ -834,7 +788,7 @@ export function pickTrialMediaSetsForQuestion(
       element,
       globallyUsedImageKeys,
       globallyUsedSetKeys,
-      pairStats,
+      balance,
       folderTags,
     );
     const images = assignment?.flatMedia || assignment?.images || [];

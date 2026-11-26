@@ -5,17 +5,21 @@ import QuestionParticipantPreview from './QuestionParticipantPreview';
 import { RegionProvider } from '../../contexts/RegionContext';
 import { PREVIEW_READY, PREVIEW_RENDERED, PREVIEW_UPDATE } from '../../lib/questionPreviewProtocol';
 
-jest.mock('../../lib/previewMediaLibrary', () => ({
-  resolveMediaPoolForPreview: async (media) => media,
-  resolvePreviewMediaContext: async (project) => ({
+jest.mock('../../lib/previewMediaLibrary', () => {
+  const resolvePreviewMediaContext = async (project) => ({
     images: project?.preloadedImages || [],
     imageDatasetConfig: project?.imageDatasetConfig || {},
     fromPreviewLibrary: false,
-  }),
-}));
+  });
+  return {
+    resolveMediaPoolForPreview: async (media) => media,
+    resolvePreviewMediaContext,
+    resolvePreviewMediaContextCached: resolvePreviewMediaContext,
+  };
+});
 jest.mock('../../lib/surveyMediaInjection', () => ({ ...jest.requireActual('../../lib/surveyMediaInjection'), resolveSkillQuestions: async () => {} }));
 const project = { preloadedImages: ['left', 'right'].flatMap(folder => [1, 2, 3, 4].map(i => ({ url: `/${folder}/${i}.jpg`, name: `${folder}-${i}.jpg`, folder, type: 'image' }))) };
-const config = { locale: 'zh', theme: { primaryColor: '#123456' }, secretNotNeededInFrame: 'excluded' };
+const config = { viewportLayout: { desktop: { questions: { pair: { fontSize: 24 } }, textStyles: { legacy: { fieldStyle: { italic: true } } } } }, locale: 'zh', theme: { primaryColor: '#123456' }, secretNotNeededInFrame: 'excluded' };
 const q = { type: 'imagepicker', name: 'pair', imageCount: 2, allowTie: false };
 const preview = (question = q) => <RegionProvider><QuestionParticipantPreview question={question} currentProject={project} surveyConfig={config} /></RegionProvider>;
 
@@ -37,6 +41,7 @@ test('handshake updates all draft settings and only accepts the matching frame a
   await waitFor(() => expect(post).toHaveBeenCalled());
   expect(post.mock.calls.at(-1)[0]).toMatchObject({ type: PREVIEW_UPDATE, payload: { appearance: { locale: 'zh' } } });
   expect(post.mock.calls.at(-1)[0].payload.appearance.secretNotNeededInFrame).toBeUndefined();
+  expect(post.mock.calls.at(-1)[0].payload.appearance.viewportLayout).toEqual(config.viewportLayout);
   post.mockClear();
   fireEvent(window, new MessageEvent('message', { source: frame.contentWindow, origin: 'https://unrelated.example', data: { type: PREVIEW_READY } }));
   fireEvent(window, new MessageEvent('message', { source: window, origin: window.location.origin, data: { type: PREVIEW_READY } }));

@@ -1,0 +1,112 @@
+{
+  "id": "2021-kruse-places",
+  "name": "Places for Play",
+  "description": "Rebuilt from the published description of Kruse, Kang, Liu, Zhang & Gao (2021). Participants rate how playable Boston street views are for children on a five-point scale. Playability is intentionally not defined, as in the paper. Differences from the original study: (1) Bundled images are photographs from the paper PDF (4 scenes), not the original full stimulus set.",
+  "author": "Kruse, Kang, Liu, Zhang & Gao",
+  "year": "2021",
+  "category": "Academic Research",
+  "tags": [
+    "official",
+    "paper"
+  ],
+  "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": null,
+  "website": "https://doi.org/10.1016/j.compenvurbsys.2021.101693",
+  "huggingfaceDataset": null,
+  "createdAt": "2026-10-02T00:00:00+00:00",
+  "imageDatasetConfig": {
+    "mediaFolderTags": {},
+    "mediaFolders": []
+  },
+  "preloadedImages": [],
+  "preloadedSource": null,
+  "preloadedAt": null,
+  "config": {
+    "title": "Places for Play",
+    "description": "Look at each street view and choose the category that best describes it.",
+    "logoPosition": "right",
+    "autoGrowComment": true,
+    "progressBarType": "questions",
+    "showProgressBar": "aboveheader",
+    "showQuestionNumbers": "off",
+    "spAnalysisRecommendation": {
+      "citation": "Kruse et al. 2021",
+      "items": [
+        {
+          "questions": [
+            "playability"
+          ],
+          "method": "scalar_distribution",
+          "minPerImage": 9
+        }
+      ]
+    },
+    "pages": [
+      {
+        "name": "page_rating",
+        "elements": [
+          {
+            "name": "playability",
+            "type": "imagerating",
+            "title": "Choose the category that most accurately describes how playable the scene in the image is for children.",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 1,
+            "trialCount": 20,
+            "rateMin": 1,
+            "rateMax": 5,
+            "rateLabels": [
+              "Very unplayable",
+              "Unplayable",
+              "Neither playable nor unplayable",
+              "Playable",
+              "Very playable"
+            ],
+            "minRateDescription": "Very unplayable",
+            "maxRateDescription": "Very playable"
+          }
+        ]
+      },
+      {
+        "name": "page_check",
+        "elements": [
+          {
+            "name": "attention_check",
+            "type": "radiogroup",
+            "title": "To show that you are reading carefully, please select \"Agree\" for this question.",
+            "choices": [
+              {
+                "value": "strongly_disagree",
+                "text": "Strongly disagree"
+              },
+              {
+                "value": "disagree",
+                "text": "Disagree"
+              },
+              {
+                "value": "neutral",
+                "text": "Neutral"
+              },
+              {
+                "value": "agree",
+                "text": "Agree"
+              },
+              {
+                "value": "strongly_agree",
+                "text": "Strongly agree"
+              }
+            ],
+            "isRequired": true,
+            "isAttentionCheck": true,
+            "expectedAnswer": "agree"
+          }
+        ]
+      }
+    ]
+  }
+}

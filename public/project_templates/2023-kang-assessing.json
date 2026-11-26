@@ -1,0 +1,99 @@
+{
+  "id": "2023-kang-assessing",
+  "name": "Safety Perception and Question Framing (Stockholm)",
+  "description": "Rebuilt from the published description of Kang et al. (2023). Participants are randomly assigned to one of two framings and compare Stockholm street views. It is one question whose wording depends on the condition (\"looks safe\" or \"looks less safe\"); \"less safe\" answers are reverse-coded before pooling. Differences from the original study: (1) The original interface was in Swedish; this template is in English only. (2) Bundled images are photographs from the paper PDF (2 scenes), not the original full stimulus set.",
+  "author": "Kang et al.",
+  "year": "2023",
+  "category": "Academic Research",
+  "tags": [
+    "official",
+    "paper"
+  ],
+  "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": null,
+  "website": "https://doi.org/10.1016/j.landurbplan.2023.104768",
+  "huggingfaceDataset": null,
+  "createdAt": "2026-10-02T00:00:00+00:00",
+  "imageDatasetConfig": {
+    "mediaFolderTags": {},
+    "mediaFolders": []
+  },
+  "preloadedImages": [],
+  "preloadedSource": null,
+  "preloadedAt": null,
+  "config": {
+    "title": "Street Safety Perception",
+    "description": "Tell us where you live, then compare pairs of street views.",
+    "logoPosition": "right",
+    "autoGrowComment": true,
+    "progressBarType": "questions",
+    "showProgressBar": "aboveheader",
+    "showQuestionNumbers": "off",
+    "conditions": [
+      {
+        "id": "safe",
+        "label": "Looks safe"
+      },
+      {
+        "id": "less_safe",
+        "label": "Looks less safe"
+      }
+    ],
+    "spAnalysisRecommendation": {
+      "citation": "Kang et al. 2023",
+      "items": [
+        {
+          "questions": [
+            "safety"
+          ],
+          "method": "trueskill_pairwise",
+          "tieHandling": "exclude",
+          "scale": "0-10",
+          "groupBy": [
+            "condition"
+          ]
+        }
+      ]
+    },
+    "pages": [
+      {
+        "name": "page_residence",
+        "elements": [
+          {
+            "name": "neighbourhood",
+            "type": "text",
+            "title": "Which neighbourhood do you live in?",
+            "isRequired": true
+          }
+        ],
+        "title": "About you"
+      },
+      {
+        "name": "page_choice",
+        "elements": [
+          {
+            "name": "safety",
+            "type": "imagepicker",
+            "title": "Which place looks safe?",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 2,
+            "trialCount": 10,
+            "conditionVariants": [
+              {
+                "condition": "less_safe",
+                "title": "Which place looks less safe?",
+                "reverseCoded": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

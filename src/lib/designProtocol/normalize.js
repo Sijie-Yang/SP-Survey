@@ -3,9 +3,22 @@
  * Pure module — no I/O.
  */
 
-import { ANNOTATION_TOOLS, normalizeAllowedTools } from '../annotationTools';
+import { ANNOTATION_TOOLS, normalizeAllowedTools } from '../annotationTools.js';
 import { PLATFORM_SCHEMA } from '../platformSchema/index.js';
-import { normalizeSliderQuestion } from '../sliderScale';
+import { normalizeSliderQuestion } from '../sliderScale.js';
+
+const OWN_RESPONSE_KEYS = new Set(['ownresponsesupabase', 'own_response_supabase']);
+
+function stripOwnResponseSupabase(value) {
+  if (Array.isArray(value)) return value.map(stripOwnResponseSupabase);
+  if (!value || typeof value !== 'object') return value;
+  const out = {};
+  Object.entries(value).forEach(([key, child]) => {
+    if (OWN_RESPONSE_KEYS.has(String(key).toLowerCase())) return;
+    out[key] = stripOwnResponseSupabase(child);
+  });
+  return out;
+}
 
 const MEDIA_STIMULUS_TYPES = [
   'imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'imagecheckbox', 'image',
@@ -50,7 +63,7 @@ export function normalizeBuilderSurveyJson(surveyJson) {
 
 /** Post-process LLM-generated configs (image/media/skill defaults, strip secrets). */
 export function postProcessAiConfig(surveyConfig) {
-  const processedConfig = JSON.parse(JSON.stringify(surveyConfig || {}));
+  const processedConfig = stripOwnResponseSupabase(JSON.parse(JSON.stringify(surveyConfig || {})));
   if (!Array.isArray(processedConfig.pages)) return processedConfig;
 
   processedConfig.pages.forEach((page) => {

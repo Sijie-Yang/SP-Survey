@@ -45,7 +45,16 @@ describe('local Silicon API', () => {
   });
 
   afterEach(async () => {
-    await fs.remove(tmp);
+    // A started run keeps writing its progress file for a moment; retry until it is done.
+    for (let attempt = 0; attempt < 20; attempt += 1) {
+      try {
+        await fs.remove(tmp);
+        return;
+      } catch (error) {
+        if (error.code !== 'ENOTEMPTY' && error.code !== 'EBUSY') throw error;
+        await new Promise((resolve) => setTimeout(resolve, 50));
+      }
+    }
   });
 
   test('stores personas locally and lists them', async () => {

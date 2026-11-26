@@ -1,4 +1,4 @@
-import { mergeMediaLibraryListing, serializeMediaLibraryEntry } from './mediaLibrarySync';
+import { imagesInLibraryPrefix, mergeMediaLibraryListing, serializeMediaLibraryEntry } from './mediaLibrarySync';
 import { buildMediaByFolderCategory, getDirectChildMedia } from './mediaUtils';
 
 const prefix = 'u/p/';
@@ -34,6 +34,14 @@ test('listing updates file presence and URL without resetting library metadata',
   expect(result).toHaveLength(2);
   expect(result[0]).toMatchObject({ url: 'https://new.test/a.jpg', media_id: 'stable', folder: 'moved' });
   expect(result[1].folder).toBe('new');
+});
+
+test('a template listing keeps only keys under that template prefix', () => {
+  const prefix = 'templates/2014-quercia-aesthetic/';
+  const own = { key: `${prefix}paper/p07-05.jpg`, name: 'p07-05.jpg' };
+  const other = { key: 'templates/2013-salesses-collaborative/paper/p07-05.jpg', name: 'p07-05.jpg' };
+  expect(imagesInLibraryPrefix([own, other, { name: 'p07-05.jpg' }], prefix)).toEqual([own]);
+  expect(imagesInLibraryPrefix([own], 'templates/2014-quercia')).toEqual([]);
 });
 
 test('legacy URL-only entries match exact URLs while unnamed files do not cross-match', () => {

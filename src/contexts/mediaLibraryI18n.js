@@ -1,8 +1,25 @@
 import { useCallback, useContext } from 'react';
+import { isChineseLanguage, lookupPhrase } from '../lib/uiLanguages';
 import { RegionContext } from './RegionContext';
 
 // Interface copy only; filenames, folder paths and stored values remain unchanged.
 const zh = {
+  "{count} image": "{count} 张图片",
+  "{count} images": "{count} 张图片",
+  "{count} video": "{count} 个视频",
+  "{count} videos": "{count} 个视频",
+  "{count} audio": "{count} 个音频",
+  "{count} audios": "{count} 个音频",
+  "Import": "导入",
+  "Tools": "工具",
+  "Street-level imagery": "街景影像",
+  "Sets & categories": "分组与分类",
+  "Spatial intelligence": "空间智能分析",
+  "Pre-annotate": "媒体标注",
+  "Pre-annotate results": "标注结果",
+  "Selected files": "已选文件",
+  "{count} selected": "已选择 {count} 个文件",
+  "Upload or import media to get started, then organize it into folders.": "先上传或导入媒体，再通过文件夹整理。",
   "No matching folders": "没有匹配的文件夹",
   "Open folder list": "展开文件夹列表",
   "Close folder list": "收起文件夹列表",
@@ -20,6 +37,9 @@ const zh = {
   "HF → storage…": "正在从 Hugging Face 导入到存储…",
   "No media uploaded yet. Upload files or import from Hugging Face above, then organize files with folders on the left.": "暂无媒体。请先在上方上传文件或从 Hugging Face 导入，再通过左侧文件夹整理。",
   "Refresh from storage": "刷新存储中的媒体",
+  "HF → R2…": "正在从 Hugging Face 导入 R2…",
+  "No media uploaded yet. Use Import, Upload, or Hugging Face above, then organize files with folders on the left.": "暂无媒体。请先用上方的导入、上传或 Hugging Face，再通过左侧文件夹整理。",
+  "Refresh from R2": "刷新云端媒体",
   "Select filtered (": "选中筛选结果 (",
   "Clear selection": "取消全部勾选",
   "ZIP selected (": "打包下载已选文件 (",
@@ -43,7 +63,7 @@ const zh = {
   "Showing": "当前显示",
   "of": "／",
   "file(s)": "个文件",
-  ". Click a card to preview (image / video / audio); images also focus Pre-annotate below. Use checkboxes for multi-select download / move / delete.": "。点击卡片预览图片、视频或音频；点击图片也会定位下方标注区。勾选文件后可批量下载、移动或删除。",
+  ". Click a card to preview (image / video / audio); images also focus Pre-annotate. Use checkboxes for multi-select download / move / delete.": "。点击卡片预览图片、视频或音频；点击图片也会定位到媒体标注。勾选文件后可批量下载、移动或删除。",
   "Preview": "预览",
   "Download": "下载",
   "Delete": "删除",
@@ -297,7 +317,9 @@ const zh = {
 
 export function mediaLibraryText(text, language, values = {}) {
   if (typeof text !== 'string') return text;
-  const translated = language === 'zh' ? (zh[text] ?? zh[text.replace(/\s+/g, ' ').trim()] ?? text) : text;
+  const key = text.replace(/\s+/g, ' ').trim();
+  const translated = lookupPhrase(language, text) ?? lookupPhrase(language, key)
+    ?? (isChineseLanguage(language) ? (zh[text] ?? zh[key] ?? text) : text);
   return translated.replace(/\{(\w+)\}/g, (match, key) => Object.hasOwn(values, key) ? String(values[key]) : match);
 }
 

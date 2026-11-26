@@ -1,17 +1,30 @@
+// Analysis resolves the same few hundred media URLs once per trial, per method, per question.
+const IDENTITY_CACHE_LIMIT = 20000;
+const identityCache = new Map();
+
 /** Stable source identity. Filenames are labels, not globally unique IDs. */
 export function mediaIdentityKey(value) {
   const source = typeof value === 'string' ? value : value?.url || value?.name || '';
   if (/^https?:\/\//i.test(source)) {
-    const url = new URL(source);
-    url.hash = '';
-    // Remove expiring access signatures, retain parameters that identify the resource.
-    for (const key of [...url.searchParams.keys()]) {
-      if (/^(x-amz-|x-goog-|signature$|expires$|token$|awsaccesskeyid$)/i.test(key)) url.searchParams.delete(key);
-    }
-    url.searchParams.sort();
-    return url.toString();
+    const cached = identityCache.get(source);
+    if (cached !== undefined) return cached;
+    const key = urlIdentityKey(source);
+    if (identityCache.size >= IDENTITY_CACHE_LIMIT) identityCache.clear();
+    identityCache.set(source, key);
+    return key;
   }
   return String(source).split('#')[0];
+}
+
+function urlIdentityKey(source) {
+  const url = new URL(source);
+  url.hash = '';
+  // Remove expiring access signatures, retain parameters that identify the resource.
+  for (const key of [...url.searchParams.keys()]) {
+    if (/^(x-amz-|x-goog-|signature$|expires$|token$|awsaccesskeyid$)/i.test(key)) url.searchParams.delete(key);
+  }
+  url.searchParams.sort();
+  return url.toString();
 }
 
 export function mediaDisplayName(value) {

@@ -1,0 +1,155 @@
+{
+  "id": "2021-ito-assessing",
+  "name": "Bikeability Perception",
+  "description": "Rebuilt from the published description of Ito & Biljecki (2021). Participants rate street-level images from Singapore and Tokyo from 0 to 10 on seven bikeability perceptions; scores are medians after MAD screening. Differences from the original study: (1) The bundled Hugging Face dataset is a single flat folder (no Singapore / Tokyo sub-folders), so the city is not available as a folder tag. (2) Slider end labels are not in the paper.",
+  "author": "Ito & Biljecki",
+  "year": "2021",
+  "category": "Academic Research",
+  "tags": [
+    "official",
+    "paper"
+  ],
+  "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": null,
+  "website": "https://doi.org/10.1016/j.trc.2021.103371",
+  "huggingfaceDataset": "koito19960406/sp_survey_bikeability",
+  "createdAt": "2026-10-02T00:00:00+00:00",
+  "imageDatasetConfig": {
+    "mediaFolders": [],
+    "mediaFolderTags": {}
+  },
+  "preloadedImages": [],
+  "preloadedSource": null,
+  "preloadedAt": null,
+  "config": {
+    "title": "Bikeability Perception",
+    "description": "Rate each street view from 0 to 10 on each aspect of cycling.",
+    "logoPosition": "right",
+    "autoGrowComment": true,
+    "progressBarType": "questions",
+    "showProgressBar": "aboveheader",
+    "showQuestionNumbers": "off",
+    "spAnalysisRecommendation": {
+      "citation": "Ito & Biljecki 2021",
+      "items": [
+        {
+          "questions": [
+            "bikeability"
+          ],
+          "method": "robust_median",
+          "madThreshold": 3,
+          "minPerImage": 8
+        },
+        {
+          "questions": [
+            "bikeability"
+          ],
+          "method": "slider_dimensions"
+        }
+      ]
+    },
+    "pages": [
+      {
+        "name": "page_rating",
+        "elements": [
+          {
+            "name": "bikeability",
+            "type": "imageslidergroup",
+            "title": "Rate this street view on each aspect (0–10).",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 1,
+            "trialCount": 20,
+            "dimensions": [
+              {
+                "id": "cycling_attractiveness",
+                "label": "Attractiveness for cycling",
+                "left": "0",
+                "right": "10"
+              },
+              {
+                "id": "spaciousness",
+                "label": "Spaciousness",
+                "left": "0",
+                "right": "10"
+              },
+              {
+                "id": "cleanliness",
+                "label": "Cleanliness",
+                "left": "0",
+                "right": "10"
+              },
+              {
+                "id": "building_design",
+                "label": "Building design attractiveness",
+                "left": "0",
+                "right": "10"
+              },
+              {
+                "id": "cyclist_safety",
+                "label": "Safety as cyclists",
+                "left": "0",
+                "right": "10"
+              },
+              {
+                "id": "beauty",
+                "label": "Beauty",
+                "left": "0",
+                "right": "10"
+              },
+              {
+                "id": "living_attractiveness",
+                "label": "Attractiveness for living",
+                "left": "0",
+                "right": "10"
+              }
+            ],
+            "scaleMin": 0,
+            "scaleMax": 10,
+            "scaleStep": 1
+          }
+        ]
+      },
+      {
+        "name": "page_check",
+        "elements": [
+          {
+            "name": "attention_check",
+            "type": "radiogroup",
+            "title": "To show that you are reading carefully, please select \"Agree\" for this question.",
+            "choices": [
+              {
+                "value": "strongly_disagree",
+                "text": "Strongly disagree"
+              },
+              {
+                "value": "disagree",
+                "text": "Disagree"
+              },
+              {
+                "value": "neutral",
+                "text": "Neutral"
+              },
+              {
+                "value": "agree",
+                "text": "Agree"
+              },
+              {
+                "value": "strongly_agree",
+                "text": "Strongly agree"
+              }
+            ],
+            "isRequired": true,
+            "isAttentionCheck": true,
+            "expectedAnswer": "agree"
+          }
+        ]
+      }
+    ]
+  }
+}

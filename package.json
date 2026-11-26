@@ -19,7 +19,14 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
+    "fflate": "^0.8.2",
     "fs-extra": "^11.3.2",
+    "leaflet": "^1.9.4",
+    "mdast-util-from-markdown": "^2.0.3",
+    "mdast-util-gfm": "^3.1.0",
+    "mdast-util-to-markdown": "^2.1.2",
+    "micromark": "^4.0.2",
+    "micromark-extension-gfm": "^3.0.0",
     "openai": "^6.6.0",
     "polygon-clipping": "^0.15.7",
     "qrcode": "^1.5.4",
@@ -37,7 +44,8 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "node-fetch": "^2.7.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -47,7 +55,9 @@
     "dev:safe": "concurrently \"npm run server:watch\" \"npm start\"",
     "build": "cross-env CI=false react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test:ci": "cross-env CI=true react-scripts test --watchAll=false --runInBand",
+    "test:server": "node --test src/server/platformShared/*.test.mjs"
   },
   "eslintConfig": {
     "extends": [
@@ -66,5 +76,19 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-markdown|remark-gfm|rehype-sanitize|devlop|unified|bail|trough|vfile|vfile-message|unist-util-.*|mdast-util-.*|hast-util-.*|micromark|micromark-.*|decode-named-character-reference|character-entities|property-information|space-separated-tokens|comma-separated-tokens|zwitch|longest-streak|markdown-table|ccount|escape-string-regexp|trim-lines|is-plain-obj|extend|remark-parse|remark-rehype|html-url-attributes|style-to-object|inline-style-parser|estree-util-is-identifier-name|parse-entities|stringify-entities|character-reference-invalid|is-decimal|is-hexadecimal|is-alphabetical|is-alphanumerical|html-void-elements)/)"
+    ],
+    "moduleNameMapper": {
+      "^unist-util-visit-parents/do-not-use-color$": "<rootDir>/node_modules/unist-util-visit-parents/lib/color.js",
+      "^#minpath$": "<rootDir>/node_modules/vfile/lib/minpath.browser.js",
+      "^#minproc$": "<rootDir>/node_modules/vfile/lib/minproc.browser.js",
+      "^#minurl$": "<rootDir>/node_modules/vfile/lib/minurl.browser.js",
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+      "^.+\\.(css|sass|scss)$": "<rootDir>/node_modules/react-scripts/config/jest/cssTransform.js",
+      "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/node_modules/react-scripts/config/jest/fileTransform.js"
+    }
   }
 }

@@ -6,6 +6,7 @@ import {
   resolveSurveyJsLocale,
   resolveSurveyUiLanguage,
   resolveUrlSurveyLocale,
+  surveyUiStrings,
 } from './surveyLocale';
 
 describe('surveyLocale', () => {
@@ -41,6 +42,34 @@ describe('surveyLocale', () => {
     applySurveyLocale(model, { locale: 'en' });
     expect(model.pageNextText).toBe('下一页');
     window.history.replaceState({}, '', `${window.location.pathname}${previous}`);
+  });
+
+  test('traditional Chinese, Japanese, and Finnish use their SurveyJS chrome', () => {
+    expect(resolveSurveyUiLanguage({ locale: 'zh-TW' })).toBe('zh-TW');
+    expect(resolveSurveyUiLanguage({ locale: 'zh-tw' })).toBe('zh-TW');
+    expect(resolveSurveyJsLocale({ locale: 'zh-TW' })).toBe('zh-tw');
+    expect(resolveSurveyJsLocale({ locale: 'ja' })).toBe('ja');
+    expect(resolveSurveyJsLocale({ locale: 'fi' })).toBe('fi');
+
+    const traditional = new Model({ locale: 'zh-TW', elements: [{ type: 'text', name: 'answer', title: 'Researcher-written title' }] });
+    applySurveyLocale(traditional, { locale: 'zh-TW' });
+    expect(traditional.pageNextText).toBe('下一頁');
+    expect(traditional.completeText).toBe('提交問卷');
+    expect(traditional.getQuestionByName('answer').title).toBe('Researcher-written title');
+
+    const japanese = new Model({ locale: 'ja' });
+    applySurveyLocale(japanese, { locale: 'ja' });
+    expect(japanese.pageNextText).toBe('次へ');
+    expect(japanese.completeText).toBe('完了');
+
+    const finnish = new Model({ locale: 'fi' });
+    applySurveyLocale(finnish, { locale: 'fi' });
+    expect(finnish.pageNextText).toBe('Seuraava');
+    expect(finnish.completeText).toBe('Valmis');
+    expect(surveyUiStrings({ locale: 'ja' }).trialNextRound).toBe('次の回');
+    expect(surveyUiStrings({ locale: 'fi' }).landHeroTitle).toBe('Katunäkymien havaintokysely');
+    expect(surveyUiStrings({ locale: 'zh-TW' }).trialNextRound).toBe('下一輪');
+    expect(surveyUiStrings({ locale: 'zh' }).trialNextRound).toBe('下一轮');
   });
 
   test('saved Builder Chinese locale translates real SurveyJS navigation', () => {

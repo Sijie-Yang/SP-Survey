@@ -1,6 +1,6 @@
 {
   "id": "2025-gu-effective",
-  "name": "Effective perception survey",
+  "name": "Effective Perception Survey",
   "description": "This study proposes the first comprehensive framework to guide image-based survey design for capturing perceptions of outdoor urban environments across different scenarios, addressing the lack of methodological standardisation in current research.",
   "author": "Gu et al.",
   "year": "2025",
@@ -9,6 +9,9 @@
     "official"
   ],
   "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000014.jpg",
   "website": "https://doi.org/10.1016/j.landurbplan.2025.105368",
   "huggingfaceDataset": "Reubengyl/EffectivePerceptionSurvey",
   "createdAt": "2026-05-20T04:23:56.85+00:00",
@@ -19,17 +22,6 @@
         "name": "page1",
         "title": "Likert Scale Survey Questions",
         "elements": [
-          {
-            "name": "likert_image",
-            "type": "image",
-            "title": "See the below image:",
-            "imageFit": "cover",
-            "imageCount": 1,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          },
           {
             "name": "likert",
             "rows": [
@@ -58,7 +50,7 @@
                 "value": "beautiful"
               }
             ],
-            "type": "matrix",
+            "type": "imagematrix",
             "title": "Rate the image:",
             "columns": [
               {
@@ -86,9 +78,8 @@
             "isRequired": true,
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "maxRateDescription": "5",
-            "minRateDescription": "1",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "imageFit": "cover"
           }
         ],
         "description": "Please answer the following questions."
@@ -106,7 +97,9 @@
             "isRequired": true,
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Equal"
           },
           {
             "name": "pairwise_lively",
@@ -117,7 +110,9 @@
             "isRequired": true,
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Equal"
           },
           {
             "name": "pairwise_boring",
@@ -128,7 +123,9 @@
             "isRequired": true,
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Equal"
           },
           {
             "name": "pairwise_depressing",
@@ -139,7 +136,9 @@
             "isRequired": true,
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Equal"
           },
           {
             "name": "pairwise_wealthy",
@@ -150,7 +149,9 @@
             "isRequired": true,
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Equal"
           },
           {
             "name": "pairwise_beautiful",
@@ -161,7 +162,9 @@
             "isRequired": true,
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
+            "randomImageSelection": true,
+            "allowTie": true,
+            "tieLabel": "Equal"
           }
         ],
         "description": "Please answer the following questions."
@@ -177,7 +180,45 @@
       "showPreviewBeforeComplete": "showAllQuestions"
     },
     "description": "This study proposes the first comprehensive framework to guide image-based survey design for capturing perceptions of outdoor urban environments across different scenarios, addressing the lack of methodological standardisation in current research.",
-    "logoPosition": "right"
+    "logoPosition": "right",
+    "spAnalysisRecommendation": {
+      "citation": "Gu et al. 2025",
+      "items": [
+        {
+          "questions": [
+            "likert"
+          ],
+          "method": "matrix_rows",
+          "minPerImage": 12
+        },
+        {
+          "questions": [
+            "pairwise_safe",
+            "pairwise_lively",
+            "pairwise_boring",
+            "pairwise_depressing",
+            "pairwise_wealthy",
+            "pairwise_beautiful"
+          ],
+          "method": "qscore_pairwise",
+          "minPerImage": 22
+        },
+        {
+          "questions": [
+            "pairwise_safe",
+            "pairwise_lively",
+            "pairwise_boring",
+            "pairwise_depressing",
+            "pairwise_wealthy",
+            "pairwise_beautiful"
+          ],
+          "method": "trueskill_pairwise",
+          "tieHandling": "exclude",
+          "runs": 1,
+          "minPerImage": 29
+        }
+      ]
+    }
   },
   "imageDatasetConfig": {
     "mediaFolderTags": {},

@@ -10,6 +10,7 @@ const { registerAgentProjectApi, createProjectIo } = require('./src/server/agent
 const { registerAgentChatApi } = require('./src/server/agentChatRuntime');
 const { registerAgentCredentialsApi } = require('./src/server/agentCredentialsApi');
 const { registerSiliconLocalApi } = require('./src/server/siliconLocalApi');
+const { registerAgentPlatformExtrasApi, registerMediaProxy } = require('./src/server/agentPlatformExtrasApi');
 const { copyParticipantPublicAssets } = require('./src/server/deploymentPublicFilter');
 const { alignDeploymentPackageJson } = require('./src/server/deploymentPackage');
 
@@ -114,9 +115,15 @@ app.post('/api/projects', async (req, res) => {
     }
     const now = new Date().toISOString();
     
+    // Metadata (saved AI analyses, SP-Scheme backups) is written only through
+    // /api/agent/projects/:id/metadata, never from a copy the editor holds.
+    const { metadata: _metadata, ...projectFields } = project || {};
     const projectData = {
       ...existing,
-      project,
+      project: projectFields,
+      ...(existing.metadata || existing.project?.metadata
+        ? { metadata: existing.metadata || existing.project.metadata }
+        : {}),
       surveyConfig,
       supabaseConfig: supabaseConfig !== undefined ? supabaseConfig : existing.supabaseConfig,
       savedAt: now,
@@ -155,7 +162,7 @@ app.get('/api/projects/:projectId', async (req, res) => {
       console.log(`✅ Loaded project data for ${projectId}`);
       res.json({
         success: true,
-        project: projectData.project,
+        project: { ...projectData.project, metadata: projectData.metadata || projectData.project?.metadata || {} },
         surveyConfig: projectData.surveyConfig,
         savedAt: projectData.savedAt || null,
         draftUpdatedAt: projectData.draftUpdatedAt || projectData.savedAt || null,
@@ -298,6 +305,10 @@ registerSiliconLocalApi(app, {
   projectsPath: PROJECTS_PATH,
   createProjectIo: () => createProjectIo({ fs, projectsPath: PROJECTS_PATH }),
 });
+registerAgentPlatformExtrasApi(app, {
+  createProjectIo: () => createProjectIo({ fs, projectsPath: PROJECTS_PATH }),
+});
+registerMediaProxy(app);
 
 // Deployment endpoints
 app.post('/api/create-deployment', async (req, res) => {

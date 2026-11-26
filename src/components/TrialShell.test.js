@@ -16,14 +16,27 @@ function Input({ question }) {
   return <button onClick={() => { question.value = 'a'; }}>Choose A</button>;
 }
 
-function setup({ name = 'choice', count = 2, preview = 'no', mode = 'edit', locale = 'en' } = {}) {
+function setup({
+  name = 'choice',
+  count = 2,
+  preview = 'no',
+  mode = 'edit',
+  locale = 'en',
+  type = 'imagepicker',
+  Inner = Input,
+  questionProps = {},
+} = {}) {
   const survey = new Model({
     locale, mode, showPreviewBeforeComplete: preview,
     elements: [{ type: 'imagepicker', name, choices: ['a', 'b'] }],
   });
   const question = survey.getQuestionByName(name);
+  question.getType = () => type;
+  Object.entries(questionProps).forEach(([key, val]) => {
+    question[key] = val;
+  });
   question.trialCount = count;
-  const view = render(<div className="sd-root-modern"><TrialShell question={question} Inner={Input} /></div>);
+  const view = render(<div className="sd-root-modern"><TrialShell question={question} Inner={Inner} /></div>);
   act(() => jest.advanceTimersByTime(60));
   return { survey, question, ...view };
 }
@@ -98,6 +111,81 @@ test('allows submission after every round is answered', () => {
   expect(container.firstChild.classList.contains('sp-trials-incomplete')).toBe(false);
   fireEvent.click(screen.getByText('Finish survey'));
   expect(survey.state).toBe('completed');
+});
+
+test('image rating advances to the next trial after a score', () => {
+  setup({
+    type: 'imagerating',
+    Inner: ({ question }) => <button onClick={() => { question.value = 4; }}>Rate 4</button>,
+  });
+  expect(screen.getByText('After you answer, the next round starts automatically.')).toBeTruthy();
+  fireEvent.click(screen.getByText('Rate 4'));
+  act(() => jest.advanceTimersByTime(500));
+  expect(screen.getByText('You will do this 2 times. This is 2 of 2.')).toBeTruthy();
+});
+
+test('sliders wait until every dimension is answered', () => {
+  setup({
+    type: 'imageslidergroup',
+    questionProps: { dimensions: [{ id: 'a' }, { id: 'b' }], scaleMin: 1, scaleMax: 7 },
+    Inner: ({ question }) => (
+      <>
+        <button onClick={() => { question.value = { a: 3 }; }}>One slider</button>
+        <button onClick={() => { question.value = { a: 3, b: 5 }; }}>Both sliders</button>
+      </>
+    ),
+  });
+  fireEvent.click(screen.getByText('One slider'));
+  act(() => jest.advanceTimersByTime(600));
+  expect(screen.getByText('You will do this 2 times. This is 1 of 2.')).toBeTruthy();
+  fireEvent.click(screen.getByText('Both sliders'));
+  act(() => jest.advanceTimersByTime(500));
+  expect(screen.getByText('You will do this 2 times. This is 2 of 2.')).toBeTruthy();
+});
+
+test('point allocation does not advance until the budget is finished', () => {
+  setup({
+    type: 'imagepointallocation',
+    questionProps: { budget: 100 },
+    Inner: ({ question }) => (
+      <>
+        <button onClick={() => { question.value = { a: 40 }; }}>Partial</button>
+        <button onClick={() => { question.value = { a: 40, b: 60 }; }}>Full</button>
+      </>
+    ),
+  });
+  expect(screen.getByText(/points are all used/)).toBeTruthy();
+  fireEvent.click(screen.getByText('Partial'));
+  act(() => jest.advanceTimersByTime(600));
+  expect(screen.getByText('You will do this 2 times. This is 1 of 2.')).toBeTruthy();
+  fireEvent.click(screen.getByText('Full'));
+  act(() => jest.advanceTimersByTime(500));
+  expect(screen.getByText('You will do this 2 times. This is 2 of 2.')).toBeTruthy();
+});
+
+test('checkbox, ranking, and text answers stay on Next', () => {
+  setup({
+    type: 'imagecheckbox',
+    Inner: ({ question }) => <button onClick={() => { question.value = ['a']; }}>Check</button>,
+  });
+  expect(screen.getByText('Use Next round after you answer.')).toBeTruthy();
+  fireEvent.click(screen.getByText('Check'));
+  act(() => jest.advanceTimersByTime(600));
+  expect(screen.getByText('You will do this 2 times. This is 1 of 2.')).toBeTruthy();
+});
+
+test('text questions do not auto-advance on keystrokes', () => {
+  const survey = new Model({ elements: [{ type: 'comment', name: 'note' }] });
+  const question = survey.getQuestionByName('note');
+  question.trialCount = 4;
+  render(<TrialShell question={question} Inner={({ question: q }) => (
+    <textarea aria-label="Long answer" onChange={(e) => { q.value = e.target.value; }} />
+  )} />);
+  fireEvent.change(screen.getByLabelText('Long answer'), { target: { value: 'h' } });
+  fireEvent.change(screen.getByLabelText('Long answer'), { target: { value: 'hello' } });
+  expect(screen.queryByText(/starts automatically/)).toBeNull();
+  expect(screen.queryByText('Next round')).toBeNull();
+  expect(question.value).toBe('hello');
 });
 
 test('completed trial question locates remaining required work on the same page', () => {

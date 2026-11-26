@@ -3,12 +3,12 @@ import { mediaIdentityKey, resolveMediaAnswerKey } from './mediaIdentity.js';
  * Wide (one-row-per-response) CSV builder for Results Analysis.
  */
 
-import { evaluateResponseQuality } from './quality';
-import { getPresetSkill } from './presetSkills';
-import { stripSkillAnswerContext } from './skillMediaUtils';
-import { objectsToCsv, exportDateStamp } from './csvUtil';
-import { downloadTextFile } from './methodsExport';
-import { supportsTrialCount } from './questionTypeConstraints';
+import { evaluateResponseQuality } from './quality.js';
+import { getPresetSkill } from './presetSkills.js';
+import { stripSkillAnswerContext } from './skillMediaUtils.js';
+import { objectsToCsv, exportDateStamp } from './csvUtil.js';
+import { downloadTextFile } from './methodsExport.js';
+import { supportsTrialCount } from './questionTypeConstraints.js';
 
 const IMAGE_TYPES = new Set([
   'imagerating', 'image_rating',
@@ -71,6 +71,10 @@ function subKeysFor(q) {
 /**
  * Build UTF-8 BOM CSV string (one row per response).
  */
+/** Response key where an SP-Scheme page's unmapped requests are kept (see SpSiteSurvey). */
+export const SP_RAW_REQUESTS_KEY = '__sp_requests';
+const SP_PAGE_STATE_KEY = '__sp_page_state';
+
 export function buildResponsesWideCsv(responses, allQuestions, surveyConfig) {
   if (!responses?.length) {
     return objectsToCsv([
@@ -120,6 +124,13 @@ export function buildResponsesWideCsv(responses, allQuestions, surveyConfig) {
     }
   }
 
+  const hasCondition = responses.some((row) => row.survey_metadata?.condition != null);
+  // Recruitment platform participant (Prolific etc.), recorded only for people who arrived from one.
+  const hasRecruitment = responses.some((row) => row.survey_metadata?.recruitment?.id);
+  const urlParamNames = [...new Set(responses.flatMap((row) => Object.keys(row.survey_metadata?.url_params || {})))].sort();
+  // Requests an SP-Scheme page sent that no question mapped: kept raw, as JSON.
+  const hasRawRequests = responses.some((row) => Array.isArray(row.responses?.[SP_RAW_REQUESTS_KEY]) && row.responses[SP_RAW_REQUESTS_KEY].length);
+  const hasPageState = responses.some((row) => row.responses?.[SP_PAGE_STATE_KEY] && typeof row.responses[SP_PAGE_STATE_KEY] === 'object' && Object.keys(row.responses[SP_PAGE_STATE_KEY]).length);
   const headers = [
     'participant_id',
     'created_at',
@@ -129,7 +140,11 @@ export function buildResponsesWideCsv(responses, allQuestions, surveyConfig) {
     'practice_mode',
     'quality_flags',
     'survey_revision',
+    ...(hasCondition ? ['condition'] : []),
+    ...urlParamNames.map((n) => `url_${n}`),
+    ...(hasRecruitment ? ['recruit_platform', 'recruit_id', 'recruit_study', 'recruit_session'] : []),
     ...headerCols,
+    ...(hasRawRequests ? [SP_RAW_REQUESTS_KEY] : []), ...(hasPageState ? [SP_PAGE_STATE_KEY] : []),
   ];
 
   const objects = responses.map((row) => {
@@ -146,6 +161,23 @@ export function buildResponsesWideCsv(responses, allQuestions, surveyConfig) {
       quality_flags: flags.join('|'),
       survey_revision: row.survey_metadata?.survey_revision || '',
     };
+    if (hasCondition) obj.condition = row.survey_metadata?.condition ?? '';
+    urlParamNames.forEach((n) => { obj[`url_${n}`] = row.survey_metadata?.url_params?.[n] ?? ''; });
+    if (hasRecruitment) {
+      const r = row.survey_metadata?.recruitment || {};
+      obj.recruit_platform = r.platform || '';
+      obj.recruit_id = r.id || '';
+      obj.recruit_study = r.study || '';
+      obj.recruit_session = r.session || '';
+    }
+    if (hasRawRequests) {
+      const raw = row.responses?.[SP_RAW_REQUESTS_KEY];
+      obj[SP_RAW_REQUESTS_KEY] = Array.isArray(raw) && raw.length ? JSON.stringify(raw) : '';
+    }
+    if (hasPageState) {
+      const state = row.responses?.[SP_PAGE_STATE_KEY];
+      obj[SP_PAGE_STATE_KEY] = state && typeof state === 'object' && Object.keys(state).length ? JSON.stringify(state) : '';
+    }
 
     for (const q of questions) {
       const qName = q.name;

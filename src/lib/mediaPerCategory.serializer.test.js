@@ -63,4 +63,23 @@ describe('mediaPerCategory SurveyJS serialization', () => {
     expect(Number(model.getQuestionByName('q2').mediaPerCategory)).toBe(1);
     expect(model.getQuestionByName('q2').mediaCategoryMode).toBe('all');
   });
+
+  test('sample category mode survives Model round-trip', () => {
+    const model = new Model({
+      pages: [{
+        name: 'p1',
+        elements: [{
+          type: 'imagerating',
+          name: 'q3',
+          mediaAssignmentMode: 'category',
+          mediaCategoryMode: 'sample',
+          mediaPerCategory: 1,
+          imageCount: 2,
+        }],
+      }],
+    });
+    expect(model.getQuestionByName('q3').mediaCategoryMode).toBe('sample');
+    const restored = new Model(model.toJSON());
+    expect(restored.getQuestionByName('q3').mediaCategoryMode).toBe('sample');
+  });
 });

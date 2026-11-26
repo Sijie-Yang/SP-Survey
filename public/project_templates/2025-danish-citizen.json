@@ -1,0 +1,304 @@
+{
+  "id": "2025-danish-citizen",
+  "name": "Percept (Citizen Science)",
+  "description": "Rebuilt from the published description of Danish, Labib, Ricker & Helbich (2025). Citizens rate Amsterdam street views from awful to great on walkability, bikeability, pleasantness, greenness and safety, each with the paper's category text. Differences from the original study: (1) The original app switched category at random every five images and offered swipe input; here each category is a block of 20 images with button input. (2) Bundled images are photographs from the paper PDF (10 scenes), not the original full stimulus set.",
+  "author": "Danish, Labib, Ricker & Helbich",
+  "year": "2025",
+  "category": "Academic Research",
+  "tags": [
+    "official",
+    "paper"
+  ],
+  "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": null,
+  "website": "https://doi.org/10.1016/j.compenvurbsys.2024.102207",
+  "huggingfaceDataset": null,
+  "createdAt": "2026-10-02T00:00:00+00:00",
+  "imageDatasetConfig": {
+    "mediaFolderTags": {},
+    "mediaFolders": []
+  },
+  "preloadedImages": [],
+  "preloadedSource": null,
+  "preloadedAt": null,
+  "config": {
+    "title": "percept",
+    "description": "Tell us a little about yourself, then rate street views.",
+    "logoPosition": "right",
+    "autoGrowComment": true,
+    "progressBarType": "questions",
+    "showProgressBar": "aboveheader",
+    "showQuestionNumbers": "off",
+    "spAnalysisRecommendation": {
+      "citation": "Danish et al. 2025",
+      "items": [
+        {
+          "questions": [
+            "walkability",
+            "bikeability",
+            "pleasantness",
+            "greenness",
+            "safety"
+          ],
+          "method": "scalar_distribution",
+          "groupBy": [
+            "gender",
+            "education"
+          ]
+        }
+      ]
+    },
+    "pages": [
+      {
+        "name": "page_about_you",
+        "elements": [
+          {
+            "name": "age",
+            "type": "text",
+            "title": "Age",
+            "isRequired": true,
+            "inputType": "number"
+          },
+          {
+            "name": "adult_confirm",
+            "type": "checkbox",
+            "title": "I confirm that I am 18 years or older.",
+            "choices": [
+              {
+                "value": "yes",
+                "text": "Yes"
+              }
+            ],
+            "isRequired": true
+          },
+          {
+            "name": "gender",
+            "type": "radiogroup",
+            "title": "Gender",
+            "choices": [
+              {
+                "value": "female",
+                "text": "Female"
+              },
+              {
+                "value": "male",
+                "text": "Male"
+              },
+              {
+                "value": "other",
+                "text": "Other"
+              },
+              {
+                "value": "prefer_not",
+                "text": "Prefer not to say"
+              }
+            ],
+            "isRequired": false
+          },
+          {
+            "name": "monthly_income",
+            "type": "text",
+            "title": "Estimated monthly income",
+            "isRequired": false
+          },
+          {
+            "name": "education",
+            "type": "radiogroup",
+            "title": "Level of education",
+            "choices": [
+              {
+                "value": "primary",
+                "text": "Primary"
+              },
+              {
+                "value": "secondary",
+                "text": "Secondary"
+              },
+              {
+                "value": "tertiary",
+                "text": "Tertiary"
+              },
+              {
+                "value": "postgraduate",
+                "text": "Postgraduate"
+              }
+            ],
+            "isRequired": false
+          },
+          {
+            "name": "postal_code",
+            "type": "text",
+            "title": "Home postal code",
+            "isRequired": false
+          },
+          {
+            "name": "country_of_residence",
+            "type": "text",
+            "title": "Country of residence",
+            "isRequired": false
+          },
+          {
+            "name": "data_consent",
+            "type": "checkbox",
+            "title": "I agree that my answers may be used for research.",
+            "choices": [
+              {
+                "value": "agree",
+                "text": "I agree"
+              }
+            ],
+            "isRequired": true
+          }
+        ],
+        "title": "About you"
+      },
+      {
+        "name": "page_walkability",
+        "elements": [
+          {
+            "name": "walkability",
+            "type": "imagerating",
+            "title": "Walkability: Does this place look like an easy and safe place for people to travel on foot or using a walking-equivalent mobility aid (e.g. wheelchair)? This might include factors such as the quality of sidewalks, pedestrian crossings, street connectivity, and access to public amenities.",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 1,
+            "trialCount": 20,
+            "rateMin": 1,
+            "rateMax": 5,
+            "rateLabels": [
+              "Awful",
+              "Bad",
+              "Neutral",
+              "Good",
+              "Great"
+            ],
+            "minRateDescription": "Awful",
+            "maxRateDescription": "Great"
+          }
+        ],
+        "title": "Walkability"
+      },
+      {
+        "name": "page_bikeability",
+        "elements": [
+          {
+            "name": "bikeability",
+            "type": "imagerating",
+            "title": "Bikeability: Does this place look accessible, attractive, safe and convenient for cycling as a mode of general-purpose transportation, or cycling-equivalent mobility aid (e.g. mobility scooter)? This might include factors such as cycle lanes, tracks, and parking, as well as the overall design of streets, junctions and any visible surroundings.",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 1,
+            "trialCount": 20,
+            "rateMin": 1,
+            "rateMax": 5,
+            "rateLabels": [
+              "Awful",
+              "Bad",
+              "Neutral",
+              "Good",
+              "Great"
+            ],
+            "minRateDescription": "Awful",
+            "maxRateDescription": "Great"
+          }
+        ],
+        "title": "Bikeability"
+      },
+      {
+        "name": "page_pleasantness",
+        "elements": [
+          {
+            "name": "pleasantness",
+            "type": "imagerating",
+            "title": "Pleasantness: Does this place look enjoyable or pleasing to the senses or emotions? This might include factors such as the aesthetics of the surroundings, the quality of the air and lighting, the soundscape, and the presence of other people or natural elements.",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 1,
+            "trialCount": 20,
+            "rateMin": 1,
+            "rateMax": 5,
+            "rateLabels": [
+              "Awful",
+              "Bad",
+              "Neutral",
+              "Good",
+              "Great"
+            ],
+            "minRateDescription": "Awful",
+            "maxRateDescription": "Great"
+          }
+        ],
+        "title": "Pleasantness"
+      },
+      {
+        "name": "page_greenness",
+        "elements": [
+          {
+            "name": "greenness",
+            "type": "imagerating",
+            "title": "Greenness: Rate the apparent amount of vegetation and greenery in a given environment. This encompasses the presence of trees, shrubs, plants, and other natural elements.",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 1,
+            "trialCount": 20,
+            "rateMin": 1,
+            "rateMax": 5,
+            "rateLabels": [
+              "Awful",
+              "Bad",
+              "Neutral",
+              "Good",
+              "Great"
+            ],
+            "minRateDescription": "Awful",
+            "maxRateDescription": "Great"
+          }
+        ],
+        "title": "Greenness"
+      },
+      {
+        "name": "page_safety",
+        "elements": [
+          {
+            "name": "safety",
+            "type": "imagerating",
+            "title": "Safety: Does this place look like you would feel protected from harm or danger, in terms of personal safety and security? Do you believe that it is likely that you would feel safe here at all times of day or night? This might include the presence of elements such as lighting, good maintenance, presence of other people and natural surveillance.",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 1,
+            "trialCount": 20,
+            "rateMin": 1,
+            "rateMax": 5,
+            "rateLabels": [
+              "Awful",
+              "Bad",
+              "Neutral",
+              "Good",
+              "Great"
+            ],
+            "minRateDescription": "Awful",
+            "maxRateDescription": "Great"
+          }
+        ],
+        "title": "Safety"
+      }
+    ]
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "id": "2009-ewing-measuring",
+  "name": "Urban Design Qualities via Video Assessment",
+  "description": "Rebuilt from the published description of Ewing & Handy (2009). An expert panel watches street video clips to the end and rates each clip from 1 (very low) to 5 (very high) on urban design qualities, using the paper's definitions. Differences from the original study: (1) The original panel rated clips together in a room with discussion; here raters work individually online. (2) Upload the clips (48 in the paper) to the \"clips\" folder and set the trial count to the number of clips. (3) The paper gives no definitions for legibility, linkage and coherence.",
+  "author": "Ewing & Handy",
+  "year": "2009",
+  "category": "Academic Research",
+  "tags": [
+    "official",
+    "paper"
+  ],
+  "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": null,
+  "website": "https://doi.org/10.1080/13574800802451155",
+  "huggingfaceDataset": null,
+  "createdAt": "2026-10-02T00:00:00+00:00",
+  "imageDatasetConfig": {
+    "mediaFolders": [
+      "clips"
+    ],
+    "mediaFolderTags": {}
+  },
+  "preloadedImages": [],
+  "preloadedSource": null,
+  "preloadedAt": null,
+  "config": {
+    "title": "Urban Design Qualities",
+    "description": "Watch each clip to the end, then rate it on each quality.",
+    "logoPosition": "right",
+    "autoGrowComment": true,
+    "progressBarType": "questions",
+    "showProgressBar": "aboveheader",
+    "showQuestionNumbers": "off",
+    "spAnalysisRecommendation": {
+      "citation": "Ewing & Handy 2009",
+      "items": [
+        {
+          "questions": [
+            "design_qualities"
+          ],
+          "method": "matrix_rows"
+        },
+        {
+          "questions": [
+            "design_qualities"
+          ],
+          "method": "rater_agreement",
+          "raterQuestion": "rater_id"
+        }
+      ]
+    },
+    "pages": [
+      {
+        "name": "page_rater",
+        "elements": [
+          {
+            "name": "rater_id",
+            "type": "text",
+            "title": "Rater ID",
+            "isRequired": true
+          },
+          {
+            "name": "background",
+            "type": "radiogroup",
+            "title": "Professional background",
+            "choices": [
+              {
+                "value": "planning",
+                "text": "Urban planning / urban design"
+              },
+              {
+                "value": "architecture",
+                "text": "Architecture"
+              },
+              {
+                "value": "landscape",
+                "text": "Landscape architecture"
+              },
+              {
+                "value": "geography",
+                "text": "Geography / GIS"
+              },
+              {
+                "value": "other",
+                "text": "Other"
+              }
+            ],
+            "isRequired": true
+          }
+        ],
+        "title": "About you"
+      },
+      {
+        "name": "page_clips",
+        "elements": [
+          {
+            "name": "design_qualities",
+            "type": "mediamatrix",
+            "title": "Rate this clip on each urban design quality.",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "mediaType": "video",
+            "imageCount": 1,
+            "trialCount": 48,
+            "mediaFolders": [
+              "clips"
+            ],
+            "requireMediaEnded": true,
+            "mediaPresentation": "stack",
+            "rows": [
+              {
+                "value": "imageability",
+                "text": "Imageability"
+              },
+              {
+                "value": "enclosure",
+                "text": "Enclosure"
+              },
+              {
+                "value": "human_scale",
+                "text": "Human scale"
+              },
+              {
+                "value": "transparency",
+                "text": "Transparency"
+              },
+              {
+                "value": "complexity",
+                "text": "Complexity"
+              },
+              {
+                "value": "legibility",
+                "text": "Legibility (optional)"
+              },
+              {
+                "value": "linkage",
+                "text": "Linkage (optional)"
+              },
+              {
+                "value": "coherence",
+                "text": "Coherence (optional)"
+              }
+            ],
+            "columns": [
+              {
+                "value": "1",
+                "text": "1 = very low"
+              },
+              {
+                "value": "2",
+                "text": "2"
+              },
+              {
+                "value": "3",
+                "text": "3"
+              },
+              {
+                "value": "4",
+                "text": "4"
+              },
+              {
+                "value": "5",
+                "text": "5 = very high"
+              }
+            ],
+            "description": "**Imageability** is the quality of a place that makes it distinct, recognizable and memorable. A place has high imageability when specific physical elements and their arrangement capture attention, evoke feelings and create a lasting impression.\n\n**Enclosure** refers to the degree to which streets and other public spaces are visually defined by buildings, walls, trees and other vertical elements. Spaces where the height of vertical elements is proportionally related to the width of the space between them have a room-like quality.\n\n**Human scale** refers to a size, texture, and articulation of physical elements that match the size and proportions of humans and, equally important, correspond to the speed at which humans walk. Building details, pavement texture, street trees, and street furniture are all physical elements contributing to human scale.\n\n**Transparency** refers to the degree to which people can see or perceive what lies beyond the edge of a street and, more specifically, the degree to which people can see or perceive human activity beyond the edge of a street. Physical elements that influence transparency include walls, windows, doors, fences, landscaping and openings into mid-block spaces.\n\n**Complexity** refers to the visual richness of a place. The complexity of a place depends on the variety of the physical environment, specifically the numbers and types of buildings, architectural diversity and ornamentation, landscape elements, street furniture, signage and human activity."
+          }
+        ]
+      }
+    ]
+  }
+}

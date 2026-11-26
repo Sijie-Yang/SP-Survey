@@ -1,0 +1,199 @@
+{
+  "id": "2022-qiu-subjective",
+  "name": "Street Design Qualities (Shanghai)",
+  "description": "Rebuilt from the published description of Qiu et al. (2022). Raters compare Shanghai street views on four Ewing & Handy design qualities (with their definitions) and safety; scores are TrueSkill ratings scaled to 0–1. Differences from the original study: (1) Bundled images are photographs from the paper PDF (13 scenes), not the original full stimulus set. (2) The rater background wording is not in the paper.",
+  "author": "Qiu et al.",
+  "year": "2022",
+  "category": "Academic Research",
+  "tags": [
+    "official",
+    "paper"
+  ],
+  "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": null,
+  "website": "https://doi.org/10.1016/j.landurbplan.2021.104358",
+  "huggingfaceDataset": null,
+  "createdAt": "2026-10-02T00:00:00+00:00",
+  "imageDatasetConfig": {
+    "mediaFolderTags": {},
+    "mediaFolders": []
+  },
+  "preloadedImages": [],
+  "preloadedSource": null,
+  "preloadedAt": null,
+  "config": {
+    "title": "Street Design Qualities",
+    "description": "For each pair of street views, choose the one that better shows the quality described.",
+    "logoPosition": "right",
+    "autoGrowComment": true,
+    "progressBarType": "questions",
+    "showProgressBar": "aboveheader",
+    "showQuestionNumbers": "off",
+    "spAnalysisRecommendation": {
+      "citation": "Qiu et al. 2022",
+      "items": [
+        {
+          "questions": [
+            "enclosure",
+            "human_scale",
+            "complexity",
+            "imageability",
+            "safety"
+          ],
+          "method": "trueskill_pairwise",
+          "tieHandling": "exclude",
+          "scale": "0-1",
+          "minPerImage": 12
+        }
+      ]
+    },
+    "pages": [
+      {
+        "name": "page_rater",
+        "elements": [
+          {
+            "name": "discipline",
+            "type": "radiogroup",
+            "title": "Discipline (wording not in paper)",
+            "choices": [
+              {
+                "value": "planning",
+                "text": "Urban planning / urban design"
+              },
+              {
+                "value": "architecture",
+                "text": "Architecture"
+              },
+              {
+                "value": "landscape",
+                "text": "Landscape architecture"
+              },
+              {
+                "value": "geography",
+                "text": "Geography / GIS"
+              },
+              {
+                "value": "other",
+                "text": "Other"
+              }
+            ],
+            "isRequired": true
+          },
+          {
+            "name": "role",
+            "type": "radiogroup",
+            "title": "Are you a student or staff? (wording not in paper)",
+            "choices": [
+              {
+                "value": "student",
+                "text": "Student"
+              },
+              {
+                "value": "staff",
+                "text": "Staff"
+              }
+            ],
+            "isRequired": true
+          }
+        ],
+        "title": "About you"
+      },
+      {
+        "name": "page_enclosure",
+        "elements": [
+          {
+            "name": "enclosure",
+            "type": "imagepicker",
+            "title": "Which place has better Enclosure?",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 2,
+            "trialCount": 20,
+            "pairingMode": "balanced",
+            "description": "Enclosure refers to the degree to which streets and other public spaces are visually defined by buildings, walls, trees and other vertical elements. Spaces where the height of vertical elements is proportionally related to the width of the space between them have a room-like quality."
+          }
+        ]
+      },
+      {
+        "name": "page_human_scale",
+        "elements": [
+          {
+            "name": "human_scale",
+            "type": "imagepicker",
+            "title": "Which place has better Human scale?",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 2,
+            "trialCount": 20,
+            "pairingMode": "balanced",
+            "description": "Human scale refers to a size, texture, and articulation of physical elements that match the size and proportions of humans and, equally important, correspond to the speed at which humans walk. Building details, pavement texture, street trees, and street furniture are all physical elements contributing to human scale."
+          }
+        ]
+      },
+      {
+        "name": "page_complexity",
+        "elements": [
+          {
+            "name": "complexity",
+            "type": "imagepicker",
+            "title": "Which place has better Complexity?",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 2,
+            "trialCount": 20,
+            "pairingMode": "balanced",
+            "description": "Complexity refers to the visual richness of a place. The complexity of a place depends on the variety of the physical environment, specifically the numbers and types of buildings, architectural diversity and ornamentation, landscape elements, street furniture, signage and human activity."
+          }
+        ]
+      },
+      {
+        "name": "page_imageability",
+        "elements": [
+          {
+            "name": "imageability",
+            "type": "imagepicker",
+            "title": "Which place has better Imageability?",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 2,
+            "trialCount": 20,
+            "pairingMode": "balanced",
+            "description": "Imageability is the quality of a place that makes it distinct, recognizable and memorable. A place has high imageability when specific physical elements and their arrangement capture attention, evoke feelings and create a lasting impression."
+          }
+        ]
+      },
+      {
+        "name": "page_safety",
+        "elements": [
+          {
+            "name": "safety",
+            "type": "imagepicker",
+            "title": "Which place looks safer?",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "isRequired": true,
+            "imageCount": 2,
+            "trialCount": 20,
+            "pairingMode": "balanced"
+          }
+        ]
+      }
+    ]
+  }
+}

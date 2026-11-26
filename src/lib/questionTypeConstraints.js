@@ -78,7 +78,7 @@ export function getQuestionMediaConstraints(type, question = {}) {
     },
     imagerating: {
       countMin: 1, countMax: 6, defaultCount: 1,
-      countLabel: 'Images to rate',
+      countLabel: 'Images shown each round',
       samplingModes: true,
     },
     imageboolean: {
@@ -118,7 +118,7 @@ export function getQuestionMediaConstraints(type, question = {}) {
     },
     mediarating: {
       countMin: 1, countMax: 6, defaultCount: 1,
-      countLabel: 'Media files shown',
+      countLabel: 'Media files shown each round',
       samplingModes: true,
     },
     mediaboolean: {

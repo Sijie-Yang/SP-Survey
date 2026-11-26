@@ -65,11 +65,11 @@ test('random folder scope can select specific folders and explicitly return to a
 test('annotation settings and media sampling details are Chinese', () => {
   setup({ type: 'imageannotation', imageCount: 1, mediaAssignmentMode: 'category', trialCount: 2 });
   expect(screen.getByLabelText('每个分类抽取的文件数')).toBeInTheDocument();
-  expect(screen.getByLabelText('轮次数（重复作答本题）')).toBeInTheDocument();
+  expect(screen.getByLabelText('作答轮数')).toBeInTheDocument();
   expect(screen.getByLabelText('分类标签（可选）')).toBeInTheDocument();
   expect(screen.getByLabelText('最少标注数量')).toBeInTheDocument();
   expect(screen.getByText(/将展示 1 个文件/)).toBeInTheDocument();
-  expect(screen.getByText(/2 轮作答/)).toBeInTheDocument();
+  expect(screen.getByText(/一共记录 2 份答案/)).toBeInTheDocument();
 });
 
 test('per-trial category mode updates the saved media count and switches back to legacy all-category sampling', () => {
@@ -127,4 +127,24 @@ test('Share validation messages translate the raw surveyConfig object error', ()
   expect(surveyValidationText('surveyConfig must be an object.', 'zh')).toBe('问卷配置无效或尚未加载。');
   expect(surveyValidationText('surveyConfig must be an object.', 'en')).toBe('surveyConfig must be an object.');
   expect(surveyValidationText('The survey has no pages.', 'zh')).toBe('问卷还没有页面。');
+});
+
+test('image rating labels separate images shown each round from how many answers are recorded', () => {
+  setup({ type: 'imagerating', imageCount: 2, trialCount: 5, rateMin: 1, rateMax: 5, excludePreviouslyUsedImages: false });
+  expect(screen.getByLabelText('每轮同屏展示的图片数')).toHaveValue(2);
+  expect(screen.getByLabelText('作答轮数')).toHaveValue(5);
+  expect(screen.getByText('每一轮同时出示的数量，不是一共要回答的次数。一共回答几轮，由作答轮数决定。')).toBeInTheDocument();
+  expect(screen.getByText(/一共记录 5 份答案/)).toBeInTheDocument();
+  expect(screen.getByText(/每轮同时出示 2 个/)).toBeInTheDocument();
+  expect(screen.getByRole('switch', { name: /优先不重复已展示的媒体/ })).not.toBeChecked();
+});
+
+test('wording per condition edits conditionVariants on the same question', () => {
+  const surveyConfig = { conditions: [{ id: 'safe', label: '正向' }, { id: 'less_safe', label: '反向' }] };
+  render(<RegionProvider><QuestionEditor question={{ ...base, type: 'imagepicker', imageCount: 2 }} currentProject={project} surveyConfig={surveyConfig} onSave={jest.fn()} onCancel={jest.fn()} /></RegionProvider>);
+  expect(screen.getByText('按实验条件显示不同题干')).toBeInTheDocument();
+  const reversed = screen.getByLabelText('反向');
+  fireEvent.change(reversed, { target: { value: 'Which place looks less safe?' } });
+  expect(reversed).toHaveValue('Which place looks less safe?');
+  expect(screen.getAllByLabelText('反向计分（措辞是反着问的）')).toHaveLength(2);
 });

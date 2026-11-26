@@ -19,6 +19,7 @@ export function previewAppearance(config = {}, fallbackTheme) {
   return {
     locale: config.locale,
     theme: config.theme || fallbackTheme,
+    viewportLayout: config.viewportLayout,
     displaySettings: Object.fromEntries(fields.filter((key) => config[key] !== undefined).map((key) => [key, config[key]])),
   };
 }

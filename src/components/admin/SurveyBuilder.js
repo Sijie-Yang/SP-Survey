@@ -1,4 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { applySurveyThemePreset, matchesSurveyThemePreset, SURVEY_THEME_OPTIONS, SURVEY_THEME_PRESETS } from '../../lib/surveyThemePresets';
+import DescriptionMarkdownEditor from './DescriptionMarkdownEditor';
+import React, { useMemo, useState } from 'react';
+import RuntimeContextSettings from './RuntimeContextSettings';
+import RecruitmentSettings from './RecruitmentSettings';
 import {
   Box,
   Typography,
@@ -9,54 +13,41 @@ import {
   MenuItem,
   Switch,
   FormControlLabel,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
   IconButton,
-  Card,
-  CardContent,
-  CardActions,
   Grid,
   Divider,
   List,
   ListItem,
   ListItemText,
-  ListItemSecondaryAction,
   Chip,
   Alert,
-  CircularProgress,
-  InputAdornment,
   Paper,
-  Tooltip,
-  Badge,
   Snackbar,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Avatar,
-  Collapse
 } from '@mui/material';
+import { useRegion } from '../../contexts/RegionContext';
+import { UI_LANGUAGES, normalizeUiLanguage, uiPair } from '../../lib/uiLanguages';
+import { useQuestionEditorText } from '../../contexts/questionEditorI18n';
+import { parsePageRule } from '../../lib/surveyRuntimeContext';
 import {
-  ExpandMore,
   Add,
   Delete,
   Edit,
   DragIndicator,
   ContentCopy,
-  AutoAwesome,
-  Psychology,
-  CheckCircle,
-  History,
-  TipsAndUpdates,
   Clear,
   Download,
-  SmartToy,
-  PersonOutline,
-  Send,
-  Settings,
-  Close
+  ArticleOutlined,
+  ImageOutlined,
+  Translate,
+  GTranslate,
+  Tune,
+  PaletteOutlined,
+  Preview,
 } from '@mui/icons-material';
 import {
   DndContext,
@@ -77,12 +68,16 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import PageEditor from './PageEditor';
+import TranslationEditor from './TranslationEditor';
+import FullSurveyPreview from './FullSurveyPreview';
+import SurveyPreview from './SurveyPreview';
 import ConfirmDialog from '../layout/ConfirmDialog';
-import QuestionEditor from './QuestionEditor';
-import { AdminPageHeader } from './AdminPageLayout';
-import { useRegion } from '../../contexts/RegionContext';
-import { useQuestionEditorText } from '../../contexts/questionEditorI18n';
+import AiAssistantPanel from './AiAssistantPanel';
+import SpSchemePanel from './SpSchemePanel';
+import PhonePreviewButton from './PhonePreviewButton';
 import SurveyThemePreviewPanel from '../SurveyThemePreviewPanel';
+import useSurveyAssistant from '../../hooks/useSurveyAssistant';
+import { AdminActionBar, AdminActionButton, AdminPageHeader } from './AdminPageLayout';
 import {
   allocateUniqueName,
   allocateUniquePageName,
@@ -90,7 +85,8 @@ import {
   findDuplicateQuestionNames,
   repairDuplicateQuestionNames,
 } from '../../lib/questionNames';
-// Chat state lives in useLocalSurveyAssistant (Admin AI sidebar).
+// Old API functions removed - now using chatApi.js
+import { getSurveyValidationWarningStrings } from '../../lib/designProtocol';
 
 /** Compact color picker row for Theme Customization */
 function ThemeColorField({ label, hint, value, onChange }) {
@@ -184,9 +180,12 @@ function SortablePageItem({ page, pageIndex, onEdit, onDelete, onDuplicate }) {
       ref={setNodeRef}
       style={style}
       sx={{
-        mb: 2,
+        mb: 1.5,
+        flexWrap: 'wrap',
+        gap: 1,
+        px: 1.5,
         bgcolor: 'background.paper',
-        borderRadius: 2,
+        borderRadius: 1.5,
         border: 1,
         borderColor: 'divider',
         '&:hover': {
@@ -198,11 +197,12 @@ function SortablePageItem({ page, pageIndex, onEdit, onDelete, onDuplicate }) {
       <Box
         {...attributes}
         {...listeners}
+        aria-label={tr('Drag to reorder page')}
         sx={{
           display: 'flex',
           alignItems: 'center',
           cursor: 'grab',
-          mr: 2,
+          mr: 0,
           '&:active': {
             cursor: 'grabbing',
           },
@@ -212,9 +212,10 @@ function SortablePageItem({ page, pageIndex, onEdit, onDelete, onDuplicate }) {
       </Box>
       
       <ListItemText
+        sx={{ flex: '1 1 150px', minWidth: 0 }}
         primary={
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-            <Typography variant="h6">
+          <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1 }}>
+            <Typography variant="subtitle1" fontWeight={600} sx={{ overflowWrap: 'anywhere' }}>
               {page.title || tr('Page {number}', { number: pageIndex + 1 })}
             </Typography>
             <Chip
@@ -223,111 +224,97 @@ function SortablePageItem({ page, pageIndex, onEdit, onDelete, onDuplicate }) {
               color="primary"
               variant="outlined"
             />
+            {(() => {
+              const rule = parsePageRule(page.visibleIf);
+              if (rule?.kind === 'always') return null;
+              const label = !rule ? tr('Custom display rule')
+                : tr(rule.kind === 'with_param' ? 'Only links with {param}' : 'Only links without {param}', { param: rule.param });
+              return <Chip label={label} size="small" color="primary" variant="outlined" />;
+            })()}
           </Box>
         }
-        secondary={
+        secondary={page.description ? (
           <Typography variant="body2" color="text.secondary">
-            {page.description || tr('No description provided')}
+            {page.description}
           </Typography>
-        }
+        ) : null}
       />
       
-      <ListItemSecondaryAction>
+      <Box sx={{ ml: 'auto' }}>
         <Box sx={{ display: 'flex', gap: 0.5 }}>
           <IconButton
             size="small"
             color="primary"
+            aria-label={tr("Edit page")}
             onClick={() => onEdit({ page, index: pageIndex })}
-            sx={{ 
-              border: 1, 
-              borderColor: 'primary.main',
-              '&:hover': { bgcolor: 'primary.light', borderColor: 'primary.dark' }
-            }}
+            sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}
           >
             <Edit fontSize="small" />
           </IconButton>
           <IconButton
             size="small"
             color="primary"
+            aria-label={tr("Duplicate page")}
             onClick={() => onDuplicate(pageIndex)}
-            sx={{ 
-              border: 1, 
-              borderColor: 'primary.main',
-              '&:hover': { bgcolor: 'primary.light', borderColor: 'primary.dark' }
-            }}
+            sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}
           >
             <ContentCopy fontSize="small" />
           </IconButton>
           <IconButton
             size="small"
             color="error"
+            aria-label={tr("Delete page")}
             onClick={() => onDelete(pageIndex)}
-            sx={{ 
-              border: 1, 
-              borderColor: 'error.main',
-              '&:hover': { bgcolor: 'error.light', borderColor: 'error.dark' }
-            }}
+            sx={{ color: 'text.secondary', '&:hover': { color: 'error.main' } }}
           >
             <Delete fontSize="small" />
           </IconButton>
         </Box>
-      </ListItemSecondaryAction>
+      </Box>
     </ListItem>
   );
 }
 
-export default function SurveyBuilder({
-  config,
-  onChange,
-  currentProject,
-  onNextStep,
-  onRepairComplete,
-  hideAssistant = false,
-  onOpenAssistant,
-}) {
-  const { t } = useRegion();
+export default function SurveyBuilder({ config, onChange, currentProject, onProjectUpdate = null, onNextStep, onRepairComplete, hideAssistant = false, onEditorSelectionChange, onOpenAssistant, onOpenLayoutStudio, onOpenPreview, editorCommitKey = 0 }) {
+  const { t, language } = useRegion();
+  // A survey that is an uploaded page (SP-Scheme) is defined by that page.
+  const siteLocked = Boolean(config?.spSite?.html);
   const { tr } = useQuestionEditorText();
   const [confirmDialog, setConfirmDialog] = useState(null);
   const [selectedPage, setSelectedPage] = useState(null);
+  const [settingsDialog, setSettingsDialog] = useState(null);
+  const [localPreviewOpen, setLocalPreviewOpen] = useState(false);
+  const [localStudioOpen, setLocalStudioOpen] = useState(false);
+  const closeSettings = () => setSettingsDialog(null);
+  const openLayoutStudio = () => {
+    if (onOpenLayoutStudio) onOpenLayoutStudio();
+    else setLocalStudioOpen(true);
+  };
+  const openPreview = () => {
+    if (onOpenPreview) onOpenPreview();
+    else setLocalPreviewOpen(true);
+  };
 
-  // Collapsed-state for the rarely-used sub-sections of the Survey Settings
-  // panel. We default both to collapsed and persist the user's choice per
-  // project in localStorage so the sections stay open if they were actively
-  // editing them.
-  const displaySettingsKey = currentProject?.id
-    ? `displaySettingsCollapsed_${currentProject.id}`
-    : 'displaySettingsCollapsed_default';
-  const themeCustomizationKey = currentProject?.id
-    ? `themeCustomizationCollapsed_${currentProject.id}`
-    : 'themeCustomizationCollapsed_default';
-  const [displaySettingsCollapsed, setDisplaySettingsCollapsed] = useState(() => {
-    if (typeof window === 'undefined') return true;
-    const stored = window.localStorage.getItem(displaySettingsKey);
-    return stored === 'false' ? false : true;
-  });
-  const [themeCustomizationCollapsed, setThemeCustomizationCollapsed] = useState(() => {
-    if (typeof window === 'undefined') return true;
-    const stored = window.localStorage.getItem(themeCustomizationKey);
-    return stored === 'false' ? false : true;
-  });
+  const reportSelection = (next) => {
+    onEditorSelectionChange?.(next);
+  };
+
   const [themeSnackbar, setThemeSnackbar] = useState({ open: false, message: '', severity: 'success' });
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(displaySettingsKey, displaySettingsCollapsed ? 'true' : 'false');
-    }
-  }, [displaySettingsCollapsed, displaySettingsKey]);
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(themeCustomizationKey, themeCustomizationCollapsed ? 'true' : 'false');
-    }
-  }, [themeCustomizationCollapsed, themeCustomizationKey]);
   
+  const assistant = useSurveyAssistant({
+    currentProject,
+    surveyConfig: config,
+    onSurveyConfigChange: onChange,
+    enabled: !hideAssistant,
+  });
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
+
 
   const handleBasicInfoChange = (field, value) => {
     // Convert boolean values to SurveyJS expected string format
@@ -345,14 +332,6 @@ export default function SurveyBuilder({
     });
   };
 
-  const handleSettingsChange = (field, value) => {
-    // Set SurveyJS standard properties directly at root level
-    onChange({
-      ...config,
-      [field]: value
-    });
-  };
-
   const handleThemeChange = (field, value) => {
     onChange({
       ...config,
@@ -363,184 +342,8 @@ export default function SurveyBuilder({
     });
   };
 
-  const handleThemeReset = () => {
-    onChange({
-      ...config,
-      theme: {
-        primaryColor: '#1976d2',
-        primaryLight: '#42a5f5',
-        primaryDark: '#1565c0',
-        secondaryColor: '#dc004e',
-        accentColor: '#ff9800',
-        successColor: '#4caf50',
-        backgroundColor: '#ffffff',
-        cardBackground: '#f8f9fa',
-        headerBackground: '#ffffff',
-        textColor: '#212121',
-        secondaryText: '#757575',
-        disabledText: '#bdbdbd',
-        borderColor: '#e0e0e0',
-        focusBorder: '#1976d2'
-      }
-    });
-  };
-
-  const handleThemePreset = (presetName) => {
-    const presets = {
-      default: {
-        primaryColor: '#1976d2',
-        primaryLight: '#42a5f5',
-        primaryDark: '#1565c0',
-        secondaryColor: '#dc004e',
-        accentColor: '#ff9800',
-        successColor: '#4caf50',
-        backgroundColor: '#ffffff',
-        cardBackground: '#f8f9fa',
-        headerBackground: '#ffffff',
-        textColor: '#212121',
-        secondaryText: '#757575',
-        disabledText: '#bdbdbd',
-        borderColor: '#e0e0e0',
-        focusBorder: '#1976d2'
-      },
-      research: {
-        // Fully copy theme configuration from original research survey
-        primaryColor: '#474747',
-        primaryLight: '#6a6a6a',
-        primaryDark: '#2e2e2e',
-        secondaryColor: '#ff9814', // rgba(255, 152, 20, 1)
-        accentColor: '#e50a3e', // rgba(229, 10, 62, 1) - special red
-        successColor: '#19b394', // rgba(25, 179, 148, 1) - special green
-        backgroundColor: '#ffffff', // rgba(255, 255, 255, 1)
-        cardBackground: '#f8f8f8', // rgba(248, 248, 248, 1)
-        headerBackground: '#f3f3f3', // rgba(243, 243, 243, 1)
-        textColor: '#000000', // rgba(0, 0, 0, 0.91)
-        secondaryText: '#737373', // rgba(0, 0, 0, 0.45)
-        disabledText: '#737373', // rgba(0, 0, 0, 0.45)
-        borderColor: '#292929', // rgba(0, 0, 0, 0.16)
-        focusBorder: '#437fd9' // rgba(67, 127, 217, 1) - special blue
-      },
-      professional: {
-        primaryColor: '#1976d2',
-        primaryLight: '#42a5f5',
-        primaryDark: '#1565c0',
-        secondaryColor: '#f57c00',
-        accentColor: '#ff9800',
-        successColor: '#4caf50',
-        backgroundColor: '#ffffff',
-        cardBackground: '#f8f9fa',
-        headerBackground: '#fafafa',
-        textColor: '#212121',
-        secondaryText: '#616161',
-        disabledText: '#bdbdbd',
-        borderColor: '#e0e0e0',
-        focusBorder: '#1976d2'
-      },
-      nature: {
-        primaryColor: '#4caf50',
-        primaryLight: '#81c784',
-        primaryDark: '#388e3c',
-        secondaryColor: '#ff9800',
-        accentColor: '#ffc107',
-        successColor: '#8bc34a',
-        backgroundColor: '#f1f8e9',
-        cardBackground: '#ffffff',
-        headerBackground: '#e8f5e8',
-        textColor: '#1b5e20',
-        secondaryText: '#4caf50',
-        disabledText: '#a5d6a7',
-        borderColor: '#c8e6c9',
-        focusBorder: '#4caf50'
-      },
-      elegant: {
-        primaryColor: '#673ab7',
-        primaryLight: '#9575cd',
-        primaryDark: '#512da8',
-        secondaryColor: '#e91e63',
-        accentColor: '#f06292',
-        successColor: '#66bb6a',
-        backgroundColor: '#fafafa',
-        cardBackground: '#ffffff',
-        headerBackground: '#f3e5f5',
-        textColor: '#4a148c',
-        secondaryText: '#7b1fa2',
-        disabledText: '#ce93d8',
-        borderColor: '#e1bee7',
-        focusBorder: '#673ab7'
-      },
-      ocean: {
-        primaryColor: '#00acc1',
-        primaryLight: '#4dd0e1',
-        primaryDark: '#00838f',
-        secondaryColor: '#0288d1',
-        accentColor: '#29b6f6',
-        successColor: '#26a69a',
-        backgroundColor: '#e0f7fa',
-        cardBackground: '#ffffff',
-        headerBackground: '#b2ebf2',
-        textColor: '#006064',
-        secondaryText: '#00838f',
-        disabledText: '#80deea',
-        borderColor: '#b2ebf2',
-        focusBorder: '#00acc1'
-      },
-      warm: {
-        primaryColor: '#ff5722',
-        primaryLight: '#ff8a65',
-        primaryDark: '#d84315',
-        secondaryColor: '#ffc107',
-        accentColor: '#ff9800',
-        successColor: '#4caf50',
-        backgroundColor: '#fff8f0',
-        cardBackground: '#ffffff',
-        headerBackground: '#ffe0b2',
-        textColor: '#3e2723',
-        secondaryText: '#6d4c41',
-        disabledText: '#bcaaa4',
-        borderColor: '#d7ccc8',
-        focusBorder: '#ff5722'
-      },
-      dark: {
-        primaryColor: '#90caf9',
-        primaryLight: '#bbdefb',
-        primaryDark: '#64b5f6',
-        secondaryColor: '#f48fb1',
-        accentColor: '#ce93d8',
-        successColor: '#81c784',
-        backgroundColor: '#121212',
-        cardBackground: '#1e1e1e',
-        headerBackground: '#2c2c2c',
-        textColor: '#e0e0e0',
-        secondaryText: '#b0b0b0',
-        disabledText: '#757575',
-        borderColor: '#424242',
-        focusBorder: '#90caf9'
-      },
-      minimal: {
-        primaryColor: '#333333',
-        primaryLight: '#555555',
-        primaryDark: '#111111',
-        secondaryColor: '#888888',
-        accentColor: '#aaaaaa',
-        successColor: '#4caf50',
-        backgroundColor: '#ffffff',
-        cardBackground: '#fafafa',
-        headerBackground: '#f5f5f5',
-        textColor: '#1a1a1a',
-        secondaryText: '#666666',
-        disabledText: '#cccccc',
-        borderColor: '#e0e0e0',
-        focusBorder: '#333333'
-      }
-    };
-
-    if (presets[presetName]) {
-      onChange({
-        ...config,
-        theme: presets[presetName]
-      });
-    }
-  };
+  const handleThemeReset = () => onChange(applySurveyThemePreset(config, 'default'));
+  const handleThemePreset = (presetName) => onChange(applySurveyThemePreset(config, presetName));
 
   // Export theme configuration
   const handleExportTheme = () => {
@@ -603,11 +406,12 @@ export default function SurveyBuilder({
     const questionCount = page?.elements?.length || 0;
     const pageTitle = page?.title || tr('Page {number}', { number: pageIndex + 1 });
     const message = questionCount > 0
-      ? tr('Delete "{title}" and its {count} question(s)? This cannot be undone.', { title: pageTitle, count: questionCount })
-      : tr('Delete "{title}"? This cannot be undone.', { title: pageTitle });
+      ? 'Delete "{title}" and its {count} question(s)? This cannot be undone.'
+      : 'Delete "{title}"? This cannot be undone.';
     setConfirmDialog({
       title: 'Delete page',
       message,
+      values: { title: pageTitle, count: questionCount },
       confirmLabel: 'Delete',
       confirmColor: 'error',
       onConfirm: () => {
@@ -692,48 +496,10 @@ export default function SurveyBuilder({
     }
   };
 
-  const getSurveyValidationWarnings = (cfg) => {
-    if (!cfg?.pages) return [];
-    const warnings = [];
-    const imageTypes = [
-      'imagepicker', 'imageranking', 'imagerating', 'imageboolean', 'imagematrix', 'image',
-      'imageannotation', 'skillquestion', 'imageslidergroup', 'imagepointallocation',
-      'mediadisplay', 'mediapicker', 'mediaranking', 'mediarating', 'mediaboolean',
-      'mediamatrix', 'mediaslidergroup', 'mediapointallocation',
-    ];
 
-    findDuplicateQuestionNames(cfg).forEach((dup) => {
-      warnings.push(
-        `Duplicate question id "${dup.name}" appears ${dup.count} times — answers will overwrite each other.`,
-      );
-    });
 
-    cfg.pages.forEach((page, pi) => {
-      const pageTitle = page.title || `Page ${pi + 1}`;
-      if (!page.elements?.length) {
-        warnings.push(`Page "${pageTitle}" has no questions.`);
-      }
-      (page.elements || []).forEach((el) => {
-        if (imageTypes.includes(el.type)) {
-          const hasManual = el.selectedImageUrls?.length || el.choices?.length || el.imageLinks?.length || el.annotationImageUrl;
-          const hasRandom = el.randomImageSelection !== false || el.imageSelectionMode === 'huggingface_random';
-          if (!hasManual && !hasRandom && el.type !== 'skillquestion') {
-            warnings.push(`"${el.title || el.name}" may have no images configured.`);
-          }
-        }
-        if ((el.type === 'slidergroup' || el.type === 'imageslidergroup' || el.type === 'mediaslidergroup') && !el.dimensions?.length) {
-          warnings.push(`Slider group "${el.title || el.name}" has no dimensions configured.`);
-        }
-        if ((el.type === 'pointallocation' || el.type === 'imagepointallocation') && !el.choices?.length) {
-          warnings.push(`Point allocation "${el.title || el.name}" has no choices configured.`);
-        }
-      });
-    });
-    return warnings;
-  };
-
-  const validationWarnings = getSurveyValidationWarnings(config);
-  const duplicateQuestionIssues = findDuplicateQuestionNames(config);
+  const validationWarnings = useMemo(() => getSurveyValidationWarningStrings(config), [config]);
+  const duplicateQuestionIssues = useMemo(() => findDuplicateQuestionNames(config), [config]);
 
   const handleRepairDuplicateQuestionNames = async () => {
     const { config: fixed, renames, remainingDuplicates } = repairDuplicateQuestionNames(config);
@@ -789,15 +555,42 @@ export default function SurveyBuilder({
   return (
     <Box>
       <AdminPageHeader
-        icon={<AutoAwesome />}
+        icon={<Edit />}
         title={t.builderTitle}
         description={t.builderDescription}
-        actions={hideAssistant && onOpenAssistant ? (
-          <Button variant="outlined" size="small" startIcon={<AutoAwesome />} onClick={onOpenAssistant} sx={{ textTransform: 'none' }}>
-            {t.aiLabel}
-          </Button>
-        ) : null}
       />
+
+      <SpSchemePanel config={config} onChange={onChange} currentProject={currentProject} onProjectUpdate={onProjectUpdate} />
+
+      <AdminActionBar
+        label={t.builderSurveySettings}
+        primaryAction={
+          <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+            <Button size="small" variant="contained" startIcon={<Tune />} onClick={openLayoutStudio}>{t.builderLayoutStudio}</Button>
+            <Button size="small" variant="outlined" startIcon={<Preview />} onClick={openPreview}>{t.builderPreview}</Button>
+            <PhonePreviewButton project={currentProject} language={language} />
+          </Box>
+        }
+      >
+          {[
+            ['basic', t.builderBasicInfo, <ArticleOutlined />],
+            ['logo', t.builderLogoSettings, <ImageOutlined />],
+            ['language', t.builderSurveyLanguage, <Translate />],
+            ['translations', uiPair(language, 'Translations', '翻译'), <GTranslate />],
+            ['display', t.builderDisplaySettings, <Tune />],
+            ['theme', t.builderThemeCustomization, <PaletteOutlined />],
+          ].map(([id, label, icon]) => (
+            <AdminActionButton
+              key={id}
+              startIcon={icon}
+              aria-haspopup="dialog"
+              onClick={() => setSettingsDialog(id)}
+              sx={{ flex: { xs: '1 1 130px', sm: '0 1 auto' } }}
+            >
+              {label}
+            </AdminActionButton>
+          ))}
+      </AdminActionBar>
 
       {validationWarnings.length > 0 && (
         <Alert
@@ -828,19 +621,14 @@ export default function SurveyBuilder({
         </Alert>
       )}
 
-      {/* Survey Settings - Unified Panel */}
-      <Accordion defaultExpanded>
-        <AccordionSummary expandIcon={<ExpandMore />}>
-          <Typography variant="h6">{t.builderSurveySettings}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-            {/* Basic Information */}
-            <Box>
-              <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 600, mb: 2 }}>
-                {t.builderBasicInfo}
-              </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+      {!hideAssistant && (
+        <AiAssistantPanel assistant={assistant} />
+      )}
+
+      <Dialog open={settingsDialog === 'basic'} onClose={closeSettings} fullWidth maxWidth="sm">
+        <DialogTitle>{t.builderBasicInfo}</DialogTitle>
+        <DialogContent dividers>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 1 }}>
                 <TextField
                   fullWidth
                   variant="outlined"
@@ -850,16 +638,7 @@ export default function SurveyBuilder({
                   helperText={t.builderSurveyTitleHelp}
                 />
                 
-                <TextField
-                  fullWidth
-                  variant="outlined"
-                  multiline
-                  rows={3}
-                  label={t.builderSurveyDescription}
-                  value={config.description || ''}
-                  onChange={(e) => handleBasicInfoChange('description', e.target.value)}
-                  helperText={t.builderSurveyDescriptionHelp}
-                />
+                <DescriptionMarkdownEditor label={t.builderSurveyDescription} value={config.description || ''} onChange={(value) => handleBasicInfoChange('description', value)} />
 
                 <TextField
                   fullWidth
@@ -885,34 +664,21 @@ export default function SurveyBuilder({
                   helperText={t.builderResponseQuotaHelp}
                   inputProps={{ min: 1 }}
                 />
+
+                <RuntimeContextSettings config={config} onChange={handleBasicInfoChange} />
+
+                <RecruitmentSettings config={config} onChange={handleBasicInfoChange} />
               </Box>
-            </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeSettings}>{t.resultsClose}</Button>
+        </DialogActions>
+      </Dialog>
 
-            <Divider />
-
-            <FormControl size="small" sx={{ minWidth: 220 }}>
-              <InputLabel>{t.builderSurveyLanguage}</InputLabel>
-              <Select
-                label={t.builderSurveyLanguage}
-                value={String(config.locale || 'en').toLowerCase().startsWith('zh') ? 'zh' : 'en'}
-                onChange={(e) => handleBasicInfoChange('locale', e.target.value)}
-              >
-                <MenuItem value="en">{t.builderSurveyLanguageEn}</MenuItem>
-                <MenuItem value="zh">{t.builderSurveyLanguageZh}</MenuItem>
-              </Select>
-              <Typography variant="caption" color="text.secondary" sx={{ mt: 0.75, display: 'block' }}>
-                {t.builderSurveyLanguageHelp}
-              </Typography>
-            </FormControl>
-
-            <Divider />
-
-            {/* Logo Settings */}
-            <Box>
-              <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 600, mb: 2 }}>
-                {t.builderLogoSettings}
-              </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+      <Dialog open={settingsDialog === 'logo'} onClose={closeSettings} fullWidth maxWidth="sm">
+        <DialogTitle>{t.builderLogoSettings}</DialogTitle>
+        <DialogContent dividers>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 1 }}>
                 <TextField
                   fullWidth
                   label="Logo URL"
@@ -935,37 +701,49 @@ export default function SurveyBuilder({
                   </Select>
                 </FormControl>
               </Box>
-            </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeSettings}>{t.resultsClose}</Button>
+        </DialogActions>
+      </Dialog>
 
-            <Divider />
-
-            {/* Display Settings — collapsed by default since most users
-                rarely need to toggle question numbers / progress bar. */}
-            <Box>
-              <Box
-                onClick={() => setDisplaySettingsCollapsed((c) => !c)}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 1,
-                  cursor: 'pointer',
-                  userSelect: 'none',
-                  mb: displaySettingsCollapsed ? 0 : 2,
-                  '&:hover': { color: 'primary.main' },
-                }}
+      <Dialog open={settingsDialog === 'language'} onClose={closeSettings} fullWidth maxWidth="xs">
+        <DialogTitle>{t.builderSurveyLanguage}</DialogTitle>
+        <DialogContent dividers>
+            <FormControl fullWidth size="small" sx={{ mt: 1 }}>
+              <InputLabel>{t.builderSurveyLanguage}</InputLabel>
+              <Select
+                label={t.builderSurveyLanguage}
+                value={normalizeUiLanguage(config.locale || 'en')}
+                onChange={(e) => handleBasicInfoChange('locale', e.target.value)}
               >
-                <ExpandMore
-                  sx={{
-                    transition: 'transform 0.2s',
-                    transform: displaySettingsCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)',
-                  }}
-                />
-                <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                  {t.builderDisplaySettings}
-                </Typography>
-              </Box>
-              <Collapse in={!displaySettingsCollapsed} timeout="auto" unmountOnExit>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                {UI_LANGUAGES.map((item) => (
+                  <MenuItem key={item.id} value={item.id}>{item.nativeName}</MenuItem>
+                ))}
+              </Select>
+              <Typography variant="caption" color="text.secondary" sx={{ mt: 0.75, display: 'block' }}>
+                {t.builderSurveyLanguageHelp}
+              </Typography>
+            </FormControl>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeSettings}>{t.resultsClose}</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={settingsDialog === 'translations'} onClose={closeSettings} fullWidth maxWidth="lg">
+        <DialogContent dividers>
+          <TranslationEditor config={config} onChange={onChange} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeSettings}>{t.resultsClose}</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={settingsDialog === 'display'} onClose={closeSettings} fullWidth maxWidth="sm">
+        <DialogTitle>{t.builderDisplaySettings}</DialogTitle>
+        <DialogContent dividers>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, pt: 1 }}>
                   <FormControlLabel
                     control={
                       <Switch
@@ -987,6 +765,15 @@ export default function SurveyBuilder({
                   <Typography variant="caption" color="text.secondary" sx={{ display: 'block', ml: 4.5, mt: -0.5, mb: 0.5 }}>
                     Uses Primary / Success colors from Theme Customization. Preview it under Theme Preview.
                   </Typography>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={config.hidePlatformBadge !== true}
+                        onChange={(e) => onChange({ ...config, hidePlatformBadge: !e.target.checked })}
+                      />
+                    }
+                    label={uiPair(language, 'Show a small "Made with SP-Survey" link at the bottom', '页尾显示「用 SP-Survey 制作」小字链接')}
+                  />
                   <Divider sx={{ my: 1 }} />
                   <Typography variant="subtitle2" color="text.secondary">Research Annotation Mode</Typography>
                   <FormControlLabel
@@ -1017,39 +804,16 @@ export default function SurveyBuilder({
                     />
                   )}
                 </Box>
-              </Collapse>
-            </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeSettings}>{t.resultsClose}</Button>
+        </DialogActions>
+      </Dialog>
 
-            <Divider />
-
-            {/* Theme Customization — collapsed by default. The action
-                buttons (Import / Export / Reset) only matter once the
-                section is expanded, so we move them inside the Collapse. */}
-            <Box>
-              <Box
-                onClick={() => setThemeCustomizationCollapsed((c) => !c)}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 1,
-                  cursor: 'pointer',
-                  userSelect: 'none',
-                  mb: themeCustomizationCollapsed ? 0 : 2,
-                  '&:hover': { color: 'primary.main' },
-                }}
-              >
-                <ExpandMore
-                  sx={{
-                    transition: 'transform 0.2s',
-                    transform: themeCustomizationCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)',
-                  }}
-                />
-                <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                  {t.builderThemeCustomization}
-                </Typography>
-              </Box>
-              <Collapse in={!themeCustomizationCollapsed} timeout="auto" unmountOnExit>
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, mb: 2 }}>
+      <Dialog open={settingsDialog === 'theme'} onClose={closeSettings} fullWidth maxWidth="md">
+        <DialogTitle>{t.builderThemeCustomization}</DialogTitle>
+        <DialogContent dividers>
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1, mb: 2, pt: 1 }}>
                 <input
                   type="file"
                   accept=".json"
@@ -1091,24 +855,24 @@ export default function SurveyBuilder({
                   Quick Presets
                 </Typography>
                 <Grid container spacing={1.5}>
-                  {[
-                    { name: 'Default', emoji: '🔷', primaryColor: '#1976d2', secondaryColor: '#dc004e', bg: '#ffffff' },
-                    { name: 'Research', emoji: '🔬', primaryColor: '#474747', secondaryColor: '#ff9814', bg: '#f8f8f8' },
-                    { name: 'Professional', emoji: '💼', primaryColor: '#1976d2', secondaryColor: '#f57c00', bg: '#f8f9fa' },
-                    { name: 'Nature', emoji: '🌿', primaryColor: '#4caf50', secondaryColor: '#ff9800', bg: '#f1f8e9' },
-                    { name: 'Elegant', emoji: '💎', primaryColor: '#673ab7', secondaryColor: '#e91e63', bg: '#f3e5f5' },
-                    { name: 'Ocean', emoji: '🌊', primaryColor: '#00acc1', secondaryColor: '#0288d1', bg: '#e0f7fa' },
-                    { name: 'Warm', emoji: '🔥', primaryColor: '#ff5722', secondaryColor: '#ffc107', bg: '#fff8f0' },
-                    { name: 'Dark', emoji: '🌙', primaryColor: '#90caf9', secondaryColor: '#f48fb1', bg: '#121212' },
-                    { name: 'Minimal', emoji: '⚪', primaryColor: '#333333', secondaryColor: '#888888', bg: '#ffffff' }
-                  ].map((theme) => (
-                    <Grid item xs={6} sm={4} md={3} key={theme.name}>
+                  {SURVEY_THEME_OPTIONS.map((option) => {
+                    const theme = SURVEY_THEME_PRESETS[option.id];
+                    const selected = matchesSurveyThemePreset(config.theme, option.id);
+                    return (
+                    <Grid item xs={6} sm={4} md={3} key={option.id}>
                       <Paper
-                        onClick={() => handleThemePreset(theme.name.toLowerCase())}
+                        component="button"
+                        type="button"
+                        aria-label={option.name}
+                        aria-pressed={selected}
+                        onClick={() => handleThemePreset(option.id)}
                         sx={{
                           cursor: 'pointer',
                           border: 2,
-                          borderColor: config.theme?.primaryColor === theme.primaryColor ? 'primary.main' : 'divider',
+                          borderColor: selected ? 'primary.main' : 'divider',
+                          width: '100%',
+                          font: 'inherit',
+                          color: 'inherit',
                           borderRadius: 1.5,
                           p: 1.5,
                           textAlign: 'center',
@@ -1129,14 +893,15 @@ export default function SurveyBuilder({
                         }}>
                           <Box sx={{ flex: 1, bgcolor: theme.primaryColor }} />
                           <Box sx={{ flex: 1, bgcolor: theme.secondaryColor }} />
-                          <Box sx={{ flex: 1, bgcolor: theme.bg }} />
+                          <Box sx={{ flex: 1, bgcolor: theme.backgroundColor }} />
                         </Box>
                         <Typography variant="caption" sx={{ fontWeight: 600, display: 'block' }}>
-                          {theme.emoji} {theme.name}
+                          {option.emoji} {option.name}
                         </Typography>
                       </Paper>
                     </Grid>
-                  ))}
+                    );
+                  })}
                 </Grid>
               </Box>
 
@@ -1328,34 +1093,23 @@ export default function SurveyBuilder({
                   </Box>
                 </Box>
               </Box>
-              </Collapse>
-            </Box>
-          </Box>
-        </AccordionDetails>
-      </Accordion>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeSettings}>{t.resultsClose}</Button>
+        </DialogActions>
+      </Dialog>
 
-      {/* Pages and Questions */}
-      <Accordion defaultExpanded>
-        <AccordionSummary expandIcon={<ExpandMore />}>
-          <Typography variant="h6">{t.builderPagesQuestions}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-              {t.builderPagesHelp}
-            </Typography>
-            <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-              <Button
-                variant="contained"
-                startIcon={<Add />}
-                onClick={addNewPage}
-                size="large"
-              >
-                {t.builderAddPage}
-              </Button>
-            </Box>
-          </Box>
-
+      {siteLocked ? (
+        <Alert severity="info" sx={{ mb: 1.5 }} data-testid="builder-site-locked">
+          {uiPair(language,
+            'This survey is the uploaded page: its pages and questions come from that page and cannot be edited here. To edit them, remove the uploaded page in SP-Scheme above.',
+            '这份问卷就是上传的页面：页面和题目都由它决定，这里不能编辑。要编辑，请先在上方 SP-Scheme 里移除上传的页面。')}
+        </Alert>
+      ) : null}
+      <Box
+        aria-disabled={siteLocked || undefined}
+        sx={siteLocked ? { opacity: 0.5, pointerEvents: 'none', userSelect: 'none', filter: 'grayscale(1)' } : undefined}
+      >
           {config.pages && config.pages.length > 0 ? (
             <DndContext
               sensors={sensors}
@@ -1366,13 +1120,16 @@ export default function SurveyBuilder({
                 items={config.pages.map((_, index) => `page-${index}`)}
                 strategy={verticalListSortingStrategy}
               >
-                <List sx={{ width: '100%' }}>
+                <List sx={{ width: '100%', py: 0 }}>
                   {config.pages.map((page, pageIndex) => (
                     <SortablePageItem
                       key={`page-${pageIndex}`}
                       page={page}
                       pageIndex={pageIndex}
-                      onEdit={setSelectedPage}
+                      onEdit={(next) => {
+                        setSelectedPage(next);
+                        reportSelection({ pageName: next?.page?.name, questionName: null, panel: 'builder' });
+                      }}
                       onDuplicate={duplicatePage}
                       onDelete={deletePage}
                     />
@@ -1381,48 +1138,79 @@ export default function SurveyBuilder({
               </SortableContext>
             </DndContext>
           ) : (
-            <Box sx={{ textAlign: 'center', py: 4, bgcolor: 'grey.50', borderRadius: 2 }}>
+            <Box sx={{ textAlign: 'center', py: 4, bgcolor: 'action.hover', borderRadius: 2 }}>
               <Typography variant="body2" color="text.secondary">
                 No pages created yet. Click "Add New Page" to get started.
               </Typography>
             </Box>
           )}
-        </AccordionDetails>
-      </Accordion>
+      </Box>
 
       {/* Page Editor Dialog */}
       {selectedPage && (
         <PageEditor
+          key={`${selectedPage.index}-${editorCommitKey}`}
           page={selectedPage.page}
           pageIndex={selectedPage.index}
           onSave={(updatedPage) => {
             updatePage(selectedPage.index, updatedPage);
             setSelectedPage(null);
+            reportSelection({ pageName: updatedPage?.name || selectedPage.page?.name, questionName: null, panel: 'builder' });
           }}
-          onCancel={() => setSelectedPage(null)}
+          onCancel={() => {
+            setSelectedPage(null);
+            reportSelection({ pageName: selectedPage.page?.name, questionName: null, panel: 'builder' });
+          }}
+          onSelectionChange={(selection) => {
+            reportSelection({
+              pageName: selection?.pageName || selectedPage.page?.name,
+              questionName: selection?.questionName || null,
+              workingCopy: selection?.workingCopy || null,
+              baseline: selection?.baseline || null,
+              dirty: Boolean(selection?.dirty || selection?.pageDirty),
+              pageWorkingCopy: selection?.pageWorkingCopy || null,
+              pageDirty: Boolean(selection?.pageDirty),
+              panel: 'builder',
+            });
+          }}
           images={config.images || []}
           currentProject={currentProject}
           surveyConfig={config}
         />
       )}
 
-      {/* Next Step Button */}
-      {onNextStep && (
-        <Box sx={{ mt: 4, pt: 3, borderTop: 1, borderColor: 'divider', display: 'flex', justifyContent: 'flex-end' }}>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={onNextStep}
-            sx={{
-              px: 4,
-              py: 1.5,
-              fontWeight: 600
-            }}
-          >
-            {t.nextHost}
-          </Button>
-        </Box>
+      <Box
+        data-builder-page-actions=""
+        sx={{ mt: 2.5, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}
+      >
+        <AdminActionButton startIcon={<Add />} onClick={addNewPage} disabled={siteLocked}>
+          {t.builderAddPage}
+        </AdminActionButton>
+        {onNextStep && (
+          <Button size="small" onClick={onNextStep}>{t.nextHost}</Button>
+        )}
+      </Box>
+      {localStudioOpen && (
+        <Dialog open onClose={() => setLocalStudioOpen(false)} className="sp-studio-dialog" maxWidth={false} fullWidth PaperProps={{ sx: { maxWidth: 'none', m: 1.5, width: 'calc(100% - 24px)', maxHeight: 'calc(100% - 24px)' } }}>
+          <DialogTitle>{t.builderLayoutStudio}</DialogTitle>
+          <DialogContent sx={{ p: 0, display: 'flex', minHeight: 0, overflow: 'hidden' }}>
+            <FullSurveyPreview config={config} currentProject={currentProject} onConfigChange={onChange} />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setLocalStudioOpen(false)}>{t.resultsClose}</Button>
+          </DialogActions>
+        </Dialog>
+      )}
+      {localPreviewOpen && (
+        <Dialog open onClose={() => setLocalPreviewOpen(false)} maxWidth="lg" fullWidth>
+          <DialogTitle>{t.previewSurvey}</DialogTitle>
+          <DialogContent>
+            <SurveyPreview config={config} currentProject={currentProject} />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setLocalPreviewOpen(false)}>{t.resultsClose}</Button>
+          </DialogActions>
+        </Dialog>
       )}
       <Snackbar
         open={themeSnackbar.open}
@@ -1436,8 +1224,9 @@ export default function SurveyBuilder({
       <ConfirmDialog
         open={Boolean(confirmDialog)}
         title={tr(confirmDialog?.title)}
-        message={confirmDialog?.message}
+        message={tr(confirmDialog?.message, confirmDialog?.values)}
         confirmLabel={tr(confirmDialog?.confirmLabel)}
+        cancelLabel={tr('Cancel')}
         confirmColor={confirmDialog?.confirmColor || 'error'}
         onConfirm={() => confirmDialog?.onConfirm?.()}
         onCancel={() => setConfirmDialog(null)}

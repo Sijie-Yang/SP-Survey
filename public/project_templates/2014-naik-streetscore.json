@@ -1,7 +1,7 @@
 {
   "id": "2014-naik-streetscore",
-  "name": "Streetscore – Perceived Safety Rating",
-  "description": "Single-image perceived safety rating survey. Participants rate street scenes on a 1–10 safety scale and provide contextual judgments. Based on the Streetscore methodology predicting perceived safety of urban streetscapes.",
+  "name": "Streetscore – Place Pulse Safety Comparison",
+  "description": "Pairwise perceived-safety comparison from Place Pulse 1.0, the training data of Streetscore. Participants answer \"Which place looks safer?\" for pairs of street view images; TrueSkill ratings are scaled to 0–10 as in the paper. Single-image 1–10 ratings follow on optional pages that are not part of the original study. Bundled images are photographs from the paper PDF (12 scenes), not the original full stimulus set.",
   "author": "Naik et al.",
   "year": "2014",
   "category": "Academic Research",
@@ -11,6 +11,9 @@
     "official"
   ],
   "isPinned": false,
+  "isApproved": true,
+  "showOnLanding": true,
+  "thumbnailUrl": null,
   "website": "https://www.media.mit.edu/projects/streetscore/overview/",
   "huggingfaceDataset": null,
   "createdAt": "2026-05-04T00:00:00+00:00",
@@ -30,29 +33,41 @@
         "description": "In this survey, you will see a series of street-level photographs. For each image, please rate how safe the street looks on a scale from 1 (very unsafe) to 10 (very safe). There are no right or wrong answers — we are interested in your personal impression."
       },
       {
-        "name": "page_safety_1",
-        "title": "Safety Rating",
+        "name": "page_pairwise",
+        "title": "Which place looks safer?",
         "elements": [
           {
-            "name": "street_image_1",
-            "type": "image",
-            "title": "Street Scene",
+            "name": "safety_pairwise",
+            "type": "imagepicker",
+            "title": "Which place looks safer?",
             "imageFit": "cover",
-            "imageCount": 1,
-            "isRequired": false,
+            "imageCount": 2,
+            "isRequired": true,
             "imageSource": "huggingface",
             "imageSelectionMode": "huggingface_random",
             "randomImageSelection": true
-          },
+          }
+        ],
+        "description": "Choose the scene that looks safer between the two shown."
+      },
+      {
+        "name": "page_safety_1",
+        "title": "Optional extension (not in original study) — single-image safety rating",
+        "elements": [
           {
             "name": "safety_score_1",
-            "type": "rating",
+            "type": "imagerating",
             "title": "How safe does this street look?",
             "rateMax": 10,
             "rateMin": 1,
-            "isRequired": true,
+            "isRequired": false,
             "maxRateDescription": "Very safe",
-            "minRateDescription": "Very unsafe"
+            "minRateDescription": "Very unsafe",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "imageCount": 1
           },
           {
             "name": "safety_reason_1",
@@ -91,28 +106,22 @@
       },
       {
         "name": "page_safety_2",
-        "title": "Safety Rating",
+        "title": "Optional extension (not in original study) — single-image safety rating",
         "elements": [
           {
-            "name": "street_image_2",
-            "type": "image",
-            "title": "Street Scene",
-            "imageFit": "cover",
-            "imageCount": 1,
-            "isRequired": false,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          },
-          {
             "name": "safety_score_2",
-            "type": "rating",
+            "type": "imagerating",
             "title": "How safe does this street look?",
             "rateMax": 10,
             "rateMin": 1,
-            "isRequired": true,
+            "isRequired": false,
             "maxRateDescription": "Very safe",
-            "minRateDescription": "Very unsafe"
+            "minRateDescription": "Very unsafe",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "imageCount": 1
           },
           {
             "name": "safety_reason_2",
@@ -151,28 +160,22 @@
       },
       {
         "name": "page_safety_3",
-        "title": "Safety Rating",
+        "title": "Optional extension (not in original study) — single-image safety rating",
         "elements": [
           {
-            "name": "street_image_3",
-            "type": "image",
-            "title": "Street Scene",
-            "imageFit": "cover",
-            "imageCount": 1,
-            "isRequired": false,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          },
-          {
             "name": "safety_score_3",
-            "type": "rating",
+            "type": "imagerating",
             "title": "How safe does this street look?",
             "rateMax": 10,
             "rateMin": 1,
-            "isRequired": true,
+            "isRequired": false,
             "maxRateDescription": "Very safe",
-            "minRateDescription": "Very unsafe"
+            "minRateDescription": "Very unsafe",
+            "imageFit": "cover",
+            "imageSource": "huggingface",
+            "imageSelectionMode": "huggingface_random",
+            "randomImageSelection": true,
+            "imageCount": 1
           },
           {
             "name": "safety_reason_3",
@@ -208,24 +211,6 @@
           }
         ],
         "description": "Look at the street scene below and rate its perceived safety."
-      },
-      {
-        "name": "page_pairwise",
-        "title": "Comparative Safety",
-        "elements": [
-          {
-            "name": "safety_pairwise",
-            "type": "imagepicker",
-            "title": "Which street scene looks safer?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          }
-        ],
-        "description": "Choose the scene that looks safer between the two shown."
       },
       {
         "name": "page_demographics",
@@ -315,13 +300,38 @@
       }
     ],
     "title": "Streetscore – Perceived Safety Survey",
-    "description": "Rate each street scene on how safe it feels. Based on: Naik, N., Philipoom, J., Raskar, R., & Hidalgo, C. (2014). Streetscore—Predicting the perceived safety of one million streetscapes. CVPR Workshops 2014.",
+    "description": "Choose the place that looks safer. Based on: Naik, N., Philipoom, J., Raskar, R., & Hidalgo, C. (2014). Streetscore—Predicting the perceived safety of one million streetscapes. CVPR Workshops 2014.",
     "logoPosition": "right",
     "autoGrowComment": true,
     "progressBarType": "questions",
     "showProgressBar": "aboveheader",
     "showQuestionNumbers": "off",
-    "showPreviewBeforeComplete": "showAllQuestions"
+    "showPreviewBeforeComplete": "showAllQuestions",
+    "spAnalysisRecommendation": {
+      "citation": "Naik et al. 2014",
+      "items": [
+        {
+          "questions": [
+            "safety_pairwise"
+          ],
+          "method": "trueskill_pairwise",
+          "tieHandling": "exclude",
+          "runs": 1,
+          "scale": "0-10",
+          "minPerImage": 29
+        },
+        {
+          "questions": [
+            "safety_score_1",
+            "safety_score_2",
+            "safety_score_3"
+          ],
+          "method": "scalar_distribution",
+          "minPerImage": 12,
+          "citation": "optional extension"
+        }
+      ]
+    }
   },
   "imageDatasetConfig": {
     "mediaFolderTags": {},

@@ -1,12 +1,31 @@
+import { PLATFORM_URL, PLATFORM_VERSION, platformInText } from './platformCitation.js';
 import { responseRecordKey } from './responseIdentity.js';
 import { ANALYSIS_ALGORITHM_VERSION, ANALYSIS_NOTES } from './analysisVersion.js';
 import { flattenQuestions, getAttentionCheckQuestions, summarizeQuality } from './quality.js';
 import { computeQuestionIrr, irrLevelForQuestion } from './reliability.js';
+import { describeRecommendation } from './analysisRecommendation.js';
 import {
   computeQuestionTrueSkill,
   computeForcedChoiceTrueSkill,
   computeMaxDiffTrueSkill,
 } from './trueskill.js';
+
+// Sampling mode as the platform runs it: anything other than 'random' is balanced.
+const samplingModeOf = (q) => (q?.pairingMode && q.pairingMode !== 'random' ? 'balanced' : 'random');
+
+function describeTrueSkillExport(question, result, kind = '') {
+  const { rankings, matches, splitByCategory, categories } = result || {};
+  if (!rankings?.length) return null;
+  const title = question.title || question.name;
+  const kindLabel = kind ? ` (${kind})` : '';
+  if (splitByCategory && categories?.length) {
+    const labels = categories.map((board) => board.label).filter(Boolean).join(', ');
+    return `"${title}"${kindLabel}: separate TrueSkill rankings for ${labels} `
+      + `(${rankings.length} images, ${matches.length} pairwise comparisons)`;
+  }
+  return `"${title}"${kindLabel}: ${rankings.length} images rated across `
+    + `${matches.length} pairwise comparisons`;
+}
 
 function questionTypeLabel(type) {
   const labels = {
@@ -84,8 +103,8 @@ export function generateMethodsText({
   lines.push(...ANALYSIS_NOTES);
   lines.push('');
   lines.push(
-    `We collected perceptual survey data using the SP Survey Platform `
-    + `(${window.location.origin}). `
+    `We collected perceptual survey data using SP-Survey `
+    + `(${platformInText().author ? `${platformInText().author}, ` : ''}${platformInText().year}; version ${PLATFORM_VERSION}, ${PLATFORM_URL}). `
     + `Data were collected between ${formatDateRange(responses)}.`,
   );
 
@@ -102,7 +121,7 @@ export function generateMethodsText({
   );
 
   if (pairwiseQs.length) {
-    const modes = [...new Set(pairwiseQs.map((q) => q.pairingMode || 'random'))];
+    const modes = [...new Set(pairwiseQs.map((q) => samplingModeOf(q)))];
     lines.push(
       `Image choice questions (${pairwiseQs.length} question(s)) used `
       + `${modes.join('/')} pairing where configured. `
@@ -112,7 +131,7 @@ export function generateMethodsText({
   }
 
   if (maxDiffQs.length) {
-    const modes = [...new Set(maxDiffQs.map((q) => q.pairingMode || 'random'))];
+    const modes = [...new Set(maxDiffQs.map((q) => samplingModeOf(q)))];
     lines.push(
       `Best–Worst (MaxDiff) questions (${maxDiffQs.length} question(s)) used `
       + `${modes.join('/')} sampling where configured. `
@@ -202,6 +221,22 @@ export function generateMethodsText({
 
   if (allQuestions.some((q) => q.allowTie)) {
     lines.push('No-preference responses are recorded as ties and summarized separately. TrueSkill rankings use decisive outcomes only; ties are excluded.');
+  }
+
+  if (Array.isArray(surveyConfig?.conditions) && surveyConfig.conditions.length > 1) {
+    lines.push(`Participants were assigned to ${surveyConfig.conditions.length} between-participant conditions `
+      + `(${surveyConfig.conditions.map((c) => c.id).join(', ')}) by balanced random assignment.`);
+  }
+
+  const recommendation = describeRecommendation(surveyConfig);
+  if (recommendation.lines.length) {
+    lines.push('');
+    lines.push('Score derivation (template recommendation):');
+    recommendation.lines.forEach((l) => lines.push(`  • ${l}`));
+    lines.push('Min–max scaled scores are relative to the current sample and are not comparable across studies.');
+    lines.push('');
+    lines.push('References:');
+    recommendation.references.forEach((r) => lines.push(`  ${r}`));
   }
 
   let bibtex = '';

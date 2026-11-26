@@ -155,7 +155,7 @@ Check the question preview, Theme Settings preview, full **Preview Survey**, **R
 
 ### 6. Create the Supabase response table
 
-Open **Host**. It uses the Supabase configuration saved in Media. Click **Copy SQL Script**, open **Supabase Dashboard → SQL Editor**, paste [`supabase/setup.sql`](./supabase/setup.sql), and click **Run**. That script is idempotent and creates `survey_responses`, `count_responses`, `get_pair_stats`, `submit_survey_response`, `image_features`, and the public `survey-images` bucket. The short table-only script below is the minimum if you only need inserts:
+Open **Host**. It uses the Supabase configuration saved in Media. Click **Copy SQL Script**, open **Supabase Dashboard → SQL Editor**, paste [`supabase/setup.sql`](./supabase/setup.sql), and click **Run**. That script is idempotent and creates `survey_responses`, `count_responses`, `count_condition_responses`, `get_pair_stats`, `submit_survey_response` (with one response per Prolific/panel participant id), `recruitment_participant_done`, the balanced-sampling functions `claim_balance_number` / `complete_balance_claim`, `image_features`, and the public `survey-images` bucket. The short table-only script below is the minimum if you only need inserts:
 
 ```sql
 CREATE TABLE IF NOT EXISTS survey_responses (

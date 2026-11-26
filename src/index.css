@@ -278,7 +278,90 @@ iframe[title="skill-question"] {
   display: none;
 }
 
-/* Matrix radios follow the configured editor/text colors in every survey surface. */
+/* Keep the row-name column wide enough to show the label. A width:100% table
+   otherwise gives the leftover space to the scale columns and clips the name. */
+.sp-surveyjs-matrix table.sd-matrix__table {
+  table-layout: auto;
+  width: max-content;
+  min-width: 100%;
+}
+.sp-surveyjs-matrix col.sp-matrix-row-col {
+  width: 11rem;
+}
+.sp-surveyjs-matrix .sd-table__cell--row-text {
+  min-width: 9rem;
+  width: auto;
+  overflow: visible;
+  white-space: normal;
+}
+.sp-surveyjs-matrix .sp-matrix-row-label {
+  display: inline-block;
+  min-width: 8.5rem;
+  max-width: 16rem;
+  font-size: var(--sjs-font-questiontitle-size, var(--sjs-font-size, 16px));
+  line-height: 1.35;
+  font-weight: 600;
+  white-space: normal;
+  overflow: visible;
+}
+
+.sd-question__description p,
+.sd-page__description p,
+.sd-description p {
+  margin: 0 0 0.7em;
+}
+.sd-question__description p:last-child,
+.sd-page__description p:last-child,
+.sd-description p:last-child {
+  margin-bottom: 0;
+}
+.sd-question__description ul,
+.sd-question__description ol,
+.sd-page__description ul,
+.sd-page__description ol,
+.sd-description ul,
+.sd-description ol {
+  margin: 0.2em 0 0.7em;
+  padding-left: 1.25em;
+}
+
+/* Shared Markdown presentation in the source preview and participant survey. */
+:is(.sp-description-markdown, .sd-question__description, .sd-page__description, .sd-description) {
+  overflow-wrap: anywhere;
+}
+:is(.sp-description-markdown, .sd-question__description, .sd-page__description, .sd-description) img {
+  max-width: 100%;
+  height: auto;
+}
+:is(.sp-description-markdown, .sd-question__description, .sd-page__description, .sd-description) pre {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 0.75em;
+  background: rgba(127, 127, 127, 0.08);
+  border-radius: 4px;
+  white-space: pre;
+}
+:is(.sp-description-markdown, .sd-question__description, .sd-page__description, .sd-description) blockquote {
+  margin: 0.7em 0;
+  padding-left: 1em;
+  border-left: 3px solid #a6b5c7;
+}
+:is(.sp-description-markdown, .sd-question__description, .sd-page__description, .sd-description) table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 0.7em 0;
+}
+:is(.sp-description-markdown, .sd-question__description, .sd-page__description, .sd-description) :is(th, td) {
+  padding: 0.35em 0.65em;
+  border: 1px solid #c6cdd5;
+}
+.sp-description-markdown p { margin: 0 0 0.7em; }
+.sp-description-markdown p:last-child { margin-bottom: 0; }
+.sp-description-markdown :is(ul, ol) { margin: 0.2em 0 0.7em; padding-left: 1.25em; }
+
+/* Matrix radios default to near-white fill — add a clear ring so they read on light panels */
 .sd-matrix .sd-radio__decorator,
 .sd-matrix .sd-item__decorator.sd-radio__decorator {
   background-color: var(--sjs-editor-backcolor, #ffffff) !important;
@@ -545,9 +628,51 @@ iframe[title="skill-question"] {
   border-radius: 6px; background: #fff; color: #9b3418; cursor: pointer;
   font: inherit; line-height: 1.4; max-width: 100%;
 }
+/* Full Preview is a layout studio: answer controls stay inert, text stays editable. */
+[data-preview-mode="format"] .sd-question__content {
+  pointer-events: none;
+}
+[data-preview-mode="format"] [data-sp-edit] {
+  pointer-events: auto;
+  outline: 1px dashed rgba(25, 118, 210, 0.55);
+  outline-offset: 2px;
+  cursor: text;
+  border-radius: 2px;
+  min-height: 1em;
+}
+[data-preview-mode="format"] [data-sp-edit]:focus {
+  outline: 2px solid #1976d2;
+  background: rgba(25, 118, 210, 0.06);
+}
+[data-preview-mode="format"] [data-sp-edit]:empty::before {
+  content: attr(data-sp-placeholder);
+  color: #8b9098;
+}
+[data-preview-mode="format"] [data-sp-reorder],
+[data-preview-mode="format"] [data-sp-reorder] * {
+  pointer-events: auto;
+}
+.sp-media-player {
+  display: block;
+  width: auto !important;
+  max-width: var(--sp-media-width, 100%) !important;
+  height: auto !important;
+  max-height: var(--sp-media-max-height, 480px) !important;
+  object-fit: contain !important;
+  background: transparent !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @media (max-width: 600px) {
   .sp-survey-with-progress .sd-title.sd-container-modern__title { padding-top: 12px; padding-bottom: 12px; }
   .sp-survey-with-progress .sd-header__text h3 { font-size: 1.25rem; line-height: 1.4; }
   .sp-survey-with-progress .sd-description { line-height: 1.5; }
   .sp-trial-shell .MuiAlert-root { padding: 6px 10px; }
+}
+
+/* SurveyJS defaultV2 uses the page background for its header. Respect the
+   separate header color emitted by generateCustomTheme in every survey view. */
+.sd-root-modern .sd-title.sd-container-modern__title {
+  background-color: var(--sjs-header-backcolor, var(--sjs-general-backcolor, var(--background, #fff)));
 }

@@ -114,6 +114,27 @@ function resolveProviderRequest(store, { provider, apiKey, baseUrl, model } = {}
   };
 }
 
+/**
+ * The Assistant's provider, model and key, chosen the same way as
+ * /api/agent/credentials/status: the saved Assistant setting, else the first
+ * configured provider and its default model. Null when no key is stored.
+ */
+async function resolveAssistantRoute({ provider, model } = {}) {
+  const catalog = await loadCatalog();
+  const store = await readStore();
+  const directory = directoryFromStore(catalog, store);
+  const configured = directory.filter((row) => row.configured && row.userConfigured);
+  const settings = store.settings || {};
+  const providerId = provider || settings.assistant_provider || configured[0]?.id || '';
+  const row = directory.find((item) => item.id === providerId) || null;
+  const request = resolveProviderRequest(store, { provider: providerId });
+  if (!row || !request) return null;
+  const modelId = model
+    || (providerId === settings.assistant_provider ? settings.assistant_model : '')
+    || row.defaultModels?.assistant || row.models?.[0]?.id || '';
+  return { ...request, provider: providerId, model: modelId, settings };
+}
+
 function registerAgentCredentialsApi(app) {
   app.get('/api/agent/credentials/status', async (_req, res) => {
     try {
@@ -288,6 +309,7 @@ function registerAgentCredentialsApi(app) {
 module.exports = {
   registerAgentCredentialsApi,
   readStore,
+  resolveAssistantRoute,
   resolveProviderRequest,
   hintFor,
 };

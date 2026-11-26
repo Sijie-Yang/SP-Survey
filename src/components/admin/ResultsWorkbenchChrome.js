@@ -1,3 +1,9 @@
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { hasReportContent } from '../../lib/resultsReportStore';
+import VisibilityOutlined from '@mui/icons-material/VisibilityOutlined';
+import DeleteOutline from '@mui/icons-material/DeleteOutline';
+import { AdminActionBar, AdminActionButton } from './AdminPageLayout';
 import React from 'react';
 import {
   Alert,
@@ -23,6 +29,8 @@ import {
 } from '@mui/material';
 import FilterList from '@mui/icons-material/FilterList';
 import AutoAwesome from '@mui/icons-material/AutoAwesome';
+import Download from '@mui/icons-material/Download';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 
 export function ResultsScopeChips({ scope, counts, t, tf }) {
   const sourceLabel = scope.dataSource === 'silicon'
@@ -118,6 +126,7 @@ export function ResultsFilterForm({
   );
 }
 
+/** Filters, export and the AI analysis button (only when `onAnalyze` is given). */
 export function ResultsToolbar({
   t,
   onOpenFilters,
@@ -125,23 +134,39 @@ export function ResultsToolbar({
   analyzeDisabled,
   analyzeBusy,
   exportItems,
+  exportHelp,
+  refreshAction,
+  citeAction = null,
 }) {
   const [anchor, setAnchor] = React.useState(null);
   return (
-    <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap">
-      <Button size="small" variant="outlined" startIcon={<FilterList />} onClick={onOpenFilters}>{t.resultsFilters}</Button>
-      <Button size="small" variant="contained" startIcon={<AutoAwesome />} disabled={analyzeDisabled} onClick={onAnalyze}>
-        {analyzeBusy ? t.resultsPreparingExport : t.resultsAnalyze}
-      </Button>
-      <Button size="small" variant="outlined" onClick={(e) => setAnchor(e.currentTarget)}>{t.resultsExportMenu}</Button>
-      <Menu anchorEl={anchor} open={Boolean(anchor)} onClose={() => setAnchor(null)}>
+    <>
+      <AdminActionBar
+        label={t.resultsTitle}
+        primaryAction={onAnalyze ? (
+          <Button size="small" variant="contained" startIcon={<AutoAwesome />} disabled={analyzeDisabled} onClick={onAnalyze}>
+            {analyzeBusy ? t.resultsPreparingExport : t.resultsAnalyze}
+          </Button>
+        ) : null}
+      >
+        <AdminActionButton startIcon={<FilterList />} onClick={onOpenFilters}>{t.resultsFilters}</AdminActionButton>
+        <AdminActionButton id="results-export-button" startIcon={<Download />} endIcon={<ExpandMore />}
+          aria-haspopup="menu" aria-expanded={Boolean(anchor)} aria-controls={anchor ? 'results-export-menu' : undefined}
+          onClick={(e) => setAnchor(e.currentTarget)}>{t.resultsExportMenu}</AdminActionButton>
+        {citeAction}
+        {refreshAction}
+      </AdminActionBar>
+      <Menu id="results-export-menu" anchorEl={anchor} open={Boolean(anchor)} onClose={() => setAnchor(null)} MenuListProps={{ 'aria-labelledby': 'results-export-button' }}>
+        <Box component="li" role="presentation" sx={{ px: 2, py: 1, maxWidth: 300 }}>
+          <Typography variant="caption" color="text.secondary">{exportHelp || t.resultsExportHelp}</Typography>
+        </Box>
         {exportItems.map((item) => (
           <MenuItem key={item.id} disabled={item.disabled} onClick={() => { setAnchor(null); item.onClick(); }}>
-            {item.label}
+            <Download fontSize="small" sx={{ mr: 1.5, color: 'text.secondary' }} />{item.label}
           </MenuItem>
         ))}
       </Menu>
-    </Stack>
+    </>
   );
 }
 
@@ -152,39 +177,68 @@ export function ResultsViewTabs({ t, value, onChange }) {
       onChange={(_, next) => onChange(next)}
       variant="scrollable"
       allowScrollButtonsMobile
-      sx={{ mb: 2 }}
+      aria-label={t.resultsViews}
     >
       <Tab value="overview" label={t.resultsViewOverview} />
       <Tab value="questions" label={t.resultsViewQuestions} />
-      <Tab value="data" label={t.resultsViewData} />
+      <Tab value="records" label={t.resultsResponseRecords} />
+      <Tab value="quality" label={t.resultsDataQuality} />
     </Tabs>
   );
 }
 
-export function ResultsReportCard({ t, report, staleness, onViewEvidence, onUpdate }) {
-  if (!report) {
-    return <Alert severity="info">{t.resultsNoReport}</Alert>;
-  }
+export function ResultsReportCard({ t, report, staleness, onViewEvidence, onUpdate, updateDisabled, onDelete }) {
+  const [viewOpen, setViewOpen] = React.useState(false);
+  const [deleteOpen, setDeleteOpen] = React.useState(false);
+  if (!report) return null;
+  const hasContent = hasReportContent(report);
+  const incomplete = !hasContent || (report.status && report.status !== 'completed');
+  const title = incomplete ? t.resultsIncompleteReport : t.resultsLatestReport;
+  const findings = Array.isArray(report.findings) ? report.findings.filter((finding) => typeof finding?.text === 'string') : [];
   return (
     <Paper variant="outlined" sx={{ p: 2 }}>
-      <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 1 }}>{t.resultsLatestReport}</Typography>
-      {staleness?.stale && (
-        <Alert severity="warning" sx={{ mb: 1 }} action={onUpdate ? <Button color="inherit" size="small" onClick={onUpdate}>{t.resultsAnalyze}</Button> : null}>
+      <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap" alignItems="center" justifyContent="space-between">
+        <Typography variant="subtitle1" fontWeight={700}>{title}</Typography>
+        <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap">
+          <AdminActionButton startIcon={<VisibilityOutlined />} onClick={() => setViewOpen(true)}>{t.resultsViewReport}</AdminActionButton>
+          {onDelete && <AdminActionButton startIcon={<DeleteOutline />} onClick={() => setDeleteOpen(true)}>{t.resultsDeleteReport}</AdminActionButton>}
+        </Stack>
+      </Stack>
+      {incomplete && <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>{t.resultsReportIncompleteHelp}</Typography>}
+      {staleness?.stale && !incomplete && (
+        <Alert severity="warning" sx={{ mt: 1 }} action={onUpdate ? <Button color="inherit" size="small" disabled={updateDisabled} onClick={onUpdate}>{t.resultsAnalyze}</Button> : null}>
           {staleness.reason === 'scope_changed' ? t.resultsReportStaleScope : t.resultsReportStaleData}
         </Alert>
       )}
-      <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
-        {report.savedAt} · {report.provider || ''} {report.model || ''} · {report.algorithmVersion}
-      </Typography>
-      {report.narrative && <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', mb: 1 }}>{report.narrative}</Typography>}
-      {(report.findings || []).map((finding) => (
-        <Box key={finding.id} sx={{ mb: 1 }}>
-          <Typography variant="body2">{finding.text}</Typography>
-          {onViewEvidence && (
-            <Button size="small" onClick={() => onViewEvidence(finding)}>{t.resultsViewEvidence}</Button>
+      <Dialog open={viewOpen} onClose={() => setViewOpen(false)} fullWidth maxWidth="md">
+        <DialogTitle>{title}</DialogTitle>
+        <DialogContent dividers>
+          {incomplete && <Alert severity="warning" sx={{ mb: 2 }}>{t.resultsReportIncompleteHelp}</Alert>}
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+            {[report.savedAt, report.provider, report.model].filter(Boolean).join(' · ')}
+          </Typography>
+          {typeof report.narrative === 'string' && report.narrative.trim() && (
+            <Box sx={{ overflowWrap: 'anywhere', '& pre': { overflowX: 'auto' }, '& table': { display: 'block', overflowX: 'auto' } }}>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{report.narrative}</ReactMarkdown>
+            </Box>
           )}
-        </Box>
-      ))}
+          {findings.map((finding, index) => (
+            <Box key={finding.id || index} sx={{ mb: 1 }}>
+              <Typography variant="body2">{finding.text}</Typography>
+              {onViewEvidence && <Button size="small" onClick={() => { setViewOpen(false); onViewEvidence(finding); }}>{t.resultsViewEvidence}</Button>}
+            </Box>
+          ))}
+        </DialogContent>
+        <DialogActions><Button onClick={() => setViewOpen(false)}>{t.resultsClose}</Button></DialogActions>
+      </Dialog>
+      <Dialog open={deleteOpen} onClose={() => setDeleteOpen(false)} fullWidth maxWidth="xs">
+        <DialogTitle>{t.resultsDeleteReport}</DialogTitle>
+        <DialogContent><Typography variant="body2">{t.resultsDeleteReportConfirm}</Typography></DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDeleteOpen(false)}>{t.resultsCancel}</Button>
+          <Button color="error" variant="contained" onClick={() => { setDeleteOpen(false); setViewOpen(false); onDelete?.(); }}>{t.resultsDeleteReport}</Button>
+        </DialogActions>
+      </Dialog>
     </Paper>
   );
 }
@@ -193,7 +247,7 @@ export function ResultsFilterShell({ open, onClose, t, children, onReset }) {
   const mobile = useMediaQuery('(max-width:600px)');
   if (mobile) {
     return (
-      <Drawer anchor="bottom" open={open} onClose={onClose}>
+      <Drawer anchor="bottom" open={open} onClose={onClose} slotProps={{ paper: { sx: { maxHeight: '90dvh', borderRadius: '16px 16px 0 0' } } }}>
         <Box sx={{ p: 2 }}>
           <Typography variant="h6">{t.resultsFilters}</Typography>
           {children}
