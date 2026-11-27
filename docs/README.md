@@ -4,4 +4,4 @@ The template gallery that used to live here has moved to [sp-survey.org](https:/
 
 Templates for published papers are requested at [sp-survey.org/request-template](https://sp-survey.org/request-template).
 
-`public/project_templates/` is still copied here by `.github/workflows/deploy-pages.yml` so existing links to the raw template JSON files keep working.
+`templates.json` is a snapshot of the online template library; `node scripts/build-template-catalog.mjs` turns it into `TEMPLATES.md` and the template block of the main README. `demo-templates.gif` is the README demo.
