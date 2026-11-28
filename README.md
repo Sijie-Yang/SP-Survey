@@ -57,6 +57,8 @@ Open http://localhost:3000/studio and click **Start from the example**: a workin
 ## Template library
 
 <!-- templates:start (written by scripts/build-template-catalog.mjs; do not edit this list by hand) -->
+<p><img src="./docs/library.jpg" alt="The template library at a glance: 401 published studies by kind of place (Streets 157, Neighbourhoods and public spaces 64, Nature and green space 153, Building exteriors 34, Interiors 32, Window views 5), by what people judge, what they are shown, how they answer, where the study is run and who takes part" width="100%"></p>
+
 **401 published perception studies**, from 1876 to 2027, run in 42 countries and regions. Each one is rebuilt as a ready-to-run survey: [preview, use or download it at sp-survey.org/templates](https://sp-survey.org/templates). Snapshot of 2026-11-28.
 
 **Recently added:** Mental maps: ranking the 48 states by where you would like to live · Neighborhood Environment Walkability Scale, abbreviated (NEWS-A questionnaire) · Physical Activity Neighborhood Environment Scale (PANES, 17-item questionnaire)

@@ -14,7 +14,8 @@
 // here too. Files that never came from the library, and templates whose media
 // ship in this repository (the bundled demos), are left alone. It also writes catalog.json,
 // the light list that the Template Library page and the README are built from.
-// Afterwards run `node scripts/build-template-catalog.mjs` to refresh the README.
+// Afterwards run `node scripts/build-template-catalog.mjs` to refresh the README list and
+// `node scripts/build-readme-images.mjs` to redraw the two README images that carry its numbers.
 import { mkdir, readFile, readdir, rm, writeFile, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
