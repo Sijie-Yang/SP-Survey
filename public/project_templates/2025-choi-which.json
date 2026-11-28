@@ -1,0 +1,972 @@
+{
+ "id": "2025-choi-which",
+ "name": "Which Street Looks More Walkable? (Anyang and Seoul)",
+ "description": "Method replication: participants compare 30 pairs of street views from Anyang and Yeongdeungpo (Seoul) and click the one they perceive as more walkable, or Equal; the city is named under each image. The images are not the paper's stimuli (67 Google Street View views, 2015–2018, each facing front, back, left or right at random, fetched for this template).\nOriginal study: Choi & Kang (2025), \"Modeling and explaining perceived walkability in urban environments using street view images and explainable AI\", Spatial Information Research 33, 57. Street views in four directions were collected every 30 m in Anyang and Yeongdeungpo; 20,886 images stratified by road type and land use formed the survey set. On a web platform, 65 evaluators (25 in their 20s, 20 in their 30s–40s, 20 aged 50 or older) picked the more walkable image in sets of 50 pairs, each set with five control pairs; 174,118 valid choices (excluding \"equal\") trained an RSS-Swin model, and AutoML with SHAP explained the scores with segmented street elements.\nDifferences from the original study: (1) 67 new Google Street View images instead of the paper's 20,886, not stratified by road type and land use; (2) 30 pairs per participant without control pairs, instead of sets of 50 with five control pairs; (3) open to anyone, with questions on age group and gender.",
+ "author": "Choi & Kang",
+ "year": "2025",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "street view",
+  "pairwise",
+  "walkability",
+  "South Korea",
+  "source:paper",
+  "concept:walkability",
+  "scene:street",
+  "modality:street_view",
+  "task:pairwise",
+  "setting:online",
+  "participants:public",
+  "sample:lt100",
+  "country:South Korea",
+  "city:Anyang",
+  "city:Seoul"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1007/s41324-025-00656-7",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T11:58:20.434+00:00",
+ "updatedAt": "2026-11-28T11:58:27.363+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about_you_first",
+    "elements": [
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Your age group",
+      "choices": [
+       {
+        "text": "20s",
+        "value": "20s"
+       },
+       {
+        "text": "30s–40s",
+        "value": "30-40s"
+       },
+       {
+        "text": "50 or older",
+        "value": "50plus"
+       },
+       {
+        "text": "Under 20",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "walkable",
+      "type": "imagepicker",
+      "title": "Which street looks more walkable?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "contain",
+      "tieLabel": "Equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 30,
+      "mediaFolders": [
+       "korea"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   }
+  ],
+  "title": "Which Street Looks More Walkable? (Anyang and Seoul)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-bde0019da115a239",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Which Street Looks More Walkable? (Anyang and Seoul)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Which Street Looks More Walkable? (Anyang and Seoul)\",\n  \"description\": \"\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you_first\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"Your age group\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"20s\",\n        \"text\": \"20s\"\n       },\n       {\n        \"value\": \"30-40s\",\n        \"text\": \"30s–40s\"\n       },\n       {\n        \"value\": \"50plus\",\n        \"text\": \"50 or older\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Under 20\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"walkable\",\n      \"title\": \"Which street looks more walkable?\",\n      \"imageCount\": 2,\n      \"trialCount\": 30,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"korea\"\n      ],\n      \"allowTie\": true,\n      \"tieLabel\": \"Equal\",\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#2f6b5a;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.pair.many{grid-template-columns:repeat(var(--k),1fr);gap:8px}\n@media (max-width:640px){.pair.many{grid-template-columns:1fr}.pair.many .pick{aspect-ratio:16/9}}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.rng{accent-color:var(--accent)}.lks{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:6px;margin:6px 0 2px}.lk{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:9px 0;font:inherit;cursor:pointer}.lk[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}.q{margin-top:10px}.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}.scale.num{grid-template-columns:repeat(5,1fr)}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Anyang and Yeongdeungpo-gu (Seoul), Google Street View (© Google), front, back, left or right view. Pairwise question from Choi &amp; Kang, “Modeling and explaining perceived walkability in urban environments using street view images and explainable AI”, Spatial Information Research 33, 57 (2025), doi:10.1007/s41324-025-00656-7.</footer>\n<script>\n(function(){\n  var C={\"before\": [\"age_group\", \"gender\"], \"after\": [], \"tasks\": [\"walkable\"], \"minutes\": 5, \"alt\": \"Street view in South Korea\", \"labels\": {}, \"buttons\": [], \"minSec\": {}, \"words\": {}, \"captions\": {\"anyang_\": \"Anyang\", \"yeongdeungpo_\": \"Yeongdeungpo, Seoul\"}, \"pickOne\": null, \"heading\": \"Which street looks more walkable?\", \"intro\": \"<p>You will see <b>30 pairs</b> of street views from Anyang and the Yeongdeungpo district of Seoul, South Korea. Some look along the street and some face the side of the street. For each pair, click the street you perceive as <b>more walkable</b>. Choose <b>Equal</b> only if you really cannot tell them apart.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&C.pickOne.ask&&!filled(C.pickOne.name))return form(C.before,'About you',start);\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?((t.choices||q.choices||[]).filter(function(c){return !c.tie;}).length>2?'Set ':'Pair '):'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair'+(imgs.length>2?' many\" style=\"--k:'+imgs.length:'')+'\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else if(q.kind==='sliders'||/slidergroup$/.test(q.type)){\n      h+='<img class=\"shot\" style=\"max-height:'+((q.dimensions||[]).length>4?'32vh;position:sticky;top:0;z-index:2':(q.dimensions||[]).length>2?'40vh':'56vh')+'\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">';\n      var cu=(md[0]&&md[0].url)||'',cap=Object.keys(C.captions||{}).filter(function(x){return cu.indexOf(x)>=0;})[0];\n      if(cap)h+='<p style=\"margin:8px 0 0;color:var(--ink)\">'+C.captions[cap]+'</p>';\n      var BT=(C.buttons||[]).indexOf(n)>=0,W=(C.words||{})[n]||{};\n      if(BT)(q.dimensions||[]).forEach(function(d){var b='';for(var v=d.min;v<=d.max;v+=(d.step||1))b+='<button type=\"button\" class=\"lk\" data-d=\"'+esc(d.id)+'\" data-val=\"'+v+'\">'+esc(W[d.id]?W[d.id][v-d.min]:v)+'</button>';\n        h+='<div class=\"q\"><b>'+esc(d.label)+'</b><div class=\"lks\" style=\"--n:'+Math.round((d.max-d.min)/(d.step||1)+1)+'\">'+b+'</div><p style=\"display:flex;justify-content:space-between;margin:0;font-size:.85rem\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      else (q.dimensions||[]).forEach(function(d){h+='<div class=\"q\"><b>'+esc(d.label)+': <span id=\"v_'+esc(d.id)+'\">–</span></b><input type=\"range\" class=\"rng\" data-d=\"'+esc(d.id)+'\" min=\"'+d.min+'\" max=\"'+d.max+'\" step=\"'+(d.step||1)+'\" value=\"'+Math.round((d.min+d.max)/2)+'\" style=\"width:100%\"><p style=\"display:flex;justify-content:space-between;margin:0\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      h+='<div class=\"row\"><button class=\"btn\" id=\"next\" disabled>Next</button></div><p style=\"font-size:.85rem\">'+(BT?'Answer every line to continue.':'Move the slider to give your answer.')+'</p>';\n      app.innerHTML=h+'<div class=\"err\"></div>';\n      var vals={},rs=app.querySelectorAll('.rng'),nx=document.getElementById('next');\n      var MS=(C.minSec||{})[n]||0,t0=Date.now(),okT=!MS;\n      function gate(){nx.disabled=!(okT&&Object.keys(vals).length>=(q.dimensions||[]).length);}\n      if(MS){var tm=document.createElement('p');tm.className='tmr';tm.style.fontWeight='600';nx.parentNode.parentNode.insertBefore(tm,nx.parentNode);\n        var iv=setInterval(function(){var left=Math.ceil(MS-(Date.now()-t0)/1000);if(!document.body.contains(tm)){clearInterval(iv);return;}\n          if(left>0)tm.textContent='Please keep looking: '+left+' s';else{tm.textContent='';okT=true;clearInterval(iv);gate();}},250);}\n      if(BT){var nd=(q.dimensions||[]).length;app.querySelectorAll('.lk').forEach(function(b){b.onclick=function(){var d=b.getAttribute('data-d');vals[d]=Number(b.getAttribute('data-val'));\n        app.querySelectorAll('.lk[data-d=\"'+d+'\"]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});gate();};});}\n      rs.forEach(function(r){r.oninput=function(){vals[r.getAttribute('data-d')]=Number(r.value);document.getElementById('v_'+r.getAttribute('data-d')).textContent=r.value;gate();};});\n      nx.onclick=function(){nx.disabled=true;SPSite.answer(n,vals,{trial:k}).then(function(r){if(r&&r.ok===false){err(r.error);nx.disabled=false;return;}(done[n]=done[n]||{})[k]=true;nextStep();});};\n      window.scrollTo(0,0);return;\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      var words=!!(lab&&lab.some(function(x){return isNaN(Number(x));}));\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale'+(words?'':' num')+'\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(words?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T11:57:25.426Z",
+   "mediaFolders": [
+    "korea"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T11:57:25.426Z"
+  },
+  "description": "",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2025-choi-which/korea/anyang_02__23bd0d10-cf71-49d8-8655-6b50822ca62e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_02__23bd0d10-cf71-49d8-8655-6b50822ca62e.jpg",
+   "name": "anyang_02.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_02__23bd0d10-cf71-49d8-8655-6b50822ca62e.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 170661,
+   "uploaded_bytes": 170661,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_03__ebd4ed44-8819-4e90-bcd6-56f58f32f149.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_03__ebd4ed44-8819-4e90-bcd6-56f58f32f149.jpg",
+   "name": "anyang_03.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_03__ebd4ed44-8819-4e90-bcd6-56f58f32f149.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 181945,
+   "uploaded_bytes": 181945,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_04__41db84b5-9c94-4f30-b980-c0bf1377788a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_04__41db84b5-9c94-4f30-b980-c0bf1377788a.jpg",
+   "name": "anyang_04.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_04__41db84b5-9c94-4f30-b980-c0bf1377788a.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 174723,
+   "uploaded_bytes": 174723,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_05__f6e81071-3a19-4210-aaf7-53c62fb755b3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_05__f6e81071-3a19-4210-aaf7-53c62fb755b3.jpg",
+   "name": "anyang_05.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_05__f6e81071-3a19-4210-aaf7-53c62fb755b3.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 118286,
+   "uploaded_bytes": 118286,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_06__f09d247d-29b5-40c6-b462-9276950176f3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_06__f09d247d-29b5-40c6-b462-9276950176f3.jpg",
+   "name": "anyang_06.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_06__f09d247d-29b5-40c6-b462-9276950176f3.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 247064,
+   "uploaded_bytes": 247064,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_07__8ab0953f-b2d2-450a-940c-45ffd833cf7d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_07__8ab0953f-b2d2-450a-940c-45ffd833cf7d.jpg",
+   "name": "anyang_07.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_07__8ab0953f-b2d2-450a-940c-45ffd833cf7d.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 234695,
+   "uploaded_bytes": 234695,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_08__8b99d7dc-ebea-4ff3-8fc7-a5411e13f8b5.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_08__8b99d7dc-ebea-4ff3-8fc7-a5411e13f8b5.jpg",
+   "name": "anyang_08.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_08__8b99d7dc-ebea-4ff3-8fc7-a5411e13f8b5.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 200531,
+   "uploaded_bytes": 200531,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_09__edb293a8-70df-4156-9aef-a592cb9be2bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_09__edb293a8-70df-4156-9aef-a592cb9be2bf.jpg",
+   "name": "anyang_09.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_09__edb293a8-70df-4156-9aef-a592cb9be2bf.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 178762,
+   "uploaded_bytes": 178762,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_10__bd72eaa1-1b98-4eb0-afe4-b24354384c79.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_10__bd72eaa1-1b98-4eb0-afe4-b24354384c79.jpg",
+   "name": "anyang_10.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_10__bd72eaa1-1b98-4eb0-afe4-b24354384c79.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 234513,
+   "uploaded_bytes": 234513,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_11__21de761a-e39e-4bf2-b368-7b698c341af6.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_11__21de761a-e39e-4bf2-b368-7b698c341af6.jpg",
+   "name": "anyang_11.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_11__21de761a-e39e-4bf2-b368-7b698c341af6.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 231315,
+   "uploaded_bytes": 231315,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_12__cd37fcb7-60e1-4d41-a74d-ef350a1f9376.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_12__cd37fcb7-60e1-4d41-a74d-ef350a1f9376.jpg",
+   "name": "anyang_12.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_12__cd37fcb7-60e1-4d41-a74d-ef350a1f9376.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 205986,
+   "uploaded_bytes": 205986,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_13__fd72336c-4625-4bf2-8d0f-8a6aa532c36a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_13__fd72336c-4625-4bf2-8d0f-8a6aa532c36a.jpg",
+   "name": "anyang_13.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_13__fd72336c-4625-4bf2-8d0f-8a6aa532c36a.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 164053,
+   "uploaded_bytes": 164053,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_14__ef679211-438a-4cd8-92cc-be66cc4eb8d6.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_14__ef679211-438a-4cd8-92cc-be66cc4eb8d6.jpg",
+   "name": "anyang_14.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_14__ef679211-438a-4cd8-92cc-be66cc4eb8d6.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 187658,
+   "uploaded_bytes": 187658,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_15__8ca737eb-003f-4469-bcfa-b28f9d1857a9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_15__8ca737eb-003f-4469-bcfa-b28f9d1857a9.jpg",
+   "name": "anyang_15.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_15__8ca737eb-003f-4469-bcfa-b28f9d1857a9.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 186622,
+   "uploaded_bytes": 186622,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_16__9bbdd53e-0925-438f-a2ef-84ac70e112ea.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_16__9bbdd53e-0925-438f-a2ef-84ac70e112ea.jpg",
+   "name": "anyang_16.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_16__9bbdd53e-0925-438f-a2ef-84ac70e112ea.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 202733,
+   "uploaded_bytes": 202733,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_17__6a433151-3673-428c-a5d0-4adbbefaa765.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_17__6a433151-3673-428c-a5d0-4adbbefaa765.jpg",
+   "name": "anyang_17.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_17__6a433151-3673-428c-a5d0-4adbbefaa765.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 170202,
+   "uploaded_bytes": 170202,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_18__d415c11f-d464-4eef-8ec0-2ba69c7f78fd.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_18__d415c11f-d464-4eef-8ec0-2ba69c7f78fd.jpg",
+   "name": "anyang_18.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_18__d415c11f-d464-4eef-8ec0-2ba69c7f78fd.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 160265,
+   "uploaded_bytes": 160265,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_19__72150689-fecb-49f8-800c-f21249c567e9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_19__72150689-fecb-49f8-800c-f21249c567e9.jpg",
+   "name": "anyang_19.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_19__72150689-fecb-49f8-800c-f21249c567e9.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 290948,
+   "uploaded_bytes": 290948,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_20__cb4a985d-baee-411b-bae9-e953e8823d06.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_20__cb4a985d-baee-411b-bae9-e953e8823d06.jpg",
+   "name": "anyang_20.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_20__cb4a985d-baee-411b-bae9-e953e8823d06.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 166241,
+   "uploaded_bytes": 166241,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_21__46fff208-37a1-471d-8751-8a58f4bd9fff.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_21__46fff208-37a1-471d-8751-8a58f4bd9fff.jpg",
+   "name": "anyang_21.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_21__46fff208-37a1-471d-8751-8a58f4bd9fff.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 262232,
+   "uploaded_bytes": 262232,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_23__4fa866ed-644b-4662-9a55-cee3aea10a07.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_23__4fa866ed-644b-4662-9a55-cee3aea10a07.jpg",
+   "name": "anyang_23.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_23__4fa866ed-644b-4662-9a55-cee3aea10a07.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 225062,
+   "uploaded_bytes": 225062,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_24__23826103-c108-4e36-9eb2-46c0c0ecd127.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_24__23826103-c108-4e36-9eb2-46c0c0ecd127.jpg",
+   "name": "anyang_24.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_24__23826103-c108-4e36-9eb2-46c0c0ecd127.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 184295,
+   "uploaded_bytes": 184295,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_25__b92de7e7-7be3-430e-83e2-9560f0ddfa77.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_25__b92de7e7-7be3-430e-83e2-9560f0ddfa77.jpg",
+   "name": "anyang_25.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_25__b92de7e7-7be3-430e-83e2-9560f0ddfa77.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 210120,
+   "uploaded_bytes": 210120,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_26__eed270ac-387f-448e-ad1d-91c00c99aa8d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_26__eed270ac-387f-448e-ad1d-91c00c99aa8d.jpg",
+   "name": "anyang_26.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_26__eed270ac-387f-448e-ad1d-91c00c99aa8d.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 260493,
+   "uploaded_bytes": 260493,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_27__4081e15b-f409-4484-b7b6-1fa55388e169.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_27__4081e15b-f409-4484-b7b6-1fa55388e169.jpg",
+   "name": "anyang_27.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_27__4081e15b-f409-4484-b7b6-1fa55388e169.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 206550,
+   "uploaded_bytes": 206550,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_28__c387ffb6-2526-4630-a4e9-0c54b4bf3d5a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_28__c387ffb6-2526-4630-a4e9-0c54b4bf3d5a.jpg",
+   "name": "anyang_28.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_28__c387ffb6-2526-4630-a4e9-0c54b4bf3d5a.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 282840,
+   "uploaded_bytes": 282840,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_29__c38782ed-38aa-408d-b795-dfc200baea65.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_29__c38782ed-38aa-408d-b795-dfc200baea65.jpg",
+   "name": "anyang_29.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_29__c38782ed-38aa-408d-b795-dfc200baea65.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 162622,
+   "uploaded_bytes": 162622,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_30__375a3242-13b3-4227-88c9-18f87002b610.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_30__375a3242-13b3-4227-88c9-18f87002b610.jpg",
+   "name": "anyang_30.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_30__375a3242-13b3-4227-88c9-18f87002b610.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 220470,
+   "uploaded_bytes": 220470,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_31__33bb92ed-a051-4915-9c02-8c1aa76fec82.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_31__33bb92ed-a051-4915-9c02-8c1aa76fec82.jpg",
+   "name": "anyang_31.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_31__33bb92ed-a051-4915-9c02-8c1aa76fec82.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 208512,
+   "uploaded_bytes": 208512,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_32__0f6c2b6b-7ee3-4a2a-a337-cbdb488d7de7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_32__0f6c2b6b-7ee3-4a2a-a337-cbdb488d7de7.jpg",
+   "name": "anyang_32.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_32__0f6c2b6b-7ee3-4a2a-a337-cbdb488d7de7.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 144165,
+   "uploaded_bytes": 144165,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_33__cb44735d-eecb-4b61-9e0d-2221c391c416.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_33__cb44735d-eecb-4b61-9e0d-2221c391c416.jpg",
+   "name": "anyang_33.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_33__cb44735d-eecb-4b61-9e0d-2221c391c416.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 201552,
+   "uploaded_bytes": 201552,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_34__0fcb70ba-372e-42ad-a891-6bf8b18da2e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_34__0fcb70ba-372e-42ad-a891-6bf8b18da2e6.jpg",
+   "name": "anyang_34.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_34__0fcb70ba-372e-42ad-a891-6bf8b18da2e6.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 183069,
+   "uploaded_bytes": 183069,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/anyang_35__9175f8b1-bc2f-44b3-ae60-cbed94c447c0.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/anyang_35__9175f8b1-bc2f-44b3-ae60-cbed94c447c0.jpg",
+   "name": "anyang_35.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/anyang_35__9175f8b1-bc2f-44b3-ae60-cbed94c447c0.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 266627,
+   "uploaded_bytes": 266627,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_02__14074267-f014-4bf5-a692-25cf34e9001a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_02__14074267-f014-4bf5-a692-25cf34e9001a.jpg",
+   "name": "yeongdeungpo_02.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_02__14074267-f014-4bf5-a692-25cf34e9001a.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 144319,
+   "uploaded_bytes": 144319,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_03__e7967089-9b23-4927-a75c-b2b1a840890f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_03__e7967089-9b23-4927-a75c-b2b1a840890f.jpg",
+   "name": "yeongdeungpo_03.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_03__e7967089-9b23-4927-a75c-b2b1a840890f.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 168735,
+   "uploaded_bytes": 168735,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_04__ad87dc4c-406c-4ac3-8135-dedda8ef2d91.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_04__ad87dc4c-406c-4ac3-8135-dedda8ef2d91.jpg",
+   "name": "yeongdeungpo_04.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_04__ad87dc4c-406c-4ac3-8135-dedda8ef2d91.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 221087,
+   "uploaded_bytes": 221087,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_05__e03d0838-8a46-42b6-9366-56613d7bec0e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_05__e03d0838-8a46-42b6-9366-56613d7bec0e.jpg",
+   "name": "yeongdeungpo_05.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_05__e03d0838-8a46-42b6-9366-56613d7bec0e.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 189863,
+   "uploaded_bytes": 189863,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_06__35a71d1b-31af-4c76-b456-33e01c17f796.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_06__35a71d1b-31af-4c76-b456-33e01c17f796.jpg",
+   "name": "yeongdeungpo_06.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_06__35a71d1b-31af-4c76-b456-33e01c17f796.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 194813,
+   "uploaded_bytes": 194813,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_07__5e5972d8-5f8a-4fa8-8570-4f615c37f417.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_07__5e5972d8-5f8a-4fa8-8570-4f615c37f417.jpg",
+   "name": "yeongdeungpo_07.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_07__5e5972d8-5f8a-4fa8-8570-4f615c37f417.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 205275,
+   "uploaded_bytes": 205275,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_08__0a8657cc-66e9-4c91-8bac-9610c93a2b1b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_08__0a8657cc-66e9-4c91-8bac-9610c93a2b1b.jpg",
+   "name": "yeongdeungpo_08.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_08__0a8657cc-66e9-4c91-8bac-9610c93a2b1b.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 152841,
+   "uploaded_bytes": 152841,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_09__02b49007-33c9-4147-88c9-ad0845cf1ad8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_09__02b49007-33c9-4147-88c9-ad0845cf1ad8.jpg",
+   "name": "yeongdeungpo_09.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_09__02b49007-33c9-4147-88c9-ad0845cf1ad8.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 263619,
+   "uploaded_bytes": 263619,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_10__c264b43b-83ce-4a55-99d4-b3dbd55b27d3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_10__c264b43b-83ce-4a55-99d4-b3dbd55b27d3.jpg",
+   "name": "yeongdeungpo_10.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_10__c264b43b-83ce-4a55-99d4-b3dbd55b27d3.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 174027,
+   "uploaded_bytes": 174027,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_11__5496cf19-f291-446e-81b8-b3264359b223.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_11__5496cf19-f291-446e-81b8-b3264359b223.jpg",
+   "name": "yeongdeungpo_11.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_11__5496cf19-f291-446e-81b8-b3264359b223.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 176405,
+   "uploaded_bytes": 176405,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_12__337f3f10-1c66-41a6-8934-aba4740e4b77.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_12__337f3f10-1c66-41a6-8934-aba4740e4b77.jpg",
+   "name": "yeongdeungpo_12.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_12__337f3f10-1c66-41a6-8934-aba4740e4b77.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 187643,
+   "uploaded_bytes": 187643,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_13__aa18f48f-5ecd-4fdd-8999-6c0411c7c99c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_13__aa18f48f-5ecd-4fdd-8999-6c0411c7c99c.jpg",
+   "name": "yeongdeungpo_13.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_13__aa18f48f-5ecd-4fdd-8999-6c0411c7c99c.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 193754,
+   "uploaded_bytes": 193754,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_14__ee2e559c-a943-4231-a52c-0fce52ac1db1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_14__ee2e559c-a943-4231-a52c-0fce52ac1db1.jpg",
+   "name": "yeongdeungpo_14.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_14__ee2e559c-a943-4231-a52c-0fce52ac1db1.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 260101,
+   "uploaded_bytes": 260101,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_15__e4e6cd53-8a85-4b92-abcf-da6f2b538f40.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_15__e4e6cd53-8a85-4b92-abcf-da6f2b538f40.jpg",
+   "name": "yeongdeungpo_15.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_15__e4e6cd53-8a85-4b92-abcf-da6f2b538f40.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 158227,
+   "uploaded_bytes": 158227,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_16__d8cbd3b1-6160-489d-9b1f-7d0f6beae72d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_16__d8cbd3b1-6160-489d-9b1f-7d0f6beae72d.jpg",
+   "name": "yeongdeungpo_16.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_16__d8cbd3b1-6160-489d-9b1f-7d0f6beae72d.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 205079,
+   "uploaded_bytes": 205079,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_17__8e5b1808-0421-4c8a-a72a-372373f448ef.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_17__8e5b1808-0421-4c8a-a72a-372373f448ef.jpg",
+   "name": "yeongdeungpo_17.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_17__8e5b1808-0421-4c8a-a72a-372373f448ef.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 203268,
+   "uploaded_bytes": 203268,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_18__4393aa8b-f2f6-4923-b883-184018501799.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_18__4393aa8b-f2f6-4923-b883-184018501799.jpg",
+   "name": "yeongdeungpo_18.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_18__4393aa8b-f2f6-4923-b883-184018501799.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 124550,
+   "uploaded_bytes": 124550,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_19__cfc405e5-62db-484d-9410-db0ae7d0e25b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_19__cfc405e5-62db-484d-9410-db0ae7d0e25b.jpg",
+   "name": "yeongdeungpo_19.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_19__cfc405e5-62db-484d-9410-db0ae7d0e25b.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 204325,
+   "uploaded_bytes": 204325,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_20__13d93b14-bdfe-47b4-b086-ccbd8c7a8884.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_20__13d93b14-bdfe-47b4-b086-ccbd8c7a8884.jpg",
+   "name": "yeongdeungpo_20.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_20__13d93b14-bdfe-47b4-b086-ccbd8c7a8884.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 200401,
+   "uploaded_bytes": 200401,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_21__8eff8239-0409-41b3-b20d-b43d721d40c5.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_21__8eff8239-0409-41b3-b20d-b43d721d40c5.jpg",
+   "name": "yeongdeungpo_21.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_21__8eff8239-0409-41b3-b20d-b43d721d40c5.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 200747,
+   "uploaded_bytes": 200747,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_22__195f5969-5181-4240-a53a-2c67cfbbd29c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_22__195f5969-5181-4240-a53a-2c67cfbbd29c.jpg",
+   "name": "yeongdeungpo_22.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_22__195f5969-5181-4240-a53a-2c67cfbbd29c.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 182844,
+   "uploaded_bytes": 182844,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_23__76dbfb1a-0342-4b4a-90c3-622af33679e0.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_23__76dbfb1a-0342-4b4a-90c3-622af33679e0.jpg",
+   "name": "yeongdeungpo_23.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_23__76dbfb1a-0342-4b4a-90c3-622af33679e0.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 216193,
+   "uploaded_bytes": 216193,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_24__ae97d8f3-4d31-4f5c-91da-9ab7cdbaa53a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_24__ae97d8f3-4d31-4f5c-91da-9ab7cdbaa53a.jpg",
+   "name": "yeongdeungpo_24.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_24__ae97d8f3-4d31-4f5c-91da-9ab7cdbaa53a.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 159713,
+   "uploaded_bytes": 159713,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_25__cbc65d7d-da60-48e5-83d1-e67115ec49bc.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_25__cbc65d7d-da60-48e5-83d1-e67115ec49bc.jpg",
+   "name": "yeongdeungpo_25.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_25__cbc65d7d-da60-48e5-83d1-e67115ec49bc.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 177941,
+   "uploaded_bytes": 177941,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_26__e1a76b79-860b-462a-9a21-ec37aca66857.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_26__e1a76b79-860b-462a-9a21-ec37aca66857.jpg",
+   "name": "yeongdeungpo_26.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_26__e1a76b79-860b-462a-9a21-ec37aca66857.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 183352,
+   "uploaded_bytes": 183352,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_27__3969783b-65b3-45ab-85e0-760ef4fcf19d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_27__3969783b-65b3-45ab-85e0-760ef4fcf19d.jpg",
+   "name": "yeongdeungpo_27.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_27__3969783b-65b3-45ab-85e0-760ef4fcf19d.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 170152,
+   "uploaded_bytes": 170152,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_28__dfecbcfe-de92-479a-ab62-2752a03efc7d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_28__dfecbcfe-de92-479a-ab62-2752a03efc7d.jpg",
+   "name": "yeongdeungpo_28.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_28__dfecbcfe-de92-479a-ab62-2752a03efc7d.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 184098,
+   "uploaded_bytes": 184098,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_29__0d3fdcec-6df3-42be-bcb3-a594bc35ba8b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_29__0d3fdcec-6df3-42be-bcb3-a594bc35ba8b.jpg",
+   "name": "yeongdeungpo_29.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_29__0d3fdcec-6df3-42be-bcb3-a594bc35ba8b.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 169541,
+   "uploaded_bytes": 169541,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_30__4b04b6e3-aff7-44df-88b5-0183356e00ad.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_30__4b04b6e3-aff7-44df-88b5-0183356e00ad.jpg",
+   "name": "yeongdeungpo_30.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_30__4b04b6e3-aff7-44df-88b5-0183356e00ad.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 148001,
+   "uploaded_bytes": 148001,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_31__17871364-b174-4ba8-8ca4-e794e6c89815.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_31__17871364-b174-4ba8-8ca4-e794e6c89815.jpg",
+   "name": "yeongdeungpo_31.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_31__17871364-b174-4ba8-8ca4-e794e6c89815.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 225118,
+   "uploaded_bytes": 225118,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_32__4b02d523-4928-42e6-9368-d6d0a563dc74.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_32__4b02d523-4928-42e6-9368-d6d0a563dc74.jpg",
+   "name": "yeongdeungpo_32.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_32__4b02d523-4928-42e6-9368-d6d0a563dc74.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 110889,
+   "uploaded_bytes": 110889,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_33__204c0569-2158-4122-8e14-eac3234d181c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_33__204c0569-2158-4122-8e14-eac3234d181c.jpg",
+   "name": "yeongdeungpo_33.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_33__204c0569-2158-4122-8e14-eac3234d181c.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 196677,
+   "uploaded_bytes": 196677,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_34__14e2cd66-8a14-418b-b11f-490e953d5072.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_34__14e2cd66-8a14-418b-b11f-490e953d5072.jpg",
+   "name": "yeongdeungpo_34.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_34__14e2cd66-8a14-418b-b11f-490e953d5072.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 229424,
+   "uploaded_bytes": 229424,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-choi-which/korea/yeongdeungpo_35__5118f550-b3ef-4767-8fbd-788b9062d910.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-choi-which/korea/yeongdeungpo_35__5118f550-b3ef-4767-8fbd-788b9062d910.jpg",
+   "name": "yeongdeungpo_35.jpg",
+   "type": "image",
+   "folder": "korea",
+   "media_id": "templates/2025-choi-which/korea/yeongdeungpo_35__5118f550-b3ef-4767-8fbd-788b9062d910.jpg",
+   "logicalFolder": "korea",
+   "original_bytes": 141230,
+   "uploaded_bytes": 141230,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Modeling and explaining perceived walkability in urban environments using street view images and explainable AI",
+  "authors": [
+   "Choi J.",
+   "Kang Y."
+  ],
+  "year": 2025,
+  "venue": "Spatial Information Research",
+  "doi": "10.1007/s41324-025-00656-7",
+  "url": "https://doi.org/10.1007/s41324-025-00656-7"
+ }
+}

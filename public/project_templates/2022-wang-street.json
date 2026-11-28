@@ -1,0 +1,1008 @@
+{
+ "id": "2022-wang-street",
+ "name": "Street Safety in Dujiangyan: Pairwise Comparison",
+ "description": "Method replication: participants compare 30 pairs of street views from Dujiangyan (Sichuan), each shown as four directions (front, right, back, left) in a 2 × 2 grid, and click the picture that leaves them with a safer impression, or choose Tie; the images are not the paper's stimuli (68 re-fetched Baidu street view panoramas across the city, 2016–2023).\n\nOriginal study: Wang, Zeng, Li & Deng (2022), ISPRS International Journal of Geo-Information 11(9), 465. From 11,584 Baidu panoramas of Dujiangyan, a geographically even subset was built; each panorama's four views were joined in a 2 × 2 grid. On a crowdsourcing website, volunteers saw random pairs and answered \"Which picture leaves you with a safer impression?\" (win / loss / tie). TrueSkill and LambdaRank turned the clicks into safety scores, 15 experts then labelled 1,142 images, and a reinforcement-learning model predicted safety from segmentation-based features.\n\nDifferences from the original study: (1) newly fetched Baidu panoramas instead of the authors' images, which are not released; (2) a fixed 30 random pairs per participant instead of open-ended clicking on the website; (3) a Tie button is shown explicitly, and gender, age and familiarity with Dujiangyan are asked first; (4) the expert labelling and the prediction model are not part of the survey.",
+ "author": "Wang, Zeng, Li & Deng",
+ "year": "2022",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "safety",
+  "pairwise",
+  "street view",
+  "Dujiangyan",
+  "China",
+  "Baidu",
+  "source:paper",
+  "concept:safety",
+  "scene:street",
+  "modality:street_view",
+  "task:pairwise",
+  "setting:online",
+  "participants:public"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/ijgi11090465",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T08:43:08.337+00:00",
+ "updatedAt": "2026-11-28T10:32:54.863+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about_you_first",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "What is your gender?",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "How old are you?",
+      "choices": [
+       {
+        "text": "Under 18",
+        "value": "under_18"
+       },
+       {
+        "text": "18–30",
+        "value": "18_30"
+       },
+       {
+        "text": "31–44",
+        "value": "31_44"
+       },
+       {
+        "text": "45–59",
+        "value": "45_59"
+       },
+       {
+        "text": "60 or older",
+        "value": "60_plus"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "know_city",
+      "type": "radiogroup",
+      "title": "Do you know Dujiangyan?",
+      "choices": [
+       {
+        "text": "I live or have lived there",
+        "value": "live"
+       },
+       {
+        "text": "I have visited",
+        "value": "visited"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "safety",
+      "type": "imagepicker",
+      "title": "Which picture leaves you with a safer impression?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "contain",
+      "tieLabel": "Tie",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 30,
+      "mediaFolders": [
+       "dujiangyan"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   }
+  ],
+  "title": "Perceived Safety of Streets in Dujiangyan",
+  "locale": "en",
+  "spSite": {
+   "id": "site-39d0ab3e4b7090fc",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Perceived Safety of Streets in Dujiangyan</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Perceived Safety of Streets in Dujiangyan\",\n  \"description\": \"\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you_first\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"What is your gender?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"under_18\",\n        \"text\": \"Under 18\"\n       },\n       {\n        \"value\": \"18_30\",\n        \"text\": \"18–30\"\n       },\n       {\n        \"value\": \"31_44\",\n        \"text\": \"31–44\"\n       },\n       {\n        \"value\": \"45_59\",\n        \"text\": \"45–59\"\n       },\n       {\n        \"value\": \"60_plus\",\n        \"text\": \"60 or older\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"know_city\",\n      \"title\": \"Do you know Dujiangyan?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"live\",\n        \"text\": \"I live or have lived there\"\n       },\n       {\n        \"value\": \"visited\",\n        \"text\": \"I have visited\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"safety\",\n      \"title\": \"Which picture leaves you with a safer impression?\",\n      \"imageCount\": 2,\n      \"trialCount\": 30,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"dujiangyan\"\n      ],\n      \"allowTie\": true,\n      \"tieLabel\": \"Tie\",\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#2d5f7a;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.rng{accent-color:var(--accent)}.lks{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:6px;margin:6px 0 2px}.lk{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:9px 0;font:inherit;cursor:pointer}.lk[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}.q{margin-top:10px}.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}.scale.num{grid-template-columns:repeat(5,1fr)}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Dujiangyan city, Baidu street view (© Baidu). Task from Wang, Zeng, Li &amp; Deng, “A Complete Reinforcement-Learning-Based Framework for Urban-Safety Perception”, ISPRS International Journal of Geo-Information 11(9), 465 (2022), doi:10.3390/ijgi11090465.</footer>\n<script>\n(function(){\n  var C={\"before\": [\"gender\", \"age_group\", \"know_city\"], \"after\": [], \"tasks\": [\"safety\"], \"minutes\": 5, \"alt\": \"Street view in Dujiangyan, four directions\", \"labels\": {}, \"buttons\": [], \"minSec\": {}, \"words\": {}, \"captions\": {}, \"pickOne\": null, \"heading\": \"Which picture leaves you with a safer impression?\", \"intro\": \"<p>This study is about how safe the streets of <b>Dujiangyan</b> (Sichuan, China) look. Each picture shows one street location from four directions (front, right, back, left) in a 2 × 2 grid. You will see <b>30 pairs</b>. For each pair, click the picture that leaves you with a <b>safer impression</b>. If you cannot decide, choose <b>Tie</b>. Go with your first impression; the task takes about 5 minutes.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?'Pair ':'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else if(q.kind==='sliders'||/slidergroup$/.test(q.type)){\n      h+='<img class=\"shot\" style=\"max-height:'+((q.dimensions||[]).length>4?'32vh;position:sticky;top:0;z-index:2':(q.dimensions||[]).length>2?'40vh':'56vh')+'\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">';\n      var cu=(md[0]&&md[0].url)||'',cap=Object.keys(C.captions||{}).filter(function(x){return cu.indexOf(x)>=0;})[0];\n      if(cap)h+='<p style=\"margin:8px 0 0;color:var(--ink)\">'+C.captions[cap]+'</p>';\n      var BT=(C.buttons||[]).indexOf(n)>=0,W=(C.words||{})[n]||{};\n      if(BT)(q.dimensions||[]).forEach(function(d){var b='';for(var v=d.min;v<=d.max;v+=(d.step||1))b+='<button type=\"button\" class=\"lk\" data-d=\"'+esc(d.id)+'\" data-val=\"'+v+'\">'+esc(W[d.id]?W[d.id][v-d.min]:v)+'</button>';\n        h+='<div class=\"q\"><b>'+esc(d.label)+'</b><div class=\"lks\" style=\"--n:'+Math.round((d.max-d.min)/(d.step||1)+1)+'\">'+b+'</div><p style=\"display:flex;justify-content:space-between;margin:0;font-size:.85rem\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      else (q.dimensions||[]).forEach(function(d){h+='<div class=\"q\"><b>'+esc(d.label)+': <span id=\"v_'+esc(d.id)+'\">–</span></b><input type=\"range\" class=\"rng\" data-d=\"'+esc(d.id)+'\" min=\"'+d.min+'\" max=\"'+d.max+'\" step=\"'+(d.step||1)+'\" value=\"'+Math.round((d.min+d.max)/2)+'\" style=\"width:100%\"><p style=\"display:flex;justify-content:space-between;margin:0\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      h+='<div class=\"row\"><button class=\"btn\" id=\"next\" disabled>Next</button></div><p style=\"font-size:.85rem\">'+(BT?'Answer every line to continue.':'Move the slider to give your answer.')+'</p>';\n      app.innerHTML=h+'<div class=\"err\"></div>';\n      var vals={},rs=app.querySelectorAll('.rng'),nx=document.getElementById('next');\n      var MS=(C.minSec||{})[n]||0,t0=Date.now(),okT=!MS;\n      function gate(){nx.disabled=!(okT&&Object.keys(vals).length>=(q.dimensions||[]).length);}\n      if(MS){var tm=document.createElement('p');tm.className='tmr';tm.style.fontWeight='600';nx.parentNode.parentNode.insertBefore(tm,nx.parentNode);\n        var iv=setInterval(function(){var left=Math.ceil(MS-(Date.now()-t0)/1000);if(!document.body.contains(tm)){clearInterval(iv);return;}\n          if(left>0)tm.textContent='Please keep looking: '+left+' s';else{tm.textContent='';okT=true;clearInterval(iv);gate();}},250);}\n      if(BT){var nd=(q.dimensions||[]).length;app.querySelectorAll('.lk').forEach(function(b){b.onclick=function(){var d=b.getAttribute('data-d');vals[d]=Number(b.getAttribute('data-val'));\n        app.querySelectorAll('.lk[data-d=\"'+d+'\"]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});gate();};});}\n      rs.forEach(function(r){r.oninput=function(){vals[r.getAttribute('data-d')]=Number(r.value);document.getElementById('v_'+r.getAttribute('data-d')).textContent=r.value;gate();};});\n      nx.onclick=function(){nx.disabled=true;SPSite.answer(n,vals,{trial:k}).then(function(r){if(r&&r.ok===false){err(r.error);nx.disabled=false;return;}(done[n]=done[n]||{})[k]=true;nextStep();});};\n      window.scrollTo(0,0);return;\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      var words=!!(lab&&lab.some(function(x){return isNaN(Number(x));}));\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale'+(words?'':' num')+'\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(words?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T08:42:21.005Z",
+   "mediaFolders": [
+    "dujiangyan"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T08:42:21.005Z"
+  },
+  "description": "",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_001__316a47ab-01c8-42d5-a7e9-685bfbefde18.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_001__316a47ab-01c8-42d5-a7e9-685bfbefde18.jpg",
+   "name": "dj_001.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_001__316a47ab-01c8-42d5-a7e9-685bfbefde18.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 256976,
+   "uploaded_bytes": 256976,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_002__dd9cabef-6920-4774-ba33-e97b9a4d6a6c.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_002__dd9cabef-6920-4774-ba33-e97b9a4d6a6c.jpg",
+   "name": "dj_002.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_002__dd9cabef-6920-4774-ba33-e97b9a4d6a6c.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 353805,
+   "uploaded_bytes": 353805,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_003__6990e041-cbcf-493a-a8a9-0b422dcbea3c.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_003__6990e041-cbcf-493a-a8a9-0b422dcbea3c.jpg",
+   "name": "dj_003.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_003__6990e041-cbcf-493a-a8a9-0b422dcbea3c.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 245930,
+   "uploaded_bytes": 245930,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_004__f8748c14-3f29-4a16-bb8e-a8d5041ae239.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_004__f8748c14-3f29-4a16-bb8e-a8d5041ae239.jpg",
+   "name": "dj_004.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_004__f8748c14-3f29-4a16-bb8e-a8d5041ae239.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 350145,
+   "uploaded_bytes": 350145,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_005__1c599a31-a48f-48d8-9241-9979323ba9e9.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_005__1c599a31-a48f-48d8-9241-9979323ba9e9.jpg",
+   "name": "dj_005.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_005__1c599a31-a48f-48d8-9241-9979323ba9e9.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 202277,
+   "uploaded_bytes": 202277,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_006__6f3bf4b8-4182-4006-af88-a117674ec22a.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_006__6f3bf4b8-4182-4006-af88-a117674ec22a.jpg",
+   "name": "dj_006.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_006__6f3bf4b8-4182-4006-af88-a117674ec22a.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 337559,
+   "uploaded_bytes": 337559,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_007__9cb72041-0956-4600-8c18-38ae058afbef.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_007__9cb72041-0956-4600-8c18-38ae058afbef.jpg",
+   "name": "dj_007.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_007__9cb72041-0956-4600-8c18-38ae058afbef.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 206449,
+   "uploaded_bytes": 206449,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_008__44c66a7c-e80a-4244-a1b4-9e432d963126.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_008__44c66a7c-e80a-4244-a1b4-9e432d963126.jpg",
+   "name": "dj_008.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_008__44c66a7c-e80a-4244-a1b4-9e432d963126.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 305175,
+   "uploaded_bytes": 305175,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_009__e22df4ce-4ce8-4461-b51f-94d66456eff9.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_009__e22df4ce-4ce8-4461-b51f-94d66456eff9.jpg",
+   "name": "dj_009.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_009__e22df4ce-4ce8-4461-b51f-94d66456eff9.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 281435,
+   "uploaded_bytes": 281435,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_010__0a757705-3c96-4246-a71d-6ca347de34b5.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_010__0a757705-3c96-4246-a71d-6ca347de34b5.jpg",
+   "name": "dj_010.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_010__0a757705-3c96-4246-a71d-6ca347de34b5.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 157052,
+   "uploaded_bytes": 157052,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_011__e6013c26-636e-4a57-8067-caf760f33e38.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_011__e6013c26-636e-4a57-8067-caf760f33e38.jpg",
+   "name": "dj_011.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_011__e6013c26-636e-4a57-8067-caf760f33e38.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 306822,
+   "uploaded_bytes": 306822,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_012__2fdabe18-38b7-4492-8236-01af1b33dfe6.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_012__2fdabe18-38b7-4492-8236-01af1b33dfe6.jpg",
+   "name": "dj_012.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_012__2fdabe18-38b7-4492-8236-01af1b33dfe6.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 238131,
+   "uploaded_bytes": 238131,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_013__0e1af187-f310-4f54-b8cb-a02308effc17.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_013__0e1af187-f310-4f54-b8cb-a02308effc17.jpg",
+   "name": "dj_013.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_013__0e1af187-f310-4f54-b8cb-a02308effc17.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 280418,
+   "uploaded_bytes": 280418,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_014__fccc1193-2d8f-479e-a1b1-00a6bdbab2e0.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_014__fccc1193-2d8f-479e-a1b1-00a6bdbab2e0.jpg",
+   "name": "dj_014.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_014__fccc1193-2d8f-479e-a1b1-00a6bdbab2e0.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 245017,
+   "uploaded_bytes": 245017,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_015__3aaf2424-9e02-4673-a9f8-3664668199e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_015__3aaf2424-9e02-4673-a9f8-3664668199e6.jpg",
+   "name": "dj_015.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_015__3aaf2424-9e02-4673-a9f8-3664668199e6.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 141829,
+   "uploaded_bytes": 141829,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_016__0fbd5ce9-e320-40c1-ba8d-9519d8d7f836.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_016__0fbd5ce9-e320-40c1-ba8d-9519d8d7f836.jpg",
+   "name": "dj_016.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_016__0fbd5ce9-e320-40c1-ba8d-9519d8d7f836.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 358719,
+   "uploaded_bytes": 358719,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_017__6fb7056d-320d-4f10-8e5a-3c951d9e5d5f.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_017__6fb7056d-320d-4f10-8e5a-3c951d9e5d5f.jpg",
+   "name": "dj_017.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_017__6fb7056d-320d-4f10-8e5a-3c951d9e5d5f.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 210241,
+   "uploaded_bytes": 210241,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_018__a720c220-699f-4dbb-98ee-a187ba3d7219.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_018__a720c220-699f-4dbb-98ee-a187ba3d7219.jpg",
+   "name": "dj_018.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_018__a720c220-699f-4dbb-98ee-a187ba3d7219.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 273780,
+   "uploaded_bytes": 273780,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_019__7dca9f8d-51fe-401b-87c0-16ac4a27dde0.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_019__7dca9f8d-51fe-401b-87c0-16ac4a27dde0.jpg",
+   "name": "dj_019.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_019__7dca9f8d-51fe-401b-87c0-16ac4a27dde0.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 323699,
+   "uploaded_bytes": 323699,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_020__559de739-7e65-4440-a4ec-1fb140a8f351.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_020__559de739-7e65-4440-a4ec-1fb140a8f351.jpg",
+   "name": "dj_020.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_020__559de739-7e65-4440-a4ec-1fb140a8f351.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 228105,
+   "uploaded_bytes": 228105,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_021__e4c6a519-1b4c-44a1-b35e-672ff467f872.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_021__e4c6a519-1b4c-44a1-b35e-672ff467f872.jpg",
+   "name": "dj_021.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_021__e4c6a519-1b4c-44a1-b35e-672ff467f872.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 226548,
+   "uploaded_bytes": 226548,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_022__a70e595e-9feb-4540-a8fe-520be197f061.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_022__a70e595e-9feb-4540-a8fe-520be197f061.jpg",
+   "name": "dj_022.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_022__a70e595e-9feb-4540-a8fe-520be197f061.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 223639,
+   "uploaded_bytes": 223639,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_024__5136ec14-1dbe-4bbd-bf2e-0ee7a8b7971c.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_024__5136ec14-1dbe-4bbd-bf2e-0ee7a8b7971c.jpg",
+   "name": "dj_024.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_024__5136ec14-1dbe-4bbd-bf2e-0ee7a8b7971c.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 295589,
+   "uploaded_bytes": 295589,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_025__3f718cc7-5d6d-44f2-9db2-534a7947d1ce.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_025__3f718cc7-5d6d-44f2-9db2-534a7947d1ce.jpg",
+   "name": "dj_025.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_025__3f718cc7-5d6d-44f2-9db2-534a7947d1ce.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 263974,
+   "uploaded_bytes": 263974,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_026__70c0aa0a-37fe-4952-8a48-8828261d4923.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_026__70c0aa0a-37fe-4952-8a48-8828261d4923.jpg",
+   "name": "dj_026.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_026__70c0aa0a-37fe-4952-8a48-8828261d4923.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 191661,
+   "uploaded_bytes": 191661,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_027__5f4bee23-1ef4-4bb3-b1ae-a2ffece5ee30.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_027__5f4bee23-1ef4-4bb3-b1ae-a2ffece5ee30.jpg",
+   "name": "dj_027.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_027__5f4bee23-1ef4-4bb3-b1ae-a2ffece5ee30.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 268580,
+   "uploaded_bytes": 268580,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_028__c1408479-b86e-48f7-ab8d-e5b6e13e726f.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_028__c1408479-b86e-48f7-ab8d-e5b6e13e726f.jpg",
+   "name": "dj_028.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_028__c1408479-b86e-48f7-ab8d-e5b6e13e726f.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 277961,
+   "uploaded_bytes": 277961,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_029__a617e494-4029-49a0-abae-7e6428014418.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_029__a617e494-4029-49a0-abae-7e6428014418.jpg",
+   "name": "dj_029.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_029__a617e494-4029-49a0-abae-7e6428014418.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 272596,
+   "uploaded_bytes": 272596,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_030__c0d084cf-1d1f-4347-a426-ba3645df9ff4.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_030__c0d084cf-1d1f-4347-a426-ba3645df9ff4.jpg",
+   "name": "dj_030.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_030__c0d084cf-1d1f-4347-a426-ba3645df9ff4.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 305571,
+   "uploaded_bytes": 305571,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_031__da011682-3d7d-49ec-87bf-b37b794942ad.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_031__da011682-3d7d-49ec-87bf-b37b794942ad.jpg",
+   "name": "dj_031.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_031__da011682-3d7d-49ec-87bf-b37b794942ad.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 250808,
+   "uploaded_bytes": 250808,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_032__4b405915-527e-4a77-a525-d1bc2b76d2df.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_032__4b405915-527e-4a77-a525-d1bc2b76d2df.jpg",
+   "name": "dj_032.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_032__4b405915-527e-4a77-a525-d1bc2b76d2df.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 258317,
+   "uploaded_bytes": 258317,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_033__4c9281c7-e3fa-4ed9-9123-3dd8ab6d3116.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_033__4c9281c7-e3fa-4ed9-9123-3dd8ab6d3116.jpg",
+   "name": "dj_033.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_033__4c9281c7-e3fa-4ed9-9123-3dd8ab6d3116.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 149977,
+   "uploaded_bytes": 149977,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_034__40ea98c6-2403-4969-8009-4c64b19963ed.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_034__40ea98c6-2403-4969-8009-4c64b19963ed.jpg",
+   "name": "dj_034.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_034__40ea98c6-2403-4969-8009-4c64b19963ed.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 273195,
+   "uploaded_bytes": 273195,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_035__9b78f868-e5cf-497c-a932-d1eeb70e1594.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_035__9b78f868-e5cf-497c-a932-d1eeb70e1594.jpg",
+   "name": "dj_035.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_035__9b78f868-e5cf-497c-a932-d1eeb70e1594.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 248018,
+   "uploaded_bytes": 248018,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_036__60727b05-34c0-43d3-891a-be42cc099299.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_036__60727b05-34c0-43d3-891a-be42cc099299.jpg",
+   "name": "dj_036.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_036__60727b05-34c0-43d3-891a-be42cc099299.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 222493,
+   "uploaded_bytes": 222493,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_037__18774279-ebc7-417c-b9f7-235231547d9b.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_037__18774279-ebc7-417c-b9f7-235231547d9b.jpg",
+   "name": "dj_037.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_037__18774279-ebc7-417c-b9f7-235231547d9b.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 244422,
+   "uploaded_bytes": 244422,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_039__2ea008ea-0e09-4270-87d6-748870a8d2a7.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_039__2ea008ea-0e09-4270-87d6-748870a8d2a7.jpg",
+   "name": "dj_039.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_039__2ea008ea-0e09-4270-87d6-748870a8d2a7.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 224254,
+   "uploaded_bytes": 224254,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_040__5aa69eb7-1637-437f-8f52-3457ca9d467b.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_040__5aa69eb7-1637-437f-8f52-3457ca9d467b.jpg",
+   "name": "dj_040.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_040__5aa69eb7-1637-437f-8f52-3457ca9d467b.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 258255,
+   "uploaded_bytes": 258255,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_041__3513164b-5049-4a82-9f96-d42129c2ab80.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_041__3513164b-5049-4a82-9f96-d42129c2ab80.jpg",
+   "name": "dj_041.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_041__3513164b-5049-4a82-9f96-d42129c2ab80.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 281852,
+   "uploaded_bytes": 281852,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_042__87847466-2976-4b39-90c6-6500078c570d.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_042__87847466-2976-4b39-90c6-6500078c570d.jpg",
+   "name": "dj_042.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_042__87847466-2976-4b39-90c6-6500078c570d.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 226993,
+   "uploaded_bytes": 226993,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_043__fddb3e5c-7841-49df-9d1b-a356a28ab0bd.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_043__fddb3e5c-7841-49df-9d1b-a356a28ab0bd.jpg",
+   "name": "dj_043.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_043__fddb3e5c-7841-49df-9d1b-a356a28ab0bd.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 277132,
+   "uploaded_bytes": 277132,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_044__cddb6e88-24ee-41c7-8869-68cd0568e291.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_044__cddb6e88-24ee-41c7-8869-68cd0568e291.jpg",
+   "name": "dj_044.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_044__cddb6e88-24ee-41c7-8869-68cd0568e291.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 270255,
+   "uploaded_bytes": 270255,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_045__034fbffb-4839-41bd-afde-7064deb25fa4.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_045__034fbffb-4839-41bd-afde-7064deb25fa4.jpg",
+   "name": "dj_045.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_045__034fbffb-4839-41bd-afde-7064deb25fa4.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 190490,
+   "uploaded_bytes": 190490,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_046__3e40339f-78c5-44a1-bc03-d1a2f518961e.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_046__3e40339f-78c5-44a1-bc03-d1a2f518961e.jpg",
+   "name": "dj_046.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_046__3e40339f-78c5-44a1-bc03-d1a2f518961e.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 166138,
+   "uploaded_bytes": 166138,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_047__7b306eb0-e2a0-4e73-954a-e80efaf90817.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_047__7b306eb0-e2a0-4e73-954a-e80efaf90817.jpg",
+   "name": "dj_047.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_047__7b306eb0-e2a0-4e73-954a-e80efaf90817.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 213517,
+   "uploaded_bytes": 213517,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_048__d8308c2d-e191-4db8-b41c-196059a7bc11.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_048__d8308c2d-e191-4db8-b41c-196059a7bc11.jpg",
+   "name": "dj_048.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_048__d8308c2d-e191-4db8-b41c-196059a7bc11.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 259826,
+   "uploaded_bytes": 259826,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_049__1bcedce2-1e41-4075-8787-606a718cf3c7.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_049__1bcedce2-1e41-4075-8787-606a718cf3c7.jpg",
+   "name": "dj_049.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_049__1bcedce2-1e41-4075-8787-606a718cf3c7.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 211226,
+   "uploaded_bytes": 211226,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_050__8918d11a-6b56-4494-bc7f-ed7241bc067f.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_050__8918d11a-6b56-4494-bc7f-ed7241bc067f.jpg",
+   "name": "dj_050.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_050__8918d11a-6b56-4494-bc7f-ed7241bc067f.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 198746,
+   "uploaded_bytes": 198746,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_051__472c1d95-8882-4c4f-91b3-5fd522634e8c.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_051__472c1d95-8882-4c4f-91b3-5fd522634e8c.jpg",
+   "name": "dj_051.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_051__472c1d95-8882-4c4f-91b3-5fd522634e8c.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 236182,
+   "uploaded_bytes": 236182,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_052__924cb277-92db-4888-bf53-43fd369649ce.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_052__924cb277-92db-4888-bf53-43fd369649ce.jpg",
+   "name": "dj_052.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_052__924cb277-92db-4888-bf53-43fd369649ce.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 278673,
+   "uploaded_bytes": 278673,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_053__6a37cf35-0c31-41bc-9edd-701802229661.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_053__6a37cf35-0c31-41bc-9edd-701802229661.jpg",
+   "name": "dj_053.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_053__6a37cf35-0c31-41bc-9edd-701802229661.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 174604,
+   "uploaded_bytes": 174604,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_054__2e7f880e-987c-4620-87a2-0d7837fe63e2.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_054__2e7f880e-987c-4620-87a2-0d7837fe63e2.jpg",
+   "name": "dj_054.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_054__2e7f880e-987c-4620-87a2-0d7837fe63e2.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 259146,
+   "uploaded_bytes": 259146,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_055__16773284-9aa3-4ac2-ab1d-0506a10989c4.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_055__16773284-9aa3-4ac2-ab1d-0506a10989c4.jpg",
+   "name": "dj_055.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_055__16773284-9aa3-4ac2-ab1d-0506a10989c4.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 216127,
+   "uploaded_bytes": 216127,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_056__52698402-c3ac-4188-9122-b8e24956f7b9.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_056__52698402-c3ac-4188-9122-b8e24956f7b9.jpg",
+   "name": "dj_056.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_056__52698402-c3ac-4188-9122-b8e24956f7b9.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 285765,
+   "uploaded_bytes": 285765,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_057__e2de8177-1654-4ae8-9505-35e16ab79157.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_057__e2de8177-1654-4ae8-9505-35e16ab79157.jpg",
+   "name": "dj_057.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_057__e2de8177-1654-4ae8-9505-35e16ab79157.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 228961,
+   "uploaded_bytes": 228961,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_058__07106a04-f3c8-4840-8e27-edb97c256418.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_058__07106a04-f3c8-4840-8e27-edb97c256418.jpg",
+   "name": "dj_058.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_058__07106a04-f3c8-4840-8e27-edb97c256418.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 237529,
+   "uploaded_bytes": 237529,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_059__7f53dae1-c3ce-404c-bbdd-60aba6c24baa.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_059__7f53dae1-c3ce-404c-bbdd-60aba6c24baa.jpg",
+   "name": "dj_059.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_059__7f53dae1-c3ce-404c-bbdd-60aba6c24baa.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 277126,
+   "uploaded_bytes": 277126,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_060__bed1a86e-023a-491f-a03b-43f4142f1309.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_060__bed1a86e-023a-491f-a03b-43f4142f1309.jpg",
+   "name": "dj_060.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_060__bed1a86e-023a-491f-a03b-43f4142f1309.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 218985,
+   "uploaded_bytes": 218985,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_061__68693d2b-4eb7-4f12-9340-17f9a69ca1f1.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_061__68693d2b-4eb7-4f12-9340-17f9a69ca1f1.jpg",
+   "name": "dj_061.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_061__68693d2b-4eb7-4f12-9340-17f9a69ca1f1.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 182995,
+   "uploaded_bytes": 182995,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_062__27370004-4916-4136-97bd-fec5471a08f6.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_062__27370004-4916-4136-97bd-fec5471a08f6.jpg",
+   "name": "dj_062.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_062__27370004-4916-4136-97bd-fec5471a08f6.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 218799,
+   "uploaded_bytes": 218799,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_063__10e4e252-77d0-4b49-a909-625ac1535a90.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_063__10e4e252-77d0-4b49-a909-625ac1535a90.jpg",
+   "name": "dj_063.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_063__10e4e252-77d0-4b49-a909-625ac1535a90.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 198744,
+   "uploaded_bytes": 198744,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_064__ad4d59ad-016b-4ce5-ba4c-61da2e01545d.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_064__ad4d59ad-016b-4ce5-ba4c-61da2e01545d.jpg",
+   "name": "dj_064.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_064__ad4d59ad-016b-4ce5-ba4c-61da2e01545d.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 242124,
+   "uploaded_bytes": 242124,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_065__eb86ffa2-b7ce-41df-bd21-ccf1b480b983.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_065__eb86ffa2-b7ce-41df-bd21-ccf1b480b983.jpg",
+   "name": "dj_065.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_065__eb86ffa2-b7ce-41df-bd21-ccf1b480b983.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 287884,
+   "uploaded_bytes": 287884,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_066__233f251d-934c-464f-a8de-5b2987b9196e.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_066__233f251d-934c-464f-a8de-5b2987b9196e.jpg",
+   "name": "dj_066.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_066__233f251d-934c-464f-a8de-5b2987b9196e.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 231550,
+   "uploaded_bytes": 231550,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_067__b41ebbfa-4b9e-416e-ba38-6d89cd97acfc.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_067__b41ebbfa-4b9e-416e-ba38-6d89cd97acfc.jpg",
+   "name": "dj_067.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_067__b41ebbfa-4b9e-416e-ba38-6d89cd97acfc.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 196716,
+   "uploaded_bytes": 196716,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_068__7075ec01-7e5a-456e-9378-dd83d379b236.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_068__7075ec01-7e5a-456e-9378-dd83d379b236.jpg",
+   "name": "dj_068.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_068__7075ec01-7e5a-456e-9378-dd83d379b236.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 254139,
+   "uploaded_bytes": 254139,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_069__2e5671a3-63f5-452d-840e-1ae8a429f5a5.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_069__2e5671a3-63f5-452d-840e-1ae8a429f5a5.jpg",
+   "name": "dj_069.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_069__2e5671a3-63f5-452d-840e-1ae8a429f5a5.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 212731,
+   "uploaded_bytes": 212731,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-wang-street/dujiangyan/dj_070__edd8b65f-e5c5-481d-aadb-4a7fe2a23667.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-wang-street/dujiangyan/dj_070__edd8b65f-e5c5-481d-aadb-4a7fe2a23667.jpg",
+   "name": "dj_070.jpg",
+   "type": "image",
+   "folder": "dujiangyan",
+   "media_id": "templates/2022-wang-street/dujiangyan/dj_070__edd8b65f-e5c5-481d-aadb-4a7fe2a23667.jpg",
+   "logicalFolder": "dujiangyan",
+   "original_bytes": 187969,
+   "uploaded_bytes": 187969,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "A Complete Reinforcement-Learning-Based Framework for Urban-Safety Perception",
+  "authors": [
+   "Yaxuan Wang",
+   "Zhixin Zeng",
+   "Qiushan Li",
+   "Yingrui Deng"
+  ],
+  "year": 2022,
+  "venue": "ISPRS International Journal of Geo-Information",
+  "doi": "10.3390/ijgi11090465",
+  "url": "https://doi.org/10.3390/ijgi11090465"
+ }
+}

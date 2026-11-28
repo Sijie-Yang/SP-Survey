@@ -1,0 +1,1495 @@
+{
+ "id": "2026-gao-walking",
+ "name": "Walking to School in Xi'an: Children's Five Pairwise Questions",
+ "description": "Method replication: primary school children (grades 1–6) compare pairs of Xi'an street views on the five walking needs used in the paper (feasibility, accessibility, safety, comfort, pleasurability), 12 pairs each, 60 forced choices in all as in the paper, after answering how often and with whom they walk to school; the images are not the paper's stimuli (98 re-fetched Baidu street views of Xi'an's six core districts, 2019–2024, camera tilted slightly down towards a child's view).\n\nOriginal study: Gao, Wang & Wang (2026), EPJ Data Science 15, 57. Pupils in grades 1–6 in Xi'an's six core urban districts completed, on tablets during a field survey (September–November 2024), a SurveyMonkey pairwise experiment with 240 Baidu street scenes (four directions per point, pitch adjusted to a child's eye level), making 60 forced choices across the five dimensions of Alfonzo's hierarchy of walking needs. Elo scores trained a CNN, and XGBoost–SHAP related perceived and built-environment factors to weekly walking frequency.\n\nDifferences from the original study: (1) newly fetched Baidu street views instead of the authors' 240 images, which are not released; (2) the paper gives only the definitions of the five dimensions, so the child-friendly question wording is written for this template and the definitions are shown under each question; (3) 12 pairs per dimension, since the paper does not report how the 60 choices were split; (4) background questions (grade, gender, walking days, companions) follow the paper's variables but are worded for this template.",
+ "author": "Gao, Wang & Wang",
+ "year": "2026",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "children",
+  "walking to school",
+  "walkability",
+  "safety",
+  "pairwise",
+  "street view",
+  "Xi'an",
+  "China",
+  "Baidu",
+  "source:paper",
+  "modality:street_view",
+  "task:pairwise",
+  "concept:walkability",
+  "concept:safety",
+  "concept:comfort",
+  "participants:students",
+  "country:China",
+  "city:Xi'an"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1140/epjds/s13688-026-00621-w",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T09:49:04.174+00:00",
+ "updatedAt": "2026-11-28T09:50:23.346+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about_you_first",
+    "elements": [
+     {
+      "name": "grade",
+      "type": "radiogroup",
+      "title": "Which grade are you in?",
+      "choices": [
+       {
+        "text": "Grade 1",
+        "value": "1"
+       },
+       {
+        "text": "Grade 2",
+        "value": "2"
+       },
+       {
+        "text": "Grade 3",
+        "value": "3"
+       },
+       {
+        "text": "Grade 4",
+        "value": "4"
+       },
+       {
+        "text": "Grade 5",
+        "value": "5"
+       },
+       {
+        "text": "Grade 6",
+        "value": "6"
+       },
+       {
+        "text": "I am an adult",
+        "value": "adult"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Are you a boy or a girl?",
+      "choices": [
+       {
+        "text": "Girl",
+        "value": "girl"
+       },
+       {
+        "text": "Boy",
+        "value": "boy"
+       },
+       {
+        "text": "Prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "walk_days",
+      "type": "radiogroup",
+      "title": "On how many days a week do you walk to or from school?",
+      "choices": [
+       {
+        "text": "Never",
+        "value": "0"
+       },
+       {
+        "text": "1–2 days",
+        "value": "1"
+       },
+       {
+        "text": "3–4 days",
+        "value": "3"
+       },
+       {
+        "text": "Every school day",
+        "value": "5"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "walk_with",
+      "type": "radiogroup",
+      "title": "When you walk to school, who do you usually walk with?",
+      "choices": [
+       {
+        "text": "Alone",
+        "value": "alone"
+       },
+       {
+        "text": "With parents or other adults",
+        "value": "parents"
+       },
+       {
+        "text": "With friends or classmates",
+        "value": "peers"
+       },
+       {
+        "text": "I do not walk to school",
+        "value": "no_walk"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "feasibility",
+      "type": "imagepicker",
+      "title": "Which street looks easier to walk along, with fewer things blocking the way?",
+      "choices": [],
+      "imageFit": "contain",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 12,
+      "description": "Feasibility: no physical barriers to walking.",
+      "mediaFolders": [
+       "xian"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_2",
+    "elements": [
+     {
+      "name": "accessibility",
+      "type": "imagepicker",
+      "title": "Which street looks like a more direct and better-connected way to get to school?",
+      "choices": [],
+      "imageFit": "contain",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 12,
+      "description": "Accessibility: connected, direct routes.",
+      "mediaFolders": [
+       "xian"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_3",
+    "elements": [
+     {
+      "name": "safety",
+      "type": "imagepicker",
+      "title": "On which street would you feel safer from traffic and from strangers?",
+      "choices": [],
+      "imageFit": "contain",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 12,
+      "description": "Safety: traffic and social risks.",
+      "mediaFolders": [
+       "xian"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_4",
+    "elements": [
+     {
+      "name": "comfort",
+      "type": "imagepicker",
+      "title": "Which street looks more comfortable to walk on (good pavement, clean)?",
+      "choices": [],
+      "imageFit": "contain",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 12,
+      "description": "Comfort: quality of the walking space.",
+      "mediaFolders": [
+       "xian"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_5",
+    "elements": [
+     {
+      "name": "pleasurability",
+      "type": "imagepicker",
+      "title": "Which street looks more interesting and fun to walk along, with more chances to meet people?",
+      "choices": [],
+      "imageFit": "contain",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 12,
+      "description": "Pleasurability: visual interest and social interaction.",
+      "mediaFolders": [
+       "xian"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   }
+  ],
+  "title": "Walking to School in Xi'an: Children's View of Streets",
+  "locale": "en",
+  "spSite": {
+   "id": "site-61688ffd6dd9004d",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Walking to School in Xi&#x27;an: Children&#x27;s View of Streets</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Walking to School in Xi'an: Children's View of Streets\",\n  \"description\": \"\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you_first\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"grade\",\n      \"title\": \"Which grade are you in?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"1\",\n        \"text\": \"Grade 1\"\n       },\n       {\n        \"value\": \"2\",\n        \"text\": \"Grade 2\"\n       },\n       {\n        \"value\": \"3\",\n        \"text\": \"Grade 3\"\n       },\n       {\n        \"value\": \"4\",\n        \"text\": \"Grade 4\"\n       },\n       {\n        \"value\": \"5\",\n        \"text\": \"Grade 5\"\n       },\n       {\n        \"value\": \"6\",\n        \"text\": \"Grade 6\"\n       },\n       {\n        \"value\": \"adult\",\n        \"text\": \"I am an adult\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Are you a boy or a girl?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"girl\",\n        \"text\": \"Girl\"\n       },\n       {\n        \"value\": \"boy\",\n        \"text\": \"Boy\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"walk_days\",\n      \"title\": \"On how many days a week do you walk to or from school?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"0\",\n        \"text\": \"Never\"\n       },\n       {\n        \"value\": \"1\",\n        \"text\": \"1–2 days\"\n       },\n       {\n        \"value\": \"3\",\n        \"text\": \"3–4 days\"\n       },\n       {\n        \"value\": \"5\",\n        \"text\": \"Every school day\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"walk_with\",\n      \"title\": \"When you walk to school, who do you usually walk with?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"alone\",\n        \"text\": \"Alone\"\n       },\n       {\n        \"value\": \"parents\",\n        \"text\": \"With parents or other adults\"\n       },\n       {\n        \"value\": \"peers\",\n        \"text\": \"With friends or classmates\"\n       },\n       {\n        \"value\": \"no_walk\",\n        \"text\": \"I do not walk to school\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"feasibility\",\n      \"title\": \"Which street looks easier to walk along, with fewer things blocking the way?\",\n      \"description\": \"Feasibility: no physical barriers to walking.\",\n      \"imageCount\": 2,\n      \"trialCount\": 12,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"xian\"\n      ],\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_2\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"accessibility\",\n      \"title\": \"Which street looks like a more direct and better-connected way to get to school?\",\n      \"description\": \"Accessibility: connected, direct routes.\",\n      \"imageCount\": 2,\n      \"trialCount\": 12,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"xian\"\n      ],\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_3\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"safety\",\n      \"title\": \"On which street would you feel safer from traffic and from strangers?\",\n      \"description\": \"Safety: traffic and social risks.\",\n      \"imageCount\": 2,\n      \"trialCount\": 12,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"xian\"\n      ],\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_4\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"comfort\",\n      \"title\": \"Which street looks more comfortable to walk on (good pavement, clean)?\",\n      \"description\": \"Comfort: quality of the walking space.\",\n      \"imageCount\": 2,\n      \"trialCount\": 12,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"xian\"\n      ],\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_5\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"pleasurability\",\n      \"title\": \"Which street looks more interesting and fun to walk along, with more chances to meet people?\",\n      \"description\": \"Pleasurability: visual interest and social interaction.\",\n      \"imageCount\": 2,\n      \"trialCount\": 12,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"xian\"\n      ],\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#d17a22;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.rng{accent-color:var(--accent)}.lks{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:6px;margin:6px 0 2px}.lk{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:9px 0;font:inherit;cursor:pointer}.lk[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}.q{margin-top:10px}.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}.scale.num{grid-template-columns:repeat(5,1fr)}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: six core districts of Xi'an, Baidu street view (© Baidu), camera tilted slightly down towards a child's view. Dimensions from Gao, Wang &amp; Wang, “Evaluating perceived built environment factors influencing children’s walking to school: an XGBoost–SHAP approach”, EPJ Data Science 15, 57 (2026), doi:10.1140/epjds/s13688-026-00621-w; question wording written for this template from the paper's definitions.</footer>\n<script>\n(function(){\n  var C={\"before\": [\"grade\", \"gender\", \"walk_days\", \"walk_with\"], \"after\": [], \"tasks\": [\"feasibility\", \"accessibility\", \"safety\", \"comfort\", \"pleasurability\"], \"minutes\": 10, \"alt\": \"Street view in Xi'an\", \"labels\": {}, \"buttons\": [], \"minSec\": {}, \"words\": {}, \"captions\": {}, \"pickOne\": null, \"heading\": \"Compare two streets\", \"intro\": \"<p>This study asks <b>primary school children</b> (grades 1–6) how streets in <b>Xi'an</b> look for walking to school. A parent or teacher can help read the questions. There are <b>5 questions</b>, each with <b>12 pairs</b> of street pictures (60 choices in all). For each pair, tap the street that fits the question better. There is no right or wrong answer; the task takes about 10 minutes.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?'Pair ':'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else if(q.kind==='sliders'||/slidergroup$/.test(q.type)){\n      h+='<img class=\"shot\" style=\"max-height:'+((q.dimensions||[]).length>4?'32vh;position:sticky;top:0;z-index:2':(q.dimensions||[]).length>2?'40vh':'56vh')+'\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">';\n      var cu=(md[0]&&md[0].url)||'',cap=Object.keys(C.captions||{}).filter(function(x){return cu.indexOf(x)>=0;})[0];\n      if(cap)h+='<p style=\"margin:8px 0 0;color:var(--ink)\">'+C.captions[cap]+'</p>';\n      var BT=(C.buttons||[]).indexOf(n)>=0,W=(C.words||{})[n]||{};\n      if(BT)(q.dimensions||[]).forEach(function(d){var b='';for(var v=d.min;v<=d.max;v+=(d.step||1))b+='<button type=\"button\" class=\"lk\" data-d=\"'+esc(d.id)+'\" data-val=\"'+v+'\">'+esc(W[d.id]?W[d.id][v-d.min]:v)+'</button>';\n        h+='<div class=\"q\"><b>'+esc(d.label)+'</b><div class=\"lks\" style=\"--n:'+Math.round((d.max-d.min)/(d.step||1)+1)+'\">'+b+'</div><p style=\"display:flex;justify-content:space-between;margin:0;font-size:.85rem\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      else (q.dimensions||[]).forEach(function(d){h+='<div class=\"q\"><b>'+esc(d.label)+': <span id=\"v_'+esc(d.id)+'\">–</span></b><input type=\"range\" class=\"rng\" data-d=\"'+esc(d.id)+'\" min=\"'+d.min+'\" max=\"'+d.max+'\" step=\"'+(d.step||1)+'\" value=\"'+Math.round((d.min+d.max)/2)+'\" style=\"width:100%\"><p style=\"display:flex;justify-content:space-between;margin:0\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      h+='<div class=\"row\"><button class=\"btn\" id=\"next\" disabled>Next</button></div><p style=\"font-size:.85rem\">'+(BT?'Answer every line to continue.':'Move the slider to give your answer.')+'</p>';\n      app.innerHTML=h+'<div class=\"err\"></div>';\n      var vals={},rs=app.querySelectorAll('.rng'),nx=document.getElementById('next');\n      var MS=(C.minSec||{})[n]||0,t0=Date.now(),okT=!MS;\n      function gate(){nx.disabled=!(okT&&Object.keys(vals).length>=(q.dimensions||[]).length);}\n      if(MS){var tm=document.createElement('p');tm.className='tmr';tm.style.fontWeight='600';nx.parentNode.parentNode.insertBefore(tm,nx.parentNode);\n        var iv=setInterval(function(){var left=Math.ceil(MS-(Date.now()-t0)/1000);if(!document.body.contains(tm)){clearInterval(iv);return;}\n          if(left>0)tm.textContent='Please keep looking: '+left+' s';else{tm.textContent='';okT=true;clearInterval(iv);gate();}},250);}\n      if(BT){var nd=(q.dimensions||[]).length;app.querySelectorAll('.lk').forEach(function(b){b.onclick=function(){var d=b.getAttribute('data-d');vals[d]=Number(b.getAttribute('data-val'));\n        app.querySelectorAll('.lk[data-d=\"'+d+'\"]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});gate();};});}\n      rs.forEach(function(r){r.oninput=function(){vals[r.getAttribute('data-d')]=Number(r.value);document.getElementById('v_'+r.getAttribute('data-d')).textContent=r.value;gate();};});\n      nx.onclick=function(){nx.disabled=true;SPSite.answer(n,vals,{trial:k}).then(function(r){if(r&&r.ok===false){err(r.error);nx.disabled=false;return;}(done[n]=done[n]||{})[k]=true;nextStep();});};\n      window.scrollTo(0,0);return;\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      var words=!!(lab&&lab.some(function(x){return isNaN(Number(x));}));\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale'+(words?'':' num')+'\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(words?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T09:47:48.068Z",
+   "mediaFolders": [
+    "xian"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T09:47:48.068Z"
+  },
+  "description": "",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_001__566e7baa-7492-45b4-bea0-ed081481c4da.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_001__566e7baa-7492-45b4-bea0-ed081481c4da.jpg",
+   "name": "xaa_001.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_001__566e7baa-7492-45b4-bea0-ed081481c4da.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 105453,
+   "uploaded_bytes": 105453,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_002__81c5cb8c-7785-408e-b3bd-f653ec03e54f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_002__81c5cb8c-7785-408e-b3bd-f653ec03e54f.jpg",
+   "name": "xaa_002.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_002__81c5cb8c-7785-408e-b3bd-f653ec03e54f.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 139687,
+   "uploaded_bytes": 139687,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_003__f5414b90-68f6-4c9e-919e-2697cbfd5010.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_003__f5414b90-68f6-4c9e-919e-2697cbfd5010.jpg",
+   "name": "xaa_003.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_003__f5414b90-68f6-4c9e-919e-2697cbfd5010.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 52011,
+   "uploaded_bytes": 52011,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_004__e0b01c62-f1aa-4593-a0b4-da77d76ab99b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_004__e0b01c62-f1aa-4593-a0b4-da77d76ab99b.jpg",
+   "name": "xaa_004.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_004__e0b01c62-f1aa-4593-a0b4-da77d76ab99b.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 118686,
+   "uploaded_bytes": 118686,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_005__d9247535-b570-40a7-ab0d-5d7ce653f55c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_005__d9247535-b570-40a7-ab0d-5d7ce653f55c.jpg",
+   "name": "xaa_005.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_005__d9247535-b570-40a7-ab0d-5d7ce653f55c.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 88944,
+   "uploaded_bytes": 88944,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_006__08faa7c7-936c-4390-b599-2abccd5e8463.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_006__08faa7c7-936c-4390-b599-2abccd5e8463.jpg",
+   "name": "xaa_006.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_006__08faa7c7-936c-4390-b599-2abccd5e8463.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 86551,
+   "uploaded_bytes": 86551,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_007__69de7914-a4a0-41f2-b87e-ab9c21ca72d4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_007__69de7914-a4a0-41f2-b87e-ab9c21ca72d4.jpg",
+   "name": "xaa_007.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_007__69de7914-a4a0-41f2-b87e-ab9c21ca72d4.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 75220,
+   "uploaded_bytes": 75220,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_008__8f237e3d-22d1-47ea-8be1-8ca9902c58c2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_008__8f237e3d-22d1-47ea-8be1-8ca9902c58c2.jpg",
+   "name": "xaa_008.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_008__8f237e3d-22d1-47ea-8be1-8ca9902c58c2.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 86469,
+   "uploaded_bytes": 86469,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_009__525b82ad-b333-4503-80eb-1748cd42ea9d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_009__525b82ad-b333-4503-80eb-1748cd42ea9d.jpg",
+   "name": "xaa_009.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_009__525b82ad-b333-4503-80eb-1748cd42ea9d.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 121917,
+   "uploaded_bytes": 121917,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_010__7b0d41e8-bf6b-4045-b3e8-fdb0ac4e031b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_010__7b0d41e8-bf6b-4045-b3e8-fdb0ac4e031b.jpg",
+   "name": "xaa_010.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_010__7b0d41e8-bf6b-4045-b3e8-fdb0ac4e031b.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 98967,
+   "uploaded_bytes": 98967,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_011__0acea633-aec1-4fee-98f3-c05278b84062.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_011__0acea633-aec1-4fee-98f3-c05278b84062.jpg",
+   "name": "xaa_011.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_011__0acea633-aec1-4fee-98f3-c05278b84062.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 86793,
+   "uploaded_bytes": 86793,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_012__5429de6a-416c-4ea0-89d8-e856aadcd7b4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_012__5429de6a-416c-4ea0-89d8-e856aadcd7b4.jpg",
+   "name": "xaa_012.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_012__5429de6a-416c-4ea0-89d8-e856aadcd7b4.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 122121,
+   "uploaded_bytes": 122121,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_014__03b31b60-3810-4f7e-ae6e-f08d08638ca2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_014__03b31b60-3810-4f7e-ae6e-f08d08638ca2.jpg",
+   "name": "xaa_014.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_014__03b31b60-3810-4f7e-ae6e-f08d08638ca2.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 133786,
+   "uploaded_bytes": 133786,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_015__f08a4532-b8db-4100-8522-1c49e56315d6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_015__f08a4532-b8db-4100-8522-1c49e56315d6.jpg",
+   "name": "xaa_015.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_015__f08a4532-b8db-4100-8522-1c49e56315d6.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 89544,
+   "uploaded_bytes": 89544,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_016__19ba02ed-90b3-4a40-84e7-df8c61f3ed14.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_016__19ba02ed-90b3-4a40-84e7-df8c61f3ed14.jpg",
+   "name": "xaa_016.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_016__19ba02ed-90b3-4a40-84e7-df8c61f3ed14.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 119749,
+   "uploaded_bytes": 119749,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_017__7085d93a-1169-4ddc-a56a-9dd533dc311f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_017__7085d93a-1169-4ddc-a56a-9dd533dc311f.jpg",
+   "name": "xaa_017.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_017__7085d93a-1169-4ddc-a56a-9dd533dc311f.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 78552,
+   "uploaded_bytes": 78552,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_018__5acb8958-f777-4f04-afe1-d6f4add1367b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_018__5acb8958-f777-4f04-afe1-d6f4add1367b.jpg",
+   "name": "xaa_018.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_018__5acb8958-f777-4f04-afe1-d6f4add1367b.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 132397,
+   "uploaded_bytes": 132397,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_019__0061c64e-e5b0-49cf-8815-64fd61e10130.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_019__0061c64e-e5b0-49cf-8815-64fd61e10130.jpg",
+   "name": "xaa_019.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_019__0061c64e-e5b0-49cf-8815-64fd61e10130.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 71892,
+   "uploaded_bytes": 71892,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_020__4e3a980c-dd29-4476-b020-2d01de547834.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_020__4e3a980c-dd29-4476-b020-2d01de547834.jpg",
+   "name": "xaa_020.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_020__4e3a980c-dd29-4476-b020-2d01de547834.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 109704,
+   "uploaded_bytes": 109704,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_021__0457bbb2-8f42-47f3-aa20-d20f0c5020fc.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_021__0457bbb2-8f42-47f3-aa20-d20f0c5020fc.jpg",
+   "name": "xaa_021.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_021__0457bbb2-8f42-47f3-aa20-d20f0c5020fc.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 113051,
+   "uploaded_bytes": 113051,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_022__b044111f-4eaf-425c-8741-0dafe2d027d7.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_022__b044111f-4eaf-425c-8741-0dafe2d027d7.jpg",
+   "name": "xaa_022.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_022__b044111f-4eaf-425c-8741-0dafe2d027d7.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 106161,
+   "uploaded_bytes": 106161,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_023__f48f38d6-c6c7-49a8-bb2b-b0cc538d0a55.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_023__f48f38d6-c6c7-49a8-bb2b-b0cc538d0a55.jpg",
+   "name": "xaa_023.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_023__f48f38d6-c6c7-49a8-bb2b-b0cc538d0a55.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 88251,
+   "uploaded_bytes": 88251,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_024__f1dafd01-13dc-4868-bb2f-d56bc6c5a553.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_024__f1dafd01-13dc-4868-bb2f-d56bc6c5a553.jpg",
+   "name": "xaa_024.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_024__f1dafd01-13dc-4868-bb2f-d56bc6c5a553.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 119573,
+   "uploaded_bytes": 119573,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xaa_025__4cbf5cba-2031-4473-97d7-cc76c0b76b5a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xaa_025__4cbf5cba-2031-4473-97d7-cc76c0b76b5a.jpg",
+   "name": "xaa_025.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xaa_025__4cbf5cba-2031-4473-97d7-cc76c0b76b5a.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 135531,
+   "uploaded_bytes": 135531,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_001__8e6726e2-e9b0-47b1-a9f0-4ae3bb448c4c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_001__8e6726e2-e9b0-47b1-a9f0-4ae3bb448c4c.jpg",
+   "name": "xab_001.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_001__8e6726e2-e9b0-47b1-a9f0-4ae3bb448c4c.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 90000,
+   "uploaded_bytes": 90000,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_002__242b58b8-d8a3-4a86-b122-0f09af7203df.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_002__242b58b8-d8a3-4a86-b122-0f09af7203df.jpg",
+   "name": "xab_002.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_002__242b58b8-d8a3-4a86-b122-0f09af7203df.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 84637,
+   "uploaded_bytes": 84637,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_003__7167cb65-82c3-419f-a7d1-d129bd9ad0f2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_003__7167cb65-82c3-419f-a7d1-d129bd9ad0f2.jpg",
+   "name": "xab_003.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_003__7167cb65-82c3-419f-a7d1-d129bd9ad0f2.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 98206,
+   "uploaded_bytes": 98206,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_004__bc5fe30b-b61b-4f90-ba28-1d887125fcee.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_004__bc5fe30b-b61b-4f90-ba28-1d887125fcee.jpg",
+   "name": "xab_004.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_004__bc5fe30b-b61b-4f90-ba28-1d887125fcee.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 108679,
+   "uploaded_bytes": 108679,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_005__764eba8f-8a3d-4d8f-b3bb-4dec09e0b3cd.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_005__764eba8f-8a3d-4d8f-b3bb-4dec09e0b3cd.jpg",
+   "name": "xab_005.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_005__764eba8f-8a3d-4d8f-b3bb-4dec09e0b3cd.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 101100,
+   "uploaded_bytes": 101100,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_006__e0172dcd-8ec1-4990-bab3-f083694e8fb6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_006__e0172dcd-8ec1-4990-bab3-f083694e8fb6.jpg",
+   "name": "xab_006.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_006__e0172dcd-8ec1-4990-bab3-f083694e8fb6.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 132430,
+   "uploaded_bytes": 132430,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_007__2842497c-3e6d-40c6-ad5d-eed80e4674dd.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_007__2842497c-3e6d-40c6-ad5d-eed80e4674dd.jpg",
+   "name": "xab_007.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_007__2842497c-3e6d-40c6-ad5d-eed80e4674dd.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 134214,
+   "uploaded_bytes": 134214,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_008__ef88c8ec-34f7-4c5c-b3cd-3eb4d564c5aa.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_008__ef88c8ec-34f7-4c5c-b3cd-3eb4d564c5aa.jpg",
+   "name": "xab_008.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_008__ef88c8ec-34f7-4c5c-b3cd-3eb4d564c5aa.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 112638,
+   "uploaded_bytes": 112638,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_009__b2290e5e-b27c-4c2a-8036-4dec7796957d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_009__b2290e5e-b27c-4c2a-8036-4dec7796957d.jpg",
+   "name": "xab_009.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_009__b2290e5e-b27c-4c2a-8036-4dec7796957d.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 87913,
+   "uploaded_bytes": 87913,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_010__092093de-98bc-4501-9f50-3936efe44a10.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_010__092093de-98bc-4501-9f50-3936efe44a10.jpg",
+   "name": "xab_010.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_010__092093de-98bc-4501-9f50-3936efe44a10.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 48091,
+   "uploaded_bytes": 48091,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_011__b45c4589-8c67-4d93-8f5e-9e2987accd11.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_011__b45c4589-8c67-4d93-8f5e-9e2987accd11.jpg",
+   "name": "xab_011.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_011__b45c4589-8c67-4d93-8f5e-9e2987accd11.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 85625,
+   "uploaded_bytes": 85625,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_012__a5be233b-4121-44d9-8426-c12f0c36ec06.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_012__a5be233b-4121-44d9-8426-c12f0c36ec06.jpg",
+   "name": "xab_012.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_012__a5be233b-4121-44d9-8426-c12f0c36ec06.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 81723,
+   "uploaded_bytes": 81723,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_013__50214672-bc09-4114-8142-c2eaf9a7c003.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_013__50214672-bc09-4114-8142-c2eaf9a7c003.jpg",
+   "name": "xab_013.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_013__50214672-bc09-4114-8142-c2eaf9a7c003.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 102412,
+   "uploaded_bytes": 102412,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_014__85a10897-effe-4166-8047-a41fbf1b91d4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_014__85a10897-effe-4166-8047-a41fbf1b91d4.jpg",
+   "name": "xab_014.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_014__85a10897-effe-4166-8047-a41fbf1b91d4.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 136092,
+   "uploaded_bytes": 136092,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_015__78881f7f-e6d0-4370-9fe1-4be96831b97f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_015__78881f7f-e6d0-4370-9fe1-4be96831b97f.jpg",
+   "name": "xab_015.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_015__78881f7f-e6d0-4370-9fe1-4be96831b97f.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 103476,
+   "uploaded_bytes": 103476,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_016__3b49334f-6bbc-4042-b013-d603ab5b162d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_016__3b49334f-6bbc-4042-b013-d603ab5b162d.jpg",
+   "name": "xab_016.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_016__3b49334f-6bbc-4042-b013-d603ab5b162d.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 126908,
+   "uploaded_bytes": 126908,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_017__041bd4f5-1d21-4956-9b14-8b1525e8025e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_017__041bd4f5-1d21-4956-9b14-8b1525e8025e.jpg",
+   "name": "xab_017.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_017__041bd4f5-1d21-4956-9b14-8b1525e8025e.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 66698,
+   "uploaded_bytes": 66698,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_018__4856b9f3-c1dc-46b4-b5ba-b647f0b45802.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_018__4856b9f3-c1dc-46b4-b5ba-b647f0b45802.jpg",
+   "name": "xab_018.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_018__4856b9f3-c1dc-46b4-b5ba-b647f0b45802.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 92014,
+   "uploaded_bytes": 92014,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_019__d48b0fde-4438-4585-aabf-80cc3f53d8c9.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_019__d48b0fde-4438-4585-aabf-80cc3f53d8c9.jpg",
+   "name": "xab_019.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_019__d48b0fde-4438-4585-aabf-80cc3f53d8c9.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 100909,
+   "uploaded_bytes": 100909,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_020__3085132b-a933-44b9-bbe8-26301b1a7ac7.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_020__3085132b-a933-44b9-bbe8-26301b1a7ac7.jpg",
+   "name": "xab_020.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_020__3085132b-a933-44b9-bbe8-26301b1a7ac7.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 110738,
+   "uploaded_bytes": 110738,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_021__0066edd3-e9af-4a07-9462-507e3c845fa1.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_021__0066edd3-e9af-4a07-9462-507e3c845fa1.jpg",
+   "name": "xab_021.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_021__0066edd3-e9af-4a07-9462-507e3c845fa1.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 115062,
+   "uploaded_bytes": 115062,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_022__e010c093-c1a1-40fd-b130-f695dcca9177.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_022__e010c093-c1a1-40fd-b130-f695dcca9177.jpg",
+   "name": "xab_022.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_022__e010c093-c1a1-40fd-b130-f695dcca9177.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 111146,
+   "uploaded_bytes": 111146,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_023__25494dab-d1bd-4b58-90cf-68057bb08d82.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_023__25494dab-d1bd-4b58-90cf-68057bb08d82.jpg",
+   "name": "xab_023.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_023__25494dab-d1bd-4b58-90cf-68057bb08d82.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 97296,
+   "uploaded_bytes": 97296,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_024__59650bbc-bb8c-4e56-a64f-8dff2468d424.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_024__59650bbc-bb8c-4e56-a64f-8dff2468d424.jpg",
+   "name": "xab_024.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_024__59650bbc-bb8c-4e56-a64f-8dff2468d424.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 94147,
+   "uploaded_bytes": 94147,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xab_025__6978a15d-9730-4ee5-8093-5b38f46ba2c5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xab_025__6978a15d-9730-4ee5-8093-5b38f46ba2c5.jpg",
+   "name": "xab_025.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xab_025__6978a15d-9730-4ee5-8093-5b38f46ba2c5.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 59265,
+   "uploaded_bytes": 59265,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_001__943179be-17e0-4fe6-85c9-8694dfad754d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_001__943179be-17e0-4fe6-85c9-8694dfad754d.jpg",
+   "name": "xac_001.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_001__943179be-17e0-4fe6-85c9-8694dfad754d.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 103485,
+   "uploaded_bytes": 103485,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_002__401b52e7-601e-4fbc-8249-bf2d3f8739ac.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_002__401b52e7-601e-4fbc-8249-bf2d3f8739ac.jpg",
+   "name": "xac_002.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_002__401b52e7-601e-4fbc-8249-bf2d3f8739ac.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 81014,
+   "uploaded_bytes": 81014,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_003__b5d37539-21de-4c4b-b922-1985ae5f4162.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_003__b5d37539-21de-4c4b-b922-1985ae5f4162.jpg",
+   "name": "xac_003.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_003__b5d37539-21de-4c4b-b922-1985ae5f4162.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 61484,
+   "uploaded_bytes": 61484,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_004__6e1cf521-376b-4d16-a4e7-1e154fe207b6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_004__6e1cf521-376b-4d16-a4e7-1e154fe207b6.jpg",
+   "name": "xac_004.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_004__6e1cf521-376b-4d16-a4e7-1e154fe207b6.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 89107,
+   "uploaded_bytes": 89107,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_005__bebea67a-9835-46c2-8404-106f879f3a03.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_005__bebea67a-9835-46c2-8404-106f879f3a03.jpg",
+   "name": "xac_005.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_005__bebea67a-9835-46c2-8404-106f879f3a03.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 100076,
+   "uploaded_bytes": 100076,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_006__1972bf95-1ec4-46f9-a731-d072c50a2c91.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_006__1972bf95-1ec4-46f9-a731-d072c50a2c91.jpg",
+   "name": "xac_006.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_006__1972bf95-1ec4-46f9-a731-d072c50a2c91.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 123952,
+   "uploaded_bytes": 123952,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_007__1d82cb87-4d51-4b9d-b6f3-a61a8001b68f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_007__1d82cb87-4d51-4b9d-b6f3-a61a8001b68f.jpg",
+   "name": "xac_007.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_007__1d82cb87-4d51-4b9d-b6f3-a61a8001b68f.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 105767,
+   "uploaded_bytes": 105767,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_008__1ad7ae86-c2ea-4951-b65f-baf654bb3d17.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_008__1ad7ae86-c2ea-4951-b65f-baf654bb3d17.jpg",
+   "name": "xac_008.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_008__1ad7ae86-c2ea-4951-b65f-baf654bb3d17.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 116050,
+   "uploaded_bytes": 116050,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_009__d8081e14-890f-4084-868d-a90a43bcf8d3.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_009__d8081e14-890f-4084-868d-a90a43bcf8d3.jpg",
+   "name": "xac_009.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_009__d8081e14-890f-4084-868d-a90a43bcf8d3.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 118356,
+   "uploaded_bytes": 118356,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_010__0acb5e56-1d32-4809-a3c0-e817e74612bb.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_010__0acb5e56-1d32-4809-a3c0-e817e74612bb.jpg",
+   "name": "xac_010.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_010__0acb5e56-1d32-4809-a3c0-e817e74612bb.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 94341,
+   "uploaded_bytes": 94341,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_011__04c10c6d-3419-4a84-b02e-0fb45a661974.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_011__04c10c6d-3419-4a84-b02e-0fb45a661974.jpg",
+   "name": "xac_011.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_011__04c10c6d-3419-4a84-b02e-0fb45a661974.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 117073,
+   "uploaded_bytes": 117073,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_012__bfb3cffc-1246-4395-bc4e-7e1f19decdcf.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_012__bfb3cffc-1246-4395-bc4e-7e1f19decdcf.jpg",
+   "name": "xac_012.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_012__bfb3cffc-1246-4395-bc4e-7e1f19decdcf.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 133455,
+   "uploaded_bytes": 133455,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_013__5d092fdf-523e-4ca0-9939-5a9cdafdd075.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_013__5d092fdf-523e-4ca0-9939-5a9cdafdd075.jpg",
+   "name": "xac_013.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_013__5d092fdf-523e-4ca0-9939-5a9cdafdd075.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 92586,
+   "uploaded_bytes": 92586,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_014__3361ccce-c5fe-4ff6-a772-56072ee30246.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_014__3361ccce-c5fe-4ff6-a772-56072ee30246.jpg",
+   "name": "xac_014.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_014__3361ccce-c5fe-4ff6-a772-56072ee30246.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 78298,
+   "uploaded_bytes": 78298,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_015__47e63c49-a74f-413c-8404-635df536e848.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_015__47e63c49-a74f-413c-8404-635df536e848.jpg",
+   "name": "xac_015.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_015__47e63c49-a74f-413c-8404-635df536e848.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 107058,
+   "uploaded_bytes": 107058,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_016__4cc079b6-b1da-400b-b8e8-d0542bb1ddf9.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_016__4cc079b6-b1da-400b-b8e8-d0542bb1ddf9.jpg",
+   "name": "xac_016.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_016__4cc079b6-b1da-400b-b8e8-d0542bb1ddf9.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 116469,
+   "uploaded_bytes": 116469,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_017__18dcdc29-a9f5-424c-93d9-75e6fd2e9a03.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_017__18dcdc29-a9f5-424c-93d9-75e6fd2e9a03.jpg",
+   "name": "xac_017.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_017__18dcdc29-a9f5-424c-93d9-75e6fd2e9a03.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 141915,
+   "uploaded_bytes": 141915,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_018__c6c22efb-2a4c-4df8-9282-4c753b0a449b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_018__c6c22efb-2a4c-4df8-9282-4c753b0a449b.jpg",
+   "name": "xac_018.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_018__c6c22efb-2a4c-4df8-9282-4c753b0a449b.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 95720,
+   "uploaded_bytes": 95720,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_019__ab27db6b-a6e6-4831-8ed4-57a0c382e3fa.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_019__ab27db6b-a6e6-4831-8ed4-57a0c382e3fa.jpg",
+   "name": "xac_019.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_019__ab27db6b-a6e6-4831-8ed4-57a0c382e3fa.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 111685,
+   "uploaded_bytes": 111685,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_020__48f2190e-96c9-4c23-9e5c-3fa9ce5e6c89.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_020__48f2190e-96c9-4c23-9e5c-3fa9ce5e6c89.jpg",
+   "name": "xac_020.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_020__48f2190e-96c9-4c23-9e5c-3fa9ce5e6c89.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 124596,
+   "uploaded_bytes": 124596,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_021__02ce9373-9cbb-4a56-aaa1-eccceb88542c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_021__02ce9373-9cbb-4a56-aaa1-eccceb88542c.jpg",
+   "name": "xac_021.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_021__02ce9373-9cbb-4a56-aaa1-eccceb88542c.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 85064,
+   "uploaded_bytes": 85064,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_022__23ccf55d-4891-4f4f-b658-23011dc4e89c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_022__23ccf55d-4891-4f4f-b658-23011dc4e89c.jpg",
+   "name": "xac_022.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_022__23ccf55d-4891-4f4f-b658-23011dc4e89c.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 86000,
+   "uploaded_bytes": 86000,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_023__b6589be9-09bf-4753-833a-ff5d0d227423.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_023__b6589be9-09bf-4753-833a-ff5d0d227423.jpg",
+   "name": "xac_023.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_023__b6589be9-09bf-4753-833a-ff5d0d227423.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 91637,
+   "uploaded_bytes": 91637,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xac_024__b1eaa2da-97d6-4484-8786-24d6c2e4fa80.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xac_024__b1eaa2da-97d6-4484-8786-24d6c2e4fa80.jpg",
+   "name": "xac_024.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xac_024__b1eaa2da-97d6-4484-8786-24d6c2e4fa80.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 140861,
+   "uploaded_bytes": 140861,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_001__5aba57af-6cb8-442a-927f-de3d2da9e96c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_001__5aba57af-6cb8-442a-927f-de3d2da9e96c.jpg",
+   "name": "xad_001.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_001__5aba57af-6cb8-442a-927f-de3d2da9e96c.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 98925,
+   "uploaded_bytes": 98925,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_002__e8100ac3-4c5f-4d59-b7a5-c320d0b5601b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_002__e8100ac3-4c5f-4d59-b7a5-c320d0b5601b.jpg",
+   "name": "xad_002.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_002__e8100ac3-4c5f-4d59-b7a5-c320d0b5601b.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 108674,
+   "uploaded_bytes": 108674,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_003__f3a2ecb3-1737-41a4-9463-afc85febcafa.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_003__f3a2ecb3-1737-41a4-9463-afc85febcafa.jpg",
+   "name": "xad_003.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_003__f3a2ecb3-1737-41a4-9463-afc85febcafa.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 137769,
+   "uploaded_bytes": 137769,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_004__0120e40c-a0fb-4260-963d-9532850d99fd.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_004__0120e40c-a0fb-4260-963d-9532850d99fd.jpg",
+   "name": "xad_004.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_004__0120e40c-a0fb-4260-963d-9532850d99fd.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 81229,
+   "uploaded_bytes": 81229,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_005__67fd490a-5d0d-4681-a9ec-387da7ff0414.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_005__67fd490a-5d0d-4681-a9ec-387da7ff0414.jpg",
+   "name": "xad_005.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_005__67fd490a-5d0d-4681-a9ec-387da7ff0414.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 117848,
+   "uploaded_bytes": 117848,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_006__45734b6a-7cc5-45b7-9aac-f251aee742cc.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_006__45734b6a-7cc5-45b7-9aac-f251aee742cc.jpg",
+   "name": "xad_006.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_006__45734b6a-7cc5-45b7-9aac-f251aee742cc.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 101264,
+   "uploaded_bytes": 101264,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_007__dba6f4ac-358e-4850-8de9-38dfd798168c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_007__dba6f4ac-358e-4850-8de9-38dfd798168c.jpg",
+   "name": "xad_007.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_007__dba6f4ac-358e-4850-8de9-38dfd798168c.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 121058,
+   "uploaded_bytes": 121058,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_008__aa919699-bee6-4614-8538-59801f70ff6a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_008__aa919699-bee6-4614-8538-59801f70ff6a.jpg",
+   "name": "xad_008.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_008__aa919699-bee6-4614-8538-59801f70ff6a.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 106778,
+   "uploaded_bytes": 106778,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_009__e5d354a6-75bc-4a0a-a778-a6b8954ec419.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_009__e5d354a6-75bc-4a0a-a778-a6b8954ec419.jpg",
+   "name": "xad_009.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_009__e5d354a6-75bc-4a0a-a778-a6b8954ec419.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 95637,
+   "uploaded_bytes": 95637,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_010__10bcf698-64a2-476f-a4bc-735b2290826f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_010__10bcf698-64a2-476f-a4bc-735b2290826f.jpg",
+   "name": "xad_010.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_010__10bcf698-64a2-476f-a4bc-735b2290826f.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 108059,
+   "uploaded_bytes": 108059,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_011__354c2b26-a37a-4454-9426-1efb11ac8038.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_011__354c2b26-a37a-4454-9426-1efb11ac8038.jpg",
+   "name": "xad_011.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_011__354c2b26-a37a-4454-9426-1efb11ac8038.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 62075,
+   "uploaded_bytes": 62075,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_012__738e5fc8-58ab-44b8-8835-350e5306dd15.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_012__738e5fc8-58ab-44b8-8835-350e5306dd15.jpg",
+   "name": "xad_012.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_012__738e5fc8-58ab-44b8-8835-350e5306dd15.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 82590,
+   "uploaded_bytes": 82590,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_013__dfdfce25-7344-47b3-a2ac-5dbceef5bf42.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_013__dfdfce25-7344-47b3-a2ac-5dbceef5bf42.jpg",
+   "name": "xad_013.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_013__dfdfce25-7344-47b3-a2ac-5dbceef5bf42.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 135431,
+   "uploaded_bytes": 135431,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_014__00cbc7a2-8eb0-4c9d-bc57-dacb63671ab7.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_014__00cbc7a2-8eb0-4c9d-bc57-dacb63671ab7.jpg",
+   "name": "xad_014.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_014__00cbc7a2-8eb0-4c9d-bc57-dacb63671ab7.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 115478,
+   "uploaded_bytes": 115478,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_015__e2a1a581-285c-48ac-9410-7ab904f54ca0.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_015__e2a1a581-285c-48ac-9410-7ab904f54ca0.jpg",
+   "name": "xad_015.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_015__e2a1a581-285c-48ac-9410-7ab904f54ca0.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 118081,
+   "uploaded_bytes": 118081,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_016__1dbcdf47-8050-4ae4-a81c-9a1a5b78b891.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_016__1dbcdf47-8050-4ae4-a81c-9a1a5b78b891.jpg",
+   "name": "xad_016.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_016__1dbcdf47-8050-4ae4-a81c-9a1a5b78b891.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 66857,
+   "uploaded_bytes": 66857,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_017__d5a663ed-4e17-4afa-b578-d7be77d3f285.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_017__d5a663ed-4e17-4afa-b578-d7be77d3f285.jpg",
+   "name": "xad_017.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_017__d5a663ed-4e17-4afa-b578-d7be77d3f285.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 100744,
+   "uploaded_bytes": 100744,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_018__1768db73-4881-45c2-a7b6-ab9cd680bf47.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_018__1768db73-4881-45c2-a7b6-ab9cd680bf47.jpg",
+   "name": "xad_018.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_018__1768db73-4881-45c2-a7b6-ab9cd680bf47.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 104547,
+   "uploaded_bytes": 104547,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_019__f7392d0c-4c47-4336-814d-c55b1966eb97.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_019__f7392d0c-4c47-4336-814d-c55b1966eb97.jpg",
+   "name": "xad_019.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_019__f7392d0c-4c47-4336-814d-c55b1966eb97.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 131091,
+   "uploaded_bytes": 131091,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_020__848fe49c-d909-4619-b159-f19640f15dfc.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_020__848fe49c-d909-4619-b159-f19640f15dfc.jpg",
+   "name": "xad_020.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_020__848fe49c-d909-4619-b159-f19640f15dfc.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 81513,
+   "uploaded_bytes": 81513,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_021__c4089c24-1ff9-4f6b-a9f6-c6e9f61879b1.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_021__c4089c24-1ff9-4f6b-a9f6-c6e9f61879b1.jpg",
+   "name": "xad_021.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_021__c4089c24-1ff9-4f6b-a9f6-c6e9f61879b1.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 116042,
+   "uploaded_bytes": 116042,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_022__0ec43d94-66af-4054-b306-aeaaba8d00eb.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_022__0ec43d94-66af-4054-b306-aeaaba8d00eb.jpg",
+   "name": "xad_022.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_022__0ec43d94-66af-4054-b306-aeaaba8d00eb.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 61247,
+   "uploaded_bytes": 61247,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_023__f65658f5-ca58-41f4-8e9e-70c9c9fc24c3.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_023__f65658f5-ca58-41f4-8e9e-70c9c9fc24c3.jpg",
+   "name": "xad_023.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_023__f65658f5-ca58-41f4-8e9e-70c9c9fc24c3.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 81768,
+   "uploaded_bytes": 81768,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_024__8138c583-3f8c-42c5-b501-65384d65cb16.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_024__8138c583-3f8c-42c5-b501-65384d65cb16.jpg",
+   "name": "xad_024.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_024__8138c583-3f8c-42c5-b501-65384d65cb16.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 82444,
+   "uploaded_bytes": 82444,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gao-walking/xian/xad_025__b0546c42-c87a-4c0a-af92-fae9a1b3754d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gao-walking/xian/xad_025__b0546c42-c87a-4c0a-af92-fae9a1b3754d.jpg",
+   "name": "xad_025.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-gao-walking/xian/xad_025__b0546c42-c87a-4c0a-af92-fae9a1b3754d.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 101361,
+   "uploaded_bytes": 101361,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Evaluating perceived built environment factors influencing children’s walking to school: an XGBoost–SHAP approach",
+  "authors": [
+   "Gao Y.",
+   "Wang J.",
+   "Wang H."
+  ],
+  "year": 2026,
+  "venue": "EPJ Data Science",
+  "doi": "10.1140/epjds/s13688-026-00621-w",
+  "url": "https://doi.org/10.1140/epjds/s13688-026-00621-w"
+ }
+}

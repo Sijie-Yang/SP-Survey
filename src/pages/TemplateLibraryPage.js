@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import AdminShell from '../components/layout/AdminShell';
 import { createProject, setActiveProject } from '../lib/projectManager';
 import {
-  CATALOG_URL, STIMULUS_LABELS, TASK_LABELS, facetOptions, filterCatalog, locationLabel, paperCitation,
+  CATALOG_URL, FILTERS, facetOptions, filterCatalog, locationLabel, paperCitation, tagLabel,
 } from '../lib/templateCatalog';
 
 const PAGE_SIZE = 50;
@@ -29,7 +29,7 @@ export default function TemplateLibraryPage() {
   const navigate = useNavigate();
   const [catalog, setCatalog] = useState(null);
   const [error, setError] = useState('');
-  const [filters, setFilters] = useState({ q: '', stimulus: '', task: '', location: '' });
+  const [filters, setFilters] = useState({ q: '' });
   const [shown, setShown] = useState(PAGE_SIZE);
   const [picked, setPicked] = useState(null);
   const [projectName, setProjectName] = useState('');
@@ -91,16 +91,20 @@ export default function TemplateLibraryPage() {
       {!catalog && !error && <Box sx={{ textAlign: 'center', py: 6 }}><CircularProgress /></Box>}
       {catalog && (
         <>
-          <Stack direction={{ xs: 'column', md: 'row' }} spacing={1.5} sx={{ mb: 2 }}>
-            <TextField
-              size="small" fullWidth placeholder="Search study, author, journal, city or concept"
-              value={filters.q} onChange={(event) => setFilter('q', event.target.value)}
-              inputProps={{ 'aria-label': 'Search templates' }}
-              InputProps={{ startAdornment: <InputAdornment position="start"><Search fontSize="small" /></InputAdornment> }}
-            />
-            <FacetSelect label="Stimulus" value={filters.stimulus} options={facetOptions(templates, 'stimulus')} labelOf={(v) => STIMULUS_LABELS[v] || v} onChange={(v) => setFilter('stimulus', v)} />
-            <FacetSelect label="Task" value={filters.task} options={facetOptions(templates, 'task')} labelOf={(v) => TASK_LABELS[v] || v} onChange={(v) => setFilter('task', v)} />
-            <FacetSelect label="Location" value={filters.location} options={facetOptions(templates, 'location')} labelOf={locationLabel} onChange={(v) => setFilter('location', v)} />
+          <TextField
+            size="small" fullWidth placeholder="Search study, author, journal, city or perception"
+            value={filters.q} onChange={(event) => setFilter('q', event.target.value)}
+            inputProps={{ 'aria-label': 'Search templates' }}
+            InputProps={{ startAdornment: <InputAdornment position="start"><Search fontSize="small" /></InputAdornment> }}
+            sx={{ mb: 1.5 }}
+          />
+          <Stack direction="row" spacing={1.5} useFlexGap sx={{ mb: 2, flexWrap: 'wrap' }}>
+            {FILTERS.map(([field, label]) => (
+              <FacetSelect
+                key={field} label={label} value={filters[field] || ''} options={facetOptions(templates, field)}
+                labelOf={(value) => tagLabel(field, value)} onChange={(value) => setFilter(field, value)}
+              />
+            ))}
           </Stack>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
             {rows.length} of {templates.length} templates. Want yours here?{' '}
@@ -122,15 +126,16 @@ export default function TemplateLibraryPage() {
                     </Typography>
                   )}
                   <Stack direction="row" spacing={0.5} sx={{ mt: 0.5, flexWrap: 'wrap', rowGap: 0.5 }}>
-                    {(entry.stimulus || []).map((v) => <Chip key={`s-${v}`} size="small" label={STIMULUS_LABELS[v] || v} />)}
-                    {(entry.task || []).map((v) => <Chip key={`t-${v}`} size="small" variant="outlined" label={TASK_LABELS[v] || v} />)}
+                    {(entry.scene || []).map((v) => <Chip key={`sc-${v}`} size="small" label={tagLabel('scene', v)} />)}
+                    {(entry.concept || []).slice(0, 4).map((v) => <Chip key={`c-${v}`} size="small" color="primary" variant="outlined" label={tagLabel('concept', v)} />)}
+                    {(entry.task || []).map((v) => <Chip key={`t-${v}`} size="small" variant="outlined" label={tagLabel('task', v)} />)}
                     {[...(entry.city || []), ...(entry.location || []).map(locationLabel)].slice(0, 3).map((v) => (
                       <Chip key={`p-${v}`} size="small" variant="outlined" label={v} />
                     ))}
                   </Stack>
                 </Box>
                 <Stack direction="row" spacing={1} sx={{ flexShrink: 0 }}>
-                  <Button size="small" href={`https://sp-survey.org/templates?q=${encodeURIComponent(entry.id)}`} target="_blank" rel="noopener noreferrer">
+                  <Button size="small" href={`https://sp-survey.org/templates?preview=${encodeURIComponent(entry.id)}`} target="_blank" rel="noopener noreferrer">
                     Preview online
                   </Button>
                   <Button size="small" variant="contained" onClick={() => openUse(entry)}>Use</Button>

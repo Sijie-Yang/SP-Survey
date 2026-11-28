@@ -1,0 +1,1597 @@
+{
+ "id": "2025-liu-physical",
+ "name": "Physical Disorder on Shanghai Streets: Five Pairwise Questions",
+ "description": "Method replication: participants compare pairs of Shanghai street views on the five questions of the paper's Table 1 (which place gives a stronger sense of disordered architecture, commerce, roads, green spaces, infrastructure), with the paper's examples of each kind of disorder shown under the question, 8 pairs per question; the images are not the paper's stimuli (110 re-fetched Baidu street views within Shanghai's Outer Ring Road, 2019–2023).\n\nOriginal study: Liu, Lu, Song, Qiu & Liu (2025), Computers, Environment and Urban Systems 122, 102348. From 60,007 Baidu street views sampled every 100 m within the Outer Ring Road (2020–2022), 300 were drawn at random for an online survey in which more than 50 respondents aged 20–40, gender-balanced, chose which of two images showed more disorder on one of five aspects. TrueSkill turned the votes into 0–10 scores, machine-learning models predicted them city-wide, and the scores were related to pedestrian volume by age and gender.\n\nDifferences from the original study: (1) newly fetched Baidu street views instead of the authors' 300 images, which are not released; (2) every participant answers all five questions with 8 pairs each, whereas the paper does not report how many comparisons each respondent made; (3) gender, age and familiarity with Shanghai are asked first; the prediction model and the pedestrian-volume analysis are not part of the survey.",
+ "author": "Liu, Lu, Song, Qiu & Liu",
+ "year": "2025",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "physical disorder",
+  "pairwise",
+  "street view",
+  "Shanghai",
+  "China",
+  "Baidu",
+  "source:paper",
+  "concept:order",
+  "scene:street",
+  "modality:street_view",
+  "task:pairwise",
+  "setting:online",
+  "participants:public",
+  "sample:lt100"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1016/j.compenvurbsys.2025.102348",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T09:38:49.62+00:00",
+ "updatedAt": "2026-11-28T10:32:58.61+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about_you_first",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "What is your gender?",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "How old are you?",
+      "choices": [
+       {
+        "text": "Under 20",
+        "value": "under_20"
+       },
+       {
+        "text": "20–29",
+        "value": "20_29"
+       },
+       {
+        "text": "30–40",
+        "value": "30_40"
+       },
+       {
+        "text": "Over 40",
+        "value": "over_40"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "know_city",
+      "type": "radiogroup",
+      "title": "Do you live in Shanghai?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "live"
+       },
+       {
+        "text": "No, but I have visited",
+        "value": "visited"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "architectural_disorder",
+      "type": "imagepicker",
+      "title": "Which place has given you a stronger sense of disordered architecture?",
+      "choices": [],
+      "imageFit": "contain",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 8,
+      "description": "Examples: Abandoned buildings, damaged or unkempt facades, graffiti, illegal advertisements, illegal or temporary buildings.",
+      "mediaFolders": [
+       "shanghai"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_2",
+    "elements": [
+     {
+      "name": "commercial_disorder",
+      "type": "imagepicker",
+      "title": "Which place has given you a stronger sense of disordered commerce?",
+      "choices": [],
+      "imageFit": "contain",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 8,
+      "description": "Examples: Stores with poor signboards or facades, vacant and pending stores.",
+      "mediaFolders": [
+       "shanghai"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_3",
+    "elements": [
+     {
+      "name": "road_disorder",
+      "type": "imagepicker",
+      "title": "Which place has given you a stronger sense of disordered roads?",
+      "choices": [],
+      "imageFit": "contain",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 8,
+      "description": "Examples: Broken roads, roads stacked with personal belongings, garbage or litter on the street.",
+      "mediaFolders": [
+       "shanghai"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_4",
+    "elements": [
+     {
+      "name": "greenery_disorder",
+      "type": "imagepicker",
+      "title": "Which place has given you a stronger sense of disordered green spaces?",
+      "choices": [],
+      "imageFit": "contain",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 8,
+      "description": "Examples: Green spaces that look messy or poorly maintained.",
+      "mediaFolders": [
+       "shanghai"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_5",
+    "elements": [
+     {
+      "name": "infrastructure_disorder",
+      "type": "imagepicker",
+      "title": "Which place has given you a stronger sense of disordered infrastructure?",
+      "choices": [],
+      "imageFit": "contain",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 8,
+      "description": "Examples: Broken infrastructure, neglected wires, malfunctioning streetlights, unmaintained distribution boxes, damaged public interfaces, leftover construction fences.",
+      "mediaFolders": [
+       "shanghai"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   }
+  ],
+  "title": "Physical Disorder on Shanghai Streets",
+  "locale": "en",
+  "spSite": {
+   "id": "site-a0b856f53f2421e1",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Physical Disorder on Shanghai Streets</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Physical Disorder on Shanghai Streets\",\n  \"description\": \"\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you_first\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"What is your gender?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"under_20\",\n        \"text\": \"Under 20\"\n       },\n       {\n        \"value\": \"20_29\",\n        \"text\": \"20–29\"\n       },\n       {\n        \"value\": \"30_40\",\n        \"text\": \"30–40\"\n       },\n       {\n        \"value\": \"over_40\",\n        \"text\": \"Over 40\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"know_city\",\n      \"title\": \"Do you live in Shanghai?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"live\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"visited\",\n        \"text\": \"No, but I have visited\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"architectural_disorder\",\n      \"title\": \"Which place has given you a stronger sense of disordered architecture?\",\n      \"description\": \"Examples: Abandoned buildings, damaged or unkempt facades, graffiti, illegal advertisements, illegal or temporary buildings.\",\n      \"imageCount\": 2,\n      \"trialCount\": 8,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"shanghai\"\n      ],\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_2\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"commercial_disorder\",\n      \"title\": \"Which place has given you a stronger sense of disordered commerce?\",\n      \"description\": \"Examples: Stores with poor signboards or facades, vacant and pending stores.\",\n      \"imageCount\": 2,\n      \"trialCount\": 8,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"shanghai\"\n      ],\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_3\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"road_disorder\",\n      \"title\": \"Which place has given you a stronger sense of disordered roads?\",\n      \"description\": \"Examples: Broken roads, roads stacked with personal belongings, garbage or litter on the street.\",\n      \"imageCount\": 2,\n      \"trialCount\": 8,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"shanghai\"\n      ],\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_4\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"greenery_disorder\",\n      \"title\": \"Which place has given you a stronger sense of disordered green spaces?\",\n      \"description\": \"Examples: Green spaces that look messy or poorly maintained.\",\n      \"imageCount\": 2,\n      \"trialCount\": 8,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"shanghai\"\n      ],\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_5\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"infrastructure_disorder\",\n      \"title\": \"Which place has given you a stronger sense of disordered infrastructure?\",\n      \"description\": \"Examples: Broken infrastructure, neglected wires, malfunctioning streetlights, unmaintained distribution boxes, damaged public interfaces, leftover construction fences.\",\n      \"imageCount\": 2,\n      \"trialCount\": 8,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"shanghai\"\n      ],\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#6b4a2e;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.rng{accent-color:var(--accent)}.lks{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:6px;margin:6px 0 2px}.lk{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:9px 0;font:inherit;cursor:pointer}.lk[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}.q{margin-top:10px}.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}.scale.num{grid-template-columns:repeat(5,1fr)}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Shanghai within the Outer Ring Road, Baidu street view (© Baidu). Questions from Liu, Lu, Song, Qiu &amp; Liu, “The association of subjective physical disorder and pedestrian volume: A big urban data and machine-learning approach”, Computers, Environment and Urban Systems 122, 102348 (2025), doi:10.1016/j.compenvurbsys.2025.102348, Table 1.</footer>\n<script>\n(function(){\n  var C={\"before\": [\"gender\", \"age_group\", \"know_city\"], \"after\": [], \"tasks\": [\"architectural_disorder\", \"commercial_disorder\", \"road_disorder\", \"greenery_disorder\", \"infrastructure_disorder\"], \"minutes\": 8, \"alt\": \"Street view in Shanghai\", \"labels\": {}, \"buttons\": [], \"minSec\": {}, \"words\": {}, \"captions\": {}, \"pickOne\": null, \"heading\": \"Compare two street views\", \"intro\": \"<p>This study is about <b>physical disorder</b> on the streets of <b>Shanghai</b>: signs that a place is damaged, messy or poorly maintained. You will answer <b>5 questions</b> (architecture, commerce, roads, green spaces, infrastructure), each with <b>8 pairs</b> of street views. For each pair, click the place that gives you a <b>stronger sense of disorder</b> in that aspect. Go with your first impression; the task takes about 8 minutes.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?'Pair ':'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else if(q.kind==='sliders'||/slidergroup$/.test(q.type)){\n      h+='<img class=\"shot\" style=\"max-height:'+((q.dimensions||[]).length>4?'32vh;position:sticky;top:0;z-index:2':(q.dimensions||[]).length>2?'40vh':'56vh')+'\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">';\n      var cu=(md[0]&&md[0].url)||'',cap=Object.keys(C.captions||{}).filter(function(x){return cu.indexOf(x)>=0;})[0];\n      if(cap)h+='<p style=\"margin:8px 0 0;color:var(--ink)\">'+C.captions[cap]+'</p>';\n      var BT=(C.buttons||[]).indexOf(n)>=0,W=(C.words||{})[n]||{};\n      if(BT)(q.dimensions||[]).forEach(function(d){var b='';for(var v=d.min;v<=d.max;v+=(d.step||1))b+='<button type=\"button\" class=\"lk\" data-d=\"'+esc(d.id)+'\" data-val=\"'+v+'\">'+esc(W[d.id]?W[d.id][v-d.min]:v)+'</button>';\n        h+='<div class=\"q\"><b>'+esc(d.label)+'</b><div class=\"lks\" style=\"--n:'+Math.round((d.max-d.min)/(d.step||1)+1)+'\">'+b+'</div><p style=\"display:flex;justify-content:space-between;margin:0;font-size:.85rem\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      else (q.dimensions||[]).forEach(function(d){h+='<div class=\"q\"><b>'+esc(d.label)+': <span id=\"v_'+esc(d.id)+'\">–</span></b><input type=\"range\" class=\"rng\" data-d=\"'+esc(d.id)+'\" min=\"'+d.min+'\" max=\"'+d.max+'\" step=\"'+(d.step||1)+'\" value=\"'+Math.round((d.min+d.max)/2)+'\" style=\"width:100%\"><p style=\"display:flex;justify-content:space-between;margin:0\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      h+='<div class=\"row\"><button class=\"btn\" id=\"next\" disabled>Next</button></div><p style=\"font-size:.85rem\">'+(BT?'Answer every line to continue.':'Move the slider to give your answer.')+'</p>';\n      app.innerHTML=h+'<div class=\"err\"></div>';\n      var vals={},rs=app.querySelectorAll('.rng'),nx=document.getElementById('next');\n      var MS=(C.minSec||{})[n]||0,t0=Date.now(),okT=!MS;\n      function gate(){nx.disabled=!(okT&&Object.keys(vals).length>=(q.dimensions||[]).length);}\n      if(MS){var tm=document.createElement('p');tm.className='tmr';tm.style.fontWeight='600';nx.parentNode.parentNode.insertBefore(tm,nx.parentNode);\n        var iv=setInterval(function(){var left=Math.ceil(MS-(Date.now()-t0)/1000);if(!document.body.contains(tm)){clearInterval(iv);return;}\n          if(left>0)tm.textContent='Please keep looking: '+left+' s';else{tm.textContent='';okT=true;clearInterval(iv);gate();}},250);}\n      if(BT){var nd=(q.dimensions||[]).length;app.querySelectorAll('.lk').forEach(function(b){b.onclick=function(){var d=b.getAttribute('data-d');vals[d]=Number(b.getAttribute('data-val'));\n        app.querySelectorAll('.lk[data-d=\"'+d+'\"]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});gate();};});}\n      rs.forEach(function(r){r.oninput=function(){vals[r.getAttribute('data-d')]=Number(r.value);document.getElementById('v_'+r.getAttribute('data-d')).textContent=r.value;gate();};});\n      nx.onclick=function(){nx.disabled=true;SPSite.answer(n,vals,{trial:k}).then(function(r){if(r&&r.ok===false){err(r.error);nx.disabled=false;return;}(done[n]=done[n]||{})[k]=true;nextStep();});};\n      window.scrollTo(0,0);return;\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      var words=!!(lab&&lab.some(function(x){return isNaN(Number(x));}));\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale'+(words?'':' num')+'\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(words?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T09:37:39.119Z",
+   "mediaFolders": [
+    "shanghai"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T09:37:39.119Z"
+  },
+  "description": "",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_001__3040ce6d-e927-4583-ae8c-a866bcd7b4ce.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_001__3040ce6d-e927-4583-ae8c-a866bcd7b4ce.jpg",
+   "name": "sha_001.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_001__3040ce6d-e927-4583-ae8c-a866bcd7b4ce.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 79472,
+   "uploaded_bytes": 79472,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_002__5a5a957e-65ca-44e8-9148-01953a8fd001.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_002__5a5a957e-65ca-44e8-9148-01953a8fd001.jpg",
+   "name": "sha_002.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_002__5a5a957e-65ca-44e8-9148-01953a8fd001.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 111155,
+   "uploaded_bytes": 111155,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_003__cbad16ce-897a-45f8-beab-15894947a982.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_003__cbad16ce-897a-45f8-beab-15894947a982.jpg",
+   "name": "sha_003.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_003__cbad16ce-897a-45f8-beab-15894947a982.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 127289,
+   "uploaded_bytes": 127289,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_004__f65507fd-7cc4-499b-b042-b7cc7a43f47e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_004__f65507fd-7cc4-499b-b042-b7cc7a43f47e.jpg",
+   "name": "sha_004.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_004__f65507fd-7cc4-499b-b042-b7cc7a43f47e.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 114269,
+   "uploaded_bytes": 114269,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_005__9c8dc463-a769-42cb-be6b-1c2493533b32.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_005__9c8dc463-a769-42cb-be6b-1c2493533b32.jpg",
+   "name": "sha_005.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_005__9c8dc463-a769-42cb-be6b-1c2493533b32.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 90665,
+   "uploaded_bytes": 90665,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_006__f7f80ef3-8a5f-49f5-9d93-7856b1fa2da7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_006__f7f80ef3-8a5f-49f5-9d93-7856b1fa2da7.jpg",
+   "name": "sha_006.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_006__f7f80ef3-8a5f-49f5-9d93-7856b1fa2da7.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 154989,
+   "uploaded_bytes": 154989,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_007__e247beaf-9e34-48a8-b80b-021bf8c1926c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_007__e247beaf-9e34-48a8-b80b-021bf8c1926c.jpg",
+   "name": "sha_007.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_007__e247beaf-9e34-48a8-b80b-021bf8c1926c.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 114654,
+   "uploaded_bytes": 114654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_008__3b15afbe-fe9b-43be-88ae-80c258d80966.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_008__3b15afbe-fe9b-43be-88ae-80c258d80966.jpg",
+   "name": "sha_008.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_008__3b15afbe-fe9b-43be-88ae-80c258d80966.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 137715,
+   "uploaded_bytes": 137715,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_009__343b174b-6b44-4fd6-8ef9-c50ea7a96931.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_009__343b174b-6b44-4fd6-8ef9-c50ea7a96931.jpg",
+   "name": "sha_009.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_009__343b174b-6b44-4fd6-8ef9-c50ea7a96931.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 116643,
+   "uploaded_bytes": 116643,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_010__b0436eff-d2b0-46f1-9e3d-c585018507bb.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_010__b0436eff-d2b0-46f1-9e3d-c585018507bb.jpg",
+   "name": "sha_010.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_010__b0436eff-d2b0-46f1-9e3d-c585018507bb.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 185231,
+   "uploaded_bytes": 185231,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_011__5a232715-bb0a-4855-83f7-b97d18bcd3b8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_011__5a232715-bb0a-4855-83f7-b97d18bcd3b8.jpg",
+   "name": "sha_011.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_011__5a232715-bb0a-4855-83f7-b97d18bcd3b8.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 124671,
+   "uploaded_bytes": 124671,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_012__76372c56-b5b9-49d6-a0e9-f176f742b1da.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_012__76372c56-b5b9-49d6-a0e9-f176f742b1da.jpg",
+   "name": "sha_012.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_012__76372c56-b5b9-49d6-a0e9-f176f742b1da.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 137453,
+   "uploaded_bytes": 137453,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_013__b68e1e28-4eab-4046-ab55-07b5764c127c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_013__b68e1e28-4eab-4046-ab55-07b5764c127c.jpg",
+   "name": "sha_013.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_013__b68e1e28-4eab-4046-ab55-07b5764c127c.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 107572,
+   "uploaded_bytes": 107572,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_014__41cd0804-9566-433c-b1d8-f5c1ead9cc13.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_014__41cd0804-9566-433c-b1d8-f5c1ead9cc13.jpg",
+   "name": "sha_014.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_014__41cd0804-9566-433c-b1d8-f5c1ead9cc13.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 142141,
+   "uploaded_bytes": 142141,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_015__b72ade3f-fe4f-4d03-a079-5297a57688c5.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_015__b72ade3f-fe4f-4d03-a079-5297a57688c5.jpg",
+   "name": "sha_015.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_015__b72ade3f-fe4f-4d03-a079-5297a57688c5.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 102857,
+   "uploaded_bytes": 102857,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_016__fffb5277-c1ea-47ef-920e-d013e39a9755.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_016__fffb5277-c1ea-47ef-920e-d013e39a9755.jpg",
+   "name": "sha_016.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_016__fffb5277-c1ea-47ef-920e-d013e39a9755.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 109735,
+   "uploaded_bytes": 109735,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_017__5389b387-6c82-4488-a764-955c477c0ea4.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_017__5389b387-6c82-4488-a764-955c477c0ea4.jpg",
+   "name": "sha_017.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_017__5389b387-6c82-4488-a764-955c477c0ea4.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 142535,
+   "uploaded_bytes": 142535,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_018__31ac83a5-d01e-47ff-b880-fca54125ce3d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_018__31ac83a5-d01e-47ff-b880-fca54125ce3d.jpg",
+   "name": "sha_018.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_018__31ac83a5-d01e-47ff-b880-fca54125ce3d.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 106678,
+   "uploaded_bytes": 106678,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_019__ac426e3f-099a-408b-b56c-c35db4d72a74.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_019__ac426e3f-099a-408b-b56c-c35db4d72a74.jpg",
+   "name": "sha_019.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_019__ac426e3f-099a-408b-b56c-c35db4d72a74.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 88229,
+   "uploaded_bytes": 88229,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_020__20252293-9108-469d-aeb0-533aaed6d40a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_020__20252293-9108-469d-aeb0-533aaed6d40a.jpg",
+   "name": "sha_020.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_020__20252293-9108-469d-aeb0-533aaed6d40a.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 123355,
+   "uploaded_bytes": 123355,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_021__a492dce6-bdb0-4bd7-92d2-e96a61afbec2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_021__a492dce6-bdb0-4bd7-92d2-e96a61afbec2.jpg",
+   "name": "sha_021.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_021__a492dce6-bdb0-4bd7-92d2-e96a61afbec2.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 80120,
+   "uploaded_bytes": 80120,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_022__8f232aeb-68b9-4d73-8230-f7cc255fe946.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_022__8f232aeb-68b9-4d73-8230-f7cc255fe946.jpg",
+   "name": "sha_022.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_022__8f232aeb-68b9-4d73-8230-f7cc255fe946.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 166499,
+   "uploaded_bytes": 166499,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_023__2dd5673c-ff61-4af5-82d3-f643ab025cac.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_023__2dd5673c-ff61-4af5-82d3-f643ab025cac.jpg",
+   "name": "sha_023.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_023__2dd5673c-ff61-4af5-82d3-f643ab025cac.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 104237,
+   "uploaded_bytes": 104237,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_024__9ac51eb3-0019-48fe-aa19-201c1c08b47d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_024__9ac51eb3-0019-48fe-aa19-201c1c08b47d.jpg",
+   "name": "sha_024.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_024__9ac51eb3-0019-48fe-aa19-201c1c08b47d.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 173168,
+   "uploaded_bytes": 173168,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_025__b5eb8e8f-7f98-4acf-a335-d35b693b6f26.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_025__b5eb8e8f-7f98-4acf-a335-d35b693b6f26.jpg",
+   "name": "sha_025.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_025__b5eb8e8f-7f98-4acf-a335-d35b693b6f26.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 167268,
+   "uploaded_bytes": 167268,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_026__d6f2d2d2-a605-474b-840d-9eb420987c78.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_026__d6f2d2d2-a605-474b-840d-9eb420987c78.jpg",
+   "name": "sha_026.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_026__d6f2d2d2-a605-474b-840d-9eb420987c78.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 122796,
+   "uploaded_bytes": 122796,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_027__817f9c37-0930-48e3-a910-e7adc3952657.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_027__817f9c37-0930-48e3-a910-e7adc3952657.jpg",
+   "name": "sha_027.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_027__817f9c37-0930-48e3-a910-e7adc3952657.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 102815,
+   "uploaded_bytes": 102815,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/sha_028__6bae2991-7e4f-40e2-a0dc-0b41ed16c5f8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/sha_028__6bae2991-7e4f-40e2-a0dc-0b41ed16c5f8.jpg",
+   "name": "sha_028.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/sha_028__6bae2991-7e4f-40e2-a0dc-0b41ed16c5f8.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 98895,
+   "uploaded_bytes": 98895,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_001__98a646ba-95bf-4710-9581-c4edd4d7a010.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_001__98a646ba-95bf-4710-9581-c4edd4d7a010.jpg",
+   "name": "shb_001.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_001__98a646ba-95bf-4710-9581-c4edd4d7a010.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 77741,
+   "uploaded_bytes": 77741,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_002__21d717e0-b33a-4ba9-8dd3-1aba8cbed952.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_002__21d717e0-b33a-4ba9-8dd3-1aba8cbed952.jpg",
+   "name": "shb_002.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_002__21d717e0-b33a-4ba9-8dd3-1aba8cbed952.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 107072,
+   "uploaded_bytes": 107072,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_003__670d4c67-de35-4d5b-86ea-ee880c87e4e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_003__670d4c67-de35-4d5b-86ea-ee880c87e4e7.jpg",
+   "name": "shb_003.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_003__670d4c67-de35-4d5b-86ea-ee880c87e4e7.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 99634,
+   "uploaded_bytes": 99634,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_004__1c044515-877f-4e1c-be7d-5696a3a4c8fb.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_004__1c044515-877f-4e1c-be7d-5696a3a4c8fb.jpg",
+   "name": "shb_004.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_004__1c044515-877f-4e1c-be7d-5696a3a4c8fb.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 85479,
+   "uploaded_bytes": 85479,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_005__acbbaeae-4776-4c05-b34b-389d4822918f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_005__acbbaeae-4776-4c05-b34b-389d4822918f.jpg",
+   "name": "shb_005.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_005__acbbaeae-4776-4c05-b34b-389d4822918f.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 104260,
+   "uploaded_bytes": 104260,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_006__48ab5f74-19c2-4da6-8b2d-0b9150937899.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_006__48ab5f74-19c2-4da6-8b2d-0b9150937899.jpg",
+   "name": "shb_006.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_006__48ab5f74-19c2-4da6-8b2d-0b9150937899.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 91520,
+   "uploaded_bytes": 91520,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_007__7f99852b-0b1b-4d81-8545-2fc5cc6ad649.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_007__7f99852b-0b1b-4d81-8545-2fc5cc6ad649.jpg",
+   "name": "shb_007.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_007__7f99852b-0b1b-4d81-8545-2fc5cc6ad649.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 78142,
+   "uploaded_bytes": 78142,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_008__05dc5277-d9a2-42b4-babc-d657959c410d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_008__05dc5277-d9a2-42b4-babc-d657959c410d.jpg",
+   "name": "shb_008.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_008__05dc5277-d9a2-42b4-babc-d657959c410d.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 120794,
+   "uploaded_bytes": 120794,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_009__d3165d1c-368f-435a-8387-e00bab21826b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_009__d3165d1c-368f-435a-8387-e00bab21826b.jpg",
+   "name": "shb_009.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_009__d3165d1c-368f-435a-8387-e00bab21826b.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 94350,
+   "uploaded_bytes": 94350,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_010__6d55d3f1-534c-4427-8301-a74c6b134d95.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_010__6d55d3f1-534c-4427-8301-a74c6b134d95.jpg",
+   "name": "shb_010.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_010__6d55d3f1-534c-4427-8301-a74c6b134d95.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 96456,
+   "uploaded_bytes": 96456,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_011__10114766-1aad-4ac9-9c08-f57a4a5c4b8d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_011__10114766-1aad-4ac9-9c08-f57a4a5c4b8d.jpg",
+   "name": "shb_011.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_011__10114766-1aad-4ac9-9c08-f57a4a5c4b8d.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 81763,
+   "uploaded_bytes": 81763,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_012__6b8cb398-d475-46b8-8624-c21046aec913.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_012__6b8cb398-d475-46b8-8624-c21046aec913.jpg",
+   "name": "shb_012.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_012__6b8cb398-d475-46b8-8624-c21046aec913.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 61128,
+   "uploaded_bytes": 61128,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_013__6fd11c36-8437-4a27-86b3-f501a5e22266.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_013__6fd11c36-8437-4a27-86b3-f501a5e22266.jpg",
+   "name": "shb_013.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_013__6fd11c36-8437-4a27-86b3-f501a5e22266.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 77676,
+   "uploaded_bytes": 77676,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_014__a3929d51-865f-42b9-840a-f591ed5564a9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_014__a3929d51-865f-42b9-840a-f591ed5564a9.jpg",
+   "name": "shb_014.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_014__a3929d51-865f-42b9-840a-f591ed5564a9.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 161220,
+   "uploaded_bytes": 161220,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_015__f83f0bd2-ffc0-403b-870f-10980b779349.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_015__f83f0bd2-ffc0-403b-870f-10980b779349.jpg",
+   "name": "shb_015.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_015__f83f0bd2-ffc0-403b-870f-10980b779349.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 86130,
+   "uploaded_bytes": 86130,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_016__83fd0149-8d42-4238-9aaa-c35e8264b60a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_016__83fd0149-8d42-4238-9aaa-c35e8264b60a.jpg",
+   "name": "shb_016.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_016__83fd0149-8d42-4238-9aaa-c35e8264b60a.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 61148,
+   "uploaded_bytes": 61148,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_017__d3e03c49-416d-498c-b0cc-fc27ee7fa9d6.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_017__d3e03c49-416d-498c-b0cc-fc27ee7fa9d6.jpg",
+   "name": "shb_017.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_017__d3e03c49-416d-498c-b0cc-fc27ee7fa9d6.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 71005,
+   "uploaded_bytes": 71005,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_018__7bf39863-276f-4e8a-971f-bd3a682b979d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_018__7bf39863-276f-4e8a-971f-bd3a682b979d.jpg",
+   "name": "shb_018.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_018__7bf39863-276f-4e8a-971f-bd3a682b979d.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 91995,
+   "uploaded_bytes": 91995,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_019__7a628d7a-9f60-4639-9235-9a2583debcfb.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_019__7a628d7a-9f60-4639-9235-9a2583debcfb.jpg",
+   "name": "shb_019.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_019__7a628d7a-9f60-4639-9235-9a2583debcfb.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 97263,
+   "uploaded_bytes": 97263,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_020__36f65736-118b-453e-a19d-e07efef1b4d8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_020__36f65736-118b-453e-a19d-e07efef1b4d8.jpg",
+   "name": "shb_020.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_020__36f65736-118b-453e-a19d-e07efef1b4d8.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 152012,
+   "uploaded_bytes": 152012,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_021__9b58248c-4e9b-4d81-b45b-666b6a5ba35e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_021__9b58248c-4e9b-4d81-b45b-666b6a5ba35e.jpg",
+   "name": "shb_021.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_021__9b58248c-4e9b-4d81-b45b-666b6a5ba35e.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 103895,
+   "uploaded_bytes": 103895,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_022__f6419d1c-27b3-4be0-a780-a0220ec49c2c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_022__f6419d1c-27b3-4be0-a780-a0220ec49c2c.jpg",
+   "name": "shb_022.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_022__f6419d1c-27b3-4be0-a780-a0220ec49c2c.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 77899,
+   "uploaded_bytes": 77899,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_023__56ad8f30-f279-4a6e-9187-afba17daf7d8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_023__56ad8f30-f279-4a6e-9187-afba17daf7d8.jpg",
+   "name": "shb_023.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_023__56ad8f30-f279-4a6e-9187-afba17daf7d8.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 89028,
+   "uploaded_bytes": 89028,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_024__aa5dd978-bd9c-4e01-9dae-2675e000bac8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_024__aa5dd978-bd9c-4e01-9dae-2675e000bac8.jpg",
+   "name": "shb_024.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_024__aa5dd978-bd9c-4e01-9dae-2675e000bac8.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 53432,
+   "uploaded_bytes": 53432,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_025__b16d7198-8b81-4d48-ada7-e5819bc111b5.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_025__b16d7198-8b81-4d48-ada7-e5819bc111b5.jpg",
+   "name": "shb_025.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_025__b16d7198-8b81-4d48-ada7-e5819bc111b5.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 162315,
+   "uploaded_bytes": 162315,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_026__dd67d966-ce58-4e37-9b67-5810d8ccea32.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_026__dd67d966-ce58-4e37-9b67-5810d8ccea32.jpg",
+   "name": "shb_026.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_026__dd67d966-ce58-4e37-9b67-5810d8ccea32.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 56262,
+   "uploaded_bytes": 56262,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_027__6a7e3244-5280-42a3-97c2-1377de78ecbb.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_027__6a7e3244-5280-42a3-97c2-1377de78ecbb.jpg",
+   "name": "shb_027.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_027__6a7e3244-5280-42a3-97c2-1377de78ecbb.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 88313,
+   "uploaded_bytes": 88313,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shb_028__96eb8554-ea71-4beb-87c9-0474fd44edce.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shb_028__96eb8554-ea71-4beb-87c9-0474fd44edce.jpg",
+   "name": "shb_028.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shb_028__96eb8554-ea71-4beb-87c9-0474fd44edce.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 181983,
+   "uploaded_bytes": 181983,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_001__1f4aa633-3d76-42c2-8a95-c9643773b9f1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_001__1f4aa633-3d76-42c2-8a95-c9643773b9f1.jpg",
+   "name": "shc_001.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_001__1f4aa633-3d76-42c2-8a95-c9643773b9f1.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 89334,
+   "uploaded_bytes": 89334,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_002__edc6d07f-907f-4f73-afcf-4cc8cff90a54.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_002__edc6d07f-907f-4f73-afcf-4cc8cff90a54.jpg",
+   "name": "shc_002.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_002__edc6d07f-907f-4f73-afcf-4cc8cff90a54.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 89266,
+   "uploaded_bytes": 89266,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_003__c66a3a2f-2b2f-4dd5-86a5-259da75e0476.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_003__c66a3a2f-2b2f-4dd5-86a5-259da75e0476.jpg",
+   "name": "shc_003.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_003__c66a3a2f-2b2f-4dd5-86a5-259da75e0476.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 128653,
+   "uploaded_bytes": 128653,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_004__c1248b89-3452-44d3-907e-3cb6ba131b63.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_004__c1248b89-3452-44d3-907e-3cb6ba131b63.jpg",
+   "name": "shc_004.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_004__c1248b89-3452-44d3-907e-3cb6ba131b63.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 149081,
+   "uploaded_bytes": 149081,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_005__3cce8331-81af-4ad9-859b-39fb5dbe6c10.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_005__3cce8331-81af-4ad9-859b-39fb5dbe6c10.jpg",
+   "name": "shc_005.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_005__3cce8331-81af-4ad9-859b-39fb5dbe6c10.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 92226,
+   "uploaded_bytes": 92226,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_006__21c79993-11b0-4e53-9388-2b74a58e6cf1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_006__21c79993-11b0-4e53-9388-2b74a58e6cf1.jpg",
+   "name": "shc_006.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_006__21c79993-11b0-4e53-9388-2b74a58e6cf1.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 90046,
+   "uploaded_bytes": 90046,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_007__8e6bfccd-fc08-47c6-9551-c63951904856.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_007__8e6bfccd-fc08-47c6-9551-c63951904856.jpg",
+   "name": "shc_007.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_007__8e6bfccd-fc08-47c6-9551-c63951904856.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 129608,
+   "uploaded_bytes": 129608,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_008__a3c03166-cf49-4e41-9e5d-a062e629ca45.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_008__a3c03166-cf49-4e41-9e5d-a062e629ca45.jpg",
+   "name": "shc_008.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_008__a3c03166-cf49-4e41-9e5d-a062e629ca45.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 138209,
+   "uploaded_bytes": 138209,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_009__099e3815-3368-4aff-a78d-2d49a10a9008.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_009__099e3815-3368-4aff-a78d-2d49a10a9008.jpg",
+   "name": "shc_009.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_009__099e3815-3368-4aff-a78d-2d49a10a9008.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 141925,
+   "uploaded_bytes": 141925,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_010__0a7bb453-34bb-4ff4-a664-01ea04e4bbc9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_010__0a7bb453-34bb-4ff4-a664-01ea04e4bbc9.jpg",
+   "name": "shc_010.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_010__0a7bb453-34bb-4ff4-a664-01ea04e4bbc9.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 129193,
+   "uploaded_bytes": 129193,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_011__9c5e07ee-3058-478d-8d6d-0a8347aee704.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_011__9c5e07ee-3058-478d-8d6d-0a8347aee704.jpg",
+   "name": "shc_011.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_011__9c5e07ee-3058-478d-8d6d-0a8347aee704.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 95022,
+   "uploaded_bytes": 95022,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_012__064768cb-9b6a-4b11-b952-1fc86cfd6998.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_012__064768cb-9b6a-4b11-b952-1fc86cfd6998.jpg",
+   "name": "shc_012.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_012__064768cb-9b6a-4b11-b952-1fc86cfd6998.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 98972,
+   "uploaded_bytes": 98972,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_013__faaa409e-58f1-4149-ba2f-5e104b01b0e2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_013__faaa409e-58f1-4149-ba2f-5e104b01b0e2.jpg",
+   "name": "shc_013.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_013__faaa409e-58f1-4149-ba2f-5e104b01b0e2.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 116019,
+   "uploaded_bytes": 116019,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_014__092ca325-c23d-423e-8c38-a1ad876f56d7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_014__092ca325-c23d-423e-8c38-a1ad876f56d7.jpg",
+   "name": "shc_014.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_014__092ca325-c23d-423e-8c38-a1ad876f56d7.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 141519,
+   "uploaded_bytes": 141519,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_015__85b1001b-6790-45a5-a333-6af1902cd934.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_015__85b1001b-6790-45a5-a333-6af1902cd934.jpg",
+   "name": "shc_015.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_015__85b1001b-6790-45a5-a333-6af1902cd934.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 74442,
+   "uploaded_bytes": 74442,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_016__63f0d2ad-18d5-49d1-9fbc-3d38b31f3938.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_016__63f0d2ad-18d5-49d1-9fbc-3d38b31f3938.jpg",
+   "name": "shc_016.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_016__63f0d2ad-18d5-49d1-9fbc-3d38b31f3938.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 153010,
+   "uploaded_bytes": 153010,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_017__43a6230d-f83b-4567-807b-d07da56de2b3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_017__43a6230d-f83b-4567-807b-d07da56de2b3.jpg",
+   "name": "shc_017.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_017__43a6230d-f83b-4567-807b-d07da56de2b3.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 65878,
+   "uploaded_bytes": 65878,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_018__943aa2bb-7461-4639-b2e3-a4ef28e81cc8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_018__943aa2bb-7461-4639-b2e3-a4ef28e81cc8.jpg",
+   "name": "shc_018.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_018__943aa2bb-7461-4639-b2e3-a4ef28e81cc8.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 94784,
+   "uploaded_bytes": 94784,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_019__69013b01-6daf-4215-a202-bc9cc619cdf0.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_019__69013b01-6daf-4215-a202-bc9cc619cdf0.jpg",
+   "name": "shc_019.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_019__69013b01-6daf-4215-a202-bc9cc619cdf0.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 113492,
+   "uploaded_bytes": 113492,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_020__7f408e79-b29f-4b23-a6bd-b175cec3e4cc.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_020__7f408e79-b29f-4b23-a6bd-b175cec3e4cc.jpg",
+   "name": "shc_020.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_020__7f408e79-b29f-4b23-a6bd-b175cec3e4cc.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 134673,
+   "uploaded_bytes": 134673,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_021__30e57d27-be25-486e-a8d0-fa714b366f92.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_021__30e57d27-be25-486e-a8d0-fa714b366f92.jpg",
+   "name": "shc_021.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_021__30e57d27-be25-486e-a8d0-fa714b366f92.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 93014,
+   "uploaded_bytes": 93014,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_022__b7e8d4c9-4ac6-429b-bb02-ed4870dcbc08.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_022__b7e8d4c9-4ac6-429b-bb02-ed4870dcbc08.jpg",
+   "name": "shc_022.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_022__b7e8d4c9-4ac6-429b-bb02-ed4870dcbc08.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 156559,
+   "uploaded_bytes": 156559,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_023__cbd9be88-2528-44d8-975b-8f6dcaf9758c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_023__cbd9be88-2528-44d8-975b-8f6dcaf9758c.jpg",
+   "name": "shc_023.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_023__cbd9be88-2528-44d8-975b-8f6dcaf9758c.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 48635,
+   "uploaded_bytes": 48635,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_024__8aac02f8-5d84-4a88-bec8-8f88fb6a250c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_024__8aac02f8-5d84-4a88-bec8-8f88fb6a250c.jpg",
+   "name": "shc_024.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_024__8aac02f8-5d84-4a88-bec8-8f88fb6a250c.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 114310,
+   "uploaded_bytes": 114310,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_025__852f4273-d07c-4b0d-943a-6d2c656c8445.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_025__852f4273-d07c-4b0d-943a-6d2c656c8445.jpg",
+   "name": "shc_025.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_025__852f4273-d07c-4b0d-943a-6d2c656c8445.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 147988,
+   "uploaded_bytes": 147988,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_026__e4487e78-5933-4dab-8409-dcdede461dd0.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_026__e4487e78-5933-4dab-8409-dcdede461dd0.jpg",
+   "name": "shc_026.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_026__e4487e78-5933-4dab-8409-dcdede461dd0.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 182054,
+   "uploaded_bytes": 182054,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_027__2aa3ce78-a150-4aaa-8749-48f7c1676c9b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_027__2aa3ce78-a150-4aaa-8749-48f7c1676c9b.jpg",
+   "name": "shc_027.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_027__2aa3ce78-a150-4aaa-8749-48f7c1676c9b.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 117626,
+   "uploaded_bytes": 117626,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shc_028__90dc8f94-558b-4152-bffe-21119b58cef1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shc_028__90dc8f94-558b-4152-bffe-21119b58cef1.jpg",
+   "name": "shc_028.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shc_028__90dc8f94-558b-4152-bffe-21119b58cef1.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 157963,
+   "uploaded_bytes": 157963,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_001__5bab126d-0424-44b1-83bd-a1478ede0847.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_001__5bab126d-0424-44b1-83bd-a1478ede0847.jpg",
+   "name": "shd_001.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_001__5bab126d-0424-44b1-83bd-a1478ede0847.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 109317,
+   "uploaded_bytes": 109317,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_002__2d3958f4-f747-4843-803f-9be85bbbf518.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_002__2d3958f4-f747-4843-803f-9be85bbbf518.jpg",
+   "name": "shd_002.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_002__2d3958f4-f747-4843-803f-9be85bbbf518.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 75845,
+   "uploaded_bytes": 75845,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_003__c3182731-0537-41f7-bf2e-515b33140087.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_003__c3182731-0537-41f7-bf2e-515b33140087.jpg",
+   "name": "shd_003.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_003__c3182731-0537-41f7-bf2e-515b33140087.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 92675,
+   "uploaded_bytes": 92675,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_004__9b3641c6-9b78-465f-8d06-1a13e278540f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_004__9b3641c6-9b78-465f-8d06-1a13e278540f.jpg",
+   "name": "shd_004.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_004__9b3641c6-9b78-465f-8d06-1a13e278540f.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 101672,
+   "uploaded_bytes": 101672,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_005__f10c7147-f8be-46d4-afc6-e12b294b1511.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_005__f10c7147-f8be-46d4-afc6-e12b294b1511.jpg",
+   "name": "shd_005.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_005__f10c7147-f8be-46d4-afc6-e12b294b1511.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 158467,
+   "uploaded_bytes": 158467,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_006__ec52ff0d-7646-400d-8313-1f9d77188cd4.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_006__ec52ff0d-7646-400d-8313-1f9d77188cd4.jpg",
+   "name": "shd_006.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_006__ec52ff0d-7646-400d-8313-1f9d77188cd4.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 72264,
+   "uploaded_bytes": 72264,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_007__69a6a8dd-98bd-4185-a02c-093dba2e8229.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_007__69a6a8dd-98bd-4185-a02c-093dba2e8229.jpg",
+   "name": "shd_007.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_007__69a6a8dd-98bd-4185-a02c-093dba2e8229.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 80794,
+   "uploaded_bytes": 80794,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_008__753af4ad-4f11-4f94-bc01-e1ebbd1c3981.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_008__753af4ad-4f11-4f94-bc01-e1ebbd1c3981.jpg",
+   "name": "shd_008.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_008__753af4ad-4f11-4f94-bc01-e1ebbd1c3981.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 110824,
+   "uploaded_bytes": 110824,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_009__b492dffc-7d1f-403e-938e-a97d90c01d15.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_009__b492dffc-7d1f-403e-938e-a97d90c01d15.jpg",
+   "name": "shd_009.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_009__b492dffc-7d1f-403e-938e-a97d90c01d15.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 132347,
+   "uploaded_bytes": 132347,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_010__23bb9db0-af52-4df1-b4ea-d46a1ee6d02a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_010__23bb9db0-af52-4df1-b4ea-d46a1ee6d02a.jpg",
+   "name": "shd_010.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_010__23bb9db0-af52-4df1-b4ea-d46a1ee6d02a.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 95986,
+   "uploaded_bytes": 95986,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_011__a47d6ace-13a7-442d-a300-8d54df69e168.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_011__a47d6ace-13a7-442d-a300-8d54df69e168.jpg",
+   "name": "shd_011.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_011__a47d6ace-13a7-442d-a300-8d54df69e168.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 108287,
+   "uploaded_bytes": 108287,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_012__7ef5cba1-d5be-4692-b711-9ae7c3ade549.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_012__7ef5cba1-d5be-4692-b711-9ae7c3ade549.jpg",
+   "name": "shd_012.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_012__7ef5cba1-d5be-4692-b711-9ae7c3ade549.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 89482,
+   "uploaded_bytes": 89482,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_013__d8eb7964-e9af-46ee-9faa-eb8fd1039663.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_013__d8eb7964-e9af-46ee-9faa-eb8fd1039663.jpg",
+   "name": "shd_013.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_013__d8eb7964-e9af-46ee-9faa-eb8fd1039663.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 139484,
+   "uploaded_bytes": 139484,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_014__8a830652-adfd-4bbf-ae04-9b430028eac4.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_014__8a830652-adfd-4bbf-ae04-9b430028eac4.jpg",
+   "name": "shd_014.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_014__8a830652-adfd-4bbf-ae04-9b430028eac4.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 159752,
+   "uploaded_bytes": 159752,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_015__28237d66-284e-42a6-b74b-254962ab1d51.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_015__28237d66-284e-42a6-b74b-254962ab1d51.jpg",
+   "name": "shd_015.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_015__28237d66-284e-42a6-b74b-254962ab1d51.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 98864,
+   "uploaded_bytes": 98864,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_016__5c3df6c3-b172-4661-b9b8-2391d70f0280.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_016__5c3df6c3-b172-4661-b9b8-2391d70f0280.jpg",
+   "name": "shd_016.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_016__5c3df6c3-b172-4661-b9b8-2391d70f0280.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 82302,
+   "uploaded_bytes": 82302,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_019__90fe4fe4-0ca3-46d5-8bbd-3a1ec7ffe747.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_019__90fe4fe4-0ca3-46d5-8bbd-3a1ec7ffe747.jpg",
+   "name": "shd_019.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_019__90fe4fe4-0ca3-46d5-8bbd-3a1ec7ffe747.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 65714,
+   "uploaded_bytes": 65714,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_020__ddf98890-e3de-4cbf-a327-d5cbd377bb01.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_020__ddf98890-e3de-4cbf-a327-d5cbd377bb01.jpg",
+   "name": "shd_020.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_020__ddf98890-e3de-4cbf-a327-d5cbd377bb01.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 149320,
+   "uploaded_bytes": 149320,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_021__63302458-4d8b-4346-81cc-26ac0108ca3e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_021__63302458-4d8b-4346-81cc-26ac0108ca3e.jpg",
+   "name": "shd_021.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_021__63302458-4d8b-4346-81cc-26ac0108ca3e.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 85097,
+   "uploaded_bytes": 85097,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_022__776f661d-1971-4ada-82b3-9d8486e0590c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_022__776f661d-1971-4ada-82b3-9d8486e0590c.jpg",
+   "name": "shd_022.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_022__776f661d-1971-4ada-82b3-9d8486e0590c.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 66930,
+   "uploaded_bytes": 66930,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_023__242d85ba-8983-4db3-b1ef-cb8d38f0a79e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_023__242d85ba-8983-4db3-b1ef-cb8d38f0a79e.jpg",
+   "name": "shd_023.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_023__242d85ba-8983-4db3-b1ef-cb8d38f0a79e.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 115062,
+   "uploaded_bytes": 115062,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_024__8f43325e-a4e5-4ab9-a0ae-b0965148707b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_024__8f43325e-a4e5-4ab9-a0ae-b0965148707b.jpg",
+   "name": "shd_024.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_024__8f43325e-a4e5-4ab9-a0ae-b0965148707b.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 99251,
+   "uploaded_bytes": 99251,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_025__69503bb1-cdf4-4cce-b99b-98c00652d0e9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_025__69503bb1-cdf4-4cce-b99b-98c00652d0e9.jpg",
+   "name": "shd_025.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_025__69503bb1-cdf4-4cce-b99b-98c00652d0e9.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 101625,
+   "uploaded_bytes": 101625,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_026__fb231119-cdec-4968-b5a4-635853fa49c4.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_026__fb231119-cdec-4968-b5a4-635853fa49c4.jpg",
+   "name": "shd_026.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_026__fb231119-cdec-4968-b5a4-635853fa49c4.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 179849,
+   "uploaded_bytes": 179849,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_027__2105cdac-4d90-4925-a668-5dd2e304b440.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_027__2105cdac-4d90-4925-a668-5dd2e304b440.jpg",
+   "name": "shd_027.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_027__2105cdac-4d90-4925-a668-5dd2e304b440.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 89698,
+   "uploaded_bytes": 89698,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-liu-physical/shanghai/shd_028__7d37303d-f7a0-455e-b05c-f83aca34df2d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-liu-physical/shanghai/shd_028__7d37303d-f7a0-455e-b05c-f83aca34df2d.jpg",
+   "name": "shd_028.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2025-liu-physical/shanghai/shd_028__7d37303d-f7a0-455e-b05c-f83aca34df2d.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 85035,
+   "uploaded_bytes": 85035,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "The association of subjective physical disorder and pedestrian volume: A big urban data and machine-learning approach",
+  "authors": [
+   "Liu F.",
+   "Lu Y.",
+   "Song Q.",
+   "Qiu W.",
+   "Liu D."
+  ],
+  "year": 2025,
+  "venue": "Computers, Environment and Urban Systems",
+  "doi": "10.1016/j.compenvurbsys.2025.102348",
+  "url": "https://doi.org/10.1016/j.compenvurbsys.2025.102348"
+ }
+}

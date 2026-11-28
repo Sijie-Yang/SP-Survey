@@ -1,0 +1,352 @@
+{
+ "id": "2023-xie-biophilic",
+ "name": "Biophilic Office vs Blue Lighting: Impressions and Ranking",
+ "description": "Faithful replication of Xie, Sawyer, Ge & Li (2023), \"Subjective Impression of an Office with Biophilic Design and Blue Lighting: A Pilot Study\", Buildings 13:42 (Carnegie Mellon University, online survey, 284 complete responses). Participants see four renderings of the same private office (Rhino 6 + Enscape 2.7) in random order: (a) baseline with conventional white lighting, (b) blue lighting, (c) indoor plants, (d) daylight and window view. Each office is rated on eight unipolar 7-point scales (lively, calming, comfortable, interesting, spacious, appealing, cheerful, bright), then all four are ranked from 1 to 4 by preference, followed by two optional open questions on what influenced the ratings and preferences. Demographics: gender, age group, years of design education, years of professional architectural experience. Analysis as in the paper: linear mixed-effects model per attribute with the baseline office as reference, plus rank distributions. Stimuli: the paper's own renderings from Figure 1 (CC BY 4.0), credited on the page; the template is removed if the authors object. Differences from the original study: (1) the exact scale anchor wording and the wording of the two open questions are not printed in the paper, so the page uses \"1 = not at all … / 7 = very …\" and short paraphrased open questions; (2) images are cropped from the published figure at about 700 px wide instead of the full-resolution renders; (3) the ranking uses one drop-down per office with a check that each rank is used once.",
+ "author": "Xie, Sawyer, Ge & Li",
+ "year": "2023",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "source:paper",
+  "concept:comfort",
+  "concept:liveliness",
+  "concept:preference",
+  "concept:emotion",
+  "scene:indoor",
+  "modality:rendered",
+  "task:rating",
+  "task:choose_from_set",
+  "task:open_ended",
+  "setting:online",
+  "participants:public",
+  "participants:students",
+  "sample:100to300",
+  "country:USA"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/buildings13010042",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T05:49:17.684+00:00",
+ "updatedAt": "2026-11-28T10:31:08.479+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I am 18 or older and agree to take part voluntarily; I know I can stop at any time.",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Male",
+        "value": 1
+       },
+       {
+        "text": "Female",
+        "value": 2
+       },
+       {
+        "text": "Prefer not to answer",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "20 or younger",
+        "value": 1
+       },
+       {
+        "text": "21–30",
+        "value": 2
+       },
+       {
+        "text": "31–40",
+        "value": 3
+       },
+       {
+        "text": "Over 40",
+        "value": 4
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "Years of formal education in architecture, landscape architecture, urban design/planning, interior design or lighting design",
+      "choices": [
+       {
+        "text": "0 years",
+        "value": 1
+       },
+       {
+        "text": "1–5 years",
+        "value": 2
+       },
+       {
+        "text": "6 years or more",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "work_experience",
+      "type": "radiogroup",
+      "title": "Years of working experience in a professional architectural setting",
+      "choices": [
+       {
+        "text": "0 years",
+        "value": 1
+       },
+       {
+        "text": "1–3 years",
+        "value": 2
+       },
+       {
+        "text": "More than 3 years",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "scenes",
+    "elements": [
+     {
+      "name": "office_rating",
+      "type": "custom",
+      "items": [
+       {
+        "key": "lively",
+        "text": "Lively"
+       },
+       {
+        "key": "calming",
+        "text": "Calming"
+       },
+       {
+        "key": "comfortable",
+        "text": "Comfortable"
+       },
+       {
+        "key": "interesting",
+        "text": "Interesting"
+       },
+       {
+        "key": "spacious",
+        "text": "Spacious"
+       },
+       {
+        "key": "appealing",
+        "text": "Appealing"
+       },
+       {
+        "key": "cheerful",
+        "text": "Cheerful"
+       },
+       {
+        "key": "bright",
+        "text": "Bright"
+       }
+      ],
+      "title": "Impression of each rendered office",
+      "trials": [
+       {
+        "id": "baseline",
+        "image": "office_a_baseline.jpg",
+        "label": "Office (a) Baseline"
+       },
+       {
+        "id": "blue_lighting",
+        "image": "office_b_blue_lighting.jpg",
+        "label": "Office (b) Blue lighting"
+       },
+       {
+        "id": "indoor_plants",
+        "image": "office_c_indoor_plants.jpg",
+        "label": "Office (c) Indoor plants"
+       },
+       {
+        "id": "daylight_view",
+        "image": "office_d_daylight_view.jpg",
+        "label": "Office (d) Daylight and view"
+       }
+      ],
+      "isRequired": false,
+      "description": "Four renderings of the same private office (Rhino 6 + Enscape 2.7): (a) baseline, (b) blue lighting, (c) indoor plants, (d) daylight and view, shown in random order. Each is rated on eight unipolar 7-point scales, 1 (most negative) to 7 (most positive): lively, calming, comfortable, interesting, spacious, appealing, cheerful, bright. Value: {lively, calming, comfortable, interesting, spacious, appealing, cheerful, bright}. Analysis as in the paper: linear mixed-effects model per attribute with participant as random intercept and the baseline office as reference."
+     }
+    ]
+   },
+   {
+    "name": "ranking",
+    "elements": [
+     {
+      "name": "preference_rank",
+      "type": "custom",
+      "title": "Rank the four offices from 1 (most preferred) to 4 (least preferred)",
+      "trials": [
+       {
+        "id": "baseline",
+        "image": "office_a_baseline.jpg",
+        "label": "Office (a) Baseline"
+       },
+       {
+        "id": "blue_lighting",
+        "image": "office_b_blue_lighting.jpg",
+        "label": "Office (b) Blue lighting"
+       },
+       {
+        "id": "indoor_plants",
+        "image": "office_c_indoor_plants.jpg",
+        "label": "Office (c) Indoor plants"
+       },
+       {
+        "id": "daylight_view",
+        "image": "office_d_daylight_view.jpg",
+        "label": "Office (d) Daylight and view"
+       }
+      ],
+      "isRequired": false,
+      "description": "All four offices shown together; each gets a unique rank 1–4. Value: {baseline, blue_lighting, indoor_plants, daylight_view} = rank. Analysis as in the paper: distribution of ranks and most common ranking orders."
+     }
+    ]
+   },
+   {
+    "name": "open",
+    "elements": [
+     {
+      "name": "factors_rating",
+      "type": "comment",
+      "title": "What influenced your ratings of the offices?",
+      "isRequired": false
+     },
+     {
+      "name": "factors_preference",
+      "type": "comment",
+      "title": "What made you prefer one office over another?",
+      "isRequired": false
+     }
+    ]
+   }
+  ],
+  "title": "Biophilic Office vs Blue Lighting: Impressions and Ranking",
+  "locale": "en",
+  "spSite": {
+   "id": "site-286a076485cdb696",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Biophilic Office Impressions</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Biophilic Office vs Blue Lighting: Impressions and Ranking\",\n  \"description\": \"Faithful replication of Xie, Sawyer, Ge & Li (2023), Buildings 13:42: rate four rendered versions of the same private office (baseline, blue lighting, indoor plants, daylight and view) on eight 7-point impressions, then rank them by preference.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"offices\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"boolean\",\n      \"name\": \"consent\",\n      \"title\": \"I am 18 or older and agree to take part voluntarily; I know I can stop at any time.\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Prefer not to answer\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"20 or younger\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"21–30\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"31–40\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Over 40\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"Years of formal education in architecture, landscape architecture, urban design/planning, interior design or lighting design\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"0 years\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"1–5 years\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"6 years or more\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"work_experience\",\n      \"title\": \"Years of working experience in a professional architectural setting\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"0 years\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"1–3 years\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"More than 3 years\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"scenes\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"office_rating\",\n      \"title\": \"Impression of each rendered office\",\n      \"isRequired\": false,\n      \"description\": \"Four renderings of the same private office (Rhino 6 + Enscape 2.7): (a) baseline, (b) blue lighting, (c) indoor plants, (d) daylight and view, shown in random order. Each is rated on eight unipolar 7-point scales, 1 (most negative) to 7 (most positive): lively, calming, comfortable, interesting, spacious, appealing, cheerful, bright. Value: {lively, calming, comfortable, interesting, spacious, appealing, cheerful, bright}. Analysis as in the paper: linear mixed-effects model per attribute with participant as random intercept and the baseline office as reference.\",\n      \"items\": [\n       {\n        \"key\": \"lively\",\n        \"text\": \"Lively\"\n       },\n       {\n        \"key\": \"calming\",\n        \"text\": \"Calming\"\n       },\n       {\n        \"key\": \"comfortable\",\n        \"text\": \"Comfortable\"\n       },\n       {\n        \"key\": \"interesting\",\n        \"text\": \"Interesting\"\n       },\n       {\n        \"key\": \"spacious\",\n        \"text\": \"Spacious\"\n       },\n       {\n        \"key\": \"appealing\",\n        \"text\": \"Appealing\"\n       },\n       {\n        \"key\": \"cheerful\",\n        \"text\": \"Cheerful\"\n       },\n       {\n        \"key\": \"bright\",\n        \"text\": \"Bright\"\n       }\n      ],\n      \"trials\": [\n       {\n        \"id\": \"baseline\",\n        \"label\": \"Office (a) Baseline\",\n        \"image\": \"office_a_baseline.jpg\"\n       },\n       {\n        \"id\": \"blue_lighting\",\n        \"label\": \"Office (b) Blue lighting\",\n        \"image\": \"office_b_blue_lighting.jpg\"\n       },\n       {\n        \"id\": \"indoor_plants\",\n        \"label\": \"Office (c) Indoor plants\",\n        \"image\": \"office_c_indoor_plants.jpg\"\n       },\n       {\n        \"id\": \"daylight_view\",\n        \"label\": \"Office (d) Daylight and view\",\n        \"image\": \"office_d_daylight_view.jpg\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"ranking\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"preference_rank\",\n      \"title\": \"Rank the four offices from 1 (most preferred) to 4 (least preferred)\",\n      \"isRequired\": false,\n      \"description\": \"All four offices shown together; each gets a unique rank 1–4. Value: {baseline, blue_lighting, indoor_plants, daylight_view} = rank. Analysis as in the paper: distribution of ranks and most common ranking orders.\",\n      \"trials\": [\n       {\n        \"id\": \"baseline\",\n        \"label\": \"Office (a) Baseline\",\n        \"image\": \"office_a_baseline.jpg\"\n       },\n       {\n        \"id\": \"blue_lighting\",\n        \"label\": \"Office (b) Blue lighting\",\n        \"image\": \"office_b_blue_lighting.jpg\"\n       },\n       {\n        \"id\": \"indoor_plants\",\n        \"label\": \"Office (c) Indoor plants\",\n        \"image\": \"office_c_indoor_plants.jpg\"\n       },\n       {\n        \"id\": \"daylight_view\",\n        \"label\": \"Office (d) Daylight and view\",\n        \"image\": \"office_d_daylight_view.jpg\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"open\",\n    \"elements\": [\n     {\n      \"type\": \"comment\",\n      \"name\": \"factors_rating\",\n      \"title\": \"What influenced your ratings of the offices?\",\n      \"isRequired\": false\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"factors_preference\",\n      \"title\": \"What made you prefer one office over another?\",\n      \"isRequired\": false\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#eef0f2;--card:#fff;--ink:#1f2328;--muted:#5d646c;--accent:#2f6f5e;--accent-ink:#fff;--line:#d8dce0;--warn:#b3261e;--miss:#fdecea}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:860px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.3rem;margin:0 0 10px}\np{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q>b{display:block;margin-bottom:4px}\n.q.miss{background:var(--miss);border-radius:10px;padding:6px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer;background:var(--card)}\n.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}\n.t{color:var(--muted);font-size:.9rem}\n.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;flex:1;margin-left:12px;max-width:260px}.bar>i{display:block;height:100%;background:var(--accent)}\n.pic{background:#e2e5e8;border-radius:12px;overflow:hidden}.pic img{width:100%;max-height:min(50vh,460px);object-fit:contain;display:block}\n.it{padding:10px 6px;border-top:1px solid var(--line);border-radius:8px}\n.it .x{font-weight:500;margin-bottom:6px}\n.sc{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px}\n.sc label{display:flex;flex-direction:column;align-items:center;font-size:.85rem;color:var(--muted);cursor:pointer;padding:2px 0;min-width:0}\n.sc input{width:20px;height:20px;margin:0 0 2px}\n.ends{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:2px;gap:8px}\n.it.miss,.rk.miss{background:var(--miss)}\n.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}\n@media(max-width:560px){.grid{grid-template-columns:1fr}}\n.rk{border:1px solid var(--line);border-radius:12px;padding:8px}\n.rk img{width:100%;display:block;border-radius:8px}\n.rk .lb{font-weight:600;margin:6px 0}\n.rk select{width:100%;font:inherit;padding:8px;border-radius:8px;border:1px solid var(--line)}\ntextarea{width:100%;min-height:90px;font:inherit;padding:8px;border-radius:8px;border:1px solid var(--line)}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:860px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Renderings: Xie, Sawyer, Ge &amp; Li (2023), Buildings 13:42, Figure 1, doi:10.3390/buildings13010042 (CC BY 4.0). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='xieoffice2023:';\n  var app=document.getElementById('app'), Q={}, files={}, ans={}, TR=[], ITEMS=[], done={}, ORDER=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='visible';}}\n  function hideErr(){var e=app.querySelector('.err');if(e)e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function q(n){return Q[n]||{};}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function page(html,btn,cb){app.innerHTML=html+'<div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">'+esc(btn)+'</button></div><div class=\"err\"></div>';document.getElementById('go').onclick=cb;app.onchange=hideErr;}\n  function send(list,b,fin){b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}fin();});}\n  function byId(id){for(var i=0;i<TR.length;i++)if(TR[i].id===id)return TR[i];}\n  function next(){\n    window.scrollTo(0,0);\n    if(!ans.intro)return intro();\n    if(!ans.about)return about();\n    for(var i=0;i<ORDER.length;i++)if(!done[ORDER[i]])return scene(byId(ORDER[i]),i);\n    if(!ans.rank)return ranking();\n    if(!ans.open)return openq();\n    finish();\n  }\n  function intro(){\n    var miss=TR.some(function(t){return !files[t.image];});\n    if(miss){app.innerHTML='<h1>Pictures missing</h1><p>Media folder offices must hold the four office renderings (office_a_baseline.jpg … office_d_daylight_view.jpg).</p>';return;}\n    page('<h1>Impressions of an office</h1><p>You will see four renderings of the same private office, each with a different design. Imagine you work in it. Rate your impression of each office, then rank the four offices by preference.</p><p>It takes about 10 minutes. Your answers are anonymous and used only for research.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(q('consent').title)+'</label></div>','Start',function(){\n      if(!document.getElementById('ok').checked)return err('Please confirm to continue.');\n      send([SPSite.answer('consent',true)],this,function(){ans.intro=true;save('a',ans);next();});});\n  }\n  var DEMO=['gender','age_group','education','work_experience'];\n  function about(){\n    page('<h1>About you</h1><div class=\"card\">'+DEMO.map(function(n,k){var d=q(n);return '<div class=\"q\" data-n=\"'+n+'\"'+(k?'':' style=\"margin-top:0\"')+'><b>'+esc(d.title)+'</b>'+(d.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}).join('')+'</div>','Continue',function(){\n      var v={},miss=[];DEMO.forEach(function(n){var x=app.querySelector('input[name=\"'+n+'\"]:checked');var r=app.querySelector('.q[data-n=\"'+n+'\"]');if(x){v[n]=Number(x.value);r.classList.remove('miss');}else{miss.push(r);r.classList.add('miss');}});\n      if(miss.length){err('Please answer every question (marked in red).');miss[0].scrollIntoView({block:'center'});return;}\n      send(DEMO.map(function(n){return SPSite.answer(n,v[n]);}),this,function(){ans.about=true;save('a',ans);next();});});\n  }\n  function scene(t,i){\n    var f=files[t.image];\n    var rows=ITEMS.map(function(it){return '<div class=\"it\" data-k=\"'+it.key+'\"><div class=\"x\">'+esc(it.text)+'</div><div class=\"sc\" role=\"radiogroup\" aria-label=\"'+esc(it.text)+'\">'+[1,2,3,4,5,6,7].map(function(v){return '<label><input type=\"radio\" name=\"'+it.key+'\" value=\"'+v+'\">'+v+'</label>';}).join('')+'</div><div class=\"ends\"><span>1 = not at all '+esc(it.text.toLowerCase())+'</span><span>7 = very '+esc(it.text.toLowerCase())+'</span></div></div>';}).join('');\n    page('<div class=\"top\"><span class=\"t\">Office '+(i+1)+' of '+TR.length+'</span><div class=\"bar\"><i style=\"width:'+(100*i/TR.length)+'%\"></i></div></div><div class=\"card\"><div class=\"pic\"><img alt=\"Rendering of a private office\" src=\"'+esc(f.url)+'\"></div><p style=\"margin:10px 0 4px;color:var(--ink)\">How does this office feel to you?</p>'+rows+'</div>','Next',function(){\n      var v={},miss=[];\n      ITEMS.forEach(function(it){var x=app.querySelector('input[name=\"'+it.key+'\"]:checked');var r=app.querySelector('.it[data-k=\"'+it.key+'\"]');if(x){v[it.key]=Number(x.value);r.classList.remove('miss');}else{miss.push(r);r.classList.add('miss');}});\n      if(miss.length){err(miss.length+' question'+(miss.length>1?'s are':' is')+' not answered yet (marked in red).');miss[0].scrollIntoView({block:'center'});return;}\n      send([SPSite.answer('office_rating',v,{key:t.id,shown:[f.name]})],this,function(){done[t.id]=true;next();});});\n    app.onchange=function(e){hideErr();var r=e.target.closest&&e.target.closest('.it');if(r)r.classList.remove('miss');};\n  }\n  function ranking(){\n    var cards=ORDER.map(function(id){var t=byId(id);var f=files[t.image];return '<div class=\"rk\" data-k=\"'+t.id+'\"><img alt=\"'+esc(t.label)+'\" src=\"'+esc(f.url)+'\"><div class=\"lb\">'+esc(t.label)+'</div><select name=\"'+t.id+'\" aria-label=\"Rank for '+esc(t.label)+'\"><option value=\"\">Rank…</option>'+[1,2,3,4].map(function(r){return '<option value=\"'+r+'\">'+r+(r===1?' (most preferred)':r===4?' (least preferred)':'')+'</option>';}).join('')+'</select></div>';}).join('');\n    page('<h1>Rank the offices</h1><p>'+esc(q('preference_rank').title)+'. Each rank can be used once.</p><div class=\"grid\">'+cards+'</div>','Continue',function(){\n      var v={},used={},bad=[];\n      TR.forEach(function(t){var s=app.querySelector('select[name=\"'+t.id+'\"]');var r=app.querySelector('.rk[data-k=\"'+t.id+'\"]');var x=Number(s.value);if(!x||used[x]){bad.push(r);r.classList.add('miss');}else{used[x]=1;v[t.id]=x;r.classList.remove('miss');}});\n      if(bad.length){err('Give each office a different rank from 1 to 4 (problems marked in red).');return;}\n      send([SPSite.answer('preference_rank',v,{key:'rank',shown:ORDER.map(function(id){return files[byId(id).image].name;})})],this,function(){ans.rank=true;save('a',ans);next();});});\n    app.onchange=function(e){hideErr();var r=e.target.closest&&e.target.closest('.rk');if(r)r.classList.remove('miss');};\n  }\n  function openq(){\n    page('<h1>Your reasons</h1><p>Optional. Write as much or as little as you like.</p><div class=\"card\"><div class=\"q\" style=\"margin-top:0\"><b>'+esc(q('factors_rating').title)+'</b><textarea id=\"fr\"></textarea></div><div class=\"q\"><b>'+esc(q('factors_preference').title)+'</b><textarea id=\"fp\"></textarea></div></div>','Finish',function(){\n      var a=document.getElementById('fr').value.trim(),b=document.getElementById('fp').value.trim(),l=[];\n      if(a)l.push(SPSite.answer('factors_rating',a));if(b)l.push(SPSite.answer('factors_preference',b));\n      send(l,this,function(){ans.open=true;save('a',ans);next();});});\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>In the original online study, 284 people rated these four offices. Adding daylight and a window view raised every impression compared with the baseline office, and 78.5% ranked that office first. The most common order was daylight and view first, indoor plants second, baseline third and blue lighting last.</p><p style=\"font-size:.82rem\">Renderings and method: Xie, J., Sawyer, A. O., Ge, Y., &amp; Li, R. (2023). Subjective Impression of an Office with Biophilic Design and Blue Lighting: A Pilot Study. Buildings 13:42, doi:10.3390/buildings13010042.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){if(x==='consent')ans.intro=false;else if(x==='office_rating')done={};else if(x==='preference_rank')ans.rank=false;else ans.about=false;});save('a',ans);next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    var SPEC;try{SPEC=JSON.parse(document.getElementById('sp-scheme').textContent).survey;}catch(e){SPEC={pages:[]};}\n    SPEC.pages.forEach(function(p){p.elements.forEach(function(e){var g=SPSite.getQuestion(e.name)||{};Q[e.name]={title:g.title||e.title,choices:(g.choices&&g.choices.length)?g.choices:e.choices};if(e.name==='office_rating'){TR=e.trials;ITEMS=e.items;}});});\n    (SPSite.getMedia('offices')||[]).forEach(function(f){files[f.name]=f;});\n    var a=(ctx&&ctx.answers)||{};ans=load('a')||{};\n    ORDER=load('o');if(!ORDER||ORDER.length!==TR.length){ORDER=shuffle(TR.map(function(t){return t.id;}));save('o',ORDER);}\n    ((a.office_rating&&a.office_rating.trials)||[]).forEach(function(t){if(t.key)done[t.key]=true;});\n    ans.intro=a.consent===true;ans.about=a.gender!=null&&a.work_experience!=null;ans.rank=a.preference_rank!=null||!!ans.rank;\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T05:48:50.891Z",
+   "mediaFolders": [
+    "offices"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T05:48:50.891Z"
+  },
+  "description": "Faithful replication of Xie, Sawyer, Ge & Li (2023), Buildings 13:42: rate four rendered versions of the same private office (baseline, blue lighting, indoor plants, daylight and view) on eight 7-point impressions, then rank them by preference.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2023-xie-biophilic/offices/office_a_baseline__b0e0d125-818b-43c2-bbd0-011654a557c1.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-xie-biophilic/offices/office_a_baseline__b0e0d125-818b-43c2-bbd0-011654a557c1.jpg",
+   "name": "office_a_baseline.jpg",
+   "type": "image",
+   "folder": "offices",
+   "media_id": "templates/2023-xie-biophilic/offices/office_a_baseline__b0e0d125-818b-43c2-bbd0-011654a557c1.jpg",
+   "logicalFolder": "offices",
+   "original_bytes": 62939,
+   "uploaded_bytes": 62939,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-xie-biophilic/offices/office_b_blue_lighting__5453bfdb-6112-4e3d-ae90-c19197e7c194.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-xie-biophilic/offices/office_b_blue_lighting__5453bfdb-6112-4e3d-ae90-c19197e7c194.jpg",
+   "name": "office_b_blue_lighting.jpg",
+   "type": "image",
+   "folder": "offices",
+   "media_id": "templates/2023-xie-biophilic/offices/office_b_blue_lighting__5453bfdb-6112-4e3d-ae90-c19197e7c194.jpg",
+   "logicalFolder": "offices",
+   "original_bytes": 64491,
+   "uploaded_bytes": 64491,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-xie-biophilic/offices/office_c_indoor_plants__33993cf4-f28d-4956-aedb-20ed808b3240.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-xie-biophilic/offices/office_c_indoor_plants__33993cf4-f28d-4956-aedb-20ed808b3240.jpg",
+   "name": "office_c_indoor_plants.jpg",
+   "type": "image",
+   "folder": "offices",
+   "media_id": "templates/2023-xie-biophilic/offices/office_c_indoor_plants__33993cf4-f28d-4956-aedb-20ed808b3240.jpg",
+   "logicalFolder": "offices",
+   "original_bytes": 79651,
+   "uploaded_bytes": 79651,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-xie-biophilic/offices/office_d_daylight_view__b7cddd1f-5e6b-4671-9515-730f9e4845f0.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-xie-biophilic/offices/office_d_daylight_view__b7cddd1f-5e6b-4671-9515-730f9e4845f0.jpg",
+   "name": "office_d_daylight_view.jpg",
+   "type": "image",
+   "folder": "offices",
+   "media_id": "templates/2023-xie-biophilic/offices/office_d_daylight_view__b7cddd1f-5e6b-4671-9515-730f9e4845f0.jpg",
+   "logicalFolder": "offices",
+   "original_bytes": 77278,
+   "uploaded_bytes": 77278,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Subjective Impression of an Office with Biophilic Design and Blue Lighting: A Pilot Study",
+  "authors": [
+   "Jiarong Xie",
+   "Azadeh Omidfar Sawyer",
+   "Siqing Ge",
+   "Tian Li"
+  ],
+  "year": 2023,
+  "venue": "Buildings",
+  "doi": "10.3390/buildings13010042",
+  "url": "https://doi.org/10.3390/buildings13010042"
+ }
+}

@@ -1,0 +1,530 @@
+{
+ "id": "2021-pracki-corridor",
+ "name": "Corridor Lighting: Brightness and Uniformity of Ten Variants",
+ "description": "Faithful replication of Pracki & Krupiński (2021), \"Brightness and Uniformity Perception of Virtual Corridor with Artificial Lighting Systems\", Energies 14:412. Ten computer visualisations (Autodesk 3ds Max, luminance checked against DIALux) of the same empty corridor lit by six luminaire types in ten layouts are shown one after another in the paper's order. For each variant participants assess the brightness and the uniformity of the ceiling, the wall, the floor and the entire corridor on 7-point semantic differential scales (Extremely bright … Extremely dim; Extremely uniform … Extremely non-uniform), coded 7 = extremely bright/uniform to 1 = extremely dim/non-uniform as in the paper. Analysis as in the paper: mean, median, min, max and SD per variant and plane, and the Wald–Wolfowitz runs test to compare groups or viewing conditions. Visualisations are cropped from Figures 4–13 of the open-access paper (CC BY 4.0) with credit; the template is removed if the authors object. Differences from the original study: (1) online on the participant's own screen; the original compared a controlled box (wall luminance about 10 cd/m²) with an uncontrolled computer room; (2) the paper lists the personal-data topics (gender, age, education, occupation, sight, well-being) but not their answer options, so the options here are written for this template; (3) the paper questionnaire is shown on screen next to each image instead of on paper; (4) images are about 1,800 px wide from the published figures.",
+ "author": "Pracki & Krupiński",
+ "year": "2021",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "source:paper",
+  "concept:light",
+  "scene:indoor",
+  "modality:rendered",
+  "task:rating",
+  "setting:lab",
+  "participants:students",
+  "sample:lt100"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/en14020412",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T08:41:02.254+00:00",
+ "updatedAt": "2026-11-28T10:32:53.27+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part voluntarily and know I can stop at any time.",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Woman",
+        "value": 1
+       },
+       {
+        "text": "Man",
+        "value": 2
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "Under 19",
+        "value": 1
+       },
+       {
+        "text": "19–25",
+        "value": 2
+       },
+       {
+        "text": "26–40",
+        "value": 3
+       },
+       {
+        "text": "41–60",
+        "value": 4
+       },
+       {
+        "text": "Over 60",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "Education",
+      "choices": [
+       {
+        "text": "Secondary school",
+        "value": 1
+       },
+       {
+        "text": "Bachelor's student or degree",
+        "value": 2
+       },
+       {
+        "text": "Master's student or degree",
+        "value": 3
+       },
+       {
+        "text": "Doctoral student or degree",
+        "value": 4
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "occupation",
+      "type": "radiogroup",
+      "title": "Occupation",
+      "choices": [
+       {
+        "text": "Student of lighting or electrical engineering",
+        "value": 1
+       },
+       {
+        "text": "Other student",
+        "value": 2
+       },
+       {
+        "text": "Working in lighting, architecture or design",
+        "value": 3
+       },
+       {
+        "text": "Other occupation",
+        "value": 4
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "sight",
+      "type": "radiogroup",
+      "title": "State of your sight",
+      "choices": [
+       {
+        "text": "Normal vision, no glasses or lenses",
+        "value": 1
+       },
+       {
+        "text": "Corrected to normal (glasses or lenses worn now)",
+        "value": 2
+       },
+       {
+        "text": "Some sight problems",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "wellbeing",
+      "type": "radiogroup",
+      "title": "How do you feel today?",
+      "choices": [
+       {
+        "text": "Very good",
+        "value": 1
+       },
+       {
+        "text": "Good",
+        "value": 2
+       },
+       {
+        "text": "Average",
+        "value": 3
+       },
+       {
+        "text": "Poor",
+        "value": 4
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "variants",
+    "elements": [
+     {
+      "name": "corridor_assessment",
+      "type": "custom",
+      "items": [
+       {
+        "key": "ceiling_brightness",
+        "plane": "Assess ceiling brightness and uniformity in the corridor",
+        "levels": [
+         "Extremely bright",
+         "Very bright",
+         "Rather bright",
+         "Moderate",
+         "Rather dim",
+         "Very dim",
+         "Extremely dim"
+        ],
+        "feature": "brightness"
+       },
+       {
+        "key": "ceiling_uniformity",
+        "plane": "Assess ceiling brightness and uniformity in the corridor",
+        "levels": [
+         "Extremely uniform",
+         "Very uniform",
+         "Rather uniform",
+         "Moderate",
+         "Rather non-uniform",
+         "Very non-uniform",
+         "Extremely non-uniform"
+        ],
+        "feature": "uniformity"
+       },
+       {
+        "key": "walls_brightness",
+        "plane": "Assess wall brightness and uniformity in the corridor",
+        "levels": [
+         "Extremely bright",
+         "Very bright",
+         "Rather bright",
+         "Moderate",
+         "Rather dim",
+         "Very dim",
+         "Extremely dim"
+        ],
+        "feature": "brightness"
+       },
+       {
+        "key": "walls_uniformity",
+        "plane": "Assess wall brightness and uniformity in the corridor",
+        "levels": [
+         "Extremely uniform",
+         "Very uniform",
+         "Rather uniform",
+         "Moderate",
+         "Rather non-uniform",
+         "Very non-uniform",
+         "Extremely non-uniform"
+        ],
+        "feature": "uniformity"
+       },
+       {
+        "key": "floor_brightness",
+        "plane": "Assess floor brightness and uniformity in the corridor",
+        "levels": [
+         "Extremely bright",
+         "Very bright",
+         "Rather bright",
+         "Moderate",
+         "Rather dim",
+         "Very dim",
+         "Extremely dim"
+        ],
+        "feature": "brightness"
+       },
+       {
+        "key": "floor_uniformity",
+        "plane": "Assess floor brightness and uniformity in the corridor",
+        "levels": [
+         "Extremely uniform",
+         "Very uniform",
+         "Rather uniform",
+         "Moderate",
+         "Rather non-uniform",
+         "Very non-uniform",
+         "Extremely non-uniform"
+        ],
+        "feature": "uniformity"
+       },
+       {
+        "key": "corridor_brightness",
+        "plane": "Assess brightness and uniformity of the entire corridor",
+        "levels": [
+         "Extremely bright",
+         "Very bright",
+         "Rather bright",
+         "Moderate",
+         "Rather dim",
+         "Very dim",
+         "Extremely dim"
+        ],
+        "feature": "brightness"
+       },
+       {
+        "key": "corridor_uniformity",
+        "plane": "Assess brightness and uniformity of the entire corridor",
+        "levels": [
+         "Extremely uniform",
+         "Very uniform",
+         "Rather uniform",
+         "Moderate",
+         "Rather non-uniform",
+         "Very non-uniform",
+         "Extremely non-uniform"
+        ],
+        "feature": "uniformity"
+       }
+      ],
+      "title": "Assess the brightness and uniformity of the corridor lighting",
+      "trials": [
+       {
+        "id": "v01",
+        "image": "corridor_variant_01.jpg",
+        "label": "Lighting variant 1"
+       },
+       {
+        "id": "v02",
+        "image": "corridor_variant_02.jpg",
+        "label": "Lighting variant 2"
+       },
+       {
+        "id": "v03",
+        "image": "corridor_variant_03.jpg",
+        "label": "Lighting variant 3"
+       },
+       {
+        "id": "v04",
+        "image": "corridor_variant_04.jpg",
+        "label": "Lighting variant 4"
+       },
+       {
+        "id": "v05",
+        "image": "corridor_variant_05.jpg",
+        "label": "Lighting variant 5"
+       },
+       {
+        "id": "v06",
+        "image": "corridor_variant_06.jpg",
+        "label": "Lighting variant 6"
+       },
+       {
+        "id": "v07",
+        "image": "corridor_variant_07.jpg",
+        "label": "Lighting variant 7"
+       },
+       {
+        "id": "v08",
+        "image": "corridor_variant_08.jpg",
+        "label": "Lighting variant 8"
+       },
+       {
+        "id": "v09",
+        "image": "corridor_variant_09.jpg",
+        "label": "Lighting variant 9"
+       },
+       {
+        "id": "v10",
+        "image": "corridor_variant_10.jpg",
+        "label": "Lighting variant 10"
+       }
+      ],
+      "isRequired": false,
+      "description": "Ten computer visualisations (Autodesk 3ds Max, luminance checked against DIALux) of the same empty corridor lit by six luminaire types in ten layouts (direct downlights, continuous or broken light lines, direct-indirect and indirect luminaires), shown one after another in the paper's order (variant 1 to 10). For each variant: brightness and uniformity of the ceiling, walls, floor and the entire corridor on 7-point semantic differential scales (Extremely bright … Extremely dim; Extremely uniform … Extremely non-uniform). Value: {ceiling_brightness, ceiling_uniformity, walls_…, floor_…, corridor_…}, coded as in the paper: 7 = extremely bright / extremely uniform, 1 = extremely dim / extremely non-uniform. Analysis as in the paper: mean, median, min, max, SD per variant and plane; compare groups or viewing conditions with the Wald–Wolfowitz runs test."
+     }
+    ]
+   }
+  ],
+  "title": "Corridor Lighting: Brightness and Uniformity of Ten Variants",
+  "locale": "en",
+  "spSite": {
+   "id": "site-9a36639f7f2c9deb",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Corridor Lighting Perception</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Corridor Lighting: Brightness and Uniformity of Ten Variants\",\n  \"description\": \"Faithful replication of Pracki & Krupiński (2021), Energies 14:412: rate the brightness and uniformity of the ceiling, walls, floor and whole corridor in ten computer-simulated corridor lighting variants.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"corridor\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"boolean\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part voluntarily and know I can stop at any time.\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Woman\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Man\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Under 19\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"19–25\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"26–40\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"41–60\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Over 60\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"Education\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Secondary school\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Bachelor's student or degree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Master's student or degree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Doctoral student or degree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"occupation\",\n      \"title\": \"Occupation\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Student of lighting or electrical engineering\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Other student\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Working in lighting, architecture or design\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Other occupation\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"sight\",\n      \"title\": \"State of your sight\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Normal vision, no glasses or lenses\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Corrected to normal (glasses or lenses worn now)\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Some sight problems\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"wellbeing\",\n      \"title\": \"How do you feel today?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Very good\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Good\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Average\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Poor\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"variants\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"corridor_assessment\",\n      \"title\": \"Assess the brightness and uniformity of the corridor lighting\",\n      \"isRequired\": false,\n      \"description\": \"Ten computer visualisations (Autodesk 3ds Max, luminance checked against DIALux) of the same empty corridor lit by six luminaire types in ten layouts (direct downlights, continuous or broken light lines, direct-indirect and indirect luminaires), shown one after another in the paper's order (variant 1 to 10). For each variant: brightness and uniformity of the ceiling, walls, floor and the entire corridor on 7-point semantic differential scales (Extremely bright … Extremely dim; Extremely uniform … Extremely non-uniform). Value: {ceiling_brightness, ceiling_uniformity, walls_…, floor_…, corridor_…}, coded as in the paper: 7 = extremely bright / extremely uniform, 1 = extremely dim / extremely non-uniform. Analysis as in the paper: mean, median, min, max, SD per variant and plane; compare groups or viewing conditions with the Wald–Wolfowitz runs test.\",\n      \"items\": [\n       {\n        \"key\": \"ceiling_brightness\",\n        \"plane\": \"Assess ceiling brightness and uniformity in the corridor\",\n        \"feature\": \"brightness\",\n        \"levels\": [\n         \"Extremely bright\",\n         \"Very bright\",\n         \"Rather bright\",\n         \"Moderate\",\n         \"Rather dim\",\n         \"Very dim\",\n         \"Extremely dim\"\n        ]\n       },\n       {\n        \"key\": \"ceiling_uniformity\",\n        \"plane\": \"Assess ceiling brightness and uniformity in the corridor\",\n        \"feature\": \"uniformity\",\n        \"levels\": [\n         \"Extremely uniform\",\n         \"Very uniform\",\n         \"Rather uniform\",\n         \"Moderate\",\n         \"Rather non-uniform\",\n         \"Very non-uniform\",\n         \"Extremely non-uniform\"\n        ]\n       },\n       {\n        \"key\": \"walls_brightness\",\n        \"plane\": \"Assess wall brightness and uniformity in the corridor\",\n        \"feature\": \"brightness\",\n        \"levels\": [\n         \"Extremely bright\",\n         \"Very bright\",\n         \"Rather bright\",\n         \"Moderate\",\n         \"Rather dim\",\n         \"Very dim\",\n         \"Extremely dim\"\n        ]\n       },\n       {\n        \"key\": \"walls_uniformity\",\n        \"plane\": \"Assess wall brightness and uniformity in the corridor\",\n        \"feature\": \"uniformity\",\n        \"levels\": [\n         \"Extremely uniform\",\n         \"Very uniform\",\n         \"Rather uniform\",\n         \"Moderate\",\n         \"Rather non-uniform\",\n         \"Very non-uniform\",\n         \"Extremely non-uniform\"\n        ]\n       },\n       {\n        \"key\": \"floor_brightness\",\n        \"plane\": \"Assess floor brightness and uniformity in the corridor\",\n        \"feature\": \"brightness\",\n        \"levels\": [\n         \"Extremely bright\",\n         \"Very bright\",\n         \"Rather bright\",\n         \"Moderate\",\n         \"Rather dim\",\n         \"Very dim\",\n         \"Extremely dim\"\n        ]\n       },\n       {\n        \"key\": \"floor_uniformity\",\n        \"plane\": \"Assess floor brightness and uniformity in the corridor\",\n        \"feature\": \"uniformity\",\n        \"levels\": [\n         \"Extremely uniform\",\n         \"Very uniform\",\n         \"Rather uniform\",\n         \"Moderate\",\n         \"Rather non-uniform\",\n         \"Very non-uniform\",\n         \"Extremely non-uniform\"\n        ]\n       },\n       {\n        \"key\": \"corridor_brightness\",\n        \"plane\": \"Assess brightness and uniformity of the entire corridor\",\n        \"feature\": \"brightness\",\n        \"levels\": [\n         \"Extremely bright\",\n         \"Very bright\",\n         \"Rather bright\",\n         \"Moderate\",\n         \"Rather dim\",\n         \"Very dim\",\n         \"Extremely dim\"\n        ]\n       },\n       {\n        \"key\": \"corridor_uniformity\",\n        \"plane\": \"Assess brightness and uniformity of the entire corridor\",\n        \"feature\": \"uniformity\",\n        \"levels\": [\n         \"Extremely uniform\",\n         \"Very uniform\",\n         \"Rather uniform\",\n         \"Moderate\",\n         \"Rather non-uniform\",\n         \"Very non-uniform\",\n         \"Extremely non-uniform\"\n        ]\n       }\n      ],\n      \"trials\": [\n       {\n        \"id\": \"v01\",\n        \"label\": \"Lighting variant 1\",\n        \"image\": \"corridor_variant_01.jpg\"\n       },\n       {\n        \"id\": \"v02\",\n        \"label\": \"Lighting variant 2\",\n        \"image\": \"corridor_variant_02.jpg\"\n       },\n       {\n        \"id\": \"v03\",\n        \"label\": \"Lighting variant 3\",\n        \"image\": \"corridor_variant_03.jpg\"\n       },\n       {\n        \"id\": \"v04\",\n        \"label\": \"Lighting variant 4\",\n        \"image\": \"corridor_variant_04.jpg\"\n       },\n       {\n        \"id\": \"v05\",\n        \"label\": \"Lighting variant 5\",\n        \"image\": \"corridor_variant_05.jpg\"\n       },\n       {\n        \"id\": \"v06\",\n        \"label\": \"Lighting variant 6\",\n        \"image\": \"corridor_variant_06.jpg\"\n       },\n       {\n        \"id\": \"v07\",\n        \"label\": \"Lighting variant 7\",\n        \"image\": \"corridor_variant_07.jpg\"\n       },\n       {\n        \"id\": \"v08\",\n        \"label\": \"Lighting variant 8\",\n        \"image\": \"corridor_variant_08.jpg\"\n       },\n       {\n        \"id\": \"v09\",\n        \"label\": \"Lighting variant 9\",\n        \"image\": \"corridor_variant_09.jpg\"\n       },\n       {\n        \"id\": \"v10\",\n        \"label\": \"Lighting variant 10\",\n        \"image\": \"corridor_variant_10.jpg\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#eef1f4;--card:#fff;--ink:#1f2328;--muted:#5d646c;--accent:#5b4a2f;--accent-ink:#fff;--line:#d6dbe0;--warn:#b3261e;--miss:#fdecea}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:1000px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.3rem;margin:0 0 10px}\np{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q>b{display:block;margin-bottom:4px}\n.q.miss{background:var(--miss);border-radius:10px;padding:6px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer;background:var(--card)}\n.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}\n.t{color:var(--muted);font-size:.9rem}\n.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;flex:1;margin-left:12px;max-width:260px}.bar>i{display:block;height:100%;background:var(--accent)}\n.pic img{width:100%;max-height:min(55vh,560px);object-fit:contain;display:block;border-radius:10px;background:#222}\n.pl{margin-top:14px;border:1px solid var(--line);border-radius:12px;padding:8px 10px}.pl>b{display:block;background:#efece4;border-radius:8px;padding:6px 10px;text-align:center}\n.it{padding:10px 6px;border-top:1px solid var(--line);border-radius:8px;margin-top:8px}\n.it .x{font-weight:500;margin-bottom:6px}\n.sc{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}\n.sc label{display:flex;flex-direction:column;align-items:center;text-align:center;font-size:.85rem;color:var(--muted);cursor:pointer;padding:4px 2px;min-width:0;border:1px solid var(--line);border-radius:8px}\n.sc input{width:20px;height:20px;margin:0 0 4px}\n@media(max-width:700px){.sc{grid-template-columns:1fr}.sc label{flex-direction:row;gap:10px;text-align:left;padding:8px 10px}.sc input{margin:0}}\n.it.miss{background:var(--miss)}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:1000px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Visualisations: Pracki &amp; Krupiński (2021), Energies 14:412, Figures 4–13, doi:10.3390/en14020412 (CC BY 4.0). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='prackicor2021:';\n  var app=document.getElementById('app'), Q={}, files={}, ans={}, GR=[], ITEMS=[], done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='visible';}}\n  function hideErr(){var e=app.querySelector('.err');if(e)e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function q(n){return Q[n]||{};}\n  function page(html,btn,cb){app.innerHTML=html+'<div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">'+esc(btn)+'</button></div><div class=\"err\"></div>';document.getElementById('go').onclick=cb;app.onchange=hideErr;}\n  function send(list,b,fin){b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}fin();});}\n  function next(){\n    window.scrollTo(0,0);\n    if(!ans.intro)return intro();\n    if(!ans.about)return about();\n    for(var i=0;i<GR.length;i++)if(!done[GR[i].id])return group(GR[i],i);\n    finish();\n  }\n  function intro(){\n    var miss=GR.some(function(g){return !files[g.image];});\n    if(miss){app.innerHTML='<h1>Pictures missing</h1><p>Media folder corridor must hold the ten visualisations (corridor_variant_01.jpg … corridor_variant_10.jpg).</p>';return;}\n    page('<h1>Corridor lighting</h1><p>You will see ten computer visualisations of the same empty corridor, each lit in a different way. For each one, assess how bright and how uniform the lighting of the ceiling, the walls, the floor and the entire corridor looks.</p><p>Please use a computer screen if you can, at normal brightness. It takes about 15 minutes. Your answers are anonymous and used only for research.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(q('consent').title)+'</label></div>','Start',function(){\n      if(!document.getElementById('ok').checked)return err('Please confirm to continue.');\n      send([SPSite.answer('consent',true)],this,function(){ans.intro=true;save('a',ans);next();});});\n  }\n  var DEMO=['gender','age_group','education','occupation','sight','wellbeing'];\n  function about(){\n    page('<h1>About you</h1><div class=\"card\">'+DEMO.map(function(n,k){var d=q(n);return '<div class=\"q\" data-n=\"'+n+'\"'+(k?'':' style=\"margin-top:0\"')+'><b>'+esc(d.title)+'</b>'+(d.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}).join('')+'</div>','Continue',function(){\n      var v={},miss=[];DEMO.forEach(function(n){var x=app.querySelector('input[name=\"'+n+'\"]:checked');var r=app.querySelector('.q[data-n=\"'+n+'\"]');if(x){v[n]=Number(x.value);r.classList.remove('miss');}else{miss.push(r);r.classList.add('miss');}});\n      if(miss.length){err('Please answer every question (marked in red).');miss[0].scrollIntoView({block:'center'});return;}\n      send(DEMO.map(function(n){return SPSite.answer(n,v[n]);}),this,function(){ans.about=true;save('a',ans);next();});});\n  }\n  function group(g,i){\n    var f=files[g.image], planes=[];\n    ITEMS.forEach(function(it){var p=planes[planes.length-1];if(!p||p.name!==it.plane){p={name:it.plane,items:[]};planes.push(p);}p.items.push(it);});\n    var html=planes.map(function(p){return '<div class=\"pl\"><b>'+esc(p.name)+'</b>'+p.items.map(function(it){return '<div class=\"it\" data-k=\"'+it.key+'\"><div class=\"x\">'+(it.feature==='brightness'?'Brightness':'Uniformity')+'</div><div class=\"sc\" role=\"radiogroup\" aria-label=\"'+esc(p.name+' '+it.feature)+'\">'+it.levels.map(function(l,v){return '<label><input type=\"radio\" name=\"'+it.key+'\" value=\"'+(7-v)+'\">'+esc(l)+'</label>';}).join('')+'</div></div>';}).join('')+'</div>';}).join('');\n    page('<div class=\"top\"><span class=\"t\">Lighting variant '+(i+1)+' of '+GR.length+'</span><div class=\"bar\"><i style=\"width:'+(100*i/GR.length)+'%\"></i></div></div><div class=\"card\"><div class=\"pic\"><img alt=\"Computer visualisation of the lit corridor, variant '+(i+1)+'\" src=\"'+esc(f.url)+'\"></div>'+html+'</div>','Next',function(){\n      var v={},miss=[];\n      ITEMS.forEach(function(it){var x=app.querySelector('input[name=\"'+it.key+'\"]:checked');var r=app.querySelector('.it[data-k=\"'+it.key+'\"]');if(x){v[it.key]=Number(x.value);r.classList.remove('miss');}else{miss.push(r);r.classList.add('miss');}});\n      if(miss.length){err(miss.length+' question'+(miss.length>1?'s are':' is')+' not answered yet (marked in red).');miss[0].scrollIntoView({block:'center'});return;}\n      send([SPSite.answer('corridor_assessment',v,{key:g.id,shown:[f.name]})],this,function(){done[g.id]=true;next();});});\n    app.onchange=function(e){hideErr();var r=e.target.closest&&e.target.closest('.it');if(r)r.classList.remove('miss');};\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>In the original study, two groups of ten lighting students in Warsaw rated these ten variants, one group in a controlled box and one in an ordinary computer room. The two groups agreed closely: in 93.75% of cases they perceived the same changes in brightness and uniformity. Variant 1, with narrow downlights, had the brightest but least uniform floor; continuous light lines gave a more uniform floor than broken ones.</p><p style=\"font-size:.82rem\">Visualisations and method: Pracki, P., &amp; Krupiński, R. (2021). Brightness and Uniformity Perception of Virtual Corridor with Artificial Lighting Systems. Energies 14:412, doi:10.3390/en14020412.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){if(x==='consent')ans.intro=false;else if(x==='corridor_assessment')done={};else ans.about=false;});save('a',ans);next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    var SPEC;try{SPEC=JSON.parse(document.getElementById('sp-scheme').textContent).survey;}catch(e){SPEC={pages:[]};}\n    SPEC.pages.forEach(function(p){p.elements.forEach(function(e){var g=SPSite.getQuestion(e.name)||{};Q[e.name]={title:g.title||e.title,choices:(g.choices&&g.choices.length)?g.choices:e.choices};if(e.name==='corridor_assessment'){GR=e.trials;ITEMS=e.items;}});});\n    (SPSite.getMedia('corridor')||[]).forEach(function(f){files[f.name]=f;});\n    var a=(ctx&&ctx.answers)||{};ans=load('a')||{};\n    ((a.corridor_assessment&&a.corridor_assessment.trials)||[]).forEach(function(t){if(t.key)done[t.key]=true;});\n    ans.intro=a.consent===true;ans.about=a.gender!=null&&a.wellbeing!=null;\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T08:40:38.941Z",
+   "mediaFolders": [
+    "corridor"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T08:40:38.941Z"
+  },
+  "description": "Faithful replication of Pracki & Krupiński (2021), Energies 14:412: rate the brightness and uniformity of the ceiling, walls, floor and whole corridor in ten computer-simulated corridor lighting variants.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2021-pracki-corridor/corridor/corridor_variant_01__584e288c-85fb-4244-9115-4448903a5cab.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-pracki-corridor/corridor/corridor_variant_01__584e288c-85fb-4244-9115-4448903a5cab.jpg",
+   "name": "corridor_variant_01.jpg",
+   "type": "image",
+   "folder": "corridor",
+   "media_id": "templates/2021-pracki-corridor/corridor/corridor_variant_01__584e288c-85fb-4244-9115-4448903a5cab.jpg",
+   "logicalFolder": "corridor",
+   "original_bytes": 289753,
+   "uploaded_bytes": 289753,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-pracki-corridor/corridor/corridor_variant_02__016dd534-af6e-4956-b5d9-8b1ff106b597.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-pracki-corridor/corridor/corridor_variant_02__016dd534-af6e-4956-b5d9-8b1ff106b597.jpg",
+   "name": "corridor_variant_02.jpg",
+   "type": "image",
+   "folder": "corridor",
+   "media_id": "templates/2021-pracki-corridor/corridor/corridor_variant_02__016dd534-af6e-4956-b5d9-8b1ff106b597.jpg",
+   "logicalFolder": "corridor",
+   "original_bytes": 402562,
+   "uploaded_bytes": 402562,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-pracki-corridor/corridor/corridor_variant_03__51770a38-7e09-4ca9-be18-bf3e74016ebf.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-pracki-corridor/corridor/corridor_variant_03__51770a38-7e09-4ca9-be18-bf3e74016ebf.jpg",
+   "name": "corridor_variant_03.jpg",
+   "type": "image",
+   "folder": "corridor",
+   "media_id": "templates/2021-pracki-corridor/corridor/corridor_variant_03__51770a38-7e09-4ca9-be18-bf3e74016ebf.jpg",
+   "logicalFolder": "corridor",
+   "original_bytes": 406223,
+   "uploaded_bytes": 406223,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-pracki-corridor/corridor/corridor_variant_04__71737c12-d923-4476-a6d8-e42ce749e4ce.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-pracki-corridor/corridor/corridor_variant_04__71737c12-d923-4476-a6d8-e42ce749e4ce.jpg",
+   "name": "corridor_variant_04.jpg",
+   "type": "image",
+   "folder": "corridor",
+   "media_id": "templates/2021-pracki-corridor/corridor/corridor_variant_04__71737c12-d923-4476-a6d8-e42ce749e4ce.jpg",
+   "logicalFolder": "corridor",
+   "original_bytes": 329043,
+   "uploaded_bytes": 329043,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-pracki-corridor/corridor/corridor_variant_05__a2f45d63-429c-4807-aaeb-c7e23b28dbd6.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-pracki-corridor/corridor/corridor_variant_05__a2f45d63-429c-4807-aaeb-c7e23b28dbd6.jpg",
+   "name": "corridor_variant_05.jpg",
+   "type": "image",
+   "folder": "corridor",
+   "media_id": "templates/2021-pracki-corridor/corridor/corridor_variant_05__a2f45d63-429c-4807-aaeb-c7e23b28dbd6.jpg",
+   "logicalFolder": "corridor",
+   "original_bytes": 405689,
+   "uploaded_bytes": 405689,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-pracki-corridor/corridor/corridor_variant_06__20b1b00d-3dc9-4321-a6bc-7b4d96647be0.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-pracki-corridor/corridor/corridor_variant_06__20b1b00d-3dc9-4321-a6bc-7b4d96647be0.jpg",
+   "name": "corridor_variant_06.jpg",
+   "type": "image",
+   "folder": "corridor",
+   "media_id": "templates/2021-pracki-corridor/corridor/corridor_variant_06__20b1b00d-3dc9-4321-a6bc-7b4d96647be0.jpg",
+   "logicalFolder": "corridor",
+   "original_bytes": 363969,
+   "uploaded_bytes": 363969,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-pracki-corridor/corridor/corridor_variant_07__f1da95a4-6f52-439b-89a6-3f58b9d3320b.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-pracki-corridor/corridor/corridor_variant_07__f1da95a4-6f52-439b-89a6-3f58b9d3320b.jpg",
+   "name": "corridor_variant_07.jpg",
+   "type": "image",
+   "folder": "corridor",
+   "media_id": "templates/2021-pracki-corridor/corridor/corridor_variant_07__f1da95a4-6f52-439b-89a6-3f58b9d3320b.jpg",
+   "logicalFolder": "corridor",
+   "original_bytes": 331605,
+   "uploaded_bytes": 331605,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-pracki-corridor/corridor/corridor_variant_08__07f7f55f-df11-4731-90d2-39b5d11d7e92.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-pracki-corridor/corridor/corridor_variant_08__07f7f55f-df11-4731-90d2-39b5d11d7e92.jpg",
+   "name": "corridor_variant_08.jpg",
+   "type": "image",
+   "folder": "corridor",
+   "media_id": "templates/2021-pracki-corridor/corridor/corridor_variant_08__07f7f55f-df11-4731-90d2-39b5d11d7e92.jpg",
+   "logicalFolder": "corridor",
+   "original_bytes": 328775,
+   "uploaded_bytes": 328775,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-pracki-corridor/corridor/corridor_variant_09__8926edf3-75fd-42ec-89ed-c6d72162b310.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-pracki-corridor/corridor/corridor_variant_09__8926edf3-75fd-42ec-89ed-c6d72162b310.jpg",
+   "name": "corridor_variant_09.jpg",
+   "type": "image",
+   "folder": "corridor",
+   "media_id": "templates/2021-pracki-corridor/corridor/corridor_variant_09__8926edf3-75fd-42ec-89ed-c6d72162b310.jpg",
+   "logicalFolder": "corridor",
+   "original_bytes": 354974,
+   "uploaded_bytes": 354974,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-pracki-corridor/corridor/corridor_variant_10__b1a041fc-66c3-4c47-a005-56092ebfe14b.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-pracki-corridor/corridor/corridor_variant_10__b1a041fc-66c3-4c47-a005-56092ebfe14b.jpg",
+   "name": "corridor_variant_10.jpg",
+   "type": "image",
+   "folder": "corridor",
+   "media_id": "templates/2021-pracki-corridor/corridor/corridor_variant_10__b1a041fc-66c3-4c47-a005-56092ebfe14b.jpg",
+   "logicalFolder": "corridor",
+   "original_bytes": 404638,
+   "uploaded_bytes": 404638,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Brightness and Uniformity Perception of Virtual Corridor with Artificial Lighting Systems",
+  "authors": [
+   "Piotr Pracki",
+   "Rafał Krupiński"
+  ],
+  "year": 2021,
+  "venue": "Energies",
+  "doi": "10.3390/en14020412",
+  "url": "https://doi.org/10.3390/en14020412"
+ }
+}

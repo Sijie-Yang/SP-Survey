@@ -1,0 +1,876 @@
+{
+ "id": "2024-xu-suzhou",
+ "name": "Suzhou Ancient City Streets: Six Word Pairs",
+ "description": "Method replication: participants rate 20 street views from Suzhou's ancient city on six word pairs (beautiful–ugly, neat–messy, vibrant–depressing, safe–dangerous, characteristic–nondescript, wide–crowded), each on five levels from 1 (very negative word) through 3 (average) to 5 (very positive word); the images are not the paper's stimuli (53 newly fetched Baidu street views inside the moat, four directions at 20° upward pitch as in the paper).\n\nOriginal study: Xu, Wang, Zuo & Han (2024), Journal of Urban Planning and Development 150(4), 05024036. Baidu panoramic static images (1,024 × 512, pitch 20°, headings 0/90/180/270°) at 2,937 points 50 m apart in Suzhou's ancient city were stitched into 2,936 panoramas. 35 volunteers (25 from across China, 10 local residents; mean age 32) rated 800 of them on the six pairs on five levels with a human–machine adversarial scoring tool; a random forest scored the rest, and the scores were combined with space syntax, POI and Weibo data to rank streets for improvement.\n\nDifferences from the original study: (1) the four views are shown as a 2 × 2 grid rather than one stitched strip, so they stay readable on phones; (2) 20 random images per participant and no machine pre-scores; (3) answers use numbered buttons with the end words shown under each pair.",
+ "author": "Xu, Wang, Zuo & Han",
+ "year": "2024",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "street-view",
+  "semantic-differential",
+  "historic-district",
+  "Suzhou",
+  "source:paper",
+  "concept:beauty",
+  "concept:safety",
+  "concept:liveliness",
+  "concept:sense_of_place",
+  "scene:street",
+  "modality:street_view",
+  "task:rating",
+  "setting:online",
+  "participants:locals",
+  "participants:public",
+  "sample:lt100",
+  "country:China",
+  "city:Suzhou"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1061/JUPDDM.UPENG-4770",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T10:23:37.26+00:00",
+ "updatedAt": "2026-11-28T10:23:51.652+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about_you_first",
+    "elements": [
+     {
+      "name": "familiar",
+      "type": "radiogroup",
+      "title": "Do you live in Suzhou's ancient city or know it well?",
+      "choices": [
+       {
+        "text": "Yes, I live there or know it well",
+        "value": "local"
+       },
+       {
+        "text": "No",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "What is your gender?",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "What is the highest level of education you have completed?",
+      "choices": [
+       {
+        "text": "Junior high school or below",
+        "value": "junior_or_below"
+       },
+       {
+        "text": "High school",
+        "value": "high_school"
+       },
+       {
+        "text": "College degree or above",
+        "value": "college_or_above"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "street_quality",
+      "type": "imageslidergroup",
+      "title": "How does this place look? (3 = average)",
+      "buttons": true,
+      "choices": [],
+      "imageFit": "contain",
+      "dimensions": [
+       {
+        "id": "beautiful",
+        "max": 5,
+        "min": 1,
+        "left": "1 = very ugly",
+        "step": 1,
+        "label": "Beautiful or ugly?",
+        "right": "5 = very beautiful"
+       },
+       {
+        "id": "neat",
+        "max": 5,
+        "min": 1,
+        "left": "1 = very messy",
+        "step": 1,
+        "label": "Neat or messy?",
+        "right": "5 = very neat"
+       },
+       {
+        "id": "vibrant",
+        "max": 5,
+        "min": 1,
+        "left": "1 = very depressing",
+        "step": 1,
+        "label": "Vibrant or depressing?",
+        "right": "5 = very vibrant"
+       },
+       {
+        "id": "safe",
+        "max": 5,
+        "min": 1,
+        "left": "1 = very dangerous",
+        "step": 1,
+        "label": "Safe or dangerous?",
+        "right": "5 = very safe"
+       },
+       {
+        "id": "characteristic",
+        "max": 5,
+        "min": 1,
+        "left": "1 = very nondescript",
+        "step": 1,
+        "label": "Characteristic or nondescript?",
+        "right": "5 = very characteristic"
+       },
+       {
+        "id": "wide",
+        "max": 5,
+        "min": 1,
+        "left": "1 = very crowded",
+        "step": 1,
+        "label": "Wide or crowded?",
+        "right": "5 = very wide"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "trialCount": 20,
+      "mediaFolders": [
+       "suzhou"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   }
+  ],
+  "title": "Suzhou Ancient City Streets: Six Word Pairs",
+  "locale": "en",
+  "spSite": {
+   "id": "site-219d1d7ca03760c0",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Suzhou Ancient City Streets: Six Word Pairs</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Suzhou Ancient City Streets: Six Word Pairs\",\n  \"description\": \"\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you_first\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"familiar\",\n      \"title\": \"Do you live in Suzhou's ancient city or know it well?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"local\",\n        \"text\": \"Yes, I live there or know it well\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"No\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"What is your gender?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"What is the highest level of education you have completed?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"junior_or_below\",\n        \"text\": \"Junior high school or below\"\n       },\n       {\n        \"value\": \"high_school\",\n        \"text\": \"High school\"\n       },\n       {\n        \"value\": \"college_or_above\",\n        \"text\": \"College degree or above\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imageslidergroup\",\n      \"name\": \"street_quality\",\n      \"title\": \"How does this place look? (3 = average)\",\n      \"isRequired\": true,\n      \"imageCount\": 1,\n      \"trialCount\": 20,\n      \"buttons\": true,\n      \"mediaFolders\": [\n       \"suzhou\"\n      ],\n      \"imageFit\": \"contain\",\n      \"dimensions\": [\n       {\n        \"id\": \"beautiful\",\n        \"label\": \"Beautiful or ugly?\",\n        \"left\": \"1 = very ugly\",\n        \"right\": \"5 = very beautiful\",\n        \"min\": 1,\n        \"max\": 5,\n        \"step\": 1\n       },\n       {\n        \"id\": \"neat\",\n        \"label\": \"Neat or messy?\",\n        \"left\": \"1 = very messy\",\n        \"right\": \"5 = very neat\",\n        \"min\": 1,\n        \"max\": 5,\n        \"step\": 1\n       },\n       {\n        \"id\": \"vibrant\",\n        \"label\": \"Vibrant or depressing?\",\n        \"left\": \"1 = very depressing\",\n        \"right\": \"5 = very vibrant\",\n        \"min\": 1,\n        \"max\": 5,\n        \"step\": 1\n       },\n       {\n        \"id\": \"safe\",\n        \"label\": \"Safe or dangerous?\",\n        \"left\": \"1 = very dangerous\",\n        \"right\": \"5 = very safe\",\n        \"min\": 1,\n        \"max\": 5,\n        \"step\": 1\n       },\n       {\n        \"id\": \"characteristic\",\n        \"label\": \"Characteristic or nondescript?\",\n        \"left\": \"1 = very nondescript\",\n        \"right\": \"5 = very characteristic\",\n        \"min\": 1,\n        \"max\": 5,\n        \"step\": 1\n       },\n       {\n        \"id\": \"wide\",\n        \"label\": \"Wide or crowded?\",\n        \"left\": \"1 = very crowded\",\n        \"right\": \"5 = very wide\",\n        \"min\": 1,\n        \"max\": 5,\n        \"step\": 1\n       }\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#3f5e5a;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.pair.many{grid-template-columns:repeat(var(--k),1fr);gap:8px}\n@media (max-width:640px){.pair.many{grid-template-columns:1fr}.pair.many .pick{aspect-ratio:16/9}}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.rng{accent-color:var(--accent)}.lks{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:6px;margin:6px 0 2px}.lk{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:9px 0;font:inherit;cursor:pointer}.lk[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}.q{margin-top:10px}.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}.scale.num{grid-template-columns:repeat(5,1fr)}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Suzhou ancient city (Gusu), Baidu street view (© Baidu), four directions at 20° upward pitch as in the paper. Word pairs and five-level scale from Xu, Wang, Zuo &amp; Han, “Spatial Quality Optimization Analysis of Streets in Historical Urban Areas Based on Street View Perception and Multisource Data”, Journal of Urban Planning and Development 150(4), 05024036 (2024), doi:10.1061/JUPDDM.UPENG-4770.</footer>\n<script>\n(function(){\n  var C={\"before\": [\"familiar\", \"gender\", \"education\"], \"after\": [], \"tasks\": [\"street_quality\"], \"minutes\": 12, \"alt\": \"Street view in Suzhou's ancient city\", \"labels\": {}, \"buttons\": [\"street_quality\"], \"minSec\": {}, \"words\": {}, \"captions\": {}, \"pickOne\": null, \"heading\": \"How do these streets in Suzhou's ancient city look to you?\", \"intro\": \"<p>You will see <b>20 street views</b> from inside the moat of Suzhou's ancient city, one at a time. Each picture shows one spot in four directions. For each of six word pairs, choose a number from <b>1</b> (very much the negative word, for example <b>very ugly</b>) through <b>3</b> (average) to <b>5</b> (very much the positive word, for example <b>very beautiful</b>). Go by your first impression.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?((t.choices||q.choices||[]).filter(function(c){return !c.tie;}).length>2?'Set ':'Pair '):'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair'+(imgs.length>2?' many\" style=\"--k:'+imgs.length:'')+'\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else if(q.kind==='sliders'||/slidergroup$/.test(q.type)){\n      h+='<img class=\"shot\" style=\"max-height:'+((q.dimensions||[]).length>4?'32vh;position:sticky;top:0;z-index:2':(q.dimensions||[]).length>2?'40vh':'56vh')+'\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">';\n      var cu=(md[0]&&md[0].url)||'',cap=Object.keys(C.captions||{}).filter(function(x){return cu.indexOf(x)>=0;})[0];\n      if(cap)h+='<p style=\"margin:8px 0 0;color:var(--ink)\">'+C.captions[cap]+'</p>';\n      var BT=(C.buttons||[]).indexOf(n)>=0,W=(C.words||{})[n]||{};\n      if(BT)(q.dimensions||[]).forEach(function(d){var b='';for(var v=d.min;v<=d.max;v+=(d.step||1))b+='<button type=\"button\" class=\"lk\" data-d=\"'+esc(d.id)+'\" data-val=\"'+v+'\">'+esc(W[d.id]?W[d.id][v-d.min]:v)+'</button>';\n        h+='<div class=\"q\"><b>'+esc(d.label)+'</b><div class=\"lks\" style=\"--n:'+Math.round((d.max-d.min)/(d.step||1)+1)+'\">'+b+'</div><p style=\"display:flex;justify-content:space-between;margin:0;font-size:.85rem\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      else (q.dimensions||[]).forEach(function(d){h+='<div class=\"q\"><b>'+esc(d.label)+': <span id=\"v_'+esc(d.id)+'\">–</span></b><input type=\"range\" class=\"rng\" data-d=\"'+esc(d.id)+'\" min=\"'+d.min+'\" max=\"'+d.max+'\" step=\"'+(d.step||1)+'\" value=\"'+Math.round((d.min+d.max)/2)+'\" style=\"width:100%\"><p style=\"display:flex;justify-content:space-between;margin:0\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      h+='<div class=\"row\"><button class=\"btn\" id=\"next\" disabled>Next</button></div><p style=\"font-size:.85rem\">'+(BT?'Answer every line to continue.':'Move the slider to give your answer.')+'</p>';\n      app.innerHTML=h+'<div class=\"err\"></div>';\n      var vals={},rs=app.querySelectorAll('.rng'),nx=document.getElementById('next');\n      var MS=(C.minSec||{})[n]||0,t0=Date.now(),okT=!MS;\n      function gate(){nx.disabled=!(okT&&Object.keys(vals).length>=(q.dimensions||[]).length);}\n      if(MS){var tm=document.createElement('p');tm.className='tmr';tm.style.fontWeight='600';nx.parentNode.parentNode.insertBefore(tm,nx.parentNode);\n        var iv=setInterval(function(){var left=Math.ceil(MS-(Date.now()-t0)/1000);if(!document.body.contains(tm)){clearInterval(iv);return;}\n          if(left>0)tm.textContent='Please keep looking: '+left+' s';else{tm.textContent='';okT=true;clearInterval(iv);gate();}},250);}\n      if(BT){var nd=(q.dimensions||[]).length;app.querySelectorAll('.lk').forEach(function(b){b.onclick=function(){var d=b.getAttribute('data-d');vals[d]=Number(b.getAttribute('data-val'));\n        app.querySelectorAll('.lk[data-d=\"'+d+'\"]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});gate();};});}\n      rs.forEach(function(r){r.oninput=function(){vals[r.getAttribute('data-d')]=Number(r.value);document.getElementById('v_'+r.getAttribute('data-d')).textContent=r.value;gate();};});\n      nx.onclick=function(){nx.disabled=true;SPSite.answer(n,vals,{trial:k}).then(function(r){if(r&&r.ok===false){err(r.error);nx.disabled=false;return;}(done[n]=done[n]||{})[k]=true;nextStep();});};\n      window.scrollTo(0,0);return;\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      var words=!!(lab&&lab.some(function(x){return isNaN(Number(x));}));\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale'+(words?'':' num')+'\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(words?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T10:22:54.473Z",
+   "mediaFolders": [
+    "suzhou"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T10:22:54.473Z"
+  },
+  "description": "",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz1_001__488c8f37-36d3-40e6-b38d-537650bf7ec5.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz1_001__488c8f37-36d3-40e6-b38d-537650bf7ec5.jpg",
+   "name": "sz1_001.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz1_001__488c8f37-36d3-40e6-b38d-537650bf7ec5.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 279483,
+   "uploaded_bytes": 279483,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz1_002__b28e534f-07c7-4bda-92e4-d50c60c560ef.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz1_002__b28e534f-07c7-4bda-92e4-d50c60c560ef.jpg",
+   "name": "sz1_002.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz1_002__b28e534f-07c7-4bda-92e4-d50c60c560ef.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 142165,
+   "uploaded_bytes": 142165,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz1_003__a7fea9e0-1271-4e00-b8e4-c751168283b9.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz1_003__a7fea9e0-1271-4e00-b8e4-c751168283b9.jpg",
+   "name": "sz1_003.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz1_003__a7fea9e0-1271-4e00-b8e4-c751168283b9.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 185508,
+   "uploaded_bytes": 185508,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz1_004__acb9ee1d-753b-4149-b08e-6d50a11b7ee5.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz1_004__acb9ee1d-753b-4149-b08e-6d50a11b7ee5.jpg",
+   "name": "sz1_004.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz1_004__acb9ee1d-753b-4149-b08e-6d50a11b7ee5.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 214531,
+   "uploaded_bytes": 214531,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz1_005__b9de0e3e-346b-480e-a74b-124e7f14eefc.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz1_005__b9de0e3e-346b-480e-a74b-124e7f14eefc.jpg",
+   "name": "sz1_005.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz1_005__b9de0e3e-346b-480e-a74b-124e7f14eefc.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 239186,
+   "uploaded_bytes": 239186,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz1_006__154eecde-73b7-4b1e-8e0a-36c7af2ad94f.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz1_006__154eecde-73b7-4b1e-8e0a-36c7af2ad94f.jpg",
+   "name": "sz1_006.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz1_006__154eecde-73b7-4b1e-8e0a-36c7af2ad94f.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 225855,
+   "uploaded_bytes": 225855,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz1_007__0a7404ed-f818-4c6b-bdf5-800f2f13238c.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz1_007__0a7404ed-f818-4c6b-bdf5-800f2f13238c.jpg",
+   "name": "sz1_007.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz1_007__0a7404ed-f818-4c6b-bdf5-800f2f13238c.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 143789,
+   "uploaded_bytes": 143789,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz1_008__4b3b5764-9294-405d-bfbc-5b5b7c62acb7.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz1_008__4b3b5764-9294-405d-bfbc-5b5b7c62acb7.jpg",
+   "name": "sz1_008.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz1_008__4b3b5764-9294-405d-bfbc-5b5b7c62acb7.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 141521,
+   "uploaded_bytes": 141521,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz1_009__e9ed8184-dd0a-479f-921d-0d703814344c.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz1_009__e9ed8184-dd0a-479f-921d-0d703814344c.jpg",
+   "name": "sz1_009.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz1_009__e9ed8184-dd0a-479f-921d-0d703814344c.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 220344,
+   "uploaded_bytes": 220344,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz1_010__6c5b5bf7-ce28-4741-989a-68ba8b8caf9f.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz1_010__6c5b5bf7-ce28-4741-989a-68ba8b8caf9f.jpg",
+   "name": "sz1_010.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz1_010__6c5b5bf7-ce28-4741-989a-68ba8b8caf9f.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 206548,
+   "uploaded_bytes": 206548,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz1_011__18defa67-d2eb-4366-9ade-ee60f9f8b278.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz1_011__18defa67-d2eb-4366-9ade-ee60f9f8b278.jpg",
+   "name": "sz1_011.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz1_011__18defa67-d2eb-4366-9ade-ee60f9f8b278.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 220084,
+   "uploaded_bytes": 220084,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz1_012__25b3c68e-b399-435d-9dfb-3d2d0160dafe.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz1_012__25b3c68e-b399-435d-9dfb-3d2d0160dafe.jpg",
+   "name": "sz1_012.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz1_012__25b3c68e-b399-435d-9dfb-3d2d0160dafe.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 155293,
+   "uploaded_bytes": 155293,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz1_013__89af8710-1bdf-453e-ace4-a0a393f6e47e.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz1_013__89af8710-1bdf-453e-ace4-a0a393f6e47e.jpg",
+   "name": "sz1_013.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz1_013__89af8710-1bdf-453e-ace4-a0a393f6e47e.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 179072,
+   "uploaded_bytes": 179072,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz1_014__84cb3c16-18e9-4f39-9b67-15c15632d488.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz1_014__84cb3c16-18e9-4f39-9b67-15c15632d488.jpg",
+   "name": "sz1_014.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz1_014__84cb3c16-18e9-4f39-9b67-15c15632d488.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 172854,
+   "uploaded_bytes": 172854,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz2_001__9943bbd8-a6b8-43d9-81e4-56f9eb121122.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz2_001__9943bbd8-a6b8-43d9-81e4-56f9eb121122.jpg",
+   "name": "sz2_001.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz2_001__9943bbd8-a6b8-43d9-81e4-56f9eb121122.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 181600,
+   "uploaded_bytes": 181600,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz2_002__d6f93861-9707-40d0-9979-6146d5088162.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz2_002__d6f93861-9707-40d0-9979-6146d5088162.jpg",
+   "name": "sz2_002.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz2_002__d6f93861-9707-40d0-9979-6146d5088162.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 213857,
+   "uploaded_bytes": 213857,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz2_003__0a071568-e465-45b7-9449-8c54d9a96d64.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz2_003__0a071568-e465-45b7-9449-8c54d9a96d64.jpg",
+   "name": "sz2_003.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz2_003__0a071568-e465-45b7-9449-8c54d9a96d64.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 170240,
+   "uploaded_bytes": 170240,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz2_004__ac2b45e3-a485-4253-868b-db0d0beec12d.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz2_004__ac2b45e3-a485-4253-868b-db0d0beec12d.jpg",
+   "name": "sz2_004.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz2_004__ac2b45e3-a485-4253-868b-db0d0beec12d.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 208382,
+   "uploaded_bytes": 208382,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz2_006__36fa342f-5ab4-44d4-8c74-1b1a5a4343fc.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz2_006__36fa342f-5ab4-44d4-8c74-1b1a5a4343fc.jpg",
+   "name": "sz2_006.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz2_006__36fa342f-5ab4-44d4-8c74-1b1a5a4343fc.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 287344,
+   "uploaded_bytes": 287344,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz2_007__c8cef8f0-aa0b-48e7-ba92-2b6bff4eaf14.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz2_007__c8cef8f0-aa0b-48e7-ba92-2b6bff4eaf14.jpg",
+   "name": "sz2_007.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz2_007__c8cef8f0-aa0b-48e7-ba92-2b6bff4eaf14.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 231994,
+   "uploaded_bytes": 231994,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz2_008__366b265b-c19e-406b-b4f8-23d59fb7259f.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz2_008__366b265b-c19e-406b-b4f8-23d59fb7259f.jpg",
+   "name": "sz2_008.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz2_008__366b265b-c19e-406b-b4f8-23d59fb7259f.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 211101,
+   "uploaded_bytes": 211101,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz2_009__0d2e29ba-de5d-4995-9ac3-343283150836.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz2_009__0d2e29ba-de5d-4995-9ac3-343283150836.jpg",
+   "name": "sz2_009.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz2_009__0d2e29ba-de5d-4995-9ac3-343283150836.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 235111,
+   "uploaded_bytes": 235111,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz2_010__bb5b49c6-edb8-4499-9fed-b2d1f344c014.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz2_010__bb5b49c6-edb8-4499-9fed-b2d1f344c014.jpg",
+   "name": "sz2_010.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz2_010__bb5b49c6-edb8-4499-9fed-b2d1f344c014.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 197423,
+   "uploaded_bytes": 197423,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz2_011__8e21bc90-5203-4402-8f84-49a11c0b30a5.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz2_011__8e21bc90-5203-4402-8f84-49a11c0b30a5.jpg",
+   "name": "sz2_011.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz2_011__8e21bc90-5203-4402-8f84-49a11c0b30a5.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 294729,
+   "uploaded_bytes": 294729,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz2_012__ded12db1-33b0-4950-9f76-d36b12641930.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz2_012__ded12db1-33b0-4950-9f76-d36b12641930.jpg",
+   "name": "sz2_012.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz2_012__ded12db1-33b0-4950-9f76-d36b12641930.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 179171,
+   "uploaded_bytes": 179171,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz2_013__b856aefc-20b0-4e7b-a6f4-9cf2655b6091.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz2_013__b856aefc-20b0-4e7b-a6f4-9cf2655b6091.jpg",
+   "name": "sz2_013.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz2_013__b856aefc-20b0-4e7b-a6f4-9cf2655b6091.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 182988,
+   "uploaded_bytes": 182988,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz2_014__a143701f-8314-4e2d-8fa5-5fe356fd64bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz2_014__a143701f-8314-4e2d-8fa5-5fe356fd64bf.jpg",
+   "name": "sz2_014.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz2_014__a143701f-8314-4e2d-8fa5-5fe356fd64bf.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 150975,
+   "uploaded_bytes": 150975,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz3_001__4f0ad9e6-ea0f-479d-aafc-e71b89645f84.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz3_001__4f0ad9e6-ea0f-479d-aafc-e71b89645f84.jpg",
+   "name": "sz3_001.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz3_001__4f0ad9e6-ea0f-479d-aafc-e71b89645f84.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 192316,
+   "uploaded_bytes": 192316,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz3_002__7d672c51-4ae9-4d66-841f-b021d9f32313.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz3_002__7d672c51-4ae9-4d66-841f-b021d9f32313.jpg",
+   "name": "sz3_002.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz3_002__7d672c51-4ae9-4d66-841f-b021d9f32313.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 179628,
+   "uploaded_bytes": 179628,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz3_003__412fe778-69ad-4b68-a6eb-2d082b2e1209.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz3_003__412fe778-69ad-4b68-a6eb-2d082b2e1209.jpg",
+   "name": "sz3_003.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz3_003__412fe778-69ad-4b68-a6eb-2d082b2e1209.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 171624,
+   "uploaded_bytes": 171624,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz3_004__eaf39bf6-d483-4d8d-b698-f810bac897e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz3_004__eaf39bf6-d483-4d8d-b698-f810bac897e6.jpg",
+   "name": "sz3_004.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz3_004__eaf39bf6-d483-4d8d-b698-f810bac897e6.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 230774,
+   "uploaded_bytes": 230774,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz3_006__ef8c490e-e230-40e9-916f-ec42ef184b51.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz3_006__ef8c490e-e230-40e9-916f-ec42ef184b51.jpg",
+   "name": "sz3_006.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz3_006__ef8c490e-e230-40e9-916f-ec42ef184b51.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 183820,
+   "uploaded_bytes": 183820,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz3_007__1976382f-6e3e-460b-8a8f-131aa0974856.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz3_007__1976382f-6e3e-460b-8a8f-131aa0974856.jpg",
+   "name": "sz3_007.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz3_007__1976382f-6e3e-460b-8a8f-131aa0974856.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 244801,
+   "uploaded_bytes": 244801,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz3_008__85cfab51-701e-49ec-a26e-16032738eb9a.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz3_008__85cfab51-701e-49ec-a26e-16032738eb9a.jpg",
+   "name": "sz3_008.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz3_008__85cfab51-701e-49ec-a26e-16032738eb9a.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 193772,
+   "uploaded_bytes": 193772,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz3_009__0f932927-0174-49f8-b017-dd23492031d6.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz3_009__0f932927-0174-49f8-b017-dd23492031d6.jpg",
+   "name": "sz3_009.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz3_009__0f932927-0174-49f8-b017-dd23492031d6.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 210509,
+   "uploaded_bytes": 210509,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz3_010__9be99f66-a2ce-4f07-a4c0-29e606a7658c.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz3_010__9be99f66-a2ce-4f07-a4c0-29e606a7658c.jpg",
+   "name": "sz3_010.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz3_010__9be99f66-a2ce-4f07-a4c0-29e606a7658c.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 145890,
+   "uploaded_bytes": 145890,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz3_011__8a207bad-90d9-4d90-a1eb-e8293d412448.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz3_011__8a207bad-90d9-4d90-a1eb-e8293d412448.jpg",
+   "name": "sz3_011.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz3_011__8a207bad-90d9-4d90-a1eb-e8293d412448.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 244872,
+   "uploaded_bytes": 244872,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz3_012__14788b31-5d36-4725-9fd1-32d8da100f1b.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz3_012__14788b31-5d36-4725-9fd1-32d8da100f1b.jpg",
+   "name": "sz3_012.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz3_012__14788b31-5d36-4725-9fd1-32d8da100f1b.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 188064,
+   "uploaded_bytes": 188064,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz3_013__ec11a79b-6722-4fba-a272-06e72fe7adee.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz3_013__ec11a79b-6722-4fba-a272-06e72fe7adee.jpg",
+   "name": "sz3_013.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz3_013__ec11a79b-6722-4fba-a272-06e72fe7adee.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 249764,
+   "uploaded_bytes": 249764,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz3_014__e8b3a8a3-9606-4098-8f78-d1b7dc253a5d.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz3_014__e8b3a8a3-9606-4098-8f78-d1b7dc253a5d.jpg",
+   "name": "sz3_014.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz3_014__e8b3a8a3-9606-4098-8f78-d1b7dc253a5d.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 145200,
+   "uploaded_bytes": 145200,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz4_001__452ea1af-213c-4dbe-bc7d-bf7da7c6747e.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz4_001__452ea1af-213c-4dbe-bc7d-bf7da7c6747e.jpg",
+   "name": "sz4_001.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz4_001__452ea1af-213c-4dbe-bc7d-bf7da7c6747e.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 205943,
+   "uploaded_bytes": 205943,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz4_002__8d585192-461b-4d94-b971-4c4403c064f4.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz4_002__8d585192-461b-4d94-b971-4c4403c064f4.jpg",
+   "name": "sz4_002.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz4_002__8d585192-461b-4d94-b971-4c4403c064f4.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 311363,
+   "uploaded_bytes": 311363,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz4_003__d3f2f289-60c4-460b-a15e-0b23fdc99de6.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz4_003__d3f2f289-60c4-460b-a15e-0b23fdc99de6.jpg",
+   "name": "sz4_003.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz4_003__d3f2f289-60c4-460b-a15e-0b23fdc99de6.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 241305,
+   "uploaded_bytes": 241305,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz4_005__e88929fe-72e8-47a3-aec2-9d9c9fff6281.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz4_005__e88929fe-72e8-47a3-aec2-9d9c9fff6281.jpg",
+   "name": "sz4_005.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz4_005__e88929fe-72e8-47a3-aec2-9d9c9fff6281.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 310848,
+   "uploaded_bytes": 310848,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz4_006__bb5cef91-0e9a-4b15-ba0c-fa311d3724b4.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz4_006__bb5cef91-0e9a-4b15-ba0c-fa311d3724b4.jpg",
+   "name": "sz4_006.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz4_006__bb5cef91-0e9a-4b15-ba0c-fa311d3724b4.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 255993,
+   "uploaded_bytes": 255993,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz4_007__4736eb64-edac-494d-825d-b8f7dbfc57ae.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz4_007__4736eb64-edac-494d-825d-b8f7dbfc57ae.jpg",
+   "name": "sz4_007.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz4_007__4736eb64-edac-494d-825d-b8f7dbfc57ae.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 227740,
+   "uploaded_bytes": 227740,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz4_008__7046771d-64d7-4bf9-8dc7-56b1799b2282.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz4_008__7046771d-64d7-4bf9-8dc7-56b1799b2282.jpg",
+   "name": "sz4_008.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz4_008__7046771d-64d7-4bf9-8dc7-56b1799b2282.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 167423,
+   "uploaded_bytes": 167423,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz4_009__0d5a4ffd-cef6-48c9-b107-af2b30d9134a.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz4_009__0d5a4ffd-cef6-48c9-b107-af2b30d9134a.jpg",
+   "name": "sz4_009.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz4_009__0d5a4ffd-cef6-48c9-b107-af2b30d9134a.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 266858,
+   "uploaded_bytes": 266858,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz4_010__52976dcf-f6c9-40b9-a5c9-2d32d4264113.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz4_010__52976dcf-f6c9-40b9-a5c9-2d32d4264113.jpg",
+   "name": "sz4_010.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz4_010__52976dcf-f6c9-40b9-a5c9-2d32d4264113.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 252674,
+   "uploaded_bytes": 252674,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz4_011__195c5189-fba4-40cf-871b-ae56ac0b380f.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz4_011__195c5189-fba4-40cf-871b-ae56ac0b380f.jpg",
+   "name": "sz4_011.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz4_011__195c5189-fba4-40cf-871b-ae56ac0b380f.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 146446,
+   "uploaded_bytes": 146446,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz4_012__9df95ec9-b02a-4ce4-ad69-9bde98719da2.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz4_012__9df95ec9-b02a-4ce4-ad69-9bde98719da2.jpg",
+   "name": "sz4_012.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz4_012__9df95ec9-b02a-4ce4-ad69-9bde98719da2.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 284397,
+   "uploaded_bytes": 284397,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz4_013__bcec8918-83d7-40bb-8a66-dbe8442e38cd.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz4_013__bcec8918-83d7-40bb-8a66-dbe8442e38cd.jpg",
+   "name": "sz4_013.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz4_013__bcec8918-83d7-40bb-8a66-dbe8442e38cd.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 153496,
+   "uploaded_bytes": 153496,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-xu-suzhou/suzhou/sz4_014__01f26e43-cca2-4f35-be55-bf2da0bf5bb8.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-xu-suzhou/suzhou/sz4_014__01f26e43-cca2-4f35-be55-bf2da0bf5bb8.jpg",
+   "name": "sz4_014.jpg",
+   "type": "image",
+   "folder": "suzhou",
+   "media_id": "templates/2024-xu-suzhou/suzhou/sz4_014__01f26e43-cca2-4f35-be55-bf2da0bf5bb8.jpg",
+   "logicalFolder": "suzhou",
+   "original_bytes": 239493,
+   "uploaded_bytes": 239493,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Spatial Quality Optimization Analysis of Streets in Historical Urban Areas Based on Street View Perception and Multisource Data",
+  "authors": [
+   "Xu J.",
+   "Wang J.",
+   "Zuo X.",
+   "Han X."
+  ],
+  "year": 2024,
+  "venue": "Journal of Urban Planning and Development",
+  "doi": "10.1061/jupddm.upeng-4770",
+  "url": "https://doi.org/10.1061/jupddm.upeng-4770"
+ }
+}

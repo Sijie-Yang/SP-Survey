@@ -1,0 +1,454 @@
+{
+ "id": "2022-tao-classroom",
+ "name": "Classroom Wall Colour and Students' Emotions",
+ "description": "Faithful replication of Tao, Wu, Li & Liu (2022), \"Influence of Classroom Colour Environment on College Students' Emotions during Campus Lockdown in the COVID-19 Post-Pandemic Era—A Case Study in Harbin, China\", Buildings 12:1873. Fourteen renderings (Revit 2021 + Lumion 11) of a small classroom and a large lecture hall modelled on real classrooms in Harbin form seven photo groups that vary only the wall colour: neutral, warm, warm high/low brightness, cold, cold high/low brightness. After gender, grade and major (as in Appendix A), participants observe each group and rate it on three 5-point semantic differential items (very unpleasant … very pleasant, very unrelaxed … very relaxed, very unfocused … very focused). Analysis as in the paper: means and SDs per group, repeated-measures ANOVA for hue and for brightness, t-test by gender and one-way ANOVA by grade and major. Renderings are cropped from Figure 2 of the open-access paper (CC BY 4.0) with credit; the template is removed if the authors object. Differences from the original study: (1) the Hospital Anxiety and Depression Scale (14 items) is left out because it is a copyrighted instrument, so the anxiety–depression analyses cannot be repeated; (2) photo groups appear in the order of Figure 2, as the paper does not list the order used in the questionnaire; (3) the original was run on the Questionnaire Star platform during a campus lockdown in April–May 2022; (4) images are about 780 px wide from the published figure.",
+ "author": "Tao, Wu, Li & Liu",
+ "year": "2022",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "source:paper",
+  "concept:emotion",
+  "concept:color",
+  "scene:indoor",
+  "modality:rendered",
+  "task:rating",
+  "setting:online",
+  "participants:students",
+  "country:China",
+  "city:Harbin"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/buildings12111873",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T08:37:14.065+00:00",
+ "updatedAt": "2026-11-28T10:32:52.722+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part voluntarily and know I can stop at any time.",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Your gender is",
+      "choices": [
+       {
+        "text": "Male",
+        "value": 1
+       },
+       {
+        "text": "Female",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "grade",
+      "type": "radiogroup",
+      "title": "Your current grade is",
+      "choices": [
+       {
+        "text": "Freshman",
+        "value": 1
+       },
+       {
+        "text": "Sophomore",
+        "value": 2
+       },
+       {
+        "text": "Junior year",
+        "value": 3
+       },
+       {
+        "text": "Senior year",
+        "value": 4
+       },
+       {
+        "text": "Grade five",
+        "value": 5
+       },
+       {
+        "text": "Master's degree",
+        "value": 6
+       },
+       {
+        "text": "Doctor",
+        "value": 7
+       },
+       {
+        "text": "Others",
+        "value": 8
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "major",
+      "type": "radiogroup",
+      "title": "Your major category is",
+      "choices": [
+       {
+        "text": "Humanities and Social Sciences",
+        "value": 1
+       },
+       {
+        "text": "Natural Sciences",
+        "value": 2
+       },
+       {
+        "text": "Engineering",
+        "value": 3
+       },
+       {
+        "text": "Medicine",
+        "value": 4
+       },
+       {
+        "text": "Arts",
+        "value": 5
+       },
+       {
+        "text": "Others",
+        "value": 6
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "groups",
+    "elements": [
+     {
+      "name": "classroom_feeling",
+      "type": "custom",
+      "items": [
+       {
+        "key": "pleasant",
+        "levels": [
+         "Very unpleasant",
+         "Unpleasant",
+         "General",
+         "Pleasant",
+         "Very pleasant"
+        ]
+       },
+       {
+        "key": "relaxed",
+        "levels": [
+         "Very unrelaxed",
+         "Unrelaxed",
+         "General",
+         "Relaxed",
+         "Very relaxed"
+        ]
+       },
+       {
+        "key": "focused",
+        "levels": [
+         "Very unfocused",
+         "Unfocused",
+         "General",
+         "Focused",
+         "Very focused"
+        ]
+       }
+      ],
+      "title": "This set of photos makes you feel",
+      "trials": [
+       {
+        "id": "nc",
+        "label": "Neutral colour",
+        "images": [
+         "nc_small_classroom.jpg",
+         "nc_large_classroom.jpg"
+        ]
+       },
+       {
+        "id": "wc",
+        "label": "Warm colour",
+        "images": [
+         "wc_small_classroom.jpg",
+         "wc_large_classroom.jpg"
+        ]
+       },
+       {
+        "id": "wch",
+        "label": "Warm colour, high brightness",
+        "images": [
+         "wch_small_classroom.jpg",
+         "wch_large_classroom.jpg"
+        ]
+       },
+       {
+        "id": "wcl",
+        "label": "Warm colour, low brightness",
+        "images": [
+         "wcl_small_classroom.jpg",
+         "wcl_large_classroom.jpg"
+        ]
+       },
+       {
+        "id": "cc",
+        "label": "Cold colour",
+        "images": [
+         "cc_small_classroom.jpg",
+         "cc_large_classroom.jpg"
+        ]
+       },
+       {
+        "id": "cch",
+        "label": "Cold colour, high brightness",
+        "images": [
+         "cch_small_classroom.jpg",
+         "cch_large_classroom.jpg"
+        ]
+       },
+       {
+        "id": "ccl",
+        "label": "Cold colour, low brightness",
+        "images": [
+         "ccl_small_classroom.jpg",
+         "ccl_large_classroom.jpg"
+        ]
+       }
+      ],
+      "isRequired": false,
+      "description": "Seven photo groups of rendered classrooms (Revit 2021 + Lumion 11, modelled on real classrooms in Harbin; each group = a small classroom and a large lecture hall with the same wall colour), shown in the order of the paper's Figure 2: neutral, warm, warm high brightness, warm low brightness, cold, cold high brightness, cold low brightness. Each group is rated on three 5-point semantic differential items, 1 = most negative to 5 = most positive: unpleasant–pleasant, unrelaxed–relaxed, unfocused–focused. Value: {pleasant, relaxed, focused}, key = group id (nc, wc, wch, wcl, cc, cch, ccl). Analysis as in the paper: means and SDs per group, repeated-measures ANOVA for hue (nc, wc, cc) and for brightness (wch, wcl, cch, ccl); independent t-test by gender and one-way ANOVA by grade and major."
+     }
+    ]
+   }
+  ],
+  "title": "Classroom Wall Colour and Students' Emotions",
+  "locale": "en",
+  "spSite": {
+   "id": "site-019e86201716687e",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Classroom Colour and Emotions</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Classroom Wall Colour and Students' Emotions\",\n  \"description\": \"Faithful replication of Tao, Wu, Li & Liu (2022), Buildings 12:1873: college students view seven groups of rendered classrooms whose wall colour changes in hue (neutral, warm, cold) and brightness, and rate how pleasant, relaxed and focused each group makes them feel.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"classrooms\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"boolean\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part voluntarily and know I can stop at any time.\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Your gender is\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Female\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"grade\",\n      \"title\": \"Your current grade is\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Freshman\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Sophomore\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Junior year\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Senior year\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Grade five\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Master's degree\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"Doctor\"\n       },\n       {\n        \"value\": 8,\n        \"text\": \"Others\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"major\",\n      \"title\": \"Your major category is\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Humanities and Social Sciences\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Natural Sciences\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Engineering\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Medicine\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Arts\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Others\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"groups\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"classroom_feeling\",\n      \"title\": \"This set of photos makes you feel\",\n      \"isRequired\": false,\n      \"description\": \"Seven photo groups of rendered classrooms (Revit 2021 + Lumion 11, modelled on real classrooms in Harbin; each group = a small classroom and a large lecture hall with the same wall colour), shown in the order of the paper's Figure 2: neutral, warm, warm high brightness, warm low brightness, cold, cold high brightness, cold low brightness. Each group is rated on three 5-point semantic differential items, 1 = most negative to 5 = most positive: unpleasant–pleasant, unrelaxed–relaxed, unfocused–focused. Value: {pleasant, relaxed, focused}, key = group id (nc, wc, wch, wcl, cc, cch, ccl). Analysis as in the paper: means and SDs per group, repeated-measures ANOVA for hue (nc, wc, cc) and for brightness (wch, wcl, cch, ccl); independent t-test by gender and one-way ANOVA by grade and major.\",\n      \"items\": [\n       {\n        \"key\": \"pleasant\",\n        \"levels\": [\n         \"Very unpleasant\",\n         \"Unpleasant\",\n         \"General\",\n         \"Pleasant\",\n         \"Very pleasant\"\n        ]\n       },\n       {\n        \"key\": \"relaxed\",\n        \"levels\": [\n         \"Very unrelaxed\",\n         \"Unrelaxed\",\n         \"General\",\n         \"Relaxed\",\n         \"Very relaxed\"\n        ]\n       },\n       {\n        \"key\": \"focused\",\n        \"levels\": [\n         \"Very unfocused\",\n         \"Unfocused\",\n         \"General\",\n         \"Focused\",\n         \"Very focused\"\n        ]\n       }\n      ],\n      \"trials\": [\n       {\n        \"id\": \"nc\",\n        \"label\": \"Neutral colour\",\n        \"images\": [\n         \"nc_small_classroom.jpg\",\n         \"nc_large_classroom.jpg\"\n        ]\n       },\n       {\n        \"id\": \"wc\",\n        \"label\": \"Warm colour\",\n        \"images\": [\n         \"wc_small_classroom.jpg\",\n         \"wc_large_classroom.jpg\"\n        ]\n       },\n       {\n        \"id\": \"wch\",\n        \"label\": \"Warm colour, high brightness\",\n        \"images\": [\n         \"wch_small_classroom.jpg\",\n         \"wch_large_classroom.jpg\"\n        ]\n       },\n       {\n        \"id\": \"wcl\",\n        \"label\": \"Warm colour, low brightness\",\n        \"images\": [\n         \"wcl_small_classroom.jpg\",\n         \"wcl_large_classroom.jpg\"\n        ]\n       },\n       {\n        \"id\": \"cc\",\n        \"label\": \"Cold colour\",\n        \"images\": [\n         \"cc_small_classroom.jpg\",\n         \"cc_large_classroom.jpg\"\n        ]\n       },\n       {\n        \"id\": \"cch\",\n        \"label\": \"Cold colour, high brightness\",\n        \"images\": [\n         \"cch_small_classroom.jpg\",\n         \"cch_large_classroom.jpg\"\n        ]\n       },\n       {\n        \"id\": \"ccl\",\n        \"label\": \"Cold colour, low brightness\",\n        \"images\": [\n         \"ccl_small_classroom.jpg\",\n         \"ccl_large_classroom.jpg\"\n        ]\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#eef1f4;--card:#fff;--ink:#1f2328;--muted:#5d646c;--accent:#2d5f8a;--accent-ink:#fff;--line:#d6dbe0;--warn:#b3261e;--miss:#fdecea}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:1000px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.3rem;margin:0 0 10px}\np{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q>b{display:block;margin-bottom:4px}\n.q.miss{background:var(--miss);border-radius:10px;padding:6px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer;background:var(--card)}\n.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}\n.t{color:var(--muted);font-size:.9rem}\n.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;flex:1;margin-left:12px;max-width:260px}.bar>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}\n@media(max-width:600px){.pair{grid-template-columns:1fr}}\n.pair img{width:100%;display:block;border-radius:10px;background:#dde}\n.it{padding:10px 6px;border-top:1px solid var(--line);border-radius:8px;margin-top:8px}\n.it .x{font-weight:500;margin-bottom:6px}\n.sc{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}\n.sc label{display:flex;flex-direction:column;align-items:center;text-align:center;font-size:.85rem;color:var(--muted);cursor:pointer;padding:4px 2px;min-width:0;border:1px solid var(--line);border-radius:8px}\n.sc input{width:20px;height:20px;margin:0 0 4px}\n@media(max-width:600px){.sc{grid-template-columns:1fr}.sc label{flex-direction:row;gap:10px;text-align:left;padding:8px 10px}.sc input{margin:0}}\n.it.miss{background:var(--miss)}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:1000px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Renderings: Tao, Wu, Li &amp; Liu (2022), Buildings 12:1873, Figure 2, doi:10.3390/buildings12111873 (CC BY 4.0). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='taoclass2022:';\n  var app=document.getElementById('app'), Q={}, files={}, ans={}, GR=[], ITEMS=[], done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='visible';}}\n  function hideErr(){var e=app.querySelector('.err');if(e)e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function q(n){return Q[n]||{};}\n  function page(html,btn,cb){app.innerHTML=html+'<div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">'+esc(btn)+'</button></div><div class=\"err\"></div>';document.getElementById('go').onclick=cb;app.onchange=hideErr;}\n  function send(list,b,fin){b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}fin();});}\n  function next(){\n    window.scrollTo(0,0);\n    if(!ans.intro)return intro();\n    if(!ans.about)return about();\n    for(var i=0;i<GR.length;i++)if(!done[GR[i].id])return group(GR[i],i);\n    finish();\n  }\n  function intro(){\n    var miss=GR.some(function(g){return g.images.some(function(n){return !files[n];});});\n    if(miss){app.innerHTML='<h1>Pictures missing</h1><p>Media folder classrooms must hold the 14 classroom renderings (nc_small_classroom.jpg … ccl_large_classroom.jpg).</p>';return;}\n    page('<h1>Classroom colour and your feelings</h1><p>This questionnaire looks at how the wall colour of classrooms affects how students feel. You will see seven groups of classroom pictures. Each group shows a small classroom and a large lecture hall with the same wall colour. Please observe each group carefully and answer three questions according to your feelings.</p><p>It takes about 5 minutes. Your answers are anonymous and used only for research.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(q('consent').title)+'</label></div>','Start',function(){\n      if(!document.getElementById('ok').checked)return err('Please confirm to continue.');\n      send([SPSite.answer('consent',true)],this,function(){ans.intro=true;save('a',ans);next();});});\n  }\n  var DEMO=['gender','grade','major'];\n  function about(){\n    page('<h1>About you</h1><div class=\"card\">'+DEMO.map(function(n,k){var d=q(n);return '<div class=\"q\" data-n=\"'+n+'\"'+(k?'':' style=\"margin-top:0\"')+'><b>'+esc(d.title)+'</b>'+(d.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}).join('')+'</div>','Continue',function(){\n      var v={},miss=[];DEMO.forEach(function(n){var x=app.querySelector('input[name=\"'+n+'\"]:checked');var r=app.querySelector('.q[data-n=\"'+n+'\"]');if(x){v[n]=Number(x.value);r.classList.remove('miss');}else{miss.push(r);r.classList.add('miss');}});\n      if(miss.length){err('Please answer every question (marked in red).');miss[0].scrollIntoView({block:'center'});return;}\n      send(DEMO.map(function(n){return SPSite.answer(n,v[n]);}),this,function(){ans.about=true;save('a',ans);next();});});\n  }\n  function group(g,i){\n    var fs=g.images.map(function(n){return files[n];});\n    var rows=ITEMS.map(function(it){return '<div class=\"it\" data-k=\"'+it.key+'\"><div class=\"x\">'+esc(q('classroom_feeling').title)+'…</div><div class=\"sc\" role=\"radiogroup\" aria-label=\"'+esc(it.key)+'\">'+it.levels.map(function(l,v){return '<label><input type=\"radio\" name=\"'+it.key+'\" value=\"'+(v+1)+'\">'+esc(l)+'</label>';}).join('')+'</div></div>';}).join('');\n    page('<div class=\"top\"><span class=\"t\">Photo group '+(i+1)+' of '+GR.length+'</span><div class=\"bar\"><i style=\"width:'+(100*i/GR.length)+'%\"></i></div></div><div class=\"card\"><p style=\"color:var(--ink);margin-bottom:10px\">Please observe photo group '+(i+1)+' carefully and answer the questions truthfully according to your feelings.</p><div class=\"pair\">'+fs.map(function(f,k){return '<img alt=\"'+(k?'Large lecture hall':'Small classroom')+'\" src=\"'+esc(f.url)+'\">';}).join('')+'</div>'+rows+'</div>','Next',function(){\n      var v={},miss=[];\n      ITEMS.forEach(function(it){var x=app.querySelector('input[name=\"'+it.key+'\"]:checked');var r=app.querySelector('.it[data-k=\"'+it.key+'\"]');if(x){v[it.key]=Number(x.value);r.classList.remove('miss');}else{miss.push(r);r.classList.add('miss');}});\n      if(miss.length){err(miss.length+' question'+(miss.length>1?'s are':' is')+' not answered yet (marked in red).');miss[0].scrollIntoView({block:'center'});return;}\n      send([SPSite.answer('classroom_feeling',v,{key:g.id,shown:fs.map(function(f){return f.name;})})],this,function(){done[g.id]=true;next();});});\n    app.onchange=function(e){hideErr();var r=e.target.closest&&e.target.closest('.it');if(r)r.classList.remove('miss');};\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>In the original survey of 110 students at a university in Harbin during the 2022 campus lockdown, warm-coloured classrooms were rated more pleasant, relaxing and focusing than cold ones, and cold ones more than neutral grey-white. Higher brightness scored better than lower brightness for both warm and cold walls.</p><p style=\"font-size:.82rem\">Renderings and method: Tao, W., Wu, Y., Li, W., &amp; Liu, F. (2022). Influence of Classroom Colour Environment on College Students’ Emotions during Campus Lockdown in the COVID-19 Post-Pandemic Era—A Case Study in Harbin, China. Buildings 12:1873, doi:10.3390/buildings12111873.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){if(x==='consent')ans.intro=false;else if(x==='classroom_feeling')done={};else ans.about=false;});save('a',ans);next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    var SPEC;try{SPEC=JSON.parse(document.getElementById('sp-scheme').textContent).survey;}catch(e){SPEC={pages:[]};}\n    SPEC.pages.forEach(function(p){p.elements.forEach(function(e){var g=SPSite.getQuestion(e.name)||{};Q[e.name]={title:g.title||e.title,choices:(g.choices&&g.choices.length)?g.choices:e.choices};if(e.name==='classroom_feeling'){GR=e.trials;ITEMS=e.items;}});});\n    (SPSite.getMedia('classrooms')||[]).forEach(function(f){files[f.name]=f;});\n    var a=(ctx&&ctx.answers)||{};ans=load('a')||{};\n    ((a.classroom_feeling&&a.classroom_feeling.trials)||[]).forEach(function(t){if(t.key)done[t.key]=true;});\n    ans.intro=a.consent===true;ans.about=a.gender!=null&&a.major!=null;\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T08:36:51.928Z",
+   "mediaFolders": [
+    "classrooms"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T08:36:51.928Z"
+  },
+  "description": "Faithful replication of Tao, Wu, Li & Liu (2022), Buildings 12:1873: college students view seven groups of rendered classrooms whose wall colour changes in hue (neutral, warm, cold) and brightness, and rate how pleasant, relaxed and focused each group makes them feel.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2022-tao-classroom/classrooms/cc_large_classroom__1ba3bf3e-1a70-4744-a626-01a81bc7ab2a.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tao-classroom/classrooms/cc_large_classroom__1ba3bf3e-1a70-4744-a626-01a81bc7ab2a.jpg",
+   "name": "cc_large_classroom.jpg",
+   "type": "image",
+   "folder": "classrooms",
+   "media_id": "templates/2022-tao-classroom/classrooms/cc_large_classroom__1ba3bf3e-1a70-4744-a626-01a81bc7ab2a.jpg",
+   "logicalFolder": "classrooms",
+   "original_bytes": 78980,
+   "uploaded_bytes": 78980,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tao-classroom/classrooms/cc_small_classroom__0ca4c4c0-dcaa-415b-a54f-f15d42a3be4f.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tao-classroom/classrooms/cc_small_classroom__0ca4c4c0-dcaa-415b-a54f-f15d42a3be4f.jpg",
+   "name": "cc_small_classroom.jpg",
+   "type": "image",
+   "folder": "classrooms",
+   "media_id": "templates/2022-tao-classroom/classrooms/cc_small_classroom__0ca4c4c0-dcaa-415b-a54f-f15d42a3be4f.jpg",
+   "logicalFolder": "classrooms",
+   "original_bytes": 57075,
+   "uploaded_bytes": 57075,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tao-classroom/classrooms/cch_large_classroom__1e547ee7-c410-4225-b32d-8749e672d04b.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tao-classroom/classrooms/cch_large_classroom__1e547ee7-c410-4225-b32d-8749e672d04b.jpg",
+   "name": "cch_large_classroom.jpg",
+   "type": "image",
+   "folder": "classrooms",
+   "media_id": "templates/2022-tao-classroom/classrooms/cch_large_classroom__1e547ee7-c410-4225-b32d-8749e672d04b.jpg",
+   "logicalFolder": "classrooms",
+   "original_bytes": 83185,
+   "uploaded_bytes": 83185,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tao-classroom/classrooms/cch_small_classroom__dee86df9-1ba2-4523-80c3-0fafb11fb710.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tao-classroom/classrooms/cch_small_classroom__dee86df9-1ba2-4523-80c3-0fafb11fb710.jpg",
+   "name": "cch_small_classroom.jpg",
+   "type": "image",
+   "folder": "classrooms",
+   "media_id": "templates/2022-tao-classroom/classrooms/cch_small_classroom__dee86df9-1ba2-4523-80c3-0fafb11fb710.jpg",
+   "logicalFolder": "classrooms",
+   "original_bytes": 61981,
+   "uploaded_bytes": 61981,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tao-classroom/classrooms/ccl_large_classroom__50015ad4-44cf-44e3-a8b4-84f7949bbbbe.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tao-classroom/classrooms/ccl_large_classroom__50015ad4-44cf-44e3-a8b4-84f7949bbbbe.jpg",
+   "name": "ccl_large_classroom.jpg",
+   "type": "image",
+   "folder": "classrooms",
+   "media_id": "templates/2022-tao-classroom/classrooms/ccl_large_classroom__50015ad4-44cf-44e3-a8b4-84f7949bbbbe.jpg",
+   "logicalFolder": "classrooms",
+   "original_bytes": 81097,
+   "uploaded_bytes": 81097,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tao-classroom/classrooms/ccl_small_classroom__e011d84c-481e-49f4-a88c-9afb614c7a46.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tao-classroom/classrooms/ccl_small_classroom__e011d84c-481e-49f4-a88c-9afb614c7a46.jpg",
+   "name": "ccl_small_classroom.jpg",
+   "type": "image",
+   "folder": "classrooms",
+   "media_id": "templates/2022-tao-classroom/classrooms/ccl_small_classroom__e011d84c-481e-49f4-a88c-9afb614c7a46.jpg",
+   "logicalFolder": "classrooms",
+   "original_bytes": 63356,
+   "uploaded_bytes": 63356,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tao-classroom/classrooms/nc_large_classroom__bf7a4380-353f-4f63-9f5c-0bc9563d8b2b.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tao-classroom/classrooms/nc_large_classroom__bf7a4380-353f-4f63-9f5c-0bc9563d8b2b.jpg",
+   "name": "nc_large_classroom.jpg",
+   "type": "image",
+   "folder": "classrooms",
+   "media_id": "templates/2022-tao-classroom/classrooms/nc_large_classroom__bf7a4380-353f-4f63-9f5c-0bc9563d8b2b.jpg",
+   "logicalFolder": "classrooms",
+   "original_bytes": 79007,
+   "uploaded_bytes": 79007,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tao-classroom/classrooms/nc_small_classroom__3f6855be-be49-4e29-b58f-68193486147c.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tao-classroom/classrooms/nc_small_classroom__3f6855be-be49-4e29-b58f-68193486147c.jpg",
+   "name": "nc_small_classroom.jpg",
+   "type": "image",
+   "folder": "classrooms",
+   "media_id": "templates/2022-tao-classroom/classrooms/nc_small_classroom__3f6855be-be49-4e29-b58f-68193486147c.jpg",
+   "logicalFolder": "classrooms",
+   "original_bytes": 57777,
+   "uploaded_bytes": 57777,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tao-classroom/classrooms/wc_large_classroom__1b2819ab-d924-4084-a7fd-1204c4b01309.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tao-classroom/classrooms/wc_large_classroom__1b2819ab-d924-4084-a7fd-1204c4b01309.jpg",
+   "name": "wc_large_classroom.jpg",
+   "type": "image",
+   "folder": "classrooms",
+   "media_id": "templates/2022-tao-classroom/classrooms/wc_large_classroom__1b2819ab-d924-4084-a7fd-1204c4b01309.jpg",
+   "logicalFolder": "classrooms",
+   "original_bytes": 77875,
+   "uploaded_bytes": 77875,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tao-classroom/classrooms/wc_small_classroom__edd9d069-9b24-4dc4-8550-c8aa0a107336.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tao-classroom/classrooms/wc_small_classroom__edd9d069-9b24-4dc4-8550-c8aa0a107336.jpg",
+   "name": "wc_small_classroom.jpg",
+   "type": "image",
+   "folder": "classrooms",
+   "media_id": "templates/2022-tao-classroom/classrooms/wc_small_classroom__edd9d069-9b24-4dc4-8550-c8aa0a107336.jpg",
+   "logicalFolder": "classrooms",
+   "original_bytes": 57165,
+   "uploaded_bytes": 57165,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tao-classroom/classrooms/wch_large_classroom__2a88b6ac-ce95-49cd-8464-8c7a778093c5.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tao-classroom/classrooms/wch_large_classroom__2a88b6ac-ce95-49cd-8464-8c7a778093c5.jpg",
+   "name": "wch_large_classroom.jpg",
+   "type": "image",
+   "folder": "classrooms",
+   "media_id": "templates/2022-tao-classroom/classrooms/wch_large_classroom__2a88b6ac-ce95-49cd-8464-8c7a778093c5.jpg",
+   "logicalFolder": "classrooms",
+   "original_bytes": 82633,
+   "uploaded_bytes": 82633,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tao-classroom/classrooms/wch_small_classroom__dcc52301-0e4a-41ab-bde1-3d39f6570127.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tao-classroom/classrooms/wch_small_classroom__dcc52301-0e4a-41ab-bde1-3d39f6570127.jpg",
+   "name": "wch_small_classroom.jpg",
+   "type": "image",
+   "folder": "classrooms",
+   "media_id": "templates/2022-tao-classroom/classrooms/wch_small_classroom__dcc52301-0e4a-41ab-bde1-3d39f6570127.jpg",
+   "logicalFolder": "classrooms",
+   "original_bytes": 62485,
+   "uploaded_bytes": 62485,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tao-classroom/classrooms/wcl_large_classroom__86603bc0-1012-483b-a272-e15775536834.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tao-classroom/classrooms/wcl_large_classroom__86603bc0-1012-483b-a272-e15775536834.jpg",
+   "name": "wcl_large_classroom.jpg",
+   "type": "image",
+   "folder": "classrooms",
+   "media_id": "templates/2022-tao-classroom/classrooms/wcl_large_classroom__86603bc0-1012-483b-a272-e15775536834.jpg",
+   "logicalFolder": "classrooms",
+   "original_bytes": 81708,
+   "uploaded_bytes": 81708,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tao-classroom/classrooms/wcl_small_classroom__370cf5b5-5d75-4c44-8063-6d25c78c2015.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tao-classroom/classrooms/wcl_small_classroom__370cf5b5-5d75-4c44-8063-6d25c78c2015.jpg",
+   "name": "wcl_small_classroom.jpg",
+   "type": "image",
+   "folder": "classrooms",
+   "media_id": "templates/2022-tao-classroom/classrooms/wcl_small_classroom__370cf5b5-5d75-4c44-8063-6d25c78c2015.jpg",
+   "logicalFolder": "classrooms",
+   "original_bytes": 63593,
+   "uploaded_bytes": 63593,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Influence of Classroom Colour Environment on College Students' Emotions during Campus Lockdown in the COVID-19 Post-Pandemic Era—A Case Study in Harbin, China",
+  "authors": [
+   "Weiyi Tao",
+   "Yue Wu",
+   "Weifeng Li",
+   "Fangfang Liu"
+  ],
+  "year": 2022,
+  "venue": "Buildings",
+  "doi": "10.3390/buildings12111873",
+  "url": "https://doi.org/10.3390/buildings12111873"
+ }
+}

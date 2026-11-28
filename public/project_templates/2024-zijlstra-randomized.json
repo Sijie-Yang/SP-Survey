@@ -1,0 +1,641 @@
+{
+ "id": "2024-zijlstra-randomized",
+ "name": "Randomized Hospital Room Designs: Golden Ratio, Feng Shui, Evidence-Based Design",
+ "description": "Faithful replication (still images) of the online randomized controlled trial in Zijlstra, van der Zwaag, Kullak, Rogers, Walker, van Dellen, Mobach & Kelly (2024), \"A randomized controlled trial of Golden Ratio, Feng Shui, and evidence based design in healthcare\", PLOS ONE 19(6):e0303032. Participants who have stayed in hospital for at least one night answer background questions and are then randomly assigned to one of four versions of a single-bed inpatient room with ensuite bathroom: a digital twin of a real Dutch hospital room (control), or a redesign following the Golden Ratio, Feng Shui or Evidence-Based Design principles. They see two pictures of the room and two of the bathroom, imagine recovering from surgery there and answer the 6-item STAI (1–4); after seeing the pictures again they rate the Supportive Hospital Environment Design Scale (sense of control 5 items, social support 4, positive distraction 4; 1–5) and the pleasantness of the room's appearance (1–10). Answers are keyed by condition. In the paper (N = 558) the Evidence-Based Design room lowered anxiety, Feng Shui worked indirectly through pleasantness and social support, and the Golden Ratio had no effect. Stimuli: the 16 room and bathroom images cropped from Figs 2–5 of the paper (CC BY 4.0); question wording from S1 Questionnaire. The template will be removed if the authors object. Differences from the original study: (1) the 2-minute walk-through video, the 3D floor plan and the written description of each room are not available and are left out, so participants see only the four still images; (2) eligibility is asked with two simple questions and ineligible people are thanked and stop, instead of recruitment through the Dutch Patient Federation; (3) the condition is drawn with simple random assignment in the page, so group sizes are not forced to be equal; (4) the \"Where were you born?\" options are kept from the Dutch original.",
+ "author": "Zijlstra, E., van der Zwaag, B., Kullak, S., Rogers, A., Walker, D., van Dellen, S., Mobach, M., & Kelly, L. H.",
+ "year": "2024",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "source:paper",
+  "concept:emotion",
+  "concept:beauty",
+  "scene:indoor",
+  "modality:rendered",
+  "task:rating",
+  "setting:online",
+  "participants:specific",
+  "sample:500to1000",
+  "country:Netherlands"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1371/journal.pone.0303032",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T02:27:38.403+00:00",
+ "updatedAt": "2026-11-28T10:32:27.837+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I have read the information above and agree to take part in this study.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     },
+     {
+      "name": "hospitalised",
+      "type": "radiogroup",
+      "title": "Have you ever stayed in a hospital for at least one night?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "last_stay",
+      "type": "radiogroup",
+      "title": "Your most recent hospital stay was mainly at or for:",
+      "choices": [
+       {
+        "text": "A general hospital ward",
+        "value": "general"
+       },
+       {
+        "text": "A psychiatric ward",
+        "value": "psychiatric"
+       },
+       {
+        "text": "A rehabilitation clinic",
+        "value": "rehabilitation"
+       },
+       {
+        "text": "The birth of my child",
+        "value": "childbirth"
+       }
+      ],
+      "isRequired": true,
+      "description": "Eligible: at least one night in hospital, last stay not psychiatric, rehabilitation or childbirth (as in the original study)."
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "With which gender do you identify yourself?",
+      "choices": [
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Other",
+        "value": "other"
+       }
+      ],
+      "isRequired": false
+     },
+     {
+      "max": 110,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "What is your age? (years)",
+      "inputType": "number",
+      "isRequired": false
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "What is your highest level of education?",
+      "choices": [
+       {
+        "text": "Low",
+        "value": "low"
+       },
+       {
+        "text": "Middle",
+        "value": "middle"
+       },
+       {
+        "text": "High",
+        "value": "high"
+       }
+      ],
+      "isRequired": false
+     },
+     {
+      "name": "household",
+      "type": "radiogroup",
+      "title": "What is your household composition?",
+      "choices": [
+       {
+        "text": "With partner",
+        "value": "partner"
+       },
+       {
+        "text": "With child(ren)",
+        "value": "children"
+       },
+       {
+        "text": "With partner and child(ren)",
+        "value": "partner_children"
+       },
+       {
+        "text": "Without partner and child(ren)",
+        "value": "alone"
+       }
+      ],
+      "isRequired": false
+     },
+     {
+      "name": "born",
+      "type": "radiogroup",
+      "title": "Where were you born?",
+      "choices": [
+       {
+        "text": "The Netherlands",
+        "value": "the_netherlands"
+       },
+       {
+        "text": "Western Europe",
+        "value": "western_europe"
+       },
+       {
+        "text": "Eastern Europe",
+        "value": "eastern_europe"
+       },
+       {
+        "text": "Middle East",
+        "value": "middle_east"
+       },
+       {
+        "text": "Asia",
+        "value": "asia"
+       },
+       {
+        "text": "Africa",
+        "value": "africa"
+       },
+       {
+        "text": "North America",
+        "value": "north_america"
+       },
+       {
+        "text": "Central America",
+        "value": "central_america"
+       },
+       {
+        "text": "South America",
+        "value": "south_america"
+       },
+       {
+        "text": "Canada",
+        "value": "canada"
+       },
+       {
+        "text": "Australia / New Zealand",
+        "value": "australia_new_zealand"
+       }
+      ],
+      "isRequired": false
+     },
+     {
+      "name": "paid_work",
+      "type": "radiogroup",
+      "title": "Do you perform paid work?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": false
+     },
+     {
+      "name": "general_health",
+      "type": "radiogroup",
+      "title": "In general, would you say your health is:",
+      "choices": [
+       {
+        "text": "Poor",
+        "value": "poor"
+       },
+       {
+        "text": "Fair",
+        "value": "fair"
+       },
+       {
+        "text": "Good",
+        "value": "good"
+       },
+       {
+        "text": "Very good",
+        "value": "very_good"
+       },
+       {
+        "text": "Excellent",
+        "value": "excellent"
+       }
+      ],
+      "isRequired": false
+     },
+     {
+      "name": "mental_health",
+      "type": "radiogroup",
+      "title": "In general, would you say your mental health is:",
+      "choices": [
+       {
+        "text": "Poor",
+        "value": "poor"
+       },
+       {
+        "text": "Fair",
+        "value": "fair"
+       },
+       {
+        "text": "Good",
+        "value": "good"
+       },
+       {
+        "text": "Very good",
+        "value": "very_good"
+       },
+       {
+        "text": "Excellent",
+        "value": "excellent"
+       }
+      ],
+      "isRequired": false
+     }
+    ]
+   },
+   {
+    "name": "room",
+    "elements": [
+     {
+      "name": "anxiety",
+      "rows": [
+       {
+        "text": "I feel calm",
+        "value": "calm_r"
+       },
+       {
+        "text": "I am tense",
+        "value": "tense"
+       },
+       {
+        "text": "I feel upset",
+        "value": "upset"
+       },
+       {
+        "text": "I am relaxed",
+        "value": "relaxed_r"
+       },
+       {
+        "text": "I feel content",
+        "value": "content_r"
+       },
+       {
+        "text": "I am worried",
+        "value": "worried"
+       }
+      ],
+      "type": "matrix",
+      "title": "Imagine that you are recovering from surgery in this hospital room. How do you feel?",
+      "columns": [
+       {
+        "text": "Not at all",
+        "value": 1
+       },
+       {
+        "text": "Somewhat",
+        "value": 2
+       },
+       {
+        "text": "Moderately",
+        "value": 3
+       },
+       {
+        "text": "Very much",
+        "value": 4
+       }
+      ],
+      "isRequired": false,
+      "description": "Short State-Trait Anxiety Inventory (STAI-6), keyed by condition (control, golden_ratio, feng_shui, evidence_based). Reverse calm_r, relaxed_r, content_r (5 - x) and sum: 6-24, higher = more anxiety."
+     },
+     {
+      "name": "supportive_design",
+      "rows": [
+       {
+        "text": "In this hospital room I am able to control the surrounding environment.",
+        "value": "control1"
+       },
+       {
+        "text": "I can control the physical features and materials of my hospital room.",
+        "value": "control2"
+       },
+       {
+        "text": "There are choices I can make about the physical features of my hospital room.",
+        "value": "control3"
+       },
+       {
+        "text": "In this room I can adjust, re-arrange, and re-organize things in my hospital room as needed.",
+        "value": "control4"
+       },
+       {
+        "text": "I determine the organization/appearance of my hospital room.",
+        "value": "control5"
+       },
+       {
+        "text": "This hospital room allows me to socialize/“get together” with visiting family and friends.",
+        "value": "social1"
+       },
+       {
+        "text": "My family and friends would feel comfortable in this hospital room.",
+        "value": "social2"
+       },
+       {
+        "text": "In this hospital room I could enjoy the company of visiting family and friends.",
+        "value": "social3"
+       },
+       {
+        "text": "This hospital room provides a supportive environment for visiting family and friends.",
+        "value": "social4"
+       },
+       {
+        "text": "In this room my attention is drawn to interesting things.",
+        "value": "distraction1"
+       },
+       {
+        "text": "In this room there are objects that attract my attention.",
+        "value": "distraction2"
+       },
+       {
+        "text": "In this room I am absorbed by the surroundings.",
+        "value": "distraction3"
+       },
+       {
+        "text": "There is plenty that I want to linger on here.",
+        "value": "distraction4"
+       }
+      ],
+      "type": "matrix",
+      "title": "Supportive Hospital Environment Design Scale",
+      "columns": [
+       {
+        "text": "Strongly disagree",
+        "value": 1
+       },
+       {
+        "text": "Disagree somewhat",
+        "value": 2
+       },
+       {
+        "text": "Neither agree or disagree",
+        "value": 3
+       },
+       {
+        "text": "Agree somewhat",
+        "value": 4
+       },
+       {
+        "text": "Strongly agree",
+        "value": 5
+       }
+      ],
+      "isRequired": false,
+      "description": "Keyed by condition. Sense of control = sum of control1-5 (5-25); social support = sum of social1-4 (4-20); positive distraction = sum of distraction1-4 (4-20)."
+     },
+     {
+      "name": "pleasantness",
+      "type": "rating",
+      "title": "Please indicate how pleasant you find the room’s appearance?",
+      "isRequired": false,
+      "rateValues": [
+       {
+        "text": "Not pleasant",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       },
+       {
+        "text": "6",
+        "value": 6
+       },
+       {
+        "text": "7",
+        "value": 7
+       },
+       {
+        "text": "8",
+        "value": 8
+       },
+       {
+        "text": "9",
+        "value": 9
+       },
+       {
+        "text": "Very pleasant",
+        "value": 10
+       }
+      ],
+      "description": "Keyed by condition; 1 = not pleasant, 10 = very pleasant."
+     }
+    ]
+   }
+  ],
+  "title": "Hospital room design and anxiety",
+  "locale": "en",
+  "spSite": {
+   "id": "site-854a24dd745b18ff",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Hospital Room Design and Anxiety</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Hospital room design and anxiety\",\n  \"description\": \"Faithful replication (still images) of the online randomized trial of Zijlstra et al. (2024), A randomized controlled trial of Golden Ratio, Feng Shui, and evidence based design in healthcare, PLOS ONE 19:e0303032. After eligibility and background questions, each participant is randomly assigned to one of four versions of a single-bed hospital room with ensuite bathroom (a digital twin of a real Dutch room = control, or a redesign by Golden Ratio, Feng Shui or Evidence-Based Design principles), sees two pictures of the room and two of the bathroom, imagines recovering from surgery there and answers the 6-item STAI (1-4); after seeing the pictures again, the Supportive Hospital Environment Design Scale (sense of control 5 items, social support 4, positive distraction 4; 1-5) and room pleasantness (1-10). Answers are keyed by condition.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"rooms\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I have read the information above and agree to take part in this study.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"hospitalised\",\n      \"title\": \"Have you ever stayed in a hospital for at least one night?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"last_stay\",\n      \"title\": \"Your most recent hospital stay was mainly at or for:\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"general\",\n        \"text\": \"A general hospital ward\"\n       },\n       {\n        \"value\": \"psychiatric\",\n        \"text\": \"A psychiatric ward\"\n       },\n       {\n        \"value\": \"rehabilitation\",\n        \"text\": \"A rehabilitation clinic\"\n       },\n       {\n        \"value\": \"childbirth\",\n        \"text\": \"The birth of my child\"\n       }\n      ],\n      \"description\": \"Eligible: at least one night in hospital, last stay not psychiatric, rehabilitation or childbirth (as in the original study).\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"With which gender do you identify yourself?\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"age\",\n      \"title\": \"What is your age? (years)\",\n      \"inputType\": \"number\",\n      \"min\": 18,\n      \"max\": 110,\n      \"isRequired\": false\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"What is your highest level of education?\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": \"low\",\n        \"text\": \"Low\"\n       },\n       {\n        \"value\": \"middle\",\n        \"text\": \"Middle\"\n       },\n       {\n        \"value\": \"high\",\n        \"text\": \"High\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"household\",\n      \"title\": \"What is your household composition?\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": \"partner\",\n        \"text\": \"With partner\"\n       },\n       {\n        \"value\": \"children\",\n        \"text\": \"With child(ren)\"\n       },\n       {\n        \"value\": \"partner_children\",\n        \"text\": \"With partner and child(ren)\"\n       },\n       {\n        \"value\": \"alone\",\n        \"text\": \"Without partner and child(ren)\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"born\",\n      \"title\": \"Where were you born?\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": \"the_netherlands\",\n        \"text\": \"The Netherlands\"\n       },\n       {\n        \"value\": \"western_europe\",\n        \"text\": \"Western Europe\"\n       },\n       {\n        \"value\": \"eastern_europe\",\n        \"text\": \"Eastern Europe\"\n       },\n       {\n        \"value\": \"middle_east\",\n        \"text\": \"Middle East\"\n       },\n       {\n        \"value\": \"asia\",\n        \"text\": \"Asia\"\n       },\n       {\n        \"value\": \"africa\",\n        \"text\": \"Africa\"\n       },\n       {\n        \"value\": \"north_america\",\n        \"text\": \"North America\"\n       },\n       {\n        \"value\": \"central_america\",\n        \"text\": \"Central America\"\n       },\n       {\n        \"value\": \"south_america\",\n        \"text\": \"South America\"\n       },\n       {\n        \"value\": \"canada\",\n        \"text\": \"Canada\"\n       },\n       {\n        \"value\": \"australia_new_zealand\",\n        \"text\": \"Australia / New Zealand\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"paid_work\",\n      \"title\": \"Do you perform paid work?\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"general_health\",\n      \"title\": \"In general, would you say your health is:\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": \"poor\",\n        \"text\": \"Poor\"\n       },\n       {\n        \"value\": \"fair\",\n        \"text\": \"Fair\"\n       },\n       {\n        \"value\": \"good\",\n        \"text\": \"Good\"\n       },\n       {\n        \"value\": \"very_good\",\n        \"text\": \"Very good\"\n       },\n       {\n        \"value\": \"excellent\",\n        \"text\": \"Excellent\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mental_health\",\n      \"title\": \"In general, would you say your mental health is:\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": \"poor\",\n        \"text\": \"Poor\"\n       },\n       {\n        \"value\": \"fair\",\n        \"text\": \"Fair\"\n       },\n       {\n        \"value\": \"good\",\n        \"text\": \"Good\"\n       },\n       {\n        \"value\": \"very_good\",\n        \"text\": \"Very good\"\n       },\n       {\n        \"value\": \"excellent\",\n        \"text\": \"Excellent\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"room\",\n    \"elements\": [\n     {\n      \"type\": \"matrix\",\n      \"name\": \"anxiety\",\n      \"title\": \"Imagine that you are recovering from surgery in this hospital room. How do you feel?\",\n      \"isRequired\": false,\n      \"rows\": [\n       {\n        \"value\": \"calm_r\",\n        \"text\": \"I feel calm\"\n       },\n       {\n        \"value\": \"tense\",\n        \"text\": \"I am tense\"\n       },\n       {\n        \"value\": \"upset\",\n        \"text\": \"I feel upset\"\n       },\n       {\n        \"value\": \"relaxed_r\",\n        \"text\": \"I am relaxed\"\n       },\n       {\n        \"value\": \"content_r\",\n        \"text\": \"I feel content\"\n       },\n       {\n        \"value\": \"worried\",\n        \"text\": \"I am worried\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"Not at all\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Somewhat\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Moderately\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Very much\"\n       }\n      ],\n      \"description\": \"Short State-Trait Anxiety Inventory (STAI-6), keyed by condition (control, golden_ratio, feng_shui, evidence_based). Reverse calm_r, relaxed_r, content_r (5 - x) and sum: 6-24, higher = more anxiety.\"\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"supportive_design\",\n      \"title\": \"Supportive Hospital Environment Design Scale\",\n      \"isRequired\": false,\n      \"rows\": [\n       {\n        \"value\": \"control1\",\n        \"text\": \"In this hospital room I am able to control the surrounding environment.\"\n       },\n       {\n        \"value\": \"control2\",\n        \"text\": \"I can control the physical features and materials of my hospital room.\"\n       },\n       {\n        \"value\": \"control3\",\n        \"text\": \"There are choices I can make about the physical features of my hospital room.\"\n       },\n       {\n        \"value\": \"control4\",\n        \"text\": \"In this room I can adjust, re-arrange, and re-organize things in my hospital room as needed.\"\n       },\n       {\n        \"value\": \"control5\",\n        \"text\": \"I determine the organization/appearance of my hospital room.\"\n       },\n       {\n        \"value\": \"social1\",\n        \"text\": \"This hospital room allows me to socialize/“get together” with visiting family and friends.\"\n       },\n       {\n        \"value\": \"social2\",\n        \"text\": \"My family and friends would feel comfortable in this hospital room.\"\n       },\n       {\n        \"value\": \"social3\",\n        \"text\": \"In this hospital room I could enjoy the company of visiting family and friends.\"\n       },\n       {\n        \"value\": \"social4\",\n        \"text\": \"This hospital room provides a supportive environment for visiting family and friends.\"\n       },\n       {\n        \"value\": \"distraction1\",\n        \"text\": \"In this room my attention is drawn to interesting things.\"\n       },\n       {\n        \"value\": \"distraction2\",\n        \"text\": \"In this room there are objects that attract my attention.\"\n       },\n       {\n        \"value\": \"distraction3\",\n        \"text\": \"In this room I am absorbed by the surroundings.\"\n       },\n       {\n        \"value\": \"distraction4\",\n        \"text\": \"There is plenty that I want to linger on here.\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"Strongly disagree\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Disagree somewhat\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Neither agree or disagree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Agree somewhat\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Strongly agree\"\n       }\n      ],\n      \"description\": \"Keyed by condition. Sense of control = sum of control1-5 (5-25); social support = sum of social1-4 (4-20); positive distraction = sum of distraction1-4 (4-20).\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"pleasantness\",\n      \"title\": \"Please indicate how pleasant you find the room’s appearance?\",\n      \"isRequired\": false,\n      \"rateValues\": [\n       {\n        \"value\": 1,\n        \"text\": \"Not pleasant\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"6\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"7\"\n       },\n       {\n        \"value\": 8,\n        \"text\": \"8\"\n       },\n       {\n        \"value\": 9,\n        \"text\": \"9\"\n       },\n       {\n        \"value\": 10,\n        \"text\": \"Very pleasant\"\n       }\n      ],\n      \"description\": \"Keyed by condition; 1 = not pleasant, 10 = very pleasant.\"\n     }\n    ]\n   }\n  ],\n  \"spAnalysisRecommendation\": \"Between-subjects randomized trial: exclude ineligible participants (hospitalised = no, or last_stay psychiatric/rehabilitation/childbirth). Score STAI-6 (sum after reversing the three positive items), the three SHEDS subscales (sums) and pleasantness per participant; compare each design condition (answer key golden_ratio, feng_shui, evidence_based) with control by linear regression or ANOVA with Cohen's d; test pleasantness, social support, sense of control and positive distraction as parallel mediators of condition -> anxiety.\"\n }\n}\n</script>\n<script type=\"application/json\" id=\"results-table\">{\"source\":\"Zijlstra et al. (2024) PLOS ONE 19:e0303032, Table 2: mean (SD) per condition, N=558\",\"columns\":[\"control\",\"golden_ratio\",\"feng_shui\",\"evidence_based\"],\"rows\":[[\"Anxiety (STAI-6, 6-24)\",\"10.26 (3.57)\",\"10.62 (3.65)\",\"9.61 (3.30)\",\"8.90 (3.08)\"],[\"Sense of control (5-25)\",\"15.09 (4.52)\",\"14.86 (5.14)\",\"15.56 (4.78)\",\"18.27 (5.09)\"],[\"Social support (4-20)\",\"16.03 (3.72)\",\"15.45 (4.06)\",\"17.31 (2.81)\",\"18.04 (2.80)\"],[\"Positive distraction (4-20)\",\"10.16 (4.23)\",\"10.85 (4.49)\",\"12.54 (4.19)\",\"14.85 (4.15)\"],[\"Pleasantness (1-10)\",\"6.81 (2.36)\",\"6.86 (2.39)\",\"7.88 (1.79)\",\"8.42 (1.73)\"]]}</script>\n<style>\n:root{--bg:#f3f2ee;--card:#fff;--ink:#1d1f1c;--muted:#5d6159;--accent:#3d6b4f;--line:#d9dad2;--warn:#b3261e;--sel:#e0ece4}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:1100px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.5rem;margin:0 0 8px}h2{font-size:1.15rem;margin:0 0 6px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:13px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.anch{display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted);margin-top:3px}\n.blk{margin-top:14px}.blk:first-child{margin-top:0}\n.blk.miss{outline:2px solid var(--warn);outline-offset:4px;border-radius:8px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\nlabel.opt:has(input:checked){background:var(--sel);border-color:var(--accent)}\ninput.txt{font:inherit;width:100%;max-width:200px;padding:9px 11px;border:1px solid var(--line);border-radius:10px;margin-top:6px}\n.err{color:var(--warn);margin-top:8px;min-height:1.5em;line-height:1.5}\n.credit{max-width:1100px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n.gal{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}\n.gal figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px}\n.gal img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border-radius:8px}\n.gal figcaption{font-size:.85rem;color:var(--muted);margin-top:4px}\n.it{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}\n.sec{margin:18px 0 6px;font-weight:700}\n.oN{display:grid;gap:3px;margin-top:8px}\n.oN label{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border:1px solid var(--line);border-radius:8px;padding:8px 2px;cursor:pointer;font-size:.72rem;line-height:1.15;color:var(--muted)}\n.oN label b{font-size:.95rem;color:var(--ink)}\n.oN label:has(input:checked){background:var(--sel);border-color:var(--accent);color:var(--ink)}\n.oN input{display:none}\n@media (max-width:700px){.gal{grid-template-columns:1fr 1fr;gap:6px}.gal figure{padding:4px}.oN label{font-size:.62rem;padding:8px 1px}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Hospital room images and questionnaire: Zijlstra, van der Zwaag, Kullak, Rogers, Walker, van Dellen, Mobach &amp; Kelly (2024), A randomized controlled trial of Golden Ratio, Feng Shui, and evidence based design in healthcare, PLOS ONE 19(6):e0303032 (doi:10.1371/journal.pone.0303032, CC BY 4.0). Images cropped from Figs 2–5; items from S1 Questionnaire. Removed on request of the authors.</footer>\n<script>\n(function(){\n  var KEY='zijlstra2024hosp:state', CONDS=['control','golden_ratio','feng_shui','evidence_based'], IT={\"stai\": [[\"calm_r\", \"I feel calm\"], [\"tense\", \"I am tense\"], [\"upset\", \"I feel upset\"], [\"relaxed_r\", \"I am relaxed\"], [\"content_r\", \"I feel content\"], [\"worried\", \"I am worried\"]], \"sheds\": [[\"control1\", \"In this hospital room I am able to control the surrounding environment.\"], [\"control2\", \"I can control the physical features and materials of my hospital room.\"], [\"control3\", \"There are choices I can make about the physical features of my hospital room.\"], [\"control4\", \"In this room I can adjust, re-arrange, and re-organize things in my hospital room as needed.\"], [\"control5\", \"I determine the organization/appearance of my hospital room.\"], [\"social1\", \"This hospital room allows me to socialize/“get together” with visiting family and friends.\"], [\"social2\", \"My family and friends would feel comfortable in this hospital room.\"], [\"social3\", \"In this hospital room I could enjoy the company of visiting family and friends.\"], [\"social4\", \"This hospital room provides a supportive environment for visiting family and friends.\"], [\"distraction1\", \"In this room my attention is drawn to interesting things.\"], [\"distraction2\", \"In this room there are objects that attract my attention.\"], [\"distraction3\", \"In this room I am absorbed by the surroundings.\"], [\"distraction4\", \"There is plenty that I want to linger on here.\"]]},\n      PICS=[['room1','Patient room'],['room2','Patient room'],['bath1','Bathroom'],['bath2','Bathroom']],\n      BG=['gender','age','education','household','born','paid_work','general_health','mental_health'];\n  var app=document.getElementById('app'), Q={}, files={}, st=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='';}}\n  function hideErr(){var e=app.querySelector('.err');if(e&&!app.querySelector('.miss'))e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function send(list,b,next){if(b)b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}next();});}\n  function markMiss(miss,msg){miss.forEach(function(el){el.classList.add('miss');});miss[0].scrollIntoView({block:'center'});err(msg);}\n  function radios(n){var q=Q[n];return '<div class=\"blk\" data-n=\"'+n+'\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function pick(n){var x=app.querySelector('input[name=\"'+n+'\"]:checked');return x?x.value:null;}\n  function shown(){return PICS.map(function(p){return files[st.cond+'_'+p[0]].name;});}\n  function gallery(){return '<div class=\"gal\">'+PICS.map(function(p){var f=files[st.cond+'_'+p[0]];return '<figure><img alt=\"'+esc(p[1])+'\" src=\"'+esc(f.url)+'\"><figcaption>'+esc(p[1])+'</figcaption></figure>';}).join('')+'</div>';}\n  function intro(){\n    app.innerHTML='<h1>Experiences of a hospital room</h1><p>This study aims to improve hospital rooms for patients. We are interested in your experiences and opinions about a hospital room. You will answer some general questions about yourself, then look at pictures of a single-bed hospital room and its bathroom and answer questions about how you would feel there. It takes about 10 minutes. Your answers are anonymous and you can stop at any time. The study is for adults who have stayed in a hospital for at least one night.</p>'+\n     '<div class=\"card\">'+radios('hospitalised')+radios('last_stay')+'<div class=\"blk\"><label class=\"opt\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label></div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){var miss=[];['hospitalised','last_stay'].forEach(function(n){if(!pick(n))miss.push(app.querySelector('.blk[data-n=\"'+n+'\"]'));});\n      if(miss.length)return markMiss(miss,'Please answer the marked questions.');\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var elig=pick('hospitalised')==='yes'&&pick('last_stay')==='general';\n      send([SPSite.answer('consent',true),SPSite.answer('hospitalised',pick('hospitalised')),SPSite.answer('last_stay',pick('last_stay'))],this,function(){st.step=elig?'about':'ineligible';save();route();});};\n  }\n  function about(){\n    app.innerHTML='<h2>About you</h2><div class=\"card\">'+BG.map(function(n){var q=Q[n];\n      if(q.type==='text')return '<div class=\"blk\" data-n=\"'+n+'\"><b>'+esc(q.title)+'</b><br><input class=\"txt\" id=\"f_'+n+'\" type=\"number\" inputmode=\"numeric\" min=\"'+q.min+'\" max=\"'+q.max+'\"></div>';\n      return radios(n);}).join('')+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){var L=[],miss=[];\n      BG.forEach(function(n){var q=Q[n],el=app.querySelector('.blk[data-n=\"'+n+'\"]');\n        if(q.type==='text'){var raw=document.getElementById('f_'+n).value.trim(),v=Number(raw);if(raw===''||isNaN(v)||v<q.min||v>q.max){miss.push(el);return;}L.push(SPSite.answer(n,v));return;}\n        var v2=pick(n);if(!v2){miss.push(el);return;}L.push(SPSite.answer(n,v2));});\n      if(miss.length)return markMiss(miss,'Please answer the marked questions.');\n      send(L,this,function(){if(!st.cond)st.cond=CONDS[Math.floor(Math.random()*CONDS.length)];st.step='view';save();route();});};\n  }\n  function scale(name,rows,cols){return rows.map(function(r){return '<div class=\"blk it\" data-n=\"'+r[0]+'\"><b>'+esc(r[1])+'</b><div class=\"oN\" style=\"grid-template-columns:repeat('+cols.length+',1fr)\">'+cols.map(function(c){return '<label><input type=\"radio\" name=\"'+r[0]+'\" value=\"'+c.value+'\"><b>'+c.value+'</b>'+esc(c.text)+'</label>';}).join('')+'</div></div>';}).join('');}\n  function collect(rows,obj,miss){rows.forEach(function(r){var v=pick(r[0]);if(v!==null)obj[r[0]]=Number(v);else miss.push(app.querySelector('.blk[data-n=\"'+r[0]+'\"]'));});}\n  function view(){\n    app.innerHTML='<h2>The hospital room</h2><p>Take a good look at these pictures of the patient room and its bathroom.</p>'+gallery()+'<div class=\"card\">'+\n      '<div class=\"sec\" style=\"margin-top:0\">'+esc(Q.anxiety.title)+'</div>'+scale('anxiety',IT.stai,Q.anxiety.columns)+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){var miss=[],a={};collect(IT.stai,a,miss);\n      if(miss.length)return markMiss(miss,'Please answer every statement.');\n      send([SPSite.answer('anxiety',a,{key:st.cond,shown:shown()})],this,function(){st.step='rate';save();route();});};\n  }\n  function rate(){\n    var rv=Q.pleasantness.rateValues||[];\n    app.innerHTML='<h2>The hospital room again</h2><p>As a reminder, here are the pictures of the patient room and the bathroom again.</p>'+gallery()+'<div class=\"card\">'+\n      '<div class=\"sec\" style=\"margin-top:0\">How much do you agree with the following statements about this hospital room?</div>'+scale('supportive_design',IT.sheds,Q.supportive_design.columns)+\n      '<div class=\"blk it\" data-n=\"__pl\" style=\"margin-top:18px\"><b>'+esc(Q.pleasantness.title)+'</b><div class=\"oN\" style=\"grid-template-columns:repeat(10,1fr)\">'+rv.map(function(s){return '<label><input type=\"radio\" name=\"__pl\" value=\"'+s.value+'\"><b>'+s.value+'</b></label>';}).join('')+'</div><div class=\"anch\"><span>Not pleasant</span><span>Very pleasant</span></div></div>'+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Finish</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){var miss=[],a={};collect(IT.sheds,a,miss);var p=pick('__pl');if(p===null)miss.push(app.querySelector('.blk[data-n=\"__pl\"]'));\n      if(miss.length)return markMiss(miss,'Please answer every statement and the pleasantness scale.');\n      send([SPSite.answer('supportive_design',a,{key:st.cond,shown:shown()}),SPSite.answer('pleasantness',Number(p),{key:st.cond,shown:shown()})],this,function(){st.step='done';save();route();});};\n  }\n  function finish(msg){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st={step:'intro'};save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent=msg||'Your answers are saved.';}});\n  }\n  app.addEventListener('change',function(e){var b=e.target.closest&&e.target.closest('.blk');if(b){b.classList.remove('miss');hideErr();}});\n  function route(){var s=st.step;window.scrollTo(0,0);if(s==='about')return about();if(s==='view')return view();if(s==='rate')return rate();if(s==='done')return finish();if(s==='ineligible')return finish('This study is for people whose most recent hospital stay (of at least one night) was on a general hospital ward, so there are no further questions for you. Thank you for your interest.');intro();}\n  SPSite.onReady(function(ctx){if(!SPSite.__nm){SPSite.__nm=1;var _gm=SPSite.getMedia;SPSite.getMedia=function(){var r=_gm.apply(SPSite,arguments),fx=function(m){if(!m||!m.name)return m;var c={},k;for(k in m)c[k]=m[k];c.name=String(m.name).replace(/__[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(\\.[A-Za-z0-9]+)$/i,'$1');return c;};if(Array.isArray(r))return r.map(fx);if(r&&typeof r==='object'){var o={},k;for(k in r)o[k]=(r[k]||[]).map(fx);return o;}return r;};}(SPSite.getQuestions()||[]).forEach(function(q){if(q.type==='number'){q.type='text';q.inputType='number';}if(q.isRequired==null)q.isRequired=!!q.required;});\n    ['consent','hospitalised','last_stay','anxiety','supportive_design','pleasantness'].concat(BG).forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('rooms')||[]).forEach(function(f){files[f.name.replace(/\\.[^.]+$/,'')]=f;});\n    var need=[];CONDS.forEach(function(c){PICS.forEach(function(p){if(!files[c+'_'+p[0]])need.push(c+'_'+p[0]);});});\n    if(need.length){app.innerHTML='<h1>Images missing</h1><p>Upload '+esc(need.join(', '))+' (.jpg) to the media folder \"rooms\".</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    var a=(ctx&&ctx.answers)||{};\n    if(!(st&&st.step)||a.consent!==true)st={step:'intro'};\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T09:27:31.778Z",
+   "mediaFolders": [
+    "rooms"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T09:27:31.778Z"
+  },
+  "description": "Faithful replication (still images) of the online randomized trial of Zijlstra et al. (2024), A randomized controlled trial of Golden Ratio, Feng Shui, and evidence based design in healthcare, PLOS ONE 19:e0303032. After eligibility and background questions, each participant is randomly assigned to one of four versions of a single-bed hospital room with ensuite bathroom (a digital twin of a real Dutch room = control, or a redesign by Golden Ratio, Feng Shui or Evidence-Based Design principles), sees two pictures of the room and two of the bathroom, imagines recovering from surgery there and answers the 6-item STAI (1-4); after seeing the pictures again, the Supportive Hospital Environment Design Scale (sense of control 5 items, social support 4, positive distraction 4; 1-5) and room pleasantness (1-10). Answers are keyed by condition.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "spAnalysisRecommendation": "Between-subjects randomized trial: exclude ineligible participants (hospitalised = no, or last_stay psychiatric/rehabilitation/childbirth). Score STAI-6 (sum after reversing the three positive items), the three SHEDS subscales (sums) and pleasantness per participant; compare each design condition (answer key golden_ratio, feng_shui, evidence_based) with control by linear regression or ANOVA with Cohen's d; test pleasantness, social support, sense of control and positive distraction as parallel mediators of condition -> anxiety.",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2024-zijlstra-randomized/rooms/control_bath1__29f27bb9-4603-443b-b4ac-55bea440f204.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zijlstra-randomized/rooms/control_bath1__29f27bb9-4603-443b-b4ac-55bea440f204.jpg",
+   "name": "control_bath1__29f27bb9-4603-443b-b4ac-55bea440f204.jpg",
+   "folder": "rooms",
+   "media_id": "templates/2024-zijlstra-randomized/rooms/control_bath1__29f27bb9-4603-443b-b4ac-55bea440f204.jpg"
+  },
+  {
+   "key": "templates/2024-zijlstra-randomized/rooms/control_bath2__e61d9466-7ac4-4229-903e-aff4eae2434a.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zijlstra-randomized/rooms/control_bath2__e61d9466-7ac4-4229-903e-aff4eae2434a.jpg",
+   "name": "control_bath2__e61d9466-7ac4-4229-903e-aff4eae2434a.jpg",
+   "folder": "rooms",
+   "media_id": "templates/2024-zijlstra-randomized/rooms/control_bath2__e61d9466-7ac4-4229-903e-aff4eae2434a.jpg"
+  },
+  {
+   "key": "templates/2024-zijlstra-randomized/rooms/control_room1__f5222e4f-f9be-486a-bb11-fcb1521e79b8.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zijlstra-randomized/rooms/control_room1__f5222e4f-f9be-486a-bb11-fcb1521e79b8.jpg",
+   "name": "control_room1__f5222e4f-f9be-486a-bb11-fcb1521e79b8.jpg",
+   "folder": "rooms",
+   "media_id": "templates/2024-zijlstra-randomized/rooms/control_room1__f5222e4f-f9be-486a-bb11-fcb1521e79b8.jpg"
+  },
+  {
+   "key": "templates/2024-zijlstra-randomized/rooms/control_room2__18e68399-9e4c-4c81-ba5e-47f715a0bee5.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zijlstra-randomized/rooms/control_room2__18e68399-9e4c-4c81-ba5e-47f715a0bee5.jpg",
+   "name": "control_room2__18e68399-9e4c-4c81-ba5e-47f715a0bee5.jpg",
+   "folder": "rooms",
+   "media_id": "templates/2024-zijlstra-randomized/rooms/control_room2__18e68399-9e4c-4c81-ba5e-47f715a0bee5.jpg"
+  },
+  {
+   "key": "templates/2024-zijlstra-randomized/rooms/evidence_based_bath1__10520c55-f3cd-4ec5-bfde-0a5571e5540c.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zijlstra-randomized/rooms/evidence_based_bath1__10520c55-f3cd-4ec5-bfde-0a5571e5540c.jpg",
+   "name": "evidence_based_bath1__10520c55-f3cd-4ec5-bfde-0a5571e5540c.jpg",
+   "folder": "rooms",
+   "media_id": "templates/2024-zijlstra-randomized/rooms/evidence_based_bath1__10520c55-f3cd-4ec5-bfde-0a5571e5540c.jpg"
+  },
+  {
+   "key": "templates/2024-zijlstra-randomized/rooms/evidence_based_bath2__5e2458bc-7ed6-4e0a-b101-00fb1dd19883.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zijlstra-randomized/rooms/evidence_based_bath2__5e2458bc-7ed6-4e0a-b101-00fb1dd19883.jpg",
+   "name": "evidence_based_bath2__5e2458bc-7ed6-4e0a-b101-00fb1dd19883.jpg",
+   "folder": "rooms",
+   "media_id": "templates/2024-zijlstra-randomized/rooms/evidence_based_bath2__5e2458bc-7ed6-4e0a-b101-00fb1dd19883.jpg"
+  },
+  {
+   "key": "templates/2024-zijlstra-randomized/rooms/evidence_based_room1__28ed13a0-cda6-4336-8908-3e36d23ccd74.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zijlstra-randomized/rooms/evidence_based_room1__28ed13a0-cda6-4336-8908-3e36d23ccd74.jpg",
+   "name": "evidence_based_room1__28ed13a0-cda6-4336-8908-3e36d23ccd74.jpg",
+   "folder": "rooms",
+   "media_id": "templates/2024-zijlstra-randomized/rooms/evidence_based_room1__28ed13a0-cda6-4336-8908-3e36d23ccd74.jpg"
+  },
+  {
+   "key": "templates/2024-zijlstra-randomized/rooms/evidence_based_room2__3e6fdcc7-0123-438b-be50-fa1d615d6f37.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zijlstra-randomized/rooms/evidence_based_room2__3e6fdcc7-0123-438b-be50-fa1d615d6f37.jpg",
+   "name": "evidence_based_room2__3e6fdcc7-0123-438b-be50-fa1d615d6f37.jpg",
+   "folder": "rooms",
+   "media_id": "templates/2024-zijlstra-randomized/rooms/evidence_based_room2__3e6fdcc7-0123-438b-be50-fa1d615d6f37.jpg"
+  },
+  {
+   "key": "templates/2024-zijlstra-randomized/rooms/feng_shui_bath1__94f4cc7c-3597-4446-9d4a-70138bf1ef8d.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zijlstra-randomized/rooms/feng_shui_bath1__94f4cc7c-3597-4446-9d4a-70138bf1ef8d.jpg",
+   "name": "feng_shui_bath1__94f4cc7c-3597-4446-9d4a-70138bf1ef8d.jpg",
+   "folder": "rooms",
+   "media_id": "templates/2024-zijlstra-randomized/rooms/feng_shui_bath1__94f4cc7c-3597-4446-9d4a-70138bf1ef8d.jpg"
+  },
+  {
+   "key": "templates/2024-zijlstra-randomized/rooms/feng_shui_bath2__e55b09cd-b38f-410b-b4db-26484345ff1c.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zijlstra-randomized/rooms/feng_shui_bath2__e55b09cd-b38f-410b-b4db-26484345ff1c.jpg",
+   "name": "feng_shui_bath2__e55b09cd-b38f-410b-b4db-26484345ff1c.jpg",
+   "folder": "rooms",
+   "media_id": "templates/2024-zijlstra-randomized/rooms/feng_shui_bath2__e55b09cd-b38f-410b-b4db-26484345ff1c.jpg"
+  },
+  {
+   "key": "templates/2024-zijlstra-randomized/rooms/feng_shui_room1__143196d6-5498-43ef-a64f-737802c7481a.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zijlstra-randomized/rooms/feng_shui_room1__143196d6-5498-43ef-a64f-737802c7481a.jpg",
+   "name": "feng_shui_room1__143196d6-5498-43ef-a64f-737802c7481a.jpg",
+   "folder": "rooms",
+   "media_id": "templates/2024-zijlstra-randomized/rooms/feng_shui_room1__143196d6-5498-43ef-a64f-737802c7481a.jpg"
+  },
+  {
+   "key": "templates/2024-zijlstra-randomized/rooms/feng_shui_room2__947c9fee-2459-43d6-a7c2-0a6034eafce5.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zijlstra-randomized/rooms/feng_shui_room2__947c9fee-2459-43d6-a7c2-0a6034eafce5.jpg",
+   "name": "feng_shui_room2__947c9fee-2459-43d6-a7c2-0a6034eafce5.jpg",
+   "folder": "rooms",
+   "media_id": "templates/2024-zijlstra-randomized/rooms/feng_shui_room2__947c9fee-2459-43d6-a7c2-0a6034eafce5.jpg"
+  },
+  {
+   "key": "templates/2024-zijlstra-randomized/rooms/golden_ratio_bath1__49475170-0a79-43c4-9856-915a7d5a999b.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zijlstra-randomized/rooms/golden_ratio_bath1__49475170-0a79-43c4-9856-915a7d5a999b.jpg",
+   "name": "golden_ratio_bath1__49475170-0a79-43c4-9856-915a7d5a999b.jpg",
+   "folder": "rooms",
+   "media_id": "templates/2024-zijlstra-randomized/rooms/golden_ratio_bath1__49475170-0a79-43c4-9856-915a7d5a999b.jpg"
+  },
+  {
+   "key": "templates/2024-zijlstra-randomized/rooms/golden_ratio_bath2__5182b3df-d8e4-4ca3-875d-e05132248f25.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zijlstra-randomized/rooms/golden_ratio_bath2__5182b3df-d8e4-4ca3-875d-e05132248f25.jpg",
+   "name": "golden_ratio_bath2__5182b3df-d8e4-4ca3-875d-e05132248f25.jpg",
+   "folder": "rooms",
+   "media_id": "templates/2024-zijlstra-randomized/rooms/golden_ratio_bath2__5182b3df-d8e4-4ca3-875d-e05132248f25.jpg"
+  },
+  {
+   "key": "templates/2024-zijlstra-randomized/rooms/golden_ratio_room1__f52d3555-89b9-4888-ba4a-c38fb7f58a0c.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zijlstra-randomized/rooms/golden_ratio_room1__f52d3555-89b9-4888-ba4a-c38fb7f58a0c.jpg",
+   "name": "golden_ratio_room1__f52d3555-89b9-4888-ba4a-c38fb7f58a0c.jpg",
+   "folder": "rooms",
+   "media_id": "templates/2024-zijlstra-randomized/rooms/golden_ratio_room1__f52d3555-89b9-4888-ba4a-c38fb7f58a0c.jpg"
+  },
+  {
+   "key": "templates/2024-zijlstra-randomized/rooms/golden_ratio_room2__79177529-f6c7-4ad6-aeaa-86aa8783acf5.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zijlstra-randomized/rooms/golden_ratio_room2__79177529-f6c7-4ad6-aeaa-86aa8783acf5.jpg",
+   "name": "golden_ratio_room2__79177529-f6c7-4ad6-aeaa-86aa8783acf5.jpg",
+   "folder": "rooms",
+   "media_id": "templates/2024-zijlstra-randomized/rooms/golden_ratio_room2__79177529-f6c7-4ad6-aeaa-86aa8783acf5.jpg"
+  }
+ ],
+ "paper": {
+  "title": "A randomized controlled trial of Golden Ratio, Feng Shui, and evidence based design in healthcare",
+  "authors": [
+   "Emma Zijlstra",
+   "Bart van der Zwaag",
+   "Sabine Kullak",
+   "Ab Rogers",
+   "Dean Walker",
+   "Sjoukje van Dellen",
+   "Mark Mobach",
+   "Laura Hannah Kelly"
+  ],
+  "year": 2024,
+  "venue": "PLOS ONE",
+  "doi": "10.1371/journal.pone.0303032",
+  "url": "https://doi.org/10.1371/journal.pone.0303032"
+ }
+}

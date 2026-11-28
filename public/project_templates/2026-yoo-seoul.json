@@ -1,0 +1,910 @@
+{
+ "id": "2026-yoo-seoul",
+ "name": "Seoul Walkability: Four Pairwise Dimensions",
+ "description": "Method replication: participants compare two Seoul street views and pick the better one, or Tie, for safety, comfort, pleasurability and overall walkability (4 parts, 10 pairs each), without being given definitions, then may describe the criteria they used; the images are not the paper's stimuli (57 Google Street View images of Seoul streets, 2017–2019, fetched for this template).\nOriginal study: Yoo, Cho & Kim (2026), \"Explaining walkability with a zero-shot multimodal LLM: Validation and empirical application\", Sustainable Cities and Society 144, 107431. 200 Naver Street View images from five land-use types in Seoul (2022 and 2024) formed five pair sets; fifteen experts with doctorates in urban planning fields, three per set, chose the better image or a tie on each dimension with no definitions or rubrics, then described their criteria. Their judgements served as the benchmark for a zero-shot GPT-4o assessment.\nDifferences from the original study: (1) Google Street View images instead of Naver, from random Seoul street points rather than balanced land-use samples, and including some larger roads; (2) each of the four dimensions uses its own random pairs, instead of judging all four dimensions on the same pair; (3) 10 pairs per dimension instead of a fixed set of pairs per expert; (4) open to anyone, with a question about planning background instead of an expert-only panel.",
+ "author": "Yoo, Cho & Kim",
+ "year": "2026",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "street view",
+  "pairwise",
+  "walkability",
+  "Seoul",
+  "source:paper",
+  "concept:walkability",
+  "concept:safety",
+  "concept:comfort",
+  "scene:street",
+  "modality:street_view",
+  "task:pairwise",
+  "setting:online",
+  "participants:experts",
+  "sample:lt100",
+  "country:South Korea",
+  "city:Seoul"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1016/j.scs.2026.107431",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T11:25:40.305+00:00",
+ "updatedAt": "2026-11-28T11:38:53.424+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about_you_first",
+    "elements": [
+     {
+      "name": "background",
+      "type": "radiogroup",
+      "title": "Do you hold a degree in urban planning or a related field?",
+      "choices": [
+       {
+        "text": "Yes, a doctorate",
+        "value": "doctorate"
+       },
+       {
+        "text": "Yes, another degree",
+        "value": "other_degree"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "safety",
+      "type": "imagepicker",
+      "title": "Part 1 – Safety: which street view is better in terms of safety?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "contain",
+      "tieLabel": "Tie",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 10,
+      "mediaFolders": [
+       "seoul"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_2",
+    "elements": [
+     {
+      "name": "comfort",
+      "type": "imagepicker",
+      "title": "Part 2 – Comfort: which street view is better in terms of comfort?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "contain",
+      "tieLabel": "Tie",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 10,
+      "mediaFolders": [
+       "seoul"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_3",
+    "elements": [
+     {
+      "name": "pleasurability",
+      "type": "imagepicker",
+      "title": "Part 3 – Pleasurability: which street view is better in terms of pleasurability?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "contain",
+      "tieLabel": "Tie",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 10,
+      "mediaFolders": [
+       "seoul"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_4",
+    "elements": [
+     {
+      "name": "walkability",
+      "type": "imagepicker",
+      "title": "Part 4 – Overall walkability: which street view is better in terms of overall walkability?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "contain",
+      "tieLabel": "Tie",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 10,
+      "mediaFolders": [
+       "seoul"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "criteria",
+      "type": "comment",
+      "title": "Optional: what criteria did you use for your choices?",
+      "isRequired": false
+     }
+    ]
+   }
+  ],
+  "title": "Seoul Walkability: Four Pairwise Dimensions",
+  "locale": "en",
+  "spSite": {
+   "id": "site-4e369b070700d49f",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Seoul Walkability: Four Pairwise Dimensions</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Seoul Walkability: Four Pairwise Dimensions\",\n  \"description\": \"\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you_first\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"background\",\n      \"title\": \"Do you hold a degree in urban planning or a related field?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"doctorate\",\n        \"text\": \"Yes, a doctorate\"\n       },\n       {\n        \"value\": \"other_degree\",\n        \"text\": \"Yes, another degree\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"safety\",\n      \"title\": \"Part 1 – Safety: which street view is better in terms of safety?\",\n      \"imageCount\": 2,\n      \"trialCount\": 10,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"seoul\"\n      ],\n      \"allowTie\": true,\n      \"tieLabel\": \"Tie\",\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_2\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"comfort\",\n      \"title\": \"Part 2 – Comfort: which street view is better in terms of comfort?\",\n      \"imageCount\": 2,\n      \"trialCount\": 10,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"seoul\"\n      ],\n      \"allowTie\": true,\n      \"tieLabel\": \"Tie\",\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_3\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"pleasurability\",\n      \"title\": \"Part 3 – Pleasurability: which street view is better in terms of pleasurability?\",\n      \"imageCount\": 2,\n      \"trialCount\": 10,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"seoul\"\n      ],\n      \"allowTie\": true,\n      \"tieLabel\": \"Tie\",\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_4\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"walkability\",\n      \"title\": \"Part 4 – Overall walkability: which street view is better in terms of overall walkability?\",\n      \"imageCount\": 2,\n      \"trialCount\": 10,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"seoul\"\n      ],\n      \"allowTie\": true,\n      \"tieLabel\": \"Tie\",\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you\",\n    \"elements\": [\n     {\n      \"type\": \"comment\",\n      \"name\": \"criteria\",\n      \"title\": \"Optional: what criteria did you use for your choices?\",\n      \"isRequired\": false\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#3b5b7a;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.pair.many{grid-template-columns:repeat(var(--k),1fr);gap:8px}\n@media (max-width:640px){.pair.many{grid-template-columns:1fr}.pair.many .pick{aspect-ratio:16/9}}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.rng{accent-color:var(--accent)}.lks{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:6px;margin:6px 0 2px}.lk{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:9px 0;font:inherit;cursor:pointer}.lk[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}.q{margin-top:10px}.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}.scale.num{grid-template-columns:repeat(5,1fr)}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Seoul, Google Street View (© Google), looking along the road. Dimensions and pairwise format with tie from Yoo, Cho &amp; Kim, “Explaining walkability with a zero-shot multimodal LLM: Validation and empirical application”, Sustainable Cities and Society 144, 107431 (2026), doi:10.1016/j.scs.2026.107431.</footer>\n<script>\n(function(){\n  var C={\"before\": [\"background\"], \"after\": [\"criteria\"], \"tasks\": [\"safety\", \"comfort\", \"pleasurability\", \"walkability\"], \"minutes\": 6, \"alt\": \"Street view in Seoul\", \"labels\": {}, \"buttons\": [], \"minSec\": {}, \"words\": {}, \"captions\": {}, \"pickOne\": null, \"heading\": \"Which street is better for walking?\", \"intro\": \"<p>You will compare pairs of street views from Seoul in <b>4 parts</b>: safety, comfort, pleasurability and overall walkability, <b>10 pairs</b> each. For each pair, click the street view you consider better on that dimension, or choose <b>Tie</b> if you cannot separate them. Use your own judgement; no definitions are given.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&C.pickOne.ask&&!filled(C.pickOne.name))return form(C.before,'About you',start);\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?((t.choices||q.choices||[]).filter(function(c){return !c.tie;}).length>2?'Set ':'Pair '):'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair'+(imgs.length>2?' many\" style=\"--k:'+imgs.length:'')+'\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else if(q.kind==='sliders'||/slidergroup$/.test(q.type)){\n      h+='<img class=\"shot\" style=\"max-height:'+((q.dimensions||[]).length>4?'32vh;position:sticky;top:0;z-index:2':(q.dimensions||[]).length>2?'40vh':'56vh')+'\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">';\n      var cu=(md[0]&&md[0].url)||'',cap=Object.keys(C.captions||{}).filter(function(x){return cu.indexOf(x)>=0;})[0];\n      if(cap)h+='<p style=\"margin:8px 0 0;color:var(--ink)\">'+C.captions[cap]+'</p>';\n      var BT=(C.buttons||[]).indexOf(n)>=0,W=(C.words||{})[n]||{};\n      if(BT)(q.dimensions||[]).forEach(function(d){var b='';for(var v=d.min;v<=d.max;v+=(d.step||1))b+='<button type=\"button\" class=\"lk\" data-d=\"'+esc(d.id)+'\" data-val=\"'+v+'\">'+esc(W[d.id]?W[d.id][v-d.min]:v)+'</button>';\n        h+='<div class=\"q\"><b>'+esc(d.label)+'</b><div class=\"lks\" style=\"--n:'+Math.round((d.max-d.min)/(d.step||1)+1)+'\">'+b+'</div><p style=\"display:flex;justify-content:space-between;margin:0;font-size:.85rem\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      else (q.dimensions||[]).forEach(function(d){h+='<div class=\"q\"><b>'+esc(d.label)+': <span id=\"v_'+esc(d.id)+'\">–</span></b><input type=\"range\" class=\"rng\" data-d=\"'+esc(d.id)+'\" min=\"'+d.min+'\" max=\"'+d.max+'\" step=\"'+(d.step||1)+'\" value=\"'+Math.round((d.min+d.max)/2)+'\" style=\"width:100%\"><p style=\"display:flex;justify-content:space-between;margin:0\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      h+='<div class=\"row\"><button class=\"btn\" id=\"next\" disabled>Next</button></div><p style=\"font-size:.85rem\">'+(BT?'Answer every line to continue.':'Move the slider to give your answer.')+'</p>';\n      app.innerHTML=h+'<div class=\"err\"></div>';\n      var vals={},rs=app.querySelectorAll('.rng'),nx=document.getElementById('next');\n      var MS=(C.minSec||{})[n]||0,t0=Date.now(),okT=!MS;\n      function gate(){nx.disabled=!(okT&&Object.keys(vals).length>=(q.dimensions||[]).length);}\n      if(MS){var tm=document.createElement('p');tm.className='tmr';tm.style.fontWeight='600';nx.parentNode.parentNode.insertBefore(tm,nx.parentNode);\n        var iv=setInterval(function(){var left=Math.ceil(MS-(Date.now()-t0)/1000);if(!document.body.contains(tm)){clearInterval(iv);return;}\n          if(left>0)tm.textContent='Please keep looking: '+left+' s';else{tm.textContent='';okT=true;clearInterval(iv);gate();}},250);}\n      if(BT){var nd=(q.dimensions||[]).length;app.querySelectorAll('.lk').forEach(function(b){b.onclick=function(){var d=b.getAttribute('data-d');vals[d]=Number(b.getAttribute('data-val'));\n        app.querySelectorAll('.lk[data-d=\"'+d+'\"]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});gate();};});}\n      rs.forEach(function(r){r.oninput=function(){vals[r.getAttribute('data-d')]=Number(r.value);document.getElementById('v_'+r.getAttribute('data-d')).textContent=r.value;gate();};});\n      nx.onclick=function(){nx.disabled=true;SPSite.answer(n,vals,{trial:k}).then(function(r){if(r&&r.ok===false){err(r.error);nx.disabled=false;return;}(done[n]=done[n]||{})[k]=true;nextStep();});};\n      window.scrollTo(0,0);return;\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      var words=!!(lab&&lab.some(function(x){return isNaN(Number(x));}));\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale'+(words?'':' num')+'\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(words?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T11:24:57.256Z",
+   "mediaFolders": [
+    "seoul"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T11:24:57.256Z"
+  },
+  "description": "",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_01__b3faf71a-e3e4-41c0-9c30-0ab29c327b33.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_01__b3faf71a-e3e4-41c0-9c30-0ab29c327b33.jpg",
+   "name": "seoul_01.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_01__b3faf71a-e3e4-41c0-9c30-0ab29c327b33.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 171861,
+   "uploaded_bytes": 171861,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_02__ee2e63bd-afd3-4008-b9bf-616ecf04d05e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_02__ee2e63bd-afd3-4008-b9bf-616ecf04d05e.jpg",
+   "name": "seoul_02.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_02__ee2e63bd-afd3-4008-b9bf-616ecf04d05e.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 219680,
+   "uploaded_bytes": 219680,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_03__0794fed9-e0cf-46f8-a41b-def733cfa7b8.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_03__0794fed9-e0cf-46f8-a41b-def733cfa7b8.jpg",
+   "name": "seoul_03.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_03__0794fed9-e0cf-46f8-a41b-def733cfa7b8.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 158696,
+   "uploaded_bytes": 158696,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_04__de37661c-3de6-4613-a521-2dc732dac7ed.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_04__de37661c-3de6-4613-a521-2dc732dac7ed.jpg",
+   "name": "seoul_04.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_04__de37661c-3de6-4613-a521-2dc732dac7ed.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 226277,
+   "uploaded_bytes": 226277,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_05__4dbc765d-5f71-4061-a572-8c0c4ce39456.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_05__4dbc765d-5f71-4061-a572-8c0c4ce39456.jpg",
+   "name": "seoul_05.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_05__4dbc765d-5f71-4061-a572-8c0c4ce39456.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 165846,
+   "uploaded_bytes": 165846,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_06__37c5fe2d-cce6-440a-bc0b-087ce8a3258e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_06__37c5fe2d-cce6-440a-bc0b-087ce8a3258e.jpg",
+   "name": "seoul_06.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_06__37c5fe2d-cce6-440a-bc0b-087ce8a3258e.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 192484,
+   "uploaded_bytes": 192484,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_07__eea0a9f5-ee1b-466e-a138-063b59509ca8.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_07__eea0a9f5-ee1b-466e-a138-063b59509ca8.jpg",
+   "name": "seoul_07.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_07__eea0a9f5-ee1b-466e-a138-063b59509ca8.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 171584,
+   "uploaded_bytes": 171584,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_08__5a38f6e8-49c7-451a-bdd8-cc91d7bee8fb.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_08__5a38f6e8-49c7-451a-bdd8-cc91d7bee8fb.jpg",
+   "name": "seoul_08.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_08__5a38f6e8-49c7-451a-bdd8-cc91d7bee8fb.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 193469,
+   "uploaded_bytes": 193469,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_09__b747dd77-038e-40e0-a1cf-74e21b6f3b2b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_09__b747dd77-038e-40e0-a1cf-74e21b6f3b2b.jpg",
+   "name": "seoul_09.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_09__b747dd77-038e-40e0-a1cf-74e21b6f3b2b.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 173672,
+   "uploaded_bytes": 173672,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_10__3f6cc605-484c-4c6d-92e0-afd593252270.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_10__3f6cc605-484c-4c6d-92e0-afd593252270.jpg",
+   "name": "seoul_10.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_10__3f6cc605-484c-4c6d-92e0-afd593252270.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 148649,
+   "uploaded_bytes": 148649,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_11__b7f9aef8-9828-4a1a-8ef8-eb7db9cb0146.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_11__b7f9aef8-9828-4a1a-8ef8-eb7db9cb0146.jpg",
+   "name": "seoul_11.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_11__b7f9aef8-9828-4a1a-8ef8-eb7db9cb0146.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 202624,
+   "uploaded_bytes": 202624,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_12__82c7337d-59af-4b5c-b63f-f5ca178570bb.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_12__82c7337d-59af-4b5c-b63f-f5ca178570bb.jpg",
+   "name": "seoul_12.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_12__82c7337d-59af-4b5c-b63f-f5ca178570bb.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 103365,
+   "uploaded_bytes": 103365,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_13__5bb3489c-8283-4207-a7f6-348949378452.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_13__5bb3489c-8283-4207-a7f6-348949378452.jpg",
+   "name": "seoul_13.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_13__5bb3489c-8283-4207-a7f6-348949378452.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 176119,
+   "uploaded_bytes": 176119,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_14__7c7b61d5-f65c-4253-8fc4-26aa9466cd27.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_14__7c7b61d5-f65c-4253-8fc4-26aa9466cd27.jpg",
+   "name": "seoul_14.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_14__7c7b61d5-f65c-4253-8fc4-26aa9466cd27.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 178515,
+   "uploaded_bytes": 178515,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_15__7721fe60-ea29-40fe-9941-0296b4850646.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_15__7721fe60-ea29-40fe-9941-0296b4850646.jpg",
+   "name": "seoul_15.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_15__7721fe60-ea29-40fe-9941-0296b4850646.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 195404,
+   "uploaded_bytes": 195404,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_16__a2583a62-a4ff-4a58-b18d-fab99f7028ef.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_16__a2583a62-a4ff-4a58-b18d-fab99f7028ef.jpg",
+   "name": "seoul_16.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_16__a2583a62-a4ff-4a58-b18d-fab99f7028ef.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 142692,
+   "uploaded_bytes": 142692,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_17__fc0b8b6b-f095-49ee-8c9a-655b6c73fc3c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_17__fc0b8b6b-f095-49ee-8c9a-655b6c73fc3c.jpg",
+   "name": "seoul_17.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_17__fc0b8b6b-f095-49ee-8c9a-655b6c73fc3c.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 186351,
+   "uploaded_bytes": 186351,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_18__e93c006e-89ea-42d2-a5ab-d5954c1ad187.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_18__e93c006e-89ea-42d2-a5ab-d5954c1ad187.jpg",
+   "name": "seoul_18.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_18__e93c006e-89ea-42d2-a5ab-d5954c1ad187.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 208740,
+   "uploaded_bytes": 208740,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_19__c036c71f-4f37-4915-ba5c-b99f3d9f249b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_19__c036c71f-4f37-4915-ba5c-b99f3d9f249b.jpg",
+   "name": "seoul_19.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_19__c036c71f-4f37-4915-ba5c-b99f3d9f249b.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 216076,
+   "uploaded_bytes": 216076,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_20__40a984e8-beb0-4e24-a81b-ff4d24231c40.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_20__40a984e8-beb0-4e24-a81b-ff4d24231c40.jpg",
+   "name": "seoul_20.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_20__40a984e8-beb0-4e24-a81b-ff4d24231c40.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 125531,
+   "uploaded_bytes": 125531,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_21__baeb290d-e291-4b49-8a8a-fd48ae54ea9f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_21__baeb290d-e291-4b49-8a8a-fd48ae54ea9f.jpg",
+   "name": "seoul_21.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_21__baeb290d-e291-4b49-8a8a-fd48ae54ea9f.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 191070,
+   "uploaded_bytes": 191070,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_22__8f2a0153-26ab-48fc-9b16-0287f9183e62.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_22__8f2a0153-26ab-48fc-9b16-0287f9183e62.jpg",
+   "name": "seoul_22.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_22__8f2a0153-26ab-48fc-9b16-0287f9183e62.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 325066,
+   "uploaded_bytes": 325066,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_23__0601b73d-10de-482e-99b1-ac615bfdf5cd.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_23__0601b73d-10de-482e-99b1-ac615bfdf5cd.jpg",
+   "name": "seoul_23.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_23__0601b73d-10de-482e-99b1-ac615bfdf5cd.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 128572,
+   "uploaded_bytes": 128572,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_24__e617a0e2-e39e-4c2d-973b-8776d790294f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_24__e617a0e2-e39e-4c2d-973b-8776d790294f.jpg",
+   "name": "seoul_24.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_24__e617a0e2-e39e-4c2d-973b-8776d790294f.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 272506,
+   "uploaded_bytes": 272506,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_25__6399a0dc-34e9-4f9e-ae1e-9248b7226561.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_25__6399a0dc-34e9-4f9e-ae1e-9248b7226561.jpg",
+   "name": "seoul_25.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_25__6399a0dc-34e9-4f9e-ae1e-9248b7226561.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 191987,
+   "uploaded_bytes": 191987,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_26__3f6c03a5-edba-47b6-97f2-6ad7d25070fe.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_26__3f6c03a5-edba-47b6-97f2-6ad7d25070fe.jpg",
+   "name": "seoul_26.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_26__3f6c03a5-edba-47b6-97f2-6ad7d25070fe.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 183422,
+   "uploaded_bytes": 183422,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_27__73f4deb8-73d0-49bc-9be5-e83e4e8a84a3.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_27__73f4deb8-73d0-49bc-9be5-e83e4e8a84a3.jpg",
+   "name": "seoul_27.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_27__73f4deb8-73d0-49bc-9be5-e83e4e8a84a3.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 163584,
+   "uploaded_bytes": 163584,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_29__ccfd52b5-7c97-4307-9b67-0a37374beb02.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_29__ccfd52b5-7c97-4307-9b67-0a37374beb02.jpg",
+   "name": "seoul_29.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_29__ccfd52b5-7c97-4307-9b67-0a37374beb02.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 166200,
+   "uploaded_bytes": 166200,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_30__092c10bf-192d-4cdf-8642-6b009aa84c72.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_30__092c10bf-192d-4cdf-8642-6b009aa84c72.jpg",
+   "name": "seoul_30.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_30__092c10bf-192d-4cdf-8642-6b009aa84c72.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 205091,
+   "uploaded_bytes": 205091,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_31__5678b16c-148a-4795-88f7-bb2784bf91d5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_31__5678b16c-148a-4795-88f7-bb2784bf91d5.jpg",
+   "name": "seoul_31.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_31__5678b16c-148a-4795-88f7-bb2784bf91d5.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 104222,
+   "uploaded_bytes": 104222,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_33__36933b23-1168-44ab-bcf0-eca5ad768fd2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_33__36933b23-1168-44ab-bcf0-eca5ad768fd2.jpg",
+   "name": "seoul_33.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_33__36933b23-1168-44ab-bcf0-eca5ad768fd2.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 207251,
+   "uploaded_bytes": 207251,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_34__330d4fdb-a741-4300-8ab4-41ee8b32397a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_34__330d4fdb-a741-4300-8ab4-41ee8b32397a.jpg",
+   "name": "seoul_34.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_34__330d4fdb-a741-4300-8ab4-41ee8b32397a.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 207645,
+   "uploaded_bytes": 207645,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_35__952a9aa8-bb60-475f-90fb-1a33320b7211.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_35__952a9aa8-bb60-475f-90fb-1a33320b7211.jpg",
+   "name": "seoul_35.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_35__952a9aa8-bb60-475f-90fb-1a33320b7211.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 135334,
+   "uploaded_bytes": 135334,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_36__2ba8b7a0-b4e7-4039-bd9e-7dc547bda09a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_36__2ba8b7a0-b4e7-4039-bd9e-7dc547bda09a.jpg",
+   "name": "seoul_36.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_36__2ba8b7a0-b4e7-4039-bd9e-7dc547bda09a.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 240803,
+   "uploaded_bytes": 240803,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_37__1f25864a-16ee-49e2-b8e7-6fca37e33333.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_37__1f25864a-16ee-49e2-b8e7-6fca37e33333.jpg",
+   "name": "seoul_37.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_37__1f25864a-16ee-49e2-b8e7-6fca37e33333.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 187698,
+   "uploaded_bytes": 187698,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_38__b4899fbc-b563-49db-a6d7-efb6222e757f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_38__b4899fbc-b563-49db-a6d7-efb6222e757f.jpg",
+   "name": "seoul_38.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_38__b4899fbc-b563-49db-a6d7-efb6222e757f.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 186008,
+   "uploaded_bytes": 186008,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_39__66ddfee4-3cf8-47a2-b94a-e8411c3ab9c8.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_39__66ddfee4-3cf8-47a2-b94a-e8411c3ab9c8.jpg",
+   "name": "seoul_39.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_39__66ddfee4-3cf8-47a2-b94a-e8411c3ab9c8.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 179994,
+   "uploaded_bytes": 179994,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_40__2db91c33-12e1-4b56-b64b-b09141e4d6e9.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_40__2db91c33-12e1-4b56-b64b-b09141e4d6e9.jpg",
+   "name": "seoul_40.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_40__2db91c33-12e1-4b56-b64b-b09141e4d6e9.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 155366,
+   "uploaded_bytes": 155366,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_41__8d17d306-f69c-499b-9a5a-f6a2b8109856.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_41__8d17d306-f69c-499b-9a5a-f6a2b8109856.jpg",
+   "name": "seoul_41.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_41__8d17d306-f69c-499b-9a5a-f6a2b8109856.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 121534,
+   "uploaded_bytes": 121534,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_42__b88cf109-eb25-4193-83f8-80e88661fd72.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_42__b88cf109-eb25-4193-83f8-80e88661fd72.jpg",
+   "name": "seoul_42.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_42__b88cf109-eb25-4193-83f8-80e88661fd72.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 167466,
+   "uploaded_bytes": 167466,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_43__6dc826f5-436c-4498-964e-0089c3f8cac8.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_43__6dc826f5-436c-4498-964e-0089c3f8cac8.jpg",
+   "name": "seoul_43.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_43__6dc826f5-436c-4498-964e-0089c3f8cac8.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 215906,
+   "uploaded_bytes": 215906,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_44__0e85abb9-9f72-43e9-8665-ccae47098517.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_44__0e85abb9-9f72-43e9-8665-ccae47098517.jpg",
+   "name": "seoul_44.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_44__0e85abb9-9f72-43e9-8665-ccae47098517.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 162485,
+   "uploaded_bytes": 162485,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_45__ae3139cc-45bd-4573-ad9d-e5cbbfc9e2c7.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_45__ae3139cc-45bd-4573-ad9d-e5cbbfc9e2c7.jpg",
+   "name": "seoul_45.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_45__ae3139cc-45bd-4573-ad9d-e5cbbfc9e2c7.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 175340,
+   "uploaded_bytes": 175340,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_46__4b1b6192-7931-448e-ad59-6b28583b940e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_46__4b1b6192-7931-448e-ad59-6b28583b940e.jpg",
+   "name": "seoul_46.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_46__4b1b6192-7931-448e-ad59-6b28583b940e.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 180493,
+   "uploaded_bytes": 180493,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_47__854ccff1-3455-464b-8a73-8a063c343d57.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_47__854ccff1-3455-464b-8a73-8a063c343d57.jpg",
+   "name": "seoul_47.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_47__854ccff1-3455-464b-8a73-8a063c343d57.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 185097,
+   "uploaded_bytes": 185097,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_48__b6ea6bda-33a2-4d74-87e6-b2e0c6cd555e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_48__b6ea6bda-33a2-4d74-87e6-b2e0c6cd555e.jpg",
+   "name": "seoul_48.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_48__b6ea6bda-33a2-4d74-87e6-b2e0c6cd555e.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 199430,
+   "uploaded_bytes": 199430,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_49__921b5ccd-48cc-4be6-b562-a1ef2dd7d1ad.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_49__921b5ccd-48cc-4be6-b562-a1ef2dd7d1ad.jpg",
+   "name": "seoul_49.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_49__921b5ccd-48cc-4be6-b562-a1ef2dd7d1ad.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 209980,
+   "uploaded_bytes": 209980,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_50__63632889-e845-42f3-9f39-16f932624d2f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_50__63632889-e845-42f3-9f39-16f932624d2f.jpg",
+   "name": "seoul_50.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_50__63632889-e845-42f3-9f39-16f932624d2f.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 220411,
+   "uploaded_bytes": 220411,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_51__6ba4d4c2-3508-442d-93cf-1646c0dce75c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_51__6ba4d4c2-3508-442d-93cf-1646c0dce75c.jpg",
+   "name": "seoul_51.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_51__6ba4d4c2-3508-442d-93cf-1646c0dce75c.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 218028,
+   "uploaded_bytes": 218028,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_53__5c3458a1-47d2-46ef-bf8b-7e6c55f82477.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_53__5c3458a1-47d2-46ef-bf8b-7e6c55f82477.jpg",
+   "name": "seoul_53.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_53__5c3458a1-47d2-46ef-bf8b-7e6c55f82477.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 162839,
+   "uploaded_bytes": 162839,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_54__a08bbacc-5aa8-47ab-9293-bfb0d0a91b61.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_54__a08bbacc-5aa8-47ab-9293-bfb0d0a91b61.jpg",
+   "name": "seoul_54.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_54__a08bbacc-5aa8-47ab-9293-bfb0d0a91b61.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 158682,
+   "uploaded_bytes": 158682,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_55__eafdd9ca-9fbe-43a5-b020-0faee1f64972.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_55__eafdd9ca-9fbe-43a5-b020-0faee1f64972.jpg",
+   "name": "seoul_55.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_55__eafdd9ca-9fbe-43a5-b020-0faee1f64972.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 346764,
+   "uploaded_bytes": 346764,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_56__64c38476-f9e5-487a-9523-5e987142b0d1.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_56__64c38476-f9e5-487a-9523-5e987142b0d1.jpg",
+   "name": "seoul_56.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_56__64c38476-f9e5-487a-9523-5e987142b0d1.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 246272,
+   "uploaded_bytes": 246272,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_57__464be0d3-d3c5-4cd1-80f5-acd754ce29c3.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_57__464be0d3-d3c5-4cd1-80f5-acd754ce29c3.jpg",
+   "name": "seoul_57.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_57__464be0d3-d3c5-4cd1-80f5-acd754ce29c3.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 222193,
+   "uploaded_bytes": 222193,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_58__54dfa076-99be-4201-a2fc-c7c940023b22.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_58__54dfa076-99be-4201-a2fc-c7c940023b22.jpg",
+   "name": "seoul_58.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_58__54dfa076-99be-4201-a2fc-c7c940023b22.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 168415,
+   "uploaded_bytes": 168415,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_59__26e24bfb-8437-4269-98be-a84634ca2011.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_59__26e24bfb-8437-4269-98be-a84634ca2011.jpg",
+   "name": "seoul_59.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_59__26e24bfb-8437-4269-98be-a84634ca2011.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 177172,
+   "uploaded_bytes": 177172,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-yoo-seoul/seoul/seoul_60__b4c239fc-d8d6-457c-aace-177e1f90c3bc.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-yoo-seoul/seoul/seoul_60__b4c239fc-d8d6-457c-aace-177e1f90c3bc.jpg",
+   "name": "seoul_60.jpg",
+   "type": "image",
+   "folder": "seoul",
+   "media_id": "templates/2026-yoo-seoul/seoul/seoul_60__b4c239fc-d8d6-457c-aace-177e1f90c3bc.jpg",
+   "logicalFolder": "seoul",
+   "original_bytes": 136655,
+   "uploaded_bytes": 136655,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Explaining walkability with a zero-shot multimodal LLM: Validation and empirical application",
+  "authors": [
+   "Yoo M.",
+   "Cho G.-H.",
+   "Kim D."
+  ],
+  "year": 2026,
+  "venue": "Sustainable Cities and Society",
+  "doi": "10.1016/j.scs.2026.107431",
+  "url": "https://doi.org/10.1016/j.scs.2026.107431"
+ }
+}

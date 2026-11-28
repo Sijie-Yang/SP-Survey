@@ -1,0 +1,345 @@
+{
+ "id": "2022-pastor-alcohol",
+ "name": "Alcohol Exposure in an Urban Square – Scene Ratings",
+ "description": "Faithful replication of Pastor et al. (2022), Int. J. Environ. Res. Public Health 19(15): 9192. Respondents see three 3D-rendered scenes (Lumion/SketchUp) of Lavapiés Square, Madrid, with null, medium (11 alcohol elements) and high (23 alcohol elements: advertising, litter, people drinking) alcohol exposure, shown side by side as in the original Google Form. For every scene they rate presence of alcohol-related elements (1–10), resemblance to the real square (1–3), comfort (1–10), acceptance (1–10) and acceptance with children present (1–10), then answer the original sociodemographic questions. The scenes are the paper's Figures 3, 5 and 6 (CC BY 4.0), used with credit; the template is removed if the authors object. Original result (159 adults, Madrid region): median comfort 9 / 7 / 6 and acceptance with children 10 / 7 / 5 from null to high exposure (Kruskal–Wallis). Differences from the original study: (1) the scenes come from the paper's figures (about 730 px wide) rather than the original render files; (2) the free-text questions on neighbourhood (B4) and city of residence (B5) are left out; (3) the consent item adds an 18+ confirmation; (4) the original Spanish questionnaire is given in the authors' English translation.",
+ "author": "Pastor, Sureda, Valiente, Badland, García-Dorado & Escobar",
+ "year": "2022",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "source:paper",
+  "concept:comfort",
+  "concept:preference",
+  "scene:public_space",
+  "modality:rendered",
+  "task:rating",
+  "setting:online",
+  "participants:public",
+  "sample:100to300",
+  "country:Spain",
+  "city:Madrid"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/ijerph19159192",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T11:24:04.74+00:00",
+ "updatedAt": "2026-11-28T11:24:13.877+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I am 18 or older, I agree to take part voluntarily and I know I can stop at any time.",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "scenes",
+    "elements": [
+     {
+      "name": "alcohol_scenes",
+      "type": "custom",
+      "items": [
+       {
+        "hi": "most",
+        "lo": "least",
+        "key": "A1",
+        "max": 10,
+        "min": 1,
+        "text": "Rate on a scale of 1 (least) to 10 (most) the presence of alcohol-related elements in each of the scenes."
+       },
+       {
+        "hi": "most",
+        "lo": "least",
+        "key": "A2",
+        "max": 3,
+        "min": 1,
+        "text": "Rate on a scale of 1 (least) to 3 (most) the resemblance between the scenes and the reality of Madrid, specifically Lavapiés Square, in terms of the presence of alcohol-related elements."
+       },
+       {
+        "hi": "most comfortable",
+        "lo": "least comfortable",
+        "key": "A3",
+        "max": 10,
+        "min": 1,
+        "text": "Rate on a scale of 1 (least comfortable) to 10 (most comfortable) how you would feel in each of the scenes."
+       },
+       {
+        "hi": "greatest acceptance",
+        "lo": "least acceptance",
+        "key": "A4",
+        "max": 10,
+        "min": 1,
+        "text": "Would you accept being in these scenes? (1 = least acceptance, 10 = greatest acceptance)"
+       },
+       {
+        "hi": "greatest acceptance",
+        "lo": "least acceptance",
+        "key": "A5",
+        "max": 10,
+        "min": 1,
+        "text": "In the presence of children, would you accept being in these scenes? (1 = least acceptance, 10 = greatest acceptance)"
+       }
+      ],
+      "order": "fixed",
+      "title": "Please look at the scenes below and answer the following questions",
+      "trials": [
+       {
+        "id": "scene1_null",
+        "label": "Scene 1",
+        "images": [
+         "scene1_null.jpg"
+        ]
+       },
+       {
+        "id": "scene2_medium",
+        "label": "Scene 2",
+        "images": [
+         "scene2_medium.jpg"
+        ]
+       },
+       {
+        "id": "scene3_high",
+        "label": "Scene 3",
+        "images": [
+         "scene3_high.jpg"
+        ]
+       }
+      ],
+      "isRequired": false,
+      "description": "Section A of the original survey (Supplementary Materials): three 3D-rendered scenes of Lavapiés Square, Madrid, with null (Scene 1), medium (Scene 2, 11 alcohol elements) and high (Scene 3, 23 alcohol elements) alcohol exposure, shown together in this fixed order. Each scene is scored on A1 presence of alcohol-related elements (1–10), A2 resemblance to Lavapiés Square (1–3), A3 comfort (1–10), A4 acceptance (1–10) and A5 acceptance with children present (1–10). One record per scene: value {A1, A2, A3, A4, A5}, key = scene id. Analysis as in the paper: medians and IQR per scene and item, Kruskal–Wallis tests across scenes for A1, A3, A4, A5, and a chi-square test of A2 (low/medium/high resemblance) across scenes; stacked frequency bars for A2 and box plots for A3–A5."
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "name": "age",
+      "type": "radiogroup",
+      "title": "Your age",
+      "choices": [
+       {
+        "text": "Under 18",
+        "value": 1
+       },
+       {
+        "text": "18-30",
+        "value": 2
+       },
+       {
+        "text": "31-60",
+        "value": 3
+       },
+       {
+        "text": "Over 60",
+        "value": 4
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "sex",
+      "type": "radiogroup",
+      "title": "Your sex",
+      "choices": [
+       {
+        "text": "Man",
+        "value": 1
+       },
+       {
+        "text": "Woman",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "live_madrid",
+      "type": "radiogroup",
+      "title": "Do you live in Madrid?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": 1
+       },
+       {
+        "text": "No",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "children",
+      "type": "radiogroup",
+      "title": "Number of children you have",
+      "choices": [
+       {
+        "text": "None",
+        "value": 1
+       },
+       {
+        "text": "1",
+        "value": 2
+       },
+       {
+        "text": "2",
+        "value": 3
+       },
+       {
+        "text": "3 or more",
+        "value": 4
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "What is your maximum level of completed studies?",
+      "choices": [
+       {
+        "text": "You know how to read and to write but you attended school for less than 5 years",
+        "value": 1
+       },
+       {
+        "text": "Unofficial Primary Education",
+        "value": 2
+       },
+       {
+        "text": "Official Certificate of Primary Education",
+        "value": 3
+       },
+       {
+        "text": "Secondary Education",
+        "value": 4
+       },
+       {
+        "text": "Professional Secondary Education",
+        "value": 5
+       },
+       {
+        "text": "Professional basic tertiary education",
+        "value": 6
+       },
+       {
+        "text": "University Bachelors Degree",
+        "value": 7
+       },
+       {
+        "text": "University Honors Degree",
+        "value": 8
+       },
+       {
+        "text": "University Masters degree",
+        "value": 9
+       },
+       {
+        "text": "PhD",
+        "value": 10
+       },
+       {
+        "text": "Other",
+        "value": 11
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Alcohol Exposure in an Urban Square",
+  "locale": "en",
+  "spSite": {
+   "id": "site-0bf0aca6c0cf6396",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Alcohol Exposure in an Urban Square</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Alcohol Exposure in an Urban Square\",\n  \"description\": \"Faithful replication of Pastor, Sureda, Valiente, Badland, García-Dorado & Escobar (2022), IJERPH 19(15): 9192: respondents see three 3D-rendered scenes of Lavapiés Square, Madrid, with null, medium and high alcohol exposure and score each on presence of alcohol elements, resemblance to the real square, comfort, and acceptance with and without children.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"scenes\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"boolean\",\n      \"name\": \"consent\",\n      \"title\": \"I am 18 or older, I agree to take part voluntarily and I know I can stop at any time.\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"scenes\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"alcohol_scenes\",\n      \"title\": \"Please look at the scenes below and answer the following questions\",\n      \"isRequired\": false,\n      \"description\": \"Section A of the original survey (Supplementary Materials): three 3D-rendered scenes of Lavapiés Square, Madrid, with null (Scene 1), medium (Scene 2, 11 alcohol elements) and high (Scene 3, 23 alcohol elements) alcohol exposure, shown together in this fixed order. Each scene is scored on A1 presence of alcohol-related elements (1–10), A2 resemblance to Lavapiés Square (1–3), A3 comfort (1–10), A4 acceptance (1–10) and A5 acceptance with children present (1–10). One record per scene: value {A1, A2, A3, A4, A5}, key = scene id. Analysis as in the paper: medians and IQR per scene and item, Kruskal–Wallis tests across scenes for A1, A3, A4, A5, and a chi-square test of A2 (low/medium/high resemblance) across scenes; stacked frequency bars for A2 and box plots for A3–A5.\",\n      \"items\": [\n       {\n        \"key\": \"A1\",\n        \"text\": \"Rate on a scale of 1 (least) to 10 (most) the presence of alcohol-related elements in each of the scenes.\",\n        \"min\": 1,\n        \"max\": 10,\n        \"lo\": \"least\",\n        \"hi\": \"most\"\n       },\n       {\n        \"key\": \"A2\",\n        \"text\": \"Rate on a scale of 1 (least) to 3 (most) the resemblance between the scenes and the reality of Madrid, specifically Lavapiés Square, in terms of the presence of alcohol-related elements.\",\n        \"min\": 1,\n        \"max\": 3,\n        \"lo\": \"least\",\n        \"hi\": \"most\"\n       },\n       {\n        \"key\": \"A3\",\n        \"text\": \"Rate on a scale of 1 (least comfortable) to 10 (most comfortable) how you would feel in each of the scenes.\",\n        \"min\": 1,\n        \"max\": 10,\n        \"lo\": \"least comfortable\",\n        \"hi\": \"most comfortable\"\n       },\n       {\n        \"key\": \"A4\",\n        \"text\": \"Would you accept being in these scenes? (1 = least acceptance, 10 = greatest acceptance)\",\n        \"min\": 1,\n        \"max\": 10,\n        \"lo\": \"least acceptance\",\n        \"hi\": \"greatest acceptance\"\n       },\n       {\n        \"key\": \"A5\",\n        \"text\": \"In the presence of children, would you accept being in these scenes? (1 = least acceptance, 10 = greatest acceptance)\",\n        \"min\": 1,\n        \"max\": 10,\n        \"lo\": \"least acceptance\",\n        \"hi\": \"greatest acceptance\"\n       }\n      ],\n      \"trials\": [\n       {\n        \"id\": \"scene1_null\",\n        \"label\": \"Scene 1\",\n        \"images\": [\n         \"scene1_null.jpg\"\n        ]\n       },\n       {\n        \"id\": \"scene2_medium\",\n        \"label\": \"Scene 2\",\n        \"images\": [\n         \"scene2_medium.jpg\"\n        ]\n       },\n       {\n        \"id\": \"scene3_high\",\n        \"label\": \"Scene 3\",\n        \"images\": [\n         \"scene3_high.jpg\"\n        ]\n       }\n      ],\n      \"order\": \"fixed\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age\",\n      \"title\": \"Your age\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Under 18\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"18-30\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"31-60\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Over 60\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"sex\",\n      \"title\": \"Your sex\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Man\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Woman\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"live_madrid\",\n      \"title\": \"Do you live in Madrid?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"No\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"children\",\n      \"title\": \"Number of children you have\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"None\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"3 or more\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"What is your maximum level of completed studies?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"You know how to read and to write but you attended school for less than 5 years\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Unofficial Primary Education\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Official Certificate of Primary Education\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Secondary Education\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Professional Secondary Education\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Professional basic tertiary education\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"University Bachelors Degree\"\n       },\n       {\n        \"value\": 8,\n        \"text\": \"University Honors Degree\"\n       },\n       {\n        \"value\": 9,\n        \"text\": \"University Masters degree\"\n       },\n       {\n        \"value\": 10,\n        \"text\": \"PhD\"\n       },\n       {\n        \"value\": 11,\n        \"text\": \"Other\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f2f1ee;--card:#fff;--ink:#1f2328;--muted:#5d646c;--accent:#7a2e3a;--accent-ink:#fff;--line:#dcd8d0;--warn:#b3261e;--miss:#fdecea}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:1000px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.3rem;margin:0 0 10px}\np{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q>b{display:block;margin-bottom:4px}\n.q.miss{background:var(--miss);border-radius:10px;padding:6px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer;background:var(--card)}\n.strip{position:sticky;top:0;z-index:2;background:var(--bg);padding:8px 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}\n.strip figure{margin:0;cursor:zoom-in}\n.strip img{width:100%;aspect-ratio:3/2;object-fit:cover;display:block;border-radius:8px;background:#ddd}\n.strip figcaption{font-weight:600;font-size:.9rem;text-align:center}\n.it{padding:12px 6px;border-top:1px solid var(--line);border-radius:8px;margin-top:8px}\n.it .x{font-weight:500;margin-bottom:8px}\n.grid{display:grid;gap:2px 0;align-items:center;max-width:680px}.ends{max-width:680px}\n.grid .h{font-size:.8rem;color:var(--muted);text-align:center}\n.grid .s{font-weight:600;font-size:.9rem;white-space:nowrap}\n.grid label{display:flex;justify-content:center;padding:4px 0;cursor:pointer}\n.grid input{width:20px;height:20px;margin:0}\n.ends{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:4px}\n.it.miss{background:var(--miss)}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n#zoom{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:9;cursor:zoom-out;padding:12px}\n#zoom img{max-width:100%;max-height:100%;border-radius:8px}\n.credit{max-width:1000px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n@media(max-width:600px){.grid .s{font-size:.8rem}.grid input{width:18px;height:18px}.grid .h{font-size:.7rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<div id=\"zoom\"><img alt=\"\"></div>\n<footer class=\"credit\">Scenes: Pastor, Sureda, Valiente, Badland, García-Dorado &amp; Escobar (2022), Int. J. Environ. Res. Public Health 19(15): 9192, Figures 3, 5 and 6, doi:10.3390/ijerph19159192 (CC BY 4.0; cropped to remove figure titles). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='pastor2022:';\n  var app=document.getElementById('app'), Q={}, files={}, ans={}, SC=[], ITEMS=[];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='visible';}}\n  function hideErr(){var e=app.querySelector('.err');if(e)e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function q(n){return Q[n]||{};}\n  function page(html,btn,cb){app.innerHTML=html+'<div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">'+esc(btn)+'</button></div><div class=\"err\"></div>';document.getElementById('go').onclick=cb;app.onchange=hideErr;}\n  function send(list,b,fin){b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}fin();});}\n  function next(){\n    window.scrollTo(0,0);\n    if(!ans.intro)return intro();\n    if(!ans.scenes)return scenes();\n    if(!ans.about)return about();\n    finish();\n  }\n  function intro(){\n    var miss=SC.some(function(s){return !files[s.images[0]];});\n    if(miss){app.innerHTML='<h1>Pictures missing</h1><p>Media folder scenes must hold the three scene images (scene1_null.jpg, scene2_medium.jpg, scene3_high.jpg).</p>';return;}\n    page('<h1>Perceptions of an urban square</h1><p>You will see three computer-rendered versions of the same square in Madrid (Lavapiés Square). Please look at the scenes and answer five short questions about each of them, then a few questions about yourself.</p><p>It takes about 5 minutes. Your answers are anonymous and used only for research. The scenes show alcohol advertising and people drinking.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(q('consent').title)+'</label></div>','Start',function(){\n      if(!document.getElementById('ok').checked)return err('Please confirm to continue.');\n      send([SPSite.answer('consent',true)],this,function(){ans.intro=true;save('a',ans);next();});});\n  }\n  function grid(it){\n    var n=it.max-it.min+1,cols='66px repeat('+n+',minmax(0,1fr))',h='<div></div>';\n    for(var v=it.min;v<=it.max;v++)h+='<div class=\"h\">'+v+'</div>';\n    SC.forEach(function(s,i){h+='<div class=\"s\">'+esc(s.label)+'</div>';for(var v=it.min;v<=it.max;v++)h+='<label><input type=\"radio\" name=\"'+it.key+'_'+i+'\" value=\"'+v+'\" aria-label=\"'+esc(s.label)+' '+v+'\"></label>';});\n    return '<div class=\"grid\" style=\"grid-template-columns:'+cols+'\">'+h+'</div><div class=\"ends\"><span>'+it.min+' = '+esc(it.lo)+'</span><span>'+it.max+' = '+esc(it.hi)+'</span></div>';\n  }\n  function scenes(){\n    var strip='<div class=\"strip\">'+SC.map(function(s){var f=files[s.images[0]];return '<figure data-src=\"'+esc(f.url)+'\"><img alt=\"'+esc(s.label)+'\" src=\"'+esc(f.url)+'\"><figcaption>'+esc(s.label)+'</figcaption></figure>';}).join('')+'</div>';\n    var rows=ITEMS.map(function(it){return '<div class=\"it\" data-k=\"'+it.key+'\"><div class=\"x\">'+esc(it.key)+'. '+esc(it.text)+'</div>'+grid(it)+'</div>';}).join('');\n    page('<h1>'+esc(q('alcohol_scenes').title)+'</h1><p>Tap a scene to see it larger.</p>'+strip+'<div class=\"card\">'+rows+'</div>','Continue',function(){\n      var v=SC.map(function(){return {};}),miss=[];\n      ITEMS.forEach(function(it){var r=app.querySelector('.it[data-k=\"'+it.key+'\"]'),all=true;SC.forEach(function(s,i){var x=app.querySelector('input[name=\"'+it.key+'_'+i+'\"]:checked');if(x)v[i][it.key]=Number(x.value);else all=false;});if(all)r.classList.remove('miss');else{miss.push(r);r.classList.add('miss');}});\n      if(miss.length){err(miss.length+' question'+(miss.length>1?'s are':' is')+' not answered for every scene (marked in red).');miss[0].scrollIntoView({block:'center'});return;}\n      send(SC.map(function(s,i){return SPSite.answer('alcohol_scenes',v[i],{key:s.id,shown:[files[s.images[0]].name]});}),this,function(){ans.scenes=true;save('a',ans);next();});});\n    app.onchange=function(e){hideErr();var r=e.target.closest&&e.target.closest('.it');if(r)r.classList.remove('miss');};\n    app.querySelectorAll('.strip figure').forEach(function(f){f.onclick=function(){var z=document.getElementById('zoom');z.firstChild.src=f.getAttribute('data-src');z.style.display='flex';};});\n  }\n  document.getElementById('zoom').onclick=function(){this.style.display='none';};\n  var DEMO=['age','sex','live_madrid','children','education'];\n  function about(){\n    page('<h1>About you</h1><div class=\"card\">'+DEMO.map(function(n,k){var d=q(n);return '<div class=\"q\" data-n=\"'+n+'\"'+(k?'':' style=\"margin-top:0\"')+'><b>'+esc(d.title)+'</b>'+(d.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}).join('')+'</div>','Continue',function(){\n      var v={},miss=[];DEMO.forEach(function(n){var x=app.querySelector('input[name=\"'+n+'\"]:checked');var r=app.querySelector('.q[data-n=\"'+n+'\"]');if(x){v[n]=Number(x.value);r.classList.remove('miss');}else{miss.push(r);r.classList.add('miss');}});\n      if(miss.length){err('Please answer every question (marked in red).');miss[0].scrollIntoView({block:'center'});return;}\n      send(DEMO.map(function(n){return SPSite.answer(n,v[n]);}),this,function(){ans.about=true;save('a',ans);next();});});\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>In the original survey, 159 adults from the Madrid region rated these scenes. Median comfort fell from 9 in the scene without alcohol to 7 (medium exposure) and 6 (high exposure). With children present, median acceptance fell from 10 to 7 and 5. Most participants (48.4%) said the high-exposure scene looked most like the real Lavapiés Square.</p><p style=\"font-size:.82rem\">Scenes and questionnaire: Pastor, A., Sureda, X., Valiente, R., Badland, H., García-Dorado, M., &amp; Escobar, F. (2022). Using geovisualization tools to examine attitudes towards alcohol exposure in urban environments: A pilot study in Madrid, Spain. Int. J. Environ. Res. Public Health 19(15): 9192, doi:10.3390/ijerph19159192.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){if(x==='consent')ans.intro=false;else if(x==='alcohol_scenes')ans.scenes=false;else ans.about=false;});save('a',ans);next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    var SPEC;try{SPEC=JSON.parse(document.getElementById('sp-scheme').textContent).survey;}catch(e){SPEC={pages:[]};}\n    SPEC.pages.forEach(function(p){p.elements.forEach(function(e){var g=SPSite.getQuestion(e.name)||{};Q[e.name]={title:g.title||e.title,choices:(g.choices&&g.choices.length)?g.choices:e.choices};if(e.name==='alcohol_scenes'){SC=e.trials;ITEMS=e.items;}});});\n    (SPSite.getMedia('scenes')||[]).forEach(function(f){files[f.name]=f;});\n    var a=(ctx&&ctx.answers)||{};ans=load('a')||{};\n    ans.intro=a.consent===true;\n    ans.scenes=!!(a.alcohol_scenes&&a.alcohol_scenes.trials&&a.alcohol_scenes.trials.length>=SC.length);\n    ans.about=a.age!=null&&a.education!=null;\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T11:23:42.361Z",
+   "mediaFolders": [
+    "scenes"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T11:23:42.361Z"
+  },
+  "description": "Faithful replication of Pastor, Sureda, Valiente, Badland, García-Dorado & Escobar (2022), IJERPH 19(15): 9192: respondents see three 3D-rendered scenes of Lavapiés Square, Madrid, with null, medium and high alcohol exposure and score each on presence of alcohol elements, resemblance to the real square, comfort, and acceptance with and without children.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2022-pastor-alcohol/scenes/scene1_null__1104c4e4-e8dd-4c2a-9c69-28001d8b1545.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-pastor-alcohol/scenes/scene1_null__1104c4e4-e8dd-4c2a-9c69-28001d8b1545.jpg",
+   "name": "scene1_null.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2022-pastor-alcohol/scenes/scene1_null__1104c4e4-e8dd-4c2a-9c69-28001d8b1545.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 103060,
+   "uploaded_bytes": 103060,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-pastor-alcohol/scenes/scene2_medium__b29d06fd-9542-49aa-9c62-a021220ae366.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-pastor-alcohol/scenes/scene2_medium__b29d06fd-9542-49aa-9c62-a021220ae366.jpg",
+   "name": "scene2_medium.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2022-pastor-alcohol/scenes/scene2_medium__b29d06fd-9542-49aa-9c62-a021220ae366.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 113421,
+   "uploaded_bytes": 113421,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-pastor-alcohol/scenes/scene3_high__8eba6caa-b90c-4b6d-9e03-00d34c37c191.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-pastor-alcohol/scenes/scene3_high__8eba6caa-b90c-4b6d-9e03-00d34c37c191.jpg",
+   "name": "scene3_high.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2022-pastor-alcohol/scenes/scene3_high__8eba6caa-b90c-4b6d-9e03-00d34c37c191.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 112890,
+   "uploaded_bytes": 112890,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Using Geovisualization Tools to Examine Attitudes towards Alcohol Exposure in Urban Environments: A Pilot Study in Madrid, Spain",
+  "authors": [
+   "Pastor A.",
+   "Sureda X.",
+   "Valiente R.",
+   "Badland H.",
+   "García-Dorado M.",
+   "Escobar F."
+  ],
+  "year": 2022,
+  "venue": "International Journal of Environmental Research and Public Health",
+  "doi": "10.3390/ijerph19159192",
+  "url": "https://doi.org/10.3390/ijerph19159192"
+ }
+}

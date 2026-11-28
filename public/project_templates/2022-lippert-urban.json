@@ -1,0 +1,380 @@
+{
+ "id": "2022-lippert-urban",
+ "name": "Urban Forest Types in Berlin: Attitudes and Emotions",
+ "description": "Faithful replication of Lippert, Kowarik & Straka (2022), Land 11:701. Participants see four photographs of urban forest types in the Berlin region, one per \"four natures\" type: (1) a native beech remnant, (2) a pine plantation, (3) a park with non-native Robinia, and (4) a novel wild woodland with the non-native tree of heaven (Ailanthus). Each photo comes with the paper's description text. For each type they rate three attitude items (beautiful, worthy of protection, interesting) and four bipolar emotion pairs (negative–positive, dislike–like, uncomfortable–comfortable, unpleasant–pleasant), all on a −2..2 scale. They then answer three place-attachment items about Berlin and give demographics. Analysis as in the paper: mean attitude and emotion scores per type, Kruskal–Wallis tests with Bonferroni-corrected pairwise Wilcoxon tests, and GLMs on age, gender, place of growing up and place attachment. Stimuli: the four photographs of the paper's Figure 1 (photos by I. Kowarik, edited by the authors; CC BY 4.0), with the a–d panel labels cropped off. The leaf inserts are part of the stimuli and are kept. Credit: doi:10.3390/land11050701. The template is removed if the authors object. Differences from the original study: (1) The survey is in English; the original was in German and the wording follows the authors' translation in Table A1. (2) Attitude items are shown before emotion pairs, as described in Section 3.3.3; Table A1 lists the emotions first. (3) Questions on parents' and grandparents' countries of birth and on school and vocational education are omitted because they are not analysed in the paper. Country of birth and home language keep a single \"other\" option with no free text. (4) The other questionnaire items that the authors measured but did not report are not included. (5) The photos are slightly cropped at the bottom to remove the panel labels.",
+ "author": "Lippert, Kowarik & Straka",
+ "year": "2022",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "source:paper",
+  "concept:beauty",
+  "concept:emotion",
+  "concept:sense_of_place",
+  "scene:nature",
+  "modality:scene_photo",
+  "task:rating",
+  "task:questionnaire",
+  "setting:online",
+  "participants:locals",
+  "sample:100to300",
+  "country:Germany",
+  "city:Berlin"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/land11050701",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T04:23:46.772+00:00",
+ "updatedAt": "2026-11-28T10:32:35.62+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I live in Berlin or Brandenburg and agree to take part voluntarily.",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "forests",
+    "elements": [
+     {
+      "name": "forest_rating",
+      "type": "custom",
+      "items": [
+       {
+        "hi": "agree completely",
+        "lo": "do not agree at all",
+        "key": "beautiful",
+        "text": "I find [X] beautiful.",
+        "group": "att"
+       },
+       {
+        "hi": "agree completely",
+        "lo": "do not agree at all",
+        "key": "worthy_of_protection",
+        "text": "I find [X] worthy of protection.",
+        "group": "att"
+       },
+       {
+        "hi": "agree completely",
+        "lo": "do not agree at all",
+        "key": "interesting",
+        "text": "I find [X] interesting.",
+        "group": "att"
+       },
+       {
+        "hi": "positive",
+        "lo": "negative",
+        "key": "negative_positive",
+        "text": "",
+        "group": "emo"
+       },
+       {
+        "hi": "I like",
+        "lo": "I don't like",
+        "key": "dislike_like",
+        "text": "",
+        "group": "emo"
+       },
+       {
+        "hi": "comfortable",
+        "lo": "uncomfortable",
+        "key": "uncomfortable_comfortable",
+        "text": "",
+        "group": "emo"
+       },
+       {
+        "hi": "pleasant",
+        "lo": "unpleasant",
+        "key": "unpleasant_pleasant",
+        "text": "",
+        "group": "emo"
+       }
+      ],
+      "title": "Attitudes and emotions towards four urban forest types",
+      "trials": [
+       {
+        "id": "nature1_beech",
+        "text": "Here you can see a stand of native beech trees that has existed in Berlin for a very long time. This woodland can develop largely undisturbed.",
+        "image": "nature1_beech.jpg",
+        "label": "stand of native beech trees"
+       },
+       {
+        "id": "nature2_pine",
+        "text": "Here you can see a stand of lesser native trees and shrubs in Berlin, planted and maintained by foresters.",
+        "image": "nature2_pine.jpg",
+        "label": "woodland planted and maintained by foresters"
+       },
+       {
+        "id": "nature3_park",
+        "text": "Here you can see a stand of woody plants with many introduced trees and shrubs in Berlin. Introduced means that these plants do not normally occur naturally in this environment and have been brought here by humans, for example. This stand of trees is planted, shaped and much cared for by gardeners, for example.",
+        "image": "nature3_park.jpg",
+        "label": "tree stand planted, landscaped and maintained extensively by gardeners"
+       },
+       {
+        "id": "nature4_wild",
+        "text": "Here you can see a stand of trees with the introduced tree of heaven, which has only existed in Berlin for a short time and which is newly emerging on many abandoned areas in the city. This woodland can develop largely undisturbed.",
+        "image": "nature4_wild.jpg",
+        "label": "woodland with the introduced tree of heaven"
+       }
+      ],
+      "isRequired": false,
+      "description": "Four photographs of forest types in the Berlin region (four natures approach), shown in the paper's order: nature 1 native beech remnant, nature 2 silvicultural pine plantation, nature 3 park with non-native Robinia, nature 4 novel wild woodland with non-native Ailanthus (tree of heaven). Each photo has the paper's description text above it. Per type: three attitude items (beautiful, worthy of protection, interesting) and four bipolar emotion (valence) pairs, all −2..2. Value: {beautiful, worthy_of_protection, interesting, negative_positive, dislike_like, uncomfortable_comfortable, unpleasant_pleasant}. Analysis as in the paper: attitude score = mean of 3 items, emotion score = mean of 4 pairs; Kruskal–Wallis across the four types with Bonferroni-corrected pairwise Wilcoxon tests; GLMs of each score on age, gender, place of growing up and place attachment."
+     }
+    ]
+   },
+   {
+    "name": "berlin",
+    "elements": [
+     {
+      "name": "place_attachment",
+      "type": "custom",
+      "items": [
+       {
+        "hi": "agree completely",
+        "lo": "do not agree at all",
+        "key": "no_other_city",
+        "text": "No other city is comparable to Berlin."
+       },
+       {
+        "hi": "agree completely",
+        "lo": "do not agree at all",
+        "key": "best_city",
+        "text": "Berlin is the best city for what I like to do."
+       },
+       {
+        "hi": "agree completely",
+        "lo": "do not agree at all",
+        "key": "more_pleasure",
+        "text": "I get more pleasure from living in Berlin than in any other city."
+       }
+      ],
+      "title": "How strongly do you agree with the following statements about Berlin?",
+      "isRequired": true,
+      "description": "Place attachment (Williams & Vaske), three items −2..2; the paper uses their mean (Cronbach's alpha 0.78). Value: {no_other_city, best_city, more_pleasure}."
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "max": 100,
+      "min": 16,
+      "name": "age",
+      "type": "text",
+      "title": "Your age (years)",
+      "inputType": "number"
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Your gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": 1
+       },
+       {
+        "text": "Male",
+        "value": 2
+       },
+       {
+        "text": "Diverse",
+        "value": 3
+       },
+       {
+        "text": "No answer",
+        "value": 4
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "grew_up",
+      "type": "radiogroup",
+      "title": "Where did you grow up?",
+      "choices": [
+       {
+        "text": "In the countryside",
+        "value": 1
+       },
+       {
+        "text": "In the city",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "country_of_birth",
+      "type": "radiogroup",
+      "title": "Your country of birth",
+      "choices": [
+       {
+        "text": "Germany",
+        "value": 1
+       },
+       {
+        "text": "Other country",
+        "value": 2
+       },
+       {
+        "text": "No answer",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "home_language",
+      "type": "radiogroup",
+      "title": "Which language do you speak most at home?",
+      "choices": [
+       {
+        "text": "German",
+        "value": 1
+       },
+       {
+        "text": "Other language",
+        "value": 2
+       },
+       {
+        "text": "No answer",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "garden",
+      "type": "radiogroup",
+      "title": "Do you own a garden?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": 1
+       },
+       {
+        "text": "No",
+        "value": 2
+       },
+       {
+        "text": "No answer",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "postal_code",
+      "type": "text",
+      "title": "What is your current place of residence? Postal code (optional)"
+     }
+    ]
+   }
+  ],
+  "title": "Urban Forest Types in Berlin: Attitudes and Emotions",
+  "locale": "en",
+  "spSite": {
+   "id": "site-62a06216c409b584",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Berlin Urban Forests</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Urban Forest Types in Berlin: Attitudes and Emotions\",\n  \"description\": \"Faithful replication of Lippert, Kowarik & Straka (2022), Land 11:701: rate four photographs of urban forest types in Berlin (native beech remnant, pine plantation, Robinia park, novel Ailanthus wild woodland) on attitudes and emotions.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"forests\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"boolean\",\n      \"name\": \"consent\",\n      \"title\": \"I live in Berlin or Brandenburg and agree to take part voluntarily.\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"forests\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"forest_rating\",\n      \"title\": \"Attitudes and emotions towards four urban forest types\",\n      \"isRequired\": false,\n      \"description\": \"Four photographs of forest types in the Berlin region (four natures approach), shown in the paper's order: nature 1 native beech remnant, nature 2 silvicultural pine plantation, nature 3 park with non-native Robinia, nature 4 novel wild woodland with non-native Ailanthus (tree of heaven). Each photo has the paper's description text above it. Per type: three attitude items (beautiful, worthy of protection, interesting) and four bipolar emotion (valence) pairs, all −2..2. Value: {beautiful, worthy_of_protection, interesting, negative_positive, dislike_like, uncomfortable_comfortable, unpleasant_pleasant}. Analysis as in the paper: attitude score = mean of 3 items, emotion score = mean of 4 pairs; Kruskal–Wallis across the four types with Bonferroni-corrected pairwise Wilcoxon tests; GLMs of each score on age, gender, place of growing up and place attachment.\",\n      \"items\": [\n       {\n        \"key\": \"beautiful\",\n        \"text\": \"I find [X] beautiful.\",\n        \"lo\": \"do not agree at all\",\n        \"hi\": \"agree completely\",\n        \"group\": \"att\"\n       },\n       {\n        \"key\": \"worthy_of_protection\",\n        \"text\": \"I find [X] worthy of protection.\",\n        \"lo\": \"do not agree at all\",\n        \"hi\": \"agree completely\",\n        \"group\": \"att\"\n       },\n       {\n        \"key\": \"interesting\",\n        \"text\": \"I find [X] interesting.\",\n        \"lo\": \"do not agree at all\",\n        \"hi\": \"agree completely\",\n        \"group\": \"att\"\n       },\n       {\n        \"key\": \"negative_positive\",\n        \"text\": \"\",\n        \"lo\": \"negative\",\n        \"hi\": \"positive\",\n        \"group\": \"emo\"\n       },\n       {\n        \"key\": \"dislike_like\",\n        \"text\": \"\",\n        \"lo\": \"I don't like\",\n        \"hi\": \"I like\",\n        \"group\": \"emo\"\n       },\n       {\n        \"key\": \"uncomfortable_comfortable\",\n        \"text\": \"\",\n        \"lo\": \"uncomfortable\",\n        \"hi\": \"comfortable\",\n        \"group\": \"emo\"\n       },\n       {\n        \"key\": \"unpleasant_pleasant\",\n        \"text\": \"\",\n        \"lo\": \"unpleasant\",\n        \"hi\": \"pleasant\",\n        \"group\": \"emo\"\n       }\n      ],\n      \"trials\": [\n       {\n        \"id\": \"nature1_beech\",\n        \"label\": \"stand of native beech trees\",\n        \"text\": \"Here you can see a stand of native beech trees that has existed in Berlin for a very long time. This woodland can develop largely undisturbed.\",\n        \"image\": \"nature1_beech.jpg\"\n       },\n       {\n        \"id\": \"nature2_pine\",\n        \"label\": \"woodland planted and maintained by foresters\",\n        \"text\": \"Here you can see a stand of lesser native trees and shrubs in Berlin, planted and maintained by foresters.\",\n        \"image\": \"nature2_pine.jpg\"\n       },\n       {\n        \"id\": \"nature3_park\",\n        \"label\": \"tree stand planted, landscaped and maintained extensively by gardeners\",\n        \"text\": \"Here you can see a stand of woody plants with many introduced trees and shrubs in Berlin. Introduced means that these plants do not normally occur naturally in this environment and have been brought here by humans, for example. This stand of trees is planted, shaped and much cared for by gardeners, for example.\",\n        \"image\": \"nature3_park.jpg\"\n       },\n       {\n        \"id\": \"nature4_wild\",\n        \"label\": \"woodland with the introduced tree of heaven\",\n        \"text\": \"Here you can see a stand of trees with the introduced tree of heaven, which has only existed in Berlin for a short time and which is newly emerging on many abandoned areas in the city. This woodland can develop largely undisturbed.\",\n        \"image\": \"nature4_wild.jpg\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"berlin\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"place_attachment\",\n      \"title\": \"How strongly do you agree with the following statements about Berlin?\",\n      \"isRequired\": true,\n      \"description\": \"Place attachment (Williams & Vaske), three items −2..2; the paper uses their mean (Cronbach's alpha 0.78). Value: {no_other_city, best_city, more_pleasure}.\",\n      \"items\": [\n       {\n        \"key\": \"no_other_city\",\n        \"text\": \"No other city is comparable to Berlin.\",\n        \"lo\": \"do not agree at all\",\n        \"hi\": \"agree completely\"\n       },\n       {\n        \"key\": \"best_city\",\n        \"text\": \"Berlin is the best city for what I like to do.\",\n        \"lo\": \"do not agree at all\",\n        \"hi\": \"agree completely\"\n       },\n       {\n        \"key\": \"more_pleasure\",\n        \"text\": \"I get more pleasure from living in Berlin than in any other city.\",\n        \"lo\": \"do not agree at all\",\n        \"hi\": \"agree completely\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"Your age (years)\",\n      \"min\": 16,\n      \"max\": 100\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Your gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Diverse\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"No answer\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"grew_up\",\n      \"title\": \"Where did you grow up?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"In the countryside\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"In the city\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"country_of_birth\",\n      \"title\": \"Your country of birth\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Germany\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Other country\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"No answer\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"home_language\",\n      \"title\": \"Which language do you speak most at home?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"German\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Other language\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"No answer\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"garden\",\n      \"title\": \"Do you own a garden?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"No\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"No answer\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"postal_code\",\n      \"title\": \"What is your current place of residence? Postal code (optional)\"\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#eceee8;--card:#fff;--ink:#22261f;--muted:#5f675a;--accent:#2f5d3a;--accent-ink:#fff;--line:#d9ddd2;--warn:#b3261e;--miss:#fdecea}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:820px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.3rem;margin:0 0 10px}\np{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q>b{display:block;margin-bottom:4px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer;background:var(--card)}\n.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}\n.t{color:var(--muted);font-size:.9rem}\n.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;flex:1;margin-left:12px;max-width:260px}.bar>i{display:block;height:100%;background:var(--accent)}\n.pic{background:#e3e6df;border-radius:12px;overflow:hidden}.pic img{width:100%;max-height:min(50vh,460px);object-fit:contain;display:block}\n.it{padding:10px 6px;border-top:1px solid var(--line);border-radius:8px}\n.it .x{font-weight:500;margin-bottom:6px}\n.sc{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}.sub{margin:16px 0 4px;font-weight:600;color:var(--ink)}.desc{color:var(--ink);margin:0 0 10px}input.tx{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%;max-width:240px}\n.sc label{display:flex;flex-direction:column;align-items:center;font-size:.85rem;color:var(--muted);cursor:pointer;padding:2px 0}\n.sc input{width:20px;height:20px;margin:0 0 2px}\n.ends{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:2px}\n.it.miss{background:var(--miss)}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:820px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs: Lippert, Kowarik &amp; Straka (2022), Land 11:701, Figure 1, doi:10.3390/land11050701 (CC BY 4.0; photos by I. Kowarik, edited by the authors; a–d labels cropped). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='berlinforest2022:';\n  var app=document.getElementById('app'), Q={}, E={}, files={}, ans={}, TR=[], ITEMS=[], PA=[], done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='visible';}}\n  function hideErr(){var e=app.querySelector('.err');if(e)e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function q(n){return Q[n]||{};}\n  function page(html,btn,cb){app.innerHTML=html+'<div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">'+esc(btn)+'</button></div><div class=\"err\"></div>';document.getElementById('go').onclick=cb;\n    app.onchange=function(e){hideErr();var r=e.target.closest&&e.target.closest('.it');if(r)r.classList.remove('miss');};}\n  function send(list,b,fin){b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}fin();});}\n  function row(it,text){return '<div class=\"it\" data-k=\"'+it.key+'\">'+(text?'<div class=\"x\">'+esc(text)+'</div>':'')+'<div class=\"sc\" role=\"radiogroup\" aria-label=\"'+esc(text||(it.lo+' – '+it.hi))+'\">'+[-2,-1,0,1,2].map(function(v){return '<label><input type=\"radio\" name=\"'+it.key+'\" value=\"'+v+'\">'+(v>0?'+'+v:(v<0?'−'+(-v):v))+'</label>';}).join('')+'</div><div class=\"ends\"><span>−2 = '+esc(it.lo)+'</span><span>+2 = '+esc(it.hi)+'</span></div></div>';}\n  function collect(items){var v={},miss=[];items.forEach(function(it){var x=app.querySelector('input[name=\"'+it.key+'\"]:checked');var r=app.querySelector('.it[data-k=\"'+it.key+'\"]');if(x){v[it.key]=Number(x.value);r.classList.remove('miss');}else{miss.push(r);r.classList.add('miss');}});\n    if(miss.length){err(miss.length+' question'+(miss.length>1?'s are':' is')+' not answered yet (marked in red).');miss[0].scrollIntoView({block:'center'});return null;}return v;}\n  function next(){\n    window.scrollTo(0,0);\n    if(!ans.intro)return intro();\n    for(var i=0;i<TR.length;i++)if(!done[TR[i].id])return scene(TR[i],i);\n    if(!ans.pa)return attach();\n    if(!ans.about)return about();\n    finish();\n  }\n  function intro(){\n    if(TR.some(function(t){return !files[t.image];})){app.innerHTML='<h1>Pictures missing</h1><p>Media folder forests must hold the four forest photographs (nature1_beech.jpg … nature4_wild.jpg).</p>';return;}\n    page('<h1>Woodlands in Berlin</h1><p>In this section we present you successive pictures of areas densely overgrown with trees and shrubs, which occur, for example, in Berlin. We are interested to know how you like different types of woodlands in Berlin.</p><p>It takes about 10 minutes. Your answers are anonymous and used only for research.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(q('consent').title)+'</label></div>','Start',function(){\n      if(!document.getElementById('ok').checked)return err('Please confirm to continue.');\n      send([SPSite.answer('consent',true)],this,function(){ans.intro=true;save('a',ans);next();});});\n  }\n  function scene(t,i){\n    var f=files[t.image];\n    var att=ITEMS.filter(function(it){return it.group==='att';}), emo=ITEMS.filter(function(it){return it.group==='emo';});\n    page('<div class=\"top\"><span class=\"t\">Woodland '+(i+1)+' of '+TR.length+'</span><div class=\"bar\"><i style=\"width:'+(100*i/TR.length)+'%\"></i></div></div><div class=\"card\"><p class=\"desc\">'+esc(t.text)+'</p><div class=\"pic\"><img alt=\"Photograph: '+esc(t.label)+', Berlin\" src=\"'+esc(f.url)+'\"></div>'\n      +'<div class=\"sub\">To what extent do you agree with the following statements? Please tick on a scale from −2 to 2.</div>'+att.map(function(it){return row(it,it.text.replace('[X]','the '+t.label));}).join('')\n      +'<div class=\"sub\">On a scale of −2 to 2, what are your feelings when you see this photo with the '+esc(t.label)+'?</div>'+emo.map(function(it){return row(it,'');}).join('')+'</div>',i===TR.length-1?'Continue':'Next woodland',function(){\n      var v=collect(ITEMS);if(!v)return;\n      send([SPSite.answer('forest_rating',v,{key:t.id,shown:[f.name]})],this,function(){done[t.id]=true;next();});});\n  }\n  function attach(){\n    var d=q('place_attachment');\n    page('<h1>About Berlin</h1><div class=\"card\"><div class=\"sub\" style=\"margin-top:0\">'+esc(d.title)+'</div>'+PA.map(function(it){return row(it,it.text);}).join('')+'</div>','Continue',function(){\n      var v=collect(PA);if(!v)return;\n      send([SPSite.answer('place_attachment',v)],this,function(){ans.pa=true;save('a',ans);next();});});\n  }\n  function about(){\n    var names=['age','gender','grew_up','country_of_birth','home_language','garden','postal_code'];\n    var h=names.map(function(n){var e=E[n]||{},d=q(n);\n      if(e.type==='text')return '<div class=\"q it\" data-k=\"'+n+'\"><b>'+esc(d.title)+'</b><input class=\"tx\" id=\"f_'+n+'\" '+(e.inputType==='number'?'type=\"number\" inputmode=\"numeric\" min=\"'+e.min+'\" max=\"'+e.max+'\"':'type=\"text\"')+'></div>';\n      return '<div class=\"q it\" data-k=\"'+n+'\"><b>'+esc(d.title)+'</b>'+(d.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}).join('');\n    page('<h1>About you</h1><p>Please provide information about yourself on this page. Age and postal code may be left empty.</p><div class=\"card\">'+h+'</div>','Finish',function(){\n      var L=[],miss=[];\n      names.forEach(function(n){var e=E[n]||{},r=app.querySelector('.it[data-k=\"'+n+'\"]');\n        if(e.type==='text'){var s=document.getElementById('f_'+n).value.trim();if(!s)return;\n          if(e.inputType==='number'){var x=Number(s);if(!(x>=e.min&&x<=e.max)){miss.push(r);r.classList.add('miss');return;}L.push([n,x]);}else L.push([n,s]);return;}\n        var c=app.querySelector('input[name=\"'+n+'\"]:checked');if(!c){miss.push(r);r.classList.add('miss');}else L.push([n,Number(c.value)]);});\n      if(miss.length){err('Please answer the questions marked in red (age must be a number between 16 and 100).');miss[0].scrollIntoView({block:'center'});return;}\n      send(L.map(function(p){return SPSite.answer(p[0],p[1]);}),this,function(){ans.about=true;save('a',ans);next();});});\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>In the original study, 299 residents of Berlin and Brandenburg answered this survey in 2020. They were positive towards all four woodland types, including the novel wild woodland with the introduced tree of heaven. Ratings were most positive for the native beech forest and least positive for the wild woodland; non-native trees did not evoke negative responses.</p><p style=\"font-size:.82rem\">Photographs and method: Lippert, H., Kowarik, I., &amp; Straka, T. M. (2022). People’s Attitudes and Emotions towards Different Urban Forest Types in the Berlin Region, Germany. Land 11:701, doi:10.3390/land11050701.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){if(x==='consent')ans.intro=false;else if(x==='forest_rating')done={};else if(x==='place_attachment')ans.pa=false;else ans.about=false;});save('a',ans);next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    var SPEC;try{SPEC=JSON.parse(document.getElementById('sp-scheme').textContent).survey;}catch(e){SPEC={pages:[]};}\n    SPEC.pages.forEach(function(p){p.elements.forEach(function(e){var g=SPSite.getQuestion(e.name)||{};E[e.name]=e;Q[e.name]={title:g.title||e.title,choices:(g.choices&&g.choices.length)?g.choices:e.choices};if(e.name==='forest_rating'){TR=e.trials;ITEMS=e.items;}if(e.name==='place_attachment')PA=e.items;});});\n    (SPSite.getMedia('forests')||[]).forEach(function(f){files[f.name]=f;});\n    var a=(ctx&&ctx.answers)||{};ans=load('a')||{};\n    ((a.forest_rating&&a.forest_rating.trials)||[]).forEach(function(t){if(t.key)done[t.key]=true;});\n    ans.intro=a.consent===true;ans.pa=a.place_attachment!=null;ans.about=a.gender!=null;\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T04:23:21.986Z",
+   "mediaFolders": [
+    "forests"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T04:23:21.986Z"
+  },
+  "description": "Faithful replication of Lippert, Kowarik & Straka (2022), Land 11:701: rate four photographs of urban forest types in Berlin (native beech remnant, pine plantation, Robinia park, novel Ailanthus wild woodland) on attitudes and emotions.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2022-lippert-urban/forests/nature1_beech__8218bbb2-c7c7-475d-81f2-34e078231628.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lippert-urban/forests/nature1_beech__8218bbb2-c7c7-475d-81f2-34e078231628.jpg",
+   "name": "nature1_beech.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lippert-urban/forests/nature1_beech__8218bbb2-c7c7-475d-81f2-34e078231628.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 243360,
+   "uploaded_bytes": 243360,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-lippert-urban/forests/nature2_pine__a4171a9b-fb2d-488d-8c74-f2395585e104.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lippert-urban/forests/nature2_pine__a4171a9b-fb2d-488d-8c74-f2395585e104.jpg",
+   "name": "nature2_pine.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lippert-urban/forests/nature2_pine__a4171a9b-fb2d-488d-8c74-f2395585e104.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 288667,
+   "uploaded_bytes": 288667,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-lippert-urban/forests/nature3_park__a113c28e-2be4-4af7-adc9-dd38d087e925.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lippert-urban/forests/nature3_park__a113c28e-2be4-4af7-adc9-dd38d087e925.jpg",
+   "name": "nature3_park.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lippert-urban/forests/nature3_park__a113c28e-2be4-4af7-adc9-dd38d087e925.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 220101,
+   "uploaded_bytes": 220101,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-lippert-urban/forests/nature4_wild__c79109a8-30da-42ed-ad5c-534388a3e76c.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lippert-urban/forests/nature4_wild__c79109a8-30da-42ed-ad5c-534388a3e76c.jpg",
+   "name": "nature4_wild.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lippert-urban/forests/nature4_wild__c79109a8-30da-42ed-ad5c-534388a3e76c.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 249122,
+   "uploaded_bytes": 249122,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "People’s Attitudes and Emotions towards Different Urban Forest Types in the Berlin Region, Germany",
+  "authors": [
+   "Henry Lippert",
+   "Ingo Kowarik",
+   "Tanja M. Straka"
+  ],
+  "year": 2022,
+  "venue": "Land",
+  "doi": "10.3390/land11050701",
+  "url": "https://doi.org/10.3390/land11050701"
+ }
+}

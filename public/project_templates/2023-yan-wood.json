@@ -1,0 +1,456 @@
+{
+ "id": "2023-yan-wood",
+ "name": "Wood Coverage in Activity Rooms for Older Adults: Semantic Differential",
+ "description": "Faithful replication of Yan & Guo (2023), Buildings 13:2086. Participants first see the activity room of an old-age building without wood (the paper's control picture), then the six scene sets of the paper's Table 1 in random order: 15%, 30%, 45%, 60% and 75% wall wood coverage (three layouts each) and 90% (two layouts). Each set is rated on the paper's nine semantic differential pairs (succinct–sophisticated, quiet–impetuous, natural–artificial, familiar–offish, warm–cool, bright–dim, secure–insecure, discernible–indiscernible, aesthetic–drab), 7 levels from +3 to −3 with the first, positive adjective at +3. Gender and age are asked first. Stimuli: the paper's own 18 renderings (SketchUp 2019 + Enscape 2.0), cropped from Table 1 of the CC BY 4.0 article; credited on the page and removed if the authors object. Differences from the original study: (1) the paper showed each set for 5 minutes on a hemispherical screen in a lab, after 15 minutes of rest and an activity-room sound recording, and split the six sets over three sessions at least 24 hours apart; here all sets are rated in one online session and viewing time is free (recorded); (2) heart rate and blood pressure are not measured; (3) the images come from the published table (about 485 × 255 px); (4) the paper does not say which end of each pair is +3; the template puts the positive adjective (listed first in the paper) at +3.",
+ "author": "Yan, Di; Guo, Qishen",
+ "year": "2023",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "source:paper",
+  "concept:materials",
+  "concept:naturalness",
+  "concept:light",
+  "concept:safety",
+  "concept:beauty",
+  "scene:indoor",
+  "modality:rendered",
+  "task:rating",
+  "setting:vr",
+  "participants:specific",
+  "sample:lt100"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/buildings13082086",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T05:37:58.338+00:00",
+ "updatedAt": "2026-11-28T10:32:39.925+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part voluntarily and know I can stop at any time.",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Male",
+        "value": 1
+       },
+       {
+        "text": "Female",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "age",
+      "type": "text",
+      "title": "Age (years)",
+      "inputType": "number",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "sets",
+    "elements": [
+     {
+      "name": "wood_sd",
+      "type": "custom",
+      "items": [
+       {
+        "key": "succinct",
+        "neg": "Sophisticated",
+        "pos": "Succinct"
+       },
+       {
+        "key": "quiet",
+        "neg": "Impetuous",
+        "pos": "Quiet"
+       },
+       {
+        "key": "natural",
+        "neg": "Artificial",
+        "pos": "Natural"
+       },
+       {
+        "key": "familiar",
+        "neg": "Offish",
+        "pos": "Familiar"
+       },
+       {
+        "key": "warm",
+        "neg": "Cool",
+        "pos": "Warm"
+       },
+       {
+        "key": "bright",
+        "neg": "Dim",
+        "pos": "Bright"
+       },
+       {
+        "key": "secure",
+        "neg": "Insecure",
+        "pos": "Secure"
+       },
+       {
+        "key": "discernible",
+        "neg": "Indiscernible",
+        "pos": "Discernible"
+       },
+       {
+        "key": "aesthetic",
+        "neg": "Drab",
+        "pos": "Aesthetic"
+       }
+      ],
+      "title": "Semantic differential rating of each wood-coverage scene set",
+      "trials": [
+       {
+        "id": "wood15",
+        "label": "15% wall wood coverage",
+        "images": [
+         "test01_wood15.png",
+         "test02_wood15.png",
+         "test03_wood15.png"
+        ],
+        "coverage": 15
+       },
+       {
+        "id": "wood30",
+        "label": "30% wall wood coverage",
+        "images": [
+         "test04_wood30.png",
+         "test05_wood30.png",
+         "test06_wood30.png"
+        ],
+        "coverage": 30
+       },
+       {
+        "id": "wood45",
+        "label": "45% wall wood coverage",
+        "images": [
+         "test07_wood45.png",
+         "test08_wood45.png",
+         "test09_wood45.png"
+        ],
+        "coverage": 45
+       },
+       {
+        "id": "wood60",
+        "label": "60% wall wood coverage",
+        "images": [
+         "test10_wood60.png",
+         "test11_wood60.png",
+         "test12_wood60.png"
+        ],
+        "coverage": 60
+       },
+       {
+        "id": "wood75",
+        "label": "75% wall wood coverage",
+        "images": [
+         "test13_wood75.png",
+         "test14_wood75.png",
+         "test15_wood75.png"
+        ],
+        "coverage": 75
+       },
+       {
+        "id": "wood90",
+        "label": "90% wall wood coverage",
+        "images": [
+         "test16_wood90.png",
+         "test17_wood90.png"
+        ],
+        "coverage": 90
+       }
+      ],
+      "control": "control_0.png",
+      "isRequired": false,
+      "description": "The control room without wood (test 18, control_0.png) is shown first as the reference. Then the six scene sets of the paper's Table 1 are shown in random order: 15%, 30%, 45%, 60% and 75% wall wood coverage (three layouts each) and 90% (two layouts), rendered in SketchUp 2019 + Enscape 2.0 as an elderly activity room. Each set is rated on nine semantic differential pairs, 7 levels from +3 (first adjective, positive) to −3 (second adjective): succinct–sophisticated, quiet–impetuous, natural–artificial, familiar–offish, warm–cool, bright–dim, secure–insecure, discernible–indiscernible, aesthetic–drab. Value: {succinct, quiet, natural, familiar, warm, bright, secure, discernible, aesthetic, view_ms}. Analysis as in the paper: mean score per pair and overall per coverage level (paper: overall evaluation highest at 30%), one-way ANOVA across coverage levels."
+     }
+    ]
+   }
+  ],
+  "title": "Wall Wood Coverage in Activity Rooms for Older Adults",
+  "locale": "en",
+  "spSite": {
+   "id": "site-ce46b11188174aa1",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Wood in Activity Rooms</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Wall Wood Coverage in Activity Rooms for Older Adults\",\n  \"description\": \"Faithful replication of Yan & Guo (2023), Buildings 13:2086: older adults look at rendered activity rooms of an old-age building with 0–90% of the walls covered in wood and rate each wood-coverage level on nine semantic differential pairs.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"rooms\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"boolean\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part voluntarily and know I can stop at any time.\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Female\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"Age (years)\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"sets\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"wood_sd\",\n      \"title\": \"Semantic differential rating of each wood-coverage scene set\",\n      \"isRequired\": false,\n      \"description\": \"The control room without wood (test 18, control_0.png) is shown first as the reference. Then the six scene sets of the paper's Table 1 are shown in random order: 15%, 30%, 45%, 60% and 75% wall wood coverage (three layouts each) and 90% (two layouts), rendered in SketchUp 2019 + Enscape 2.0 as an elderly activity room. Each set is rated on nine semantic differential pairs, 7 levels from +3 (first adjective, positive) to −3 (second adjective): succinct–sophisticated, quiet–impetuous, natural–artificial, familiar–offish, warm–cool, bright–dim, secure–insecure, discernible–indiscernible, aesthetic–drab. Value: {succinct, quiet, natural, familiar, warm, bright, secure, discernible, aesthetic, view_ms}. Analysis as in the paper: mean score per pair and overall per coverage level (paper: overall evaluation highest at 30%), one-way ANOVA across coverage levels.\",\n      \"items\": [\n       {\n        \"key\": \"succinct\",\n        \"pos\": \"Succinct\",\n        \"neg\": \"Sophisticated\"\n       },\n       {\n        \"key\": \"quiet\",\n        \"pos\": \"Quiet\",\n        \"neg\": \"Impetuous\"\n       },\n       {\n        \"key\": \"natural\",\n        \"pos\": \"Natural\",\n        \"neg\": \"Artificial\"\n       },\n       {\n        \"key\": \"familiar\",\n        \"pos\": \"Familiar\",\n        \"neg\": \"Offish\"\n       },\n       {\n        \"key\": \"warm\",\n        \"pos\": \"Warm\",\n        \"neg\": \"Cool\"\n       },\n       {\n        \"key\": \"bright\",\n        \"pos\": \"Bright\",\n        \"neg\": \"Dim\"\n       },\n       {\n        \"key\": \"secure\",\n        \"pos\": \"Secure\",\n        \"neg\": \"Insecure\"\n       },\n       {\n        \"key\": \"discernible\",\n        \"pos\": \"Discernible\",\n        \"neg\": \"Indiscernible\"\n       },\n       {\n        \"key\": \"aesthetic\",\n        \"pos\": \"Aesthetic\",\n        \"neg\": \"Drab\"\n       }\n      ],\n      \"control\": \"control_0.png\",\n      \"trials\": [\n       {\n        \"id\": \"wood15\",\n        \"label\": \"15% wall wood coverage\",\n        \"coverage\": 15,\n        \"images\": [\n         \"test01_wood15.png\",\n         \"test02_wood15.png\",\n         \"test03_wood15.png\"\n        ]\n       },\n       {\n        \"id\": \"wood30\",\n        \"label\": \"30% wall wood coverage\",\n        \"coverage\": 30,\n        \"images\": [\n         \"test04_wood30.png\",\n         \"test05_wood30.png\",\n         \"test06_wood30.png\"\n        ]\n       },\n       {\n        \"id\": \"wood45\",\n        \"label\": \"45% wall wood coverage\",\n        \"coverage\": 45,\n        \"images\": [\n         \"test07_wood45.png\",\n         \"test08_wood45.png\",\n         \"test09_wood45.png\"\n        ]\n       },\n       {\n        \"id\": \"wood60\",\n        \"label\": \"60% wall wood coverage\",\n        \"coverage\": 60,\n        \"images\": [\n         \"test10_wood60.png\",\n         \"test11_wood60.png\",\n         \"test12_wood60.png\"\n        ]\n       },\n       {\n        \"id\": \"wood75\",\n        \"label\": \"75% wall wood coverage\",\n        \"coverage\": 75,\n        \"images\": [\n         \"test13_wood75.png\",\n         \"test14_wood75.png\",\n         \"test15_wood75.png\"\n        ]\n       },\n       {\n        \"id\": \"wood90\",\n        \"label\": \"90% wall wood coverage\",\n        \"coverage\": 90,\n        \"images\": [\n         \"test16_wood90.png\",\n         \"test17_wood90.png\"\n        ]\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f2efe9;--card:#fff;--ink:#24211c;--muted:#625b51;--accent:#8a5a2b;--accent-ink:#fff;--line:#ddd5c8;--warn:#b3261e;--miss:#fdecea}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:900px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.35rem;margin:0 0 10px}\np{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:13px 22px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q>b{display:block;margin-bottom:4px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer;background:var(--card)}\ninput.num{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:10px;width:120px}\n.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}\n.t{color:var(--muted);font-size:.9rem}\n.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;flex:1;margin-left:12px;max-width:260px}.bar>i{display:block;height:100%;background:var(--accent)}\n.pics{display:grid;gap:8px}.pics img{width:100%;border-radius:10px;display:block;background:#ddd}\n@media (min-width:760px){.pics.n3{grid-template-columns:repeat(3,1fr)}.pics.n2{grid-template-columns:repeat(2,1fr)}}\n.it{padding:10px 4px;border-top:1px solid var(--line);border-radius:8px}.it.miss{background:var(--miss)}\n.sd{display:grid;grid-template-columns:minmax(64px,1fr) auto minmax(64px,1fr);gap:6px;align-items:center}\n.sd .l{text-align:right;font-weight:500}.sd .r{font-weight:500}\n.sc{display:grid;grid-template-columns:repeat(7,minmax(26px,1fr));gap:2px}\n.sc label{display:flex;flex-direction:column;align-items:center;font-size:.72rem;color:var(--muted);cursor:pointer}\n.sc input{width:20px;height:20px;margin:0 0 2px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:900px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n@media (max-width:520px){.sd{grid-template-columns:1fr 1fr}.sd .sc{grid-column:1/3;grid-row:2}.sd .l{text-align:left}.sd .r{text-align:right}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Images: Yan &amp; Guo (2023), Buildings 13:2086, Table 1, doi:10.3390/buildings13082086 (CC BY 4.0; rendered by the authors in SketchUp 2019 and Enscape 2.0). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='woodelderly2023:';\n  var app=document.getElementById('app'), Q={}, files={}, ans={}, TR=[], ITEMS=[], CTRL='', done={}, order=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='visible';}}\n  function hideErr(){var e=app.querySelector('.err');if(e)e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function q(n){return Q[n]||{};}\n  function page(html,btn,cb){app.innerHTML=html+'<div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">'+esc(btn)+'</button></div><div class=\"err\"></div>';document.getElementById('go').onclick=cb;app.onchange=function(e){hideErr();var r=e.target.closest&&e.target.closest('.it');if(r)r.classList.remove('miss');};}\n  function send(list,b,fin){b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}fin();});}\n  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function next(){\n    window.scrollTo(0,0);\n    if(!ans.intro)return intro();\n    if(!ans.about)return about();\n    if(!ans.ctrl)return control();\n    for(var i=0;i<order.length;i++){var t=TR.filter(function(x){return x.id===order[i];})[0];if(t&&!done[t.id])return set(t,i);}\n    finish();\n  }\n  function intro(){\n    var need=[CTRL].concat.apply([CTRL],TR.map(function(t){return t.images;}));\n    if(need.some(function(n){return !files[n];})){app.innerHTML='<h1>Pictures missing</h1><p>Media folder rooms must hold the 18 room images (control_0.png and test01_wood15.png … test17_wood90.png).</p>';return;}\n    page('<h1>Wood on the walls of an activity room</h1><p>This study is about activity rooms in homes for older people. You will see pictures of the same room with different amounts of wood on the walls. For each group of pictures, say how the room feels to you.</p><p>It takes about 10 minutes. Your answers are anonymous and used only for research.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(q('consent').title)+'</label></div>','Start',function(){\n      if(!document.getElementById('ok').checked)return err('Please confirm to continue.');\n      send([SPSite.answer('consent',true)],this,function(){ans.intro=true;save('a',ans);next();});});\n  }\n  function radios(name){var d=q(name);return '<div class=\"q\"><b>'+esc(d.title)+'</b>'+(d.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function about(){\n    page('<h1>About you</h1><div class=\"card\">'+radios('gender')+'<div class=\"q\"><b>'+esc(q('age').title)+'</b><input class=\"num\" type=\"number\" id=\"f_age\" min=\"10\" max=\"110\"></div></div>','Continue',function(){\n      var g=app.querySelector('input[name=gender]:checked'),a=Number(document.getElementById('f_age').value);\n      if(!g||!(a>=10&&a<=110))return err('Please answer both questions (age as a number).');\n      send([SPSite.answer('gender',Number(g.value)),SPSite.answer('age',a)],this,function(){ans.about=true;save('a',ans);next();});});\n  }\n  function control(){\n    page('<h1>The room without wood</h1><p>This is the activity room before any wood is added. Imagine you are sitting in it. Next you will see the same room with wood on the walls.</p><div class=\"card\"><div class=\"pics\"><img alt=\"Activity room without wood\" src=\"'+esc(files[CTRL].url)+'\"></div></div>','Continue',function(){ans.ctrl=true;save('a',ans);next();});\n  }\n  function set(t,i){\n    var t0=Date.now(),fs=t.images.map(function(n){return files[n];});\n    var rows=ITEMS.map(function(it){return '<div class=\"it\" data-k=\"'+it.key+'\"><div class=\"sd\"><span class=\"l\">'+esc(it.pos)+'</span><div class=\"sc\" role=\"radiogroup\" aria-label=\"'+esc(it.pos+' – '+it.neg)+'\">'+[3,2,1,0,-1,-2,-3].map(function(v){return '<label><input type=\"radio\" name=\"'+it.key+'\" value=\"'+v+'\">'+(v>0?'+'+v:v)+'</label>';}).join('')+'</div><span class=\"r\">'+esc(it.neg)+'</span></div></div>';}).join('');\n    page('<div class=\"top\"><span class=\"t\">Room set '+(i+1)+' of '+order.length+'</span><div class=\"bar\"><i style=\"width:'+(100*i/order.length)+'%\"></i></div></div><p style=\"color:var(--ink)\">Take your time to look at these pictures of the room. They show the same amount of wood in different layouts. Imagine sitting in this room, then rate how it feels.</p><div class=\"card\"><div class=\"pics n'+fs.length+'\">'+fs.map(function(f){return '<img alt=\"Activity room with wood on the walls\" src=\"'+esc(f.url)+'\">';}).join('')+'</div></div><div class=\"card\"><p style=\"margin:0 0 4px\">+3 = very, +2 = quite, +1 = a little, 0 = neutral, then the same towards the right-hand word.</p>'+rows+'</div>',i===order.length-1?'Finish':'Next room set',function(){\n      var v={},miss=[];\n      ITEMS.forEach(function(it){var x=app.querySelector('input[name=\"'+it.key+'\"]:checked');var r=app.querySelector('.it[data-k=\"'+it.key+'\"]');if(x)v[it.key]=Number(x.value);else{miss.push(r);r.classList.add('miss');}});\n      if(miss.length){err(miss.length+' pair'+(miss.length>1?'s are':' is')+' not answered yet (marked in red).');miss[0].scrollIntoView({block:'center'});return;}\n      v.view_ms=Date.now()-t0;\n      send([SPSite.answer('wood_sd',v,{key:t.id,shown:fs.map(function(f){return f.name;})})],this,function(){done[t.id]=true;next();});});\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>In the original study, 30 older adults (65–75 years) in Harbin saw these rooms on a large hemispherical screen. Their overall evaluation rose as wood was added and then fell again; it was highest at 30% wall wood coverage. Heart rate and blood pressure also changed with the amount of wood.</p><p style=\"font-size:.82rem\">Images and method: Yan, D., &amp; Guo, Q. (2023). Effect of Indoor Wall Wood Coverage on the Elderly Group—A Case Study of Activity Rooms in Old-Age Buildings. Buildings 13:2086, doi:10.3390/buildings13082086.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){if(x==='consent')ans.intro=false;else if(x==='wood_sd')done={};else ans.about=false;});save('a',ans);next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    var SPEC;try{SPEC=JSON.parse(document.getElementById('sp-scheme').textContent).survey;}catch(e){SPEC={pages:[]};}\n    SPEC.pages.forEach(function(p){p.elements.forEach(function(e){var g=SPSite.getQuestion(e.name)||{};Q[e.name]={title:g.title||e.title,choices:(g.choices&&g.choices.length)?g.choices:e.choices};if(e.name==='wood_sd'){TR=e.trials;ITEMS=e.items;CTRL=e.control;}});});\n    (SPSite.getMedia('rooms')||[]).forEach(function(f){files[f.name]=f;});\n    var a=(ctx&&ctx.answers)||{};ans=load('a')||{};\n    order=load('o');if(!order||order.length!==TR.length){order=shuffle(TR.map(function(t){return t.id;}));save('o',order);}\n    ((a.wood_sd&&a.wood_sd.trials)||[]).forEach(function(t){if(t.key)done[t.key]=true;});\n    ans.intro=a.consent===true;ans.about=a.gender!=null&&a.age!=null;\n    if(Object.keys(done).length)ans.ctrl=true;\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T05:37:32.477Z",
+   "mediaFolders": [
+    "rooms"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T05:37:32.477Z"
+  },
+  "description": "Faithful replication of Yan & Guo (2023), Buildings 13:2086: older adults look at rendered activity rooms of an old-age building with 0–90% of the walls covered in wood and rate each wood-coverage level on nine semantic differential pairs.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2023-yan-wood/rooms/control_0__aa0c58df-c86c-4cc4-ab30-7c7c81cab1a0.png",
+   "url": "https://media.sp-survey.org/templates/2023-yan-wood/rooms/control_0__aa0c58df-c86c-4cc4-ab30-7c7c81cab1a0.png",
+   "name": "control_0.png",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2023-yan-wood/rooms/control_0__aa0c58df-c86c-4cc4-ab30-7c7c81cab1a0.png",
+   "logicalFolder": "rooms",
+   "original_bytes": 85201,
+   "uploaded_bytes": 85201,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-yan-wood/rooms/test01_wood15__635524ff-e3cc-44c3-9e3c-e5b87c41a4e2.png",
+   "url": "https://media.sp-survey.org/templates/2023-yan-wood/rooms/test01_wood15__635524ff-e3cc-44c3-9e3c-e5b87c41a4e2.png",
+   "name": "test01_wood15.png",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2023-yan-wood/rooms/test01_wood15__635524ff-e3cc-44c3-9e3c-e5b87c41a4e2.png",
+   "logicalFolder": "rooms",
+   "original_bytes": 87430,
+   "uploaded_bytes": 87430,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-yan-wood/rooms/test02_wood15__9e4c9606-8b55-45b1-8de5-96973c23a7f3.png",
+   "url": "https://media.sp-survey.org/templates/2023-yan-wood/rooms/test02_wood15__9e4c9606-8b55-45b1-8de5-96973c23a7f3.png",
+   "name": "test02_wood15.png",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2023-yan-wood/rooms/test02_wood15__9e4c9606-8b55-45b1-8de5-96973c23a7f3.png",
+   "logicalFolder": "rooms",
+   "original_bytes": 88725,
+   "uploaded_bytes": 88725,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-yan-wood/rooms/test03_wood15__87095e02-47cb-45a3-9aea-e53742a73ca5.png",
+   "url": "https://media.sp-survey.org/templates/2023-yan-wood/rooms/test03_wood15__87095e02-47cb-45a3-9aea-e53742a73ca5.png",
+   "name": "test03_wood15.png",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2023-yan-wood/rooms/test03_wood15__87095e02-47cb-45a3-9aea-e53742a73ca5.png",
+   "logicalFolder": "rooms",
+   "original_bytes": 98612,
+   "uploaded_bytes": 98612,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-yan-wood/rooms/test04_wood30__035c13e6-e5b8-4040-a78e-8a28a3c9248a.png",
+   "url": "https://media.sp-survey.org/templates/2023-yan-wood/rooms/test04_wood30__035c13e6-e5b8-4040-a78e-8a28a3c9248a.png",
+   "name": "test04_wood30.png",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2023-yan-wood/rooms/test04_wood30__035c13e6-e5b8-4040-a78e-8a28a3c9248a.png",
+   "logicalFolder": "rooms",
+   "original_bytes": 89934,
+   "uploaded_bytes": 89934,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-yan-wood/rooms/test05_wood30__dd16ae91-4320-4617-9f81-a7eb04725aee.png",
+   "url": "https://media.sp-survey.org/templates/2023-yan-wood/rooms/test05_wood30__dd16ae91-4320-4617-9f81-a7eb04725aee.png",
+   "name": "test05_wood30.png",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2023-yan-wood/rooms/test05_wood30__dd16ae91-4320-4617-9f81-a7eb04725aee.png",
+   "logicalFolder": "rooms",
+   "original_bytes": 92513,
+   "uploaded_bytes": 92513,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-yan-wood/rooms/test06_wood30__bac6883c-2cb6-491e-ae66-76eee4c48dd9.png",
+   "url": "https://media.sp-survey.org/templates/2023-yan-wood/rooms/test06_wood30__bac6883c-2cb6-491e-ae66-76eee4c48dd9.png",
+   "name": "test06_wood30.png",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2023-yan-wood/rooms/test06_wood30__bac6883c-2cb6-491e-ae66-76eee4c48dd9.png",
+   "logicalFolder": "rooms",
+   "original_bytes": 99292,
+   "uploaded_bytes": 99292,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-yan-wood/rooms/test07_wood45__bcf497a7-a89a-402c-9e06-5ca80630697f.png",
+   "url": "https://media.sp-survey.org/templates/2023-yan-wood/rooms/test07_wood45__bcf497a7-a89a-402c-9e06-5ca80630697f.png",
+   "name": "test07_wood45.png",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2023-yan-wood/rooms/test07_wood45__bcf497a7-a89a-402c-9e06-5ca80630697f.png",
+   "logicalFolder": "rooms",
+   "original_bytes": 98729,
+   "uploaded_bytes": 98729,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-yan-wood/rooms/test08_wood45__7e52226d-d45f-4108-981a-27e4634cbdc3.png",
+   "url": "https://media.sp-survey.org/templates/2023-yan-wood/rooms/test08_wood45__7e52226d-d45f-4108-981a-27e4634cbdc3.png",
+   "name": "test08_wood45.png",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2023-yan-wood/rooms/test08_wood45__7e52226d-d45f-4108-981a-27e4634cbdc3.png",
+   "logicalFolder": "rooms",
+   "original_bytes": 93110,
+   "uploaded_bytes": 93110,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-yan-wood/rooms/test09_wood45__7bd092e7-e1d4-4e43-8d83-407c83d530f5.png",
+   "url": "https://media.sp-survey.org/templates/2023-yan-wood/rooms/test09_wood45__7bd092e7-e1d4-4e43-8d83-407c83d530f5.png",
+   "name": "test09_wood45.png",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2023-yan-wood/rooms/test09_wood45__7bd092e7-e1d4-4e43-8d83-407c83d530f5.png",
+   "logicalFolder": "rooms",
+   "original_bytes": 103386,
+   "uploaded_bytes": 103386,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-yan-wood/rooms/test10_wood60__554f62f4-26d7-471f-87e4-63b5a5652642.png",
+   "url": "https://media.sp-survey.org/templates/2023-yan-wood/rooms/test10_wood60__554f62f4-26d7-471f-87e4-63b5a5652642.png",
+   "name": "test10_wood60.png",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2023-yan-wood/rooms/test10_wood60__554f62f4-26d7-471f-87e4-63b5a5652642.png",
+   "logicalFolder": "rooms",
+   "original_bytes": 95388,
+   "uploaded_bytes": 95388,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-yan-wood/rooms/test11_wood60__cf367634-36de-4834-afdb-bb627b13d254.png",
+   "url": "https://media.sp-survey.org/templates/2023-yan-wood/rooms/test11_wood60__cf367634-36de-4834-afdb-bb627b13d254.png",
+   "name": "test11_wood60.png",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2023-yan-wood/rooms/test11_wood60__cf367634-36de-4834-afdb-bb627b13d254.png",
+   "logicalFolder": "rooms",
+   "original_bytes": 97433,
+   "uploaded_bytes": 97433,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-yan-wood/rooms/test12_wood60__0f1acf10-5eb6-4c61-829f-a5d3ebd6871e.png",
+   "url": "https://media.sp-survey.org/templates/2023-yan-wood/rooms/test12_wood60__0f1acf10-5eb6-4c61-829f-a5d3ebd6871e.png",
+   "name": "test12_wood60.png",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2023-yan-wood/rooms/test12_wood60__0f1acf10-5eb6-4c61-829f-a5d3ebd6871e.png",
+   "logicalFolder": "rooms",
+   "original_bytes": 104462,
+   "uploaded_bytes": 104462,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-yan-wood/rooms/test13_wood75__bcda396e-2904-48ca-89ec-31e5242c2d86.png",
+   "url": "https://media.sp-survey.org/templates/2023-yan-wood/rooms/test13_wood75__bcda396e-2904-48ca-89ec-31e5242c2d86.png",
+   "name": "test13_wood75.png",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2023-yan-wood/rooms/test13_wood75__bcda396e-2904-48ca-89ec-31e5242c2d86.png",
+   "logicalFolder": "rooms",
+   "original_bytes": 97761,
+   "uploaded_bytes": 97761,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-yan-wood/rooms/test14_wood75__2fe8394b-744a-4161-b246-7ffd5a1a7b62.png",
+   "url": "https://media.sp-survey.org/templates/2023-yan-wood/rooms/test14_wood75__2fe8394b-744a-4161-b246-7ffd5a1a7b62.png",
+   "name": "test14_wood75.png",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2023-yan-wood/rooms/test14_wood75__2fe8394b-744a-4161-b246-7ffd5a1a7b62.png",
+   "logicalFolder": "rooms",
+   "original_bytes": 102168,
+   "uploaded_bytes": 102168,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-yan-wood/rooms/test15_wood75__0d1a119b-7ba4-4e73-9dbb-4866aa3b4311.png",
+   "url": "https://media.sp-survey.org/templates/2023-yan-wood/rooms/test15_wood75__0d1a119b-7ba4-4e73-9dbb-4866aa3b4311.png",
+   "name": "test15_wood75.png",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2023-yan-wood/rooms/test15_wood75__0d1a119b-7ba4-4e73-9dbb-4866aa3b4311.png",
+   "logicalFolder": "rooms",
+   "original_bytes": 107800,
+   "uploaded_bytes": 107800,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-yan-wood/rooms/test16_wood90__a948b557-c73f-49b9-a121-e478d2c85cca.png",
+   "url": "https://media.sp-survey.org/templates/2023-yan-wood/rooms/test16_wood90__a948b557-c73f-49b9-a121-e478d2c85cca.png",
+   "name": "test16_wood90.png",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2023-yan-wood/rooms/test16_wood90__a948b557-c73f-49b9-a121-e478d2c85cca.png",
+   "logicalFolder": "rooms",
+   "original_bytes": 101352,
+   "uploaded_bytes": 101352,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-yan-wood/rooms/test17_wood90__51db8d36-7bc7-4cdf-85bc-64b75a2e0f8f.png",
+   "url": "https://media.sp-survey.org/templates/2023-yan-wood/rooms/test17_wood90__51db8d36-7bc7-4cdf-85bc-64b75a2e0f8f.png",
+   "name": "test17_wood90.png",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2023-yan-wood/rooms/test17_wood90__51db8d36-7bc7-4cdf-85bc-64b75a2e0f8f.png",
+   "logicalFolder": "rooms",
+   "original_bytes": 104646,
+   "uploaded_bytes": 104646,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Effect of Indoor Wall Wood Coverage on the Elderly Group—A Case Study of Activity Rooms in Old-Age Buildings",
+  "authors": [
+   "Di Yan",
+   "Qishen Guo"
+  ],
+  "year": 2023,
+  "venue": "Buildings",
+  "doi": "10.3390/buildings13082086",
+  "url": "https://doi.org/10.3390/buildings13082086"
+ }
+}
