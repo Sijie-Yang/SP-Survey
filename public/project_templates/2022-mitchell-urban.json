@@ -1,0 +1,1768 @@
+{
+ "id": "2022-mitchell-urban",
+ "name": "Urban Soundscape Annoyance: Source Labels and Ratings (DeLTA)",
+ "description": "Faithful replication: same task, scales and recordings as the paper (120 of the authors' open DeLTA binaural recordings, Zenodo 7158057, CC BY 4.0). Headphone listening test of urban soundscapes in London and Venice. After a sound check, a volume calibration with noise at the loudest and quietest recording levels and a six-trial Huggins-pitch headphone test (pass = 5 of 6), participants do 5 practice trials and then hear 10 random 15-second recordings. For each, they listen once and tick every sound source they hear from 24 labels (shown in a random layout per participant), then listen again and rate \"How annoying is this sound?\" from 1 (not at all) to 10 (extremely). The paper relates annoyance to the number of distinct sources (soundscape complexity) with mixed models. The page source holds the authors' majority labels and mean annoyance for every recording. Differences from the original study: (1) 120 recordings, 20 for each number of sources 1 to 6+, instead of all 2,890; (2) runs as one web page instead of Gorilla, with the test sounds generated in the browser; (3) gender and age are optional and other background questions are left out. Cite: Mitchell, Erfanian, Soelistyo, Oberman, Kang, Aldridge, Xue & Aletta (2022), Int. J. Environ. Res. Public Health 19(22): 14872.",
+ "author": "Mitchell et al.",
+ "year": "2022",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "soundscape",
+  "audio",
+  "annoyance",
+  "listening-test",
+  "source:paper",
+  "modality:audio",
+  "task:rating",
+  "task:choose_from_set",
+  "task:custom_page",
+  "concept:soundscape",
+  "concept:complexity",
+  "concept:comfort",
+  "participants:crowd",
+  "sample:gt1000",
+  "country:United Kingdom",
+  "country:Italy",
+  "city:London",
+  "city:Venice"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/ijerph192214872",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-26T23:56:15.335+00:00",
+ "updatedAt": "2026-11-27T05:59:53.652+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research. I am wearing headphones and sitting in a quiet place.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender (optional)",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ]
+     },
+     {
+      "max": 99,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "Age in years (optional)",
+      "inputType": "number"
+     }
+    ]
+   },
+   {
+    "name": "checks",
+    "elements": [
+     {
+      "max": 6,
+      "min": 0,
+      "name": "headphone_score",
+      "type": "text",
+      "title": "Recorded by the page: Huggins-pitch headphone test, number correct out of 6 (Milne et al. 2021). Participants with fewer than 5 correct do not continue to the listening task.",
+      "inputType": "number",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "listening",
+    "elements": [
+     {
+      "name": "sources",
+      "type": "checkbox",
+      "title": "Please choose the sounds you can hear (select all that apply)",
+      "choices": [
+       {
+        "text": "Dog bark",
+        "value": "dog_bark"
+       },
+       {
+        "text": "Screeching brakes",
+        "value": "screeching_brakes"
+       },
+       {
+        "text": "General traffic",
+        "value": "general_traffic"
+       },
+       {
+        "text": "Rail",
+        "value": "rail"
+       },
+       {
+        "text": "Bird tweet",
+        "value": "bird_tweet"
+       },
+       {
+        "text": "Aircraft",
+        "value": "aircraft"
+       },
+       {
+        "text": "Footsteps",
+        "value": "footsteps"
+       },
+       {
+        "text": "Music",
+        "value": "music"
+       },
+       {
+        "text": "Rustling leaves",
+        "value": "rustling_leaves"
+       },
+       {
+        "text": "Siren",
+        "value": "siren"
+       },
+       {
+        "text": "Car",
+        "value": "car"
+       },
+       {
+        "text": "Construction",
+        "value": "construction"
+       },
+       {
+        "text": "Motorcycle",
+        "value": "motorcycle"
+       },
+       {
+        "text": "Ventilation",
+        "value": "ventilation"
+       },
+       {
+        "text": "Shouting",
+        "value": "shouting"
+       },
+       {
+        "text": "Speech",
+        "value": "speech"
+       },
+       {
+        "text": "Horn",
+        "value": "horn"
+       },
+       {
+        "text": "Laughter",
+        "value": "laughter"
+       },
+       {
+        "text": "Children",
+        "value": "children"
+       },
+       {
+        "text": "Bells",
+        "value": "bells"
+       },
+       {
+        "text": "Bus",
+        "value": "bus"
+       },
+       {
+        "text": "Water",
+        "value": "water"
+       },
+       {
+        "text": "Non-identifiable",
+        "value": "non_identifiable"
+       },
+       {
+        "text": "Other",
+        "value": "other"
+       }
+      ],
+      "isRequired": true,
+      "description": "One record per recording: key = recording file (the DeLTA name, e.g. Rs118_2.mp3); value = the labels ticked. The page source (script id delta-original) has the authors' majority labels and mean annoyance for every recording."
+     },
+     {
+      "name": "annoyance",
+      "type": "rating",
+      "title": "How annoying is this sound?",
+      "rateMax": 10,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "One record per recording (key = recording file). 1 = not at all, 10 = extremely. Paper's analysis: mean annoyance per recording against the number of sound sources heard and against which sources were present.",
+      "maxRateDescription": "Extremely",
+      "minRateDescription": "Not at all"
+     }
+    ]
+   }
+  ],
+  "title": "Urban Sounds: What Do You Hear?",
+  "locale": "en",
+  "spSite": {
+   "id": "site-497cbe82e5601b3c",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Urban Sounds: What Do You Hear?</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Urban Sounds: What Do You Hear?\",\n    \"description\": \"Online listening test with headphones. After a sound check, volume setting and a Huggins-pitch headphone test, participants hear 10 binaural 15-second recordings of urban places in London and Venice (drawn at random from 120). For each recording they first tick every sound source they can hear (24 labels: traffic, birds, speech, construction, water…), then hear it again and rate “How annoying is this sound?” from 1 (not at all) to 10 (extremely). Rebuilt from Mitchell, Erfanian, Soelistyo, Oberman, Kang, Aldridge, Xue & Aletta (2022), Int. J. Environ. Res. Public Health 19(22): 14872, with the authors' open DeLTA recordings (Zenodo 7158057, CC BY 4.0). The page source holds, for each recording, the majority source labels and mean annoyance from the original study (script id delta-original).\",\n    \"locale\": \"en\",\n    \"mediaFolders\": [\"clips\", \"practice\"],\n    \"pages\": [\n      { \"name\": \"start\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research. I am wearing headphones and sitting in a quiet place.\", \"isRequired\": true, \"labelTrue\": \"I agree\", \"labelFalse\": \"I do not agree\" },\n        { \"type\": \"radiogroup\", \"name\": \"gender\", \"title\": \"Gender (optional)\", \"choices\": [\n          { \"value\": \"female\", \"text\": \"Female\" }, { \"value\": \"male\", \"text\": \"Male\" }, { \"value\": \"other\", \"text\": \"Other / prefer not to say\" } ] },\n        { \"type\": \"number\", \"name\": \"age\", \"title\": \"Age in years (optional)\", \"min\": 18, \"max\": 99 }\n      ]},\n      { \"name\": \"checks\", \"elements\": [\n        { \"type\": \"number\", \"name\": \"headphone_score\", \"title\": \"Recorded by the page: Huggins-pitch headphone test, number correct out of 6 (Milne et al. 2021). Participants with fewer than 5 correct do not continue to the listening task.\", \"min\": 0, \"max\": 6, \"isRequired\": true }\n      ]},\n      { \"name\": \"listening\", \"elements\": [\n        { \"type\": \"checkbox\", \"name\": \"sources\", \"title\": \"Please choose the sounds you can hear (select all that apply)\", \"description\": \"One record per recording: key = recording file (the DeLTA name, e.g. Rs118_2.mp3); value = the labels ticked. The page source (script id delta-original) has the authors' majority labels and mean annoyance for every recording.\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"dog_bark\", \"text\": \"Dog bark\" }, { \"value\": \"screeching_brakes\", \"text\": \"Screeching brakes\" }, { \"value\": \"general_traffic\", \"text\": \"General traffic\" }, { \"value\": \"rail\", \"text\": \"Rail\" },\n          { \"value\": \"bird_tweet\", \"text\": \"Bird tweet\" }, { \"value\": \"aircraft\", \"text\": \"Aircraft\" }, { \"value\": \"footsteps\", \"text\": \"Footsteps\" }, { \"value\": \"music\", \"text\": \"Music\" },\n          { \"value\": \"rustling_leaves\", \"text\": \"Rustling leaves\" }, { \"value\": \"siren\", \"text\": \"Siren\" }, { \"value\": \"car\", \"text\": \"Car\" }, { \"value\": \"construction\", \"text\": \"Construction\" },\n          { \"value\": \"motorcycle\", \"text\": \"Motorcycle\" }, { \"value\": \"ventilation\", \"text\": \"Ventilation\" }, { \"value\": \"shouting\", \"text\": \"Shouting\" }, { \"value\": \"speech\", \"text\": \"Speech\" },\n          { \"value\": \"horn\", \"text\": \"Horn\" }, { \"value\": \"laughter\", \"text\": \"Laughter\" }, { \"value\": \"children\", \"text\": \"Children\" }, { \"value\": \"bells\", \"text\": \"Bells\" },\n          { \"value\": \"bus\", \"text\": \"Bus\" }, { \"value\": \"water\", \"text\": \"Water\" }, { \"value\": \"non_identifiable\", \"text\": \"Non-identifiable\" }, { \"value\": \"other\", \"text\": \"Other\" } ] },\n        { \"type\": \"rating\", \"name\": \"annoyance\", \"title\": \"How annoying is this sound?\", \"description\": \"One record per recording (key = recording file). 1 = not at all, 10 = extremely. Paper's analysis: mean annoyance per recording against the number of sound sources heard and against which sources were present.\", \"rateMin\": 1, \"rateMax\": 10, \"minRateDescription\": \"Not at all\", \"maxRateDescription\": \"Extremely\", \"isRequired\": true }\n      ]}\n    ]\n  }\n}\n</script>\n<script type=\"application/json\" id=\"delta-original\">\n[{\"file\": \"ts218_3.mp3\", \"location\": \"ts\", \"majority_sources\": \"Speech\", \"n_sources\": 1, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.0}, {\"file\": \"Pl227_1.mp3\", \"location\": \"Pl\", \"majority_sources\": \"Speech\", \"n_sources\": 1, \"n_raters_original\": 5, \"mean_annoyance_original\": 3.4}, {\"file\": \"RP333_2.mp3\", \"location\": \"RP\", \"majority_sources\": \"Water\", \"n_sources\": 1, \"n_raters_original\": 4, \"mean_annoyance_original\": 5.25}, {\"file\": \"Rp108_1.mp3\", \"location\": \"Rp\", \"majority_sources\": \"Water\", \"n_sources\": 1, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.0}, {\"file\": \"TM425_1.mp3\", \"location\": \"TM\", \"majority_sources\": \"Bird tweet\", \"n_sources\": 1, \"n_raters_original\": 4, \"mean_annoyance_original\": 1.25}, {\"file\": \"ts302_2.mp3\", \"location\": \"ts\", \"majority_sources\": \"Non-identifiable\", \"n_sources\": 1, \"n_raters_original\": 4, \"mean_annoyance_original\": 1.5}, {\"file\": \"PL430_2.mp3\", \"location\": \"PL\", \"majority_sources\": \"Non-identifiable\", \"n_sources\": 1, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.5}, {\"file\": \"Rs101_1.mp3\", \"location\": \"Rs\", \"majority_sources\": \"Water\", \"n_sources\": 1, \"n_raters_original\": 5, \"mean_annoyance_original\": 4.2}, {\"file\": \"ET431_2.mp3\", \"location\": \"ET\", \"majority_sources\": \"General traffic\", \"n_sources\": 1, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.25}, {\"file\": \"RP325_1.mp3\", \"location\": \"RP\", \"majority_sources\": \"Bird tweet\", \"n_sources\": 1, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.0}, {\"file\": \"Rp102_1.mp3\", \"location\": \"Rp\", \"majority_sources\": \"Water\", \"n_sources\": 1, \"n_raters_original\": 4, \"mean_annoyance_original\": 5.75}, {\"file\": \"ts307_2.mp3\", \"location\": \"ts\", \"majority_sources\": \"Speech\", \"n_sources\": 1, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.25}, {\"file\": \"ET427_2.mp3\", \"location\": \"ET\", \"majority_sources\": \"Car\", \"n_sources\": 1, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.25}, {\"file\": \"NP116_2.mp3\", \"location\": \"NP\", \"majority_sources\": \"Motorcycle\", \"n_sources\": 1, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.5}, {\"file\": \"RP319_2.mp3\", \"location\": \"RP\", \"majority_sources\": \"Water\", \"n_sources\": 1, \"n_raters_original\": 4, \"mean_annoyance_original\": 1.5}, {\"file\": \"PL403_1.mp3\", \"location\": \"PL\", \"majority_sources\": \"Speech\", \"n_sources\": 1, \"n_raters_original\": 4, \"mean_annoyance_original\": 1.75}, {\"file\": \"cv12_1.mp3\", \"location\": \"cv\", \"majority_sources\": \"Speech\", \"n_sources\": 1, \"n_raters_original\": 5, \"mean_annoyance_original\": 3.6}, {\"file\": \"PL438_1.mp3\", \"location\": \"PL\", \"majority_sources\": \"Aircraft\", \"n_sources\": 1, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.75}, {\"file\": \"RP320_1.mp3\", \"location\": \"RP\", \"majority_sources\": \"Water\", \"n_sources\": 1, \"n_raters_original\": 3, \"mean_annoyance_original\": 2.0}, {\"file\": \"RP318_2.mp3\", \"location\": \"RP\", \"majority_sources\": \"Water\", \"n_sources\": 1, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.25}, {\"file\": \"NP123_2.mp3\", \"location\": \"NP\", \"majority_sources\": \"Laughter; Speech\", \"n_sources\": 2, \"n_raters_original\": 4, \"mean_annoyance_original\": 1.75}, {\"file\": \"ts308_1.mp3\", \"location\": \"ts\", \"majority_sources\": \"Footsteps; Speech\", \"n_sources\": 2, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.0}, {\"file\": \"TM405_1.mp3\", \"location\": \"TM\", \"majority_sources\": \"Non-identifiable; Rail\", \"n_sources\": 2, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.0}, {\"file\": \"MG332_2.mp3\", \"location\": \"MG\", \"majority_sources\": \"Bird tweet; Speech\", \"n_sources\": 2, \"n_raters_original\": 4, \"mean_annoyance_original\": 1.5}, {\"file\": \"cp14_1.mp3\", \"location\": \"cp\", \"majority_sources\": \"Speech; Water\", \"n_sources\": 2, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.0}, {\"file\": \"CT109_2.mp3\", \"location\": \"CT\", \"majority_sources\": \"General traffic; Speech\", \"n_sources\": 2, \"n_raters_original\": 5, \"mean_annoyance_original\": 2.8}, {\"file\": \"sr117_1.mp3\", \"location\": \"sr\", \"majority_sources\": \"Footsteps; Speech\", \"n_sources\": 2, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.25}, {\"file\": \"NP128_1.mp3\", \"location\": \"NP\", \"majority_sources\": \"General traffic; Motorcycle\", \"n_sources\": 2, \"n_raters_original\": 5, \"mean_annoyance_original\": 3.8}, {\"file\": \"sc141_1.mp3\", \"location\": \"sc\", \"majority_sources\": \"Footsteps; Speech\", \"n_sources\": 2, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.5}, {\"file\": \"RF310_2.mp3\", \"location\": \"RF\", \"majority_sources\": \"Bird tweet; Ventilation\", \"n_sources\": 2, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.5}, {\"file\": \"MG320_2.mp3\", \"location\": \"MG\", \"majority_sources\": \"Bird tweet; Speech\", \"n_sources\": 2, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.75}, {\"file\": \"Rp108_2.mp3\", \"location\": \"Rp\", \"majority_sources\": \"Speech; Water\", \"n_sources\": 2, \"n_raters_original\": 4, \"mean_annoyance_original\": 6.0}, {\"file\": \"RS410_2.mp3\", \"location\": \"RS\", \"majority_sources\": \"Bird tweet; General traffic\", \"n_sources\": 2, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.25}, {\"file\": \"NP163_1.mp3\", \"location\": \"NP\", \"majority_sources\": \"General traffic; Motorcycle\", \"n_sources\": 2, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.5}, {\"file\": \"RP332_1.mp3\", \"location\": \"RP\", \"majority_sources\": \"Bird tweet; Water\", \"n_sources\": 2, \"n_raters_original\": 4, \"mean_annoyance_original\": 1.75}, {\"file\": \"PL313_1.mp3\", \"location\": \"PL\", \"majority_sources\": \"Children; General traffic\", \"n_sources\": 2, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.5}, {\"file\": \"ET203_2.mp3\", \"location\": \"ET\", \"majority_sources\": \"General traffic; Horn\", \"n_sources\": 2, \"n_raters_original\": 5, \"mean_annoyance_original\": 3.4}, {\"file\": \"RP331_1.mp3\", \"location\": \"RP\", \"majority_sources\": \"Bird tweet; Water\", \"n_sources\": 2, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.25}, {\"file\": \"PL407_1.mp3\", \"location\": \"PL\", \"majority_sources\": \"Speech; Ventilation\", \"n_sources\": 2, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.75}, {\"file\": \"TM426_1.mp3\", \"location\": \"TM\", \"majority_sources\": \"Non-identifiable; Ventilation\", \"n_sources\": 2, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.75}, {\"file\": \"Mc120_1.mp3\", \"location\": \"Mc\", \"majority_sources\": \"Bird tweet; Footsteps; Speech\", \"n_sources\": 3, \"n_raters_original\": 3, \"mean_annoyance_original\": 3.67}, {\"file\": \"PL311_1.mp3\", \"location\": \"PL\", \"majority_sources\": \"Children; General traffic; Speech\", \"n_sources\": 3, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.0}, {\"file\": \"PL303_1.mp3\", \"location\": \"PL\", \"majority_sources\": \"Non-identifiable; Other; Water\", \"n_sources\": 3, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.75}, {\"file\": \"CT318_2.mp3\", \"location\": \"CT\", \"majority_sources\": \"Footsteps; General traffic; Speech\", \"n_sources\": 3, \"n_raters_original\": 3, \"mean_annoyance_original\": 3.67}, {\"file\": \"Mc316_2.mp3\", \"location\": \"Mc\", \"majority_sources\": \"Footsteps; General traffic; Non-identifiable\", \"n_sources\": 3, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.0}, {\"file\": \"ET218_1.mp3\", \"location\": \"ET\", \"majority_sources\": \"Construction; General traffic; Speech\", \"n_sources\": 3, \"n_raters_original\": 5, \"mean_annoyance_original\": 3.0}, {\"file\": \"AM02_1.mp3\", \"location\": \"AM\", \"majority_sources\": \"Children; Shouting; Speech\", \"n_sources\": 3, \"n_raters_original\": 3, \"mean_annoyance_original\": 2.67}, {\"file\": \"sc107_2.mp3\", \"location\": \"sc\", \"majority_sources\": \"Footsteps; Laughter; Speech\", \"n_sources\": 3, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.75}, {\"file\": \"NP101_1.mp3\", \"location\": \"NP\", \"majority_sources\": \"Bird tweet; Non-identifiable; Other\", \"n_sources\": 3, \"n_raters_original\": 4, \"mean_annoyance_original\": 1.0}, {\"file\": \"2cv32_1.mp3\", \"location\": \"2c\", \"majority_sources\": \"Bird tweet; Laughter; Speech\", \"n_sources\": 3, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.0}, {\"file\": \"SR244_2.mp3\", \"location\": \"SR\", \"majority_sources\": \"Bird tweet; Construction; Speech\", \"n_sources\": 3, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.75}, {\"file\": \"Rf223_2.mp3\", \"location\": \"Rf\", \"majority_sources\": \"Footsteps; Non-identifiable; Speech\", \"n_sources\": 3, \"n_raters_original\": 4, \"mean_annoyance_original\": 1.5}, {\"file\": \"cp5_1.mp3\", \"location\": \"cp\", \"majority_sources\": \"Bird tweet; General traffic; Speech\", \"n_sources\": 3, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.25}, {\"file\": \"Rs101_2.mp3\", \"location\": \"Rs\", \"majority_sources\": \"General traffic; Speech; Water\", \"n_sources\": 3, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.75}, {\"file\": \"CT328_3.mp3\", \"location\": \"CT\", \"majority_sources\": \"General traffic; Music; Speech\", \"n_sources\": 3, \"n_raters_original\": 4, \"mean_annoyance_original\": 5.0}, {\"file\": \"PL436_1.mp3\", \"location\": \"PL\", \"majority_sources\": \"General traffic; Siren; Speech\", \"n_sources\": 3, \"n_raters_original\": 3, \"mean_annoyance_original\": 3.67}, {\"file\": \"Pl119_2.mp3\", \"location\": \"Pl\", \"majority_sources\": \"Construction; General traffic; Speech\", \"n_sources\": 3, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.5}, {\"file\": \"cv33_1.mp3\", \"location\": \"cv\", \"majority_sources\": \"Bird tweet; Footsteps; Speech\", \"n_sources\": 3, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.0}, {\"file\": \"RF315_2.mp3\", \"location\": \"RF\", \"majority_sources\": \"Bird tweet; Footsteps; Speech\", \"n_sources\": 3, \"n_raters_original\": 4, \"mean_annoyance_original\": 1.75}, {\"file\": \"ET111_1.mp3\", \"location\": \"ET\", \"majority_sources\": \"General traffic; Music; Siren\", \"n_sources\": 3, \"n_raters_original\": 4, \"mean_annoyance_original\": 5.5}, {\"file\": \"tm223_2.mp3\", \"location\": \"tm\", \"majority_sources\": \"Footsteps; Laughter; Music; Speech\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 6.25}, {\"file\": \"ML131_1.mp3\", \"location\": \"ML\", \"majority_sources\": \"Children; Music; Shouting; Speech\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.25}, {\"file\": \"Rf209_1.mp3\", \"location\": \"Rf\", \"majority_sources\": \"Bird tweet; Footsteps; Speech; Water\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.25}, {\"file\": \"MG114_2.mp3\", \"location\": \"MG\", \"majority_sources\": \"Children; Footsteps; Rustling leaves; Speech\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.25}, {\"file\": \"Rf117_2.mp3\", \"location\": \"Rf\", \"majority_sources\": \"Aircraft; Children; General traffic; Speech\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 1.75}, {\"file\": \"CT502_1.mp3\", \"location\": \"CT\", \"majority_sources\": \"Bird tweet; Car; General traffic; Music\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 5.75}, {\"file\": \"RF325_1.mp3\", \"location\": \"RF\", \"majority_sources\": \"Bird tweet; Footsteps; Other; Speech\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.0}, {\"file\": \"SC204_2.mp3\", \"location\": \"SC\", \"majority_sources\": \"Bells; Bird tweet; Construction; Music\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.5}, {\"file\": \"CT523_2.mp3\", \"location\": \"CT\", \"majority_sources\": \"Car; General traffic; Motorcycle; Speech\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.5}, {\"file\": \"ts224_2.mp3\", \"location\": \"ts\", \"majority_sources\": \"Footsteps; General traffic; Other; Speech\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.5}, {\"file\": \"sc108_1.mp3\", \"location\": \"sc\", \"majority_sources\": \"Footsteps; General traffic; Other; Speech\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.25}, {\"file\": \"TM431_1.mp3\", \"location\": \"TM\", \"majority_sources\": \"Bird tweet; Construction; General traffic; Other\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.0}, {\"file\": \"ML111_8.mp3\", \"location\": \"ML\", \"majority_sources\": \"Children; Footsteps; Laughter; Speech\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.5}, {\"file\": \"ts214_2.mp3\", \"location\": \"ts\", \"majority_sources\": \"Car; Laughter; Motorcycle; Speech\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 1.25}, {\"file\": \"Mc104_2.mp3\", \"location\": \"Mc\", \"majority_sources\": \"Bird tweet; Footsteps; General traffic; Horn\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 1.5}, {\"file\": \"ML131_6.mp3\", \"location\": \"ML\", \"majority_sources\": \"Children; Laughter; Shouting; Speech\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.0}, {\"file\": \"tm110_1.mp3\", \"location\": \"tm\", \"majority_sources\": \"Footsteps; Laughter; Shouting; Speech\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.5}, {\"file\": \"sr118_3.mp3\", \"location\": \"sr\", \"majority_sources\": \"Aircraft; Footsteps; Other; Speech\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.0}, {\"file\": \"PL429_1.mp3\", \"location\": \"PL\", \"majority_sources\": \"Bird tweet; Footsteps; Speech; Water\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.25}, {\"file\": \"Rs125_1.mp3\", \"location\": \"Rs\", \"majority_sources\": \"Footsteps; Motorcycle; Speech; Water\", \"n_sources\": 4, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.25}, {\"file\": \"RF338_1.mp3\", \"location\": \"RF\", \"majority_sources\": \"Bird tweet; Children; Footsteps; Shouting; Speech\", \"n_sources\": 5, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.25}, {\"file\": \"PL313_2.mp3\", \"location\": \"PL\", \"majority_sources\": \"Children; Construction; Footsteps; General traffic; Rustling leaves\", \"n_sources\": 5, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.25}, {\"file\": \"ts204_1.mp3\", \"location\": \"ts\", \"majority_sources\": \"Car; Footsteps; General traffic; Other; Speech\", \"n_sources\": 5, \"n_raters_original\": 4, \"mean_annoyance_original\": 1.25}, {\"file\": \"tm321_2.mp3\", \"location\": \"tm\", \"majority_sources\": \"Children; Footsteps; General traffic; Laughter; Speech\", \"n_sources\": 5, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.0}, {\"file\": \"CT121_1.mp3\", \"location\": \"CT\", \"majority_sources\": \"Car; Footsteps; General traffic; Motorcycle; Speech\", \"n_sources\": 5, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.5}, {\"file\": \"ET307_2.mp3\", \"location\": \"ET\", \"majority_sources\": \"Footsteps; General traffic; Laughter; Music; Speech\", \"n_sources\": 5, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.5}, {\"file\": \"Rp227_1.mp3\", \"location\": \"Rp\", \"majority_sources\": \"Bird tweet; Children; Footsteps; Laughter; Speech\", \"n_sources\": 5, \"n_raters_original\": 4, \"mean_annoyance_original\": 1.0}, {\"file\": \"Rs126_1.mp3\", \"location\": \"Rs\", \"majority_sources\": \"Car; Footsteps; General traffic; Speech; Water\", \"n_sources\": 5, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.75}, {\"file\": \"tm212_2.mp3\", \"location\": \"tm\", \"majority_sources\": \"Children; Footsteps; Laughter; Shouting; Speech\", \"n_sources\": 5, \"n_raters_original\": 5, \"mean_annoyance_original\": 4.0}, {\"file\": \"NP146_1.mp3\", \"location\": \"NP\", \"majority_sources\": \"Bird tweet; Dog bark; Footsteps; Other; Speech\", \"n_sources\": 5, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.25}, {\"file\": \"SR212_1.mp3\", \"location\": \"SR\", \"majority_sources\": \"Car; Footsteps; General traffic; Non-identifiable; Other\", \"n_sources\": 5, \"n_raters_original\": 4, \"mean_annoyance_original\": 1.75}, {\"file\": \"NP142_2.mp3\", \"location\": \"NP\", \"majority_sources\": \"Bird tweet; Car; Footsteps; General traffic; Speech\", \"n_sources\": 5, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.75}, {\"file\": \"NP123_1.mp3\", \"location\": \"NP\", \"majority_sources\": \"Bird tweet; Car; General traffic; Speech; Ventilation\", \"n_sources\": 5, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.75}, {\"file\": \"Rs230_1.mp3\", \"location\": \"Rs\", \"majority_sources\": \"Children; Footsteps; General traffic; Laughter; Speech\", \"n_sources\": 5, \"n_raters_original\": 4, \"mean_annoyance_original\": 5.5}, {\"file\": \"Pl217_1.mp3\", \"location\": \"Pl\", \"majority_sources\": \"Construction; Footsteps; Non-identifiable; Siren; Speech\", \"n_sources\": 5, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.75}, {\"file\": \"tm116_1.mp3\", \"location\": \"tm\", \"majority_sources\": \"Children; Laughter; Music; Shouting; Speech\", \"n_sources\": 5, \"n_raters_original\": 4, \"mean_annoyance_original\": 5.75}, {\"file\": \"tm230_2.mp3\", \"location\": \"tm\", \"majority_sources\": \"Children; Footsteps; Other; Shouting; Speech\", \"n_sources\": 5, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.25}, {\"file\": \"tm217_2.mp3\", \"location\": \"tm\", \"majority_sources\": \"Children; Footsteps; General traffic; Music; Speech\", \"n_sources\": 5, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.0}, {\"file\": \"cp00_1.mp3\", \"location\": \"cp\", \"majority_sources\": \"Bird tweet; Footsteps; Shouting; Speech; Water\", \"n_sources\": 5, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.75}, {\"file\": \"sc112_2.mp3\", \"location\": \"sc\", \"majority_sources\": \"Footsteps; General traffic; Laughter; Siren; Speech\", \"n_sources\": 5, \"n_raters_original\": 3, \"mean_annoyance_original\": 3.33}, {\"file\": \"m11_2.mp3\", \"location\": \"m1\", \"majority_sources\": \"Bird tweet; Children; Footsteps; Music; Other; Speech\", \"n_sources\": 6, \"n_raters_original\": 4, \"mean_annoyance_original\": 6.0}, {\"file\": \"ET215_2.mp3\", \"location\": \"ET\", \"majority_sources\": \"Bird tweet; Car; General traffic; Laughter; Music; Speech\", \"n_sources\": 6, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.5}, {\"file\": \"Rf129_2.mp3\", \"location\": \"Rf\", \"majority_sources\": \"Bird tweet; Children; Footsteps; Non-identifiable; Shouting; Speech\", \"n_sources\": 6, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.0}, {\"file\": \"m23_2.mp3\", \"location\": \"m2\", \"majority_sources\": \"Bird tweet; Laughter; Motorcycle; Music; Other; Speech\", \"n_sources\": 6, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.75}, {\"file\": \"ET203_1.mp3\", \"location\": \"ET\", \"majority_sources\": \"Bus; Children; Footsteps; General traffic; Other; Screeching brakes\", \"n_sources\": 6, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.75}, {\"file\": \"ET212_2.mp3\", \"location\": \"ET\", \"majority_sources\": \"Bus; Car; General traffic; Motorcycle; Screeching brakes; Speech\", \"n_sources\": 6, \"n_raters_original\": 4, \"mean_annoyance_original\": 5.25}, {\"file\": \"tm133_2.mp3\", \"location\": \"tm\", \"majority_sources\": \"Children; Footsteps; General traffic; Laughter; Shouting; Speech\", \"n_sources\": 6, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.0}, {\"file\": \"tm330_2.mp3\", \"location\": \"tm\", \"majority_sources\": \"Bird tweet; Children; Footsteps; General traffic; Music; Speech\", \"n_sources\": 6, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.25}, {\"file\": \"sr126_1.mp3\", \"location\": \"sr\", \"majority_sources\": \"Children; Footsteps; General traffic; Laughter; Other; Rustling leaves; Speech\", \"n_sources\": 7, \"n_raters_original\": 4, \"mean_annoyance_original\": 6.0}, {\"file\": \"tm211_2.mp3\", \"location\": \"tm\", \"majority_sources\": \"Children; General traffic; Laughter; Shouting; Speech; Water\", \"n_sources\": 6, \"n_raters_original\": 4, \"mean_annoyance_original\": 6.0}, {\"file\": \"Rs313_2.mp3\", \"location\": \"Rs\", \"majority_sources\": \"Bird tweet; Car; General traffic; Other; Rustling leaves; Speech\", \"n_sources\": 6, \"n_raters_original\": 4, \"mean_annoyance_original\": 3.25}, {\"file\": \"tm207_1.mp3\", \"location\": \"tm\", \"majority_sources\": \"Aircraft; Children; Footsteps; Laughter; Shouting; Speech\", \"n_sources\": 6, \"n_raters_original\": 4, \"mean_annoyance_original\": 8.5}, {\"file\": \"CT112_2.mp3\", \"location\": \"CT\", \"majority_sources\": \"Bus; Car; Footsteps; General traffic; Siren; Speech\", \"n_sources\": 6, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.0}, {\"file\": \"m111_2.mp3\", \"location\": \"m1\", \"majority_sources\": \"Footsteps; General traffic; Laughter; Music; Shouting; Speech\", \"n_sources\": 6, \"n_raters_original\": 4, \"mean_annoyance_original\": 5.75}, {\"file\": \"tm211_1.mp3\", \"location\": \"tm\", \"majority_sources\": \"Children; Footsteps; General traffic; Laughter; Music; Speech; Water\", \"n_sources\": 7, \"n_raters_original\": 4, \"mean_annoyance_original\": 5.0}, {\"file\": \"Ts418_2.mp3\", \"location\": \"Ts\", \"majority_sources\": \"Bells; Bird tweet; Footsteps; General traffic; Laughter; Speech\", \"n_sources\": 6, \"n_raters_original\": 4, \"mean_annoyance_original\": 2.75}, {\"file\": \"Rf101_1.mp3\", \"location\": \"Rf\", \"majority_sources\": \"Bird tweet; Children; Footsteps; General traffic; Rustling leaves; Siren; Speech\", \"n_sources\": 7, \"n_raters_original\": 4, \"mean_annoyance_original\": 5.25}, {\"file\": \"CT101_1.mp3\", \"location\": \"CT\", \"majority_sources\": \"Bus; Car; Footsteps; General traffic; Horn; Speech\", \"n_sources\": 6, \"n_raters_original\": 4, \"mean_annoyance_original\": 5.0}, {\"file\": \"Rs304_2.mp3\", \"location\": \"Rs\", \"majority_sources\": \"Bird tweet; Footsteps; General traffic; Horn; Laughter; Speech\", \"n_sources\": 6, \"n_raters_original\": 4, \"mean_annoyance_original\": 5.5}, {\"file\": \"CT109_1.mp3\", \"location\": \"CT\", \"majority_sources\": \"Children; Footsteps; General traffic; Laughter; Motorcycle; Speech\", \"n_sources\": 6, \"n_raters_original\": 4, \"mean_annoyance_original\": 4.0}]\n</script>\n<style>\n:root{--bg:#eff2f4;--card:#fff;--ink:#1a1f24;--muted:#56616b;--accent:#2d5d86;--accent-ink:#fff;--line:#d3dbe1;--warn:#b3261e;--ok:#2e7d32}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:820px;margin:0 auto;padding:24px 16px 40px}\nh1{font-size:1.45rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.sec{background:var(--card);color:var(--ink);border:1px solid var(--line)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:8px 0 14px}.progress>i{display:block;height:100%;background:var(--accent)}\n.play{display:flex;align-items:center;gap:14px;padding:18px;border-radius:12px;background:#e4ecf2}\n.bar{flex:1;height:8px;background:#c9d6e0;border-radius:4px;overflow:hidden}.bar>i{display:block;height:100%;width:0;background:var(--accent)}\n.labels{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}\n@media (max-width:620px){.labels{grid-template-columns:repeat(2,1fr)}}\n.labels button,.scale button,.iv button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:9px 4px;font:inherit;font-size:.92rem;cursor:pointer;min-width:0}\n.labels button.on,.scale button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}\n.scale{display:grid;grid-template-columns:repeat(10,1fr);gap:5px}.scale button{font-weight:700;padding:11px 0}\n@media (max-width:480px){.scale{grid-template-columns:repeat(5,1fr)}}\n.ends{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-top:3px}\n.iv{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.iv button{padding:18px 0;font-weight:700}\n.iv button.now{background:#dbe7f0}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.f{margin-top:14px}.f>b{display:block;margin-bottom:4px}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:120px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:820px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Recordings: DeLTA dataset (Zenodo doi:10.5281/zenodo.7158057), 15-s excerpts of International Soundscape Database binaural recordings from London and Venice, CC BY 4.0. Headphone test after Milne et al. (2021).</footer>\n<script>\n(function(){\n  var N=10, PRACTICE=5, PLAY_S=15;\n  var app=document.getElementById('app'), Q={}, clips=[], prac=[], st=null, ctxA=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var x=a[k];a[k]=a[j];a[j]=x;}return a;}\n  function save(){try{localStorage.setItem('delta2022:state',JSON.stringify(st));}catch(e){}}\n  function ac(){if(!ctxA){var C=window.AudioContext||window.webkitAudioContext;ctxA=new C();}if(ctxA.state==='suspended')ctxA.resume();return ctxA;}\n  function byName(list,n){for(var i=0;i<list.length;i++)if(list[i].name===n)return list[i];return null;}\n\n  // ---------- generated test sounds ----------\n  function noiseBuffer(sec,dbfs,sr){var a=ac();sr=sr||a.sampleRate;var n=Math.round(sec*sr),b=a.createBuffer(2,n,sr),g=Math.pow(10,dbfs/20)*Math.sqrt(3);for(var c=0;c<2;c++){var d=b.getChannelData(c);for(var i=0;i<n;i++)d[i]=(Math.random()*2-1)*g;}return b;}\n  function playBuffer(b,onend){var a=ac(),s=a.createBufferSource();s.buffer=b;s.connect(a.destination);s.onended=onend||null;s.start();return s;}\n  function tune(){var a=ac(),sr=a.sampleRate,notes=[523.25,659.25,783.99,1046.5,783.99,659.25,523.25,659.25,783.99,659.25],len=0.5,n=Math.round(len*notes.length*sr),b=a.createBuffer(2,n,sr);\n    for(var c=0;c<2;c++){var d=b.getChannelData(c);for(var i=0;i<n;i++){var k=Math.floor(i/(len*sr)),t=(i%(len*sr))/sr,env=Math.min(1,t*40)*Math.exp(-t*3);d[i]=0.18*env*Math.sin(2*Math.PI*notes[k]*t);}}return b;}\n  // FFT for the Huggins-pitch stimulus\n  function fft(re,im,inv){var n=re.length,i,j,k,l;for(i=1,j=0;i<n;i++){var bit=n>>1;for(;j&bit;bit>>=1)j^=bit;j^=bit;if(i<j){var t=re[i];re[i]=re[j];re[j]=t;t=im[i];im[i]=im[j];im[j]=t;}}\n    for(l=2;l<=n;l<<=1){var ang=2*Math.PI/l*(inv?1:-1),wr=Math.cos(ang),wi=Math.sin(ang);for(i=0;i<n;i+=l){var cr=1,ci=0;for(k=0;k<l/2;k++){var a=i+k,b=i+k+l/2,tr=re[b]*cr-im[b]*ci,ti=re[b]*ci+im[b]*cr;re[b]=re[a]-tr;im[b]=im[a]-ti;re[a]+=tr;im[a]+=ti;var nr=cr*wr-ci*wi;ci=cr*wi+ci*wr;cr=nr;}}}\n    if(inv)for(i=0;i<n;i++){re[i]/=n;im[i]/=n;}}\n  function hpInterval(withPitch){\n    // 1 s of the same white noise in both ears; for the target interval the band 600 Hz ± 6 % is phase-inverted in one ear (Huggins pitch)\n    var a=ac(),sr=32768,n=32768,re=new Float64Array(n),im=new Float64Array(n),i;\n    for(i=0;i<n;i++)re[i]=Math.random()*2-1;\n    var L=Float32Array.from(re), R;\n    if(withPitch){fft(re,im,false);var lo=Math.floor(600*0.94*n/sr),hi=Math.ceil(600*1.06*n/sr);for(i=lo;i<=hi;i++){re[i]=-re[i];im[i]=-im[i];re[n-i]=-re[n-i];im[n-i]=-im[n-i];}fft(re,im,true);R=Float32Array.from(re);}else R=Float32Array.from(L);\n    var g=0.25/Math.sqrt(1/3), ramp=Math.round(0.02*sr), b=a.createBuffer(2,n,sr), dl=b.getChannelData(0), dr=b.getChannelData(1);\n    for(i=0;i<n;i++){var e=Math.min(1,i/ramp,(n-1-i)/ramp)*g*0.2;dl[i]=L[i]*e;dr[i]=R[i]*e;}\n    return b;\n  }\n\n  // ---------- screens ----------\n  function intro(){\n    if(clips.length<N){app.innerHTML='<h1>Recordings missing</h1><p>The media folder “clips” needs at least '+N+' recordings (now '+clips.length+').</p>';return;}\n    app.innerHTML='<h1>Listening to urban places</h1><p>You will listen to short recordings of streets and squares and tell us which sounds you hear and how annoying the sound is. <b>Please wear headphones</b>, sit in a quiet room and use a computer. First we check your sound, set the volume and run a short headphone test. About 15 minutes.</p>'+\n      '<div class=\"card\"><div class=\"f\" style=\"margin-top:0\"><b>'+esc(Q.gender.title)+'</b>'+(Q.gender.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"gender\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div><div class=\"f\"><b>'+esc(Q.age.title)+'</b><input type=\"number\" id=\"age\" min=\"18\" max=\"99\"></div></div>'+\n      '<div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div class=\"row\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var av=document.getElementById('age').value, g=app.querySelector('input[name=gender]:checked');\n      if(av&&!(Number(av)>=18&&Number(av)<=99))return err('Age must be between 18 and 99, or leave it empty.');\n      ac();var b=this;b.disabled=true;var calls=[SPSite.answer('consent',true)];if(g)calls.push(SPSite.answer('gender',g.value));if(av)calls.push(SPSite.answer('age',Number(av)));\n      Promise.all(calls).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}st.step='sound';save();route();});\n    };\n  }\n  function soundCheck(){\n    app.innerHTML='<h1>1 · Sound check</h1><div class=\"card\"><p>Press play. You should hear a short tune.</p><div class=\"row\"><button class=\"btn sec\" id=\"pl\">▶ Play the tune</button></div><div class=\"row\"><button class=\"btn\" id=\"yes\" disabled>I heard it</button><button class=\"btn sec\" id=\"no\" disabled>I did not hear anything</button></div><div class=\"err\"></div></div>';\n    document.getElementById('pl').onclick=function(){playBuffer(tune(),function(){document.getElementById('yes').disabled=false;document.getElementById('no').disabled=false;});};\n    document.getElementById('yes').onclick=function(){st.step='volume';save();route();};\n    document.getElementById('no').onclick=function(){err('Please check that your browser is allowed to play sound, that the volume is up and your headphones are connected, then play it again.');};\n  }\n  function volume(){\n    var src=null;\n    app.innerHTML='<h1>2 · Set the volume</h1><div class=\"card\"><p>Turn your volume down, press play, then turn it up while the noise plays until it is as loud as is still comfortable. This noise is as loud as the loudest recordings.</p><div class=\"row\"><button class=\"btn sec\" id=\"loud\">▶ Play loud noise (10 s)</button></div>'+\n      '<p style=\"margin-top:16px\">Now listen to this quiet noise, as quiet as the quietest recordings. You should still hear it clearly.</p><div class=\"row\"><button class=\"btn sec\" id=\"quiet\">▶ Play quiet noise (5 s)</button></div>'+\n      '<p style=\"margin-top:16px\"><b>From now on, please do not change the volume.</b></p><div class=\"row\"><button class=\"btn\" id=\"nx\" disabled>I can hear the quiet noise clearly</button></div><div class=\"err\"></div></div>';\n    var heard={loud:0,quiet:0};\n    function chk(){document.getElementById('nx').disabled=!(heard.loud&&heard.quiet);}\n    document.getElementById('loud').onclick=function(){if(src)try{src.stop();}catch(e){}src=playBuffer(noiseBuffer(10,-11.06),function(){heard.loud=1;chk();});};\n    document.getElementById('quiet').onclick=function(){if(src)try{src.stop();}catch(e){}src=playBuffer(noiseBuffer(5,-28.8),function(){heard.quiet=1;chk();});};\n    document.getElementById('nx').onclick=function(){if(src)try{src.stop();}catch(e){}st.step='hp';st.hp={trial:0,correct:0};save();route();};\n  }\n  function hp(){\n    var h=st.hp;\n    if(h.trial>=6){\n      return SPSite.answer('headphone_score',h.correct).then(function(){\n        if(h.correct>=5){st.step='prac';st.pi=0;save();route();}\n        else{app.innerHTML='<h1>Headphone test not passed</h1><div class=\"card\"><p>You heard the hidden tone in '+h.correct+' of 6 trials. This test only works with headphones (not speakers). Please put on headphones and try again.</p><div class=\"row\"><button class=\"btn\" id=\"again\">Try the headphone test again</button></div></div>';document.getElementById('again').onclick=function(){st.hp={trial:0,correct:0};save();route();};}\n      });\n    }\n    var target=Math.floor(Math.random()*3);\n    app.innerHTML='<h1>3 · Headphone test</h1><p>Trial '+(h.trial+1)+' of 6. You will hear three bursts of noise. One of them has a faint tone hidden inside it. Which one?</p><div class=\"card\"><div class=\"row\"><button class=\"btn sec\" id=\"pl\">▶ Play the three sounds</button></div><div class=\"iv\"><button data-i=\"0\" disabled>1</button><button data-i=\"1\" disabled>2</button><button data-i=\"2\" disabled>3</button></div><div class=\"err\"></div></div>';\n    var bufs=[0,1,2].map(function(i){return hpInterval(i===target);}), btns=app.querySelectorAll('.iv button');\n    document.getElementById('pl').onclick=function(){\n      var a=ac(),t0=a.currentTime+0.1;this.disabled=true;\n      bufs.forEach(function(b,i){var s=a.createBufferSource();s.buffer=b;s.connect(a.destination);s.start(t0+i*1.5);setTimeout(function(){btns.forEach(function(x){x.classList.toggle('now',x.getAttribute('data-i')==i);});},(0.1+i*1.5)*1000);});\n      setTimeout(function(){btns.forEach(function(x){x.classList.remove('now');x.disabled=false;});},(0.1+3*1.5)*1000);\n    };\n    btns.forEach(function(x){x.onclick=function(){h.trial++;if(Number(x.getAttribute('data-i'))===target)h.correct++;save();hp();};});\n  }\n  function player(f,label,done){\n    var au=new Audio();au.src=f.url;au.preload='auto';\n    app.querySelector('#stage').innerHTML='<div class=\"play\"><button class=\"btn\" id=\"pb\">▶ '+esc(label)+'</button><div class=\"bar\"><i id=\"pbar\"></i></div></div>';\n    var pb=document.getElementById('pb'),bar=document.getElementById('pbar'),tm=null;\n    pb.onclick=function(){pb.disabled=true;au.currentTime=0;au.play().catch(function(){pb.disabled=false;err('The recording could not play. Press play again.');});\n      tm=setInterval(function(){var d=Math.min(PLAY_S,au.duration||PLAY_S);bar.style.width=Math.min(100,100*au.currentTime/d)+'%';},200);};\n    au.onended=function(){clearInterval(tm);bar.style.width='100%';done();};\n  }\n  function trial(f,head,isPractice,onDone){\n    var labels=st.layout.map(function(v){for(var i=0;i<Q.sources.choices.length;i++)if(Q.sources.choices[i].value===v)return Q.sources.choices[i];}).filter(Boolean), sel={}, rating=null;\n    app.innerHTML=head+'<div class=\"card\"><p style=\"color:var(--ink)\"><b>Step 1.</b> Listen to the recording (15 s). Then choose the sounds you heard.</p><div id=\"stage\"></div><div id=\"q\"></div><div class=\"err\"></div></div>';\n    player(f,'Play recording',function(){\n      document.getElementById('q').innerHTML='<p style=\"color:var(--ink);margin-top:14px\"><b>'+esc(Q.sources.title)+'</b></p><div class=\"labels\">'+labels.map(function(c){return '<button data-v=\"'+esc(c.value)+'\">'+esc(c.text)+'</button>';}).join('')+'</div><div class=\"row\"><button class=\"btn\" id=\"nx\">Next</button></div>';\n      app.querySelectorAll('.labels button').forEach(function(x){x.onclick=function(){var v=x.getAttribute('data-v');sel[v]=!sel[v];x.classList.toggle('on',!!sel[v]);err('');};});\n      document.getElementById('nx').onclick=function(){\n        var vals=Object.keys(sel).filter(function(k){return sel[k];});if(!vals.length)return err('Please choose at least one sound (or “Non-identifiable” / “Other”).');\n        var go=function(){step2(vals);};\n        if(isPractice)go();else{this.disabled=true;SPSite.answer('sources',vals,{key:f.name,shown:[f.name]}).then(function(r){if(!ok(r))return err(r.error);go();});}\n      };\n    });\n    function step2(){\n      app.querySelector('.card').innerHTML='<p style=\"color:var(--ink)\"><b>Step 2.</b> Listen to the same recording again. Then rate it.</p><div id=\"stage\"></div><div id=\"q\"></div><div class=\"err\"></div>';\n      player(f,'Play recording again',function(){\n        var b='';for(var v=1;v<=10;v++)b+='<button data-v=\"'+v+'\">'+v+'</button>';\n        document.getElementById('q').innerHTML='<p style=\"color:var(--ink);margin-top:14px\"><b>'+esc(Q.annoyance.title)+'</b></p><div class=\"scale\">'+b+'</div><div class=\"ends\"><span>1 · Not at all</span><span>10 · Extremely</span></div>';\n        app.querySelectorAll('.scale button').forEach(function(x){x.onclick=function(){\n          var v=Number(x.getAttribute('data-v'));app.querySelectorAll('.scale button').forEach(function(y){y.disabled=true;});\n          if(isPractice)return onDone();\n          SPSite.answer('annoyance',v,{key:f.name,shown:[f.name]}).then(function(r){if(!ok(r)){app.querySelectorAll('.scale button').forEach(function(y){y.disabled=false;});return err(r.error);}onDone();});\n        };});\n      });\n    }\n  }\n  function practice(){\n    if(st.pi>=Math.min(PRACTICE,prac.length)){app.innerHTML='<h1>Practice done</h1><div class=\"card\"><p>Now the real recordings begin: '+N+' recordings, each played twice.</p><button class=\"btn\" id=\"go\">Start</button></div>';document.getElementById('go').onclick=function(){st.step='main';save();route();};return;}\n    trial(prac[st.pi],'<h1>Practice '+(st.pi+1)+' of '+Math.min(PRACTICE,prac.length)+'</h1><p>Practice answers are not recorded.</p>',true,function(){st.pi++;save();practice();});\n  }\n  function main(){\n    var i=0;while(i<st.list.length&&st.done[st.list[i]])i++;\n    if(i>=st.list.length)return finish();\n    var f=byName(clips,st.list[i]);\n    trial(f,'<p>Recording '+(i+1)+' of '+st.list.length+'</p><div class=\"progress\"><i style=\"width:'+(100*i/st.list.length)+'%\"></i></div>',false,function(){st.done[f.name]=true;save();window.scrollTo(0,0);main();});\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){var m=r.missing||[];if(m.indexOf('consent')>=0)st.step='intro';else if(m.indexOf('headphone_score')>=0)st.step='hp';else{st.done={};st.step='main';}save();route();},1800);}else{try{localStorage.removeItem('delta2022:state');}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  function route(){\n    var s=st.step;\n    if(s==='sound')return soundCheck();\n    if(s==='volume')return volume();\n    if(s==='hp')return hp();\n    if(s==='prac')return practice();\n    if(s==='main')return main();\n    intro();\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','gender','age','headphone_score','sources','annoyance'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    clips=(SPSite.getMedia('clips')||[]).filter(function(f){return /\\.(mp3|wav|ogg|m4a)$/i.test(f.name);});\n    prac=(SPSite.getMedia('practice')||[]).filter(function(f){return /\\.(mp3|wav|ogg|m4a)$/i.test(f.name);});\n    try{st=JSON.parse(localStorage.getItem('delta2022:state'));}catch(e){st=null;}\n    if(!st||!Array.isArray(st.list)||st.list.some(function(n){return !byName(clips,n);}))st={step:'intro',list:shuffle(clips).slice(0,N).map(function(f){return f.name;}),done:{},layout:shuffle((Q.sources.choices||[]).map(function(c){return c.value;}))}; // 10 random recordings; label layout random per participant, as in the paper\n    prac=shuffle(prac);\n    var a=(ctx&&ctx.answers)||{};\n    if(a.consent!==true)st.step='intro';\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-26T23:54:48.797Z",
+   "mediaFolders": [
+    "clips",
+    "practice"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-26T23:54:48.797Z"
+  },
+  "description": "Online listening test with headphones. After a sound check, volume setting and a Huggins-pitch headphone test, participants hear 10 binaural 15-second recordings of urban places in London and Venice (drawn at random from 120). For each recording they first tick every sound source they can hear (24 labels: traffic, birds, speech, construction, water…), then hear it again and rate “How annoying is this sound?” from 1 (not at all) to 10 (extremely). Rebuilt from Mitchell, Erfanian, Soelistyo, Oberman, Kang, Aldridge, Xue & Aletta (2022), Int. J. Environ. Res. Public Health 19(22): 14872, with the authors' open DeLTA recordings (Zenodo 7158057, CC BY 4.0). The page source holds, for each recording, the majority source labels and mean annoyance from the original study (script id delta-original).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2022-mitchell-urban/clips/2cv32_1__13a13e5a-8188-4cc0-8f71-34dc8ab87c98.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/2cv32_1__13a13e5a-8188-4cc0-8f71-34dc8ab87c98.mp3",
+   "name": "2cv32_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/2cv32_1__13a13e5a-8188-4cc0-8f71-34dc8ab87c98.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/AM02_1__967f78a9-c181-4775-bc74-85fb75629c3d.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/AM02_1__967f78a9-c181-4775-bc74-85fb75629c3d.mp3",
+   "name": "AM02_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/AM02_1__967f78a9-c181-4775-bc74-85fb75629c3d.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/CT101_1__cc263ce0-9d80-4b85-a05b-24d1fe28fbcf.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/CT101_1__cc263ce0-9d80-4b85-a05b-24d1fe28fbcf.mp3",
+   "name": "CT101_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/CT101_1__cc263ce0-9d80-4b85-a05b-24d1fe28fbcf.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/CT109_1__481c9bbe-be12-4499-ad6d-f40f491e63cb.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/CT109_1__481c9bbe-be12-4499-ad6d-f40f491e63cb.mp3",
+   "name": "CT109_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/CT109_1__481c9bbe-be12-4499-ad6d-f40f491e63cb.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/CT109_2__92c4cf97-b946-44df-bf62-442ccc933be2.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/CT109_2__92c4cf97-b946-44df-bf62-442ccc933be2.mp3",
+   "name": "CT109_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/CT109_2__92c4cf97-b946-44df-bf62-442ccc933be2.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/CT112_2__7b87ef13-2851-48a7-a2bf-70114b0536fb.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/CT112_2__7b87ef13-2851-48a7-a2bf-70114b0536fb.mp3",
+   "name": "CT112_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/CT112_2__7b87ef13-2851-48a7-a2bf-70114b0536fb.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/CT121_1__06f42253-2d14-43f7-9ede-67f3980fda26.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/CT121_1__06f42253-2d14-43f7-9ede-67f3980fda26.mp3",
+   "name": "CT121_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/CT121_1__06f42253-2d14-43f7-9ede-67f3980fda26.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/CT318_2__c009e668-1c4d-4ac3-99f9-7414d82e9205.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/CT318_2__c009e668-1c4d-4ac3-99f9-7414d82e9205.mp3",
+   "name": "CT318_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/CT318_2__c009e668-1c4d-4ac3-99f9-7414d82e9205.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/CT328_3__55e9e8aa-ef11-4dfa-bd62-9c32eb82f787.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/CT328_3__55e9e8aa-ef11-4dfa-bd62-9c32eb82f787.mp3",
+   "name": "CT328_3.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/CT328_3__55e9e8aa-ef11-4dfa-bd62-9c32eb82f787.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/CT502_1__70b92587-96e9-4ae1-bff7-a99447f30d45.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/CT502_1__70b92587-96e9-4ae1-bff7-a99447f30d45.mp3",
+   "name": "CT502_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/CT502_1__70b92587-96e9-4ae1-bff7-a99447f30d45.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/CT523_2__24f7156d-aa4e-44a7-99b2-626f1451ed4c.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/CT523_2__24f7156d-aa4e-44a7-99b2-626f1451ed4c.mp3",
+   "name": "CT523_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/CT523_2__24f7156d-aa4e-44a7-99b2-626f1451ed4c.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/ET111_1__36dfc2d3-7244-4c4c-b917-b7030057d755.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/ET111_1__36dfc2d3-7244-4c4c-b917-b7030057d755.mp3",
+   "name": "ET111_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/ET111_1__36dfc2d3-7244-4c4c-b917-b7030057d755.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/ET203_1__6d1ec1d6-45a9-4759-ac27-a8bacf0fbbfa.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/ET203_1__6d1ec1d6-45a9-4759-ac27-a8bacf0fbbfa.mp3",
+   "name": "ET203_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/ET203_1__6d1ec1d6-45a9-4759-ac27-a8bacf0fbbfa.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/ET203_2__2c7eef39-e9a6-45e9-9d14-83d96cb952e3.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/ET203_2__2c7eef39-e9a6-45e9-9d14-83d96cb952e3.mp3",
+   "name": "ET203_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/ET203_2__2c7eef39-e9a6-45e9-9d14-83d96cb952e3.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/ET212_2__396ecb65-48b8-4074-a6f1-c1d1dd23cfc3.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/ET212_2__396ecb65-48b8-4074-a6f1-c1d1dd23cfc3.mp3",
+   "name": "ET212_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/ET212_2__396ecb65-48b8-4074-a6f1-c1d1dd23cfc3.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/ET215_2__4df3cb85-69fd-4c9d-9878-95aafe6b5d51.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/ET215_2__4df3cb85-69fd-4c9d-9878-95aafe6b5d51.mp3",
+   "name": "ET215_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/ET215_2__4df3cb85-69fd-4c9d-9878-95aafe6b5d51.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/ET218_1__20c076de-e589-44a7-828c-d86ba259fa81.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/ET218_1__20c076de-e589-44a7-828c-d86ba259fa81.mp3",
+   "name": "ET218_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/ET218_1__20c076de-e589-44a7-828c-d86ba259fa81.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/ET307_2__a0b64cc3-81d7-489b-a33a-ec0839406c0e.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/ET307_2__a0b64cc3-81d7-489b-a33a-ec0839406c0e.mp3",
+   "name": "ET307_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/ET307_2__a0b64cc3-81d7-489b-a33a-ec0839406c0e.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/ET427_2__e99ebefa-543c-4830-8f2a-05373d0801bc.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/ET427_2__e99ebefa-543c-4830-8f2a-05373d0801bc.mp3",
+   "name": "ET427_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/ET427_2__e99ebefa-543c-4830-8f2a-05373d0801bc.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/ET431_2__ff40f2c3-8046-4df2-8225-2e4ee67237b1.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/ET431_2__ff40f2c3-8046-4df2-8225-2e4ee67237b1.mp3",
+   "name": "ET431_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/ET431_2__ff40f2c3-8046-4df2-8225-2e4ee67237b1.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/MG114_2__76421bd4-bcf2-4f03-a0db-93167a8bf1fa.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/MG114_2__76421bd4-bcf2-4f03-a0db-93167a8bf1fa.mp3",
+   "name": "MG114_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/MG114_2__76421bd4-bcf2-4f03-a0db-93167a8bf1fa.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/MG320_2__bdd8d089-3c54-4b36-9b64-5c867e04defa.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/MG320_2__bdd8d089-3c54-4b36-9b64-5c867e04defa.mp3",
+   "name": "MG320_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/MG320_2__bdd8d089-3c54-4b36-9b64-5c867e04defa.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/MG332_2__37334196-3adc-4288-9ab2-77b1a0beccf5.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/MG332_2__37334196-3adc-4288-9ab2-77b1a0beccf5.mp3",
+   "name": "MG332_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/MG332_2__37334196-3adc-4288-9ab2-77b1a0beccf5.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/ML111_8__4349072b-1734-4a8e-a813-96ed27137dfc.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/ML111_8__4349072b-1734-4a8e-a813-96ed27137dfc.mp3",
+   "name": "ML111_8.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/ML111_8__4349072b-1734-4a8e-a813-96ed27137dfc.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/ML131_1__d1599688-2335-4b8b-979e-26aa66150cae.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/ML131_1__d1599688-2335-4b8b-979e-26aa66150cae.mp3",
+   "name": "ML131_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/ML131_1__d1599688-2335-4b8b-979e-26aa66150cae.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/ML131_6__99694d64-0b14-4765-9e7c-497b127386b6.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/ML131_6__99694d64-0b14-4765-9e7c-497b127386b6.mp3",
+   "name": "ML131_6.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/ML131_6__99694d64-0b14-4765-9e7c-497b127386b6.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Mc104_2__a9d4ffea-1636-4164-b3f1-44ed30f116ec.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Mc104_2__a9d4ffea-1636-4164-b3f1-44ed30f116ec.mp3",
+   "name": "Mc104_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Mc104_2__a9d4ffea-1636-4164-b3f1-44ed30f116ec.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Mc120_1__39601534-6aeb-4a9e-a03d-b1b924df487c.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Mc120_1__39601534-6aeb-4a9e-a03d-b1b924df487c.mp3",
+   "name": "Mc120_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Mc120_1__39601534-6aeb-4a9e-a03d-b1b924df487c.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Mc316_2__6a57a9ab-7ff9-4f53-98a2-dfa40f6a269d.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Mc316_2__6a57a9ab-7ff9-4f53-98a2-dfa40f6a269d.mp3",
+   "name": "Mc316_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Mc316_2__6a57a9ab-7ff9-4f53-98a2-dfa40f6a269d.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/NP101_1__cac90291-44b6-441d-838f-f77960588d8b.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/NP101_1__cac90291-44b6-441d-838f-f77960588d8b.mp3",
+   "name": "NP101_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/NP101_1__cac90291-44b6-441d-838f-f77960588d8b.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/NP116_2__ee263140-78bd-4296-ac03-993bdf785323.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/NP116_2__ee263140-78bd-4296-ac03-993bdf785323.mp3",
+   "name": "NP116_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/NP116_2__ee263140-78bd-4296-ac03-993bdf785323.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/NP123_1__2cc5f9b0-be7b-4ae5-b26b-406e7b02fa93.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/NP123_1__2cc5f9b0-be7b-4ae5-b26b-406e7b02fa93.mp3",
+   "name": "NP123_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/NP123_1__2cc5f9b0-be7b-4ae5-b26b-406e7b02fa93.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/NP123_2__1e2ee6c9-7839-4b89-b976-e7858ffc4641.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/NP123_2__1e2ee6c9-7839-4b89-b976-e7858ffc4641.mp3",
+   "name": "NP123_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/NP123_2__1e2ee6c9-7839-4b89-b976-e7858ffc4641.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/NP128_1__c8e8c28a-ff53-43b9-b29f-7928c9a9da66.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/NP128_1__c8e8c28a-ff53-43b9-b29f-7928c9a9da66.mp3",
+   "name": "NP128_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/NP128_1__c8e8c28a-ff53-43b9-b29f-7928c9a9da66.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/NP142_2__606402ed-57ab-48a1-9446-1d7e0f93e886.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/NP142_2__606402ed-57ab-48a1-9446-1d7e0f93e886.mp3",
+   "name": "NP142_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/NP142_2__606402ed-57ab-48a1-9446-1d7e0f93e886.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/NP146_1__6badf5b8-fed4-419a-ad3f-9d3553d97d68.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/NP146_1__6badf5b8-fed4-419a-ad3f-9d3553d97d68.mp3",
+   "name": "NP146_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/NP146_1__6badf5b8-fed4-419a-ad3f-9d3553d97d68.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/NP163_1__6cd58766-a59c-4070-a505-d892d7958ab8.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/NP163_1__6cd58766-a59c-4070-a505-d892d7958ab8.mp3",
+   "name": "NP163_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/NP163_1__6cd58766-a59c-4070-a505-d892d7958ab8.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/PL303_1__0d6a4ea8-5d42-48ec-a435-20d3f9634cb5.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/PL303_1__0d6a4ea8-5d42-48ec-a435-20d3f9634cb5.mp3",
+   "name": "PL303_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/PL303_1__0d6a4ea8-5d42-48ec-a435-20d3f9634cb5.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/PL311_1__2bb2a41e-184c-45f9-ab05-62d6d42b598a.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/PL311_1__2bb2a41e-184c-45f9-ab05-62d6d42b598a.mp3",
+   "name": "PL311_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/PL311_1__2bb2a41e-184c-45f9-ab05-62d6d42b598a.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/PL313_1__2f9528ba-0dd1-4316-9c18-d291d422e30f.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/PL313_1__2f9528ba-0dd1-4316-9c18-d291d422e30f.mp3",
+   "name": "PL313_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/PL313_1__2f9528ba-0dd1-4316-9c18-d291d422e30f.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/PL313_2__eef1d675-7305-49ca-af38-3b492cd8bac6.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/PL313_2__eef1d675-7305-49ca-af38-3b492cd8bac6.mp3",
+   "name": "PL313_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/PL313_2__eef1d675-7305-49ca-af38-3b492cd8bac6.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/PL403_1__9b43f573-6cfd-4c1d-b952-f3c320c5dc37.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/PL403_1__9b43f573-6cfd-4c1d-b952-f3c320c5dc37.mp3",
+   "name": "PL403_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/PL403_1__9b43f573-6cfd-4c1d-b952-f3c320c5dc37.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/PL407_1__b632d8c1-79ac-4afe-a84b-d15e85d70bf2.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/PL407_1__b632d8c1-79ac-4afe-a84b-d15e85d70bf2.mp3",
+   "name": "PL407_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/PL407_1__b632d8c1-79ac-4afe-a84b-d15e85d70bf2.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/PL429_1__46dfbcea-6093-462b-807d-fc7a3e2e6d35.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/PL429_1__46dfbcea-6093-462b-807d-fc7a3e2e6d35.mp3",
+   "name": "PL429_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/PL429_1__46dfbcea-6093-462b-807d-fc7a3e2e6d35.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/PL430_2__b8892904-7c6e-4a75-bfe7-922639b844f3.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/PL430_2__b8892904-7c6e-4a75-bfe7-922639b844f3.mp3",
+   "name": "PL430_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/PL430_2__b8892904-7c6e-4a75-bfe7-922639b844f3.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/PL436_1__eca1a103-dc22-426d-91cf-faa753ac7510.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/PL436_1__eca1a103-dc22-426d-91cf-faa753ac7510.mp3",
+   "name": "PL436_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/PL436_1__eca1a103-dc22-426d-91cf-faa753ac7510.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/PL438_1__d281347b-cafa-45a5-be0c-bb6fe7499fd5.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/PL438_1__d281347b-cafa-45a5-be0c-bb6fe7499fd5.mp3",
+   "name": "PL438_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/PL438_1__d281347b-cafa-45a5-be0c-bb6fe7499fd5.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Pl119_2__0e44b090-eb7c-4f39-af92-46637bb61394.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Pl119_2__0e44b090-eb7c-4f39-af92-46637bb61394.mp3",
+   "name": "Pl119_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Pl119_2__0e44b090-eb7c-4f39-af92-46637bb61394.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Pl217_1__e35fbede-1192-4b76-a5a7-f8b6c7e32d9b.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Pl217_1__e35fbede-1192-4b76-a5a7-f8b6c7e32d9b.mp3",
+   "name": "Pl217_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Pl217_1__e35fbede-1192-4b76-a5a7-f8b6c7e32d9b.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Pl227_1__08bcb114-e7aa-423b-8b0d-354936132c79.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Pl227_1__08bcb114-e7aa-423b-8b0d-354936132c79.mp3",
+   "name": "Pl227_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Pl227_1__08bcb114-e7aa-423b-8b0d-354936132c79.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/RF310_2__464646fb-d3c8-45a2-9d03-8d2967c0c015.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/RF310_2__464646fb-d3c8-45a2-9d03-8d2967c0c015.mp3",
+   "name": "RF310_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/RF310_2__464646fb-d3c8-45a2-9d03-8d2967c0c015.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/RF315_2__b4048b67-4899-4796-84f7-b4285c304a36.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/RF315_2__b4048b67-4899-4796-84f7-b4285c304a36.mp3",
+   "name": "RF315_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/RF315_2__b4048b67-4899-4796-84f7-b4285c304a36.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/RF325_1__12d7d68e-7af2-479b-973e-f3c8e281684b.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/RF325_1__12d7d68e-7af2-479b-973e-f3c8e281684b.mp3",
+   "name": "RF325_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/RF325_1__12d7d68e-7af2-479b-973e-f3c8e281684b.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/RF338_1__467e0077-4ba8-4b73-9c2a-058b80972ed0.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/RF338_1__467e0077-4ba8-4b73-9c2a-058b80972ed0.mp3",
+   "name": "RF338_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/RF338_1__467e0077-4ba8-4b73-9c2a-058b80972ed0.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/RP318_2__74de85ce-cf71-4366-95b4-ffaba87a1fb9.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/RP318_2__74de85ce-cf71-4366-95b4-ffaba87a1fb9.mp3",
+   "name": "RP318_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/RP318_2__74de85ce-cf71-4366-95b4-ffaba87a1fb9.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/RP319_2__dcfe60dc-c156-46ac-88c9-f15f9a2ab8fa.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/RP319_2__dcfe60dc-c156-46ac-88c9-f15f9a2ab8fa.mp3",
+   "name": "RP319_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/RP319_2__dcfe60dc-c156-46ac-88c9-f15f9a2ab8fa.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/RP320_1__421b48ab-f0a1-4783-b0d4-b473dc0bd37e.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/RP320_1__421b48ab-f0a1-4783-b0d4-b473dc0bd37e.mp3",
+   "name": "RP320_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/RP320_1__421b48ab-f0a1-4783-b0d4-b473dc0bd37e.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/RP325_1__3b0afc72-2477-454b-8ea7-a5d7fd036371.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/RP325_1__3b0afc72-2477-454b-8ea7-a5d7fd036371.mp3",
+   "name": "RP325_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/RP325_1__3b0afc72-2477-454b-8ea7-a5d7fd036371.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/RP331_1__e768e45f-31af-4158-aa68-7c6bbd3579cd.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/RP331_1__e768e45f-31af-4158-aa68-7c6bbd3579cd.mp3",
+   "name": "RP331_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/RP331_1__e768e45f-31af-4158-aa68-7c6bbd3579cd.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/RP332_1__5ef6138d-300c-4e52-84b5-a5e75784ff49.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/RP332_1__5ef6138d-300c-4e52-84b5-a5e75784ff49.mp3",
+   "name": "RP332_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/RP332_1__5ef6138d-300c-4e52-84b5-a5e75784ff49.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/practice/CT309_1__d10cc958-f1bc-4f14-a269-6454d1db8edd.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/practice/CT309_1__d10cc958-f1bc-4f14-a269-6454d1db8edd.mp3",
+   "name": "CT309_1.mp3",
+   "type": "audio",
+   "folder": "practice",
+   "media_id": "templates/2022-mitchell-urban/practice/CT309_1__d10cc958-f1bc-4f14-a269-6454d1db8edd.mp3",
+   "logicalFolder": "practice",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/practice/MC522_1__a90cf73c-fc8d-4bd5-b28f-22baaf0921cd.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/practice/MC522_1__a90cf73c-fc8d-4bd5-b28f-22baaf0921cd.mp3",
+   "name": "MC522_1.mp3",
+   "type": "audio",
+   "folder": "practice",
+   "media_id": "templates/2022-mitchell-urban/practice/MC522_1__a90cf73c-fc8d-4bd5-b28f-22baaf0921cd.mp3",
+   "logicalFolder": "practice",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/practice/RF302_1__21fbc828-db49-4fb9-a86c-22a26f0fc7dd.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/practice/RF302_1__21fbc828-db49-4fb9-a86c-22a26f0fc7dd.mp3",
+   "name": "RF302_1.mp3",
+   "type": "audio",
+   "folder": "practice",
+   "media_id": "templates/2022-mitchell-urban/practice/RF302_1__21fbc828-db49-4fb9-a86c-22a26f0fc7dd.mp3",
+   "logicalFolder": "practice",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/practice/SC208_2__a8a1fbea-aefe-46e7-9705-15ef03fbbc4d.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/practice/SC208_2__a8a1fbea-aefe-46e7-9705-15ef03fbbc4d.mp3",
+   "name": "SC208_2.mp3",
+   "type": "audio",
+   "folder": "practice",
+   "media_id": "templates/2022-mitchell-urban/practice/SC208_2__a8a1fbea-aefe-46e7-9705-15ef03fbbc4d.mp3",
+   "logicalFolder": "practice",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/practice/ts207_1__59fcb060-bcb9-4e38-8bcb-e935586538c7.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/practice/ts207_1__59fcb060-bcb9-4e38-8bcb-e935586538c7.mp3",
+   "name": "ts207_1.mp3",
+   "type": "audio",
+   "folder": "practice",
+   "media_id": "templates/2022-mitchell-urban/practice/ts207_1__59fcb060-bcb9-4e38-8bcb-e935586538c7.mp3",
+   "logicalFolder": "practice",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/RP333_2__79b32897-5033-45e5-926d-5e74b980d577.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/RP333_2__79b32897-5033-45e5-926d-5e74b980d577.mp3",
+   "name": "RP333_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/RP333_2__79b32897-5033-45e5-926d-5e74b980d577.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/RS410_2__3857d082-d4c6-48e1-8448-56864e7ced0d.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/RS410_2__3857d082-d4c6-48e1-8448-56864e7ced0d.mp3",
+   "name": "RS410_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/RS410_2__3857d082-d4c6-48e1-8448-56864e7ced0d.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Rf101_1__7f6f46ae-0278-4ce7-a491-e82e1960f228.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Rf101_1__7f6f46ae-0278-4ce7-a491-e82e1960f228.mp3",
+   "name": "Rf101_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Rf101_1__7f6f46ae-0278-4ce7-a491-e82e1960f228.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Rf117_2__e5ae01ad-528b-445e-b7bb-5d581eceb201.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Rf117_2__e5ae01ad-528b-445e-b7bb-5d581eceb201.mp3",
+   "name": "Rf117_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Rf117_2__e5ae01ad-528b-445e-b7bb-5d581eceb201.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Rf129_2__93545feb-b97b-4bad-af10-8a0d76d08791.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Rf129_2__93545feb-b97b-4bad-af10-8a0d76d08791.mp3",
+   "name": "Rf129_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Rf129_2__93545feb-b97b-4bad-af10-8a0d76d08791.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Rf209_1__713bc751-b867-4545-b41c-b837e7ed7a73.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Rf209_1__713bc751-b867-4545-b41c-b837e7ed7a73.mp3",
+   "name": "Rf209_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Rf209_1__713bc751-b867-4545-b41c-b837e7ed7a73.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Rf223_2__6bc26307-4511-49eb-9aff-8a8a24997b67.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Rf223_2__6bc26307-4511-49eb-9aff-8a8a24997b67.mp3",
+   "name": "Rf223_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Rf223_2__6bc26307-4511-49eb-9aff-8a8a24997b67.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Rp102_1__87492b34-4d9b-49fc-aec3-32fea46a5a72.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Rp102_1__87492b34-4d9b-49fc-aec3-32fea46a5a72.mp3",
+   "name": "Rp102_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Rp102_1__87492b34-4d9b-49fc-aec3-32fea46a5a72.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Rp108_1__87f024db-8177-4218-a8da-574104df8624.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Rp108_1__87f024db-8177-4218-a8da-574104df8624.mp3",
+   "name": "Rp108_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Rp108_1__87f024db-8177-4218-a8da-574104df8624.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Rp108_2__509552c1-597b-4013-8753-f2409574ee24.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Rp108_2__509552c1-597b-4013-8753-f2409574ee24.mp3",
+   "name": "Rp108_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Rp108_2__509552c1-597b-4013-8753-f2409574ee24.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Rp227_1__cbec3342-29c2-4bc2-bc05-e07eb0bc9683.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Rp227_1__cbec3342-29c2-4bc2-bc05-e07eb0bc9683.mp3",
+   "name": "Rp227_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Rp227_1__cbec3342-29c2-4bc2-bc05-e07eb0bc9683.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Rs101_1__706138c9-0e88-4041-9ac8-7b387ffd1975.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Rs101_1__706138c9-0e88-4041-9ac8-7b387ffd1975.mp3",
+   "name": "Rs101_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Rs101_1__706138c9-0e88-4041-9ac8-7b387ffd1975.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Rs101_2__6d94e1b2-9eed-44b6-af56-2d9e90e78c38.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Rs101_2__6d94e1b2-9eed-44b6-af56-2d9e90e78c38.mp3",
+   "name": "Rs101_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Rs101_2__6d94e1b2-9eed-44b6-af56-2d9e90e78c38.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Rs125_1__e61d2770-fb8e-4057-b939-99bc37971712.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Rs125_1__e61d2770-fb8e-4057-b939-99bc37971712.mp3",
+   "name": "Rs125_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Rs125_1__e61d2770-fb8e-4057-b939-99bc37971712.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Rs126_1__304ec728-2d03-42ba-b0ad-9755f63cc341.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Rs126_1__304ec728-2d03-42ba-b0ad-9755f63cc341.mp3",
+   "name": "Rs126_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Rs126_1__304ec728-2d03-42ba-b0ad-9755f63cc341.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Rs230_1__7b633d75-dd6d-49b8-a53f-53dc5db3fe03.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Rs230_1__7b633d75-dd6d-49b8-a53f-53dc5db3fe03.mp3",
+   "name": "Rs230_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Rs230_1__7b633d75-dd6d-49b8-a53f-53dc5db3fe03.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Rs304_2__988a72ee-38a4-4afa-945d-25325be9b333.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Rs304_2__988a72ee-38a4-4afa-945d-25325be9b333.mp3",
+   "name": "Rs304_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Rs304_2__988a72ee-38a4-4afa-945d-25325be9b333.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Rs313_2__baef41ee-b48b-40d0-9851-049b853d27e4.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Rs313_2__baef41ee-b48b-40d0-9851-049b853d27e4.mp3",
+   "name": "Rs313_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Rs313_2__baef41ee-b48b-40d0-9851-049b853d27e4.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/SC204_2__782b668f-03af-4289-b46f-9bf079edba14.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/SC204_2__782b668f-03af-4289-b46f-9bf079edba14.mp3",
+   "name": "SC204_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/SC204_2__782b668f-03af-4289-b46f-9bf079edba14.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/SR212_1__8cc86e22-f77f-4a4c-9b1f-77c356128f48.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/SR212_1__8cc86e22-f77f-4a4c-9b1f-77c356128f48.mp3",
+   "name": "SR212_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/SR212_1__8cc86e22-f77f-4a4c-9b1f-77c356128f48.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/SR244_2__01182b51-5151-4adc-aeea-cf92bb7f3050.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/SR244_2__01182b51-5151-4adc-aeea-cf92bb7f3050.mp3",
+   "name": "SR244_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/SR244_2__01182b51-5151-4adc-aeea-cf92bb7f3050.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/TM405_1__2b32bcf0-c1f1-4724-990e-4f56439e3465.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/TM405_1__2b32bcf0-c1f1-4724-990e-4f56439e3465.mp3",
+   "name": "TM405_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/TM405_1__2b32bcf0-c1f1-4724-990e-4f56439e3465.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/TM425_1__b121e5fd-ff41-4b7b-98de-52b29c3b3be2.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/TM425_1__b121e5fd-ff41-4b7b-98de-52b29c3b3be2.mp3",
+   "name": "TM425_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/TM425_1__b121e5fd-ff41-4b7b-98de-52b29c3b3be2.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/TM426_1__f5828cb1-4394-4b0f-bcb8-d723591cf9be.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/TM426_1__f5828cb1-4394-4b0f-bcb8-d723591cf9be.mp3",
+   "name": "TM426_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/TM426_1__f5828cb1-4394-4b0f-bcb8-d723591cf9be.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/TM431_1__1bff1437-f6f6-4936-8a7a-ef3da6f34d62.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/TM431_1__1bff1437-f6f6-4936-8a7a-ef3da6f34d62.mp3",
+   "name": "TM431_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/TM431_1__1bff1437-f6f6-4936-8a7a-ef3da6f34d62.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/Ts418_2__c6460437-e76d-4027-ad68-5135cd270725.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/Ts418_2__c6460437-e76d-4027-ad68-5135cd270725.mp3",
+   "name": "Ts418_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/Ts418_2__c6460437-e76d-4027-ad68-5135cd270725.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/cp00_1__f17fc094-8dfa-463f-88e8-404376be080d.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/cp00_1__f17fc094-8dfa-463f-88e8-404376be080d.mp3",
+   "name": "cp00_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/cp00_1__f17fc094-8dfa-463f-88e8-404376be080d.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/cp14_1__4d717e98-53cf-4a8b-a860-155dc98fdb7f.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/cp14_1__4d717e98-53cf-4a8b-a860-155dc98fdb7f.mp3",
+   "name": "cp14_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/cp14_1__4d717e98-53cf-4a8b-a860-155dc98fdb7f.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/cp5_1__8f44a2e5-7598-4dcf-93aa-0b75e8542ba4.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/cp5_1__8f44a2e5-7598-4dcf-93aa-0b75e8542ba4.mp3",
+   "name": "cp5_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/cp5_1__8f44a2e5-7598-4dcf-93aa-0b75e8542ba4.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/cv12_1__0dec7b43-60da-4a34-bdcf-692f70fa7bf9.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/cv12_1__0dec7b43-60da-4a34-bdcf-692f70fa7bf9.mp3",
+   "name": "cv12_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/cv12_1__0dec7b43-60da-4a34-bdcf-692f70fa7bf9.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/cv33_1__12ae6e05-e653-47ce-ab99-a9ab3759b52b.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/cv33_1__12ae6e05-e653-47ce-ab99-a9ab3759b52b.mp3",
+   "name": "cv33_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/cv33_1__12ae6e05-e653-47ce-ab99-a9ab3759b52b.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/m111_2__e12b7d06-a2b4-459c-952a-3213a85a992c.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/m111_2__e12b7d06-a2b4-459c-952a-3213a85a992c.mp3",
+   "name": "m111_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/m111_2__e12b7d06-a2b4-459c-952a-3213a85a992c.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/m11_2__d81ad977-8484-4e3d-a908-b1236a87e956.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/m11_2__d81ad977-8484-4e3d-a908-b1236a87e956.mp3",
+   "name": "m11_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/m11_2__d81ad977-8484-4e3d-a908-b1236a87e956.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/m23_2__5af9dace-d175-4495-a614-6d7db07eb646.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/m23_2__5af9dace-d175-4495-a614-6d7db07eb646.mp3",
+   "name": "m23_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/m23_2__5af9dace-d175-4495-a614-6d7db07eb646.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/sc107_2__52f8dcc7-3aec-45d9-8fb9-1c6702ad3564.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/sc107_2__52f8dcc7-3aec-45d9-8fb9-1c6702ad3564.mp3",
+   "name": "sc107_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/sc107_2__52f8dcc7-3aec-45d9-8fb9-1c6702ad3564.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/sc108_1__e2040fdb-f016-4655-9786-4ab89a6351b3.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/sc108_1__e2040fdb-f016-4655-9786-4ab89a6351b3.mp3",
+   "name": "sc108_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/sc108_1__e2040fdb-f016-4655-9786-4ab89a6351b3.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/sc112_2__9f81d1a6-d342-46ef-85e9-5266dd8e52b4.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/sc112_2__9f81d1a6-d342-46ef-85e9-5266dd8e52b4.mp3",
+   "name": "sc112_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/sc112_2__9f81d1a6-d342-46ef-85e9-5266dd8e52b4.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/sc141_1__c5e6e4d1-b38d-41ca-b24b-afe576c8a185.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/sc141_1__c5e6e4d1-b38d-41ca-b24b-afe576c8a185.mp3",
+   "name": "sc141_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/sc141_1__c5e6e4d1-b38d-41ca-b24b-afe576c8a185.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/sr117_1__44a575c7-648a-4ce4-8fc9-1def01c7990d.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/sr117_1__44a575c7-648a-4ce4-8fc9-1def01c7990d.mp3",
+   "name": "sr117_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/sr117_1__44a575c7-648a-4ce4-8fc9-1def01c7990d.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/sr118_3__b5299d4e-1ae5-4497-9f69-69ae6a4d4b9d.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/sr118_3__b5299d4e-1ae5-4497-9f69-69ae6a4d4b9d.mp3",
+   "name": "sr118_3.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/sr118_3__b5299d4e-1ae5-4497-9f69-69ae6a4d4b9d.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/sr126_1__e6c7c961-e74d-4ea1-8092-81008cba4c5d.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/sr126_1__e6c7c961-e74d-4ea1-8092-81008cba4c5d.mp3",
+   "name": "sr126_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/sr126_1__e6c7c961-e74d-4ea1-8092-81008cba4c5d.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/tm110_1__791bd2b1-37f2-4de2-98c7-fc8da318e333.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/tm110_1__791bd2b1-37f2-4de2-98c7-fc8da318e333.mp3",
+   "name": "tm110_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/tm110_1__791bd2b1-37f2-4de2-98c7-fc8da318e333.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/tm116_1__2a82750d-9a25-4ba1-9c92-edf5d8a2486a.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/tm116_1__2a82750d-9a25-4ba1-9c92-edf5d8a2486a.mp3",
+   "name": "tm116_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/tm116_1__2a82750d-9a25-4ba1-9c92-edf5d8a2486a.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/tm133_2__e97dcffd-1ea8-49ec-903d-af5a17d908ec.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/tm133_2__e97dcffd-1ea8-49ec-903d-af5a17d908ec.mp3",
+   "name": "tm133_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/tm133_2__e97dcffd-1ea8-49ec-903d-af5a17d908ec.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/tm207_1__29e149ce-89b9-4aae-8626-a6aeaca3629a.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/tm207_1__29e149ce-89b9-4aae-8626-a6aeaca3629a.mp3",
+   "name": "tm207_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/tm207_1__29e149ce-89b9-4aae-8626-a6aeaca3629a.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/tm211_1__33623e08-b962-43c0-a249-db45b55ac766.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/tm211_1__33623e08-b962-43c0-a249-db45b55ac766.mp3",
+   "name": "tm211_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/tm211_1__33623e08-b962-43c0-a249-db45b55ac766.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/tm211_2__35ee8f14-01cf-4e70-8612-34053194ea96.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/tm211_2__35ee8f14-01cf-4e70-8612-34053194ea96.mp3",
+   "name": "tm211_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/tm211_2__35ee8f14-01cf-4e70-8612-34053194ea96.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/tm212_2__29c6f277-30ab-4310-86af-0deb6aec9a8e.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/tm212_2__29c6f277-30ab-4310-86af-0deb6aec9a8e.mp3",
+   "name": "tm212_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/tm212_2__29c6f277-30ab-4310-86af-0deb6aec9a8e.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/tm217_2__f2eda50c-56eb-435c-8c4f-18906e5bdc98.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/tm217_2__f2eda50c-56eb-435c-8c4f-18906e5bdc98.mp3",
+   "name": "tm217_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/tm217_2__f2eda50c-56eb-435c-8c4f-18906e5bdc98.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/tm223_2__3de52c5c-e39b-40f6-b095-a7d806598b7b.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/tm223_2__3de52c5c-e39b-40f6-b095-a7d806598b7b.mp3",
+   "name": "tm223_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/tm223_2__3de52c5c-e39b-40f6-b095-a7d806598b7b.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/tm230_2__d89c2e00-5f4b-4b18-a7c1-232e83995b22.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/tm230_2__d89c2e00-5f4b-4b18-a7c1-232e83995b22.mp3",
+   "name": "tm230_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/tm230_2__d89c2e00-5f4b-4b18-a7c1-232e83995b22.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/tm321_2__6447c723-8fec-442b-ad0e-36b82364124b.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/tm321_2__6447c723-8fec-442b-ad0e-36b82364124b.mp3",
+   "name": "tm321_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/tm321_2__6447c723-8fec-442b-ad0e-36b82364124b.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/tm330_2__a0602bab-97cf-4f36-a774-5b9650c255f4.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/tm330_2__a0602bab-97cf-4f36-a774-5b9650c255f4.mp3",
+   "name": "tm330_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/tm330_2__a0602bab-97cf-4f36-a774-5b9650c255f4.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 240654,
+   "uploaded_bytes": 240654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/ts204_1__b1e31f69-f4b8-4fd6-8fe3-afbd2499b176.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/ts204_1__b1e31f69-f4b8-4fd6-8fe3-afbd2499b176.mp3",
+   "name": "ts204_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/ts204_1__b1e31f69-f4b8-4fd6-8fe3-afbd2499b176.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/ts214_2__a0215641-a1bc-44e6-ac34-0c58b77e5a31.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/ts214_2__a0215641-a1bc-44e6-ac34-0c58b77e5a31.mp3",
+   "name": "ts214_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/ts214_2__a0215641-a1bc-44e6-ac34-0c58b77e5a31.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/ts218_3__64292389-d9ba-4c74-aee3-ac915f7dc772.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/ts218_3__64292389-d9ba-4c74-aee3-ac915f7dc772.mp3",
+   "name": "ts218_3.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/ts218_3__64292389-d9ba-4c74-aee3-ac915f7dc772.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/ts224_2__c6efa8b8-e6de-4e4c-bd60-c772d5e4517c.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/ts224_2__c6efa8b8-e6de-4e4c-bd60-c772d5e4517c.mp3",
+   "name": "ts224_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/ts224_2__c6efa8b8-e6de-4e4c-bd60-c772d5e4517c.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/ts302_2__fafdab13-666b-4a7a-8496-0dad0fb0a6ee.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/ts302_2__fafdab13-666b-4a7a-8496-0dad0fb0a6ee.mp3",
+   "name": "ts302_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/ts302_2__fafdab13-666b-4a7a-8496-0dad0fb0a6ee.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/ts307_2__93beed39-fe7d-4a63-8ca2-6b118f922de8.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/ts307_2__93beed39-fe7d-4a63-8ca2-6b118f922de8.mp3",
+   "name": "ts307_2.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/ts307_2__93beed39-fe7d-4a63-8ca2-6b118f922de8.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mitchell-urban/clips/ts308_1__ab70700c-0ceb-4a06-beab-c8bb4563cc8e.mp3",
+   "url": "https://media.sp-survey.org/templates/2022-mitchell-urban/clips/ts308_1__ab70700c-0ceb-4a06-beab-c8bb4563cc8e.mp3",
+   "name": "ts308_1.mp3",
+   "type": "audio",
+   "folder": "clips",
+   "media_id": "templates/2022-mitchell-urban/clips/ts308_1__ab70700c-0ceb-4a06-beab-c8bb4563cc8e.mp3",
+   "logicalFolder": "clips",
+   "original_bytes": 241197,
+   "uploaded_bytes": 241197,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Effects of Soundscape Complexity on Urban Noise Annoyance Ratings: A Large-Scale Online Listening Experiment",
+  "authors": [
+   "Andrew Mitchell",
+   "Mercede Erfanian",
+   "Christopher Soelistyo",
+   "Tin Oberman",
+   "Jian Kang",
+   "Robert Aldridge",
+   "Jing-Hao Xue",
+   "Francesco Aletta"
+  ],
+  "year": 2022,
+  "venue": "International Journal of Environmental Research and Public Health",
+  "doi": "10.3390/ijerph192214872",
+  "url": "https://doi.org/10.3390/ijerph192214872"
+ }
+}

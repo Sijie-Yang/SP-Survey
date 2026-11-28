@@ -1,0 +1,554 @@
+{
+ "id": "2026-latifzadeh-urban",
+ "name": "Urban Green Space Affective Ratings",
+ "description": "How does the amount of greenery in an urban scene shape how people feel about it? Participants see 30 photographs of streets, squares and green spaces taken by the authors at three sites in Esch-sur-Alzette / Belval, Luxembourg, one at a time in random order and self-paced, and rate each on four 7-point scales: emotional valence, safety, satisfaction and calmness. At the end they pick their three favourite places from a grid of all 30 and explain each choice. Ratings are keyed by the paper's image ID, so they join directly with the open dataset (27 participants, 810 trials, plus eye-tracking, pupil and EEG data; Zenodo record 18348490, CC BY 4.0), where images with more vegetation drew more attention and higher attractiveness ratings. Faithful replication: the authors' own 30 photographs. Rebuilt from Latifzadeh et al. (2026), CHI '26. Differences from the original study: (1) online, without eye tracking, pupillometry or EEG; (2) the full text was not reachable when the template was built, so the four questions and their end labels are written from the dataset's variable names (Emotional Valence, Safety, Satisfaction, Calmness, 1–7) rather than copied from the paper; check them against the paper before use; (3) photographs are resized to 1600 px.",
+ "author": "Latifzadeh, Emami, Emami, Duraisamy & Leiva",
+ "year": "2026",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "urban green space",
+  "affect",
+  "safety",
+  "calmness",
+  "source:paper",
+  "modality:scene_photo",
+  "task:multi_rating",
+  "task:choose_from_set",
+  "concept:greenery",
+  "concept:safety",
+  "concept:comfort",
+  "concept:preference",
+  "concept:restoration",
+  "participants:lab",
+  "sample:lt100",
+  "country:Luxembourg",
+  "city:Esch-sur-Alzette"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1145/3772318.3791826",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-26T23:32:26.81+00:00",
+ "updatedAt": "2026-11-26T23:32:42.397+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "max": 99,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "Age (years)",
+      "inputType": "number",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "places",
+    "elements": [
+     {
+      "name": "ratings",
+      "type": "imageslidergroup",
+      "title": "How does this place make you feel?",
+      "choices": [],
+      "scaleMax": 7,
+      "scaleMin": 1,
+      "dimensions": [
+       {
+        "id": "valence",
+        "max": 7,
+        "min": 1,
+        "left": "Very negative",
+        "step": 1,
+        "label": "Emotional valence: how do you feel when you look at this place?",
+        "right": "Very positive"
+       },
+       {
+        "id": "safety",
+        "max": 7,
+        "min": 1,
+        "left": "Very unsafe",
+        "step": 1,
+        "label": "Safety: how safe would you feel in this place?",
+        "right": "Very safe"
+       },
+       {
+        "id": "satisfaction",
+        "max": 7,
+        "min": 1,
+        "left": "Very unsatisfied",
+        "step": 1,
+        "label": "Satisfaction: how satisfied would you be with this place?",
+        "right": "Very satisfied"
+       },
+       {
+        "id": "calmness",
+        "max": 7,
+        "min": 1,
+        "left": "Very agitated",
+        "step": 1,
+        "label": "Calmness: how calm does this place make you feel?",
+        "right": "Very calm"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "description": "One record per photograph: key = the paper's image ID (1–30, as in stimulus_id of trials_info.csv on Zenodo); shown = the photograph file (scene_NN.jpg). Values 1–7, matching the columns Emotional Valence, Safety, Satisfaction and Calmness of the open dataset.",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "top_three",
+      "type": "custom",
+      "title": "Your three favourite places and why",
+      "isRequired": true,
+      "description": "Recorded by the page after all ratings: [{ rank: 1–3, image: paper image ID (1–30), file, reason: free text }], matching justifications_on_top_three_choices.txt of the open dataset."
+     }
+    ]
+   }
+  ],
+  "title": "Urban Green Space Affective Ratings",
+  "locale": "en",
+  "spSite": {
+   "id": "site-56efebba211d63a6",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Urban Green Space Affective Ratings</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Urban Green Space Affective Ratings\",\n    \"description\": \"30 photographs of urban spaces with more or less greenery, taken by the authors at three sites in Esch-sur-Alzette / Belval, Luxembourg, shown one at a time in random order. Each photograph is rated on four 7-point scales: emotional valence, safety, satisfaction and calmness. At the end participants pick their three favourite places from a grid of all 30 and say why. Rebuilt from Latifzadeh, Emami, Emami, Duraisamy and Leiva (2026), CHI '26, using the authors' open image set.\",\n    \"locale\": \"en\",\n    \"mediaFolders\": [\"scenes\"],\n    \"pages\": [\n      { \"name\": \"about_you\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\", \"isRequired\": true, \"labelTrue\": \"I agree\", \"labelFalse\": \"I do not agree\" },\n        { \"type\": \"radiogroup\", \"name\": \"gender\", \"title\": \"Gender\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"female\", \"text\": \"Female\" }, { \"value\": \"male\", \"text\": \"Male\" }, { \"value\": \"other\", \"text\": \"Other / prefer not to say\" } ] },\n        { \"type\": \"number\", \"name\": \"age\", \"title\": \"Age (years)\", \"min\": 18, \"max\": 99, \"isRequired\": true }\n      ]},\n      { \"name\": \"places\", \"elements\": [\n        { \"type\": \"imageslidergroup\", \"name\": \"ratings\", \"title\": \"How does this place make you feel?\", \"description\": \"One record per photograph: key = the paper's image ID (1–30, as in stimulus_id of trials_info.csv on Zenodo); shown = the photograph file (scene_NN.jpg). Values 1–7, matching the columns Emotional Valence, Safety, Satisfaction and Calmness of the open dataset.\", \"imageCount\": 1, \"scaleMin\": 1, \"scaleMax\": 7, \"isRequired\": true, \"dimensions\": [\n          { \"id\": \"valence\", \"label\": \"Emotional valence: how do you feel when you look at this place?\", \"left\": \"Very negative\", \"right\": \"Very positive\", \"min\": 1, \"max\": 7, \"step\": 1 },\n          { \"id\": \"safety\", \"label\": \"Safety: how safe would you feel in this place?\", \"left\": \"Very unsafe\", \"right\": \"Very safe\", \"min\": 1, \"max\": 7, \"step\": 1 },\n          { \"id\": \"satisfaction\", \"label\": \"Satisfaction: how satisfied would you be with this place?\", \"left\": \"Very unsatisfied\", \"right\": \"Very satisfied\", \"min\": 1, \"max\": 7, \"step\": 1 },\n          { \"id\": \"calmness\", \"label\": \"Calmness: how calm does this place make you feel?\", \"left\": \"Very agitated\", \"right\": \"Very calm\", \"min\": 1, \"max\": 7, \"step\": 1 }\n        ] },\n        { \"type\": \"custom\", \"name\": \"top_three\", \"title\": \"Your three favourite places and why\", \"description\": \"Recorded by the page after all ratings: [{ rank: 1–3, image: paper image ID (1–30), file, reason: free text }], matching justifications_on_top_three_choices.txt of the open dataset.\", \"isRequired\": true }\n      ]}\n    ]\n  }\n}\n</script>\n<style>\n:root{--bg:#f1f3ef;--card:#fff;--ink:#1b1f1c;--muted:#59615b;--accent:#2f6b4a;--accent-ink:#fff;--line:#d5dad5;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:860px;margin:0 auto;padding:24px 16px 40px}\nh1{font-size:1.45rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:8px 0 14px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pic{background:#dfe3df;border-radius:12px;overflow:hidden;aspect-ratio:16/9}\n.pic img{width:100%;height:100%;object-fit:contain;display:block}\n.item{margin-top:14px}.item b{display:block;font-weight:600;margin-bottom:6px}\n.scale{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}\n.scale button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:9px 0;font:inherit;font-weight:700;cursor:pointer;min-width:0}\n.scale button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}\n.ends{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-top:3px}\n.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}\n@media(min-width:640px){.grid{grid-template-columns:repeat(5,1fr)}}\n.grid button{appearance:none;position:relative;border:3px solid transparent;border-radius:10px;padding:0;overflow:hidden;cursor:pointer;background:#dfe3df;aspect-ratio:16/9}\n.grid button img{width:100%;height:100%;object-fit:cover;display:block}\n.grid button.on{border-color:var(--accent)}\n.grid button span{position:absolute;top:4px;left:4px;background:var(--accent);color:#fff;border-radius:50%;width:24px;height:24px;font-weight:700;font-size:.85rem;display:none;align-items:center;justify-content:center}\n.grid button.on span{display:flex}\n.why{display:flex;gap:10px;align-items:flex-start;margin-top:12px}.why img{width:96px;border-radius:8px;aspect-ratio:16/9;object-fit:cover}\ntextarea{font:inherit;width:100%;min-height:64px;padding:8px 10px;border:1px solid var(--line);border-radius:8px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.q{margin-top:16px}.q>b{display:block;margin-bottom:4px}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:120px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:860px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs: Emami, Duraisamy, Latifzadeh, Emami &amp; Leiva, “Pixels, Plants, and People” dataset, Zenodo record 18348490, CC BY 4.0 (resized to 1600 px).</footer>\n<script>\n(function(){\n  var N=30, app=document.getElementById('app'), Q={}, files={}, order=[], done={}, i=0;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function fn(k){return 'scene_'+(k<10?'0':'')+k+'.jpg';}\n  function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var x=a[k];a[k]=a[j];a[j]=x;}return a;}\n  function all(){var a=[];for(var k=1;k<=N;k++)a.push(k);return a;}\n  function setup(){\n    var saved=null;try{saved=JSON.parse(localStorage.getItem('ppp2026:order'));}catch(e){}\n    if(Array.isArray(saved)&&saved.length===N&&all().every(function(k){return saved.indexOf(k)>=0;}))order=saved;\n    else{order=shuffle(all());try{localStorage.setItem('ppp2026:order',JSON.stringify(order));}catch(e){}}\n  }\n  function radios(n){return (Q[n].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');}\n  function intro(){\n    var miss=all().filter(function(k){return !files[fn(k)];});\n    if(miss.length){app.innerHTML='<h1>Photographs missing</h1><p>Missing in folder “scenes”: '+esc(miss.map(fn).join(', '))+'</p>';return;}\n    app.innerHTML='<h1>How do these places make you feel?</h1><p>You will see 30 photographs of streets, squares and green spaces in a European town, one at a time. Look at each one for as long as you like and answer four short questions about it. At the end you choose your three favourite places and say why. About 15 minutes.</p>'+\n      '<div class=\"card\"><div class=\"q\" style=\"margin-top:0\"><b>'+esc(Q.gender.title)+'</b>'+radios('gender')+'</div><div class=\"q\"><b>'+esc(Q.age.title||'Age')+'</b><input type=\"number\" id=\"age\" min=\"18\" max=\"99\" inputmode=\"numeric\"></div></div>'+\n      '<div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var g=app.querySelector('input[name=gender]:checked');if(!g)return err('Please answer: '+Q.gender.title);\n      var av=document.getElementById('age').value, age=Number(av);if(!av||!(age>=18&&age<=99))return err('Please enter your age (18–99).');\n      var b=this;b.disabled=true;\n      Promise.all([SPSite.answer('consent',true),SPSite.answer('gender',g.value),SPSite.answer('age',age)]).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}i=0;trial();});\n    };\n  }\n  function trial(){\n    while(i<order.length&&done[order[i]])i++;\n    if(i>=order.length)return pick();\n    var k=order[i], f=files[fn(k)], n=Object.keys(done).length, vals={}, dims=Q.ratings.dimensions||[];\n    var items=dims.map(function(d){var b='';for(var v=1;v<=7;v++)b+='<button data-d=\"'+esc(d.id)+'\" data-v=\"'+v+'\" aria-label=\"'+esc(d.label)+' '+v+'\">'+v+'</button>';\n      return '<div class=\"item\"><b>'+esc(d.label)+'</b><div class=\"scale\">'+b+'</div><div class=\"ends\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></div></div>';}).join('');\n    app.innerHTML='<p>Photograph '+(n+1)+' of '+N+'</p><div class=\"progress\"><i style=\"width:'+(100*n/N)+'%\"></i></div>'+\n      '<div class=\"pic\"><img src=\"'+esc(f.url)+'\" alt=\"Photograph of an urban space\"></div><div class=\"card\">'+items+'</div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"nx\">Next</button></div><div class=\"err\"></div>';\n    var nf=files[fn(order[i+1])];if(nf){var im=new Image();im.src=nf.url;}\n    app.querySelectorAll('.scale button').forEach(function(x){x.onclick=function(){vals[x.getAttribute('data-d')]=Number(x.getAttribute('data-v'));x.parentNode.querySelectorAll('button').forEach(function(y){y.classList.toggle('on',y===x);});err('');};});\n    document.getElementById('nx').onclick=function(){\n      if(dims.some(function(d){return vals[d.id]==null;}))return err('Please answer all four questions.');\n      var bt=this;bt.disabled=true;var v={};dims.forEach(function(d){v[d.id]=vals[d.id];});\n      SPSite.answer('ratings',v,{key:String(k),shown:[f.name]}).then(function(r){if(!ok(r)){bt.disabled=false;return err(r.error);}done[k]=true;i++;window.scrollTo(0,0);trial();});\n    };\n  }\n  function pick(){\n    var sel=[];\n    function draw(){\n      app.querySelectorAll('.grid button').forEach(function(b){var k=Number(b.dataset.k),r=sel.indexOf(k);b.classList.toggle('on',r>=0);b.querySelector('span').textContent=r>=0?r+1:'';});\n      var w=document.getElementById('why'), old={};w.querySelectorAll('textarea').forEach(function(t){old[t.dataset.k]=t.value;});\n      w.innerHTML=sel.map(function(k,r){return '<div class=\"why\"><img src=\"'+esc(files[fn(k)].url)+'\" alt=\"\"><div style=\"flex:1\"><b>'+(r+1)+(r===0?'st':r===1?'nd':'rd')+' choice: why?</b><textarea data-k=\"'+k+'\">'+esc(old[k]||'')+'</textarea></div></div>';}).join('');w.style.display=sel.length?'':'none';\n    }\n    app.innerHTML='<h1>Your three favourite places</h1><p>Here are all 30 places. Tap your favourite first, then your second and third. Tap again to remove. Then tell us briefly why you chose each one.</p>'+\n      '<div class=\"grid\">'+all().map(function(k){return '<button data-k=\"'+k+'\" aria-label=\"Place '+k+'\"><img src=\"'+esc(files[fn(k)].url)+'\" alt=\"\" loading=\"lazy\"><span></span></button>';}).join('')+'</div>'+\n      '<div class=\"card\" id=\"why\"></div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"fin\">Finish</button></div><div class=\"err\"></div>';\n    app.querySelectorAll('.grid button').forEach(function(b){b.onclick=function(){var k=Number(b.dataset.k),r=sel.indexOf(k);if(r>=0)sel.splice(r,1);else if(sel.length<3)sel.push(k);else return err('You have already chosen three. Tap one to remove it first.');err('');draw();};});\n    draw();\n    document.getElementById('fin').onclick=function(){\n      if(sel.length<3)return err('Please choose three places.');\n      var ts={};app.querySelectorAll('#why textarea').forEach(function(t){ts[t.dataset.k]=t.value.trim();});\n      if(sel.some(function(k){return !ts[k];}))return err('Please say briefly why you chose each place.');\n      var bt=this;bt.disabled=true;\n      var v=sel.map(function(k,r){return {rank:r+1,image:k,file:fn(k),reason:ts[k].slice(0,2000)};});\n      SPSite.answer('top_three',v,{shown:sel.map(fn)}).then(function(r){if(!ok(r)){bt.disabled=false;return err(r.error);}finish();});\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin2\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){if(m.some(function(x){return x!=='ratings'&&x!=='top_three';}))intro();else{done={};i=0;trial();}},1800);}else{var s=document.getElementById('fin2');if(s)s.textContent='Your answers are saved.';}});\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','gender','age','ratings','top_three'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('scenes')||[]).forEach(function(f){files[f.name]=f;});\n    setup();\n    var a=(ctx&&ctx.answers)||{}, p=a.ratings;\n    (p&&Array.isArray(p.trials)?p.trials:[]).forEach(function(x){if(x&&x.key!=null&&x.value!=null)done[Number(x.key)]=true;});\n    if(a.consent===true){if(a.top_three&&Object.keys(done).length>=N)finish();else trial();}else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-26T23:31:46.040Z",
+   "mediaFolders": [
+    "scenes"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-26T23:31:46.040Z"
+  },
+  "description": "30 photographs of urban spaces with more or less greenery, taken by the authors at three sites in Esch-sur-Alzette / Belval, Luxembourg, shown one at a time in random order. Each photograph is rated on four 7-point scales: emotional valence, safety, satisfaction and calmness. At the end participants pick their three favourite places from a grid of all 30 and say why. Rebuilt from Latifzadeh, Emami, Emami, Duraisamy and Leiva (2026), CHI '26, using the authors' open image set.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_01__609eebfc-b26e-45e5-9ba4-85a320e685fc.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_01__609eebfc-b26e-45e5-9ba4-85a320e685fc.jpg",
+   "name": "scene_01.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_01__609eebfc-b26e-45e5-9ba4-85a320e685fc.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 457988,
+   "uploaded_bytes": 457988,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_02__0978eb06-0560-43a8-96fd-814a8111618f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_02__0978eb06-0560-43a8-96fd-814a8111618f.jpg",
+   "name": "scene_02.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_02__0978eb06-0560-43a8-96fd-814a8111618f.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 230591,
+   "uploaded_bytes": 230591,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_03__a7f539ef-944a-4fbd-a385-52166ebe504b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_03__a7f539ef-944a-4fbd-a385-52166ebe504b.jpg",
+   "name": "scene_03.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_03__a7f539ef-944a-4fbd-a385-52166ebe504b.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 323740,
+   "uploaded_bytes": 323740,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_04__9821ec39-faa0-4ce4-add8-b4b24e5af506.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_04__9821ec39-faa0-4ce4-add8-b4b24e5af506.jpg",
+   "name": "scene_04.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_04__9821ec39-faa0-4ce4-add8-b4b24e5af506.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 339656,
+   "uploaded_bytes": 339656,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_05__c9bc7fc2-a5a3-4f8e-ba14-4047a8d8746f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_05__c9bc7fc2-a5a3-4f8e-ba14-4047a8d8746f.jpg",
+   "name": "scene_05.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_05__c9bc7fc2-a5a3-4f8e-ba14-4047a8d8746f.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 234687,
+   "uploaded_bytes": 234687,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_06__2e154efd-d85c-4f0d-a20e-28b2a34d648a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_06__2e154efd-d85c-4f0d-a20e-28b2a34d648a.jpg",
+   "name": "scene_06.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_06__2e154efd-d85c-4f0d-a20e-28b2a34d648a.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 267094,
+   "uploaded_bytes": 267094,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_07__4a8bc669-a443-4433-b346-cbd378e7c80c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_07__4a8bc669-a443-4433-b346-cbd378e7c80c.jpg",
+   "name": "scene_07.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_07__4a8bc669-a443-4433-b346-cbd378e7c80c.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 244226,
+   "uploaded_bytes": 244226,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_08__e930922d-3ec8-4e5e-9b10-d17777811a9c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_08__e930922d-3ec8-4e5e-9b10-d17777811a9c.jpg",
+   "name": "scene_08.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_08__e930922d-3ec8-4e5e-9b10-d17777811a9c.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 292351,
+   "uploaded_bytes": 292351,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_09__2f5ac804-26db-452e-a1f0-57d92010e682.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_09__2f5ac804-26db-452e-a1f0-57d92010e682.jpg",
+   "name": "scene_09.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_09__2f5ac804-26db-452e-a1f0-57d92010e682.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 317798,
+   "uploaded_bytes": 317798,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_10__4657bdad-02f0-481a-bc5d-86cef8eb9a13.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_10__4657bdad-02f0-481a-bc5d-86cef8eb9a13.jpg",
+   "name": "scene_10.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_10__4657bdad-02f0-481a-bc5d-86cef8eb9a13.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 358881,
+   "uploaded_bytes": 358881,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_11__facf68e3-7fdb-49a7-87d5-f268a362718e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_11__facf68e3-7fdb-49a7-87d5-f268a362718e.jpg",
+   "name": "scene_11.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_11__facf68e3-7fdb-49a7-87d5-f268a362718e.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 350627,
+   "uploaded_bytes": 350627,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_12__ac61207a-2ada-446c-9ffb-151f55d9341e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_12__ac61207a-2ada-446c-9ffb-151f55d9341e.jpg",
+   "name": "scene_12.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_12__ac61207a-2ada-446c-9ffb-151f55d9341e.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 294123,
+   "uploaded_bytes": 294123,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_13__0ea6b375-1af5-49c3-b9ee-1166f3809f98.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_13__0ea6b375-1af5-49c3-b9ee-1166f3809f98.jpg",
+   "name": "scene_13.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_13__0ea6b375-1af5-49c3-b9ee-1166f3809f98.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 260717,
+   "uploaded_bytes": 260717,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_14__cc2da2e6-6e59-4715-824a-416dfa88982b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_14__cc2da2e6-6e59-4715-824a-416dfa88982b.jpg",
+   "name": "scene_14.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_14__cc2da2e6-6e59-4715-824a-416dfa88982b.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 285568,
+   "uploaded_bytes": 285568,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_15__7ec2f351-c1a3-45eb-9245-d96bd91e2877.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_15__7ec2f351-c1a3-45eb-9245-d96bd91e2877.jpg",
+   "name": "scene_15.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_15__7ec2f351-c1a3-45eb-9245-d96bd91e2877.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 297890,
+   "uploaded_bytes": 297890,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_16__9fa61e8b-32f2-46d4-a98f-ab4eca440c30.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_16__9fa61e8b-32f2-46d4-a98f-ab4eca440c30.jpg",
+   "name": "scene_16.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_16__9fa61e8b-32f2-46d4-a98f-ab4eca440c30.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 280527,
+   "uploaded_bytes": 280527,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_17__0f0b22ce-e5c6-4b53-ae55-ba1689af15c2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_17__0f0b22ce-e5c6-4b53-ae55-ba1689af15c2.jpg",
+   "name": "scene_17.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_17__0f0b22ce-e5c6-4b53-ae55-ba1689af15c2.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 425171,
+   "uploaded_bytes": 425171,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_18__324cf085-db27-449d-9b2f-49fdbbc0a980.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_18__324cf085-db27-449d-9b2f-49fdbbc0a980.jpg",
+   "name": "scene_18.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_18__324cf085-db27-449d-9b2f-49fdbbc0a980.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 258921,
+   "uploaded_bytes": 258921,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_19__8c799d54-d80a-42a0-a205-916a909729c8.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_19__8c799d54-d80a-42a0-a205-916a909729c8.jpg",
+   "name": "scene_19.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_19__8c799d54-d80a-42a0-a205-916a909729c8.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 292918,
+   "uploaded_bytes": 292918,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_20__60a45c7e-3848-49a0-a89d-ed639570d495.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_20__60a45c7e-3848-49a0-a89d-ed639570d495.jpg",
+   "name": "scene_20.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_20__60a45c7e-3848-49a0-a89d-ed639570d495.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 159350,
+   "uploaded_bytes": 159350,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_21__cffb7918-e0a0-4a1a-9982-07c0bfcdf286.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_21__cffb7918-e0a0-4a1a-9982-07c0bfcdf286.jpg",
+   "name": "scene_21.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_21__cffb7918-e0a0-4a1a-9982-07c0bfcdf286.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 199282,
+   "uploaded_bytes": 199282,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_22__8bcfb17b-1b8f-46bc-8280-65038fe4b8cd.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_22__8bcfb17b-1b8f-46bc-8280-65038fe4b8cd.jpg",
+   "name": "scene_22.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_22__8bcfb17b-1b8f-46bc-8280-65038fe4b8cd.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 389840,
+   "uploaded_bytes": 389840,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_23__229eccdd-6ce7-4d9f-bf61-e1965527fca9.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_23__229eccdd-6ce7-4d9f-bf61-e1965527fca9.jpg",
+   "name": "scene_23.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_23__229eccdd-6ce7-4d9f-bf61-e1965527fca9.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 330454,
+   "uploaded_bytes": 330454,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_24__6e6607e4-5647-451f-ba13-69025eed1aef.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_24__6e6607e4-5647-451f-ba13-69025eed1aef.jpg",
+   "name": "scene_24.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_24__6e6607e4-5647-451f-ba13-69025eed1aef.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 457810,
+   "uploaded_bytes": 457810,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_25__074d0ecb-1c62-4950-aa18-b332bd2d4411.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_25__074d0ecb-1c62-4950-aa18-b332bd2d4411.jpg",
+   "name": "scene_25.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_25__074d0ecb-1c62-4950-aa18-b332bd2d4411.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 448238,
+   "uploaded_bytes": 448238,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_26__f4cfafd0-9ff2-467c-ac25-12743f65e07a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_26__f4cfafd0-9ff2-467c-ac25-12743f65e07a.jpg",
+   "name": "scene_26.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_26__f4cfafd0-9ff2-467c-ac25-12743f65e07a.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 259817,
+   "uploaded_bytes": 259817,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_27__042b4a7f-a50f-412d-9d18-5bd660f08660.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_27__042b4a7f-a50f-412d-9d18-5bd660f08660.jpg",
+   "name": "scene_27.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_27__042b4a7f-a50f-412d-9d18-5bd660f08660.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 379834,
+   "uploaded_bytes": 379834,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_28__23e886a1-5e73-4b57-862f-c526d9d47527.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_28__23e886a1-5e73-4b57-862f-c526d9d47527.jpg",
+   "name": "scene_28.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_28__23e886a1-5e73-4b57-862f-c526d9d47527.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 410030,
+   "uploaded_bytes": 410030,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_29__c1ae0588-7b52-4246-a397-1b3d1d61885b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_29__c1ae0588-7b52-4246-a397-1b3d1d61885b.jpg",
+   "name": "scene_29.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_29__c1ae0588-7b52-4246-a397-1b3d1d61885b.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 311974,
+   "uploaded_bytes": 311974,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-latifzadeh-urban/scenes/scene_30__00a2ccfe-099a-46d1-99cf-9a2b13f7c999.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-latifzadeh-urban/scenes/scene_30__00a2ccfe-099a-46d1-99cf-9a2b13f7c999.jpg",
+   "name": "scene_30.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-latifzadeh-urban/scenes/scene_30__00a2ccfe-099a-46d1-99cf-9a2b13f7c999.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 284225,
+   "uploaded_bytes": 284225,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Pixels, Plants, and People: Affective Evaluation of Urban Green Spaces",
+  "authors": [
+   "Kayhan Latifzadeh",
+   "Parvin Emami",
+   "Fariba Emami",
+   "Saravanakumar Duraisamy",
+   "Luis A. Leiva"
+  ],
+  "year": 2026,
+  "venue": "Proceedings of the 2026 CHI Conference on Human Factors in Computing Systems",
+  "doi": "10.1145/3772318.3791826",
+  "url": "https://doi.org/10.1145/3772318.3791826"
+ }
+}

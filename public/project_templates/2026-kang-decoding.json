@@ -1,69 +1,999 @@
 {
-  "id": "2026-kang-decoding",
-  "name": "Safety Choice (Eye-Tracking Study)",
-  "description": "Rebuilt from the published description of Kang et al. (2026). Participants choose the safer of two Helsingborg street views; the participant ID from the link (?pid=...) and per-trial timestamps allow linking to eye-tracker recordings. Images chosen at least 3 times are labelled safe. Differences from the original study: (1) Eye tracking is not part of the platform; record it separately and join on pid and the trial timestamps. (2) Bundled images are photographs from the paper PDF (8 scenes), not the original full stimulus set.",
-  "author": "Kang et al.",
-  "year": "2026",
-  "category": "Academic Research",
-  "tags": [
-    "official",
-    "paper"
-  ],
-  "isPinned": false,
-  "isApproved": true,
-  "showOnLanding": true,
-  "thumbnailUrl": null,
-  "website": "https://doi.org/10.1016/j.compenvurbsys.2025.102356",
-  "huggingfaceDataset": null,
-  "createdAt": "2026-10-02T00:00:00+00:00",
-  "imageDatasetConfig": {
-    "mediaFolderTags": {},
-    "mediaFolders": []
-  },
-  "preloadedImages": [],
-  "preloadedSource": null,
-  "preloadedAt": null,
-  "config": {
-    "title": "Street Safety Choice",
-    "description": "For each pair, choose the place that looks safer.",
-    "logoPosition": "right",
-    "autoGrowComment": true,
-    "progressBarType": "questions",
-    "showProgressBar": "aboveheader",
-    "showQuestionNumbers": "off",
-    "captureUrlParams": [
-      "pid"
-    ],
-    "spAnalysisRecommendation": {
-      "citation": "Kang et al. 2026",
-      "items": [
-        {
-          "questions": [
-            "safer"
-          ],
-          "method": "choice_share",
-          "threshold": 3
-        }
-      ]
-    },
-    "pages": [
-      {
-        "name": "page_choice",
-        "elements": [
-          {
-            "name": "safer",
-            "type": "imagepicker",
-            "title": "Which place looks safer?",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 2,
-            "trialCount": 10
-          }
-        ]
-      }
+ "id": "2026-kang-decoding",
+ "name": "Which Place Looks Safer? Helsingborg pairwise street-view safety",
+ "description": "Method replication: same task, scales and design as the paper; the images are not the paper's stimuli (67 new Google Street View views of Helsingborg, Sweden, captured 2017–2026, © Google). Based on Kang et al., \"Human vs. AI Safety Perception? Decoding Human Safety Perception with Eye-Tracking Systems, Street View Images, and Explainable AI\" (Computers, Environment and Urban Systems, 2026, doi:10.1016/j.compenvurbsys.2025.102356; preprint arXiv:2509.25457). Participants first give age group and gender, then see two street views of Helsingborg side by side and pick the one that looks safer (10 trials, images drawn without repeats). The original study collected 127 participants in Helsingborg; each image was compared about 5.8 times, and Bradley–Terry / TrueSkill-style scores give a safety score per image.\n\nDifferences from the original study: (1) no eye tracker (the original used Tobii X3-120 / 4C gaze recording; if you run one, record it separately and join on the response time stamps); (2) images are random Street View views, not the paper's 300-image set balanced across high/medium/low predicted safety; (3) online link instead of passersby at four locations in Helsingborg; (4) one closing question on familiarity with Helsingborg was added.",
+ "author": "Kang, Chen, Liu, Sharma, Mazzarello, Mora, Duarte & Ratti",
+ "year": "2026",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "street view",
+  "safety",
+  "pairwise",
+  "source:paper",
+  "modality:street_view",
+  "task:pairwise",
+  "concept:safety",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:Sweden",
+  "city:Helsingborg"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1016/j.compenvurbsys.2025.102356",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-10-02T00:00:00+00:00",
+ "updatedAt": "2026-11-27T04:57:42.426+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
     ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "Under 18",
+        "value": "under18"
+       },
+       {
+        "text": "18–29",
+        "value": "18-29"
+       },
+       {
+        "text": "30–44",
+        "value": "30-44"
+       },
+       {
+        "text": "45–64",
+        "value": "45-64"
+       },
+       {
+        "text": "65 or older",
+        "value": "65plus"
+       }
+      ]
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "comparisons",
+    "elements": [
+     {
+      "name": "safer",
+      "type": "imagepicker",
+      "title": "Which place looks safer?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 10,
+      "description": "Click the street view that looks safer.",
+      "mediaFolders": [
+       "helsingborg"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "local",
+    "elements": [
+     {
+      "name": "helsingborg_familiarity",
+      "type": "radiogroup",
+      "title": "How well do you know Helsingborg?",
+      "choices": [
+       {
+        "text": "I live or work there",
+        "value": "resident"
+       },
+       {
+        "text": "I have visited",
+        "value": "visited"
+       },
+       {
+        "text": "I have never been there",
+        "value": "never"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "title": "Which Place Looks Safer? (Helsingborg)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-ea70168eb28d3298",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Which Place Looks Safer? (Helsingborg)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Which Place Looks Safer? (Helsingborg)\",\n    \"description\": \"Ten pairs of street views from Helsingborg, Sweden: pick the place that looks safer. Method replication of Kang et al. (2025, arXiv 2509.25457; Computers, Environment and Urban Systems), without the eye tracker.\",\n    \"locale\": \"en\",\n    \"pages\": [\n      { \"name\": \"intro\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"I agree to take part. My answers are recorded anonymously for research.\", \"isRequired\": true, \"labelTrue\": \"I agree\", \"labelFalse\": \"I do not agree\" }\n      ]},\n      { \"name\": \"about_you\", \"elements\": [\n        { \"type\": \"radiogroup\", \"name\": \"age_group\", \"title\": \"Age\", \"choices\": [\n          { \"value\": \"under18\", \"text\": \"Under 18\" }, { \"value\": \"18-29\", \"text\": \"18–29\" }, { \"value\": \"30-44\", \"text\": \"30–44\" }, { \"value\": \"45-64\", \"text\": \"45–64\" }, { \"value\": \"65plus\", \"text\": \"65 or older\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"gender\", \"title\": \"Gender\", \"choices\": [\n          { \"value\": \"female\", \"text\": \"Female\" }, { \"value\": \"male\", \"text\": \"Male\" }, { \"value\": \"other\", \"text\": \"Other / prefer not to say\" } ] }\n      ]},\n      { \"name\": \"comparisons\", \"elements\": [\n        { \"type\": \"imagepicker\", \"name\": \"safer\", \"title\": \"Which place looks safer?\",\n          \"description\": \"Click the street view that looks safer.\",\n          \"imageCount\": 2, \"trialCount\": 10, \"imageFit\": \"cover\", \"isRequired\": true, \"choices\": [],\n          \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"mediaFolders\": [\"helsingborg\"] }\n      ]},\n      { \"name\": \"local\", \"elements\": [\n        { \"type\": \"radiogroup\", \"name\": \"helsingborg_familiarity\", \"title\": \"How well do you know Helsingborg?\", \"choices\": [\n          { \"value\": \"resident\", \"text\": \"I live or work there\" }, { \"value\": \"visited\", \"text\": \"I have visited\" }, { \"value\": \"never\", \"text\": \"I have never been there\" } ] }\n      ]}\n    ]\n  }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#2d5d3b;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:900px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\ntable{border-collapse:collapse;width:100%;font-size:.88rem}th,td{text-align:left;vertical-align:top;padding:6px 8px;border-top:1px solid var(--line)}th{color:var(--muted);font-weight:600}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}\n.pair figure{margin:0}.pair img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:8px;background:#000}\n.pair figcaption{text-align:center;margin-top:4px;font-weight:600}\n.choices{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}\n.choices .btn{width:100%}\ndetails{margin-top:12px}summary{cursor:pointer;color:var(--accent)}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:900px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{gap:8px}.choices{gap:8px}.choices .btn{padding:10px 6px;font-size:.88rem}h1{font-size:1.2rem}table{font-size:.8rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Helsingborg, Google Street View 2017–2026 (© Google). Task from Kang, Chen, Liu, Sharma, Mazzarello, Mora, Duarte &amp; Ratti (2025), arXiv:2509.25457.</footer>\n<script>\n(function(){\n  var app=document.getElementById('app'),Q,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function trial(k){var t=Q.trials&&Q.trials[k];var ch=(t&&t.choices)||Q.choices||[],md=(t&&t.media)||Q.media||[];\n    return {im:ch.filter(function(c){return !c.tie;}).map(function(c,j){return {value:c.value,url:c.imageUrl||(md[j]&&md[j].url)||''};}),tie:ch.filter(function(c){return c.tie;})[0]};}\n  function firstOpen(){for(var k=0;k<Q.trialCount;k++){if(!done[k])return k;}return Q.trialCount;}\n  function intro(){\n    var c=SPSite.getQuestion('consent');\n    app.innerHTML='<h1>Which place looks safer?</h1>'+\n      '<p>First two short questions about you, then '+Q.trialCount+' pairs of street views from Helsingborg, Sweden. For each pair, click the place that looks safer. It takes about 3 minutes.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);demo();});};\n  }\n  function demo(){\n    var h='<h1>About you</h1><div class=\"card\">';\n    ['age_group','gender'].forEach(function(n){var q=SPSite.getQuestion(n);h+='<div style=\"margin-top:10px\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';});\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Start the comparisons</button></div><div class=\"err\"></div></div>';\n    ['age_group','gender'].forEach(function(n){app.querySelectorAll('input[name='+n+']').forEach(function(r){r.onchange=function(){SPSite.answer(n,r.value).then(function(x){if(x&&x.ok===false)err(x.error);});};});});\n    document.getElementById('go').onclick=function(){i=firstOpen();show();};\n    window.scrollTo(0,0);\n  }\n  function show(){\n    if(i>=Q.trialCount)return about();\n    var t=trial(i);\n    app.innerHTML='<h1>'+esc(Q.title)+'</h1><p>Pair '+(i+1)+' of '+Q.trialCount+'</p><div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/Q.trialCount)+'%\"></i></div>'+\n      '<div class=\"pair\">'+t.im.map(function(m,j){return '<figure><img src=\"'+esc(m.url)+'\" alt=\"Panoramic street view, Image '+(j?'B':'A')+'\"><figcaption>Image '+(j?'B':'A')+'</figcaption></figure>';}).join('')+'</div>'+\n      '<div class=\"choices\"><button class=\"btn\" data-v=\"'+esc(t.im[0].value)+'\">Image A</button>'+\n      (t.tie?'<button class=\"btn ghost\" aria-label=\"Equal\" data-v=\"'+esc(t.tie.value)+'\">'+esc(t.tie.text||'=')+'</button>':'')+\n      '<button class=\"btn\" data-v=\"'+esc(t.im[1].value)+'\">Image B</button></div>'+\n      \n      (i>0?'<div class=\"row\"><button class=\"btn ghost\" id=\"back\">Back</button></div>':'')+'<div class=\"err\"></div>';\n    app.querySelectorAll('[data-v]').forEach(function(b){b.onclick=function(){var k=i;app.querySelectorAll('[data-v]').forEach(function(x){x.disabled=true;});\n      SPSite.answer('safer',b.getAttribute('data-v'),{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);app.querySelectorAll('[data-v]').forEach(function(x){x.disabled=false;});return;}\n        done[k]=true;i=k+1;show();});};});\n    var bk=document.getElementById('back');if(bk)bk.onclick=function(){i-=1;show();};\n    window.scrollTo(0,0);\n  }\n  function about(){\n    var q=SPSite.getQuestion('helsingborg_familiarity');\n    app.innerHTML='<h1>One last question</h1><div class=\"card\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"fam\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+\n      '<div class=\"row\"><button class=\"btn\" id=\"finish\">Finish</button></div><div class=\"err\"></div></div>';\n    app.querySelectorAll('input[name=fam]').forEach(function(r){r.onchange=function(){SPSite.answer('helsingborg_familiarity',r.value).then(function(x){if(x&&x.ok===false)err(x.error);});};});\n    document.getElementById('finish').onclick=function(){var btn=this;btn.disabled=true;err('Submitting…');\n      SPSite.complete().then(function(r){if(r&&r.ok===false){btn.disabled=false;var m=r.missing||[];err(r.error||('Please answer: '+m.join(', ')));if(m.indexOf('consent')>=0)intro();else if(m.indexOf('safer')>=0){i=firstOpen();show();}}});};\n    window.scrollTo(0,0);\n  }\n  SPSite.onReady(function(ctx){\n    Q=SPSite.getQuestion('safer');\n    var a=(ctx&&ctx.answers)||{},p=a.safer,list=p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);\n    list.forEach(function(t,k){var v=t&&typeof t==='object'?t.value:t;if(v!=null&&v!=='')done[k]=true;});\n    if(a.consent===true){i=firstOpen();show();}else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T00:22:12.582Z",
+   "mediaFolders": [
+    "helsingborg"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T00:22:12.582Z"
+  },
+  "description": "Ten pairs of street views from Helsingborg, Sweden: pick the place that looks safer. Method replication of Kang et al. (2025, arXiv 2509.25457; Computers, Environment and Urban Systems), without the eye tracker.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_01__d35d2ac9-9df7-403d-a2b8-7c86d4a78dea.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_01__d35d2ac9-9df7-403d-a2b8-7c86d4a78dea.jpg",
+   "name": "hbg_01.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_01__d35d2ac9-9df7-403d-a2b8-7c86d4a78dea.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 96132,
+   "uploaded_bytes": 96132,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_02__0844fba7-2ee6-4fc6-a4d5-9381bb285b2a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_02__0844fba7-2ee6-4fc6-a4d5-9381bb285b2a.jpg",
+   "name": "hbg_02.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_02__0844fba7-2ee6-4fc6-a4d5-9381bb285b2a.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 121589,
+   "uploaded_bytes": 121589,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_03__5b1b3206-936f-4bd2-9080-9c56fa458a18.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_03__5b1b3206-936f-4bd2-9080-9c56fa458a18.jpg",
+   "name": "hbg_03.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_03__5b1b3206-936f-4bd2-9080-9c56fa458a18.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 68440,
+   "uploaded_bytes": 68440,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_04__a229e2d9-df5b-44c7-a3e4-99a998d38e3d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_04__a229e2d9-df5b-44c7-a3e4-99a998d38e3d.jpg",
+   "name": "hbg_04.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_04__a229e2d9-df5b-44c7-a3e4-99a998d38e3d.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 70471,
+   "uploaded_bytes": 70471,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_05__1a30fd56-85a7-4e64-be12-c18fe93f91b5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_05__1a30fd56-85a7-4e64-be12-c18fe93f91b5.jpg",
+   "name": "hbg_05.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_05__1a30fd56-85a7-4e64-be12-c18fe93f91b5.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 96612,
+   "uploaded_bytes": 96612,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_06__cf834d26-ceeb-4981-945f-e7d1580fccf1.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_06__cf834d26-ceeb-4981-945f-e7d1580fccf1.jpg",
+   "name": "hbg_06.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_06__cf834d26-ceeb-4981-945f-e7d1580fccf1.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 111340,
+   "uploaded_bytes": 111340,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_07__f0ab239e-b2f9-4657-ae40-fe1b20d9bb51.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_07__f0ab239e-b2f9-4657-ae40-fe1b20d9bb51.jpg",
+   "name": "hbg_07.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_07__f0ab239e-b2f9-4657-ae40-fe1b20d9bb51.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 95277,
+   "uploaded_bytes": 95277,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_08__a022078b-9731-44b4-ab1a-e084b3cf0505.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_08__a022078b-9731-44b4-ab1a-e084b3cf0505.jpg",
+   "name": "hbg_08.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_08__a022078b-9731-44b4-ab1a-e084b3cf0505.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 78497,
+   "uploaded_bytes": 78497,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_09__cf9508fa-291e-478d-a994-0a960b7b6fe3.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_09__cf9508fa-291e-478d-a994-0a960b7b6fe3.jpg",
+   "name": "hbg_09.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_09__cf9508fa-291e-478d-a994-0a960b7b6fe3.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 77678,
+   "uploaded_bytes": 77678,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_10__871c6d3f-e3ef-4c65-8138-fe2ef4aea66f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_10__871c6d3f-e3ef-4c65-8138-fe2ef4aea66f.jpg",
+   "name": "hbg_10.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_10__871c6d3f-e3ef-4c65-8138-fe2ef4aea66f.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 82578,
+   "uploaded_bytes": 82578,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_11__f2115cae-024f-445a-917f-7a3d9ac9f75b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_11__f2115cae-024f-445a-917f-7a3d9ac9f75b.jpg",
+   "name": "hbg_11.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_11__f2115cae-024f-445a-917f-7a3d9ac9f75b.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 95545,
+   "uploaded_bytes": 95545,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_12__7a48ab13-861a-446b-8fec-00132dc985ee.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_12__7a48ab13-861a-446b-8fec-00132dc985ee.jpg",
+   "name": "hbg_12.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_12__7a48ab13-861a-446b-8fec-00132dc985ee.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 155212,
+   "uploaded_bytes": 155212,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_13__b4d55e19-0bf2-4e8c-9eaa-2ff6348bb4b3.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_13__b4d55e19-0bf2-4e8c-9eaa-2ff6348bb4b3.jpg",
+   "name": "hbg_13.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_13__b4d55e19-0bf2-4e8c-9eaa-2ff6348bb4b3.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 80520,
+   "uploaded_bytes": 80520,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_14__3afd01f3-fd0e-484d-a8f5-c91f1747619a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_14__3afd01f3-fd0e-484d-a8f5-c91f1747619a.jpg",
+   "name": "hbg_14.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_14__3afd01f3-fd0e-484d-a8f5-c91f1747619a.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 74279,
+   "uploaded_bytes": 74279,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_15__28fa801e-cf48-4d2d-9d05-c7c2c893078e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_15__28fa801e-cf48-4d2d-9d05-c7c2c893078e.jpg",
+   "name": "hbg_15.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_15__28fa801e-cf48-4d2d-9d05-c7c2c893078e.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 86371,
+   "uploaded_bytes": 86371,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_16__9fb06e24-2706-4f5d-ab24-4f911c9081cf.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_16__9fb06e24-2706-4f5d-ab24-4f911c9081cf.jpg",
+   "name": "hbg_16.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_16__9fb06e24-2706-4f5d-ab24-4f911c9081cf.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 51837,
+   "uploaded_bytes": 51837,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_17__544e112f-8101-4587-b2d5-3c003c831cb1.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_17__544e112f-8101-4587-b2d5-3c003c831cb1.jpg",
+   "name": "hbg_17.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_17__544e112f-8101-4587-b2d5-3c003c831cb1.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 110020,
+   "uploaded_bytes": 110020,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_18__469af756-b022-43f4-8055-d5da75a6b816.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_18__469af756-b022-43f4-8055-d5da75a6b816.jpg",
+   "name": "hbg_18.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_18__469af756-b022-43f4-8055-d5da75a6b816.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 102116,
+   "uploaded_bytes": 102116,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_19__8908043b-fd38-4ef2-871e-cb23cb1e6838.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_19__8908043b-fd38-4ef2-871e-cb23cb1e6838.jpg",
+   "name": "hbg_19.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_19__8908043b-fd38-4ef2-871e-cb23cb1e6838.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 81608,
+   "uploaded_bytes": 81608,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_20__efc7b3e8-5b1c-4000-ba55-65e95b8a8874.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_20__efc7b3e8-5b1c-4000-ba55-65e95b8a8874.jpg",
+   "name": "hbg_20.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_20__efc7b3e8-5b1c-4000-ba55-65e95b8a8874.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 98049,
+   "uploaded_bytes": 98049,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_21__5704e016-fb77-41b9-8664-2e4b95b9c473.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_21__5704e016-fb77-41b9-8664-2e4b95b9c473.jpg",
+   "name": "hbg_21.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_21__5704e016-fb77-41b9-8664-2e4b95b9c473.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 91779,
+   "uploaded_bytes": 91779,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_22__6cf6ce14-c415-4b59-a736-f0d63046a12a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_22__6cf6ce14-c415-4b59-a736-f0d63046a12a.jpg",
+   "name": "hbg_22.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_22__6cf6ce14-c415-4b59-a736-f0d63046a12a.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 77056,
+   "uploaded_bytes": 77056,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_23__ba424242-1826-4f91-a88e-d8a03a995d96.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_23__ba424242-1826-4f91-a88e-d8a03a995d96.jpg",
+   "name": "hbg_23.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_23__ba424242-1826-4f91-a88e-d8a03a995d96.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 142189,
+   "uploaded_bytes": 142189,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_25__37b77ceb-0c10-407d-95f9-85c01036209d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_25__37b77ceb-0c10-407d-95f9-85c01036209d.jpg",
+   "name": "hbg_25.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_25__37b77ceb-0c10-407d-95f9-85c01036209d.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 75610,
+   "uploaded_bytes": 75610,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_27__f795099f-172c-4ebb-869f-398cc8ab08f1.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_27__f795099f-172c-4ebb-869f-398cc8ab08f1.jpg",
+   "name": "hbg_27.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_27__f795099f-172c-4ebb-869f-398cc8ab08f1.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 127894,
+   "uploaded_bytes": 127894,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_28__44c6aeff-ee34-410d-b3bf-9de67d81dc74.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_28__44c6aeff-ee34-410d-b3bf-9de67d81dc74.jpg",
+   "name": "hbg_28.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_28__44c6aeff-ee34-410d-b3bf-9de67d81dc74.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 60227,
+   "uploaded_bytes": 60227,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_29__30931ed2-4f36-4bf7-9f95-da3a5beb638f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_29__30931ed2-4f36-4bf7-9f95-da3a5beb638f.jpg",
+   "name": "hbg_29.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_29__30931ed2-4f36-4bf7-9f95-da3a5beb638f.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 53968,
+   "uploaded_bytes": 53968,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_30__9632c133-d787-47f6-821e-0ad971fe3fab.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_30__9632c133-d787-47f6-821e-0ad971fe3fab.jpg",
+   "name": "hbg_30.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_30__9632c133-d787-47f6-821e-0ad971fe3fab.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 52109,
+   "uploaded_bytes": 52109,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_31__d0b2aa32-78ff-4f54-b037-8453be1af7e9.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_31__d0b2aa32-78ff-4f54-b037-8453be1af7e9.jpg",
+   "name": "hbg_31.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_31__d0b2aa32-78ff-4f54-b037-8453be1af7e9.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 119579,
+   "uploaded_bytes": 119579,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_32__3a5c1454-41eb-4fdf-8e1a-87eeba258c82.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_32__3a5c1454-41eb-4fdf-8e1a-87eeba258c82.jpg",
+   "name": "hbg_32.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_32__3a5c1454-41eb-4fdf-8e1a-87eeba258c82.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 71403,
+   "uploaded_bytes": 71403,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_33__98ac95ee-bc4e-49a7-8abc-bed7edbecda2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_33__98ac95ee-bc4e-49a7-8abc-bed7edbecda2.jpg",
+   "name": "hbg_33.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_33__98ac95ee-bc4e-49a7-8abc-bed7edbecda2.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 59111,
+   "uploaded_bytes": 59111,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_34__9c613e10-7870-401f-875a-372762eced98.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_34__9c613e10-7870-401f-875a-372762eced98.jpg",
+   "name": "hbg_34.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_34__9c613e10-7870-401f-875a-372762eced98.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 36339,
+   "uploaded_bytes": 36339,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_35__8ca2fc80-70b5-4687-a295-17a57a2f8800.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_35__8ca2fc80-70b5-4687-a295-17a57a2f8800.jpg",
+   "name": "hbg_35.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_35__8ca2fc80-70b5-4687-a295-17a57a2f8800.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 74461,
+   "uploaded_bytes": 74461,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_36__ef95a77a-c3e7-4bf6-8dd6-6231d310e1e3.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_36__ef95a77a-c3e7-4bf6-8dd6-6231d310e1e3.jpg",
+   "name": "hbg_36.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_36__ef95a77a-c3e7-4bf6-8dd6-6231d310e1e3.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 141511,
+   "uploaded_bytes": 141511,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_37__e58d0f0b-b805-4826-a949-50f30deebaba.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_37__e58d0f0b-b805-4826-a949-50f30deebaba.jpg",
+   "name": "hbg_37.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_37__e58d0f0b-b805-4826-a949-50f30deebaba.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 60125,
+   "uploaded_bytes": 60125,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_38__94994e97-7f65-4910-89c8-0b479e83e54f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_38__94994e97-7f65-4910-89c8-0b479e83e54f.jpg",
+   "name": "hbg_38.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_38__94994e97-7f65-4910-89c8-0b479e83e54f.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 87851,
+   "uploaded_bytes": 87851,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_39__5e1ac053-32b0-467d-9060-b64fe1fa0c5e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_39__5e1ac053-32b0-467d-9060-b64fe1fa0c5e.jpg",
+   "name": "hbg_39.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_39__5e1ac053-32b0-467d-9060-b64fe1fa0c5e.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 79384,
+   "uploaded_bytes": 79384,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_40__5b533d8f-84ee-435e-90f9-b708ec6d2ab2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_40__5b533d8f-84ee-435e-90f9-b708ec6d2ab2.jpg",
+   "name": "hbg_40.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_40__5b533d8f-84ee-435e-90f9-b708ec6d2ab2.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 103376,
+   "uploaded_bytes": 103376,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_41__e4f469c3-6cca-4618-ae37-915869005262.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_41__e4f469c3-6cca-4618-ae37-915869005262.jpg",
+   "name": "hbg_41.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_41__e4f469c3-6cca-4618-ae37-915869005262.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 137608,
+   "uploaded_bytes": 137608,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_42__6d7d6d43-de79-4502-9c23-60e6ece5f3d5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_42__6d7d6d43-de79-4502-9c23-60e6ece5f3d5.jpg",
+   "name": "hbg_42.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_42__6d7d6d43-de79-4502-9c23-60e6ece5f3d5.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 77352,
+   "uploaded_bytes": 77352,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_43__cfc53006-e16c-41e2-85f1-246b4aa85011.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_43__cfc53006-e16c-41e2-85f1-246b4aa85011.jpg",
+   "name": "hbg_43.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_43__cfc53006-e16c-41e2-85f1-246b4aa85011.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 95508,
+   "uploaded_bytes": 95508,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_44__201355a8-ccee-4fd6-9a4d-baaf819d0ab6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_44__201355a8-ccee-4fd6-9a4d-baaf819d0ab6.jpg",
+   "name": "hbg_44.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_44__201355a8-ccee-4fd6-9a4d-baaf819d0ab6.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 87379,
+   "uploaded_bytes": 87379,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_45__85867351-bcd4-423f-bd2b-da65405d103f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_45__85867351-bcd4-423f-bd2b-da65405d103f.jpg",
+   "name": "hbg_45.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_45__85867351-bcd4-423f-bd2b-da65405d103f.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 122024,
+   "uploaded_bytes": 122024,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_46__836ed48a-f985-4a91-bf9e-74991f355e3b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_46__836ed48a-f985-4a91-bf9e-74991f355e3b.jpg",
+   "name": "hbg_46.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_46__836ed48a-f985-4a91-bf9e-74991f355e3b.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 76947,
+   "uploaded_bytes": 76947,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_47__8cf810ba-4a43-47d2-9cee-d91bfc0438f6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_47__8cf810ba-4a43-47d2-9cee-d91bfc0438f6.jpg",
+   "name": "hbg_47.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_47__8cf810ba-4a43-47d2-9cee-d91bfc0438f6.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 88252,
+   "uploaded_bytes": 88252,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_48__b34826aa-1438-4fca-ab26-cbe2a16d0643.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_48__b34826aa-1438-4fca-ab26-cbe2a16d0643.jpg",
+   "name": "hbg_48.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_48__b34826aa-1438-4fca-ab26-cbe2a16d0643.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 102450,
+   "uploaded_bytes": 102450,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_49__680cc4d0-d82a-4a58-b3f5-561845a35ebe.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_49__680cc4d0-d82a-4a58-b3f5-561845a35ebe.jpg",
+   "name": "hbg_49.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_49__680cc4d0-d82a-4a58-b3f5-561845a35ebe.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 76278,
+   "uploaded_bytes": 76278,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_50__aaf67662-d0de-46f6-bc6a-b3b8e0ccdeed.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_50__aaf67662-d0de-46f6-bc6a-b3b8e0ccdeed.jpg",
+   "name": "hbg_50.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_50__aaf67662-d0de-46f6-bc6a-b3b8e0ccdeed.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 86977,
+   "uploaded_bytes": 86977,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_51__3fab9bbc-4ec3-4a90-8911-cb82cba1767c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_51__3fab9bbc-4ec3-4a90-8911-cb82cba1767c.jpg",
+   "name": "hbg_51.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_51__3fab9bbc-4ec3-4a90-8911-cb82cba1767c.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 49150,
+   "uploaded_bytes": 49150,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_52__7c03429f-9278-4c61-afae-8fb8abbdd4a3.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_52__7c03429f-9278-4c61-afae-8fb8abbdd4a3.jpg",
+   "name": "hbg_52.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_52__7c03429f-9278-4c61-afae-8fb8abbdd4a3.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 79962,
+   "uploaded_bytes": 79962,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_53__0c82442c-7dbf-4d3f-bfb4-a4f6d028557b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_53__0c82442c-7dbf-4d3f-bfb4-a4f6d028557b.jpg",
+   "name": "hbg_53.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_53__0c82442c-7dbf-4d3f-bfb4-a4f6d028557b.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 53713,
+   "uploaded_bytes": 53713,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_54__16171dc6-c407-460a-a4ce-a037d1f0e5e3.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_54__16171dc6-c407-460a-a4ce-a037d1f0e5e3.jpg",
+   "name": "hbg_54.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_54__16171dc6-c407-460a-a4ce-a037d1f0e5e3.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 85488,
+   "uploaded_bytes": 85488,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_55__d3fec259-03bb-46d3-ba81-03bacc677367.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_55__d3fec259-03bb-46d3-ba81-03bacc677367.jpg",
+   "name": "hbg_55.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_55__d3fec259-03bb-46d3-ba81-03bacc677367.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 90600,
+   "uploaded_bytes": 90600,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_56__768ca28b-3baa-4dc2-aef5-ea05031613b8.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_56__768ca28b-3baa-4dc2-aef5-ea05031613b8.jpg",
+   "name": "hbg_56.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_56__768ca28b-3baa-4dc2-aef5-ea05031613b8.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 72517,
+   "uploaded_bytes": 72517,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_57__8176f8d8-04f3-43f9-bb4a-03889687a3c4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_57__8176f8d8-04f3-43f9-bb4a-03889687a3c4.jpg",
+   "name": "hbg_57.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_57__8176f8d8-04f3-43f9-bb4a-03889687a3c4.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 39598,
+   "uploaded_bytes": 39598,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_58__4e5b3897-8b46-4a90-b5ac-0bb077c9f671.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_58__4e5b3897-8b46-4a90-b5ac-0bb077c9f671.jpg",
+   "name": "hbg_58.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_58__4e5b3897-8b46-4a90-b5ac-0bb077c9f671.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 73580,
+   "uploaded_bytes": 73580,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_59__5dd53e01-3e5f-4392-807f-3c5353cdc95e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_59__5dd53e01-3e5f-4392-807f-3c5353cdc95e.jpg",
+   "name": "hbg_59.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_59__5dd53e01-3e5f-4392-807f-3c5353cdc95e.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 62188,
+   "uploaded_bytes": 62188,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_60__bb6271ed-e918-4a1e-8274-9eb28ac3061f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_60__bb6271ed-e918-4a1e-8274-9eb28ac3061f.jpg",
+   "name": "hbg_60.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_60__bb6271ed-e918-4a1e-8274-9eb28ac3061f.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 77274,
+   "uploaded_bytes": 77274,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_61__85e87b7a-ba86-48dd-bfc8-4c856bc004ea.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_61__85e87b7a-ba86-48dd-bfc8-4c856bc004ea.jpg",
+   "name": "hbg_61.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_61__85e87b7a-ba86-48dd-bfc8-4c856bc004ea.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 101477,
+   "uploaded_bytes": 101477,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_62__7036025b-9b5d-4cd6-8e6f-1e261282cb2c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_62__7036025b-9b5d-4cd6-8e6f-1e261282cb2c.jpg",
+   "name": "hbg_62.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_62__7036025b-9b5d-4cd6-8e6f-1e261282cb2c.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 95669,
+   "uploaded_bytes": 95669,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_63__84c6da96-9eca-44a5-935a-c1cd4798220c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_63__84c6da96-9eca-44a5-935a-c1cd4798220c.jpg",
+   "name": "hbg_63.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_63__84c6da96-9eca-44a5-935a-c1cd4798220c.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 88626,
+   "uploaded_bytes": 88626,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_64__9c9142c9-3d90-4a60-b112-bc1dd1f0839c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_64__9c9142c9-3d90-4a60-b112-bc1dd1f0839c.jpg",
+   "name": "hbg_64.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_64__9c9142c9-3d90-4a60-b112-bc1dd1f0839c.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 102560,
+   "uploaded_bytes": 102560,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_65__64f8fcc3-8216-49db-85be-9142deba5cb5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_65__64f8fcc3-8216-49db-85be-9142deba5cb5.jpg",
+   "name": "hbg_65.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_65__64f8fcc3-8216-49db-85be-9142deba5cb5.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 72953,
+   "uploaded_bytes": 72953,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_66__65a177a2-ad30-41a1-ab51-db333041ff29.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_66__65a177a2-ad30-41a1-ab51-db333041ff29.jpg",
+   "name": "hbg_66.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_66__65a177a2-ad30-41a1-ab51-db333041ff29.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 75502,
+   "uploaded_bytes": 75502,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_67__a5b6edd3-1d69-4ad9-b300-7770a3c7fadb.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_67__a5b6edd3-1d69-4ad9-b300-7770a3c7fadb.jpg",
+   "name": "hbg_67.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_67__a5b6edd3-1d69-4ad9-b300-7770a3c7fadb.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 138925,
+   "uploaded_bytes": 138925,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_68__0b23faf1-bc71-44ef-a4b3-045ddc8a2348.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_68__0b23faf1-bc71-44ef-a4b3-045ddc8a2348.jpg",
+   "name": "hbg_68.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_68__0b23faf1-bc71-44ef-a4b3-045ddc8a2348.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 88480,
+   "uploaded_bytes": 88480,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kang-decoding/helsingborg/hbg_69__f6dae5eb-837c-4fcf-8bfa-e4231894001f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kang-decoding/helsingborg/hbg_69__f6dae5eb-837c-4fcf-8bfa-e4231894001f.jpg",
+   "name": "hbg_69.jpg",
+   "type": "image",
+   "folder": "helsingborg",
+   "media_id": "templates/2026-kang-decoding/helsingborg/hbg_69__f6dae5eb-837c-4fcf-8bfa-e4231894001f.jpg",
+   "logicalFolder": "helsingborg",
+   "original_bytes": 98109,
+   "uploaded_bytes": 98109,
+   "image_compressed": false
   }
+ ],
+ "paper": {
+  "title": "Decoding human safety perception with eye-tracking systems, street view images, and explainable AI",
+  "authors": [
+   "Kang Y.",
+   "Chen J.",
+   "Liu L.",
+   "Sharma K.",
+   "Mazzarello M.",
+   "Mora S.",
+   "Duarte F.",
+   "Ratti C."
+  ],
+  "year": 2026,
+  "venue": "Computers, Environment and Urban Systems",
+  "doi": "10.1016/j.compenvurbsys.2025.102356",
+  "url": "https://doi.org/10.1016/j.compenvurbsys.2025.102356"
+ }
 }

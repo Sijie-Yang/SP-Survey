@@ -1,0 +1,538 @@
+{
+ "id": "2023-chen-autumn",
+ "name": "Autumn Colour in Urban Forests: Aesthetic Rating",
+ "description": "Faithful replication of the aesthetic rating task in Chen, Huang, Shen, Fu, Yao, Huang, Lan, Zhu & Dong (2023), \"How Vegetation Colorization Design Affects Urban Forest Aesthetic Preference and Visual Attention: An Eye-Tracking Study\", Forests 14(7):1491, doi:10.3390/f14071491. The images are the authors' own photomontages of the Yushan Scenic Area in Fuzhou, China, printed in Figures 2 and 3 of the open-access paper (CC BY 4.0). They are used with credit for research, and the template is taken down if the authors object.\n\nWhat participants do: after an instruction quoted from the paper, each participant is randomly assigned to one of three image groups (10 images each) and sees the images in random order. For each image, a fixation cross appears for 3 s, the image is shown for 15 s, and then the participant rates its aesthetic quality on a 7-point scale. The page ends with gender and age.\n\nImages (30): canopy_O01–O12 are a UAV view over the forest canopy with autumn-coloured trees added in three forms (O1–O4 aggregate, O5–O8 homogeneous, O9–O12 random) and four intensities within each form (slight, low, medium and high, i.e. 15%, 22.5%, 33.75% and 50.63% coloured vegetation). forest_I01–I18 are nine in-forest scenes; each odd number is the original photo and the next even number is the same scene with colorized vegetation.\n\nOriginal study: 183 students of Fujian Agriculture and Forestry University in three groups of 61. Lab session with eye tracking. Analysis: mean rating per image, comparison of colorization intensities and forms against the original scene, and the marginal effect of intensity × form. Main finding: a homogeneous form and a moderate intensity gave the highest aesthetic ratings.\n\nDifferences from the original study: (1) 30 of the 31 images; the original base canopy photo is not printed in the paper. (2) The paper divided the images into three groups at random but does not list them; this template uses a fixed random split with 4 canopy and 6 forest images per group (listed in the image_group question). (3) No eye tracking; online on any screen instead of a lab monitor at 55 cm with a chin rest. (4) The paper gave a 5 s rating window after viewing; here the rating has no time limit. (5) The scale anchors are not reported in the paper; \"1 = very low\" and \"7 = very high\" were added. (6) Gender and age are asked at the end; the paper reports them but does not print its questions.",
+ "author": "Chen, Huang, Shen, Fu, Yao, Huang, Lan, Zhu & Dong",
+ "year": "2023",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "photomontage",
+  "urban forest",
+  "autumn colour",
+  "aesthetic rating",
+  "landscape design",
+  "source:paper",
+  "modality:scene_photo",
+  "task:rating",
+  "concept:aesthetics",
+  "concept:preference",
+  "participants:students",
+  "sample:100to1000",
+  "country:China",
+  "city:Fuzhou"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/f14071491",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T11:18:16.426+00:00",
+ "updatedAt": "2026-11-27T11:19:24.86+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "scenes",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I have read the information above and agree to take part.",
+      "labelTrue": "Yes",
+      "isRequired": true,
+      "labelFalse": "No"
+     },
+     {
+      "name": "image_group",
+      "type": "radiogroup",
+      "title": "Image group (set by the page)",
+      "choices": [
+       {
+        "text": "Group A",
+        "value": 1
+       },
+       {
+        "text": "Group B",
+        "value": 2
+       },
+       {
+        "text": "Group C",
+        "value": 3
+       }
+      ],
+      "isRequired": true,
+      "description": "Recorded by the page, not asked. As in the paper, the images were divided into three groups and each participant is randomly assigned to one group of 10. A = canopy_O03, canopy_O08, canopy_O10, canopy_O12, forest_I03, forest_I06, forest_I09, forest_I10, forest_I14, forest_I17; B = canopy_O02, canopy_O06, canopy_O07, canopy_O11, forest_I01, forest_I02, forest_I05, forest_I07, forest_I12, forest_I15; C = canopy_O01, canopy_O04, canopy_O05, canopy_O09, forest_I04, forest_I08, forest_I11, forest_I13, forest_I16, forest_I18."
+     },
+     {
+      "name": "ratings",
+      "type": "imageslidergroup",
+      "title": "Aesthetic rating per image",
+      "choices": [],
+      "scaleMax": 7,
+      "scaleMin": 1,
+      "dimensions": [
+       {
+        "id": "aesthetic",
+        "max": 7,
+        "min": 1,
+        "left": "very low",
+        "step": 1,
+        "label": "How do you rate the aesthetic quality of this landscape?",
+        "right": "very high"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "description": "One row per image (key = image name). canopy_O01 … O12 = UAV view of the Yushan canopy with autumn-coloured trees added: O1–O4 aggregate form, O5–O8 homogeneous, O9–O12 random; within each form slight, low, medium, high colorization intensity (15%, 22.5%, 33.75%, 50.63% of vegetation). forest_I01 … I18 = nine in-forest scenes, odd number = original photo, next even number = the same scene with colorized vegetation. Each image: 3 s fixation cross, 15 s viewing, then a 1–7 rating. Analysis in the paper: mean rating per image, ANOVA across intensities and forms against the original, pairwise comparisons, marginal effect of intensity × form.",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "What is your gender?",
+      "choices": [
+       {
+        "text": "Male",
+        "value": 1
+       },
+       {
+        "text": "Female",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "max": 99,
+      "min": 16,
+      "name": "age",
+      "type": "text",
+      "title": "How old are you?",
+      "inputType": "number",
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Autumn Colour in Urban Forests",
+  "locale": "en",
+  "spSite": {
+   "id": "site-916fc5abc3887637",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Autumn Urban Forest</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Autumn Colour in Urban Forests\",\n  \"description\": \"Faithful replication of the aesthetic rating task in Chen, Huang, Shen, Fu, Yao, Huang, Lan, Zhu & Dong (2023), Forests 14(7):1491, with the authors' own photomontages of the Yushan Scenic Area in Fuzhou, China. Participants view autumn colorization designs of an urban forest, from the canopy seen from above and from inside the forest, for 15 seconds each and rate their aesthetic quality from 1 to 7.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"scenes\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"scenes\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I have read the information above and agree to take part.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"Yes\",\n      \"labelFalse\": \"No\"\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"image_group\",\n      \"title\": \"Image group (set by the page)\",\n      \"isRequired\": true,\n      \"description\": \"Recorded by the page, not asked. As in the paper, the images were divided into three groups and each participant is randomly assigned to one group of 10. A = canopy_O03, canopy_O08, canopy_O10, canopy_O12, forest_I03, forest_I06, forest_I09, forest_I10, forest_I14, forest_I17; B = canopy_O02, canopy_O06, canopy_O07, canopy_O11, forest_I01, forest_I02, forest_I05, forest_I07, forest_I12, forest_I15; C = canopy_O01, canopy_O04, canopy_O05, canopy_O09, forest_I04, forest_I08, forest_I11, forest_I13, forest_I16, forest_I18.\",\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Group A\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Group B\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Group C\"\n       }\n      ]\n     },\n     {\n      \"type\": \"imageslidergroup\",\n      \"name\": \"ratings\",\n      \"title\": \"Aesthetic rating per image\",\n      \"isRequired\": true,\n      \"imageCount\": 1,\n      \"scaleMin\": 1,\n      \"scaleMax\": 7,\n      \"description\": \"One row per image (key = image name). canopy_O01 … O12 = UAV view of the Yushan canopy with autumn-coloured trees added: O1–O4 aggregate form, O5–O8 homogeneous, O9–O12 random; within each form slight, low, medium, high colorization intensity (15%, 22.5%, 33.75%, 50.63% of vegetation). forest_I01 … I18 = nine in-forest scenes, odd number = original photo, next even number = the same scene with colorized vegetation. Each image: 3 s fixation cross, 15 s viewing, then a 1–7 rating. Analysis in the paper: mean rating per image, ANOVA across intensities and forms against the original, pairwise comparisons, marginal effect of intensity × form.\",\n      \"dimensions\": [\n       {\n        \"id\": \"aesthetic\",\n        \"label\": \"How do you rate the aesthetic quality of this landscape?\",\n        \"left\": \"very low\",\n        \"right\": \"very high\",\n        \"min\": 1,\n        \"max\": 7,\n        \"step\": 1\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"What is your gender?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Female\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"age\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"inputType\": \"number\",\n      \"min\": 16,\n      \"max\": 99\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#eef0f2;--card:#fff;--ink:#1b1e22;--muted:#5a616b;--accent:#2f5d62;--accent-ink:#fff;--line:#d5d9de;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:820px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 10px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q>b{display:block;margin-bottom:4px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:120px}\n.pic{background:#2a2d31;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;aspect-ratio:3/2;max-height:min(58vh,560px)}\n.pic img{max-width:100%;max-height:100%;object-fit:contain;display:block}\n.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}\n.t{color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}\n.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;flex:1;margin-left:12px;max-width:260px}.bar>i{display:block;height:100%;background:var(--accent)}\n.qq{font-weight:600;margin:12px 0 6px}\n.sc{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}\n.sc button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:11px 0;font:inherit;font-weight:700;cursor:pointer}\n.sc button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}\n.fix{background:#2a2d31;border-radius:12px;aspect-ratio:3/2;max-height:min(58vh,560px);display:flex;align-items:center;justify-content:center;color:#fff;font-size:3rem;font-weight:300}\n.ends{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted);margin-top:3px;gap:12px}.ends span:last-child{text-align:right}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:820px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs and photomontages: Chen et al. (2023), Forests 14(7):1491, doi:10.3390/f14071491 (CC BY 4.0). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='forestcolor2023:', GROUPS={\"A\": [\"canopy_O03\", \"canopy_O08\", \"canopy_O10\", \"canopy_O12\", \"forest_I03\", \"forest_I06\", \"forest_I09\", \"forest_I10\", \"forest_I14\", \"forest_I17\"], \"B\": [\"canopy_O02\", \"canopy_O06\", \"canopy_O07\", \"canopy_O11\", \"forest_I01\", \"forest_I02\", \"forest_I05\", \"forest_I07\", \"forest_I12\", \"forest_I15\"], \"C\": [\"canopy_O01\", \"canopy_O04\", \"canopy_O05\", \"canopy_O09\", \"forest_I04\", \"forest_I08\", \"forest_I11\", \"forest_I13\", \"forest_I16\", \"forest_I18\"]}, GN=['A','B','C'], grp=null;\n  var app=document.getElementById('app'), Q={}, M={}, D=null, ans={}, done={}, order=[];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function saveAll(l,b,cb){Promise.all(l.map(function(a){return a[2]?SPSite.answer(a[0],a[1],a[2]):SPSite.answer(a[0],a[1]);})).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}cb();});}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function stem(n){return n.replace(/\\.[^.]+$/,'');}\n  function list(){return M.scenes||[];}\n  function byName(n){var l=list();for(var i=0;i<l.length;i++)if(l[i].name===n)return l[i];}\n  function next(){\n    window.scrollTo(0,0);\n    if(!ans.intro)return intro();\n    if(!ans.howto)return howto();\n    for(var i=0;i<order.length;i++){if(!done[stem(order[i])])return trial(i);}\n    if(!ans.about)return about();\n    finish();\n  }\n  function page(title,html,btn,cb){\n    app.innerHTML='<div class=\"card\">'+(title?'<h1>'+esc(title)+'</h1>':'')+html+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">'+esc(btn||'Continue')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=cb;\n  }\n  function radios(name){return (Q[name].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');}\n  function val(n){var x=app.querySelector('input[name='+n+']:checked');return x?Number(x.value):null;}\n  function intro(){\n    var miss=[];GN.forEach(function(g){GROUPS[g].forEach(function(n){if(!byName(n+'.jpg'))miss.push(n);});});\n    if(miss.length){app.innerHTML='<h1>Pictures missing</h1><p>Media folder scenes must hold the 30 images; missing: '+esc(miss.join(', '))+'.</p>';return;}\n    page('Autumn colours in an urban forest','<p>In this study you will be shown a series of autumnal photos of a mountain park in a city, one at a time, and rate the aesthetic quality of each landscape. It takes about 5 minutes.</p><p>Participation is voluntary and anonymous.</p><label class=\"opt\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label>','Start',function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var b=this;b.disabled=true;saveAll([['consent',true],['image_group',GN.indexOf(grp)+1]],b,function(){ans.intro=true;next();});\n    });\n  }\n  function howto(){\n    page('Instructions','<p style=\"color:var(--ink)\">You will be shown a series of autumnal photos on the screen. Please evaluate the aesthetic quality of the mountain landscapes using a seven-point scale, from <b>1 = very low</b> to <b>7 = very high</b>.</p><p style=\"color:var(--ink)\">Please do not try to remember or compare any details in the photos. This is not a memory test. Before each photo a cross appears; please look at it. Each photo stays on screen for 15 seconds, then you give your rating.</p>','Begin',function(){ans.howto=true;next();});\n  }\n  var timer=null;\n  function trial(i){\n    var f=byName(order[i]), n=0, k=stem(f.name);order.forEach(function(x){if(done[stem(x)])n++;});\n    var head='<div class=\"top\"><span class=\"t\">Image '+(n+1)+' of '+order.length+'</span><div class=\"bar\"><i style=\"width:'+(100*n/order.length)+'%\"></i></div></div>';\n    var pre=new Image();pre.src=f.url;\n    app.innerHTML=head+'<div class=\"fix\">+</div>';\n    clearTimeout(timer);\n    timer=setTimeout(function(){\n      app.innerHTML=head+'<div class=\"pic\"><img alt=\"Photograph of an urban forest landscape\" src=\"'+esc(f.url)+'\"></div><p class=\"t\" style=\"margin-top:8px\">Please look at the photo.</p>';\n      timer=setTimeout(function(){rate(f,k,head);},15000);\n    },3000);\n  }\n  function rate(f,k,head){\n    var b='';for(var v=D.min;v<=D.max;v++)b+='<button type=\"button\" data-v=\"'+v+'\">'+v+'</button>';\n    app.innerHTML=head+'<div class=\"qq\">'+esc(D.label)+'</div><div class=\"sc\">'+b+'</div><div class=\"ends\"><span>1 = '+esc(D.left)+'</span><span>7 = '+esc(D.right)+'</span></div><div class=\"err\"></div>';\n    var busy=false;\n    app.querySelectorAll('.sc button').forEach(function(x){x.onclick=function(){\n      if(busy)return;busy=true;x.classList.add('on');\n      SPSite.answer('ratings',{aesthetic:Number(x.dataset.v)},{key:k,shown:[f.name]}).then(function(r){\n        if(!ok(r)){busy=false;x.classList.remove('on');return err(r.error);}\n        done[k]=true;setTimeout(next,150);});\n    };});\n  }\n  function about(){\n    page('About you','<div class=\"q\"><b>'+esc(Q.gender.title)+'</b>'+radios('gender')+'</div><div class=\"q\"><b>'+esc(Q.age.title)+'</b><input type=\"number\" name=\"age\" min=\"16\" max=\"99\" inputmode=\"numeric\"></div>','Finish',function(){\n      var g=val('gender');if(!g)return err('Please answer: '+Q.gender.title);\n      var a=Number((app.querySelector('input[name=age]')||{}).value);if(!a||a<16||a>99)return err('Please enter your age in years.');\n      var b=this;b.disabled=true;saveAll([['gender',g],['age',a]],b,function(){ans.about=true;next();});\n    });\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>The photos showed the Yushan Scenic Area in Fuzhou, China, with autumn-coloured trees added digitally in different amounts and patterns, seen over the canopy and from inside the forest. In the original study of 183 students, evenly spread (homogeneous) autumn colour and a moderate amount of colour gave the highest aesthetic ratings overall.</p><p style=\"font-size:.82rem\">Photographs and task: Chen, Z., Huang, Y., Shen, Y., Fu, W., Yao, X., Huang, J., Lan, Y., Zhu, Z., &amp; Dong, J. (2023). How vegetation colorization design affects urban forest aesthetic preference and visual attention: An eye-tracking study. Forests 14(7):1491, doi:10.3390/f14071491. Used with credit and removed if the authors object.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){\n      if(x==='consent'||x==='image_group')ans.intro=false;else if(x==='ratings')done={};else ans.about=false;});next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','gender','age'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    var R=SPSite.getQuestion('ratings')||{};D=(R.dimensions||[])[0]||{label:'How do you rate the aesthetic quality of this landscape?',left:'very low',right:'very high',min:1,max:7};\n    M.scenes=(SPSite.getMedia('scenes')||[]).slice();\n    var a=(ctx&&ctx.answers)||{};\n    grp=load('group');if(a.image_group>=1&&a.image_group<=3)grp=GN[a.image_group-1];\n    if(GN.indexOf(grp)<0)grp=GN[Math.floor(Math.random()*3)];save('group',grp);\n    var names=GROUPS[grp].map(function(x){return x+'.jpg';});var o=load('order');\n    if(!o||o.length!==names.length||o.some(function(x){return names.indexOf(x)<0;}))o=shuffle(names);order=o;save('order',order);\n    ((a.ratings&&a.ratings.trials)||[]).forEach(function(t){if(t.key)done[t.key]=true;});\n    if(a.consent===true){ans.intro=true;if(Object.keys(done).length)ans.howto=true;}\n    if(a.age!=null)ans.about=true;\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T11:18:45.395Z",
+   "mediaFolders": [
+    "scenes"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T11:18:45.395Z"
+  },
+  "description": "Faithful replication of the aesthetic rating task in Chen, Huang, Shen, Fu, Yao, Huang, Lan, Zhu & Dong (2023), Forests 14(7):1491, with the authors' own photomontages of the Yushan Scenic Area in Fuzhou, China. Participants view autumn colorization designs of an urban forest, from the canopy seen from above and from inside the forest, for 15 seconds each and rate their aesthetic quality from 1 to 7.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2023-chen-autumn/scenes/canopy_O01__161ec235-f238-4b25-afc9-f9aa0c9d8088.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/canopy_O01__161ec235-f238-4b25-afc9-f9aa0c9d8088.jpg",
+   "name": "canopy_O01.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/canopy_O01__161ec235-f238-4b25-afc9-f9aa0c9d8088.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 93161,
+   "uploaded_bytes": 93161,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/canopy_O02__46819da2-60b4-4125-adb3-5afd58d95e0f.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/canopy_O02__46819da2-60b4-4125-adb3-5afd58d95e0f.jpg",
+   "name": "canopy_O02.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/canopy_O02__46819da2-60b4-4125-adb3-5afd58d95e0f.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 95222,
+   "uploaded_bytes": 95222,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/canopy_O03__f82bd4fe-ae77-4e3c-b347-adb44dce5439.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/canopy_O03__f82bd4fe-ae77-4e3c-b347-adb44dce5439.jpg",
+   "name": "canopy_O03.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/canopy_O03__f82bd4fe-ae77-4e3c-b347-adb44dce5439.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 95304,
+   "uploaded_bytes": 95304,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/canopy_O04__ff54264a-564f-4e16-8fe1-1c788e3fefd1.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/canopy_O04__ff54264a-564f-4e16-8fe1-1c788e3fefd1.jpg",
+   "name": "canopy_O04.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/canopy_O04__ff54264a-564f-4e16-8fe1-1c788e3fefd1.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 93486,
+   "uploaded_bytes": 93486,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/canopy_O05__4c618f92-5b44-4451-b3f1-da386c019e9b.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/canopy_O05__4c618f92-5b44-4451-b3f1-da386c019e9b.jpg",
+   "name": "canopy_O05.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/canopy_O05__4c618f92-5b44-4451-b3f1-da386c019e9b.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 86785,
+   "uploaded_bytes": 86785,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/canopy_O06__b657c45d-3d6b-4291-b55f-e02057f3d534.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/canopy_O06__b657c45d-3d6b-4291-b55f-e02057f3d534.jpg",
+   "name": "canopy_O06.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/canopy_O06__b657c45d-3d6b-4291-b55f-e02057f3d534.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 86317,
+   "uploaded_bytes": 86317,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/canopy_O07__2e055a5d-3f4c-41ee-85e1-0fccda8f7a0c.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/canopy_O07__2e055a5d-3f4c-41ee-85e1-0fccda8f7a0c.jpg",
+   "name": "canopy_O07.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/canopy_O07__2e055a5d-3f4c-41ee-85e1-0fccda8f7a0c.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 90162,
+   "uploaded_bytes": 90162,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/canopy_O08__99aaef87-94e8-47bc-80f0-17427b82d577.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/canopy_O08__99aaef87-94e8-47bc-80f0-17427b82d577.jpg",
+   "name": "canopy_O08.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/canopy_O08__99aaef87-94e8-47bc-80f0-17427b82d577.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 91391,
+   "uploaded_bytes": 91391,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/canopy_O09__8a67566a-9eb1-4a27-a936-1ff3d40077d5.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/canopy_O09__8a67566a-9eb1-4a27-a936-1ff3d40077d5.jpg",
+   "name": "canopy_O09.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/canopy_O09__8a67566a-9eb1-4a27-a936-1ff3d40077d5.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 85528,
+   "uploaded_bytes": 85528,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/canopy_O10__c6fa9fda-3cc9-43e1-a42f-c8a16dc766b9.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/canopy_O10__c6fa9fda-3cc9-43e1-a42f-c8a16dc766b9.jpg",
+   "name": "canopy_O10.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/canopy_O10__c6fa9fda-3cc9-43e1-a42f-c8a16dc766b9.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 83794,
+   "uploaded_bytes": 83794,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/canopy_O11__386666d0-2080-4cd7-97cb-5e38b235e1a2.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/canopy_O11__386666d0-2080-4cd7-97cb-5e38b235e1a2.jpg",
+   "name": "canopy_O11.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/canopy_O11__386666d0-2080-4cd7-97cb-5e38b235e1a2.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 88986,
+   "uploaded_bytes": 88986,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/canopy_O12__f728a01b-ba81-47b1-90d2-a21b27f337c0.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/canopy_O12__f728a01b-ba81-47b1-90d2-a21b27f337c0.jpg",
+   "name": "canopy_O12.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/canopy_O12__f728a01b-ba81-47b1-90d2-a21b27f337c0.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 92052,
+   "uploaded_bytes": 92052,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/forest_I01__34125f58-d590-498a-a723-120485c2a7de.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/forest_I01__34125f58-d590-498a-a723-120485c2a7de.jpg",
+   "name": "forest_I01.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/forest_I01__34125f58-d590-498a-a723-120485c2a7de.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 75383,
+   "uploaded_bytes": 75383,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/forest_I02__d301e732-88fc-4cc2-a864-abcfa2985659.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/forest_I02__d301e732-88fc-4cc2-a864-abcfa2985659.jpg",
+   "name": "forest_I02.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/forest_I02__d301e732-88fc-4cc2-a864-abcfa2985659.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 71464,
+   "uploaded_bytes": 71464,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/forest_I03__09dfd21f-5f33-459e-aaff-2ac9d94af056.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/forest_I03__09dfd21f-5f33-459e-aaff-2ac9d94af056.jpg",
+   "name": "forest_I03.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/forest_I03__09dfd21f-5f33-459e-aaff-2ac9d94af056.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 72940,
+   "uploaded_bytes": 72940,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/forest_I04__4258411d-a390-4e43-8c1f-9ca79e172737.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/forest_I04__4258411d-a390-4e43-8c1f-9ca79e172737.jpg",
+   "name": "forest_I04.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/forest_I04__4258411d-a390-4e43-8c1f-9ca79e172737.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 54604,
+   "uploaded_bytes": 54604,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/forest_I05__6114db16-42f1-40b6-b965-f25dc400d8c0.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/forest_I05__6114db16-42f1-40b6-b965-f25dc400d8c0.jpg",
+   "name": "forest_I05.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/forest_I05__6114db16-42f1-40b6-b965-f25dc400d8c0.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 79615,
+   "uploaded_bytes": 79615,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/forest_I06__bb3582fb-e41f-4b86-b532-3c5d4986b9a7.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/forest_I06__bb3582fb-e41f-4b86-b532-3c5d4986b9a7.jpg",
+   "name": "forest_I06.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/forest_I06__bb3582fb-e41f-4b86-b532-3c5d4986b9a7.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 71840,
+   "uploaded_bytes": 71840,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/forest_I07__3b5f3fbf-55bc-4f80-9147-aa52eb524cf2.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/forest_I07__3b5f3fbf-55bc-4f80-9147-aa52eb524cf2.jpg",
+   "name": "forest_I07.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/forest_I07__3b5f3fbf-55bc-4f80-9147-aa52eb524cf2.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 71491,
+   "uploaded_bytes": 71491,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/forest_I08__63fa7eaa-b2a7-47dc-95c5-164c72f9dab3.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/forest_I08__63fa7eaa-b2a7-47dc-95c5-164c72f9dab3.jpg",
+   "name": "forest_I08.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/forest_I08__63fa7eaa-b2a7-47dc-95c5-164c72f9dab3.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 76539,
+   "uploaded_bytes": 76539,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/forest_I09__1aa31406-3d1f-42b1-a26f-22493b941e27.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/forest_I09__1aa31406-3d1f-42b1-a26f-22493b941e27.jpg",
+   "name": "forest_I09.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/forest_I09__1aa31406-3d1f-42b1-a26f-22493b941e27.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 63652,
+   "uploaded_bytes": 63652,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/forest_I10__aaf66649-3241-4035-abbc-97a7e1c5680c.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/forest_I10__aaf66649-3241-4035-abbc-97a7e1c5680c.jpg",
+   "name": "forest_I10.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/forest_I10__aaf66649-3241-4035-abbc-97a7e1c5680c.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 66930,
+   "uploaded_bytes": 66930,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/forest_I11__6ff48ed8-0bf0-4b72-8531-580698f0956a.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/forest_I11__6ff48ed8-0bf0-4b72-8531-580698f0956a.jpg",
+   "name": "forest_I11.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/forest_I11__6ff48ed8-0bf0-4b72-8531-580698f0956a.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 60390,
+   "uploaded_bytes": 60390,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/forest_I12__76b258f4-19a1-4944-8e60-55eb7b1bc7ba.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/forest_I12__76b258f4-19a1-4944-8e60-55eb7b1bc7ba.jpg",
+   "name": "forest_I12.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/forest_I12__76b258f4-19a1-4944-8e60-55eb7b1bc7ba.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 62537,
+   "uploaded_bytes": 62537,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/forest_I13__be0834e8-389b-47dc-a707-236e2c1479aa.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/forest_I13__be0834e8-389b-47dc-a707-236e2c1479aa.jpg",
+   "name": "forest_I13.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/forest_I13__be0834e8-389b-47dc-a707-236e2c1479aa.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 72749,
+   "uploaded_bytes": 72749,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/forest_I14__41016689-0ecf-4ec4-9960-8310f15ba71d.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/forest_I14__41016689-0ecf-4ec4-9960-8310f15ba71d.jpg",
+   "name": "forest_I14.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/forest_I14__41016689-0ecf-4ec4-9960-8310f15ba71d.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 75228,
+   "uploaded_bytes": 75228,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/forest_I15__fd4f6453-ca9b-45bb-bb6a-a0f9d27543a8.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/forest_I15__fd4f6453-ca9b-45bb-bb6a-a0f9d27543a8.jpg",
+   "name": "forest_I15.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/forest_I15__fd4f6453-ca9b-45bb-bb6a-a0f9d27543a8.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 77161,
+   "uploaded_bytes": 77161,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/forest_I16__f9a3a171-9ea3-4a40-99a7-f70615cad18e.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/forest_I16__f9a3a171-9ea3-4a40-99a7-f70615cad18e.jpg",
+   "name": "forest_I16.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/forest_I16__f9a3a171-9ea3-4a40-99a7-f70615cad18e.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 72853,
+   "uploaded_bytes": 72853,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/forest_I17__ac5b1d3d-0131-4d99-9c0b-092618e79e3e.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/forest_I17__ac5b1d3d-0131-4d99-9c0b-092618e79e3e.jpg",
+   "name": "forest_I17.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/forest_I17__ac5b1d3d-0131-4d99-9c0b-092618e79e3e.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 73685,
+   "uploaded_bytes": 73685,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-chen-autumn/scenes/forest_I18__8bf63d20-cc5a-4006-8391-67896cc48680.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-chen-autumn/scenes/forest_I18__8bf63d20-cc5a-4006-8391-67896cc48680.jpg",
+   "name": "forest_I18.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2023-chen-autumn/scenes/forest_I18__8bf63d20-cc5a-4006-8391-67896cc48680.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 77694,
+   "uploaded_bytes": 77694,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "How Vegetation Colorization Design Affects Urban Forest Aesthetic Preference and Visual Attention: An Eye-Tracking Study",
+  "authors": [
+   "Ziru Chen",
+   "Yaling Huang",
+   "Yuanping Shen",
+   "Weicong Fu",
+   "Xiong Yao",
+   "Jingkai Huang",
+   "Yuxiang Lan",
+   "Zhipeng Zhu",
+   "Jiaying Dong"
+  ],
+  "year": 2023,
+  "venue": "Forests",
+  "doi": "10.3390/f14071491",
+  "url": "https://doi.org/10.3390/f14071491"
+ }
+}

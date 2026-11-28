@@ -1,0 +1,1109 @@
+{
+ "id": "2024-ignatieva-urban",
+ "name": "Urban lawns in Perth: views, uses and lawn alternatives",
+ "description": "Faithful replication of the online questionnaire in Ignatieva, Hughes, Chaudhary & Mofrad (2024), \"The Lawn as a Social and Cultural Phenomenon in Perth, Western Australia\", Land 13(2):191 (171 respondents). Participants define what a lawn is and what it is for, rate their private lawn and their local park lawn (agreement and frequency of uses), report animals seen, satisfaction, habitat value and grass allergy, then rate five photographed lawn alternatives (clover, Dichondra, flowering weeds, Scaevola patches, uncut high grass) as Good / Neutral / Bad and rank them 1–5, followed by lawn management questions and background items. The paper found people still preferred alternatives closest to a conventional lawn (Dichondra and clover). Questionnaire from the paper's Table S1; photographs by M. Ignatieva from the paper's Figure 4 (CC BY 4.0), used with credit; the template is removed if the authors object.\n\nDifferences from the original study: (1) the postcode question is left out for privacy; (2) ranking is done by tapping photos in order instead of drag-and-drop; (3) the Good / Neutral / Bad scale is coded 1–3 (the original coding used 4–6); (4) a consent page is added; (5) \"large / smaller urban park\" is asked as one single-choice question; (6) the \"other activity\" text field is optional.",
+ "author": "Ignatieva, Hughes, Chaudhary & Mofrad",
+ "year": "2024",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "source:paper",
+  "modality:scene_photo",
+  "task:rating",
+  "task:choose_from_set",
+  "task:questionnaire",
+  "task:open_ended",
+  "concept:greenery",
+  "concept:preference",
+  "concept:naturalness",
+  "participants:residents",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:Australia",
+  "city:Perth"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/land13020191",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T20:16:19.881+00:00",
+ "updatedAt": "2026-11-27T20:16:33.562+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "intro": "This survey asks about your understanding and use of lawns at home and in your nearest public park, your views on some alternatives to conventional lawn, and a few questions about you. It takes about 10–15 minutes. Answers are anonymous and used for research only.",
+    "title": "Lawns in your neighbourhood",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "label": "I agree to take part in this survey.",
+      "title": "Consent",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "understanding",
+    "intro": "We would like to know your general understanding of what lawn is and what it is for. Please write a short response to the following two questions.",
+    "elements": [
+     {
+      "name": "lawn_definition",
+      "type": "comment",
+      "title": "How would you explain what lawn is? Please write a short definition of lawn in your own words, using the space provided.",
+      "isRequired": true
+     },
+     {
+      "name": "lawn_purpose",
+      "type": "comment",
+      "title": "In your opinion, what is the main purpose of lawns in an urban environment? Write a short explanation in your own words using the space provided.",
+      "isRequired": true
+     },
+     {
+      "name": "private_lawn",
+      "type": "radiogroup",
+      "title": "Does your home where you currently live have a lawn for your private use?",
+      "choices": [
+       {
+        "text": "No",
+        "value": 1
+       },
+       {
+        "text": "Yes",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "private",
+    "intro": "The next few questions are about the private lawn at the home where you currently live.",
+    "elements": [
+     {
+      "kind": "matrix",
+      "name": "private_lawn_agreement",
+      "type": "custom",
+      "items": [
+       {
+        "name": "a_1",
+        "text": "The lawn is healthy and well kept"
+       },
+       {
+        "name": "a_2",
+        "text": "The lawn is a good place for rest / relaxation / socialising"
+       },
+       {
+        "name": "a_3",
+        "text": "The lawn looks beautiful"
+       },
+       {
+        "name": "a_4",
+        "text": "The lawn is a good place to rest"
+       }
+      ],
+      "scale": [
+       {
+        "text": "Disagree",
+        "value": 1
+       },
+       {
+        "text": "Neutral",
+        "value": 2
+       },
+       {
+        "text": "Agree",
+        "value": 3
+       }
+      ],
+      "title": "Thinking about your own private lawn, please rate how much you agree or disagree with the following statements.",
+      "visibleIf": {
+       "q": "private_lawn",
+       "eq": 2
+      },
+      "isRequired": true,
+      "description": "Value: {a_1..a_4: 1 disagree, 2 neutral, 3 agree}."
+     },
+     {
+      "kind": "matrix",
+      "name": "private_lawn_use",
+      "type": "custom",
+      "items": [
+       {
+        "name": "u_1",
+        "text": "Light exercise (eg walking)"
+       },
+       {
+        "name": "u_2",
+        "text": "Vigorous exercise (eg fitness training)"
+       },
+       {
+        "name": "u_3",
+        "text": "Playing games"
+       },
+       {
+        "name": "u_4",
+        "text": "Passive recreation (eg sitting, socialising)"
+       },
+       {
+        "name": "u_5",
+        "text": "Other (optional)",
+        "optional": true
+       }
+      ],
+      "scale": [
+       {
+        "text": "Never",
+        "value": 1
+       },
+       {
+        "text": "Sometimes",
+        "value": 2
+       },
+       {
+        "text": "Often",
+        "value": 3
+       }
+      ],
+      "title": "Thinking about your own private lawn please indicate how frequently the lawn is used for each of the activities listed.",
+      "visibleIf": {
+       "q": "private_lawn",
+       "eq": 2
+      },
+      "isRequired": true,
+      "description": "Value: {u_1..u_5: 1 never, 2 sometimes, 3 often}."
+     },
+     {
+      "name": "private_lawn_use_other",
+      "type": "text",
+      "title": "Other activity (please specify)",
+      "visibleIf": {
+       "q": "private_lawn",
+       "eq": 2
+      }
+     }
+    ]
+   },
+   {
+    "name": "public",
+    "intro": "The next few questions are about the lawn in your nearest public park to where you currently live. The public park near where you live might include anything from a large area of lawn to a smaller pocket park.",
+    "elements": [
+     {
+      "name": "park_type",
+      "type": "radiogroup",
+      "title": "Your nearest public park is a:",
+      "choices": [
+       {
+        "text": "Large urban park",
+        "value": 1
+       },
+       {
+        "text": "Smaller urban park",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "kind": "matrix",
+      "name": "park_lawn_agreement",
+      "type": "custom",
+      "items": [
+       {
+        "name": "a_1",
+        "text": "The lawn is healthy and well kept"
+       },
+       {
+        "name": "a_2",
+        "text": "The lawn is a good place for recreation"
+       },
+       {
+        "name": "a_3",
+        "text": "The lawn looks beautiful"
+       },
+       {
+        "name": "a_4",
+        "text": "The lawn is a good place for rest and relaxation"
+       }
+      ],
+      "scale": [
+       {
+        "text": "Disagree",
+        "value": 1
+       },
+       {
+        "text": "Neutral",
+        "value": 2
+       },
+       {
+        "text": "Agree",
+        "value": 3
+       }
+      ],
+      "title": "Thinking about the lawn in your nearest local public park to where you live, please rate how much you agree or disagree with the following statements.",
+      "isRequired": true,
+      "description": "Value: {a_1..a_4: 1 disagree, 2 neutral, 3 agree}."
+     },
+     {
+      "kind": "matrix",
+      "name": "park_lawn_use",
+      "type": "custom",
+      "items": [
+       {
+        "name": "u_1",
+        "text": "Light exercise (eg walking)"
+       },
+       {
+        "name": "u_2",
+        "text": "Vigorous exercise (eg fitness training)"
+       },
+       {
+        "name": "u_3",
+        "text": "Organised sport"
+       },
+       {
+        "name": "u_4",
+        "text": "Passive recreation (eg sitting relaxation, socialisation)"
+       },
+       {
+        "name": "u_5",
+        "text": "Picnics, BBQ, social gatherings"
+       },
+       {
+        "name": "u_6",
+        "text": "Playing games"
+       },
+       {
+        "name": "u_7",
+        "text": "A transit area (place to pass through)"
+       },
+       {
+        "name": "u_8",
+        "text": "Walking pets"
+       },
+       {
+        "name": "u_9",
+        "text": "Other (optional)",
+        "optional": true
+       }
+      ],
+      "scale": [
+       {
+        "text": "Never",
+        "value": 1
+       },
+       {
+        "text": "Sometimes",
+        "value": 2
+       },
+       {
+        "text": "Often",
+        "value": 3
+       }
+      ],
+      "title": "Thinking about the lawn in your nearest local public park to where you live, please indicate how frequently you use the lawn for each of the activities listed.",
+      "isRequired": true,
+      "description": "Value: {u_1..u_9: 1 never, 2 sometimes, 3 often}."
+     }
+    ]
+   },
+   {
+    "name": "views",
+    "elements": [
+     {
+      "name": "lawn_satisfaction",
+      "type": "radiogroup",
+      "title": "How generally satisfied are you with the condition of public and private lawns in the neighbourhood where you live (your overall general impression)?",
+      "choices": [
+       {
+        "text": "Very dissatisfied",
+        "value": 1
+       },
+       {
+        "text": "Somewhat dissatisfied",
+        "value": 2
+       },
+       {
+        "text": "Neither satisfied nor dissatisfied",
+        "value": 3
+       },
+       {
+        "text": "Somewhat satisfied",
+        "value": 4
+       },
+       {
+        "text": "Very satisfied",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "satisfaction_reason",
+      "type": "comment",
+      "title": "Please briefly explain the main reason for your level of satisfaction with the condition of lawns in your neighbourhood where you live.",
+      "isRequired": true
+     },
+     {
+      "name": "lawn_habitat",
+      "type": "radiogroup",
+      "title": "In your opinion, do you think the lawn in urban areas is a good habitat for animals (eg insects, mammals and/or birds)?",
+      "choices": [
+       {
+        "text": "No",
+        "value": 1
+       },
+       {
+        "text": "Don't know",
+        "value": 2
+       },
+       {
+        "text": "Yes",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "animals_seen",
+      "type": "radiogroup",
+      "title": "Have you seen any types of animals using the public or private lawns in the neighbourhood where you live?",
+      "reflow": true,
+      "choices": [
+       {
+        "text": "No",
+        "value": 1
+       },
+       {
+        "text": "Don't know",
+        "value": 2
+       },
+       {
+        "text": "Yes",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "animals_named",
+      "type": "comment",
+      "title": "Please name the types of animals you have seen using lawns in your neighbourhood.",
+      "visibleIf": {
+       "q": "animals_seen",
+       "eq": 3
+      },
+      "isRequired": true
+     },
+     {
+      "name": "grass_allergy",
+      "type": "radiogroup",
+      "title": "Are you allergic to flowering grasses?",
+      "choices": [
+       {
+        "text": "No",
+        "value": 1
+       },
+       {
+        "text": "Don't know",
+        "value": 2
+       },
+       {
+        "text": "Yes",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "alternatives",
+    "elements": [
+     {
+      "kind": "image_rating",
+      "name": "lawn_alternative_opinion",
+      "type": "custom",
+      "items": [
+       {
+        "file": "clover.jpg",
+        "name": "clover",
+        "text": "Lawn with turf grasses and clover"
+       },
+       {
+        "file": "dichondra.jpg",
+        "name": "dichondra",
+        "text": "Lawn with turf grasses and Dichondra"
+       },
+       {
+        "file": "flowering_weeds.jpg",
+        "name": "flowering_weeds",
+        "text": "Biodiverse lawn with turf grasses and flowering weeds"
+       },
+       {
+        "file": "scaevola.jpg",
+        "name": "scaevola",
+        "text": "Scaevola patches in dedicated spaces"
+       },
+       {
+        "file": "uncut_high_grass.jpg",
+        "name": "uncut_high_grass",
+        "text": "‘Old’ uncut high grass lawn"
+       }
+      ],
+      "scale": [
+       {
+        "text": "Good",
+        "value": 1
+       },
+       {
+        "text": "Neutral",
+        "value": 2
+       },
+       {
+        "text": "Bad",
+        "value": 3
+       }
+      ],
+      "title": "The following images represent types of lawn alternatives that could be used in urban public parks. Thinking about types of possible lawn alternatives that could be used in particular designed spaces in urban public parks where you live, please indicate your opinion of each lawn type.",
+      "isRequired": true,
+      "description": "Five lawn-alternative photographs (paper Figure 4). Value: {clover, dichondra, flowering_weeds, scaevola, uncut_high_grass: 1 good, 2 neutral, 3 bad} (original codes 4/5/6). Analysis in the paper: share good/neutral/bad (Table S4)."
+     }
+    ]
+   },
+   {
+    "name": "ranking",
+    "elements": [
+     {
+      "kind": "image_rank",
+      "name": "lawn_alternative_rank",
+      "type": "custom",
+      "items": [
+       {
+        "file": "clover.jpg",
+        "name": "clover",
+        "text": "Lawn with turf grasses and clover"
+       },
+       {
+        "file": "dichondra.jpg",
+        "name": "dichondra",
+        "text": "Lawn with turf grasses and Dichondra"
+       },
+       {
+        "file": "flowering_weeds.jpg",
+        "name": "flowering_weeds",
+        "text": "Biodiverse lawn with turf grasses and flowering weeds"
+       },
+       {
+        "file": "scaevola.jpg",
+        "name": "scaevola",
+        "text": "Scaevola patches in dedicated spaces"
+       },
+       {
+        "file": "uncut_high_grass.jpg",
+        "name": "uncut_high_grass",
+        "text": "‘Old’ uncut high grass lawn"
+       }
+      ],
+      "title": "Focusing on the different lawn alternatives that could be used in dedicated spaces in urban public parks where you live, please indicate your order of preference (1 = most preferred, 5 = least preferred).",
+      "isRequired": true,
+      "description": "Value: {clover: rank, dichondra: rank, ...}, 1 = most preferred. Analysis in the paper: mean rank (Table S5)."
+     }
+    ]
+   },
+   {
+    "name": "management",
+    "intro": "The next few questions are about managing your own private lawn at your home where you currently live.",
+    "elements": [
+     {
+      "name": "mowing_frequency",
+      "type": "checkbox",
+      "title": "Thinking about your own private lawn at your home where you live, please indicate how often the lawn is mown (select any that apply):",
+      "choices": [
+       {
+        "text": "About once per week",
+        "value": 1
+       },
+       {
+        "text": "About once per fortnight",
+        "value": 2
+       },
+       {
+        "text": "About once per month",
+        "value": 3
+       },
+       {
+        "text": "Never mown",
+        "value": 4
+       },
+       {
+        "text": "Other",
+        "value": 5
+       }
+      ],
+      "visibleIf": {
+       "q": "private_lawn",
+       "eq": 2
+      },
+      "isRequired": true
+     },
+     {
+      "name": "mowing_height",
+      "type": "checkbox",
+      "title": "Please indicate whether the following lawn heights are currently used when mowing (select any that apply):",
+      "choices": [
+       {
+        "text": "Short mown lawn (less than 3cm tall)",
+        "value": 1
+       },
+       {
+        "text": "Long mown lawn (3 cm to 5 cm tall)",
+        "value": 2
+       },
+       {
+        "text": "Don't know",
+        "value": 3
+       }
+      ],
+      "visibleIf": {
+       "q": "private_lawn",
+       "eq": 2
+      },
+      "isRequired": true
+     },
+     {
+      "name": "management_techniques",
+      "type": "checkbox",
+      "title": "Please indicate whether the following lawn management techniques are currently used (select any that apply):",
+      "choices": [
+       {
+        "text": "Removing mown grass clippings",
+        "value": 1
+       },
+       {
+        "text": "Fertilising",
+        "value": 2
+       },
+       {
+        "text": "Applying herbicides",
+        "value": 3
+       },
+       {
+        "text": "Adding soil wetting agent",
+        "value": 4
+       },
+       {
+        "text": "Mowing",
+        "value": 5
+       }
+      ],
+      "visibleIf": {
+       "q": "private_lawn",
+       "eq": 2
+      }
+     },
+     {
+      "name": "watered",
+      "type": "radiogroup",
+      "title": "Does the lawn at the home where you live get regularly watered during hot months (eg with reticulation, a hose or sprinkler)?",
+      "reflow": true,
+      "choices": [
+       {
+        "text": "Yes",
+        "value": 1
+       },
+       {
+        "text": "No",
+        "value": 2
+       },
+       {
+        "text": "Don't know",
+        "value": 3
+       }
+      ],
+      "visibleIf": {
+       "q": "private_lawn",
+       "eq": 2
+      },
+      "isRequired": true
+     },
+     {
+      "name": "not_watered_reasons",
+      "type": "checkbox",
+      "title": "If the lawn at the home where you live is not watered, indicate why by selecting any options that apply from the list provided:",
+      "choices": [
+       {
+        "text": "No reticulation system",
+        "value": 1
+       },
+       {
+        "text": "No time to hand water",
+        "value": 2
+       },
+       {
+        "text": "Lawn survives without watering",
+        "value": 3
+       },
+       {
+        "text": "Watering the lawn is a waste of water",
+        "value": 4
+       },
+       {
+        "text": "OK if the lawn dies during dry months",
+        "value": 5
+       },
+       {
+        "text": "No sprinkler",
+        "value": 6
+       },
+       {
+        "text": "I don’t know how to keep my lawn healthy and green during summer",
+        "value": 7
+       },
+       {
+        "text": "Other",
+        "value": 8
+       }
+      ],
+      "visibleIf": {
+       "q": "watered",
+       "eq": 2
+      },
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "intro": "This section asks some very general questions about you to help us better understand the survey responses.",
+    "elements": [
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "How old are you?",
+      "choices": [
+       {
+        "text": "18-24 years old",
+        "value": 1
+       },
+       {
+        "text": "25-34 years old",
+        "value": 2
+       },
+       {
+        "text": "35-44 years old",
+        "value": 3
+       },
+       {
+        "text": "45-54 years old",
+        "value": 4
+       },
+       {
+        "text": "55-64 years old",
+        "value": 5
+       },
+       {
+        "text": "65+ years old",
+        "value": 6
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "How do you describe yourself?",
+      "choices": [
+       {
+        "text": "Male",
+        "value": 1
+       },
+       {
+        "text": "Female",
+        "value": 2
+       },
+       {
+        "text": "Non-binary / third gender",
+        "value": 3
+       },
+       {
+        "text": "Prefer to self-describe",
+        "value": 4
+       },
+       {
+        "text": "Prefer not to say",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "dwelling",
+      "type": "radiogroup",
+      "title": "Please indicate the type of dwelling you currently live in:",
+      "choices": [
+       {
+        "text": "Detached house",
+        "value": 1
+       },
+       {
+        "text": "Flat / apartment / townhouse",
+        "value": 2
+       },
+       {
+        "text": "Other",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "residence",
+      "type": "radiogroup",
+      "title": "Where is your current place of residence?",
+      "reflow": true,
+      "choices": [
+       {
+        "text": "Australia",
+        "value": 1
+       },
+       {
+        "text": "Country other than Australia",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "state",
+      "type": "radiogroup",
+      "title": "If you live in Australia, what state/territory do you live in?",
+      "choices": [
+       {
+        "text": "Australian Capital Territory",
+        "value": 1
+       },
+       {
+        "text": "New South Wales",
+        "value": 2
+       },
+       {
+        "text": "Northern Territory",
+        "value": 3
+       },
+       {
+        "text": "Queensland",
+        "value": 4
+       },
+       {
+        "text": "South Australia",
+        "value": 5
+       },
+       {
+        "text": "Tasmania",
+        "value": 6
+       },
+       {
+        "text": "Victoria",
+        "value": 7
+       },
+       {
+        "text": "Western Australia",
+        "value": 8
+       },
+       {
+        "text": "Other",
+        "value": 9
+       }
+      ],
+      "visibleIf": {
+       "q": "residence",
+       "eq": 1
+      },
+      "isRequired": true
+     },
+     {
+      "name": "employment",
+      "type": "radiogroup",
+      "title": "What best describes your current employment status?",
+      "reflow": true,
+      "choices": [
+       {
+        "text": "Working full-time",
+        "value": 1
+       },
+       {
+        "text": "Working part-time/casual",
+        "value": 2
+       },
+       {
+        "text": "Home duties",
+        "value": 3
+       },
+       {
+        "text": "Unemployed",
+        "value": 4
+       },
+       {
+        "text": "Retired",
+        "value": 5
+       },
+       {
+        "text": "Student",
+        "value": 6
+       },
+       {
+        "text": "Other",
+        "value": 7
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "occupation",
+      "type": "radiogroup",
+      "title": "Select the occupation that most closely matches the one in which you are currently employed:",
+      "choices": [
+       {
+        "text": "Accommodation and Food Services",
+        "value": 1
+       },
+       {
+        "text": "Administrative and Support Services",
+        "value": 2
+       },
+       {
+        "text": "Agriculture, Forestry and Fishing",
+        "value": 3
+       },
+       {
+        "text": "Arts and Recreation Services",
+        "value": 4
+       },
+       {
+        "text": "Construction",
+        "value": 5
+       },
+       {
+        "text": "Defence Forces",
+        "value": 6
+       },
+       {
+        "text": "Education and Training",
+        "value": 7
+       },
+       {
+        "text": "Electricity, Gas, Water and Waste Services",
+        "value": 8
+       },
+       {
+        "text": "Financial and Insurance Services",
+        "value": 9
+       },
+       {
+        "text": "Health Care and Social Assistance",
+        "value": 10
+       },
+       {
+        "text": "Information Media and Telecommunications",
+        "value": 11
+       },
+       {
+        "text": "Mining, Oil and Gas",
+        "value": 12
+       },
+       {
+        "text": "Manufacturing",
+        "value": 13
+       },
+       {
+        "text": "Professional, Scientific and Technical Services",
+        "value": 14
+       },
+       {
+        "text": "Public Administration and Safety",
+        "value": 15
+       },
+       {
+        "text": "Rental, Hiring and Real Estate Services",
+        "value": 16
+       },
+       {
+        "text": "Retail Trade",
+        "value": 17
+       },
+       {
+        "text": "Transport, Postal and Warehousing",
+        "value": 18
+       },
+       {
+        "text": "Wholesale Trade",
+        "value": 19
+       },
+       {
+        "text": "Other Services",
+        "value": 20
+       }
+      ],
+      "visibleIf": {
+       "q": "employment",
+       "in": [
+        1,
+        2
+       ]
+      },
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "What is your highest level of education?",
+      "choices": [
+       {
+        "text": "Primary school",
+        "value": 1
+       },
+       {
+        "text": "Secondary school (high school)",
+        "value": 2
+       },
+       {
+        "text": "University graduate",
+        "value": 3
+       },
+       {
+        "text": "University higher degree (post graduate)",
+        "value": 4
+       },
+       {
+        "text": "Vocational training",
+        "value": 5
+       },
+       {
+        "text": "Other",
+        "value": 6
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "comments",
+      "type": "comment",
+      "title": "Do you have any additional comments about the presence, use or management of lawn in the area where you live?"
+     }
+    ]
+   }
+  ],
+  "title": "Lawns and Lawn Alternatives (Perth)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-ca8b994c6c776ed2",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Lawns in Perth</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Lawns and Lawn Alternatives (Perth)\",\n  \"description\": \"Faithful replication of Ignatieva, Hughes, Chaudhary & Mofrad (2024), Land 13:191: the full Perth lawn questionnaire: what lawn is for, how private and park lawns are used and managed, and opinions and a preference ranking of five photographed lawn alternatives (clover, Dichondra, flowering weeds, Scaevola, uncut high grass).\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"lawns\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"title\": \"Lawns in your neighbourhood\",\n    \"intro\": \"This survey asks about your understanding and use of lawns at home and in your nearest public park, your views on some alternatives to conventional lawn, and a few questions about you. It takes about 10–15 minutes. Answers are anonymous and used for research only.\",\n    \"elements\": [\n     {\n      \"type\": \"boolean\",\n      \"name\": \"consent\",\n      \"title\": \"Consent\",\n      \"label\": \"I agree to take part in this survey.\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"understanding\",\n    \"intro\": \"We would like to know your general understanding of what lawn is and what it is for. Please write a short response to the following two questions.\",\n    \"elements\": [\n     {\n      \"type\": \"comment\",\n      \"name\": \"lawn_definition\",\n      \"title\": \"How would you explain what lawn is? Please write a short definition of lawn in your own words, using the space provided.\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"lawn_purpose\",\n      \"title\": \"In your opinion, what is the main purpose of lawns in an urban environment? Write a short explanation in your own words using the space provided.\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"private_lawn\",\n      \"title\": \"Does your home where you currently live have a lawn for your private use?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"No\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Yes\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"private\",\n    \"intro\": \"The next few questions are about the private lawn at the home where you currently live.\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"kind\": \"matrix\",\n      \"name\": \"private_lawn_agreement\",\n      \"visibleIf\": {\n       \"q\": \"private_lawn\",\n       \"eq\": 2\n      },\n      \"isRequired\": true,\n      \"title\": \"Thinking about your own private lawn, please rate how much you agree or disagree with the following statements.\",\n      \"scale\": [\n       {\n        \"value\": 1,\n        \"text\": \"Disagree\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Neutral\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Agree\"\n       }\n      ],\n      \"items\": [\n       {\n        \"name\": \"a_1\",\n        \"text\": \"The lawn is healthy and well kept\"\n       },\n       {\n        \"name\": \"a_2\",\n        \"text\": \"The lawn is a good place for rest / relaxation / socialising\"\n       },\n       {\n        \"name\": \"a_3\",\n        \"text\": \"The lawn looks beautiful\"\n       },\n       {\n        \"name\": \"a_4\",\n        \"text\": \"The lawn is a good place to rest\"\n       }\n      ],\n      \"description\": \"Value: {a_1..a_4: 1 disagree, 2 neutral, 3 agree}.\"\n     },\n     {\n      \"type\": \"custom\",\n      \"kind\": \"matrix\",\n      \"name\": \"private_lawn_use\",\n      \"visibleIf\": {\n       \"q\": \"private_lawn\",\n       \"eq\": 2\n      },\n      \"isRequired\": true,\n      \"title\": \"Thinking about your own private lawn please indicate how frequently the lawn is used for each of the activities listed.\",\n      \"scale\": [\n       {\n        \"value\": 1,\n        \"text\": \"Never\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Sometimes\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Often\"\n       }\n      ],\n      \"items\": [\n       {\n        \"name\": \"u_1\",\n        \"text\": \"Light exercise (eg walking)\"\n       },\n       {\n        \"name\": \"u_2\",\n        \"text\": \"Vigorous exercise (eg fitness training)\"\n       },\n       {\n        \"name\": \"u_3\",\n        \"text\": \"Playing games\"\n       },\n       {\n        \"name\": \"u_4\",\n        \"text\": \"Passive recreation (eg sitting, socialising)\"\n       },\n       {\n        \"name\": \"u_5\",\n        \"text\": \"Other (optional)\",\n        \"optional\": true\n       }\n      ],\n      \"description\": \"Value: {u_1..u_5: 1 never, 2 sometimes, 3 often}.\"\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"private_lawn_use_other\",\n      \"visibleIf\": {\n       \"q\": \"private_lawn\",\n       \"eq\": 2\n      },\n      \"title\": \"Other activity (please specify)\"\n     }\n    ]\n   },\n   {\n    \"name\": \"public\",\n    \"intro\": \"The next few questions are about the lawn in your nearest public park to where you currently live. The public park near where you live might include anything from a large area of lawn to a smaller pocket park.\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"park_type\",\n      \"title\": \"Your nearest public park is a:\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Large urban park\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Smaller urban park\"\n       }\n      ]\n     },\n     {\n      \"type\": \"custom\",\n      \"kind\": \"matrix\",\n      \"name\": \"park_lawn_agreement\",\n      \"isRequired\": true,\n      \"title\": \"Thinking about the lawn in your nearest local public park to where you live, please rate how much you agree or disagree with the following statements.\",\n      \"scale\": [\n       {\n        \"value\": 1,\n        \"text\": \"Disagree\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Neutral\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Agree\"\n       }\n      ],\n      \"items\": [\n       {\n        \"name\": \"a_1\",\n        \"text\": \"The lawn is healthy and well kept\"\n       },\n       {\n        \"name\": \"a_2\",\n        \"text\": \"The lawn is a good place for recreation\"\n       },\n       {\n        \"name\": \"a_3\",\n        \"text\": \"The lawn looks beautiful\"\n       },\n       {\n        \"name\": \"a_4\",\n        \"text\": \"The lawn is a good place for rest and relaxation\"\n       }\n      ],\n      \"description\": \"Value: {a_1..a_4: 1 disagree, 2 neutral, 3 agree}.\"\n     },\n     {\n      \"type\": \"custom\",\n      \"kind\": \"matrix\",\n      \"name\": \"park_lawn_use\",\n      \"isRequired\": true,\n      \"title\": \"Thinking about the lawn in your nearest local public park to where you live, please indicate how frequently you use the lawn for each of the activities listed.\",\n      \"scale\": [\n       {\n        \"value\": 1,\n        \"text\": \"Never\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Sometimes\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Often\"\n       }\n      ],\n      \"items\": [\n       {\n        \"name\": \"u_1\",\n        \"text\": \"Light exercise (eg walking)\"\n       },\n       {\n        \"name\": \"u_2\",\n        \"text\": \"Vigorous exercise (eg fitness training)\"\n       },\n       {\n        \"name\": \"u_3\",\n        \"text\": \"Organised sport\"\n       },\n       {\n        \"name\": \"u_4\",\n        \"text\": \"Passive recreation (eg sitting relaxation, socialisation)\"\n       },\n       {\n        \"name\": \"u_5\",\n        \"text\": \"Picnics, BBQ, social gatherings\"\n       },\n       {\n        \"name\": \"u_6\",\n        \"text\": \"Playing games\"\n       },\n       {\n        \"name\": \"u_7\",\n        \"text\": \"A transit area (place to pass through)\"\n       },\n       {\n        \"name\": \"u_8\",\n        \"text\": \"Walking pets\"\n       },\n       {\n        \"name\": \"u_9\",\n        \"text\": \"Other (optional)\",\n        \"optional\": true\n       }\n      ],\n      \"description\": \"Value: {u_1..u_9: 1 never, 2 sometimes, 3 often}.\"\n     }\n    ]\n   },\n   {\n    \"name\": \"views\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"lawn_satisfaction\",\n      \"title\": \"How generally satisfied are you with the condition of public and private lawns in the neighbourhood where you live (your overall general impression)?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Very dissatisfied\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Somewhat dissatisfied\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Neither satisfied nor dissatisfied\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Somewhat satisfied\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Very satisfied\"\n       }\n      ]\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"satisfaction_reason\",\n      \"title\": \"Please briefly explain the main reason for your level of satisfaction with the condition of lawns in your neighbourhood where you live.\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"lawn_habitat\",\n      \"title\": \"In your opinion, do you think the lawn in urban areas is a good habitat for animals (eg insects, mammals and/or birds)?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"No\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Don't know\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Yes\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"animals_seen\",\n      \"reflow\": true,\n      \"title\": \"Have you seen any types of animals using the public or private lawns in the neighbourhood where you live?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"No\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Don't know\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Yes\"\n       }\n      ]\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"animals_named\",\n      \"visibleIf\": {\n       \"q\": \"animals_seen\",\n       \"eq\": 3\n      },\n      \"title\": \"Please name the types of animals you have seen using lawns in your neighbourhood.\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"grass_allergy\",\n      \"title\": \"Are you allergic to flowering grasses?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"No\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Don't know\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Yes\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"alternatives\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"kind\": \"image_rating\",\n      \"name\": \"lawn_alternative_opinion\",\n      \"isRequired\": true,\n      \"title\": \"The following images represent types of lawn alternatives that could be used in urban public parks. Thinking about types of possible lawn alternatives that could be used in particular designed spaces in urban public parks where you live, please indicate your opinion of each lawn type.\",\n      \"scale\": [\n       {\n        \"value\": 1,\n        \"text\": \"Good\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Neutral\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Bad\"\n       }\n      ],\n      \"items\": [\n       {\n        \"name\": \"clover\",\n        \"text\": \"Lawn with turf grasses and clover\",\n        \"file\": \"clover.jpg\"\n       },\n       {\n        \"name\": \"dichondra\",\n        \"text\": \"Lawn with turf grasses and Dichondra\",\n        \"file\": \"dichondra.jpg\"\n       },\n       {\n        \"name\": \"flowering_weeds\",\n        \"text\": \"Biodiverse lawn with turf grasses and flowering weeds\",\n        \"file\": \"flowering_weeds.jpg\"\n       },\n       {\n        \"name\": \"scaevola\",\n        \"text\": \"Scaevola patches in dedicated spaces\",\n        \"file\": \"scaevola.jpg\"\n       },\n       {\n        \"name\": \"uncut_high_grass\",\n        \"text\": \"‘Old’ uncut high grass lawn\",\n        \"file\": \"uncut_high_grass.jpg\"\n       }\n      ],\n      \"description\": \"Five lawn-alternative photographs (paper Figure 4). Value: {clover, dichondra, flowering_weeds, scaevola, uncut_high_grass: 1 good, 2 neutral, 3 bad} (original codes 4/5/6). Analysis in the paper: share good/neutral/bad (Table S4).\"\n     }\n    ]\n   },\n   {\n    \"name\": \"ranking\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"kind\": \"image_rank\",\n      \"name\": \"lawn_alternative_rank\",\n      \"isRequired\": true,\n      \"title\": \"Focusing on the different lawn alternatives that could be used in dedicated spaces in urban public parks where you live, please indicate your order of preference (1 = most preferred, 5 = least preferred).\",\n      \"items\": [\n       {\n        \"name\": \"clover\",\n        \"text\": \"Lawn with turf grasses and clover\",\n        \"file\": \"clover.jpg\"\n       },\n       {\n        \"name\": \"dichondra\",\n        \"text\": \"Lawn with turf grasses and Dichondra\",\n        \"file\": \"dichondra.jpg\"\n       },\n       {\n        \"name\": \"flowering_weeds\",\n        \"text\": \"Biodiverse lawn with turf grasses and flowering weeds\",\n        \"file\": \"flowering_weeds.jpg\"\n       },\n       {\n        \"name\": \"scaevola\",\n        \"text\": \"Scaevola patches in dedicated spaces\",\n        \"file\": \"scaevola.jpg\"\n       },\n       {\n        \"name\": \"uncut_high_grass\",\n        \"text\": \"‘Old’ uncut high grass lawn\",\n        \"file\": \"uncut_high_grass.jpg\"\n       }\n      ],\n      \"description\": \"Value: {clover: rank, dichondra: rank, ...}, 1 = most preferred. Analysis in the paper: mean rank (Table S5).\"\n     }\n    ]\n   },\n   {\n    \"name\": \"management\",\n    \"intro\": \"The next few questions are about managing your own private lawn at your home where you currently live.\",\n    \"elements\": [\n     {\n      \"type\": \"checkbox\",\n      \"name\": \"mowing_frequency\",\n      \"visibleIf\": {\n       \"q\": \"private_lawn\",\n       \"eq\": 2\n      },\n      \"title\": \"Thinking about your own private lawn at your home where you live, please indicate how often the lawn is mown (select any that apply):\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"About once per week\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"About once per fortnight\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"About once per month\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Never mown\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"checkbox\",\n      \"name\": \"mowing_height\",\n      \"visibleIf\": {\n       \"q\": \"private_lawn\",\n       \"eq\": 2\n      },\n      \"title\": \"Please indicate whether the following lawn heights are currently used when mowing (select any that apply):\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Short mown lawn (less than 3cm tall)\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Long mown lawn (3 cm to 5 cm tall)\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Don't know\"\n       }\n      ]\n     },\n     {\n      \"type\": \"checkbox\",\n      \"name\": \"management_techniques\",\n      \"visibleIf\": {\n       \"q\": \"private_lawn\",\n       \"eq\": 2\n      },\n      \"title\": \"Please indicate whether the following lawn management techniques are currently used (select any that apply):\",\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Removing mown grass clippings\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Fertilising\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Applying herbicides\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Adding soil wetting agent\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Mowing\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"watered\",\n      \"reflow\": true,\n      \"visibleIf\": {\n       \"q\": \"private_lawn\",\n       \"eq\": 2\n      },\n      \"title\": \"Does the lawn at the home where you live get regularly watered during hot months (eg with reticulation, a hose or sprinkler)?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"No\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Don't know\"\n       }\n      ]\n     },\n     {\n      \"type\": \"checkbox\",\n      \"name\": \"not_watered_reasons\",\n      \"visibleIf\": {\n       \"q\": \"watered\",\n       \"eq\": 2\n      },\n      \"title\": \"If the lawn at the home where you live is not watered, indicate why by selecting any options that apply from the list provided:\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"No reticulation system\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"No time to hand water\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Lawn survives without watering\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Watering the lawn is a waste of water\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"OK if the lawn dies during dry months\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"No sprinkler\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"I don’t know how to keep my lawn healthy and green during summer\"\n       },\n       {\n        \"value\": 8,\n        \"text\": \"Other\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"intro\": \"This section asks some very general questions about you to help us better understand the survey responses.\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"18-24 years old\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"25-34 years old\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"35-44 years old\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"45-54 years old\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"55-64 years old\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"65+ years old\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"How do you describe yourself?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Non-binary / third gender\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Prefer to self-describe\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"dwelling\",\n      \"title\": \"Please indicate the type of dwelling you currently live in:\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Detached house\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Flat / apartment / townhouse\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"residence\",\n      \"reflow\": true,\n      \"title\": \"Where is your current place of residence?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Australia\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Country other than Australia\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"state\",\n      \"visibleIf\": {\n       \"q\": \"residence\",\n       \"eq\": 1\n      },\n      \"title\": \"If you live in Australia, what state/territory do you live in?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Australian Capital Territory\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"New South Wales\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Northern Territory\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Queensland\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"South Australia\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Tasmania\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"Victoria\"\n       },\n       {\n        \"value\": 8,\n        \"text\": \"Western Australia\"\n       },\n       {\n        \"value\": 9,\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"employment\",\n      \"reflow\": true,\n      \"title\": \"What best describes your current employment status?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Working full-time\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Working part-time/casual\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Home duties\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Unemployed\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Retired\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Student\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"occupation\",\n      \"visibleIf\": {\n       \"q\": \"employment\",\n       \"in\": [\n        1,\n        2\n       ]\n      },\n      \"title\": \"Select the occupation that most closely matches the one in which you are currently employed:\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Accommodation and Food Services\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Administrative and Support Services\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Agriculture, Forestry and Fishing\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Arts and Recreation Services\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Construction\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Defence Forces\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"Education and Training\"\n       },\n       {\n        \"value\": 8,\n        \"text\": \"Electricity, Gas, Water and Waste Services\"\n       },\n       {\n        \"value\": 9,\n        \"text\": \"Financial and Insurance Services\"\n       },\n       {\n        \"value\": 10,\n        \"text\": \"Health Care and Social Assistance\"\n       },\n       {\n        \"value\": 11,\n        \"text\": \"Information Media and Telecommunications\"\n       },\n       {\n        \"value\": 12,\n        \"text\": \"Mining, Oil and Gas\"\n       },\n       {\n        \"value\": 13,\n        \"text\": \"Manufacturing\"\n       },\n       {\n        \"value\": 14,\n        \"text\": \"Professional, Scientific and Technical Services\"\n       },\n       {\n        \"value\": 15,\n        \"text\": \"Public Administration and Safety\"\n       },\n       {\n        \"value\": 16,\n        \"text\": \"Rental, Hiring and Real Estate Services\"\n       },\n       {\n        \"value\": 17,\n        \"text\": \"Retail Trade\"\n       },\n       {\n        \"value\": 18,\n        \"text\": \"Transport, Postal and Warehousing\"\n       },\n       {\n        \"value\": 19,\n        \"text\": \"Wholesale Trade\"\n       },\n       {\n        \"value\": 20,\n        \"text\": \"Other Services\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"What is your highest level of education?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Primary school\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Secondary school (high school)\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"University graduate\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"University higher degree (post graduate)\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Vocational training\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"comments\",\n      \"title\": \"Do you have any additional comments about the presence, use or management of lawn in the area where you live?\"\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f0f3ec;--card:#fff;--ink:#1e231b;--muted:#596253;--accent:#3d6e2a;--line:#d3dbcc;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:820px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.3rem;margin:0 0 10px}\np{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn.sec{background:transparent;color:var(--accent);border:1px solid var(--line);padding:8px 14px;font-size:.9rem}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:22px}.q:first-child{margin-top:0}.q>b{display:block;margin-bottom:6px}\n.q.miss>b{color:var(--warn)}\n.hint{font-size:.85rem;color:var(--muted);margin:-2px 0 6px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer;background:var(--card)}\ntextarea,input[type=text]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%}\ntextarea{min-height:84px;resize:vertical}\n.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}\n.t{color:var(--muted);font-size:.9rem}\n.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;flex:1;margin-left:12px;max-width:260px}.bar>i{display:block;height:100%;background:var(--accent)}\n.it{padding:10px 0;border-top:1px solid var(--line)}.it:first-of-type{border-top:0}.it.miss>div:first-child{color:var(--warn)}\n.it>div:first-child{margin-bottom:6px}\n.seg{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:3px;max-width:480px}\n.seg label{display:block;cursor:pointer;position:relative}\n.seg input{position:absolute;opacity:0;pointer-events:none}\n.seg span{display:flex;align-items:center;justify-content:center;text-align:center;min-height:40px;padding:2px 4px;border:1px solid var(--line);border-radius:8px;font-size:.85rem}\n.seg input:checked+span{background:var(--accent);border-color:var(--accent);color:#fff}\n.seg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}\n.imgs{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}\n.imgs img,.tile img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px;display:block}\n.cap{font-size:.9rem;margin:6px 0}\n.rank{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:10px}\n.tile{position:relative;border:2px solid var(--line);border-radius:10px;overflow:hidden;cursor:pointer;background:#fff;padding:0;font:inherit;text-align:center}\n.tile img{border-radius:0}.tile small{display:block;padding:4px 3px;font-size:.76rem;line-height:1.25}\n.tile.on{border-color:var(--accent)}\n.tile .n{position:absolute;top:6px;left:6px;min-width:30px;height:30px;border-radius:15px;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:820px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n@media (max-width:600px){.rank{grid-template-columns:repeat(2,minmax(0,1fr))}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs: M. Ignatieva, in Ignatieva, Hughes, Chaudhary &amp; Mofrad (2024), Land 13:191, Figure 4, doi:10.3390/land13020191 (CC BY 4.0; lawn alternatives in Perth, Western Australia). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='perthlawn2024:';\n  var app=document.getElementById('app'), Q={}, files={}, done={}, A={}, PAGES=[];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='visible';}}\n  function hideErr(){var e=app.querySelector('.err');if(e)e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function vis(e){var c=e.visibleIf;if(!c)return true;var v=A[c.q];if(c.eq!=null)return v===c.eq;if(c.in)return c.in.indexOf(v)>=0;if(c.has)return Array.isArray(v)&&v.indexOf(c.has)>=0;return true;}\n  function pageVis(p){return p.elements.some(vis);}\n  function next(){window.scrollTo(0,0);for(var i=0;i<PAGES.length;i++){var p=PAGES[i];if(!done[p.name]&&pageVis(p))return render(p,i);}finish();}\n  function seg(name,cols){return '<div class=\"seg\" style=\"--n:'+cols.length+'\" role=\"radiogroup\">'+cols.map(function(c){return '<label><input type=\"radio\" name=\"'+esc(name)+'\" value=\"'+esc(c.value)+'\"><span>'+esc(c.text)+'</span></label>';}).join('')+'</div>';}\n  function el(e,i){\n    var h='<div class=\"q\" data-q=\"'+e.name+'\"><b>'+esc(e.title)+(e.isRequired?'':' <span class=\"t\">(optional)</span>')+'</b>'+(e.hint?'<div class=\"hint\">'+esc(e.hint)+'</div>':'');\n    if(e.type==='boolean')h+='<label class=\"opt\"><input type=\"checkbox\" name=\"'+e.name+'\" value=\"1\"> '+esc(e.label||'Yes')+'</label>';\n    else if(e.type==='radiogroup')h+=e.choices.map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+e.name+'\" value=\"'+c.value+'\"> '+esc(c.text)+'</label>';}).join('');\n    else if(e.type==='checkbox')h+=e.choices.map(function(c){return '<label class=\"opt\"><input type=\"checkbox\" name=\"'+e.name+'\" value=\"'+c.value+'\"> '+esc(c.text)+'</label>';}).join('');\n    else if(e.type==='comment')h+='<textarea name=\"'+e.name+'\" maxlength=\"2000\"></textarea>';\n    else if(e.type==='text')h+='<input type=\"text\" name=\"'+e.name+'\" maxlength=\"200\">';\n    else if(e.kind==='matrix')h+=e.items.map(function(it){return '<div class=\"it\" data-n=\"'+it.name+'\"><div>'+esc(it.text)+'</div>'+seg(e.name+'__'+it.name,e.scale)+'</div>';}).join('');\n    else if(e.kind==='image_rating')h+='<div class=\"imgs\">'+e.items.map(function(it){return '<div class=\"it\" data-n=\"'+it.name+'\" style=\"border:0;padding:0\"><img alt=\"'+esc(it.text)+'\" src=\"'+esc(files[it.file].url)+'\"><div class=\"cap\">'+esc(it.text)+'</div>'+seg(e.name+'__'+it.name,e.scale)+'</div>';}).join('')+'</div>';\n    else if(e.kind==='image_rank')h+='<div class=\"rank\"></div><p class=\"status\" style=\"margin-top:10px;color:var(--ink)\"></p><button type=\"button\" class=\"btn sec rreset\">Start over</button>';\n    return h+'</div>';\n  }\n  function render(p,i){\n    var els=p.elements.filter(vis),order={};\n    app.innerHTML='<div class=\"top\"><span class=\"t\">Page '+(i+1)+' of '+PAGES.length+'</span><div class=\"bar\"><i style=\"width:'+(100*i/PAGES.length)+'%\"></i></div></div>'+(p.title?'<h1>'+esc(p.title)+'</h1>':'')+'<div class=\"card\">'+(p.intro?'<p style=\"color:var(--ink)\">'+esc(p.intro)+'</p>':'')+els.map(el).join('')+'</div><div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">'+(i===PAGES.length-1?'Finish':'Next')+'</button></div><div class=\"err\"></div>';\n    app.onchange=function(ev){hideErr();var it=ev.target.closest('.it');if(it)it.classList.remove('miss');var qq=ev.target.closest('.q');if(qq)qq.classList.remove('miss');var e2=Q[qq&&qq.getAttribute('data-q')];if(e2&&e2.reflow){A[e2.name]=readOne(e2,true);var keep=collect();render(p,i);restore(keep);}};\n    els.forEach(function(e){if(e.kind==='image_rank'){order[e.name]=[];drawRank(e,order);}});\n    restore(load('draft_'+p.name));\n    document.getElementById('go').onclick=function(){\n      var l=[],bad=null;\n      for(var k=0;k<els.length;k++){var e=els[k],v=e.kind==='image_rank'?rankVal(e,order):readOne(e);\n        if(v===undefined){if(e.isRequired){bad=bad||e;var qq=app.querySelector('.q[data-q=\"'+e.name+'\"]');qq.classList.add('miss');}continue;}\n        l.push([e.name,v]);}\n      if(bad){err(bad.kind==='image_rank'?'Please rank all five lawn types.':(bad.kind?'Please answer every row of: ':'Please answer: ')+(bad.kind==='image_rank'?'':bad.title));var m=app.querySelector('.q.miss');if(m)m.scrollIntoView({block:'center'});return;}\n      var b=this;b.disabled=true;\n      Promise.all(l.map(function(a){A[a[0]]=a[1];return SPSite.answer(a[0],a[1]);})).then(function(rs){var x=rs.filter(function(r){return !ok(r);})[0];if(x){b.disabled=false;return err(x.error);}done[p.name]=true;save('d',done);next();});\n    };\n  }\n  function collect(){var o={};[].forEach.call(app.querySelectorAll('input,textarea'),function(x){if(x.type==='radio'||x.type==='checkbox'){if(x.checked)(o[x.name]=o[x.name]||[]).push(x.value);}else o[x.name]=x.value;});return o;}\n  function restore(o){if(!o)return;[].forEach.call(app.querySelectorAll('input,textarea'),function(x){var v=o[x.name];if(v==null)return;if(x.type==='radio'||x.type==='checkbox')x.checked=v.indexOf(x.value)>=0;else x.value=v;});}\n  function readOne(e,soft){\n    if(e.type==='boolean'){return app.querySelector('input[name=\"'+e.name+'\"]').checked?true:undefined;}\n    if(e.type==='radiogroup'){var x=app.querySelector('input[name=\"'+e.name+'\"]:checked');return x?Number(x.value):undefined;}\n    if(e.type==='checkbox'){var xs=[].map.call(app.querySelectorAll('input[name=\"'+e.name+'\"]:checked'),function(x){return Number(x.value);});return xs.length?xs:undefined;}\n    if(e.type==='comment'||e.type==='text'){var t=app.querySelector('[name=\"'+e.name+'\"]').value.trim();return t?t:undefined;}\n    if(e.kind==='matrix'||e.kind==='image_rating'){var v={},miss=0;e.items.forEach(function(it){var x=app.querySelector('input[name=\"'+e.name+'__'+it.name+'\"]:checked');if(x)v[it.name]=Number(x.value);else if(!it.optional){miss++;var d=app.querySelector('.q[data-q=\"'+e.name+'\"] .it[data-n=\"'+it.name+'\"]');if(d&&!soft)d.classList.add('miss');}});return miss?undefined:v;}\n  }\n  function rankVal(e,order){var o=order[e.name];if(o.length<e.items.length)return undefined;var v={};o.forEach(function(n,i){v[n]=i+1;});return v;}\n  function drawRank(e,order){\n    var box=app.querySelector('.q[data-q=\"'+e.name+'\"]'),g=box.querySelector('.rank'),o=order[e.name];\n    g.innerHTML=e.items.map(function(it){var p=o.indexOf(it.name);return '<button type=\"button\" class=\"tile'+(p>=0?' on':'')+'\" data-v=\"'+it.name+'\"><img alt=\"'+esc(it.text)+'\" src=\"'+esc(files[it.file].url)+'\">'+(p>=0?'<span class=\"n\">'+(p+1)+'</span>':'')+'<small>'+esc(it.text)+'</small></button>';}).join('');\n    box.querySelector('.status').textContent=o.length?('Your order: '+o.map(function(n){return e.items.filter(function(it){return it.name===n;})[0].text;}).join(' > ')):'Tap your most preferred lawn type first (1), then the next, down to the least preferred (5). Tap a numbered photo to undo it.';\n    [].forEach.call(g.querySelectorAll('.tile'),function(t){t.onclick=function(){var v=t.getAttribute('data-v'),p=o.indexOf(v);if(p>=0)o.splice(p,1);else o.push(v);hideErr();box.classList.remove('miss');drawRank(e,order);};});\n    box.querySelector('.rreset').onclick=function(){o.length=0;drawRank(e,order);};\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>In the original online survey of residents of Perth, Western Australia, most people valued lawns for recreation and relaxation, and many were open to alternatives in parts of public parks. Lawns mixed with Dichondra or clover were ranked most preferred, followed by biodiverse lawn with flowering weeds and Scaevola patches; ‘old’ uncut high grass was clearly least liked.</p><p style=\"font-size:.82rem\">Ignatieva, M., Hughes, M., Chaudhary, A. K., &amp; Mofrad, F. (2024). The Lawn as a Social and Cultural Phenomenon in Perth, Western Australia. Land 13:191, doi:10.3390/land13020191.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){PAGES.forEach(function(p){if(p.elements.some(function(e){return m.indexOf(e.name)>=0;}))done[p.name]=false;});save('d',done);next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    var S;try{S=JSON.parse(document.getElementById('sp-scheme').textContent).survey;}catch(e){S={pages:[]};}\n    PAGES=S.pages;PAGES.forEach(function(p){p.elements.forEach(function(e){var g=SPSite.getQuestion(e.name)||{};if(g.title)e.title=g.title;Q[e.name]=e;});});\n    (SPSite.getMedia('lawns')||[]).forEach(function(f){files[f.name]=f;});\n    if(Object.keys(files).length<5){app.innerHTML='<h1>Photographs missing</h1><p>Media folder lawns must hold the five lawn photographs.</p>';return;}\n    A=(ctx&&ctx.answers)||{};done=load('d')||{};\n    PAGES.forEach(function(p){done[p.name]=p.elements.filter(function(e){return e.isRequired&&vis(e);}).every(function(e){return A[e.name]!=null;})&&p.elements.some(function(e){return A[e.name]!=null;});});\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T20:15:54.590Z",
+   "mediaFolders": [
+    "lawns"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T20:15:54.590Z"
+  },
+  "description": "Faithful replication of Ignatieva, Hughes, Chaudhary & Mofrad (2024), Land 13:191: the full Perth lawn questionnaire: what lawn is for, how private and park lawns are used and managed, and opinions and a preference ranking of five photographed lawn alternatives (clover, Dichondra, flowering weeds, Scaevola, uncut high grass).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2024-ignatieva-urban/lawns/clover__5b567f70-aa17-4ee7-8e54-2874152b8e68.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-ignatieva-urban/lawns/clover__5b567f70-aa17-4ee7-8e54-2874152b8e68.jpg",
+   "name": "clover.jpg",
+   "type": "image",
+   "folder": "lawns",
+   "media_id": "templates/2024-ignatieva-urban/lawns/clover__5b567f70-aa17-4ee7-8e54-2874152b8e68.jpg",
+   "logicalFolder": "lawns",
+   "original_bytes": 192023,
+   "uploaded_bytes": 192023,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-ignatieva-urban/lawns/dichondra__e70ca35e-a769-4548-b428-aa3d29f5fde5.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-ignatieva-urban/lawns/dichondra__e70ca35e-a769-4548-b428-aa3d29f5fde5.jpg",
+   "name": "dichondra.jpg",
+   "type": "image",
+   "folder": "lawns",
+   "media_id": "templates/2024-ignatieva-urban/lawns/dichondra__e70ca35e-a769-4548-b428-aa3d29f5fde5.jpg",
+   "logicalFolder": "lawns",
+   "original_bytes": 282894,
+   "uploaded_bytes": 282894,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-ignatieva-urban/lawns/flowering_weeds__2e274c88-d55d-4f13-b648-4db55aa32825.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-ignatieva-urban/lawns/flowering_weeds__2e274c88-d55d-4f13-b648-4db55aa32825.jpg",
+   "name": "flowering_weeds.jpg",
+   "type": "image",
+   "folder": "lawns",
+   "media_id": "templates/2024-ignatieva-urban/lawns/flowering_weeds__2e274c88-d55d-4f13-b648-4db55aa32825.jpg",
+   "logicalFolder": "lawns",
+   "original_bytes": 138153,
+   "uploaded_bytes": 138153,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-ignatieva-urban/lawns/scaevola__18c4d28a-023d-4870-9115-069098497001.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-ignatieva-urban/lawns/scaevola__18c4d28a-023d-4870-9115-069098497001.jpg",
+   "name": "scaevola.jpg",
+   "type": "image",
+   "folder": "lawns",
+   "media_id": "templates/2024-ignatieva-urban/lawns/scaevola__18c4d28a-023d-4870-9115-069098497001.jpg",
+   "logicalFolder": "lawns",
+   "original_bytes": 167257,
+   "uploaded_bytes": 167257,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-ignatieva-urban/lawns/uncut_high_grass__d2f3b42a-5019-406c-b7b9-b5ccbf9d5559.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-ignatieva-urban/lawns/uncut_high_grass__d2f3b42a-5019-406c-b7b9-b5ccbf9d5559.jpg",
+   "name": "uncut_high_grass.jpg",
+   "type": "image",
+   "folder": "lawns",
+   "media_id": "templates/2024-ignatieva-urban/lawns/uncut_high_grass__d2f3b42a-5019-406c-b7b9-b5ccbf9d5559.jpg",
+   "logicalFolder": "lawns",
+   "original_bytes": 214339,
+   "uploaded_bytes": 214339,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "The Lawn as a Social and Cultural Phenomenon in Perth, Western Australia",
+  "authors": [
+   "Maria Ignatieva",
+   "Michael Hughes",
+   "Ashok Kumar Chaudhary",
+   "Fahimeh Mofrad"
+  ],
+  "year": 2024,
+  "venue": "Land",
+  "doi": "10.3390/land13020191",
+  "url": "https://doi.org/10.3390/land13020191"
+ }
+}

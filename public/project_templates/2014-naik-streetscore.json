@@ -1,343 +1,1307 @@
 {
-  "id": "2014-naik-streetscore",
-  "name": "Streetscore – Place Pulse Safety Comparison",
-  "description": "Pairwise perceived-safety comparison from Place Pulse 1.0, the training data of Streetscore. Participants answer \"Which place looks safer?\" for pairs of street view images; TrueSkill ratings are scaled to 0–10 as in the paper. Single-image 1–10 ratings follow on optional pages that are not part of the original study. Bundled images are photographs from the paper PDF (12 scenes), not the original full stimulus set.",
-  "author": "Naik et al.",
-  "year": "2014",
-  "category": "Academic Research",
-  "tags": [
-    "reference",
-    "ai-generated",
-    "official"
+ "id": "2014-naik-streetscore",
+ "name": "Streetscore: Which Place Looks Safer? (New York, Boston)",
+ "description": "Method replication: the same pairwise safety question as the data behind the paper; the images are not the paper's stimuli (new Google Street View views of New York and Boston, © Google). Naik, Philipoom, Raskar & Hidalgo (2014, IEEE CVPR Workshops) trained Streetscore, an algorithm that predicts the perceived safety of a streetscape, on pairwise votes from an online survey with more than 7,000 participants (Place Pulse). Geometric texton and colour histograms with GIST predicted safety best, and Streetscore then mapped perceived safety for about one million Google Street View images in 21 US cities.\n\nWhat participants do: after consent, 20 pairs of street views from New York and Boston, drawn at random from 94; for each pair they click the place that looks safer. Then age and gender.\n\nAnalysis as in the paper: TrueSkill rating per image from the pairwise votes, rescaled to 0–10, then image features (colour, texture, GIST or modern deep features) regressed on the scores.\n\nDifferences from the original study: (1) the images are new Google Street View views (2016–2026) from random points in New York (29) and Boston (65), not the Place Pulse set; (2) the online survey allowed unlimited votes, this template asks 20 pairs; (3) the earlier version of this template added optional 1–10 single-image ratings, which are removed here because they were not in the paper. The earlier version showed 12 photographs cropped from the paper PDF.",
+ "author": "Naik, Philipoom, Raskar & Hidalgo",
+ "year": "2014",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "place-pulse",
+  "safety",
+  "streetscore",
+  "source:paper",
+  "modality:street_view",
+  "task:pairwise",
+  "concept:safety",
+  "participants:crowd",
+  "sample:gt1000",
+  "country:USA",
+  "city:New York",
+  "city:Boston"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1109/cvprw.2014.121",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-05-04T00:00:00+00:00",
+ "updatedAt": "2026-11-27T05:44:25.873+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "safety_pairwise",
+      "type": "imagepicker",
+      "title": "Which place looks safer?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 20,
+      "mediaFolders": [
+       "nyc",
+       "boston"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "18–24",
+        "value": "18-24"
+       },
+       {
+        "text": "25–34",
+        "value": "25-34"
+       },
+       {
+        "text": "35–44",
+        "value": "35-44"
+       },
+       {
+        "text": "45–54",
+        "value": "45-54"
+       },
+       {
+        "text": "55–64",
+        "value": "55-64"
+       },
+       {
+        "text": "65+",
+        "value": "65+"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other",
+        "value": "other"
+       },
+       {
+        "text": "Prefer not to say",
+        "value": "prefer_not_to_say"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
   ],
-  "isPinned": false,
-  "isApproved": true,
-  "showOnLanding": true,
-  "thumbnailUrl": null,
-  "website": "https://www.media.mit.edu/projects/streetscore/overview/",
-  "huggingfaceDataset": null,
-  "createdAt": "2026-05-04T00:00:00+00:00",
-  "config": {
-    "pages": [
-      {
-        "name": "page_intro",
-        "title": "Instructions",
-        "elements": [
-          {
-            "name": "safety_intro",
-            "type": "expression",
-            "title": "How to respond",
-            "description": "Use the 1–10 scale to rate perceived safety. Consider factors like lighting, visibility, human presence, and physical environment."
-          }
-        ],
-        "description": "In this survey, you will see a series of street-level photographs. For each image, please rate how safe the street looks on a scale from 1 (very unsafe) to 10 (very safe). There are no right or wrong answers — we are interested in your personal impression."
-      },
-      {
-        "name": "page_pairwise",
-        "title": "Which place looks safer?",
-        "elements": [
-          {
-            "name": "safety_pairwise",
-            "type": "imagepicker",
-            "title": "Which place looks safer?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          }
-        ],
-        "description": "Choose the scene that looks safer between the two shown."
-      },
-      {
-        "name": "page_safety_1",
-        "title": "Optional extension (not in original study) — single-image safety rating",
-        "elements": [
-          {
-            "name": "safety_score_1",
-            "type": "imagerating",
-            "title": "How safe does this street look?",
-            "rateMax": 10,
-            "rateMin": 1,
-            "isRequired": false,
-            "maxRateDescription": "Very safe",
-            "minRateDescription": "Very unsafe",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "imageCount": 1
-          },
-          {
-            "name": "safety_reason_1",
-            "type": "radiogroup",
-            "title": "What most influences your safety perception of this scene?",
-            "choices": [
-              {
-                "text": "Lighting conditions",
-                "value": "lighting"
-              },
-              {
-                "text": "Presence / absence of people",
-                "value": "people"
-              },
-              {
-                "text": "Building / street maintenance",
-                "value": "maintenance"
-              },
-              {
-                "text": "Greenery and open space",
-                "value": "greenery"
-              },
-              {
-                "text": "Traffic and road design",
-                "value": "traffic"
-              },
-              {
-                "text": "Other",
-                "value": "other"
-              }
-            ],
-            "isRequired": false
-          }
-        ],
-        "description": "Look at the street scene below and rate its perceived safety."
-      },
-      {
-        "name": "page_safety_2",
-        "title": "Optional extension (not in original study) — single-image safety rating",
-        "elements": [
-          {
-            "name": "safety_score_2",
-            "type": "imagerating",
-            "title": "How safe does this street look?",
-            "rateMax": 10,
-            "rateMin": 1,
-            "isRequired": false,
-            "maxRateDescription": "Very safe",
-            "minRateDescription": "Very unsafe",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "imageCount": 1
-          },
-          {
-            "name": "safety_reason_2",
-            "type": "radiogroup",
-            "title": "What most influences your safety perception of this scene?",
-            "choices": [
-              {
-                "text": "Lighting conditions",
-                "value": "lighting"
-              },
-              {
-                "text": "Presence / absence of people",
-                "value": "people"
-              },
-              {
-                "text": "Building / street maintenance",
-                "value": "maintenance"
-              },
-              {
-                "text": "Greenery and open space",
-                "value": "greenery"
-              },
-              {
-                "text": "Traffic and road design",
-                "value": "traffic"
-              },
-              {
-                "text": "Other",
-                "value": "other"
-              }
-            ],
-            "isRequired": false
-          }
-        ],
-        "description": "Look at the street scene below and rate its perceived safety."
-      },
-      {
-        "name": "page_safety_3",
-        "title": "Optional extension (not in original study) — single-image safety rating",
-        "elements": [
-          {
-            "name": "safety_score_3",
-            "type": "imagerating",
-            "title": "How safe does this street look?",
-            "rateMax": 10,
-            "rateMin": 1,
-            "isRequired": false,
-            "maxRateDescription": "Very safe",
-            "minRateDescription": "Very unsafe",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "imageCount": 1
-          },
-          {
-            "name": "safety_reason_3",
-            "type": "radiogroup",
-            "title": "What most influences your safety perception of this scene?",
-            "choices": [
-              {
-                "text": "Lighting conditions",
-                "value": "lighting"
-              },
-              {
-                "text": "Presence / absence of people",
-                "value": "people"
-              },
-              {
-                "text": "Building / street maintenance",
-                "value": "maintenance"
-              },
-              {
-                "text": "Greenery and open space",
-                "value": "greenery"
-              },
-              {
-                "text": "Traffic and road design",
-                "value": "traffic"
-              },
-              {
-                "text": "Other",
-                "value": "other"
-              }
-            ],
-            "isRequired": false
-          }
-        ],
-        "description": "Look at the street scene below and rate its perceived safety."
-      },
-      {
-        "name": "page_demographics",
-        "title": "Background Information (Optional)",
-        "elements": [
-          {
-            "name": "age_group",
-            "type": "dropdown",
-            "title": "Age group",
-            "choices": [
-              {
-                "text": "Under 18",
-                "value": "under_18"
-              },
-              {
-                "text": "18–24",
-                "value": "18_24"
-              },
-              {
-                "text": "25–34",
-                "value": "25_34"
-              },
-              {
-                "text": "35–44",
-                "value": "35_44"
-              },
-              {
-                "text": "45–54",
-                "value": "45_54"
-              },
-              {
-                "text": "55–64",
-                "value": "55_64"
-              },
-              {
-                "text": "65 or older",
-                "value": "65_plus"
-              }
-            ],
-            "isRequired": false
-          },
-          {
-            "name": "gender",
-            "type": "dropdown",
-            "title": "Gender",
-            "choices": [
-              {
-                "text": "Male",
-                "value": "male"
-              },
-              {
-                "text": "Female",
-                "value": "female"
-              },
-              {
-                "text": "Non-binary / third gender",
-                "value": "non_binary"
-              },
-              {
-                "text": "Prefer not to say",
-                "value": "prefer_not"
-              }
-            ],
-            "isRequired": false
-          },
-          {
-            "name": "crime_experience",
-            "type": "radiogroup",
-            "title": "Have you personally experienced street crime in the past 5 years?",
-            "choices": [
-              {
-                "text": "Yes",
-                "value": "yes"
-              },
-              {
-                "text": "No",
-                "value": "no"
-              },
-              {
-                "text": "Prefer not to say",
-                "value": "prefer_not"
-              }
-            ],
-            "isRequired": false
-          }
-        ]
-      }
-    ],
-    "title": "Streetscore – Perceived Safety Survey",
-    "description": "Choose the place that looks safer. Based on: Naik, N., Philipoom, J., Raskar, R., & Hidalgo, C. (2014). Streetscore—Predicting the perceived safety of one million streetscapes. CVPR Workshops 2014.",
-    "logoPosition": "right",
-    "autoGrowComment": true,
-    "progressBarType": "questions",
-    "showProgressBar": "aboveheader",
-    "showQuestionNumbers": "off",
-    "showPreviewBeforeComplete": "showAllQuestions",
-    "spAnalysisRecommendation": {
-      "citation": "Naik et al. 2014",
-      "items": [
-        {
-          "questions": [
-            "safety_pairwise"
-          ],
-          "method": "trueskill_pairwise",
-          "tieHandling": "exclude",
-          "runs": 1,
-          "scale": "0-10",
-          "minPerImage": 29
-        },
-        {
-          "questions": [
-            "safety_score_1",
-            "safety_score_2",
-            "safety_score_3"
-          ],
-          "method": "scalar_distribution",
-          "minPerImage": 12,
-          "citation": "optional extension"
-        }
-      ]
-    }
+  "title": "Streetscore: Which Place Looks Safer? (New York, Boston)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-8cfdeebb853e4c3b",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Streetscore: Which Place Looks Safer? (New York, Boston)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Streetscore: Which Place Looks Safer? (New York, Boston)\",\n  \"description\": \"Pairs of New York and Boston street views: choose the one that looks safer. Method replication of the Place Pulse 1.0 safety task used to train Streetscore (Naik, Philipoom, Raskar & Hidalgo, 2014, CVPR Workshops).\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"safety_pairwise\",\n      \"title\": \"Which place looks safer?\",\n      \"imageCount\": 2,\n      \"trialCount\": 20,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"nyc\",\n       \"boston\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"imageFit\": \"cover\",\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"18-24\",\n        \"text\": \"18–24\"\n       },\n       {\n        \"value\": \"25-34\",\n        \"text\": \"25–34\"\n       },\n       {\n        \"value\": \"35-44\",\n        \"text\": \"35–44\"\n       },\n       {\n        \"value\": \"45-54\",\n        \"text\": \"45–54\"\n       },\n       {\n        \"value\": \"55-64\",\n        \"text\": \"55–64\"\n       },\n       {\n        \"value\": \"65+\",\n        \"text\": \"65+\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other\"\n       },\n       {\n        \"value\": \"prefer_not_to_say\",\n        \"text\": \"Prefer not to say\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#2d4f6e;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: New York and Boston, Google Street View (© Google). Task from Naik, Philipoom, Raskar &amp; Hidalgo (2014), Streetscore, IEEE CVPR Workshops, doi:10.1109/CVPRW.2014.121.</footer>\n<script>\n(function(){\n  var C={\"before\": [], \"after\": [\"age_group\", \"gender\"], \"tasks\": [\"safety_pairwise\"], \"minutes\": 4, \"alt\": \"Street view\", \"labels\": {}, \"pickOne\": null, \"heading\": \"Which place looks safer?\", \"intro\": \"<p>You will see 20 pairs of street views from New York City and Boston. For each pair, click the place that <b>looks safer</b>. Judge only from what you see.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?'Pair ':'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(lab?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T05:40:06.536Z",
+   "mediaFolders": [
+    "boston",
+    "nyc"
+   ]
   },
-  "imageDatasetConfig": {
-    "mediaFolderTags": {},
-    "mediaFolders": []
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T05:40:06.536Z"
   },
-  "preloadedImages": [],
-  "preloadedSource": null,
-  "preloadedAt": null
+  "description": "Pairs of New York and Boston street views: choose the one that looks safer. Method replication of the Place Pulse 1.0 safety task used to train Streetscore (Naik, Philipoom, Raskar & Hidalgo, 2014, CVPR Workshops).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_01__832ca41a-e162-4923-a88b-f61127420af2.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_01__832ca41a-e162-4923-a88b-f61127420af2.jpg",
+   "name": "boston_01.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_01__832ca41a-e162-4923-a88b-f61127420af2.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 191395,
+   "uploaded_bytes": 191395,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_02__5908449c-c655-4619-a3e6-fb8bde02a4e4.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_02__5908449c-c655-4619-a3e6-fb8bde02a4e4.jpg",
+   "name": "boston_02.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_02__5908449c-c655-4619-a3e6-fb8bde02a4e4.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 169226,
+   "uploaded_bytes": 169226,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_03__a72b25cf-37d2-4636-ac27-a8a23efd35fb.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_03__a72b25cf-37d2-4636-ac27-a8a23efd35fb.jpg",
+   "name": "boston_03.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_03__a72b25cf-37d2-4636-ac27-a8a23efd35fb.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 171324,
+   "uploaded_bytes": 171324,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_04__8bbbee67-f1bb-4f4a-8f0f-e32a43394ac2.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_04__8bbbee67-f1bb-4f4a-8f0f-e32a43394ac2.jpg",
+   "name": "boston_04.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_04__8bbbee67-f1bb-4f4a-8f0f-e32a43394ac2.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 142463,
+   "uploaded_bytes": 142463,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_05__7fa986c3-e96f-43bf-92db-4c4d858a2b7c.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_05__7fa986c3-e96f-43bf-92db-4c4d858a2b7c.jpg",
+   "name": "boston_05.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_05__7fa986c3-e96f-43bf-92db-4c4d858a2b7c.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 195926,
+   "uploaded_bytes": 195926,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_06__7ad99631-b6f0-47be-bf4f-459ba2cf7c37.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_06__7ad99631-b6f0-47be-bf4f-459ba2cf7c37.jpg",
+   "name": "boston_06.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_06__7ad99631-b6f0-47be-bf4f-459ba2cf7c37.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 116152,
+   "uploaded_bytes": 116152,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_07__2bbf85d8-577d-4b5a-81b5-730da9ce847e.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_07__2bbf85d8-577d-4b5a-81b5-730da9ce847e.jpg",
+   "name": "boston_07.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_07__2bbf85d8-577d-4b5a-81b5-730da9ce847e.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 108840,
+   "uploaded_bytes": 108840,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_08__d5b378a6-f0b9-41f1-bd34-0bdef4c03f47.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_08__d5b378a6-f0b9-41f1-bd34-0bdef4c03f47.jpg",
+   "name": "boston_08.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_08__d5b378a6-f0b9-41f1-bd34-0bdef4c03f47.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 183161,
+   "uploaded_bytes": 183161,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_09__349be071-47dd-4f33-8bcb-6b5cecac6227.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_09__349be071-47dd-4f33-8bcb-6b5cecac6227.jpg",
+   "name": "boston_09.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_09__349be071-47dd-4f33-8bcb-6b5cecac6227.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 127598,
+   "uploaded_bytes": 127598,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_10__787576a5-7e49-42d7-80e8-ecd9656eefb7.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_10__787576a5-7e49-42d7-80e8-ecd9656eefb7.jpg",
+   "name": "boston_10.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_10__787576a5-7e49-42d7-80e8-ecd9656eefb7.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 182816,
+   "uploaded_bytes": 182816,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_11__2a0fbbca-7542-42ae-8272-ad3cfdace988.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_11__2a0fbbca-7542-42ae-8272-ad3cfdace988.jpg",
+   "name": "boston_11.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_11__2a0fbbca-7542-42ae-8272-ad3cfdace988.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 201202,
+   "uploaded_bytes": 201202,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_12__7b112504-13f6-4b27-b22a-8d7b68b82d49.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_12__7b112504-13f6-4b27-b22a-8d7b68b82d49.jpg",
+   "name": "boston_12.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_12__7b112504-13f6-4b27-b22a-8d7b68b82d49.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 159717,
+   "uploaded_bytes": 159717,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_13__1bd6105a-0fc6-4e9a-9117-7ab7e971aa91.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_13__1bd6105a-0fc6-4e9a-9117-7ab7e971aa91.jpg",
+   "name": "boston_13.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_13__1bd6105a-0fc6-4e9a-9117-7ab7e971aa91.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 166230,
+   "uploaded_bytes": 166230,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_14__7738b9bd-3a62-486d-b5d8-6fde635a8b26.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_14__7738b9bd-3a62-486d-b5d8-6fde635a8b26.jpg",
+   "name": "boston_14.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_14__7738b9bd-3a62-486d-b5d8-6fde635a8b26.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 132561,
+   "uploaded_bytes": 132561,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_15__61575ff8-c99e-4555-872b-1aa8b6740638.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_15__61575ff8-c99e-4555-872b-1aa8b6740638.jpg",
+   "name": "boston_15.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_15__61575ff8-c99e-4555-872b-1aa8b6740638.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 153995,
+   "uploaded_bytes": 153995,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_16__3ce7a757-919f-4f80-bf03-1de96d25de8d.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_16__3ce7a757-919f-4f80-bf03-1de96d25de8d.jpg",
+   "name": "boston_16.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_16__3ce7a757-919f-4f80-bf03-1de96d25de8d.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 138150,
+   "uploaded_bytes": 138150,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_17__bf40afd4-11a1-49ae-a0bb-c87c0de47907.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_17__bf40afd4-11a1-49ae-a0bb-c87c0de47907.jpg",
+   "name": "boston_17.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_17__bf40afd4-11a1-49ae-a0bb-c87c0de47907.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 247076,
+   "uploaded_bytes": 247076,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_18__510137c4-82bc-45cc-a084-28ccd05767af.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_18__510137c4-82bc-45cc-a084-28ccd05767af.jpg",
+   "name": "boston_18.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_18__510137c4-82bc-45cc-a084-28ccd05767af.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 131423,
+   "uploaded_bytes": 131423,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_19__d153ac8f-7d5a-410f-9fcc-7bb3bc8b47f1.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_19__d153ac8f-7d5a-410f-9fcc-7bb3bc8b47f1.jpg",
+   "name": "boston_19.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_19__d153ac8f-7d5a-410f-9fcc-7bb3bc8b47f1.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 101159,
+   "uploaded_bytes": 101159,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_20__4f725d2a-3cfd-4ad5-b35b-497d117c617f.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_20__4f725d2a-3cfd-4ad5-b35b-497d117c617f.jpg",
+   "name": "boston_20.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_20__4f725d2a-3cfd-4ad5-b35b-497d117c617f.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 140390,
+   "uploaded_bytes": 140390,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_21__aa1d8d48-fb62-4ecc-90c2-2239b1b30416.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_21__aa1d8d48-fb62-4ecc-90c2-2239b1b30416.jpg",
+   "name": "boston_21.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_21__aa1d8d48-fb62-4ecc-90c2-2239b1b30416.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 148404,
+   "uploaded_bytes": 148404,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_22__5c49d369-4657-4356-8fd9-d0bd9d7ba90a.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_22__5c49d369-4657-4356-8fd9-d0bd9d7ba90a.jpg",
+   "name": "boston_22.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_22__5c49d369-4657-4356-8fd9-d0bd9d7ba90a.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 133231,
+   "uploaded_bytes": 133231,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_23__9d6b76da-cb9a-44a2-81fb-dc59fce395df.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_23__9d6b76da-cb9a-44a2-81fb-dc59fce395df.jpg",
+   "name": "boston_23.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_23__9d6b76da-cb9a-44a2-81fb-dc59fce395df.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 183245,
+   "uploaded_bytes": 183245,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_24__ddf25d7f-fb66-4a52-8a26-ff62f989a088.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_24__ddf25d7f-fb66-4a52-8a26-ff62f989a088.jpg",
+   "name": "boston_24.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_24__ddf25d7f-fb66-4a52-8a26-ff62f989a088.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 153604,
+   "uploaded_bytes": 153604,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_25__5642cfa5-462c-423a-a4b7-68db66653efe.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_25__5642cfa5-462c-423a-a4b7-68db66653efe.jpg",
+   "name": "boston_25.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_25__5642cfa5-462c-423a-a4b7-68db66653efe.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 156965,
+   "uploaded_bytes": 156965,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_26__56f623a7-ab0a-4edb-985e-e844af5d1080.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_26__56f623a7-ab0a-4edb-985e-e844af5d1080.jpg",
+   "name": "boston_26.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_26__56f623a7-ab0a-4edb-985e-e844af5d1080.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 169030,
+   "uploaded_bytes": 169030,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_27__01738da6-12cd-4ec8-b13c-0259923f5069.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_27__01738da6-12cd-4ec8-b13c-0259923f5069.jpg",
+   "name": "boston_27.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_27__01738da6-12cd-4ec8-b13c-0259923f5069.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 168822,
+   "uploaded_bytes": 168822,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_28__0199899f-afc5-4965-9bca-6e653996d805.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_28__0199899f-afc5-4965-9bca-6e653996d805.jpg",
+   "name": "boston_28.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_28__0199899f-afc5-4965-9bca-6e653996d805.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 183602,
+   "uploaded_bytes": 183602,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_29__3a618bc9-8712-46bb-b66e-2e101df4e424.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_29__3a618bc9-8712-46bb-b66e-2e101df4e424.jpg",
+   "name": "boston_29.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_29__3a618bc9-8712-46bb-b66e-2e101df4e424.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 207609,
+   "uploaded_bytes": 207609,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_30__e867e80b-1610-4c48-83ef-a8dadc8e1af4.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_30__e867e80b-1610-4c48-83ef-a8dadc8e1af4.jpg",
+   "name": "boston_30.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_30__e867e80b-1610-4c48-83ef-a8dadc8e1af4.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 182710,
+   "uploaded_bytes": 182710,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_31__3eb8261d-e3a7-4dcf-ac15-45e17949d536.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_31__3eb8261d-e3a7-4dcf-ac15-45e17949d536.jpg",
+   "name": "boston_31.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_31__3eb8261d-e3a7-4dcf-ac15-45e17949d536.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 166500,
+   "uploaded_bytes": 166500,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_32__563badd8-b8f0-4daa-8cc9-c21bd1156571.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_32__563badd8-b8f0-4daa-8cc9-c21bd1156571.jpg",
+   "name": "boston_32.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_32__563badd8-b8f0-4daa-8cc9-c21bd1156571.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 113366,
+   "uploaded_bytes": 113366,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_33__b8987b3e-9c8a-472f-b908-4cc5fd10bb2d.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_33__b8987b3e-9c8a-472f-b908-4cc5fd10bb2d.jpg",
+   "name": "boston_33.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_33__b8987b3e-9c8a-472f-b908-4cc5fd10bb2d.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 170262,
+   "uploaded_bytes": 170262,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_34__ebea3590-f13d-4137-93bf-a6fb47c84109.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_34__ebea3590-f13d-4137-93bf-a6fb47c84109.jpg",
+   "name": "boston_34.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_34__ebea3590-f13d-4137-93bf-a6fb47c84109.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 134953,
+   "uploaded_bytes": 134953,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_35__2009171e-5b81-47ea-a5ff-f15e8dbf7ed4.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_35__2009171e-5b81-47ea-a5ff-f15e8dbf7ed4.jpg",
+   "name": "boston_35.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_35__2009171e-5b81-47ea-a5ff-f15e8dbf7ed4.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 201806,
+   "uploaded_bytes": 201806,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_36__031e6c96-1df3-42a5-8086-7646ab57001a.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_36__031e6c96-1df3-42a5-8086-7646ab57001a.jpg",
+   "name": "boston_36.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_36__031e6c96-1df3-42a5-8086-7646ab57001a.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 175139,
+   "uploaded_bytes": 175139,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_37__17a436d3-04cd-474d-a5b4-de6fae522404.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_37__17a436d3-04cd-474d-a5b4-de6fae522404.jpg",
+   "name": "boston_37.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_37__17a436d3-04cd-474d-a5b4-de6fae522404.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 145980,
+   "uploaded_bytes": 145980,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_38__b3a17e7b-aa18-4bcb-9f36-705fbf43418a.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_38__b3a17e7b-aa18-4bcb-9f36-705fbf43418a.jpg",
+   "name": "boston_38.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_38__b3a17e7b-aa18-4bcb-9f36-705fbf43418a.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 163972,
+   "uploaded_bytes": 163972,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_39__6f98b672-1654-4c3f-a3ac-ccb0fc57dd3b.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_39__6f98b672-1654-4c3f-a3ac-ccb0fc57dd3b.jpg",
+   "name": "boston_39.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_39__6f98b672-1654-4c3f-a3ac-ccb0fc57dd3b.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 196510,
+   "uploaded_bytes": 196510,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_40__b9d132bb-f719-4c5b-a026-662332dff538.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_40__b9d132bb-f719-4c5b-a026-662332dff538.jpg",
+   "name": "boston_40.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_40__b9d132bb-f719-4c5b-a026-662332dff538.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 117686,
+   "uploaded_bytes": 117686,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_41__2164198b-2e98-4a9d-a488-afaaef41910f.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_41__2164198b-2e98-4a9d-a488-afaaef41910f.jpg",
+   "name": "boston_41.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_41__2164198b-2e98-4a9d-a488-afaaef41910f.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 162656,
+   "uploaded_bytes": 162656,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_42__0f12b71b-3800-4148-80f0-32056d613c67.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_42__0f12b71b-3800-4148-80f0-32056d613c67.jpg",
+   "name": "boston_42.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_42__0f12b71b-3800-4148-80f0-32056d613c67.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 161722,
+   "uploaded_bytes": 161722,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_43__2f40a10a-3a78-46e0-9725-f397502da023.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_43__2f40a10a-3a78-46e0-9725-f397502da023.jpg",
+   "name": "boston_43.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_43__2f40a10a-3a78-46e0-9725-f397502da023.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 175868,
+   "uploaded_bytes": 175868,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_44__b037ad89-7f37-4287-b3c5-433ccbdbaa06.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_44__b037ad89-7f37-4287-b3c5-433ccbdbaa06.jpg",
+   "name": "boston_44.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_44__b037ad89-7f37-4287-b3c5-433ccbdbaa06.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 125087,
+   "uploaded_bytes": 125087,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_45__d556deac-8453-43d9-aed1-884a0b4b2461.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_45__d556deac-8453-43d9-aed1-884a0b4b2461.jpg",
+   "name": "boston_45.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_45__d556deac-8453-43d9-aed1-884a0b4b2461.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 204699,
+   "uploaded_bytes": 204699,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_46__58afcd2a-ce63-49a8-8ece-52f114e5d6b5.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_46__58afcd2a-ce63-49a8-8ece-52f114e5d6b5.jpg",
+   "name": "boston_46.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_46__58afcd2a-ce63-49a8-8ece-52f114e5d6b5.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 178090,
+   "uploaded_bytes": 178090,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_47__15f46c55-be3b-4094-9796-53cbebf00f58.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_47__15f46c55-be3b-4094-9796-53cbebf00f58.jpg",
+   "name": "boston_47.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_47__15f46c55-be3b-4094-9796-53cbebf00f58.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 193207,
+   "uploaded_bytes": 193207,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_48__d36ab1de-ee40-43a0-a3ce-279407d5d2e4.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_48__d36ab1de-ee40-43a0-a3ce-279407d5d2e4.jpg",
+   "name": "boston_48.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_48__d36ab1de-ee40-43a0-a3ce-279407d5d2e4.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 171047,
+   "uploaded_bytes": 171047,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_49__8445611a-e7ca-405a-abc5-5ee27b329761.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_49__8445611a-e7ca-405a-abc5-5ee27b329761.jpg",
+   "name": "boston_49.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_49__8445611a-e7ca-405a-abc5-5ee27b329761.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 165187,
+   "uploaded_bytes": 165187,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_50__84c3a34b-d3c0-4c3a-957e-b529b5325487.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_50__84c3a34b-d3c0-4c3a-957e-b529b5325487.jpg",
+   "name": "boston_50.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_50__84c3a34b-d3c0-4c3a-957e-b529b5325487.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 111317,
+   "uploaded_bytes": 111317,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_51__74f221b9-7dfb-484a-a2f4-0c7f27a30018.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_51__74f221b9-7dfb-484a-a2f4-0c7f27a30018.jpg",
+   "name": "boston_51.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_51__74f221b9-7dfb-484a-a2f4-0c7f27a30018.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 205008,
+   "uploaded_bytes": 205008,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_52__5af86154-45c7-482b-9090-aab63e24fbc7.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_52__5af86154-45c7-482b-9090-aab63e24fbc7.jpg",
+   "name": "boston_52.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_52__5af86154-45c7-482b-9090-aab63e24fbc7.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 149614,
+   "uploaded_bytes": 149614,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_53__51cb40e7-5cba-4949-b2f1-f4a9b4e24cb7.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_53__51cb40e7-5cba-4949-b2f1-f4a9b4e24cb7.jpg",
+   "name": "boston_53.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_53__51cb40e7-5cba-4949-b2f1-f4a9b4e24cb7.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 99860,
+   "uploaded_bytes": 99860,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_54__3be4a42c-4a86-4e51-bbfb-32721547564e.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_54__3be4a42c-4a86-4e51-bbfb-32721547564e.jpg",
+   "name": "boston_54.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_54__3be4a42c-4a86-4e51-bbfb-32721547564e.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 189342,
+   "uploaded_bytes": 189342,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_55__0e7bd19f-d810-4662-9490-18c10bbd0765.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_55__0e7bd19f-d810-4662-9490-18c10bbd0765.jpg",
+   "name": "boston_55.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_55__0e7bd19f-d810-4662-9490-18c10bbd0765.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 172703,
+   "uploaded_bytes": 172703,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_56__b9cf6fb9-4839-4eb5-89ce-88b2f48e80ee.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_56__b9cf6fb9-4839-4eb5-89ce-88b2f48e80ee.jpg",
+   "name": "boston_56.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_56__b9cf6fb9-4839-4eb5-89ce-88b2f48e80ee.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 147309,
+   "uploaded_bytes": 147309,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_57__cbe0e879-30aa-47f5-a30a-43c446a0bd9f.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_57__cbe0e879-30aa-47f5-a30a-43c446a0bd9f.jpg",
+   "name": "boston_57.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_57__cbe0e879-30aa-47f5-a30a-43c446a0bd9f.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 180810,
+   "uploaded_bytes": 180810,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_58__c9100298-adef-4729-9c2b-f2a16d94b759.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_58__c9100298-adef-4729-9c2b-f2a16d94b759.jpg",
+   "name": "boston_58.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_58__c9100298-adef-4729-9c2b-f2a16d94b759.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 215009,
+   "uploaded_bytes": 215009,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_59__57121fc8-3635-49b8-b259-cf90599aed95.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_59__57121fc8-3635-49b8-b259-cf90599aed95.jpg",
+   "name": "boston_59.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_59__57121fc8-3635-49b8-b259-cf90599aed95.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 120276,
+   "uploaded_bytes": 120276,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_60__ab619724-13eb-4f80-9fab-7cdc35fdfc71.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_60__ab619724-13eb-4f80-9fab-7cdc35fdfc71.jpg",
+   "name": "boston_60.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_60__ab619724-13eb-4f80-9fab-7cdc35fdfc71.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 130697,
+   "uploaded_bytes": 130697,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_61__2458a31a-5c9f-4565-b7d1-9a9d6d4591ba.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_61__2458a31a-5c9f-4565-b7d1-9a9d6d4591ba.jpg",
+   "name": "boston_61.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_61__2458a31a-5c9f-4565-b7d1-9a9d6d4591ba.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 164259,
+   "uploaded_bytes": 164259,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_62__b53a7bce-d97d-46a1-8431-25f1d77f407c.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_62__b53a7bce-d97d-46a1-8431-25f1d77f407c.jpg",
+   "name": "boston_62.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_62__b53a7bce-d97d-46a1-8431-25f1d77f407c.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 189986,
+   "uploaded_bytes": 189986,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_63__1d1b11c7-cff9-428d-9ee2-0fe689ea32e0.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_63__1d1b11c7-cff9-428d-9ee2-0fe689ea32e0.jpg",
+   "name": "boston_63.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_63__1d1b11c7-cff9-428d-9ee2-0fe689ea32e0.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 164728,
+   "uploaded_bytes": 164728,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_64__f7d3d188-aaca-4435-8a40-3e616487aec4.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_64__f7d3d188-aaca-4435-8a40-3e616487aec4.jpg",
+   "name": "boston_64.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_64__f7d3d188-aaca-4435-8a40-3e616487aec4.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 160172,
+   "uploaded_bytes": 160172,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/boston/boston_65__de6ce05e-27a3-452c-874d-3c94553f0a4e.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/boston/boston_65__de6ce05e-27a3-452c-874d-3c94553f0a4e.jpg",
+   "name": "boston_65.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2014-naik-streetscore/boston/boston_65__de6ce05e-27a3-452c-874d-3c94553f0a4e.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 142609,
+   "uploaded_bytes": 142609,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_01__73858371-dd08-4550-87b9-d817c714df63.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_01__73858371-dd08-4550-87b9-d817c714df63.jpg",
+   "name": "nyc_01.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_01__73858371-dd08-4550-87b9-d817c714df63.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 138556,
+   "uploaded_bytes": 138556,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_02__4ab79e41-0a3b-45e8-9ca7-669eb48759cc.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_02__4ab79e41-0a3b-45e8-9ca7-669eb48759cc.jpg",
+   "name": "nyc_02.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_02__4ab79e41-0a3b-45e8-9ca7-669eb48759cc.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 130774,
+   "uploaded_bytes": 130774,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_03__e59d22b6-d33b-46b1-87e0-f8da88b8354e.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_03__e59d22b6-d33b-46b1-87e0-f8da88b8354e.jpg",
+   "name": "nyc_03.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_03__e59d22b6-d33b-46b1-87e0-f8da88b8354e.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 164114,
+   "uploaded_bytes": 164114,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_04__22b9cdf5-c025-4029-be6f-7646397cabd6.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_04__22b9cdf5-c025-4029-be6f-7646397cabd6.jpg",
+   "name": "nyc_04.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_04__22b9cdf5-c025-4029-be6f-7646397cabd6.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 172714,
+   "uploaded_bytes": 172714,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_05__3e886ada-8e2a-40a9-b9e2-52ec10144ce8.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_05__3e886ada-8e2a-40a9-b9e2-52ec10144ce8.jpg",
+   "name": "nyc_05.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_05__3e886ada-8e2a-40a9-b9e2-52ec10144ce8.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 111185,
+   "uploaded_bytes": 111185,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_06__9e6534fa-b74f-4b01-9d4e-da48352ebf7e.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_06__9e6534fa-b74f-4b01-9d4e-da48352ebf7e.jpg",
+   "name": "nyc_06.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_06__9e6534fa-b74f-4b01-9d4e-da48352ebf7e.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 172000,
+   "uploaded_bytes": 172000,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_07__8ca24ced-53c0-44ec-ae20-e7a64e411dd0.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_07__8ca24ced-53c0-44ec-ae20-e7a64e411dd0.jpg",
+   "name": "nyc_07.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_07__8ca24ced-53c0-44ec-ae20-e7a64e411dd0.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 169309,
+   "uploaded_bytes": 169309,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_08__e4d59f2e-51b9-4945-9ebc-8de3563c4c77.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_08__e4d59f2e-51b9-4945-9ebc-8de3563c4c77.jpg",
+   "name": "nyc_08.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_08__e4d59f2e-51b9-4945-9ebc-8de3563c4c77.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 132184,
+   "uploaded_bytes": 132184,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_09__776b03f2-0ac8-4dc0-b0ce-146720c7503b.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_09__776b03f2-0ac8-4dc0-b0ce-146720c7503b.jpg",
+   "name": "nyc_09.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_09__776b03f2-0ac8-4dc0-b0ce-146720c7503b.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 173761,
+   "uploaded_bytes": 173761,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_10__18aba359-1e07-4c5c-b997-c6bfe810e02f.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_10__18aba359-1e07-4c5c-b997-c6bfe810e02f.jpg",
+   "name": "nyc_10.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_10__18aba359-1e07-4c5c-b997-c6bfe810e02f.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 143074,
+   "uploaded_bytes": 143074,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_11__cf366565-e1c7-4932-bef7-278261b02fa5.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_11__cf366565-e1c7-4932-bef7-278261b02fa5.jpg",
+   "name": "nyc_11.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_11__cf366565-e1c7-4932-bef7-278261b02fa5.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 169204,
+   "uploaded_bytes": 169204,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_12__6c73e959-7fc6-4c20-8c7e-8a4c79e45d0a.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_12__6c73e959-7fc6-4c20-8c7e-8a4c79e45d0a.jpg",
+   "name": "nyc_12.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_12__6c73e959-7fc6-4c20-8c7e-8a4c79e45d0a.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 162230,
+   "uploaded_bytes": 162230,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_13__4b435de5-c82b-4776-82c2-5bf5ce1d7a44.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_13__4b435de5-c82b-4776-82c2-5bf5ce1d7a44.jpg",
+   "name": "nyc_13.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_13__4b435de5-c82b-4776-82c2-5bf5ce1d7a44.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 235279,
+   "uploaded_bytes": 235279,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_14__54c7cd2d-2619-4eca-8e3d-f1d5b7a05923.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_14__54c7cd2d-2619-4eca-8e3d-f1d5b7a05923.jpg",
+   "name": "nyc_14.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_14__54c7cd2d-2619-4eca-8e3d-f1d5b7a05923.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 154163,
+   "uploaded_bytes": 154163,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_15__d5ce5da2-5565-4e35-b521-8b8f0f51ce4e.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_15__d5ce5da2-5565-4e35-b521-8b8f0f51ce4e.jpg",
+   "name": "nyc_15.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_15__d5ce5da2-5565-4e35-b521-8b8f0f51ce4e.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 149258,
+   "uploaded_bytes": 149258,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_16__2cff33ed-169e-4d95-af6a-ee372c0ebbb6.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_16__2cff33ed-169e-4d95-af6a-ee372c0ebbb6.jpg",
+   "name": "nyc_16.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_16__2cff33ed-169e-4d95-af6a-ee372c0ebbb6.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 201440,
+   "uploaded_bytes": 201440,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_17__8498b953-47e8-40e2-b8f7-b9ca7a75631a.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_17__8498b953-47e8-40e2-b8f7-b9ca7a75631a.jpg",
+   "name": "nyc_17.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_17__8498b953-47e8-40e2-b8f7-b9ca7a75631a.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 142922,
+   "uploaded_bytes": 142922,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_18__4cbcbcd9-accf-48c4-826e-9ef6c4f79c42.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_18__4cbcbcd9-accf-48c4-826e-9ef6c4f79c42.jpg",
+   "name": "nyc_18.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_18__4cbcbcd9-accf-48c4-826e-9ef6c4f79c42.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 164907,
+   "uploaded_bytes": 164907,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_19__a690f5e9-fa34-4cda-9480-b93df4fe4aa5.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_19__a690f5e9-fa34-4cda-9480-b93df4fe4aa5.jpg",
+   "name": "nyc_19.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_19__a690f5e9-fa34-4cda-9480-b93df4fe4aa5.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 134595,
+   "uploaded_bytes": 134595,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_20__747c2a50-77f8-4df9-8f76-3d810eb4beec.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_20__747c2a50-77f8-4df9-8f76-3d810eb4beec.jpg",
+   "name": "nyc_20.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_20__747c2a50-77f8-4df9-8f76-3d810eb4beec.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 204490,
+   "uploaded_bytes": 204490,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_21__667e39d2-bb7e-47cb-bfaf-4089882f7e1b.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_21__667e39d2-bb7e-47cb-bfaf-4089882f7e1b.jpg",
+   "name": "nyc_21.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_21__667e39d2-bb7e-47cb-bfaf-4089882f7e1b.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 156963,
+   "uploaded_bytes": 156963,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_22__5a7e8d09-ccca-4ad2-a926-6a31bdd89c25.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_22__5a7e8d09-ccca-4ad2-a926-6a31bdd89c25.jpg",
+   "name": "nyc_22.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_22__5a7e8d09-ccca-4ad2-a926-6a31bdd89c25.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 176390,
+   "uploaded_bytes": 176390,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_23__e52fc4bf-e477-4d5b-9ec6-baa633401778.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_23__e52fc4bf-e477-4d5b-9ec6-baa633401778.jpg",
+   "name": "nyc_23.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_23__e52fc4bf-e477-4d5b-9ec6-baa633401778.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 204584,
+   "uploaded_bytes": 204584,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_24__c3785bf5-c1df-4bc9-808a-8e32555f2290.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_24__c3785bf5-c1df-4bc9-808a-8e32555f2290.jpg",
+   "name": "nyc_24.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_24__c3785bf5-c1df-4bc9-808a-8e32555f2290.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 185784,
+   "uploaded_bytes": 185784,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_25__dc01f72f-8fad-4d4a-a655-00160b067853.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_25__dc01f72f-8fad-4d4a-a655-00160b067853.jpg",
+   "name": "nyc_25.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_25__dc01f72f-8fad-4d4a-a655-00160b067853.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 211665,
+   "uploaded_bytes": 211665,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_26__928ff787-24ac-4894-bf4f-37c023a8caca.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_26__928ff787-24ac-4894-bf4f-37c023a8caca.jpg",
+   "name": "nyc_26.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_26__928ff787-24ac-4894-bf4f-37c023a8caca.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 113276,
+   "uploaded_bytes": 113276,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_27__fb48dab8-7c77-4d75-b2cb-db8277979065.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_27__fb48dab8-7c77-4d75-b2cb-db8277979065.jpg",
+   "name": "nyc_27.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_27__fb48dab8-7c77-4d75-b2cb-db8277979065.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 211243,
+   "uploaded_bytes": 211243,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_28__0bafc5aa-085f-4216-acb7-bf22f5dc0b9f.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_28__0bafc5aa-085f-4216-acb7-bf22f5dc0b9f.jpg",
+   "name": "nyc_28.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_28__0bafc5aa-085f-4216-acb7-bf22f5dc0b9f.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 174551,
+   "uploaded_bytes": 174551,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-naik-streetscore/nyc/nyc_29__262f70c4-89e0-48c0-adb2-939816d8f5e4.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-naik-streetscore/nyc/nyc_29__262f70c4-89e0-48c0-adb2-939816d8f5e4.jpg",
+   "name": "nyc_29.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2014-naik-streetscore/nyc/nyc_29__262f70c4-89e0-48c0-adb2-939816d8f5e4.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 121704,
+   "uploaded_bytes": 121704,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Streetscore -- Predicting the Perceived Safety of One Million Streetscapes",
+  "authors": [
+   "Naik N.",
+   "Philipoom J.",
+   "Raskar R.",
+   "Hidalgo C."
+  ],
+  "year": 2014,
+  "venue": "2014 IEEE Conference on Computer Vision and Pattern Recognition Workshops",
+  "doi": "10.1109/cvprw.2014.121",
+  "url": "https://doi.org/10.1109/cvprw.2014.121"
+ }
 }

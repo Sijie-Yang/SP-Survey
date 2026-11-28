@@ -1,0 +1,473 @@
+{
+ "id": "2026-admin-spschemenight",
+ "name": "SP-Scheme-Night",
+ "description": "Template created from project: SP-Scheme-Night",
+ "author": "Admin",
+ "year": "2026",
+ "category": "Custom",
+ "tags": [
+  "custom",
+  "user-created",
+  "source:ai",
+  "modality:street_view",
+  "task:custom_page",
+  "concept:safety",
+  "concept:night"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": null,
+ "huggingfaceDataset": null,
+ "createdAt": "2026-10-15T11:06:11.881+00:00",
+ "updatedAt": "2026-11-26T14:58:01.892+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "我已知悉本实验匿名进行，部分场景可能引发轻微不适，我自愿参与并可随时退出",
+      "labelTrue": "同意",
+      "isRequired": true,
+      "labelFalse": "不同意"
+     }
+    ]
+   },
+   {
+    "name": "you",
+    "elements": [
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "你的年龄段是？",
+      "choices": [
+       {
+        "text": "18–24 岁",
+        "value": "18_24"
+       },
+       {
+        "text": "25–34 岁",
+        "value": "25_34"
+       },
+       {
+        "text": "35–44 岁",
+        "value": "35_44"
+       },
+       {
+        "text": "45–59 岁",
+        "value": "45_59"
+       },
+       {
+        "text": "60 岁及以上",
+        "value": "60_plus"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "你的性别是？",
+      "choices": [
+       {
+        "text": "女",
+        "value": "female"
+       },
+       {
+        "text": "男",
+        "value": "male"
+       },
+       {
+        "text": "非二元",
+        "value": "nonbinary"
+       },
+       {
+        "text": "不愿透露",
+        "value": "na"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "night_freq",
+      "type": "radiogroup",
+      "title": "你多久会在晚上 10 点后独自步行一次？",
+      "choices": [
+       {
+        "text": "几乎从不",
+        "value": "never"
+       },
+       {
+        "text": "每月几次",
+        "value": "monthly"
+       },
+       {
+        "text": "每周几次",
+        "value": "weekly"
+       },
+       {
+        "text": "几乎每天",
+        "value": "daily"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "night_unease",
+      "type": "radiogroup",
+      "title": "过去一年，你是否曾在夜间步行时感到明显不安？",
+      "choices": [
+       {
+        "text": "从未有过",
+        "value": "never"
+       },
+       {
+        "text": "偶尔有",
+        "value": "sometimes"
+       },
+       {
+        "text": "经常有",
+        "value": "often"
+       },
+       {
+        "text": "不想回答",
+        "value": "na"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "night_habits",
+      "type": "checkbox",
+      "title": "夜间独行时，你通常会做哪些事？（可多选）",
+      "choices": [
+       {
+        "text": "边走边打电话",
+        "value": "call"
+       },
+       {
+        "text": "和亲友共享定位",
+        "value": "share_location"
+       },
+       {
+        "text": "刻意走大路",
+        "value": "main_road"
+       },
+       {
+        "text": "提前打车",
+        "value": "taxi"
+       },
+       {
+        "text": "摘下耳机",
+        "value": "no_earphones"
+       },
+       {
+        "text": "握紧钥匙或手机",
+        "value": "hold_keys"
+       },
+       {
+        "text": "以上都不会",
+        "value": "none"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "torch",
+    "elements": [
+     {
+      "name": "torch_safety",
+      "type": "imagerating",
+      "title": "用手电筒探查 8 秒后：这条街让你感到多安全？",
+      "choices": [],
+      "rateMax": 5,
+      "rateMin": 1,
+      "imageCount": 1,
+      "isRequired": true,
+      "trialCount": 3,
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "非常安全",
+      "minRateDescription": "非常不安全",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "torch_gaze",
+      "type": "custom",
+      "title": "手电筒扫描网格（32×20 计数）与最先注意的元素，按轮次"
+     }
+    ]
+   },
+   {
+    "name": "walk",
+    "elements": [
+     {
+      "name": "walk_unease",
+      "type": "imagerating",
+      "title": "第一人称夜行：经过这段街景时的平均不安程度（0–100，由按住时长自动计算）",
+      "choices": [],
+      "rateMax": 100,
+      "rateMin": 0,
+      "imageCount": 1,
+      "isRequired": true,
+      "trialCount": 6,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "walk_trace",
+      "type": "custom",
+      "title": "夜行连续不安曲线（每 0.1 秒采样）"
+     }
+    ]
+   },
+   {
+    "name": "threshold",
+    "elements": [
+     {
+      "name": "threshold_photos",
+      "type": "image",
+      "title": "照明阈值实验使用的街景",
+      "choices": [],
+      "imageCount": 3,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "max": 100,
+      "min": 0,
+      "name": "threshold_level",
+      "type": "text",
+      "title": "个人安全照明阈值（相对亮度 0–100，阶梯法最后 4 个反转点均值）",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "threshold_trials",
+      "type": "custom",
+      "title": "阶梯法逐次记录"
+     }
+    ]
+   },
+   {
+    "name": "route",
+    "elements": [
+     {
+      "name": "route_plans",
+      "type": "custom",
+      "title": "三种情境下的回家路线（路口序列、路程、黑暗暴露、绕行系数）"
+     }
+    ]
+   },
+   {
+    "name": "distance",
+    "elements": [
+     {
+      "name": "stranger_distance",
+      "type": "imageslidergroup",
+      "title": "对方走到多近（米）你会开始感到不自在？",
+      "choices": [],
+      "dimensions": [
+       {
+        "id": "hood_dark",
+        "max": 40,
+        "min": 0.8,
+        "left": "很近",
+        "step": 0.1,
+        "label": "戴兜帽、双手插兜的陌生人（昏暗）",
+        "right": "很远"
+       },
+       {
+        "id": "group_dark",
+        "max": 40,
+        "min": 0.8,
+        "left": "很近",
+        "step": 0.1,
+        "label": "三个结伴而行的年轻人（昏暗）",
+        "right": "很远"
+       },
+       {
+        "id": "dog_dark",
+        "max": 40,
+        "min": 0.8,
+        "left": "很近",
+        "step": 0.1,
+        "label": "牵着狗散步的路人（昏暗）",
+        "right": "很远"
+       },
+       {
+        "id": "rider_dark",
+        "max": 40,
+        "min": 0.8,
+        "left": "很近",
+        "step": 0.1,
+        "label": "驶上人行道的外卖骑手（昏暗）",
+        "right": "很远"
+       },
+       {
+        "id": "hood_lit",
+        "max": 40,
+        "min": 0.8,
+        "left": "很近",
+        "step": 0.1,
+        "label": "同一位兜帽陌生人（明亮）",
+        "right": "很远"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "sound",
+    "elements": [
+     {
+      "name": "sound_unease",
+      "type": "slidergroup",
+      "title": "这段声音带给你的不安程度（0 平静 – 10 极度不安）",
+      "scaleMax": 10,
+      "scaleMin": 0,
+      "scaleStep": 0.1,
+      "dimensions": [
+       {
+        "id": "steps",
+        "left": "平静",
+        "label": "身后的脚步声",
+        "right": "极度不安"
+       },
+       {
+        "id": "dog",
+        "left": "平静",
+        "label": "黑暗里的狗吠",
+        "right": "极度不安"
+       },
+       {
+        "id": "wind",
+        "left": "平静",
+        "label": "寂静中的风声",
+        "right": "极度不安"
+       },
+       {
+        "id": "moto",
+        "left": "平静",
+        "label": "摩托车驶近",
+        "right": "极度不安"
+       },
+       {
+        "id": "glass",
+        "left": "平静",
+        "label": "玻璃碎裂",
+        "right": "极度不安"
+       },
+       {
+        "id": "music",
+        "left": "平静",
+        "label": "远处小酒馆的音乐",
+        "right": "极度不安"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "sound_reaction",
+      "rows": [
+       {
+        "text": "身后的脚步声",
+        "value": "steps"
+       },
+       {
+        "text": "黑暗里的狗吠",
+        "value": "dog"
+       },
+       {
+        "text": "寂静中的风声",
+        "value": "wind"
+       },
+       {
+        "text": "摩托车驶近",
+        "value": "moto"
+       },
+       {
+        "text": "玻璃碎裂",
+        "value": "glass"
+       },
+       {
+        "text": "远处小酒馆的音乐",
+        "value": "music"
+       }
+      ],
+      "type": "matrix",
+      "title": "听到这个声音，你的第一反应是？",
+      "columns": [
+       {
+        "text": "加快脚步",
+        "value": "speed_up"
+       },
+       {
+        "text": "回头看",
+        "value": "look_back"
+       },
+       {
+        "text": "停下观察",
+        "value": "stop"
+       },
+       {
+        "text": "换一侧走",
+        "value": "switch_side"
+       },
+       {
+        "text": "拿出手机",
+        "value": "phone"
+       },
+       {
+        "text": "无所谓",
+        "value": "ignore"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "NIGHTWALK · 夜间步行安全感实验",
+  "locale": "zh",
+  "spSite": {
+   "id": "site-84139173c9836cc7",
+   "html": "<!doctype html>\n<html lang=\"zh-CN\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>夜行安全感实验</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"NIGHTWALK · 夜间步行安全感实验\",\n    \"description\": \"用手电筒探查街道、第一人称走完一段夜路、找到你的照明阈值、规划回家路线、面对陌生人并聆听夜晚的声音。约 12 分钟，建议佩戴耳机。\",\n    \"locale\": \"zh\",\n    \"pages\": [\n      { \"name\": \"intro\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"我已知悉本实验匿名进行，部分场景可能引发轻微不适，我自愿参与并可随时退出\", \"isRequired\": true, \"labelTrue\": \"同意\", \"labelFalse\": \"不同意\" }\n      ]},\n      { \"name\": \"you\", \"elements\": [\n        { \"type\": \"radiogroup\", \"name\": \"age_group\", \"title\": \"你的年龄段是？\", \"isRequired\": true, \"choices\": [{\"value\":\"18_24\",\"text\":\"18–24 岁\"},{\"value\":\"25_34\",\"text\":\"25–34 岁\"},{\"value\":\"35_44\",\"text\":\"35–44 岁\"},{\"value\":\"45_59\",\"text\":\"45–59 岁\"},{\"value\":\"60_plus\",\"text\":\"60 岁及以上\"}]},\n        { \"type\": \"radiogroup\", \"name\": \"gender\", \"title\": \"你的性别是？\", \"isRequired\": true, \"choices\": [{\"value\":\"female\",\"text\":\"女\"},{\"value\":\"male\",\"text\":\"男\"},{\"value\":\"nonbinary\",\"text\":\"非二元\"},{\"value\":\"na\",\"text\":\"不愿透露\"}]},\n        { \"type\": \"radiogroup\", \"name\": \"night_freq\", \"title\": \"你多久会在晚上 10 点后独自步行一次？\", \"isRequired\": true, \"choices\": [{\"value\":\"never\",\"text\":\"几乎从不\"},{\"value\":\"monthly\",\"text\":\"每月几次\"},{\"value\":\"weekly\",\"text\":\"每周几次\"},{\"value\":\"daily\",\"text\":\"几乎每天\"}]},\n        { \"type\": \"radiogroup\", \"name\": \"night_unease\", \"title\": \"过去一年，你是否曾在夜间步行时感到明显不安？\", \"isRequired\": true, \"choices\": [{\"value\":\"never\",\"text\":\"从未有过\"},{\"value\":\"sometimes\",\"text\":\"偶尔有\"},{\"value\":\"often\",\"text\":\"经常有\"},{\"value\":\"na\",\"text\":\"不想回答\"}]},\n        { \"type\": \"checkbox\", \"name\": \"night_habits\", \"title\": \"夜间独行时，你通常会做哪些事？（可多选）\", \"isRequired\": true, \"choices\": [{\"value\":\"call\",\"text\":\"边走边打电话\"},{\"value\":\"share_location\",\"text\":\"和亲友共享定位\"},{\"value\":\"main_road\",\"text\":\"刻意走大路\"},{\"value\":\"taxi\",\"text\":\"提前打车\"},{\"value\":\"no_earphones\",\"text\":\"摘下耳机\"},{\"value\":\"hold_keys\",\"text\":\"握紧钥匙或手机\"},{\"value\":\"none\",\"text\":\"以上都不会\"}]}\n      ]},\n      { \"name\": \"torch\", \"elements\": [\n        { \"type\": \"imagerating\", \"name\": \"torch_safety\", \"title\": \"用手电筒探查 8 秒后：这条街让你感到多安全？\", \"imageCount\": 1, \"trialCount\": 3, \"rateMin\": 1, \"rateMax\": 5, \"minRateDescription\": \"非常不安全\", \"maxRateDescription\": \"非常安全\", \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"choices\": [], \"isRequired\": true },\n        { \"type\": \"custom\", \"name\": \"torch_gaze\", \"title\": \"手电筒扫描网格（32×20 计数）与最先注意的元素，按轮次\" }\n      ]},\n      { \"name\": \"walk\", \"elements\": [\n        { \"type\": \"imagerating\", \"name\": \"walk_unease\", \"title\": \"第一人称夜行：经过这段街景时的平均不安程度（0–100，由按住时长自动计算）\", \"imageCount\": 1, \"trialCount\": 6, \"rateMin\": 0, \"rateMax\": 100, \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"choices\": [], \"isRequired\": true },\n        { \"type\": \"custom\", \"name\": \"walk_trace\", \"title\": \"夜行连续不安曲线（每 0.1 秒采样）\" }\n      ]},\n      { \"name\": \"threshold\", \"elements\": [\n        { \"type\": \"image\", \"name\": \"threshold_photos\", \"title\": \"照明阈值实验使用的街景\", \"imageCount\": 3, \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"choices\": [] },\n        { \"type\": \"number\", \"name\": \"threshold_level\", \"title\": \"个人安全照明阈值（相对亮度 0–100，阶梯法最后 4 个反转点均值）\", \"min\": 0, \"max\": 100, \"isRequired\": true },\n        { \"type\": \"custom\", \"name\": \"threshold_trials\", \"title\": \"阶梯法逐次记录\" }\n      ]},\n      { \"name\": \"route\", \"elements\": [\n        { \"type\": \"custom\", \"name\": \"route_plans\", \"title\": \"三种情境下的回家路线（路口序列、路程、黑暗暴露、绕行系数）\" }\n      ]},\n      { \"name\": \"distance\", \"elements\": [\n        { \"type\": \"imageslidergroup\", \"name\": \"stranger_distance\", \"title\": \"对方走到多近（米）你会开始感到不自在？\", \"imageCount\": 1, \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"choices\": [], \"isRequired\": true, \"dimensions\": [\n          {\"id\":\"hood_dark\",\"label\":\"戴兜帽、双手插兜的陌生人（昏暗）\",\"left\":\"很近\",\"right\":\"很远\",\"min\":0.8,\"max\":40,\"step\":0.1},\n          {\"id\":\"group_dark\",\"label\":\"三个结伴而行的年轻人（昏暗）\",\"left\":\"很近\",\"right\":\"很远\",\"min\":0.8,\"max\":40,\"step\":0.1},\n          {\"id\":\"dog_dark\",\"label\":\"牵着狗散步的路人（昏暗）\",\"left\":\"很近\",\"right\":\"很远\",\"min\":0.8,\"max\":40,\"step\":0.1},\n          {\"id\":\"rider_dark\",\"label\":\"驶上人行道的外卖骑手（昏暗）\",\"left\":\"很近\",\"right\":\"很远\",\"min\":0.8,\"max\":40,\"step\":0.1},\n          {\"id\":\"hood_lit\",\"label\":\"同一位兜帽陌生人（明亮）\",\"left\":\"很近\",\"right\":\"很远\",\"min\":0.8,\"max\":40,\"step\":0.1}]}\n      ]},\n      { \"name\": \"sound\", \"elements\": [\n        { \"type\": \"slidergroup\", \"name\": \"sound_unease\", \"title\": \"这段声音带给你的不安程度（0 平静 – 10 极度不安）\", \"isRequired\": true, \"scaleMin\": 0, \"scaleMax\": 10, \"scaleStep\": 0.1, \"dimensions\": [\n          {\"id\":\"steps\",\"label\":\"身后的脚步声\",\"left\":\"平静\",\"right\":\"极度不安\"},\n          {\"id\":\"dog\",\"label\":\"黑暗里的狗吠\",\"left\":\"平静\",\"right\":\"极度不安\"},\n          {\"id\":\"wind\",\"label\":\"寂静中的风声\",\"left\":\"平静\",\"right\":\"极度不安\"},\n          {\"id\":\"moto\",\"label\":\"摩托车驶近\",\"left\":\"平静\",\"right\":\"极度不安\"},\n          {\"id\":\"glass\",\"label\":\"玻璃碎裂\",\"left\":\"平静\",\"right\":\"极度不安\"},\n          {\"id\":\"music\",\"label\":\"远处小酒馆的音乐\",\"left\":\"平静\",\"right\":\"极度不安\"}]},\n        { \"type\": \"matrix\", \"name\": \"sound_reaction\", \"title\": \"听到这个声音，你的第一反应是？\", \"isRequired\": true,\n          \"rows\": [{\"value\":\"steps\",\"text\":\"身后的脚步声\"},{\"value\":\"dog\",\"text\":\"黑暗里的狗吠\"},{\"value\":\"wind\",\"text\":\"寂静中的风声\"},{\"value\":\"moto\",\"text\":\"摩托车驶近\"},{\"value\":\"glass\",\"text\":\"玻璃碎裂\"},{\"value\":\"music\",\"text\":\"远处小酒馆的音乐\"}],\n          \"columns\": [{\"value\":\"speed_up\",\"text\":\"加快脚步\"},{\"value\":\"look_back\",\"text\":\"回头看\"},{\"value\":\"stop\",\"text\":\"停下观察\"},{\"value\":\"switch_side\",\"text\":\"换一侧走\"},{\"value\":\"phone\",\"text\":\"拿出手机\"},{\"value\":\"ignore\",\"text\":\"无所谓\"}]}\n      ]}\n    ]\n  }\n}\n</script>\n\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link href=\"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600;800&display=swap\" rel=\"stylesheet\">\n<style>\n:root{--bg:#05060a;--panel:rgba(14,16,24,.78);--panel2:rgba(255,255,255,.04);--ink:#eef0f6;--ink2:#b9bdc9;--muted:#7d8392;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.16);--amber:#ffb547;--amber2:#ff8a1f;--cyan:#59e0ff;--red:#ff4d6d;--green:#4dffb0;--mono:\"JetBrains Mono\",ui-monospace,monospace}\n*{box-sizing:border-box;margin:0;padding:0}\nhtml{overflow-x:hidden}\nbody{background:var(--bg);color:var(--ink);font-family:\"Noto Sans SC\",system-ui,sans-serif;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}\nbutton{font:inherit;color:inherit;background:none;border:0;cursor:pointer}\n:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:6px}\nkbd{font-family:var(--mono);font-size:.78em;padding:2px 7px;border-radius:6px;border:1px solid var(--line2);border-bottom-width:2px;background:rgba(255,255,255,.06)}\n.mono{font-family:var(--mono)}.hidden{display:none!important}\n#hud{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:linear-gradient(to bottom,rgba(5,6,10,.9),transparent);pointer-events:none}\n#hud>*{pointer-events:auto}\n.logo{font-family:var(--mono);font-weight:800;letter-spacing:.3em;font-size:13px;display:flex;align-items:center;gap:10px}\n.logo i{width:9px;height:9px;border-radius:50%;background:var(--amber);box-shadow:0 0 12px var(--amber),0 0 30px var(--amber2)}\n.logo span{color:var(--muted);letter-spacing:.1em;font-weight:400}\n.hud-r{display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:12px;color:var(--ink2)}\n.hbtn{width:32px;height:32px;border-radius:9px;border:1px solid var(--line2);display:grid;place-items:center}\n#stage{min-height:100vh;padding:74px clamp(16px,4vw,56px) 120px;transition:opacity .5s,filter .5s,transform .6s cubic-bezier(.2,.8,.2,1)}\n#stage.out{opacity:0;filter:blur(14px) brightness(.3)}#stage.pre{opacity:0;filter:blur(14px);transform:scale(1.015);transition:none}\n.wrap{max-width:1180px;margin:0 auto}\n.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.3em;color:var(--amber);text-transform:uppercase}\nh1{font-size:clamp(48px,8vw,108px);font-weight:900;line-height:.95;letter-spacing:-.03em}\nh2{font-size:clamp(26px,3.6vw,44px);font-weight:900;line-height:1.12;margin:10px 0}\n.lead{color:var(--ink2);font-size:15px;line-height:1.75;max-width:680px}.lead b{color:var(--ink)}\n.chead{margin-bottom:22px}\n.panel{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:20px;backdrop-filter:blur(18px)}\n.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;padding:0 22px;border-radius:14px;border:1px solid var(--line2);font-weight:700;font-size:14px;transition:.25s;background:rgba(255,255,255,.03)}\n.btn:hover{border-color:var(--ink2)}.btn:disabled{opacity:.3;pointer-events:none}\n.btn-amber{background:var(--amber);color:#1a1102;border-color:var(--amber);box-shadow:0 10px 40px -10px var(--amber)}\n.btn-sm{min-height:36px;padding:0 14px;font-size:13px;border-radius:10px}\n.cta-row{display:flex;justify-content:flex-end;align-items:center;gap:14px;margin-top:24px}.cta-row .note{font-size:12px;color:var(--muted);font-family:var(--mono)}\n.chips{display:flex;flex-wrap:wrap;gap:8px}\n.chip{padding:9px 15px;border-radius:999px;border:1px solid var(--line2);font-size:13px;color:var(--ink2)}\n.chip.on{background:var(--amber);border-color:var(--amber);color:#1a1102;font-weight:700}\n.photo{position:relative;aspect-ratio:16/10;border-radius:22px;overflow:hidden;background:#000;box-shadow:0 40px 120px -30px rgba(0,0,0,.9),0 0 0 1px var(--line)}\n.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none}\n.night img{filter:brightness(.62) contrast(1.12) saturate(.85) hue-rotate(-8deg)}\n.toast{position:fixed;left:50%;bottom:110px;z-index:90;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:12px 20px;border-radius:12px;background:#fff;color:#111;font-size:14px;transition:.35s;max-width:90vw}\n.toast.show{opacity:1;transform:translate(-50%,0)}\n.shake{animation:shake .45s}@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}\n#line{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:14px clamp(16px,4vw,56px) 16px;background:linear-gradient(to top,rgba(5,6,10,.95) 40%,transparent)}\n.mline{position:relative;max-width:980px;margin:0 auto;height:44px}\n.mline .rail{position:absolute;left:10px;right:10px;top:12px;height:3px;border-radius:3px;background:var(--line2)}\n.mline .rail i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--amber2),var(--amber));box-shadow:0 0 12px var(--amber);transition:width .8s}\n.stop{position:absolute;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px}\n.stop b{width:26px;height:26px;border-radius:50%;border:3px solid var(--line2);background:var(--bg);display:grid;place-items:center}\n.stop span{font-size:11px;color:var(--muted);white-space:nowrap;font-family:var(--mono)}\n.stop.done b{border-color:var(--amber);background:var(--amber)}\n.stop.cur b{border-color:var(--amber);box-shadow:0 0 0 6px rgba(255,181,71,.18),0 0 20px var(--amber)}.stop.cur b::after{content:\"\";width:8px;height:8px;border-radius:50%;background:var(--amber)}.stop.cur span{color:var(--amber)}\n/* intro */\n.intro{position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse at 50% 70%,#141a33,#04050a 70%)}\n.lamps{position:absolute;inset:0;pointer-events:none}\n.lampd{position:absolute;border-radius:50%;background:#ffe6b0;transform:translate(-50%,-50%);box-shadow:0 0 calc(var(--s)*3) calc(var(--s)*1.2) rgba(255,190,110,.55);opacity:var(--o,0);transition:opacity .25s}\n.pool{position:absolute;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(ellipse,rgba(255,190,110,.32),transparent 70%);opacity:var(--o,0);transition:opacity .25s}\n.road{position:absolute;left:50%;bottom:0;width:140vw;height:46vh;transform:translateX(-50%);background:linear-gradient(to top,#0e1018,#06070b);clip-path:polygon(38% 0,62% 0,100% 100%,0 100%)}\n.intro-ui{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:90px 20px 130px}\n.typed{font-size:clamp(18px,2.2vw,26px);line-height:1.9;font-weight:300;min-height:150px;color:var(--ink2)}\n.typed .cur{display:inline-block;width:10px;height:1.1em;background:var(--amber);vertical-align:-3px;margin-left:4px;animation:blink .8s steps(2) infinite}@keyframes blink{50%{opacity:0}}\n.hold{position:relative;width:118px;height:118px;margin:22px auto 12px;border-radius:50%;display:grid;place-items:center;user-select:none;touch-action:none}\n.hold svg{position:absolute;inset:0;transform:rotate(-90deg)}\n.hold .core{width:74px;height:74px;border-radius:50%;background:radial-gradient(circle,rgba(255,181,71,.35),rgba(255,181,71,.05));border:1px solid rgba(255,181,71,.5);display:grid;place-items:center;font:13px var(--mono);color:var(--amber)}\n.after h1 em{font-style:normal;color:var(--amber)}\n.consent{display:flex;gap:12px;align-items:flex-start;text-align:left;font-size:13px;color:var(--ink2);margin:20px 0;cursor:pointer;line-height:1.6}\n.consent input{width:20px;height:20px;flex:none;accent-color:var(--amber)}\n/* typeform */\n.tf{max-width:820px;margin:8vh auto 0}.tf-q{animation:tfIn .55s cubic-bezier(.2,.8,.2,1)}@keyframes tfIn{from{opacity:0;transform:translateY(40px)}}\n.tf-n{font-family:var(--mono);color:var(--amber);font-size:13px;margin-bottom:10px}\n.tf h3{font-size:clamp(22px,3vw,34px);font-weight:700;line-height:1.3;margin-bottom:22px}\n.tf-opts{display:flex;flex-direction:column;gap:10px;max-width:520px}\n.tf-opt{display:flex;align-items:center;gap:14px;padding:13px 16px;border-radius:12px;border:1px solid var(--line2);text-align:left;font-size:16px;background:rgba(255,255,255,.02)}\n.tf-opt:hover{border-color:var(--amber)}.tf-opt.on{border-color:var(--amber);background:rgba(255,181,71,.14)}.tf-opt.on kbd{background:var(--amber);color:#111}\n.tf-nav{display:flex;gap:10px;margin-top:22px;align-items:center;flex-wrap:wrap}\n/* torch */\n.gz{display:grid;grid-template-columns:1fr 320px;gap:22px;align-items:start}\n.gzbox{cursor:none;touch-action:none}\n.torch{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle var(--r,110px) at var(--x,50%) var(--y,50%),rgba(0,0,0,0) 0,rgba(0,0,0,.3) 55%,rgba(2,3,6,.985) 100%);transition:opacity .8s}\n.torch.off{opacity:0}\n.ring{position:absolute;right:16px;top:16px;width:58px;height:58px}.ring svg{transform:rotate(-90deg)}.ring b{position:absolute;inset:0;display:grid;place-items:center;font:15px var(--mono)}\n.gz-cover{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:rgba(3,4,8,.92);padding:20px;cursor:default}\n.gz-cover .big{font:800 60px var(--mono);color:var(--amber)}\n.heat{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:screen}\n.scale5{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:10px 0 6px}\n.scale5 button{height:46px;border-radius:10px;border:1px solid var(--line2);font:800 15px var(--mono)}\n.scale5 button.on{background:var(--c);border-color:var(--c);color:#0a0a0a}\n.lbl{font-size:13px;font-weight:700;margin-bottom:8px;display:block}\n/* walk */\n.walk{position:relative;height:calc(100vh - 230px);min-height:400px;border-radius:24px;overflow:hidden;background:#000;user-select:none;touch-action:none}\n.walk .slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s}\n.walk .slide.on{opacity:1}\n.walk .slide img{width:100%;height:100%;object-fit:cover;filter:brightness(.55) contrast(1.15) saturate(.8);transform-origin:50% 55%}\n.walk .slide.on img{animation:dolly var(--d,6s) linear forwards}\n@keyframes dolly{from{transform:scale(1)}to{transform:scale(1.38)}}\n.walk .fx{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 55%,transparent calc(60% - var(--u,0)*35%),rgba(calc(var(--u,0)*150),0,15,calc(.4 + var(--u,0)*.45)) 100%)}\n.walk .fx.beat{animation:beat .5s}@keyframes beat{15%{filter:brightness(1.6)}}\n.whud{position:absolute;left:18px;top:16px;font:12px var(--mono);color:var(--ink2);line-height:1.8;text-shadow:0 1px 4px #000}.whud b{color:var(--ink);font-size:22px}\n.walk canvas.trace{position:absolute;left:0;right:0;bottom:0;width:100%;height:90px;background:linear-gradient(to top,rgba(0,0,0,.75),transparent)}\n.press{position:absolute;right:22px;bottom:106px;width:116px;height:116px;border-radius:50%;border:2px solid rgba(255,77,109,.6);display:grid;place-items:center;text-align:center;font-size:12px;color:#fff;background:radial-gradient(circle,rgba(255,77,109,calc(.15 + var(--u,0)*.6)),rgba(255,77,109,.05));box-shadow:0 0 calc(var(--u,0)*60px) rgba(255,77,109,.8)}\n.press.down{transform:scale(.93)}.press b{display:block;font:800 22px var(--mono)}\n.walk-cover{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:rgba(3,4,8,.86);padding:24px;gap:12px}\n.walk-cover .big{font:800 96px var(--mono);color:var(--amber)}\n.zb{display:grid;grid-template-columns:70px 1fr 40px;gap:12px;align-items:center;font-size:13px;margin:6px 0}\n.zb img{width:70px;height:44px;object-fit:cover;border-radius:6px;filter:brightness(.7)}\n.zb .b{height:10px;border-radius:9px;background:var(--line);overflow:hidden}.zb .b i{display:block;height:100%;background:linear-gradient(90deg,var(--amber),var(--red))}\n/* staircase */\n.st{display:grid;grid-template-columns:1fr 350px;gap:22px;align-items:start}\n.st .photo img{transition:filter .7s,opacity .3s}\n.lux{position:absolute;left:14px;bottom:12px;font:12px var(--mono);color:#fff;background:rgba(0,0,0,.55);padding:6px 10px;border-radius:8px}\n.yn{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}\n.yn button{height:74px;border-radius:16px;border:1px solid var(--line2);font-size:16px;font-weight:700;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}\n.yn button span{font-size:11px;color:var(--muted);font-weight:400}\n.yn .no:hover{border-color:var(--red)}.yn .yes:hover{border-color:var(--green)}\n.scen{font-size:15px;line-height:1.7;color:var(--ink2);padding:14px 16px;border-left:2px solid var(--amber);background:rgba(255,181,71,.05);border-radius:0 12px 12px 0}\n/* route */\n.rt{display:grid;grid-template-columns:1fr 310px;gap:22px;align-items:start}\n.map{width:100%;display:block;border-radius:22px;background:#07090f;border:1px solid var(--line);user-select:none}\n.map .node{cursor:pointer}\n.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}\n.tab{padding:8px 13px;border-radius:10px;border:1px solid var(--line2);font:12px var(--mono)}.tab.on{border-color:var(--amber);color:var(--amber)}.tab.ok::after{content:\" ✓\";color:var(--green)}\n.stat{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}\n.stat div{padding:12px;border-radius:12px;background:var(--panel2);border:1px solid var(--line)}.stat small{display:block;font-size:11px;color:var(--muted)}.stat b{font:800 20px var(--mono)}\n.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:11px;color:var(--muted);margin-top:8px}.legend i{display:inline-block;width:18px;height:4px;border-radius:2px;vertical-align:middle;margin-right:5px}\n/* distance */\n.ds{display:grid;grid-template-columns:1fr 310px;gap:22px;align-items:start}\n.dsbox{cursor:ns-resize;touch-action:none}\n.dsbox.dark img{filter:brightness(.42) contrast(1.15) saturate(.7)}.dsbox.lit img{filter:brightness(.9) saturate(1.05)}\n.fig{position:absolute;left:50%;transform:translate(-50%,-100%);pointer-events:none;transition:none}\n.fig svg{display:block;width:100%;height:100%;overflow:visible}\n.dread{position:absolute;left:50%;top:16px;transform:translateX(-50%);text-align:center;pointer-events:none}\n.dread b{font:800 50px var(--mono);text-shadow:0 2px 20px #000}\n.dread span{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;background:var(--zc,#444);color:#0a0a0a}\n/* sound */\n.snd{display:grid;grid-template-columns:290px 1fr;gap:22px;align-items:start}\n.tapes{display:flex;flex-direction:column;gap:8px}\n.tape{display:grid;grid-template-columns:36px 1fr auto;gap:10px;align-items:center;padding:12px 14px;border-radius:14px;border:1px solid var(--line);text-align:left;background:var(--panel2)}\n.tape .ic{font-size:22px}.tape b{display:block;font-size:14px}.tape small{color:var(--muted);font-size:11px}.tape .v{font:800 15px var(--mono);color:var(--muted)}\n.tape.on{border-color:var(--amber);background:rgba(255,181,71,.08)}.tape.ok .v{color:var(--amber)}\n.player{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}\n.orb{position:relative;aspect-ratio:1;border-radius:50%;cursor:pointer;width:100%}.orb canvas{width:100%;height:100%;display:block}\n.orb .lab{position:absolute;inset:0;display:grid;place-items:center;text-align:center;pointer-events:none;font:12px var(--mono);color:var(--ink2)}\n.knob{position:relative;width:100%;max-width:230px;margin:0 auto;touch-action:none;cursor:grab;user-select:none}.knob svg{width:100%;display:block}\n.knob .kv{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}.knob .kv b{font:800 44px var(--mono)}.knob .kv span{font-size:11px;color:var(--muted)}\n.knob.locked{opacity:.3;pointer-events:none}\n/* file */\n.dhead{display:grid;grid-template-columns:1.3fr 1fr;gap:20px;align-items:center;padding:26px;border-radius:24px;background:linear-gradient(135deg,rgba(255,181,71,.14),rgba(89,224,255,.05));border:1px solid rgba(255,181,71,.3)}\n.ph{font:11px var(--mono);letter-spacing:.24em;color:var(--muted);margin-bottom:10px;text-transform:uppercase}\n.idx{font:800 88px var(--mono);line-height:1;color:var(--amber)}\n.dossier{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.dossier .w{grid-column:1/-1}\n.drow{display:grid;grid-template-columns:150px 1fr 60px;gap:12px;align-items:center;font-size:13px;margin:6px 0}\n.drow .b{height:8px;border-radius:9px;background:var(--line);overflow:hidden}.drow .b i{display:block;height:100%;border-radius:9px}\n.missing{margin-top:14px;padding:14px;border-radius:14px;background:rgba(255,77,109,.1);border:1px solid rgba(255,77,109,.35);font-size:14px}\n@media (max-width:980px){.gz,.st,.rt,.ds,.snd,.player,.dhead,.dossier{grid-template-columns:1fr}}\n@media (max-width:640px){#hud{padding:10px 12px}.logo span{display:none}.stop span{display:none}.stop.cur span{display:block}#stage{padding:62px 14px 104px}.walk{height:calc(100vh - 200px)}.press{width:92px;height:92px;right:12px}.drow{grid-template-columns:110px 1fr 54px}}\n@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}\n</style>\n</head>\n<body>\n<header id=\"hud\"><div class=\"logo\"><i></i>NIGHTWALK<span>/ 夜行安全感实验</span></div><div class=\"hud-r\"><span id=\"chapN\">00 / 08</span><button class=\"hbtn\" id=\"sndBtn\" title=\"声音开关\" aria-label=\"声音开关\">♪</button></div></header>\n<main id=\"stage\"><p style=\"padding:40px\">加载中…</p></main>\n<nav id=\"line\" aria-label=\"进度\"><div class=\"mline\" id=\"mline\"></div></nav>\n<div class=\"toast\" id=\"toast\" role=\"status\" aria-live=\"polite\"></div>\n<script>\nSPSite.onReady(function(ctx){\nconst $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];\nconst clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)),lerp=(a,b,t)=>a+(b-a)*t;\nconst esc=s=>String(s==null?'':s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]));\nconst Q=n=>SPSite.getQuestion(n),A=JSON.parse(JSON.stringify(ctx.answers||{})),T0=Date.now();\nfunction toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2600)}\nfunction rec(name,value,opt){return SPSite.answer(name,value,opt).then(r=>{if(!r||!r.ok){toast((r&&r.error)||'记录失败');return r}\n  if(opt&&opt.trial!=null){const c=A[name]&&A[name].trials?A[name]:{trials:[]};c.trials[opt.trial]={value};A[name]=c}else if(value==null)delete A[name];else A[name]=value;return r})}\nconst tval=(n,i)=>A[n]&&A[n].trials&&A[n].trials[i]?A[n].trials[i].value:null;\nconst tdone=n=>{const q=Q(n);for(let i=0;i<q.trialCount;i++)if(tval(n,i)==null)return false;return true};\nconst photo=(m,alt,cls='')=>`<div class=\"photo ${cls}\"><img src=\"${esc(m.url)}\" alt=\"${esc(alt)}\" draggable=\"false\"></div>`;\nlet disposers=[],keyH=null;const track=f=>disposers.push(f);function dispose(){disposers.forEach(f=>{try{f()}catch(e){}});disposers=[];keyH=null}\nconst later=(f,ms)=>{const h=setTimeout(f,ms);track(()=>clearTimeout(h))};\nfunction loop(fn,maxDt=.05){let id,last=performance.now(),alive=true;const tick=n=>{if(!alive)return;fn(Math.min(maxDt,(n-last)/1000));last=n;id=requestAnimationFrame(tick)};id=requestAnimationFrame(tick);const stop=()=>{alive=false;cancelAnimationFrame(id)};track(stop);return stop}\nconst head=(n,k,t,l)=>`<div class=\"chead\"><div class=\"kicker\">${String(n).padStart(2,'0')} · ${k}</div><h2>${t}</h2>${l?`<p class=\"lead\">${l}</p>`:''}</div>`;\nconst cta=(note='')=>`<div class=\"cta-row\"><span class=\"note\">${note}</span><button class=\"btn btn-amber\" id=\"go\">继续 →</button></div>`;\nconst C={gaze:(A.torch_gaze&&A.torch_gaze.trials)||[],trace:null,stair:(A.threshold_trials&&A.threshold_trials.trials)||[],routes:A.route_plans||{},dist:Object.assign({},A.stranger_distance||{}),snd:Object.assign({},A.sound_unease||{}),react:Object.assign({},A.sound_reaction||{})};\n\n/* -------- 音频（实时合成） -------- */\nlet snd=true,AC=null,OUT=null,AN=null,NOISE=null,VERB=null;\nfunction audio(){if(!snd)return null;if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)()}catch(e){return null}\n  OUT=AC.createGain();OUT.gain.value=.8;AN=AC.createAnalyser();AN.fftSize=1024;OUT.connect(AN);AN.connect(AC.destination);\n  NOISE=AC.createBuffer(1,AC.sampleRate*2,AC.sampleRate);const d=NOISE.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;\n  VERB=AC.createConvolver();const ir=AC.createBuffer(2,AC.sampleRate*1.8,AC.sampleRate);for(let c=0;c<2;c++){const a=ir.getChannelData(c);for(let i=0;i<a.length;i++)a[i]=(Math.random()*2-1)*Math.pow(1-i/a.length,3)}VERB.buffer=ir;const vg=AC.createGain();vg.gain.value=.35;VERB.connect(vg).connect(OUT)}\n  if(AC.state==='suspended')AC.resume();return AC}\nconst noise=()=>{const s=AC.createBufferSource();s.buffer=NOISE;s.loop=true;return s};\nfunction env(g,t,a,p,d){g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(p,t+a);g.gain.exponentialRampToValueAtTime(.0008,t+a+d)}\nfunction step(t,v,pan=0,wet=false){const n=noise(),f=AC.createBiquadFilter(),g=AC.createGain(),p=AC.createStereoPanner();f.type='lowpass';f.frequency.value=650;p.pan.value=pan;env(g,t,.006,v,.11);n.connect(f).connect(g).connect(p).connect(OUT);if(wet)g.connect(VERB);n.start(t,Math.random());n.stop(t+.16)}\nfunction thump(t,v){[0,.16].forEach((o,i)=>{const s=AC.createOscillator(),g=AC.createGain();s.frequency.setValueAtTime(70,t+o);s.frequency.exponentialRampToValueAtTime(38,t+o+.12);env(g,t+o,.01,v*(i?.6:1),.16);s.connect(g).connect(OUT);s.start(t+o);s.stop(t+o+.2)})}\nconst SOUNDS={\n  steps:{ic:'👣',d:'有人在你身后，越走越近',play(){const t0=AC.currentTime+.05;for(let i=0;i<13;i++)step(t0+i*.5+(i%2)*.03,.05+i/13*.75,i%2?.12:-.12,true);return 6.8}},\n  dog:{ic:'🐕',d:'看不见的院子里传来犬吠',play(){const t0=AC.currentTime+.1;[0,.38,1.3,1.62,2.9].forEach(o=>{const t=t0+o,s=AC.createOscillator(),f=AC.createBiquadFilter(),g=AC.createGain();s.type='sawtooth';s.frequency.setValueAtTime(620,t);s.frequency.exponentialRampToValueAtTime(260,t+.18);f.type='bandpass';f.frequency.value=950;f.Q.value=1.4;env(g,t,.012,.55,.2);s.connect(f).connect(g);g.connect(OUT);g.connect(VERB);s.start(t);s.stop(t+.25)});return 3.8}},\n  wind:{ic:'🌫',d:'空无一人，只有风',play(){const t0=AC.currentTime,n=noise(),f=AC.createBiquadFilter(),g=AC.createGain(),l=AC.createOscillator(),lg=AC.createGain();f.type='bandpass';f.frequency.value=420;f.Q.value=.9;l.frequency.value=.18;lg.gain.value=260;l.connect(lg).connect(f.frequency);g.gain.setValueAtTime(0,t0);g.gain.linearRampToValueAtTime(.55,t0+1.8);g.gain.setValueAtTime(.55,t0+5.6);g.gain.linearRampToValueAtTime(0,t0+7.2);n.connect(f).connect(g).connect(OUT);n.start(t0);n.stop(t0+7.3);l.start(t0);l.stop(t0+7.3);return 7.3}},\n  moto:{ic:'🏍',d:'一辆摩托从背后高速驶来',play(){const t0=AC.currentTime,p=AC.createStereoPanner(),f=AC.createBiquadFilter(),g=AC.createGain();f.type='lowpass';p.pan.setValueAtTime(-.9,t0);p.pan.linearRampToValueAtTime(.9,t0+5.6);f.frequency.setValueAtTime(700,t0);f.frequency.linearRampToValueAtTime(2600,t0+3);f.frequency.linearRampToValueAtTime(700,t0+5.8);\n    g.gain.setValueAtTime(.01,t0);g.gain.exponentialRampToValueAtTime(.55,t0+3);g.gain.exponentialRampToValueAtTime(.01,t0+6);[1,1.5,2.01].forEach(m=>{const o=AC.createOscillator();o.type=m===1?'sawtooth':'square';o.frequency.setValueAtTime(62*m,t0);o.frequency.linearRampToValueAtTime(96*m,t0+3);o.frequency.linearRampToValueAtTime(64*m,t0+3.6);const og=AC.createGain();og.gain.value=m===1?.6:.18;o.connect(og).connect(f);o.start(t0);o.stop(t0+6.1)});f.connect(g).connect(p).connect(OUT);return 6.2}},\n  glass:{ic:'🍾',d:'不远处突然传来碎裂声',play(){const t0=AC.currentTime+.5,n=noise(),f=AC.createBiquadFilter(),g=AC.createGain();f.type='highpass';f.frequency.value=2400;env(g,t0,.004,.9,.4);n.connect(f).connect(g);g.connect(OUT);g.connect(VERB);n.start(t0);n.stop(t0+.5);for(let i=0;i<16;i++){const t=t0+.05+Math.random()*1.1,o=AC.createOscillator(),og=AC.createGain();o.frequency.value=2600+Math.random()*5200;env(og,t,.002,.08+Math.random()*.08,.18);o.connect(og);og.connect(OUT);og.connect(VERB);o.start(t);o.stop(t+.25)}return 2.6}},\n  music:{ic:'🎶',d:'隔着墙，隐约有人在唱歌',play(){const t0=AC.currentTime,f=AC.createBiquadFilter(),g=AC.createGain();f.type='lowpass';f.frequency.value=560;g.gain.value=.5;f.connect(g).connect(OUT);[[220,277,330],[196,247,294],[175,220,262],[196,247,330]].forEach((cc,i)=>cc.forEach(fr=>{const o=AC.createOscillator(),og=AC.createGain(),t=t0+i*1.4;o.type='triangle';o.frequency.value=fr;og.gain.setValueAtTime(0,t);og.gain.linearRampToValueAtTime(.12,t+.05);og.gain.linearRampToValueAtTime(0,t+1.42);o.connect(og).connect(f);o.start(t);o.stop(t+1.45)}));\n    for(let i=0;i<12;i++){const t=t0+i*.47,o=AC.createOscillator(),og=AC.createGain();o.frequency.setValueAtTime(95,t);o.frequency.exponentialRampToValueAtTime(42,t+.12);env(og,t,.005,.55,.14);o.connect(og).connect(f);o.start(t);o.stop(t+.2)}return 5.8}},\n};\n\n/* =============== 00 · 序章 =============== */\nfunction rIntro(el){\n  const lit0=A.consent===true;\n  const L=[];for(let i=0;i<7;i++){const k=1/(1+i*.55);for(const s of[-1,1])L.push({x:50+s*(9+40*k),y:48-26*k,s:Math.max(3,14*k),px:50+s*(5+28*k),py:55+34*k,pw:30*k})}\n  el.innerHTML=`<div class=\"intro\"><div class=\"road\"></div><div class=\"lamps\" id=\"lamps\">${L.map((l,i)=>`<i class=\"pool\" style=\"left:${l.px}%;top:${l.py}%;width:${l.pw}vw;height:${l.pw*.35}vw\" data-i=\"${i}\"></i><i class=\"lampd\" style=\"left:${l.x}%;top:${l.y}%;width:${l.s}px;height:${l.s}px;--s:${l.s}px\" data-i=\"${i}\"></i>`).join('')}</div>\n    <div class=\"intro-ui\"><div id=\"pre\" class=\"${lit0?'hidden':''}\"><div class=\"typed\" id=\"ty\"></div>\n      <div class=\"hold\" id=\"hold\" role=\"button\" tabindex=\"0\" aria-label=\"按住点亮街灯\"><svg viewBox=\"0 0 118 118\"><circle cx=\"59\" cy=\"59\" r=\"55\" fill=\"none\" stroke=\"rgba(255,255,255,.1)\" stroke-width=\"3\"/><circle id=\"hr\" cx=\"59\" cy=\"59\" r=\"55\" fill=\"none\" stroke=\"#ffb547\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-dasharray=\"345.6\" stroke-dashoffset=\"345.6\"/></svg><div class=\"core\">按住</div></div>\n      <p style=\"font-size:13px;color:var(--muted)\">按住 <kbd>空格</kbd> 或长按圆环，点亮这条街</p></div>\n    <div id=\"post\" class=\"after ${lit0?'':'hidden'}\" style=\"max-width:640px\"><div class=\"kicker\" style=\"margin-bottom:14px\">一项关于夜间步行安全感的研究</div><h1>夜<em>行</em></h1>\n      <p class=\"lead\" style=\"margin:18px auto 0\">约 12 分钟：用手电筒探查街道、第一人称走完一段夜路、调节亮度找到你的“安全阈值”、规划回家路线、面对陌生人，并聆听夜晚的声音。<b>建议佩戴耳机</b>。</p>\n      <label class=\"consent\"><input type=\"checkbox\" id=\"consent\" ${lit0?'checked':''}><span>${esc(Q('consent').title)}。作答（含反应时间、指针轨迹、连续评分）仅用于学术研究。</span></label>\n      <button class=\"btn btn-amber\" id=\"go\" style=\"min-height:54px;padding:0 32px\">走进夜色 →</button></div></div></div>`;\n  const lamps=$$('#lamps [data-i]');let p=lit0?1:0,down=false,doneHold=lit0;\n  const paint=()=>lamps.forEach(e=>{const i=+e.dataset.i,th=i/L.length;e.style.setProperty('--o',p>=1?1:(p>th?(Math.random()<.15?.25:1):0))});paint();\n  if(!lit0){loop(dt=>{p=clamp(p+(down?dt*.55:-dt*.8));$('#hr').style.strokeDashoffset=345.6*(1-p);paint();if(p>=1&&!doneHold){doneHold=true;$('#pre').classList.add('hidden');$('#post').classList.remove('hidden');if(audio())thump(AC.currentTime,.25)}});\n    const hold=$('#hold'),dn=e=>{e.preventDefault();down=true;audio()},up=()=>down=false;hold.addEventListener('pointerdown',dn);addEventListener('pointerup',up);track(()=>removeEventListener('pointerup',up));\n    keyH=e=>{if(e.code==='Space'){e.preventDefault();down=e.type==='keydown';return true}};\n    const lines=['23:47。末班地铁的门在身后合上。','回家还有 1.2 公里。','这条街，比你记忆中暗了一些。'];let li=0,ci=0;const ty=$('#ty');\n    const tick=()=>{if(li>=lines.length){ty.innerHTML=lines.join('<br>')+'<span class=\"cur\"></span>';return}ci++;ty.innerHTML=lines.slice(0,li).join('<br>')+(li?'<br>':'')+lines[li].slice(0,ci)+'<span class=\"cur\"></span>';if(ci>=lines[li].length){li++;ci=0;later(tick,500)}else later(tick,60)};later(tick,400)}\n  $('#consent').onchange=e=>rec('consent',e.target.checked?true:null);$('#go').onclick=next;\n}\n\n/* =============== 01 · 你 =============== */\nconst YOU=['age_group','gender','night_freq','night_unease','night_habits'];\nfunction rYou(el){\n  let qi=YOU.findIndex(n=>A[n]==null||(Array.isArray(A[n])&&!A[n].length));if(qi<0)qi=YOU.length;\n  const draw=()=>{\n    if(qi>=YOU.length){el.innerHTML=`<div class=\"wrap\">${head(1,'YOU','谢谢，我们认识了')}<div class=\"panel\" style=\"max-width:680px\">${YOU.map((n,i)=>{const q=Q(n),v=[].concat(A[n]||[]).map(x=>(q.choices.find(c=>c.value===x)||{}).text).join('、');return`<div style=\"display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px dashed var(--line2);font-size:14px\"><span style=\"color:var(--muted)\">${esc(q.title)}</span><button class=\"mono\" data-e=\"${i}\" style=\"color:var(--amber);text-align:right\">${esc(v)} ✎</button></div>`}).join('')}</div>${cta()}</div>`;\n      $$('[data-e]').forEach(b=>b.onclick=()=>{qi=+b.dataset.e;draw()});$('#go').onclick=next;keyH=null;return}\n    const n=YOU[qi],q=Q(n),multi=q.kind==='multiChoice',sel=A[n]||(multi?[]:null);\n    el.innerHTML=`<div class=\"tf\"><div class=\"tf-q\"><div class=\"tf-n\">${qi+1} → ${YOU.length}</div><h3>${esc(q.title)}</h3>\n      <div class=\"tf-opts\" role=\"${multi?'group':'radiogroup'}\">${q.choices.map((c,i)=>`<button class=\"tf-opt ${(multi?sel.includes(c.value):sel===c.value)?'on':''}\" data-i=\"${i}\" role=\"${multi?'checkbox':'radio'}\" aria-checked=\"${multi?sel.includes(c.value):sel===c.value}\"><kbd>${String.fromCharCode(65+i)}</kbd>${esc(c.text)}</button>`).join('')}</div>\n      <div class=\"tf-nav\">${qi?'<button class=\"btn btn-sm\" id=\"bk\">↑ 上一题</button>':''}${multi?'<button class=\"btn btn-amber btn-sm\" id=\"ok\">确定 ↵</button>':''}<span style=\"font-size:12px;color:var(--muted)\">按字母键快速选择</span></div></div></div>`;\n    const pick=i=>{const c=q.choices[i];if(!c)return;\n      if(multi){const a=(A[n]||[]).slice(),j=a.indexOf(c.value);j<0?a.push(c.value):a.splice(j,1);rec(n,a.length?a:null).then(r=>{if(r.ok)draw()})}\n      else rec(n,c.value).then(r=>{if(!r.ok)return;$$('.tf-opt').forEach((x,k)=>x.classList.toggle('on',k===i));later(()=>{qi++;draw()},300)})};\n    $$('.tf-opt').forEach(b=>b.onclick=()=>pick(+b.dataset.i));if($('#bk'))$('#bk').onclick=()=>{qi--;draw()};\n    if($('#ok'))$('#ok').onclick=()=>{if(!(A[n]||[]).length){toast('请至少选择一项');return}qi++;draw()};\n    keyH=e=>{if(e.type!=='keydown')return;const i=e.key.toUpperCase().charCodeAt(0)-65;if(e.key.length===1&&i>=0&&i<q.choices.length){pick(i);return true}if(e.key==='Enter'&&multi){$('#ok').click();return true}};\n  };draw();\n}\n\n/* =============== 02 · 手电筒 =============== */\nconst GX=32,GY=20,GT=8,ATTN=['人影','暗处/角落','路灯','涂鸦','出口/岔路','车辆','店铺灯光','窗户','地面'];\nfunction rTorch(el){\n  const q=Q('torch_safety'),N=q.trialCount;let ci=0;while(ci<N-1&&tval('torch_safety',ci)!=null)ci++;\n  const draw=()=>{const m=q.trials[ci].media[0],done=tval('torch_safety',ci)!=null,g=C.gaze.find(x=>x.trial===ci);\n    el.innerHTML=`<div class=\"wrap\">${head(2,'TORCH','你的目光，会先落在哪里？','画面几乎全黑，你的鼠标（或手指）就是一支手电筒。每条街你有 <b>8 秒</b>自由探查，我们记录光束扫过的位置，作为视线注意力的近似测量。')}\n    <div class=\"gz\"><div><div class=\"photo night gzbox\" id=\"box\"><img src=\"${esc(m.url)}\" alt=\"第 ${ci+1} 条待探查的夜间街景\" draggable=\"false\"><canvas class=\"heat\" id=\"heat\"></canvas><div class=\"torch off\" id=\"torch\"></div>\n      <div class=\"ring hidden\" id=\"ring\"><svg viewBox=\"0 0 58 58\" width=\"58\" height=\"58\"><circle cx=\"29\" cy=\"29\" r=\"25\" fill=\"none\" stroke=\"rgba(255,255,255,.15)\" stroke-width=\"3\"/><circle id=\"rc\" cx=\"29\" cy=\"29\" r=\"25\" fill=\"none\" stroke=\"#ffb547\" stroke-width=\"3\" stroke-dasharray=\"157\"/></svg><b id=\"rt\">8</b></div>\n      ${done?'':`<div class=\"gz-cover\" id=\"cover\"><div><div class=\"big\">${ci+1}/${N}</div><p style=\"color:var(--ink2);margin:8px 0 16px\">8 秒探查</p><button class=\"btn btn-amber\" id=\"start\">打开手电筒 · 空格</button></div></div>`}</div>\n      <div class=\"tabs\" style=\"margin-top:12px\">${q.trials.map((_,k)=>`<button class=\"tab ${k===ci?'on':''} ${tval('torch_safety',k)!=null?'ok':''}\" data-k=\"${k}\">街道 ${k+1}</button>`).join('')}</div></div>\n    <div class=\"panel\" id=\"side\">${done?`<h3>街道 ${ci+1}</h3><p class=\"lead\" style=\"font-size:13px;margin:8px 0\">安全评分 <b class=\"mono\" style=\"color:var(--amber)\">${tval('torch_safety',ci)}/5</b> · 最先注意：${esc(g&&g.first||'—')}</p><p class=\"hint\" style=\"font-size:12px;color:var(--muted)\">左图亮黄色为手电筒停留最久的位置。</p>${tdone('torch_safety')?cta():'<button class=\"btn btn-sm\" id=\"gnext\">下一条街 →</button>'}`:'<p class=\"lead\" style=\"font-size:13px\">准备好后点击“打开手电筒”。8 秒结束后回答两个问题。</p>'}</div></div></div>`;\n    $$('.tab').forEach(b=>b.onclick=()=>{if(tval('torch_safety',+b.dataset.k)!=null||+b.dataset.k===ci){ci=+b.dataset.k;dispose();draw()}});\n    if(done){if(g)requestAnimationFrame(()=>drawHeat($('#heat'),g.grid));if($('#gnext'))$('#gnext').onclick=()=>{ci=q.trials.findIndex((_,k)=>tval('torch_safety',k)==null);draw()};if($('#go'))$('#go').onclick=next;return}\n    const box=$('#box'),torch=$('#torch'),grid=new Array(GX*GY).fill(0);let run=false,mx=.5,my=.5,t0=0,n=0;\n    const mv=e=>{const r=box.getBoundingClientRect();mx=clamp((e.clientX-r.left)/r.width);my=clamp((e.clientY-r.top)/r.height);torch.style.setProperty('--x',mx*100+'%');torch.style.setProperty('--y',my*100+'%');torch.style.setProperty('--r',Math.max(70,r.width*.12)+'px')};\n    box.addEventListener('pointermove',mv);box.addEventListener('pointerdown',mv);\n    const start=()=>{if(run)return;run=true;$('#cover').remove();torch.classList.remove('off');$('#ring').classList.remove('hidden');t0=performance.now();\n      loop(()=>{const e=(performance.now()-t0)/1000;$('#rc').style.strokeDashoffset=157*e/GT;$('#rt').textContent=Math.ceil(GT-e);while(n<e*12.5){n++;grid[Math.min(GY-1,my*GY|0)*GX+Math.min(GX-1,mx*GX|0)]++}if(e>=GT){dispose();finish()}})};\n    const finish=()=>{torch.classList.add('off');$('#ring').classList.add('hidden');drawHeat($('#heat'),grid);let sf=null,fa=null;\n      $('#side').innerHTML=`<span class=\"lbl\">这条街让你感到多安全？</span><div class=\"scale5\" role=\"radiogroup\">${[1,2,3,4,5].map(i=>`<button style=\"--c:${['#ff4d6d','#ff8a5b','#ffb547','#a8e06a','#4dffb0'][i-1]}\" data-s=\"${i}\" aria-label=\"${i}\">${i}</button>`).join('')}</div>\n        <div style=\"display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:16px\"><span>${esc(q.minLabel||'')}</span><span>${esc(q.maxLabel||'')}</span></div>\n        <span class=\"lbl\">你的目光最先被什么吸引？</span><div class=\"chips\" id=\"fa\">${ATTN.map(a=>`<button class=\"chip\" data-v=\"${a}\">${a}</button>`).join('')}</div><button class=\"btn btn-amber\" id=\"gok\" style=\"width:100%;margin-top:16px\" disabled>确认 →</button>`;\n      const chk=()=>$('#gok').disabled=!(sf&&fa);\n      $$('[data-s]').forEach(b=>b.onclick=()=>{sf=+b.dataset.s;$$('[data-s]').forEach(x=>x.classList.toggle('on',x===b));chk()});\n      $$('#fa .chip').forEach(b=>b.onclick=()=>{fa=b.dataset.v;$$('#fa .chip').forEach(x=>x.classList.toggle('on',x===b));chk()});\n      $('#gok').onclick=()=>rec('torch_safety',sf,{trial:ci}).then(r=>{if(!r.ok)return;C.gaze=C.gaze.filter(x=>x.trial!==ci).concat({trial:ci,image:m.name,grid,first:fa});rec('torch_gaze',{grid:[GX,GY],seconds:GT,trials:C.gaze});const nx=q.trials.findIndex((_,k)=>tval('torch_safety',k)==null);if(nx>=0)ci=nx;draw()});\n      keyH=e=>{if(e.type==='keydown'&&/^[1-5]$/.test(e.key)){$$('[data-s]')[+e.key-1].click();return true}}};\n    $('#start').onclick=start;keyH=e=>{if(e.type==='keydown'&&e.code==='Space'){e.preventDefault();start();return true}};\n  };draw();\n}\nfunction drawHeat(cv,grid){if(!cv)return;const r=cv.getBoundingClientRect();cv.width=r.width||400;cv.height=r.height||250;const c=cv.getContext('2d'),mx=Math.max(1,...grid),cw=cv.width/GX,ch=cv.height/GY;\n  const off=document.createElement('canvas');off.width=cv.width;off.height=cv.height;const o=off.getContext('2d');\n  grid.forEach((v,i)=>{if(!v)return;const x=(i%GX+.5)*cw,y=((i/GX|0)+.5)*ch,a=v/mx,R=cw*3.2,g=o.createRadialGradient(x,y,0,x,y,R);g.addColorStop(0,`rgba(0,0,0,${.6*a+.08})`);g.addColorStop(1,'rgba(0,0,0,0)');o.fillStyle=g;o.fillRect(x-R,y-R,R*2,R*2)});\n  const id=o.getImageData(0,0,off.width,off.height),d=id.data;for(let i=0;i<d.length;i+=4){const a=Math.min(1,d[i+3]/255*1.6);if(a<.03){d[i+3]=0;continue}const c3=a<.33?[40,60,255]:a<.66?[255,80,140]:[255,230,90],c2=a<.33?[0,0,80]:a<.66?[40,60,255]:[255,80,140],t=(a%.33)/.33;d[i]=lerp(c2[0],c3[0],t);d[i+1]=lerp(c2[1],c3[1],t);d[i+2]=lerp(c2[2],c3[2],t);d[i+3]=a*230}c.putImageData(id,0,0)}\n\n/* =============== 03 · 夜行 =============== */\nconst SEG=6.5;\nfunction rWalk(el){\n  const q=Q('walk_unease'),N=q.trialCount,D=N*SEG,done=tdone('walk_unease');\n  el.innerHTML=`<div class=\"wrap\">${head(3,'WALK','走完这段夜路','你将第一人称“走过” '+N+' 段夜间街景，约 '+Math.round(D)+' 秒。<b>只要感到不安，就按住空格键（或屏幕右下的红色按钮）</b>，越不安就按得越久；松开表示恢复平静。')}\n  <div class=\"walk\" id=\"wk\">${q.trials.map((t,k)=>`<div class=\"slide\" data-k=\"${k}\"><img src=\"${esc(t.media[0].url)}\" alt=\"夜行第 ${k+1} 段街景\" draggable=\"false\"></div>`).join('')}<div class=\"fx\" id=\"fx\"></div>\n    <div class=\"whud hidden\" id=\"whud\">第 <b id=\"wd\">1</b> / ${N} 段<br><span id=\"wt\">00:00</span></div><canvas class=\"trace\" id=\"tr\"></canvas><div class=\"press hidden\" id=\"press\" aria-hidden=\"true\"><div><b id=\"pu\">0</b>不安</div></div>\n    <div class=\"walk-cover\" id=\"wc\">${done?`<div class=\"kicker\">已完成</div><h2 style=\"margin:4px 0\">你的夜行记录</h2><div id=\"sum\" style=\"width:min(520px,100%)\"></div><button class=\"btn\" id=\"again\">↻ 重走一次</button>`:`<div class=\"kicker\">准备</div><h2 style=\"margin:4px 0\">按住 = 不安</h2><p class=\"lead\" style=\"text-align:center\">戴上耳机效果更好（会有脚步声与心跳）。切换窗口会自动暂停。</p><button class=\"btn btn-amber\" id=\"begin\">开始夜行 →</button>`}</div></div>${cta(done?'':'完成夜行后可继续')}</div>`;\n  const tr=$('#tr'),fx=$('#fx'),press=$('#press'),slides=$$('.slide');slides[0].classList.add('on');\n  let trc=null,trace=[],running=false,paused=false,held=false,u=0,t=0,acc=0,nStep=0,nBeat=0,seg=0;\n  const fitT=()=>{const r=tr.getBoundingClientRect(),dp=Math.min(2,devicePixelRatio||1);tr.width=r.width*dp;tr.height=r.height*dp;trc=tr.getContext('2d');trc.setTransform(dp,0,0,dp,0,0);drawT()};\n  const ro=new ResizeObserver(fitT);ro.observe(tr);track(()=>ro.disconnect());\n  function drawT(){if(!trc)return;const w=tr.clientWidth,h=tr.clientHeight,src=running?trace:((A.walk_trace&&A.walk_trace.samples)||[]);trc.clearRect(0,0,w,h);\n    for(let k=0;k<N;k++){trc.fillStyle=k%2?'rgba(255,255,255,.04)':'transparent';trc.fillRect(k/N*w,0,w/N,h)}\n    if(!src.length)return;const g=trc.createLinearGradient(0,h,0,10);g.addColorStop(0,'#ffb547');g.addColorStop(1,'#ff4d6d');trc.strokeStyle=g;trc.lineWidth=2;trc.beginPath();src.forEach((p,i)=>{const x=p[0]/D*w,y=h-10-p[1]*(h-26);i?trc.lineTo(x,y):trc.moveTo(x,y)});trc.stroke()}\n  if(done){const s=$('#sum');s.innerHTML=q.trials.map((tt,k)=>`<div class=\"zb\"><img src=\"${esc(tt.media[0].url)}\" alt=\"第 ${k+1} 段\"><div class=\"b\"><i style=\"width:${tval('walk_unease',k)}%\"></i></div><b class=\"mono\">${tval('walk_unease',k)}</b></div>`).join('');\n    $('#again').onclick=()=>{q.trials.forEach((_,k)=>{A.walk_unease&&A.walk_unease.trials&&(A.walk_unease.trials[k]=null)});rWalk(el)}}\n  const begin=()=>{const wc=$('#wc');wc.innerHTML='<div class=\"big\" id=\"cd\">3</div>';audio();let n=3;const tick=()=>{n--;if(n<=0){wc.remove();go2();return}$('#cd').textContent=n;later(tick,800)};later(tick,800)};\n  const go2=()=>{running=true;$('#whud').classList.remove('hidden');press.classList.remove('hidden');slides.forEach(s=>s.style.setProperty('--d',SEG+1.2+'s'));\n    loop(dt=>{if(paused)return;t+=dt;const k=Math.min(N-1,Math.floor(t/SEG));if(k!==seg){slides[seg].classList.remove('on');seg=k;slides[k].classList.add('on');$('#wd').textContent=k+1}\n      u=held?u+(1-u)*(1-Math.exp(-dt*.9)):u*Math.exp(-dt*.55);u=clamp(u);acc+=dt;while(acc>=.1){acc-=.1;trace.push([+(t-acc).toFixed(1),+u.toFixed(3),seg])}\n      drawT();fx.style.setProperty('--u',u);press.style.setProperty('--u',u);$('#pu').textContent=Math.round(u*100);$('#wt').textContent='00:'+String(Math.floor(t)).padStart(2,'0');\n      if(AC&&snd){if(t>=nStep){step(AC.currentTime,.12,(Math.floor(t/.55)%2)?.1:-.1);nStep=t+.55}if(u>.35&&t>=nBeat){thump(AC.currentTime,.15+u*.5);fx.classList.remove('beat');void fx.offsetWidth;fx.classList.add('beat');nBeat=t+lerp(.95,.42,u)}}\n      if(t>=D){running=false;dispose();finish()}},.5)};\n  const finish=()=>{const per=q.trials.map((_,k)=>{const s=trace.filter(p=>p[2]===k);return s.length?Math.round(s.reduce((a,b)=>a+b[1],0)/s.length*100):0});\n    Promise.all(per.map((v,k)=>rec('walk_unease',v,{trial:k}))).then(()=>rec('walk_trace',{hz:10,columns:['t_s','unease_0_1','segment'],images:q.trials.map(x=>x.media[0].name),samples:trace})).then(()=>rWalk(el))};\n  const dn=e=>{if(!running)return;e&&e.preventDefault&&e.preventDefault();held=true;press.classList.add('down')},up=()=>{held=false;press.classList.remove('down')};\n  $('#wk').addEventListener('pointerdown',dn);addEventListener('pointerup',up);track(()=>removeEventListener('pointerup',up));\n  const vis=()=>paused=document.hidden;document.addEventListener('visibilitychange',vis);track(()=>document.removeEventListener('visibilitychange',vis));\n  keyH=e=>{if(e.code==='Space'){e.preventDefault();if(e.type==='keydown'){if(!running&&$('#begin'))begin();else dn()}else up();return true}};\n  if($('#begin'))$('#begin').onclick=begin;$('#go').onclick=next;\n}\n\n/* =============== 04 · 光阈（阶梯法） =============== */\nconst MAXT=18,MAXR=7,lvl=L=>Math.round(L*100);\nfunction rStair(el){\n  const ph=Q('threshold_photos').media,st={L:.85,step:.2,last:null,rev:[],trials:C.stair.slice(),done:A.threshold_level!=null,thr:A.threshold_level!=null?A.threshold_level/100:null};\n  const bright=L=>`brightness(${(.06+L*.94).toFixed(3)}) contrast(${(1.25-L*.2).toFixed(2)}) saturate(${(.5+L*.5).toFixed(2)})`;\n  el.innerHTML=`<div class=\"wrap\">${head(4,'THRESHOLD','多亮，你才敢走进去？','心理物理学阶梯法：每次出现一条亮度不同的街道，凭直觉回答是否愿意<b>独自</b>走进去。系统会根据回答自动调节亮度，逼近你的个人“安全照明阈值”。')}\n  <div class=\"st\"><div class=\"photo\" id=\"ph\"><img id=\"pimg\" src=\"${esc(ph[0].url)}\" alt=\"亮度可变的夜间街景\" style=\"filter:${bright(st.done?st.thr:st.L)}\"><span class=\"lux\" id=\"lx\"></span></div>\n  <div class=\"panel\"><p class=\"scen\">现在是 <b>23:30</b>，你独自一人，手机电量充足。回家需要穿过这条街，绕路要多走 10 分钟。</p>\n    <div class=\"yn ${st.done?'hidden':''}\" id=\"yn\"><button class=\"no\" data-a=\"0\">绕开它<span>F / ←</span></button><button class=\"yes\" data-a=\"1\">走进去<span>J / →</span></button></div>\n    <div style=\"margin-top:18px\"><div style=\"display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px\"><span>阶梯轨迹</span><span class=\"mono\" id=\"sp\"></span></div><svg id=\"plot\" viewBox=\"0 0 320 150\" style=\"width:100%;display:block\" aria-label=\"阶梯轨迹图\"></svg></div><div id=\"res\"></div></div></div>${cta()}</div>`;\n  const plot=()=>{const n=Math.max(MAXT,st.trials.length+1),X=i=>14+i*(296/(n-1)),Y=L=>140-L*125;let s='';[0,.25,.5,.75,1].forEach(L=>s+=`<line x1=\"14\" y1=\"${Y(L)}\" x2=\"310\" y2=\"${Y(L)}\" stroke=\"rgba(255,255,255,.06)\"/><text x=\"0\" y=\"${Y(L)+3}\" font-size=\"8\" fill=\"#7d8392\" font-family=\"JetBrains Mono\">${lvl(L)}</text>`);\n    if(st.trials.length)s+=`<polyline points=\"${st.trials.map((t,i)=>X(i)+','+Y(t.L)).join(' ')}${st.done?'':` ${X(st.trials.length)},${Y(st.L)}`}\" fill=\"none\" stroke=\"#ffb547\" stroke-width=\"1.6\"/>`;\n    st.trials.forEach((t,i)=>s+=`<circle cx=\"${X(i)}\" cy=\"${Y(t.L)}\" r=\"${t.rev?5:3.2}\" fill=\"${t.a?'#4dffb0':'#ff4d6d'}\" stroke=\"${t.rev?'#fff':'none'}\"/>`);\n    if(st.thr!=null)s+=`<line x1=\"14\" y1=\"${Y(st.thr)}\" x2=\"310\" y2=\"${Y(st.thr)}\" stroke=\"#59e0ff\" stroke-dasharray=\"4 3\"/><text x=\"310\" y=\"${Y(st.thr)-5}\" text-anchor=\"end\" font-size=\"9\" fill=\"#59e0ff\" font-family=\"JetBrains Mono\">阈值 ${lvl(st.thr)}</text>`;\n    $('#plot').innerHTML=s;$('#sp').textContent=st.done?'已收敛':`第 ${st.trials.length+1} 次 · 反转 ${st.rev.length}/${MAXR}`;$('#lx').textContent=`相对亮度 ${lvl(st.done?st.thr:st.L)} / 100`};\n  const res=()=>{$('#yn').classList.add('hidden');$('#res').innerHTML=`<div style=\"margin-top:14px;padding:14px;border-radius:14px;background:rgba(89,224,255,.07);border:1px solid rgba(89,224,255,.3)\"><div class=\"kicker\" style=\"color:var(--cyan)\">你的安全照明阈值</div><div class=\"mono\" style=\"font-size:42px;font-weight:800;color:var(--cyan)\">${lvl(st.thr)} / 100</div><p style=\"font-size:12px;color:var(--muted)\">最后 4 次反转点的平均值（相对亮度）。</p><button class=\"btn btn-sm\" id=\"redo\" style=\"margin-top:8px\">↻ 重新测量</button></div>`;\n    $('#redo').onclick=()=>{C.stair=[];rec('threshold_level',null);rec('threshold_trials',null);rStair(el)}};\n  let busy=false;\n  const answer=a=>{if(busy||st.done)return;busy=true;const pi=st.trials.length%ph.length,t={trial:st.trials.length,L:+st.L.toFixed(3),a,image:ph[pi].name,rev:false};\n    if(st.last!=null&&st.last!==a){t.rev=true;st.rev.push(st.L);st.step=Math.max(.035,st.step/2)}st.last=a;st.trials.push(t);st.L=clamp(st.L+(a?-st.step:st.step));\n    if(st.rev.length>=MAXR||st.trials.length>=MAXT){st.done=true;const r=st.rev.slice(-4);st.thr=r.length?r.reduce((x,y)=>x+y,0)/r.length:st.L}\n    C.stair=st.trials;rec('threshold_trials',{rule:'1-up-1-down',trials:st.trials});plot();\n    const im=$('#pimg');im.style.opacity=0;later(()=>{const L=st.done?st.thr:st.L;im.src=ph[st.trials.length%ph.length].url;im.style.filter='brightness(0)';im.style.opacity=1;requestAnimationFrame(()=>requestAnimationFrame(()=>{im.style.filter=bright(L)}));\n      if(st.done)rec('threshold_level',lvl(st.thr)).then(res);busy=false},320)};\n  $$('#yn button').forEach(b=>b.onclick=()=>answer(+b.dataset.a));\n  keyH=e=>{if(e.type!=='keydown')return;if(['f','F','ArrowLeft'].includes(e.key)){answer(0);return true}if(['j','J','ArrowRight'].includes(e.key)){answer(1);return true}};\n  plot();if(st.done)res();$('#go').onclick=next;\n}\n\n/* =============== 05 · 归途（地图） =============== */\nconst MC=6,MR=5,MX=i=>70+i*112,MY=j=>58+j*92,EM=110,nid=(i,j)=>j*MC+i,nij=n=>[n%MC,Math.floor(n/MC)],AN0=nid(0,2),BN=nid(5,2);\nconst SCEN=[{id:'s1',t:'22:30 · 平常的夜晚',d:'你刚加完班，不赶时间。街边商铺大多还开着。',open:1,rain:0},{id:'s2',t:'23:40 · 下雨，手机电量 5%',d:'雨越下越大，手机随时会关机，你想尽快到家。',open:.6,rain:1},{id:'s3',t:'01:30 · 凌晨',d:'商铺全部关门，街上几乎没人。',open:0,rain:0}];\nfunction eAttr(a,b,sc){const[i1,j1]=nij(a),[i2,j2]=nij(b),hz=j1===j2,i=Math.min(i1,i2),j=Math.min(j1,j2),park=(hz&&j>=3&&i>=1&&i<=3)||(!hz&&i>=1&&i<=3&&j>=2);\n  let type='res',l=.38,shop=0;if(hz&&j===0){type='main';l=.95;shop=1}else if(hz&&j===2&&i>=1&&i<=3){type='alley';l=.1}else if(park){type='park';l=.06}else if(hz&&j===1){type='mixed';l=.55;shop=.6}else if(!hz&&(i===0||i===5)){l=.65}else if(hz&&j===4){l=.45}\n  const sh=shop*sc.open;return{type,l:clamp(l*(sc.open?1:.7)+sh*.1-(sc.rain?.05:0),.03,1),shop:sh}}\nconst EDGES=(()=>{const E=[];for(let j=0;j<MR;j++)for(let i=0;i<MC;i++){if(i<MC-1)E.push([nid(i,j),nid(i+1,j)]);if(j<MR-1)E.push([nid(i,j),nid(i,j+1)])}const drop=new Set(['7-8','13-19','16-22','20-26','1-7','27-28']);return E.filter(([a,b])=>!drop.has(a+'-'+b))})();\nconst adj=(a,b)=>EDGES.some(([x,y])=>(x===a&&y===b)||(x===b&&y===a));\nconst SHORT=(()=>{const d=new Array(MC*MR).fill(1e9);d[AN0]=0;const Qs=new Set(d.map((_,i)=>i));while(Qs.size){let u=-1;Qs.forEach(q=>{if(u<0||d[q]<d[u])u=q});Qs.delete(u);EDGES.forEach(([a,b])=>{const v=a===u?b:b===u?a:-1;if(v>=0&&d[u]+1<d[v])d[v]=d[u]+1})}return d[BN]})();\nfunction pStats(p,sc){let len=0,dk=0;for(let k=1;k<p.length;k++){const e=eAttr(p[k-1],p[k],sc);len+=EM;dk+=EM*(1-e.l)}const done=p[p.length-1]===BN;return{len,min:+(len/80).toFixed(1),dark:+(len?dk/len:0).toFixed(3),done,detour:done?+((p.length-1)/SHORT).toFixed(2):null}}\nfunction mapSVG(sc,path,inter=true){const T={main:['#ffb547',7],mixed:['#ffcf85',5],res:['#c8b38a',4],alley:['#8a8f9a',3],park:['#3f8f63',3]};\n  let s=`<defs><filter id=\"gl\"><feGaussianBlur stdDeviation=\"5\"/></filter><pattern id=\"rp\" width=\"14\" height=\"14\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(18)\"><line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"8\" stroke=\"rgba(150,190,255,.18)\"/></pattern></defs><rect x=\"${MX(1)}\" y=\"${MY(2)}\" width=\"${MX(4)-MX(1)}\" height=\"${MY(4)-MY(2)}\" fill=\"#0d2418\" rx=\"8\"/><text x=\"${(MX(1)+MX(4))/2}\" y=\"${MY(3)+40}\" text-anchor=\"middle\" font-size=\"11\" fill=\"#2f7a52\" font-family=\"JetBrains Mono\">城市公园</text>`;\n  for(let j=0;j<MR-1;j++)for(let i=0;i<MC-1;i++){if(j>=2&&i>=1&&i<=3)continue;s+=`<rect x=\"${MX(i)+12}\" y=\"${MY(j)+12}\" width=\"88\" height=\"68\" rx=\"6\" fill=\"#10131c\"/>`}\n  EDGES.forEach(([a,b])=>{const e=eAttr(a,b,sc),[i1,j1]=nij(a),[i2,j2]=nij(b),[c,w]=T[e.type];if(e.l>.4)s+=`<line x1=\"${MX(i1)}\" y1=\"${MY(j1)}\" x2=\"${MX(i2)}\" y2=\"${MY(j2)}\" stroke=\"${c}\" stroke-width=\"${w*2.4}\" opacity=\"${e.l*.45}\" filter=\"url(#gl)\"/>`;\n    s+=`<line x1=\"${MX(i1)}\" y1=\"${MY(j1)}\" x2=\"${MX(i2)}\" y2=\"${MY(j2)}\" stroke=\"${c}\" stroke-width=\"${w}\" stroke-linecap=\"round\" opacity=\"${.5+e.l*.5}\" ${e.l<.2?'stroke-dasharray=\"4 5\"':''}/>`;if(e.shop>.3)s+=`<circle cx=\"${(MX(i1)+MX(i2))/2}\" cy=\"${(MY(j1)+MY(j2))/2-10}\" r=\"3\" fill=\"#ffe7a8\"/>`});\n  if(sc.rain)s+=`<rect width=\"700\" height=\"440\" fill=\"url(#rp)\"/>`;\n  if(path.length>1){const d=path.map((n,k)=>{const[i,j]=nij(n);return(k?'L':'M')+MX(i)+' '+MY(j)}).join(' ');s+=`<path d=\"${d}\" fill=\"none\" stroke=\"#59e0ff\" stroke-width=\"12\" opacity=\".25\" filter=\"url(#gl)\"/><path d=\"${d}\" fill=\"none\" stroke=\"#59e0ff\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-dasharray=\"10 6\"><animate attributeName=\"stroke-dashoffset\" from=\"32\" to=\"0\" dur=\".8s\" repeatCount=\"indefinite\"/></path><circle r=\"6\" fill=\"#fff\"><animateMotion dur=\"${path.length*.5}s\" repeatCount=\"indefinite\" path=\"${d}\"/></circle>`}\n  if(inter){const end=path[path.length-1];for(let n=0;n<MC*MR;n++){const[i,j]=nij(n),nb=adj(end,n)&&end!==BN,inP=path.includes(n);s+=`<g class=\"node\" data-n=\"${n}\" tabindex=\"${nb||inP?0:-1}\" role=\"button\" aria-label=\"路口 ${i+1}-${j+1}\"><circle cx=\"${MX(i)}\" cy=\"${MY(j)}\" r=\"22\" fill=\"transparent\"/><circle cx=\"${MX(i)}\" cy=\"${MY(j)}\" r=\"${nb&&!inP?7:4}\" fill=\"${inP?'#59e0ff':nb?'#fff':'rgba(255,255,255,.25)'}\" ${nb&&!inP?'stroke=\"#59e0ff\" stroke-width=\"2\"':''}/></g>`}}\n  [[AN0,'Ⓜ 地铁站','#59e0ff'],[BN,'⌂ 家','#ffb547']].forEach(([n,t,c])=>{const[i,j]=nij(n);s+=`<g pointer-events=\"none\"><circle cx=\"${MX(i)}\" cy=\"${MY(j)}\" r=\"15\" fill=\"none\" stroke=\"${c}\" stroke-width=\"2\"/><text x=\"${MX(i)+(i?-20:20)}\" y=\"${MY(j)-20}\" text-anchor=\"${i?'end':'start'}\" font-size=\"13\" font-weight=\"700\" fill=\"${c}\">${t}</text></g>`});\n  return`<svg class=\"map\" viewBox=\"0 0 700 440\" role=\"img\" aria-label=\"夜间街区地图\">${s}</svg>`}\nfunction rRoute(el){\n  let si=Math.max(0,SCEN.findIndex(s=>!(C.routes[s.id]&&C.routes[s.id].done)));\n  const save=()=>rec('route_plans',SCEN.some(s=>C.routes[s.id])?Object.assign({grid:[MC,MR],edge_m:EM,shortest_edges:SHORT},C.routes):null);\n  const draw=()=>{const sc=SCEN[si],r=C.routes[sc.id]=C.routes[sc.id]||{path:[AN0],done:false},st=pStats(r.path,sc);\n    el.innerHTML=`<div class=\"wrap\">${head(5,'ROUTE','选一条回家的路','从地铁站出发，<b>依次点击相邻路口</b>规划回家路线（点击路线上的路口可回退）。亮黄色是灯火通明的主路，虚线是几乎没有照明的小巷与公园小径。三种情境都需要完成。')}\n    <div class=\"rt\"><div id=\"mp\">${mapSVG(sc,r.path,!r.done)}</div><div class=\"panel\"><div class=\"tabs\">${SCEN.map((s,i)=>`<button class=\"tab ${i===si?'on':''} ${C.routes[s.id]&&C.routes[s.id].done?'ok':''}\" data-i=\"${i}\">情境 ${i+1}</button>`).join('')}</div>\n      <h3 style=\"font-size:16px\">${sc.t}</h3><p class=\"lead\" style=\"font-size:13px;margin-top:6px\">${sc.d}</p>\n      <div class=\"stat\"><div><small>路程</small><b>${st.len} m</b></div><div><small>步行时间</small><b>${st.min} min</b></div><div><small>黑暗暴露</small><b style=\"color:${st.dark>.5?'var(--red)':st.dark>.3?'var(--amber)':'var(--green)'}\">${Math.round(st.dark*100)}%</b></div><div><small>绕行系数</small><b>${st.detour?st.detour+'×':'—'}</b></div></div>\n      <div class=\"legend\"><span><i style=\"background:#ffb547\"></i>主路</span><span><i style=\"background:#ffcf85\"></i>商业支路</span><span><i style=\"background:#c8b38a\"></i>居民街道</span><span><i style=\"background:#8a8f9a\"></i>暗巷</span><span><i style=\"background:#3f8f63\"></i>公园小径</span></div>\n      <div style=\"display:flex;gap:8px;margin-top:14px;flex-wrap:wrap\"><button class=\"btn btn-sm\" id=\"undo\" ${r.path.length<2?'disabled':''}>↶ 回退</button><button class=\"btn btn-sm\" id=\"clr\">清除</button>${r.done?'<button class=\"btn btn-sm\" id=\"edit\">✎ 重新规划</button>':`<button class=\"btn btn-amber btn-sm\" id=\"cf\" ${st.done?'':'disabled'}>确认路线 ✓</button>`}</div></div></div>${cta()}</div>`;\n    const tap=n=>{const p=r.path,end=p[p.length-1],k=p.indexOf(n);if(k>=0)r.path=p.slice(0,k+1);else if(adj(end,n)&&end!==BN){p.push(n);audio()&&step(AC.currentTime,.12)}else{toast('只能走到相邻的路口');return}draw()};\n    $$('.node').forEach(g=>{g.onclick=()=>tap(+g.dataset.n);g.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tap(+g.dataset.n)}}});\n    $$('.tab').forEach(b=>b.onclick=()=>{si=+b.dataset.i;draw()});\n    $('#undo').onclick=()=>{r.path.pop();if(!r.path.length)r.path=[AN0];r.done=false;draw()};$('#clr').onclick=()=>{r.path=[AN0];r.done=false;draw()};\n    if($('#cf'))$('#cf').onclick=()=>{Object.assign(r,{done:true},pStats(r.path,sc));save().then(()=>{const n=SCEN.findIndex(s=>!(C.routes[s.id]&&C.routes[s.id].done));if(n>=0){si=n;toast('已保存，进入下一个情境')}draw()})};\n    if($('#edit'))$('#edit').onclick=()=>{r.done=false;draw()};$('#go').onclick=next;\n  };draw();\n}\n\n/* =============== 06 · 距离 =============== */\nconst PROX=[[0,.45,'亲密距离','#ff4d6d'],[.45,1.2,'个人距离','#ff8a5b'],[1.2,3.7,'社交距离','#ffb547'],[3.7,99,'公共距离','#4dffb0']],prox=d=>PROX.find(p=>d>=p[0]&&d<p[1]);\nconst PERSON=(x,c,hood,extra='')=>`<g transform=\"translate(${x} 0)\"><rect x=\"-9\" y=\"96\" width=\"7\" height=\"104\" rx=\"3\" fill=\"${c}\"/><rect x=\"2\" y=\"96\" width=\"7\" height=\"104\" rx=\"3\" fill=\"${c}\"/><rect x=\"-16\" y=\"40\" width=\"32\" height=\"64\" rx=\"10\" fill=\"${c}\"/><circle cx=\"0\" cy=\"${hood?26:24}\" r=\"${hood?17:13}\" fill=\"${c}\"/>${hood?'<ellipse cx=\"0\" cy=\"29\" rx=\"8\" ry=\"10\" fill=\"#000\"/>':''}${extra}</g>`;\nconst FIGS={hood:`<svg viewBox=\"-40 0 80 200\">${PERSON(0,'#111317',1)}</svg>`,\n  group:`<svg viewBox=\"-80 0 160 200\">${PERSON(-42,'#181a20',0)}${PERSON(0,'#121318',1,'<rect x=\"10\" y=\"44\" width=\"7\" height=\"12\" rx=\"2\" fill=\"#bfe3ff\"/>')}${PERSON(42,'#1c1e24',0)}</svg>`,\n  dog:`<svg viewBox=\"-40 0 110 200\">${PERSON(0,'#15171c',0)}<ellipse cx=\"44\" cy=\"165\" rx=\"22\" ry=\"11\" fill=\"#15171c\"/><circle cx=\"64\" cy=\"152\" r=\"9\" fill=\"#15171c\"/><rect x=\"28\" y=\"170\" width=\"4\" height=\"30\" fill=\"#15171c\"/><rect x=\"54\" y=\"170\" width=\"4\" height=\"30\" fill=\"#15171c\"/><line x1=\"14\" y1=\"100\" x2=\"62\" y2=\"152\" stroke=\"#c33\" stroke-width=\"2\"/></svg>`,\n  rider:`<svg viewBox=\"-40 0 80 200\"><circle cx=\"0\" cy=\"40\" r=\"56\" fill=\"rgba(255,255,220,.25)\"/><ellipse cx=\"0\" cy=\"185\" rx=\"8\" ry=\"15\" fill=\"#0b0b0d\"/><rect x=\"-14\" y=\"110\" width=\"28\" height=\"70\" rx=\"6\" fill=\"#2a2c31\"/><rect x=\"-22\" y=\"60\" width=\"44\" height=\"40\" rx=\"4\" fill=\"#d6a400\"/>${PERSON(0,'#191b20',0).replace('translate(0 0)','translate(0 -10) scale(.9)')}<circle cx=\"0\" cy=\"118\" r=\"7\" fill=\"#fffbe0\"/></svg>`};\nconst DKIND=d=>d.split('_')[0],DLIGHT=d=>d.split('_')[1];\nfunction rDist(el){\n  const q=Q('stranger_distance'),dims=q.dimensions;let ti=dims.findIndex(d=>C.dist[d.id]==null);if(ti<0)ti=dims.length;\n  const draw=()=>{if(ti>=dims.length){el.innerHTML=`<div class=\"wrap\">${head(6,'DISTANCE','你的个人安全边界')}<div class=\"panel\" style=\"max-width:760px\">${dims.map(d=>{const v=C.dist[d.id],p=prox(v);return`<div class=\"drow\" style=\"grid-template-columns:230px 1fr 70px\"><span>${esc(d.label)}</span><div class=\"b\"><i style=\"width:${Math.min(100,v/20*100)}%;background:${p[3]}\"></i></div><b class=\"mono\">${v.toFixed(1)} m</b></div>`}).join('')}<button class=\"btn btn-sm\" id=\"redo\" style=\"margin-top:12px\">↻ 重新测量</button></div>${cta()}</div>`;\n      $('#redo').onclick=()=>{C.dist={};rec('stranger_distance',null);ti=0;draw()};$('#go').onclick=next;keyH=null;return}\n    const dm=dims[ti],kind=DKIND(dm.id),light=DLIGHT(dm.id);\n    el.innerHTML=`<div class=\"wrap\">${head(6,'DISTANCE','TA 走到多近，你会开始不自在？',`<b>上下拖动画面</b>（或滚轮、↑↓ 键）让对方靠近或远离。找到你<b>开始感到不自在</b>的距离，然后确认。第 ${ti+1} / ${dims.length} 次。`)}\n    <div class=\"ds\"><div class=\"photo dsbox ${light}\" id=\"box\" tabindex=\"0\" aria-label=\"上下拖动调整距离\">${`<img src=\"${esc(q.media[0].url)}\" alt=\"${light==='lit'?'明亮':'昏暗'}的街道\" draggable=\"false\">`}<div class=\"fig\" id=\"fig\">${FIGS[kind]}</div><div class=\"dread\"><b id=\"dv\">--</b><br><span id=\"dz\"></span></div></div>\n    <div class=\"panel\"><div class=\"kicker\" style=\"margin-bottom:6px\">${light==='lit'?'明亮街道':'昏暗街道'}</div><h3 style=\"font-size:18px\">${esc(dm.label.replace(/（.*）/,''))}</h3><svg id=\"topv\" viewBox=\"0 0 280 180\" style=\"width:100%;margin:12px 0\" aria-hidden=\"true\"></svg>\n      <button class=\"btn btn-amber\" id=\"ok\" style=\"width:100%\">就是这个距离 ↵</button><p style=\"font-size:12px;color:var(--muted);margin-top:10px\">参考：Edward Hall 人际距离理论的四个空间层次。</p></div></div></div>`;\n    let d=25,target=25;const box=$('#box'),fig=$('#fig');\n    const ui=()=>{const r=box.getBoundingClientRect(),h=r.height*1.05/d*1.6,feet=r.height*(.52+.42/Math.max(1,d*.55));fig.style.height=Math.min(r.height*2.5,h)+'px';fig.style.width=Math.min(r.height*2.5,h)*({group:2,dog:1.375}[kind]||1)*.4+'px';fig.style.top=feet+'px';\n      const p=prox(d);$('#dv').textContent=d.toFixed(1)+' m';$('#dz').textContent=p[2];$('#dz').style.setProperty('--zc',p[3]);\n      let s='';[[3.7,'公共',3],[1.2,'个人',1],[.45,'亲密',0]].forEach(([m,n,k])=>{const rr=18+m*17;s+=`<circle cx=\"140\" cy=\"160\" r=\"${rr}\" fill=\"none\" stroke=\"${PROX[k][3]}\" stroke-opacity=\".5\" stroke-dasharray=\"3 3\"/><text x=\"${140+rr+3}\" y=\"156\" font-size=\"8\" fill=\"${PROX[k][3]}\">${n}</text>`});\n      const fy=160-(18+Math.min(d,9)*17);s+=`<circle cx=\"140\" cy=\"160\" r=\"7\" fill=\"#59e0ff\"/><circle cx=\"140\" cy=\"${fy}\" r=\"7\" fill=\"${p[3]}\"/>`;$('#topv').innerHTML=s};\n    loop(dt=>{d+=(target-d)*Math.min(1,dt*10);ui()});\n    let y0=null,t0=0;box.addEventListener('pointerdown',e=>{y0=e.clientY;t0=target;box.setPointerCapture(e.pointerId)});box.addEventListener('pointermove',e=>{if(y0!=null)target=clamp(t0*Math.exp(-(e.clientY-y0)/160),dm.min,dm.max)});box.addEventListener('pointerup',()=>y0=null);\n    box.addEventListener('wheel',e=>{e.preventDefault();target=clamp(target*Math.exp(e.deltaY*.0012),dm.min,dm.max)},{passive:false});\n    const ok=()=>{if(Math.abs(target-25)<.05){toast('请先拖动画面调整距离');return}C.dist[dm.id]=Math.round(target*10)/10;const full=dims.every(x=>C.dist[x.id]!=null);\n      (full?rec('stranger_distance',Object.assign({},C.dist)):Promise.resolve({ok:true})).then(r=>{if(!r.ok)return;ti++;dispose();draw()})};\n    $('#ok').onclick=ok;keyH=e=>{if(e.type!=='keydown')return;if(e.key==='ArrowUp'){target=clamp(target*1.08,dm.min,dm.max);return true}if(e.key==='ArrowDown'){target=clamp(target/1.08,dm.min,dm.max);return true}if(e.key==='Enter'){ok();return true}};\n  };draw();\n}\n\n/* =============== 07 · 声音 =============== */\nfunction rSound(el){\n  const q=Q('sound_unease'),mq=Q('sound_reaction'),dims=q.dimensions;let cur=Math.max(0,dims.findIndex(d=>C.snd[d.id]==null));const played={};\n  const commit=()=>{if(dims.every(d=>C.snd[d.id]!=null))rec('sound_unease',Object.assign({},C.snd));if(mq.rows.every(r=>C.react[r.value]))rec('sound_reaction',Object.assign({},C.react))};\n  const draw=()=>{const d=dims[cur],S=SOUNDS[d.id];\n    el.innerHTML=`<div class=\"wrap\">${head(7,'SOUND','闭上眼，听听夜晚','6 段声音由浏览器实时合成。<b>点击光球播放</b>，听完后转动旋钮评价不安程度（0 平静 – 10 极度不安），并选择你的第一反应。')}\n    <div class=\"snd\"><div class=\"tapes\">${dims.map((x,i)=>`<button class=\"tape ${i===cur?'on':''} ${C.snd[x.id]!=null&&C.react[x.id]?'ok':''}\" data-i=\"${i}\"><span class=\"ic\">${SOUNDS[x.id].ic}</span><span><b>${esc(x.label)}</b><small>${SOUNDS[x.id].d}</small></span><span class=\"v\">${C.snd[x.id]!=null?C.snd[x.id].toFixed(1):'—'}</span></button>`).join('')}</div>\n    <div class=\"panel\"><div class=\"player\"><button class=\"orb\" id=\"orb\" aria-label=\"播放：${esc(d.label)}\"><canvas id=\"oc\"></canvas><span class=\"lab\" id=\"ol\">▶ 点击播放<br>${esc(d.label)}</span></button>\n      <div><div class=\"knob ${played[d.id]||C.snd[d.id]!=null?'':'locked'}\" id=\"knob\" tabindex=\"0\" role=\"slider\" aria-label=\"不安程度\" aria-valuemin=\"0\" aria-valuemax=\"10\"><svg viewBox=\"0 0 220 220\" id=\"ks\"></svg><div class=\"kv\"><b id=\"kvb\">–</b><span>不安程度</span></div></div><p style=\"font-size:12px;color:var(--muted);text-align:center;margin-top:6px\" id=\"kh\">${played[d.id]||C.snd[d.id]!=null?'拖动旋钮或用 ←→ 键':'请先播放声音'}</p></div></div>\n      <span class=\"lbl\" style=\"margin-top:16px\">听到这个声音，你的第一反应是？</span><div class=\"chips\" id=\"act\">${mq.columns.map(c=>`<button class=\"chip ${C.react[d.id]===c.value?'on':''}\" data-v=\"${c.value}\">${esc(c.text)}</button>`).join('')}</div></div></div>${cta(`${dims.filter(x=>C.snd[x.id]!=null&&C.react[x.id]).length} / ${dims.length} 已完成`)}</div>`;\n    $$('.tape').forEach(b=>b.onclick=()=>{cur=+b.dataset.i;dispose();draw()});\n    $$('#act .chip').forEach(b=>b.onclick=()=>{C.react[d.id]=b.dataset.v;$$('#act .chip').forEach(x=>x.classList.toggle('on',x===b));commit()});\n    const oc=$('#oc');let octx=null;const fit=()=>{const r=oc.getBoundingClientRect(),dp=Math.min(2,devicePixelRatio||1);oc.width=r.width*dp;oc.height=r.height*dp;octx=oc.getContext('2d');octx.setTransform(dp,0,0,dp,0,0)};const ro=new ResizeObserver(fit);ro.observe(oc);track(()=>ro.disconnect());fit();\n    let playing=0,buf=null,tt=0;loop(dt=>{tt+=dt;if(!octx)return;const w=oc.clientWidth,h=oc.clientHeight,cx=w/2,cy=h/2,R0=w*.28;octx.clearRect(0,0,w,h);let lv=0;if(AN&&playing){buf=buf||new Uint8Array(AN.fftSize);AN.getByteTimeDomainData(buf);for(let i=0;i<buf.length;i++)lv=Math.max(lv,Math.abs(buf[i]-128)/128)}\n      const g=octx.createRadialGradient(cx,cy,0,cx,cy,R0*(1.6+lv));g.addColorStop(0,`rgba(255,181,71,${.35+lv*.5})`);g.addColorStop(1,'rgba(255,181,71,0)');octx.fillStyle=g;octx.fillRect(0,0,w,h);octx.strokeStyle='#ffb547';octx.lineWidth=2;octx.beginPath();\n      for(let i=0;i<=128;i++){const a=i/128*Math.PI*2,sv=playing&&buf?(buf[Math.floor(i/128*(buf.length-1))]-128)/128:Math.sin(a*6+tt*2)*.03,rr=R0*(1+sv*.9);const x=cx+Math.cos(a)*rr,y=cy+Math.sin(a)*rr;i?octx.lineTo(x,y):octx.moveTo(x,y)}octx.closePath();octx.stroke()});\n    $('#orb').onclick=()=>{if(playing)return;if(!snd){toast('声音已关闭，请点击右上角 ♪ 打开');return}if(!audio()){toast('浏览器不支持音频');return}const dur=S.play();playing=1;$('#ol').textContent='● 正在播放';\n      later(()=>{playing=0;played[d.id]=1;$('#ol').textContent='↻ 再听一次';$('#knob').classList.remove('locked');$('#kh').textContent='拖动旋钮或用 ←→ 键'},dur*1000+200)};\n    const ks=$('#ks'),setK=v=>{const arc=(r,s1,e1)=>{const p=a=>[110+r*Math.cos(a*Math.PI/180),110+r*Math.sin(a*Math.PI/180)],[x1,y1]=p(s1),[x2,y2]=p(e1);return`M${x1} ${y1} A${r} ${r} 0 ${e1-s1>180?1:0} 1 ${x2} ${y2}`};\n      const a=135+(v||0)/10*270,col=v==null?'#444':`hsl(${lerp(150,350,v/10)},90%,62%)`;let s=`<path d=\"${arc(92,135,405)}\" stroke=\"rgba(255,255,255,.08)\" stroke-width=\"14\" fill=\"none\" stroke-linecap=\"round\"/>`;\n      for(let i=0;i<=10;i++){const r=(135+i*27)*Math.PI/180;s+=`<line x1=\"${110+78*Math.cos(r)}\" y1=\"${110+78*Math.sin(r)}\" x2=\"${110+70*Math.cos(r)}\" y2=\"${110+70*Math.sin(r)}\" stroke=\"rgba(255,255,255,.3)\" stroke-width=\"${i%5?1:2}\"/>`}\n      if(v)s+=`<path d=\"${arc(92,135,a)}\" stroke=\"${col}\" stroke-width=\"14\" fill=\"none\" stroke-linecap=\"round\"/>`;const hd=a*Math.PI/180;s+=`<circle cx=\"${110+92*Math.cos(hd)}\" cy=\"${110+92*Math.sin(hd)}\" r=\"11\" fill=\"#fff\"/>`;ks.innerHTML=s;$('#kvb').textContent=v==null?'–':v.toFixed(1);$('#kvb').style.color=col;$('#knob').setAttribute('aria-valuenow',v==null?'':v)};\n    setK(C.snd[d.id]);const kn=$('#knob');let drag=false;const upd=e=>{const b=kn.getBoundingClientRect();let a=Math.atan2(e.clientY-(b.top+b.height/2),e.clientX-(b.left+b.width/2))*180/Math.PI;a=(a-135+720)%360;if(a>270)a=a>315?0:270;C.snd[d.id]=Math.round(a/270*100)/10;setK(C.snd[d.id])};\n    const fin=()=>{commit();const t=$$('.tape')[cur];$('.v',t).textContent=C.snd[d.id].toFixed(1)};\n    kn.addEventListener('pointerdown',e=>{drag=true;kn.setPointerCapture(e.pointerId);upd(e)});kn.addEventListener('pointermove',e=>drag&&upd(e));kn.addEventListener('pointerup',()=>{drag=false;fin()});\n    kn.onkeydown=e=>{const s={ArrowLeft:-.5,ArrowDown:-.5,ArrowRight:.5,ArrowUp:.5}[e.key];if(s==null)return;e.preventDefault();C.snd[d.id]=clamp((C.snd[d.id]||0)+s,0,10);setK(C.snd[d.id]);fin()};\n    $('#go').onclick=next;\n  };draw();\n}\n\n/* =============== 08 · 档案 + 提交 =============== */\nfunction rFile(el){\n  const wq=Q('walk_unease'),walk=wq.trials.map((_,k)=>tval('walk_unease',k)||0),wAvg=walk.reduce((a,b)=>a+b,0)/walk.length/100;\n  const thr=(A.threshold_level||0)/100,sAvg=Object.values(C.snd).reduce((a,b)=>a+b,0)/Math.max(1,Object.keys(C.snd).length)/10;\n  const dAvg=Object.values(C.dist).reduce((a,b)=>a+b,0)/Math.max(1,Object.keys(C.dist).length),rd=SCEN.map(s=>C.routes[s.id]).filter(r=>r&&r.done),dark=rd.reduce((a,b)=>a+b.dark,0)/Math.max(1,rd.length);\n  const idx=Math.round(clamp(.28*thr+.24*wAvg*1.4+.18*sAvg+.15*clamp(dAvg/12)+.15*(1-dark))*100);\n  const pe=idx>=70?['高警觉 · 光的信徒','你对黑暗与不确定性高度敏感，需要充足照明和清晰视野才能放心前行。']:idx>=50?['审慎的夜行者','你会主动规避明显的风险环境，但在有人气的街道上能保持从容。']:idx>=30?['从容的城市漫游者','只有在明显的威胁信号出现时，你才会警觉。']:['无畏的夜行者','夜色几乎不影响你的步行选择。'];\n  const dq=Q('stranger_distance');\n  el.innerHTML=`<div class=\"wrap\"><div class=\"dhead\"><div><div class=\"ph\">夜行安全档案</div><h2 style=\"margin:0 0 8px\">${pe[0]}</h2><p class=\"lead\" style=\"font-size:14px\">${pe[1]}</p></div><div style=\"text-align:center\"><div class=\"ph\">夜间威胁敏感指数</div><div class=\"idx\">${idx}</div></div></div>\n  <div class=\"dossier\"><div class=\"panel\"><div class=\"ph\">照明阈值</div><div class=\"mono\" style=\"font-size:44px;font-weight:800;color:var(--cyan)\">${A.threshold_level??'—'}<small style=\"font-size:15px\"> / 100</small></div><p style=\"font-size:12px;color:var(--muted)\">低于此相对亮度时，你倾向于绕开街道。</p></div>\n    <div class=\"panel\"><div class=\"ph\">夜行 · 各段平均不安</div>${wq.trials.map((t,k)=>`<div class=\"zb\"><img src=\"${esc(t.media[0].url)}\" alt=\"第 ${k+1} 段\"><div class=\"b\"><i style=\"width:${walk[k]}%\"></i></div><b class=\"mono\">${walk[k]}</b></div>`).join('')}</div>\n    <div class=\"panel\"><div class=\"ph\">距离 · 个人安全边界</div>${dq.dimensions.map(d=>{const v=C.dist[d.id];if(v==null)return'';const p=prox(v);return`<div class=\"drow\"><span style=\"font-size:12px\">${esc(d.label)}</span><div class=\"b\"><i style=\"width:${Math.min(100,v/20*100)}%;background:${p[3]}\"></i></div><b class=\"mono\">${v.toFixed(1)}m</b></div>`}).join('')}</div>\n    <div class=\"panel\"><div class=\"ph\">声音 · 不安排名</div>${Q('sound_unease').dimensions.slice().sort((a,b)=>(C.snd[b.id]||0)-(C.snd[a.id]||0)).map(d=>`<div class=\"drow\" style=\"grid-template-columns:150px 1fr 40px\"><span style=\"font-size:12px\">${SOUNDS[d.id].ic} ${esc(d.label)}</span><div class=\"b\"><i style=\"width:${(C.snd[d.id]||0)*10}%;background:hsl(${lerp(150,350,(C.snd[d.id]||0)/10)},90%,62%)\"></i></div><b class=\"mono\">${(C.snd[d.id]||0).toFixed(1)}</b></div>`).join('')}</div>\n    <div class=\"panel w\"><div class=\"ph\">归途 · 黑暗暴露与绕行</div>${SCEN.map(s=>{const r=C.routes[s.id]||{};return`<div class=\"drow\" style=\"grid-template-columns:180px 1fr 130px\"><span style=\"font-size:12px\">${s.t}</span><div class=\"b\"><i style=\"width:${(r.dark||0)*100}%;background:#ff4d6d\"></i></div><span class=\"mono\" style=\"font-size:12px\">暗 ${Math.round((r.dark||0)*100)}% · ${r.detour?r.detour+'×':'—'}</span></div>`}).join('')}</div></div>\n  <div class=\"panel\" style=\"margin-top:14px;text-align:center\"><p class=\"lead\" style=\"margin:0 auto 12px\">确认无误后提交。提交后数据将进入研究数据库。</p><button class=\"btn btn-amber\" id=\"submit\" style=\"min-height:54px;padding:0 34px\">提交答卷 ✦</button><div id=\"miss\"></div></div></div>`;\n  $('#submit').onclick=submit;\n}\nconst OWNER={consent:0,age_group:1,gender:1,night_freq:1,night_unease:1,night_habits:1,torch_safety:2,torch_gaze:2,walk_unease:3,walk_trace:3,threshold_level:4,threshold_trials:4,route_plans:5,stranger_distance:6,sound_unease:7,sound_reaction:7};\nfunction submit(){const b=$('#submit');b.disabled=true;b.textContent='提交中…';SPSite.complete().then(r=>{if(r&&r.ok){$('#stage').innerHTML='<div style=\"text-align:center;margin-top:28vh\"><h2>提交中…</h2><p class=\"lead\" style=\"margin:auto\">谢谢你走完这段夜路。</p></div>';return}\n  b.disabled=false;b.textContent='提交答卷 ✦';const m=(r&&r.missing)||[];$('#miss').innerHTML=`<div class=\"missing\">${esc((r&&r.error)||'提交失败')}<div class=\"chips\" style=\"justify-content:center;margin-top:10px\">${[...new Set(m.map(n=>OWNER[n]).filter(x=>x!=null))].map(i=>`<button class=\"chip\" data-g=\"${i}\">去完成「${CH[i].t}」</button>`).join('')}</div></div>`;$$('[data-g]').forEach(x=>x.onclick=()=>go(+x.dataset.g))})}\n\n/* =============== 流程 =============== */\nconst CH=[\n  {t:'序章',r:rIntro,v:()=>A.consent===true||'请先勾选知情同意'},\n  {t:'你',r:rYou,v:()=>YOU.every(n=>A[n]!=null&&(!Array.isArray(A[n])||A[n].length))||'请完成全部问题'},\n  {t:'手电筒',r:rTorch,v:()=>tdone('torch_safety')||'还有街道未探查'},\n  {t:'夜行',r:rWalk,v:()=>tdone('walk_unease')||'请先完成夜行'},\n  {t:'光阈',r:rStair,v:()=>A.threshold_level!=null||'阈值尚未收敛'},\n  {t:'归途',r:rRoute,v:()=>SCEN.every(s=>C.routes[s.id]&&C.routes[s.id].done)||'三个情境都需要确认路线'},\n  {t:'距离',r:rDist,v:()=>!!A.stranger_distance||'还有距离测量未完成'},\n  {t:'声音',r:rSound,v:()=>!A.sound_unease?'还有声音未评分':!A.sound_reaction?'请为每段声音选择第一反应':true},\n  {t:'档案',r:rFile,v:()=>true},\n];\nlet ch=0,mx=0,busy=false;\nfunction metro(){const n=CH.length-1;$('#mline').innerHTML=`<div class=\"rail\"><i style=\"width:${ch/n*100}%\"></i></div>`+CH.map((c,i)=>`<button class=\"stop ${i===ch?'cur':i<=mx?'done':''}\" style=\"left:calc(10px + (100% - 20px)*${i/n})\" data-i=\"${i}\" ${i>mx?'disabled':''} aria-label=\"${c.t}\"><b></b><span>${c.t}</span></button>`).join('');\n  $$('.stop').forEach(b=>b.onclick=()=>go(+b.dataset.i));$('#chapN').textContent=`${String(ch).padStart(2,'0')} / ${String(n).padStart(2,'0')}`}\nfunction go(i){if(busy||i<0||i>=CH.length)return;busy=true;dispose();const st=$('#stage');st.classList.add('out');\n  setTimeout(()=>{ch=i;mx=Math.max(mx,i);st.classList.remove('out');st.classList.add('pre');st.innerHTML='';CH[i].r(st);scrollTo(0,0);metro();requestAnimationFrame(()=>requestAnimationFrame(()=>st.classList.remove('pre')));busy=false},450)}\nfunction next(){const ok=CH[ch].v();if(ok!==true){toast(ok);const b=$('#go');if(b){b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake')}return}go(ch+1)}\n['keydown','keyup'].forEach(t=>document.addEventListener(t,e=>{if(e.target.matches&&e.target.matches('input,textarea'))return;if(keyH&&keyH(e))return;if(t==='keydown'&&e.key==='Enter'&&!(e.target.matches&&e.target.matches('button,[role=button]'))&&$('#go')){e.preventDefault();next()}}));\n$('#sndBtn').onclick=()=>{snd=!snd;$('#sndBtn').textContent=snd?'♪':'✕';if(OUT)OUT.gain.value=snd?.8:0};\nCH[0].r($('#stage'));metro();\n});\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-10-15T11:02:29.684Z"
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-10-15T11:02:29.684Z"
+  },
+  "description": "用手电筒探查街道、第一人称走完一段夜路、找到你的照明阈值、规划回家路线、面对陌生人并聆听夜晚的声音。约 12 分钟，建议佩戴耳机。",
+  "logoPosition": "right",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [],
+ "paper": null
+}

@@ -1,0 +1,970 @@
+{
+ "id": "2026-kim-fear",
+ "name": "Fear of Crime: Which Street Feels Safer? (Seoul)",
+ "description": "Method replication: same task and design as the paper; the images are not the paper's stimuli (new Google Street View views of the same district, © Google). Kim, Choi & Kang (2026, ISPRS IJGI 15:18) mapped perceived fear of crime in Yeongdeungpo-gu, Seoul. Participants saw two street views side by side and chose the scene that looked safer from crime-related risk, judging only from what they saw; \"crime\" meant interpersonal crime (assault, robbery, harassment), not traffic or natural hazards, and an \"Equal\" answer was allowed. 65 participants (balanced across 20s, 30s–40s and 50+) gave 178,750 answers on 20,886 Kakao Map views taken in four directions (0°, 90°, 180°, 270°, pitch 0°) at stratified sample points. Analysis as in the paper: drop Equal answers, turn the wins into a score per image (the paper trained a Swin Transformer with a RankNet loss; TrueSkill or Bradley–Terry scores serve the same purpose for a small set), then relate scores to segmentation classes and map them; the paper used SHAP to explain the model. Differences from the original study: (1) images are 67 Google Street View views (mostly 2018, a few 2009–2014) at random points in Yeongdeungpo-gu, each facing one random cardinal direction; the paper used Kakao Map 2021–2022 views and also Anyang City; (2) each participant makes 30 comparisons; the paper's question set was algorithmically balanced over thousands of comparisons per person; (3) the paper inserted five trap pairs with obvious differences to screen inattentive answers; this template has none, so add your own check if needed; (4) the age and gender questions are additions that allow the paper's group comparisons.",
+ "author": "Kim, Choi & Kang",
+ "year": "2026",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "fear-of-crime",
+  "cpted",
+  "pairwise",
+  "seoul",
+  "korea",
+  "source:paper",
+  "modality:street_view",
+  "task:pairwise",
+  "concept:safety",
+  "participants:crowd",
+  "sample:lt100",
+  "country:South Korea",
+  "city:Seoul"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/ijgi15010018",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-26T23:33:51.963+00:00",
+ "updatedAt": "2026-11-26T23:33:59.518+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "comparisons",
+    "elements": [
+     {
+      "name": "safer",
+      "type": "imagepicker",
+      "title": "Which scene looks safer from crime?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "cover",
+      "tieLabel": "Equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 30,
+      "description": "Think only of crime against people, such as assault, robbery or harassment, not traffic or natural hazards. Judge from what you see. If both look the same, choose Equal.",
+      "mediaFolders": [
+       "yeongdeungpo"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "Under 20",
+        "value": "under20"
+       },
+       {
+        "text": "20s",
+        "value": "20s"
+       },
+       {
+        "text": "30s or 40s",
+        "value": "30s_40s"
+       },
+       {
+        "text": "50 or older",
+        "value": "50plus"
+       }
+      ]
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "title": "Fear of Crime: Which Street Feels Safer? (Seoul)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-4defd4e0e6a17b94",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Fear of Crime: Which Street Feels Safer? (Seoul)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Fear of Crime: Which Street Feels Safer? (Seoul)\",\n    \"description\": \"Pairs of street views from Yeongdeungpo-gu, Seoul: choose the scene that looks safer from crime against people (assault, robbery, harassment), or Equal. Method replication of Kim, Choi & Kang (2026, IJGI).\",\n    \"locale\": \"en\",\n    \"pages\": [\n      { \"name\": \"intro\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"I agree to take part. My answers are recorded anonymously for research.\", \"isRequired\": true, \"labelTrue\": \"I agree\", \"labelFalse\": \"I do not agree\" }\n      ]},\n      { \"name\": \"comparisons\", \"elements\": [\n        { \"type\": \"imagepicker\", \"name\": \"safer\", \"title\": \"Which scene looks safer from crime?\",\n          \"description\": \"Think only of crime against people, such as assault, robbery or harassment, not traffic or natural hazards. Judge from what you see. If both look the same, choose Equal.\",\n          \"imageCount\": 2, \"trialCount\": 30, \"allowTie\": true, \"tieLabel\": \"Equal\",\n          \"imageFit\": \"cover\", \"isRequired\": true, \"choices\": [],\n          \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true,\n          \"mediaFolders\": [\"yeongdeungpo\"] }\n      ]},\n      { \"name\": \"about_you\", \"elements\": [\n        { \"type\": \"radiogroup\", \"name\": \"age_group\", \"title\": \"Age\", \"choices\": [\n          { \"value\": \"under20\", \"text\": \"Under 20\" }, { \"value\": \"20s\", \"text\": \"20s\" }, { \"value\": \"30s_40s\", \"text\": \"30s or 40s\" }, { \"value\": \"50plus\", \"text\": \"50 or older\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"gender\", \"title\": \"Gender\", \"choices\": [\n          { \"value\": \"female\", \"text\": \"Female\" }, { \"value\": \"male\", \"text\": \"Male\" }, { \"value\": \"other\", \"text\": \"Other / prefer not to say\" } ] }\n      ]}\n    ]\n  }\n}\n</script>\n<style>\n:root{--bg:#f6f6f4;--card:#fff;--ink:#1e2124;--muted:#5b6168;--accent:#2b5c8a;--accent-ink:#fff;--line:#dfe2e5;--safe:#e8f3ec;--danger:#fbeceb}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:24px 16px 40px}\nh1{font-size:1.5rem;margin:0 0 8px}h2{font-size:1.05rem;margin:0 0 6px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.crit{display:grid;grid-template-columns:1fr 1fr;gap:12px}.crit>div{border-radius:10px;padding:12px 14px}.crit ul{margin:0;padding-left:18px;font-size:.92rem}\n.crit .s{background:var(--safe)}.crit .d{background:var(--danger)}\ndetails.crit-mini{margin:10px 0}details.crit-mini summary{cursor:pointer;color:var(--accent)}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:8px 0 14px}.progress>i{display:block;height:100%;background:var(--accent);transition:width .25s}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:#000;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair,.crit{grid-template-columns:1fr}.pick{aspect-ratio:16/10}h1{font-size:1.3rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Yeongdeungpo-gu, Seoul, Google Street View 2009–2018 (© Google). Task from Kim, Choi &amp; Kang (2026), ISPRS Int. J. Geo-Inf. 15(1):18.</footer>\n<script>\n(function(){\n  var app=document.getElementById('app'),Q={},i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function choicesOf(k){var t=Q.safer.trials&&Q.safer.trials[k];return (t&&t.choices)||Q.safer.choices||[];}\n  function mediaOf(k){var t=Q.safer.trials&&Q.safer.trials[k];return (t&&t.media)||Q.safer.media||[];}\n  function firstOpen(){for(var k=0;k<Q.safer.trialCount;k++){if(!done[k])return k;}return Q.safer.trialCount;}\n  var NOTE='<div class=\"crit\"><div class=\"s\"><h2>Judge this</h2><ul><li>How vulnerable would you feel to crime against people here: assault, robbery, harassment?</li><li>Use only what you see in the picture.</li></ul></div><div class=\"d\"><h2>Not this</h2><ul><li>Traffic accidents or road danger</li><li>Natural hazards such as floods</li><li>Whether you know the place</li></ul></div></div>';\n  function intro(){\n    app.innerHTML='<h1>Which street feels safer from crime?</h1>'+\n      '<p>You will see '+Q.safer.trialCount+' pairs of street views from Yeongdeungpo-gu in Seoul, South Korea. For each pair, click the scene that looks <b>safer from crime</b>. If they look the same, choose “Equal”. It takes about 5 minutes.</p>'+\n      '<div class=\"card\">'+NOTE+'</div>'+\n      '<div class=\"card\"><p>'+esc(Q.consent.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(Q.consent.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);i=firstOpen();trial();});};\n  }\n  function trial(){\n    if(i>=Q.safer.trialCount)return about();\n    var ch=choicesOf(i),imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;}),media=mediaOf(i);\n    var html='<h1>'+esc(Q.safer.title)+'</h1><p>Pair '+(i+1)+' of '+Q.safer.trialCount+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/Q.safer.trialCount)+'%\"></i></div><div class=\"pair\">';\n    imgs.forEach(function(c,k){var src=c.imageUrl||(media[k]&&media[k].url)||'';\n      html+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Scene '+(k===0?'A':'B')+' looks safer\"><img src=\"'+esc(src)+'\" alt=\"Street view '+(k===0?'A':'B')+'\"><span>'+(k===0?'A':'B')+'</span></button>';});\n    html+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'')+\n      '<details class=\"crit-mini\"><summary>What counts as crime here?</summary>'+NOTE+'</details>'+\n      (i>0?'<div class=\"row\"><button class=\"btn ghost\" id=\"back\">Back</button></div>':'')+'<div class=\"err\"></div>';\n    app.innerHTML=html;\n    app.querySelectorAll('[data-v]').forEach(function(b){b.onclick=function(){\n      var k=i;app.querySelectorAll('[data-v]').forEach(function(x){x.disabled=true;});\n      SPSite.answer('safer',b.getAttribute('data-v'),{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);app.querySelectorAll('[data-v]').forEach(function(x){x.disabled=false;});return;}\n        done[k]=true;i=k+1;trial();});};});\n    var back=document.getElementById('back');if(back)back.onclick=function(){i-=1;trial();};\n    window.scrollTo(0,0);\n  }\n  function radios(q){return '<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+q.name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function about(){\n    app.innerHTML='<h1>About you</h1><p>Optional, used only to describe the sample.</p><div class=\"card\">'+radios(Q.age_group)+radios(Q.gender)+\n      '<div class=\"row\"><button class=\"btn\" id=\"finish\">Finish</button></div><div class=\"err\"></div></div>';\n    ['age_group','gender'].forEach(function(n){app.querySelectorAll('input[name='+n+']').forEach(function(r){r.onchange=function(){SPSite.answer(n,r.value).then(function(x){if(x&&x.ok===false)err(x.error);});};});});\n    document.getElementById('finish').onclick=function(){var btn=this;btn.disabled=true;err('Submitting…');\n      SPSite.complete().then(function(r){if(r&&r.ok===false){btn.disabled=false;err(r.error||('Please answer: '+(r.missing||[]).join(', ')));var m=r.missing||[];if(m.indexOf('consent')>=0)intro();else if(m.indexOf('safer')>=0){i=firstOpen();trial();}}});};\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','safer','age_group','gender'].forEach(function(n){Q[n]=SPSite.getQuestion(n);});\n    var a=(ctx&&ctx.answers)||{},p=a.safer,list=p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);\n    list.forEach(function(t,k){var v=t&&typeof t==='object'?t.value:t;if(v!=null&&v!=='')done[k]=true;});\n    if(a.consent===true){i=firstOpen();trial();}else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-26T23:33:15.701Z",
+   "mediaFolders": [
+    "yeongdeungpo"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-26T23:33:15.701Z"
+  },
+  "description": "Pairs of street views from Yeongdeungpo-gu, Seoul: choose the scene that looks safer from crime against people (assault, robbery, harassment), or Equal. Method replication of Kim, Choi & Kang (2026, IJGI).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_02__afa82c89-ae34-40ac-8c4d-c0078816944d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_02__afa82c89-ae34-40ac-8c4d-c0078816944d.jpg",
+   "name": "ydp_02.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_02__afa82c89-ae34-40ac-8c4d-c0078816944d.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 141845,
+   "uploaded_bytes": 141845,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_03__e0b295b5-8ece-4406-9853-9ac5eab1845d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_03__e0b295b5-8ece-4406-9853-9ac5eab1845d.jpg",
+   "name": "ydp_03.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_03__e0b295b5-8ece-4406-9853-9ac5eab1845d.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 117511,
+   "uploaded_bytes": 117511,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_05__0729d867-cdb1-44fa-ac6a-36f07f63cabc.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_05__0729d867-cdb1-44fa-ac6a-36f07f63cabc.jpg",
+   "name": "ydp_05.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_05__0729d867-cdb1-44fa-ac6a-36f07f63cabc.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 173412,
+   "uploaded_bytes": 173412,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_06__cc633db9-24da-488b-9814-990ad82c5e12.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_06__cc633db9-24da-488b-9814-990ad82c5e12.jpg",
+   "name": "ydp_06.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_06__cc633db9-24da-488b-9814-990ad82c5e12.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 152055,
+   "uploaded_bytes": 152055,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_07__e92eb356-84a5-46f8-812a-5afeb763f32d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_07__e92eb356-84a5-46f8-812a-5afeb763f32d.jpg",
+   "name": "ydp_07.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_07__e92eb356-84a5-46f8-812a-5afeb763f32d.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 125758,
+   "uploaded_bytes": 125758,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_08__387be786-8ffc-4c6c-9a62-765841de7f9b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_08__387be786-8ffc-4c6c-9a62-765841de7f9b.jpg",
+   "name": "ydp_08.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_08__387be786-8ffc-4c6c-9a62-765841de7f9b.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 171393,
+   "uploaded_bytes": 171393,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_09__8f047a4b-428e-49c1-970d-1984bc77d61c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_09__8f047a4b-428e-49c1-970d-1984bc77d61c.jpg",
+   "name": "ydp_09.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_09__8f047a4b-428e-49c1-970d-1984bc77d61c.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 117405,
+   "uploaded_bytes": 117405,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_10__47546c16-a619-474e-acef-c9d0ee1ec712.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_10__47546c16-a619-474e-acef-c9d0ee1ec712.jpg",
+   "name": "ydp_10.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_10__47546c16-a619-474e-acef-c9d0ee1ec712.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 154372,
+   "uploaded_bytes": 154372,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_11__7aa2c5cb-6eca-423c-bb5b-1d83b7f963c1.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_11__7aa2c5cb-6eca-423c-bb5b-1d83b7f963c1.jpg",
+   "name": "ydp_11.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_11__7aa2c5cb-6eca-423c-bb5b-1d83b7f963c1.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 115058,
+   "uploaded_bytes": 115058,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_12__406f8a65-2d76-445d-bdd5-2815e7f5343f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_12__406f8a65-2d76-445d-bdd5-2815e7f5343f.jpg",
+   "name": "ydp_12.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_12__406f8a65-2d76-445d-bdd5-2815e7f5343f.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 158319,
+   "uploaded_bytes": 158319,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_13__f7d1252f-0756-4582-8b74-6327e17fd7de.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_13__f7d1252f-0756-4582-8b74-6327e17fd7de.jpg",
+   "name": "ydp_13.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_13__f7d1252f-0756-4582-8b74-6327e17fd7de.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 127698,
+   "uploaded_bytes": 127698,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_14__7b20046b-d0e3-4933-adfd-bb7129264273.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_14__7b20046b-d0e3-4933-adfd-bb7129264273.jpg",
+   "name": "ydp_14.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_14__7b20046b-d0e3-4933-adfd-bb7129264273.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 123740,
+   "uploaded_bytes": 123740,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_15__1509c273-452f-4d05-b1af-3745e6045c81.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_15__1509c273-452f-4d05-b1af-3745e6045c81.jpg",
+   "name": "ydp_15.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_15__1509c273-452f-4d05-b1af-3745e6045c81.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 88924,
+   "uploaded_bytes": 88924,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_16__32335033-a506-4b8b-8825-a31d819d965f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_16__32335033-a506-4b8b-8825-a31d819d965f.jpg",
+   "name": "ydp_16.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_16__32335033-a506-4b8b-8825-a31d819d965f.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 137559,
+   "uploaded_bytes": 137559,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_17__af312cc1-af91-4b40-86cf-10d8c809dd02.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_17__af312cc1-af91-4b40-86cf-10d8c809dd02.jpg",
+   "name": "ydp_17.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_17__af312cc1-af91-4b40-86cf-10d8c809dd02.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 122309,
+   "uploaded_bytes": 122309,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_18__2a23f63b-5353-4b19-8b4b-fd8861714b27.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_18__2a23f63b-5353-4b19-8b4b-fd8861714b27.jpg",
+   "name": "ydp_18.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_18__2a23f63b-5353-4b19-8b4b-fd8861714b27.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 160942,
+   "uploaded_bytes": 160942,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_19__951af8b9-7708-430c-a694-8d597b53ffe3.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_19__951af8b9-7708-430c-a694-8d597b53ffe3.jpg",
+   "name": "ydp_19.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_19__951af8b9-7708-430c-a694-8d597b53ffe3.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 121062,
+   "uploaded_bytes": 121062,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_20__00e1791a-f804-4886-b23f-052a5c4ec2af.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_20__00e1791a-f804-4886-b23f-052a5c4ec2af.jpg",
+   "name": "ydp_20.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_20__00e1791a-f804-4886-b23f-052a5c4ec2af.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 119893,
+   "uploaded_bytes": 119893,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_21__3c8d8353-8022-45f3-9194-38f7d231d965.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_21__3c8d8353-8022-45f3-9194-38f7d231d965.jpg",
+   "name": "ydp_21.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_21__3c8d8353-8022-45f3-9194-38f7d231d965.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 135681,
+   "uploaded_bytes": 135681,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_22__545c40a7-57cb-4a6d-887c-dcd570216a7f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_22__545c40a7-57cb-4a6d-887c-dcd570216a7f.jpg",
+   "name": "ydp_22.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_22__545c40a7-57cb-4a6d-887c-dcd570216a7f.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 129694,
+   "uploaded_bytes": 129694,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_23__4dc7cc92-32ea-4850-9ad2-21acd5c856ff.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_23__4dc7cc92-32ea-4850-9ad2-21acd5c856ff.jpg",
+   "name": "ydp_23.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_23__4dc7cc92-32ea-4850-9ad2-21acd5c856ff.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 107723,
+   "uploaded_bytes": 107723,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_24__c1bd3c3d-ff2a-4871-b099-bde73b1811f5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_24__c1bd3c3d-ff2a-4871-b099-bde73b1811f5.jpg",
+   "name": "ydp_24.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_24__c1bd3c3d-ff2a-4871-b099-bde73b1811f5.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 147575,
+   "uploaded_bytes": 147575,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_25__7a6716eb-43cb-4145-a095-d25281080ff0.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_25__7a6716eb-43cb-4145-a095-d25281080ff0.jpg",
+   "name": "ydp_25.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_25__7a6716eb-43cb-4145-a095-d25281080ff0.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 139361,
+   "uploaded_bytes": 139361,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_26__02aa390f-19d7-45c4-a285-b5a83880a384.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_26__02aa390f-19d7-45c4-a285-b5a83880a384.jpg",
+   "name": "ydp_26.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_26__02aa390f-19d7-45c4-a285-b5a83880a384.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 187917,
+   "uploaded_bytes": 187917,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_27__a6a2c54d-80fc-4f1d-8f1b-cf424e9094a0.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_27__a6a2c54d-80fc-4f1d-8f1b-cf424e9094a0.jpg",
+   "name": "ydp_27.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_27__a6a2c54d-80fc-4f1d-8f1b-cf424e9094a0.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 136257,
+   "uploaded_bytes": 136257,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_29__b49f1b81-ba83-45f3-b7ed-c6584bd3f5ac.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_29__b49f1b81-ba83-45f3-b7ed-c6584bd3f5ac.jpg",
+   "name": "ydp_29.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_29__b49f1b81-ba83-45f3-b7ed-c6584bd3f5ac.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 137584,
+   "uploaded_bytes": 137584,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_30__3cec15b3-76b1-4cae-acc7-e4c9c8f70dd7.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_30__3cec15b3-76b1-4cae-acc7-e4c9c8f70dd7.jpg",
+   "name": "ydp_30.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_30__3cec15b3-76b1-4cae-acc7-e4c9c8f70dd7.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 155589,
+   "uploaded_bytes": 155589,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_31__23ea9fcf-0059-426e-ba0f-33b4a30588c5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_31__23ea9fcf-0059-426e-ba0f-33b4a30588c5.jpg",
+   "name": "ydp_31.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_31__23ea9fcf-0059-426e-ba0f-33b4a30588c5.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 143891,
+   "uploaded_bytes": 143891,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_32__cb8f4204-1ed6-40b3-8782-ab371fdd794e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_32__cb8f4204-1ed6-40b3-8782-ab371fdd794e.jpg",
+   "name": "ydp_32.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_32__cb8f4204-1ed6-40b3-8782-ab371fdd794e.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 135793,
+   "uploaded_bytes": 135793,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_33__a8f79a23-4fe0-4579-a5b1-b3a4b5b269d2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_33__a8f79a23-4fe0-4579-a5b1-b3a4b5b269d2.jpg",
+   "name": "ydp_33.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_33__a8f79a23-4fe0-4579-a5b1-b3a4b5b269d2.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 130842,
+   "uploaded_bytes": 130842,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_34__17bb46a9-af63-42bc-896c-690981dccd12.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_34__17bb46a9-af63-42bc-896c-690981dccd12.jpg",
+   "name": "ydp_34.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_34__17bb46a9-af63-42bc-896c-690981dccd12.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 197828,
+   "uploaded_bytes": 197828,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_35__00355a68-c7ca-4406-a864-0ddc513ef5bd.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_35__00355a68-c7ca-4406-a864-0ddc513ef5bd.jpg",
+   "name": "ydp_35.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_35__00355a68-c7ca-4406-a864-0ddc513ef5bd.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 124841,
+   "uploaded_bytes": 124841,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_36__a5ad007b-22f0-48d0-aba2-634bed77f10d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_36__a5ad007b-22f0-48d0-aba2-634bed77f10d.jpg",
+   "name": "ydp_36.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_36__a5ad007b-22f0-48d0-aba2-634bed77f10d.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 166763,
+   "uploaded_bytes": 166763,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_37__e7a66ee6-87dd-4363-8a10-857353ab6d52.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_37__e7a66ee6-87dd-4363-8a10-857353ab6d52.jpg",
+   "name": "ydp_37.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_37__e7a66ee6-87dd-4363-8a10-857353ab6d52.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 203440,
+   "uploaded_bytes": 203440,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_38__c55742cf-293d-49db-a102-46181b60ead4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_38__c55742cf-293d-49db-a102-46181b60ead4.jpg",
+   "name": "ydp_38.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_38__c55742cf-293d-49db-a102-46181b60ead4.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 141669,
+   "uploaded_bytes": 141669,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_39__e1b41b71-5273-4e2c-973e-9a3e47c5b693.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_39__e1b41b71-5273-4e2c-973e-9a3e47c5b693.jpg",
+   "name": "ydp_39.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_39__e1b41b71-5273-4e2c-973e-9a3e47c5b693.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 142847,
+   "uploaded_bytes": 142847,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_40__5a97abbe-1fd0-4cf3-8d3c-57dde9f0fa8b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_40__5a97abbe-1fd0-4cf3-8d3c-57dde9f0fa8b.jpg",
+   "name": "ydp_40.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_40__5a97abbe-1fd0-4cf3-8d3c-57dde9f0fa8b.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 128513,
+   "uploaded_bytes": 128513,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_41__14a5dfcb-2cf2-4d46-9300-946194930bb4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_41__14a5dfcb-2cf2-4d46-9300-946194930bb4.jpg",
+   "name": "ydp_41.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_41__14a5dfcb-2cf2-4d46-9300-946194930bb4.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 141484,
+   "uploaded_bytes": 141484,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_42__71055643-6ec8-4e04-af6e-28f1f4108e06.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_42__71055643-6ec8-4e04-af6e-28f1f4108e06.jpg",
+   "name": "ydp_42.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_42__71055643-6ec8-4e04-af6e-28f1f4108e06.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 127626,
+   "uploaded_bytes": 127626,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_43__4b73a846-1096-4ded-b1f1-60d32b900eed.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_43__4b73a846-1096-4ded-b1f1-60d32b900eed.jpg",
+   "name": "ydp_43.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_43__4b73a846-1096-4ded-b1f1-60d32b900eed.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 150966,
+   "uploaded_bytes": 150966,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_44__7f115424-8f57-4fa5-bd87-26cfc9c4cf4e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_44__7f115424-8f57-4fa5-bd87-26cfc9c4cf4e.jpg",
+   "name": "ydp_44.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_44__7f115424-8f57-4fa5-bd87-26cfc9c4cf4e.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 93854,
+   "uploaded_bytes": 93854,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_45__12ab087d-5b1a-4397-8140-5598abb8faf0.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_45__12ab087d-5b1a-4397-8140-5598abb8faf0.jpg",
+   "name": "ydp_45.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_45__12ab087d-5b1a-4397-8140-5598abb8faf0.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 157398,
+   "uploaded_bytes": 157398,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_46__a2ff69bf-e12a-484b-8b2d-21def82aa615.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_46__a2ff69bf-e12a-484b-8b2d-21def82aa615.jpg",
+   "name": "ydp_46.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_46__a2ff69bf-e12a-484b-8b2d-21def82aa615.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 161466,
+   "uploaded_bytes": 161466,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_47__4f440097-d890-4be6-a780-152ebaf9547f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_47__4f440097-d890-4be6-a780-152ebaf9547f.jpg",
+   "name": "ydp_47.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_47__4f440097-d890-4be6-a780-152ebaf9547f.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 129207,
+   "uploaded_bytes": 129207,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_48__a233ce2c-aac0-4a29-bec8-a0c8097a56a4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_48__a233ce2c-aac0-4a29-bec8-a0c8097a56a4.jpg",
+   "name": "ydp_48.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_48__a233ce2c-aac0-4a29-bec8-a0c8097a56a4.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 225094,
+   "uploaded_bytes": 225094,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_49__c34a068a-bc5c-4adb-a858-69d150412976.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_49__c34a068a-bc5c-4adb-a858-69d150412976.jpg",
+   "name": "ydp_49.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_49__c34a068a-bc5c-4adb-a858-69d150412976.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 151388,
+   "uploaded_bytes": 151388,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_50__49124f21-b7a6-4aad-a9d1-af864432c4bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_50__49124f21-b7a6-4aad-a9d1-af864432c4bf.jpg",
+   "name": "ydp_50.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_50__49124f21-b7a6-4aad-a9d1-af864432c4bf.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 136945,
+   "uploaded_bytes": 136945,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_51__228721d7-bd21-438c-bff2-f0cdc062009f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_51__228721d7-bd21-438c-bff2-f0cdc062009f.jpg",
+   "name": "ydp_51.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_51__228721d7-bd21-438c-bff2-f0cdc062009f.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 125884,
+   "uploaded_bytes": 125884,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_52__1b41bced-9931-4e0c-ba91-2787a3100125.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_52__1b41bced-9931-4e0c-ba91-2787a3100125.jpg",
+   "name": "ydp_52.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_52__1b41bced-9931-4e0c-ba91-2787a3100125.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 141590,
+   "uploaded_bytes": 141590,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_53__dc32a0aa-1a26-4875-90ab-a286fca15c9d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_53__dc32a0aa-1a26-4875-90ab-a286fca15c9d.jpg",
+   "name": "ydp_53.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_53__dc32a0aa-1a26-4875-90ab-a286fca15c9d.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 151153,
+   "uploaded_bytes": 151153,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_54__d465b4cd-b3fa-4255-9fbd-57b48c4ecb22.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_54__d465b4cd-b3fa-4255-9fbd-57b48c4ecb22.jpg",
+   "name": "ydp_54.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_54__d465b4cd-b3fa-4255-9fbd-57b48c4ecb22.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 156966,
+   "uploaded_bytes": 156966,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_55__4afa29dd-1752-4b84-8936-41323e884b66.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_55__4afa29dd-1752-4b84-8936-41323e884b66.jpg",
+   "name": "ydp_55.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_55__4afa29dd-1752-4b84-8936-41323e884b66.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 146137,
+   "uploaded_bytes": 146137,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_56__dc1db207-938a-4f3c-a666-0ad211380b96.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_56__dc1db207-938a-4f3c-a666-0ad211380b96.jpg",
+   "name": "ydp_56.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_56__dc1db207-938a-4f3c-a666-0ad211380b96.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 131485,
+   "uploaded_bytes": 131485,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_57__b73607bc-d725-4ada-98f0-92ca3d866805.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_57__b73607bc-d725-4ada-98f0-92ca3d866805.jpg",
+   "name": "ydp_57.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_57__b73607bc-d725-4ada-98f0-92ca3d866805.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 138849,
+   "uploaded_bytes": 138849,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_58__f8fc6ea5-cbdc-45c2-8794-770a8d90dfd4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_58__f8fc6ea5-cbdc-45c2-8794-770a8d90dfd4.jpg",
+   "name": "ydp_58.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_58__f8fc6ea5-cbdc-45c2-8794-770a8d90dfd4.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 143385,
+   "uploaded_bytes": 143385,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_59__627410a6-9a97-44b4-8c51-6b4e01cb843c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_59__627410a6-9a97-44b4-8c51-6b4e01cb843c.jpg",
+   "name": "ydp_59.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_59__627410a6-9a97-44b4-8c51-6b4e01cb843c.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 124969,
+   "uploaded_bytes": 124969,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_60__d9c78e6f-5280-4754-ad21-e3ba319dae03.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_60__d9c78e6f-5280-4754-ad21-e3ba319dae03.jpg",
+   "name": "ydp_60.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_60__d9c78e6f-5280-4754-ad21-e3ba319dae03.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 125096,
+   "uploaded_bytes": 125096,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_61__720ea557-9832-470d-bd94-629283037cd9.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_61__720ea557-9832-470d-bd94-629283037cd9.jpg",
+   "name": "ydp_61.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_61__720ea557-9832-470d-bd94-629283037cd9.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 118705,
+   "uploaded_bytes": 118705,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_62__289393bc-23b7-4dc4-8223-e39feaee732d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_62__289393bc-23b7-4dc4-8223-e39feaee732d.jpg",
+   "name": "ydp_62.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_62__289393bc-23b7-4dc4-8223-e39feaee732d.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 160429,
+   "uploaded_bytes": 160429,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_63__c203e858-1ff8-4576-b6d9-93a64fc875e5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_63__c203e858-1ff8-4576-b6d9-93a64fc875e5.jpg",
+   "name": "ydp_63.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_63__c203e858-1ff8-4576-b6d9-93a64fc875e5.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 96207,
+   "uploaded_bytes": 96207,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_64__171ed0da-9e9e-4d80-8595-c5f9ce9e1e92.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_64__171ed0da-9e9e-4d80-8595-c5f9ce9e1e92.jpg",
+   "name": "ydp_64.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_64__171ed0da-9e9e-4d80-8595-c5f9ce9e1e92.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 140981,
+   "uploaded_bytes": 140981,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_65__e8f60bb0-129a-46c0-8da5-c471f8284df2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_65__e8f60bb0-129a-46c0-8da5-c471f8284df2.jpg",
+   "name": "ydp_65.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_65__e8f60bb0-129a-46c0-8da5-c471f8284df2.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 127809,
+   "uploaded_bytes": 127809,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_66__5c61c70a-767e-47fb-92f3-b7d092900ec7.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_66__5c61c70a-767e-47fb-92f3-b7d092900ec7.jpg",
+   "name": "ydp_66.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_66__5c61c70a-767e-47fb-92f3-b7d092900ec7.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 157317,
+   "uploaded_bytes": 157317,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_67__3af8a384-4966-4708-9a26-359469614c0f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_67__3af8a384-4966-4708-9a26-359469614c0f.jpg",
+   "name": "ydp_67.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_67__3af8a384-4966-4708-9a26-359469614c0f.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 151950,
+   "uploaded_bytes": 151950,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_68__bcf80e5a-59a3-4411-8852-011c5bd48481.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_68__bcf80e5a-59a3-4411-8852-011c5bd48481.jpg",
+   "name": "ydp_68.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_68__bcf80e5a-59a3-4411-8852-011c5bd48481.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 146036,
+   "uploaded_bytes": 146036,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_69__521e341f-66df-4853-8c68-6ba207f0e0a5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_69__521e341f-66df-4853-8c68-6ba207f0e0a5.jpg",
+   "name": "ydp_69.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_69__521e341f-66df-4853-8c68-6ba207f0e0a5.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 112866,
+   "uploaded_bytes": 112866,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kim-fear/yeongdeungpo/ydp_70__85c557b4-e603-4423-8c01-1175110d1214.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kim-fear/yeongdeungpo/ydp_70__85c557b4-e603-4423-8c01-1175110d1214.jpg",
+   "name": "ydp_70.jpg",
+   "type": "image",
+   "folder": "yeongdeungpo",
+   "media_id": "templates/2026-kim-fear/yeongdeungpo/ydp_70__85c557b4-e603-4423-8c01-1175110d1214.jpg",
+   "logicalFolder": "yeongdeungpo",
+   "original_bytes": 139208,
+   "uploaded_bytes": 139208,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Modeling and Explaining Perceived Fear of Crime from Street View Imagery Using a GeoAI Framework",
+  "authors": [
+   "Kim S.",
+   "Choi J.",
+   "Kang Y."
+  ],
+  "year": 2026,
+  "venue": "ISPRS International Journal of Geo-Information",
+  "doi": "10.3390/ijgi15010018",
+  "url": "https://doi.org/10.3390/ijgi15010018"
+ }
+}

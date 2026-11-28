@@ -1,0 +1,955 @@
+{
+ "id": "2025-benkhard-lake",
+ "name": "Lake Tisza Anglers: Shore Site Ranking",
+ "description": "Faithful replication of Benkhard et al. (2025), \"Recreational and Landscape Preferences of Anglers in the Case of Lake Tisza\", Land 14:600. The template follows the paper's 19-question survey (Appendix C). Participants are shown eight pictures of typical Lake Tisza shore sites (different angling-spot size, vegetation, water-surface width and opposite-shore vegetation; Figure 4 / Appendix A) and rank three of them for angling, for a longer stay of several days and for a shorter stay, each time explaining why in their own words. The survey also asks where and how often they angle, their purposes at the lake, ten site-selection factors (1 = not at all, 5 = completely), the most beautiful seasons, other landscapes they travel to and for what purpose, and residence, age, gender, education, income and money management. Analysis as in the paper: dichotomise each ranking (selected / not selected), report the share choosing each picture and ranking it first, code the open answers into categories (shade, natural vegetation, beauty, angling, camping, open water, peace and quiet, infrastructure), and describe the Likert items. In the original study (224 anglers interviewed in spring 2024), picture 2 was chosen most often for angling (62%) and longer stays (57%), picture 8 was ranked first most often, and picture 4 was chosen most often for short stays.\n\nPictures: the paper's Figure 4 (photographs of Lake Tisza shore sites; article CC BY 4.0), each about 360 × 280 pixels, used with credit; the template is removed if the authors object.\n\nDifferences from the original study: (1) the original was an in-person interview with a printed picture montage; here it is a self-completed online page, and pictures are chosen by tapping instead of writing their numbers; (2) the eight pictures are cut from the paper's Figure 4 without the colour key, so they are small; (3) \"Other\" answers to questions 2 and 17 go into a separate text field; question 12's table is shown as one row of purpose checkboxes per landscape; (4) the shorter-stay ranking and all \"why\" questions can be skipped, matching the high share of missing answers reported for short stays; (5) an online consent checkbox was added; the wording is the English version printed in the paper's Appendix C.",
+ "author": "Benkhard et al.",
+ "year": "2025",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "source:paper",
+  "modality:scene_photo",
+  "task:choose_from_set",
+  "task:open_ended",
+  "task:questionnaire",
+  "concept:preference",
+  "concept:naturalness",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:Hungary"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/land14030600",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T14:23:53.428+00:00",
+ "updatedAt": "2026-11-27T14:24:21.352+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part voluntarily and know I can stop at any time.",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "visits",
+    "elements": [
+     {
+      "name": "angle_where",
+      "type": "text",
+      "title": "1. Where do you angle most often?",
+      "isRequired": true
+     },
+     {
+      "name": "visit_purpose",
+      "type": "checkbox",
+      "title": "2. For what purpose do you usually spend time at Lake Tisza?",
+      "choices": [
+       {
+        "text": "Angling",
+        "value": 1
+       },
+       {
+        "text": "Recreation",
+        "value": 2
+       },
+       {
+        "text": "Walking",
+        "value": 3
+       },
+       {
+        "text": "Cycling",
+        "value": 4
+       },
+       {
+        "text": "Exercise",
+        "value": 5
+       },
+       {
+        "text": "Picnicking",
+        "value": 6
+       },
+       {
+        "text": "Other",
+        "value": 7
+       }
+      ],
+      "isRequired": true,
+      "otherValue": 7
+     },
+     {
+      "name": "visit_purpose_other",
+      "type": "text",
+      "title": "Other purpose",
+      "isRequired": false
+     },
+     {
+      "name": "angle_frequency",
+      "type": "radiogroup",
+      "title": "3. How often do you angle at Lake Tisza?",
+      "choices": [
+       {
+        "text": "Every day",
+        "value": 1
+       },
+       {
+        "text": "1 time a week",
+        "value": 2
+       },
+       {
+        "text": "Several times a week",
+        "value": 3
+       },
+       {
+        "text": "1 time per month",
+        "value": 4
+       },
+       {
+        "text": "2–3 times a month",
+        "value": 5
+       },
+       {
+        "text": "Quarterly",
+        "value": 6
+       },
+       {
+        "text": "2–3 times a year",
+        "value": 7
+       },
+       {
+        "text": "1 time a year",
+        "value": 8
+       },
+       {
+        "text": "Less frequently",
+        "value": 9
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "rank_angling",
+    "elements": [
+     {
+      "name": "rank_angling",
+      "type": "custom",
+      "title": "4. Which of the 3 locations in the photos would you like the most to go angling in? Choose three pictures in order of ranking.",
+      "pictures": [
+       "picture_1",
+       "picture_2",
+       "picture_3",
+       "picture_4",
+       "picture_5",
+       "picture_6",
+       "picture_7",
+       "picture_8"
+      ],
+      "isRequired": true,
+      "description": "Ranking of three of the eight Lake Tisza pictures (folder sites, picture_1 … picture_8, numbered as in the paper's Figure 4 / Appendix A). Value: array of three picture numbers in rank order, e.g. [8, 2, 4] = picture 8 first, 2 second, 4 third. Analysis as in the paper: dichotomise (selected / not selected) and report the share selecting each picture and the share ranking it first."
+     },
+     {
+      "name": "why_angling",
+      "type": "comment",
+      "title": "5. Why would you choose the above 3 pictures for angling?",
+      "isRequired": false
+     }
+    ]
+   },
+   {
+    "name": "rank_longer",
+    "elements": [
+     {
+      "name": "rank_longer_stay",
+      "type": "custom",
+      "title": "6. Which of the 3 locations in the photos would you like the most to spend longer time (several days) in? Choose three pictures in order of ranking.",
+      "pictures": [
+       "picture_1",
+       "picture_2",
+       "picture_3",
+       "picture_4",
+       "picture_5",
+       "picture_6",
+       "picture_7",
+       "picture_8"
+      ],
+      "isRequired": true,
+      "description": "Ranking of three of the eight Lake Tisza pictures (folder sites, picture_1 … picture_8, numbered as in the paper's Figure 4 / Appendix A). Value: array of three picture numbers in rank order, e.g. [8, 2, 4] = picture 8 first, 2 second, 4 third. Analysis as in the paper: dichotomise (selected / not selected) and report the share selecting each picture and the share ranking it first."
+     },
+     {
+      "name": "why_longer_stay",
+      "type": "comment",
+      "title": "7. Why would you choose the above 3 pictures for a longer stay?",
+      "isRequired": false
+     }
+    ]
+   },
+   {
+    "name": "rank_shorter",
+    "elements": [
+     {
+      "name": "rank_shorter_stay",
+      "type": "custom",
+      "title": "8. Which of the 3 locations in the photos would you like the most to spend shorter time in? Choose three pictures in order of ranking.",
+      "pictures": [
+       "picture_1",
+       "picture_2",
+       "picture_3",
+       "picture_4",
+       "picture_5",
+       "picture_6",
+       "picture_7",
+       "picture_8"
+      ],
+      "isRequired": false,
+      "description": "Ranking of three of the eight Lake Tisza pictures (folder sites, picture_1 … picture_8, numbered as in the paper's Figure 4 / Appendix A). Value: array of three picture numbers in rank order, e.g. [8, 2, 4] = picture 8 first, 2 second, 4 third. Analysis as in the paper: dichotomise (selected / not selected) and report the share selecting each picture and the share ranking it first."
+     },
+     {
+      "name": "why_shorter_stay",
+      "type": "comment",
+      "title": "9. Why would you choose the above 3 pictures for a shorter stay?",
+      "isRequired": false
+     }
+    ]
+   },
+   {
+    "name": "site_selection",
+    "elements": [
+     {
+      "name": "site_factor_1",
+      "type": "radiogroup",
+      "title": "A narrow stretch of water with reeds and trees on the other side.",
+      "choices": [
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "site_factor_2",
+      "type": "radiogroup",
+      "title": "A vast, open body of water in front of me.",
+      "choices": [
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "site_factor_3",
+      "type": "radiogroup",
+      "title": "A wide view of the water.",
+      "choices": [
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "site_factor_4",
+      "type": "radiogroup",
+      "title": "Having a few trees, like a grove.",
+      "choices": [
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "site_factor_5",
+      "type": "radiogroup",
+      "title": "Many trees and shrubs should be around me (with narrow views in between).",
+      "choices": [
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "site_factor_6",
+      "type": "radiogroup",
+      "title": "Having a reedy riverbank around me.",
+      "choices": [
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "site_factor_7",
+      "type": "radiogroup",
+      "title": "I see only natural elements.",
+      "choices": [
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "site_factor_8",
+      "type": "radiogroup",
+      "title": "There should also be artificial objects (pier, viewpoint, motorboat on the water).",
+      "choices": [
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "site_factor_9",
+      "type": "radiogroup",
+      "title": "Seasonal differences are essential, as each season has its own atmosphere.",
+      "choices": [
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "site_factor_10",
+      "type": "radiogroup",
+      "title": "Silence is the primary value; no “neighbours”, and no activity on the water.",
+      "choices": [
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "seasons_travel",
+    "elements": [
+     {
+      "name": "beautiful_seasons",
+      "type": "checkbox",
+      "title": "11. What are the most beautiful seasons at Lake Tisza?",
+      "choices": [
+       {
+        "text": "Winter",
+        "value": 1
+       },
+       {
+        "text": "Spring",
+        "value": 2
+       },
+       {
+        "text": "Summer",
+        "value": 3
+       },
+       {
+        "text": "Autumn",
+        "value": 4
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "travel_lakes",
+      "type": "checkbox",
+      "title": "To other lakes",
+      "choices": [
+       {
+        "text": "Angling",
+        "value": 1
+       },
+       {
+        "text": "Resting",
+        "value": 2
+       },
+       {
+        "text": "Physical activity",
+        "value": 3
+       },
+       {
+        "text": "Beauty of the landscape",
+        "value": 4
+       },
+       {
+        "text": "Hunting",
+        "value": 5
+       },
+       {
+        "text": "Other",
+        "value": 6
+       }
+      ],
+      "isRequired": false
+     },
+     {
+      "name": "travel_rivers",
+      "type": "checkbox",
+      "title": "To rivers",
+      "choices": [
+       {
+        "text": "Angling",
+        "value": 1
+       },
+       {
+        "text": "Resting",
+        "value": 2
+       },
+       {
+        "text": "Physical activity",
+        "value": 3
+       },
+       {
+        "text": "Beauty of the landscape",
+        "value": 4
+       },
+       {
+        "text": "Hunting",
+        "value": 5
+       },
+       {
+        "text": "Other",
+        "value": 6
+       }
+      ],
+      "isRequired": false
+     },
+     {
+      "name": "travel_mountains",
+      "type": "checkbox",
+      "title": "To mountain areas",
+      "choices": [
+       {
+        "text": "Angling",
+        "value": 1
+       },
+       {
+        "text": "Resting",
+        "value": 2
+       },
+       {
+        "text": "Physical activity",
+        "value": 3
+       },
+       {
+        "text": "Beauty of the landscape",
+        "value": 4
+       },
+       {
+        "text": "Hunting",
+        "value": 5
+       },
+       {
+        "text": "Other",
+        "value": 6
+       }
+      ],
+      "isRequired": false
+     },
+     {
+      "name": "travel_plains",
+      "type": "checkbox",
+      "title": "To plain areas in the lowlands",
+      "choices": [
+       {
+        "text": "Angling",
+        "value": 1
+       },
+       {
+        "text": "Resting",
+        "value": 2
+       },
+       {
+        "text": "Physical activity",
+        "value": 3
+       },
+       {
+        "text": "Beauty of the landscape",
+        "value": 4
+       },
+       {
+        "text": "Hunting",
+        "value": 5
+       },
+       {
+        "text": "Other",
+        "value": 6
+       }
+      ],
+      "isRequired": false
+     },
+     {
+      "name": "travel_other_purpose",
+      "type": "text",
+      "title": "13. If you selected “Other” in the previous question, please describe that purpose.",
+      "isRequired": false
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "name": "residence",
+      "type": "text",
+      "title": "14. Place of residence",
+      "isRequired": true
+     },
+     {
+      "max": 110,
+      "min": 14,
+      "name": "age",
+      "type": "text",
+      "title": "15. Age",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "16. Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": 1
+       },
+       {
+        "text": "Male",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "17. Highest educational level",
+      "choices": [
+       {
+        "text": "Primary school",
+        "value": 1
+       },
+       {
+        "text": "Vocational school",
+        "value": 2
+       },
+       {
+        "text": "Vocational high school",
+        "value": 3
+       },
+       {
+        "text": "Grammar school",
+        "value": 4
+       },
+       {
+        "text": "College",
+        "value": 5
+       },
+       {
+        "text": "University",
+        "value": 6
+       },
+       {
+        "text": "Other",
+        "value": 7
+       }
+      ],
+      "isRequired": true,
+      "otherValue": 7
+     },
+     {
+      "name": "education_other",
+      "type": "text",
+      "title": "Other educational level",
+      "isRequired": false
+     },
+     {
+      "name": "income",
+      "type": "radiogroup",
+      "title": "18. Which income bracket would you put yourself in? (Hungarian Central Statistical Office: average is net 375,000 HUF)",
+      "choices": [
+       {
+        "text": "Below average",
+        "value": 1
+       },
+       {
+        "text": "Average",
+        "value": 2
+       },
+       {
+        "text": "Above average",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "money_management",
+      "type": "radiogroup",
+      "title": "19. How can you manage your money?",
+      "choices": [
+       {
+        "text": "Very difficult",
+        "value": 1
+       },
+       {
+        "text": "Relatively difficult",
+        "value": 2
+       },
+       {
+        "text": "With a schedule",
+        "value": 3
+       },
+       {
+        "text": "Relatively easily",
+        "value": 4
+       },
+       {
+        "text": "Easily",
+        "value": 5
+       },
+       {
+        "text": "Don’t know",
+        "value": 6
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Landscape Preferences of Anglers at Lake Tisza",
+  "locale": "en",
+  "spSite": {
+   "id": "site-e6b167d4879870a4",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Lake Tisza Anglers</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Landscape Preferences of Anglers at Lake Tisza\",\n  \"description\": \"Faithful replication of Benkhard et al. (2025), Land 14:600: anglers rank three of eight Lake Tisza shore pictures for angling, a longer stay and a shorter stay, explain why, and answer the paper's 19-question survey on visits, site-selection factors, seasons, other landscapes and socio-demographics.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"sites\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"boolean\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part voluntarily and know I can stop at any time.\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"visits\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"name\": \"angle_where\",\n      \"title\": \"1. Where do you angle most often?\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"checkbox\",\n      \"name\": \"visit_purpose\",\n      \"title\": \"2. For what purpose do you usually spend time at Lake Tisza?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Angling\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Recreation\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Walking\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Cycling\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Exercise\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Picnicking\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"Other\"\n       }\n      ],\n      \"otherValue\": 7\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"visit_purpose_other\",\n      \"title\": \"Other purpose\",\n      \"isRequired\": false\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"angle_frequency\",\n      \"title\": \"3. How often do you angle at Lake Tisza?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Every day\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"1 time a week\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Several times a week\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"1 time per month\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"2–3 times a month\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Quarterly\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"2–3 times a year\"\n       },\n       {\n        \"value\": 8,\n        \"text\": \"1 time a year\"\n       },\n       {\n        \"value\": 9,\n        \"text\": \"Less frequently\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"rank_angling\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"rank_angling\",\n      \"title\": \"4. Which of the 3 locations in the photos would you like the most to go angling in? Choose three pictures in order of ranking.\",\n      \"isRequired\": true,\n      \"pictures\": [\n       \"picture_1\",\n       \"picture_2\",\n       \"picture_3\",\n       \"picture_4\",\n       \"picture_5\",\n       \"picture_6\",\n       \"picture_7\",\n       \"picture_8\"\n      ],\n      \"description\": \"Ranking of three of the eight Lake Tisza pictures (folder sites, picture_1 … picture_8, numbered as in the paper's Figure 4 / Appendix A). Value: array of three picture numbers in rank order, e.g. [8, 2, 4] = picture 8 first, 2 second, 4 third. Analysis as in the paper: dichotomise (selected / not selected) and report the share selecting each picture and the share ranking it first.\"\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"why_angling\",\n      \"title\": \"5. Why would you choose the above 3 pictures for angling?\",\n      \"isRequired\": false\n     }\n    ]\n   },\n   {\n    \"name\": \"rank_longer\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"rank_longer_stay\",\n      \"title\": \"6. Which of the 3 locations in the photos would you like the most to spend longer time (several days) in? Choose three pictures in order of ranking.\",\n      \"isRequired\": true,\n      \"pictures\": [\n       \"picture_1\",\n       \"picture_2\",\n       \"picture_3\",\n       \"picture_4\",\n       \"picture_5\",\n       \"picture_6\",\n       \"picture_7\",\n       \"picture_8\"\n      ],\n      \"description\": \"Ranking of three of the eight Lake Tisza pictures (folder sites, picture_1 … picture_8, numbered as in the paper's Figure 4 / Appendix A). Value: array of three picture numbers in rank order, e.g. [8, 2, 4] = picture 8 first, 2 second, 4 third. Analysis as in the paper: dichotomise (selected / not selected) and report the share selecting each picture and the share ranking it first.\"\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"why_longer_stay\",\n      \"title\": \"7. Why would you choose the above 3 pictures for a longer stay?\",\n      \"isRequired\": false\n     }\n    ]\n   },\n   {\n    \"name\": \"rank_shorter\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"rank_shorter_stay\",\n      \"title\": \"8. Which of the 3 locations in the photos would you like the most to spend shorter time in? Choose three pictures in order of ranking.\",\n      \"isRequired\": false,\n      \"pictures\": [\n       \"picture_1\",\n       \"picture_2\",\n       \"picture_3\",\n       \"picture_4\",\n       \"picture_5\",\n       \"picture_6\",\n       \"picture_7\",\n       \"picture_8\"\n      ],\n      \"description\": \"Ranking of three of the eight Lake Tisza pictures (folder sites, picture_1 … picture_8, numbered as in the paper's Figure 4 / Appendix A). Value: array of three picture numbers in rank order, e.g. [8, 2, 4] = picture 8 first, 2 second, 4 third. Analysis as in the paper: dichotomise (selected / not selected) and report the share selecting each picture and the share ranking it first.\"\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"why_shorter_stay\",\n      \"title\": \"9. Why would you choose the above 3 pictures for a shorter stay?\",\n      \"isRequired\": false\n     }\n    ]\n   },\n   {\n    \"name\": \"site_selection\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"site_factor_1\",\n      \"title\": \"A narrow stretch of water with reeds and trees on the other side.\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"site_factor_2\",\n      \"title\": \"A vast, open body of water in front of me.\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"site_factor_3\",\n      \"title\": \"A wide view of the water.\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"site_factor_4\",\n      \"title\": \"Having a few trees, like a grove.\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"site_factor_5\",\n      \"title\": \"Many trees and shrubs should be around me (with narrow views in between).\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"site_factor_6\",\n      \"title\": \"Having a reedy riverbank around me.\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"site_factor_7\",\n      \"title\": \"I see only natural elements.\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"site_factor_8\",\n      \"title\": \"There should also be artificial objects (pier, viewpoint, motorboat on the water).\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"site_factor_9\",\n      \"title\": \"Seasonal differences are essential, as each season has its own atmosphere.\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"site_factor_10\",\n      \"title\": \"Silence is the primary value; no “neighbours”, and no activity on the water.\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"seasons_travel\",\n    \"elements\": [\n     {\n      \"type\": \"checkbox\",\n      \"name\": \"beautiful_seasons\",\n      \"title\": \"11. What are the most beautiful seasons at Lake Tisza?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Winter\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Spring\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Summer\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Autumn\"\n       }\n      ]\n     },\n     {\n      \"type\": \"checkbox\",\n      \"name\": \"travel_lakes\",\n      \"title\": \"To other lakes\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Angling\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Resting\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Physical activity\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Beauty of the landscape\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Hunting\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"checkbox\",\n      \"name\": \"travel_rivers\",\n      \"title\": \"To rivers\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Angling\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Resting\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Physical activity\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Beauty of the landscape\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Hunting\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"checkbox\",\n      \"name\": \"travel_mountains\",\n      \"title\": \"To mountain areas\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Angling\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Resting\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Physical activity\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Beauty of the landscape\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Hunting\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"checkbox\",\n      \"name\": \"travel_plains\",\n      \"title\": \"To plain areas in the lowlands\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Angling\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Resting\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Physical activity\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Beauty of the landscape\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Hunting\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"travel_other_purpose\",\n      \"title\": \"13. If you selected “Other” in the previous question, please describe that purpose.\",\n      \"isRequired\": false\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"name\": \"residence\",\n      \"title\": \"14. Place of residence\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"15. Age\",\n      \"isRequired\": true,\n      \"min\": 14,\n      \"max\": 110\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"16. Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Male\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"17. Highest educational level\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Primary school\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Vocational school\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Vocational high school\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Grammar school\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"College\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"University\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"Other\"\n       }\n      ],\n      \"otherValue\": 7\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"education_other\",\n      \"title\": \"Other educational level\",\n      \"isRequired\": false\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"income\",\n      \"title\": \"18. Which income bracket would you put yourself in? (Hungarian Central Statistical Office: average is net 375,000 HUF)\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Below average\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Average\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Above average\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"money_management\",\n      \"title\": \"19. How can you manage your money?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Very difficult\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Relatively difficult\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"With a schedule\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Relatively easily\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Easily\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Don’t know\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#edf2f3;--card:#fff;--ink:#1d2427;--muted:#5a6569;--accent:#2e6b78;--accent-ink:#fff;--line:#d2dcdf;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:900px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.3rem;margin:0 0 10px}\np{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q:first-child{margin-top:0}.q>b{display:block;margin-bottom:4px}.opt-note{font-weight:400;color:var(--muted);font-size:.85rem}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:7px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer;background:var(--card)}\ntextarea,input[type=text],input[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%;background:#fff;color:var(--ink)}\ntextarea{min-height:70px}input[type=number]{max-width:160px}\n.other{margin-top:6px}\n.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}\n.t{color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}\n.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;flex:1;margin-left:12px;max-width:260px}.bar>i{display:block;height:100%;background:var(--accent)}\n.pics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}\n.pic{position:relative;border:3px solid transparent;border-radius:10px;overflow:hidden;cursor:pointer;background:#dde4e6;padding:0;font:inherit;text-align:left}\n.pic img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}\n.pic .no{position:absolute;left:6px;top:6px;background:#fff;color:#000;font-weight:700;font-size:.85rem;padding:0 7px;border-radius:5px}\n.pic .rk{position:absolute;right:6px;top:6px;background:var(--accent);color:#fff;font-weight:700;font-size:.8rem;padding:1px 8px;border-radius:999px;display:none}\n.pic.on{border-color:var(--accent)}.pic.on .rk{display:block}\n.pic:focus-visible{outline:2px solid var(--accent);outline-offset:2px}\n.picked{margin-top:8px;font-size:.9rem;color:var(--muted)}\n.lk{display:grid;grid-template-columns:1fr repeat(5,44px);gap:4px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}\n.lk:first-of-type{border-top:0}.lk .h{font-size:.8rem;color:var(--muted);text-align:center}\n.lk label{display:flex;justify-content:center}.lk input{width:20px;height:20px}\n.grid{display:flex;flex-wrap:wrap;gap:6px}.grid label.opt{margin-top:0}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:900px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n@media (max-width:640px){.pics{grid-template-columns:repeat(2,1fr)}.lk{grid-template-columns:1fr repeat(5,34px)}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Pictures: Benkhard et al. (2025), Land 14:600, Figure 4, doi:10.3390/land14030600 (CC BY 4.0; photographs of Lake Tisza shore sites). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='tisza2025:';\n  var app=document.getElementById('app'), Q={}, files={}, done={}, SPEC=null, PAGES=[], cur=0;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='visible';}}\n  function hideErr(){var e=app.querySelector('.err');if(e)e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function q(n){return Q[n]||{};}\n  var HEAD={site_selection:'10. To what extent do the following influence site selection at Lake Tisza? (1: not at all – 5: completely)'};\n  function next(){\n    window.scrollTo(0,0);\n    for(var i=0;i<PAGES.length;i++){if(!done[PAGES[i].name])return show(PAGES[i],i);}\n    finish();\n  }\n  var ranks={};\n  function rankHtml(e){\n    var r=ranks[e.name]||(ranks[e.name]=[]);\n    return '<div class=\"q\" data-n=\"'+e.name+'\"><b>'+esc(q(e.name).title)+(e.isRequired?'':' <span class=\"opt-note\">(optional)</span>')+'</b><span class=\"opt-note\">Tap three pictures: first tap = 1st place, then 2nd, then 3rd. Tap again to remove.</span><div class=\"pics\">'+\n      e.pictures.map(function(p,i){var k=r.indexOf(i+1);var f=files[p+'.jpg'];return '<button type=\"button\" class=\"pic'+(k>=0?' on':'')+'\" data-p=\"'+(i+1)+'\" aria-pressed=\"'+(k>=0)+'\" aria-label=\"Picture '+(i+1)+'\"><img alt=\"Lake Tisza shore, picture '+(i+1)+'\" src=\"'+esc(f.url)+'\"><span class=\"no\">'+(i+1)+'</span><span class=\"rk\">'+(k>=0?['1st','2nd','3rd'][k]:'')+'</span></button>';}).join('')+\n      '</div><div class=\"picked\">'+(r.length?'Your ranking: '+r.map(function(n,k){return (k+1)+'. picture '+n;}).join(', '):'No picture chosen yet.')+'</div></div>';\n  }\n  function field(e){\n    var d=q(e.name),opt=e.isRequired?'':' <span class=\"opt-note\">(optional)</span>';\n    if(e.type==='custom')return rankHtml(e);\n    if(e.type==='radiogroup'||e.type==='checkbox'){\n      var tp=e.type==='radiogroup'?'radio':'checkbox';\n      return '<div class=\"q\"><b>'+esc(d.title)+opt+'</b>'+(d.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"'+tp+'\" name=\"'+e.name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n    if(/_other$/.test(e.name))return '<div class=\"other\" data-other=\"'+e.name+'\"><input type=\"text\" name=\"'+e.name+'\" placeholder=\"'+esc(d.title)+' …\" aria-label=\"'+esc(d.title)+'\"></div>';\n    if(e.type==='comment')return '<div class=\"q\"><b>'+esc(d.title)+opt+'</b><textarea name=\"'+e.name+'\"></textarea></div>';\n    return '<div class=\"q\"><b>'+esc(d.title)+opt+'</b><input '+(e.inputType==='number'?'type=\"number\" inputmode=\"numeric\" min=\"'+e.min+'\" max=\"'+e.max+'\"':'type=\"text\"')+' name=\"'+e.name+'\"></div>';\n  }\n  function body(p){\n    if(p.name==='site_selection'){\n      return '<div class=\"q\"><b>'+esc(HEAD.site_selection)+'</b><div class=\"lk\"><span></span>'+[1,2,3,4,5].map(function(v){return '<span class=\"h\">'+v+'</span>';}).join('')+'</div>'+\n        p.elements.map(function(e,i){return '<div class=\"lk\" role=\"radiogroup\" aria-label=\"'+esc(q(e.name).title)+'\"><span>'+(i+1)+'. '+esc(q(e.name).title)+'</span>'+[1,2,3,4,5].map(function(v){return '<label><input type=\"radio\" name=\"'+e.name+'\" value=\"'+v+'\" aria-label=\"'+v+'\"></label>';}).join('')+'</div>';}).join('')+'</div>';}\n    if(p.name==='seasons_travel'){\n      var t=p.elements.filter(function(e){return /^travel_(lakes|rivers|mountains|plains)$/.test(e.name);});\n      return field(p.elements[0])+'<div class=\"q\"><b>12. What other landscapes do you travel to in your free time, and for what purpose? <span class=\"opt-note\">(tick all that apply)</span></b>'+\n        t.map(function(e){return '<div style=\"margin-top:10px\"><div style=\"font-weight:600;font-size:.95rem\">'+esc(q(e.name).title)+'</div><div class=\"grid\">'+(q(e.name).choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"checkbox\" name=\"'+e.name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div></div>';}).join('')+'</div>'+field(p.elements[p.elements.length-1]);}\n    return p.elements.map(field).join('');\n  }\n  function show(p,i){\n    if(p.name==='intro'){\n      var miss=[1,2,3,4,5,6,7,8].some(function(n){return !files['picture_'+n+'.jpg'];});\n      if(miss){app.innerHTML='<h1>Pictures missing</h1><p>Media folder sites must hold picture_1.jpg … picture_8.jpg.</p>';return;}\n      app.innerHTML='<h1>Recreational and landscape preferences of anglers at Lake Tisza</h1><p>This short survey (19 questions) is about how you spend time at Lake Tisza, Hungary, and which kinds of shore sites you prefer for angling and for longer or shorter stays. Some questions show eight pictures of typical shore sites; you choose and rank three of them.</p><p>Your answers are anonymous and used only for research.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(q('consent').title)+'</label></div><div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div>';\n      app.onchange=hideErr;app.onclick=null;\n      document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('Please confirm to continue.');var b=this;b.disabled=true;SPSite.answer('consent',true).then(function(r){if(!ok(r)){b.disabled=false;return err(r.error);}done.intro=true;save('d',done);next();});};\n      return;}\n    app.innerHTML='<div class=\"top\"><span class=\"t\">Part '+i+' of '+(PAGES.length-1)+'</span><div class=\"bar\"><i style=\"width:'+(100*(i-1)/(PAGES.length-1))+'%\"></i></div></div><div class=\"card\">'+body(p)+'</div><div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">'+(i===PAGES.length-1?'Finish':'Continue')+'</button></div><div class=\"err\"></div>';\n    app.onchange=hideErr;\n    app.onclick=function(ev){var b=ev.target.closest('.pic');if(!b)return;var box=b.closest('.q[data-n]');if(!box)return;hideErr();var n=box.getAttribute('data-n'),r=ranks[n],v=Number(b.getAttribute('data-p')),k=r.indexOf(v);\n        if(k>=0)r.splice(k,1);else{if(r.length>=3)return err('You have already chosen three pictures. Tap one of them to remove it first.');r.push(v);}\n        var e=p.elements.filter(function(x){return x.name===n;})[0];var y=window.scrollY;box.outerHTML=rankHtml(e);window.scrollTo(0,y);\n        var nb=app.querySelector('.q[data-n=\"'+n+'\"] .pic[data-p=\"'+v+'\"]');if(nb)nb.focus({preventScroll:true});};\n    document.getElementById('go').onclick=function(){\n      var l=[];\n      for(var j=0;j<p.elements.length;j++){var e=p.elements[j],d=q(e.name),v;\n        if(e.type==='custom'){var r=ranks[e.name]||[];if(r.length===0){if(e.isRequired)return err('Please choose and rank three pictures for question '+d.title.split('.')[0]+'.');continue;}if(r.length<3)return err('Please choose three pictures (you have chosen '+r.length+').');\n          l.push([e.name,r.slice(),{shown:e.pictures.map(function(x){return x+'.jpg';})}]);continue;}\n        if(e.type==='radiogroup'){var x=app.querySelector('input[name=\"'+e.name+'\"]:checked');if(!x){if(e.isRequired)return err('Please answer: '+d.title);continue;}v=Number(x.value);}\n        else if(e.type==='checkbox'){v=[].map.call(app.querySelectorAll('input[name=\"'+e.name+'\"]:checked'),function(x){return Number(x.value);});if(!v.length){if(e.isRequired)return err('Please answer: '+d.title);continue;}}\n        else{var el=app.querySelector('[name=\"'+e.name+'\"]');v=(el.value||'').trim();\n          if(e.inputType==='number'){var k=Number(v);if(!v||!(k>=e.min&&k<=e.max)||Math.round(k)!==k)return err('Please enter your age ('+e.min+'–'+e.max+').');v=k;}\n          else if(!v){if(e.isRequired)return err('Please answer: '+d.title);continue;}}\n        if(e.otherValue!=null){var oth=app.querySelector('[name=\"'+e.name+'_other\"]'),has=Array.isArray(v)?v.indexOf(e.otherValue)>=0:v===e.otherValue;if(has&&!(oth.value||'').trim())return err('Please describe “Other”.');}\n        l.push([e.name,v]);}\n      var b=this;b.disabled=true;\n      Promise.all(l.map(function(a){return a[2]?SPSite.answer(a[0],a[1],a[2]):SPSite.answer(a[0],a[1]);})).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}done[p.name]=true;save('d',done);next();});\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>In the original study, 224 anglers were interviewed along the shores of Lake Tisza in spring 2024. For angling and for longer stays, most of them included picture 2 among their three choices, and picture 8 was ranked first most often; both show a narrow view of the water from a site shaded by vegetation. For short stays, picture 4, a grove-like site with a few trees, was chosen most often. Shade, suitability for angling and natural vegetation were the most frequent reasons.</p><p style=\"font-size:.82rem\">Pictures and questionnaire: Benkhard, B., Kiss, E., Csorba, P., Balla, D., Szabó, G., Mester, T., Vass, R., Fazekas, I., Babka, B., Balázs, D., &amp; Vasvári, M. (2025). Recreational and Landscape Preferences of Anglers in the Case of Lake Tisza. Land 14:600, doi:10.3390/land14030600.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){PAGES.forEach(function(p){if(p.elements.some(function(e){return m.indexOf(e.name)>=0;}))done[p.name]=false;});save('d',done);next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    try{SPEC=JSON.parse(document.getElementById('sp-scheme').textContent).survey;}catch(e){SPEC={pages:[]};}\n    PAGES=SPEC.pages;\n    PAGES.forEach(function(p){p.elements.forEach(function(e){var g=SPSite.getQuestion(e.name)||{};Q[e.name]={title:g.title||e.title,choices:(g.choices&&g.choices.length)?g.choices:e.choices};});});\n    (SPSite.getMedia('sites')||[]).forEach(function(f){files[f.name]=f;});\n    var a=(ctx&&ctx.answers)||{};done=load('d')||{};\n    done.intro=a.consent===true;\n    PAGES.forEach(function(p){if(p.name==='intro')return;var req=p.elements.filter(function(e){return e.isRequired;});if(req.length&&req.every(function(e){return a[e.name]!=null;}))done[p.name]=true;else if(req.length&&!req.every(function(e){return a[e.name]!=null;}))done[p.name]=false;});\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T14:23:29.236Z",
+   "mediaFolders": [
+    "sites"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T14:23:29.236Z"
+  },
+  "description": "Faithful replication of Benkhard et al. (2025), Land 14:600: anglers rank three of eight Lake Tisza shore pictures for angling, a longer stay and a shorter stay, explain why, and answer the paper's 19-question survey on visits, site-selection factors, seasons, other landscapes and socio-demographics.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2025-benkhard-lake/sites/picture_1__69db4e51-8e36-4de0-8f50-08cc5a300a9b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-benkhard-lake/sites/picture_1__69db4e51-8e36-4de0-8f50-08cc5a300a9b.jpg",
+   "name": "picture_1.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2025-benkhard-lake/sites/picture_1__69db4e51-8e36-4de0-8f50-08cc5a300a9b.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 26485,
+   "uploaded_bytes": 26485,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-benkhard-lake/sites/picture_2__d582f97a-0904-4c43-b58c-377962343261.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-benkhard-lake/sites/picture_2__d582f97a-0904-4c43-b58c-377962343261.jpg",
+   "name": "picture_2.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2025-benkhard-lake/sites/picture_2__d582f97a-0904-4c43-b58c-377962343261.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 36063,
+   "uploaded_bytes": 36063,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-benkhard-lake/sites/picture_3__9aafd4f5-8653-4db0-95cb-a8d7f15fda07.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-benkhard-lake/sites/picture_3__9aafd4f5-8653-4db0-95cb-a8d7f15fda07.jpg",
+   "name": "picture_3.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2025-benkhard-lake/sites/picture_3__9aafd4f5-8653-4db0-95cb-a8d7f15fda07.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 32607,
+   "uploaded_bytes": 32607,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-benkhard-lake/sites/picture_4__adc07621-fb96-4110-aaad-61c246428580.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-benkhard-lake/sites/picture_4__adc07621-fb96-4110-aaad-61c246428580.jpg",
+   "name": "picture_4.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2025-benkhard-lake/sites/picture_4__adc07621-fb96-4110-aaad-61c246428580.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 41239,
+   "uploaded_bytes": 41239,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-benkhard-lake/sites/picture_5__b4b88e8a-0839-47ed-97e4-cdeba2807096.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-benkhard-lake/sites/picture_5__b4b88e8a-0839-47ed-97e4-cdeba2807096.jpg",
+   "name": "picture_5.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2025-benkhard-lake/sites/picture_5__b4b88e8a-0839-47ed-97e4-cdeba2807096.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 34095,
+   "uploaded_bytes": 34095,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-benkhard-lake/sites/picture_6__0d17128e-ea99-4845-b4a9-83fd28e0ea0c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-benkhard-lake/sites/picture_6__0d17128e-ea99-4845-b4a9-83fd28e0ea0c.jpg",
+   "name": "picture_6.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2025-benkhard-lake/sites/picture_6__0d17128e-ea99-4845-b4a9-83fd28e0ea0c.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 30528,
+   "uploaded_bytes": 30528,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-benkhard-lake/sites/picture_7__52b6f93b-f013-414c-b122-42c77cf8289f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-benkhard-lake/sites/picture_7__52b6f93b-f013-414c-b122-42c77cf8289f.jpg",
+   "name": "picture_7.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2025-benkhard-lake/sites/picture_7__52b6f93b-f013-414c-b122-42c77cf8289f.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 31275,
+   "uploaded_bytes": 31275,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-benkhard-lake/sites/picture_8__1da97289-576a-48cc-b8dd-5dcfdbc2fb02.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-benkhard-lake/sites/picture_8__1da97289-576a-48cc-b8dd-5dcfdbc2fb02.jpg",
+   "name": "picture_8.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2025-benkhard-lake/sites/picture_8__1da97289-576a-48cc-b8dd-5dcfdbc2fb02.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 28786,
+   "uploaded_bytes": 28786,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Recreational and Landscape Preferences of Anglers in the Case of Lake Tisza",
+  "authors": [
+   "Borbála Benkhard",
+   "Emőke Kiss",
+   "Péter Csorba",
+   "Dániel Balla",
+   "György Szabó",
+   "Tamás Mester",
+   "Róbert Vass",
+   "István Fazekas",
+   "Beáta Babka",
+   "Dávid Balázs",
+   "Mária Vasvári"
+  ],
+  "year": 2025,
+  "venue": "Land",
+  "doi": "10.3390/land14030600",
+  "url": "https://doi.org/10.3390/land14030600"
+ }
+}

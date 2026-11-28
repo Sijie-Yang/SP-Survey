@@ -1,0 +1,253 @@
+{
+ "id": "2017-patching-random",
+ "name": "Random Environmental Walk Between Park Lights",
+ "description": "Method replication: the four photographs are the paper's own pictures of its four lampposts, but participants move between them on screen instead of walking between the real lights in a park after dark. Four outdoor lighting applications on lampposts numbered 1-4 along the path of a small formal garden in a municipal park in Malmö (1 clear ceramic metal halide, 2 frosted ceramic metal halide, 3 LED 3912 K, 4 LED 4051 K). Participants first see all four lampposts in order, then follow the paper's random environmental walking procedure with an on-screen four-sided die: a first throw sets the starting lamp; then, 40 times, the die is thrown again and the participant either walks to the lamp it shows if they prefer it to their current one (or stays, if it shows their current lamp), or throws again and must go to whichever lamp the second throw shows. Preference is the number of times each lamp is walked to. Age and gender are asked at the end. Rebuilt from Patching, Rahm, Jansson & Johansson (2017), A New Method of Random Environmental Walking for Assessing Behavioral Preferences for Different Lighting Applications, Frontiers in Psychology 8: 345, with the photographs cropped from its Figure 2 and the procedure steps from its text (CC BY 4.0). Image ids: L1-L4 (lamppost numbers). Each step is stored under walk (lamp after the step, keyed s01-s40) and decision (accept, stay or rethrow); start holds the first lamp. Analysis as in the paper: count the walks to each lamp per participant and compare lamps with a mixed model (participant random intercept) or chi-square; in the field test (80 adults) the rank order of walks was 3, 4, 2, 1, and walk counts were related to the perceived pleasantness and perceived comfort quality ratings. Differences from the original study: (1) photographs on a screen instead of the lit garden at night, and the photographs are not dark night views, so the test reflects the look of each lamppost and its setting rather than the light at night; (2) the Perceived Outdoor Lighting Quality scale, the perceived flicker rating and the eight-item pleasantness semantic differential are not included because the paper does not print their items; (3) the die is simulated on screen, and the instruction texts are ours, built from the paper's step-by-step procedure; (4) the age and gender questions are ours.",
+ "author": "Patching, Rahm, Jansson & Johansson",
+ "year": "2017",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "lighting",
+  "park",
+  "behavioural-preference",
+  "source:paper",
+  "modality:scene_photo",
+  "task:pairwise",
+  "task:custom_page",
+  "concept:preference",
+  "concept:comfort",
+  "participants:residents",
+  "sample:lt100",
+  "country:Sweden",
+  "city:Malmö"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3389/fpsyg.2017.00345",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T21:48:42.603+00:00",
+ "updatedAt": "2026-11-27T21:48:54.707+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "walk",
+    "elements": [
+     {
+      "name": "start",
+      "type": "radiogroup",
+      "title": "Starting lamp (first throw of the die)",
+      "choices": [
+       {
+        "text": "Lamp 1",
+        "value": "L1"
+       },
+       {
+        "text": "Lamp 2",
+        "value": "L2"
+       },
+       {
+        "text": "Lamp 3",
+        "value": "L3"
+       },
+       {
+        "text": "Lamp 4",
+        "value": "L4"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "walk",
+      "type": "radiogroup",
+      "title": "Lamp the participant is at after each step",
+      "choices": [
+       {
+        "text": "Lamp 1",
+        "value": "L1"
+       },
+       {
+        "text": "Lamp 2",
+        "value": "L2"
+       },
+       {
+        "text": "Lamp 3",
+        "value": "L3"
+       },
+       {
+        "text": "Lamp 4",
+        "value": "L4"
+       }
+      ],
+      "isRequired": true,
+      "description": "One answer per step, keyed s01-s40; shown = [current lamp, lamp offered by the die]. Counting these answers per lamp gives the walk counts."
+     },
+     {
+      "name": "decision",
+      "type": "radiogroup",
+      "title": "Decision at each step",
+      "choices": [
+       {
+        "text": "Walked to the lamp shown by the first throw",
+        "value": "accept"
+       },
+       {
+        "text": "Die showed the current lamp and the participant stayed",
+        "value": "stay"
+       },
+       {
+        "text": "Threw again and went to the lamp of the second throw",
+        "value": "rethrow"
+       }
+      ],
+      "isRequired": true,
+      "description": "Keyed s01-s40."
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "max": 110,
+      "min": 16,
+      "name": "age",
+      "type": "text",
+      "title": "How old are you?",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Random Environmental Walk Between Park Lights",
+  "locale": "en",
+  "spSite": {
+   "id": "site-b6d66d8cfb180a76",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Park Light Walk</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Random Environmental Walk Between Park Lights\",\n  \"description\": \"Method replication: the four photographs are the paper's own pictures of its four lampposts, but participants move between them on screen instead of walking between the real lights in a park after dark. Four outdoor lighting applications on lampposts numbered 1-4 along the path of a small formal garden in a municipal park in Malmö (1 clear ceramic metal halide, 2 frosted ceramic metal halide, 3 LED 3912 K, 4 LED 4051 K). Participants first see all four lampposts in order, then follow the paper's random environmental walking procedure with an on-screen four-sided die: a first throw sets the starting lamp; then, 40 times, the die is thrown again and the participant either walks to the lamp it shows if they prefer it to their current one (or stays, if it shows their current lamp), or throws again and must go to whichever lamp the second throw shows. Preference is the number of times each lamp is walked to. Age and gender are asked at the end. Rebuilt from Patching, Rahm, Jansson & Johansson (2017), A New Method of Random Environmental Walking for Assessing Behavioral Preferences for Different Lighting Applications, Frontiers in Psychology 8: 345, with the photographs cropped from its Figure 2 and the procedure steps from its text (CC BY 4.0). Image ids: L1-L4 (lamppost numbers). Each step is stored under walk (lamp after the step, keyed s01-s40) and decision (accept, stay or rethrow); start holds the first lamp. Analysis as in the paper: count the walks to each lamp per participant and compare lamps with a mixed model (participant random intercept) or chi-square; in the field test (80 adults) the rank order of walks was 3, 4, 2, 1, and walk counts were related to the perceived pleasantness and perceived comfort quality ratings. Differences from the original study: (1) photographs on a screen instead of the lit garden at night, and the photographs are not dark night views, so the test reflects the look of each lamppost and its setting rather than the light at night; (2) the Perceived Outdoor Lighting Quality scale, the perceived flicker rating and the eight-item pleasantness semantic differential are not included because the paper does not print their items; (3) the die is simulated on screen, and the instruction texts are ours, built from the paper's step-by-step procedure; (4) the age and gender questions are ours.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"lights\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"walk\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"start\",\n      \"title\": \"Starting lamp (first throw of the die)\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"L1\",\n        \"text\": \"Lamp 1\"\n       },\n       {\n        \"value\": \"L2\",\n        \"text\": \"Lamp 2\"\n       },\n       {\n        \"value\": \"L3\",\n        \"text\": \"Lamp 3\"\n       },\n       {\n        \"value\": \"L4\",\n        \"text\": \"Lamp 4\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"walk\",\n      \"title\": \"Lamp the participant is at after each step\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"L1\",\n        \"text\": \"Lamp 1\"\n       },\n       {\n        \"value\": \"L2\",\n        \"text\": \"Lamp 2\"\n       },\n       {\n        \"value\": \"L3\",\n        \"text\": \"Lamp 3\"\n       },\n       {\n        \"value\": \"L4\",\n        \"text\": \"Lamp 4\"\n       }\n      ],\n      \"description\": \"One answer per step, keyed s01-s40; shown = [current lamp, lamp offered by the die]. Counting these answers per lamp gives the walk counts.\"\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"decision\",\n      \"title\": \"Decision at each step\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"accept\",\n        \"text\": \"Walked to the lamp shown by the first throw\"\n       },\n       {\n        \"value\": \"stay\",\n        \"text\": \"Die showed the current lamp and the participant stayed\"\n       },\n       {\n        \"value\": \"rethrow\",\n        \"text\": \"Threw again and went to the lamp of the second throw\"\n       }\n      ],\n      \"description\": \"Keyed s01-s40.\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"min\": 16,\n      \"max\": 110\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"park-light-walk-original\">{\"source\": \"Patching, Rahm, Jansson & Johansson (2017) Frontiers in Psychology 8: 345\", \"n\": 80, \"steps\": 40, \"lamps\": {\"L1\": \"clear CMH, CCT 2832 K, CRI 89\", \"L2\": \"frosted CMH, CCT 2981 K, CRI 82\", \"L3\": \"LED, CCT 3912 K, CRI 81\", \"L4\": \"LED, CCT 4051 K, CRI 64\"}, \"results\": {\"walk_rank\": [\"L3\", \"L4\", \"L2\", \"L1\"], \"pleasantness_rank\": [\"L3\", \"L2\", \"L4\", \"L1\"]}}</script>\n<style>\n:root{--bg:#eef0f3;--card:#fff;--ink:#1c2128;--muted:#5a626d;--accent:#2f5b8a;--line:#d6dbe2;--warn:#b3261e;--sel:#e1eaf5}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:760px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.5rem;margin:0 0 8px}h2{font-size:1.15rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:13px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn.alt{background:#fff;color:var(--accent);border:2px solid var(--accent)}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.prog{font-size:.88rem;color:var(--muted);margin-bottom:8px}\n.bar{height:4px;background:var(--line);border-radius:2px;margin-bottom:12px}.bar i{display:block;height:100%;background:var(--accent);border-radius:2px}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.lamp{text-align:center}\n.lamp img{width:100%;max-height:52vh;object-fit:contain;border-radius:8px;background:#ccc;display:block}\n.lamp .cap{font-size:.9rem;color:var(--muted);margin-top:4px}\n.lamp.here .cap b{color:var(--accent)}\n.die{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:8px;background:var(--accent);color:#fff;font-weight:700;font-size:1.3rem;margin-right:8px;vertical-align:middle}\n.acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}\n.tour{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}\n.tour img{width:100%;border-radius:6px;display:block}\n.tour div{text-align:center;font-size:.85rem;color:var(--muted)}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:110px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:760px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs and procedure: Patching, Rahm, Jansson &amp; Johansson (2017), Frontiers in Psychology 8: 345, Figure 2 (doi:10.3389/fpsyg.2017.00345, CC BY 4.0).</footer>\n<script>\n(function(){\n  var KEY='park-light-walk:state', STEPS=40, IDS=['L1','L2','L3','L4'];\n  var app=document.getElementById('app'), Q={}, files={}, st=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function send(list,b,next){if(b)b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}next();});}\n  function val(name){var x=app.querySelector('input[name=\"'+name+'\"]:checked');return x?x.value:null;}\n  function die(){return IDS[Math.floor(Math.random()*4)];}\n  function num(id){return id.slice(1);}\n  function fresh(){return {step:'intro',cur:null,k:0,phase:'first',offer:null,second:null};}\n  function lamp(id,cap,here){return '<div class=\"lamp'+(here?' here':'')+'\"><img alt=\"Lamp '+num(id)+'\" src=\"'+esc(files[id].url)+'\"><div class=\"cap\">'+cap+'</div></div>';}\n  function intro(){\n    app.innerHTML='<h1>A walk between four park lights</h1><p>Four lampposts, numbered 1 to 4, stand along the path of a small garden in a city park. Imagine you are walking there in the evening. You will move between the lamps many times, guided by a four-sided die, and choose where you would rather be.</p>'+\n      '<div class=\"card\"><div class=\"tour\">'+IDS.map(function(id){return '<div><img alt=\"Lamp '+num(id)+'\" src=\"'+esc(files[id].url)+'\">Lamp '+num(id)+'</div>';}).join('')+'</div></div>'+\n      '<div class=\"card\"><p class=\"qt\" style=\"color:var(--ink)\"><b>How it works</b></p><p>1. The die is thrown and you go to the lamp with that number.<br>2. The die is thrown again. If you prefer the lamp it shows to the lamp where you are, walk there (if it shows your own lamp, you may stay). Otherwise, throw the die again: you then go to whatever lamp the second throw shows.<br>3. This is repeated '+STEPS+' times. It takes about 5 minutes.</p><label class=\"opt\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Throw the die</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var s=die();send([SPSite.answer('consent',true),SPSite.answer('start',s,{shown:[files[s].name]})],this,function(){st.cur=s;st.step='walk';st.phase='first';st.offer=die();st.second=null;save();route();});};\n  }\n  function head(){return '<div class=\"prog\">Step '+(st.k+1)+' of '+STEPS+'</div><div class=\"bar\"><i style=\"width:'+Math.round(100*st.k/STEPS)+'%\"></i></div>';}\n  function record(to,dec,offered,b){\n    var key='s'+(st.k<9?'0':'')+(st.k+1),m={key:key,shown:[files[st.cur].name,files[offered].name]};\n    send([SPSite.answer('walk',to,m),SPSite.answer('decision',dec,{key:key})],b,function(){st.cur=to;st.k++;st.phase='first';st.offer=die();st.second=null;save();route();});\n  }\n  function walk(){\n    if(st.k>=STEPS){st.step='about';save();return route();}\n    var cur=st.cur,o=st.offer;\n    if(st.phase==='first'){\n      var same=(o===cur);\n      app.innerHTML=head()+'<div class=\"card\"><p style=\"color:var(--ink)\"><span class=\"die\">'+num(o)+'</span>The die shows <b>lamp '+num(o)+'</b>'+(same?', the lamp where you are now.':'.')+'</p><div class=\"pair\">'+lamp(cur,'You are at <b>lamp '+num(cur)+'</b>',true)+lamp(o,'Die: lamp '+num(o))+'</div>'+\n        '<div class=\"acts\"><button class=\"btn\" id=\"a\">'+(same?'Stay at lamp '+num(o):'Walk to lamp '+num(o))+'</button><button class=\"btn alt\" id=\"b\">Throw again</button></div><div class=\"err\"></div></div>';\n      document.getElementById('a').onclick=function(){record(o,same?'stay':'accept',o,this);};\n      document.getElementById('b').onclick=function(){st.phase='second';st.second=die();save();route();};\n      return;\n    }\n    var z=st.second;\n    app.innerHTML=head()+'<div class=\"card\"><p style=\"color:var(--ink)\"><span class=\"die\">'+num(z)+'</span>The second throw shows <b>lamp '+num(z)+'</b>. '+(z===cur?'That is where you are, so you stay.':'You go there.')+'</p><div class=\"pair\">'+lamp(cur,'You are at <b>lamp '+num(cur)+'</b>',true)+lamp(z,'Die: lamp '+num(z))+'</div>'+\n      '<div class=\"acts\"><button class=\"btn\" id=\"a\">'+(z===cur?'Stay at lamp '+num(z):'Walk to lamp '+num(z))+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('a').onclick=function(){record(z,'rethrow',z,this);};\n  }\n  function about(){\n    app.innerHTML='<h2>About you</h2><div class=\"card\"><div><b>'+esc(Q.age.title)+'</b><br><input type=\"number\" id=\"age\" min=\"16\" max=\"110\"></div><div style=\"margin-top:16px\"><b>'+esc(Q.gender.title)+'</b>'+(Q.gender.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"gender\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Finish</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){var age=Number(document.getElementById('age').value),g=val('gender');if(!(age>=16&&age<=110))return err('Please enter your age.');if(!g)return err('Please choose your gender.');\n      send([SPSite.answer('age',age),SPSite.answer('gender',g)],this,function(){st.step='done';save();route();});};\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st=fresh();save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  function route(){var s=st.step;window.scrollTo(0,0);if(s==='walk')return walk();if(s==='about')return about();if(s==='done')return finish();intro();}\n  SPSite.onReady(function(ctx){\n    ['consent','start','walk','decision','age','gender'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('lights')||[]).forEach(function(f){files[f.name.replace(/\\.[^.]+$/,'')]=f;});\n    var need=IDS.filter(function(k){return !files[k];});\n    if(need.length){app.innerHTML='<h1>Images missing</h1><p>Upload '+esc(need.join(', '))+' (.jpg) to the media folder \"lights\".</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    var a=(ctx&&ctx.answers)||{};\n    if(!(st&&st.step)||a.consent!==true)st=fresh();\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T21:48:20.076Z",
+   "mediaFolders": [
+    "lights"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T21:48:20.076Z"
+  },
+  "description": "Method replication: the four photographs are the paper's own pictures of its four lampposts, but participants move between them on screen instead of walking between the real lights in a park after dark. Four outdoor lighting applications on lampposts numbered 1-4 along the path of a small formal garden in a municipal park in Malmö (1 clear ceramic metal halide, 2 frosted ceramic metal halide, 3 LED 3912 K, 4 LED 4051 K). Participants first see all four lampposts in order, then follow the paper's random environmental walking procedure with an on-screen four-sided die: a first throw sets the starting lamp; then, 40 times, the die is thrown again and the participant either walks to the lamp it shows if they prefer it to their current one (or stays, if it shows their current lamp), or throws again and must go to whichever lamp the second throw shows. Preference is the number of times each lamp is walked to. Age and gender are asked at the end. Rebuilt from Patching, Rahm, Jansson & Johansson (2017), A New Method of Random Environmental Walking for Assessing Behavioral Preferences for Different Lighting Applications, Frontiers in Psychology 8: 345, with the photographs cropped from its Figure 2 and the procedure steps from its text (CC BY 4.0). Image ids: L1-L4 (lamppost numbers). Each step is stored under walk (lamp after the step, keyed s01-s40) and decision (accept, stay or rethrow); start holds the first lamp. Analysis as in the paper: count the walks to each lamp per participant and compare lamps with a mixed model (participant random intercept) or chi-square; in the field test (80 adults) the rank order of walks was 3, 4, 2, 1, and walk counts were related to the perceived pleasantness and perceived comfort quality ratings. Differences from the original study: (1) photographs on a screen instead of the lit garden at night, and the photographs are not dark night views, so the test reflects the look of each lamppost and its setting rather than the light at night; (2) the Perceived Outdoor Lighting Quality scale, the perceived flicker rating and the eight-item pleasantness semantic differential are not included because the paper does not print their items; (3) the die is simulated on screen, and the instruction texts are ours, built from the paper's step-by-step procedure; (4) the age and gender questions are ours.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2017-patching-random/lights/L1__a570326e-13ca-42c9-9d84-c0e38c39f457.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-patching-random/lights/L1__a570326e-13ca-42c9-9d84-c0e38c39f457.jpg",
+   "name": "L1.jpg",
+   "type": "image",
+   "folder": "lights",
+   "media_id": "templates/2017-patching-random/lights/L1__a570326e-13ca-42c9-9d84-c0e38c39f457.jpg",
+   "logicalFolder": "lights",
+   "original_bytes": 93388,
+   "uploaded_bytes": 93388,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-patching-random/lights/L2__689b3c61-f4fb-476b-a46c-94af33cd30b5.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-patching-random/lights/L2__689b3c61-f4fb-476b-a46c-94af33cd30b5.jpg",
+   "name": "L2.jpg",
+   "type": "image",
+   "folder": "lights",
+   "media_id": "templates/2017-patching-random/lights/L2__689b3c61-f4fb-476b-a46c-94af33cd30b5.jpg",
+   "logicalFolder": "lights",
+   "original_bytes": 98998,
+   "uploaded_bytes": 98998,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-patching-random/lights/L3__8ad14a91-c6c3-43a9-8f87-dbcf23e33e52.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-patching-random/lights/L3__8ad14a91-c6c3-43a9-8f87-dbcf23e33e52.jpg",
+   "name": "L3.jpg",
+   "type": "image",
+   "folder": "lights",
+   "media_id": "templates/2017-patching-random/lights/L3__8ad14a91-c6c3-43a9-8f87-dbcf23e33e52.jpg",
+   "logicalFolder": "lights",
+   "original_bytes": 108552,
+   "uploaded_bytes": 108552,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-patching-random/lights/L4__2a03d73e-2777-4f1d-91ce-80e09e8a8edd.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-patching-random/lights/L4__2a03d73e-2777-4f1d-91ce-80e09e8a8edd.jpg",
+   "name": "L4.jpg",
+   "type": "image",
+   "folder": "lights",
+   "media_id": "templates/2017-patching-random/lights/L4__2a03d73e-2777-4f1d-91ce-80e09e8a8edd.jpg",
+   "logicalFolder": "lights",
+   "original_bytes": 98440,
+   "uploaded_bytes": 98440,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "A New Method of Random Environmental Walking for Assessing Behavioral Preferences for Different Lighting Applications.",
+  "authors": [
+   "Patching GR",
+   "Rahm J",
+   "Jansson M",
+   "Johansson M"
+  ],
+  "year": 2017,
+  "venue": "Frontiers in Psychology",
+  "doi": "10.3389/fpsyg.2017.00345",
+  "url": "https://doi.org/10.3389/fpsyg.2017.00345"
+ }
+}

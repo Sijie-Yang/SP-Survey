@@ -1,0 +1,529 @@
+{
+ "id": "2021-schirpke-mountain",
+ "name": "Mountain Lakes: Visual Preferences",
+ "description": "Faithful replication of the photo-based online questionnaire in Schirpke, U., Scolozzi, R., & Tappeiner, U. (2021). \"A gem among the rocks\"—Identifying and measuring visual preferences for mountain lakes. Water 13(9):1151. https://doi.org/10.3390/w13091151\n\nAfter the paper's definition of a mountain lake (\"smaller-sized natural lakes, which are located at least 1000 meters above sea level\"), participants answer the open question \"During an excursion you pass by a natural mountain lake. What best defines the characteristics of this lake?\". They then see the paper's six picture sets one by one, with the images of each set in random order, and choose the image they prefer: (1) water clarity, 2 images; (2) water colour, 4; (3) presence of algae, 3; (4) lake shore at lower altitudes, 4; (5) lake shore at higher altitudes, 4; (6) surrounding land cover, 4. Last come optional questions on gender, age, first language, relation to the Alps, time spent in nature and lake visits per year. Image ids follow the paper's Figure 3 (set2_a = image 2a, …).\n\nOriginal study: 526 people reached through Alpine clubs and limnology networks in Austria, Germany and Italy (online, July–December 2020). Most preferred clear water (1a, 83.5%), blue water (2a/2b), no algae (3a), shrubs or grass with rocks at lower shores (4b/4d), large rocks at higher shores (5a, 70%) and forest around the lake (6d, 47%); preferences for the water were very similar across socio-cultural groups.\n\nAnalysis as in the paper: share of choices per image within each set, paired t-tests between images, and comparisons across the socio-cultural groups; code the open answers into lake characteristics.\n\nDifferences from the original study: (1) the images are cropped from the paper's Figure 3, so the top strip carrying the result labels is removed and each image is slightly smaller than in the questionnaire; (2) English only (the original also ran in German and Italian); (3) the wording of the socio-cultural questions is ours, built from the paper's Table 3 classes (e.g. lake affinity is asked as number of lake visits per year so the paper's split can be made); (4) the picture-set topics are not shown to participants.\n\nImages: Figure 3 of the open-access article (CC BY 4.0), shown with credit for research; the template is removed if the authors object.",
+ "author": "Schirpke, Scolozzi & Tappeiner",
+ "year": "2021",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "lakes",
+  "water",
+  "Alps",
+  "landscape preference",
+  "source:paper",
+  "modality:scene_photo",
+  "task:choose_from_set",
+  "task:open_ended",
+  "task:questionnaire",
+  "concept:preference",
+  "concept:aesthetics",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:Austria",
+  "country:Germany",
+  "country:Italy",
+  "city:European Alps"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/w13091151",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T12:52:28.109+00:00",
+ "updatedAt": "2026-11-27T12:52:41.066+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I take part voluntarily and know I can stop at any time.",
+      "isRequired": true
+     },
+     {
+      "name": "lake_characteristics",
+      "type": "comment",
+      "title": "During an excursion you pass by a natural mountain lake. What best defines the characteristics of this lake? Please briefly describe these in a few words.",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "pictures",
+    "elements": [
+     {
+      "name": "picture_sets",
+      "type": "custom",
+      "items": [
+       {
+        "id": "set1",
+        "text": "Water clarity",
+        "options": [
+         "set1_a",
+         "set1_b"
+        ]
+       },
+       {
+        "id": "set2",
+        "text": "Water colour",
+        "options": [
+         "set2_a",
+         "set2_b",
+         "set2_c",
+         "set2_d"
+        ]
+       },
+       {
+        "id": "set3",
+        "text": "Presence of algae",
+        "options": [
+         "set3_a",
+         "set3_b",
+         "set3_c"
+        ]
+       },
+       {
+        "id": "set4",
+        "text": "Lake shore",
+        "options": [
+         "set4_a",
+         "set4_b",
+         "set4_c",
+         "set4_d"
+        ]
+       },
+       {
+        "id": "set5",
+        "text": "Lake shore",
+        "options": [
+         "set5_a",
+         "set5_b",
+         "set5_c",
+         "set5_d"
+        ]
+       },
+       {
+        "id": "set6",
+        "text": "Surrounding land cover",
+        "options": [
+         "set6_a",
+         "set6_b",
+         "set6_c",
+         "set6_d"
+        ]
+       }
+      ],
+      "title": "Which image do you prefer?",
+      "isRequired": true,
+      "description": "One trial per picture set (key set1 … set6, in the paper's order), images in random order within each set. Value: the chosen image id, e.g. 'set2_a', with letters as in the paper's Figure 3 (set1 water clarity a–b, set2 water colour a–d, set3 algae a–c, set4 lake shore at lower altitudes a–d, set5 lake shore at higher altitudes a–d, set6 surrounding land cover a–d)."
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": 1
+       },
+       {
+        "text": "Male",
+        "value": 2
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": 3
+       }
+      ],
+      "isRequired": false
+     },
+     {
+      "name": "age",
+      "type": "text",
+      "title": "Age (years)",
+      "inputType": "number",
+      "isRequired": false
+     },
+     {
+      "name": "cultural_background",
+      "type": "radiogroup",
+      "title": "Which is your first language?",
+      "choices": [
+       {
+        "text": "German",
+        "value": 1
+       },
+       {
+        "text": "Italian",
+        "value": 2
+       },
+       {
+        "text": "English",
+        "value": 3
+       },
+       {
+        "text": "Other",
+        "value": 4
+       }
+      ],
+      "isRequired": false
+     },
+     {
+      "name": "relation_to_alps",
+      "type": "radiogroup",
+      "title": "What is your relation to the Alps?",
+      "choices": [
+       {
+        "text": "I live in and grew up in the Alps",
+        "value": 1
+       },
+       {
+        "text": "I visit the Alps primarily as a tourist",
+        "value": 2
+       },
+       {
+        "text": "Other",
+        "value": 3
+       }
+      ],
+      "isRequired": false
+     },
+     {
+      "name": "nature_connectedness",
+      "type": "radiogroup",
+      "title": "How often do you spend time in nature?",
+      "choices": [
+       {
+        "text": "At least several times a week",
+        "value": 1
+       },
+       {
+        "text": "Several times a month",
+        "value": 2
+       },
+       {
+        "text": "Less than several times a month",
+        "value": 3
+       }
+      ],
+      "isRequired": false
+     },
+     {
+      "name": "lake_visits",
+      "type": "text",
+      "title": "About how many times a year do you visit lakes?",
+      "inputType": "number",
+      "isRequired": false
+     }
+    ]
+   }
+  ],
+  "title": "Mountain Lakes: Visual Preferences",
+  "locale": "en",
+  "spSite": {
+   "id": "site-a1d738a6095c1c98",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Mountain Lakes Survey</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Mountain Lakes: Visual Preferences\",\n  \"description\": \"Faithful replication of the photo-based online questionnaire in Schirpke, Scolozzi & Tappeiner (2021), Water 13:1151: describe a mountain lake in a few words, then choose the preferred image in six picture sets of Alpine lakes (water clarity, water colour, algae, two lake-shore sets, surrounding land cover).\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"lakes\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"boolean\",\n      \"name\": \"consent\",\n      \"title\": \"I take part voluntarily and know I can stop at any time.\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"lake_characteristics\",\n      \"title\": \"During an excursion you pass by a natural mountain lake. What best defines the characteristics of this lake? Please briefly describe these in a few words.\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"pictures\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"picture_sets\",\n      \"title\": \"Which image do you prefer?\",\n      \"isRequired\": true,\n      \"description\": \"One trial per picture set (key set1 … set6, in the paper's order), images in random order within each set. Value: the chosen image id, e.g. 'set2_a', with letters as in the paper's Figure 3 (set1 water clarity a–b, set2 water colour a–d, set3 algae a–c, set4 lake shore at lower altitudes a–d, set5 lake shore at higher altitudes a–d, set6 surrounding land cover a–d).\",\n      \"items\": [\n       {\n        \"id\": \"set1\",\n        \"text\": \"Water clarity\",\n        \"options\": [\n         \"set1_a\",\n         \"set1_b\"\n        ]\n       },\n       {\n        \"id\": \"set2\",\n        \"text\": \"Water colour\",\n        \"options\": [\n         \"set2_a\",\n         \"set2_b\",\n         \"set2_c\",\n         \"set2_d\"\n        ]\n       },\n       {\n        \"id\": \"set3\",\n        \"text\": \"Presence of algae\",\n        \"options\": [\n         \"set3_a\",\n         \"set3_b\",\n         \"set3_c\"\n        ]\n       },\n       {\n        \"id\": \"set4\",\n        \"text\": \"Lake shore\",\n        \"options\": [\n         \"set4_a\",\n         \"set4_b\",\n         \"set4_c\",\n         \"set4_d\"\n        ]\n       },\n       {\n        \"id\": \"set5\",\n        \"text\": \"Lake shore\",\n        \"options\": [\n         \"set5_a\",\n         \"set5_b\",\n         \"set5_c\",\n         \"set5_d\"\n        ]\n       },\n       {\n        \"id\": \"set6\",\n        \"text\": \"Surrounding land cover\",\n        \"options\": [\n         \"set6_a\",\n         \"set6_b\",\n         \"set6_c\",\n         \"set6_d\"\n        ]\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"age\",\n      \"inputType\": \"number\",\n      \"title\": \"Age (years)\",\n      \"isRequired\": false\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"cultural_background\",\n      \"title\": \"Which is your first language?\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"German\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Italian\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"English\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"relation_to_alps\",\n      \"title\": \"What is your relation to the Alps?\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"I live in and grew up in the Alps\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"I visit the Alps primarily as a tourist\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"nature_connectedness\",\n      \"title\": \"How often do you spend time in nature?\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"At least several times a week\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Several times a month\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Less than several times a month\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"lake_visits\",\n      \"inputType\": \"number\",\n      \"title\": \"About how many times a year do you visit lakes?\",\n      \"isRequired\": false\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#eef3f4;--card:#fff;--ink:#17222a;--muted:#55636d;--accent:#1f5f7a;--accent-ink:#fff;--line:#d3dde1;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:900px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.3rem;margin:0 0 10px}\np{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q>b{display:block;margin-bottom:4px}.opt-note{font-weight:400;color:var(--muted);font-size:.85rem}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer;background:var(--card)}\ntextarea,input[type=text]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%;background:#fff;color:var(--ink)}\ntextarea{min-height:80px}input[type=text]{max-width:200px}\n.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}\n.t{color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}\n.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;flex:1;margin-left:12px;max-width:260px}.bar>i{display:block;height:100%;background:var(--accent)}\n.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}\n.tile{position:relative;border:4px solid transparent;border-radius:12px;padding:0;background:none;cursor:pointer;overflow:hidden;display:block}\n.tile img{width:100%;aspect-ratio:62/33;object-fit:cover;display:block}\n.tile .no{position:absolute;left:6px;top:6px;background:#fff;color:#000;font-weight:700;font-size:.85rem;padding:0 7px;border-radius:5px}\n.tile.sel{border-color:var(--accent)}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:900px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n@media (max-width:560px){.grid{grid-template-columns:1fr}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs: Schirpke, Scolozzi &amp; Tappeiner (2021), Water 13:1151, doi:10.3390/w13091151, Figure 3 (CC BY 4.0), cropped to remove the result labels. Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='mountainlakes2021:';\n  var app=document.getElementById('app'), Q={}, files={}, ans={}, done={}, SETS=[], orders={}, SPEC=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='visible';}}\n  function hideErr(){var e=app.querySelector('.err');if(e)e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function q(n){return Q[n]||{};}\n  function saveAll(l,b,cb){Promise.all(l.map(function(a){return SPSite.answer(a[0],a[1]);})).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}cb();});}\n  function page(html,btn,cb){\n    app.innerHTML=html+'<div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">'+esc(btn||'Continue')+'</button></div><div class=\"err\"></div>';\n    document.getElementById('go').onclick=cb;app.onchange=hideErr;\n  }\n  function next(){\n    window.scrollTo(0,0);\n    if(!ans.intro)return intro();\n    for(var i=0;i<SETS.length;i++){if(!done[SETS[i].id])return set(i);}\n    if(!ans.about)return about();\n    finish();\n  }\n  function intro(){\n    var miss=SETS.some(function(s){return s.options.some(function(o){return !files[o+'.jpg'];});});\n    if(miss){app.innerHTML='<h1>Pictures missing</h1><p>Media folder lakes must hold set1_a.jpg … set6_d.jpg.</p>';return;}\n    page('<h1>Mountain lakes</h1><p>This survey is about what people like in mountain lakes. In this survey, mountain lakes are smaller-sized natural lakes, which are located at least 1000 meters above sea level. It takes about 5 minutes. Participation is anonymous and voluntary, you can stop at any time, and your answers are treated confidentially.</p>'+\n      '<div class=\"card\"><div class=\"q\" style=\"margin-top:0\"><b>'+esc(q('lake_characteristics').title)+'</b><textarea name=\"lake_characteristics\"></textarea></div>'+\n      '<label class=\"opt\" style=\"margin-top:14px\"><input type=\"checkbox\" id=\"ok\"> '+esc(q('consent').title)+'</label></div>','Start',function(){\n      var t=app.querySelector('textarea').value.trim();if(!t)return err('Please describe the lake in a few words.');\n      if(!document.getElementById('ok').checked)return err('Please confirm that you take part voluntarily.');\n      var b=this;b.disabled=true;saveAll([['consent',true],['lake_characteristics',t]],b,function(){ans.intro=true;save('a',ans);next();});\n    });\n  }\n  function set(i){\n    var s=SETS[i], ord=orders[s.id], pick=null, n=0;SETS.forEach(function(x){if(done[x.id])n++;});\n    page('<div class=\"top\"><span class=\"t\">Picture set '+(n+1)+' of '+SETS.length+'</span><div class=\"bar\"><i style=\"width:'+(100*n/SETS.length)+'%\"></i></div></div>'+\n      '<div class=\"card\"><h1>'+esc(q('picture_sets').title)+'</h1><p>Tap the image you prefer.</p><div class=\"grid\">'+ord.map(function(o,j){return '<button type=\"button\" class=\"tile\" data-o=\"'+o+'\" aria-label=\"Image '+(j+1)+'\"><img alt=\"Mountain lake image '+(j+1)+'\" src=\"'+esc(files[o+'.jpg'].url)+'\"><span class=\"no\">'+(j+1)+'</span></button>';}).join('')+'</div></div>','Next',function(){\n      if(!pick)return err('Please tap the image you prefer.');\n      var b=this;b.disabled=true;\n      SPSite.answer('picture_sets',pick,{key:s.id,shown:ord.map(function(o){return o+'.jpg';})}).then(function(r){if(!ok(r)){b.disabled=false;return err(r.error);}done[s.id]=true;next();});\n    });\n    [].forEach.call(app.querySelectorAll('.tile'),function(t){t.onclick=function(){pick=t.dataset.o;hideErr();[].forEach.call(app.querySelectorAll('.tile'),function(x){x.classList.toggle('sel',x===t);});};});\n  }\n  function about(){\n    var ns=['gender','age','cultural_background','relation_to_alps','nature_connectedness','lake_visits'];\n    var h=ns.map(function(n){var d=q(n);var head='<b>'+esc(d.title)+' <span class=\"opt-note\">(optional)</span></b>';\n      if(d.type!=='radiogroup')return '<div class=\"q\">'+head+'<input type=\"text\" inputmode=\"numeric\" name=\"'+n+'\"></div>';\n      return '<div class=\"q\">'+head+(d.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}).join('');\n    page('<h1>About you</h1><p>These questions are optional.</p><div class=\"card\">'+h+'</div>','Finish',function(){\n      var l=[];for(var i=0;i<ns.length;i++){var n=ns[i];\n        if(q(n).type==='radiogroup'){var x=app.querySelector('input[name=\"'+n+'\"]:checked');if(x)l.push([n,Number(x.value)]);}\n        else{var v=app.querySelector('input[name=\"'+n+'\"]').value.trim();if(v){var num=Number(v);if(isNaN(num)||num<0||num>(n==='age'?110:1000))return err('Please enter a number: '+q(n).title);l.push([n,num]);}}}\n      var b=this;b.disabled=true;saveAll(l,b,function(){ans.about=true;save('a',ans);next();});\n    });\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>The six picture sets varied water clarity, water colour, algae, the lake shore and the land cover around Alpine lakes. In the original study with 526 people, most preferred clear, blue water without algae, large rocks at the shore and forest around the lake, and preferences for the water were very similar across groups.</p><p style=\"font-size:.82rem\">Photographs and questions: Schirpke, U., Scolozzi, R., &amp; Tappeiner, U. (2021). “A gem among the rocks”—Identifying and measuring visual preferences for mountain lakes. Water 13:1151, doi:10.3390/w13091151.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){if(x==='picture_sets')done={};else if(x==='consent'||x==='lake_characteristics')ans.intro=false;else ans.about=false;});save('a',ans);next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    try{SPEC=JSON.parse(document.getElementById('sp-scheme').textContent).survey;}catch(e){SPEC={pages:[]};}\n    SPEC.pages.forEach(function(p){p.elements.forEach(function(e){var g=SPSite.getQuestion(e.name)||{};Q[e.name]={type:e.type,title:g.title||e.title,isRequired:e.isRequired,choices:(g.choices&&g.choices.length)?g.choices:e.choices};if(e.name==='picture_sets')SETS=e.items;});});\n    (SPSite.getMedia('lakes')||[]).forEach(function(f){files[f.name]=f;});\n    orders=load('orders')||{};SETS.forEach(function(s){if(!orders[s.id]||orders[s.id].length!==s.options.length)orders[s.id]=shuffle(s.options);});save('orders',orders);\n    var a=(ctx&&ctx.answers)||{};ans=load('a')||{};\n    ((a.picture_sets&&a.picture_sets.trials)||[]).forEach(function(t){if(t.key)done[t.key]=true;});\n    ans.intro=a.consent===true&&a.lake_characteristics!=null;\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T12:51:58.731Z",
+   "mediaFolders": [
+    "lakes"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T12:51:58.731Z"
+  },
+  "description": "Faithful replication of the photo-based online questionnaire in Schirpke, Scolozzi & Tappeiner (2021), Water 13:1151: describe a mountain lake in a few words, then choose the preferred image in six picture sets of Alpine lakes (water clarity, water colour, algae, two lake-shore sets, surrounding land cover).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set1_a__1d9976c8-1f1f-457d-9d22-72c0bc88a066.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set1_a__1d9976c8-1f1f-457d-9d22-72c0bc88a066.jpg",
+   "name": "set1_a.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set1_a__1d9976c8-1f1f-457d-9d22-72c0bc88a066.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 46653,
+   "uploaded_bytes": 46653,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set1_b__2de3d65d-bdf9-4b7a-98d3-0d7a2fc90d12.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set1_b__2de3d65d-bdf9-4b7a-98d3-0d7a2fc90d12.jpg",
+   "name": "set1_b.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set1_b__2de3d65d-bdf9-4b7a-98d3-0d7a2fc90d12.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 27339,
+   "uploaded_bytes": 27339,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set2_a__38fbb039-f4a1-4935-af0b-19c4fd0d6f14.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set2_a__38fbb039-f4a1-4935-af0b-19c4fd0d6f14.jpg",
+   "name": "set2_a.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set2_a__38fbb039-f4a1-4935-af0b-19c4fd0d6f14.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 13279,
+   "uploaded_bytes": 13279,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set2_b__b81831e0-e1c2-48d5-bbb0-91912512fc28.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set2_b__b81831e0-e1c2-48d5-bbb0-91912512fc28.jpg",
+   "name": "set2_b.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set2_b__b81831e0-e1c2-48d5-bbb0-91912512fc28.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 20522,
+   "uploaded_bytes": 20522,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set2_c__a0c6d4aa-9116-4a34-b208-cb8694d77156.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set2_c__a0c6d4aa-9116-4a34-b208-cb8694d77156.jpg",
+   "name": "set2_c.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set2_c__a0c6d4aa-9116-4a34-b208-cb8694d77156.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 20342,
+   "uploaded_bytes": 20342,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set2_d__794e1a32-0f18-41aa-992d-6fec3a252fc1.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set2_d__794e1a32-0f18-41aa-992d-6fec3a252fc1.jpg",
+   "name": "set2_d.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set2_d__794e1a32-0f18-41aa-992d-6fec3a252fc1.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 20056,
+   "uploaded_bytes": 20056,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set3_a__12da4687-cda2-496a-b5a7-d6fbb03f9689.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set3_a__12da4687-cda2-496a-b5a7-d6fbb03f9689.jpg",
+   "name": "set3_a.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set3_a__12da4687-cda2-496a-b5a7-d6fbb03f9689.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 56585,
+   "uploaded_bytes": 56585,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set3_b__575bdf26-fcb3-4991-a6bd-b93f5d559969.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set3_b__575bdf26-fcb3-4991-a6bd-b93f5d559969.jpg",
+   "name": "set3_b.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set3_b__575bdf26-fcb3-4991-a6bd-b93f5d559969.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 46173,
+   "uploaded_bytes": 46173,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set3_c__646f5039-5072-497e-8076-a8a775f97f6d.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set3_c__646f5039-5072-497e-8076-a8a775f97f6d.jpg",
+   "name": "set3_c.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set3_c__646f5039-5072-497e-8076-a8a775f97f6d.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 40450,
+   "uploaded_bytes": 40450,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set4_a__47f0bef8-21b8-4aa6-b2e1-06f283a02f53.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set4_a__47f0bef8-21b8-4aa6-b2e1-06f283a02f53.jpg",
+   "name": "set4_a.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set4_a__47f0bef8-21b8-4aa6-b2e1-06f283a02f53.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 46296,
+   "uploaded_bytes": 46296,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set4_b__9d50c540-a85f-41db-b7d7-583dd89a9cee.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set4_b__9d50c540-a85f-41db-b7d7-583dd89a9cee.jpg",
+   "name": "set4_b.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set4_b__9d50c540-a85f-41db-b7d7-583dd89a9cee.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 66757,
+   "uploaded_bytes": 66757,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set4_c__763e9225-0c8b-4289-98e3-82d32e2cc822.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set4_c__763e9225-0c8b-4289-98e3-82d32e2cc822.jpg",
+   "name": "set4_c.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set4_c__763e9225-0c8b-4289-98e3-82d32e2cc822.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 66622,
+   "uploaded_bytes": 66622,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set4_d__6374ac39-efc6-496a-87d3-586d570bfdba.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set4_d__6374ac39-efc6-496a-87d3-586d570bfdba.jpg",
+   "name": "set4_d.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set4_d__6374ac39-efc6-496a-87d3-586d570bfdba.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 75720,
+   "uploaded_bytes": 75720,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set5_a__2257a4dd-0a39-412e-a142-036797b55e06.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set5_a__2257a4dd-0a39-412e-a142-036797b55e06.jpg",
+   "name": "set5_a.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set5_a__2257a4dd-0a39-412e-a142-036797b55e06.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 65820,
+   "uploaded_bytes": 65820,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set5_b__3be6eb40-a07b-471e-a636-35563ffbeb6e.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set5_b__3be6eb40-a07b-471e-a636-35563ffbeb6e.jpg",
+   "name": "set5_b.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set5_b__3be6eb40-a07b-471e-a636-35563ffbeb6e.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 60543,
+   "uploaded_bytes": 60543,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set5_c__52f139f5-0535-4b19-9641-5777fc918788.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set5_c__52f139f5-0535-4b19-9641-5777fc918788.jpg",
+   "name": "set5_c.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set5_c__52f139f5-0535-4b19-9641-5777fc918788.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 71466,
+   "uploaded_bytes": 71466,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set5_d__9687fc42-2c4a-47b5-a0c8-3dd921ec2e7d.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set5_d__9687fc42-2c4a-47b5-a0c8-3dd921ec2e7d.jpg",
+   "name": "set5_d.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set5_d__9687fc42-2c4a-47b5-a0c8-3dd921ec2e7d.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 68645,
+   "uploaded_bytes": 68645,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set6_a__6c170dfb-0254-4277-918c-57a8a02f808b.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set6_a__6c170dfb-0254-4277-918c-57a8a02f808b.jpg",
+   "name": "set6_a.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set6_a__6c170dfb-0254-4277-918c-57a8a02f808b.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 56248,
+   "uploaded_bytes": 56248,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set6_b__c4d028f4-e48c-4ec0-8801-6ba386d1976e.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set6_b__c4d028f4-e48c-4ec0-8801-6ba386d1976e.jpg",
+   "name": "set6_b.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set6_b__c4d028f4-e48c-4ec0-8801-6ba386d1976e.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 48965,
+   "uploaded_bytes": 48965,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set6_c__3314c1e9-1dc3-463d-95da-998fd4eb3536.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set6_c__3314c1e9-1dc3-463d-95da-998fd4eb3536.jpg",
+   "name": "set6_c.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set6_c__3314c1e9-1dc3-463d-95da-998fd4eb3536.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 43006,
+   "uploaded_bytes": 43006,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-schirpke-mountain/lakes/set6_d__b12ee9f1-7d21-475a-9ad0-8e55340a7509.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-schirpke-mountain/lakes/set6_d__b12ee9f1-7d21-475a-9ad0-8e55340a7509.jpg",
+   "name": "set6_d.jpg",
+   "type": "image",
+   "folder": "lakes",
+   "media_id": "templates/2021-schirpke-mountain/lakes/set6_d__b12ee9f1-7d21-475a-9ad0-8e55340a7509.jpg",
+   "logicalFolder": "lakes",
+   "original_bytes": 57004,
+   "uploaded_bytes": 57004,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "“A Gem among the Rocks”—Identifying and Measuring Visual Preferences for Mountain Lakes",
+  "authors": [
+   "Uta Schirpke",
+   "Rocco Scolozzi",
+   "Ulrike Tappeiner"
+  ],
+  "year": 2021,
+  "venue": "Water",
+  "doi": "10.3390/w13091151",
+  "url": "https://doi.org/10.3390/w13091151"
+ }
+}

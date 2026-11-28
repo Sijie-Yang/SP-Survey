@@ -1,122 +1,1830 @@
 {
-  "id": "2013-salesses-collaborative",
-  "name": "Place Pulse 1.0",
-  "description": "Rebuilt from the published description of Salesses, Schechtner & Hidalgo (2013). Pairwise comparisons of street views from New York, Boston, Linz and Salzburg on safety, class and uniqueness, scored with Q-scores. Differences from the original study: (1) The original website allowed unlimited votes; this template asks 10 pairs per question (survey rounds with \"continue voting\" are not available). (2) Bundled images are photographs from the paper PDF (7 scenes), not the original full stimulus set.",
-  "author": "Salesses, Schechtner & Hidalgo",
-  "year": "2013",
-  "category": "Academic Research",
-  "tags": [
-    "official",
-    "paper"
-  ],
-  "isPinned": false,
-  "isApproved": true,
-  "showOnLanding": true,
-  "thumbnailUrl": null,
-  "website": "https://doi.org/10.1371/journal.pone.0068400",
-  "huggingfaceDataset": null,
-  "createdAt": "2026-10-02T00:00:00+00:00",
-  "imageDatasetConfig": {
-    "mediaFolderTags": {},
-    "mediaFolders": []
-  },
-  "preloadedImages": [],
-  "preloadedSource": null,
-  "preloadedAt": null,
-  "config": {
-    "title": "Place Pulse 1.0",
-    "description": "For each pair of street views, click the place that better matches the question. Choose \"Equal\" if you cannot decide.",
-    "logoPosition": "right",
-    "autoGrowComment": true,
-    "progressBarType": "questions",
-    "showProgressBar": "aboveheader",
-    "showQuestionNumbers": "off",
-    "spAnalysisRecommendation": {
-      "citation": "Salesses et al. 2013",
-      "items": [
-        {
-          "questions": [
-            "safer",
-            "upper_class",
-            "unique"
-          ],
-          "method": "qscore_pairwise",
-          "scale": "0-10",
-          "minPerImage": 4
-        },
-        {
-          "questions": [
-            "safer",
-            "upper_class",
-            "unique"
-          ],
-          "method": "trueskill_pairwise",
-          "tieHandling": "draw",
-          "scale": "0-10"
-        }
-      ]
-    },
-    "pages": [
-      {
-        "name": "page_safer",
-        "elements": [
-          {
-            "name": "safer",
-            "type": "imagepicker",
-            "title": "Which place looks safer?",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 2,
-            "trialCount": 10,
-            "pairingMode": "balanced",
-            "allowTie": true,
-            "tieLabel": "Equal"
-          }
-        ]
-      },
-      {
-        "name": "page_upper_class",
-        "elements": [
-          {
-            "name": "upper_class",
-            "type": "imagepicker",
-            "title": "Which place looks more upper-class?",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 2,
-            "trialCount": 10,
-            "pairingMode": "balanced",
-            "allowTie": true,
-            "tieLabel": "Equal"
-          }
-        ]
-      },
-      {
-        "name": "page_unique",
-        "elements": [
-          {
-            "name": "unique",
-            "type": "imagepicker",
-            "title": "Which place looks more unique?",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 2,
-            "trialCount": 10,
-            "pairingMode": "balanced",
-            "allowTie": true,
-            "tieLabel": "Equal"
-          }
-        ]
-      }
+ "id": "2013-salesses-collaborative",
+ "name": "Place Pulse 1.0: Safety, Class and Uniqueness (4 cities)",
+ "description": "Method replication: same questions and pairwise design as the paper; the images are not the paper's stimuli (new Google Street View views of the same four cities, © Google). Salesses, Schechtner & Hidalgo (2013, PLoS ONE 8(7):e68400) built the original Place Pulse website: volunteers compared pairs of geo-tagged street images from Boston, New York, Linz and Salzburg on which looked safer, more upper-class and more unique. Images were scored with Q-scores. Perceptions of New York and Boston images spread more widely than those of Linz and Salzburg, which the authors read as more contrasting, unequal cityscapes; in New York, perceived safety and class correlated with homicides by zip code after controlling for income, population, area and age.\n\nWhat participants do: after consent, 10 pairs each on \"Which place looks safer?\", \"Which place looks more upper-class?\" and \"Which place looks more unique?\", with an Equal option. Images come at random from 130 views: Boston 65, New York 29, Linz 19, Salzburg 17. Then age, gender and home city.\n\nAnalysis as in the paper: Q-score per image (win and loss rates corrected for opponents), then the spread of scores within each city to compare inequality of perception.\n\nDifferences from the original study: (1) the images are new Google Street View views (2016–2026) from random points in each city, not the paper's set; the four cities are not equally represented; (2) the original site allowed unlimited votes; this template asks 10 pairs per question. The earlier version of this template showed 7 photographs cropped from the paper PDF.",
+ "author": "Salesses, Schechtner & Hidalgo",
+ "year": "2013",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "place-pulse",
+  "safety",
+  "class",
+  "uniqueness",
+  "source:paper",
+  "modality:street_view",
+  "task:pairwise",
+  "concept:safety",
+  "concept:class",
+  "concept:uniqueness",
+  "participants:crowd",
+  "sample:gt1000",
+  "country:USA",
+  "country:Austria",
+  "city:New York",
+  "city:Boston",
+  "city:Linz",
+  "city:Salzburg"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1371/journal.pone.0068400",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-10-02T00:00:00+00:00",
+ "updatedAt": "2026-11-27T05:44:25.342+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
     ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "safer",
+      "type": "imagepicker",
+      "title": "Which place looks safer?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "cover",
+      "tieLabel": "Equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 10,
+      "mediaFolders": [
+       "nyc",
+       "boston",
+       "linz",
+       "salzburg"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_2",
+    "elements": [
+     {
+      "name": "upper_class",
+      "type": "imagepicker",
+      "title": "Which place looks more upper-class?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "cover",
+      "tieLabel": "Equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 10,
+      "mediaFolders": [
+       "nyc",
+       "boston",
+       "linz",
+       "salzburg"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_3",
+    "elements": [
+     {
+      "name": "unique",
+      "type": "imagepicker",
+      "title": "Which place looks more unique?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "cover",
+      "tieLabel": "Equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 10,
+      "mediaFolders": [
+       "nyc",
+       "boston",
+       "linz",
+       "salzburg"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "18–24",
+        "value": "18-24"
+       },
+       {
+        "text": "25–34",
+        "value": "25-34"
+       },
+       {
+        "text": "35–44",
+        "value": "35-44"
+       },
+       {
+        "text": "45–54",
+        "value": "45-54"
+       },
+       {
+        "text": "55–64",
+        "value": "55-64"
+       },
+       {
+        "text": "65+",
+        "value": "65+"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other",
+        "value": "other"
+       },
+       {
+        "text": "Prefer not to say",
+        "value": "prefer_not_to_say"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "home_city",
+      "type": "radiogroup",
+      "title": "Do you live in one of these cities?",
+      "choices": [
+       {
+        "text": "New York",
+        "value": "new_york"
+       },
+       {
+        "text": "Boston",
+        "value": "boston"
+       },
+       {
+        "text": "Linz",
+        "value": "linz"
+       },
+       {
+        "text": "Salzburg",
+        "value": "salzburg"
+       },
+       {
+        "text": "None of them",
+        "value": "none_of_them"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Place Pulse 1.0: Safer, Upper-Class, Unique? (New York, Boston, Linz, Salzburg)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-ccd6be211acffecd",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Place Pulse 1.0: Safer, Upper-Class, Unique? (New York, Boston, Linz, Salzburg)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Place Pulse 1.0: Safer, Upper-Class, Unique? (New York, Boston, Linz, Salzburg)\",\n  \"description\": \"Pairs of street views from New York, Boston, Linz and Salzburg, compared on safety, class and uniqueness, with an Equal option. Method replication of Salesses, Schechtner & Hidalgo (2013, PLoS ONE), the original Place Pulse.\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"safer\",\n      \"title\": \"Which place looks safer?\",\n      \"imageCount\": 2,\n      \"trialCount\": 10,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"nyc\",\n       \"boston\",\n       \"linz\",\n       \"salzburg\"\n      ],\n      \"allowTie\": true,\n      \"tieLabel\": \"Equal\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"imageFit\": \"cover\",\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_2\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"upper_class\",\n      \"title\": \"Which place looks more upper-class?\",\n      \"imageCount\": 2,\n      \"trialCount\": 10,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"nyc\",\n       \"boston\",\n       \"linz\",\n       \"salzburg\"\n      ],\n      \"allowTie\": true,\n      \"tieLabel\": \"Equal\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"imageFit\": \"cover\",\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_3\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"unique\",\n      \"title\": \"Which place looks more unique?\",\n      \"imageCount\": 2,\n      \"trialCount\": 10,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"nyc\",\n       \"boston\",\n       \"linz\",\n       \"salzburg\"\n      ],\n      \"allowTie\": true,\n      \"tieLabel\": \"Equal\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"imageFit\": \"cover\",\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"18-24\",\n        \"text\": \"18–24\"\n       },\n       {\n        \"value\": \"25-34\",\n        \"text\": \"25–34\"\n       },\n       {\n        \"value\": \"35-44\",\n        \"text\": \"35–44\"\n       },\n       {\n        \"value\": \"45-54\",\n        \"text\": \"45–54\"\n       },\n       {\n        \"value\": \"55-64\",\n        \"text\": \"55–64\"\n       },\n       {\n        \"value\": \"65+\",\n        \"text\": \"65+\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other\"\n       },\n       {\n        \"value\": \"prefer_not_to_say\",\n        \"text\": \"Prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"home_city\",\n      \"title\": \"Do you live in one of these cities?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"new_york\",\n        \"text\": \"New York\"\n       },\n       {\n        \"value\": \"boston\",\n        \"text\": \"Boston\"\n       },\n       {\n        \"value\": \"linz\",\n        \"text\": \"Linz\"\n       },\n       {\n        \"value\": \"salzburg\",\n        \"text\": \"Salzburg\"\n       },\n       {\n        \"value\": \"none_of_them\",\n        \"text\": \"None of them\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#8a2b2b;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: New York, Boston, Linz and Salzburg, Google Street View (© Google). Task from Salesses, Schechtner &amp; Hidalgo (2013), PLoS ONE 8(7): e68400, doi:10.1371/journal.pone.0068400.</footer>\n<script>\n(function(){\n  var C={\"before\": [], \"after\": [\"age_group\", \"gender\", \"home_city\"], \"tasks\": [\"safer\", \"upper_class\", \"unique\"], \"minutes\": 5, \"alt\": \"Street view\", \"labels\": {}, \"pickOne\": null, \"heading\": \"Which place looks safer?\", \"intro\": \"<p>You will see pairs of street views from New York City, Boston, Linz and Salzburg. For each pair, click the place that fits the question better: which looks <b>safer</b>, which looks <b>more upper-class</b>, and which looks <b>more unique</b>. If you cannot choose, click “Equal”. 30 pairs in total.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?'Pair ':'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(lab?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T05:39:40.524Z",
+   "mediaFolders": [
+    "boston",
+    "linz",
+    "nyc",
+    "salzburg"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T05:39:40.524Z"
+  },
+  "description": "Pairs of street views from New York, Boston, Linz and Salzburg, compared on safety, class and uniqueness, with an Equal option. Method replication of Salesses, Schechtner & Hidalgo (2013, PLoS ONE), the original Place Pulse.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_01__b9ffac92-cc6f-4279-b83c-2f387d83d5db.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_01__b9ffac92-cc6f-4279-b83c-2f387d83d5db.jpg",
+   "name": "boston_01.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_01__b9ffac92-cc6f-4279-b83c-2f387d83d5db.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 191395,
+   "uploaded_bytes": 191395,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_02__dab4e1b0-37b1-42d9-8408-a48e31c145b1.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_02__dab4e1b0-37b1-42d9-8408-a48e31c145b1.jpg",
+   "name": "boston_02.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_02__dab4e1b0-37b1-42d9-8408-a48e31c145b1.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 169226,
+   "uploaded_bytes": 169226,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_03__2481f5c2-6f32-4515-bbd0-bff2a8cfb912.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_03__2481f5c2-6f32-4515-bbd0-bff2a8cfb912.jpg",
+   "name": "boston_03.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_03__2481f5c2-6f32-4515-bbd0-bff2a8cfb912.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 171324,
+   "uploaded_bytes": 171324,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_04__b110073b-6756-4b47-8252-f2e509f4481e.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_04__b110073b-6756-4b47-8252-f2e509f4481e.jpg",
+   "name": "boston_04.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_04__b110073b-6756-4b47-8252-f2e509f4481e.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 142463,
+   "uploaded_bytes": 142463,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_05__dbd5ce41-ef99-4165-aab8-61bf814613c8.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_05__dbd5ce41-ef99-4165-aab8-61bf814613c8.jpg",
+   "name": "boston_05.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_05__dbd5ce41-ef99-4165-aab8-61bf814613c8.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 195926,
+   "uploaded_bytes": 195926,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_06__2305ee31-8ac6-4743-a7e0-ff0a6f0ec374.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_06__2305ee31-8ac6-4743-a7e0-ff0a6f0ec374.jpg",
+   "name": "boston_06.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_06__2305ee31-8ac6-4743-a7e0-ff0a6f0ec374.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 116152,
+   "uploaded_bytes": 116152,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_07__22b54132-21ae-48e1-8a23-54b5e8820fad.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_07__22b54132-21ae-48e1-8a23-54b5e8820fad.jpg",
+   "name": "boston_07.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_07__22b54132-21ae-48e1-8a23-54b5e8820fad.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 108840,
+   "uploaded_bytes": 108840,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_08__146f79f9-1822-4887-a40c-b3081981719d.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_08__146f79f9-1822-4887-a40c-b3081981719d.jpg",
+   "name": "boston_08.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_08__146f79f9-1822-4887-a40c-b3081981719d.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 183161,
+   "uploaded_bytes": 183161,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_09__78982363-4657-4b9a-8ceb-764c0cad4792.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_09__78982363-4657-4b9a-8ceb-764c0cad4792.jpg",
+   "name": "boston_09.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_09__78982363-4657-4b9a-8ceb-764c0cad4792.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 127598,
+   "uploaded_bytes": 127598,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_10__4d6c4bb7-2ebd-43d5-bb8c-f0a45f59998d.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_10__4d6c4bb7-2ebd-43d5-bb8c-f0a45f59998d.jpg",
+   "name": "boston_10.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_10__4d6c4bb7-2ebd-43d5-bb8c-f0a45f59998d.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 182816,
+   "uploaded_bytes": 182816,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_11__bde0c083-0376-4290-9ac2-97c731020e5c.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_11__bde0c083-0376-4290-9ac2-97c731020e5c.jpg",
+   "name": "boston_11.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_11__bde0c083-0376-4290-9ac2-97c731020e5c.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 201202,
+   "uploaded_bytes": 201202,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_12__7ef7adde-5a11-4284-aac1-bd380122a30f.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_12__7ef7adde-5a11-4284-aac1-bd380122a30f.jpg",
+   "name": "boston_12.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_12__7ef7adde-5a11-4284-aac1-bd380122a30f.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 159717,
+   "uploaded_bytes": 159717,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_13__33dbf800-6eb7-485f-96b6-9ac9c870776e.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_13__33dbf800-6eb7-485f-96b6-9ac9c870776e.jpg",
+   "name": "boston_13.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_13__33dbf800-6eb7-485f-96b6-9ac9c870776e.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 166230,
+   "uploaded_bytes": 166230,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_14__3dee0100-67f0-42e1-824b-465f1748e7ba.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_14__3dee0100-67f0-42e1-824b-465f1748e7ba.jpg",
+   "name": "boston_14.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_14__3dee0100-67f0-42e1-824b-465f1748e7ba.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 132561,
+   "uploaded_bytes": 132561,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_15__6403e595-ae2f-4e10-8a8e-638ea49d4f3e.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_15__6403e595-ae2f-4e10-8a8e-638ea49d4f3e.jpg",
+   "name": "boston_15.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_15__6403e595-ae2f-4e10-8a8e-638ea49d4f3e.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 153995,
+   "uploaded_bytes": 153995,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_16__b38defd4-9af9-4b9b-9e47-24a005e3a71b.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_16__b38defd4-9af9-4b9b-9e47-24a005e3a71b.jpg",
+   "name": "boston_16.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_16__b38defd4-9af9-4b9b-9e47-24a005e3a71b.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 138150,
+   "uploaded_bytes": 138150,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_17__17e21884-ca12-4760-bf01-fd4a17229a7e.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_17__17e21884-ca12-4760-bf01-fd4a17229a7e.jpg",
+   "name": "boston_17.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_17__17e21884-ca12-4760-bf01-fd4a17229a7e.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 247076,
+   "uploaded_bytes": 247076,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_18__e737b577-de68-46a2-8319-8caf3479e8ce.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_18__e737b577-de68-46a2-8319-8caf3479e8ce.jpg",
+   "name": "boston_18.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_18__e737b577-de68-46a2-8319-8caf3479e8ce.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 131423,
+   "uploaded_bytes": 131423,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_19__5842714c-d9f9-45f2-b0ee-5900cd206f79.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_19__5842714c-d9f9-45f2-b0ee-5900cd206f79.jpg",
+   "name": "boston_19.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_19__5842714c-d9f9-45f2-b0ee-5900cd206f79.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 101159,
+   "uploaded_bytes": 101159,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_20__61eb0020-bd69-4da8-baba-48cfcdd89d11.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_20__61eb0020-bd69-4da8-baba-48cfcdd89d11.jpg",
+   "name": "boston_20.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_20__61eb0020-bd69-4da8-baba-48cfcdd89d11.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 140390,
+   "uploaded_bytes": 140390,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_21__4b7e05b1-15f5-4757-b562-724ad26f3e54.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_21__4b7e05b1-15f5-4757-b562-724ad26f3e54.jpg",
+   "name": "boston_21.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_21__4b7e05b1-15f5-4757-b562-724ad26f3e54.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 148404,
+   "uploaded_bytes": 148404,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_22__bf1d4693-e0f4-4b1d-97fc-a0f9f96c6558.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_22__bf1d4693-e0f4-4b1d-97fc-a0f9f96c6558.jpg",
+   "name": "boston_22.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_22__bf1d4693-e0f4-4b1d-97fc-a0f9f96c6558.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 133231,
+   "uploaded_bytes": 133231,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_23__63f55726-f4e5-42cc-8909-16d84c534446.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_23__63f55726-f4e5-42cc-8909-16d84c534446.jpg",
+   "name": "boston_23.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_23__63f55726-f4e5-42cc-8909-16d84c534446.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 183245,
+   "uploaded_bytes": 183245,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_24__c1dfd9f6-3ab1-40e6-9df8-191f26416680.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_24__c1dfd9f6-3ab1-40e6-9df8-191f26416680.jpg",
+   "name": "boston_24.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_24__c1dfd9f6-3ab1-40e6-9df8-191f26416680.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 153604,
+   "uploaded_bytes": 153604,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_25__16bdc8af-661a-461b-b1aa-7b37f0d7722a.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_25__16bdc8af-661a-461b-b1aa-7b37f0d7722a.jpg",
+   "name": "boston_25.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_25__16bdc8af-661a-461b-b1aa-7b37f0d7722a.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 156965,
+   "uploaded_bytes": 156965,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_26__3559704c-f0ac-4bb1-ba9e-213886847cc6.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_26__3559704c-f0ac-4bb1-ba9e-213886847cc6.jpg",
+   "name": "boston_26.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_26__3559704c-f0ac-4bb1-ba9e-213886847cc6.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 169030,
+   "uploaded_bytes": 169030,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_27__48a524c0-5d31-417f-b83d-084c4e10f189.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_27__48a524c0-5d31-417f-b83d-084c4e10f189.jpg",
+   "name": "boston_27.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_27__48a524c0-5d31-417f-b83d-084c4e10f189.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 168822,
+   "uploaded_bytes": 168822,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_28__39733f31-a994-4d8f-9477-fefddee2e250.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_28__39733f31-a994-4d8f-9477-fefddee2e250.jpg",
+   "name": "boston_28.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_28__39733f31-a994-4d8f-9477-fefddee2e250.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 183602,
+   "uploaded_bytes": 183602,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_29__40712949-a2a5-4410-abaf-04938bbca55b.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_29__40712949-a2a5-4410-abaf-04938bbca55b.jpg",
+   "name": "boston_29.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_29__40712949-a2a5-4410-abaf-04938bbca55b.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 207609,
+   "uploaded_bytes": 207609,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_30__289e9006-7cf7-44b1-9762-838d8f2a364a.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_30__289e9006-7cf7-44b1-9762-838d8f2a364a.jpg",
+   "name": "boston_30.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_30__289e9006-7cf7-44b1-9762-838d8f2a364a.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 182710,
+   "uploaded_bytes": 182710,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_31__f859ebf5-902f-4178-b8bf-3d106dcb157e.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_31__f859ebf5-902f-4178-b8bf-3d106dcb157e.jpg",
+   "name": "boston_31.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_31__f859ebf5-902f-4178-b8bf-3d106dcb157e.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 166500,
+   "uploaded_bytes": 166500,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_32__a095da7f-e33d-4a0f-8517-dc2ed8e01427.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_32__a095da7f-e33d-4a0f-8517-dc2ed8e01427.jpg",
+   "name": "boston_32.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_32__a095da7f-e33d-4a0f-8517-dc2ed8e01427.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 113366,
+   "uploaded_bytes": 113366,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_33__3b319385-c90a-4156-b316-c8c9bcd16654.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_33__3b319385-c90a-4156-b316-c8c9bcd16654.jpg",
+   "name": "boston_33.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_33__3b319385-c90a-4156-b316-c8c9bcd16654.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 170262,
+   "uploaded_bytes": 170262,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_34__6efcec51-335f-4440-b46e-3e6f68b14aea.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_34__6efcec51-335f-4440-b46e-3e6f68b14aea.jpg",
+   "name": "boston_34.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_34__6efcec51-335f-4440-b46e-3e6f68b14aea.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 134953,
+   "uploaded_bytes": 134953,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_35__3a07d168-22fd-4904-a214-7da912723b2e.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_35__3a07d168-22fd-4904-a214-7da912723b2e.jpg",
+   "name": "boston_35.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_35__3a07d168-22fd-4904-a214-7da912723b2e.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 201806,
+   "uploaded_bytes": 201806,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_36__36de8193-571d-4539-9f28-00c22bc10481.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_36__36de8193-571d-4539-9f28-00c22bc10481.jpg",
+   "name": "boston_36.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_36__36de8193-571d-4539-9f28-00c22bc10481.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 175139,
+   "uploaded_bytes": 175139,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_37__bbed22c8-8933-4caa-86dc-d22d57229ff3.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_37__bbed22c8-8933-4caa-86dc-d22d57229ff3.jpg",
+   "name": "boston_37.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_37__bbed22c8-8933-4caa-86dc-d22d57229ff3.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 145980,
+   "uploaded_bytes": 145980,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_38__9bbb1789-3e15-4ffc-aff8-782f9b642754.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_38__9bbb1789-3e15-4ffc-aff8-782f9b642754.jpg",
+   "name": "boston_38.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_38__9bbb1789-3e15-4ffc-aff8-782f9b642754.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 163972,
+   "uploaded_bytes": 163972,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_39__8c13e949-ba58-4281-85dc-cf64dd828b6e.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_39__8c13e949-ba58-4281-85dc-cf64dd828b6e.jpg",
+   "name": "boston_39.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_39__8c13e949-ba58-4281-85dc-cf64dd828b6e.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 196510,
+   "uploaded_bytes": 196510,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_40__db7a8268-9c5b-48fa-96ef-175e89995465.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_40__db7a8268-9c5b-48fa-96ef-175e89995465.jpg",
+   "name": "boston_40.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_40__db7a8268-9c5b-48fa-96ef-175e89995465.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 117686,
+   "uploaded_bytes": 117686,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_41__12050c85-508e-45f3-8ba4-4a90d1f9fd67.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_41__12050c85-508e-45f3-8ba4-4a90d1f9fd67.jpg",
+   "name": "boston_41.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_41__12050c85-508e-45f3-8ba4-4a90d1f9fd67.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 162656,
+   "uploaded_bytes": 162656,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_42__63834ffb-631d-49bf-97c1-8036614167ec.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_42__63834ffb-631d-49bf-97c1-8036614167ec.jpg",
+   "name": "boston_42.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_42__63834ffb-631d-49bf-97c1-8036614167ec.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 161722,
+   "uploaded_bytes": 161722,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_43__de460610-92b7-48f3-883a-fd166937bebf.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_43__de460610-92b7-48f3-883a-fd166937bebf.jpg",
+   "name": "boston_43.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_43__de460610-92b7-48f3-883a-fd166937bebf.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 175868,
+   "uploaded_bytes": 175868,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_44__b2cd80d6-9e56-405c-80c5-c7dfa9df7790.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_44__b2cd80d6-9e56-405c-80c5-c7dfa9df7790.jpg",
+   "name": "boston_44.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_44__b2cd80d6-9e56-405c-80c5-c7dfa9df7790.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 125087,
+   "uploaded_bytes": 125087,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_45__23646483-52c4-4b8f-9253-f20f89e9097f.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_45__23646483-52c4-4b8f-9253-f20f89e9097f.jpg",
+   "name": "boston_45.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_45__23646483-52c4-4b8f-9253-f20f89e9097f.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 204699,
+   "uploaded_bytes": 204699,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_46__3d8842b2-515f-4fee-931d-6dc109f1497b.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_46__3d8842b2-515f-4fee-931d-6dc109f1497b.jpg",
+   "name": "boston_46.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_46__3d8842b2-515f-4fee-931d-6dc109f1497b.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 178090,
+   "uploaded_bytes": 178090,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_47__678bc5ea-1d5f-4748-89cd-0bbd754d1bba.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_47__678bc5ea-1d5f-4748-89cd-0bbd754d1bba.jpg",
+   "name": "boston_47.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_47__678bc5ea-1d5f-4748-89cd-0bbd754d1bba.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 193207,
+   "uploaded_bytes": 193207,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_48__efd11f9e-4395-4d56-bce6-f431562864e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_48__efd11f9e-4395-4d56-bce6-f431562864e6.jpg",
+   "name": "boston_48.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_48__efd11f9e-4395-4d56-bce6-f431562864e6.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 171047,
+   "uploaded_bytes": 171047,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_49__711b8d68-d0ce-4573-8146-619c718a252f.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_49__711b8d68-d0ce-4573-8146-619c718a252f.jpg",
+   "name": "boston_49.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_49__711b8d68-d0ce-4573-8146-619c718a252f.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 165187,
+   "uploaded_bytes": 165187,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_50__9438a7df-0662-4448-a9d0-98efcd17221b.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_50__9438a7df-0662-4448-a9d0-98efcd17221b.jpg",
+   "name": "boston_50.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_50__9438a7df-0662-4448-a9d0-98efcd17221b.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 111317,
+   "uploaded_bytes": 111317,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_51__118087bc-590c-4aa5-8989-cad737ef46fd.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_51__118087bc-590c-4aa5-8989-cad737ef46fd.jpg",
+   "name": "boston_51.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_51__118087bc-590c-4aa5-8989-cad737ef46fd.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 205008,
+   "uploaded_bytes": 205008,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_52__8a146aeb-22c3-4f11-a0e2-512b8a41374d.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_52__8a146aeb-22c3-4f11-a0e2-512b8a41374d.jpg",
+   "name": "boston_52.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_52__8a146aeb-22c3-4f11-a0e2-512b8a41374d.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 149614,
+   "uploaded_bytes": 149614,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_53__1e14fc76-d220-4f3d-90d8-68a2e3ab217f.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_53__1e14fc76-d220-4f3d-90d8-68a2e3ab217f.jpg",
+   "name": "boston_53.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_53__1e14fc76-d220-4f3d-90d8-68a2e3ab217f.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 99860,
+   "uploaded_bytes": 99860,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_54__3d2eccd7-99b3-4b89-b520-af701fcaae5b.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_54__3d2eccd7-99b3-4b89-b520-af701fcaae5b.jpg",
+   "name": "boston_54.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_54__3d2eccd7-99b3-4b89-b520-af701fcaae5b.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 189342,
+   "uploaded_bytes": 189342,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_55__8f3753f3-09cf-43c1-8cda-60ae2340da74.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_55__8f3753f3-09cf-43c1-8cda-60ae2340da74.jpg",
+   "name": "boston_55.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_55__8f3753f3-09cf-43c1-8cda-60ae2340da74.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 172703,
+   "uploaded_bytes": 172703,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_56__7633c368-af78-424e-8611-6a5c7ddd5a63.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_56__7633c368-af78-424e-8611-6a5c7ddd5a63.jpg",
+   "name": "boston_56.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_56__7633c368-af78-424e-8611-6a5c7ddd5a63.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 147309,
+   "uploaded_bytes": 147309,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_57__e8703354-2153-4357-8db7-02ab3078d9af.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_57__e8703354-2153-4357-8db7-02ab3078d9af.jpg",
+   "name": "boston_57.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_57__e8703354-2153-4357-8db7-02ab3078d9af.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 180810,
+   "uploaded_bytes": 180810,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_58__e6d9c6bc-ab44-4fad-876e-6e8ac5ce3a82.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_58__e6d9c6bc-ab44-4fad-876e-6e8ac5ce3a82.jpg",
+   "name": "boston_58.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_58__e6d9c6bc-ab44-4fad-876e-6e8ac5ce3a82.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 215009,
+   "uploaded_bytes": 215009,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_59__eda88d94-3a7c-45b7-91cb-683db24e3b45.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_59__eda88d94-3a7c-45b7-91cb-683db24e3b45.jpg",
+   "name": "boston_59.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_59__eda88d94-3a7c-45b7-91cb-683db24e3b45.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 120276,
+   "uploaded_bytes": 120276,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_60__6056869d-c8db-4c74-9d64-5f6bc4704b35.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_60__6056869d-c8db-4c74-9d64-5f6bc4704b35.jpg",
+   "name": "boston_60.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_60__6056869d-c8db-4c74-9d64-5f6bc4704b35.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 130697,
+   "uploaded_bytes": 130697,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_61__a4b24122-8248-4dc2-886c-7f0acea0dabb.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_61__a4b24122-8248-4dc2-886c-7f0acea0dabb.jpg",
+   "name": "boston_61.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_61__a4b24122-8248-4dc2-886c-7f0acea0dabb.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 164259,
+   "uploaded_bytes": 164259,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_62__8e160469-01a6-4458-a516-e05557e6678d.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_62__8e160469-01a6-4458-a516-e05557e6678d.jpg",
+   "name": "boston_62.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_62__8e160469-01a6-4458-a516-e05557e6678d.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 189986,
+   "uploaded_bytes": 189986,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_63__6945ec65-8c04-464f-924f-872190101cdf.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_63__6945ec65-8c04-464f-924f-872190101cdf.jpg",
+   "name": "boston_63.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_63__6945ec65-8c04-464f-924f-872190101cdf.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 164728,
+   "uploaded_bytes": 164728,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_64__dafcc81e-74a4-475f-a2a6-911ea440223e.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_64__dafcc81e-74a4-475f-a2a6-911ea440223e.jpg",
+   "name": "boston_64.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_64__dafcc81e-74a4-475f-a2a6-911ea440223e.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 160172,
+   "uploaded_bytes": 160172,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/boston/boston_65__511962e3-a03e-45dd-8a72-9d9d5f4ddb0a.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/boston/boston_65__511962e3-a03e-45dd-8a72-9d9d5f4ddb0a.jpg",
+   "name": "boston_65.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2013-salesses-collaborative/boston/boston_65__511962e3-a03e-45dd-8a72-9d9d5f4ddb0a.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 142609,
+   "uploaded_bytes": 142609,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/linz/linz_01__ccb351c5-b579-44b9-ac85-855358d22b68.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/linz/linz_01__ccb351c5-b579-44b9-ac85-855358d22b68.jpg",
+   "name": "linz_01.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2013-salesses-collaborative/linz/linz_01__ccb351c5-b579-44b9-ac85-855358d22b68.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 166041,
+   "uploaded_bytes": 166041,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/linz/linz_02__853ee735-ac7c-4eef-9341-7db9050ded7e.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/linz/linz_02__853ee735-ac7c-4eef-9341-7db9050ded7e.jpg",
+   "name": "linz_02.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2013-salesses-collaborative/linz/linz_02__853ee735-ac7c-4eef-9341-7db9050ded7e.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 160363,
+   "uploaded_bytes": 160363,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/linz/linz_03__cd3f52a0-24dc-4412-bb51-0e6d55b5b8a1.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/linz/linz_03__cd3f52a0-24dc-4412-bb51-0e6d55b5b8a1.jpg",
+   "name": "linz_03.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2013-salesses-collaborative/linz/linz_03__cd3f52a0-24dc-4412-bb51-0e6d55b5b8a1.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 156914,
+   "uploaded_bytes": 156914,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/linz/linz_04__b9497b4d-8af2-4712-9f80-33ec0b981c5b.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/linz/linz_04__b9497b4d-8af2-4712-9f80-33ec0b981c5b.jpg",
+   "name": "linz_04.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2013-salesses-collaborative/linz/linz_04__b9497b4d-8af2-4712-9f80-33ec0b981c5b.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 157507,
+   "uploaded_bytes": 157507,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/linz/linz_05__4a827f26-edb6-4549-a50c-01d6293a60a3.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/linz/linz_05__4a827f26-edb6-4549-a50c-01d6293a60a3.jpg",
+   "name": "linz_05.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2013-salesses-collaborative/linz/linz_05__4a827f26-edb6-4549-a50c-01d6293a60a3.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 95665,
+   "uploaded_bytes": 95665,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/linz/linz_06__c33431f0-281c-40ee-a0ee-f43516397b13.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/linz/linz_06__c33431f0-281c-40ee-a0ee-f43516397b13.jpg",
+   "name": "linz_06.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2013-salesses-collaborative/linz/linz_06__c33431f0-281c-40ee-a0ee-f43516397b13.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 148576,
+   "uploaded_bytes": 148576,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/linz/linz_07__7f3225c3-e689-4b4e-bec4-b0be0ad674fa.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/linz/linz_07__7f3225c3-e689-4b4e-bec4-b0be0ad674fa.jpg",
+   "name": "linz_07.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2013-salesses-collaborative/linz/linz_07__7f3225c3-e689-4b4e-bec4-b0be0ad674fa.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 148769,
+   "uploaded_bytes": 148769,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/linz/linz_08__efe19128-ace0-4b00-ab44-5588273f9bd9.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/linz/linz_08__efe19128-ace0-4b00-ab44-5588273f9bd9.jpg",
+   "name": "linz_08.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2013-salesses-collaborative/linz/linz_08__efe19128-ace0-4b00-ab44-5588273f9bd9.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 113735,
+   "uploaded_bytes": 113735,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/linz/linz_09__e4359a2f-49e1-4ae6-8de5-0067453859ba.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/linz/linz_09__e4359a2f-49e1-4ae6-8de5-0067453859ba.jpg",
+   "name": "linz_09.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2013-salesses-collaborative/linz/linz_09__e4359a2f-49e1-4ae6-8de5-0067453859ba.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 139169,
+   "uploaded_bytes": 139169,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/linz/linz_10__b9701d1b-725b-41b2-86b4-05f6744d3ae1.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/linz/linz_10__b9701d1b-725b-41b2-86b4-05f6744d3ae1.jpg",
+   "name": "linz_10.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2013-salesses-collaborative/linz/linz_10__b9701d1b-725b-41b2-86b4-05f6744d3ae1.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 163054,
+   "uploaded_bytes": 163054,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/linz/linz_11__259711ee-ab8a-44aa-8890-0099531b6251.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/linz/linz_11__259711ee-ab8a-44aa-8890-0099531b6251.jpg",
+   "name": "linz_11.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2013-salesses-collaborative/linz/linz_11__259711ee-ab8a-44aa-8890-0099531b6251.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 142250,
+   "uploaded_bytes": 142250,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/linz/linz_12__7e9a0cb0-96af-4d77-ace7-238ddf7a67fa.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/linz/linz_12__7e9a0cb0-96af-4d77-ace7-238ddf7a67fa.jpg",
+   "name": "linz_12.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2013-salesses-collaborative/linz/linz_12__7e9a0cb0-96af-4d77-ace7-238ddf7a67fa.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 221170,
+   "uploaded_bytes": 221170,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/linz/linz_13__78dd1641-d9cb-478d-bb37-c915e7c753f7.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/linz/linz_13__78dd1641-d9cb-478d-bb37-c915e7c753f7.jpg",
+   "name": "linz_13.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2013-salesses-collaborative/linz/linz_13__78dd1641-d9cb-478d-bb37-c915e7c753f7.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 152076,
+   "uploaded_bytes": 152076,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/linz/linz_14__e78791e1-8390-44c3-b4a9-e4fa606b9cce.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/linz/linz_14__e78791e1-8390-44c3-b4a9-e4fa606b9cce.jpg",
+   "name": "linz_14.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2013-salesses-collaborative/linz/linz_14__e78791e1-8390-44c3-b4a9-e4fa606b9cce.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 141796,
+   "uploaded_bytes": 141796,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/linz/linz_15__7e0bcaaa-2091-4c33-b4da-baeb07a4ba01.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/linz/linz_15__7e0bcaaa-2091-4c33-b4da-baeb07a4ba01.jpg",
+   "name": "linz_15.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2013-salesses-collaborative/linz/linz_15__7e0bcaaa-2091-4c33-b4da-baeb07a4ba01.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 173156,
+   "uploaded_bytes": 173156,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/linz/linz_16__e5bf1df5-5273-4ba7-9bd7-dbb842176c15.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/linz/linz_16__e5bf1df5-5273-4ba7-9bd7-dbb842176c15.jpg",
+   "name": "linz_16.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2013-salesses-collaborative/linz/linz_16__e5bf1df5-5273-4ba7-9bd7-dbb842176c15.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 176752,
+   "uploaded_bytes": 176752,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/linz/linz_17__98b3c608-da99-4e02-b9f4-2c2245d3fdfe.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/linz/linz_17__98b3c608-da99-4e02-b9f4-2c2245d3fdfe.jpg",
+   "name": "linz_17.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2013-salesses-collaborative/linz/linz_17__98b3c608-da99-4e02-b9f4-2c2245d3fdfe.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 151386,
+   "uploaded_bytes": 151386,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/linz/linz_18__3e55cdf5-d69c-423c-9f5e-22708ceff5bd.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/linz/linz_18__3e55cdf5-d69c-423c-9f5e-22708ceff5bd.jpg",
+   "name": "linz_18.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2013-salesses-collaborative/linz/linz_18__3e55cdf5-d69c-423c-9f5e-22708ceff5bd.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 201891,
+   "uploaded_bytes": 201891,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/linz/linz_19__80cb64ef-0509-43d8-9ee4-5ec1368b8a36.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/linz/linz_19__80cb64ef-0509-43d8-9ee4-5ec1368b8a36.jpg",
+   "name": "linz_19.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2013-salesses-collaborative/linz/linz_19__80cb64ef-0509-43d8-9ee4-5ec1368b8a36.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 170671,
+   "uploaded_bytes": 170671,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_01__01f2e47e-6c99-474b-8b66-40d28b5713c9.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_01__01f2e47e-6c99-474b-8b66-40d28b5713c9.jpg",
+   "name": "nyc_01.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_01__01f2e47e-6c99-474b-8b66-40d28b5713c9.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 138556,
+   "uploaded_bytes": 138556,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_02__f7b1412d-7b49-4e44-9676-19a42b939f38.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_02__f7b1412d-7b49-4e44-9676-19a42b939f38.jpg",
+   "name": "nyc_02.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_02__f7b1412d-7b49-4e44-9676-19a42b939f38.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 130774,
+   "uploaded_bytes": 130774,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_03__3018a89c-4e37-4452-849d-c5058cffcab8.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_03__3018a89c-4e37-4452-849d-c5058cffcab8.jpg",
+   "name": "nyc_03.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_03__3018a89c-4e37-4452-849d-c5058cffcab8.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 164114,
+   "uploaded_bytes": 164114,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_04__7952299a-e310-4977-a537-1430533d69e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_04__7952299a-e310-4977-a537-1430533d69e7.jpg",
+   "name": "nyc_04.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_04__7952299a-e310-4977-a537-1430533d69e7.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 172714,
+   "uploaded_bytes": 172714,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_05__72cd99a8-e6ae-439e-b843-c5c75bd6780c.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_05__72cd99a8-e6ae-439e-b843-c5c75bd6780c.jpg",
+   "name": "nyc_05.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_05__72cd99a8-e6ae-439e-b843-c5c75bd6780c.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 111185,
+   "uploaded_bytes": 111185,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_06__dc668a82-61cb-4ddb-b0b6-e99780cfce55.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_06__dc668a82-61cb-4ddb-b0b6-e99780cfce55.jpg",
+   "name": "nyc_06.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_06__dc668a82-61cb-4ddb-b0b6-e99780cfce55.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 172000,
+   "uploaded_bytes": 172000,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_07__c3c2e8ce-f374-4713-99db-560d2d9a7a76.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_07__c3c2e8ce-f374-4713-99db-560d2d9a7a76.jpg",
+   "name": "nyc_07.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_07__c3c2e8ce-f374-4713-99db-560d2d9a7a76.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 169309,
+   "uploaded_bytes": 169309,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_08__fb31b96b-d59d-4c7c-8126-460f220bf763.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_08__fb31b96b-d59d-4c7c-8126-460f220bf763.jpg",
+   "name": "nyc_08.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_08__fb31b96b-d59d-4c7c-8126-460f220bf763.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 132184,
+   "uploaded_bytes": 132184,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_09__1c017f53-1d65-426f-956b-d82949f643ae.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_09__1c017f53-1d65-426f-956b-d82949f643ae.jpg",
+   "name": "nyc_09.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_09__1c017f53-1d65-426f-956b-d82949f643ae.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 173761,
+   "uploaded_bytes": 173761,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_10__3d9c7ce0-5201-4600-a259-0b09e3c6adfc.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_10__3d9c7ce0-5201-4600-a259-0b09e3c6adfc.jpg",
+   "name": "nyc_10.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_10__3d9c7ce0-5201-4600-a259-0b09e3c6adfc.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 143074,
+   "uploaded_bytes": 143074,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_11__a621b8ee-b503-444b-863a-5d10f68a2840.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_11__a621b8ee-b503-444b-863a-5d10f68a2840.jpg",
+   "name": "nyc_11.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_11__a621b8ee-b503-444b-863a-5d10f68a2840.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 169204,
+   "uploaded_bytes": 169204,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_12__c831e1ee-9fe5-492f-b122-286dc7d06afb.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_12__c831e1ee-9fe5-492f-b122-286dc7d06afb.jpg",
+   "name": "nyc_12.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_12__c831e1ee-9fe5-492f-b122-286dc7d06afb.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 162230,
+   "uploaded_bytes": 162230,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_13__df67b2b3-2332-433d-995e-38d97568c991.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_13__df67b2b3-2332-433d-995e-38d97568c991.jpg",
+   "name": "nyc_13.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_13__df67b2b3-2332-433d-995e-38d97568c991.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 235279,
+   "uploaded_bytes": 235279,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_14__e805839b-b505-44f9-84ec-7bee8cb0a914.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_14__e805839b-b505-44f9-84ec-7bee8cb0a914.jpg",
+   "name": "nyc_14.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_14__e805839b-b505-44f9-84ec-7bee8cb0a914.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 154163,
+   "uploaded_bytes": 154163,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_15__c06f0126-5ddd-47b6-a806-b60ac2d2c3cc.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_15__c06f0126-5ddd-47b6-a806-b60ac2d2c3cc.jpg",
+   "name": "nyc_15.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_15__c06f0126-5ddd-47b6-a806-b60ac2d2c3cc.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 149258,
+   "uploaded_bytes": 149258,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_16__66f2c784-d8b7-4a0c-9475-0fc7a185dc1c.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_16__66f2c784-d8b7-4a0c-9475-0fc7a185dc1c.jpg",
+   "name": "nyc_16.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_16__66f2c784-d8b7-4a0c-9475-0fc7a185dc1c.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 201440,
+   "uploaded_bytes": 201440,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_17__892cd36e-df8e-4095-a440-a7413dd3d6b2.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_17__892cd36e-df8e-4095-a440-a7413dd3d6b2.jpg",
+   "name": "nyc_17.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_17__892cd36e-df8e-4095-a440-a7413dd3d6b2.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 142922,
+   "uploaded_bytes": 142922,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_18__488f3586-ff57-4dd8-a583-6dd40dd55299.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_18__488f3586-ff57-4dd8-a583-6dd40dd55299.jpg",
+   "name": "nyc_18.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_18__488f3586-ff57-4dd8-a583-6dd40dd55299.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 164907,
+   "uploaded_bytes": 164907,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_19__f0461c7f-89eb-4988-beaa-66f7ebc25042.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_19__f0461c7f-89eb-4988-beaa-66f7ebc25042.jpg",
+   "name": "nyc_19.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_19__f0461c7f-89eb-4988-beaa-66f7ebc25042.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 134595,
+   "uploaded_bytes": 134595,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_20__64efb101-0cdc-41a9-933a-9535d29e0531.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_20__64efb101-0cdc-41a9-933a-9535d29e0531.jpg",
+   "name": "nyc_20.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_20__64efb101-0cdc-41a9-933a-9535d29e0531.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 204490,
+   "uploaded_bytes": 204490,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_21__70b5c265-ee56-4a4b-a334-d3c336f319d8.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_21__70b5c265-ee56-4a4b-a334-d3c336f319d8.jpg",
+   "name": "nyc_21.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_21__70b5c265-ee56-4a4b-a334-d3c336f319d8.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 156963,
+   "uploaded_bytes": 156963,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_22__afdc6fec-5864-4d5e-806d-a00f85d18d14.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_22__afdc6fec-5864-4d5e-806d-a00f85d18d14.jpg",
+   "name": "nyc_22.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_22__afdc6fec-5864-4d5e-806d-a00f85d18d14.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 176390,
+   "uploaded_bytes": 176390,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_23__c798410b-a8d6-409a-8b5f-f7973ff7afd2.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_23__c798410b-a8d6-409a-8b5f-f7973ff7afd2.jpg",
+   "name": "nyc_23.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_23__c798410b-a8d6-409a-8b5f-f7973ff7afd2.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 204584,
+   "uploaded_bytes": 204584,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_24__a5c2b097-5fbb-457d-bae5-1f9adb3b1339.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_24__a5c2b097-5fbb-457d-bae5-1f9adb3b1339.jpg",
+   "name": "nyc_24.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_24__a5c2b097-5fbb-457d-bae5-1f9adb3b1339.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 185784,
+   "uploaded_bytes": 185784,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_25__a5d96909-cc73-402b-95b1-44a8331c3194.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_25__a5d96909-cc73-402b-95b1-44a8331c3194.jpg",
+   "name": "nyc_25.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_25__a5d96909-cc73-402b-95b1-44a8331c3194.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 211665,
+   "uploaded_bytes": 211665,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_26__b8c8f625-cdfc-4c21-9a4c-ee16acd15606.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_26__b8c8f625-cdfc-4c21-9a4c-ee16acd15606.jpg",
+   "name": "nyc_26.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_26__b8c8f625-cdfc-4c21-9a4c-ee16acd15606.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 113276,
+   "uploaded_bytes": 113276,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_27__fb33ff83-4950-4f15-9ff9-ef52990a36ea.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_27__fb33ff83-4950-4f15-9ff9-ef52990a36ea.jpg",
+   "name": "nyc_27.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_27__fb33ff83-4950-4f15-9ff9-ef52990a36ea.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 211243,
+   "uploaded_bytes": 211243,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_28__50582bee-c31e-437a-9f3e-f6460da8fcdb.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_28__50582bee-c31e-437a-9f3e-f6460da8fcdb.jpg",
+   "name": "nyc_28.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_28__50582bee-c31e-437a-9f3e-f6460da8fcdb.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 174551,
+   "uploaded_bytes": 174551,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/nyc/nyc_29__870be3de-863f-4f7f-b694-08a5ecbc744c.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/nyc/nyc_29__870be3de-863f-4f7f-b694-08a5ecbc744c.jpg",
+   "name": "nyc_29.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2013-salesses-collaborative/nyc/nyc_29__870be3de-863f-4f7f-b694-08a5ecbc744c.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 121704,
+   "uploaded_bytes": 121704,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/salzburg/salzburg_01__0e07b8ea-8644-44a5-8145-43a6b3d654ac.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/salzburg/salzburg_01__0e07b8ea-8644-44a5-8145-43a6b3d654ac.jpg",
+   "name": "salzburg_01.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2013-salesses-collaborative/salzburg/salzburg_01__0e07b8ea-8644-44a5-8145-43a6b3d654ac.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 161123,
+   "uploaded_bytes": 161123,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/salzburg/salzburg_02__e84862b3-4c48-42b7-a702-5d9cb4872d37.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/salzburg/salzburg_02__e84862b3-4c48-42b7-a702-5d9cb4872d37.jpg",
+   "name": "salzburg_02.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2013-salesses-collaborative/salzburg/salzburg_02__e84862b3-4c48-42b7-a702-5d9cb4872d37.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 135338,
+   "uploaded_bytes": 135338,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/salzburg/salzburg_03__34e25983-2639-43b8-ac72-da8d254b75aa.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/salzburg/salzburg_03__34e25983-2639-43b8-ac72-da8d254b75aa.jpg",
+   "name": "salzburg_03.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2013-salesses-collaborative/salzburg/salzburg_03__34e25983-2639-43b8-ac72-da8d254b75aa.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 167115,
+   "uploaded_bytes": 167115,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/salzburg/salzburg_04__ac7cbf4e-2ac8-45f9-8ff8-1e4d0c138737.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/salzburg/salzburg_04__ac7cbf4e-2ac8-45f9-8ff8-1e4d0c138737.jpg",
+   "name": "salzburg_04.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2013-salesses-collaborative/salzburg/salzburg_04__ac7cbf4e-2ac8-45f9-8ff8-1e4d0c138737.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 142218,
+   "uploaded_bytes": 142218,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/salzburg/salzburg_05__0b118959-8d77-4139-b591-54f2c0921800.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/salzburg/salzburg_05__0b118959-8d77-4139-b591-54f2c0921800.jpg",
+   "name": "salzburg_05.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2013-salesses-collaborative/salzburg/salzburg_05__0b118959-8d77-4139-b591-54f2c0921800.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 138628,
+   "uploaded_bytes": 138628,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/salzburg/salzburg_06__77dc43e4-bff9-459c-86a0-6c2f098d5d78.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/salzburg/salzburg_06__77dc43e4-bff9-459c-86a0-6c2f098d5d78.jpg",
+   "name": "salzburg_06.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2013-salesses-collaborative/salzburg/salzburg_06__77dc43e4-bff9-459c-86a0-6c2f098d5d78.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 160097,
+   "uploaded_bytes": 160097,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/salzburg/salzburg_07__0a198f6a-cc81-40c3-8394-eba0f37e2544.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/salzburg/salzburg_07__0a198f6a-cc81-40c3-8394-eba0f37e2544.jpg",
+   "name": "salzburg_07.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2013-salesses-collaborative/salzburg/salzburg_07__0a198f6a-cc81-40c3-8394-eba0f37e2544.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 199176,
+   "uploaded_bytes": 199176,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/salzburg/salzburg_08__e1471066-2107-4625-a8a9-624b9fe42edd.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/salzburg/salzburg_08__e1471066-2107-4625-a8a9-624b9fe42edd.jpg",
+   "name": "salzburg_08.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2013-salesses-collaborative/salzburg/salzburg_08__e1471066-2107-4625-a8a9-624b9fe42edd.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 169274,
+   "uploaded_bytes": 169274,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/salzburg/salzburg_09__3fed8bb9-0669-47af-b649-7bdf0ce60972.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/salzburg/salzburg_09__3fed8bb9-0669-47af-b649-7bdf0ce60972.jpg",
+   "name": "salzburg_09.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2013-salesses-collaborative/salzburg/salzburg_09__3fed8bb9-0669-47af-b649-7bdf0ce60972.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 168494,
+   "uploaded_bytes": 168494,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/salzburg/salzburg_10__0208da9b-07b1-487c-b75c-6bdd7b3f49b3.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/salzburg/salzburg_10__0208da9b-07b1-487c-b75c-6bdd7b3f49b3.jpg",
+   "name": "salzburg_10.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2013-salesses-collaborative/salzburg/salzburg_10__0208da9b-07b1-487c-b75c-6bdd7b3f49b3.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 180841,
+   "uploaded_bytes": 180841,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/salzburg/salzburg_11__71b22924-584c-409a-8393-05bb56c57fbc.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/salzburg/salzburg_11__71b22924-584c-409a-8393-05bb56c57fbc.jpg",
+   "name": "salzburg_11.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2013-salesses-collaborative/salzburg/salzburg_11__71b22924-584c-409a-8393-05bb56c57fbc.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 186136,
+   "uploaded_bytes": 186136,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/salzburg/salzburg_12__01dce90c-6b45-42ad-be8c-2074fbbd27de.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/salzburg/salzburg_12__01dce90c-6b45-42ad-be8c-2074fbbd27de.jpg",
+   "name": "salzburg_12.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2013-salesses-collaborative/salzburg/salzburg_12__01dce90c-6b45-42ad-be8c-2074fbbd27de.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 194126,
+   "uploaded_bytes": 194126,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/salzburg/salzburg_13__f9c6d9ba-f97a-4354-a6f3-3f2222b6a4b5.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/salzburg/salzburg_13__f9c6d9ba-f97a-4354-a6f3-3f2222b6a4b5.jpg",
+   "name": "salzburg_13.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2013-salesses-collaborative/salzburg/salzburg_13__f9c6d9ba-f97a-4354-a6f3-3f2222b6a4b5.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 167331,
+   "uploaded_bytes": 167331,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/salzburg/salzburg_14__00c93efc-e1dd-4ac5-9717-78e6a2b32326.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/salzburg/salzburg_14__00c93efc-e1dd-4ac5-9717-78e6a2b32326.jpg",
+   "name": "salzburg_14.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2013-salesses-collaborative/salzburg/salzburg_14__00c93efc-e1dd-4ac5-9717-78e6a2b32326.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 172080,
+   "uploaded_bytes": 172080,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/salzburg/salzburg_15__4393bfb5-279c-458d-8385-3245f9e51888.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/salzburg/salzburg_15__4393bfb5-279c-458d-8385-3245f9e51888.jpg",
+   "name": "salzburg_15.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2013-salesses-collaborative/salzburg/salzburg_15__4393bfb5-279c-458d-8385-3245f9e51888.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 142343,
+   "uploaded_bytes": 142343,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/salzburg/salzburg_16__6a6c0966-72ee-45fa-a88d-340e9bb0eede.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/salzburg/salzburg_16__6a6c0966-72ee-45fa-a88d-340e9bb0eede.jpg",
+   "name": "salzburg_16.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2013-salesses-collaborative/salzburg/salzburg_16__6a6c0966-72ee-45fa-a88d-340e9bb0eede.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 178960,
+   "uploaded_bytes": 178960,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2013-salesses-collaborative/salzburg/salzburg_17__10b84510-c9b0-4dd3-b06c-d369639ada2e.jpg",
+   "url": "https://media.sp-survey.org/templates/2013-salesses-collaborative/salzburg/salzburg_17__10b84510-c9b0-4dd3-b06c-d369639ada2e.jpg",
+   "name": "salzburg_17.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2013-salesses-collaborative/salzburg/salzburg_17__10b84510-c9b0-4dd3-b06c-d369639ada2e.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 142521,
+   "uploaded_bytes": 142521,
+   "image_compressed": false
   }
+ ],
+ "paper": {
+  "title": "The Collaborative Image of The City: Mapping the Inequality of Urban Perception",
+  "authors": [
+   "Salesses P.",
+   "Schechtner K.",
+   "Hidalgo C.A."
+  ],
+  "year": 2013,
+  "venue": "PLoS ONE",
+  "doi": "10.1371/journal.pone.0068400",
+  "url": "https://doi.org/10.1371/journal.pone.0068400"
+ }
 }

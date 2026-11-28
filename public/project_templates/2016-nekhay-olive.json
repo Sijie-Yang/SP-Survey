@@ -1,0 +1,656 @@
+{
+ "id": "2016-nekhay-olive",
+ "name": "Olive Grove Landscapes: AHP Pairwise Comparison",
+ "description": "Faithful replication of Nekhay & Arriaza (2016), Sustainability 8:1160. Each participant gets one photograph of each of three upland olive grove types in Montoro, Andalusia, drawn at random from the ten per type printed in the paper: A non-productive olive groves returning to wild vegetation, B olive groves with grass cover between the trees, C conventional olive groves on bare soil. They make the paper's three pairwise comparisons (A–B, A–C, B–C), choosing the more attractive picture and the strength of preference on Saaty's 1–9 scale (1 = same visual quality, 9 = absolute preference), then answer sex, age, municipality size, education, job type and income. Analysis: Analytic Hierarchy Process; judgments aggregated across respondents by geometric mean (AIJ), eigenvector weights per landscape type, consistency ratio CR < 0.1 (paper: grass cover 0.42, non-productive 0.41, conventional 0.17). The page also stores each participant's own weights and CR.\n\nPhotographs: the 30 photographs in the paper's Appendix A (CC BY 4.0, taken by Manuel Arriaza), used with credit; the template is removed if the authors object.\n\nDifferences from the original study: (1) online and self-completed instead of a face-to-face interview with printed photographs labelled A, B and C; (2) the paper says inconsistent answers (CR ≥ 0.1) were revised and repeated until consistent; here the participant is asked once to redo the comparisons and both attempts are kept; (3) answer options for age above 69, education, job type and income are not given in the paper and were written for this template; (4) a consent item is added.",
+ "author": "Nekhay & Arriaza",
+ "year": "2016",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "source:paper",
+  "modality:scene_photo",
+  "task:pairwise",
+  "task:questionnaire",
+  "concept:preference",
+  "concept:aesthetics",
+  "concept:naturalness",
+  "participants:residents",
+  "sample:100to1000",
+  "country:Spain",
+  "city:Montoro"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/su8111160",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T21:41:35.004+00:00",
+ "updatedAt": "2026-11-27T21:41:45.844+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "intro": "You will compare three photographs of upland olive groves in southern Spain, two at a time, and say which you find visually more attractive and how strongly. Then a few questions about you. It takes about 5 minutes and your answers are anonymous.",
+    "title": "How attractive are olive grove landscapes?",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "label": "I agree to take part in this survey and that my answers are used for research.",
+      "title": "Consent",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "comparisons",
+    "title": "Comparisons",
+    "elements": [
+     {
+      "kind": "ahp_pairwise",
+      "name": "olive_pairs",
+      "type": "custom",
+      "pairs": [
+       {
+        "id": "D1",
+        "left": "non_productive",
+        "right": "grass_cover"
+       },
+       {
+        "id": "D2",
+        "left": "non_productive",
+        "right": "conventional"
+       },
+       {
+        "id": "D3",
+        "left": "grass_cover",
+        "right": "conventional"
+       }
+      ],
+      "title": "Look at the two pictures. Which landscape do you find visually more attractive, and how strongly?",
+      "types": {
+       "grass_cover": {
+        "text": "olive farming system with grass vegetation cover between the trees",
+        "label": "B"
+       },
+       "conventional": {
+        "text": "conventional olive farming system without grass cover",
+        "label": "C"
+       },
+       "non_productive": {
+        "text": "non-productive olive groves (being replaced by local wild plants and trees)",
+        "label": "A"
+       }
+      },
+      "isRequired": true,
+      "description": "Each participant gets one picture of each olive grove type, drawn at random from the ten per type (paper Appendix A): A = non-productive, B = grass cover between the trees, C = conventional. Three comparisons as in paper Appendix B: D1 A–B, D2 A–C, D3 B–C, each with the preferred picture and intensity 1–9 (1 = same visual quality, 3 weak, 5 notable, 7 strong, 9 absolute). One trial per comparison: comparison, picture_left, picture_right, preferred (type or equal), intensity, ahp_value (judgment of left over right: intensity, or 1/intensity when right is preferred), attempt, position; shown = the two image files."
+     },
+     {
+      "kind": "ahp_result",
+      "name": "ahp_consistency",
+      "type": "custom",
+      "title": "AHP weights and consistency of this participant",
+      "isRequired": true,
+      "description": "Computed by the page after the three comparisons: consistency_ratio (CR = CI / 0.58), consistent (CR < 0.1), weight_non_productive, weight_grass_cover, weight_conventional (geometric-mean priority vector) and attempt. If CR ≥ 0.1 the participant is asked once to redo the three comparisons (retry trials have keys D1_retry…). Analysis in the paper: aggregation of individual judgments (AIJ) by geometric mean across respondents, then eigenvector weights for the three landscape types (paper: grass cover 0.42, non-productive 0.41, conventional 0.17)."
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "title": "About you",
+    "elements": [
+     {
+      "name": "sex",
+      "type": "radiogroup",
+      "title": "Sex",
+      "choices": [
+       {
+        "text": "Male",
+        "value": 1
+       },
+       {
+        "text": "Female",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "age",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "Less than 34",
+        "value": 1
+       },
+       {
+        "text": "35–49",
+        "value": 2
+       },
+       {
+        "text": "50–69",
+        "value": 3
+       },
+       {
+        "text": "70 or older",
+        "value": 4
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "municipality_size",
+      "type": "radiogroup",
+      "title": "Size of the municipality where you live",
+      "choices": [
+       {
+        "text": "Fewer than 10,000 inhabitants",
+        "value": 1
+       },
+       {
+        "text": "10,000–25,000 inhabitants",
+        "value": 2
+       },
+       {
+        "text": "More than 25,000 inhabitants",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "Highest level of education",
+      "choices": [
+       {
+        "text": "Primary or none",
+        "value": 1
+       },
+       {
+        "text": "Secondary",
+        "value": 2
+       },
+       {
+        "text": "University",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "job_type",
+      "type": "radiogroup",
+      "title": "Type of job",
+      "choices": [
+       {
+        "text": "Agriculture",
+        "value": 1
+       },
+       {
+        "text": "Industry or construction",
+        "value": 2
+       },
+       {
+        "text": "Services",
+        "value": 3
+       },
+       {
+        "text": "Student",
+        "value": 4
+       },
+       {
+        "text": "Retired",
+        "value": 5
+       },
+       {
+        "text": "Unemployed or homemaker",
+        "value": 6
+       },
+       {
+        "text": "Other",
+        "value": 7
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "income",
+      "type": "radiogroup",
+      "title": "Monthly household income",
+      "choices": [
+       {
+        "text": "Low",
+        "value": 1
+       },
+       {
+        "text": "Medium-low",
+        "value": 2
+       },
+       {
+        "text": "Medium-high",
+        "value": 3
+       },
+       {
+        "text": "High",
+        "value": 4
+       },
+       {
+        "text": "Prefer not to say",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Olive Grove Landscapes: AHP Pairwise Comparison",
+  "locale": "en",
+  "spSite": {
+   "id": "site-baba3f75cf37dc7d",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Olive Grove Landscapes</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Olive Grove Landscapes: AHP Pairwise Comparison\",\n  \"description\": \"Faithful replication of Nekhay & Arriaza (2016), Sustainability 8:1160: participants compare one photograph each of three upland olive grove types in Andalusia (non-productive, grass cover between the trees, conventional bare soil) in three pairwise comparisons on Saaty's 1–9 scale, analysed with the Analytic Hierarchy Process.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"olives\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"title\": \"How attractive are olive grove landscapes?\",\n    \"intro\": \"You will compare three photographs of upland olive groves in southern Spain, two at a time, and say which you find visually more attractive and how strongly. Then a few questions about you. It takes about 5 minutes and your answers are anonymous.\",\n    \"elements\": [\n     {\n      \"type\": \"boolean\",\n      \"name\": \"consent\",\n      \"title\": \"Consent\",\n      \"label\": \"I agree to take part in this survey and that my answers are used for research.\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"comparisons\",\n    \"title\": \"Comparisons\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"kind\": \"ahp_pairwise\",\n      \"name\": \"olive_pairs\",\n      \"isRequired\": true,\n      \"title\": \"Look at the two pictures. Which landscape do you find visually more attractive, and how strongly?\",\n      \"types\": {\n       \"non_productive\": {\n        \"label\": \"A\",\n        \"text\": \"non-productive olive groves (being replaced by local wild plants and trees)\"\n       },\n       \"grass_cover\": {\n        \"label\": \"B\",\n        \"text\": \"olive farming system with grass vegetation cover between the trees\"\n       },\n       \"conventional\": {\n        \"label\": \"C\",\n        \"text\": \"conventional olive farming system without grass cover\"\n       }\n      },\n      \"pairs\": [\n       {\n        \"id\": \"D1\",\n        \"left\": \"non_productive\",\n        \"right\": \"grass_cover\"\n       },\n       {\n        \"id\": \"D2\",\n        \"left\": \"non_productive\",\n        \"right\": \"conventional\"\n       },\n       {\n        \"id\": \"D3\",\n        \"left\": \"grass_cover\",\n        \"right\": \"conventional\"\n       }\n      ],\n      \"description\": \"Each participant gets one picture of each olive grove type, drawn at random from the ten per type (paper Appendix A): A = non-productive, B = grass cover between the trees, C = conventional. Three comparisons as in paper Appendix B: D1 A–B, D2 A–C, D3 B–C, each with the preferred picture and intensity 1–9 (1 = same visual quality, 3 weak, 5 notable, 7 strong, 9 absolute). One trial per comparison: comparison, picture_left, picture_right, preferred (type or equal), intensity, ahp_value (judgment of left over right: intensity, or 1/intensity when right is preferred), attempt, position; shown = the two image files.\"\n     },\n     {\n      \"type\": \"custom\",\n      \"kind\": \"ahp_result\",\n      \"name\": \"ahp_consistency\",\n      \"isRequired\": true,\n      \"title\": \"AHP weights and consistency of this participant\",\n      \"description\": \"Computed by the page after the three comparisons: consistency_ratio (CR = CI / 0.58), consistent (CR < 0.1), weight_non_productive, weight_grass_cover, weight_conventional (geometric-mean priority vector) and attempt. If CR ≥ 0.1 the participant is asked once to redo the three comparisons (retry trials have keys D1_retry…). Analysis in the paper: aggregation of individual judgments (AIJ) by geometric mean across respondents, then eigenvector weights for the three landscape types (paper: grass cover 0.42, non-productive 0.41, conventional 0.17).\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"title\": \"About you\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"sex\",\n      \"title\": \"Sex\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Female\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Less than 34\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"35–49\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"50–69\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"70 or older\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"municipality_size\",\n      \"title\": \"Size of the municipality where you live\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Fewer than 10,000 inhabitants\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"10,000–25,000 inhabitants\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"More than 25,000 inhabitants\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"Highest level of education\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Primary or none\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Secondary\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"University\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"job_type\",\n      \"title\": \"Type of job\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Agriculture\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Industry or construction\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Services\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Student\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Retired\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Unemployed or homemaker\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"income\",\n      \"title\": \"Monthly household income\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Low\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Medium-low\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Medium-high\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"High\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Prefer not to say\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#eef2ec;--card:#fff;--ink:#1c231d;--muted:#56614f;--accent:#2f6b3a;--line:#d2dccd;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:760px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.3rem;margin:0 0 10px}\np{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:20px}.q:first-child{margin-top:0}.q>b{display:block;margin-bottom:6px}.q.miss>b{color:var(--warn)}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer;background:var(--card)}\ninput[type=text],input[type=number],textarea{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%}\ninput[type=number]{max-width:160px}textarea{min-height:70px;resize:vertical}\n.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.t{color:var(--muted);font-size:.9rem}\n.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;flex:1;margin-left:12px;max-width:260px}.bar>i{display:block;height:100%;background:var(--accent)}\n.stim{display:block;width:100%;max-width:560px;margin:0 auto;border-radius:8px}\n.it{padding:10px 0;border-top:1px solid var(--line)}.it:first-child{border-top:0}.it.miss>.lab{color:var(--warn)}\n.lab{margin-bottom:4px}\n.ends{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-top:3px;max-width:520px}\n.seg{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:3px;max-width:520px}\n.seg label{display:block;cursor:pointer;position:relative}\n.seg input{position:absolute;opacity:0;pointer-events:none}\n.seg span{display:flex;align-items:center;justify-content:center;min-height:40px;border:1px solid var(--line);border-radius:8px;font-size:.9rem}\n.seg input:checked+span{background:var(--accent);border-color:var(--accent);color:#fff}\n.seg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}\n.kw{display:flex;flex-wrap:wrap;gap:6px}.kw label.opt{margin-top:0}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:760px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}\n.pick{display:block;cursor:pointer;border:2px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;position:relative}\n.pick input{position:absolute;opacity:0;pointer-events:none}\n.pick img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}\n.pick span{display:block;text-align:center;padding:6px;font-weight:600}\n.pick:has(input:checked){border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}\n.pick:has(input:checked) span{background:var(--accent);color:#fff}\n.pick:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}\n.miss .pair .pick{border-color:var(--warn)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs: the 30 photographs of upland olive groves in Montoro (Córdoba, Spain) printed in Nekhay &amp; Arriaza (2016), Sustainability 8:1160, Appendix A, doi:10.3390/su8111160 (CC BY 4.0; photographs by Manuel Arriaza). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='olive2016:';\n  var app=document.getElementById('app'),SPEC,Q={},files={},done={},SET=null,PRE=[],POST=[],CMP=null,TYPES={},PAIRS=[];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='visible';}}\n  function hideErr(){var e=app.querySelector('.err');if(e)e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function seven(name){var h='<div class=\"seg\" style=\"--n:10\" role=\"radiogroup\">';for(var v=0;v<=9;v++)h+='<label><input type=\"radio\" name=\"'+name+'\" value=\"'+v+'\"><span>'+v+'</span></label>';return h+'</div>';}\n  function scaleItem(name,it){return '<div class=\"it\" data-n=\"'+name+'\"><div class=\"lab\">'+esc(it.text)+'</div>'+seven(name)+'<div class=\"ends\"><span>0 = '+esc(it.low)+'</span><span>9 = '+esc(it.high)+'</span></div></div>';}\n  function total(){return PRE.length+PAIRS.length+POST.length;}\n  function top(i){return '<div class=\"top\"><span class=\"t\">Page '+(i+1)+' of '+total()+'</span><div class=\"bar\"><i style=\"width:'+(100*i/total())+'%\"></i></div></div>';}\n  function next(){window.scrollTo(0,0);\n    for(var k=0;k<PRE.length;k++)if(!done['p_'+PRE[k].name])return intro(k,PRE,0);\n    for(var j=0;j<PAIRS.length;j++)if(!done['c_'+PAIRS[j].id])return compare(j);\n    for(var m=0;m<POST.length;m++)if(!done['p_'+POST[m].name])return intro(m,POST,PRE.length+PAIRS.length);\n    finish();}\n  function field(e){\n    var h='<div class=\"q\" data-q=\"'+e.name+'\"><b>'+esc(Q[e.name].title)+'</b>';\n    if(e.type==='boolean')h+='<label class=\"opt\"><input type=\"checkbox\" name=\"'+e.name+'\" value=\"1\"> '+esc(e.label)+'</label>';\n    else if(e.type==='radiogroup')h+=Q[e.name].choices.map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+e.name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');\n    else if(e.type==='text')h+='<input type=\"'+(e.inputType==='number'?'number':'text')+'\" name=\"'+e.name+'\"'+(e.inputType==='number'?' min=\"'+e.min+'\" max=\"'+e.max+'\" inputmode=\"numeric\"':' maxlength=\"80\"')+'>';\n    else if(e.kind==='scales')h+=e.items.map(function(it){return scaleItem(e.name+'__'+it.name,it);}).join('');\n    return h+'</div>';\n  }\n  function readField(e){\n    if(e.type==='boolean')return app.querySelector('input[name=\"'+e.name+'\"]').checked?true:undefined;\n    if(e.type==='radiogroup'){var x=app.querySelector('input[name=\"'+e.name+'\"]:checked');return x?Number(x.value):undefined;}\n    if(e.type==='text'){var t=app.querySelector('[name=\"'+e.name+'\"]').value.trim();if(e.inputType==='number'){var n=Number(t);return (t!==''&&n>=e.min&&n<=e.max&&Math.round(n)===n)?n:undefined;}return t||undefined;}\n    if(e.kind==='scales'){var v={},miss=0;e.items.forEach(function(it){var x=app.querySelector('input[name=\"'+e.name+'__'+it.name+'\"]:checked');if(x)v[it.name]=Number(x.value);else{miss++;app.querySelector('.it[data-n=\"'+e.name+'__'+it.name+'\"]').classList.add('miss');}});return miss?undefined:v;}\n  }\n  function intro(k,LIST,off){\n    var P=LIST[k],INTRO=P.elements;\n    app.innerHTML=top(off+k)+'<h1>'+esc(P.title)+'</h1><div class=\"card\">'+(P.intro?'<p style=\"color:var(--ink)\">'+esc(P.intro)+'</p>':'')+INTRO.map(field).join('')+'</div><div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div>';\n    app.onchange=function(ev){hideErr();var q=ev.target.closest('.q');if(q)q.classList.remove('miss');var it=ev.target.closest('.it');if(it)it.classList.remove('miss');};\n    document.getElementById('go').onclick=function(){\n      var l=[],bad=null;\n      INTRO.forEach(function(e){var v=readField(e);if(v===undefined){bad=bad||e;app.querySelector('.q[data-q=\"'+e.name+'\"]').classList.add('miss');}else l.push([e.name,v]);});\n      if(bad){err(bad.name==='consent'?'Please tick the box to agree before you start.':bad.inputType==='number'?'Please enter your age as a whole number from '+bad.min+' to '+bad.max+'.':bad.kind?'Please answer every row of: '+Q[bad.name].title:'Please answer: '+Q[bad.name].title);var m=app.querySelector('.q.miss');if(m)m.scrollIntoView({block:'center'});return;}\n      var b=this;b.disabled=true;\n      Promise.all(l.map(function(a){return SPSite.answer(a[0],a[1]);})).then(function(rs){var x=rs.filter(function(r){return !ok(r);})[0];if(x){b.disabled=false;return err(x.error);}done['p_'+P.name]=true;save('d',done);next();});\n    };\n  }\n  function tile(side,type){var f=SET[type];return '<label class=\"pick\"><input type=\"radio\" name=\"side\" value=\"'+side+'\"><img alt=\"Picture '+TYPES[type].label+'\" src=\"'+esc(files[f].url)+'\"><span>Picture '+TYPES[type].label+'</span></label>';}\n  function compare(j){\n    var P=PAIRS[j];\n    app.innerHTML=top(PRE.length+j)+'<h1>Comparison '+(j+1)+' of '+PAIRS.length+'</h1><div class=\"card\"><p style=\"color:var(--ink)\">'+esc(CMP.title)+'</p><div class=\"q\" data-q=\"side\"><b>Which picture do you prefer?</b><div class=\"pair\">'+tile('left',P.left)+tile('right',P.right)+'</div></div>'+\n      '<div class=\"q\" data-q=\"intensity\"><b>How strong is your preference?</b><div class=\"seg\" style=\"--n:9\" role=\"radiogroup\">'+[1,2,3,4,5,6,7,8,9].map(function(v){return '<label><input type=\"radio\" name=\"intensity\" value=\"'+v+'\"><span>'+v+'</span></label>';}).join('')+'</div><div class=\"ends\"><span>1 = both the same</span><span>9 = absolute preference</span></div><p style=\"font-size:.85rem;margin-top:8px\">3 = weak, 5 = notable, 7 = strong, 9 = absolute preference; 2, 4, 6 and 8 are in between. If you choose 1 you do not need to pick a picture.</p></div></div>'+\n      '<div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div>';\n    app.onchange=function(ev){hideErr();var q=ev.target.closest('.q');if(q)q.classList.remove('miss');};\n    document.getElementById('go').onclick=function(){\n      var sd=app.querySelector('input[name=side]:checked'),it=app.querySelector('input[name=intensity]:checked');\n      if(!it){app.querySelector('.q[data-q=intensity]').classList.add('miss');return err('Please choose how strong your preference is (1–9).');}\n      var n=Number(it.value);\n      if(n>1&&!sd){app.querySelector('.q[data-q=side]').classList.add('miss');return err('Please tap the picture you prefer.');}\n      var pref=n===1?'equal':(sd.value==='left'?P.left:P.right);\n      var v={comparison:P.id,picture_left:P.left,picture_right:P.right,preferred:pref,intensity:n,ahp_value:n===1?1:(pref===P.left?n:Math.round(1e4/n)/1e4),attempt:done.attempt||1,position:j+1};\n      var b=this;b.disabled=true;\n      SPSite.answer('olive_pairs',v,{key:P.id+(done.attempt>1?'_retry':''),shown:[SET[P.left],SET[P.right]]}).then(function(r){if(!ok(r)){b.disabled=false;return err(r.error);}\n        done.vals=done.vals||{};done.vals[P.id]=v.ahp_value;done['c_'+P.id]=true;save('d',done);\n        if(j===PAIRS.length-1)return checkCR();next();});\n    };\n  }\n  function ahp(vals){ // 3x3 matrix A,B,C from D1=A/B, D2=A/C, D3=B/C\n    var M=[[1,vals.D1,vals.D2],[1/vals.D1,1,vals.D3],[1/vals.D2,1/vals.D3,1]];\n    var g=M.map(function(r){return Math.cbrt(r[0]*r[1]*r[2]);}),s=g[0]+g[1]+g[2],w=g.map(function(x){return x/s;});\n    var lam=0;for(var i=0;i<3;i++){var row=0;for(var k=0;k<3;k++)row+=M[i][k]*w[k];lam+=row/w[i];}lam/=3;\n    var ci=(lam-3)/2;return {w:w,cr:Math.max(0,Math.round(ci/0.58*1000)/1000)};\n  }\n  function checkCR(){\n    var r=ahp(done.vals),order=['non_productive','grass_cover','conventional'];\n    var rec={consistency_ratio:r.cr,consistent:r.cr<0.1,attempt:done.attempt||1};order.forEach(function(t,i){rec['weight_'+t]=Math.round(r.w[i]*1000)/1000;});\n    SPSite.answer('ahp_consistency',rec).then(function(){\n      if(r.cr>=0.1&&!(done.attempt>1)){\n        app.innerHTML='<h1>Please look once more</h1><div class=\"card\"><p style=\"color:var(--ink)\">Your three answers do not quite agree with each other (for example, preferring A to B and B to C, but C to A). Please make the three comparisons again with the same pictures, taking a moment for each.</p></div><div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">Compare again</button></div>';\n        document.getElementById('go').onclick=function(){done.attempt=2;PAIRS.forEach(function(p){done['c_'+p.id]=false;});save('d',done);next();};\n      }else next();\n    });\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>In the original study, 480 residents of Andalusia (Spain) compared one photograph of each olive grove type in face-to-face interviews. Combining their judgments with the Analytic Hierarchy Process gave weights of 0.42 for olive groves with grass cover between the trees, 0.41 for non-productive olive groves returning to wild vegetation, and 0.17 for conventional olive groves on bare soil.</p><p style=\"font-size:.82rem\">Nekhay, O., &amp; Arriaza, M. (2016). How Attractive Is Upland Olive Groves Landscape? Application of the Analytic Hierarchy Process and GIS in Southern Spain. Sustainability 8:1160, doi:10.3390/su8111160.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){if(x==='olive_pairs'||x==='ahp_consistency')PAIRS.forEach(function(p){done['c_'+p.id]=false;});else PRE.concat(POST).forEach(function(p){if(p.elements.some(function(e){return e.name===x;}))done['p_'+p.name]=false;});});save('d',done);next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    try{SPEC=JSON.parse(document.getElementById('sp-scheme').textContent).survey;}catch(e){SPEC={pages:[]};}\n    SPEC.pages.forEach(function(p){p.elements.forEach(function(e){var g=SPSite.getQuestion(e.name)||{};Q[e.name]={title:g.title||e.title,choices:(g.choices&&g.choices.length)?g.choices:e.choices};if(e.name==='olive_pairs'){CMP=e;TYPES=e.types;PAIRS=e.pairs;}});});\n    var ci=SPEC.pages.findIndex(function(p){return p.name==='comparisons';});\n    PRE=SPEC.pages.slice(0,ci);POST=SPEC.pages.slice(ci+1);\n    (SPSite.getMedia('olives')||[]).forEach(function(f){files[f.name]=f;});\n    var by={};Object.keys(files).forEach(function(n){var t=n.replace(/_\\d+\\.jpg$/,'');(by[t]=by[t]||[]).push(n);});\n    if(Object.keys(TYPES).some(function(t){return !(by[t]&&by[t].length);})){app.innerHTML='<h1>Pictures missing</h1><p>Media folder olives must hold pictures named conventional_NN.jpg, grass_cover_NN.jpg and non_productive_NN.jpg.</p>';return;}\n    var a=(ctx&&ctx.answers)||{};done=load('d')||{};\n    SET=load('set');\n    if(!SET||Object.keys(TYPES).some(function(t){return !files[SET[t]];})){SET={};Object.keys(TYPES).forEach(function(t){var l=by[t];SET[t]=l[Math.floor(Math.random()*l.length)];});save('set',SET);}\n    PRE.concat(POST).forEach(function(p){done['p_'+p.name]=p.elements.every(function(e){return a[e.name]!=null;});});\n    if(a.ahp_consistency!=null&&!(done.attempt>1))PAIRS.forEach(function(p){done['c_'+p.id]=true;});\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T21:41:10.353Z",
+   "mediaFolders": [
+    "olives"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T21:41:10.353Z"
+  },
+  "description": "Faithful replication of Nekhay & Arriaza (2016), Sustainability 8:1160: participants compare one photograph each of three upland olive grove types in Andalusia (non-productive, grass cover between the trees, conventional bare soil) in three pairwise comparisons on Saaty's 1–9 scale, analysed with the Analytic Hierarchy Process.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2016-nekhay-olive/olives/conventional_01__2d801f5e-338a-4397-ad94-b7500612869c.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/conventional_01__2d801f5e-338a-4397-ad94-b7500612869c.jpg",
+   "name": "conventional_01.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/conventional_01__2d801f5e-338a-4397-ad94-b7500612869c.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 15657,
+   "uploaded_bytes": 15657,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/conventional_02__c9427541-8586-437d-816a-3c75802149fb.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/conventional_02__c9427541-8586-437d-816a-3c75802149fb.jpg",
+   "name": "conventional_02.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/conventional_02__c9427541-8586-437d-816a-3c75802149fb.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 31181,
+   "uploaded_bytes": 31181,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/conventional_03__067a0a68-0f4a-4972-a496-5f3b0fa04f82.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/conventional_03__067a0a68-0f4a-4972-a496-5f3b0fa04f82.jpg",
+   "name": "conventional_03.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/conventional_03__067a0a68-0f4a-4972-a496-5f3b0fa04f82.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 31416,
+   "uploaded_bytes": 31416,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/conventional_04__903c67ff-414a-4d9b-9dec-931bb1a9133c.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/conventional_04__903c67ff-414a-4d9b-9dec-931bb1a9133c.jpg",
+   "name": "conventional_04.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/conventional_04__903c67ff-414a-4d9b-9dec-931bb1a9133c.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 27604,
+   "uploaded_bytes": 27604,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/conventional_05__1e8df078-b02b-4965-be44-10207425ff13.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/conventional_05__1e8df078-b02b-4965-be44-10207425ff13.jpg",
+   "name": "conventional_05.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/conventional_05__1e8df078-b02b-4965-be44-10207425ff13.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 27459,
+   "uploaded_bytes": 27459,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/conventional_06__39653d58-aa6b-402e-bf29-9c52943a407c.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/conventional_06__39653d58-aa6b-402e-bf29-9c52943a407c.jpg",
+   "name": "conventional_06.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/conventional_06__39653d58-aa6b-402e-bf29-9c52943a407c.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 36231,
+   "uploaded_bytes": 36231,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/conventional_07__323d6920-d31b-41a4-bd08-f7ce55145593.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/conventional_07__323d6920-d31b-41a4-bd08-f7ce55145593.jpg",
+   "name": "conventional_07.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/conventional_07__323d6920-d31b-41a4-bd08-f7ce55145593.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 34279,
+   "uploaded_bytes": 34279,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/conventional_08__2d588d68-eda5-48fd-8a6a-d145082967c3.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/conventional_08__2d588d68-eda5-48fd-8a6a-d145082967c3.jpg",
+   "name": "conventional_08.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/conventional_08__2d588d68-eda5-48fd-8a6a-d145082967c3.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 18809,
+   "uploaded_bytes": 18809,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/conventional_09__4164c4f7-954c-4efa-9d85-c9de3f328b99.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/conventional_09__4164c4f7-954c-4efa-9d85-c9de3f328b99.jpg",
+   "name": "conventional_09.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/conventional_09__4164c4f7-954c-4efa-9d85-c9de3f328b99.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 26696,
+   "uploaded_bytes": 26696,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/conventional_10__42ec59d8-6478-464c-941f-1982cb5e4253.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/conventional_10__42ec59d8-6478-464c-941f-1982cb5e4253.jpg",
+   "name": "conventional_10.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/conventional_10__42ec59d8-6478-464c-941f-1982cb5e4253.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 19668,
+   "uploaded_bytes": 19668,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/grass_cover_01__40c2baf3-78c5-453b-aa3f-7d182ce523b1.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/grass_cover_01__40c2baf3-78c5-453b-aa3f-7d182ce523b1.jpg",
+   "name": "grass_cover_01.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/grass_cover_01__40c2baf3-78c5-453b-aa3f-7d182ce523b1.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 32931,
+   "uploaded_bytes": 32931,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/grass_cover_02__13436330-3b27-4396-ae8a-d0785b8484f8.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/grass_cover_02__13436330-3b27-4396-ae8a-d0785b8484f8.jpg",
+   "name": "grass_cover_02.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/grass_cover_02__13436330-3b27-4396-ae8a-d0785b8484f8.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 37591,
+   "uploaded_bytes": 37591,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/grass_cover_03__235e7744-36fa-48a0-9740-c95fa233d44c.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/grass_cover_03__235e7744-36fa-48a0-9740-c95fa233d44c.jpg",
+   "name": "grass_cover_03.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/grass_cover_03__235e7744-36fa-48a0-9740-c95fa233d44c.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 18921,
+   "uploaded_bytes": 18921,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/grass_cover_04__ea5b5de5-8d19-4566-b540-8b29e6230c0e.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/grass_cover_04__ea5b5de5-8d19-4566-b540-8b29e6230c0e.jpg",
+   "name": "grass_cover_04.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/grass_cover_04__ea5b5de5-8d19-4566-b540-8b29e6230c0e.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 15328,
+   "uploaded_bytes": 15328,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/grass_cover_05__f4d2aea9-1b58-49d5-9b45-c9fa869685d3.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/grass_cover_05__f4d2aea9-1b58-49d5-9b45-c9fa869685d3.jpg",
+   "name": "grass_cover_05.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/grass_cover_05__f4d2aea9-1b58-49d5-9b45-c9fa869685d3.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 18213,
+   "uploaded_bytes": 18213,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/grass_cover_06__dc2bc86b-924e-4780-b78b-da5b36b8524d.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/grass_cover_06__dc2bc86b-924e-4780-b78b-da5b36b8524d.jpg",
+   "name": "grass_cover_06.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/grass_cover_06__dc2bc86b-924e-4780-b78b-da5b36b8524d.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 19105,
+   "uploaded_bytes": 19105,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/grass_cover_07__d12cf890-53fe-4d9d-a438-0b0d701add97.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/grass_cover_07__d12cf890-53fe-4d9d-a438-0b0d701add97.jpg",
+   "name": "grass_cover_07.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/grass_cover_07__d12cf890-53fe-4d9d-a438-0b0d701add97.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 17188,
+   "uploaded_bytes": 17188,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/grass_cover_08__850899ff-36f2-4037-82f8-c92ee9c85bbc.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/grass_cover_08__850899ff-36f2-4037-82f8-c92ee9c85bbc.jpg",
+   "name": "grass_cover_08.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/grass_cover_08__850899ff-36f2-4037-82f8-c92ee9c85bbc.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 16021,
+   "uploaded_bytes": 16021,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/grass_cover_09__0db3ddc7-2b64-485c-aa0c-86809241c542.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/grass_cover_09__0db3ddc7-2b64-485c-aa0c-86809241c542.jpg",
+   "name": "grass_cover_09.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/grass_cover_09__0db3ddc7-2b64-485c-aa0c-86809241c542.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 20441,
+   "uploaded_bytes": 20441,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/grass_cover_10__1511a6e8-a172-4596-b598-e879acaa7556.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/grass_cover_10__1511a6e8-a172-4596-b598-e879acaa7556.jpg",
+   "name": "grass_cover_10.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/grass_cover_10__1511a6e8-a172-4596-b598-e879acaa7556.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 19942,
+   "uploaded_bytes": 19942,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/non_productive_01__d243e8e0-a938-4077-beac-37f8eefdb3f7.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/non_productive_01__d243e8e0-a938-4077-beac-37f8eefdb3f7.jpg",
+   "name": "non_productive_01.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/non_productive_01__d243e8e0-a938-4077-beac-37f8eefdb3f7.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 22862,
+   "uploaded_bytes": 22862,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/non_productive_02__49f335a8-73d0-4f35-8d39-b10ca2e9f517.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/non_productive_02__49f335a8-73d0-4f35-8d39-b10ca2e9f517.jpg",
+   "name": "non_productive_02.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/non_productive_02__49f335a8-73d0-4f35-8d39-b10ca2e9f517.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 20042,
+   "uploaded_bytes": 20042,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/non_productive_03__72763000-6f92-4029-be0b-e0f4799e5aa8.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/non_productive_03__72763000-6f92-4029-be0b-e0f4799e5aa8.jpg",
+   "name": "non_productive_03.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/non_productive_03__72763000-6f92-4029-be0b-e0f4799e5aa8.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 22239,
+   "uploaded_bytes": 22239,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/non_productive_04__4b3d1336-7182-4c87-b758-d57d3eb135ef.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/non_productive_04__4b3d1336-7182-4c87-b758-d57d3eb135ef.jpg",
+   "name": "non_productive_04.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/non_productive_04__4b3d1336-7182-4c87-b758-d57d3eb135ef.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 21718,
+   "uploaded_bytes": 21718,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/non_productive_05__15ea459b-2247-42c9-9baa-532858ba0942.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/non_productive_05__15ea459b-2247-42c9-9baa-532858ba0942.jpg",
+   "name": "non_productive_05.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/non_productive_05__15ea459b-2247-42c9-9baa-532858ba0942.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 21081,
+   "uploaded_bytes": 21081,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/non_productive_06__5c37ff87-b85d-4034-a47c-120a1edd4534.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/non_productive_06__5c37ff87-b85d-4034-a47c-120a1edd4534.jpg",
+   "name": "non_productive_06.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/non_productive_06__5c37ff87-b85d-4034-a47c-120a1edd4534.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 18659,
+   "uploaded_bytes": 18659,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/non_productive_07__fd771ace-eccd-43ee-8696-b88faabbacb8.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/non_productive_07__fd771ace-eccd-43ee-8696-b88faabbacb8.jpg",
+   "name": "non_productive_07.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/non_productive_07__fd771ace-eccd-43ee-8696-b88faabbacb8.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 21689,
+   "uploaded_bytes": 21689,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/non_productive_08__62a47ac2-f6ab-4aae-9a4e-f16e78d26270.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/non_productive_08__62a47ac2-f6ab-4aae-9a4e-f16e78d26270.jpg",
+   "name": "non_productive_08.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/non_productive_08__62a47ac2-f6ab-4aae-9a4e-f16e78d26270.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 22862,
+   "uploaded_bytes": 22862,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/non_productive_09__3eee5341-15f6-4871-bd9e-2179d9039399.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/non_productive_09__3eee5341-15f6-4871-bd9e-2179d9039399.jpg",
+   "name": "non_productive_09.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/non_productive_09__3eee5341-15f6-4871-bd9e-2179d9039399.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 21414,
+   "uploaded_bytes": 21414,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-nekhay-olive/olives/non_productive_10__0678d3ed-0c9d-4c04-a8ee-8fa90f2086f3.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-nekhay-olive/olives/non_productive_10__0678d3ed-0c9d-4c04-a8ee-8fa90f2086f3.jpg",
+   "name": "non_productive_10.jpg",
+   "type": "image",
+   "folder": "olives",
+   "media_id": "templates/2016-nekhay-olive/olives/non_productive_10__0678d3ed-0c9d-4c04-a8ee-8fa90f2086f3.jpg",
+   "logicalFolder": "olives",
+   "original_bytes": 19945,
+   "uploaded_bytes": 19945,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "How Attractive Is Upland Olive Groves Landscape? Application of the Analytic Hierarchy Process and GIS in Southern Spain",
+  "authors": [
+   "Olexandr Nekhay",
+   "Manuel Arriaza"
+  ],
+  "year": 2016,
+  "venue": "Sustainability",
+  "doi": "10.3390/su8111160",
+  "url": "https://doi.org/10.3390/su8111160"
+ }
+}

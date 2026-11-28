@@ -1,0 +1,712 @@
+{
+ "id": "2026-admin-spschemeperception",
+ "name": "SP-Scheme-Perception",
+ "description": "Template created from project: SP-Scheme-Perception",
+ "author": "Admin",
+ "year": "2026",
+ "category": "Custom",
+ "tags": [
+  "custom",
+  "user-created",
+  "source:ai",
+  "modality:street_view",
+  "task:custom_page",
+  "concept:safety",
+  "concept:liveliness",
+  "concept:beauty"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": null,
+ "huggingfaceDataset": null,
+ "createdAt": "2026-10-15T11:05:59.448+00:00",
+ "updatedAt": "2026-11-26T14:58:02.403+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "welcome",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "我已阅读知情同意说明，自愿参与本研究",
+      "labelTrue": "同意",
+      "isRequired": true,
+      "labelFalse": "不同意"
+     }
+    ]
+   },
+   {
+    "name": "profile",
+    "elements": [
+     {
+      "max": 80,
+      "min": 16,
+      "name": "age",
+      "type": "text",
+      "title": "你的年龄",
+      "inputType": "number"
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "性别",
+      "choices": [
+       {
+        "text": "女",
+        "value": "female"
+       },
+       {
+        "text": "男",
+        "value": "male"
+       },
+       {
+        "text": "非二元",
+        "value": "nonbinary"
+       },
+       {
+        "text": "不愿透露",
+        "value": "na"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "city_size",
+      "type": "radiogroup",
+      "title": "你目前长期居住的地区",
+      "choices": [
+       {
+        "text": "超大城市",
+        "value": "mega"
+       },
+       {
+        "text": "大城市",
+        "value": "large"
+       },
+       {
+        "text": "中小城市",
+        "value": "mid"
+       },
+       {
+        "text": "县城/镇",
+        "value": "county"
+       },
+       {
+        "text": "乡村",
+        "value": "rural"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "travel_modes",
+      "type": "checkbox",
+      "title": "日常出行方式（可多选）",
+      "choices": [
+       {
+        "text": "步行",
+        "value": "walk"
+       },
+       {
+        "text": "骑行",
+        "value": "bike"
+       },
+       {
+        "text": "公交",
+        "value": "bus"
+       },
+       {
+        "text": "地铁",
+        "value": "metro"
+       },
+       {
+        "text": "自驾",
+        "value": "car"
+       },
+       {
+        "text": "网约车",
+        "value": "ridehail"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "field",
+      "type": "radiogroup",
+      "title": "专业背景",
+      "choices": [
+       {
+        "text": "城乡规划",
+        "value": "planning"
+       },
+       {
+        "text": "建筑/景观",
+        "value": "arch"
+       },
+       {
+        "text": "地理/GIS",
+        "value": "geo"
+       },
+       {
+        "text": "计算机/AI",
+        "value": "cs"
+       },
+       {
+        "text": "社会科学",
+        "value": "social"
+       },
+       {
+        "text": "其他",
+        "value": "other"
+       },
+       {
+        "text": "无相关",
+        "value": "none"
+       }
+      ]
+     },
+     {
+      "name": "night_walk",
+      "type": "radiogroup",
+      "title": "你多久会在夜间独自步行一次？",
+      "choices": [
+       {
+        "text": "几乎从不",
+        "value": "never"
+       },
+       {
+        "text": "每月几次",
+        "value": "monthly"
+       },
+       {
+        "text": "每周几次",
+        "value": "weekly"
+       },
+       {
+        "text": "几乎每天",
+        "value": "daily"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "flash",
+    "elements": [
+     {
+      "name": "flash_safety",
+      "type": "imagerating",
+      "title": "只看 1.2 秒：这条街看起来有多安全？",
+      "choices": [],
+      "rateMax": 7,
+      "rateMin": 1,
+      "imageCount": 1,
+      "isRequired": true,
+      "trialCount": 6,
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "非常安全",
+      "minRateDescription": "非常危险",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "flash_timing",
+      "type": "custom",
+      "title": "第一印象反应时（毫秒，按轮次）"
+     }
+    ]
+   },
+   {
+    "name": "duels",
+    "elements": [
+     {
+      "name": "duel_safe",
+      "type": "imagepicker",
+      "title": "哪条街道看起来更安全？",
+      "choices": [],
+      "allowTie": true,
+      "tieLabel": "equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 3,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "duel_lively",
+      "type": "imagepicker",
+      "title": "哪条街道看起来更有活力？",
+      "choices": [],
+      "allowTie": true,
+      "tieLabel": "equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 3,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "duel_beautiful",
+      "type": "imagepicker",
+      "title": "哪条街道看起来更美丽？",
+      "choices": [],
+      "allowTie": true,
+      "tieLabel": "equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 3,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "duel_wealthy",
+      "type": "imagepicker",
+      "title": "哪条街道看起来更富裕？",
+      "choices": [],
+      "allowTie": true,
+      "tieLabel": "equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 3,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "duel_boring",
+      "type": "imagepicker",
+      "title": "哪条街道看起来更无聊？",
+      "choices": [],
+      "allowTie": true,
+      "tieLabel": "equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 3,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "duel_depressing",
+      "type": "imagepicker",
+      "title": "哪条街道看起来更压抑？",
+      "choices": [],
+      "allowTie": true,
+      "tieLabel": "equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 3,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "duel_timing",
+      "type": "custom",
+      "title": "成对比较的呈现顺序与反应时"
+     }
+    ]
+   },
+   {
+    "name": "semantic",
+    "elements": [
+     {
+      "name": "sd_scene",
+      "type": "imageslidergroup",
+      "title": "在每对相反的形容词之间，拖到最贴合你感受的位置",
+      "choices": [],
+      "scaleMax": 3,
+      "scaleMin": -3,
+      "scaleStep": 1,
+      "dimensions": [
+       {
+        "id": "quiet",
+        "left": "嘈杂",
+        "label": "安静",
+        "right": "安静"
+       },
+       {
+        "id": "open",
+        "left": "封闭",
+        "label": "开阔",
+        "right": "开阔"
+       },
+       {
+        "id": "tidy",
+        "left": "杂乱",
+        "label": "整洁",
+        "right": "整洁"
+       },
+       {
+        "id": "friendly",
+        "left": "冷漠",
+        "label": "友好",
+        "right": "友好"
+       },
+       {
+        "id": "safe",
+        "left": "危险",
+        "label": "安全",
+        "right": "安全"
+       },
+       {
+        "id": "rich",
+        "left": "单调",
+        "label": "丰富",
+        "right": "丰富"
+       },
+       {
+        "id": "relaxed",
+        "left": "压抑",
+        "label": "舒展",
+        "right": "舒展"
+       },
+       {
+        "id": "modern",
+        "left": "陈旧",
+        "label": "现代",
+        "right": "现代"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "attention_check",
+      "type": "rating",
+      "title": "注意力检测：请将此滑块拖到最右端",
+      "rateMax": 3,
+      "rateMin": -3,
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "affect",
+    "elements": [
+     {
+      "name": "affect_grid",
+      "type": "imageslidergroup",
+      "title": "这条街让你产生了怎样的情绪？（愉悦度 × 唤醒度）",
+      "choices": [],
+      "scaleMax": 100,
+      "scaleMin": -100,
+      "dimensions": [
+       {
+        "id": "valence",
+        "left": "不愉快",
+        "label": "愉悦度",
+        "right": "愉快"
+       },
+       {
+        "id": "arousal",
+        "left": "平静",
+        "label": "唤醒度",
+        "right": "激动"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "trialCount": 3,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "hotspot",
+    "elements": [
+     {
+      "name": "hotspots",
+      "type": "imageannotation",
+      "title": "点击街景中吸引你或让你不适的位置，并选择对应要素",
+      "choices": [],
+      "imageCount": 1,
+      "isRequired": true,
+      "allowedTools": [
+       "point"
+      ],
+      "maxAnnotations": 30,
+      "minAnnotations": 3,
+      "annotationLabels": [
+       "吸引·树木绿化",
+       "吸引·建筑立面",
+       "吸引·车辆",
+       "吸引·行人",
+       "吸引·路灯",
+       "吸引·涂鸦",
+       "吸引·垃圾",
+       "吸引·天空视野",
+       "吸引·人行道",
+       "吸引·商铺",
+       "吸引·道路",
+       "吸引·其他",
+       "不适·树木绿化",
+       "不适·建筑立面",
+       "不适·车辆",
+       "不适·行人",
+       "不适·路灯",
+       "不适·涂鸦",
+       "不适·垃圾",
+       "不适·天空视野",
+       "不适·人行道",
+       "不适·商铺",
+       "不适·道路",
+       "不适·其他"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "rank",
+    "elements": [
+     {
+      "name": "walk_rank",
+      "type": "imageranking",
+      "title": "步行 15 分钟去见朋友，按愿意步行的程度从高到低排序",
+      "choices": [],
+      "imageCount": 5,
+      "isRequired": true,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "budget",
+    "elements": [
+     {
+      "name": "element_budget",
+      "type": "pointallocation",
+      "title": "把 100 点分配给最能提升街道体验的要素",
+      "budget": 100,
+      "choices": [
+       {
+        "text": "绿化与树荫",
+        "value": "greenery"
+       },
+       {
+        "text": "宽敞人行道",
+        "value": "sidewalk"
+       },
+       {
+        "text": "夜间照明",
+        "value": "lighting"
+       },
+       {
+        "text": "沿街商铺",
+        "value": "shops"
+       },
+       {
+        "text": "建筑风貌",
+        "value": "architecture"
+       },
+       {
+        "text": "交通宁静",
+        "value": "quiet"
+       },
+       {
+        "text": "整洁维护",
+        "value": "cleanliness"
+       },
+       {
+        "text": "人气活力",
+        "value": "vitality"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "ideal",
+    "elements": [
+     {
+      "name": "ideal_mix",
+      "type": "slidergroup",
+      "title": "调配你心目中理想街道的“配方”",
+      "scaleMax": 100,
+      "scaleMin": 0,
+      "dimensions": [
+       {
+        "id": "road_width",
+        "left": "窄",
+        "label": "车行道宽度",
+        "right": "宽"
+       },
+       {
+        "id": "sidewalk",
+        "left": "窄",
+        "label": "人行道宽度",
+        "right": "宽"
+       },
+       {
+        "id": "height",
+        "left": "低矮",
+        "label": "建筑高度",
+        "right": "高耸"
+       },
+       {
+        "id": "greenery",
+        "left": "无",
+        "label": "行道树",
+        "right": "浓密"
+       },
+       {
+        "id": "people",
+        "left": "冷清",
+        "label": "行人",
+        "right": "热闹"
+       },
+       {
+        "id": "traffic",
+        "left": "无车",
+        "label": "机动车",
+        "right": "车多"
+       },
+       {
+        "id": "shops",
+        "left": "无",
+        "label": "沿街商铺",
+        "right": "连续"
+       },
+       {
+        "id": "tidiness",
+        "left": "粗犷",
+        "label": "整洁度",
+        "right": "一尘不染"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "open",
+    "elements": [
+     {
+      "name": "open_story",
+      "rows": 5,
+      "type": "comment",
+      "title": "描述一条让你印象深刻的街道——它在哪里？为什么让你记住它？"
+     },
+     {
+      "name": "open_tags",
+      "type": "checkbox",
+      "title": "用哪些词形容你所在城市的街道？",
+      "choices": [
+       {
+        "text": "绿树成荫",
+        "value": "shady"
+       },
+       {
+        "text": "烟火气",
+        "value": "lively"
+       },
+       {
+        "text": "安静",
+        "value": "quiet"
+       },
+       {
+        "text": "拥挤",
+        "value": "crowded"
+       },
+       {
+        "text": "压迫感",
+        "value": "oppressive"
+       },
+       {
+        "text": "干净整洁",
+        "value": "clean"
+       },
+       {
+        "text": "破旧",
+        "value": "rundown"
+       },
+       {
+        "text": "有安全感",
+        "value": "safe"
+       },
+       {
+        "text": "无聊单调",
+        "value": "boring"
+       },
+       {
+        "text": "有设计感",
+        "value": "designed"
+       },
+       {
+        "text": "步行友好",
+        "value": "walkable"
+       },
+       {
+        "text": "车太多",
+        "value": "car_heavy"
+       }
+      ]
+     },
+     {
+      "name": "followup",
+      "type": "radiogroup",
+      "title": "你是否愿意参加后续的眼动追踪 / VR 街景实验？",
+      "choices": [
+       {
+        "text": "愿意",
+        "value": "yes"
+       },
+       {
+        "text": "可能",
+        "value": "maybe"
+       },
+       {
+        "text": "不愿意",
+        "value": "no"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "title": "城市之眼 · 街景感知调查",
+  "locale": "zh",
+  "spSite": {
+   "id": "site-1933abc593065d6f",
+   "html": "<!doctype html>\n<html lang=\"zh-CN\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>街景感知调查</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"城市之眼 · 街景感知调查\",\n    \"description\": \"通过快速判断、成对比较、语义量表、情绪坐标、热点标注、排序与预算分配，研究人们如何感知街道。约 12 分钟。\",\n    \"locale\": \"zh\",\n    \"pages\": [\n      { \"name\": \"welcome\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"我已阅读知情同意说明，自愿参与本研究\", \"isRequired\": true, \"labelTrue\": \"同意\", \"labelFalse\": \"不同意\" }\n      ]},\n      { \"name\": \"profile\", \"elements\": [\n        { \"type\": \"number\", \"name\": \"age\", \"title\": \"你的年龄\", \"min\": 16, \"max\": 80 },\n        { \"type\": \"radiogroup\", \"name\": \"gender\", \"title\": \"性别\", \"isRequired\": true, \"choices\": [\n          {\"value\":\"female\",\"text\":\"女\"},{\"value\":\"male\",\"text\":\"男\"},{\"value\":\"nonbinary\",\"text\":\"非二元\"},{\"value\":\"na\",\"text\":\"不愿透露\"}]},\n        { \"type\": \"radiogroup\", \"name\": \"city_size\", \"title\": \"你目前长期居住的地区\", \"isRequired\": true, \"choices\": [\n          {\"value\":\"mega\",\"text\":\"超大城市\"},{\"value\":\"large\",\"text\":\"大城市\"},{\"value\":\"mid\",\"text\":\"中小城市\"},{\"value\":\"county\",\"text\":\"县城/镇\"},{\"value\":\"rural\",\"text\":\"乡村\"}]},\n        { \"type\": \"checkbox\", \"name\": \"travel_modes\", \"title\": \"日常出行方式（可多选）\", \"isRequired\": true, \"choices\": [\n          {\"value\":\"walk\",\"text\":\"步行\"},{\"value\":\"bike\",\"text\":\"骑行\"},{\"value\":\"bus\",\"text\":\"公交\"},{\"value\":\"metro\",\"text\":\"地铁\"},{\"value\":\"car\",\"text\":\"自驾\"},{\"value\":\"ridehail\",\"text\":\"网约车\"}]},\n        { \"type\": \"radiogroup\", \"name\": \"field\", \"title\": \"专业背景\", \"choices\": [\n          {\"value\":\"planning\",\"text\":\"城乡规划\"},{\"value\":\"arch\",\"text\":\"建筑/景观\"},{\"value\":\"geo\",\"text\":\"地理/GIS\"},{\"value\":\"cs\",\"text\":\"计算机/AI\"},{\"value\":\"social\",\"text\":\"社会科学\"},{\"value\":\"other\",\"text\":\"其他\"},{\"value\":\"none\",\"text\":\"无相关\"}]},\n        { \"type\": \"radiogroup\", \"name\": \"night_walk\", \"title\": \"你多久会在夜间独自步行一次？\", \"choices\": [\n          {\"value\":\"never\",\"text\":\"几乎从不\"},{\"value\":\"monthly\",\"text\":\"每月几次\"},{\"value\":\"weekly\",\"text\":\"每周几次\"},{\"value\":\"daily\",\"text\":\"几乎每天\"}]}\n      ]},\n      { \"name\": \"flash\", \"elements\": [\n        { \"type\": \"imagerating\", \"name\": \"flash_safety\", \"title\": \"只看 1.2 秒：这条街看起来有多安全？\", \"imageCount\": 1, \"trialCount\": 6, \"rateMin\": 1, \"rateMax\": 7, \"minRateDescription\": \"非常危险\", \"maxRateDescription\": \"非常安全\", \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"choices\": [], \"isRequired\": true },\n        { \"type\": \"custom\", \"name\": \"flash_timing\", \"title\": \"第一印象反应时（毫秒，按轮次）\" }\n      ]},\n      { \"name\": \"duels\", \"elements\": [\n        { \"type\": \"imagepicker\", \"name\": \"duel_safe\", \"title\": \"哪条街道看起来更安全？\", \"imageCount\": 2, \"trialCount\": 3, \"allowTie\": true, \"tieLabel\": \"equal\", \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"choices\": [], \"isRequired\": true },\n        { \"type\": \"imagepicker\", \"name\": \"duel_lively\", \"title\": \"哪条街道看起来更有活力？\", \"imageCount\": 2, \"trialCount\": 3, \"allowTie\": true, \"tieLabel\": \"equal\", \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"choices\": [], \"isRequired\": true },\n        { \"type\": \"imagepicker\", \"name\": \"duel_beautiful\", \"title\": \"哪条街道看起来更美丽？\", \"imageCount\": 2, \"trialCount\": 3, \"allowTie\": true, \"tieLabel\": \"equal\", \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"choices\": [], \"isRequired\": true },\n        { \"type\": \"imagepicker\", \"name\": \"duel_wealthy\", \"title\": \"哪条街道看起来更富裕？\", \"imageCount\": 2, \"trialCount\": 3, \"allowTie\": true, \"tieLabel\": \"equal\", \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"choices\": [], \"isRequired\": true },\n        { \"type\": \"imagepicker\", \"name\": \"duel_boring\", \"title\": \"哪条街道看起来更无聊？\", \"imageCount\": 2, \"trialCount\": 3, \"allowTie\": true, \"tieLabel\": \"equal\", \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"choices\": [], \"isRequired\": true },\n        { \"type\": \"imagepicker\", \"name\": \"duel_depressing\", \"title\": \"哪条街道看起来更压抑？\", \"imageCount\": 2, \"trialCount\": 3, \"allowTie\": true, \"tieLabel\": \"equal\", \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"choices\": [], \"isRequired\": true },\n        { \"type\": \"custom\", \"name\": \"duel_timing\", \"title\": \"成对比较的呈现顺序与反应时\" }\n      ]},\n      { \"name\": \"semantic\", \"elements\": [\n        { \"type\": \"imageslidergroup\", \"name\": \"sd_scene\", \"title\": \"在每对相反的形容词之间，拖到最贴合你感受的位置\", \"imageCount\": 1, \"scaleMin\": -3, \"scaleMax\": 3, \"scaleStep\": 1, \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"choices\": [], \"isRequired\": true, \"dimensions\": [\n          {\"id\":\"quiet\",\"label\":\"安静\",\"left\":\"嘈杂\",\"right\":\"安静\"},\n          {\"id\":\"open\",\"label\":\"开阔\",\"left\":\"封闭\",\"right\":\"开阔\"},\n          {\"id\":\"tidy\",\"label\":\"整洁\",\"left\":\"杂乱\",\"right\":\"整洁\"},\n          {\"id\":\"friendly\",\"label\":\"友好\",\"left\":\"冷漠\",\"right\":\"友好\"},\n          {\"id\":\"safe\",\"label\":\"安全\",\"left\":\"危险\",\"right\":\"安全\"},\n          {\"id\":\"rich\",\"label\":\"丰富\",\"left\":\"单调\",\"right\":\"丰富\"},\n          {\"id\":\"relaxed\",\"label\":\"舒展\",\"left\":\"压抑\",\"right\":\"舒展\"},\n          {\"id\":\"modern\",\"label\":\"现代\",\"left\":\"陈旧\",\"right\":\"现代\"}]},\n        { \"type\": \"rating\", \"name\": \"attention_check\", \"title\": \"注意力检测：请将此滑块拖到最右端\", \"rateMin\": -3, \"rateMax\": 3, \"isRequired\": true }\n      ]},\n      { \"name\": \"affect\", \"elements\": [\n        { \"type\": \"imageslidergroup\", \"name\": \"affect_grid\", \"title\": \"这条街让你产生了怎样的情绪？（愉悦度 × 唤醒度）\", \"imageCount\": 1, \"trialCount\": 3, \"scaleMin\": -100, \"scaleMax\": 100, \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"choices\": [], \"isRequired\": true, \"dimensions\": [\n          {\"id\":\"valence\",\"label\":\"愉悦度\",\"left\":\"不愉快\",\"right\":\"愉快\"},\n          {\"id\":\"arousal\",\"label\":\"唤醒度\",\"left\":\"平静\",\"right\":\"激动\"}]}\n      ]},\n      { \"name\": \"hotspot\", \"elements\": [\n        { \"type\": \"imageannotation\", \"name\": \"hotspots\", \"title\": \"点击街景中吸引你或让你不适的位置，并选择对应要素\", \"imageCount\": 1, \"allowedTools\": [\"point\"], \"minAnnotations\": 3, \"maxAnnotations\": 30, \"annotationLabels\": [\n          \"吸引·树木绿化\",\"吸引·建筑立面\",\"吸引·车辆\",\"吸引·行人\",\"吸引·路灯\",\"吸引·涂鸦\",\"吸引·垃圾\",\"吸引·天空视野\",\"吸引·人行道\",\"吸引·商铺\",\"吸引·道路\",\"吸引·其他\",\n          \"不适·树木绿化\",\"不适·建筑立面\",\"不适·车辆\",\"不适·行人\",\"不适·路灯\",\"不适·涂鸦\",\"不适·垃圾\",\"不适·天空视野\",\"不适·人行道\",\"不适·商铺\",\"不适·道路\",\"不适·其他\"],\n          \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"choices\": [], \"isRequired\": true }\n      ]},\n      { \"name\": \"rank\", \"elements\": [\n        { \"type\": \"imageranking\", \"name\": \"walk_rank\", \"title\": \"步行 15 分钟去见朋友，按愿意步行的程度从高到低排序\", \"imageCount\": 5, \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"choices\": [], \"isRequired\": true }\n      ]},\n      { \"name\": \"budget\", \"elements\": [\n        { \"type\": \"pointallocation\", \"name\": \"element_budget\", \"title\": \"把 100 点分配给最能提升街道体验的要素\", \"budget\": 100, \"isRequired\": true, \"choices\": [\n          {\"value\":\"greenery\",\"text\":\"绿化与树荫\"},{\"value\":\"sidewalk\",\"text\":\"宽敞人行道\"},{\"value\":\"lighting\",\"text\":\"夜间照明\"},{\"value\":\"shops\",\"text\":\"沿街商铺\"},\n          {\"value\":\"architecture\",\"text\":\"建筑风貌\"},{\"value\":\"quiet\",\"text\":\"交通宁静\"},{\"value\":\"cleanliness\",\"text\":\"整洁维护\"},{\"value\":\"vitality\",\"text\":\"人气活力\"}]}\n      ]},\n      { \"name\": \"ideal\", \"elements\": [\n        { \"type\": \"slidergroup\", \"name\": \"ideal_mix\", \"title\": \"调配你心目中理想街道的“配方”\", \"scaleMin\": 0, \"scaleMax\": 100, \"dimensions\": [\n          {\"id\":\"road_width\",\"label\":\"车行道宽度\",\"left\":\"窄\",\"right\":\"宽\"},\n          {\"id\":\"sidewalk\",\"label\":\"人行道宽度\",\"left\":\"窄\",\"right\":\"宽\"},\n          {\"id\":\"height\",\"label\":\"建筑高度\",\"left\":\"低矮\",\"right\":\"高耸\"},\n          {\"id\":\"greenery\",\"label\":\"行道树\",\"left\":\"无\",\"right\":\"浓密\"},\n          {\"id\":\"people\",\"label\":\"行人\",\"left\":\"冷清\",\"right\":\"热闹\"},\n          {\"id\":\"traffic\",\"label\":\"机动车\",\"left\":\"无车\",\"right\":\"车多\"},\n          {\"id\":\"shops\",\"label\":\"沿街商铺\",\"left\":\"无\",\"right\":\"连续\"},\n          {\"id\":\"tidiness\",\"label\":\"整洁度\",\"left\":\"粗犷\",\"right\":\"一尘不染\"}]}\n      ]},\n      { \"name\": \"open\", \"elements\": [\n        { \"type\": \"comment\", \"name\": \"open_story\", \"title\": \"描述一条让你印象深刻的街道——它在哪里？为什么让你记住它？\", \"rows\": 5 },\n        { \"type\": \"checkbox\", \"name\": \"open_tags\", \"title\": \"用哪些词形容你所在城市的街道？\", \"choices\": [\n          {\"value\":\"shady\",\"text\":\"绿树成荫\"},{\"value\":\"lively\",\"text\":\"烟火气\"},{\"value\":\"quiet\",\"text\":\"安静\"},{\"value\":\"crowded\",\"text\":\"拥挤\"},{\"value\":\"oppressive\",\"text\":\"压迫感\"},{\"value\":\"clean\",\"text\":\"干净整洁\"},\n          {\"value\":\"rundown\",\"text\":\"破旧\"},{\"value\":\"safe\",\"text\":\"有安全感\"},{\"value\":\"boring\",\"text\":\"无聊单调\"},{\"value\":\"designed\",\"text\":\"有设计感\"},{\"value\":\"walkable\",\"text\":\"步行友好\"},{\"value\":\"car_heavy\",\"text\":\"车太多\"}]},\n        { \"type\": \"radiogroup\", \"name\": \"followup\", \"title\": \"你是否愿意参加后续的眼动追踪 / VR 街景实验？\", \"choices\": [\n          {\"value\":\"yes\",\"text\":\"愿意\"},{\"value\":\"maybe\",\"text\":\"可能\"},{\"value\":\"no\",\"text\":\"不愿意\"}]}\n      ]}\n    ]\n  }\n}\n</script>\n\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link href=\"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap\" rel=\"stylesheet\">\n<style>\n:root{--bg:#f3f0e8;--surface:rgba(255,255,255,.74);--solid:#fffdf8;--rail:rgba(255,253,248,.6);--ink:#15171c;--ink2:#3a3e47;--muted:#737884;--line:rgba(20,22,30,.1);--line2:rgba(20,22,30,.18);\n  --accent:#ff5a36;--accent2:#2f6bff;--accent3:#14b37d;--bad:#e5484d;--good:#16a36a;--warn:#c98a00;--shadow:0 1px 2px rgba(20,20,30,.06),0 12px 40px -12px rgba(20,20,30,.18);--shadow-lg:0 30px 80px -20px rgba(20,20,40,.35);--r:20px;--b1:#ffb199;--b2:#a6c1ff;--b3:#b7f0d4}\n@media (prefers-color-scheme:dark){:root{--bg:#0b0d12;--surface:rgba(22,25,33,.74);--solid:#161922;--rail:rgba(14,16,22,.6);--ink:#eef0f5;--ink2:#c5c9d3;--muted:#8d93a0;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.16);--shadow:0 12px 40px -12px rgba(0,0,0,.6);--shadow-lg:0 30px 80px -20px rgba(0,0,0,.8);--b1:#7a2a1a;--b2:#1e2f6b;--b3:#0f4a37}}\n*{box-sizing:border-box;margin:0;padding:0}\nhtml{overflow-x:hidden}\nbody{background:var(--bg);color:var(--ink);font-family:\"Noto Sans SC\",\"Space Grotesk\",system-ui,sans-serif;line-height:1.55;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}\nbutton{font:inherit;color:inherit;cursor:pointer;border:0;background:none}\n:focus-visible{outline:3px solid var(--accent2);outline-offset:3px;border-radius:6px}\nkbd{font-family:\"Space Grotesk\",monospace;font-size:.78em;padding:2px 7px;border-radius:6px;border:1px solid var(--line2);border-bottom-width:2px;background:var(--solid)}\n.num{font-family:\"Space Grotesk\",sans-serif;font-variant-numeric:tabular-nums}\n.hidden{display:none!important}\n.blobs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}\n.blobs i{position:absolute;width:55vmax;height:55vmax;border-radius:50%;filter:blur(90px);opacity:.42;animation:drift 26s ease-in-out infinite alternate}\n.blobs i:nth-child(1){background:var(--b1);left:-15vmax;top:-20vmax}.blobs i:nth-child(2){background:var(--b2);right:-20vmax;top:10vmax;animation-delay:-8s}.blobs i:nth-child(3){background:var(--b3);left:20vmax;bottom:-30vmax;animation-delay:-15s}\n@keyframes drift{to{transform:translate(8vmax,6vmax) scale(1.15)}}\n#app{position:relative;z-index:1;display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh}\n.rail{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:18px;padding:26px 18px;border-right:1px solid var(--line);background:var(--rail);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}\n.brand{display:flex;align-items:center;gap:10px;font-weight:900}\n.brand .logo{width:36px;height:36px;border-radius:11px;background:conic-gradient(from 200deg,var(--accent),#ffb03a,var(--accent3),var(--accent2),var(--accent));display:grid;place-items:center;color:#fff;font-size:18px}\n.brand small{display:block;font-weight:500;color:var(--muted);font-size:11px;letter-spacing:.12em}\n.steps{list-style:none;display:flex;flex-direction:column;gap:2px;overflow:auto;flex:1;min-width:0}\n.steps button{width:100%;display:flex;align-items:center;gap:12px;padding:8px 10px;border-radius:12px;text-align:left;font-size:14px;color:var(--muted);transition:.25s}\n.steps button:disabled{cursor:not-allowed;opacity:.5}\n.steps button:not(:disabled):hover{background:var(--line)}\n.steps .dot{width:26px;height:26px;flex:none;border-radius:9px;display:grid;place-items:center;font-size:12px;font-family:\"Space Grotesk\";border:1.5px solid var(--line2)}\n.steps li.done .dot{background:var(--ink);color:var(--bg);border-color:var(--ink)}\n.steps li.cur button{color:var(--ink);background:var(--surface);box-shadow:var(--shadow);font-weight:700}\n.steps li.cur .dot{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 22%,transparent)}\n.rail-foot{font-size:12px;color:var(--muted)}\nmain{display:flex;flex-direction:column;min-width:0}\n.topbar{position:sticky;top:0;z-index:20;height:4px;background:var(--line)}\n.topbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),#ffb03a,var(--accent3),var(--accent2));transition:width .6s cubic-bezier(.2,.8,.2,1)}\n#stage{flex:1;width:100%;max-width:1200px;margin:0 auto;padding:36px clamp(16px,4vw,56px);transition:opacity .38s,transform .5s cubic-bezier(.2,.8,.2,1),filter .38s}\n#stage.out{opacity:0;transform:translateX(-40px);filter:blur(8px)}\n#stage.pre{opacity:0;transform:translateX(40px);filter:blur(8px);transition:none}\n.navbar{position:sticky;bottom:0;z-index:15;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px clamp(16px,4vw,56px);background:linear-gradient(to top,var(--bg) 55%,transparent)}\n.navbar .mid{font-size:13px;color:var(--muted)}\n.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.16em;color:var(--accent);font-weight:700}\n.eyebrow::before{content:\"\";width:18px;height:2px;background:currentColor}\nh1{font-size:clamp(34px,5.4vw,66px);line-height:1.06;font-weight:900;letter-spacing:-.02em}\nh2{font-size:clamp(24px,3.2vw,36px);line-height:1.18;font-weight:900;margin:10px 0 8px}\nh3{font-size:16px;font-weight:700}\n.lead{color:var(--ink2);font-size:15px;max-width:720px}\n.grad{background:linear-gradient(100deg,var(--accent),#ffb03a 45%,var(--accent3) 70%,var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% 100%;animation:shine 6s linear infinite}\n@keyframes shine{to{background-position:-200% 0}}\n.qhead{margin-bottom:22px}\n.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow);backdrop-filter:blur(18px)}\n.card+.card,.grid2+.card,.card+.grid2{margin-top:14px}\n.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}\n.lbl{display:block;font-weight:700;font-size:14px;margin-bottom:10px}.lbl i{color:var(--accent);font-style:normal}\n.hint{font-size:13px;color:var(--muted)}\n.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:14px;font-weight:700;font-size:14px;border:1px solid var(--line2);background:var(--solid);transition:transform .2s,box-shadow .2s}\n.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}\n.btn:disabled{opacity:.35;pointer-events:none}\n.btn-primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}\n.btn-lg{min-height:56px;padding:0 30px;font-size:16px;border-radius:18px}\n.btn-sm{min-height:34px;padding:0 13px;font-size:13px;border-radius:10px}\n.chips{display:flex;flex-wrap:wrap;gap:8px}\n.chip{padding:8px 15px;border-radius:999px;border:1px solid var(--line2);font-size:14px;background:var(--solid);transition:.2s}\n.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}\n.seg{display:flex;padding:4px;border-radius:14px;background:var(--line);gap:4px;flex-wrap:wrap}\n.seg button{flex:1;padding:9px 12px;border-radius:10px;font-size:13px;color:var(--ink2);white-space:nowrap}\n.seg button.on{background:var(--solid);color:var(--ink);box-shadow:var(--shadow);font-weight:700}\n.range{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:99px;background:linear-gradient(90deg,var(--accent) var(--p,50%),var(--line2) var(--p,50%));outline-offset:6px;cursor:pointer}\n.range::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#fff;border:3px solid var(--accent);box-shadow:0 4px 12px -2px rgba(0,0,0,.35)}\n.range::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--accent)}\n.range.untouched::-webkit-slider-thumb{border-color:var(--muted)}\n.photo{position:relative;aspect-ratio:16/10;border-radius:18px;overflow:hidden;background:#222;box-shadow:var(--shadow)}\n.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none}\n.toast{position:fixed;left:50%;bottom:90px;z-index:100;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:12px 20px;border-radius:14px;background:var(--ink);color:var(--bg);font-size:14px;box-shadow:var(--shadow-lg);transition:.35s;max-width:90vw}\n.toast.show{opacity:1;transform:translate(-50%,0)}\n.shake{animation:shake .45s}@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}\n.done-panel{display:flex;align-items:center;gap:16px;padding:20px;border-radius:var(--r);background:color-mix(in srgb,var(--good) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--good) 30%,transparent)}\n.done-panel .ok{width:48px;height:48px;flex:none;border-radius:14px;background:var(--good);color:#fff;display:grid;place-items:center;font-size:22px}\n/* welcome */\n.hero{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;min-height:calc(100vh - 170px)}\n.hero-art{position:relative;aspect-ratio:4/5;border-radius:28px;overflow:hidden;box-shadow:var(--shadow-lg);background:linear-gradient(#1b2340,#3b2d5c 55%,#ff8a5b)}\n.hero-art svg{position:absolute;inset:0;width:100%;height:100%}\n.hbox{position:absolute;border:1.5px solid #6effc4;border-radius:4px;box-shadow:0 0 12px #6effc4;transition:all 1.2s cubic-bezier(.2,.8,.2,1)}\n.hbox span{position:absolute;top:-20px;left:-1px;background:#6effc4;color:#08251a;font:700 10px \"Space Grotesk\";padding:2px 6px;border-radius:3px;white-space:nowrap}\n.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:24px 0}\n.stats div{padding:14px;border-radius:16px;background:var(--surface);border:1px solid var(--line)}\n.stats b{display:block;font:700 24px \"Space Grotesk\"}.stats span{font-size:12px;color:var(--muted)}\n.consent{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:var(--ink2);margin-bottom:20px;cursor:pointer}\n.consent input{width:22px;height:22px;flex:none;accent-color:var(--accent);margin-top:1px}\n/* profile */\n.tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}\n.tile{padding:14px 8px;border-radius:16px;border:1px solid var(--line2);background:var(--solid);text-align:center;transition:.25s;display:flex;flex-direction:column;align-items:center;gap:4px}\n.tile i{font-style:normal;font-size:26px}.tile b{font-size:14px}.tile span{font-size:11px;color:var(--muted)}\n.tile.on{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent);background:color-mix(in srgb,var(--accent) 8%,var(--solid))}\n/* flash */\n.flash-wrap{max-width:calc(54vh * 16 / 9);margin:0 auto}\n.flash-stage{position:relative;aspect-ratio:16/9;border-radius:24px;overflow:hidden;background:radial-gradient(circle at 50% 40%,#1d2230,#07080c);display:grid;place-items:center;color:#fff;box-shadow:var(--shadow-lg)}\n.flash-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:flashIn .18s}\n@keyframes flashIn{from{opacity:0;filter:brightness(2)}}\n.flash-msg{text-align:center;padding:20px}.flash-msg .big{font:700 60px \"Space Grotesk\";line-height:1}.flash-msg .big small{font-size:22px;opacity:.5}.flash-msg p{opacity:.7;margin:10px 0 18px}\n.count{font:700 110px \"Space Grotesk\";animation:pop .45s}@keyframes pop{from{transform:scale(1.8);opacity:0}}\n.mask{position:absolute;inset:0}.mask svg{width:100%;height:100%}\n.rate7{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:16px}\n.rate7 button{height:70px;border-radius:16px;border:1px solid var(--line2);background:var(--solid);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:.2s}\n.rate7 button b{font:700 22px \"Space Grotesk\"}.rate7 button span{font-size:11px;color:var(--muted)}\n.rate7 button:hover{transform:translateY(-4px);box-shadow:0 10px 26px -10px var(--c);background:color-mix(in srgb,var(--c) 14%,var(--solid))}\n.rate-cap{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-top:8px}\n.rt-chip{position:absolute;right:16px;top:16px;font:500 12px \"Space Grotesk\";padding:6px 10px;border-radius:9px;background:rgba(255,255,255,.12)}\n/* duel */\n.ptop{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}\n.pdots{display:flex;gap:4px;flex-wrap:wrap}.pdots i{width:12px;height:6px;border-radius:9px;background:var(--line2)}.pdots i.d{background:var(--ink2)}.pdots i.c{background:var(--accent);width:24px}\n.dimbadge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;color:#fff;font-weight:700;font-size:13px;background:var(--dc)}\n.pq{font-size:clamp(20px,3vw,30px);font-weight:900;text-align:center;margin:6px 0 18px}.pq b{color:var(--dc)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:20px;perspective:1400px;position:relative}\n.pcard{position:relative;border-radius:22px;transition:transform .25s ease-out,opacity .4s,filter .4s;cursor:pointer;text-align:left}\n.pcard .photo{border-radius:22px;box-shadow:var(--shadow-lg)}\n.pcard .key{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:12px;background:rgba(10,12,18,.6);color:#fff;font-size:13px;white-space:nowrap}\n.pcard .key kbd{background:#fff;color:#111}\n.pcard.picked{transform:scale(1.04)!important}.pcard.picked .photo{box-shadow:0 0 0 4px var(--dc),0 30px 80px -20px var(--dc)}\n.pcard.dropped{opacity:.25;filter:grayscale(1) blur(2px);transform:scale(.94)!important}\n.vs{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;width:52px;height:52px;border-radius:50%;background:var(--solid);display:grid;place-items:center;font:900 15px \"Space Grotesk\";box-shadow:var(--shadow-lg);pointer-events:none}\n.pmid{display:flex;justify-content:center;gap:10px;margin-top:18px}\n/* sd */\n.sd{display:grid;grid-template-columns:1.1fr 1fr;gap:26px;align-items:start}.sd .sticky{position:sticky;top:30px}\n.sdrow{padding:12px 4px;border-bottom:1px dashed var(--line2)}.sdrow:last-child{border:0}\n.sdlab{display:flex;justify-content:space-between;align-items:center;font-size:14px;margin-bottom:10px;color:var(--muted)}\n.sdlab span.hi{color:var(--ink);font-weight:900}\n.sdlab .val{font:700 12px \"Space Grotesk\";padding:2px 9px;border-radius:999px;background:var(--line);min-width:40px;text-align:center}\n.sdrow.att .sdlab{color:var(--warn)}\n/* affect */\n.aff{display:grid;grid-template-columns:1fr 400px;gap:26px;align-items:start}\n.atabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}\n.atab{position:relative;border-radius:14px;overflow:hidden;opacity:.55;border:2px solid transparent;padding:0}\n.atab .photo{border-radius:12px;box-shadow:none}.atab.on{opacity:1;border-color:var(--accent)}\n.atab .ck{position:absolute;right:6px;top:6px;width:22px;height:22px;border-radius:50%;background:var(--good);color:#fff;font-size:12px;display:grid;place-items:center;z-index:2}\n.pad{position:relative;aspect-ratio:1;border-radius:24px;overflow:hidden;cursor:crosshair;touch-action:none;box-shadow:var(--shadow-lg);user-select:none}\n.pad-bg{position:absolute;inset:0;background:radial-gradient(circle at 100% 0,#ffcf3a,transparent 60%),radial-gradient(circle at 0 0,#ff4d5e,transparent 60%),radial-gradient(circle at 0 100%,#4a5bd4,transparent 60%),radial-gradient(circle at 100% 100%,#2fd39a,transparent 60%),#7e7e90}\n.pad-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.18) 1px,transparent 1px);background-size:10% 10%}\n.pad-axis{position:absolute;background:rgba(255,255,255,.7)}.pad-axis.h{left:0;right:0;top:50%;height:1.5px}.pad-axis.v{top:0;bottom:0;left:50%;width:1.5px}\n.pad-lab{position:absolute;color:#fff;font-size:12px;font-weight:700;text-shadow:0 1px 6px rgba(0,0,0,.4);pointer-events:none}\n.pdot{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;background:#fff;box-shadow:0 0 0 6px rgba(255,255,255,.35),0 8px 24px rgba(0,0,0,.45);pointer-events:none}\n.pdot::after{content:\"\";position:absolute;inset:9px;border-radius:50%;background:#15171c}\n.ripple{position:absolute;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;border:2px solid #fff;pointer-events:none;animation:rip .8s ease-out forwards}@keyframes rip{to{transform:scale(5);opacity:0}}\n/* hot */\n.hot{display:grid;grid-template-columns:1fr 290px;gap:22px;align-items:start}\n.hot-scene{position:relative;cursor:crosshair;user-select:none}\n.heat{position:absolute;inset:0;border-radius:18px;pointer-events:none;opacity:0;transition:opacity .4s;filter:blur(14px)}.heat.on{opacity:.85}\n.pin{position:absolute;width:30px;height:30px;margin:-30px 0 0 -15px;z-index:3;animation:drop .45s cubic-bezier(.3,1.6,.5,1)}\n@keyframes drop{from{transform:translateY(-40px) scale(.4);opacity:0}}\n.pin i{position:absolute;inset:0;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--pc);border:2px solid #fff;box-shadow:0 6px 14px -3px rgba(0,0,0,.5)}\n.pin span{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font:700 12px \"Space Grotesk\";padding-bottom:3px}\n.pop{position:absolute;z-index:10;width:250px;padding:14px;border-radius:16px;background:var(--solid);border:1px solid var(--line);box-shadow:var(--shadow-lg);cursor:default}\n.pop .chip{padding:6px 11px;font-size:13px}\n.modebar{display:flex;gap:8px;margin-bottom:12px}\n.mode{flex:1;padding:12px;border-radius:14px;border:1.5px solid var(--line2);font-weight:700;font-size:14px;background:var(--solid)}\n.mode.on.pos{border-color:var(--good);color:var(--good);background:color-mix(in srgb,var(--good) 12%,var(--solid))}\n.mode.on.neg{border-color:var(--bad);color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--solid))}\n.pinlist{list-style:none;display:flex;flex-direction:column;gap:6px;max-height:300px;overflow:auto;margin-top:10px}\n.pinlist li{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;background:var(--line);font-size:13px}\n.pinlist li i{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;color:#fff;font:700 11px \"Space Grotesk\";font-style:normal;flex:none}\n.pinlist li button{margin-left:auto;color:var(--muted);font-size:16px}\n/* rank */\n.rank{display:flex;flex-direction:column;gap:12px;max-width:820px}\n.ritem{display:grid;grid-template-columns:50px 190px 1fr auto;gap:16px;align-items:center;height:118px;padding:10px 14px 10px 10px;border-radius:20px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);touch-action:none;user-select:none;cursor:grab;transition:transform .32s cubic-bezier(.2,.8,.2,1)}\n.ritem .photo{border-radius:12px;box-shadow:none;height:98px;aspect-ratio:auto}\n.ritem .rk{font:700 32px \"Space Grotesk\";text-align:center;color:var(--muted)}.ritem:first-child .rk{color:var(--accent)}\n.ritem.drag{z-index:5;cursor:grabbing;transition:none;box-shadow:var(--shadow-lg)}\n.arrows{display:flex;flex-direction:column;gap:4px}.arrows button{width:34px;height:34px;border-radius:10px;border:1px solid var(--line2);background:var(--solid)}\n/* budget */\n.bud{display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start}\n.brow{display:grid;grid-template-columns:34px 110px 1fr 46px;gap:12px;align-items:center;padding:9px 0}\n.brow .v{font:700 18px \"Space Grotesk\";text-align:right}\n.donut-wrap{position:sticky;top:30px;text-align:center}\n.total{font:700 50px \"Space Grotesk\";line-height:1}.total.over{color:var(--bad)}.total.ok{color:var(--good)}\n.legend{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin-top:14px;text-align:left;font-size:12px}\n.legend span{display:flex;align-items:center;gap:6px}.legend i{width:10px;height:10px;border-radius:3px}\n/* ideal */\n.eq{display:grid;grid-template-columns:repeat(8,1fr);gap:10px;align-items:end;height:220px;padding:16px;border-radius:18px;background:linear-gradient(#141826,#232a40);margin-bottom:16px}\n.eq div{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;gap:6px}\n.eq i{display:block;width:100%;border-radius:8px 8px 3px 3px;background:linear-gradient(to top,var(--c1),var(--c2));transition:height .4s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 16px var(--c2)}\n.eq span{font-size:11px;color:#c9cede;text-align:center;line-height:1.2}\ntextarea{width:100%;min-height:150px;resize:vertical;padding:16px;border-radius:16px;border:1px solid var(--line2);background:var(--solid);font:inherit;font-size:15px;color:inherit}\n/* report */\n.rep{display:grid;grid-template-columns:1fr 1fr;gap:14px}.rep .wide{grid-column:1/-1}\n.persona{padding:26px;border-radius:24px;background:linear-gradient(135deg,var(--ink),color-mix(in srgb,var(--ink) 70%,var(--accent2)));color:var(--bg);margin-bottom:14px}\n.persona h2{font-size:clamp(26px,3.4vw,40px)}\n.strip{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}\n.strip .photo{border-radius:10px;box-shadow:none}\n.missing{margin-top:14px;padding:14px;border-radius:14px;background:color-mix(in srgb,var(--bad) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--bad) 30%,transparent);font-size:14px}\n@media (max-width:1080px){.aff,.hot,.bud,.sd{grid-template-columns:1fr}.sd .sticky,.donut-wrap{position:static}}\n@media (max-width:860px){\n  #app{grid-template-columns:minmax(0,1fr)}\n  .rail{min-width:0;position:sticky;top:0;z-index:30;height:auto;flex-direction:row;align-items:center;padding:8px 12px;gap:10px;border-right:0;border-bottom:1px solid var(--line)}\n  .brand .txt,.rail-foot{display:none}\n  .steps{flex-direction:row;overflow-x:auto;scrollbar-width:none}\n  .steps button{padding:5px;gap:0}.steps button .t{display:none}.steps li.cur button .t{display:inline;margin-left:6px;white-space:nowrap}\n  .topbar{top:53px}#stage{padding:22px 16px}.navbar{padding:10px 16px}\n  .hero{grid-template-columns:1fr;gap:22px;min-height:0}.hero-art{aspect-ratio:16/10}\n  .grid2,.rep{grid-template-columns:1fr}.tiles{grid-template-columns:repeat(3,1fr)}.stats{grid-template-columns:repeat(2,1fr)}\n  .rate7{gap:4px}.rate7 button{height:58px}.rate7 button span{display:none}\n  .ritem{grid-template-columns:30px 100px 1fr auto;height:90px;gap:10px}.ritem .photo{height:70px}.ritem .rk{font-size:22px}\n  .strip{grid-template-columns:repeat(3,1fr)}.eq{gap:4px;padding:10px}.eq span{font-size:9px}\n}\n@media (max-width:600px){.pair{grid-template-columns:1fr}.vs{display:none}.brow{grid-template-columns:28px 1fr 42px}.brow .range{grid-column:1/-1}}\n@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}\n</style>\n</head>\n<body>\n<div class=\"blobs\"><i></i><i></i><i></i></div>\n<div id=\"app\">\n  <aside class=\"rail\"><div class=\"brand\"><div class=\"logo\">◉</div><div class=\"txt\">城市之眼<small>STREETSCAPE PERCEPTION</small></div></div>\n    <ul class=\"steps\" id=\"steps\"></ul><div class=\"rail-foot\">已用时 <b class=\"num\" id=\"timer\">00:00</b></div></aside>\n  <main><div class=\"topbar\"><i id=\"prog\"></i></div><section id=\"stage\"><p>加载中…</p></section>\n    <nav class=\"navbar\"><button class=\"btn\" id=\"prevBtn\">← 上一步</button><span class=\"mid num\" id=\"navMid\"></span><button class=\"btn btn-primary\" id=\"nextBtn\">下一步 →</button></nav></main>\n</div>\n<div class=\"toast\" id=\"toast\" role=\"status\" aria-live=\"polite\"></div>\n<script>\nSPSite.onReady(function(ctx){\n/* ---------------- utilities ---------------- */\nconst $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];\nconst clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));\nconst esc=s=>String(s==null?'':s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]));\nconst Q=n=>SPSite.getQuestion(n);\nconst A=JSON.parse(JSON.stringify(ctx.answers||{}));   // local mirror of recorded answers\nconst T0=Date.now();\nfunction toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2600)}\nfunction rec(name,value,opt){return SPSite.answer(name,value,opt).then(r=>{if(!r||!r.ok){toast((r&&r.error)||'记录失败，请重试');return r}\n  if(opt&&opt.trial!=null){const c=A[name]&&A[name].trials?A[name]:{trials:[]};c.trials[opt.trial]={value};A[name]=c}else if(value==null)delete A[name];else A[name]=value;return r})}\nconst tval=(name,i)=>A[name]&&A[name].trials&&A[name].trials[i]?A[name].trials[i].value:null;\nconst tdone=name=>{const q=Q(name);for(let i=0;i<q.trialCount;i++)if(tval(name,i)==null)return false;return true};\nconst img=(m,alt,cls='photo')=>`<div class=\"${cls}\"><img src=\"${esc(m.url)}\" alt=\"${esc(alt)}\" draggable=\"false\"></div>`;\nconst head=(n,eb,title,lead)=>`<div class=\"qhead\"><span class=\"eyebrow\">模块 ${String(n).padStart(2,'0')} · ${eb}</span><h2>${title}</h2>${lead?`<p class=\"lead\">${lead}</p>`:''}</div>`;\nconst fillRange=el=>el.style.setProperty('--p',(el.value-el.min)/(el.max-el.min)*100+'%');\nlet timers=[],keyH=null;const later=(f,ms)=>{const h=setTimeout(f,ms);timers.push(h);return h};const every=(f,ms)=>{const h=setInterval(f,ms);timers.push(h)};\nfunction cleanup(){timers.forEach(h=>{clearTimeout(h);clearInterval(h)});timers=[];keyH=null}\nconst custom={flash:(A.flash_timing&&A.flash_timing.trials)||[],duel:(A.duel_timing&&A.duel_timing.items)||[]};\n\n/* ================= 0 · 欢迎 ================= */\nfunction rWelcome(el){\n  el.innerHTML=`<div class=\"hero\"><div class=\"hero-art\" aria-hidden=\"true\"><svg viewBox=\"0 0 400 500\" preserveAspectRatio=\"xMidYMid slice\">\n      ${Array.from({length:14},(_,i)=>`<line x1=\"200\" y1=\"230\" x2=\"${-200+i*60}\" y2=\"520\" stroke=\"rgba(255,255,255,.18)\"/>`).join('')}\n      ${Array.from({length:8},(_,i)=>{const y=240+Math.pow(i/7,2)*270;return`<line x1=\"0\" y1=\"${y}\" x2=\"400\" y2=\"${y}\" stroke=\"rgba(255,255,255,${.06+i*.02})\"/>`}).join('')}\n      <circle cx=\"200\" cy=\"230\" r=\"60\" fill=\"#ffcf8a\" opacity=\".25\"><animate attributeName=\"r\" values=\"50;70;50\" dur=\"6s\" repeatCount=\"indefinite\"/></circle>\n      ${Array.from({length:10},(_,i)=>`<rect x=\"${i<5?10+i*30:250+(i-5)*30}\" y=\"${80+((i*37)%90)}\" width=\"26\" height=\"${150-((i*37)%90)}\" fill=\"rgba(10,14,30,.55)\"/>`).join('')}</svg>\n      <div class=\"hbox\" id=\"hbox\"><span>TREE 0.94</span></div></div>\n    <div><span class=\"eyebrow\">城市感知研究</span><h1 style=\"margin:14px 0 16px\">你眼中的<span class=\"grad\">街道</span>，<br>是什么样子？</h1>\n      <p class=\"lead\">我们研究人们如何“读懂”一条街道：它是否安全、有活力、让人愿意驻足。你将完成 10 个交互模块，最后获得一份专属的感知画像。</p>\n      <div class=\"stats\"><div><b>~12</b><span>分钟</span></div><div><b>10</b><span>交互模块</span></div><div><b>40+</b><span>次判断</span></div><div><b>100%</b><span>匿名</span></div></div>\n      <label class=\"consent\"><input type=\"checkbox\" id=\"consent\" ${A.consent===true?'checked':''}><span>${esc(Q('consent').title)}。本研究不收集姓名或联系方式，你可随时关闭页面退出。</span></label>\n      <button class=\"btn btn-primary btn-lg\" id=\"startBtn\">开始探索 →</button></div></div>`;\n  const boxes=[[58,38,22,30,'TREE 0.94'],[8,42,26,40,'BUILDING 0.88'],[44,62,14,16,'CAR 0.91'],[66,58,6,16,'PERSON 0.83']];let b=0;\n  const mv=()=>{const q=boxes[b++%boxes.length],h=$('#hbox');if(!h)return;Object.assign(h.style,{left:q[0]+'%',top:q[1]+'%',width:q[2]+'%',height:q[3]+'%'});h.firstChild.textContent=q[4]};mv();every(mv,1800);\n  $('#consent').onchange=e=>rec('consent',e.target.checked?true:null);\n  $('#startBtn').onclick=next;\n}\n\n/* ================= 1 · 关于你 ================= */\nfunction rProfile(el){\n  const opts=n=>Q(n).choices,ic={mega:'🏙',large:'🌆',mid:'🏘',county:'🏡',rural:'🌾'},sub={mega:'>1000万',large:'300–1000万',mid:'<300万',county:'',rural:''};\n  const chipsOf=(n,multi)=>opts(n).map(c=>{const on=multi?(A[n]||[]).includes(c.value):A[n]===c.value;return`<button class=\"chip ${on?'on':''}\" data-v=\"${c.value}\" aria-pressed=\"${on}\">${esc(c.text)}</button>`}).join('');\n  el.innerHTML=head(1,'关于你','先认识一下你','这些信息帮助我们理解不同人群的感知差异。带 <b style=\"color:var(--accent)\">*</b> 为必填。')+`\n  <div class=\"grid2\"><div class=\"card\"><label class=\"lbl\" for=\"age\">年龄</label><div style=\"display:flex;align-items:baseline;gap:6px;margin-bottom:12px\"><span class=\"num\" id=\"ageOut\" style=\"font-size:52px;font-weight:700;line-height:1\">${A.age??28}</span><span class=\"hint\">岁</span></div><input id=\"age\" type=\"range\" class=\"range\" min=\"16\" max=\"80\" value=\"${A.age??28}\"></div>\n    <div class=\"card\"><span class=\"lbl\">性别 <i>*</i></span><div class=\"chips\" data-q=\"gender\">${chipsOf('gender')}</div><span class=\"lbl\" style=\"margin-top:18px\">专业背景</span><div class=\"chips\" data-q=\"field\">${chipsOf('field')}</div></div></div>\n  <div class=\"card\"><span class=\"lbl\">你目前长期居住的地区 <i>*</i></span><div class=\"tiles\" data-q=\"city_size\">${opts('city_size').map(c=>`<button class=\"tile ${A.city_size===c.value?'on':''}\" data-v=\"${c.value}\"><i>${ic[c.value]}</i><b>${esc(c.text)}</b><span>${sub[c.value]||'&nbsp;'}</span></button>`).join('')}</div></div>\n  <div class=\"card\"><span class=\"lbl\">日常出行方式（可多选）<i>*</i></span><div class=\"chips\" data-q=\"travel_modes\" data-multi>${chipsOf('travel_modes',1)}</div></div>\n  <div class=\"card\"><span class=\"lbl\">你多久会在夜间独自步行一次？</span><div class=\"seg\" data-q=\"night_walk\">${opts('night_walk').map(c=>`<button class=\"${A.night_walk===c.value?'on':''}\" data-v=\"${c.value}\">${esc(c.text)}</button>`).join('')}</div></div>`;\n  const a=$('#age');fillRange(a);a.oninput=()=>{$('#ageOut').textContent=a.value;fillRange(a)};a.onchange=()=>rec('age',+a.value);\n  $$('[data-q]',el).forEach(g=>g.addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(!b)return;const n=g.dataset.q;\n    if('multi' in g.dataset){const arr=(A[n]||[]).slice(),i=arr.indexOf(b.dataset.v);i<0?arr.push(b.dataset.v):arr.splice(i,1);rec(n,arr.length?arr:null).then(r=>{if(r.ok){b.classList.toggle('on');b.setAttribute('aria-pressed',b.classList.contains('on'))}})}\n    else rec(n,b.dataset.v).then(r=>{if(r.ok)$$('[data-v]',g).forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-pressed',x===b)})})}));\n}\n\n/* ================= 2 · 第一印象 ================= */\nconst R7=['#e5484d','#f06a3b','#f2a33a','#a3a6ad','#7ac16b','#2fb27a','#14936a'],R7T=['非常危险','危险','略危险','中立','略安全','安全','非常安全'];\nfunction rFlash(el){\n  const q=Q('flash_safety'),N=q.trialCount,H=head(2,'第一印象','只看 1.2 秒，你觉得安全吗？','每张街景只会短暂闪现，请凭直觉评分。可用键盘 <kbd>1</kbd>–<kbd>7</kbd> 作答。');\n  const draw=()=>{let i=0;while(i<N&&tval('flash_safety',i)!=null)i++;\n    if(i>=N){el.innerHTML=H+`<div class=\"done-panel\"><div class=\"ok\">✓</div><div><h3>直觉测试完成</h3><p class=\"hint\">以下是你的评分与反应时。</p></div></div>\n      <div class=\"card\"><div class=\"strip\">${q.trials.map((t,k)=>`<div>${img(t.media[0],'街景 '+(k+1))}<div style=\"display:flex;justify-content:space-between;font-size:12px;margin-top:4px\"><b class=\"num\" style=\"color:${R7[tval('flash_safety',k)-1]}\">${tval('flash_safety',k)}/7</b><span class=\"hint num\">${(custom.flash.find(x=>x.trial===k)||{}).rt_ms||'–'}ms</span></div></div>`).join('')}</div>\n      <button class=\"btn btn-sm\" id=\"redo\" style=\"margin-top:12px\">重新测试</button></div>`;\n      $('#redo').onclick=()=>{Promise.all(q.trials.map((_,k)=>rec('flash_safety',null,{trial:k}))).then(()=>{custom.flash=[];rec('flash_timing',null);draw()})};keyH=null;return}\n    el.innerHTML=H+`<div class=\"flash-wrap\"><div class=\"flash-stage\" id=\"fs\"><div class=\"flash-msg\"><div class=\"big num\">${i+1}<small>/${N}</small></div><p>准备好后按 <kbd style=\"color:#111\">空格</kbd> 或点击按钮</p><button class=\"btn btn-lg\" style=\"background:var(--accent);color:#fff;border:0\" id=\"fgo\">闪现街景</button></div></div>\n      <div id=\"r7\" style=\"visibility:hidden\"><div class=\"rate7\" role=\"group\" aria-label=\"安全评分\">${R7.map((c,k)=>`<button style=\"--c:${c}\" data-r=\"${k+1}\" aria-label=\"${k+1} ${R7T[k]}\"><b>${k+1}</b><span>${R7T[k]}</span></button>`).join('')}</div><div class=\"rate-cap\"><span>← 非常危险</span><span>非常安全 →</span></div></div></div>`;\n    let phase='ready',t0=0;const fs=$('#fs');\n    const show=()=>{fs.innerHTML=`<img src=\"${esc(q.trials[i].media[0].url)}\" alt=\"快速闪现的街景\">`;later(()=>{fs.innerHTML=`<div class=\"mask\"><svg viewBox=\"0 0 400 225\" preserveAspectRatio=\"none\"><filter id=\"nz\"><feTurbulence baseFrequency=\".8\" numOctaves=\"3\" seed=\"${i}\"/><feColorMatrix type=\"saturate\" values=\"0\"/></filter><rect width=\"400\" height=\"225\" filter=\"url(#nz)\"/></svg></div>`;\n      later(()=>{fs.innerHTML=`<div class=\"flash-msg\"><p style=\"font-size:18px;opacity:.9\">刚才那条街道，看起来有多安全？</p></div><span class=\"rt-chip num\" id=\"rtc\">0 ms</span>`;$('#r7').style.visibility='visible';phase='rate';t0=performance.now();every(()=>{const c=$('#rtc');if(c)c.textContent=Math.round(performance.now()-t0)+' ms'},60)},320)},1200)};\n    const run=()=>{if(phase!=='ready')return;phase='count';let n=3;const tick=()=>{if(!n){fs.innerHTML='<span style=\"font:300 48px Space Grotesk\">+</span>';later(show,400);return}fs.innerHTML=`<div class=\"count num\">${n--}</div>`;later(tick,420)};tick()};\n    const rate=v=>{if(phase!=='rate')return;phase='done';const rt=Math.round(performance.now()-t0);rec('flash_safety',v,{trial:i}).then(r=>{if(!r.ok){phase='rate';return}\n      custom.flash=custom.flash.filter(x=>x.trial!==i).concat({trial:i,image:q.trials[i].media[0].name,rt_ms:rt});rec('flash_timing',{trials:custom.flash});cleanup();setK();draw()})};\n    $('#fgo').onclick=run;$$('#r7 [data-r]').forEach(b=>b.onclick=()=>rate(+b.dataset.r));\n    const setK=()=>{keyH=e=>{if(e.code==='Space'){e.preventDefault();run();return true}if(/^[1-7]$/.test(e.key)){rate(+e.key);return true}}};setK();\n  };draw();\n}\n\n/* ================= 3 · 成对比较 ================= */\nconst DIMS=[{k:'safe',lab:'安全',c:'#2f6bff',ic:'🛡'},{k:'lively',lab:'活力',c:'#e07800',ic:'⚡'},{k:'beautiful',lab:'美丽',c:'#d43a72',ic:'✿'},{k:'wealthy',lab:'富裕',c:'#14a06c',ic:'◆'},{k:'boring',lab:'无聊',c:'#6c727d',ic:'◌'},{k:'depressing',lab:'压抑',c:'#6b4fd8',ic:'☁'}];\nlet PLAN=null;\nfunction rDuel(el){\n  if(!PLAN){PLAN=[];DIMS.forEach(d=>{for(let t=0;t<Q('duel_'+d.k).trialCount;t++)PLAN.push({d,t})});for(let i=PLAN.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[PLAN[i],PLAN[j]]=[PLAN[j],PLAN[i]]}}\n  const H=head(3,'成对比较','两条街，选一条','每次在两张街景中做出相对判断。点击图片，或按 <kbd>←</kbd> <kbd>→</kbd> 选择，<kbd>↓</kbd> 表示差不多。');\n  const draw=()=>{const idx=PLAN.findIndex(p=>tval('duel_'+p.d.k,p.t)==null);\n    if(idx<0){el.innerHTML=H+`<div class=\"done-panel\"><div class=\"ok\">✓</div><div><h3>${PLAN.length} 组比较全部完成</h3><p class=\"hint\">你的选择已记录，平台会用 TrueSkill 汇总所有参与者的判断。</p></div></div>`;keyH=null;return}\n    const {d,t}=PLAN[idx],name='duel_'+d.k,q=Q(name),round=q.trials[t],imgs=round.choices.filter(c=>!c.tie),tie=round.choices.find(c=>c.tie);\n    el.innerHTML=H+`<div style=\"--dc:${d.c}\"><div class=\"ptop\"><span class=\"dimbadge\">${d.ic} 维度 · ${d.lab}</span><div class=\"pdots\" aria-hidden=\"true\">${PLAN.map((p,k)=>`<i class=\"${tval('duel_'+p.d.k,p.t)!=null?'d':k===idx?'c':''}\"></i>`).join('')}</div><span class=\"hint num\">${PLAN.filter(p=>tval('duel_'+p.d.k,p.t)!=null).length+1} / ${PLAN.length}</span></div>\n      <div class=\"pq\">${esc(q.title).replace(d.lab,`<b>${d.lab}</b>`)}</div>\n      <div class=\"pair\">${imgs.map((c,k)=>`<button class=\"pcard\" data-v=\"${c.value}\">${img({url:c.imageUrl},`${k?'右':'左'}侧街景`)}<div class=\"key\">${k?'右边这条 <kbd>→</kbd>':'<kbd>←</kbd> 左边这条'}</div></button>`).join('')}<div class=\"vs\">VS</div></div>\n      <div class=\"pmid\">${tie?`<button class=\"btn\" data-v=\"${tie.value}\">差不多 <kbd>↓</kbd></button>`:''}</div></div>`;\n    const t0=performance.now();let locked=false;\n    const choose=v=>{if(locked||v==null)return;locked=true;rec(name,v,{trial:t}).then(r=>{if(!r.ok){locked=false;return}\n      custom.duel=custom.duel.filter(x=>!(x.q===name&&x.trial===t)).concat({q:name,trial:t,order:custom.duel.length+1,rt_ms:Math.round(performance.now()-t0)});rec('duel_timing',{items:custom.duel});\n      $$('.pcard',el).forEach(p=>p.classList.add(tie&&v===tie.value?'dropped':p.dataset.v===v?'picked':'dropped'));later(draw,420)})};\n    $$('[data-v]',el).forEach(b=>b.onclick=()=>choose(b.dataset.v));\n    $$('.pcard',el).forEach(c=>{c.onmousemove=e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;c.style.transform=`rotateY(${(x-.5)*9}deg) rotateX(${(.5-y)*7}deg)`};c.onmouseleave=()=>c.style.transform=''});\n    keyH=e=>{if(e.key==='ArrowLeft'){choose(imgs[0].value);return true}if(e.key==='ArrowRight'){choose(imgs[1]&&imgs[1].value);return true}if(e.key==='ArrowDown'&&tie){e.preventDefault();choose(tie.value);return true}};\n  };draw();\n}\n\n/* ================= 4 · 语义量表 ================= */\nfunction rSD(el){\n  const q=Q('sd_scene'),vals=Object.assign({},A.sd_scene||{}),att=Q('attention_check');\n  const rows=q.dimensions.map(d=>({id:d.id,l:d.left,r:d.right,min:d.min,max:d.max,step:d.step}));rows.splice(5,0,{id:'__att',att:1,min:att.rateMin,max:att.rateMax,step:1});\n  el.innerHTML=head(4,'语义量表','给这条街画一张“性格侧写”','在每对相反的形容词之间，拖动滑块到最贴合你感受的位置。中间代表“两者都不是”。')+`\n  <div class=\"sd\"><div class=\"sticky\">${img(q.media[0],'待评价的街景')}<p class=\"hint\" style=\"margin-top:8px\">想象自己正站在这条街上。</p></div>\n  <div class=\"card\">${rows.map(r=>{const v=r.att?A.attention_check:vals[r.id];return`<div class=\"sdrow ${r.att?'att':''}\" data-id=\"${r.id}\"><div class=\"sdlab\">${r.att?`<span>${esc(att.title)}</span>`:`<span data-s=\"l\">${esc(r.l)}</span>`}<span class=\"val num\">${v==null?'—':v}</span>${r.att?'':`<span data-s=\"r\">${esc(r.r)}</span>`}</div>\n    <input type=\"range\" class=\"range ${v==null?'untouched':''}\" min=\"${r.min}\" max=\"${r.max}\" step=\"${r.step}\" value=\"${v??Math.round((r.min+r.max)/2)}\" aria-label=\"${r.att?esc(att.title):esc(r.l+' 至 '+r.r)}\"></div>`}).join('')}</div></div>`;\n  $$('.sdrow',el).forEach(row=>{const id=row.dataset.id,inp=$('input',row);fillRange(inp);\n    const upd=()=>{const v=+inp.value;fillRange(inp);$('.val',row).textContent=(v>0?'+':'')+v;const l=$('[data-s=l]',row),r=$('[data-s=r]',row);if(l){l.classList.toggle('hi',v<0);r.classList.toggle('hi',v>0)}};\n    if(!inp.classList.contains('untouched'))upd();\n    inp.addEventListener('input',()=>{inp.classList.remove('untouched');upd();if(id==='__att')return;vals[id]=+inp.value});\n    inp.addEventListener('change',()=>{if(id==='__att'){rec('attention_check',+inp.value);return}if(q.dimensions.every(d=>vals[d.id]!=null))rec('sd_scene',Object.assign({},vals))})});\n}\n\n/* ================= 5 · 情绪坐标 ================= */\nfunction emoWord(v,a){const r=Math.hypot(v,a);if(r<.18)return'😐 中性';const ang=(Math.atan2(a,v)*180/Math.PI+360)%360,W=['😊 愉悦','🤩 兴奋','😳 警觉','😰 紧张','😣 不悦','😞 沮丧','😪 困倦','😌 放松'][Math.round(ang/45)%8];return(r>.7?'非常':r<.4?'有点':'')+W}\nfunction rAffect(el){\n  const q=Q('affect_grid'),N=q.trialCount;let cur=0;while(cur<N-1&&tval('affect_grid',cur)!=null)cur++;\n  const draw=()=>{const v=tval('affect_grid',cur),f=v?{x:v.valence/100,y:v.arousal/100}:null;\n    el.innerHTML=head(5,'情绪坐标','这条街让你产生了怎样的情绪？','横轴是<b>愉悦程度</b>，纵轴是<b>唤醒程度</b>。在情绪面板上点击或拖动圆点（也可用方向键），每张街景都需要完成。')+`\n    <div class=\"aff\"><div>${img(q.trials[cur].media[0],'第 '+(cur+1)+' 张街景')}<div class=\"atabs\">${q.trials.map((t,k)=>`<button class=\"atab ${k===cur?'on':''}\" data-i=\"${k}\" aria-label=\"第 ${k+1} 张\">${tval('affect_grid',k)!=null?'<span class=\"ck\">✓</span>':''}${img(t.media[0],'缩略图 '+(k+1))}</button>`).join('')}</div></div>\n    <div><div class=\"pad\" id=\"pad\" tabindex=\"0\" role=\"application\" aria-label=\"情绪面板，方向键移动\"><div class=\"pad-bg\"></div><div class=\"pad-grid\"></div><div class=\"pad-axis h\"></div><div class=\"pad-axis v\"></div>\n      <span class=\"pad-lab\" style=\"top:10px;left:50%;transform:translateX(-50%)\">激动 ▲</span><span class=\"pad-lab\" style=\"bottom:10px;left:50%;transform:translateX(-50%)\">▼ 平静</span>\n      <span class=\"pad-lab\" style=\"left:10px;top:44%\">◀ 不愉快</span><span class=\"pad-lab\" style=\"right:10px;top:44%\">愉快 ▶</span>\n      <span class=\"pad-lab\" style=\"left:12%;top:18%\">紧张焦虑</span><span class=\"pad-lab\" style=\"right:12%;top:18%\">兴奋愉悦</span><span class=\"pad-lab\" style=\"left:12%;bottom:18%\">沮丧低落</span><span class=\"pad-lab\" style=\"right:12%;bottom:18%\">放松平和</span>\n      <div class=\"pdot ${f?'':'hidden'}\" id=\"pdot\"></div></div>\n      <div class=\"card\" style=\"margin-top:12px;display:flex;justify-content:space-between;align-items:center\"><b id=\"emoW\" style=\"font-size:20px\">${f?emoWord(f.x,f.y):'— 尚未标记'}</b><span class=\"hint num\" id=\"emoN\">${f?`愉悦 ${v.valence} · 唤醒 ${v.arousal}`:''}</span></div>\n      <button class=\"btn btn-primary\" id=\"affNext\" style=\"width:100%;margin-top:12px\" ${f?'':'disabled'}>${q.trials.every((_,k)=>k===cur||tval('affect_grid',k)!=null)?'完成 ✓':'下一张街景 →'}</button></div></div>`;\n    const pad=$('#pad'),dot=$('#pdot');let p=f?{...f}:{x:0,y:0};\n    const place=()=>{dot.classList.remove('hidden');dot.style.left=(p.x+1)/2*100+'%';dot.style.top=(1-p.y)/2*100+'%';$('#emoW').textContent=emoWord(p.x,p.y);$('#emoN').textContent=`愉悦 ${Math.round(p.x*100)} · 唤醒 ${Math.round(p.y*100)}`};\n    const commit=()=>rec('affect_grid',{valence:Math.round(p.x*100),arousal:Math.round(p.y*100)},{trial:cur}).then(r=>{if(r.ok){$('#affNext').disabled=false;const tb=$$('.atab')[cur];if(!$('.ck',tb))tb.insertAdjacentHTML('afterbegin','<span class=\"ck\">✓</span>')}});\n    let down=false;const set=e=>{const r=pad.getBoundingClientRect();p={x:clamp((e.clientX-r.left)/r.width)*2-1,y:1-clamp((e.clientY-r.top)/r.height)*2};place()};\n    pad.onpointerdown=e=>{down=true;pad.setPointerCapture(e.pointerId);set(e);const rp=document.createElement('div');rp.className='ripple';rp.style.left=(p.x+1)/2*100+'%';rp.style.top=(1-p.y)/2*100+'%';pad.appendChild(rp);setTimeout(()=>rp.remove(),800)};\n    pad.onpointermove=e=>{if(down)set(e)};pad.onpointerup=()=>{if(down){down=false;commit()}};\n    pad.onkeydown=e=>{const d={ArrowLeft:[-.05,0],ArrowRight:[.05,0],ArrowUp:[0,.05],ArrowDown:[0,-.05]}[e.key];if(!d)return;e.preventDefault();p={x:clamp(p.x+d[0],-1,1),y:clamp(p.y+d[1],-1,1)};place();commit()};\n    $$('.atab',el).forEach(b=>b.onclick=()=>{cur=+b.dataset.i;draw()});\n    $('#affNext').onclick=()=>{const n=q.trials.findIndex((_,k)=>tval('affect_grid',k)==null);if(n>=0){cur=n;draw()}else next()};\n  };draw();\n}\n\n/* ================= 6 · 热点标注 ================= */\nfunction rHot(el){\n  const q=Q('hotspots'),labels=q.labels||[],tags=[...new Set(labels.map(l=>l.split('·')[1]))];\n  const shapes=((A.hotspots&&A.hotspots.shapes)||[]).slice();let mode='吸引',heatOn=false,pop=null;\n  el.innerHTML=head(6,'热点标注','是什么让你产生这种感觉？','先选择标注类型，再点击街景中<b>吸引你</b>或<b>让你不适</b>的位置，并选择对应要素。至少标注 '+(q.minShapes||3)+' 处。')+`\n  <div class=\"hot\"><div class=\"hot-scene\" id=\"hs\">${img(q.media[0],'待标注的街景')}<canvas class=\"heat\" id=\"heat\"></canvas><div id=\"pins\"></div></div>\n  <div class=\"card\"><div class=\"modebar\"><button class=\"mode pos on\" data-m=\"吸引\">👍 吸引我</button><button class=\"mode neg\" data-m=\"不适\">👎 让我不适</button></div>\n    <label class=\"hint\" style=\"display:flex;gap:8px;align-items:center\"><input type=\"checkbox\" id=\"heatT\"> 显示感知热力图</label><div class=\"hint\" id=\"pc\" style=\"margin-top:8px\"></div><ul class=\"pinlist\" id=\"plist\"></ul></div></div>`;\n  const hs=$('#hs'),col=l=>l.startsWith('吸引')?'var(--good)':'var(--bad)';\n  const save=()=>{const ok=shapes.filter(s=>s.label);rec('hotspots',ok.length?{shapes:ok}:null)};\n  const close=()=>{if(pop){pop.remove();pop=null}};\n  const render=()=>{$('#pins').innerHTML=shapes.map((s,i)=>`<button class=\"pin\" data-i=\"${i}\" style=\"left:${s.points[0].x*100}%;top:${s.points[0].y*100}%;--pc:${col(s.label||s._m)}\" aria-label=\"标记 ${i+1}\"><i></i><span>${i+1}</span></button>`).join('');\n    $('#plist').innerHTML=shapes.map((s,i)=>`<li><i style=\"background:${col(s.label||s._m)}\">${i+1}</i>${s.label?esc(s.label):'<span class=\"hint\">请选择要素</span>'}<button data-del=\"${i}\" aria-label=\"删除\">×</button></li>`).join('')||'<li class=\"hint\" style=\"background:none\">点击左侧街景开始标注。</li>';\n    $('#pc').textContent=`已标注 ${shapes.filter(s=>s.label).length} 处`;\n    $$('[data-del]').forEach(b=>b.onclick=()=>{shapes.splice(+b.dataset.del,1);close();render();save()});\n    $$('.pin').forEach(p=>p.onclick=e=>{e.stopPropagation();open(+p.dataset.i)});heat()};\n  const heat=()=>{const cv=$('#heat'),r=hs.getBoundingClientRect();cv.width=r.width;cv.height=r.height;const c=cv.getContext('2d');shapes.forEach(s=>{const x=s.points[0].x*cv.width,y=s.points[0].y*cv.height,R=cv.width*.15,g=c.createRadialGradient(x,y,0,x,y,R),rgb=(s.label||s._m).startsWith('吸引')?'22,190,120':'240,60,70';g.addColorStop(0,`rgba(${rgb},.85)`);g.addColorStop(1,`rgba(${rgb},0)`);c.fillStyle=g;c.fillRect(x-R,y-R,R*2,R*2)});cv.classList.toggle('on',heatOn)};\n  const open=i=>{close();const s=shapes[i],m=(s.label||s._m).split('·')[0];pop=document.createElement('div');pop.className='pop';\n    pop.innerHTML=`<div style=\"display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:8px\"><span>标记 ${i+1}（${m}）是什么？</span><button class=\"hint\" data-x>删除</button></div><div class=\"chips\">${tags.map(t=>`<button class=\"chip ${s.label===m+'·'+t?'on':''}\" data-t=\"${t}\">${t}</button>`).join('')}</div>`;\n    pop.style.left=`min(max(0px, calc(${s.points[0].x*100}% - 125px)), calc(100% - 250px))`;pop.style.top=s.points[0].y>.55?`calc(${s.points[0].y*100}% - 40px)`:`calc(${s.points[0].y*100}% + 12px)`;if(s.points[0].y>.55)pop.style.transform='translateY(-100%)';\n    hs.appendChild(pop);pop.addEventListener('click',e=>{e.stopPropagation();if(e.target.dataset.x!=null){shapes.splice(i,1);close();render();save();return}const b=e.target.closest('[data-t]');if(b){s.label=m+'·'+b.dataset.t;delete s._m;close();render();save()}});$('.chip',pop).focus()};\n  hs.addEventListener('click',e=>{if(pop){close();return}const r=hs.getBoundingClientRect();shapes.push({tool:'point',label:null,_m:mode,points:[{x:+((e.clientX-r.left)/r.width).toFixed(4),y:+((e.clientY-r.top)/r.height).toFixed(4)}]});render();open(shapes.length-1)});\n  $$('.mode',el).forEach(b=>b.onclick=()=>{mode=b.dataset.m;$$('.mode',el).forEach(x=>x.classList.toggle('on',x===b))});\n  $('#heatT').onchange=e=>{heatOn=e.target.checked;heat()};render();\n  const origSave=save;// strip helper fields before recording\n  shapes.forEach(s=>{if(!s.label)s._m=mode});\n  keyH=e=>{if(e.key==='Escape'){close();return true}};\n}\n\n/* ================= 7 · 步行排序 ================= */\nfunction rRank(el){\n  const q=Q('walk_rank'),byV=Object.fromEntries(q.choices.map(c=>[c.value,c]));let order=(A.walk_rank||q.choices.map(c=>c.value)).slice(),moved=!!A.walk_rank;\n  const LAB=['最愿意','比较愿意','一般','不太愿意','最不愿意'];\n  const draw=()=>{el.innerHTML=head(7,'步行排序','步行 15 分钟去见朋友，你会选哪条路？','拖动卡片，按<b>最愿意</b>到<b>最不愿意</b>排序（也可用右侧箭头）。')+`<div class=\"rank\" id=\"rk\">${order.map((v,k)=>`<div class=\"ritem\" data-v=\"${v}\"><div class=\"rk\">${k+1}</div>${img({url:byV[v].imageUrl},'候选街道 '+(k+1))}<div><b>${LAB[k]||''}</b></div><div class=\"arrows\"><button data-mv=\"-1\" ${k?'':'disabled'} aria-label=\"上移\">↑</button><button data-mv=\"1\" ${k<order.length-1?'':'disabled'} aria-label=\"下移\">↓</button></div></div>`).join('')}</div>\n    <p class=\"hint\" style=\"margin-top:12px\">${moved?'✓ 排序已记录，可继续调整':'即使认同当前顺序，也请至少移动一次以确认'}</p>`;\n    const items=$$('.ritem',el),commit=()=>{moved=true;rec('walk_rank',order.slice()).then(draw)};\n    items.forEach((it,idx)=>{$$('[data-mv]',it).forEach(b=>b.onclick=e=>{e.stopPropagation();const j=idx+ +b.dataset.mv;[order[idx],order[j]]=[order[j],order[idx]];commit()});\n      it.onpointerdown=e=>{if(e.target.closest('button'))return;e.preventDefault();it.setPointerCapture(e.pointerId);it.classList.add('drag');const y0=e.clientY,step=it.offsetHeight+12;let to=idx;\n        it.onpointermove=ev=>{const dy=ev.clientY-y0;it.style.transform=`translateY(${dy}px)`;to=clamp(Math.round(idx+dy/step),0,items.length-1);items.forEach((o,j)=>{if(o===it)return;let s=0;if(idx<to&&j>idx&&j<=to)s=-step;if(idx>to&&j<idx&&j>=to)s=step;o.style.transform=s?`translateY(${s}px)`:''})};\n        it.onpointerup=()=>{it.onpointermove=it.onpointerup=null;it.classList.remove('drag');if(to!==idx){const[m]=order.splice(idx,1);order.splice(to,0,m);setTimeout(commit,250)}it.style.transform=`translateY(${(to-idx)*step}px)`;if(to===idx)it.style.transform=''}}})};draw();\n}\n\n/* ================= 8 · 要素权重 ================= */\nconst BCOL=['#2fb27a','#2f6bff','#f2b33a','#ff6a3d','#9b6bff','#20b5c9','#8fbf3a','#e0457b'],BIC=['🌳','🚶','💡','🏪','🏛','🔇','🧹','👥'];\nfunction rBudget(el){\n  const q=Q('element_budget'),B=q.budget,b=Object.fromEntries(q.choices.map(c=>[c.value,(A.element_budget||{})[c.value]||0])),tot=()=>Object.values(b).reduce((x,y)=>x+y,0);\n  el.innerHTML=head(8,'要素权重',`如果你是街道设计师，手里有 ${B} 点预算`,`把 ${B} 点分配给最能提升街道体验的要素，总和必须正好等于 ${B}。`)+`\n  <div class=\"bud\"><div class=\"card\">${q.choices.map((c,i)=>`<div class=\"brow\"><span style=\"font-size:22px\">${BIC[i]||'•'}</span><label for=\"b_${c.value}\">${esc(c.text)}</label><input id=\"b_${c.value}\" type=\"range\" class=\"range\" min=\"0\" max=\"${B}\" value=\"${b[c.value]}\" data-k=\"${c.value}\"><span class=\"v num\" id=\"bv_${c.value}\">${b[c.value]}</span></div>`).join('')}\n    <div style=\"display:flex;gap:8px;margin-top:10px;flex-wrap:wrap\"><button class=\"btn btn-sm\" id=\"bEven\">平均分配</button><button class=\"btn btn-sm\" id=\"bNorm\">按比例凑整</button><button class=\"btn btn-sm\" id=\"bZero\">清零</button></div></div>\n  <div class=\"card donut-wrap\"><svg viewBox=\"0 0 200 200\" style=\"width:100%;max-width:280px\" id=\"donut\" aria-hidden=\"true\"></svg><div style=\"margin-top:-145px;margin-bottom:95px\"><div class=\"total num\" id=\"tot\">0</div><div class=\"hint\" id=\"totH\"></div></div>\n    <div class=\"legend\">${q.choices.map((c,i)=>`<span><i style=\"background:${BCOL[i%8]}\"></i>${esc(c.text)}</span>`).join('')}</div></div></div>`;\n  const C=2*Math.PI*78;\n  const up=()=>{const t=tot();$('#tot').textContent=t;$('#tot').className='total num '+(t>B?'over':t===B?'ok':'');$('#totH').textContent=t>B?`超出 ${t-B} 点`:t===B?'分配完成 ✓':`还剩 ${B-t} 点`;\n    let acc=0;$('#donut').innerHTML=`<circle cx=\"100\" cy=\"100\" r=\"78\" fill=\"none\" stroke=\"var(--line)\" stroke-width=\"22\"/>`+q.choices.map((c,i)=>{const L=b[c.value]/Math.max(B,t)*C,s=`<circle cx=\"100\" cy=\"100\" r=\"78\" fill=\"none\" stroke=\"${BCOL[i%8]}\" stroke-width=\"22\" stroke-dasharray=\"${Math.max(0,L-1.5)} ${C}\" stroke-dashoffset=\"${-acc}\" transform=\"rotate(-90 100 100)\"/>`;acc+=L;return s}).join('');\n    q.choices.forEach(c=>{$('#bv_'+c.value).textContent=b[c.value];const r=$('#b_'+c.value);r.value=b[c.value];fillRange(r)})};\n  const commit=()=>{up();rec('element_budget',tot()===B?Object.assign({},b):null)};\n  $$('input[data-k]',el).forEach(r=>{r.oninput=()=>{b[r.dataset.k]=+r.value;up()};r.onchange=commit});\n  $('#bEven').onclick=()=>{const n=q.choices.length;q.choices.forEach((c,i)=>b[c.value]=Math.floor(B/n)+(i<B%n?1:0));commit()};\n  $('#bZero').onclick=()=>{q.choices.forEach(c=>b[c.value]=0);commit()};\n  $('#bNorm').onclick=()=>{const t=tot();if(!t){toast('请先分配一些点数');return}let s=0;const ks=q.choices.map(c=>c.value);ks.forEach(k=>{b[k]=Math.floor(b[k]/t*B);s+=b[k]});const ord=ks.slice().sort((x,y)=>b[y]-b[x]);for(let i=0;s<B;i++,s++)b[ord[i%ord.length]]++;commit()};\n  up();\n}\n\n/* ================= 9 · 理想街道配方 ================= */\nfunction rIdeal(el){\n  const q=Q('ideal_mix'),v=Object.assign(Object.fromEntries(q.dimensions.map(d=>[d.id,Math.round((d.min+d.max)/2)])),A.ideal_mix||{});\n  const cols=[['#ff8a5b','#ffcf8a'],['#2f6bff','#8fb3ff'],['#9b6bff','#d4bfff'],['#14b37d','#8ff0c8'],['#e0457b','#ffa3c4'],['#6c727d','#c4c8d0'],['#ff6a3d','#ffc08a'],['#20b5c9','#9bebf5']];\n  el.innerHTML=head(9,'理想街道','调配你心目中理想街道的“配方”','像调音台一样调节每个要素。上方的均衡器会实时显示你的配方。')+`\n  <div class=\"eq\" aria-hidden=\"true\">${q.dimensions.map((d,i)=>`<div><i id=\"eq_${d.id}\" style=\"--c1:${cols[i%8][0]};--c2:${cols[i%8][1]};height:${v[d.id]}%\"></i><span>${esc(d.label)}</span></div>`).join('')}</div>\n  <div class=\"card\">${q.dimensions.map(d=>`<div class=\"sdrow\"><div class=\"sdlab\"><span>${esc(d.left)}</span><b style=\"color:var(--ink)\">${esc(d.label)} <span class=\"num\" id=\"iv_${d.id}\">${v[d.id]}</span></b><span>${esc(d.right)}</span></div><input type=\"range\" class=\"range\" min=\"${d.min}\" max=\"${d.max}\" step=\"${d.step}\" value=\"${v[d.id]}\" data-k=\"${d.id}\" aria-label=\"${esc(d.label)}\"></div>`).join('')}</div>`;\n  $$('input[data-k]',el).forEach(r=>{fillRange(r);r.oninput=()=>{v[r.dataset.k]=+r.value;fillRange(r);$('#iv_'+r.dataset.k).textContent=r.value;$('#eq_'+r.dataset.k).style.height=r.value/(+r.max)*100+'%'};r.onchange=()=>rec('ideal_mix',Object.assign({},v))});\n  if(!A.ideal_mix)rec('ideal_mix',Object.assign({},v));\n}\n\n/* ================= 10 · 开放问答 ================= */\nfunction rOpen(el){\n  const tags=Q('open_tags').choices,fu=Q('followup').choices;\n  el.innerHTML=head(10,'开放问答','最后，说说你的故事','这一部分为选填，但你的文字对我们极其宝贵。')+`\n  <div class=\"card\"><label class=\"lbl\" for=\"story\">${esc(Q('open_story').title)}</label><textarea id=\"story\" maxlength=\"800\" placeholder=\"例如：上海武康路的梧桐树下，午后光影斑驳……\">${esc(A.open_story||'')}</textarea><div class=\"hint num\" id=\"wc\" style=\"margin-top:6px\"></div></div>\n  <div class=\"card\"><span class=\"lbl\">${esc(Q('open_tags').title)}</span><div class=\"chips\" id=\"tg\">${tags.map(c=>`<button class=\"chip ${(A.open_tags||[]).includes(c.value)?'on':''}\" data-v=\"${c.value}\">${esc(c.text)}</button>`).join('')}</div></div>\n  <div class=\"card\"><span class=\"lbl\">${esc(Q('followup').title)}</span><div class=\"seg\" id=\"fu\">${fu.map(c=>`<button class=\"${A.followup===c.value?'on':''}\" data-v=\"${c.value}\">${esc(c.text)}</button>`).join('')}</div></div>`;\n  const t=$('#story'),wc=()=>$('#wc').textContent=`${t.value.length} / 800`;wc();t.oninput=wc;t.onchange=()=>rec('open_story',t.value.trim()||null);\n  $$('#tg .chip').forEach(b=>b.onclick=()=>{const a=(A.open_tags||[]).slice(),i=a.indexOf(b.dataset.v);i<0?a.push(b.dataset.v):a.splice(i,1);rec('open_tags',a.length?a:null).then(r=>{if(r.ok)b.classList.toggle('on')})});\n  $$('#fu button').forEach(b=>b.onclick=()=>rec('followup',b.dataset.v).then(r=>{if(r.ok)$$('#fu button').forEach(x=>x.classList.toggle('on',x===b))}));\n}\n\n/* ================= 11 · 报告 + 提交 ================= */\nfunction rReport(el){\n  const sd=A.sd_scene||{},sq=Q('sd_scene'),bq=Q('element_budget'),bud=A.element_budget||{};\n  const top=bq.choices.slice().sort((x,y)=>(bud[y.value]||0)-(bud[x.value]||0))[0];\n  const p={greenery:['自然疗愈派','绿意与树荫是你衡量街道品质的第一标尺。'],sidewalk:['漫步主义者','好的街道首先属于行人。'],lighting:['夜行守望者','光照与可见性直接决定你的安全感。'],shops:['烟火气收藏家','热闹的店铺界面让城市变得可亲。'],architecture:['城市审美家','你对建筑立面和街道风貌有敏锐判断。'],quiet:['宁静寻觅者','安静本身就是一种奢侈。'],cleanliness:['秩序守护者','整洁是一条街“被在乎”的信号。'],vitality:['人群观察家','你从人的存在中获得安全与活力。']}[top&&top.value]||['城市漫游者','你在多种要素间保持平衡。'];\n  const n=sq.dimensions.length,cx=150,cy=140,R=95,pt=(i,r)=>{const a=-Math.PI/2+i*2*Math.PI/n;return[cx+Math.cos(a)*r,cy+Math.sin(a)*r]};\n  let radar='';for(let k=1;k<=3;k++)radar+=`<polygon points=\"${sq.dimensions.map((_,i)=>pt(i,R*k/3).join(',')).join(' ')}\" fill=\"none\" stroke=\"var(--line2)\"/>`;\n  sq.dimensions.forEach((d,i)=>{const l=pt(i,R+20);radar+=`<text x=\"${l[0]}\" y=\"${l[1]}\" text-anchor=\"middle\" dominant-baseline=\"middle\" font-size=\"11\" fill=\"var(--ink2)\">${esc(d.right)}</text>`});\n  radar+=`<polygon points=\"${sq.dimensions.map((d,i)=>pt(i,R*Math.max(.05,((sd[d.id]??0)-d.min)/(d.max-d.min))).join(',')).join(' ')}\" fill=\"color-mix(in srgb,var(--accent) 28%,transparent)\" stroke=\"var(--accent)\" stroke-width=\"2.5\"/>`;\n  const fq=Q('flash_safety'),aq=Q('affect_grid'),rq=Q('walk_rank'),byV=Object.fromEntries(rq.choices.map(c=>[c.value,c]));\n  const secs=Math.round((Date.now()-T0)/1000),att=A.attention_check===Q('attention_check').rateMax;\n  el.innerHTML=`<div class=\"qhead\"><span class=\"eyebrow\">你的感知画像</span><h2>谢谢！这是你的街道感知画像</h2><p class=\"lead\">确认无误后点击下方“提交答卷”。</p></div>\n  <div class=\"persona\"><div class=\"hint\" style=\"color:inherit;opacity:.6\">你的感知人格</div><h2>${p[0]}</h2><p style=\"opacity:.8\">${p[1]}</p><p class=\"num\" style=\"opacity:.6;font-size:13px;margin-top:8px\">本页用时 ${Math.floor(secs/60)}′${secs%60}″ · 注意力检测${att?'通过 ✓':'未通过'}</p></div>\n  <div class=\"rep\"><div class=\"card\"><h3>语义侧写</h3><svg viewBox=\"0 0 300 290\" style=\"width:100%;max-width:340px;display:block;margin:auto\" aria-label=\"语义量表雷达图\">${radar}</svg></div>\n    <div class=\"card\"><h3>情绪分布</h3><svg viewBox=\"0 0 240 240\" style=\"width:100%;max-width:260px;display:block;margin:10px auto\" aria-label=\"情绪坐标图\"><rect width=\"240\" height=\"240\" rx=\"16\" fill=\"var(--line)\"/><line x1=\"120\" y1=\"8\" x2=\"120\" y2=\"232\" stroke=\"var(--line2)\"/><line x1=\"8\" y1=\"120\" x2=\"232\" y2=\"120\" stroke=\"var(--line2)\"/>\n      ${aq.trials.map((t,k)=>{const v=tval('affect_grid',k);if(!v)return'';const x=120+v.valence*1.08,y=120-v.arousal*1.08,c=['#2f6bff','#ff6a3d','#14a06c'][k%3];return`<circle cx=\"${x}\" cy=\"${y}\" r=\"15\" fill=\"${c}\" opacity=\".2\"/><circle cx=\"${x}\" cy=\"${y}\" r=\"7\" fill=\"${c}\"/><text x=\"${x+10}\" y=\"${y-9}\" font-size=\"11\" font-weight=\"700\" fill=\"var(--ink)\">${k+1}</text>`}).join('')}</svg></div>\n    <div class=\"card wide\"><h3>第一印象 · 安全评分</h3><div class=\"strip\" style=\"margin-top:10px\">${fq.trials.map((t,k)=>`<div>${img(t.media[0],'闪现街景 '+(k+1))}<b class=\"num\" style=\"color:${R7[(tval('flash_safety',k)||4)-1]}\">${tval('flash_safety',k)??'–'}/7</b></div>`).join('')}</div></div>\n    <div class=\"card wide\"><h3>你最愿意步行的街道</h3><div class=\"strip\" style=\"grid-template-columns:repeat(5,1fr);margin-top:10px\">${(A.walk_rank||[]).map((v,k)=>`<div>${img({url:byV[v].imageUrl},'排名 '+(k+1))}<b class=\"num\">#${k+1}</b></div>`).join('')}</div></div>\n    <div class=\"card wide\"><h3>预算分配</h3>${bq.choices.map((c,i)=>`<div style=\"display:grid;grid-template-columns:110px 1fr 36px;gap:10px;align-items:center;margin:6px 0;font-size:13px\"><span>${BIC[i]} ${esc(c.text)}</span><div style=\"height:8px;border-radius:9px;background:var(--line);overflow:hidden\"><i style=\"display:block;height:100%;width:${bud[c.value]||0}%;background:${BCOL[i%8]}\"></i></div><b class=\"num\">${bud[c.value]||0}</b></div>`).join('')}</div></div>\n  <div class=\"card\" style=\"margin-top:14px;text-align:center\"><button class=\"btn btn-primary btn-lg\" id=\"submit\">提交答卷 ✦</button><div id=\"miss\"></div></div>`;\n  $('#submit').onclick=submit;\n}\nconst OWNER={consent:0,age:1,gender:1,city_size:1,travel_modes:1,field:1,night_walk:1,flash_safety:2,flash_timing:2,sd_scene:4,attention_check:4,affect_grid:5,hotspots:6,walk_rank:7,element_budget:8,ideal_mix:9,open_story:10,open_tags:10,followup:10};\nDIMS.forEach(d=>OWNER['duel_'+d.k]=3);OWNER.duel_timing=3;\nfunction submit(){const b=$('#submit');b.disabled=true;b.textContent='提交中…';\n  SPSite.complete().then(r=>{if(r&&r.ok){$('#stage').innerHTML='<div class=\"qhead\" style=\"text-align:center;margin-top:20vh\"><h2>提交中…</h2><p class=\"lead\" style=\"margin:auto\">感谢你的参与！</p></div>';$('.navbar').classList.add('hidden');return}\n    b.disabled=false;b.textContent='提交答卷 ✦';const m=(r&&r.missing)||[];$('#miss').innerHTML=`<div class=\"missing\">${esc((r&&r.error)||'提交失败')}<div class=\"chips\" style=\"justify-content:center;margin-top:10px\">${[...new Set(m.map(n=>OWNER[n]).filter(x=>x!=null))].map(i=>`<button class=\"chip\" data-go=\"${i}\">去完成「${STEPS[i].t}」</button>`).join('')}</div></div>`;\n    $$('[data-go]').forEach(x=>x.onclick=()=>go(+x.dataset.go))})}\n\n/* ================= 流程 ================= */\nconst STEPS=[\n  {t:'欢迎',r:rWelcome,v:()=>A.consent===true||'请先勾选知情同意'},\n  {t:'关于你',r:rProfile,v:()=>!A.gender?'请选择性别':!A.city_size?'请选择居住地区':!(A.travel_modes||[]).length?'请至少选择一种出行方式':true},\n  {t:'第一印象',r:rFlash,v:()=>tdone('flash_safety')||'还有街景未评分'},\n  {t:'成对比较',r:rDuel,v:()=>DIMS.every(d=>tdone('duel_'+d.k))||'还有比较未完成'},\n  {t:'语义量表',r:rSD,v:()=>!A.sd_scene?'请调整全部 8 个滑块':A.attention_check==null?'请完成注意力检测题':true},\n  {t:'情绪坐标',r:rAffect,v:()=>tdone('affect_grid')||'还有街景未标记情绪'},\n  {t:'热点标注',r:rHot,v:()=>((A.hotspots&&A.hotspots.shapes)||[]).length>=(Q('hotspots').minShapes||3)||`请至少标注 ${Q('hotspots').minShapes||3} 处并选择要素`},\n  {t:'步行排序',r:rRank,v:()=>!!A.walk_rank||'请至少调整一次排序以确认'},\n  {t:'要素权重',r:rBudget,v:()=>!!A.element_budget||`总和需要正好等于 ${Q('element_budget').budget}`},\n  {t:'理想街道',r:rIdeal,v:()=>true},\n  {t:'开放问答',r:rOpen,v:()=>true},\n  {t:'你的报告',r:rReport,v:()=>true},\n];\nlet step=0,maxStep=0,busy=false;\nfunction chrome(){$('#steps').innerHTML=STEPS.map((s,i)=>`<li class=\"${i===step?'cur':i<maxStep?'done':''}\"><button data-i=\"${i}\" ${i>maxStep?'disabled':''} aria-current=\"${i===step?'step':'false'}\"><span class=\"dot\">${i<maxStep&&i!==step?'✓':i}</span><span class=\"t\">${s.t}</span></button></li>`).join('');\n  $$('#steps button').forEach(b=>b.onclick=()=>go(+b.dataset.i));$('#prog').style.width=step/(STEPS.length-1)*100+'%';\n  $('#prevBtn').style.visibility=step&&step<STEPS.length-1?'visible':'hidden';$('#nextBtn').style.visibility=step<STEPS.length-1?'visible':'hidden';\n  $('#nextBtn').textContent=step===STEPS.length-2?'查看我的画像 ✦':'下一步 →';$('#navMid').textContent=`${step} / ${STEPS.length-1}`}\nfunction go(i){if(busy||i<0||i>=STEPS.length)return;busy=true;cleanup();const st=$('#stage');st.classList.add('out');\n  setTimeout(()=>{step=i;maxStep=Math.max(maxStep,i);st.className='pre';STEPS[i].r(st);scrollTo(0,0);chrome();requestAnimationFrame(()=>requestAnimationFrame(()=>st.className=''));busy=false},300)}\nfunction next(){const ok=STEPS[step].v();if(ok!==true){toast(ok);const b=$('#nextBtn');b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake');return}go(step+1)}\n$('#prevBtn').onclick=()=>go(step-1);$('#nextBtn').onclick=next;\ndocument.addEventListener('keydown',e=>{if(e.target.matches&&e.target.matches('input,textarea'))return;if(keyH&&keyH(e))return;if(e.key==='Enter'&&!(e.target.matches&&e.target.matches('button'))){e.preventDefault();next()}});\nsetInterval(()=>{const s=Math.floor((Date.now()-T0)/1000);$('#timer').textContent=`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`},1000);\nSTEPS[0].r($('#stage'));chrome();\n});\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-10-15T11:03:40.858Z"
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-10-15T11:03:40.858Z"
+  },
+  "description": "通过快速判断、成对比较、语义量表、情绪坐标、热点标注、排序与预算分配，研究人们如何感知街道。约 12 分钟。",
+  "logoPosition": "right",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [],
+ "paper": null
+}

@@ -1,0 +1,539 @@
+{
+ "id": "2026-admin-spschemeheat",
+ "name": "SP-Scheme-Heat",
+ "description": "Template created from project: SP-Scheme-Heat",
+ "author": "Admin",
+ "year": "2026",
+ "category": "Custom",
+ "tags": [
+  "custom",
+  "user-created",
+  "source:ai",
+  "modality:street_view",
+  "task:custom_page",
+  "concept:thermal_comfort"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": null,
+ "huggingfaceDataset": null,
+ "createdAt": "2026-10-15T11:06:20.948+00:00",
+ "updatedAt": "2026-11-26T14:58:01.373+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "我已知悉本研究匿名进行，数据（含绘制轨迹与选择）仅用于学术分析，我自愿参与并可随时退出",
+      "labelTrue": "同意",
+      "isRequired": true,
+      "labelFalse": "不同意"
+     }
+    ]
+   },
+   {
+    "name": "you",
+    "elements": [
+     {
+      "max": 35,
+      "min": 15,
+      "name": "comfort_temp",
+      "type": "text",
+      "title": "你觉得最舒适的户外气温是多少 °C？",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "heat_sensitivity",
+      "type": "rating",
+      "title": "你有多怕热？",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "很怕冷",
+       "不怕热",
+       "一般",
+       "比较怕热",
+       "极怕热"
+      ],
+      "maxRateDescription": "极怕热",
+      "minRateDescription": "很怕冷"
+     },
+     {
+      "name": "climate",
+      "type": "radiogroup",
+      "title": "你长期生活的气候区",
+      "choices": [
+       {
+        "text": "湿热",
+        "value": "humid_hot"
+       },
+       {
+        "text": "干热",
+        "value": "dry_hot"
+       },
+       {
+        "text": "夏热冬冷",
+        "value": "hot_summer_cold_winter"
+       },
+       {
+        "text": "温和",
+        "value": "mild"
+       },
+       {
+        "text": "寒冷",
+        "value": "cold"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "outdoor_walk",
+      "type": "radiogroup",
+      "title": "夏天你每天在户外步行多久？",
+      "choices": [
+       {
+        "text": "< 10 分钟",
+        "value": "lt10"
+       },
+       {
+        "text": "10–30 分钟",
+        "value": "10_30"
+       },
+       {
+        "text": "30–60 分钟",
+        "value": "30_60"
+       },
+       {
+        "text": "> 1 小时",
+        "value": "gt60"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "sun_habits",
+      "type": "checkbox",
+      "title": "你的防晒习惯（可多选）",
+      "choices": [
+       {
+        "text": "打伞",
+        "value": "umbrella"
+       },
+       {
+        "text": "戴帽子",
+        "value": "hat"
+       },
+       {
+        "text": "专挑阴凉走",
+        "value": "seek_shade"
+       },
+       {
+        "text": "穿防晒衣",
+        "value": "sun_clothes"
+       },
+       {
+        "text": "避开正午出门",
+        "value": "avoid_noon"
+       },
+       {
+        "text": "都没有",
+        "value": "none"
+       }
+      ]
+     },
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "年龄段",
+      "choices": [
+       {
+        "text": "18–24",
+        "value": "18_24"
+       },
+       {
+        "text": "25–34",
+        "value": "25_34"
+       },
+       {
+        "text": "35–44",
+        "value": "35_44"
+       },
+       {
+        "text": "45–59",
+        "value": "45_59"
+       },
+       {
+        "text": "60+",
+        "value": "60_plus"
+       }
+      ]
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "性别",
+      "choices": [
+       {
+        "text": "女",
+        "value": "female"
+       },
+       {
+        "text": "男",
+        "value": "male"
+       },
+       {
+        "text": "非二元",
+        "value": "nonbinary"
+       },
+       {
+        "text": "不愿透露",
+        "value": "na"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "feel",
+    "elements": [
+     {
+      "name": "feel_heat",
+      "type": "imageslidergroup",
+      "title": "想象七月站在这条街上：你的体感温度与最多愿意停留的时间",
+      "choices": [],
+      "dimensions": [
+       {
+        "id": "perceived_temp",
+        "max": 46,
+        "min": 24,
+        "left": "舒适",
+        "step": 0.5,
+        "label": "体感温度 (°C)",
+        "right": "危险高温"
+       },
+       {
+        "id": "stay_minutes",
+        "max": 30,
+        "min": 0,
+        "left": "立刻离开",
+        "step": 1,
+        "label": "最多愿意停留 (分钟)",
+        "right": "30 分钟以上"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "trialCount": 5,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "paint",
+    "elements": [
+     {
+      "name": "heat_paint",
+      "type": "imageannotation",
+      "title": "用画笔在街景上涂出你感到炙热、温热与凉爽的区域",
+      "choices": [],
+      "imageCount": 1,
+      "isRequired": true,
+      "trialCount": 2,
+      "allowedTools": [
+       "line"
+      ],
+      "maxAnnotations": 60,
+      "minAnnotations": 1,
+      "annotationLabels": [
+       "炙热",
+       "温热",
+       "凉爽"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "route",
+    "elements": [
+     {
+      "name": "shade_routes",
+      "type": "custom",
+      "title": "两个时段的遮阴路线（平面图坐标、路程、遮阴比例）"
+     }
+    ]
+   },
+   {
+    "name": "swipe",
+    "elements": [
+     {
+      "name": "shade_swipe",
+      "type": "imageboolean",
+      "title": "为了这条更阴凉的路线，你愿意绕路吗？",
+      "choices": [],
+      "labelTrue": "愿意绕路",
+      "imageCount": 1,
+      "isRequired": true,
+      "labelFalse": "还是直走",
+      "trialCount": 12,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "swipe_design",
+      "type": "custom",
+      "title": "每张卡片的属性（多走分钟、遮阴比例、当日气温）与反应时"
+     }
+    ]
+   },
+   {
+    "name": "body",
+    "elements": [
+     {
+      "name": "body_heat",
+      "rows": [
+       {
+        "text": "头部",
+        "value": "head"
+       },
+       {
+        "text": "面部",
+        "value": "face"
+       },
+       {
+        "text": "颈部",
+        "value": "neck"
+       },
+       {
+        "text": "胸口",
+        "value": "chest"
+       },
+       {
+        "text": "腹部",
+        "value": "belly"
+       },
+       {
+        "text": "左上臂",
+        "value": "upper_arm_l"
+       },
+       {
+        "text": "右上臂",
+        "value": "upper_arm_r"
+       },
+       {
+        "text": "左前臂",
+        "value": "forearm_l"
+       },
+       {
+        "text": "右前臂",
+        "value": "forearm_r"
+       },
+       {
+        "text": "左手",
+        "value": "hand_l"
+       },
+       {
+        "text": "右手",
+        "value": "hand_r"
+       },
+       {
+        "text": "左大腿",
+        "value": "thigh_l"
+       },
+       {
+        "text": "右大腿",
+        "value": "thigh_r"
+       },
+       {
+        "text": "左小腿",
+        "value": "calf_l"
+       },
+       {
+        "text": "右小腿",
+        "value": "calf_r"
+       },
+       {
+        "text": "左脚",
+        "value": "foot_l"
+       },
+       {
+        "text": "右脚",
+        "value": "foot_r"
+       },
+       {
+        "text": "后脑",
+        "value": "back_head"
+       },
+       {
+        "text": "后颈",
+        "value": "nape"
+       },
+       {
+        "text": "上背",
+        "value": "upper_back"
+       },
+       {
+        "text": "下背",
+        "value": "lower_back"
+       },
+       {
+        "text": "左臂后侧",
+        "value": "back_arm_l"
+       },
+       {
+        "text": "右臂后侧",
+        "value": "back_arm_r"
+       },
+       {
+        "text": "左大腿后",
+        "value": "back_thigh_l"
+       },
+       {
+        "text": "右大腿后",
+        "value": "back_thigh_r"
+       },
+       {
+        "text": "左小腿后",
+        "value": "back_calf_l"
+       },
+       {
+        "text": "右小腿后",
+        "value": "back_calf_r"
+       }
+      ],
+      "type": "matrix",
+      "title": "烈日下步行 10 分钟后，身体各部位的热感",
+      "columns": [
+       {
+        "text": "无",
+        "value": "0"
+       },
+       {
+        "text": "温热",
+        "value": "1"
+       },
+       {
+        "text": "很热",
+        "value": "2"
+       },
+       {
+        "text": "灼热",
+        "value": "3"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "cool_first",
+      "type": "radiogroup",
+      "title": "最想先给哪里降温？",
+      "choices": [
+       {
+        "text": "头部",
+        "value": "head"
+       },
+       {
+        "text": "颈部",
+        "value": "neck"
+       },
+       {
+        "text": "背部",
+        "value": "back"
+       },
+       {
+        "text": "腋下/胸口",
+        "value": "chest"
+       },
+       {
+        "text": "脚",
+        "value": "feet"
+       },
+       {
+        "text": "手臂",
+        "value": "arms"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "cool",
+    "elements": [
+     {
+      "name": "cooling_plan",
+      "type": "imageannotation",
+      "title": "用 14 枚金币，把降温改造拖放到街景中你想放置的位置",
+      "choices": [],
+      "imageCount": 1,
+      "isRequired": true,
+      "allowedTools": [
+       "point"
+      ],
+      "maxAnnotations": 14,
+      "minAnnotations": 1,
+      "annotationLabels": [
+       "行道树",
+       "遮阳帆",
+       "骑楼廊道",
+       "喷雾柱",
+       "水景",
+       "垂直绿化",
+       "浅色铺装"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "max": 10,
+      "min": 0,
+      "name": "cool_expected",
+      "type": "text",
+      "title": "你认为这套改造能让体感温度下降多少 °C？",
+      "inputType": "number"
+     }
+    ]
+   }
+  ],
+  "title": "热 · 街道热感知与遮阴实验",
+  "locale": "zh",
+  "spSite": {
+   "id": "site-6da57e3071dd7afa",
+   "html": "<!doctype html>\n<html lang=\"zh-CN\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>街道热感知实验</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"热 · 街道热感知与遮阴实验\",\n    \"description\": \"估计体感温度、在街景上涂抹热区、画出遮阴路线、用滑卡做取舍、标注身体热感，并为一条街设计降温方案。约 12 分钟。\",\n    \"locale\": \"zh\",\n    \"pages\": [\n      { \"name\": \"intro\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"我已知悉本研究匿名进行，数据（含绘制轨迹与选择）仅用于学术分析，我自愿参与并可随时退出\", \"isRequired\": true, \"labelTrue\": \"同意\", \"labelFalse\": \"不同意\" }\n      ]},\n      { \"name\": \"you\", \"elements\": [\n        { \"type\": \"number\", \"name\": \"comfort_temp\", \"title\": \"你觉得最舒适的户外气温是多少 °C？\", \"min\": 15, \"max\": 35, \"isRequired\": true },\n        { \"type\": \"rating\", \"name\": \"heat_sensitivity\", \"title\": \"你有多怕热？\", \"rateMin\": 1, \"rateMax\": 5, \"rateLabels\": [\"很怕冷\",\"不怕热\",\"一般\",\"比较怕热\",\"极怕热\"], \"minRateDescription\": \"很怕冷\", \"maxRateDescription\": \"极怕热\", \"isRequired\": true },\n        { \"type\": \"radiogroup\", \"name\": \"climate\", \"title\": \"你长期生活的气候区\", \"isRequired\": true, \"choices\": [{\"value\":\"humid_hot\",\"text\":\"湿热\"},{\"value\":\"dry_hot\",\"text\":\"干热\"},{\"value\":\"hot_summer_cold_winter\",\"text\":\"夏热冬冷\"},{\"value\":\"mild\",\"text\":\"温和\"},{\"value\":\"cold\",\"text\":\"寒冷\"}]},\n        { \"type\": \"radiogroup\", \"name\": \"outdoor_walk\", \"title\": \"夏天你每天在户外步行多久？\", \"isRequired\": true, \"choices\": [{\"value\":\"lt10\",\"text\":\"< 10 分钟\"},{\"value\":\"10_30\",\"text\":\"10–30 分钟\"},{\"value\":\"30_60\",\"text\":\"30–60 分钟\"},{\"value\":\"gt60\",\"text\":\"> 1 小时\"}]},\n        { \"type\": \"checkbox\", \"name\": \"sun_habits\", \"title\": \"你的防晒习惯（可多选）\", \"choices\": [{\"value\":\"umbrella\",\"text\":\"打伞\"},{\"value\":\"hat\",\"text\":\"戴帽子\"},{\"value\":\"seek_shade\",\"text\":\"专挑阴凉走\"},{\"value\":\"sun_clothes\",\"text\":\"穿防晒衣\"},{\"value\":\"avoid_noon\",\"text\":\"避开正午出门\"},{\"value\":\"none\",\"text\":\"都没有\"}]},\n        { \"type\": \"radiogroup\", \"name\": \"age_group\", \"title\": \"年龄段\", \"choices\": [{\"value\":\"18_24\",\"text\":\"18–24\"},{\"value\":\"25_34\",\"text\":\"25–34\"},{\"value\":\"35_44\",\"text\":\"35–44\"},{\"value\":\"45_59\",\"text\":\"45–59\"},{\"value\":\"60_plus\",\"text\":\"60+\"}]},\n        { \"type\": \"radiogroup\", \"name\": \"gender\", \"title\": \"性别\", \"choices\": [{\"value\":\"female\",\"text\":\"女\"},{\"value\":\"male\",\"text\":\"男\"},{\"value\":\"nonbinary\",\"text\":\"非二元\"},{\"value\":\"na\",\"text\":\"不愿透露\"}]}\n      ]},\n      { \"name\": \"feel\", \"elements\": [\n        { \"type\": \"imageslidergroup\", \"name\": \"feel_heat\", \"title\": \"想象七月站在这条街上：你的体感温度与最多愿意停留的时间\", \"imageCount\": 1, \"trialCount\": 5, \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"choices\": [], \"isRequired\": true, \"dimensions\": [\n          {\"id\":\"perceived_temp\",\"label\":\"体感温度 (°C)\",\"left\":\"舒适\",\"right\":\"危险高温\",\"min\":24,\"max\":46,\"step\":0.5},\n          {\"id\":\"stay_minutes\",\"label\":\"最多愿意停留 (分钟)\",\"left\":\"立刻离开\",\"right\":\"30 分钟以上\",\"min\":0,\"max\":30,\"step\":1}]}\n      ]},\n      { \"name\": \"paint\", \"elements\": [\n        { \"type\": \"imageannotation\", \"name\": \"heat_paint\", \"title\": \"用画笔在街景上涂出你感到炙热、温热与凉爽的区域\", \"imageCount\": 1, \"trialCount\": 2, \"allowedTools\": [\"line\"], \"annotationLabels\": [\"炙热\",\"温热\",\"凉爽\"], \"minAnnotations\": 1, \"maxAnnotations\": 60, \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"choices\": [], \"isRequired\": true }\n      ]},\n      { \"name\": \"route\", \"elements\": [\n        { \"type\": \"custom\", \"name\": \"shade_routes\", \"title\": \"两个时段的遮阴路线（平面图坐标、路程、遮阴比例）\" }\n      ]},\n      { \"name\": \"swipe\", \"elements\": [\n        { \"type\": \"imageboolean\", \"name\": \"shade_swipe\", \"title\": \"为了这条更阴凉的路线，你愿意绕路吗？\", \"imageCount\": 1, \"trialCount\": 12, \"labelTrue\": \"愿意绕路\", \"labelFalse\": \"还是直走\", \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"choices\": [], \"isRequired\": true },\n        { \"type\": \"custom\", \"name\": \"swipe_design\", \"title\": \"每张卡片的属性（多走分钟、遮阴比例、当日气温）与反应时\" }\n      ]},\n      { \"name\": \"body\", \"elements\": [\n        { \"type\": \"matrix\", \"name\": \"body_heat\", \"title\": \"烈日下步行 10 分钟后，身体各部位的热感\", \"isRequired\": true,\n          \"rows\": [{\"value\":\"head\",\"text\":\"头部\"},{\"value\":\"face\",\"text\":\"面部\"},{\"value\":\"neck\",\"text\":\"颈部\"},{\"value\":\"chest\",\"text\":\"胸口\"},{\"value\":\"belly\",\"text\":\"腹部\"},{\"value\":\"upper_arm_l\",\"text\":\"左上臂\"},{\"value\":\"upper_arm_r\",\"text\":\"右上臂\"},{\"value\":\"forearm_l\",\"text\":\"左前臂\"},{\"value\":\"forearm_r\",\"text\":\"右前臂\"},{\"value\":\"hand_l\",\"text\":\"左手\"},{\"value\":\"hand_r\",\"text\":\"右手\"},{\"value\":\"thigh_l\",\"text\":\"左大腿\"},{\"value\":\"thigh_r\",\"text\":\"右大腿\"},{\"value\":\"calf_l\",\"text\":\"左小腿\"},{\"value\":\"calf_r\",\"text\":\"右小腿\"},{\"value\":\"foot_l\",\"text\":\"左脚\"},{\"value\":\"foot_r\",\"text\":\"右脚\"},{\"value\":\"back_head\",\"text\":\"后脑\"},{\"value\":\"nape\",\"text\":\"后颈\"},{\"value\":\"upper_back\",\"text\":\"上背\"},{\"value\":\"lower_back\",\"text\":\"下背\"},{\"value\":\"back_arm_l\",\"text\":\"左臂后侧\"},{\"value\":\"back_arm_r\",\"text\":\"右臂后侧\"},{\"value\":\"back_thigh_l\",\"text\":\"左大腿后\"},{\"value\":\"back_thigh_r\",\"text\":\"右大腿后\"},{\"value\":\"back_calf_l\",\"text\":\"左小腿后\"},{\"value\":\"back_calf_r\",\"text\":\"右小腿后\"}],\n          \"columns\": [{\"value\":\"0\",\"text\":\"无\"},{\"value\":\"1\",\"text\":\"温热\"},{\"value\":\"2\",\"text\":\"很热\"},{\"value\":\"3\",\"text\":\"灼热\"}]},\n        { \"type\": \"radiogroup\", \"name\": \"cool_first\", \"title\": \"最想先给哪里降温？\", \"choices\": [{\"value\":\"head\",\"text\":\"头部\"},{\"value\":\"neck\",\"text\":\"颈部\"},{\"value\":\"back\",\"text\":\"背部\"},{\"value\":\"chest\",\"text\":\"腋下/胸口\"},{\"value\":\"feet\",\"text\":\"脚\"},{\"value\":\"arms\",\"text\":\"手臂\"}]}\n      ]},\n      { \"name\": \"cool\", \"elements\": [\n        { \"type\": \"imageannotation\", \"name\": \"cooling_plan\", \"title\": \"用 14 枚金币，把降温改造拖放到街景中你想放置的位置\", \"imageCount\": 1, \"allowedTools\": [\"point\"], \"annotationLabels\": [\"行道树\",\"遮阳帆\",\"骑楼廊道\",\"喷雾柱\",\"水景\",\"垂直绿化\",\"浅色铺装\"], \"minAnnotations\": 1, \"maxAnnotations\": 14, \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"choices\": [], \"isRequired\": true },\n        { \"type\": \"number\", \"name\": \"cool_expected\", \"title\": \"你认为这套改造能让体感温度下降多少 °C？\", \"min\": 0, \"max\": 10 }\n      ]}\n    ]\n  }\n}\n</script>\n\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link href=\"https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap\" rel=\"stylesheet\">\n<style>\n:root{--bg:#f6eddf;--paper:#fffaf2;--paper2:#fbf3e6;--ink:#2b1b12;--ink2:#5c4535;--muted:#8e7562;--line:rgba(43,27,18,.12);--line2:rgba(43,27,18,.22);--sun:#ff6a1a;--sun2:#ffb02e;--hot:#d8301b;--cool:#137f77;--body:#eadfce;--shadow:0 18px 50px -20px rgba(120,60,20,.35);--serif:\"Noto Serif SC\",serif;--mono:\"DM Mono\",ui-monospace,monospace}\n@media (prefers-color-scheme:dark){:root{--bg:#17100b;--paper:#211812;--paper2:#2a1f17;--ink:#f6e9da;--ink2:#d6c2ad;--muted:#a48c78;--line:rgba(255,235,210,.1);--line2:rgba(255,235,210,.2);--body:#4a3a2e;--cool:#2bb5aa;--hot:#ff5a40;--shadow:0 18px 50px -20px rgba(0,0,0,.7)}}\n*{box-sizing:border-box;margin:0;padding:0}\nhtml{overflow-x:hidden}\nbody{background:var(--bg);color:var(--ink);font-family:\"Noto Sans SC\",system-ui,sans-serif;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}\nbutton{font:inherit;color:inherit;background:none;border:0;cursor:pointer}\n:focus-visible{outline:3px solid var(--sun);outline-offset:3px;border-radius:6px}\nkbd{font-family:var(--mono);font-size:.8em;padding:1px 7px;border-radius:6px;border:1px solid var(--line2);border-bottom-width:2px;background:var(--paper)}\n.mono{font-family:var(--mono)}.hidden{display:none!important}\n.sunwash{position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(circle at 85% -10%,rgba(255,176,46,.35),transparent 50%),radial-gradient(circle at 0% 110%,rgba(229,52,31,.12),transparent 50%)}\n#app{position:relative;z-index:1;display:grid;grid-template-columns:150px minmax(0,1fr);min-height:100vh}\n#rail{position:sticky;top:0;height:100vh;padding:26px 0 26px 26px;display:flex;flex-direction:column}\n.brand{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1}.brand small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--muted);font-weight:400;margin-top:6px}\n.therm{position:relative;flex:1;margin:22px 0 0 10px;width:110px}\n.tube{position:absolute;left:0;top:0;bottom:46px;width:18px;border-radius:12px;background:var(--paper);border:2px solid var(--line2);overflow:hidden}\n.merc{position:absolute;left:3px;right:3px;bottom:3px;border-radius:9px;background:linear-gradient(to top,var(--hot),var(--sun) 60%,var(--sun2));transition:height 1s cubic-bezier(.3,1.3,.5,1)}\n.bulb{position:absolute;left:-13px;bottom:0;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff8a4a,var(--hot));border:2px solid var(--line2);display:grid;place-items:center;color:#fff;font:500 11px var(--mono)}\n.marks{position:absolute;left:26px;top:0;bottom:46px;width:110px}\n.mk{position:absolute;left:0;transform:translateY(50%);display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);white-space:nowrap}\n.mk::before{content:\"\";width:10px;height:2px;background:var(--line2)}.mk.done{color:var(--ink2)}.mk.done::before{background:var(--sun)}.mk.cur{color:var(--hot);font-weight:700}.mk.cur::before{width:16px;background:var(--hot)}\nmain{min-width:0;display:flex;flex-direction:column}\n#stage{flex:1;max-width:1200px;width:100%;margin:0 auto;padding:38px clamp(16px,4vw,56px) 28px;transition:opacity .45s,transform .55s cubic-bezier(.2,.8,.2,1)}\n#stage.out{opacity:0;transform:translateX(-60px)}#stage.pre{opacity:0;transform:translateX(60px);transition:none}\n.nav{position:sticky;bottom:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px clamp(16px,4vw,56px);background:linear-gradient(to top,var(--bg) 60%,transparent)}\n.nav .mid{font:500 12px var(--mono);color:var(--muted)}\n.kick{font:500 12px var(--mono);letter-spacing:.2em;color:var(--hot);display:flex;align-items:center;gap:10px}.kick::before{content:\"\";width:28px;height:1px;background:currentColor}\nh1{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7vw,92px);line-height:1.02}\nh2{font-family:var(--serif);font-weight:900;font-size:clamp(26px,3.4vw,42px);line-height:1.15;margin:10px 0}\n.lead{color:var(--ink2);font-size:15px;line-height:1.8;max-width:700px}\n.chead{margin-bottom:22px}\n.card{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--shadow)}\n.card+.card{margin-top:14px}\n.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;border-radius:999px;border:1.5px solid var(--ink);font-weight:700;font-size:14px;transition:.2s;background:var(--paper)}\n.btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 -2px var(--ink)}.btn:disabled{opacity:.3;pointer-events:none}\n.btn-hot{background:var(--hot);border-color:var(--hot);color:#fff}\n.btn-sm{min-height:36px;padding:0 14px;font-size:13px}\n.chips{display:flex;flex-wrap:wrap;gap:8px}\n.chip{padding:8px 15px;border-radius:999px;border:1.5px solid var(--line2);font-size:13px;background:var(--paper)}.chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}\n.lbl{display:block;font-weight:700;font-size:14px;margin-bottom:10px}\n.hint{font-size:12px;color:var(--muted)}\n.photo{position:relative;aspect-ratio:16/10;border-radius:20px;overflow:hidden;background:#ccc;box-shadow:var(--shadow)}\n.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none}\n.hazy img{filter:url(#haze) saturate(1.08)}\n.hazy::after{content:\"\";position:absolute;inset:0;background:linear-gradient(to top,rgba(255,140,40,.18),rgba(255,230,180,.12) 40%,transparent 70%);mix-blend-mode:multiply;pointer-events:none}\n.toast{position:fixed;left:50%;bottom:86px;z-index:99;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:12px 20px;border-radius:999px;background:var(--ink);color:var(--paper);font-size:14px;transition:.35s;max-width:90vw}\n.toast.show{opacity:1;transform:translate(-50%,0)}\n.shake{animation:shake .45s}@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}\n.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}.tab{padding:7px 13px;border-radius:999px;border:1.5px solid var(--line2);font:500 12px var(--mono)}.tab.on{border-color:var(--hot);color:var(--hot)}.tab.ok::after{content:\" ✓\";color:var(--cool)}\n/* intro */\n.intro{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;min-height:calc(100vh - 150px)}\n.sky{position:relative;aspect-ratio:1;border-radius:28px;overflow:hidden;box-shadow:var(--shadow);touch-action:none;user-select:none}\n.sky svg{position:absolute;inset:0;width:100%;height:100%}\n.tread{position:absolute;left:20px;top:18px;font:500 40px var(--mono);color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.25);pointer-events:none}.tread small{display:block;font-size:11px;letter-spacing:.14em;opacity:.85}\n.consent{display:flex;gap:12px;align-items:flex-start;font-size:13px;color:var(--ink2);margin:18px 0;cursor:pointer;line-height:1.7}.consent input{width:20px;height:20px;flex:none;accent-color:var(--hot)}\n.reveal{transition:opacity .8s,transform .8s}.reveal.dim{opacity:.18;transform:translateY(16px);pointer-events:none}\n/* profile */\n.prof{display:grid;grid-template-columns:1fr 330px;gap:22px;align-items:start}\n.faces,.climates{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}\n.face,.clim{padding:12px 4px;border-radius:16px;border:1.5px solid var(--line2);text-align:center;background:var(--paper);font-size:13px}\n.face b{display:block;font-size:30px;transition:transform .3s cubic-bezier(.3,1.8,.5,1)}.face span{font-size:11px;color:var(--muted)}\n.face.on{border-color:var(--hot)}.face.on b{transform:scale(1.3) rotate(-8deg)}\n.clim i{display:block;font-style:normal;font-size:22px;margin-bottom:4px}.clim.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}\n.hrange{-webkit-appearance:none;appearance:none;width:100%;height:16px;border-radius:12px;background:linear-gradient(90deg,#3a8bd8,#62c0b5 30%,#ffd166 60%,#ff8c42 80%,#e5341f);border:2px solid var(--paper);box-shadow:0 0 0 1px var(--line2)}\n.hrange::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;border-radius:50%;background:var(--paper);border:3px solid var(--ink)}\n.hrange::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:var(--paper);border:3px solid var(--ink)}\n.idcard{position:sticky;top:30px;border-radius:22px;overflow:hidden;background:var(--ink);color:var(--paper);box-shadow:var(--shadow)}\n.idcard .top{padding:20px;background:linear-gradient(135deg,var(--hot),var(--sun) 60%,var(--sun2));color:#fff}\n.idcard .ava{font-size:52px;line-height:1}\n.idcard .row{display:flex;justify-content:space-between;gap:10px;padding:10px 20px;border-bottom:1px dashed rgba(255,255,255,.15);font-size:13px}.idcard .row span{opacity:.6}.idcard .row b{font-family:var(--mono);font-weight:500;text-align:right}\n.barcode{height:34px;margin:16px 20px 20px;background:repeating-linear-gradient(90deg,var(--paper) 0 2px,transparent 2px 4px,var(--paper) 4px 5px,transparent 5px 9px);opacity:.7}\n/* feel */\n.te{display:grid;grid-template-columns:1fr 140px 220px;gap:20px;align-items:start}\n.bigtherm{touch-action:none;user-select:none;cursor:ns-resize}.bigtherm svg{width:100%;max-height:52vh;display:block;margin:0 auto}\n.tval{text-align:center}.tval b{font:500 30px var(--mono)}.tval span{display:inline-block;margin-top:4px;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;color:#fff}\n.dial{touch-action:none;user-select:none;cursor:grab}.dial svg{width:100%;display:block}\n.dv{text-align:center;margin-top:6px}.dv b{font:500 28px var(--mono)}.dv span{display:block;font-size:11px;color:var(--muted)}\n.strip{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}\n.strip button{position:relative;border-radius:12px;overflow:hidden;border:2px solid transparent;opacity:.55;padding:0}.strip button .photo{border-radius:10px;box-shadow:none}\n.strip button.on{border-color:var(--hot);opacity:1}.strip button.ok{opacity:1}\n.ck{position:absolute;right:5px;top:5px;z-index:2;background:var(--cool);color:#fff;width:20px;height:20px;border-radius:50%;font-size:11px;display:grid;place-items:center}\n.stamp2{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;z-index:3}\n.stamp2 b{font:900 34px var(--serif);color:var(--hot);border:4px solid var(--hot);padding:6px 18px;border-radius:12px;transform:rotate(-10deg);background:rgba(255,250,242,.85);animation:stampIn .4s cubic-bezier(.3,1.7,.5,1)}\n@keyframes stampIn{from{transform:rotate(-10deg) scale(2.2);opacity:0}}\n/* paint */\n.pt{display:grid;grid-template-columns:1fr 250px;gap:22px;align-items:start}\n.pbox{position:relative;cursor:crosshair;touch-action:none;user-select:none}\n.pbox canvas{position:absolute;inset:0;width:100%;height:100%;border-radius:20px;opacity:.82}\n.tools{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}\n.tool{padding:12px 6px;border-radius:14px;border:1.5px solid var(--line2);font-size:13px;font-weight:700;display:flex;flex-direction:column;align-items:center;background:var(--paper)}\n.tool i{font-style:normal;font-size:22px}.tool.on{border-color:var(--tc);color:var(--tc);background:color-mix(in srgb,var(--tc) 12%,var(--paper))}\n/* route */\n.rt{display:grid;grid-template-columns:1fr 290px;gap:22px;align-items:start}\n.plan{position:relative;border-radius:20px;overflow:hidden;box-shadow:var(--shadow);touch-action:none;user-select:none;cursor:crosshair}\n.plan canvas{display:block;width:100%;aspect-ratio:16/10}\n.compass{position:absolute;right:12px;top:12px;width:90px;height:90px;pointer-events:none}\n.stat2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}.stat2 div{padding:12px;border-radius:14px;background:var(--paper2);border:1px solid var(--line)}.stat2 small{display:block;font-size:11px;color:var(--muted)}.stat2 b{font:500 21px var(--mono)}\n.shadebar{display:flex;height:14px;border-radius:9px;overflow:hidden;margin:6px 0 2px;background:var(--line)}.shadebar i{display:block;height:100%}\n/* swipe */\n.sw{display:grid;grid-template-columns:1fr 290px;gap:28px;align-items:start}\n.deck{position:relative;height:520px;max-width:420px;margin:0 auto;width:100%}\n.scard{position:absolute;inset:0;border-radius:26px;background:var(--paper);border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(80,40,10,.5);overflow:hidden;touch-action:none;user-select:none;cursor:grab}\n.scard.fly{transition:transform .45s cubic-bezier(.3,.6,.4,1),opacity .45s}.scard.back{transition:transform .5s cubic-bezier(.3,1.6,.5,1)}\n.scard .photo{border-radius:0;box-shadow:none}\n.scard .body{padding:16px 20px}.scard h3{font-family:var(--serif);font-size:28px;font-weight:900;margin-bottom:8px}\n.facts{display:flex;flex-wrap:wrap;gap:8px}.facts span{padding:6px 11px;border-radius:999px;background:var(--paper2);border:1px solid var(--line);font-size:13px}\n.stamp{position:absolute;top:26px;padding:6px 14px;border:4px solid;border-radius:10px;font:900 24px var(--serif);opacity:0;pointer-events:none;z-index:3;background:rgba(255,255,255,.8)}\n.stamp.yes{left:20px;color:var(--cool);border-color:var(--cool);transform:rotate(-14deg)}.stamp.no{right:20px;color:var(--hot);border-color:var(--hot);transform:rotate(14deg)}\n.swbtns{display:flex;justify-content:center;gap:26px;margin-top:18px}\n.swbtns button{width:66px;height:66px;border-radius:50%;border:2px solid;font-size:26px;background:var(--paper);box-shadow:var(--shadow)}\n.swbtns .n{border-color:var(--hot);color:var(--hot)}.swbtns .y{border-color:var(--cool);color:var(--cool)}\n.baseline{padding:16px;border-radius:18px;background:var(--ink);color:var(--paper);font-size:14px;line-height:1.7}.baseline b{color:var(--sun2)}\n/* body */\n.bd{display:grid;grid-template-columns:1fr 290px;gap:22px;align-items:start}\n.bodies{display:grid;grid-template-columns:1fr 1fr;gap:10px;background:var(--paper);border-radius:22px;padding:16px;box-shadow:var(--shadow);border:1px solid var(--line)}\n.bodies svg{width:100%;max-height:500px;display:block}\n.rg{cursor:pointer;transition:fill .3s;stroke:var(--paper);stroke-width:2}.rg:hover{filter:brightness(.92)}.rg.l3{animation:throb 1.2s infinite}@keyframes throb{50%{filter:drop-shadow(0 0 8px #e5341f)}}\n.bodies h4{text-align:center;font:500 12px var(--mono);color:var(--muted);letter-spacing:.2em}\n/* cool */\n.cd{display:grid;grid-template-columns:1fr 290px;gap:22px;align-items:start}\n.cdbox{position:relative}.drop-ok .photo{outline:3px dashed var(--cool);outline-offset:6px}\n.tokens{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:14px}\n.tok{position:relative;padding:12px 4px 10px;border-radius:16px;border:1.5px solid var(--line2);background:var(--paper);text-align:center;cursor:grab;touch-action:none;user-select:none}\n.tok i{display:block;font-style:normal;font-size:24px}.tok span{font-size:12px;font-weight:700}.tok small{position:absolute;top:4px;right:6px;font:500 10px var(--mono);color:var(--sun)}\n.tok.dis{opacity:.35;pointer-events:none}\n.ghost{position:fixed;z-index:200;pointer-events:none;font-size:40px;transform:translate(-50%,-50%) scale(1.2)}\n.marker{position:absolute;transform:translate(-50%,-50%);z-index:4;font-size:26px;cursor:pointer;animation:plop .45s cubic-bezier(.3,1.7,.5,1);filter:drop-shadow(0 4px 6px rgba(0,0,0,.45))}\n@keyframes plop{from{transform:translate(-50%,-120%) scale(.3);opacity:0}}\n.coins{display:flex;gap:4px;flex-wrap:wrap}.coins i{width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffe28a,#f2a516);border:1px solid #c98710}.coins i.used{background:var(--line);border-color:var(--line2)}\n/* report */\n.rhead{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;align-items:center;padding:28px;border-radius:26px;background:linear-gradient(135deg,var(--hot),var(--sun) 55%,var(--sun2));color:#fff;margin-bottom:14px}\n.rhead h2{color:#fff}.rhead .big{font:500 70px var(--mono);line-height:1}\n.rep{display:grid;grid-template-columns:1fr 1fr;gap:14px}.rep .w{grid-column:1/-1}\n.ph{font:500 11px var(--mono);letter-spacing:.2em;color:var(--muted);margin-bottom:10px}\n.thumbs{display:grid;grid-template-columns:1fr 1fr;gap:8px}.thumbs .wrapc{position:relative}.thumbs canvas.ov{position:absolute;inset:0;width:100%;height:100%;border-radius:20px}\n.missing{margin-top:14px;padding:14px;border-radius:14px;background:color-mix(in srgb,var(--hot) 10%,var(--paper));border:1px solid color-mix(in srgb,var(--hot) 35%,transparent);font-size:14px}\n@media (max-width:1080px){.te{grid-template-columns:1fr 1fr}.te .lw{grid-column:1/-1}.pt,.rt,.sw,.bd,.cd,.prof,.rhead{grid-template-columns:1fr}.idcard{position:static}.tokens{grid-template-columns:repeat(4,1fr)}}\n@media (max-width:860px){#app{grid-template-columns:minmax(0,1fr)}#rail{position:sticky;z-index:30;height:auto;flex-direction:row;align-items:center;gap:14px;padding:10px 14px;background:var(--bg);border-bottom:1px solid var(--line)}\n  .brand{font-size:20px}.brand small{display:none}.therm{flex:1;height:34px;margin:0;width:auto}.tube{top:8px;bottom:auto;left:24px;right:0;width:auto;height:16px}\n  .merc{top:3px;bottom:3px;right:auto;height:auto!important;width:var(--w,0%);transition:width 1s}.bulb{left:0;top:0;width:34px;height:34px;font-size:9px}.marks{display:none}\n  .intro{grid-template-columns:1fr;min-height:0}.clim small{display:none}.rep{grid-template-columns:1fr}.deck{height:490px}}\n@media (max-width:560px){.te{grid-template-columns:1fr}.faces,.climates{gap:4px}.strip{grid-template-columns:repeat(5,1fr);gap:4px}}\n@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}\n</style>\n</head>\n<body>\n<svg width=\"0\" height=\"0\" style=\"position:absolute\" aria-hidden=\"true\"><filter id=\"haze\" x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.006 0.05\" numOctaves=\"2\" seed=\"7\"><animate attributeName=\"baseFrequency\" dur=\"2.6s\" values=\"0.006 0.05;0.007 0.065;0.006 0.05\" repeatCount=\"indefinite\"/></feTurbulence><feDisplacementMap in=\"SourceGraphic\" scale=\"6\"/></filter></svg>\n<div class=\"sunwash\"></div>\n<div id=\"app\">\n  <aside id=\"rail\"><div class=\"brand\">热<small>STREET HEAT LAB</small></div><div class=\"therm\"><div class=\"tube\"><div class=\"merc\" id=\"merc\"></div></div><div class=\"marks\" id=\"marks\"></div><div class=\"bulb\" id=\"bulb\">24°</div></div></aside>\n  <main><section id=\"stage\"><p>加载中…</p></section><nav class=\"nav\"><button class=\"btn\" id=\"prev\">← 上一章</button><span class=\"mid\" id=\"navMid\"></span><button class=\"btn btn-hot\" id=\"next\">下一章 →</button></nav></main>\n</div>\n<div class=\"toast\" id=\"toast\" role=\"status\" aria-live=\"polite\"></div>\n<script>\nSPSite.onReady(function(ctx){\nconst $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];\nconst clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)),lerp=(a,b,t)=>a+(b-a)*t;\nconst esc=s=>String(s==null?'':s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]));\nconst Q=n=>SPSite.getQuestion(n),A=JSON.parse(JSON.stringify(ctx.answers||{}));\nfunction toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2600)}\nfunction rec(name,value,opt){return SPSite.answer(name,value,opt).then(r=>{if(!r||!r.ok){toast((r&&r.error)||'记录失败');return r}\n  if(opt&&opt.trial!=null){const c=A[name]&&A[name].trials?A[name]:{trials:[]};c.trials[opt.trial]={value};A[name]=c}else if(value==null)delete A[name];else A[name]=value;return r})}\nconst tval=(n,i)=>A[n]&&A[n].trials&&A[n].trials[i]?A[n].trials[i].value:null;\nconst tdone=n=>{const q=Q(n);for(let i=0;i<q.trialCount;i++)if(tval(n,i)==null)return false;return true};\nconst photo=(m,alt,cls='')=>`<div class=\"photo ${cls}\"><img src=\"${esc(m.url)}\" alt=\"${esc(alt)}\" draggable=\"false\"></div>`;\nlet disposers=[],keyH=null;const track=f=>disposers.push(f);function dispose(){disposers.forEach(f=>{try{f()}catch(e){}});disposers=[];keyH=null}\nconst later=(f,ms)=>{const h=setTimeout(f,ms);track(()=>clearTimeout(h))};\nconst head=(n,k,t,l)=>`<div class=\"chead\"><div class=\"kick\">第 ${n} 章 · ${k}</div><h2>${t}</h2>${l?`<p class=\"lead\">${l}</p>`:''}</div>`;\nconst tColor=T=>T<28?'#3a8bd8':T<32?'#3aa89c':T<35?'#d99a1e':T<38?'#ff8c42':T<41?'#e5341f':'#9b1a1a';\nconst tWord=T=>T<28?'舒适':T<32?'温暖':T<35?'炎热':T<38?'酷热':T<41?'灼烤':'危险高温';\nconst C={routes:A.shade_routes||{},swipe:(A.swipe_design&&A.swipe_design.trials)||[]};let sunDone=A.consent===true;\n\n/* =============== 00 · 序：拖动太阳 =============== */\nfunction rIntro(el){\n  let t=sunDone?1:.06;\n  el.innerHTML=`<div class=\"intro\"><div class=\"sky\" id=\"sky\" aria-label=\"拖动太阳到正午\"><svg viewBox=\"0 0 600 600\" id=\"arc\"><defs><linearGradient id=\"sk\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop id=\"s0\" offset=\"0\"/><stop id=\"s1\" offset=\"1\"/></linearGradient><radialGradient id=\"sg\"><stop offset=\"0\" stop-color=\"#fff2b0\" stop-opacity=\".9\"/><stop offset=\"1\" stop-color=\"#ffb02e\" stop-opacity=\"0\"/></radialGradient></defs>\n    <rect width=\"600\" height=\"600\" fill=\"url(#sk)\"/><rect y=\"420\" width=\"600\" height=\"180\" fill=\"#d9cbb3\"/><polygon id=\"shB\" fill=\"#2a3d6e\" opacity=\".35\"/><polygon id=\"shT\" fill=\"#2a3d6e\" opacity=\".35\"/><polygon id=\"shP\" fill=\"#2a3d6e\" opacity=\".35\"/>\n    <rect x=\"70\" y=\"250\" width=\"90\" height=\"170\" fill=\"#e4b98f\"/>${[0,1,2,3].map(r=>[0,1].map(c=>`<rect x=\"${86+c*40}\" y=\"${268+r*38}\" width=\"18\" height=\"22\" fill=\"#7f99b0\"/>`).join('')).join('')}\n    <rect x=\"356\" y=\"350\" width=\"8\" height=\"70\" fill=\"#6a4a33\"/><circle cx=\"360\" cy=\"330\" r=\"38\" fill=\"#4f9445\"/><circle cx=\"345\" cy=\"318\" r=\"18\" fill=\"#6cae4f\"/>\n    <g transform=\"translate(470 420)\"><rect x=\"-6\" y=\"-60\" width=\"12\" height=\"40\" rx=\"5\" fill=\"#3567c8\"/><rect x=\"-5\" y=\"-22\" width=\"4\" height=\"22\" fill=\"#333\"/><rect x=\"1\" y=\"-22\" width=\"4\" height=\"22\" fill=\"#333\"/><circle cx=\"0\" cy=\"-70\" r=\"9\" fill=\"#e0ac85\"/></g>\n    <path d=\"M50 330 A250 250 0 0 1 300 80\" fill=\"none\" stroke=\"rgba(255,255,255,.6)\" stroke-width=\"2\" stroke-dasharray=\"4 7\"/><text x=\"34\" y=\"352\" font-size=\"12\" fill=\"#fff\" font-family=\"DM Mono\">06:00</text><text x=\"300\" y=\"66\" font-size=\"12\" fill=\"#fff\" text-anchor=\"middle\" font-family=\"DM Mono\">12:00</text>\n    <g id=\"sunk\" style=\"cursor:grab\" tabindex=\"0\" role=\"slider\" aria-label=\"太阳位置\"><circle r=\"70\" fill=\"url(#sg)\"/><circle r=\"28\" fill=\"#fff6d8\" stroke=\"#fff\" stroke-width=\"3\"/><text y=\"5\" text-anchor=\"middle\" font-size=\"12\" fill=\"#c25b10\" font-family=\"DM Mono\" id=\"sunt\">拖我</text></g></svg>\n    <div class=\"tread\" id=\"tread\"></div></div>\n  <div><div class=\"kick\">一项关于街道热环境的感知研究</div><h1 style=\"margin:14px 0 16px\">把太阳<br>拖到<span style=\"color:var(--hot)\">正午</span>。</h1>\n    <p class=\"lead\" id=\"ilead\">沿着弧线拖动太阳（或用方向键），看看影子如何随时间收缩——这正是城市夏天最难熬的时刻。</p>\n    <div class=\"reveal ${sunDone?'':'dim'}\" id=\"rv\"><p class=\"lead\" style=\"margin-top:12px\">约 12 分钟：估计体感温度、在街景上涂抹热区、在地图上画遮阴路线、用滑卡做取舍、标注身体热感，最后为一条街设计降温方案。</p>\n      <label class=\"consent\"><input type=\"checkbox\" id=\"consent\" ${A.consent===true?'checked':''}><span>${esc(Q('consent').title)}。</span></label>\n      <button class=\"btn btn-hot\" id=\"go\" style=\"min-height:54px;padding:0 30px\">走进烈日 →</button></div></div></div>`;\n  const arcP=t=>{const a=Math.PI*(1-t*.5);return[300+250*Math.cos(a),330-250*Math.sin(a)]},mixc=(a,b,k)=>{const A1=[1,3,5].map(i=>parseInt(a.slice(i,i+2),16)),B1=[1,3,5].map(i=>parseInt(b.slice(i,i+2),16));return'rgb('+A1.map((v,i)=>Math.round(lerp(v,B1[i],k))).join(',')+')'};\n  const shadow=(x0,x1,h,id)=>{const el2=6+t*66,L=Math.min(520,h/Math.tan(el2*Math.PI/180));$('#'+id).setAttribute('points',`${x0},420 ${x1},420 ${x1+L},${420+Math.min(60,L*.12)} ${x0+L},${420+Math.min(60,L*.12)}`)};\n  const upd=()=>{const[x,y]=arcP(t);$('#sunk').setAttribute('transform',`translate(${x} ${y})`);$('#s0').setAttribute('stop-color',mixc('#ffb27a','#7fb6e6',t));$('#s1').setAttribute('stop-color',mixc('#ffd9b0','#f6ecd8',t));\n    shadow(70,160,170,'shB');shadow(330,390,110,'shT');shadow(464,476,80,'shP');$('#tread').innerHTML=`${(24+t*14).toFixed(1)}°<small>体感温度 · ${String(6+Math.round(t*6)).padStart(2,'0')}:00</small>`;$('#sunt').textContent=t>.97?'☀':'拖我';\n    if(t>.97&&!sunDone){sunDone=true;$('#rv').classList.remove('dim');$('#ilead').innerHTML='<b>正午 12:00。</b>地表温度已超过 55°C，阴影缩到了脚下。'}};upd();\n  let drag=false;const arc=$('#arc'),mv=e=>{if(!drag)return;const r=arc.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*600-300,y=330-(e.clientY-r.top)/r.height*600;t=clamp((Math.PI-Math.atan2(Math.max(0,y),x))/(Math.PI/2));upd()};\n  $('#sunk').addEventListener('pointerdown',e=>{drag=true;arc.setPointerCapture(e.pointerId)});arc.addEventListener('pointermove',mv);arc.addEventListener('pointerup',()=>drag=false);\n  $('#sunk').onkeydown=e=>{const d={ArrowRight:.08,ArrowUp:.08,ArrowLeft:-.08,ArrowDown:-.08}[e.key];if(d==null)return;e.preventDefault();t=clamp(t+d);upd()};\n  $('#consent').onchange=e=>rec('consent',e.target.checked?true:null);$('#go').onclick=next;\n}\n\n/* =============== 01 · 你 =============== */\nconst SENS=['🥶','😌','🙂','😓','🥵'],CLI={humid_hot:['🌴','华南/东南亚'],dry_hot:['🏜','西北/中东'],hot_summer_cold_winter:['🌧','长江流域'],mild:['🌤','西南/沿海'],cold:['❄','东北/北欧']};\nfunction rYou(el){\n  const sq=Q('heat_sensitivity'),txt=(n,v)=>{const c=(Q(n).choices||[]).find(x=>x.value===v);return c?c.text:'—'};\n  const chipsOf=(n,multi)=>Q(n).choices.map(c=>{const on=multi?(A[n]||[]).includes(c.value):A[n]===c.value;return`<button class=\"chip ${on?'on':''}\" data-v=\"${c.value}\">${esc(c.text)}</button>`}).join('');\n  const cv=A.comfort_temp??24;\n  el.innerHTML=head(1,'YOU','先办一张“热耐受身份证”','你的答案会实时印在右侧的卡片上。')+`<div class=\"prof\"><div>\n    <div class=\"card\"><label class=\"lbl\" for=\"cr\">${esc(Q('comfort_temp').title)}</label><b class=\"mono\" id=\"cvv\" style=\"font-size:42px\">${cv}°C</b><input type=\"range\" class=\"hrange\" id=\"cr\" min=\"15\" max=\"35\" value=\"${cv}\" style=\"margin-top:10px\"></div>\n    <div class=\"card\"><span class=\"lbl\">${esc(sq.title)}</span><div class=\"faces\" data-q=\"heat_sensitivity\">${(sq.rateValues||[]).map((r,i)=>`<button class=\"face ${A.heat_sensitivity===r.value?'on':''}\" data-v=\"${r.value}\"><b>${SENS[i]||'🙂'}</b><span>${esc(r.text)}</span></button>`).join('')}</div></div>\n    <div class=\"card\"><span class=\"lbl\">${esc(Q('climate').title)}</span><div class=\"climates\" data-q=\"climate\">${Q('climate').choices.map(c=>`<button class=\"clim ${A.climate===c.value?'on':''}\" data-v=\"${c.value}\"><i>${CLI[c.value][0]}</i>${esc(c.text)}<small style=\"display:block;font-size:10px;opacity:.7\">${CLI[c.value][1]}</small></button>`).join('')}</div></div>\n    <div class=\"card\"><span class=\"lbl\">${esc(Q('outdoor_walk').title)}</span><div class=\"chips\" data-q=\"outdoor_walk\">${chipsOf('outdoor_walk')}</div>\n      <span class=\"lbl\" style=\"margin-top:16px\">${esc(Q('sun_habits').title)}</span><div class=\"chips\" data-q=\"sun_habits\" data-multi>${chipsOf('sun_habits',1)}</div>\n      <span class=\"lbl\" style=\"margin-top:16px\">年龄段 · 性别</span><div class=\"chips\" data-q=\"age_group\" style=\"margin-bottom:8px\">${chipsOf('age_group')}</div><div class=\"chips\" data-q=\"gender\">${chipsOf('gender')}</div></div></div>\n  <div class=\"idcard\"><div class=\"top\"><div class=\"mono\" style=\"font-size:10px;letter-spacing:.2em;opacity:.8\">HEAT TOLERANCE ID</div><div class=\"ava\" id=\"ava\">🙂</div><div style=\"font-family:var(--serif);font-size:20px;font-weight:900;margin-top:6px\" id=\"idt\">体感档案</div></div><div id=\"idrows\"></div><div class=\"barcode\"></div></div></div>`;\n  const card=()=>{const sv=A.heat_sensitivity,r=(sq.rateValues||[]).findIndex(x=>x.value===sv);$('#ava').textContent=r>=0?SENS[r]:'🙂';$('#idt').textContent=r>=0?sq.rateValues[r].text+'的人':'体感档案';\n    $('#idrows').innerHTML=[['舒适温度',(A.comfort_temp??'—')+'°C'],['气候区',txt('climate',A.climate)],['日均户外步行',txt('outdoor_walk',A.outdoor_walk)],['防晒习惯',(A.sun_habits||[]).map(v=>txt('sun_habits',v)).join(' / ')||'—'],['年龄 · 性别',[A.age_group&&txt('age_group',A.age_group),A.gender&&txt('gender',A.gender)].filter(Boolean).join(' · ')||'—']].map(([a,b])=>`<div class=\"row\"><span>${a}</span><b>${esc(b)}</b></div>`).join('')};\n  const cr=$('#cr');cr.oninput=()=>{$('#cvv').textContent=cr.value+'°C';$('#cvv').style.color=tColor(+cr.value+6)};cr.onchange=()=>rec('comfort_temp',+cr.value).then(card);\n  if(A.comfort_temp==null)rec('comfort_temp',cv).then(card);\n  $$('[data-q]',el).forEach(g=>g.addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(!b)return;const n=g.dataset.q,raw=b.dataset.v,v=n==='heat_sensitivity'?+raw:raw;\n    if('multi' in g.dataset){const a=(A[n]||[]).slice(),i=a.indexOf(v);i<0?a.push(v):a.splice(i,1);rec(n,a.length?a:null).then(r=>{if(r.ok){b.classList.toggle('on');card()}})}\n    else rec(n,v).then(r=>{if(r.ok){$$('[data-v]',g).forEach(x=>x.classList.toggle('on',x===b));card()}})}));card();\n}\n\n/* =============== 02 · 体感：温度计 + 计时盘 =============== */\nfunction rFeel(el){\n  const q=Q('feel_heat'),N=q.trialCount,dT=q.dimensions.find(d=>d.id==='perceived_temp'),dS=q.dimensions.find(d=>d.id==='stay_minutes');let ci=0;while(ci<N-1&&tval('feel_heat',ci)!=null)ci++;\n  const draw=()=>{const done=tval('feel_heat',ci)!=null,r=Object.assign({perceived_temp:null,stay_minutes:null},tval('feel_heat',ci)||{});\n    el.innerHTML=head(2,'FEEL','站在这里，你觉得有多热？','想象此刻是七月，你正站在这条街上。<b>上下拖动温度计</b>（或用 ↑↓ 键）估计你的体感温度，再<b>转动计时盘</b>表示最多愿意停留多久。')+`\n    <div class=\"te\"><div class=\"lw\"><div style=\"position:relative\">${photo(q.trials[ci].media[0],'第 '+(ci+1)+' 条待评估的街景','hazy')}${done?'<div class=\"stamp2\"><b>已记录 ✓</b></div>':''}</div>\n      <div class=\"strip\">${q.trials.map((t,k)=>`<button class=\"${k===ci?'on':''} ${tval('feel_heat',k)!=null?'ok':''}\" data-i=\"${k}\" aria-label=\"第 ${k+1} 条\">${tval('feel_heat',k)!=null?'<span class=\"ck\">✓</span>':''}${photo(t.media[0],'缩略图 '+(k+1))}</button>`).join('')}</div></div>\n    <div><div class=\"bigtherm\" id=\"bt\" tabindex=\"0\" role=\"slider\" aria-label=\"体感温度\"></div><div class=\"tval\"><b id=\"tv\">--</b><br><span id=\"tw\">拖动</span></div></div>\n    <div><div class=\"dial\" id=\"dl\" tabindex=\"0\" role=\"slider\" aria-label=\"停留时间\"><svg viewBox=\"0 0 200 200\" id=\"ds\"></svg></div><div class=\"dv\"><b id=\"dvb\">--</b><span>最多停留</span></div>\n      <button class=\"btn btn-hot\" id=\"sub\" style=\"width:100%;margin-top:14px\" ${done?'':'disabled'}>${done?(tdone('feel_heat')?'全部完成 ✓':'下一条街 →'):'提交这条街'}</button></div></div>`;\n    const Tn=dT.min,Tx=dT.max,ty=T=>380-(T-Tn)/(Tx-Tn)*350;\n    const drawT=()=>{const T=r.perceived_temp,c=T==null?'#bbb':tColor(T);let s=`<svg viewBox=\"0 0 120 470\"><rect x=\"44\" y=\"14\" width=\"32\" height=\"390\" rx=\"16\" fill=\"var(--paper)\" stroke=\"var(--line2)\" stroke-width=\"2\"/>`;\n      for(let k=Math.ceil(Tn);k<=Tx;k+=2){const y=ty(k);s+=`<line x1=\"${k%10===0?24:32}\" y1=\"${y}\" x2=\"42\" y2=\"${y}\" stroke=\"var(--ink2)\"/>${k%4===0?`<text x=\"20\" y=\"${y+4}\" font-size=\"11\" text-anchor=\"end\" fill=\"var(--muted)\" font-family=\"DM Mono\">${k}</text>`:''}`}\n      const top=T==null?ty(Tn+1):ty(T);s+=`<rect x=\"51\" y=\"${top}\" width=\"18\" height=\"${410-top}\" rx=\"9\" fill=\"${c}\"/><circle cx=\"60\" cy=\"425\" r=\"34\" fill=\"${c}\" stroke=\"var(--line2)\" stroke-width=\"2\"/><circle cx=\"50\" cy=\"415\" r=\"9\" fill=\"#fff\" opacity=\".35\"/></svg>`;\n      $('#bt').innerHTML=s;$('#tv').textContent=T==null?'--':T.toFixed(1)+'°C';$('#tw').textContent=T==null?'拖动温度计':tWord(T);$('#tw').style.background=c};\n    const drawD=()=>{const m=r.stay_minutes;let s=`<circle cx=\"100\" cy=\"100\" r=\"86\" fill=\"var(--paper)\" stroke=\"var(--line2)\" stroke-width=\"2\"/>`;for(let i=0;i<30;i++){const a=i/30*Math.PI*2-Math.PI/2;s+=`<line x1=\"${100+78*Math.cos(a)}\" y1=\"${100+78*Math.sin(a)}\" x2=\"${100+(i%5?72:66)*Math.cos(a)}\" y2=\"${100+(i%5?72:66)*Math.sin(a)}\" stroke=\"var(--ink2)\" stroke-width=\"${i%5?1:2}\"/>`}\n      if(m){const a=Math.min(.9999,m/dS.max)*Math.PI*2,x=100+60*Math.sin(a),y=100-60*Math.cos(a);s+=`<path d=\"M100 100 L100 40 A60 60 0 ${a>Math.PI?1:0} 1 ${x} ${y} Z\" fill=\"${m<5?'#e5341f':m<15?'#ffb02e':'#62c0b5'}\" opacity=\".55\"/><line x1=\"100\" y1=\"100\" x2=\"${100+70*Math.sin(a)}\" y2=\"${100-70*Math.cos(a)}\" stroke=\"var(--ink)\" stroke-width=\"3\" stroke-linecap=\"round\"/>`}\n      s+='<circle cx=\"100\" cy=\"100\" r=\"6\" fill=\"var(--ink)\"/>';$('#ds').innerHTML=s;$('#dvb').textContent=m==null?'--':(m>=dS.max?dS.max+'+':m)+' 分'};\n    const chk=()=>{if(!done)$('#sub').disabled=!(r.perceived_temp!=null&&r.stay_minutes!=null)};\n    const bt=$('#bt');let dg=false;const setT=e=>{const b=$('svg',bt).getBoundingClientRect(),y=(e.clientY-b.top)/b.height*470;r.perceived_temp=Math.round(clamp(Tn+(380-y)/350*(Tx-Tn),Tn,Tx)/dT.step)*dT.step;drawT();chk()};\n    bt.addEventListener('pointerdown',e=>{if(done)return;dg=true;bt.setPointerCapture(e.pointerId);setT(e)});bt.addEventListener('pointermove',e=>dg&&setT(e));bt.addEventListener('pointerup',()=>dg=false);\n    bt.onkeydown=e=>{if(done)return;const d={ArrowUp:dT.step,ArrowDown:-dT.step}[e.key];if(d==null)return;e.preventDefault();r.perceived_temp=clamp((r.perceived_temp??34)+d,Tn,Tx);drawT();chk()};\n    const dl=$('#dl');let dd=false;const setD=e=>{const b=dl.getBoundingClientRect();let a=Math.atan2(e.clientX-(b.left+b.width/2),-(e.clientY-(b.top+b.height/2)));if(a<0)a+=Math.PI*2;r.stay_minutes=Math.round(a/(Math.PI*2)*dS.max);drawD();chk()};\n    dl.addEventListener('pointerdown',e=>{if(done)return;dd=true;dl.setPointerCapture(e.pointerId);setD(e)});dl.addEventListener('pointermove',e=>dd&&setD(e));dl.addEventListener('pointerup',()=>dd=false);\n    dl.onkeydown=e=>{if(done)return;const d={ArrowRight:1,ArrowUp:1,ArrowLeft:-1,ArrowDown:-1}[e.key];if(d==null)return;e.preventDefault();r.stay_minutes=clamp((r.stay_minutes??10)+d,dS.min,dS.max);drawD();chk()};\n    drawT();drawD();$$('.strip button').forEach(b=>b.onclick=()=>{ci=+b.dataset.i;draw()});\n    $('#sub').onclick=()=>{if(done){const n=q.trials.findIndex((_,k)=>tval('feel_heat',k)==null);if(n>=0){ci=n;draw()}else next();return}\n      rec('feel_heat',{perceived_temp:r.perceived_temp,stay_minutes:r.stay_minutes},{trial:ci}).then(x=>{if(x.ok)draw()})};\n  };draw();\n}\n\n/* =============== 03 · 涂抹 =============== */\nconst TOOLS=[{l:'炙热',i:'🔥',c:'#e5341f'},{l:'温热',i:'☀️',c:'#ff9a2e'},{l:'凉爽',i:'❄️',c:'#169e94'}];\nfunction rPaint(el){\n  const q=Q('heat_paint'),N=q.trialCount;let ci=0;while(ci<N-1&&tval('heat_paint',ci)!=null)ci++;let tool=0,size=.06;\n  const draw=()=>{const strokes=((tval('heat_paint',ci)||{}).shapes||[]).map(s=>({...s,w:size}));\n    el.innerHTML=head(3,'PAINT','画出你皮肤感受到的热','用画笔直接在街景上涂抹：哪里<b style=\"color:var(--hot)\">炙热</b>、哪里<b style=\"color:#c9741a\">温热</b>、哪里<b style=\"color:var(--cool)\">凉爽</b>。凭感觉涂即可，按 1/2/3 切换画笔。')+`\n    <div class=\"pt\"><div><div class=\"tabs\">${q.trials.map((_,k)=>`<button class=\"tab ${k===ci?'on':''} ${tval('heat_paint',k)!=null?'ok':''}\" data-i=\"${k}\">街景 ${k+1}</button>`).join('')}</div><div class=\"pbox\" id=\"pb\">${photo(q.trials[ci].media[0],'待涂抹的街景 '+(ci+1),'hazy')}<canvas id=\"pc\"></canvas></div></div>\n    <div class=\"card\"><span class=\"lbl\">画笔</span><div class=\"tools\">${TOOLS.map((t,i)=>`<button class=\"tool ${tool===i?'on':''}\" data-t=\"${i}\" style=\"--tc:${t.c}\"><i>${t.i}</i>${t.l}</button>`).join('')}</div>\n      <label class=\"lbl\" style=\"margin-top:14px\" for=\"sz\">笔刷大小</label><input type=\"range\" id=\"sz\" min=\"3\" max=\"14\" value=\"${size*100}\" style=\"width:100%\">\n      <div style=\"display:flex;gap:8px;margin-top:12px\"><button class=\"btn btn-sm\" id=\"un\">↶ 撤销</button><button class=\"btn btn-sm\" id=\"cl\">清空</button></div>\n      <p class=\"hint\" style=\"margin-top:12px\" id=\"cnt\"></p><button class=\"btn btn-hot\" id=\"ok\" style=\"width:100%;margin-top:12px\">保存这张热感图</button></div></div>`;\n    const pb=$('#pb'),cv=$('#pc');let c2;\n    const fit=()=>{const b=pb.getBoundingClientRect(),dp=Math.min(2,devicePixelRatio||1);cv.width=b.width*dp;cv.height=b.height*dp;c2=cv.getContext('2d');redraw()};\n    const dab=(x,y,col,s)=>{const W=cv.width,H=cv.height,R=s*W,X=x*W,Y=y*H,A1=[1,3,5].map(i=>parseInt(col.slice(i,i+2),16)),g=c2.createRadialGradient(X,Y,0,X,Y,R);g.addColorStop(0,`rgba(${A1},.5)`);g.addColorStop(.6,`rgba(${A1},.25)`);g.addColorStop(1,`rgba(${A1},0)`);c2.fillStyle=g;c2.fillRect(X-R,Y-R,R*2,R*2)};\n    const seg=(a,b,col,s)=>{const n=Math.max(1,Math.ceil(Math.hypot(b.x-a.x,b.y-a.y)/(s*.25)));for(let i=1;i<=n;i++)dab(lerp(a.x,b.x,i/n),lerp(a.y,b.y,i/n),col,s)};\n    const paint=s=>{const col=(TOOLS.find(t=>t.l===s.label)||TOOLS[0]).c;dab(s.points[0].x,s.points[0].y,col,s.w);for(let i=1;i<s.points.length;i++)seg(s.points[i-1],s.points[i],col,s.w)};\n    const redraw=()=>{if(!c2)return;c2.clearRect(0,0,cv.width,cv.height);strokes.forEach(paint);$('#cnt').textContent=`已画 ${strokes.length} 笔`};\n    const ro=new ResizeObserver(fit);ro.observe(pb);track(()=>ro.disconnect());\n    let cur=null;const pos=e=>{const b=pb.getBoundingClientRect();return{x:+clamp((e.clientX-b.left)/b.width).toFixed(4),y:+clamp((e.clientY-b.top)/b.height).toFixed(4)}};\n    pb.addEventListener('pointerdown',e=>{pb.setPointerCapture(e.pointerId);cur={tool:'line',label:TOOLS[tool].l,points:[pos(e)],w:size};strokes.push(cur);dab(cur.points[0].x,cur.points[0].y,TOOLS[tool].c,size)});\n    pb.addEventListener('pointermove',e=>{if(!cur)return;const p=pos(e),l=cur.points[cur.points.length-1];if(Math.hypot(p.x-l.x,p.y-l.y)<.006)return;cur.points.push(p);seg(l,p,TOOLS[tool].c,size)});\n    pb.addEventListener('pointerup',()=>{if(!cur)return;if(cur.points.length===1)cur.points.push({x:cur.points[0].x+.001,y:cur.points[0].y});if(cur.points.length>40){const k=Math.ceil(cur.points.length/40);cur.points=cur.points.filter((_,i)=>i%k===0||i===cur.points.length-1)}cur=null;$('#cnt').textContent=`已画 ${strokes.length} 笔`});\n    $$('.tool').forEach(b=>b.onclick=()=>{tool=+b.dataset.t;$$('.tool').forEach(x=>x.classList.toggle('on',x===b))});$('#sz').oninput=e=>size=e.target.value/100;\n    $('#un').onclick=()=>{strokes.pop();redraw()};$('#cl').onclick=()=>{strokes.length=0;redraw()};$$('.tab').forEach(b=>b.onclick=()=>{ci=+b.dataset.i;dispose();draw()});\n    $('#ok').onclick=()=>{if(!strokes.length){toast('请至少画一笔');return}rec('heat_paint',{shapes:strokes.map(s=>({tool:'line',label:s.label,points:s.points}))},{trial:ci}).then(r=>{if(!r.ok)return;toast('已保存');const n=q.trials.findIndex((_,k)=>tval('heat_paint',k)==null);if(n>=0){ci=n;dispose();draw()}else $$('.tab')[ci].classList.add('ok')})};\n    keyH=e=>{const i=['1','2','3'].indexOf(e.key);if(i>=0){$$('.tool')[i].click();return true}if(e.key==='z'&&(e.metaKey||e.ctrlKey)){$('#un').click();return true}};\n  };draw();\n}\n\n/* =============== 04 · 寻荫（平面图） =============== */\nconst PX=4,PLAN={roads:[[0,205,800,75],[352,0,82,500]],walks:[[0,185,800,20],[0,280,800,20],[332,0,20,500],[434,0,20,500]],\n  bld:[[30,30,130,120,6],[180,24,130,130,22],[30,330,110,140,5],[160,330,150,60,14],[160,410,150,70,4],[478,30,110,130,8],[608,30,160,70,28],[608,120,160,40,6],[478,330,290,60,10],[478,410,120,70,4],[630,410,140,70,18]],\n  trees:[[50,195],[95,195],[140,195],[190,292],[235,292],[280,292],[342,60],[342,120],[444,370],[444,440],[500,195],[560,195],[620,292],[680,292],[740,292],[444,250],[342,330],[342,450]],A:[60,296],B:[700,170]};\nconst ROUNDS=[{id:'r1230',t:'12:30',az:180,el:74,d:'正午，太阳几乎在头顶'},{id:'r1630',t:'16:30',az:258,el:28,d:'下午，太阳在西南方，影子很长'}];\nfunction hull(P0){const p=P0.slice().sort((a,b)=>a[0]-b[0]||a[1]-b[1]),cr=(o,a,b)=>(a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0]),lo=[],up=[];for(const q of p){while(lo.length>=2&&cr(lo[lo.length-2],lo[lo.length-1],q)<=0)lo.pop();lo.push(q)}for(const q of p.reverse()){while(up.length>=2&&cr(up[up.length-2],up[up.length-1],q)<=0)up.pop();up.push(q)}return lo.slice(0,-1).concat(up.slice(0,-1))}\nfunction shadows(rd){const az=rd.az*Math.PI/180,te=Math.tan(rd.el*Math.PI/180),dir=[-Math.sin(az),Math.cos(az)];return{bs:PLAN.bld.map(([x,y,w,h,m])=>{const L=m/te*PX,c=[[x,y],[x+w,y],[x+w,y+h],[x,y+h]];return hull(c.concat(c.map(q=>[q[0]+dir[0]*L,q[1]+dir[1]*L])))}),ts:PLAN.trees.map(([x,y])=>{const L=6.5/te*PX*.6;return[x+dir[0]*L,y+dir[1]*L,15]})}}\nfunction shadePath(c,sh){c.beginPath();sh.bs.forEach(pg=>{c.moveTo(pg[0][0],pg[0][1]);pg.slice(1).forEach(q=>c.lineTo(q[0],q[1]));c.closePath()});sh.ts.forEach(([x,y,r])=>{c.moveTo(x+r,y);c.arc(x,y,r,0,7)})}\nfunction makeMask(rd){const m=document.createElement('canvas');m.width=800;m.height=500;const c=m.getContext('2d');c.fillStyle='#fff';c.fillRect(0,0,800,500);c.fillStyle='#000';shadePath(c,shadows(rd));c.fill();return c.getImageData(0,0,800,500).data}\nconst isShade=(m,x,y)=>m[(Math.round(clamp(y,0,499))*800+Math.round(clamp(x,0,799)))*4]<128,inBld=(x,y)=>PLAN.bld.some(([bx,by,w,h])=>x>bx+2&&x<bx+w-2&&y>by+2&&y<by+h-2);\nfunction drawPlan(c,rd,path,mask){c.fillStyle='#efe3cf';c.fillRect(0,0,800,500);PLAN.walks.forEach(([x,y,w,h])=>{c.fillStyle='#e6d8c1';c.fillRect(x,y,w,h)});PLAN.roads.forEach(([x,y,w,h])=>{c.fillStyle='#7d7a76';c.fillRect(x,y,w,h)});\n  c.strokeStyle='rgba(255,255,255,.7)';c.setLineDash([14,12]);c.lineWidth=2;c.beginPath();c.moveTo(0,242);c.lineTo(352,242);c.moveTo(434,242);c.lineTo(800,242);c.moveTo(393,0);c.lineTo(393,205);c.moveTo(393,280);c.lineTo(393,500);c.stroke();c.setLineDash([]);\n  c.save();c.globalAlpha=.42;c.fillStyle='#2a3d6e';shadePath(c,shadows(rd));c.fill();c.restore();\n  PLAN.bld.forEach(([x,y,w,h,m])=>{c.fillStyle='rgba(60,30,10,.18)';c.fillRect(x+3,y+4,w,h);c.fillStyle=m>15?'#e9dcc6':'#f6eee0';c.fillRect(x,y,w,h);c.strokeStyle='#c9b79a';c.lineWidth=1.5;c.strokeRect(x,y,w,h);c.fillStyle='#8a735c';c.font='500 12px DM Mono, monospace';c.fillText(m+'m',x+8,y+18)});\n  PLAN.trees.forEach(([x,y])=>{c.fillStyle='#3f7d3a';c.beginPath();c.arc(x,y,12,0,7);c.fill();c.fillStyle='#5ea350';c.beginPath();c.arc(x-3,y-3,7,0,7);c.fill()});\n  [[PLAN.A,'🚌 公交站','#169e94',-10,30],[PLAN.B,'🏢 公司入口','#e5341f',-92,-16]].forEach(([q,t,col,dx,dy])=>{c.fillStyle=col;c.beginPath();c.arc(q[0],q[1],11,0,7);c.fill();c.strokeStyle='#fff';c.lineWidth=3;c.stroke();c.fillStyle='#2b1b12';c.font='700 13px sans-serif';c.fillText(t,q[0]+dx,q[1]+dy)});\n  if(path&&path.length>1){c.lineCap='round';for(let i=1;i<path.length;i++){const a=path[i-1],b=path[i];c.strokeStyle=isShade(mask,(a[0]+b[0])/2,(a[1]+b[1])/2)?'#169e94':'#ff6a1a';c.lineWidth=6;c.beginPath();c.moveTo(a[0],a[1]);c.lineTo(b[0],b[1]);c.stroke()}}}\nfunction rStats(p,m){let L=0,Ls=0;for(let i=1;i<p.length;i++){const a=p[i-1],b=p[i],d=Math.hypot(b[0]-a[0],b[1]-a[1]);L+=d;if(isShade(m,(a[0]+b[0])/2,(a[1]+b[1])/2))Ls+=d}const len=L/PX,sh=L?Ls/L:0;return{len_m:+len.toFixed(1),shade:+sh.toFixed(3),sun_s:Math.round(len*(1-sh)/1.2)}}\nconst DIRECT=Math.hypot(PLAN.B[0]-PLAN.A[0],PLAN.B[1]-PLAN.A[1])/PX;\nfunction rRoute(el){\n  let ri=Math.max(0,ROUNDS.findIndex(r=>!(C.routes[r.id]&&C.routes[r.id].done)));\n  const save=()=>rec('shade_routes',Object.assign({plan:'800x500px, 1m=4px',start:PLAN.A,end:PLAN.B,direct_m:+DIRECT.toFixed(1)},C.routes));\n  const draw=()=>{const rd=ROUNDS[ri],r=C.routes[rd.id]=C.routes[rd.id]||{path:[],done:false},mask=makeMask(rd);\n    el.innerHTML=head(4,'SHADE ROUTE','从公交站到公司，你会怎么走？','街区俯视平面图，蓝色是此刻的建筑与树影。<b>从 🚌 公交站按住拖动，一笔画到 🏢 公司入口</b>，不能穿过建筑。路线中<b style=\"color:var(--cool)\">青色</b>为阴影内，<b style=\"color:var(--sun)\">橙色</b>为暴晒段。')+`\n    <div class=\"rt\"><div><div class=\"tabs\">${ROUNDS.map((x,i)=>`<button class=\"tab ${i===ri?'on':''} ${C.routes[x.id]&&C.routes[x.id].done?'ok':''}\" data-i=\"${i}\">${x.t}</button>`).join('')}</div><div class=\"plan\" id=\"pl\"><canvas id=\"cv\" width=\"1600\" height=\"1000\" aria-label=\"街区平面图，可绘制路线\"></canvas><svg class=\"compass\" viewBox=\"0 0 96 96\" id=\"cp\"></svg></div></div>\n    <div class=\"card\"><div class=\"kick\" style=\"margin-bottom:6px\">${rd.t} · 太阳高度 ${rd.el}°</div><p class=\"lead\" style=\"font-size:13px\">${rd.d}。七月，气温 35°C。</p>\n      <div class=\"stat2\"><div><small>路程</small><b id=\"sL\">--</b></div><div><small>遮阴比例</small><b id=\"sS\">--</b></div><div><small>暴晒时长</small><b id=\"sE\">--</b></div><div><small>绕行系数</small><b id=\"sD\">--</b></div></div>\n      <div class=\"shadebar\" id=\"sb\"></div><button class=\"btn btn-sm\" id=\"clr\" style=\"margin-top:14px\">清除重画</button><p class=\"hint\" style=\"margin-top:10px\" id=\"st\">${r.done?'✓ 路线已保存':'将指针按在公交站上开始绘制'}</p></div></div>`;\n    const cv=$('#cv'),c=cv.getContext('2d');c.setTransform(2,0,0,2,0,0);const az=rd.az*Math.PI/180,sx=48+Math.sin(az)*34,sy=48-Math.cos(az)*34;\n    $('#cp').innerHTML=`<circle cx=\"48\" cy=\"48\" r=\"40\" fill=\"rgba(255,250,242,.88)\" stroke=\"#c9b79a\"/><text x=\"48\" y=\"18\" text-anchor=\"middle\" font-size=\"10\" font-family=\"DM Mono\" fill=\"#8a735c\">N</text><circle cx=\"${sx}\" cy=\"${sy}\" r=\"9\" fill=\"#ffb02e\" stroke=\"#fff\" stroke-width=\"2\"/>`;\n    const stat=()=>{const s=rStats(r.path,mask);$('#sL').textContent=s.len_m.toFixed(0)+' m';$('#sS').textContent=Math.round(s.shade*100)+'%';$('#sE').textContent=s.sun_s+' 秒';$('#sD').textContent=r.path.length>1?(s.len_m/DIRECT).toFixed(2)+'×':'--';$('#sb').innerHTML=`<i style=\"width:${s.shade*100}%;background:#169e94\"></i><i style=\"flex:1;background:#ff6a1a\"></i>`;return s};\n    const paint=()=>{drawPlan(c,rd,r.path,mask);stat()};paint();\n    const pl=$('#pl');let on=false;const pos=e=>{const b=cv.getBoundingClientRect();return[(e.clientX-b.left)/b.width*800,(e.clientY-b.top)/b.height*500]};\n    pl.addEventListener('pointerdown',e=>{const q=pos(e);if(Math.hypot(q[0]-PLAN.A[0],q[1]-PLAN.A[1])>28){toast('请从 🚌 公交站开始画');return}pl.setPointerCapture(e.pointerId);on=true;r.path=[PLAN.A.slice()];r.done=false;$('#st').textContent='绘制中……画到 🏢 入口即完成';paint()});\n    pl.addEventListener('pointermove',e=>{if(!on)return;const q=pos(e),l=r.path[r.path.length-1];if(Math.hypot(q[0]-l[0],q[1]-l[1])<5)return;\n      if(inBld(q[0],q[1])){on=false;r.path=[];pl.classList.add('shake');setTimeout(()=>pl.classList.remove('shake'),450);toast('不能穿过建筑，请重新开始');paint();return}\n      r.path.push([Math.round(q[0]),Math.round(q[1])]);\n      if(Math.hypot(q[0]-PLAN.B[0],q[1]-PLAN.B[1])<22){on=false;r.path.push(PLAN.B.slice());if(r.path.length>160){const k=Math.ceil(r.path.length/160);r.path=r.path.filter((_,i)=>i%k===0||i===r.path.length-1)}\n        Object.assign(r,stat(),{done:true,detour:+(rStats(r.path,mask).len_m/DIRECT).toFixed(2)});save().then(()=>{paint();$('#st').textContent='✓ 路线已保存';const n=ROUNDS.findIndex(x=>!(C.routes[x.id]&&C.routes[x.id].done));if(n>=0)later(()=>{toast('下一时段：'+ROUNDS[n].t);ri=n;dispose();draw()},1200)});return}paint()});\n    pl.addEventListener('pointerup',()=>{if(on){on=false;if(!r.done)toast('需要一直画到 🏢 公司入口')}});\n    $('#clr').onclick=()=>{r.path=[];r.done=false;paint()};$$('.tab').forEach(b=>b.onclick=()=>{ri=+b.dataset.i;dispose();draw()});\n  };draw();\n}\n\n/* =============== 05 · 取舍滑卡 =============== */\nlet PLAN_SW=null;\nfunction swPlan(n){const all=[];[2,4,6,9,12].forEach(m=>[30,60,90].forEach(s=>[33,37,41].forEach(t=>all.push({m,s,t}))));for(let i=all.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[all[i],all[j]]=[all[j],all[i]]}const out=[],seen={};for(const a of all){const k=a.m+'-'+a.s;if(seen[k])continue;seen[k]=1;out.push(a);if(out.length===n)break}return out}\nfunction logit(){const X=[],y=[];C.swipe.forEach(d=>{const v=tval('shade_swipe',d.trial);if(v==null)return;X.push([1,d.shade_pct/100,d.extra_min/10,(d.temp_c-37)/4]);y.push(v?1:0)});let w=[0,0,0,0];if(!X.length)return{w,wtw:null};\n  for(let it=0;it<3000;it++){const g=[0,0,0,0];X.forEach((x,i)=>{const p=1/(1+Math.exp(-x.reduce((s,v,k)=>s+v*w[k],0)));for(let k=0;k<4;k++)g[k]+=(p-y[i])*x[k]});for(let k=0;k<4;k++)w[k]-=.15*(g[k]/X.length+.05*w[k]*(k?1:0))}\n  return{w,wtw:w[2]<-.05?Math.max(0,-(w[1]*.1)/(w[2]/10)):null}}\nfunction rSwipe(el){\n  const q=Q('shade_swipe'),N=q.trialCount;if(!PLAN_SW){const saved=C.swipe.length===N?C.swipe.map(d=>({m:d.extra_min,s:d.shade_pct,t:d.temp_c})):null;PLAN_SW=saved||swPlan(N)}\n  const draw=()=>{const i=q.trials.findIndex((_,k)=>tval('shade_swipe',k)==null);\n    el.innerHTML=head(5,'TRADE-OFF','为了树荫，你愿意多走几分钟？','你要从地铁站走到办公室，直达路线全程暴晒。每张卡片是一条<b>更绕但更阴凉</b>的备选路线：<b>向右滑 = 愿意绕路</b>，<b>向左滑 = 还是直走</b>（或用 ← →）。')+`\n    <div class=\"sw\"><div><div class=\"deck\" id=\"deck\"></div><div class=\"swbtns ${i<0?'hidden':''}\"><button class=\"n\" id=\"bn\" aria-label=\"${esc(q.labelFalse)}\">✕</button><button class=\"y\" id=\"by\" aria-label=\"${esc(q.labelTrue)}\">✓</button></div></div>\n    <div><div class=\"baseline\">☀ <b>直达路线</b>：步行 6 分钟 · 遮阴 5%<br>今天的气温写在每张卡片上。</div><div class=\"card\" style=\"margin-top:14px\" id=\"swr\"></div></div></div>`;\n    const n=q.trials.filter((_,k)=>tval('shade_swipe',k)!=null).length,ac=q.trials.filter((_,k)=>tval('shade_swipe',k)===true).length;\n    let h=`<div class=\"ph\">进度 ${n} / ${N}</div><div style=\"display:flex;gap:4px;margin-bottom:12px\">${q.trials.map((_,k)=>{const v=tval('shade_swipe',k);return`<i style=\"flex:1;height:6px;border-radius:4px;background:${v==null?'var(--line2)':v?'var(--cool)':'var(--hot)'}\"></i>`}).join('')}</div><div class=\"hint\">绕路 ${ac} 次 · 直走 ${n-ac} 次</div>`;\n    if(i<0){const f=logit();h+=`<div style=\"margin-top:14px\"><div class=\"ph\">估算结果</div><div class=\"mono\" style=\"font-size:38px;color:var(--cool)\">${f.wtw==null?'∞':f.wtw>5?'>5':f.wtw.toFixed(1)}<small style=\"font-size:14px\"> 分钟</small></div><p class=\"hint\">每增加 10% 遮阴你愿意多走的时间（基于 logit 模型拟合）。</p></div>`}\n    $('#swr').innerHTML=h;const deck=$('#deck');\n    if(i<0){deck.innerHTML=`<div class=\"scard\" style=\"display:grid;place-items:center;text-align:center;cursor:default\"><div><div style=\"font-size:60px\">🌳</div><h3 style=\"font-family:var(--serif);font-size:26px\">全部完成</h3></div></div>`;keyH=null;return}\n    const next3=[];for(let k=i;k<N&&next3.length<3;k++)if(tval('shade_swipe',k)==null)next3.push(k);\n    deck.innerHTML=next3.slice().reverse().map(k=>{const depth=next3.indexOf(k),d=PLAN_SW[k];return`<div class=\"scard\" data-d=\"${depth}\" style=\"transform:translateY(${depth*12}px) scale(${1-depth*.04});z-index:${10-depth}\">${photo(q.trials[k].media[0],'备选路线街景 '+(k+1),depth?'':'hazy')}<div class=\"stamp yes\">绕路 ✓</div><div class=\"stamp no\">直走 ✕</div>\n      <div class=\"body\"><div class=\"mono hint\">备选路线 #${String(k+1).padStart(2,'0')}</div><h3>多走 ${d.m} 分钟</h3><div class=\"facts\"><span>🌳 遮阴 ${d.s}%</span><span>⏱ 共 ${6+d.m} 分钟</span><span style=\"color:${tColor(d.t)}\">🌡 今日 ${d.t}°C</span></div></div></div>`}).join('');\n    const top=$('.scard[data-d=\"0\"]',deck),d=PLAN_SW[i],t0=performance.now();let x0=null,dx=0,lock=false;\n    const setT=()=>{top.style.transform=`translate(${dx}px,${Math.abs(dx)*.05}px) rotate(${dx*.06}deg)`;$('.stamp.yes',top).style.opacity=clamp(dx/110);$('.stamp.no',top).style.opacity=clamp(-dx/110)};\n    const decide=a=>{if(lock)return;lock=true;keyH=null;rec('shade_swipe',!!a,{trial:i}).then(r=>{if(!r.ok){lock=false;return}\n      C.swipe=C.swipe.filter(x=>x.trial!==i).concat({trial:i,image:q.trials[i].media[0].name,extra_min:d.m,shade_pct:d.s,temp_c:d.t,baseline_min:6,rt_ms:Math.round(performance.now()-t0)});rec('swipe_design',{trials:C.swipe});\n      top.classList.add('fly');dx=a?700:-700;setT();top.style.opacity=0;later(draw,380)})};\n    top.addEventListener('pointerdown',e=>{x0=e.clientX;top.setPointerCapture(e.pointerId);top.classList.remove('back')});top.addEventListener('pointermove',e=>{if(x0==null)return;dx=e.clientX-x0;setT()});\n    top.addEventListener('pointerup',()=>{if(x0==null)return;x0=null;if(Math.abs(dx)>110)decide(dx>0);else{top.classList.add('back');dx=0;setT()}});\n    $('#bn').onclick=()=>decide(0);$('#by').onclick=()=>decide(1);keyH=e=>{if(e.key==='ArrowLeft'){decide(0);return true}if(e.key==='ArrowRight'){decide(1);return true}};\n  };draw();\n}\n\n/* =============== 06 · 身体 =============== */\nconst LV=['var(--body)','#ffd166','#ff8c42','#e5341f'];\nfunction bodySVG(back,B,inter=true){const g=(id,sh)=>{const v=+(B[id]||0),tag=sh.match(/^<(\\w+)/)[1];return sh.replace('/>',` class=\"rg l${v}\" data-r=\"${id}\" fill=\"${LV[v]}\" ${inter?`tabindex=\"0\" role=\"button\" aria-label=\"${esc(RN[id])}，当前 ${['无','温热','很热','灼热'][v]}\"`:''}><title>${esc(RN[id])}</title></${tag}>`)},L=[];\n  L.push(g(back?'back_head':'head','<ellipse cx=\"100\" cy=\"40\" rx=\"26\" ry=\"30\"/>'));if(!back)L.push(g('face','<ellipse cx=\"100\" cy=\"48\" rx=\"16\" ry=\"17\"/>'));L.push(g(back?'nape':'neck','<rect x=\"90\" y=\"66\" width=\"20\" height=\"20\" rx=\"6\"/>'));\n  L.push(g(back?'upper_back':'chest','<path d=\"M58 92 Q100 78 142 92 L137 152 L63 152 Z\"/>'));L.push(g(back?'lower_back':'belly','<path d=\"M63 152 L137 152 L133 214 L67 214 Z\"/>'));\n  L.push(g(back?'back_arm_l':'upper_arm_l','<rect x=\"36\" y=\"92\" width=\"20\" height=\"72\" rx=\"10\" transform=\"rotate(10 46 92)\"/>'));L.push(g(back?'back_arm_r':'upper_arm_r','<rect x=\"144\" y=\"92\" width=\"20\" height=\"72\" rx=\"10\" transform=\"rotate(-10 154 92)\"/>'));\n  if(!back){L.push(g('forearm_l','<rect x=\"26\" y=\"166\" width=\"18\" height=\"62\" rx=\"9\" transform=\"rotate(6 35 166)\"/>'));L.push(g('forearm_r','<rect x=\"156\" y=\"166\" width=\"18\" height=\"62\" rx=\"9\" transform=\"rotate(-6 165 166)\"/>'));L.push(g('hand_l','<ellipse cx=\"30\" cy=\"240\" rx=\"10\" ry=\"13\"/>'));L.push(g('hand_r','<ellipse cx=\"170\" cy=\"240\" rx=\"10\" ry=\"13\"/>'))}\n  else L.push('<rect x=\"26\" y=\"166\" width=\"18\" height=\"62\" rx=\"9\" fill=\"var(--body)\" opacity=\".5\" transform=\"rotate(6 35 166)\"/><rect x=\"156\" y=\"166\" width=\"18\" height=\"62\" rx=\"9\" fill=\"var(--body)\" opacity=\".5\" transform=\"rotate(-6 165 166)\"/>');\n  L.push(g(back?'back_thigh_l':'thigh_l','<rect x=\"68\" y=\"216\" width=\"30\" height=\"96\" rx=\"14\"/>'));L.push(g(back?'back_thigh_r':'thigh_r','<rect x=\"102\" y=\"216\" width=\"30\" height=\"96\" rx=\"14\"/>'));\n  L.push(g(back?'back_calf_l':'calf_l','<rect x=\"70\" y=\"316\" width=\"25\" height=\"84\" rx=\"12\"/>'));L.push(g(back?'back_calf_r':'calf_r','<rect x=\"105\" y=\"316\" width=\"25\" height=\"84\" rx=\"12\"/>'));\n  if(!back){L.push(g('foot_l','<ellipse cx=\"80\" cy=\"410\" rx=\"15\" ry=\"8\"/>'));L.push(g('foot_r','<ellipse cx=\"120\" cy=\"410\" rx=\"15\" ry=\"8\"/>'))}\n  return`<svg viewBox=\"0 0 200 430\">${L.join('')}</svg>`}\nlet RN={};\nfunction rBody(el){\n  const q=Q('body_heat');RN=Object.fromEntries(q.rows.map(r=>[r.value,r.text]));const B=Object.assign(Object.fromEntries(q.rows.map(r=>[r.value,'0'])),A.body_heat||{});\n  const commit=()=>rec('body_heat',Object.assign({},B));\n  const draw=()=>{el.innerHTML=head(6,'BODY','烈日下步行 10 分钟后，哪里最热？','<b>点击身体部位</b>（或 Tab 选中后按回车）标注热感，重复点击加深：<b>温热 → 很热 → 灼热</b>，第四次清除。至少标注 3 个部位。')+`\n    <div class=\"bd\"><div class=\"bodies\"><div><h4>正面</h4>${bodySVG(false,B)}</div><div><h4>背面</h4>${bodySVG(true,B)}</div></div>\n    <div class=\"card\"><div style=\"display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted);flex-wrap:wrap\">${q.columns.map((c,i)=>`<i style=\"width:16px;height:16px;border-radius:5px;background:${LV[i]};border:1px solid var(--line2)\"></i>${esc(c.text)}`).join('')}</div>\n      <div style=\"font-size:13px;line-height:2;margin-top:10px\">${q.rows.filter(r=>+B[r.value]).sort((a,b)=>B[b.value]-B[a.value]).map(r=>`<span style=\"display:inline-flex;align-items:center;gap:6px;margin-right:10px\"><i style=\"width:10px;height:10px;border-radius:3px;background:${LV[+B[r.value]]}\"></i>${esc(r.text)}</span>`).join('')||'<span class=\"hint\">尚未标注</span>'}</div>\n      <span class=\"lbl\" style=\"margin-top:14px\">${esc(Q('cool_first').title)}</span><div class=\"chips\" id=\"bf\">${Q('cool_first').choices.map(c=>`<button class=\"chip ${A.cool_first===c.value?'on':''}\" data-v=\"${c.value}\">${esc(c.text)}</button>`).join('')}</div>\n      <button class=\"btn btn-sm\" id=\"bc\" style=\"margin-top:14px\">清空标注</button></div></div>`;\n    const hit=k=>{B[k]=String((+B[k]+1)%4);commit();const y=scrollY,f=document.activeElement&&document.activeElement.dataset&&document.activeElement.dataset.r;draw();scrollTo(0,y);if(f){const n=$(`.rg[data-r=\"${f}\"]`);n&&n.focus()}};\n    $$('.rg').forEach(r=>{r.addEventListener('click',()=>hit(r.dataset.r));r.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();hit(r.dataset.r)}})});\n    $$('#bf .chip').forEach(b=>b.onclick=()=>rec('cool_first',b.dataset.v).then(r=>{if(r.ok)$$('#bf .chip').forEach(x=>x.classList.toggle('on',x===b))}));\n    $('#bc').onclick=()=>{Object.keys(B).forEach(k=>B[k]='0');commit();draw()};\n  };draw();\n}\n\n/* =============== 07 · 降温（拖放到照片） =============== */\nconst ITEMS=[{t:'行道树',i:'🌳',c:3},{t:'遮阳帆',i:'⛱',c:2},{t:'骑楼廊道',i:'🏛',c:3},{t:'喷雾柱',i:'💦',c:1},{t:'水景',i:'⛲',c:2},{t:'垂直绿化',i:'🌿',c:2},{t:'浅色铺装',i:'⬜',c:3,once:1}],BUD=14;\nfunction rCool(el){\n  const q=Q('cooling_plan'),shapes=((A.cooling_plan&&A.cooling_plan.shapes)||[]).slice(),cost=l=>(ITEMS.find(x=>x.t===l)||{c:0}).c,spent=()=>shapes.reduce((a,s)=>a+cost(s.label),0);\n  el.innerHTML=head(7,'COOL IT DOWN',`你有 ${BUD} 枚金币，为这条街降温`,'把下方的改造工具<b>拖到街景中你想放置的位置</b>（键盘：选中工具后按回车放到画面中央）。点击已放置的图标可撤回。')+`\n  <div class=\"cd\"><div><div class=\"cdbox\" id=\"cb\">${photo(q.media[0],'待改造的街景','hazy')}<div id=\"mk\"></div></div><div class=\"tokens\" id=\"tk\"></div></div>\n  <div class=\"card\"><div class=\"ph\">金币 <span id=\"cn\"></span></div><div class=\"coins\" id=\"coins\"></div><div id=\"list\" style=\"margin-top:14px;font-size:13px;line-height:2\"></div>\n    <label class=\"lbl\" style=\"margin-top:16px\" for=\"ce\">${esc(Q('cool_expected').title)}</label><div style=\"display:flex;align-items:center;gap:10px\"><input id=\"ce\" type=\"range\" min=\"0\" max=\"10\" step=\"0.5\" value=\"${A.cool_expected??0}\" style=\"flex:1\"><b class=\"mono\" id=\"cev\">${A.cool_expected??0}°C</b></div>\n    <button class=\"btn btn-sm\" id=\"rs\" style=\"margin-top:14px\">全部撤回</button></div></div>`;\n  const commit=()=>rec('cooling_plan',shapes.length?{shapes:shapes.map(s=>({tool:'point',label:s.label,points:s.points}))}:null);\n  const render=()=>{const sp=spent();$('#cn').textContent=`${BUD-sp} / ${BUD}`;$('#coins').innerHTML=Array.from({length:BUD},(_,i)=>`<i class=\"${i<sp?'used':''}\"></i>`).join('');\n    $('#tk').innerHTML=ITEMS.filter(it=>(q.labels||[]).includes(it.t)).map(it=>`<button class=\"tok ${(BUD-sp<it.c)||(it.once&&shapes.some(s=>s.label===it.t))?'dis':''}\" data-t=\"${it.t}\" aria-label=\"${it.t}，${it.c} 枚金币\"><small>${it.c}🪙</small><i>${it.i}</i><span>${it.t}</span></button>`).join('');\n    $('#mk').innerHTML=shapes.map((s,i)=>`<button class=\"marker\" data-i=\"${i}\" style=\"left:${s.points[0].x*100}%;top:${s.points[0].y*100}%\" aria-label=\"撤回 ${s.label}\">${(ITEMS.find(x=>x.t===s.label)||{}).i||'•'}</button>`).join('');\n    $('#list').innerHTML=ITEMS.map(it=>{const n=shapes.filter(s=>s.label===it.t).length;return n?`<span style=\"margin-right:10px\">${it.i} ${it.t} × ${n}</span>`:''}).join('')||'<span class=\"hint\">尚未放置改造</span>';\n    $$('.marker').forEach(m=>m.onclick=()=>{shapes.splice(+m.dataset.i,1);commit();render()});bindTok()};\n  const place=(it,x,y)=>{shapes.push({tool:'point',label:it.t,points:[{x:+clamp(x).toFixed(4),y:+clamp(y).toFixed(4)}]});commit();render();toast('已放置 '+it.t)};\n  function bindTok(){$$('.tok').forEach(t=>{const it=ITEMS.find(x=>x.t===t.dataset.t);t.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();place(it,.5,.65)}});\n    t.addEventListener('pointerdown',e=>{if(t.classList.contains('dis'))return;e.preventDefault();const gh=document.createElement('div');gh.className='ghost';gh.textContent=it.i;document.body.appendChild(gh);const cb=$('#cb');\n      const inside=ev=>{const b=$('.photo',cb).getBoundingClientRect();return ev.clientX>b.left&&ev.clientX<b.right&&ev.clientY>b.top&&ev.clientY<b.bottom};\n      const mv=ev=>{gh.style.left=ev.clientX+'px';gh.style.top=ev.clientY+'px';cb.classList.toggle('drop-ok',inside(ev))};mv(e);\n      const up=ev=>{removeEventListener('pointermove',mv);removeEventListener('pointerup',up);gh.remove();cb.classList.remove('drop-ok');if(!inside(ev))return;const b=$('.photo',cb).getBoundingClientRect();place(it,(ev.clientX-b.left)/b.width,(ev.clientY-b.top)/b.height)};\n      addEventListener('pointermove',mv);addEventListener('pointerup',up);track(()=>{removeEventListener('pointermove',mv);removeEventListener('pointerup',up);gh.remove()})})})}\n  const ce=$('#ce');ce.oninput=()=>$('#cev').textContent=ce.value+'°C';ce.onchange=()=>rec('cool_expected',+ce.value);\n  $('#rs').onclick=()=>{shapes.length=0;commit();render()};render();\n}\n\n/* =============== 08 · 档案 + 提交 =============== */\nfunction rReport(el){\n  const fq=Q('feel_heat'),ests=fq.trials.map((_,k)=>tval('feel_heat',k)).filter(Boolean),avgT=ests.reduce((a,b)=>a+b.perceived_temp,0)/Math.max(1,ests.length),f=logit();\n  const sens=A.heat_sensitivity||3,pe=f.wtw!=null&&f.wtw>2.5?['🌳 树荫追随者','为了一片阴凉，你愿意付出可观的时间成本。遮阴的连续性是你判断街道“能不能走”的首要标准。']:sens>=4||avgT>=38?['🔥 体感敏锐者','你对热环境的感知强烈，身体会比温度计更早发出警报。']:sens<=2&&avgT<34?['🏃 耐热行者','你对炎热的耐受度较高。']:['☂ 理性避暑者','你会在时间与舒适之间权衡取舍，对阴影的价值有清晰判断。'];\n  const B=A.body_heat||{},hot=Q('body_heat').rows.filter(r=>+B[r.value]).sort((a,b)=>B[b.value]-B[a.value]).slice(0,3).map(r=>r.text);RN=Object.fromEntries(Q('body_heat').rows.map(r=>[r.value,r.text]));\n  el.innerHTML=`<div class=\"rhead\"><div><div class=\"mono\" style=\"font-size:11px;letter-spacing:.2em;opacity:.85\">你的热感档案</div><h2>${pe[0]}</h2><p style=\"opacity:.9;line-height:1.8\">${pe[1]}</p></div>\n    <div><div class=\"mono\" style=\"font-size:11px;letter-spacing:.2em;opacity:.85\">为 10% 遮阴愿多走</div><div class=\"big\">${f.wtw==null?'∞':f.wtw>5?'>5':f.wtw.toFixed(1)}<small style=\"font-size:20px\"> 分钟</small></div><div class=\"mono\" style=\"margin-top:6px;opacity:.9\">平均体感 ${avgT.toFixed(1)}°C · 舒适温度 ${A.comfort_temp??'—'}°C</div></div></div>\n  <div class=\"rep\"><div class=\"card w\"><div class=\"ph\">体感估计 · 每条街</div>${fq.trials.map((t,k)=>{const v=tval('feel_heat',k)||{};return`<div style=\"display:grid;grid-template-columns:90px 1fr 70px 50px;gap:12px;align-items:center;margin:8px 0;font-size:13px\"><div style=\"width:90px\">${photo(t.media[0],'街景 '+(k+1))}</div><div style=\"height:10px;border-radius:9px;background:var(--line);overflow:hidden\"><i style=\"display:block;height:100%;width:${((v.perceived_temp||24)-24)/22*100}%;background:${tColor(v.perceived_temp||24)}\"></i></div><b class=\"mono\">${v.perceived_temp??'–'}°C</b><span class=\"mono hint\">${v.stay_minutes??'–'}′</span></div>`}).join('')}</div>\n    <div class=\"card\"><div class=\"ph\">涂抹热感图</div><div class=\"thumbs\">${Q('heat_paint').trials.map((t,k)=>`<div class=\"wrapc\">${photo(t.media[0],'涂抹街景 '+(k+1))}<canvas class=\"ov\" data-p=\"${k}\"></canvas></div>`).join('')}</div></div>\n    <div class=\"card\"><div class=\"ph\">遮阴路线</div><div class=\"thumbs\">${ROUNDS.map(rd=>`<div><canvas data-r=\"${rd.id}\" width=\"800\" height=\"500\" style=\"width:100%;border-radius:12px;display:block\"></canvas><div class=\"hint mono\" style=\"margin-top:4px\">${rd.t} · 遮阴 ${Math.round(((C.routes[rd.id]||{}).shade||0)*100)}%</div></div>`).join('')}</div></div>\n    <div class=\"card\"><div class=\"ph\">身体热感</div><div style=\"display:grid;grid-template-columns:1fr 1fr;gap:6px;pointer-events:none\">${bodySVG(false,B,false)}${bodySVG(true,B,false)}</div><p class=\"hint\">最热：${esc(hot.join('、')||'—')}</p></div>\n    <div class=\"card\"><div class=\"ph\">你的降温方案 · 预计降温 ${A.cool_expected??'—'}°C</div><div style=\"position:relative\">${photo(Q('cooling_plan').media[0],'降温方案')}${((A.cooling_plan||{}).shapes||[]).map(s=>`<span class=\"marker\" style=\"left:${s.points[0].x*100}%;top:${s.points[0].y*100}%;cursor:default\">${(ITEMS.find(x=>x.t===s.label)||{}).i||'•'}</span>`).join('')}</div></div></div>\n  <div class=\"card\" style=\"margin-top:14px;text-align:center\"><p class=\"lead\" style=\"margin:0 auto 12px\">确认无误后提交。</p><button class=\"btn btn-hot\" id=\"submit\" style=\"min-height:54px;padding:0 34px\">提交答卷 ✦</button><div id=\"miss\"></div></div>`;\n  requestAnimationFrame(()=>{$$('canvas[data-p]').forEach(cv=>{const b=cv.getBoundingClientRect();cv.width=b.width;cv.height=b.height;const c=cv.getContext('2d'),v=tval('heat_paint',+cv.dataset.p);if(!v)return;c.lineCap='round';c.lineJoin='round';\n      v.shapes.forEach(s=>{c.strokeStyle=(TOOLS.find(t=>t.l===s.label)||TOOLS[0]).c+'99';c.lineWidth=cv.width*.08;c.beginPath();s.points.forEach((p,i)=>i?c.lineTo(p.x*cv.width,p.y*cv.height):c.moveTo(p.x*cv.width,p.y*cv.height));c.stroke()})});\n    $$('canvas[data-r]').forEach(cv=>{const rd=ROUNDS.find(x=>x.id===cv.dataset.r);drawPlan(cv.getContext('2d'),rd,(C.routes[rd.id]||{}).path||[],makeMask(rd))})});\n  $('#submit').onclick=submit;\n}\nconst OWNER={consent:0,comfort_temp:1,heat_sensitivity:1,climate:1,outdoor_walk:1,sun_habits:1,age_group:1,gender:1,feel_heat:2,heat_paint:3,shade_routes:4,shade_swipe:5,swipe_design:5,body_heat:6,cool_first:6,cooling_plan:7,cool_expected:7};\nfunction submit(){const b=$('#submit');b.disabled=true;b.textContent='提交中…';SPSite.complete().then(r=>{if(r&&r.ok){$('#stage').innerHTML='<div style=\"text-align:center;margin-top:26vh\"><h2>提交中…</h2><p class=\"lead\" style=\"margin:auto\">谢谢你，愿你的夏天多一些树荫。</p></div>';$('.nav').classList.add('hidden');return}\n  b.disabled=false;b.textContent='提交答卷 ✦';const m=(r&&r.missing)||[];$('#miss').innerHTML=`<div class=\"missing\">${esc((r&&r.error)||'提交失败')}<div class=\"chips\" style=\"justify-content:center;margin-top:10px\">${[...new Set(m.map(n=>OWNER[n]).filter(x=>x!=null))].map(i=>`<button class=\"chip\" data-g=\"${i}\">去完成「${CH[i].t}」</button>`).join('')}</div></div>`;$$('[data-g]').forEach(x=>x.onclick=()=>go(+x.dataset.g))})}\n\n/* =============== 流程 =============== */\nconst CH=[\n  {t:'序 · 正午',r:rIntro,v:()=>!sunDone?'先把太阳拖到正午':A.consent===true||'请勾选知情同意'},\n  {t:'你',r:rYou,v:()=>A.heat_sensitivity==null?'请选择你有多怕热':!A.climate?'请选择气候区':!A.outdoor_walk?'请选择户外步行时长':A.comfort_temp==null?'请设置舒适温度':true},\n  {t:'体感',r:rFeel,v:()=>tdone('feel_heat')||'还有街道未评估'},\n  {t:'涂抹',r:rPaint,v:()=>tdone('heat_paint')||'每张街景都需要涂抹并保存'},\n  {t:'寻荫',r:rRoute,v:()=>ROUNDS.every(r=>C.routes[r.id]&&C.routes[r.id].done)||'两个时段都需要画出路线'},\n  {t:'取舍',r:rSwipe,v:()=>tdone('shade_swipe')||'还有卡片未选择'},\n  {t:'身体',r:rBody,v:()=>Object.values(A.body_heat||{}).filter(v=>+v).length>=3||'请至少标注 3 个部位'},\n  {t:'降温',r:rCool,v:()=>!!A.cooling_plan||'请至少放置一项改造'},\n  {t:'档案',r:rReport,v:()=>true},\n];\nlet ch=0,mx=0,busy=false;\nfunction rail(){const n=CH.length-1,f=ch/n;$('#merc').style.height=`calc(${f*100}% - 6px)`;$('#merc').style.setProperty('--w',f*100+'%');$('#bulb').textContent=Math.round(24+f*18)+'°';\n  $('#marks').innerHTML=CH.map((c,i)=>`<button class=\"mk ${i===ch?'cur':i<=mx?'done':''}\" style=\"bottom:${i/n*100}%\" data-i=\"${i}\" ${i>mx?'disabled':''}>${c.t}</button>`).join('');$$('.mk').forEach(b=>b.onclick=()=>go(+b.dataset.i));\n  $('#navMid').textContent=`${ch} / ${n}`;$('#prev').style.visibility=ch&&ch<n?'visible':'hidden';$('#next').style.visibility=ch<n?'visible':'hidden';$('#next').textContent=ch===n-1?'生成档案 ✦':'下一章 →'}\nfunction go(i){if(busy||i<0||i>=CH.length)return;busy=true;dispose();const st=$('#stage');st.classList.add('out');\n  setTimeout(()=>{ch=i;mx=Math.max(mx,i);st.classList.remove('out');st.classList.add('pre');st.innerHTML='';CH[i].r(st);scrollTo(0,0);rail();requestAnimationFrame(()=>requestAnimationFrame(()=>st.classList.remove('pre')));busy=false},400)}\nfunction next(){const ok=CH[ch].v();if(ok!==true){toast(ok);const b=$('#next');b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake');return}go(ch+1)}\n$('#prev').onclick=()=>go(ch-1);$('#next').onclick=next;\ndocument.addEventListener('keydown',e=>{if(e.target.matches&&e.target.matches('input,textarea'))return;if(keyH&&keyH(e))return;if(e.key==='Enter'&&!(e.target.matches&&e.target.matches('button,[role=button],[role=slider]'))){e.preventDefault();next()}});\nCH[0].r($('#stage'));rail();\n});\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-10-15T11:00:53.790Z"
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-10-15T11:00:53.790Z"
+  },
+  "description": "估计体感温度、在街景上涂抹热区、画出遮阴路线、用滑卡做取舍、标注身体热感，并为一条街设计降温方案。约 12 分钟。",
+  "logoPosition": "right",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [],
+ "paper": null
+}

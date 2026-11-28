@@ -1,230 +1,978 @@
 {
-  "id": "2025-gu-effective",
-  "name": "Effective Perception Survey",
-  "description": "This study proposes the first comprehensive framework to guide image-based survey design for capturing perceptions of outdoor urban environments across different scenarios, addressing the lack of methodological standardisation in current research.",
-  "author": "Gu et al.",
-  "year": "2025",
-  "category": "Academic Research",
-  "tags": [
-    "official"
-  ],
-  "isPinned": false,
-  "isApproved": true,
-  "showOnLanding": true,
-  "thumbnailUrl": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000014.jpg",
-  "website": "https://doi.org/10.1016/j.landurbplan.2025.105368",
-  "huggingfaceDataset": "Reubengyl/EffectivePerceptionSurvey",
-  "createdAt": "2026-05-20T04:23:56.85+00:00",
-  "config": {
-    "logo": "https://api.surveyjs.io/private/Surveys/files?name=8fb3943d-2606-4486-88ad-a41ad27f4570",
-    "pages": [
-      {
-        "name": "page1",
-        "title": "Likert Scale Survey Questions",
-        "elements": [
-          {
-            "name": "likert",
-            "rows": [
-              {
-                "text": "Safe",
-                "value": "safe"
-              },
-              {
-                "text": "Lively",
-                "value": "lively"
-              },
-              {
-                "text": "Boring",
-                "value": "boring"
-              },
-              {
-                "text": "Depressing",
-                "value": "depressing"
-              },
-              {
-                "text": "Wealthy",
-                "value": "wealthy"
-              },
-              {
-                "text": "Beautiful",
-                "value": "beautiful"
-              }
-            ],
-            "type": "imagematrix",
-            "title": "Rate the image:",
-            "columns": [
-              {
-                "text": "1",
-                "value": "1"
-              },
-              {
-                "text": "2",
-                "value": "2"
-              },
-              {
-                "text": "3",
-                "value": "3"
-              },
-              {
-                "text": "4",
-                "value": "4"
-              },
-              {
-                "text": "5",
-                "value": "5"
-              }
-            ],
-            "imageCount": 1,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "imageFit": "cover"
-          }
-        ],
-        "description": "Please answer the following questions."
-      },
-      {
-        "name": "page_1760707538596",
-        "title": "Pairwise Comparison Survey Questions",
-        "elements": [
-          {
-            "name": "pairwise_safe",
-            "type": "imagepicker",
-            "title": "Which streetscape is safer?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "allowTie": true,
-            "tieLabel": "Equal"
-          },
-          {
-            "name": "pairwise_lively",
-            "type": "imagepicker",
-            "title": "Which streetscape is livelier?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "allowTie": true,
-            "tieLabel": "Equal"
-          },
-          {
-            "name": "pairwise_boring",
-            "type": "imagepicker",
-            "title": "Which streetscape is more boring?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "allowTie": true,
-            "tieLabel": "Equal"
-          },
-          {
-            "name": "pairwise_depressing",
-            "type": "imagepicker",
-            "title": "Which streetscape is more depressing?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "allowTie": true,
-            "tieLabel": "Equal"
-          },
-          {
-            "name": "pairwise_wealthy",
-            "type": "imagepicker",
-            "title": "Which streetscape is more wealthy?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "allowTie": true,
-            "tieLabel": "Equal"
-          },
-          {
-            "name": "pairwise_beautiful",
-            "type": "imagepicker",
-            "title": "Which streetscape is more beautiful?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "allowTie": true,
-            "tieLabel": "Equal"
-          }
-        ],
-        "description": "Please answer the following questions."
-      }
+ "id": "2025-gu-effective",
+ "name": "Effective Perception Survey",
+ "description": "This study proposes the first comprehensive framework to guide image-based survey design for capturing perceptions of outdoor urban environments across different scenarios, addressing the lack of methodological standardisation in current research.",
+ "author": "Gu et al.",
+ "year": "2025",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "source:paper",
+  "modality:street_view",
+  "task:pairwise",
+  "task:rating",
+  "concept:safety",
+  "concept:liveliness",
+  "concept:beauty",
+  "concept:wealth",
+  "concept:boring",
+  "concept:depressing",
+  "participants:students",
+  "sample:100to1000",
+  "country:Singapore"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000014.jpg",
+ "website": "https://doi.org/10.1016/j.landurbplan.2025.105368",
+ "huggingfaceDataset": "Reubengyl/EffectivePerceptionSurvey",
+ "createdAt": "2026-05-20T04:23:56.85+00:00",
+ "updatedAt": "2026-11-26T14:57:47.651+00:00",
+ "config": {
+  "logo": "https://api.surveyjs.io/private/Surveys/files?name=8fb3943d-2606-4486-88ad-a41ad27f4570",
+  "pages": [
+   {
+    "name": "page1",
+    "title": "Likert Scale Survey Questions",
+    "elements": [
+     {
+      "name": "likert",
+      "rows": [
+       {
+        "text": "Safe",
+        "value": "safe"
+       },
+       {
+        "text": "Lively",
+        "value": "lively"
+       },
+       {
+        "text": "Boring",
+        "value": "boring"
+       },
+       {
+        "text": "Depressing",
+        "value": "depressing"
+       },
+       {
+        "text": "Wealthy",
+        "value": "wealthy"
+       },
+       {
+        "text": "Beautiful",
+        "value": "beautiful"
+       }
+      ],
+      "type": "imagematrix",
+      "title": "Rate the image:",
+      "columns": [
+       {
+        "text": "1",
+        "value": "1"
+       },
+       {
+        "text": "2",
+        "value": "2"
+       },
+       {
+        "text": "3",
+        "value": "3"
+       },
+       {
+        "text": "4",
+        "value": "4"
+       },
+       {
+        "text": "5",
+        "value": "5"
+       }
+      ],
+      "imageFit": "cover",
+      "imageCount": 1,
+      "isRequired": true,
+      "imageSource": "huggingface",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true
+     }
     ],
-    "title": "Effective perception survey",
-    "images": [],
-    "settings": {
-      "autoGrowComment": true,
-      "progressBarType": "questions",
-      "showProgressBar": "aboveheader",
-      "showQuestionNumbers": "off",
-      "showPreviewBeforeComplete": "showAllQuestions"
+    "description": "Please answer the following questions."
+   },
+   {
+    "name": "page_1760707538596",
+    "title": "Pairwise Comparison Survey Questions",
+    "elements": [
+     {
+      "name": "pairwise_safe",
+      "type": "imagepicker",
+      "title": "Which streetscape is safer?",
+      "allowTie": true,
+      "imageFit": "cover",
+      "tieLabel": "Equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "imageSource": "huggingface",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true
+     },
+     {
+      "name": "pairwise_lively",
+      "type": "imagepicker",
+      "title": "Which streetscape is livelier?",
+      "allowTie": true,
+      "imageFit": "cover",
+      "tieLabel": "Equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "imageSource": "huggingface",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true
+     },
+     {
+      "name": "pairwise_boring",
+      "type": "imagepicker",
+      "title": "Which streetscape is more boring?",
+      "allowTie": true,
+      "imageFit": "cover",
+      "tieLabel": "Equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "imageSource": "huggingface",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true
+     },
+     {
+      "name": "pairwise_depressing",
+      "type": "imagepicker",
+      "title": "Which streetscape is more depressing?",
+      "allowTie": true,
+      "imageFit": "cover",
+      "tieLabel": "Equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "imageSource": "huggingface",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true
+     },
+     {
+      "name": "pairwise_wealthy",
+      "type": "imagepicker",
+      "title": "Which streetscape is more wealthy?",
+      "allowTie": true,
+      "imageFit": "cover",
+      "tieLabel": "Equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "imageSource": "huggingface",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true
+     },
+     {
+      "name": "pairwise_beautiful",
+      "type": "imagepicker",
+      "title": "Which streetscape is more beautiful?",
+      "allowTie": true,
+      "imageFit": "cover",
+      "tieLabel": "Equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "imageSource": "huggingface",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true
+     }
+    ],
+    "description": "Please answer the following questions."
+   }
+  ],
+  "title": "Effective perception survey",
+  "images": [],
+  "settings": {
+   "autoGrowComment": true,
+   "progressBarType": "questions",
+   "showProgressBar": "aboveheader",
+   "showQuestionNumbers": "off",
+   "showPreviewBeforeComplete": "showAllQuestions"
+  },
+  "description": "This study proposes the first comprehensive framework to guide image-based survey design for capturing perceptions of outdoor urban environments across different scenarios, addressing the lack of methodological standardisation in current research.",
+  "logoPosition": "right",
+  "spAnalysisRecommendation": {
+   "items": [
+    {
+     "method": "matrix_rows",
+     "questions": [
+      "likert"
+     ],
+     "minPerImage": 12
     },
-    "description": "This study proposes the first comprehensive framework to guide image-based survey design for capturing perceptions of outdoor urban environments across different scenarios, addressing the lack of methodological standardisation in current research.",
-    "logoPosition": "right",
-    "spAnalysisRecommendation": {
-      "citation": "Gu et al. 2025",
-      "items": [
-        {
-          "questions": [
-            "likert"
-          ],
-          "method": "matrix_rows",
-          "minPerImage": 12
-        },
-        {
-          "questions": [
-            "pairwise_safe",
-            "pairwise_lively",
-            "pairwise_boring",
-            "pairwise_depressing",
-            "pairwise_wealthy",
-            "pairwise_beautiful"
-          ],
-          "method": "qscore_pairwise",
-          "minPerImage": 22
-        },
-        {
-          "questions": [
-            "pairwise_safe",
-            "pairwise_lively",
-            "pairwise_boring",
-            "pairwise_depressing",
-            "pairwise_wealthy",
-            "pairwise_beautiful"
-          ],
-          "method": "trueskill_pairwise",
-          "tieHandling": "exclude",
-          "runs": 1,
-          "minPerImage": 29
-        }
-      ]
+    {
+     "method": "qscore_pairwise",
+     "questions": [
+      "pairwise_safe",
+      "pairwise_lively",
+      "pairwise_boring",
+      "pairwise_depressing",
+      "pairwise_wealthy",
+      "pairwise_beautiful"
+     ],
+     "minPerImage": 22
+    },
+    {
+     "runs": 1,
+     "method": "trueskill_pairwise",
+     "questions": [
+      "pairwise_safe",
+      "pairwise_lively",
+      "pairwise_boring",
+      "pairwise_depressing",
+      "pairwise_wealthy",
+      "pairwise_beautiful"
+     ],
+     "minPerImage": 29,
+     "tieHandling": "exclude"
     }
+   ],
+   "citation": "Gu et al. 2025"
+  }
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2025-gu-effective/image_000000.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000000.jpg",
+   "name": "image_000000.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000000.jpg"
   },
-  "imageDatasetConfig": {
-    "mediaFolderTags": {},
-    "mediaFolders": []
+  {
+   "key": "templates/2025-gu-effective/image_000001.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000001.jpg",
+   "name": "image_000001.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000001.jpg"
   },
-  "preloadedImages": [],
-  "preloadedSource": null,
-  "preloadedAt": null
+  {
+   "key": "templates/2025-gu-effective/image_000002.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000002.jpg",
+   "name": "image_000002.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000002.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000003.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000003.jpg",
+   "name": "image_000003.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000003.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000004.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000004.jpg",
+   "name": "image_000004.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000004.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000005.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000005.jpg",
+   "name": "image_000005.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000005.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000006.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000006.jpg",
+   "name": "image_000006.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000006.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000007.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000007.jpg",
+   "name": "image_000007.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000007.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000008.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000008.jpg",
+   "name": "image_000008.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000008.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000009.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000009.jpg",
+   "name": "image_000009.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000009.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000010.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000010.jpg",
+   "name": "image_000010.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000010.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000011.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000011.jpg",
+   "name": "image_000011.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000011.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000012.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000012.jpg",
+   "name": "image_000012.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000012.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000013.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000013.jpg",
+   "name": "image_000013.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000013.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000014.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000014.jpg",
+   "name": "image_000014.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000014.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000015.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000015.jpg",
+   "name": "image_000015.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000015.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000016.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000016.jpg",
+   "name": "image_000016.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000016.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000017.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000017.jpg",
+   "name": "image_000017.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000017.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000018.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000018.jpg",
+   "name": "image_000018.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000018.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000019.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000019.jpg",
+   "name": "image_000019.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000019.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000020.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000020.jpg",
+   "name": "image_000020.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000020.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000021.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000021.jpg",
+   "name": "image_000021.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000021.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000022.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000022.jpg",
+   "name": "image_000022.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000022.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000023.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000023.jpg",
+   "name": "image_000023.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000023.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000024.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000024.jpg",
+   "name": "image_000024.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000024.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000025.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000025.jpg",
+   "name": "image_000025.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000025.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000026.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000026.jpg",
+   "name": "image_000026.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000026.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000027.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000027.jpg",
+   "name": "image_000027.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000027.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000028.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000028.jpg",
+   "name": "image_000028.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000028.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000029.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000029.jpg",
+   "name": "image_000029.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000029.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000030.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000030.jpg",
+   "name": "image_000030.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000030.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000031.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000031.jpg",
+   "name": "image_000031.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000031.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000032.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000032.jpg",
+   "name": "image_000032.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000032.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000033.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000033.jpg",
+   "name": "image_000033.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000033.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000034.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000034.jpg",
+   "name": "image_000034.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000034.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000035.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000035.jpg",
+   "name": "image_000035.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000035.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000036.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000036.jpg",
+   "name": "image_000036.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000036.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000037.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000037.jpg",
+   "name": "image_000037.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000037.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000038.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000038.jpg",
+   "name": "image_000038.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000038.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000039.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000039.jpg",
+   "name": "image_000039.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000039.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000040.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000040.jpg",
+   "name": "image_000040.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000040.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000041.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000041.jpg",
+   "name": "image_000041.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000041.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000042.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000042.jpg",
+   "name": "image_000042.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000042.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000043.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000043.jpg",
+   "name": "image_000043.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000043.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000044.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000044.jpg",
+   "name": "image_000044.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000044.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000045.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000045.jpg",
+   "name": "image_000045.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000045.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000046.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000046.jpg",
+   "name": "image_000046.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000046.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000047.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000047.jpg",
+   "name": "image_000047.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000047.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000048.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000048.jpg",
+   "name": "image_000048.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000048.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000049.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000049.jpg",
+   "name": "image_000049.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000049.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000050.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000050.jpg",
+   "name": "image_000050.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000050.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000051.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000051.jpg",
+   "name": "image_000051.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000051.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000052.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000052.jpg",
+   "name": "image_000052.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000052.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000053.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000053.jpg",
+   "name": "image_000053.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000053.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000054.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000054.jpg",
+   "name": "image_000054.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000054.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000055.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000055.jpg",
+   "name": "image_000055.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000055.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000056.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000056.jpg",
+   "name": "image_000056.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000056.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000057.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000057.jpg",
+   "name": "image_000057.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000057.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000058.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000058.jpg",
+   "name": "image_000058.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000058.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000059.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000059.jpg",
+   "name": "image_000059.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000059.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000060.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000060.jpg",
+   "name": "image_000060.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000060.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000061.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000061.jpg",
+   "name": "image_000061.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000061.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000062.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000062.jpg",
+   "name": "image_000062.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000062.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000063.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000063.jpg",
+   "name": "image_000063.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000063.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000064.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000064.jpg",
+   "name": "image_000064.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000064.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000065.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000065.jpg",
+   "name": "image_000065.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000065.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000066.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000066.jpg",
+   "name": "image_000066.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000066.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000067.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000067.jpg",
+   "name": "image_000067.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000067.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000068.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000068.jpg",
+   "name": "image_000068.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000068.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000069.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000069.jpg",
+   "name": "image_000069.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000069.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000070.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000070.jpg",
+   "name": "image_000070.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000070.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000071.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000071.jpg",
+   "name": "image_000071.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000071.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000072.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000072.jpg",
+   "name": "image_000072.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000072.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000073.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000073.jpg",
+   "name": "image_000073.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000073.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000074.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000074.jpg",
+   "name": "image_000074.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000074.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000075.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000075.jpg",
+   "name": "image_000075.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000075.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000076.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000076.jpg",
+   "name": "image_000076.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000076.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000077.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000077.jpg",
+   "name": "image_000077.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000077.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000078.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000078.jpg",
+   "name": "image_000078.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000078.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000079.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000079.jpg",
+   "name": "image_000079.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000079.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000080.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000080.jpg",
+   "name": "image_000080.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000080.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000081.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000081.jpg",
+   "name": "image_000081.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000081.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000082.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000082.jpg",
+   "name": "image_000082.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000082.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000083.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000083.jpg",
+   "name": "image_000083.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000083.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000084.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000084.jpg",
+   "name": "image_000084.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000084.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000085.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000085.jpg",
+   "name": "image_000085.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000085.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000086.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000086.jpg",
+   "name": "image_000086.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000086.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000087.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000087.jpg",
+   "name": "image_000087.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000087.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000088.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000088.jpg",
+   "name": "image_000088.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000088.jpg"
+  },
+  {
+   "key": "templates/2025-gu-effective/image_000089.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-gu-effective/image_000089.jpg",
+   "name": "image_000089.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-gu-effective/image_000089.jpg"
+  }
+ ],
+ "paper": {
+  "title": "Designing effective image-based surveys for urban visual perception",
+  "authors": [
+   "Gu Y.",
+   "Quintana M.",
+   "Liang X.",
+   "Ito K.",
+   "Yap W.",
+   "Biljecki F."
+  ],
+  "year": 2025,
+  "venue": "Landscape and Urban Planning",
+  "doi": "10.1016/j.landurbplan.2025.105368",
+  "url": "https://doi.org/10.1016/j.landurbplan.2025.105368"
+ }
 }

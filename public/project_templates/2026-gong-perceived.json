@@ -1,0 +1,739 @@
+{
+ "id": "2026-gong-perceived",
+ "name": "Perceived Walking Comfort: Panorama Pairs (Macau)",
+ "description": "Method replication: same task, scales and design as the paper; the images are not the paper's stimuli (49 Google Street View panoramas of Macau, all captured in December 2008, the only Google coverage of Macau; the paper used recent Baidu panoramas).\n\nGong et al. (2026, Buildings) mapped perceived walking comfort across Macau's high-density street network. Raters viewed two 2048 × 664 panoramic street views side by side and decided which appeared more comfortable for walking, with a \"same level\" option (coded 1 = left, 2 = right, 0 = equal). A guideline of eight comfort dimensions (shade and solar relief, spatial generosity, greenery and visual amenity, spatial openness and visual field, noise and traffic disturbance, cleanliness and maintenance, facility convenience, walking continuity and smoothness; Table 1) was to be weighed together as overall comfort, not one feature at a time. About 2,000 images each entered at least eight comparisons; an EfficientNet-B7 model extended the comparisons to about 6,000 images, and win/loss/tie network scores fed XGBoost/LightGBM and SHAP.\n\nThis template keeps the side-by-side panorama pair, the three answers (Image A / Same level / Image B) and the eight-dimension guideline (shown before the task and on every pair). Results ranks the panoramas with TrueSkill; ties are kept.\n\nDifferences from the original study: (1) images: 49 Google Street View panoramas (Macau peninsula plus four in Taipa), 2008 imagery, so streets look as they did then; the paper sampled about 6,000 Baidu panoramas at 50 m intervals; replace them with current images for a new study; (2) participants instead of four trained raters, so there is no training or pilot agreement test, only the written guideline; (3) 20 random pairs per participant instead of fixed non-overlapping batches; (4) one optional question on familiarity with Macau added.\n\nStreet images: Google Street View (© Google).",
+ "author": "Gong et al.",
+ "year": "2026",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "street view",
+  "panorama",
+  "pairwise comparison",
+  "walking comfort",
+  "high-density",
+  "Macau",
+  "source:paper",
+  "modality:panorama",
+  "task:pairwise",
+  "concept:comfort",
+  "concept:walkability",
+  "participants:experts",
+  "sample:lt100",
+  "country:China",
+  "city:Macau"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/buildings16061103",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T00:06:08.387+00:00",
+ "updatedAt": "2026-11-27T00:06:14.279+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "comparisons",
+    "elements": [
+     {
+      "name": "more_comfortable",
+      "type": "imagepicker",
+      "title": "Which street appears more comfortable for walking?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "contain",
+      "tieLabel": "Same level",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 20,
+      "description": "Judge the overall walking-environment comfort, weighing all eight dimensions together rather than any single feature. Choose Same level if both are equally comfortable.",
+      "mediaFolders": [
+       "streets"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "macau_familiarity",
+      "type": "radiogroup",
+      "title": "How well do you know Macau?",
+      "choices": [
+       {
+        "text": "I live or work there",
+        "value": "resident"
+       },
+       {
+        "text": "I have visited",
+        "value": "visited"
+       },
+       {
+        "text": "I have never been there",
+        "value": "never"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "title": "Which Street Is More Comfortable to Walk? (Macau)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-ec94d1bffe9a856d",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Which Street Is More Comfortable to Walk? (Macau)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Which Street Is More Comfortable to Walk? (Macau)\",\n    \"description\": \"Pairs of panoramic street views from Macau: decide which one is more comfortable for walking overall, or choose Same level. A guideline lists the eight comfort dimensions to weigh together. Method replication of Gong et al. (2026, Buildings).\",\n    \"locale\": \"en\",\n    \"pages\": [\n      { \"name\": \"intro\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"I agree to take part. My answers are recorded anonymously for research.\", \"isRequired\": true, \"labelTrue\": \"I agree\", \"labelFalse\": \"I do not agree\" }\n      ]},\n      { \"name\": \"comparisons\", \"elements\": [\n        { \"type\": \"imagepicker\", \"name\": \"more_comfortable\", \"title\": \"Which street appears more comfortable for walking?\",\n          \"description\": \"Judge the overall walking-environment comfort, weighing all eight dimensions together rather than any single feature. Choose Same level if both are equally comfortable.\",\n          \"imageCount\": 2, \"trialCount\": 20, \"allowTie\": true, \"tieLabel\": \"Same level\", \"imageFit\": \"contain\", \"isRequired\": true, \"choices\": [],\n          \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"mediaFolders\": [\"streets\"] }\n      ]},\n      { \"name\": \"about_you\", \"elements\": [\n        { \"type\": \"radiogroup\", \"name\": \"macau_familiarity\", \"title\": \"How well do you know Macau?\", \"choices\": [\n          { \"value\": \"resident\", \"text\": \"I live or work there\" }, { \"value\": \"visited\", \"text\": \"I have visited\" }, { \"value\": \"never\", \"text\": \"I have never been there\" } ] }\n      ]}\n    ]\n  }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#8a4b1f;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:1180px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\ntable{border-collapse:collapse;width:100%;font-size:.88rem}th,td{text-align:left;vertical-align:top;padding:6px 8px;border-top:1px solid var(--line)}th{color:var(--muted);font-weight:600}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}\n.pair figure{margin:0}.pair img{width:100%;aspect-ratio:2048/664;object-fit:cover;display:block;border-radius:8px;background:#000}\n.pair figcaption{text-align:center;margin-top:4px;font-weight:600}\n.choices{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;margin-top:14px}\n.choices .btn{width:100%}\ndetails{margin-top:12px}summary{cursor:pointer;color:var(--accent)}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:1180px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:820px){.pair{grid-template-columns:1fr}.choices{grid-template-columns:1fr}h1{font-size:1.2rem}table{font-size:.8rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Macau, Google Street View panoramas captured December 2008 (© Google). Task and guideline from Gong et al. (2026), Buildings 16(6):1103, Table 1.</footer>\n<script>\n(function(){\n  var app=document.getElementById('app'),Q,i=0,done={};\n  var DIMS=[['Shade and solar relief','Relief from direct sunlight, reducing thermal discomfort.','Tree canopy, facade shading, shadow patterns on sidewalks.'],\n    ['Spatial generosity','Perception of spaciousness, reducing crowding and constraint.','Sidewalk width, absence of obstacles, pedestrian flow.'],\n    ['Greenery and visual amenity','Influence of nature and greenery on psychological restoration and aesthetic pleasure.','Continuity of vegetation, multi-layer planting, visible green spaces.'],\n    ['Spatial openness and visual field','Perceived openness of space, enhancing relaxation and reducing claustrophobia.','Sky visibility, long sightlines, openness of facades.'],\n    ['Noise and traffic disturbance','Impact of vehicle noise and traffic on comfort and stress.','Traffic volume, vehicle proximity, presence of barriers.'],\n    ['Cleanliness and maintenance','Cleanliness, orderliness, and maintenance of streets enhancing comfort.','Clean pavements, absence of litter, well-maintained surfaces.'],\n    ['Facility convenience','Availability of supportive infrastructure enhancing comfort.','Seating, shading devices, rest areas, public signage.'],\n    ['Walking continuity and smoothness','Uninterrupted, smooth pedestrian pathways promoting comfort.','Continuous sidewalks, absence of barriers, smooth pavement.']];\n  var GUIDE='<table><thead><tr><th>Dimension</th><th>Description</th><th>Observable cues</th></tr></thead><tbody>'+DIMS.map(function(d){return '<tr><td><b>'+d[0]+'</b></td><td>'+d[1]+'</td><td>'+d[2]+'</td></tr>';}).join('')+'</tbody></table>';\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function trial(k){var t=Q.trials&&Q.trials[k];var ch=(t&&t.choices)||Q.choices||[],md=(t&&t.media)||Q.media||[];\n    return {im:ch.filter(function(c){return !c.tie;}).map(function(c,j){return {value:c.value,url:c.imageUrl||(md[j]&&md[j].url)||''};}),tie:ch.filter(function(c){return c.tie;})[0]};}\n  function firstOpen(){for(var k=0;k<Q.trialCount;k++){if(!done[k])return k;}return Q.trialCount;}\n  function intro(){\n    var c=SPSite.getQuestion('consent');\n    app.innerHTML='<h1>Which street is more comfortable to walk?</h1>'+\n      '<p>You will see '+Q.trialCount+' pairs of 360° street panoramas from Macau. For each pair, decide which street appears more comfortable for walking, or choose “Same level” if both are equally comfortable. Judge the overall walking-environment comfort: weigh the eight dimensions below together, not any single feature. It takes about 5 minutes.</p>'+\n      '<div class=\"card\"><h2 style=\"font-size:1rem;margin:0 0 8px\">Rating guideline</h2>'+GUIDE+'</div>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);i=firstOpen();show();});};\n  }\n  function show(){\n    if(i>=Q.trialCount)return about();\n    var t=trial(i);\n    app.innerHTML='<h1>'+esc(Q.title)+'</h1><p>Pair '+(i+1)+' of '+Q.trialCount+' · overall walking comfort, all dimensions together</p><div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/Q.trialCount)+'%\"></i></div>'+\n      '<div class=\"pair\">'+t.im.map(function(m,j){return '<figure><img src=\"'+esc(m.url)+'\" alt=\"Panoramic street view, Image '+(j?'B':'A')+'\"><figcaption>Image '+(j?'B':'A')+'</figcaption></figure>';}).join('')+'</div>'+\n      '<div class=\"choices\"><button class=\"btn\" data-v=\"'+esc(t.im[0].value)+'\">Image A is more comfortable</button>'+\n      (t.tie?'<button class=\"btn ghost\" data-v=\"'+esc(t.tie.value)+'\">'+esc(t.tie.text||'Same level')+'</button>':'')+\n      '<button class=\"btn\" data-v=\"'+esc(t.im[1].value)+'\">Image B is more comfortable</button></div>'+\n      '<details><summary>Rating guideline</summary>'+GUIDE+'</details>'+\n      (i>0?'<div class=\"row\"><button class=\"btn ghost\" id=\"back\">Back</button></div>':'')+'<div class=\"err\"></div>';\n    app.querySelectorAll('[data-v]').forEach(function(b){b.onclick=function(){var k=i;app.querySelectorAll('[data-v]').forEach(function(x){x.disabled=true;});\n      SPSite.answer('more_comfortable',b.getAttribute('data-v'),{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);app.querySelectorAll('[data-v]').forEach(function(x){x.disabled=false;});return;}\n        done[k]=true;i=k+1;show();});};});\n    var bk=document.getElementById('back');if(bk)bk.onclick=function(){i-=1;show();};\n    window.scrollTo(0,0);\n  }\n  function about(){\n    var q=SPSite.getQuestion('macau_familiarity');\n    app.innerHTML='<h1>One last question</h1><div class=\"card\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"fam\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+\n      '<div class=\"row\"><button class=\"btn\" id=\"finish\">Finish</button></div><div class=\"err\"></div></div>';\n    app.querySelectorAll('input[name=fam]').forEach(function(r){r.onchange=function(){SPSite.answer('macau_familiarity',r.value).then(function(x){if(x&&x.ok===false)err(x.error);});};});\n    document.getElementById('finish').onclick=function(){var btn=this;btn.disabled=true;err('Submitting…');\n      SPSite.complete().then(function(r){if(r&&r.ok===false){btn.disabled=false;var m=r.missing||[];err(r.error||('Please answer: '+m.join(', ')));if(m.indexOf('consent')>=0)intro();else if(m.indexOf('more_comfortable')>=0){i=firstOpen();show();}}});};\n    window.scrollTo(0,0);\n  }\n  SPSite.onReady(function(ctx){\n    Q=SPSite.getQuestion('more_comfortable');\n    var a=(ctx&&ctx.answers)||{},p=a.more_comfortable,list=p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);\n    list.forEach(function(t,k){var v=t&&typeof t==='object'?t.value:t;if(v!=null&&v!=='')done[k]=true;});\n    if(a.consent===true){i=firstOpen();show();}else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T00:05:33.428Z",
+   "mediaFolders": [
+    "streets"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T00:05:33.428Z"
+  },
+  "description": "Pairs of panoramic street views from Macau: decide which one is more comfortable for walking overall, or choose Same level. A guideline lists the eight comfort dimensions to weigh together. Method replication of Gong et al. (2026, Buildings).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_01__10c923b0-26e4-4dcf-ad8a-6c8789e4532c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_01__10c923b0-26e4-4dcf-ad8a-6c8789e4532c.jpg",
+   "name": "pen_01.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_01__10c923b0-26e4-4dcf-ad8a-6c8789e4532c.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 216861,
+   "uploaded_bytes": 216861,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_02__b30faab5-58ce-45a1-91f1-9e11f769ce55.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_02__b30faab5-58ce-45a1-91f1-9e11f769ce55.jpg",
+   "name": "pen_02.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_02__b30faab5-58ce-45a1-91f1-9e11f769ce55.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 288926,
+   "uploaded_bytes": 288926,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_03__d3cd5dcf-ff6b-4df0-89aa-4f6c3e2b2090.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_03__d3cd5dcf-ff6b-4df0-89aa-4f6c3e2b2090.jpg",
+   "name": "pen_03.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_03__d3cd5dcf-ff6b-4df0-89aa-4f6c3e2b2090.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 252288,
+   "uploaded_bytes": 252288,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_04__fc611950-c6d2-4a8c-b3ed-f46754c9b2dc.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_04__fc611950-c6d2-4a8c-b3ed-f46754c9b2dc.jpg",
+   "name": "pen_04.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_04__fc611950-c6d2-4a8c-b3ed-f46754c9b2dc.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 317296,
+   "uploaded_bytes": 317296,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_05__f4a6a2f5-b0dc-4061-bd39-8e3947d05bae.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_05__f4a6a2f5-b0dc-4061-bd39-8e3947d05bae.jpg",
+   "name": "pen_05.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_05__f4a6a2f5-b0dc-4061-bd39-8e3947d05bae.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 258848,
+   "uploaded_bytes": 258848,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_06__c789a933-5579-493b-b5e9-1bda5c5c1002.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_06__c789a933-5579-493b-b5e9-1bda5c5c1002.jpg",
+   "name": "pen_06.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_06__c789a933-5579-493b-b5e9-1bda5c5c1002.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 246841,
+   "uploaded_bytes": 246841,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_07__d91f1282-7351-4fd1-9216-1f21f44ef01e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_07__d91f1282-7351-4fd1-9216-1f21f44ef01e.jpg",
+   "name": "pen_07.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_07__d91f1282-7351-4fd1-9216-1f21f44ef01e.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 228017,
+   "uploaded_bytes": 228017,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_08__811fc9ae-97d0-4674-b001-20a7dd5d680c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_08__811fc9ae-97d0-4674-b001-20a7dd5d680c.jpg",
+   "name": "pen_08.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_08__811fc9ae-97d0-4674-b001-20a7dd5d680c.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 280436,
+   "uploaded_bytes": 280436,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_09__a940f9b5-2e86-4f10-909a-ce24c02263a0.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_09__a940f9b5-2e86-4f10-909a-ce24c02263a0.jpg",
+   "name": "pen_09.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_09__a940f9b5-2e86-4f10-909a-ce24c02263a0.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 296065,
+   "uploaded_bytes": 296065,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_10__a9630637-98ac-4238-b594-3749da96a3a8.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_10__a9630637-98ac-4238-b594-3749da96a3a8.jpg",
+   "name": "pen_10.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_10__a9630637-98ac-4238-b594-3749da96a3a8.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 284620,
+   "uploaded_bytes": 284620,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_11__b64e0302-753e-4cdf-9b36-edf9160da667.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_11__b64e0302-753e-4cdf-9b36-edf9160da667.jpg",
+   "name": "pen_11.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_11__b64e0302-753e-4cdf-9b36-edf9160da667.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 315743,
+   "uploaded_bytes": 315743,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_12__e4fe29cc-4838-4d8d-80b0-725ce2742a08.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_12__e4fe29cc-4838-4d8d-80b0-725ce2742a08.jpg",
+   "name": "pen_12.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_12__e4fe29cc-4838-4d8d-80b0-725ce2742a08.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 282113,
+   "uploaded_bytes": 282113,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_13__1cf2d187-5577-4251-abf9-16457e2f044c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_13__1cf2d187-5577-4251-abf9-16457e2f044c.jpg",
+   "name": "pen_13.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_13__1cf2d187-5577-4251-abf9-16457e2f044c.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 185196,
+   "uploaded_bytes": 185196,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_14__ed39f17a-50c3-495a-a7c0-79240dd86855.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_14__ed39f17a-50c3-495a-a7c0-79240dd86855.jpg",
+   "name": "pen_14.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_14__ed39f17a-50c3-495a-a7c0-79240dd86855.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 267493,
+   "uploaded_bytes": 267493,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_15__441ab538-3bb3-4cfe-9fa6-692b5f57f733.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_15__441ab538-3bb3-4cfe-9fa6-692b5f57f733.jpg",
+   "name": "pen_15.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_15__441ab538-3bb3-4cfe-9fa6-692b5f57f733.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 310938,
+   "uploaded_bytes": 310938,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_16__035189cf-557d-41e3-8955-a95de4010393.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_16__035189cf-557d-41e3-8955-a95de4010393.jpg",
+   "name": "pen_16.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_16__035189cf-557d-41e3-8955-a95de4010393.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 279314,
+   "uploaded_bytes": 279314,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_17__5f91e44a-9064-449e-ae03-240e4f347f72.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_17__5f91e44a-9064-449e-ae03-240e4f347f72.jpg",
+   "name": "pen_17.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_17__5f91e44a-9064-449e-ae03-240e4f347f72.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 313377,
+   "uploaded_bytes": 313377,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_18__24c4be72-8747-4365-b786-62cac7f2d401.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_18__24c4be72-8747-4365-b786-62cac7f2d401.jpg",
+   "name": "pen_18.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_18__24c4be72-8747-4365-b786-62cac7f2d401.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 278185,
+   "uploaded_bytes": 278185,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_19__26ce62d3-8b69-438f-8290-d11e26a14c01.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_19__26ce62d3-8b69-438f-8290-d11e26a14c01.jpg",
+   "name": "pen_19.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_19__26ce62d3-8b69-438f-8290-d11e26a14c01.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 260338,
+   "uploaded_bytes": 260338,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_20__caae284e-468f-458f-af3e-61e5f423102d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_20__caae284e-468f-458f-af3e-61e5f423102d.jpg",
+   "name": "pen_20.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_20__caae284e-468f-458f-af3e-61e5f423102d.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 249619,
+   "uploaded_bytes": 249619,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_21__ffd67890-3234-44e4-9264-526a27b1b267.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_21__ffd67890-3234-44e4-9264-526a27b1b267.jpg",
+   "name": "pen_21.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_21__ffd67890-3234-44e4-9264-526a27b1b267.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 272242,
+   "uploaded_bytes": 272242,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_22__28395cfb-ec9e-4d51-bb4a-12dcc02f6df7.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_22__28395cfb-ec9e-4d51-bb4a-12dcc02f6df7.jpg",
+   "name": "pen_22.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_22__28395cfb-ec9e-4d51-bb4a-12dcc02f6df7.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 255036,
+   "uploaded_bytes": 255036,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_23__0e2b0f56-b74a-4dcd-bf5e-9ca857433d8f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_23__0e2b0f56-b74a-4dcd-bf5e-9ca857433d8f.jpg",
+   "name": "pen_23.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_23__0e2b0f56-b74a-4dcd-bf5e-9ca857433d8f.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 199135,
+   "uploaded_bytes": 199135,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_24__0c08c622-2a24-46cb-afa7-9288aec4bf8a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_24__0c08c622-2a24-46cb-afa7-9288aec4bf8a.jpg",
+   "name": "pen_24.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_24__0c08c622-2a24-46cb-afa7-9288aec4bf8a.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 224895,
+   "uploaded_bytes": 224895,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_25__fae55f12-f2f8-420c-8655-63372232c7ed.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_25__fae55f12-f2f8-420c-8655-63372232c7ed.jpg",
+   "name": "pen_25.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_25__fae55f12-f2f8-420c-8655-63372232c7ed.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 258638,
+   "uploaded_bytes": 258638,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_26__8d7ae3f4-7dae-4f95-b019-4b787d7d8d94.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_26__8d7ae3f4-7dae-4f95-b019-4b787d7d8d94.jpg",
+   "name": "pen_26.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_26__8d7ae3f4-7dae-4f95-b019-4b787d7d8d94.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 244347,
+   "uploaded_bytes": 244347,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_27__9747dd0a-9e18-426a-b2dd-88abccbfd769.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_27__9747dd0a-9e18-426a-b2dd-88abccbfd769.jpg",
+   "name": "pen_27.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_27__9747dd0a-9e18-426a-b2dd-88abccbfd769.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 301020,
+   "uploaded_bytes": 301020,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_28__3fa573fa-6fd6-482d-b6af-eaeeedcf4745.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_28__3fa573fa-6fd6-482d-b6af-eaeeedcf4745.jpg",
+   "name": "pen_28.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_28__3fa573fa-6fd6-482d-b6af-eaeeedcf4745.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 280146,
+   "uploaded_bytes": 280146,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_29__1815f780-7b55-4ff1-9f8b-267ce7866856.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_29__1815f780-7b55-4ff1-9f8b-267ce7866856.jpg",
+   "name": "pen_29.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_29__1815f780-7b55-4ff1-9f8b-267ce7866856.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 234568,
+   "uploaded_bytes": 234568,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_30__d6cc620c-af7d-4019-9727-cbb1598deb62.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_30__d6cc620c-af7d-4019-9727-cbb1598deb62.jpg",
+   "name": "pen_30.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_30__d6cc620c-af7d-4019-9727-cbb1598deb62.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 169938,
+   "uploaded_bytes": 169938,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_31__e3d7fb89-0869-473f-aa29-1a9abf6d22d1.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_31__e3d7fb89-0869-473f-aa29-1a9abf6d22d1.jpg",
+   "name": "pen_31.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_31__e3d7fb89-0869-473f-aa29-1a9abf6d22d1.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 211544,
+   "uploaded_bytes": 211544,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_32__dec310a0-163c-4634-93f3-560e73b0006b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_32__dec310a0-163c-4634-93f3-560e73b0006b.jpg",
+   "name": "pen_32.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_32__dec310a0-163c-4634-93f3-560e73b0006b.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 268202,
+   "uploaded_bytes": 268202,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_33__e700fa8c-2d4f-4e51-bc69-4f2c784dfad1.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_33__e700fa8c-2d4f-4e51-bc69-4f2c784dfad1.jpg",
+   "name": "pen_33.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_33__e700fa8c-2d4f-4e51-bc69-4f2c784dfad1.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 284856,
+   "uploaded_bytes": 284856,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_34__20fc7676-5522-493a-9a16-8256cc958044.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_34__20fc7676-5522-493a-9a16-8256cc958044.jpg",
+   "name": "pen_34.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_34__20fc7676-5522-493a-9a16-8256cc958044.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 220834,
+   "uploaded_bytes": 220834,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_35__348ff7ee-1f4e-47a5-b250-ede6dc1da389.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_35__348ff7ee-1f4e-47a5-b250-ede6dc1da389.jpg",
+   "name": "pen_35.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_35__348ff7ee-1f4e-47a5-b250-ede6dc1da389.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 215846,
+   "uploaded_bytes": 215846,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_36__f2dc3ce2-da05-4012-a11f-7dadeeaa14e9.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_36__f2dc3ce2-da05-4012-a11f-7dadeeaa14e9.jpg",
+   "name": "pen_36.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_36__f2dc3ce2-da05-4012-a11f-7dadeeaa14e9.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 283969,
+   "uploaded_bytes": 283969,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_37__808ac957-bdb6-4240-b4ca-90beae5c9f21.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_37__808ac957-bdb6-4240-b4ca-90beae5c9f21.jpg",
+   "name": "pen_37.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_37__808ac957-bdb6-4240-b4ca-90beae5c9f21.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 264158,
+   "uploaded_bytes": 264158,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_38__6fc1dac6-0791-4cfa-a773-0774cb344f83.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_38__6fc1dac6-0791-4cfa-a773-0774cb344f83.jpg",
+   "name": "pen_38.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_38__6fc1dac6-0791-4cfa-a773-0774cb344f83.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 318656,
+   "uploaded_bytes": 318656,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_39__1b07916c-4b84-46d7-9ac7-6da7bf009980.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_39__1b07916c-4b84-46d7-9ac7-6da7bf009980.jpg",
+   "name": "pen_39.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_39__1b07916c-4b84-46d7-9ac7-6da7bf009980.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 190999,
+   "uploaded_bytes": 190999,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_40__6c42b62b-6f4d-4ce1-a212-2aed9b5433a5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_40__6c42b62b-6f4d-4ce1-a212-2aed9b5433a5.jpg",
+   "name": "pen_40.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_40__6c42b62b-6f4d-4ce1-a212-2aed9b5433a5.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 185314,
+   "uploaded_bytes": 185314,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_41__88de12df-1045-40fc-8d43-fec323944205.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_41__88de12df-1045-40fc-8d43-fec323944205.jpg",
+   "name": "pen_41.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_41__88de12df-1045-40fc-8d43-fec323944205.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 250251,
+   "uploaded_bytes": 250251,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_42__e06b366a-f7ec-4e2b-8425-ed950a0b1528.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_42__e06b366a-f7ec-4e2b-8425-ed950a0b1528.jpg",
+   "name": "pen_42.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_42__e06b366a-f7ec-4e2b-8425-ed950a0b1528.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 227653,
+   "uploaded_bytes": 227653,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_43__445247d8-e226-4631-95c4-bd1eb4c571a5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_43__445247d8-e226-4631-95c4-bd1eb4c571a5.jpg",
+   "name": "pen_43.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_43__445247d8-e226-4631-95c4-bd1eb4c571a5.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 279726,
+   "uploaded_bytes": 279726,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_44__5ffd123f-4af6-4220-858c-7509734b6d8c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_44__5ffd123f-4af6-4220-858c-7509734b6d8c.jpg",
+   "name": "pen_44.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_44__5ffd123f-4af6-4220-858c-7509734b6d8c.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 259255,
+   "uploaded_bytes": 259255,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/pen_45__73a364b8-d4be-4fc0-939e-417347fd2118.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/pen_45__73a364b8-d4be-4fc0-939e-417347fd2118.jpg",
+   "name": "pen_45.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/pen_45__73a364b8-d4be-4fc0-939e-417347fd2118.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 202434,
+   "uploaded_bytes": 202434,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/tai_08__e1d72dd1-f29a-46ee-a951-0dfee4c499b0.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/tai_08__e1d72dd1-f29a-46ee-a951-0dfee4c499b0.jpg",
+   "name": "tai_08.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/tai_08__e1d72dd1-f29a-46ee-a951-0dfee4c499b0.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 257828,
+   "uploaded_bytes": 257828,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/tai_10__b933a6d0-a1cf-4348-bbef-bb601a2cd48c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/tai_10__b933a6d0-a1cf-4348-bbef-bb601a2cd48c.jpg",
+   "name": "tai_10.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/tai_10__b933a6d0-a1cf-4348-bbef-bb601a2cd48c.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 216621,
+   "uploaded_bytes": 216621,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/tai_15__ebfa7812-f40c-41ee-889a-02ff3a3958c8.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/tai_15__ebfa7812-f40c-41ee-889a-02ff3a3958c8.jpg",
+   "name": "tai_15.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/tai_15__ebfa7812-f40c-41ee-889a-02ff3a3958c8.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 310000,
+   "uploaded_bytes": 310000,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-gong-perceived/streets/tai_25__8601ba8e-6cdf-452a-9697-09ae452d480d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-gong-perceived/streets/tai_25__8601ba8e-6cdf-452a-9697-09ae452d480d.jpg",
+   "name": "tai_25.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2026-gong-perceived/streets/tai_25__8601ba8e-6cdf-452a-9697-09ae452d480d.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 243212,
+   "uploaded_bytes": 243212,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "A Machine-Learning Approach for Evaluating Perceived Walking Comfort in Macau’s High-Density Urban Environment",
+  "authors": [
+   "Gong Z.",
+   "Zhou J.",
+   "Zhang X.",
+   "Xie L.",
+   "Luo G.",
+   "Luo X.",
+   "Fu J.",
+   "Guo Y.",
+   "Zhi X."
+  ],
+  "year": 2026,
+  "venue": "Buildings",
+  "doi": "10.3390/buildings16061103",
+  "url": "https://doi.org/10.3390/buildings16061103"
+ }
+}

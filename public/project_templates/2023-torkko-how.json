@@ -1,130 +1,1375 @@
 {
-  "id": "2023-torkko-how",
-  "name": "Perceived Greenery In Situ",
-  "description": "Rebuilt from the published description of Torkko, Poom, Willberg & Toivonen (2023). Participants scan a QR code at one of 20 Helsinki sites (link ?site=S01…S20) and rate the visible greenery around them from 0 to 100; an optional online version rates street-level images instead. Differences from the original study: (1) The in-situ page is shown only when the link contains ?site=...; without it, the online version (not in the original study) is shown.",
-  "author": "Torkko, Poom, Willberg & Toivonen",
-  "year": "2023",
-  "category": "Academic Research",
-  "tags": [
-    "official",
-    "paper"
-  ],
-  "isPinned": false,
-  "isApproved": true,
-  "showOnLanding": true,
-  "thumbnailUrl": null,
-  "website": "https://doi.org/10.3389/frsc.2023.1160995",
-  "huggingfaceDataset": "Jusba/Greenery_Survey_Helsinki_Mapillary/images",
-  "createdAt": "2026-10-02T00:00:00+00:00",
-  "imageDatasetConfig": {
-    "mediaFolders": [],
-    "mediaFolderTags": {}
-  },
-  "preloadedImages": [],
-  "preloadedSource": null,
-  "preloadedAt": null,
-  "config": {
-    "title": "Perceived Greenery",
-    "description": "This short survey asks how much greenery you can see around you.",
-    "logoPosition": "right",
-    "autoGrowComment": true,
-    "progressBarType": "questions",
-    "showProgressBar": "aboveheader",
-    "showQuestionNumbers": "off",
-    "captureUrlParams": [
-      "site"
-    ],
-    "spAnalysisRecommendation": {
-      "citation": "Torkko et al. 2023",
-      "items": [
-        {
-          "questions": [
-            "greenery_in_situ"
-          ],
-          "method": "param_aggregation",
-          "param": "site"
-        },
-        {
-          "questions": [
-            "greenery_online"
-          ],
-          "method": "slider_dimensions"
-        }
-      ]
-    },
-    "pages": [
-      {
-        "name": "page_consent",
-        "elements": [
-          {
-            "name": "consent",
-            "type": "checkbox",
-            "title": "I agree to take part in this study and for my answers to be used for research.",
-            "choices": [
-              {
-                "value": "agree",
-                "text": "I agree"
-              }
-            ],
-            "isRequired": true
-          }
-        ],
-        "title": "Consent"
-      },
-      {
-        "name": "page_in_situ",
-        "elements": [
-          {
-            "name": "greenery_in_situ",
-            "type": "slidergroup",
-            "title": "Please evaluate the amount of greenery visible in your surrounding scenery, from 0 (no visible greenery) to 100 (only greenery is visible). Concentrate on natural greenery, i.e., exclude green-coloured cars, buildings, and other artificial objects.",
-            "dimensions": [
-              {
-                "id": "greenery",
-                "label": "Visible greenery",
-                "left": "0 – no visible greenery",
-                "right": "100 – only greenery is visible"
-              }
-            ],
-            "scaleMin": 0,
-            "scaleMax": 100,
-            "scaleStep": 1,
-            "isRequired": true
-          }
-        ],
-        "visibleIf": "{url_site} notempty",
-        "title": "Your surroundings"
-      },
-      {
-        "name": "page_online",
-        "elements": [
-          {
-            "name": "greenery_online",
-            "type": "imageslidergroup",
-            "title": "Please evaluate the amount of greenery visible in this image, from 0 (no visible greenery) to 100 (only greenery is visible). Concentrate on natural greenery, i.e., exclude green-coloured cars, buildings, and other artificial objects.",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 1,
-            "trialCount": 10,
-            "dimensions": [
-              {
-                "id": "greenery",
-                "label": "Visible greenery",
-                "left": "0 – no visible greenery",
-                "right": "100 – only greenery is visible"
-              }
-            ],
-            "scaleMin": 0,
-            "scaleMax": 100,
-            "scaleStep": 1
-          }
-        ],
-        "visibleIf": "{url_site} empty",
-        "title": "Online version (not in original study)"
-      }
+ "id": "2023-torkko-how",
+ "name": "How Much Greenery Do You See? (Helsinki, 0–100)",
+ "description": "Method replication: the paper's greenery question and 0–100 scale, asked online about street-level photos instead of on site. Images: 100 Helsinki street-level photos from Mapillary (CC BY-SA 4.0, © Mapillary contributors), a sample released by the first author on Hugging Face (Jusba/Greenery_Survey_Helsinki_Mapillary); they are not the paper's study sites. Torkko, Poom, Willberg & Toivonen (2023, Frontiers in Sustainable Cities 5:1160995) asked people at randomly selected sites across Helsinki how much greenery they saw around them, from 0 (no visible greenery) to 100 (only greenery is visible), and compared the answers with street-level (image segmentation, colour segmentation, point clouds) and top-down (land cover, remote sensing) greenery maps. All methods were strongly associated with perceived greenery, but mapped values were consistently lower than perceived ones; semantic segmentation came closer to human perception than colour segmentation.\n\nWhat participants do: after consent, 20 Helsinki photos drawn at random from 100; for each they move a slider from 0 to 100 for how much natural greenery they see (ignoring green cars, buildings and other artificial objects). Then familiarity with Helsinki and age.\n\nAnalysis as in the paper: mean perceived greenery per image, compared with Green View Index from semantic segmentation of the same image (correlation, and the gap between perceived and measured values).\n\nDifferences from the original study: (1) the original was answered in situ at Helsinki study sites; this template asks the same question online about photos; (2) the images are a Mapillary sample from across Helsinki (2015–2025), not the study sites; (3) the familiarity and age questions are additions. The earlier version of this template had an in-situ page opened with ?site= links and no bundled images.",
+ "author": "Torkko, Poom, Willberg & Toivonen",
+ "year": "2023",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "greenery",
+  "green-view-index",
+  "helsinki",
+  "finland",
+  "source:paper",
+  "modality:street_view",
+  "task:rating",
+  "concept:greenery",
+  "participants:crowd",
+  "country:Finland",
+  "city:Helsinki"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3389/frsc.2023.1160995",
+ "huggingfaceDataset": "Jusba/Greenery_Survey_Helsinki_Mapillary/images",
+ "createdAt": "2026-10-02T00:00:00+00:00",
+ "updatedAt": "2026-11-27T05:54:17.15+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
     ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "greenery_online",
+      "type": "imageslidergroup",
+      "title": "How much greenery is visible in this image?",
+      "choices": [],
+      "imageFit": "contain",
+      "scaleMax": 100,
+      "scaleMin": 0,
+      "dimensions": [
+       {
+        "id": "greenery",
+        "left": "0 – no visible greenery",
+        "label": "Visible greenery",
+        "right": "100 – only greenery is visible"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "trialCount": 20,
+      "description": "Please evaluate the amount of greenery visible in this image, from 0 (no visible greenery) to 100 (only greenery is visible). Concentrate on natural greenery, i.e., exclude green-coloured cars, buildings, and other artificial objects.",
+      "mediaFolders": [
+       "helsinki"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "helsinki_familiarity",
+      "type": "radiogroup",
+      "title": "How well do you know Helsinki?",
+      "choices": [
+       {
+        "text": "I live or work there",
+        "value": "resident"
+       },
+       {
+        "text": "I have visited",
+        "value": "visited"
+       },
+       {
+        "text": "I have never been there",
+        "value": "never"
+       }
+      ],
+      "isRequired": false
+     },
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "18–29",
+        "value": "18-29"
+       },
+       {
+        "text": "30–44",
+        "value": "30-44"
+       },
+       {
+        "text": "45–64",
+        "value": "45-64"
+       },
+       {
+        "text": "65 or older",
+        "value": "65plus"
+       }
+      ],
+      "isRequired": false
+     }
+    ]
+   }
+  ],
+  "title": "How Much Greenery Do You See? (Helsinki)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-fb73f50007133546",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>How Much Greenery Do You See? (Helsinki)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"How Much Greenery Do You See? (Helsinki)\",\n  \"description\": \"Helsinki street-level photos rated from 0 (no visible greenery) to 100 (only greenery is visible), the question Torkko, Poom, Willberg & Toivonen (2023, Frontiers in Sustainable Cities) asked people on site, here asked online with the first author's Helsinki Mapillary sample.\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imageslidergroup\",\n      \"name\": \"greenery_online\",\n      \"title\": \"How much greenery is visible in this image?\",\n      \"description\": \"Please evaluate the amount of greenery visible in this image, from 0 (no visible greenery) to 100 (only greenery is visible). Concentrate on natural greenery, i.e., exclude green-coloured cars, buildings, and other artificial objects.\",\n      \"imageCount\": 1,\n      \"trialCount\": 20,\n      \"scaleMin\": 0,\n      \"scaleMax\": 100,\n      \"isRequired\": true,\n      \"imageFit\": \"contain\",\n      \"dimensions\": [\n       {\n        \"id\": \"greenery\",\n        \"label\": \"Visible greenery\",\n        \"left\": \"0 – no visible greenery\",\n        \"right\": \"100 – only greenery is visible\"\n       }\n      ],\n      \"mediaFolders\": [\n       \"helsinki\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"helsinki_familiarity\",\n      \"title\": \"How well do you know Helsinki?\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": \"resident\",\n        \"text\": \"I live or work there\"\n       },\n       {\n        \"value\": \"visited\",\n        \"text\": \"I have visited\"\n       },\n       {\n        \"value\": \"never\",\n        \"text\": \"I have never been there\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"Age\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": \"18-29\",\n        \"text\": \"18–29\"\n       },\n       {\n        \"value\": \"30-44\",\n        \"text\": \"30–44\"\n       },\n       {\n        \"value\": \"45-64\",\n        \"text\": \"45–64\"\n       },\n       {\n        \"value\": \"65plus\",\n        \"text\": \"65 or older\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#2f6f3e;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Images: Helsinki street-level photos from Mapillary (CC BY-SA 4.0, © Mapillary contributors), sample released by the first author on Hugging Face (Jusba/Greenery_Survey_Helsinki_Mapillary). Question from Torkko, Poom, Willberg &amp; Toivonen (2023), Frontiers in Sustainable Cities 5, 1160995, doi:10.3389/frsc.2023.1160995.</footer>\n<script>\n(function(){\n  var C={\"before\": [], \"after\": [\"helsinki_familiarity\", \"age_group\"], \"tasks\": [\"greenery_online\"], \"minutes\": 5, \"alt\": \"Street-level photo in Helsinki\", \"labels\": {}, \"pickOne\": null, \"heading\": \"How much greenery do you see?\", \"intro\": \"<p>You will see 20 street-level photos from Helsinki, Finland. For each one, move the slider to show how much <b>natural greenery</b> you see, from 0 (no visible greenery) to 100 (only greenery is visible). Ignore green-coloured cars, buildings and other artificial objects.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?'Pair ':'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else if(q.kind==='sliders'||/slidergroup$/.test(q.type)){\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">';\n      (q.dimensions||[]).forEach(function(d){h+='<div class=\"q\"><b>'+esc(d.label)+': <span id=\"v_'+esc(d.id)+'\">–</span></b><input type=\"range\" class=\"rng\" data-d=\"'+esc(d.id)+'\" min=\"'+d.min+'\" max=\"'+d.max+'\" step=\"'+(d.step||1)+'\" value=\"'+Math.round((d.min+d.max)/2)+'\" style=\"width:100%\"><p style=\"display:flex;justify-content:space-between;margin:0\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      h+='<div class=\"row\"><button class=\"btn\" id=\"next\" disabled>Next</button></div><p style=\"font-size:.85rem\">Move the slider to give your answer.</p>';\n      app.innerHTML=h+'<div class=\"err\"></div>';\n      var vals={},rs=app.querySelectorAll('.rng'),nx=document.getElementById('next');\n      rs.forEach(function(r){r.oninput=function(){vals[r.getAttribute('data-d')]=Number(r.value);document.getElementById('v_'+r.getAttribute('data-d')).textContent=r.value;nx.disabled=Object.keys(vals).length<rs.length;};});\n      nx.onclick=function(){nx.disabled=true;SPSite.answer(n,vals,{trial:k}).then(function(r){if(r&&r.ok===false){err(r.error);nx.disabled=false;return;}(done[n]=done[n]||{})[k]=true;nextStep();});};\n      window.scrollTo(0,0);return;\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(lab?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T05:53:14.499Z",
+   "mediaFolders": [
+    "helsinki"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T05:53:14.499Z"
+  },
+  "description": "Helsinki street-level photos rated from 0 (no visible greenery) to 100 (only greenery is visible), the question Torkko, Poom, Willberg & Toivonen (2023, Frontiers in Sustainable Cities) asked people on site, here asked online with the first author's Helsinki Mapillary sample.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2023-torkko-how/helsinki/1082279519365580__513910eb-4443-44f6-8661-d414172e2ae0.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/1082279519365580__513910eb-4443-44f6-8661-d414172e2ae0.jpg",
+   "name": "1082279519365580.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/1082279519365580__513910eb-4443-44f6-8661-d414172e2ae0.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 130578,
+   "uploaded_bytes": 130578,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/111611565366563__63ab482d-cf10-4b40-b6b4-63d1c1f750f0.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/111611565366563__63ab482d-cf10-4b40-b6b4-63d1c1f750f0.jpg",
+   "name": "111611565366563.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/111611565366563__63ab482d-cf10-4b40-b6b4-63d1c1f750f0.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 136026,
+   "uploaded_bytes": 136026,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/1127904514384930__df64bc74-6bac-4dc8-b30d-aa5e25acfefe.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/1127904514384930__df64bc74-6bac-4dc8-b30d-aa5e25acfefe.jpg",
+   "name": "1127904514384930.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/1127904514384930__df64bc74-6bac-4dc8-b30d-aa5e25acfefe.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 93999,
+   "uploaded_bytes": 93999,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/1130498087417770__dfe3cd82-7114-40e7-a07e-9b473ad88c51.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/1130498087417770__dfe3cd82-7114-40e7-a07e-9b473ad88c51.jpg",
+   "name": "1130498087417770.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/1130498087417770__dfe3cd82-7114-40e7-a07e-9b473ad88c51.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 89618,
+   "uploaded_bytes": 89618,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/1155817454909983__abb2422f-8ed8-42aa-8930-993b5e8a13db.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/1155817454909983__abb2422f-8ed8-42aa-8930-993b5e8a13db.jpg",
+   "name": "1155817454909983.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/1155817454909983__abb2422f-8ed8-42aa-8930-993b5e8a13db.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 158072,
+   "uploaded_bytes": 158072,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/1167000087078125__c6ac5ab3-bbe9-4910-a374-05dc04d8429a.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/1167000087078125__c6ac5ab3-bbe9-4910-a374-05dc04d8429a.jpg",
+   "name": "1167000087078125.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/1167000087078125__c6ac5ab3-bbe9-4910-a374-05dc04d8429a.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 87788,
+   "uploaded_bytes": 87788,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/1259906288101366__5b8ca55c-e1c6-4d2b-9ad7-b142cd8a2838.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/1259906288101366__5b8ca55c-e1c6-4d2b-9ad7-b142cd8a2838.jpg",
+   "name": "1259906288101366.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/1259906288101366__5b8ca55c-e1c6-4d2b-9ad7-b142cd8a2838.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 142941,
+   "uploaded_bytes": 142941,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/1269230803493377__1279077a-b488-485c-823b-2b6ca745ac82.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/1269230803493377__1279077a-b488-485c-823b-2b6ca745ac82.jpg",
+   "name": "1269230803493377.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/1269230803493377__1279077a-b488-485c-823b-2b6ca745ac82.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 116454,
+   "uploaded_bytes": 116454,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/128621102558740__284b6423-e728-4223-b59b-60522b5073e2.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/128621102558740__284b6423-e728-4223-b59b-60522b5073e2.jpg",
+   "name": "128621102558740.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/128621102558740__284b6423-e728-4223-b59b-60522b5073e2.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 219240,
+   "uploaded_bytes": 219240,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/1341973059519382__eb80e632-5297-46a0-bab5-c89004b7b1a8.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/1341973059519382__eb80e632-5297-46a0-bab5-c89004b7b1a8.jpg",
+   "name": "1341973059519382.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/1341973059519382__eb80e632-5297-46a0-bab5-c89004b7b1a8.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 86864,
+   "uploaded_bytes": 86864,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/134545901946839__9a541d46-7799-4fdb-8879-6118c1409424.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/134545901946839__9a541d46-7799-4fdb-8879-6118c1409424.jpg",
+   "name": "134545901946839.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/134545901946839__9a541d46-7799-4fdb-8879-6118c1409424.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 193484,
+   "uploaded_bytes": 193484,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/1355245908182432__81d63c50-b550-4194-9cbb-7ecdd2c727eb.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/1355245908182432__81d63c50-b550-4194-9cbb-7ecdd2c727eb.jpg",
+   "name": "1355245908182432.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/1355245908182432__81d63c50-b550-4194-9cbb-7ecdd2c727eb.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 171864,
+   "uploaded_bytes": 171864,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/140726821365856__41b28f44-b6ef-4f5d-8665-13e50ce3056d.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/140726821365856__41b28f44-b6ef-4f5d-8665-13e50ce3056d.jpg",
+   "name": "140726821365856.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/140726821365856__41b28f44-b6ef-4f5d-8665-13e50ce3056d.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 157506,
+   "uploaded_bytes": 157506,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/1451998668483411__e334c97b-92ba-476c-ba65-c128227652f1.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/1451998668483411__e334c97b-92ba-476c-ba65-c128227652f1.jpg",
+   "name": "1451998668483411.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/1451998668483411__e334c97b-92ba-476c-ba65-c128227652f1.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 65783,
+   "uploaded_bytes": 65783,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/154855306517962__4cd1d927-00cb-4c2e-8cdf-9dc13956a08f.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/154855306517962__4cd1d927-00cb-4c2e-8cdf-9dc13956a08f.jpg",
+   "name": "154855306517962.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/154855306517962__4cd1d927-00cb-4c2e-8cdf-9dc13956a08f.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 63853,
+   "uploaded_bytes": 63853,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/155682839771676__85c3426b-3bc9-46f7-ae14-74d8e9a2c1c5.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/155682839771676__85c3426b-3bc9-46f7-ae14-74d8e9a2c1c5.jpg",
+   "name": "155682839771676.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/155682839771676__85c3426b-3bc9-46f7-ae14-74d8e9a2c1c5.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 117275,
+   "uploaded_bytes": 117275,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/1606862832847623__5778b2ce-8b2f-40b7-9976-55719f8dd84a.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/1606862832847623__5778b2ce-8b2f-40b7-9976-55719f8dd84a.jpg",
+   "name": "1606862832847623.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/1606862832847623__5778b2ce-8b2f-40b7-9976-55719f8dd84a.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 118977,
+   "uploaded_bytes": 118977,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/161185982520364__72c0eb72-a31c-47a6-a160-5242a274d408.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/161185982520364__72c0eb72-a31c-47a6-a160-5242a274d408.jpg",
+   "name": "161185982520364.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/161185982520364__72c0eb72-a31c-47a6-a160-5242a274d408.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 176098,
+   "uploaded_bytes": 176098,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/161217822519727__90d9c3c6-de77-497c-91d2-f98079cc1b07.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/161217822519727__90d9c3c6-de77-497c-91d2-f98079cc1b07.jpg",
+   "name": "161217822519727.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/161217822519727__90d9c3c6-de77-497c-91d2-f98079cc1b07.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 182031,
+   "uploaded_bytes": 182031,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/1641320050025397__fcce33d2-b67c-4a22-8df6-0ee9990a9e26.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/1641320050025397__fcce33d2-b67c-4a22-8df6-0ee9990a9e26.jpg",
+   "name": "1641320050025397.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/1641320050025397__fcce33d2-b67c-4a22-8df6-0ee9990a9e26.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 138845,
+   "uploaded_bytes": 138845,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/1643985519710360__4d765dc9-2bb2-4162-aa32-2c248ec1ed37.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/1643985519710360__4d765dc9-2bb2-4162-aa32-2c248ec1ed37.jpg",
+   "name": "1643985519710360.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/1643985519710360__4d765dc9-2bb2-4162-aa32-2c248ec1ed37.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 146117,
+   "uploaded_bytes": 146117,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/167538478595143__e240c0cc-2a8d-46be-ab64-2f0ab6fa0212.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/167538478595143__e240c0cc-2a8d-46be-ab64-2f0ab6fa0212.jpg",
+   "name": "167538478595143.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/167538478595143__e240c0cc-2a8d-46be-ab64-2f0ab6fa0212.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 113277,
+   "uploaded_bytes": 113277,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/174767727897950__2a745a93-9f72-4da4-b318-8d64b740ef1c.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/174767727897950__2a745a93-9f72-4da4-b318-8d64b740ef1c.jpg",
+   "name": "174767727897950.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/174767727897950__2a745a93-9f72-4da4-b318-8d64b740ef1c.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 75528,
+   "uploaded_bytes": 75528,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/1781965625298058__0b639b45-e157-4576-9e5c-f29d5d3a4ab5.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/1781965625298058__0b639b45-e157-4576-9e5c-f29d5d3a4ab5.jpg",
+   "name": "1781965625298058.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/1781965625298058__0b639b45-e157-4576-9e5c-f29d5d3a4ab5.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 80204,
+   "uploaded_bytes": 80204,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/185325403448999__c07cc476-27ab-4062-ab48-5c45c2f5c2cf.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/185325403448999__c07cc476-27ab-4062-ab48-5c45c2f5c2cf.jpg",
+   "name": "185325403448999.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/185325403448999__c07cc476-27ab-4062-ab48-5c45c2f5c2cf.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 162073,
+   "uploaded_bytes": 162073,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/185634169984416__2a296b21-b137-4cd4-bd15-2f64402940e2.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/185634169984416__2a296b21-b137-4cd4-bd15-2f64402940e2.jpg",
+   "name": "185634169984416.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/185634169984416__2a296b21-b137-4cd4-bd15-2f64402940e2.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 100551,
+   "uploaded_bytes": 100551,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/1879523762896784__83257ca9-9116-40fc-a000-5374220702b5.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/1879523762896784__83257ca9-9116-40fc-a000-5374220702b5.jpg",
+   "name": "1879523762896784.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/1879523762896784__83257ca9-9116-40fc-a000-5374220702b5.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 210403,
+   "uploaded_bytes": 210403,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/1925725637593434__e8bf34e8-8c88-461b-88a9-702ecfaedc5b.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/1925725637593434__e8bf34e8-8c88-461b-88a9-702ecfaedc5b.jpg",
+   "name": "1925725637593434.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/1925725637593434__e8bf34e8-8c88-461b-88a9-702ecfaedc5b.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 89102,
+   "uploaded_bytes": 89102,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/195760322276407__d8615948-a612-4a81-8c03-a040192b4440.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/195760322276407__d8615948-a612-4a81-8c03-a040192b4440.jpg",
+   "name": "195760322276407.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/195760322276407__d8615948-a612-4a81-8c03-a040192b4440.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 111908,
+   "uploaded_bytes": 111908,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/203233578283068__14386be2-13db-4fa2-a9e8-90df77063fc4.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/203233578283068__14386be2-13db-4fa2-a9e8-90df77063fc4.jpg",
+   "name": "203233578283068.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/203233578283068__14386be2-13db-4fa2-a9e8-90df77063fc4.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 73333,
+   "uploaded_bytes": 73333,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/212321607387477__b5bdff27-e069-41fb-8e6e-915913c85d53.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/212321607387477__b5bdff27-e069-41fb-8e6e-915913c85d53.jpg",
+   "name": "212321607387477.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/212321607387477__b5bdff27-e069-41fb-8e6e-915913c85d53.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 72609,
+   "uploaded_bytes": 72609,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/214349670196126__486be369-1111-42c3-aad9-b644782dfa12.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/214349670196126__486be369-1111-42c3-aad9-b644782dfa12.jpg",
+   "name": "214349670196126.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/214349670196126__486be369-1111-42c3-aad9-b644782dfa12.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 141754,
+   "uploaded_bytes": 141754,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/215334356768435__719af3b6-9657-4317-a878-9c0f469f57c7.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/215334356768435__719af3b6-9657-4317-a878-9c0f469f57c7.jpg",
+   "name": "215334356768435.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/215334356768435__719af3b6-9657-4317-a878-9c0f469f57c7.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 108343,
+   "uploaded_bytes": 108343,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/215652870111354__0f08d6b5-9200-46c0-927e-d996bd87f94f.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/215652870111354__0f08d6b5-9200-46c0-927e-d996bd87f94f.jpg",
+   "name": "215652870111354.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/215652870111354__0f08d6b5-9200-46c0-927e-d996bd87f94f.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 101971,
+   "uploaded_bytes": 101971,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/215714866729798__02c28452-9c70-4486-b05d-5690a39ec846.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/215714866729798__02c28452-9c70-4486-b05d-5690a39ec846.jpg",
+   "name": "215714866729798.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/215714866729798__02c28452-9c70-4486-b05d-5690a39ec846.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 108685,
+   "uploaded_bytes": 108685,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/218368943106095__df57debb-97f3-4723-be85-8587069656e5.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/218368943106095__df57debb-97f3-4723-be85-8587069656e5.jpg",
+   "name": "218368943106095.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/218368943106095__df57debb-97f3-4723-be85-8587069656e5.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 121349,
+   "uploaded_bytes": 121349,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/223982136195777__ec5f60b3-dc9f-47e9-8d22-1054f120dce9.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/223982136195777__ec5f60b3-dc9f-47e9-8d22-1054f120dce9.jpg",
+   "name": "223982136195777.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/223982136195777__ec5f60b3-dc9f-47e9-8d22-1054f120dce9.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 206372,
+   "uploaded_bytes": 206372,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/249256176993225__89380aa7-cbbc-42fe-bbad-b4215db14313.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/249256176993225__89380aa7-cbbc-42fe-bbad-b4215db14313.jpg",
+   "name": "249256176993225.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/249256176993225__89380aa7-cbbc-42fe-bbad-b4215db14313.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 116402,
+   "uploaded_bytes": 116402,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/2566354123660551__276a66e2-320f-4f6a-82da-e035692bb48d.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/2566354123660551__276a66e2-320f-4f6a-82da-e035692bb48d.jpg",
+   "name": "2566354123660551.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/2566354123660551__276a66e2-320f-4f6a-82da-e035692bb48d.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 159309,
+   "uploaded_bytes": 159309,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/258738789324402__fcb8399a-b1ca-4710-80c6-8b5591e82e78.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/258738789324402__fcb8399a-b1ca-4710-80c6-8b5591e82e78.jpg",
+   "name": "258738789324402.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/258738789324402__fcb8399a-b1ca-4710-80c6-8b5591e82e78.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 118929,
+   "uploaded_bytes": 118929,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/263008298938068__235723fa-ddb2-426f-b8f7-539d32fae0bd.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/263008298938068__235723fa-ddb2-426f-b8f7-539d32fae0bd.jpg",
+   "name": "263008298938068.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/263008298938068__235723fa-ddb2-426f-b8f7-539d32fae0bd.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 139811,
+   "uploaded_bytes": 139811,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/269369574922735__1bcf3919-43b1-48da-aea8-0ba92a55d035.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/269369574922735__1bcf3919-43b1-48da-aea8-0ba92a55d035.jpg",
+   "name": "269369574922735.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/269369574922735__1bcf3919-43b1-48da-aea8-0ba92a55d035.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 145529,
+   "uploaded_bytes": 145529,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/272475164577175__01ee8c34-cac1-44c3-8f00-7d2bcaec7365.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/272475164577175__01ee8c34-cac1-44c3-8f00-7d2bcaec7365.jpg",
+   "name": "272475164577175.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/272475164577175__01ee8c34-cac1-44c3-8f00-7d2bcaec7365.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 91989,
+   "uploaded_bytes": 91989,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/279263606935359__24534c1d-3314-4be8-b577-07cae4a2ed70.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/279263606935359__24534c1d-3314-4be8-b577-07cae4a2ed70.jpg",
+   "name": "279263606935359.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/279263606935359__24534c1d-3314-4be8-b577-07cae4a2ed70.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 204640,
+   "uploaded_bytes": 204640,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/2837606099890930__58408766-ec5c-473b-8a54-9c65b4f0bf09.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/2837606099890930__58408766-ec5c-473b-8a54-9c65b4f0bf09.jpg",
+   "name": "2837606099890930.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/2837606099890930__58408766-ec5c-473b-8a54-9c65b4f0bf09.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 116564,
+   "uploaded_bytes": 116564,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/286358583183759__f7f5b3a0-bba0-4fda-a7fc-14676b49c3ae.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/286358583183759__f7f5b3a0-bba0-4fda-a7fc-14676b49c3ae.jpg",
+   "name": "286358583183759.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/286358583183759__f7f5b3a0-bba0-4fda-a7fc-14676b49c3ae.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 117704,
+   "uploaded_bytes": 117704,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/2938543903060825__7f85a4df-045a-4c23-94f1-35234889b6f6.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/2938543903060825__7f85a4df-045a-4c23-94f1-35234889b6f6.jpg",
+   "name": "2938543903060825.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/2938543903060825__7f85a4df-045a-4c23-94f1-35234889b6f6.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 61108,
+   "uploaded_bytes": 61108,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/294026222375881__e20dc1e9-9704-4fca-8358-ba552493176c.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/294026222375881__e20dc1e9-9704-4fca-8358-ba552493176c.jpg",
+   "name": "294026222375881.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/294026222375881__e20dc1e9-9704-4fca-8358-ba552493176c.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 115023,
+   "uploaded_bytes": 115023,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/298121332262820__ef151223-66c8-4451-af8e-f7c2f2fac7d1.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/298121332262820__ef151223-66c8-4451-af8e-f7c2f2fac7d1.jpg",
+   "name": "298121332262820.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/298121332262820__ef151223-66c8-4451-af8e-f7c2f2fac7d1.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 101172,
+   "uploaded_bytes": 101172,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/2985385785120632__95a7b9df-7981-4c09-ad66-799418ed0ede.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/2985385785120632__95a7b9df-7981-4c09-ad66-799418ed0ede.jpg",
+   "name": "2985385785120632.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/2985385785120632__95a7b9df-7981-4c09-ad66-799418ed0ede.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 175916,
+   "uploaded_bytes": 175916,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/299298461682980__74061b40-b5bf-4252-890c-f6f725b0f6c6.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/299298461682980__74061b40-b5bf-4252-890c-f6f725b0f6c6.jpg",
+   "name": "299298461682980.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/299298461682980__74061b40-b5bf-4252-890c-f6f725b0f6c6.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 106728,
+   "uploaded_bytes": 106728,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/300097921820823__f3eecb63-c044-4692-b6ec-f7d97cad4798.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/300097921820823__f3eecb63-c044-4692-b6ec-f7d97cad4798.jpg",
+   "name": "300097921820823.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/300097921820823__f3eecb63-c044-4692-b6ec-f7d97cad4798.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 140225,
+   "uploaded_bytes": 140225,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/300471928203773__ff151bd0-2620-47c0-92e1-b8abdd1b1e11.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/300471928203773__ff151bd0-2620-47c0-92e1-b8abdd1b1e11.jpg",
+   "name": "300471928203773.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/300471928203773__ff151bd0-2620-47c0-92e1-b8abdd1b1e11.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 88718,
+   "uploaded_bytes": 88718,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/303124291358683__e9dc244d-1580-46ac-acbb-9889a10726fe.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/303124291358683__e9dc244d-1580-46ac-acbb-9889a10726fe.jpg",
+   "name": "303124291358683.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/303124291358683__e9dc244d-1580-46ac-acbb-9889a10726fe.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 98616,
+   "uploaded_bytes": 98616,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/304708805137534__d462563d-e2f6-40d7-ac4e-0f3254685539.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/304708805137534__d462563d-e2f6-40d7-ac4e-0f3254685539.jpg",
+   "name": "304708805137534.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/304708805137534__d462563d-e2f6-40d7-ac4e-0f3254685539.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 97701,
+   "uploaded_bytes": 97701,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/311017607101538__f313b087-74bb-490e-bffb-1e8ba06d01b0.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/311017607101538__f313b087-74bb-490e-bffb-1e8ba06d01b0.jpg",
+   "name": "311017607101538.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/311017607101538__f313b087-74bb-490e-bffb-1e8ba06d01b0.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 194284,
+   "uploaded_bytes": 194284,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/315185513323950__e2bddb45-69da-4585-a893-da38f61f7017.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/315185513323950__e2bddb45-69da-4585-a893-da38f61f7017.jpg",
+   "name": "315185513323950.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/315185513323950__e2bddb45-69da-4585-a893-da38f61f7017.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 130315,
+   "uploaded_bytes": 130315,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/317567193055807__dc4a690b-bfcc-49d8-8624-222246eb0682.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/317567193055807__dc4a690b-bfcc-49d8-8624-222246eb0682.jpg",
+   "name": "317567193055807.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/317567193055807__dc4a690b-bfcc-49d8-8624-222246eb0682.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 94290,
+   "uploaded_bytes": 94290,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/318177756440535__f51f4957-390c-475e-b5cd-806fe19f2ae4.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/318177756440535__f51f4957-390c-475e-b5cd-806fe19f2ae4.jpg",
+   "name": "318177756440535.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/318177756440535__f51f4957-390c-475e-b5cd-806fe19f2ae4.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 86000,
+   "uploaded_bytes": 86000,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/339984704218218__2067f400-ca95-4d43-b94d-c668114d95f4.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/339984704218218__2067f400-ca95-4d43-b94d-c668114d95f4.jpg",
+   "name": "339984704218218.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/339984704218218__2067f400-ca95-4d43-b94d-c668114d95f4.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 136729,
+   "uploaded_bytes": 136729,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/373166457373736__f2dc776a-be9c-46eb-9f69-f7f11201be7a.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/373166457373736__f2dc776a-be9c-46eb-9f69-f7f11201be7a.jpg",
+   "name": "373166457373736.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/373166457373736__f2dc776a-be9c-46eb-9f69-f7f11201be7a.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 100184,
+   "uploaded_bytes": 100184,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/381493123151067__85bd3c9b-b65d-4dc9-bacf-964662417d22.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/381493123151067__85bd3c9b-b65d-4dc9-bacf-964662417d22.jpg",
+   "name": "381493123151067.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/381493123151067__85bd3c9b-b65d-4dc9-bacf-964662417d22.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 122418,
+   "uploaded_bytes": 122418,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/424717696058641__1873ac81-a440-4550-bc57-129378ab19ea.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/424717696058641__1873ac81-a440-4550-bc57-129378ab19ea.jpg",
+   "name": "424717696058641.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/424717696058641__1873ac81-a440-4550-bc57-129378ab19ea.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 167775,
+   "uploaded_bytes": 167775,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/4333566116674396__7d48726e-7b52-40b1-a76a-c4711975e493.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/4333566116674396__7d48726e-7b52-40b1-a76a-c4711975e493.jpg",
+   "name": "4333566116674396.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/4333566116674396__7d48726e-7b52-40b1-a76a-c4711975e493.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 135489,
+   "uploaded_bytes": 135489,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/464233061301930__dbb0c7a2-91d3-4b89-9238-56296db1645b.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/464233061301930__dbb0c7a2-91d3-4b89-9238-56296db1645b.jpg",
+   "name": "464233061301930.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/464233061301930__dbb0c7a2-91d3-4b89-9238-56296db1645b.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 51775,
+   "uploaded_bytes": 51775,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/464838988106127__d3550d41-fd57-47dd-a243-a4a7303f4d38.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/464838988106127__d3550d41-fd57-47dd-a243-a4a7303f4d38.jpg",
+   "name": "464838988106127.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/464838988106127__d3550d41-fd57-47dd-a243-a4a7303f4d38.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 191868,
+   "uploaded_bytes": 191868,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/465180817882594__02df3b39-04c6-4942-90bd-a7fc74ad6652.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/465180817882594__02df3b39-04c6-4942-90bd-a7fc74ad6652.jpg",
+   "name": "465180817882594.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/465180817882594__02df3b39-04c6-4942-90bd-a7fc74ad6652.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 57101,
+   "uploaded_bytes": 57101,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/471955927461486__44548d0b-d1e9-4ec2-baeb-c39a27496d82.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/471955927461486__44548d0b-d1e9-4ec2-baeb-c39a27496d82.jpg",
+   "name": "471955927461486.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/471955927461486__44548d0b-d1e9-4ec2-baeb-c39a27496d82.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 119870,
+   "uploaded_bytes": 119870,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/475821483701035__3e1f56f5-a4ea-4991-bd10-bb6776d36dd5.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/475821483701035__3e1f56f5-a4ea-4991-bd10-bb6776d36dd5.jpg",
+   "name": "475821483701035.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/475821483701035__3e1f56f5-a4ea-4991-bd10-bb6776d36dd5.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 112214,
+   "uploaded_bytes": 112214,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/478710333381171__6cbfb917-8c45-474d-8eef-febd8120056f.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/478710333381171__6cbfb917-8c45-474d-8eef-febd8120056f.jpg",
+   "name": "478710333381171.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/478710333381171__6cbfb917-8c45-474d-8eef-febd8120056f.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 100981,
+   "uploaded_bytes": 100981,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/484735116069015__5b6f0414-7abc-4fc2-ac8c-1bb221f46edb.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/484735116069015__5b6f0414-7abc-4fc2-ac8c-1bb221f46edb.jpg",
+   "name": "484735116069015.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/484735116069015__5b6f0414-7abc-4fc2-ac8c-1bb221f46edb.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 67710,
+   "uploaded_bytes": 67710,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/491466848731177__998b6331-079c-4a40-bf3f-7838ed48f1d2.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/491466848731177__998b6331-079c-4a40-bf3f-7838ed48f1d2.jpg",
+   "name": "491466848731177.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/491466848731177__998b6331-079c-4a40-bf3f-7838ed48f1d2.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 89079,
+   "uploaded_bytes": 89079,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/497550007963307__df586360-fcf9-43f5-8d83-c19e3f558666.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/497550007963307__df586360-fcf9-43f5-8d83-c19e3f558666.jpg",
+   "name": "497550007963307.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/497550007963307__df586360-fcf9-43f5-8d83-c19e3f558666.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 220279,
+   "uploaded_bytes": 220279,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/497874691561498__bd5d8f81-8c00-46b1-9440-728480dc890b.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/497874691561498__bd5d8f81-8c00-46b1-9440-728480dc890b.jpg",
+   "name": "497874691561498.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/497874691561498__bd5d8f81-8c00-46b1-9440-728480dc890b.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 110058,
+   "uploaded_bytes": 110058,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/503869787290186__fd5f0dde-856d-4276-8706-3f244e990008.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/503869787290186__fd5f0dde-856d-4276-8706-3f244e990008.jpg",
+   "name": "503869787290186.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/503869787290186__fd5f0dde-856d-4276-8706-3f244e990008.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 177452,
+   "uploaded_bytes": 177452,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/507904866900301__0fa5fb2e-894f-4644-a87b-67b789c1eb2d.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/507904866900301__0fa5fb2e-894f-4644-a87b-67b789c1eb2d.jpg",
+   "name": "507904866900301.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/507904866900301__0fa5fb2e-894f-4644-a87b-67b789c1eb2d.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 122066,
+   "uploaded_bytes": 122066,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/512136756496018__bfe8aaaf-160f-4e20-9bd1-0dcc91ed0431.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/512136756496018__bfe8aaaf-160f-4e20-9bd1-0dcc91ed0431.jpg",
+   "name": "512136756496018.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/512136756496018__bfe8aaaf-160f-4e20-9bd1-0dcc91ed0431.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 172053,
+   "uploaded_bytes": 172053,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/513284423385787__5faa1caf-6a23-43dc-86a4-fd4982bfb8d4.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/513284423385787__5faa1caf-6a23-43dc-86a4-fd4982bfb8d4.jpg",
+   "name": "513284423385787.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/513284423385787__5faa1caf-6a23-43dc-86a4-fd4982bfb8d4.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 140825,
+   "uploaded_bytes": 140825,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/516653982680193__aebf484c-b4c5-4b7a-acd4-9f28f2a19784.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/516653982680193__aebf484c-b4c5-4b7a-acd4-9f28f2a19784.jpg",
+   "name": "516653982680193.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/516653982680193__aebf484c-b4c5-4b7a-acd4-9f28f2a19784.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 164390,
+   "uploaded_bytes": 164390,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/519662126062480__d1351882-2dc2-4bf2-bef6-5dc4ced389dd.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/519662126062480__d1351882-2dc2-4bf2-bef6-5dc4ced389dd.jpg",
+   "name": "519662126062480.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/519662126062480__d1351882-2dc2-4bf2-bef6-5dc4ced389dd.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 97405,
+   "uploaded_bytes": 97405,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/5652832348096667__5b94f9f2-32be-4d61-89e3-cd7c6aed32a8.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/5652832348096667__5b94f9f2-32be-4d61-89e3-cd7c6aed32a8.jpg",
+   "name": "5652832348096667.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/5652832348096667__5b94f9f2-32be-4d61-89e3-cd7c6aed32a8.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 133470,
+   "uploaded_bytes": 133470,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/574433653960063__890cf6fd-0159-4702-8c48-dd345a7515cc.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/574433653960063__890cf6fd-0159-4702-8c48-dd345a7515cc.jpg",
+   "name": "574433653960063.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/574433653960063__890cf6fd-0159-4702-8c48-dd345a7515cc.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 124155,
+   "uploaded_bytes": 124155,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/599907358078232__0a32be97-c69a-4543-b3ac-c007e78f39a4.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/599907358078232__0a32be97-c69a-4543-b3ac-c007e78f39a4.jpg",
+   "name": "599907358078232.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/599907358078232__0a32be97-c69a-4543-b3ac-c007e78f39a4.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 120758,
+   "uploaded_bytes": 120758,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/630576847919896__4669b482-67c6-4f2d-9538-47da140bd3a6.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/630576847919896__4669b482-67c6-4f2d-9538-47da140bd3a6.jpg",
+   "name": "630576847919896.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/630576847919896__4669b482-67c6-4f2d-9538-47da140bd3a6.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 162972,
+   "uploaded_bytes": 162972,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/648555876753773__4d6ee29a-6da3-4495-912d-30e8d729e528.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/648555876753773__4d6ee29a-6da3-4495-912d-30e8d729e528.jpg",
+   "name": "648555876753773.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/648555876753773__4d6ee29a-6da3-4495-912d-30e8d729e528.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 261427,
+   "uploaded_bytes": 261427,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/751320122227180__db36a054-d1f8-42fd-9685-bab1d2fecfd1.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/751320122227180__db36a054-d1f8-42fd-9685-bab1d2fecfd1.jpg",
+   "name": "751320122227180.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/751320122227180__db36a054-d1f8-42fd-9685-bab1d2fecfd1.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 178583,
+   "uploaded_bytes": 178583,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/763837979900523__c9f3a321-8236-411c-a746-cac968eea6d5.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/763837979900523__c9f3a321-8236-411c-a746-cac968eea6d5.jpg",
+   "name": "763837979900523.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/763837979900523__c9f3a321-8236-411c-a746-cac968eea6d5.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 122282,
+   "uploaded_bytes": 122282,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/774668033216254__a612dbba-cac7-4f78-bf44-47eae8713b08.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/774668033216254__a612dbba-cac7-4f78-bf44-47eae8713b08.jpg",
+   "name": "774668033216254.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/774668033216254__a612dbba-cac7-4f78-bf44-47eae8713b08.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 146820,
+   "uploaded_bytes": 146820,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/788478755202855__a600fd56-8370-4ea1-811e-eb252df5b3c9.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/788478755202855__a600fd56-8370-4ea1-811e-eb252df5b3c9.jpg",
+   "name": "788478755202855.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/788478755202855__a600fd56-8370-4ea1-811e-eb252df5b3c9.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 74206,
+   "uploaded_bytes": 74206,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/797720077827195__7ce1520e-31fd-43e6-9043-8da447f9d2f2.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/797720077827195__7ce1520e-31fd-43e6-9043-8da447f9d2f2.jpg",
+   "name": "797720077827195.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/797720077827195__7ce1520e-31fd-43e6-9043-8da447f9d2f2.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 203622,
+   "uploaded_bytes": 203622,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/817245062267666__2e328787-d9d1-4ff4-9d3d-4244cac61d02.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/817245062267666__2e328787-d9d1-4ff4-9d3d-4244cac61d02.jpg",
+   "name": "817245062267666.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/817245062267666__2e328787-d9d1-4ff4-9d3d-4244cac61d02.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 96674,
+   "uploaded_bytes": 96674,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/830308820908543__2e4b758b-6ee6-408d-b71c-40efd19c1751.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/830308820908543__2e4b758b-6ee6-408d-b71c-40efd19c1751.jpg",
+   "name": "830308820908543.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/830308820908543__2e4b758b-6ee6-408d-b71c-40efd19c1751.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 143965,
+   "uploaded_bytes": 143965,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/833003544238726__a3884f5a-a211-4488-9596-08a7b7782250.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/833003544238726__a3884f5a-a211-4488-9596-08a7b7782250.jpg",
+   "name": "833003544238726.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/833003544238726__a3884f5a-a211-4488-9596-08a7b7782250.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 159407,
+   "uploaded_bytes": 159407,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/847699955956939__f7f75338-76d3-47c2-8817-6c47bad848ff.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/847699955956939__f7f75338-76d3-47c2-8817-6c47bad848ff.jpg",
+   "name": "847699955956939.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/847699955956939__f7f75338-76d3-47c2-8817-6c47bad848ff.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 120281,
+   "uploaded_bytes": 120281,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/864574574125431__fe0e73bc-7cf7-49c0-83e1-52aab768b217.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/864574574125431__fe0e73bc-7cf7-49c0-83e1-52aab768b217.jpg",
+   "name": "864574574125431.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/864574574125431__fe0e73bc-7cf7-49c0-83e1-52aab768b217.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 89610,
+   "uploaded_bytes": 89610,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/880087059388550__1d568c95-0b13-4bfe-9681-7dca45f0119a.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/880087059388550__1d568c95-0b13-4bfe-9681-7dca45f0119a.jpg",
+   "name": "880087059388550.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/880087059388550__1d568c95-0b13-4bfe-9681-7dca45f0119a.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 99279,
+   "uploaded_bytes": 99279,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/882554609191088__a8ee34ad-3a48-4e07-9cae-9bd7948617c8.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/882554609191088__a8ee34ad-3a48-4e07-9cae-9bd7948617c8.jpg",
+   "name": "882554609191088.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/882554609191088__a8ee34ad-3a48-4e07-9cae-9bd7948617c8.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 89663,
+   "uploaded_bytes": 89663,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/906144804653688__09bf183f-c3f6-460b-a7da-3a6e62f17c8e.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/906144804653688__09bf183f-c3f6-460b-a7da-3a6e62f17c8e.jpg",
+   "name": "906144804653688.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/906144804653688__09bf183f-c3f6-460b-a7da-3a6e62f17c8e.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 123028,
+   "uploaded_bytes": 123028,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/919840065481850__3224834a-8ab3-475d-abe5-c65f7c83e1af.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/919840065481850__3224834a-8ab3-475d-abe5-c65f7c83e1af.jpg",
+   "name": "919840065481850.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/919840065481850__3224834a-8ab3-475d-abe5-c65f7c83e1af.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 127173,
+   "uploaded_bytes": 127173,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-torkko-how/helsinki/960106004764550__aff86c8e-0c64-4728-a387-f6ea908e6aff.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-torkko-how/helsinki/960106004764550__aff86c8e-0c64-4728-a387-f6ea908e6aff.jpg",
+   "name": "960106004764550.jpg",
+   "type": "image",
+   "folder": "helsinki",
+   "media_id": "templates/2023-torkko-how/helsinki/960106004764550__aff86c8e-0c64-4728-a387-f6ea908e6aff.jpg",
+   "logicalFolder": "helsinki",
+   "original_bytes": 120167,
+   "uploaded_bytes": 120167,
+   "image_compressed": false
   }
+ ],
+ "paper": {
+  "title": "How to best map greenery from a human perspective? Comparing computational measurements with human perception",
+  "authors": [
+   "Torkko J.",
+   "Poom A.",
+   "Willberg E.",
+   "Toivonen T."
+  ],
+  "year": 2023,
+  "venue": "Frontiers in Sustainable Cities",
+  "doi": "10.3389/frsc.2023.1160995",
+  "url": "https://doi.org/10.3389/frsc.2023.1160995"
+ }
 }

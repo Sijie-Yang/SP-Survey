@@ -1,0 +1,1136 @@
+{
+ "id": "2026-kuang-street",
+ "name": "Street Perception of Residents and Tourists in Xi'an",
+ "description": "Method replication: same task, dimensions, scale and viewing rule as the paper; the images are not the paper's stimuli (74 Baidu street views re-fetched inside the city walls of Xi'an, Mingcheng District, each stitched from four directions). Participants first say whether they are a resident or a recent tourist, then rate 50 random street views on five dimensions with 0–100 sliders (safety, comfort, convenience, pleasure, sociability, with the paper's definitions); each picture must stay on screen for at least 10 s before the ratings can be sent.\n\nOriginal study: Kuang, Yang, Zhu & Chang (2026), PLOS ONE 21(3), e0345073. 15 residents of Mingcheng District and 15 tourists who had visited in the past 12 months rated stitched 3600×600 Baidu SVIs online, 50 images each, on the five dimensions (0–100, at least 10 s per image); random forest and SHAP models compared what drives residents' and tourists' perceptions across 5,309 images.\n\nDifferences from the original study: (1) images are newly fetched Baidu views, not the paper's images; (2) images are drawn at random rather than by the paper's stratified assignment that gave each image raters from both groups; (3) no researcher-led calibration with sample images, only written definitions; (4) a \"neither\" option and two background questions were added.",
+ "author": "Kuang, Yang, Zhu & Chang",
+ "year": "2026",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "street view",
+  "residents",
+  "tourists",
+  "safety",
+  "comfort",
+  "sociability",
+  "Xi'an",
+  "Baidu",
+  "source:paper",
+  "modality:street_view",
+  "modality:panorama",
+  "task:multi_rating",
+  "concept:safety",
+  "concept:comfort",
+  "concept:preference",
+  "concept:place",
+  "participants:residents",
+  "sample:lt100",
+  "country:China",
+  "city:Xi'an"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1371/journal.pone.0345073",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T19:50:46.84+00:00",
+ "updatedAt": "2026-11-27T19:51:08.123+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about_you_first",
+    "elements": [
+     {
+      "name": "user_group",
+      "type": "radiogroup",
+      "title": "Which describes you best?",
+      "choices": [
+       {
+        "text": "I live in Xi'an's Mingcheng District (inside the city walls)",
+        "value": "resident"
+       },
+       {
+        "text": "I visited Xi'an as a tourist in the past 12 months",
+        "value": "tourist"
+       },
+       {
+        "text": "Neither",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "street_perception",
+      "type": "imageslidergroup",
+      "title": "Rate this street from 0 (completely disagree) to 100 (fully agree)",
+      "choices": [],
+      "imageFit": "contain",
+      "scaleMax": 100,
+      "scaleMin": 0,
+      "dimensions": [
+       {
+        "id": "safety",
+        "max": 100,
+        "min": 0,
+        "left": "0 = completely disagree",
+        "step": 1,
+        "label": "Safety",
+        "right": "100 = fully agree"
+       },
+       {
+        "id": "comfort",
+        "max": 100,
+        "min": 0,
+        "left": "0 = completely disagree",
+        "step": 1,
+        "label": "Comfort",
+        "right": "100 = fully agree"
+       },
+       {
+        "id": "convenience",
+        "max": 100,
+        "min": 0,
+        "left": "0 = completely disagree",
+        "step": 1,
+        "label": "Convenience",
+        "right": "100 = fully agree"
+       },
+       {
+        "id": "pleasure",
+        "max": 100,
+        "min": 0,
+        "left": "0 = completely disagree",
+        "step": 1,
+        "label": "Pleasure",
+        "right": "100 = fully agree"
+       },
+       {
+        "id": "sociability",
+        "max": 100,
+        "min": 0,
+        "left": "0 = completely disagree",
+        "step": 1,
+        "label": "Sociability",
+        "right": "100 = fully agree"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "minSeconds": 10,
+      "trialCount": 50,
+      "mediaFolders": [
+       "xian"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "What is your gender?",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "How old are you?",
+      "choices": [
+       {
+        "text": "18–29",
+        "value": "18_29"
+       },
+       {
+        "text": "30–44",
+        "value": "30_44"
+       },
+       {
+        "text": "45–59",
+        "value": "45_59"
+       },
+       {
+        "text": "60 or older",
+        "value": "60_plus"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Street Perception of Residents and Tourists in Xi'an",
+  "locale": "en",
+  "spSite": {
+   "id": "site-58326d98757af6d4",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Street Perception of Residents and Tourists in Xi&#x27;an</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Street Perception of Residents and Tourists in Xi'an\",\n  \"description\": \"\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you_first\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"user_group\",\n      \"title\": \"Which describes you best?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"resident\",\n        \"text\": \"I live in Xi'an's Mingcheng District (inside the city walls)\"\n       },\n       {\n        \"value\": \"tourist\",\n        \"text\": \"I visited Xi'an as a tourist in the past 12 months\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Neither\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imageslidergroup\",\n      \"name\": \"street_perception\",\n      \"title\": \"Rate this street from 0 (completely disagree) to 100 (fully agree)\",\n      \"isRequired\": true,\n      \"imageCount\": 1,\n      \"trialCount\": 50,\n      \"scaleMin\": 0,\n      \"scaleMax\": 100,\n      \"dimensions\": [\n       {\n        \"id\": \"safety\",\n        \"label\": \"Safety\",\n        \"left\": \"0 = completely disagree\",\n        \"right\": \"100 = fully agree\",\n        \"min\": 0,\n        \"max\": 100,\n        \"step\": 1\n       },\n       {\n        \"id\": \"comfort\",\n        \"label\": \"Comfort\",\n        \"left\": \"0 = completely disagree\",\n        \"right\": \"100 = fully agree\",\n        \"min\": 0,\n        \"max\": 100,\n        \"step\": 1\n       },\n       {\n        \"id\": \"convenience\",\n        \"label\": \"Convenience\",\n        \"left\": \"0 = completely disagree\",\n        \"right\": \"100 = fully agree\",\n        \"min\": 0,\n        \"max\": 100,\n        \"step\": 1\n       },\n       {\n        \"id\": \"pleasure\",\n        \"label\": \"Pleasure\",\n        \"left\": \"0 = completely disagree\",\n        \"right\": \"100 = fully agree\",\n        \"min\": 0,\n        \"max\": 100,\n        \"step\": 1\n       },\n       {\n        \"id\": \"sociability\",\n        \"label\": \"Sociability\",\n        \"left\": \"0 = completely disagree\",\n        \"right\": \"100 = fully agree\",\n        \"min\": 0,\n        \"max\": 100,\n        \"step\": 1\n       }\n      ],\n      \"minSeconds\": 10,\n      \"mediaFolders\": [\n       \"xian\"\n      ],\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"What is your gender?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"18_29\",\n        \"text\": \"18–29\"\n       },\n       {\n        \"value\": \"30_44\",\n        \"text\": \"30–44\"\n       },\n       {\n        \"value\": \"45_59\",\n        \"text\": \"45–59\"\n       },\n       {\n        \"value\": \"60_plus\",\n        \"text\": \"60 or older\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#7a3d2e;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.rng{accent-color:var(--accent)}.lks{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:6px;margin:6px 0 2px}.lk{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:9px 0;font:inherit;cursor:pointer}.lk[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}.q{margin-top:10px}.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}.scale.num{grid-template-columns:repeat(5,1fr)}h1{font-size:1.2rem}}\n.shot{aspect-ratio:6/1!important;max-height:none!important}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Mingcheng District, Xi'an, Baidu street view (© Baidu), four directions stitched. Task, dimensions and scale from Kuang, Yang, Zhu &amp; Chang, “Explaining urban street perception inequities between residents and tourists using interpretable machine learning”, PLOS ONE 21(3), e0345073 (2026), doi:10.1371/journal.pone.0345073.</footer>\n<script>\n(function(){\n  var C={\"before\": [\"user_group\"], \"after\": [\"gender\", \"age_group\"], \"tasks\": [\"street_perception\"], \"minutes\": 25, \"alt\": \"Street view in Xi'an\", \"labels\": {}, \"buttons\": [], \"minSec\": {\"street_perception\": 10}, \"words\": {}, \"captions\": {}, \"pickOne\": null, \"heading\": \"How does this street in Xi'an feel to you?\", \"intro\": \"<p>You will see <b>50 street views</b> from inside the city walls of Xi'an (Mingcheng District), one at a time. Each picture shows one spot looking in four directions side by side. Look at each picture for at least <b>10 seconds</b>, then rate it on five qualities from 0 (completely disagree) to 100 (fully agree), going by your first impression:</p><ul><li><b>Safety</b>: The perceived sense of security, including freedom from threats such as traffic conflicts, poor lighting or unsafe design.</li><li><b>Comfort</b>: The perceived ease of the street space: cleanliness, greenery, spatial openness and walkability.</li><li><b>Convenience</b>: The ease of accessing nearby transport, services or street connections.</li><li><b>Pleasure</b>: Visual appeal and emotional enjoyment: how attractive and beautiful the environment is.</li><li><b>Sociability</b>: The space's capacity to promote interaction between people, foster community belonging and give a strong sense of place.</li></ul>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?'Pair ':'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else if(q.kind==='sliders'||/slidergroup$/.test(q.type)){\n      h+='<img class=\"shot\" style=\"max-height:'+((q.dimensions||[]).length>4?'32vh;position:sticky;top:0;z-index:2':(q.dimensions||[]).length>2?'40vh':'56vh')+'\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">';\n      var cu=(md[0]&&md[0].url)||'',cap=Object.keys(C.captions||{}).filter(function(x){return cu.indexOf(x)>=0;})[0];\n      if(cap)h+='<p style=\"margin:8px 0 0;color:var(--ink)\">'+C.captions[cap]+'</p>';\n      var BT=(C.buttons||[]).indexOf(n)>=0,W=(C.words||{})[n]||{};\n      if(BT)(q.dimensions||[]).forEach(function(d){var b='';for(var v=d.min;v<=d.max;v+=(d.step||1))b+='<button type=\"button\" class=\"lk\" data-d=\"'+esc(d.id)+'\" data-val=\"'+v+'\">'+esc(W[d.id]?W[d.id][v-d.min]:v)+'</button>';\n        h+='<div class=\"q\"><b>'+esc(d.label)+'</b><div class=\"lks\" style=\"--n:'+Math.round((d.max-d.min)/(d.step||1)+1)+'\">'+b+'</div><p style=\"display:flex;justify-content:space-between;margin:0;font-size:.85rem\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      else (q.dimensions||[]).forEach(function(d){h+='<div class=\"q\"><b>'+esc(d.label)+': <span id=\"v_'+esc(d.id)+'\">–</span></b><input type=\"range\" class=\"rng\" data-d=\"'+esc(d.id)+'\" min=\"'+d.min+'\" max=\"'+d.max+'\" step=\"'+(d.step||1)+'\" value=\"'+Math.round((d.min+d.max)/2)+'\" style=\"width:100%\"><p style=\"display:flex;justify-content:space-between;margin:0\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      h+='<div class=\"row\"><button class=\"btn\" id=\"next\" disabled>Next</button></div><p style=\"font-size:.85rem\">'+(BT?'Answer every line to continue.':'Move the slider to give your answer.')+'</p>';\n      app.innerHTML=h+'<div class=\"err\"></div>';\n      var vals={},rs=app.querySelectorAll('.rng'),nx=document.getElementById('next');\n      var MS=(C.minSec||{})[n]||0,t0=Date.now(),okT=!MS;\n      function gate(){nx.disabled=!(okT&&Object.keys(vals).length>=(q.dimensions||[]).length);}\n      if(MS){var tm=document.createElement('p');tm.className='tmr';tm.style.fontWeight='600';nx.parentNode.parentNode.insertBefore(tm,nx.parentNode);\n        var iv=setInterval(function(){var left=Math.ceil(MS-(Date.now()-t0)/1000);if(!document.body.contains(tm)){clearInterval(iv);return;}\n          if(left>0)tm.textContent='Please keep looking: '+left+' s';else{tm.textContent='';okT=true;clearInterval(iv);gate();}},250);}\n      if(BT){var nd=(q.dimensions||[]).length;app.querySelectorAll('.lk').forEach(function(b){b.onclick=function(){var d=b.getAttribute('data-d');vals[d]=Number(b.getAttribute('data-val'));\n        app.querySelectorAll('.lk[data-d=\"'+d+'\"]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});gate();};});}\n      rs.forEach(function(r){r.oninput=function(){vals[r.getAttribute('data-d')]=Number(r.value);document.getElementById('v_'+r.getAttribute('data-d')).textContent=r.value;gate();};});\n      nx.onclick=function(){nx.disabled=true;SPSite.answer(n,vals,{trial:k}).then(function(r){if(r&&r.ok===false){err(r.error);nx.disabled=false;return;}(done[n]=done[n]||{})[k]=true;nextStep();});};\n      window.scrollTo(0,0);return;\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      var words=!!(lab&&lab.some(function(x){return isNaN(Number(x));}));\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale'+(words?'':' num')+'\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(words?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T19:50:08.729Z",
+   "mediaFolders": [
+    "xian"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T19:50:08.729Z"
+  },
+  "description": "",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2026-kuang-street/xian/xa_002__6ff3e843-2a98-4e08-9fb6-1719058c1bfa.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xa_002__6ff3e843-2a98-4e08-9fb6-1719058c1bfa.jpg",
+   "name": "xa_002.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xa_002__6ff3e843-2a98-4e08-9fb6-1719058c1bfa.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 238482,
+   "uploaded_bytes": 238482,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xa_003__290fbbb1-a5c1-4df8-847c-dbd61ccb9f18.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xa_003__290fbbb1-a5c1-4df8-847c-dbd61ccb9f18.jpg",
+   "name": "xa_003.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xa_003__290fbbb1-a5c1-4df8-847c-dbd61ccb9f18.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 190205,
+   "uploaded_bytes": 190205,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xa_004__8f691f12-d3e3-48ea-98e2-0ef17f159edd.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xa_004__8f691f12-d3e3-48ea-98e2-0ef17f159edd.jpg",
+   "name": "xa_004.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xa_004__8f691f12-d3e3-48ea-98e2-0ef17f159edd.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 253105,
+   "uploaded_bytes": 253105,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xa_005__71368b90-f93b-4765-98cf-11c3fabada92.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xa_005__71368b90-f93b-4765-98cf-11c3fabada92.jpg",
+   "name": "xa_005.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xa_005__71368b90-f93b-4765-98cf-11c3fabada92.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 185481,
+   "uploaded_bytes": 185481,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xa_006__76656939-67d6-4b23-92f3-28e21d51f365.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xa_006__76656939-67d6-4b23-92f3-28e21d51f365.jpg",
+   "name": "xa_006.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xa_006__76656939-67d6-4b23-92f3-28e21d51f365.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 250732,
+   "uploaded_bytes": 250732,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xa_007__d1f03cc9-a8b7-425a-b648-cabc914152aa.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xa_007__d1f03cc9-a8b7-425a-b648-cabc914152aa.jpg",
+   "name": "xa_007.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xa_007__d1f03cc9-a8b7-425a-b648-cabc914152aa.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 182049,
+   "uploaded_bytes": 182049,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xa_008__1e737b63-49dc-43f9-9f68-de3171fdd82d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xa_008__1e737b63-49dc-43f9-9f68-de3171fdd82d.jpg",
+   "name": "xa_008.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xa_008__1e737b63-49dc-43f9-9f68-de3171fdd82d.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 256436,
+   "uploaded_bytes": 256436,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xa_009__3ab37b2a-a816-4d39-a0ab-a7e26f3a933f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xa_009__3ab37b2a-a816-4d39-a0ab-a7e26f3a933f.jpg",
+   "name": "xa_009.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xa_009__3ab37b2a-a816-4d39-a0ab-a7e26f3a933f.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 231164,
+   "uploaded_bytes": 231164,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xa_010__b6124925-d770-47b0-9857-507fab9c4733.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xa_010__b6124925-d770-47b0-9857-507fab9c4733.jpg",
+   "name": "xa_010.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xa_010__b6124925-d770-47b0-9857-507fab9c4733.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 212411,
+   "uploaded_bytes": 212411,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xa_011__c04fbbe8-c60f-466c-9fc8-24c99ac6929b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xa_011__c04fbbe8-c60f-466c-9fc8-24c99ac6929b.jpg",
+   "name": "xa_011.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xa_011__c04fbbe8-c60f-466c-9fc8-24c99ac6929b.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 162741,
+   "uploaded_bytes": 162741,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xa_012__34e01161-873d-4144-8636-d1b14ee9515f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xa_012__34e01161-873d-4144-8636-d1b14ee9515f.jpg",
+   "name": "xa_012.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xa_012__34e01161-873d-4144-8636-d1b14ee9515f.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 267156,
+   "uploaded_bytes": 267156,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xa_013__bdbffd88-4d8c-4f28-835b-e11c48bfa0c4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xa_013__bdbffd88-4d8c-4f28-835b-e11c48bfa0c4.jpg",
+   "name": "xa_013.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xa_013__bdbffd88-4d8c-4f28-835b-e11c48bfa0c4.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 249702,
+   "uploaded_bytes": 249702,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xa_014__d8be55e7-8336-47e9-b331-aad4372efa54.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xa_014__d8be55e7-8336-47e9-b331-aad4372efa54.jpg",
+   "name": "xa_014.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xa_014__d8be55e7-8336-47e9-b331-aad4372efa54.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 255813,
+   "uploaded_bytes": 255813,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xa_015__9a33c645-b62a-43b3-9558-5e9b3a28499a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xa_015__9a33c645-b62a-43b3-9558-5e9b3a28499a.jpg",
+   "name": "xa_015.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xa_015__9a33c645-b62a-43b3-9558-5e9b3a28499a.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 224481,
+   "uploaded_bytes": 224481,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xa_016__2397e134-5770-4f86-8019-051727cbaeaa.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xa_016__2397e134-5770-4f86-8019-051727cbaeaa.jpg",
+   "name": "xa_016.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xa_016__2397e134-5770-4f86-8019-051727cbaeaa.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 242259,
+   "uploaded_bytes": 242259,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xa_017__be5daac5-3476-4b3f-89c1-4ecd7cd91d33.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xa_017__be5daac5-3476-4b3f-89c1-4ecd7cd91d33.jpg",
+   "name": "xa_017.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xa_017__be5daac5-3476-4b3f-89c1-4ecd7cd91d33.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 194333,
+   "uploaded_bytes": 194333,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xa_018__f4af187b-c024-4551-86ed-4cc5fd7a5373.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xa_018__f4af187b-c024-4551-86ed-4cc5fd7a5373.jpg",
+   "name": "xa_018.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xa_018__f4af187b-c024-4551-86ed-4cc5fd7a5373.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 243532,
+   "uploaded_bytes": 243532,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xa_019__c5901d8a-2e5f-4526-9047-228fa5b0a93a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xa_019__c5901d8a-2e5f-4526-9047-228fa5b0a93a.jpg",
+   "name": "xa_019.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xa_019__c5901d8a-2e5f-4526-9047-228fa5b0a93a.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 217635,
+   "uploaded_bytes": 217635,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xb_001__16121d4f-6350-47d8-9498-c8066b2a7bd2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xb_001__16121d4f-6350-47d8-9498-c8066b2a7bd2.jpg",
+   "name": "xb_001.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xb_001__16121d4f-6350-47d8-9498-c8066b2a7bd2.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 183449,
+   "uploaded_bytes": 183449,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xb_002__7450f20b-6de4-4bdb-812f-b1e32ccd01d4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xb_002__7450f20b-6de4-4bdb-812f-b1e32ccd01d4.jpg",
+   "name": "xb_002.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xb_002__7450f20b-6de4-4bdb-812f-b1e32ccd01d4.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 196564,
+   "uploaded_bytes": 196564,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xb_003__30e46f10-24a6-475d-bdda-a072b9a89984.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xb_003__30e46f10-24a6-475d-bdda-a072b9a89984.jpg",
+   "name": "xb_003.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xb_003__30e46f10-24a6-475d-bdda-a072b9a89984.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 201320,
+   "uploaded_bytes": 201320,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xb_004__af38aa3e-aa66-46ac-85c2-5fe143a163a7.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xb_004__af38aa3e-aa66-46ac-85c2-5fe143a163a7.jpg",
+   "name": "xb_004.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xb_004__af38aa3e-aa66-46ac-85c2-5fe143a163a7.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 205006,
+   "uploaded_bytes": 205006,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xb_005__e174d67c-5918-4332-8389-62448eb6c55a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xb_005__e174d67c-5918-4332-8389-62448eb6c55a.jpg",
+   "name": "xb_005.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xb_005__e174d67c-5918-4332-8389-62448eb6c55a.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 181925,
+   "uploaded_bytes": 181925,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xb_006__a2c8c468-697d-4298-8dab-efa1d351029a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xb_006__a2c8c468-697d-4298-8dab-efa1d351029a.jpg",
+   "name": "xb_006.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xb_006__a2c8c468-697d-4298-8dab-efa1d351029a.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 167479,
+   "uploaded_bytes": 167479,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xb_007__f35d830c-b3ee-4e4b-9c95-8e8aad644ddb.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xb_007__f35d830c-b3ee-4e4b-9c95-8e8aad644ddb.jpg",
+   "name": "xb_007.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xb_007__f35d830c-b3ee-4e4b-9c95-8e8aad644ddb.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 232240,
+   "uploaded_bytes": 232240,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xb_008__ed35531b-574d-4464-b7a2-6c219e0fb7fe.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xb_008__ed35531b-574d-4464-b7a2-6c219e0fb7fe.jpg",
+   "name": "xb_008.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xb_008__ed35531b-574d-4464-b7a2-6c219e0fb7fe.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 237819,
+   "uploaded_bytes": 237819,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xb_009__2f030167-c95c-4b77-8cc0-198d2b31a828.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xb_009__2f030167-c95c-4b77-8cc0-198d2b31a828.jpg",
+   "name": "xb_009.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xb_009__2f030167-c95c-4b77-8cc0-198d2b31a828.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 204865,
+   "uploaded_bytes": 204865,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xb_010__e5d0d0af-67de-4d28-a22f-85f28bc73210.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xb_010__e5d0d0af-67de-4d28-a22f-85f28bc73210.jpg",
+   "name": "xb_010.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xb_010__e5d0d0af-67de-4d28-a22f-85f28bc73210.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 213306,
+   "uploaded_bytes": 213306,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xb_011__e5810237-c9e1-42fe-8253-308da4d962eb.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xb_011__e5810237-c9e1-42fe-8253-308da4d962eb.jpg",
+   "name": "xb_011.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xb_011__e5810237-c9e1-42fe-8253-308da4d962eb.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 252886,
+   "uploaded_bytes": 252886,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xb_012__b4d8e7b9-39d6-4e1e-bc6c-acc36870e61c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xb_012__b4d8e7b9-39d6-4e1e-bc6c-acc36870e61c.jpg",
+   "name": "xb_012.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xb_012__b4d8e7b9-39d6-4e1e-bc6c-acc36870e61c.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 233134,
+   "uploaded_bytes": 233134,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xb_013__26fe8ecb-863d-497b-8af8-fad3a0f04bbd.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xb_013__26fe8ecb-863d-497b-8af8-fad3a0f04bbd.jpg",
+   "name": "xb_013.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xb_013__26fe8ecb-863d-497b-8af8-fad3a0f04bbd.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 250499,
+   "uploaded_bytes": 250499,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xb_014__2febab84-8585-41a2-8557-fb6536aec343.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xb_014__2febab84-8585-41a2-8557-fb6536aec343.jpg",
+   "name": "xb_014.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xb_014__2febab84-8585-41a2-8557-fb6536aec343.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 216457,
+   "uploaded_bytes": 216457,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xb_015__fd39c535-8ae0-4547-a145-259dce1d743d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xb_015__fd39c535-8ae0-4547-a145-259dce1d743d.jpg",
+   "name": "xb_015.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xb_015__fd39c535-8ae0-4547-a145-259dce1d743d.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 252847,
+   "uploaded_bytes": 252847,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xb_016__8770ee76-feb3-4cd5-8b7e-38ffac3fc06f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xb_016__8770ee76-feb3-4cd5-8b7e-38ffac3fc06f.jpg",
+   "name": "xb_016.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xb_016__8770ee76-feb3-4cd5-8b7e-38ffac3fc06f.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 185819,
+   "uploaded_bytes": 185819,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xb_017__577ffdf6-1a8a-4cbf-85a3-8b1057ee09d4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xb_017__577ffdf6-1a8a-4cbf-85a3-8b1057ee09d4.jpg",
+   "name": "xb_017.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xb_017__577ffdf6-1a8a-4cbf-85a3-8b1057ee09d4.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 201303,
+   "uploaded_bytes": 201303,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xb_018__573d761a-b654-45dc-81e2-6f9179a00d25.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xb_018__573d761a-b654-45dc-81e2-6f9179a00d25.jpg",
+   "name": "xb_018.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xb_018__573d761a-b654-45dc-81e2-6f9179a00d25.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 182428,
+   "uploaded_bytes": 182428,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xb_019__bc0275fb-f157-42ce-8821-0c41387f8cdd.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xb_019__bc0275fb-f157-42ce-8821-0c41387f8cdd.jpg",
+   "name": "xb_019.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xb_019__bc0275fb-f157-42ce-8821-0c41387f8cdd.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 235071,
+   "uploaded_bytes": 235071,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xc_001__883c4997-fdbf-4a45-bbc8-7639da9bc6ba.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xc_001__883c4997-fdbf-4a45-bbc8-7639da9bc6ba.jpg",
+   "name": "xc_001.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xc_001__883c4997-fdbf-4a45-bbc8-7639da9bc6ba.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 232452,
+   "uploaded_bytes": 232452,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xc_002__926068cb-da43-40ae-9bd2-e8ac61edca4f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xc_002__926068cb-da43-40ae-9bd2-e8ac61edca4f.jpg",
+   "name": "xc_002.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xc_002__926068cb-da43-40ae-9bd2-e8ac61edca4f.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 206364,
+   "uploaded_bytes": 206364,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xc_003__47890a85-bc7e-45c4-a10c-95836faf16a5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xc_003__47890a85-bc7e-45c4-a10c-95836faf16a5.jpg",
+   "name": "xc_003.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xc_003__47890a85-bc7e-45c4-a10c-95836faf16a5.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 143456,
+   "uploaded_bytes": 143456,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xc_004__bd16f330-b5c5-4593-aa33-6078e4dcb6fc.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xc_004__bd16f330-b5c5-4593-aa33-6078e4dcb6fc.jpg",
+   "name": "xc_004.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xc_004__bd16f330-b5c5-4593-aa33-6078e4dcb6fc.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 261270,
+   "uploaded_bytes": 261270,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xc_005__bd005d6e-67be-4b02-9d7c-649abf2b9b55.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xc_005__bd005d6e-67be-4b02-9d7c-649abf2b9b55.jpg",
+   "name": "xc_005.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xc_005__bd005d6e-67be-4b02-9d7c-649abf2b9b55.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 136878,
+   "uploaded_bytes": 136878,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xc_006__90391643-5539-4ba8-9813-eccfb886af02.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xc_006__90391643-5539-4ba8-9813-eccfb886af02.jpg",
+   "name": "xc_006.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xc_006__90391643-5539-4ba8-9813-eccfb886af02.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 106851,
+   "uploaded_bytes": 106851,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xc_007__aa8a65e6-25b3-4ff7-a0af-8c1ec2a69e8d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xc_007__aa8a65e6-25b3-4ff7-a0af-8c1ec2a69e8d.jpg",
+   "name": "xc_007.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xc_007__aa8a65e6-25b3-4ff7-a0af-8c1ec2a69e8d.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 259759,
+   "uploaded_bytes": 259759,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xc_008__f3e9b90e-e181-4351-8f3a-b42d170f1696.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xc_008__f3e9b90e-e181-4351-8f3a-b42d170f1696.jpg",
+   "name": "xc_008.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xc_008__f3e9b90e-e181-4351-8f3a-b42d170f1696.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 272674,
+   "uploaded_bytes": 272674,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xc_010__762039a8-fa7c-4fcf-a600-f716a2d0f0df.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xc_010__762039a8-fa7c-4fcf-a600-f716a2d0f0df.jpg",
+   "name": "xc_010.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xc_010__762039a8-fa7c-4fcf-a600-f716a2d0f0df.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 192933,
+   "uploaded_bytes": 192933,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xc_011__46251b49-6e69-4cbe-8e1f-62cc28d58e6a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xc_011__46251b49-6e69-4cbe-8e1f-62cc28d58e6a.jpg",
+   "name": "xc_011.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xc_011__46251b49-6e69-4cbe-8e1f-62cc28d58e6a.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 161094,
+   "uploaded_bytes": 161094,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xc_012__6f4c92eb-a4e6-4199-b5d4-0886e91d659b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xc_012__6f4c92eb-a4e6-4199-b5d4-0886e91d659b.jpg",
+   "name": "xc_012.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xc_012__6f4c92eb-a4e6-4199-b5d4-0886e91d659b.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 269939,
+   "uploaded_bytes": 269939,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xc_013__0a41bcc3-5a8b-4d22-94da-a15b76404b0d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xc_013__0a41bcc3-5a8b-4d22-94da-a15b76404b0d.jpg",
+   "name": "xc_013.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xc_013__0a41bcc3-5a8b-4d22-94da-a15b76404b0d.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 237943,
+   "uploaded_bytes": 237943,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xc_014__93722683-ad6b-46bf-86b6-9974a385938d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xc_014__93722683-ad6b-46bf-86b6-9974a385938d.jpg",
+   "name": "xc_014.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xc_014__93722683-ad6b-46bf-86b6-9974a385938d.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 275872,
+   "uploaded_bytes": 275872,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xc_015__9417d2bd-fc0b-4da8-88bd-1d4e58789e43.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xc_015__9417d2bd-fc0b-4da8-88bd-1d4e58789e43.jpg",
+   "name": "xc_015.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xc_015__9417d2bd-fc0b-4da8-88bd-1d4e58789e43.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 162549,
+   "uploaded_bytes": 162549,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xc_016__3493d325-9843-42bb-b5e5-4c159c983102.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xc_016__3493d325-9843-42bb-b5e5-4c159c983102.jpg",
+   "name": "xc_016.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xc_016__3493d325-9843-42bb-b5e5-4c159c983102.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 221594,
+   "uploaded_bytes": 221594,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xc_017__3ab01ae5-3645-4150-b778-a2efffb4d284.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xc_017__3ab01ae5-3645-4150-b778-a2efffb4d284.jpg",
+   "name": "xc_017.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xc_017__3ab01ae5-3645-4150-b778-a2efffb4d284.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 221781,
+   "uploaded_bytes": 221781,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xc_018__7d8a1697-fba7-49f7-91f4-8cb61329c34d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xc_018__7d8a1697-fba7-49f7-91f4-8cb61329c34d.jpg",
+   "name": "xc_018.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xc_018__7d8a1697-fba7-49f7-91f4-8cb61329c34d.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 135059,
+   "uploaded_bytes": 135059,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xc_019__56044e4b-ad7f-45bd-ba93-dcf7febe2991.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xc_019__56044e4b-ad7f-45bd-ba93-dcf7febe2991.jpg",
+   "name": "xc_019.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xc_019__56044e4b-ad7f-45bd-ba93-dcf7febe2991.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 169892,
+   "uploaded_bytes": 169892,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xd_001__6669b061-3225-4bfc-ac3a-7af6cc099c18.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xd_001__6669b061-3225-4bfc-ac3a-7af6cc099c18.jpg",
+   "name": "xd_001.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xd_001__6669b061-3225-4bfc-ac3a-7af6cc099c18.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 253734,
+   "uploaded_bytes": 253734,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xd_002__da8f34d8-ba02-4428-8fd7-10f9b24a4342.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xd_002__da8f34d8-ba02-4428-8fd7-10f9b24a4342.jpg",
+   "name": "xd_002.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xd_002__da8f34d8-ba02-4428-8fd7-10f9b24a4342.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 267833,
+   "uploaded_bytes": 267833,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xd_003__8276318b-8fba-4b17-a275-3e6febdb2e3f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xd_003__8276318b-8fba-4b17-a275-3e6febdb2e3f.jpg",
+   "name": "xd_003.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xd_003__8276318b-8fba-4b17-a275-3e6febdb2e3f.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 206770,
+   "uploaded_bytes": 206770,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xd_004__e2013fbf-d5f1-4d00-803e-b93c8037f18e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xd_004__e2013fbf-d5f1-4d00-803e-b93c8037f18e.jpg",
+   "name": "xd_004.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xd_004__e2013fbf-d5f1-4d00-803e-b93c8037f18e.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 131367,
+   "uploaded_bytes": 131367,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xd_005__736195a7-3ca6-47b7-884d-e4084abd85e0.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xd_005__736195a7-3ca6-47b7-884d-e4084abd85e0.jpg",
+   "name": "xd_005.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xd_005__736195a7-3ca6-47b7-884d-e4084abd85e0.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 239441,
+   "uploaded_bytes": 239441,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xd_006__e7d61374-1afe-435a-9573-e12aca37f7a9.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xd_006__e7d61374-1afe-435a-9573-e12aca37f7a9.jpg",
+   "name": "xd_006.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xd_006__e7d61374-1afe-435a-9573-e12aca37f7a9.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 156647,
+   "uploaded_bytes": 156647,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xd_007__d5e6bb57-6d54-43ab-a569-20eeb7aa3a15.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xd_007__d5e6bb57-6d54-43ab-a569-20eeb7aa3a15.jpg",
+   "name": "xd_007.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xd_007__d5e6bb57-6d54-43ab-a569-20eeb7aa3a15.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 168741,
+   "uploaded_bytes": 168741,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xd_008__c37d2033-feff-4c37-a351-345ee53b98b5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xd_008__c37d2033-feff-4c37-a351-345ee53b98b5.jpg",
+   "name": "xd_008.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xd_008__c37d2033-feff-4c37-a351-345ee53b98b5.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 212441,
+   "uploaded_bytes": 212441,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xd_009__a6aea49d-8a25-4709-9103-1c618bfbdb2f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xd_009__a6aea49d-8a25-4709-9103-1c618bfbdb2f.jpg",
+   "name": "xd_009.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xd_009__a6aea49d-8a25-4709-9103-1c618bfbdb2f.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 201021,
+   "uploaded_bytes": 201021,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xd_010__fd7c8636-dead-433b-9a3f-8c7fd7e284ab.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xd_010__fd7c8636-dead-433b-9a3f-8c7fd7e284ab.jpg",
+   "name": "xd_010.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xd_010__fd7c8636-dead-433b-9a3f-8c7fd7e284ab.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 206857,
+   "uploaded_bytes": 206857,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xd_011__6ac9d06b-1c61-4212-b124-bac7ec91705a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xd_011__6ac9d06b-1c61-4212-b124-bac7ec91705a.jpg",
+   "name": "xd_011.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xd_011__6ac9d06b-1c61-4212-b124-bac7ec91705a.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 144561,
+   "uploaded_bytes": 144561,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xd_012__a09f5447-7767-4ee5-8460-06da55f072bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xd_012__a09f5447-7767-4ee5-8460-06da55f072bf.jpg",
+   "name": "xd_012.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xd_012__a09f5447-7767-4ee5-8460-06da55f072bf.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 235232,
+   "uploaded_bytes": 235232,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xd_013__1a0df0f4-1537-4a2e-b325-2f1c2030638d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xd_013__1a0df0f4-1537-4a2e-b325-2f1c2030638d.jpg",
+   "name": "xd_013.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xd_013__1a0df0f4-1537-4a2e-b325-2f1c2030638d.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 237423,
+   "uploaded_bytes": 237423,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xd_014__4ff33239-4a5f-4460-bb42-79cade106913.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xd_014__4ff33239-4a5f-4460-bb42-79cade106913.jpg",
+   "name": "xd_014.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xd_014__4ff33239-4a5f-4460-bb42-79cade106913.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 241289,
+   "uploaded_bytes": 241289,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xd_015__caa1712e-a11b-44f8-9260-c50377ab69fe.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xd_015__caa1712e-a11b-44f8-9260-c50377ab69fe.jpg",
+   "name": "xd_015.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xd_015__caa1712e-a11b-44f8-9260-c50377ab69fe.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 198807,
+   "uploaded_bytes": 198807,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xd_016__d90e4b09-6e4d-4fa3-8fbc-ec60e7af8cf6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xd_016__d90e4b09-6e4d-4fa3-8fbc-ec60e7af8cf6.jpg",
+   "name": "xd_016.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xd_016__d90e4b09-6e4d-4fa3-8fbc-ec60e7af8cf6.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 223318,
+   "uploaded_bytes": 223318,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xd_017__d08b3d57-bcde-41f6-9479-d14067a9babb.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xd_017__d08b3d57-bcde-41f6-9479-d14067a9babb.jpg",
+   "name": "xd_017.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xd_017__d08b3d57-bcde-41f6-9479-d14067a9babb.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 261256,
+   "uploaded_bytes": 261256,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xd_018__18b72963-bbb7-4af6-97be-b09718a18489.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xd_018__18b72963-bbb7-4af6-97be-b09718a18489.jpg",
+   "name": "xd_018.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xd_018__18b72963-bbb7-4af6-97be-b09718a18489.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 198532,
+   "uploaded_bytes": 198532,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-kuang-street/xian/xd_019__ee5f942b-1b11-41e8-8c48-a5784285e7ee.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-kuang-street/xian/xd_019__ee5f942b-1b11-41e8-8c48-a5784285e7ee.jpg",
+   "name": "xd_019.jpg",
+   "type": "image",
+   "folder": "xian",
+   "media_id": "templates/2026-kuang-street/xian/xd_019__ee5f942b-1b11-41e8-8c48-a5784285e7ee.jpg",
+   "logicalFolder": "xian",
+   "original_bytes": 228384,
+   "uploaded_bytes": 228384,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Explaining urban street perception inequities between residents and tourists using interpretable machine learning",
+  "authors": [
+   "Kuang B.",
+   "Yang H.",
+   "Zhu Y.",
+   "Chang Z."
+  ],
+  "year": 2026,
+  "venue": "PLOS ONE",
+  "doi": "10.1371/journal.pone.0345073",
+  "url": "https://doi.org/10.1371/journal.pone.0345073"
+ }
+}

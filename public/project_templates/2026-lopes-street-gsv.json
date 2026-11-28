@@ -1,723 +1,1528 @@
 {
-  "id": "2026-lopes-street-gsv",
-  "name": "Street Intervention Before–After Preferences (GSV Time Travel)",
-  "description": "Visual stated-preference template from Lopes, Valença & Moura (Landscape and Urban Planning, 2026): eight before/after pairwise street-intervention comparisons (car / bus / active modes) plus characterization items from Table 1. Paper used GSV Time Machine iframes; this template uses fixed 2-image sets per trial (upload before/after pairs into set folders).",
-  "author": "Lopes, Valença & Moura",
-  "year": "2026",
-  "category": "Academic Research",
-  "tags": [
-    "street",
-    "gsv",
-    "before-after",
-    "visual-preference",
-    "mobility",
-    "urban-planning",
-    "stated-preference",
-    "official"
+ "id": "2026-lopes-street-gsv",
+ "name": "Street Intervention Before–After Preferences (GSV Time Travel)",
+ "description": "Visual stated-preference survey from Lopes, Valença & Moura (2026, Landscape and Urban Planning 273, 105686; 188 participants). Each participant gets one of four blocks of eight real street interventions (2 car-oriented, 2 bus-oriented, 4 active-modes; 3 medium, 3 large, 2 transformative), each shown as a pair of 360° Google Street View panoramas from before and after the change, in random A/B order. For each pair they look around, answer \"Please select the urban environment you prefer.\" and \"Do you know this place?\", and rate how much seven factors (usefulness, safety, security, stress, comfort, order, liveability) influenced the choice, followed by socio-demographic and travel-behaviour questions. The 28 interventions (Lisbon, Barcelona, Auckland, Brussels, New York, San Francisco and 14 other cities) and the block structure are the authors' own, taken from their public list; question wording is taken from the paper and the authors' public dataset (github.com/mariaines0/preferences_urban_interventions). Analysis as in the paper: share preferring the \"after\" view per intervention and group, and a pooled logistic regression on after-preferred (use trial_k.code or site to identify the intervention). Differences from the original study: (1) the original embedded live, navigable Street View; here each view is a 360° strip at eye level that can be turned left and right (both views turn together) but not moved along the street or tilted; (2) Google has retired some of the original panoramas, so 22 of the 56 views use the panorama at the same spot closest to the authors' date (17 within the same month, the largest gap is Mexico City: before view 13 months earlier, after view 10 months later; see sources.json in the project notes); (3) the labels of the 5-point factor scale and several answer lists (gender, occupation, commute modes, commute time, parking) are not published, so those use our own options or free text, and multiple-choice items (pets, disabilities, role) are single choice. Street images © Google. If the authors or Google object, the images will be taken down.",
+ "author": "Lopes, Valença & Moura",
+ "year": "2026",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "street",
+  "gsv",
+  "before-after",
+  "visual-preference",
+  "mobility",
+  "urban-planning",
+  "stated-preference",
+  "source:paper",
+  "modality:street_view",
+  "modality:panorama",
+  "task:pairwise",
+  "task:multi_rating",
+  "task:questionnaire",
+  "concept:preference",
+  "concept:street_design",
+  "concept:safety",
+  "concept:comfort",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:Portugal",
+  "country:Spain",
+  "country:New Zealand",
+  "country:United States",
+  "country:Belgium",
+  "country:Brazil",
+  "city:Lisbon",
+  "city:Barcelona",
+  "city:Auckland",
+  "city:Brussels"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1016/j.landurbplan.2026.105686",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-07-15T00:00:00+00:00",
+ "updatedAt": "2026-11-28T02:21:14.946+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "isRequired": true
+     },
+     {
+      "name": "block",
+      "type": "text",
+      "title": "Block of eight interventions (1–4), assigned at random by the page",
+      "isRequired": true,
+      "description": "The original survey had four blocks of eight before/after pairs (2 car-oriented, 2 bus-oriented, 4 active-modes; 3 medium, 3 large, 2 transformative); each participant saw one block at random."
+     }
+    ]
+   },
+   {
+    "name": "street_1",
+    "elements": [
+     {
+      "name": "trial_1",
+      "type": "custom",
+      "title": "Street 1: which intervention was shown and how",
+      "isRequired": true,
+      "description": "Value: {block, code (survey code G101–G408), site (authors' intervention ID), city, country, type (car / bus / active), scale, view_a, view_b (which of before/after was shown as A and as B, random), chosen, after_preferred (1 = post-intervention view preferred, the paper's Y), looked_around, seconds}. Use code or site to analyse by intervention."
+     },
+     {
+      "name": "pref_1",
+      "type": "radiogroup",
+      "title": "Please select the urban environment you prefer.",
+      "choices": [
+       {
+        "text": "After the intervention",
+        "value": "after"
+       },
+       {
+        "text": "Before the intervention",
+        "value": "before"
+       }
+      ],
+      "isRequired": true,
+      "description": "Verbatim preference question; forced choice. Participants see the two views as A and B in random order, never the words before/after."
+     },
+     {
+      "name": "know_1",
+      "type": "radiogroup",
+      "title": "Do you know this place?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true,
+      "description": "Verbatim familiarity question."
+     },
+     {
+      "name": "factors_1",
+      "type": "custom",
+      "title": "Evaluate to what extent the following factors have influenced your decision.",
+      "isRequired": true,
+      "description": "Value: {usefulness, safety, security, stress, comfort, order, liveability}, each 1–5. Wording of the question and of the seven factors is taken from the authors' public dataset; the labels of the five scale points are not published (here 1 = not at all, 5 = very much)."
+     },
+     {
+      "name": "other_1",
+      "type": "comment",
+      "title": "Were there any other factors that influenced your choice?",
+      "isRequired": false
+     }
+    ]
+   },
+   {
+    "name": "street_2",
+    "elements": [
+     {
+      "name": "trial_2",
+      "type": "custom",
+      "title": "Street 2: which intervention was shown and how",
+      "isRequired": true,
+      "description": "Value: {block, code (survey code G101–G408), site (authors' intervention ID), city, country, type (car / bus / active), scale, view_a, view_b (which of before/after was shown as A and as B, random), chosen, after_preferred (1 = post-intervention view preferred, the paper's Y), looked_around, seconds}. Use code or site to analyse by intervention."
+     },
+     {
+      "name": "pref_2",
+      "type": "radiogroup",
+      "title": "Please select the urban environment you prefer.",
+      "choices": [
+       {
+        "text": "After the intervention",
+        "value": "after"
+       },
+       {
+        "text": "Before the intervention",
+        "value": "before"
+       }
+      ],
+      "isRequired": true,
+      "description": "Verbatim preference question; forced choice. Participants see the two views as A and B in random order, never the words before/after."
+     },
+     {
+      "name": "know_2",
+      "type": "radiogroup",
+      "title": "Do you know this place?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true,
+      "description": "Verbatim familiarity question."
+     },
+     {
+      "name": "factors_2",
+      "type": "custom",
+      "title": "Evaluate to what extent the following factors have influenced your decision.",
+      "isRequired": true,
+      "description": "Value: {usefulness, safety, security, stress, comfort, order, liveability}, each 1–5. Wording of the question and of the seven factors is taken from the authors' public dataset; the labels of the five scale points are not published (here 1 = not at all, 5 = very much)."
+     },
+     {
+      "name": "other_2",
+      "type": "comment",
+      "title": "Were there any other factors that influenced your choice?",
+      "isRequired": false
+     }
+    ]
+   },
+   {
+    "name": "street_3",
+    "elements": [
+     {
+      "name": "trial_3",
+      "type": "custom",
+      "title": "Street 3: which intervention was shown and how",
+      "isRequired": true,
+      "description": "Value: {block, code (survey code G101–G408), site (authors' intervention ID), city, country, type (car / bus / active), scale, view_a, view_b (which of before/after was shown as A and as B, random), chosen, after_preferred (1 = post-intervention view preferred, the paper's Y), looked_around, seconds}. Use code or site to analyse by intervention."
+     },
+     {
+      "name": "pref_3",
+      "type": "radiogroup",
+      "title": "Please select the urban environment you prefer.",
+      "choices": [
+       {
+        "text": "After the intervention",
+        "value": "after"
+       },
+       {
+        "text": "Before the intervention",
+        "value": "before"
+       }
+      ],
+      "isRequired": true,
+      "description": "Verbatim preference question; forced choice. Participants see the two views as A and B in random order, never the words before/after."
+     },
+     {
+      "name": "know_3",
+      "type": "radiogroup",
+      "title": "Do you know this place?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true,
+      "description": "Verbatim familiarity question."
+     },
+     {
+      "name": "factors_3",
+      "type": "custom",
+      "title": "Evaluate to what extent the following factors have influenced your decision.",
+      "isRequired": true,
+      "description": "Value: {usefulness, safety, security, stress, comfort, order, liveability}, each 1–5. Wording of the question and of the seven factors is taken from the authors' public dataset; the labels of the five scale points are not published (here 1 = not at all, 5 = very much)."
+     },
+     {
+      "name": "other_3",
+      "type": "comment",
+      "title": "Were there any other factors that influenced your choice?",
+      "isRequired": false
+     }
+    ]
+   },
+   {
+    "name": "street_4",
+    "elements": [
+     {
+      "name": "trial_4",
+      "type": "custom",
+      "title": "Street 4: which intervention was shown and how",
+      "isRequired": true,
+      "description": "Value: {block, code (survey code G101–G408), site (authors' intervention ID), city, country, type (car / bus / active), scale, view_a, view_b (which of before/after was shown as A and as B, random), chosen, after_preferred (1 = post-intervention view preferred, the paper's Y), looked_around, seconds}. Use code or site to analyse by intervention."
+     },
+     {
+      "name": "pref_4",
+      "type": "radiogroup",
+      "title": "Please select the urban environment you prefer.",
+      "choices": [
+       {
+        "text": "After the intervention",
+        "value": "after"
+       },
+       {
+        "text": "Before the intervention",
+        "value": "before"
+       }
+      ],
+      "isRequired": true,
+      "description": "Verbatim preference question; forced choice. Participants see the two views as A and B in random order, never the words before/after."
+     },
+     {
+      "name": "know_4",
+      "type": "radiogroup",
+      "title": "Do you know this place?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true,
+      "description": "Verbatim familiarity question."
+     },
+     {
+      "name": "factors_4",
+      "type": "custom",
+      "title": "Evaluate to what extent the following factors have influenced your decision.",
+      "isRequired": true,
+      "description": "Value: {usefulness, safety, security, stress, comfort, order, liveability}, each 1–5. Wording of the question and of the seven factors is taken from the authors' public dataset; the labels of the five scale points are not published (here 1 = not at all, 5 = very much)."
+     },
+     {
+      "name": "other_4",
+      "type": "comment",
+      "title": "Were there any other factors that influenced your choice?",
+      "isRequired": false
+     }
+    ]
+   },
+   {
+    "name": "street_5",
+    "elements": [
+     {
+      "name": "trial_5",
+      "type": "custom",
+      "title": "Street 5: which intervention was shown and how",
+      "isRequired": true,
+      "description": "Value: {block, code (survey code G101–G408), site (authors' intervention ID), city, country, type (car / bus / active), scale, view_a, view_b (which of before/after was shown as A and as B, random), chosen, after_preferred (1 = post-intervention view preferred, the paper's Y), looked_around, seconds}. Use code or site to analyse by intervention."
+     },
+     {
+      "name": "pref_5",
+      "type": "radiogroup",
+      "title": "Please select the urban environment you prefer.",
+      "choices": [
+       {
+        "text": "After the intervention",
+        "value": "after"
+       },
+       {
+        "text": "Before the intervention",
+        "value": "before"
+       }
+      ],
+      "isRequired": true,
+      "description": "Verbatim preference question; forced choice. Participants see the two views as A and B in random order, never the words before/after."
+     },
+     {
+      "name": "know_5",
+      "type": "radiogroup",
+      "title": "Do you know this place?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true,
+      "description": "Verbatim familiarity question."
+     },
+     {
+      "name": "factors_5",
+      "type": "custom",
+      "title": "Evaluate to what extent the following factors have influenced your decision.",
+      "isRequired": true,
+      "description": "Value: {usefulness, safety, security, stress, comfort, order, liveability}, each 1–5. Wording of the question and of the seven factors is taken from the authors' public dataset; the labels of the five scale points are not published (here 1 = not at all, 5 = very much)."
+     },
+     {
+      "name": "other_5",
+      "type": "comment",
+      "title": "Were there any other factors that influenced your choice?",
+      "isRequired": false
+     }
+    ]
+   },
+   {
+    "name": "street_6",
+    "elements": [
+     {
+      "name": "trial_6",
+      "type": "custom",
+      "title": "Street 6: which intervention was shown and how",
+      "isRequired": true,
+      "description": "Value: {block, code (survey code G101–G408), site (authors' intervention ID), city, country, type (car / bus / active), scale, view_a, view_b (which of before/after was shown as A and as B, random), chosen, after_preferred (1 = post-intervention view preferred, the paper's Y), looked_around, seconds}. Use code or site to analyse by intervention."
+     },
+     {
+      "name": "pref_6",
+      "type": "radiogroup",
+      "title": "Please select the urban environment you prefer.",
+      "choices": [
+       {
+        "text": "After the intervention",
+        "value": "after"
+       },
+       {
+        "text": "Before the intervention",
+        "value": "before"
+       }
+      ],
+      "isRequired": true,
+      "description": "Verbatim preference question; forced choice. Participants see the two views as A and B in random order, never the words before/after."
+     },
+     {
+      "name": "know_6",
+      "type": "radiogroup",
+      "title": "Do you know this place?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true,
+      "description": "Verbatim familiarity question."
+     },
+     {
+      "name": "factors_6",
+      "type": "custom",
+      "title": "Evaluate to what extent the following factors have influenced your decision.",
+      "isRequired": true,
+      "description": "Value: {usefulness, safety, security, stress, comfort, order, liveability}, each 1–5. Wording of the question and of the seven factors is taken from the authors' public dataset; the labels of the five scale points are not published (here 1 = not at all, 5 = very much)."
+     },
+     {
+      "name": "other_6",
+      "type": "comment",
+      "title": "Were there any other factors that influenced your choice?",
+      "isRequired": false
+     }
+    ]
+   },
+   {
+    "name": "street_7",
+    "elements": [
+     {
+      "name": "trial_7",
+      "type": "custom",
+      "title": "Street 7: which intervention was shown and how",
+      "isRequired": true,
+      "description": "Value: {block, code (survey code G101–G408), site (authors' intervention ID), city, country, type (car / bus / active), scale, view_a, view_b (which of before/after was shown as A and as B, random), chosen, after_preferred (1 = post-intervention view preferred, the paper's Y), looked_around, seconds}. Use code or site to analyse by intervention."
+     },
+     {
+      "name": "pref_7",
+      "type": "radiogroup",
+      "title": "Please select the urban environment you prefer.",
+      "choices": [
+       {
+        "text": "After the intervention",
+        "value": "after"
+       },
+       {
+        "text": "Before the intervention",
+        "value": "before"
+       }
+      ],
+      "isRequired": true,
+      "description": "Verbatim preference question; forced choice. Participants see the two views as A and B in random order, never the words before/after."
+     },
+     {
+      "name": "know_7",
+      "type": "radiogroup",
+      "title": "Do you know this place?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true,
+      "description": "Verbatim familiarity question."
+     },
+     {
+      "name": "factors_7",
+      "type": "custom",
+      "title": "Evaluate to what extent the following factors have influenced your decision.",
+      "isRequired": true,
+      "description": "Value: {usefulness, safety, security, stress, comfort, order, liveability}, each 1–5. Wording of the question and of the seven factors is taken from the authors' public dataset; the labels of the five scale points are not published (here 1 = not at all, 5 = very much)."
+     },
+     {
+      "name": "other_7",
+      "type": "comment",
+      "title": "Were there any other factors that influenced your choice?",
+      "isRequired": false
+     }
+    ]
+   },
+   {
+    "name": "street_8",
+    "elements": [
+     {
+      "name": "trial_8",
+      "type": "custom",
+      "title": "Street 8: which intervention was shown and how",
+      "isRequired": true,
+      "description": "Value: {block, code (survey code G101–G408), site (authors' intervention ID), city, country, type (car / bus / active), scale, view_a, view_b (which of before/after was shown as A and as B, random), chosen, after_preferred (1 = post-intervention view preferred, the paper's Y), looked_around, seconds}. Use code or site to analyse by intervention."
+     },
+     {
+      "name": "pref_8",
+      "type": "radiogroup",
+      "title": "Please select the urban environment you prefer.",
+      "choices": [
+       {
+        "text": "After the intervention",
+        "value": "after"
+       },
+       {
+        "text": "Before the intervention",
+        "value": "before"
+       }
+      ],
+      "isRequired": true,
+      "description": "Verbatim preference question; forced choice. Participants see the two views as A and B in random order, never the words before/after."
+     },
+     {
+      "name": "know_8",
+      "type": "radiogroup",
+      "title": "Do you know this place?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true,
+      "description": "Verbatim familiarity question."
+     },
+     {
+      "name": "factors_8",
+      "type": "custom",
+      "title": "Evaluate to what extent the following factors have influenced your decision.",
+      "isRequired": true,
+      "description": "Value: {usefulness, safety, security, stress, comfort, order, liveability}, each 1–5. Wording of the question and of the seven factors is taken from the authors' public dataset; the labels of the five scale points are not published (here 1 = not at all, 5 = very much)."
+     },
+     {
+      "name": "other_8",
+      "type": "comment",
+      "title": "Were there any other factors that influenced your choice?",
+      "isRequired": false
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "max": 600,
+      "min": 0,
+      "name": "age",
+      "type": "text",
+      "title": "What is your age?",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "What is your gender identity?",
+      "choices": [
+       {
+        "text": "Woman",
+        "value": "woman"
+       },
+       {
+        "text": "Man",
+        "value": "man"
+       },
+       {
+        "text": "Non-binary",
+        "value": "non_binary"
+       },
+       {
+        "text": "Prefer not to say",
+        "value": "prefer_not_to_say"
+       }
+      ],
+      "isRequired": true,
+      "description": "Four options in the original; their labels are not published."
+     },
+     {
+      "name": "city",
+      "type": "text",
+      "title": "Where do you live? City/Town",
+      "isRequired": true
+     },
+     {
+      "name": "country",
+      "type": "text",
+      "title": "Where do you live? Country",
+      "isRequired": true
+     },
+     {
+      "name": "nationality",
+      "type": "text",
+      "title": "What is your country of origin?",
+      "isRequired": true
+     },
+     {
+      "name": "children",
+      "type": "radiogroup",
+      "title": "Do you have children?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "children_ages",
+      "type": "text",
+      "title": "If yes, how many children do you have and what are their ages?",
+      "isRequired": false,
+      "description": "Original: counts in three age bands (0–5, 6–10, 11 years old and above)."
+     },
+     {
+      "name": "pets",
+      "type": "radiogroup",
+      "title": "Do you have pets?",
+      "choices": [
+       {
+        "text": "Yes, I have one (or more) dog(s)",
+        "value": "yes_i_have_one_or_more_dog_s"
+       },
+       {
+        "text": "Yes, I have another type of pet",
+        "value": "yes_i_have_another_type_of_pet"
+       },
+       {
+        "text": "Yes, I have both",
+        "value": "yes_i_have_both"
+       },
+       {
+        "text": "No, I do not have pets",
+        "value": "no_i_do_not_have_pets"
+       }
+      ],
+      "isRequired": true,
+      "description": "Multiple choice in the original."
+     },
+     {
+      "name": "disabilities",
+      "type": "radiogroup",
+      "title": "Do you have any disabilities?",
+      "choices": [
+       {
+        "text": "Yes, I have reduced mobility",
+        "value": "yes_i_have_reduced_mobility"
+       },
+       {
+        "text": "Yes, I have a visual impairment",
+        "value": "yes_i_have_a_visual_impairment"
+       },
+       {
+        "text": "Yes, I have a hearing impairment",
+        "value": "yes_i_have_a_hearing_impairment"
+       },
+       {
+        "text": "Yes, I have another type of disability",
+        "value": "yes_i_have_another_type_of_disability"
+       },
+       {
+        "text": "No, I do not have any disabilities",
+        "value": "no_i_do_not_have_any_disabilities"
+       }
+      ],
+      "isRequired": true,
+      "description": "Multiple choice in the original."
+     },
+     {
+      "name": "occupation",
+      "type": "text",
+      "title": "What is your current occupation?",
+      "isRequired": true,
+      "description": "A list in the original; its options are not published."
+     },
+     {
+      "name": "specialist",
+      "type": "radiogroup",
+      "title": "Do you have any background, either past or present, through study or work, in the fields of urban mobility, transportation, or urbanism?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "specialist_role",
+      "type": "radiogroup",
+      "title": "If yes, what is (or was) your role?",
+      "choices": [
+       {
+        "text": "Academic/Researcher",
+        "value": "academic_researcher"
+       },
+       {
+        "text": "Professional (e.g., Planner, Engineer)",
+        "value": "professional_e_g_planner_engineer"
+       },
+       {
+        "text": "Government/Public Sector",
+        "value": "government_public_sector"
+       },
+       {
+        "text": "Industry/Private Sector",
+        "value": "industry_private_sector"
+       },
+       {
+        "text": "Non-Profit/Advocacy",
+        "value": "non_profit_advocacy"
+       },
+       {
+        "text": "Technology/Innovation",
+        "value": "technology_innovation"
+       },
+       {
+        "text": "Other",
+        "value": "other"
+       }
+      ],
+      "isRequired": false,
+      "description": "Multiple choice in the original."
+     },
+     {
+      "name": "commute_modes",
+      "type": "text",
+      "title": "Which transportation modes do you use for daily commuting, including trips to work or school?",
+      "isRequired": true,
+      "description": "A list of ten modes in the original (e.g. walking, train); the full list is not published."
+     },
+     {
+      "max": 600,
+      "min": 0,
+      "name": "commute_time",
+      "type": "text",
+      "title": "How long does your daily commute approximately take? (minutes, one way)",
+      "inputType": "number",
+      "isRequired": true,
+      "description": "Time bands in the original; their limits are not published."
+     },
+     {
+      "name": "car",
+      "type": "radiogroup",
+      "title": "Do you own and have access to a private car?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "parking_home",
+      "type": "radiogroup",
+      "title": "Do you have access to free parking or do you have a parking permit for your residential area?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       },
+       {
+        "text": "Not applicable",
+        "value": "not_applicable"
+       }
+      ],
+      "isRequired": false,
+      "description": "Three options in the original; labels not published."
+     },
+     {
+      "name": "parking_work",
+      "type": "radiogroup",
+      "title": "Do you have access to free parking or do you have a parking permit for your workplace/university?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       },
+       {
+        "text": "Not applicable",
+        "value": "not_applicable"
+       }
+      ],
+      "isRequired": false
+     }
+    ]
+   }
   ],
-  "isPinned": false,
-  "isApproved": true,
-  "showOnLanding": false,
-  "thumbnailUrl": null,
-  "website": "https://doi.org/10.1016/j.landurbplan.2026.105686",
-  "huggingfaceDataset": null,
-  "createdAt": "2026-07-15T00:00:00+00:00",
-  "config": {
-    "pages": [
-      {
-        "name": "overview",
-        "title": "Overview",
-        "elements": [
-          {
-            "html": "<p><strong>Lopes, Valença &amp; Moura (2026)</strong> — Before-and-after visual preferences of street interventions using Google Street View time travel. <em>Landscape and Urban Planning</em>, 273, 105686. <a href='https://doi.org/10.1016/j.landurbplan.2026.105686' target='_blank' rel='noopener'>https://doi.org/10.1016/j.landurbplan.2026.105686</a></p><p>This template follows the paper’s LimeSurvey design (~39 items, ~10 min): <strong>8 pairwise before/after preference trials</strong> (2 car + 2 bus + 4 active-modes) plus a participant characterization section (Table 1).</p><ul><li>Preference wording (verbatim): <em>Please select the urban environment you prefer.</em></li><li>Familiarity (verbatim): <em>Do you know this place?</em></li><li>Paper method: embed GSV Time Machine iframes (Google ToS–compliant). This platform alternatively uses fixed 2-image <strong>sets</strong> per trial folder.</li></ul><p>Participation in the original study was voluntary with no monetary compensation.</p>",
-            "name": "overview_html",
-            "type": "html"
-          }
-        ]
-      },
-      {
-        "name": "instructions",
-        "title": "Instructions",
-        "elements": [
-          {
-            "html": "<p>You will see <strong>eight</strong> street interventions. For each one, compare the urban environment <strong>before</strong> and <strong>after</strong> the intervention.</p><p>In the original study, respondents were instructed to navigate the Street View imagery to explore the street in both pre- and post-intervention states (full 360° view).</p><p>Intervention categories (paper definitions):</p><ol><li><strong>Car-oriented</strong> — e.g. converting cycle lanes into traffic/parking, reducing sidewalk for parking, expanding roadways.</li><li><strong>Bus-oriented</strong> — e.g. exclusive bus lanes, banning private cars for buses only.</li><li><strong>Active-modes-oriented</strong> — e.g. shared spaces, car-free zones, cycle lanes, widened sidewalks.</li></ol>",
-            "name": "instructions_html",
-            "type": "html"
-          },
-          {
-            "name": "ex_car",
-            "type": "image",
-            "title": "Fig. 2 — Car-oriented example (paper)",
-            "imageFit": "contain",
-            "imageLink": "/project_templates/2026-lopes-street-gsv/examples/fig2-car-oriented-example.jpg",
-            "imageHeight": 200
-          },
-          {
-            "name": "ex_bus",
-            "type": "image",
-            "title": "Fig. 3 — Bus-oriented example (paper)",
-            "imageFit": "contain",
-            "imageLink": "/project_templates/2026-lopes-street-gsv/examples/fig3-bus-oriented-example.jpg",
-            "imageHeight": 200
-          },
-          {
-            "name": "ex_active",
-            "type": "image",
-            "title": "Fig. 4 — Active-modes example (paper)",
-            "imageFit": "contain",
-            "imageLink": "/project_templates/2026-lopes-street-gsv/examples/fig4-active-modes-example.jpg",
-            "imageHeight": 200
-          }
-        ]
-      },
-      {
-        "name": "trial_car_1",
-        "title": "Comparison 1 of 8 — Car-oriented",
-        "elements": [
-          {
-            "html": "<p><strong>Car-oriented intervention</strong></p><p>Explore the street <em>before</em> and <em>after</em> the intervention (paper: GSV Time Machine iframes; here: the two images in the set below), then answer.</p><p style='color:#666;font-size:0.9em'>Set folder: <code>car-1</code> (exactly 2 files: before + after).</p>",
-            "name": "trial_car_1_instructions",
-            "type": "html"
-          },
-          {
-            "name": "trial_car_1_preference",
-            "type": "imagepicker",
-            "title": "Please select the urban environment you prefer.",
-            "imageFit": "cover",
-            "mediaType": "image",
-            "imageCount": 2,
-            "isRequired": true,
-            "description": "Paper DV (verbatim). Forced choice, no ties. Coding in the article: Y = 1 if after (post-intervention) preferred, Y = 0 if before preferred. Upload before.jpg + after.jpg to set folder `car-1` (exactly 2 files).",
-            "imageSource": "huggingface",
-            "mediaFolders": [
-              "car-1"
-            ],
-            "imageSelectionMode": "huggingface_random",
-            "mediaAssignmentMode": "set",
-            "randomImageSelection": true,
-            "excludePreviouslyUsedImages": true,
-            "randomizeSetOrder": true
-          },
-          {
-            "name": "trial_car_1_familiarity",
-            "type": "radiogroup",
-            "title": "Do you know this place?",
-            "choices": [
-              {
-                "text": "Yes",
-                "value": "yes"
-              },
-              {
-                "text": "No",
-                "value": "no"
-              }
-            ],
-            "isRequired": true,
-            "description": "Familiarity (binary; Table 1)."
-          }
-        ],
-        "description": "Car-oriented intervention"
-      },
-      {
-        "name": "trial_car_2",
-        "title": "Comparison 2 of 8 — Car-oriented",
-        "elements": [
-          {
-            "html": "<p><strong>Car-oriented intervention</strong></p><p>Explore the street <em>before</em> and <em>after</em> the intervention (paper: GSV Time Machine iframes; here: the two images in the set below), then answer.</p><p style='color:#666;font-size:0.9em'>Set folder: <code>car-2</code> (exactly 2 files: before + after).</p>",
-            "name": "trial_car_2_instructions",
-            "type": "html"
-          },
-          {
-            "name": "trial_car_2_preference",
-            "type": "imagepicker",
-            "title": "Please select the urban environment you prefer.",
-            "imageFit": "cover",
-            "mediaType": "image",
-            "imageCount": 2,
-            "isRequired": true,
-            "description": "Paper DV (verbatim). Forced choice, no ties. Coding in the article: Y = 1 if after (post-intervention) preferred, Y = 0 if before preferred. Upload before.jpg + after.jpg to set folder `car-2` (exactly 2 files).",
-            "imageSource": "huggingface",
-            "mediaFolders": [
-              "car-2"
-            ],
-            "imageSelectionMode": "huggingface_random",
-            "mediaAssignmentMode": "set",
-            "randomImageSelection": true,
-            "excludePreviouslyUsedImages": true,
-            "randomizeSetOrder": true
-          },
-          {
-            "name": "trial_car_2_familiarity",
-            "type": "radiogroup",
-            "title": "Do you know this place?",
-            "choices": [
-              {
-                "text": "Yes",
-                "value": "yes"
-              },
-              {
-                "text": "No",
-                "value": "no"
-              }
-            ],
-            "isRequired": true,
-            "description": "Familiarity (binary; Table 1)."
-          }
-        ],
-        "description": "Car-oriented intervention"
-      },
-      {
-        "name": "trial_bus_1",
-        "title": "Comparison 3 of 8 — Bus-oriented",
-        "elements": [
-          {
-            "html": "<p><strong>Bus-oriented intervention</strong></p><p>Explore the street <em>before</em> and <em>after</em> the intervention (paper: GSV Time Machine iframes; here: the two images in the set below), then answer.</p><p style='color:#666;font-size:0.9em'>Set folder: <code>bus-1</code> (exactly 2 files: before + after).</p>",
-            "name": "trial_bus_1_instructions",
-            "type": "html"
-          },
-          {
-            "name": "trial_bus_1_preference",
-            "type": "imagepicker",
-            "title": "Please select the urban environment you prefer.",
-            "imageFit": "cover",
-            "mediaType": "image",
-            "imageCount": 2,
-            "isRequired": true,
-            "description": "Paper DV (verbatim). Forced choice, no ties. Coding in the article: Y = 1 if after (post-intervention) preferred, Y = 0 if before preferred. Upload before.jpg + after.jpg to set folder `bus-1` (exactly 2 files).",
-            "imageSource": "huggingface",
-            "mediaFolders": [
-              "bus-1"
-            ],
-            "imageSelectionMode": "huggingface_random",
-            "mediaAssignmentMode": "set",
-            "randomImageSelection": true,
-            "excludePreviouslyUsedImages": true,
-            "randomizeSetOrder": true
-          },
-          {
-            "name": "trial_bus_1_familiarity",
-            "type": "radiogroup",
-            "title": "Do you know this place?",
-            "choices": [
-              {
-                "text": "Yes",
-                "value": "yes"
-              },
-              {
-                "text": "No",
-                "value": "no"
-              }
-            ],
-            "isRequired": true,
-            "description": "Familiarity (binary; Table 1)."
-          }
-        ],
-        "description": "Bus-oriented intervention"
-      },
-      {
-        "name": "trial_bus_2",
-        "title": "Comparison 4 of 8 — Bus-oriented",
-        "elements": [
-          {
-            "html": "<p><strong>Bus-oriented intervention</strong></p><p>Explore the street <em>before</em> and <em>after</em> the intervention (paper: GSV Time Machine iframes; here: the two images in the set below), then answer.</p><p style='color:#666;font-size:0.9em'>Set folder: <code>bus-2</code> (exactly 2 files: before + after).</p>",
-            "name": "trial_bus_2_instructions",
-            "type": "html"
-          },
-          {
-            "name": "trial_bus_2_preference",
-            "type": "imagepicker",
-            "title": "Please select the urban environment you prefer.",
-            "imageFit": "cover",
-            "mediaType": "image",
-            "imageCount": 2,
-            "isRequired": true,
-            "description": "Paper DV (verbatim). Forced choice, no ties. Coding in the article: Y = 1 if after (post-intervention) preferred, Y = 0 if before preferred. Upload before.jpg + after.jpg to set folder `bus-2` (exactly 2 files).",
-            "imageSource": "huggingface",
-            "mediaFolders": [
-              "bus-2"
-            ],
-            "imageSelectionMode": "huggingface_random",
-            "mediaAssignmentMode": "set",
-            "randomImageSelection": true,
-            "excludePreviouslyUsedImages": true,
-            "randomizeSetOrder": true
-          },
-          {
-            "name": "trial_bus_2_familiarity",
-            "type": "radiogroup",
-            "title": "Do you know this place?",
-            "choices": [
-              {
-                "text": "Yes",
-                "value": "yes"
-              },
-              {
-                "text": "No",
-                "value": "no"
-              }
-            ],
-            "isRequired": true,
-            "description": "Familiarity (binary; Table 1)."
-          }
-        ],
-        "description": "Bus-oriented intervention"
-      },
-      {
-        "name": "trial_active_1",
-        "title": "Comparison 5 of 8 — Active modes",
-        "elements": [
-          {
-            "html": "<p><strong>Active-modes-oriented intervention</strong></p><p>Explore the street <em>before</em> and <em>after</em> the intervention (paper: GSV Time Machine iframes; here: the two images in the set below), then answer.</p><p style='color:#666;font-size:0.9em'>Set folder: <code>active-1</code> (exactly 2 files: before + after).</p>",
-            "name": "trial_active_1_instructions",
-            "type": "html"
-          },
-          {
-            "name": "trial_active_1_preference",
-            "type": "imagepicker",
-            "title": "Please select the urban environment you prefer.",
-            "imageFit": "cover",
-            "mediaType": "image",
-            "imageCount": 2,
-            "isRequired": true,
-            "description": "Paper DV (verbatim). Forced choice, no ties. Coding in the article: Y = 1 if after (post-intervention) preferred, Y = 0 if before preferred. Upload before.jpg + after.jpg to set folder `active-1` (exactly 2 files).",
-            "imageSource": "huggingface",
-            "mediaFolders": [
-              "active-1"
-            ],
-            "imageSelectionMode": "huggingface_random",
-            "mediaAssignmentMode": "set",
-            "randomImageSelection": true,
-            "excludePreviouslyUsedImages": true,
-            "randomizeSetOrder": true
-          },
-          {
-            "name": "trial_active_1_familiarity",
-            "type": "radiogroup",
-            "title": "Do you know this place?",
-            "choices": [
-              {
-                "text": "Yes",
-                "value": "yes"
-              },
-              {
-                "text": "No",
-                "value": "no"
-              }
-            ],
-            "isRequired": true,
-            "description": "Familiarity (binary; Table 1)."
-          }
-        ],
-        "description": "Active-modes-oriented intervention"
-      },
-      {
-        "name": "trial_active_2",
-        "title": "Comparison 6 of 8 — Active modes",
-        "elements": [
-          {
-            "html": "<p><strong>Active-modes-oriented intervention</strong></p><p>Explore the street <em>before</em> and <em>after</em> the intervention (paper: GSV Time Machine iframes; here: the two images in the set below), then answer.</p><p style='color:#666;font-size:0.9em'>Set folder: <code>active-2</code> (exactly 2 files: before + after).</p>",
-            "name": "trial_active_2_instructions",
-            "type": "html"
-          },
-          {
-            "name": "trial_active_2_preference",
-            "type": "imagepicker",
-            "title": "Please select the urban environment you prefer.",
-            "imageFit": "cover",
-            "mediaType": "image",
-            "imageCount": 2,
-            "isRequired": true,
-            "description": "Paper DV (verbatim). Forced choice, no ties. Coding in the article: Y = 1 if after (post-intervention) preferred, Y = 0 if before preferred. Upload before.jpg + after.jpg to set folder `active-2` (exactly 2 files).",
-            "imageSource": "huggingface",
-            "mediaFolders": [
-              "active-2"
-            ],
-            "imageSelectionMode": "huggingface_random",
-            "mediaAssignmentMode": "set",
-            "randomImageSelection": true,
-            "excludePreviouslyUsedImages": true,
-            "randomizeSetOrder": true
-          },
-          {
-            "name": "trial_active_2_familiarity",
-            "type": "radiogroup",
-            "title": "Do you know this place?",
-            "choices": [
-              {
-                "text": "Yes",
-                "value": "yes"
-              },
-              {
-                "text": "No",
-                "value": "no"
-              }
-            ],
-            "isRequired": true,
-            "description": "Familiarity (binary; Table 1)."
-          }
-        ],
-        "description": "Active-modes-oriented intervention"
-      },
-      {
-        "name": "trial_active_3",
-        "title": "Comparison 7 of 8 — Active modes",
-        "elements": [
-          {
-            "html": "<p><strong>Active-modes-oriented intervention</strong></p><p>Explore the street <em>before</em> and <em>after</em> the intervention (paper: GSV Time Machine iframes; here: the two images in the set below), then answer.</p><p style='color:#666;font-size:0.9em'>Set folder: <code>active-3</code> (exactly 2 files: before + after).</p>",
-            "name": "trial_active_3_instructions",
-            "type": "html"
-          },
-          {
-            "name": "trial_active_3_preference",
-            "type": "imagepicker",
-            "title": "Please select the urban environment you prefer.",
-            "imageFit": "cover",
-            "mediaType": "image",
-            "imageCount": 2,
-            "isRequired": true,
-            "description": "Paper DV (verbatim). Forced choice, no ties. Coding in the article: Y = 1 if after (post-intervention) preferred, Y = 0 if before preferred. Upload before.jpg + after.jpg to set folder `active-3` (exactly 2 files).",
-            "imageSource": "huggingface",
-            "mediaFolders": [
-              "active-3"
-            ],
-            "imageSelectionMode": "huggingface_random",
-            "mediaAssignmentMode": "set",
-            "randomImageSelection": true,
-            "excludePreviouslyUsedImages": true,
-            "randomizeSetOrder": true
-          },
-          {
-            "name": "trial_active_3_familiarity",
-            "type": "radiogroup",
-            "title": "Do you know this place?",
-            "choices": [
-              {
-                "text": "Yes",
-                "value": "yes"
-              },
-              {
-                "text": "No",
-                "value": "no"
-              }
-            ],
-            "isRequired": true,
-            "description": "Familiarity (binary; Table 1)."
-          }
-        ],
-        "description": "Active-modes-oriented intervention"
-      },
-      {
-        "name": "trial_active_4",
-        "title": "Comparison 8 of 8 — Active modes",
-        "elements": [
-          {
-            "html": "<p><strong>Active-modes-oriented intervention</strong></p><p>Explore the street <em>before</em> and <em>after</em> the intervention (paper: GSV Time Machine iframes; here: the two images in the set below), then answer.</p><p style='color:#666;font-size:0.9em'>Set folder: <code>active-4</code> (exactly 2 files: before + after).</p>",
-            "name": "trial_active_4_instructions",
-            "type": "html"
-          },
-          {
-            "name": "trial_active_4_preference",
-            "type": "imagepicker",
-            "title": "Please select the urban environment you prefer.",
-            "imageFit": "cover",
-            "mediaType": "image",
-            "imageCount": 2,
-            "isRequired": true,
-            "description": "Paper DV (verbatim). Forced choice, no ties. Coding in the article: Y = 1 if after (post-intervention) preferred, Y = 0 if before preferred. Upload before.jpg + after.jpg to set folder `active-4` (exactly 2 files).",
-            "imageSource": "huggingface",
-            "mediaFolders": [
-              "active-4"
-            ],
-            "imageSelectionMode": "huggingface_random",
-            "mediaAssignmentMode": "set",
-            "randomImageSelection": true,
-            "excludePreviouslyUsedImages": true,
-            "randomizeSetOrder": true
-          },
-          {
-            "name": "trial_active_4_familiarity",
-            "type": "radiogroup",
-            "title": "Do you know this place?",
-            "choices": [
-              {
-                "text": "Yes",
-                "value": "yes"
-              },
-              {
-                "text": "No",
-                "value": "no"
-              }
-            ],
-            "isRequired": true,
-            "description": "Familiarity (binary; Table 1)."
-          }
-        ],
-        "description": "Active-modes-oriented intervention"
-      },
-      {
-        "name": "characterization",
-        "title": "About you",
-        "elements": [
-          {
-            "name": "age",
-            "type": "text",
-            "title": "Age",
-            "inputType": "number",
-            "isRequired": true,
-            "description": "Socio-demographics — Age (ordinal in Table 1; enter years)."
-          },
-          {
-            "name": "gender",
-            "type": "radiogroup",
-            "title": "Gender",
-            "choices": [
-              {
-                "text": "Male",
-                "value": "male"
-              },
-              {
-                "text": "Female",
-                "value": "female"
-              },
-              {
-                "text": "Other",
-                "value": "other"
-              }
-            ],
-            "isRequired": true,
-            "description": "Socio-demographics — Gender (categorical). Sample reported male / female / other."
-          },
-          {
-            "name": "having_children",
-            "type": "radiogroup",
-            "title": "Do you have children?",
-            "choices": [
-              {
-                "text": "Yes",
-                "value": "yes"
-              },
-              {
-                "text": "No",
-                "value": "no"
-              }
-            ],
-            "isRequired": true,
-            "description": "Having Children (binary; Table 1)."
-          },
-          {
-            "name": "number_of_children",
-            "type": "text",
-            "title": "Number of children",
-            "inputType": "number",
-            "visibleIf": "{having_children} = 'yes'",
-            "description": "Number of Children (ordinal; Table 1)."
-          },
-          {
-            "name": "age_of_children",
-            "type": "text",
-            "title": "Age of children",
-            "visibleIf": "{having_children} = 'yes'",
-            "description": "Age of Children (categorical; Table 1). Exact response options not listed in the article — free text."
-          },
-          {
-            "name": "having_pets_dogs",
-            "type": "radiogroup",
-            "title": "Do you have pets/dogs?",
-            "choices": [
-              {
-                "text": "Yes",
-                "value": "yes"
-              },
-              {
-                "text": "No",
-                "value": "no"
-              }
-            ],
-            "isRequired": true,
-            "description": "Having Pets/Dogs (binary; Table 1)."
-          },
-          {
-            "name": "disability",
-            "type": "text",
-            "title": "Disability",
-            "description": "Disability (categorical; Table 1). Exact options not listed — free text / self-report."
-          },
-          {
-            "name": "occupation",
-            "type": "text",
-            "title": "Occupation",
-            "isRequired": true,
-            "description": "Occupation (categorical; Table 1). Exact options not listed — free text."
-          },
-          {
-            "name": "city_of_residence",
-            "type": "text",
-            "title": "City of residence",
-            "isRequired": true,
-            "description": "Residence & nationality — City of Residence (Table 1)."
-          },
-          {
-            "name": "country_of_residence",
-            "type": "text",
-            "title": "Country of residence",
-            "isRequired": true,
-            "description": "Country of Residence (Table 1)."
-          },
-          {
-            "name": "nationality",
-            "type": "text",
-            "title": "Nationality",
-            "isRequired": true,
-            "description": "Nationality (Table 1)."
-          },
-          {
-            "name": "urban_planning_specialist",
-            "type": "radiogroup",
-            "title": "Do you have a background / specialization in urban planning (or related transport planning)?",
-            "choices": [
-              {
-                "text": "Yes",
-                "value": "yes"
-              },
-              {
-                "text": "No",
-                "value": "no"
-              }
-            ],
-            "isRequired": true,
-            "description": "Urban Planning Background — Specialist (binary; Table 1)."
-          },
-          {
-            "name": "role_type",
-            "type": "text",
-            "title": "Role type (if specialist)",
-            "visibleIf": "{urban_planning_specialist} = 'yes'",
-            "description": "Role Type (categorical; Table 1). Sample was mainly academics within urban planning — free text."
-          },
-          {
-            "name": "commute_modes",
-            "type": "checkbox",
-            "title": "What mode(s) do you use for your commute?",
-            "choices": [
-              {
-                "text": "Car",
-                "value": "car"
-              },
-              {
-                "text": "Public transport (PT)",
-                "value": "pt"
-              },
-              {
-                "text": "Active (walk / cycle)",
-                "value": "active"
-              },
-              {
-                "text": "Other",
-                "value": "other"
-              }
-            ],
-            "isRequired": true,
-            "description": "Travel Behaviour — Commute Modes (categorical; Table 1). Analysis used combinations (car, active, PT, etc.)."
-          },
-          {
-            "name": "commute_time",
-            "type": "text",
-            "title": "Commute time",
-            "inputType": "number",
-            "isRequired": true,
-            "description": "Commute Time (ordinal; Table 1). Exact bins not listed — enter typical one-way minutes."
-          },
-          {
-            "name": "car_ownership",
-            "type": "radiogroup",
-            "title": "Do you own a car?",
-            "choices": [
-              {
-                "text": "Yes",
-                "value": "yes"
-              },
-              {
-                "text": "No",
-                "value": "no"
-              }
-            ],
-            "isRequired": true,
-            "description": "Car Ownership (binary; Table 1)."
-          },
-          {
-            "name": "workplace_home_parking",
-            "type": "text",
-            "title": "Workplace / home parking",
-            "description": "Workplace/Home Parking (categorical; Table 1). Exact options not listed — free text."
-          }
-        ],
-        "description": "Participants’ Characterization Section (15 items; Table 1). Only constructs listed in the article."
-      }
-    ],
-    "title": "Street Intervention Preferences (Before–After GSV) — Lopes et al., 2026",
-    "description": "Based on: Lopes, M. I., Valença, G., & Moura, F. (2026). Exploring Before-and-After visual preferences of street interventions using Google Street View time travel. Landscape and Urban Planning, 273, 105686. https://doi.org/10.1016/j.landurbplan.2026.105686. Eight pairwise comparisons (2 car, 2 bus, 4 active-modes) plus demographics/travel behaviour (Table 1). Preference and familiarity wording are verbatim from the article.",
-    "logoPosition": "right",
-    "autoGrowComment": true,
-    "progressBarType": "questions",
-    "showProgressBar": "aboveheader",
-    "showQuestionNumbers": "off",
-    "showPreviewBeforeComplete": "showAllQuestions",
-    "spAnalysisRecommendation": {
-      "citation": "Lopes et al. 2026",
-      "items": [
-        {
-          "questions": [
-            "trial_car_1_preference",
-            "trial_car_2_preference",
-            "trial_bus_1_preference",
-            "trial_bus_2_preference",
-            "trial_active_1_preference",
-            "trial_active_2_preference",
-            "trial_active_3_preference",
-            "trial_active_4_preference"
-          ],
-          "method": "choice_share",
-          "note": "Put before.jpg and after.jpg in each set folder; the folder name encodes the intervention type."
-        },
-        {
-          "questions": [
-            "trial_car_1_preference",
-            "trial_car_2_preference",
-            "trial_bus_1_preference",
-            "trial_bus_2_preference",
-            "trial_active_1_preference",
-            "trial_active_2_preference",
-            "trial_active_3_preference",
-            "trial_active_4_preference"
-          ],
-          "method": "long_export"
-        }
-      ]
-    }
+  "title": "Before or after? Street intervention preferences with Street View time travel (Lopes et al. 2026)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-3bb4011e8886a746",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Before or after? Street intervention preferences with Street View time travel (Lopes et al. 2026)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\"format\": \"sp-scheme-package\", \"spScheme\": \"2.0\", \"survey\": {\"title\": \"Before or after? Street intervention preferences with Street View time travel (Lopes et al. 2026)\", \"description\": \"Eight real street interventions, each shown as a pair of 360° Google Street View panoramas from before and after the change. Participants look around both views, choose the urban environment they prefer, say whether they know the place and rate seven factors behind the choice.\", \"locale\": \"en\", \"mediaFolders\": [\"sites\"], \"pages\": [{\"name\": \"intro\", \"elements\": [{\"type\": \"boolean\", \"name\": \"consent\", \"title\": \"I agree to take part. My answers are recorded anonymously for research.\", \"isRequired\": true}, {\"type\": \"text\", \"name\": \"block\", \"title\": \"Block of eight interventions (1–4), assigned at random by the page\", \"isRequired\": true, \"description\": \"The original survey had four blocks of eight before/after pairs (2 car-oriented, 2 bus-oriented, 4 active-modes; 3 medium, 3 large, 2 transformative); each participant saw one block at random.\"}]}, {\"name\": \"street_1\", \"elements\": [{\"type\": \"custom\", \"name\": \"trial_1\", \"title\": \"Street 1: which intervention was shown and how\", \"isRequired\": true, \"description\": \"Value: {block, code (survey code G101–G408), site (authors' intervention ID), city, country, type (car / bus / active), scale, view_a, view_b (which of before/after was shown as A and as B, random), chosen, after_preferred (1 = post-intervention view preferred, the paper's Y), looked_around, seconds}. Use code or site to analyse by intervention.\"}, {\"type\": \"radiogroup\", \"name\": \"pref_1\", \"title\": \"Please select the urban environment you prefer.\", \"isRequired\": true, \"choices\": [{\"value\": \"after\", \"text\": \"After the intervention\"}, {\"value\": \"before\", \"text\": \"Before the intervention\"}], \"description\": \"Verbatim preference question; forced choice. Participants see the two views as A and B in random order, never the words before/after.\"}, {\"type\": \"radiogroup\", \"name\": \"know_1\", \"title\": \"Do you know this place?\", \"isRequired\": true, \"choices\": [{\"value\": \"yes\", \"text\": \"Yes\"}, {\"value\": \"no\", \"text\": \"No\"}], \"description\": \"Verbatim familiarity question.\"}, {\"type\": \"custom\", \"name\": \"factors_1\", \"title\": \"Evaluate to what extent the following factors have influenced your decision.\", \"isRequired\": true, \"description\": \"Value: {usefulness, safety, security, stress, comfort, order, liveability}, each 1–5. Wording of the question and of the seven factors is taken from the authors' public dataset; the labels of the five scale points are not published (here 1 = not at all, 5 = very much).\"}, {\"type\": \"comment\", \"name\": \"other_1\", \"title\": \"Were there any other factors that influenced your choice?\", \"isRequired\": false}]}, {\"name\": \"street_2\", \"elements\": [{\"type\": \"custom\", \"name\": \"trial_2\", \"title\": \"Street 2: which intervention was shown and how\", \"isRequired\": true, \"description\": \"Value: {block, code (survey code G101–G408), site (authors' intervention ID), city, country, type (car / bus / active), scale, view_a, view_b (which of before/after was shown as A and as B, random), chosen, after_preferred (1 = post-intervention view preferred, the paper's Y), looked_around, seconds}. Use code or site to analyse by intervention.\"}, {\"type\": \"radiogroup\", \"name\": \"pref_2\", \"title\": \"Please select the urban environment you prefer.\", \"isRequired\": true, \"choices\": [{\"value\": \"after\", \"text\": \"After the intervention\"}, {\"value\": \"before\", \"text\": \"Before the intervention\"}], \"description\": \"Verbatim preference question; forced choice. Participants see the two views as A and B in random order, never the words before/after.\"}, {\"type\": \"radiogroup\", \"name\": \"know_2\", \"title\": \"Do you know this place?\", \"isRequired\": true, \"choices\": [{\"value\": \"yes\", \"text\": \"Yes\"}, {\"value\": \"no\", \"text\": \"No\"}], \"description\": \"Verbatim familiarity question.\"}, {\"type\": \"custom\", \"name\": \"factors_2\", \"title\": \"Evaluate to what extent the following factors have influenced your decision.\", \"isRequired\": true, \"description\": \"Value: {usefulness, safety, security, stress, comfort, order, liveability}, each 1–5. Wording of the question and of the seven factors is taken from the authors' public dataset; the labels of the five scale points are not published (here 1 = not at all, 5 = very much).\"}, {\"type\": \"comment\", \"name\": \"other_2\", \"title\": \"Were there any other factors that influenced your choice?\", \"isRequired\": false}]}, {\"name\": \"street_3\", \"elements\": [{\"type\": \"custom\", \"name\": \"trial_3\", \"title\": \"Street 3: which intervention was shown and how\", \"isRequired\": true, \"description\": \"Value: {block, code (survey code G101–G408), site (authors' intervention ID), city, country, type (car / bus / active), scale, view_a, view_b (which of before/after was shown as A and as B, random), chosen, after_preferred (1 = post-intervention view preferred, the paper's Y), looked_around, seconds}. Use code or site to analyse by intervention.\"}, {\"type\": \"radiogroup\", \"name\": \"pref_3\", \"title\": \"Please select the urban environment you prefer.\", \"isRequired\": true, \"choices\": [{\"value\": \"after\", \"text\": \"After the intervention\"}, {\"value\": \"before\", \"text\": \"Before the intervention\"}], \"description\": \"Verbatim preference question; forced choice. Participants see the two views as A and B in random order, never the words before/after.\"}, {\"type\": \"radiogroup\", \"name\": \"know_3\", \"title\": \"Do you know this place?\", \"isRequired\": true, \"choices\": [{\"value\": \"yes\", \"text\": \"Yes\"}, {\"value\": \"no\", \"text\": \"No\"}], \"description\": \"Verbatim familiarity question.\"}, {\"type\": \"custom\", \"name\": \"factors_3\", \"title\": \"Evaluate to what extent the following factors have influenced your decision.\", \"isRequired\": true, \"description\": \"Value: {usefulness, safety, security, stress, comfort, order, liveability}, each 1–5. Wording of the question and of the seven factors is taken from the authors' public dataset; the labels of the five scale points are not published (here 1 = not at all, 5 = very much).\"}, {\"type\": \"comment\", \"name\": \"other_3\", \"title\": \"Were there any other factors that influenced your choice?\", \"isRequired\": false}]}, {\"name\": \"street_4\", \"elements\": [{\"type\": \"custom\", \"name\": \"trial_4\", \"title\": \"Street 4: which intervention was shown and how\", \"isRequired\": true, \"description\": \"Value: {block, code (survey code G101–G408), site (authors' intervention ID), city, country, type (car / bus / active), scale, view_a, view_b (which of before/after was shown as A and as B, random), chosen, after_preferred (1 = post-intervention view preferred, the paper's Y), looked_around, seconds}. Use code or site to analyse by intervention.\"}, {\"type\": \"radiogroup\", \"name\": \"pref_4\", \"title\": \"Please select the urban environment you prefer.\", \"isRequired\": true, \"choices\": [{\"value\": \"after\", \"text\": \"After the intervention\"}, {\"value\": \"before\", \"text\": \"Before the intervention\"}], \"description\": \"Verbatim preference question; forced choice. Participants see the two views as A and B in random order, never the words before/after.\"}, {\"type\": \"radiogroup\", \"name\": \"know_4\", \"title\": \"Do you know this place?\", \"isRequired\": true, \"choices\": [{\"value\": \"yes\", \"text\": \"Yes\"}, {\"value\": \"no\", \"text\": \"No\"}], \"description\": \"Verbatim familiarity question.\"}, {\"type\": \"custom\", \"name\": \"factors_4\", \"title\": \"Evaluate to what extent the following factors have influenced your decision.\", \"isRequired\": true, \"description\": \"Value: {usefulness, safety, security, stress, comfort, order, liveability}, each 1–5. Wording of the question and of the seven factors is taken from the authors' public dataset; the labels of the five scale points are not published (here 1 = not at all, 5 = very much).\"}, {\"type\": \"comment\", \"name\": \"other_4\", \"title\": \"Were there any other factors that influenced your choice?\", \"isRequired\": false}]}, {\"name\": \"street_5\", \"elements\": [{\"type\": \"custom\", \"name\": \"trial_5\", \"title\": \"Street 5: which intervention was shown and how\", \"isRequired\": true, \"description\": \"Value: {block, code (survey code G101–G408), site (authors' intervention ID), city, country, type (car / bus / active), scale, view_a, view_b (which of before/after was shown as A and as B, random), chosen, after_preferred (1 = post-intervention view preferred, the paper's Y), looked_around, seconds}. Use code or site to analyse by intervention.\"}, {\"type\": \"radiogroup\", \"name\": \"pref_5\", \"title\": \"Please select the urban environment you prefer.\", \"isRequired\": true, \"choices\": [{\"value\": \"after\", \"text\": \"After the intervention\"}, {\"value\": \"before\", \"text\": \"Before the intervention\"}], \"description\": \"Verbatim preference question; forced choice. Participants see the two views as A and B in random order, never the words before/after.\"}, {\"type\": \"radiogroup\", \"name\": \"know_5\", \"title\": \"Do you know this place?\", \"isRequired\": true, \"choices\": [{\"value\": \"yes\", \"text\": \"Yes\"}, {\"value\": \"no\", \"text\": \"No\"}], \"description\": \"Verbatim familiarity question.\"}, {\"type\": \"custom\", \"name\": \"factors_5\", \"title\": \"Evaluate to what extent the following factors have influenced your decision.\", \"isRequired\": true, \"description\": \"Value: {usefulness, safety, security, stress, comfort, order, liveability}, each 1–5. Wording of the question and of the seven factors is taken from the authors' public dataset; the labels of the five scale points are not published (here 1 = not at all, 5 = very much).\"}, {\"type\": \"comment\", \"name\": \"other_5\", \"title\": \"Were there any other factors that influenced your choice?\", \"isRequired\": false}]}, {\"name\": \"street_6\", \"elements\": [{\"type\": \"custom\", \"name\": \"trial_6\", \"title\": \"Street 6: which intervention was shown and how\", \"isRequired\": true, \"description\": \"Value: {block, code (survey code G101–G408), site (authors' intervention ID), city, country, type (car / bus / active), scale, view_a, view_b (which of before/after was shown as A and as B, random), chosen, after_preferred (1 = post-intervention view preferred, the paper's Y), looked_around, seconds}. Use code or site to analyse by intervention.\"}, {\"type\": \"radiogroup\", \"name\": \"pref_6\", \"title\": \"Please select the urban environment you prefer.\", \"isRequired\": true, \"choices\": [{\"value\": \"after\", \"text\": \"After the intervention\"}, {\"value\": \"before\", \"text\": \"Before the intervention\"}], \"description\": \"Verbatim preference question; forced choice. Participants see the two views as A and B in random order, never the words before/after.\"}, {\"type\": \"radiogroup\", \"name\": \"know_6\", \"title\": \"Do you know this place?\", \"isRequired\": true, \"choices\": [{\"value\": \"yes\", \"text\": \"Yes\"}, {\"value\": \"no\", \"text\": \"No\"}], \"description\": \"Verbatim familiarity question.\"}, {\"type\": \"custom\", \"name\": \"factors_6\", \"title\": \"Evaluate to what extent the following factors have influenced your decision.\", \"isRequired\": true, \"description\": \"Value: {usefulness, safety, security, stress, comfort, order, liveability}, each 1–5. Wording of the question and of the seven factors is taken from the authors' public dataset; the labels of the five scale points are not published (here 1 = not at all, 5 = very much).\"}, {\"type\": \"comment\", \"name\": \"other_6\", \"title\": \"Were there any other factors that influenced your choice?\", \"isRequired\": false}]}, {\"name\": \"street_7\", \"elements\": [{\"type\": \"custom\", \"name\": \"trial_7\", \"title\": \"Street 7: which intervention was shown and how\", \"isRequired\": true, \"description\": \"Value: {block, code (survey code G101–G408), site (authors' intervention ID), city, country, type (car / bus / active), scale, view_a, view_b (which of before/after was shown as A and as B, random), chosen, after_preferred (1 = post-intervention view preferred, the paper's Y), looked_around, seconds}. Use code or site to analyse by intervention.\"}, {\"type\": \"radiogroup\", \"name\": \"pref_7\", \"title\": \"Please select the urban environment you prefer.\", \"isRequired\": true, \"choices\": [{\"value\": \"after\", \"text\": \"After the intervention\"}, {\"value\": \"before\", \"text\": \"Before the intervention\"}], \"description\": \"Verbatim preference question; forced choice. Participants see the two views as A and B in random order, never the words before/after.\"}, {\"type\": \"radiogroup\", \"name\": \"know_7\", \"title\": \"Do you know this place?\", \"isRequired\": true, \"choices\": [{\"value\": \"yes\", \"text\": \"Yes\"}, {\"value\": \"no\", \"text\": \"No\"}], \"description\": \"Verbatim familiarity question.\"}, {\"type\": \"custom\", \"name\": \"factors_7\", \"title\": \"Evaluate to what extent the following factors have influenced your decision.\", \"isRequired\": true, \"description\": \"Value: {usefulness, safety, security, stress, comfort, order, liveability}, each 1–5. Wording of the question and of the seven factors is taken from the authors' public dataset; the labels of the five scale points are not published (here 1 = not at all, 5 = very much).\"}, {\"type\": \"comment\", \"name\": \"other_7\", \"title\": \"Were there any other factors that influenced your choice?\", \"isRequired\": false}]}, {\"name\": \"street_8\", \"elements\": [{\"type\": \"custom\", \"name\": \"trial_8\", \"title\": \"Street 8: which intervention was shown and how\", \"isRequired\": true, \"description\": \"Value: {block, code (survey code G101–G408), site (authors' intervention ID), city, country, type (car / bus / active), scale, view_a, view_b (which of before/after was shown as A and as B, random), chosen, after_preferred (1 = post-intervention view preferred, the paper's Y), looked_around, seconds}. Use code or site to analyse by intervention.\"}, {\"type\": \"radiogroup\", \"name\": \"pref_8\", \"title\": \"Please select the urban environment you prefer.\", \"isRequired\": true, \"choices\": [{\"value\": \"after\", \"text\": \"After the intervention\"}, {\"value\": \"before\", \"text\": \"Before the intervention\"}], \"description\": \"Verbatim preference question; forced choice. Participants see the two views as A and B in random order, never the words before/after.\"}, {\"type\": \"radiogroup\", \"name\": \"know_8\", \"title\": \"Do you know this place?\", \"isRequired\": true, \"choices\": [{\"value\": \"yes\", \"text\": \"Yes\"}, {\"value\": \"no\", \"text\": \"No\"}], \"description\": \"Verbatim familiarity question.\"}, {\"type\": \"custom\", \"name\": \"factors_8\", \"title\": \"Evaluate to what extent the following factors have influenced your decision.\", \"isRequired\": true, \"description\": \"Value: {usefulness, safety, security, stress, comfort, order, liveability}, each 1–5. Wording of the question and of the seven factors is taken from the authors' public dataset; the labels of the five scale points are not published (here 1 = not at all, 5 = very much).\"}, {\"type\": \"comment\", \"name\": \"other_8\", \"title\": \"Were there any other factors that influenced your choice?\", \"isRequired\": false}]}, {\"name\": \"about\", \"elements\": [{\"type\": \"text\", \"name\": \"age\", \"title\": \"What is your age?\", \"isRequired\": true, \"inputType\": \"number\", \"min\": 0, \"max\": 600}, {\"type\": \"radiogroup\", \"name\": \"gender\", \"title\": \"What is your gender identity?\", \"isRequired\": true, \"choices\": [{\"value\": \"woman\", \"text\": \"Woman\"}, {\"value\": \"man\", \"text\": \"Man\"}, {\"value\": \"non_binary\", \"text\": \"Non-binary\"}, {\"value\": \"prefer_not_to_say\", \"text\": \"Prefer not to say\"}], \"description\": \"Four options in the original; their labels are not published.\"}, {\"type\": \"text\", \"name\": \"city\", \"title\": \"Where do you live? City/Town\", \"isRequired\": true}, {\"type\": \"text\", \"name\": \"country\", \"title\": \"Where do you live? Country\", \"isRequired\": true}, {\"type\": \"text\", \"name\": \"nationality\", \"title\": \"What is your country of origin?\", \"isRequired\": true}, {\"type\": \"radiogroup\", \"name\": \"children\", \"title\": \"Do you have children?\", \"isRequired\": true, \"choices\": [{\"value\": \"yes\", \"text\": \"Yes\"}, {\"value\": \"no\", \"text\": \"No\"}]}, {\"type\": \"text\", \"name\": \"children_ages\", \"title\": \"If yes, how many children do you have and what are their ages?\", \"isRequired\": false, \"description\": \"Original: counts in three age bands (0–5, 6–10, 11 years old and above).\"}, {\"type\": \"radiogroup\", \"name\": \"pets\", \"title\": \"Do you have pets?\", \"isRequired\": true, \"choices\": [{\"value\": \"yes_i_have_one_or_more_dog_s\", \"text\": \"Yes, I have one (or more) dog(s)\"}, {\"value\": \"yes_i_have_another_type_of_pet\", \"text\": \"Yes, I have another type of pet\"}, {\"value\": \"yes_i_have_both\", \"text\": \"Yes, I have both\"}, {\"value\": \"no_i_do_not_have_pets\", \"text\": \"No, I do not have pets\"}], \"description\": \"Multiple choice in the original.\"}, {\"type\": \"radiogroup\", \"name\": \"disabilities\", \"title\": \"Do you have any disabilities?\", \"isRequired\": true, \"choices\": [{\"value\": \"yes_i_have_reduced_mobility\", \"text\": \"Yes, I have reduced mobility\"}, {\"value\": \"yes_i_have_a_visual_impairment\", \"text\": \"Yes, I have a visual impairment\"}, {\"value\": \"yes_i_have_a_hearing_impairment\", \"text\": \"Yes, I have a hearing impairment\"}, {\"value\": \"yes_i_have_another_type_of_disability\", \"text\": \"Yes, I have another type of disability\"}, {\"value\": \"no_i_do_not_have_any_disabilities\", \"text\": \"No, I do not have any disabilities\"}], \"description\": \"Multiple choice in the original.\"}, {\"type\": \"text\", \"name\": \"occupation\", \"title\": \"What is your current occupation?\", \"isRequired\": true, \"description\": \"A list in the original; its options are not published.\"}, {\"type\": \"radiogroup\", \"name\": \"specialist\", \"title\": \"Do you have any background, either past or present, through study or work, in the fields of urban mobility, transportation, or urbanism?\", \"isRequired\": true, \"choices\": [{\"value\": \"yes\", \"text\": \"Yes\"}, {\"value\": \"no\", \"text\": \"No\"}]}, {\"type\": \"radiogroup\", \"name\": \"specialist_role\", \"title\": \"If yes, what is (or was) your role?\", \"isRequired\": false, \"choices\": [{\"value\": \"academic_researcher\", \"text\": \"Academic/Researcher\"}, {\"value\": \"professional_e_g_planner_engineer\", \"text\": \"Professional (e.g., Planner, Engineer)\"}, {\"value\": \"government_public_sector\", \"text\": \"Government/Public Sector\"}, {\"value\": \"industry_private_sector\", \"text\": \"Industry/Private Sector\"}, {\"value\": \"non_profit_advocacy\", \"text\": \"Non-Profit/Advocacy\"}, {\"value\": \"technology_innovation\", \"text\": \"Technology/Innovation\"}, {\"value\": \"other\", \"text\": \"Other\"}], \"description\": \"Multiple choice in the original.\"}, {\"type\": \"text\", \"name\": \"commute_modes\", \"title\": \"Which transportation modes do you use for daily commuting, including trips to work or school?\", \"isRequired\": true, \"description\": \"A list of ten modes in the original (e.g. walking, train); the full list is not published.\"}, {\"type\": \"text\", \"name\": \"commute_time\", \"title\": \"How long does your daily commute approximately take? (minutes, one way)\", \"isRequired\": true, \"inputType\": \"number\", \"min\": 0, \"max\": 600, \"description\": \"Time bands in the original; their limits are not published.\"}, {\"type\": \"radiogroup\", \"name\": \"car\", \"title\": \"Do you own and have access to a private car?\", \"isRequired\": true, \"choices\": [{\"value\": \"yes\", \"text\": \"Yes\"}, {\"value\": \"no\", \"text\": \"No\"}]}, {\"type\": \"radiogroup\", \"name\": \"parking_home\", \"title\": \"Do you have access to free parking or do you have a parking permit for your residential area?\", \"isRequired\": false, \"choices\": [{\"value\": \"yes\", \"text\": \"Yes\"}, {\"value\": \"no\", \"text\": \"No\"}, {\"value\": \"not_applicable\", \"text\": \"Not applicable\"}], \"description\": \"Three options in the original; labels not published.\"}, {\"type\": \"radiogroup\", \"name\": \"parking_work\", \"title\": \"Do you have access to free parking or do you have a parking permit for your workplace/university?\", \"isRequired\": false, \"choices\": [{\"value\": \"yes\", \"text\": \"Yes\"}, {\"value\": \"no\", \"text\": \"No\"}, {\"value\": \"not_applicable\", \"text\": \"Not applicable\"}]}]}]}}\n</script>\n<style>\n:root{--bg:#f2f1ed;--card:#fff;--ink:#1d1e21;--muted:#5d6066;--accent:#2456a6;--accent-ink:#fff;--line:#d9d6cf;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:920px;margin:0 auto;padding:20px 16px 40px}h1{font-size:1.3rem;margin:0 0 8px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}.btn:disabled{opacity:.4;cursor:not-allowed}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}.btn.sm{padding:7px 12px;font-size:.9rem}.btn.sel{background:var(--ink);color:#fff;border-color:var(--ink)}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center}\n.q{margin-top:16px}.q>b{display:block;margin-bottom:6px;font-weight:600}\ntextarea,input[type=text],input[type=number]{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}\ntextarea{min-height:110px;resize:vertical}input[type=number]{width:140px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.step{display:inline-block;padding:2px 10px;border-radius:999px;background:#e1e9f7;color:#1b3f7a;font-size:.85rem;font-weight:600;margin-bottom:8px}\n.sheet{position:relative;border:1px solid #bdb9b0;background:#fffdf8;border-radius:6px;overflow:hidden;touch-action:none}\n.sheet canvas{display:block;width:100%;height:auto;cursor:crosshair;user-select:none;-webkit-user-select:none}\n.sheet input{position:absolute;width:150px;padding:3px 6px;font-size:.85rem;border:1px solid var(--accent);border-radius:6px;z-index:2}\n.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}\n.clock{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--muted);font-size:.9rem}\n.compass{display:grid;grid-template-columns:repeat(3,56px);gap:6px;margin-top:8px}\n.compass button{height:44px;border:1px solid var(--line);background:#fff;border-radius:8px;font-size:1.2rem;cursor:pointer}.compass button.sel{background:var(--accent);color:#fff;border-color:var(--accent)}\n.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.85rem;color:var(--muted);margin-top:6px}.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:920px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n.vw{position:relative;margin-top:10px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}\n.pano{height:300px;background-repeat:repeat-x;background-size:auto 100%;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}\n.tag{position:absolute;left:10px;top:10px;z-index:2;background:#fff;color:#111;font-weight:700;border-radius:8px;padding:2px 12px;font-size:1.1rem;box-shadow:0 1px 4px rgba(0,0,0,.3)}\n#pick .btn{flex:1;min-width:130px;font-size:1.05rem}\n.fhead{display:flex;justify-content:flex-end;gap:16px;font-size:.8rem;color:var(--muted)}\n.frow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-top:1px solid var(--line);font-size:.93rem}\n.fb{display:flex;gap:5px;flex-shrink:0}.fb button{width:34px;height:34px;border:1px solid var(--line);background:#fff;border-radius:8px;font:inherit;cursor:pointer}.fb button.sel{background:var(--accent);color:#fff;border-color:var(--accent)}\n@media(max-width:700px){.pano{height:190px}.frow{flex-direction:column;align-items:flex-start}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Method and interventions: Lopes, M. I., Valença, G., &amp; Moura, F. (2026). Exploring before-and-after visual preferences of street interventions using Google Street View time travel. <i>Landscape and Urban Planning</i>, 273, 105686. Street images: Google Street View panoramas at the locations and dates listed by the authors (© Google).</footer>\n<script>\nvar SITES={\"2\": {\"id\": 2, \"city\": \"Fortaleza\", \"country\": \"Brazil\", \"type\": \"active\", \"subtype\": \"Active-Modes\", \"scale\": \"large\", \"before\": \"s02_before.jpg\", \"after\": \"s02_after.jpg\"}, \"4\": {\"id\": 4, \"city\": \"Mexico City\", \"country\": \"Mexico\", \"type\": \"active\", \"subtype\": \"Active-Modes\", \"scale\": \"large\", \"before\": \"s04_before.jpg\", \"after\": \"s04_after.jpg\"}, \"7\": {\"id\": 7, \"city\": \"Graz\", \"country\": \"Austria\", \"type\": \"active\", \"subtype\": \"Shared Space\", \"scale\": \"medium\", \"before\": \"s07_before.jpg\", \"after\": \"s07_after.jpg\"}, \"9\": {\"id\": 9, \"city\": \"Milan\", \"country\": \"Italy\", \"type\": \"active\", \"subtype\": \"Active-Modes\", \"scale\": \"medium\", \"before\": \"s09_before.jpg\", \"after\": \"s09_after.jpg\"}, \"10\": {\"id\": 10, \"city\": \"Barcelona\", \"country\": \"Spain\", \"type\": \"active\", \"subtype\": \"Active-Modes\", \"scale\": \"large\", \"before\": \"s10_before.jpg\", \"after\": \"s10_after.jpg\"}, \"15\": {\"id\": 15, \"city\": \"Lisbon\", \"country\": \"Portugal\", \"type\": \"active\", \"subtype\": \"Active-Modes\", \"scale\": \"medium\", \"before\": \"s15_before.jpg\", \"after\": \"s15_after.jpg\"}, \"18\": {\"id\": 18, \"city\": \"Culver City\", \"country\": \"USA\", \"type\": \"bus\", \"subtype\": \"Bus-Oriented\", \"scale\": \"medium\", \"before\": \"s18_before.jpg\", \"after\": \"s18_after.jpg\"}, \"20\": {\"id\": 20, \"city\": \"Istanbul\", \"country\": \"Turkey\", \"type\": \"active\", \"subtype\": \"Active-Modes\", \"scale\": \"large\", \"before\": \"s20_before.jpg\", \"after\": \"s20_after.jpg\"}, \"25\": {\"id\": 25, \"city\": \"New York\", \"country\": \"USA\", \"type\": \"bus\", \"subtype\": \"Bus-Oriented\", \"scale\": \"large\", \"before\": \"s25_before.jpg\", \"after\": \"s25_after.jpg\"}, \"30\": {\"id\": 30, \"city\": \"Elche\", \"country\": \"Spain\", \"type\": \"car\", \"subtype\": \"Car-Oriented\", \"scale\": \"medium\", \"before\": \"s30_before.jpg\", \"after\": \"s30_after.jpg\"}, \"31\": {\"id\": 31, \"city\": \"Elche\", \"country\": \"Spain\", \"type\": \"car\", \"subtype\": \"Car-Oriented\", \"scale\": \"medium\", \"before\": \"s31_before.jpg\", \"after\": \"s31_after.jpg\"}, \"33\": {\"id\": 33, \"city\": \"San Francisco\", \"country\": \"USA\", \"type\": \"bus\", \"subtype\": \"Bus-Oriented\", \"scale\": \"large\", \"before\": \"s33_before.jpg\", \"after\": \"s33_after.jpg\"}, \"34\": {\"id\": 34, \"city\": \"London\", \"country\": \"United Kingdom\", \"type\": \"car\", \"subtype\": \"Car-Oriented\", \"scale\": \"medium\", \"before\": \"s34_before.jpg\", \"after\": \"s34_after.jpg\"}, \"37\": {\"id\": 37, \"city\": \"Natal\", \"country\": \"Brazil\", \"type\": \"car\", \"subtype\": \"Car-Oriented\", \"scale\": \"transformative\", \"before\": \"s37_before.jpg\", \"after\": \"s37_after.jpg\"}, \"39\": {\"id\": 39, \"city\": \"Brussels\", \"country\": \"Belgium\", \"type\": \"active\", \"subtype\": \"Car-Free\", \"scale\": \"transformative\", \"before\": \"s39_before.jpg\", \"after\": \"s39_after.jpg\"}, \"41\": {\"id\": 41, \"city\": \"Brussels\", \"country\": \"Belgium\", \"type\": \"active\", \"subtype\": \"Shared Space\", \"scale\": \"transformative\", \"before\": \"s41_before.jpg\", \"after\": \"s41_after.jpg\"}, \"49\": {\"id\": 49, \"city\": \"Barcelona\", \"country\": \"Spain\", \"type\": \"active\", \"subtype\": \"Car-Free\", \"scale\": \"transformative\", \"before\": \"s49_before.jpg\", \"after\": \"s49_after.jpg\"}, \"50\": {\"id\": 50, \"city\": \"Barcelona\", \"country\": \"Spain\", \"type\": \"active\", \"subtype\": \"Active-Modes\", \"scale\": \"large\", \"before\": \"s50_before.jpg\", \"after\": \"s50_after.jpg\"}, \"55\": {\"id\": 55, \"city\": \"Athens\", \"country\": \"Greece\", \"type\": \"active\", \"subtype\": \"Active-Modes\", \"scale\": \"large\", \"before\": \"s55_before.jpg\", \"after\": \"s55_after.jpg\"}, \"60\": {\"id\": 60, \"city\": \"Seattle\", \"country\": \"USA\", \"type\": \"active\", \"subtype\": \"Shared Space\", \"scale\": \"large\", \"before\": \"s60_before.jpg\", \"after\": \"s60_after.jpg\"}, \"62\": {\"id\": 62, \"city\": \"Barcelona\", \"country\": \"Spain\", \"type\": \"active\", \"subtype\": \"Car-Free\", \"scale\": \"transformative\", \"before\": \"s62_before.jpg\", \"after\": \"s62_after.jpg\"}, \"63\": {\"id\": 63, \"city\": \"Valencia\", \"country\": \"Spain\", \"type\": \"active\", \"subtype\": \"Car-Free\", \"scale\": \"transformative\", \"before\": \"s63_before.jpg\", \"after\": \"s63_after.jpg\"}, \"64\": {\"id\": 64, \"city\": \"Lisbon\", \"country\": \"Portugal\", \"type\": \"car\", \"subtype\": \"Car-Oriented\", \"scale\": \"large\", \"before\": \"s64_before.jpg\", \"after\": \"s64_after.jpg\"}, \"66\": {\"id\": 66, \"city\": \"Auckland\", \"country\": \"New Zealand\", \"type\": \"bus\", \"subtype\": \"Bus-Oriented\", \"scale\": \"large\", \"before\": \"s66_before.jpg\", \"after\": \"s66_after.jpg\"}, \"67\": {\"id\": 67, \"city\": \"Auckland\", \"country\": \"New Zealand\", \"type\": \"active\", \"subtype\": \"Shared Space\", \"scale\": \"transformative\", \"before\": \"s67_before.jpg\", \"after\": \"s67_after.jpg\"}, \"68\": {\"id\": 68, \"city\": \"Lisbon\", \"country\": \"Portugal\", \"type\": \"car\", \"subtype\": \"Car-Oriented\", \"scale\": \"medium\", \"before\": \"s68_before.jpg\", \"after\": \"s68_after.jpg\"}, \"69\": {\"id\": 69, \"city\": \"Lisbon\", \"country\": \"Portugal\", \"type\": \"bus\", \"subtype\": \"Bus-Oriented\", \"scale\": \"medium\", \"before\": \"s69_before.jpg\", \"after\": \"s69_after.jpg\"}, \"72\": {\"id\": 72, \"city\": \"Auckland\", \"country\": \"New Zealand\", \"type\": \"bus\", \"subtype\": \"Bus-Oriented\", \"scale\": \"medium\", \"before\": \"s72_before.jpg\", \"after\": \"s72_after.jpg\"}},BLOCKS={\"1\": [{\"code\": \"G101\", \"site\": \"2\"}, {\"code\": \"G102\", \"site\": \"7\"}, {\"code\": \"G103\", \"site\": \"55\"}, {\"code\": \"G104\", \"site\": \"18\"}, {\"code\": \"G105\", \"site\": \"49\"}, {\"code\": \"G106\", \"site\": \"37\"}, {\"code\": \"G107\", \"site\": \"33\"}, {\"code\": \"G108\", \"site\": \"30\"}], \"2\": [{\"code\": \"G201\", \"site\": \"63\"}, {\"code\": \"G202\", \"site\": \"60\"}, {\"code\": \"G203\", \"site\": \"37\"}, {\"code\": \"G204\", \"site\": \"34\"}, {\"code\": \"G205\", \"site\": \"72\"}, {\"code\": \"G206\", \"site\": \"25\"}, {\"code\": \"G207\", \"site\": \"4\"}, {\"code\": \"G208\", \"site\": \"15\"}], \"3\": [{\"code\": \"G301\", \"site\": \"64\"}, {\"code\": \"G302\", \"site\": \"9\"}, {\"code\": \"G303\", \"site\": \"50\"}, {\"code\": \"G304\", \"site\": \"31\"}, {\"code\": \"G305\", \"site\": \"69\"}, {\"code\": \"G306\", \"site\": \"66\"}, {\"code\": \"G307\", \"site\": \"39\"}, {\"code\": \"G308\", \"site\": \"67\"}], \"4\": [{\"code\": \"G401\", \"site\": \"18\"}, {\"code\": \"G402\", \"site\": \"41\"}, {\"code\": \"G403\", \"site\": \"20\"}, {\"code\": \"G404\", \"site\": \"10\"}, {\"code\": \"G405\", \"site\": \"64\"}, {\"code\": \"G406\", \"site\": \"69\"}, {\"code\": \"G407\", \"site\": \"62\"}, {\"code\": \"G408\", \"site\": \"68\"}]};\n(function(){\n  var app=document.getElementById('app'),A={},MEDIA={};\n  var FACTORS=[['usefulness','Usefulness (e.g., commuting, access to restaurants, parking, socializing, etc)'],['safety','Safety (e.g., traffic accidents)'],['security','Security (e.g., crime)'],['stress','Stress (e.g., traffic)'],['comfort','Comfort (e.g., shade, seating, etc)'],['order','Order (e.g., structured public space)'],['liveability','Liveability (e.g., recreational/green spaces, sense of community, etc)']];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function has(n){var v=A[n];return v!=null&&v!=='';}\n  function T(n){return SPSite.getQuestion(n).title;}\n  function url(f){return (MEDIA[f]&&MEDIA[f].url)||('sites/'+f);}\n  var ABOUT=[\n    {step:'About you · 1 of 3',names:['age','gender','city','country','nationality','children','children_ages','pets','disabilities']},\n    {step:'About you · 2 of 3',names:['occupation','specialist','specialist_role']},\n    {step:'About you · 3 of 3',names:['commute_modes','commute_time','car','parking_home','parking_work']}];\n  var OPT={children_ages:1,specialist_role:1,parking_home:1,parking_work:1};\n  function req(n){return !OPT[n];}\n  function saveAll(items,b,then){b.disabled=true;\n    (function step(i){if(i>=items.length)return then();\n      SPSite.answer(items[i][0],items[i][1],items[i][2]).then(function(r){if(!ok(r)){b.disabled=false;return err(r.error);}A[items[i][0]]=items[i][1];step(i+1);});})(0);}\n  function next(){window.scrollTo(0,0);\n    if(A.consent!==true)return intro();\n    if(!has('block'))return assign();\n    for(var k=1;k<=8;k++)if(!has('pref_'+k)||!has('know_'+k)||!has('factors_'+k))return trial(k);\n    for(var i=0;i<ABOUT.length;i++){var P=ABOUT[i];for(var j=0;j<P.names.length;j++)if(req(P.names[j])&&!has(P.names[j]))return form(P);}\n    finish();}\n  function intro(){\n    app.innerHTML='<h1>Which street do you prefer?</h1><p>You will see eight streets. Each one is shown twice, at two different moments in time, as 360° street views. Look around in both views, then choose the urban environment you prefer. After the eight streets there are a few questions about you. It takes about 10 minutes.</p><div class=\"card\"><p>'+esc(T('consent'))+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">I agree</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){saveAll([['consent',true]],this,next);};}\n  function assign(){var b=1+Math.floor(Math.random()*4);SPSite.answer('block',String(b)).then(function(r){if(!ok(r)){app.innerHTML='<p class=\"err\">'+esc(r.error)+'</p>';return;}A.block=String(b);next();});}\n  function trial(k){\n    var blk=BLOCKS[A.block],S=SITES[blk[k-1].site],code=blk[k-1].code,topIs=Math.random()<0.5?'before':'after',botIs=topIs==='before'?'after':'before';\n    var files={before:S.before,after:S.after},t0=Date.now(),panned=false,choice=null,know=null,F={};\n    var h='<div class=\"card\"><span class=\"step\">Street '+k+' of 8</span><h1>'+esc(T('pref_'+k))+'</h1><p>Both views show the same place. Drag a picture sideways (or use the arrows) to look around; the two views turn together.</p>';\n    [['A',topIs],['B',botIs]].forEach(function(v){h+='<div class=\"vw\"><span class=\"tag\">'+v[0]+'</span><div class=\"pano\" data-v=\"'+v[0]+'\" style=\"background-image:url(&quot;'+esc(url(files[v[1]]))+'&quot;)\"></div></div>';});\n    h+='<div class=\"row\" style=\"justify-content:center\"><button class=\"btn sm ghost\" id=\"pl\" aria-label=\"Look left\">◀ Look left</button><button class=\"btn sm ghost\" id=\"pr\" aria-label=\"Look right\">Look right ▶</button></div>';\n    h+='<div class=\"row\" id=\"pick\"><button class=\"btn ghost\" data-c=\"A\">I prefer A</button><button class=\"btn ghost\" data-c=\"B\">I prefer B</button></div>';\n    h+='<div class=\"q\"><b>'+esc(T('know_'+k))+'</b><div class=\"row\" id=\"know\" style=\"margin-top:6px\"><button class=\"btn sm ghost\" data-k=\"yes\">Yes</button><button class=\"btn sm ghost\" data-k=\"no\">No</button></div></div>';\n    h+='<div class=\"q\"><b>'+esc(T('factors_'+k))+'</b><div class=\"fhead\"><span>1 = not at all</span><span>5 = very much</span></div>';\n    FACTORS.forEach(function(f){h+='<div class=\"frow\"><span>'+esc(f[1])+'</span><span class=\"fb\" data-f=\"'+f[0]+'\">'+[1,2,3,4,5].map(function(n){return '<button type=\"button\" data-n=\"'+n+'\">'+n+'</button>';}).join('')+'</span></div>';});\n    h+='</div><div class=\"q\"><b>'+esc(T('other_'+k))+' <span style=\"font-weight:400;color:#777\">(optional)</span></b><textarea id=\"other\" style=\"min-height:60px\"></textarea></div>';\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    var panos=[].slice.call(app.querySelectorAll('.pano')),off=0,drag=null;\n    function paint(){panos.forEach(function(p){var w=p.clientHeight*2880/662;p.style.backgroundPosition=(p.clientWidth/2-w/2+off)+'px 0';});}\n    panos.forEach(function(p){\n      p.addEventListener('pointerdown',function(e){drag={x:e.clientX,o:off};p.setPointerCapture(e.pointerId);});\n      p.addEventListener('pointermove',function(e){if(!drag)return;off=drag.o+(e.clientX-drag.x);if(Math.abs(e.clientX-drag.x)>8)panned=true;paint();});\n      p.addEventListener('pointerup',function(){drag=null;});p.addEventListener('pointercancel',function(){drag=null;});});\n    function turn(d){off+=d*panos[0].clientWidth*0.4;panned=true;paint();}\n    document.getElementById('pl').onclick=function(){turn(1);};document.getElementById('pr').onclick=function(){turn(-1);};\n    window.addEventListener('resize',paint);paint();\n    app.querySelectorAll('#pick button').forEach(function(b){b.onclick=function(){choice=b.getAttribute('data-c');app.querySelectorAll('#pick button').forEach(function(x){x.classList.toggle('sel',x===b);});err('');};});\n    app.querySelectorAll('#know button').forEach(function(b){b.onclick=function(){know=b.getAttribute('data-k');app.querySelectorAll('#know button').forEach(function(x){x.classList.toggle('sel',x===b);});err('');};});\n    app.querySelectorAll('.fb').forEach(function(g){g.querySelectorAll('button').forEach(function(b){b.onclick=function(){F[g.getAttribute('data-f')]=Number(b.getAttribute('data-n'));g.querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b);});err('');};});});\n    document.getElementById('go').onclick=function(){\n      if(!choice)return err('Please choose the urban environment you prefer, A or B.');\n      if(!know)return err('Please say whether you know this place.');\n      for(var i=0;i<FACTORS.length;i++)if(!F[FACTORS[i][0]])return err('Please rate: '+FACTORS[i][1].split(' (')[0]+'.');\n      var chosen=choice==='A'?topIs:botIs,shown=[files[topIs],files[botIs]];\n      var items=[['trial_'+k,{block:Number(A.block),code:code,site:S.id,city:S.city,country:S.country,type:S.type,scale:S.scale,view_a:topIs,view_b:botIs,chosen:chosen,after_preferred:chosen==='after'?1:0,looked_around:panned,seconds:Math.round((Date.now()-t0)/100)/10},{shown:shown}],\n        ['pref_'+k,chosen,{shown:shown}],['know_'+k,know],['factors_'+k,F]],o=document.getElementById('other').value.trim();\n      if(o)items.push(['other_'+k,o]);\n      saveAll(items,this,next);};}\n  function form(P){\n    var h='<div class=\"card\"><span class=\"step\">'+esc(P.step)+'</span>';\n    P.names.forEach(function(n){var q=SPSite.getQuestion(n);h+='<div class=\"q\"><b>'+esc(T(n))+(req(n)?'':' <span style=\"font-weight:400;color:#777\">(optional)</span>')+'</b>';\n      if(q.type==='radiogroup')h+=q.choices.map(function(c){return '<label class=\"o\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');\n      else if(q.type==='comment')h+='<textarea id=\"f_'+n+'\" style=\"min-height:60px\"></textarea>';\n      else h+='<input id=\"f_'+n+'\" type=\"'+(q.inputType==='number'?'number':'text')+'\"'+(q.inputType==='number'?' min=\"0\" max=\"600\"':'')+'>';\n      h+='</div>';});\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){var items=[];\n      for(var k=0;k<P.names.length;k++){var n=P.names[k],q=SPSite.getQuestion(n),x;\n        if(q.type==='radiogroup'){var c=app.querySelector('input[name=\"'+n+'\"]:checked');x=c?c.value:'';}\n        else{x=document.getElementById('f_'+n).value.trim();if(q.inputType==='number'&&x!==''){x=Number(x);if(isNaN(x)||x<0||x>600)return err('Please enter a valid number.');}}\n        if(req(n)&&x==='')return err('Please answer: '+T(n).slice(0,80)+(T(n).length>80?'…':''));\n        if(x!=='')items.push([n,x]);}\n      saveAll(items,this,next);};}\n  function finish(){\n    var n=0;for(var k=1;k<=8;k++)if(A['pref_'+k]==='after')n++;\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>Each street was shown before and after a real change to how its space is shared: some changes gave more room to walking and cycling, some to buses, and some to cars. You preferred the street <b>after</b> the change in '+n+' of 8 cases. In the original study by Lopes, Valença and Moura (2026), most participants preferred the \"after\" view, especially for changes in favour of walking and cycling.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');return;}var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';});}\n  SPSite.onReady(function(ctx){A=(ctx&&ctx.answers)||{};(SPSite.getMedia('sites')||[]).forEach(function(f){MEDIA[f.name]=f;});next();});\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T02:19:24.061Z",
+   "mediaFolders": [
+    "sites"
+   ]
   },
-  "imageDatasetConfig": {
-    "mediaFolders": [
-      "active-1",
-      "active-2",
-      "active-3",
-      "active-4",
-      "bus-1",
-      "bus-2",
-      "car-1",
-      "car-2"
-    ],
-    "mediaFolderTags": {
-      "bus-1": "set",
-      "bus-2": "set",
-      "car-1": "set",
-      "car-2": "set",
-      "active-1": "set",
-      "active-2": "set",
-      "active-3": "set",
-      "active-4": "set"
-    }
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T02:19:24.061Z"
   },
-  "preloadedImages": [],
-  "preloadedSource": null,
-  "preloadedAt": null
+  "description": "Eight real street interventions, each shown as a pair of 360° Google Street View panoramas from before and after the change. Participants look around both views, choose the urban environment they prefer, say whether they know the place and rate seven factors behind the choice.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s02_after__ca81b2b0-a393-4287-b22a-647f0dda3782.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s02_after__ca81b2b0-a393-4287-b22a-647f0dda3782.jpg",
+   "name": "s02_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s02_after__ca81b2b0-a393-4287-b22a-647f0dda3782.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 311957,
+   "uploaded_bytes": 311957,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s02_before__d7e1f6c7-c3da-419c-9b7d-79c3033ef672.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s02_before__d7e1f6c7-c3da-419c-9b7d-79c3033ef672.jpg",
+   "name": "s02_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s02_before__d7e1f6c7-c3da-419c-9b7d-79c3033ef672.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 271543,
+   "uploaded_bytes": 271543,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s04_after__6504ad29-adf2-4c4c-845d-e592cd6a7001.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s04_after__6504ad29-adf2-4c4c-845d-e592cd6a7001.jpg",
+   "name": "s04_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s04_after__6504ad29-adf2-4c4c-845d-e592cd6a7001.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 309702,
+   "uploaded_bytes": 309702,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s04_before__0f81001d-2dc6-4c65-81a2-48e453f137f6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s04_before__0f81001d-2dc6-4c65-81a2-48e453f137f6.jpg",
+   "name": "s04_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s04_before__0f81001d-2dc6-4c65-81a2-48e453f137f6.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 251070,
+   "uploaded_bytes": 251070,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s07_after__34a81bb1-bf37-40d2-887b-89a8c151ee20.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s07_after__34a81bb1-bf37-40d2-887b-89a8c151ee20.jpg",
+   "name": "s07_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s07_after__34a81bb1-bf37-40d2-887b-89a8c151ee20.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 353327,
+   "uploaded_bytes": 353327,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s07_before__31adbb70-174e-4fc5-981b-db7d17356a79.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s07_before__31adbb70-174e-4fc5-981b-db7d17356a79.jpg",
+   "name": "s07_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s07_before__31adbb70-174e-4fc5-981b-db7d17356a79.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 355682,
+   "uploaded_bytes": 355682,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s09_after__5189a88b-fda0-437a-b07e-4ecddf48530b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s09_after__5189a88b-fda0-437a-b07e-4ecddf48530b.jpg",
+   "name": "s09_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s09_after__5189a88b-fda0-437a-b07e-4ecddf48530b.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 405149,
+   "uploaded_bytes": 405149,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s09_before__452ffbc7-a3c0-4269-949d-8f1b1473f35b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s09_before__452ffbc7-a3c0-4269-949d-8f1b1473f35b.jpg",
+   "name": "s09_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s09_before__452ffbc7-a3c0-4269-949d-8f1b1473f35b.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 360286,
+   "uploaded_bytes": 360286,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s10_after__b97c7a9d-688b-4568-af51-242049026c3d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s10_after__b97c7a9d-688b-4568-af51-242049026c3d.jpg",
+   "name": "s10_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s10_after__b97c7a9d-688b-4568-af51-242049026c3d.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 409490,
+   "uploaded_bytes": 409490,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s10_before__94f6098a-1755-4238-9967-e18194c4a902.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s10_before__94f6098a-1755-4238-9967-e18194c4a902.jpg",
+   "name": "s10_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s10_before__94f6098a-1755-4238-9967-e18194c4a902.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 408259,
+   "uploaded_bytes": 408259,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s15_after__6e5b3021-0403-4e4d-baa3-8e902ba253dd.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s15_after__6e5b3021-0403-4e4d-baa3-8e902ba253dd.jpg",
+   "name": "s15_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s15_after__6e5b3021-0403-4e4d-baa3-8e902ba253dd.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 355708,
+   "uploaded_bytes": 355708,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s15_before__299c8965-22f9-4eb8-a832-f98a67e5ad71.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s15_before__299c8965-22f9-4eb8-a832-f98a67e5ad71.jpg",
+   "name": "s15_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s15_before__299c8965-22f9-4eb8-a832-f98a67e5ad71.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 329010,
+   "uploaded_bytes": 329010,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s18_after__075da7e2-4293-45c0-a523-e6656778524e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s18_after__075da7e2-4293-45c0-a523-e6656778524e.jpg",
+   "name": "s18_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s18_after__075da7e2-4293-45c0-a523-e6656778524e.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 318004,
+   "uploaded_bytes": 318004,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s18_before__4229796d-46aa-447a-8d25-f2fe67335995.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s18_before__4229796d-46aa-447a-8d25-f2fe67335995.jpg",
+   "name": "s18_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s18_before__4229796d-46aa-447a-8d25-f2fe67335995.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 399050,
+   "uploaded_bytes": 399050,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s20_after__ec549b56-694a-418e-8859-11b4c98df8c5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s20_after__ec549b56-694a-418e-8859-11b4c98df8c5.jpg",
+   "name": "s20_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s20_after__ec549b56-694a-418e-8859-11b4c98df8c5.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 330405,
+   "uploaded_bytes": 330405,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s20_before__b2aa70ff-f99e-4255-b26d-59ca9e360f85.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s20_before__b2aa70ff-f99e-4255-b26d-59ca9e360f85.jpg",
+   "name": "s20_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s20_before__b2aa70ff-f99e-4255-b26d-59ca9e360f85.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 316777,
+   "uploaded_bytes": 316777,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s25_after__68aa7e2d-909e-4436-9bff-afdbadb8ccaa.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s25_after__68aa7e2d-909e-4436-9bff-afdbadb8ccaa.jpg",
+   "name": "s25_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s25_after__68aa7e2d-909e-4436-9bff-afdbadb8ccaa.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 340927,
+   "uploaded_bytes": 340927,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s25_before__ef037eff-284f-4203-a128-574267422bf7.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s25_before__ef037eff-284f-4203-a128-574267422bf7.jpg",
+   "name": "s25_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s25_before__ef037eff-284f-4203-a128-574267422bf7.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 368639,
+   "uploaded_bytes": 368639,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s30_after__16dc571a-0796-482a-b74e-f5c4deaf4a29.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s30_after__16dc571a-0796-482a-b74e-f5c4deaf4a29.jpg",
+   "name": "s30_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s30_after__16dc571a-0796-482a-b74e-f5c4deaf4a29.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 365999,
+   "uploaded_bytes": 365999,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s30_before__0227f115-065e-4883-b99a-ccbc45106b3c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s30_before__0227f115-065e-4883-b99a-ccbc45106b3c.jpg",
+   "name": "s30_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s30_before__0227f115-065e-4883-b99a-ccbc45106b3c.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 353558,
+   "uploaded_bytes": 353558,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s31_after__077cb39d-2877-4f37-b3d6-63b92d3b8edc.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s31_after__077cb39d-2877-4f37-b3d6-63b92d3b8edc.jpg",
+   "name": "s31_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s31_after__077cb39d-2877-4f37-b3d6-63b92d3b8edc.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 352732,
+   "uploaded_bytes": 352732,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s31_before__45875b72-3f1b-420f-a723-ab939510fce3.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s31_before__45875b72-3f1b-420f-a723-ab939510fce3.jpg",
+   "name": "s31_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s31_before__45875b72-3f1b-420f-a723-ab939510fce3.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 371299,
+   "uploaded_bytes": 371299,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s33_after__33c27762-7e29-4714-aed8-8a63161ebcf0.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s33_after__33c27762-7e29-4714-aed8-8a63161ebcf0.jpg",
+   "name": "s33_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s33_after__33c27762-7e29-4714-aed8-8a63161ebcf0.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 403818,
+   "uploaded_bytes": 403818,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s33_before__9bf9d7b2-b98e-4205-b9c0-dbf1f72514e8.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s33_before__9bf9d7b2-b98e-4205-b9c0-dbf1f72514e8.jpg",
+   "name": "s33_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s33_before__9bf9d7b2-b98e-4205-b9c0-dbf1f72514e8.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 371609,
+   "uploaded_bytes": 371609,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s34_after__6979150a-9cb8-4ac7-a514-5eb35bf6f2fe.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s34_after__6979150a-9cb8-4ac7-a514-5eb35bf6f2fe.jpg",
+   "name": "s34_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s34_after__6979150a-9cb8-4ac7-a514-5eb35bf6f2fe.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 445345,
+   "uploaded_bytes": 445345,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s34_before__ff622570-cbbd-491a-8368-5d288e1a01ec.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s34_before__ff622570-cbbd-491a-8368-5d288e1a01ec.jpg",
+   "name": "s34_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s34_before__ff622570-cbbd-491a-8368-5d288e1a01ec.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 467008,
+   "uploaded_bytes": 467008,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s37_after__2a0cdcb2-1460-4e00-9e18-2bbd71d6284e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s37_after__2a0cdcb2-1460-4e00-9e18-2bbd71d6284e.jpg",
+   "name": "s37_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s37_after__2a0cdcb2-1460-4e00-9e18-2bbd71d6284e.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 223154,
+   "uploaded_bytes": 223154,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s37_before__613606b4-8700-4a78-8b26-5d0e85092938.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s37_before__613606b4-8700-4a78-8b26-5d0e85092938.jpg",
+   "name": "s37_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s37_before__613606b4-8700-4a78-8b26-5d0e85092938.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 360523,
+   "uploaded_bytes": 360523,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s39_after__52342f84-c7dd-4701-a75f-14bb4e96ebad.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s39_after__52342f84-c7dd-4701-a75f-14bb4e96ebad.jpg",
+   "name": "s39_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s39_after__52342f84-c7dd-4701-a75f-14bb4e96ebad.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 349106,
+   "uploaded_bytes": 349106,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s39_before__229929b8-4fa8-4957-ac25-67246519c859.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s39_before__229929b8-4fa8-4957-ac25-67246519c859.jpg",
+   "name": "s39_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s39_before__229929b8-4fa8-4957-ac25-67246519c859.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 324228,
+   "uploaded_bytes": 324228,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s41_after__d76fe122-77b9-4858-a90a-3ae2559610e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s41_after__d76fe122-77b9-4858-a90a-3ae2559610e7.jpg",
+   "name": "s41_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s41_after__d76fe122-77b9-4858-a90a-3ae2559610e7.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 439073,
+   "uploaded_bytes": 439073,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s41_before__03c2fdb5-7b60-4d94-9000-8136783d577d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s41_before__03c2fdb5-7b60-4d94-9000-8136783d577d.jpg",
+   "name": "s41_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s41_before__03c2fdb5-7b60-4d94-9000-8136783d577d.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 340736,
+   "uploaded_bytes": 340736,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s49_after__1349afe4-cddc-4ff7-a464-068c1088a972.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s49_after__1349afe4-cddc-4ff7-a464-068c1088a972.jpg",
+   "name": "s49_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s49_after__1349afe4-cddc-4ff7-a464-068c1088a972.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 431605,
+   "uploaded_bytes": 431605,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s49_before__029c07b6-279b-4f41-9be5-04efffc1eaf3.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s49_before__029c07b6-279b-4f41-9be5-04efffc1eaf3.jpg",
+   "name": "s49_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s49_before__029c07b6-279b-4f41-9be5-04efffc1eaf3.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 411400,
+   "uploaded_bytes": 411400,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s50_after__1c6b3686-769e-44f4-8a62-1a1b00dab468.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s50_after__1c6b3686-769e-44f4-8a62-1a1b00dab468.jpg",
+   "name": "s50_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s50_after__1c6b3686-769e-44f4-8a62-1a1b00dab468.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 404616,
+   "uploaded_bytes": 404616,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s50_before__7d921453-29aa-4ca6-8ea3-ec84ec11445e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s50_before__7d921453-29aa-4ca6-8ea3-ec84ec11445e.jpg",
+   "name": "s50_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s50_before__7d921453-29aa-4ca6-8ea3-ec84ec11445e.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 390568,
+   "uploaded_bytes": 390568,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s55_after__9b4b5fcf-990c-4895-9d19-2629e8aa8de4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s55_after__9b4b5fcf-990c-4895-9d19-2629e8aa8de4.jpg",
+   "name": "s55_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s55_after__9b4b5fcf-990c-4895-9d19-2629e8aa8de4.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 399042,
+   "uploaded_bytes": 399042,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s55_before__e685aafb-6069-4c6b-9731-d2cdfe14ee41.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s55_before__e685aafb-6069-4c6b-9731-d2cdfe14ee41.jpg",
+   "name": "s55_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s55_before__e685aafb-6069-4c6b-9731-d2cdfe14ee41.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 365031,
+   "uploaded_bytes": 365031,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s60_after__8af04137-33e3-40fb-a4bb-c8e95d8da1fe.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s60_after__8af04137-33e3-40fb-a4bb-c8e95d8da1fe.jpg",
+   "name": "s60_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s60_after__8af04137-33e3-40fb-a4bb-c8e95d8da1fe.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 389271,
+   "uploaded_bytes": 389271,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s60_before__35ed645c-743a-4207-8e18-34c0e312d8b2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s60_before__35ed645c-743a-4207-8e18-34c0e312d8b2.jpg",
+   "name": "s60_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s60_before__35ed645c-743a-4207-8e18-34c0e312d8b2.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 315916,
+   "uploaded_bytes": 315916,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s62_after__7a88e11a-5bb4-42db-800c-f6caa5a89dda.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s62_after__7a88e11a-5bb4-42db-800c-f6caa5a89dda.jpg",
+   "name": "s62_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s62_after__7a88e11a-5bb4-42db-800c-f6caa5a89dda.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 319303,
+   "uploaded_bytes": 319303,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s62_before__d0be6a64-0838-496e-a7d1-eb66ccca85c5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s62_before__d0be6a64-0838-496e-a7d1-eb66ccca85c5.jpg",
+   "name": "s62_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s62_before__d0be6a64-0838-496e-a7d1-eb66ccca85c5.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 303900,
+   "uploaded_bytes": 303900,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s63_after__393f46a6-39e4-4c1e-af4c-362f66937aee.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s63_after__393f46a6-39e4-4c1e-af4c-362f66937aee.jpg",
+   "name": "s63_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s63_after__393f46a6-39e4-4c1e-af4c-362f66937aee.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 380865,
+   "uploaded_bytes": 380865,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s63_before__7dbeb478-e456-41ff-bbe9-6df13e69b831.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s63_before__7dbeb478-e456-41ff-bbe9-6df13e69b831.jpg",
+   "name": "s63_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s63_before__7dbeb478-e456-41ff-bbe9-6df13e69b831.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 417576,
+   "uploaded_bytes": 417576,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s64_after__49b00efc-1107-44fd-b033-b67b08132d87.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s64_after__49b00efc-1107-44fd-b033-b67b08132d87.jpg",
+   "name": "s64_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s64_after__49b00efc-1107-44fd-b033-b67b08132d87.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 293177,
+   "uploaded_bytes": 293177,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s64_before__7cee2596-aa1d-4d3b-99c3-81cb7e846813.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s64_before__7cee2596-aa1d-4d3b-99c3-81cb7e846813.jpg",
+   "name": "s64_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s64_before__7cee2596-aa1d-4d3b-99c3-81cb7e846813.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 331500,
+   "uploaded_bytes": 331500,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s66_after__ee3b273b-ce92-4773-9468-8ef5ff621b03.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s66_after__ee3b273b-ce92-4773-9468-8ef5ff621b03.jpg",
+   "name": "s66_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s66_after__ee3b273b-ce92-4773-9468-8ef5ff621b03.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 379028,
+   "uploaded_bytes": 379028,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s66_before__da634e5a-2244-4bf4-8ce3-98999e83b251.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s66_before__da634e5a-2244-4bf4-8ce3-98999e83b251.jpg",
+   "name": "s66_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s66_before__da634e5a-2244-4bf4-8ce3-98999e83b251.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 394882,
+   "uploaded_bytes": 394882,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s67_after__836024cc-cbc8-4888-8e9a-b3d84edba6a4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s67_after__836024cc-cbc8-4888-8e9a-b3d84edba6a4.jpg",
+   "name": "s67_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s67_after__836024cc-cbc8-4888-8e9a-b3d84edba6a4.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 360429,
+   "uploaded_bytes": 360429,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s67_before__c3015211-a71e-4a8d-a5f4-10be87d2fba2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s67_before__c3015211-a71e-4a8d-a5f4-10be87d2fba2.jpg",
+   "name": "s67_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s67_before__c3015211-a71e-4a8d-a5f4-10be87d2fba2.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 303637,
+   "uploaded_bytes": 303637,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s68_after__74127d2d-1fa3-4f42-9ca4-af8cca4c83f5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s68_after__74127d2d-1fa3-4f42-9ca4-af8cca4c83f5.jpg",
+   "name": "s68_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s68_after__74127d2d-1fa3-4f42-9ca4-af8cca4c83f5.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 404393,
+   "uploaded_bytes": 404393,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s68_before__e283a442-2ca3-4287-ac55-4e9adcbfca34.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s68_before__e283a442-2ca3-4287-ac55-4e9adcbfca34.jpg",
+   "name": "s68_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s68_before__e283a442-2ca3-4287-ac55-4e9adcbfca34.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 394587,
+   "uploaded_bytes": 394587,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s69_after__da415bc8-6b0a-4378-a850-be98c75a489d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s69_after__da415bc8-6b0a-4378-a850-be98c75a489d.jpg",
+   "name": "s69_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s69_after__da415bc8-6b0a-4378-a850-be98c75a489d.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 368538,
+   "uploaded_bytes": 368538,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s69_before__4c50e44d-44d7-42f8-8d38-fed56b558e7a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s69_before__4c50e44d-44d7-42f8-8d38-fed56b558e7a.jpg",
+   "name": "s69_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s69_before__4c50e44d-44d7-42f8-8d38-fed56b558e7a.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 354287,
+   "uploaded_bytes": 354287,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s72_after__c6aadf7b-90f1-4fd1-ae84-574231949d27.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s72_after__c6aadf7b-90f1-4fd1-ae84-574231949d27.jpg",
+   "name": "s72_after.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s72_after__c6aadf7b-90f1-4fd1-ae84-574231949d27.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 372556,
+   "uploaded_bytes": 372556,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lopes-street-gsv/sites/s72_before__025f3e30-f00e-47b6-9ed5-072f3c34aba8.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lopes-street-gsv/sites/s72_before__025f3e30-f00e-47b6-9ed5-072f3c34aba8.jpg",
+   "name": "s72_before.jpg",
+   "type": "image",
+   "folder": "sites",
+   "media_id": "templates/2026-lopes-street-gsv/sites/s72_before__025f3e30-f00e-47b6-9ed5-072f3c34aba8.jpg",
+   "logicalFolder": "sites",
+   "original_bytes": 343787,
+   "uploaded_bytes": 343787,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Exploring Before-and-After visual preferences of street interventions using Google Street View time travel",
+  "authors": [
+   "Lopes M.I.",
+   "Valença G.",
+   "Moura F."
+  ],
+  "year": 2026,
+  "venue": "Landscape and Urban Planning",
+  "doi": "10.1016/j.landurbplan.2026.105686",
+  "url": "https://doi.org/10.1016/j.landurbplan.2026.105686"
+ }
 }

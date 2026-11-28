@@ -1,0 +1,759 @@
+{
+ "id": "2025-huang-visual",
+ "name": "Visual Walkability of Commercial Streets (Fukuoka Tenjin)",
+ "description": "Method replication: same task, scales and design as the paper; the images are not the paper's stimuli (new Google Street View panoramas of the same district, © Google). Huang, Yu, Lyu, Sun, Dewancker & Gao (2025, Buildings 15:113) measured the visual walkability of the Tenjin commercial district in Fukuoka, Japan. Observers looked at 360° Google Street View panoramas (2048 × 624, pitch 0°) and rated each on four walking needs with 5-point semantic differential scales: Useless (1)–Useful (5), Unsafe–Safe, Uncomfortable–Comfortable, Unattractive–Attractive, after reading a definition of each need. Mean scores over 475 panoramas were attractiveness 3.25 > safety 3.02 > comfort 2.97 > usefulness 2.93; regressions on semantic-segmentation features found walkable space and landmark visibility drove usefulness, cleanliness drove safety, greenness drove comfort and landmark visibility drove attractiveness. Analysis as in the paper: mean and SD per need and per image, correlations between the four needs, then image-level scores joined with segmentation features (greenness, sky, walkable space, enclosure, cleanliness) for correlation and stepwise linear regression. Differences from the original study: (1) the paper rated all 475 panoramas sampled every 50 m along OSM roads (April 2023 captures); this template bundles 45 panoramas (2022–2026) from random points in the same district, and each participant rates 20 of them in random order; (2) the paper projected slides in a classroom for 40 s per image with 35 student observers; here participants view on their own screen with no time limit (the page asks for 30–40 s); (3) the definitions of the four needs are our summary of the paper's Section 1; (4) the background questions (role, gender, familiarity with Tenjin) are additions.",
+ "author": "Huang, Yu, Lyu, Sun, Dewancker & Gao",
+ "year": "2025",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "walkability",
+  "semantic-differential",
+  "panorama",
+  "fukuoka",
+  "japan",
+  "source:paper",
+  "modality:panorama",
+  "modality:street_view",
+  "task:multi_rating",
+  "concept:walkability",
+  "concept:practicality",
+  "concept:safety",
+  "concept:comfort",
+  "concept:aesthetics",
+  "participants:students",
+  "sample:lt100",
+  "country:Japan",
+  "city:Fukuoka"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/buildings15010113",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-26T23:31:15.34+00:00",
+ "updatedAt": "2026-11-26T23:31:27.436+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "ratings",
+    "elements": [
+     {
+      "name": "walkability_sd",
+      "type": "imageslidergroup",
+      "title": "How does this street feel for walking?",
+      "choices": [],
+      "scaleMax": 5,
+      "scaleMin": 1,
+      "scaleStep": 1,
+      "dimensions": [
+       {
+        "id": "usefulness",
+        "left": "Useless (1)",
+        "label": "Usefulness",
+        "right": "Useful (5)"
+       },
+       {
+        "id": "safety",
+        "left": "Unsafe (1)",
+        "label": "Safety",
+        "right": "Safe (5)"
+       },
+       {
+        "id": "comfort",
+        "left": "Uncomfortable (1)",
+        "label": "Comfort",
+        "right": "Comfortable (5)"
+       },
+       {
+        "id": "attractiveness",
+        "left": "Unattractive (1)",
+        "label": "Attractiveness",
+        "right": "Attractive (5)"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "trialCount": 20,
+      "description": "Rate the street on each pair of adjectives. Higher scores are closer to the adjective on the right.",
+      "mediaFolders": [
+       "tenjin"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "role",
+      "type": "radiogroup",
+      "title": "Which describes you best?",
+      "choices": [
+       {
+        "text": "Undergraduate student",
+        "value": "undergraduate"
+       },
+       {
+        "text": "Graduate student",
+        "value": "graduate"
+       },
+       {
+        "text": "Working",
+        "value": "working"
+       },
+       {
+        "text": "Other",
+        "value": "other"
+       }
+      ]
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ]
+     },
+     {
+      "name": "familiar",
+      "type": "radiogroup",
+      "title": "Have you been to Tenjin, Fukuoka?",
+      "choices": [
+       {
+        "text": "Yes, often",
+        "value": "often"
+       },
+       {
+        "text": "Once or a few times",
+        "value": "once"
+       },
+       {
+        "text": "Never",
+        "value": "never"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "title": "Visual Walkability of Commercial Streets (Fukuoka Tenjin)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-0fb8b9272bc44b21",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Visual Walkability of Commercial Streets (Fukuoka Tenjin)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Visual Walkability of Commercial Streets (Fukuoka Tenjin)\",\n    \"description\": \"Look at 360° street panoramas of the Tenjin commercial district in Fukuoka and rate each on four walking needs (usefulness, safety, comfort, attractiveness) with 5-point semantic differential scales. Method replication of Huang et al. (2025, Buildings).\",\n    \"locale\": \"en\",\n    \"pages\": [\n      { \"name\": \"intro\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"I agree to take part. My answers are recorded anonymously for research.\", \"isRequired\": true, \"labelTrue\": \"I agree\", \"labelFalse\": \"I do not agree\" }\n      ]},\n      { \"name\": \"ratings\", \"elements\": [\n        { \"type\": \"imageslidergroup\", \"name\": \"walkability_sd\",\n          \"title\": \"How does this street feel for walking?\",\n          \"description\": \"Rate the street on each pair of adjectives. Higher scores are closer to the adjective on the right.\",\n          \"imageCount\": 1, \"trialCount\": 20, \"isRequired\": true, \"choices\": [],\n          \"scaleMin\": 1, \"scaleMax\": 5, \"scaleStep\": 1,\n          \"dimensions\": [\n            { \"id\": \"usefulness\", \"label\": \"Usefulness\", \"left\": \"Useless (1)\", \"right\": \"Useful (5)\" },\n            { \"id\": \"safety\", \"label\": \"Safety\", \"left\": \"Unsafe (1)\", \"right\": \"Safe (5)\" },\n            { \"id\": \"comfort\", \"label\": \"Comfort\", \"left\": \"Uncomfortable (1)\", \"right\": \"Comfortable (5)\" },\n            { \"id\": \"attractiveness\", \"label\": \"Attractiveness\", \"left\": \"Unattractive (1)\", \"right\": \"Attractive (5)\" }\n          ],\n          \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true,\n          \"mediaFolders\": [\"tenjin\"] }\n      ]},\n      { \"name\": \"about_you\", \"elements\": [\n        { \"type\": \"radiogroup\", \"name\": \"role\", \"title\": \"Which describes you best?\", \"choices\": [\n          { \"value\": \"undergraduate\", \"text\": \"Undergraduate student\" }, { \"value\": \"graduate\", \"text\": \"Graduate student\" },\n          { \"value\": \"working\", \"text\": \"Working\" }, { \"value\": \"other\", \"text\": \"Other\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"gender\", \"title\": \"Gender\", \"choices\": [\n          { \"value\": \"female\", \"text\": \"Female\" }, { \"value\": \"male\", \"text\": \"Male\" }, { \"value\": \"other\", \"text\": \"Other / prefer not to say\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"familiar\", \"title\": \"Have you been to Tenjin, Fukuoka?\", \"choices\": [\n          { \"value\": \"often\", \"text\": \"Yes, often\" }, { \"value\": \"once\", \"text\": \"Once or a few times\" }, { \"value\": \"never\", \"text\": \"Never\" } ] }\n      ]}\n    ]\n  }\n}\n</script>\n<style>\n:root{--bg:#f5f5f2;--card:#fff;--ink:#1d2125;--muted:#5d646b;--accent:#2f5d50;--line:#dde1e3;--sel:#e3efe9}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:1100px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.45rem;margin:0 0 8px}h2{font-size:1.05rem;margin:0 0 6px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.defs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.defs div{background:var(--sel);border-radius:10px;padding:10px 12px;font-size:.93rem}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:8px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pano{overflow-x:auto;border-radius:12px;background:#000;-webkit-overflow-scrolling:touch}\n.pano img{display:block;width:100%;height:auto;min-width:720px}\n.hint{font-size:.82rem;color:var(--muted);margin:4px 0 0;display:none}\n.sd{margin-top:10px}.sd .r{display:grid;grid-template-columns:150px 1fr 150px;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}\n.sd .l{text-align:right;font-size:.92rem}.sd .rt{font-size:.92rem}\n.opts{display:flex;justify-content:space-between;gap:6px}\n.opts label{flex:1;text-align:center;border:1px solid var(--line);border-radius:8px;padding:7px 0;cursor:pointer;font-weight:600}\n.opts input{position:absolute;opacity:0;pointer-events:none}\n.opts label:has(input:checked){background:var(--accent);color:#fff;border-color:var(--accent)}\n.opts label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:1100px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:700px){.defs{grid-template-columns:1fr}.sd .r{grid-template-columns:1fr 1fr;row-gap:6px}.sd .l{text-align:left;order:1}.sd .rt{text-align:right;order:2}.sd .opts{order:3;grid-column:1/3}.hint{display:block}.pano img{width:auto;height:260px;min-width:0}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Tenjin, Fukuoka, Google Street View panoramas 2022–2026 (© Google). Scales from Huang, Yu, Lyu, Sun, Dewancker &amp; Gao (2025), Buildings 15(1):113.</footer>\n<script>\n(function(){\n  var DEFS=[['Usefulness','Does the street give you reasons and an easy way to walk here: destinations, shops, clear paths, no barriers such as very wide roads or blocked land?'],\n    ['Safety','Does the street look free from crime and traffic danger: no graffiti, litter or abandoned buildings, open sightlines, cars and bicycles kept apart from people?'],\n    ['Comfort','Does the street make walking pleasant in practice: good sidewalks, street furniture, greenery, openness and accessible facilities?'],\n    ['Attractiveness','Is walking here enjoyable: an appealing, interesting and lively street, greenery, distinctive buildings, other people around?']];\n  var app=document.getElementById('app'),Q={},i=0,done={},vals={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function defs(){return '<div class=\"defs\">'+DEFS.map(function(d){return '<div><b>'+d[0]+'</b><br>'+esc(d[1])+'</div>';}).join('')+'</div>';}\n  function mediaOf(k){var t=Q.sd.trials&&Q.sd.trials[k];return (t&&t.media)||Q.sd.media||[];}\n  function firstOpen(){for(var k=0;k<Q.sd.trialCount;k++){if(!done[k])return k;}return Q.sd.trialCount;}\n  function intro(){\n    app.innerHTML='<h1>How walkable do these streets look?</h1>'+\n      '<p>You will see '+Q.sd.trialCount+' street panoramas from the Tenjin commercial district in Fukuoka, Japan. Each one is a full 360° view from the middle of the street. Look at each panorama calmly (about 30–40 seconds) and rate it on four walking needs, from 1 to 5. It takes about 12 minutes.</p>'+\n      '<div class=\"card\"><h2>What the four words mean</h2><p>Please read these definitions first. You can open them again on every screen.</p>'+defs()+'</div>'+\n      '<div class=\"card\"><p>'+esc(Q.consent.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(Q.consent.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);i=firstOpen();trial();});};\n  }\n  function trial(){\n    if(i>=Q.sd.trialCount)return about();\n    var m=mediaOf(i)[0]||{},v=vals[i]||{},n=Q.sd.trialCount;\n    var html='<h1>Street '+(i+1)+' of '+n+'</h1><div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/n)+'%\"></i></div>'+\n      '<div class=\"pano\"><img src=\"'+esc(m.url)+'\" alt=\"360° street panorama '+(i+1)+' in Tenjin, Fukuoka\"></div><p class=\"hint\">Swipe the picture sideways to look around.</p>'+\n      '<div class=\"card\"><h2>'+esc(Q.sd.title)+'</h2><p>'+esc(Q.sd.description)+'</p><div class=\"sd\">';\n    Q.sd.dimensions.forEach(function(d){\n      html+='<div class=\"r\"><div class=\"l\">'+esc(d.left)+'</div><div class=\"opts\" role=\"radiogroup\" aria-label=\"'+esc(d.label)+'\">';\n      for(var s=d.min;s<=d.max;s+=d.step||1){html+='<label><input type=\"radio\" name=\"'+d.id+'\" value=\"'+s+'\"'+(v[d.id]===s?' checked':'')+'>'+s+'</label>';}\n      html+='</div><div class=\"rt\">'+esc(d.right)+'</div></div>';\n    });\n    html+='</div><details style=\"margin-top:10px\"><summary style=\"cursor:pointer;color:var(--accent)\">Show the definitions</summary>'+defs()+'</details>'+\n      '<div class=\"row\">'+(i>0?'<button class=\"btn ghost\" id=\"back\">Back</button>':'')+'<button class=\"btn\" id=\"next\">'+(i+1<n?'Next street':'Continue')+'</button></div><div class=\"err\"></div></div>';\n    app.innerHTML=html;\n    app.querySelectorAll('.opts input').forEach(function(r){r.onchange=function(){v[r.name]=Number(r.value);vals[i]=v;err('');};});\n    var back=document.getElementById('back');if(back)back.onclick=function(){i-=1;trial();};\n    document.getElementById('next').onclick=function(){\n      var miss=Q.sd.dimensions.filter(function(d){return v[d.id]==null;});\n      if(miss.length)return err('Please rate: '+miss.map(function(d){return d.label;}).join(', '));\n      var k=i,btn=this;btn.disabled=true;\n      SPSite.answer('walkability_sd',v,{trial:k}).then(function(r){\n        if(r&&r.ok===false){btn.disabled=false;return err(r.error);}\n        done[k]=true;i=k+1;trial();});\n    };\n    window.scrollTo(0,0);\n  }\n  function radios(q){return '<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+q.name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function about(){\n    app.innerHTML='<h1>About you</h1><p>Optional, used only to describe the sample.</p><div class=\"card\">'+radios(Q.role)+radios(Q.gender)+radios(Q.familiar)+\n      '<div class=\"row\"><button class=\"btn\" id=\"finish\">Finish</button></div><div class=\"err\"></div></div>';\n    ['role','gender','familiar'].forEach(function(n){app.querySelectorAll('input[name='+n+']').forEach(function(r){r.onchange=function(){SPSite.answer(n,r.value).then(function(x){if(x&&x.ok===false)err(x.error);});};});});\n    document.getElementById('finish').onclick=function(){var btn=this;btn.disabled=true;err('Submitting…');\n      SPSite.complete().then(function(r){if(r&&r.ok===false){btn.disabled=false;err(r.error||('Please answer: '+(r.missing||[]).join(', ')));var m=r.missing||[];if(m.indexOf('consent')>=0)intro();else if(m.indexOf('walkability_sd')>=0){i=firstOpen();trial();}}});};\n  }\n  SPSite.onReady(function(ctx){\n    Q={consent:SPSite.getQuestion('consent'),sd:SPSite.getQuestion('walkability_sd'),role:SPSite.getQuestion('role'),gender:SPSite.getQuestion('gender'),familiar:SPSite.getQuestion('familiar')};\n    var a=(ctx&&ctx.answers)||{},p=a.walkability_sd,list=p&&Array.isArray(p.trials)?p.trials:[];\n    list.forEach(function(t,k){if(t&&t.value&&typeof t.value==='object'){done[k]=true;vals[k]=t.value;}});\n    if(a.consent===true){i=firstOpen();trial();}else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-26T23:30:27.066Z",
+   "mediaFolders": [
+    "tenjin"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-26T23:30:27.066Z"
+  },
+  "description": "Look at 360° street panoramas of the Tenjin commercial district in Fukuoka and rate each on four walking needs (usefulness, safety, comfort, attractiveness) with 5-point semantic differential scales. Method replication of Huang et al. (2025, Buildings).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_01__7a6b585b-a053-41ca-8a32-bfccfd7a05e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_01__7a6b585b-a053-41ca-8a32-bfccfd7a05e7.jpg",
+   "name": "tenjin_01.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_01__7a6b585b-a053-41ca-8a32-bfccfd7a05e7.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 374230,
+   "uploaded_bytes": 374230,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_02__e79c51a4-89db-4eeb-9179-29f4d3da15ec.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_02__e79c51a4-89db-4eeb-9179-29f4d3da15ec.jpg",
+   "name": "tenjin_02.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_02__e79c51a4-89db-4eeb-9179-29f4d3da15ec.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 293387,
+   "uploaded_bytes": 293387,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_03__99001698-eb66-4995-b279-b2474b5cae7d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_03__99001698-eb66-4995-b279-b2474b5cae7d.jpg",
+   "name": "tenjin_03.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_03__99001698-eb66-4995-b279-b2474b5cae7d.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 303862,
+   "uploaded_bytes": 303862,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_04__d24a2bd3-faad-48f7-861b-430459bc5296.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_04__d24a2bd3-faad-48f7-861b-430459bc5296.jpg",
+   "name": "tenjin_04.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_04__d24a2bd3-faad-48f7-861b-430459bc5296.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 367200,
+   "uploaded_bytes": 367200,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_05__cb6cdc55-040e-44e2-8278-04ba47d46bff.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_05__cb6cdc55-040e-44e2-8278-04ba47d46bff.jpg",
+   "name": "tenjin_05.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_05__cb6cdc55-040e-44e2-8278-04ba47d46bff.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 347557,
+   "uploaded_bytes": 347557,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_06__c81a0c74-752c-4d08-9fe0-7d1168e5b443.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_06__c81a0c74-752c-4d08-9fe0-7d1168e5b443.jpg",
+   "name": "tenjin_06.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_06__c81a0c74-752c-4d08-9fe0-7d1168e5b443.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 299222,
+   "uploaded_bytes": 299222,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_07__80e5f8fc-2138-4de8-978e-7e05a3742fb4.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_07__80e5f8fc-2138-4de8-978e-7e05a3742fb4.jpg",
+   "name": "tenjin_07.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_07__80e5f8fc-2138-4de8-978e-7e05a3742fb4.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 330205,
+   "uploaded_bytes": 330205,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_08__415d4231-e403-4749-a4bc-51d50015aee4.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_08__415d4231-e403-4749-a4bc-51d50015aee4.jpg",
+   "name": "tenjin_08.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_08__415d4231-e403-4749-a4bc-51d50015aee4.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 351191,
+   "uploaded_bytes": 351191,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_09__5bfa2c67-237d-4583-9eb1-1de53133bcda.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_09__5bfa2c67-237d-4583-9eb1-1de53133bcda.jpg",
+   "name": "tenjin_09.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_09__5bfa2c67-237d-4583-9eb1-1de53133bcda.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 353352,
+   "uploaded_bytes": 353352,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_10__32d129e3-8bd3-4fb8-a0c8-da9d764d9f31.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_10__32d129e3-8bd3-4fb8-a0c8-da9d764d9f31.jpg",
+   "name": "tenjin_10.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_10__32d129e3-8bd3-4fb8-a0c8-da9d764d9f31.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 320095,
+   "uploaded_bytes": 320095,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_11__2a2041b5-f759-4662-a3fa-4e05bc17c8bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_11__2a2041b5-f759-4662-a3fa-4e05bc17c8bf.jpg",
+   "name": "tenjin_11.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_11__2a2041b5-f759-4662-a3fa-4e05bc17c8bf.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 333420,
+   "uploaded_bytes": 333420,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_12__d764de30-a8bf-4be4-a293-b424789c0c9b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_12__d764de30-a8bf-4be4-a293-b424789c0c9b.jpg",
+   "name": "tenjin_12.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_12__d764de30-a8bf-4be4-a293-b424789c0c9b.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 342866,
+   "uploaded_bytes": 342866,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_13__6b2a8673-e288-4564-80f1-83dba2c19c76.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_13__6b2a8673-e288-4564-80f1-83dba2c19c76.jpg",
+   "name": "tenjin_13.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_13__6b2a8673-e288-4564-80f1-83dba2c19c76.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 336967,
+   "uploaded_bytes": 336967,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_14__c4614e2c-0534-41be-8504-b70437f69d43.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_14__c4614e2c-0534-41be-8504-b70437f69d43.jpg",
+   "name": "tenjin_14.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_14__c4614e2c-0534-41be-8504-b70437f69d43.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 339947,
+   "uploaded_bytes": 339947,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_15__052b057a-e471-4bbc-85a1-006cf91a6077.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_15__052b057a-e471-4bbc-85a1-006cf91a6077.jpg",
+   "name": "tenjin_15.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_15__052b057a-e471-4bbc-85a1-006cf91a6077.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 331803,
+   "uploaded_bytes": 331803,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_16__708c63f1-d5d2-4fc1-9080-052e2e1aeafc.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_16__708c63f1-d5d2-4fc1-9080-052e2e1aeafc.jpg",
+   "name": "tenjin_16.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_16__708c63f1-d5d2-4fc1-9080-052e2e1aeafc.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 323810,
+   "uploaded_bytes": 323810,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_17__d7d697b0-29e8-4a3a-831b-2aa42aa9b767.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_17__d7d697b0-29e8-4a3a-831b-2aa42aa9b767.jpg",
+   "name": "tenjin_17.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_17__d7d697b0-29e8-4a3a-831b-2aa42aa9b767.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 376795,
+   "uploaded_bytes": 376795,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_18__e7c921a2-39cb-4e5f-bdd0-50c35e70a89e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_18__e7c921a2-39cb-4e5f-bdd0-50c35e70a89e.jpg",
+   "name": "tenjin_18.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_18__e7c921a2-39cb-4e5f-bdd0-50c35e70a89e.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 347851,
+   "uploaded_bytes": 347851,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_19__92a9bfb5-18ae-4654-8c83-cf23c22b8dba.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_19__92a9bfb5-18ae-4654-8c83-cf23c22b8dba.jpg",
+   "name": "tenjin_19.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_19__92a9bfb5-18ae-4654-8c83-cf23c22b8dba.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 367274,
+   "uploaded_bytes": 367274,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_20__57bf2d33-9acf-46bc-9aa6-eaae46daf8d5.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_20__57bf2d33-9acf-46bc-9aa6-eaae46daf8d5.jpg",
+   "name": "tenjin_20.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_20__57bf2d33-9acf-46bc-9aa6-eaae46daf8d5.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 320987,
+   "uploaded_bytes": 320987,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_21__b29378ae-48db-4b1e-ac64-4ad678d33d4c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_21__b29378ae-48db-4b1e-ac64-4ad678d33d4c.jpg",
+   "name": "tenjin_21.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_21__b29378ae-48db-4b1e-ac64-4ad678d33d4c.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 307316,
+   "uploaded_bytes": 307316,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_22__1b1fde0e-cf0f-4739-b587-d6fd7a3795e9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_22__1b1fde0e-cf0f-4739-b587-d6fd7a3795e9.jpg",
+   "name": "tenjin_22.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_22__1b1fde0e-cf0f-4739-b587-d6fd7a3795e9.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 355314,
+   "uploaded_bytes": 355314,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_23__86f223bf-46cf-451d-bdb0-a53169876ce3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_23__86f223bf-46cf-451d-bdb0-a53169876ce3.jpg",
+   "name": "tenjin_23.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_23__86f223bf-46cf-451d-bdb0-a53169876ce3.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 317252,
+   "uploaded_bytes": 317252,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_24__fa77aa76-7a7c-4da4-bcdd-8c6f20a6057a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_24__fa77aa76-7a7c-4da4-bcdd-8c6f20a6057a.jpg",
+   "name": "tenjin_24.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_24__fa77aa76-7a7c-4da4-bcdd-8c6f20a6057a.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 318081,
+   "uploaded_bytes": 318081,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_25__9eff218b-f012-46b5-8434-77f69cc5c6dd.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_25__9eff218b-f012-46b5-8434-77f69cc5c6dd.jpg",
+   "name": "tenjin_25.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_25__9eff218b-f012-46b5-8434-77f69cc5c6dd.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 304806,
+   "uploaded_bytes": 304806,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_26__da91feac-2c23-459c-ac0f-51c6457c3f92.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_26__da91feac-2c23-459c-ac0f-51c6457c3f92.jpg",
+   "name": "tenjin_26.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_26__da91feac-2c23-459c-ac0f-51c6457c3f92.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 335591,
+   "uploaded_bytes": 335591,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_27__1b949fc7-f735-4374-9bcf-37ec54a2a265.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_27__1b949fc7-f735-4374-9bcf-37ec54a2a265.jpg",
+   "name": "tenjin_27.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_27__1b949fc7-f735-4374-9bcf-37ec54a2a265.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 357132,
+   "uploaded_bytes": 357132,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_28__a91b3786-73cb-47cf-a5c6-4f4f9aff2048.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_28__a91b3786-73cb-47cf-a5c6-4f4f9aff2048.jpg",
+   "name": "tenjin_28.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_28__a91b3786-73cb-47cf-a5c6-4f4f9aff2048.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 373480,
+   "uploaded_bytes": 373480,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_29__0605b513-4497-44be-a694-7a5687b63066.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_29__0605b513-4497-44be-a694-7a5687b63066.jpg",
+   "name": "tenjin_29.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_29__0605b513-4497-44be-a694-7a5687b63066.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 325093,
+   "uploaded_bytes": 325093,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_30__35d92abc-5d6d-4bdd-905c-9a234dfb648c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_30__35d92abc-5d6d-4bdd-905c-9a234dfb648c.jpg",
+   "name": "tenjin_30.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_30__35d92abc-5d6d-4bdd-905c-9a234dfb648c.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 266018,
+   "uploaded_bytes": 266018,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_31__8463c749-c24b-483f-b967-71e0548ce602.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_31__8463c749-c24b-483f-b967-71e0548ce602.jpg",
+   "name": "tenjin_31.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_31__8463c749-c24b-483f-b967-71e0548ce602.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 332669,
+   "uploaded_bytes": 332669,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_32__9596a17e-f2df-47df-91ea-d3f8a15e5948.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_32__9596a17e-f2df-47df-91ea-d3f8a15e5948.jpg",
+   "name": "tenjin_32.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_32__9596a17e-f2df-47df-91ea-d3f8a15e5948.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 363254,
+   "uploaded_bytes": 363254,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_33__44961d00-74d8-434b-8cc6-fe62dba73b74.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_33__44961d00-74d8-434b-8cc6-fe62dba73b74.jpg",
+   "name": "tenjin_33.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_33__44961d00-74d8-434b-8cc6-fe62dba73b74.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 328874,
+   "uploaded_bytes": 328874,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_34__ebcea853-d5a4-43d8-a923-7f0a0a78643d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_34__ebcea853-d5a4-43d8-a923-7f0a0a78643d.jpg",
+   "name": "tenjin_34.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_34__ebcea853-d5a4-43d8-a923-7f0a0a78643d.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 341816,
+   "uploaded_bytes": 341816,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_35__e25a9794-0ef6-418b-aa01-14be72fd7a82.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_35__e25a9794-0ef6-418b-aa01-14be72fd7a82.jpg",
+   "name": "tenjin_35.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_35__e25a9794-0ef6-418b-aa01-14be72fd7a82.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 346418,
+   "uploaded_bytes": 346418,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_36__2a0ea6e7-9771-4e24-a5fe-ef06532ba4ca.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_36__2a0ea6e7-9771-4e24-a5fe-ef06532ba4ca.jpg",
+   "name": "tenjin_36.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_36__2a0ea6e7-9771-4e24-a5fe-ef06532ba4ca.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 304254,
+   "uploaded_bytes": 304254,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_37__1dd90998-0e85-465e-a8d3-2781e35fa491.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_37__1dd90998-0e85-465e-a8d3-2781e35fa491.jpg",
+   "name": "tenjin_37.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_37__1dd90998-0e85-465e-a8d3-2781e35fa491.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 329330,
+   "uploaded_bytes": 329330,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_38__19c172c7-619b-4439-85ad-a2d0a765cae1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_38__19c172c7-619b-4439-85ad-a2d0a765cae1.jpg",
+   "name": "tenjin_38.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_38__19c172c7-619b-4439-85ad-a2d0a765cae1.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 348477,
+   "uploaded_bytes": 348477,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_39__ca1cdecf-93b0-4148-b3dc-d772e8e234e3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_39__ca1cdecf-93b0-4148-b3dc-d772e8e234e3.jpg",
+   "name": "tenjin_39.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_39__ca1cdecf-93b0-4148-b3dc-d772e8e234e3.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 306931,
+   "uploaded_bytes": 306931,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_40__9e688ab1-59d1-4f94-b6e2-91b46d809878.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_40__9e688ab1-59d1-4f94-b6e2-91b46d809878.jpg",
+   "name": "tenjin_40.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_40__9e688ab1-59d1-4f94-b6e2-91b46d809878.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 345157,
+   "uploaded_bytes": 345157,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_41__081e0f43-d209-4c53-96a8-56b63b76d7b9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_41__081e0f43-d209-4c53-96a8-56b63b76d7b9.jpg",
+   "name": "tenjin_41.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_41__081e0f43-d209-4c53-96a8-56b63b76d7b9.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 272553,
+   "uploaded_bytes": 272553,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_42__f97e10d1-f6ed-472d-96c1-41bfe7ec6a0d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_42__f97e10d1-f6ed-472d-96c1-41bfe7ec6a0d.jpg",
+   "name": "tenjin_42.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_42__f97e10d1-f6ed-472d-96c1-41bfe7ec6a0d.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 298891,
+   "uploaded_bytes": 298891,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_43__6756b655-5ced-44a0-9ae8-795cdfb79779.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_43__6756b655-5ced-44a0-9ae8-795cdfb79779.jpg",
+   "name": "tenjin_43.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_43__6756b655-5ced-44a0-9ae8-795cdfb79779.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 320913,
+   "uploaded_bytes": 320913,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_44__d360bd8c-5a51-497d-975b-dfa59d4cbef2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_44__d360bd8c-5a51-497d-975b-dfa59d4cbef2.jpg",
+   "name": "tenjin_44.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_44__d360bd8c-5a51-497d-975b-dfa59d4cbef2.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 334809,
+   "uploaded_bytes": 334809,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-huang-visual/tenjin/tenjin_45__cc3de38e-4f0e-4d04-9971-7c704f1dbce3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-huang-visual/tenjin/tenjin_45__cc3de38e-4f0e-4d04-9971-7c704f1dbce3.jpg",
+   "name": "tenjin_45.jpg",
+   "type": "image",
+   "folder": "tenjin",
+   "media_id": "templates/2025-huang-visual/tenjin/tenjin_45__cc3de38e-4f0e-4d04-9971-7c704f1dbce3.jpg",
+   "logicalFolder": "tenjin",
+   "original_bytes": 304487,
+   "uploaded_bytes": 304487,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Impact of Physical Features on Visual Walkability Perception in Urban Commercial Streets by Using Street-View Images and Deep Learning",
+  "authors": [
+   "Huang G.",
+   "Yu Y.",
+   "Lyu M.",
+   "Sun D.",
+   "Dewancker B.",
+   "Gao W."
+  ],
+  "year": 2025,
+  "venue": "Buildings",
+  "doi": "10.3390/buildings15010113",
+  "url": "https://doi.org/10.3390/buildings15010113"
+ }
+}

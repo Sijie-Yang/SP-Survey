@@ -1,0 +1,950 @@
+{
+ "id": "2020-yang-nature",
+ "name": "Nature Pictures and the Pain of Social Ostracism (recall + photo viewing)",
+ "description": "Faithful replication of Study 4 of Yang, Wang, Passmore, Zhang, Zhu & Cai (2020), \"Viewing nature scenes reduces the pain of social ostracism\", The Journal of Social Psychology 161(2), 197–215. Rebuilt from the authors' own Study 4 materials on OSF (osf.io/6xv3t, CC BY 4.0): recall instructions, manipulation check, the three slide sets of 14 photos (nature, urban scenes, neutral objects) and the questionnaire package.\n\nWhat participants do: (1) write at least five lines about a painful experience of being refused or ostracized (or, in the control condition, an experience of being accepted or welcomed); (2) rate five manipulation-check statements (1–7); (3) as a separate \"Perception of Pictures and Well-being Inventory\" study, view 14 photos one at a time at their own pace, at least 5 s each, imagining being immersed in the scene; (4) rate 18 emotion words right now (1–5), eight need-satisfaction statements about the recalled event (1–5) and four pain words (1–10); (5) age and sex. Recall condition (2) and picture set (3) are assigned at random and independently: 2 × 3 between subjects. Viewing time per photo is recorded.\n\nAnalysis as in the paper: compare picture conditions on state social pain (mean of the 4 pain words), affect balance (positive minus negative words) and retrospective need satisfaction (reverse rejected, outsider, meaningless, non-existent), within the ostracism condition and across the 2 × 3 design. The paper reports lower social pain and higher affect balance after nature photos across four studies (meta-analytic d = 0.58).\n\nDifferences from the original study: (1) online in English; the original ran with Chinese university students using paper sheets, PowerPoint slides and a wjx.cn questionnaire, with a student ID and a small gift, both left out. (2) \"At least five lines\" is enforced as at least 250 characters. (3) The inclusion instruction in the OSF file says \"painful life experiences where you were accepted\"; \"painful\" is dropped here. (4) The paper text was not available to us, so the 2 × 3 cell structure follows the Study 4 materials (one exclusion and one inclusion recall version, three photo sets); the Study 4 package has no self-esteem scale, so none is included. (5) Photos keep the original slide order; a short debriefing is added at the end.\n\nSource and credit: photos and wording come from the authors' OSF project and are used with credit; the template is taken down if the authors object.",
+ "author": "Yang, Wang, Passmore, Zhang, Zhu & Cai",
+ "year": "2020",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "restoration",
+  "social-pain",
+  "ostracism",
+  "source:paper",
+  "modality:scene_photo",
+  "task:questionnaire",
+  "task:open_ended",
+  "task:custom_page",
+  "concept:restoration",
+  "concept:emotion",
+  "concept:naturalness",
+  "participants:students",
+  "sample:100to1000",
+  "country:China"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1080/00224545.2020.1784826",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T06:48:21.114+00:00",
+ "updatedAt": "2026-11-27T06:48:42.975+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "recall",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to participate in this study.",
+      "labelTrue": "Yes",
+      "isRequired": true,
+      "labelFalse": "No"
+     },
+     {
+      "name": "recall",
+      "type": "custom",
+      "title": "Recall task",
+      "isRequired": true,
+      "description": "{ condition: 'exclusion' | 'inclusion', text, chars, seconds } — random assignment to recall a painful experience of being refused or ostracized (exclusion) or an experience of being accepted or welcomed (inclusion), written in at least five lines (here: at least 250 characters)."
+     },
+     {
+      "name": "manip_check",
+      "rows": [
+       {
+        "text": "I feel ostracized",
+        "value": "MC1"
+       },
+       {
+        "text": "I feel ignored",
+        "value": "MC2"
+       },
+       {
+        "text": "I feel accepted",
+        "value": "MC3"
+       },
+       {
+        "text": "I vividly recalled the experience",
+        "value": "MC4"
+       },
+       {
+        "text": "I can well recall the experience",
+        "value": "MC5"
+       }
+      ],
+      "type": "matrix",
+      "title": "The five statements described your possible feelings when you are recalling the experience of being ostracized. Please indicate your agreement on a seven point scale, according your feelings of the experiences you recalled.",
+      "columns": [
+       {
+        "text": "Completely disagree",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       },
+       {
+        "text": "6",
+        "value": 6
+       },
+       {
+        "text": "Completely agree",
+        "value": 7
+       }
+      ],
+      "isRequired": true,
+      "description": "Manipulation check, 1–7 (Completely disagree … Completely agree). Ostracism = mean of MC1, MC2 and reversed MC3 (8 − MC3); recall vividness = mean of MC4, MC5."
+     }
+    ]
+   },
+   {
+    "name": "pictures",
+    "elements": [
+     {
+      "name": "pictures",
+      "type": "custom",
+      "title": "Picture viewing",
+      "isRequired": true,
+      "description": "{ condition: 'nature' | 'urban' | 'neutral', views: [{ file, ms }], total_s } — random assignment (independent of the recall condition) to one of three sets of 14 photos from the authors' Study 4 slides (folders nature, urban, neutral), shown one at a time in the original slide order at the participant's own pace; Next unlocks after 5 s (the original asked to watch each picture at least 5 s and imagine being immersed in the scene). ms = time on each picture."
+     }
+    ]
+   },
+   {
+    "name": "measures",
+    "elements": [
+     {
+      "name": "affect",
+      "rows": [
+       {
+        "text": "Active",
+        "value": "PA1"
+       },
+       {
+        "text": "Enthusiastic",
+        "value": "PA2"
+       },
+       {
+        "text": "Happy",
+        "value": "PA3"
+       },
+       {
+        "text": "Cheerful",
+        "value": "PA4"
+       },
+       {
+        "text": "Excited",
+        "value": "PA5"
+       },
+       {
+        "text": "Proud",
+        "value": "PA6"
+       },
+       {
+        "text": "Delighted",
+        "value": "PA7"
+       },
+       {
+        "text": "Inspired",
+        "value": "PA8"
+       },
+       {
+        "text": "Compassionate",
+        "value": "PA9"
+       },
+       {
+        "text": "Ashamed",
+        "value": "NA1"
+       },
+       {
+        "text": "Sad",
+        "value": "NA2"
+       },
+       {
+        "text": "Afraid",
+        "value": "NA3"
+       },
+       {
+        "text": "Nervous",
+        "value": "NA4"
+       },
+       {
+        "text": "Scared",
+        "value": "NA5"
+       },
+       {
+        "text": "Guilty",
+        "value": "NA6"
+       },
+       {
+        "text": "Hostile",
+        "value": "NA7"
+       },
+       {
+        "text": "Upset",
+        "value": "NA8"
+       },
+       {
+        "text": "Irritable",
+        "value": "NA9"
+       }
+      ],
+      "type": "matrix",
+      "title": "Measure #1. This scale consists of a number of words that describe different feelings and emotions. For each word, please indicate to what extent you feel this emotion RIGHT NOW.",
+      "columns": [
+       {
+        "text": "Very slightly or Not at all",
+        "value": 1
+       },
+       {
+        "text": "A little",
+        "value": 2
+       },
+       {
+        "text": "Moderately",
+        "value": 3
+       },
+       {
+        "text": "Quite a bit",
+        "value": 4
+       },
+       {
+        "text": "Extremely",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "18 emotion words, 1–5. PA1–PA9 positive, NA1–NA9 negative; affect balance = mean(PA) − mean(NA)."
+     },
+     {
+      "name": "needs",
+      "rows": [
+       {
+        "text": "I felt rejected",
+        "value": "N1R"
+       },
+       {
+        "text": "I felt like an outsider",
+        "value": "N2R"
+       },
+       {
+        "text": "I felt liked",
+        "value": "N3"
+       },
+       {
+        "text": "I felt good about myself",
+        "value": "N4"
+       },
+       {
+        "text": "I felt I had control over the course of the interaction",
+        "value": "N5"
+       },
+       {
+        "text": "I felt powerful",
+        "value": "N6"
+       },
+       {
+        "text": "I felt meaningless",
+        "value": "N7R"
+       },
+       {
+        "text": "I felt non-existent",
+        "value": "N8R"
+       }
+      ],
+      "type": "matrix",
+      "title": "Measure #2. This scale consists of eight statements that describe different psychological reactions to the event you recalled. For each statement, with regard to the event you recalled, please indicate to what extent you felt:",
+      "columns": [
+       {
+        "text": "Very slightly or Not at all",
+        "value": 1
+       },
+       {
+        "text": "A little",
+        "value": 2
+       },
+       {
+        "text": "Moderately",
+        "value": 3
+       },
+       {
+        "text": "Quite a bit",
+        "value": 4
+       },
+       {
+        "text": "Extremely",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "Retrospective need satisfaction about the recalled event, 8 items, 1–5; items ending in R are reversed (6 − x) before averaging."
+     },
+     {
+      "name": "pain",
+      "rows": [
+       {
+        "text": "tiring-exhausting",
+        "value": "P1"
+       },
+       {
+        "text": "Sickening",
+        "value": "P2"
+       },
+       {
+        "text": "Fearful",
+        "value": "P3"
+       },
+       {
+        "text": "punishing-cruel",
+        "value": "P4"
+       }
+      ],
+      "type": "matrix",
+      "title": "Measure #3. This questionnaire provides you with a list of words that describe some of the different qualities of pain. Please choose the number that best describes the intensity of each of the pain you feel right now about the event you recalled. Use 1 if the word does not describe your pain.",
+      "columns": [
+       {
+        "text": "none",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       },
+       {
+        "text": "6",
+        "value": 6
+       },
+       {
+        "text": "7",
+        "value": 7
+       },
+       {
+        "text": "8",
+        "value": 8
+       },
+       {
+        "text": "9",
+        "value": 9
+       },
+       {
+        "text": "Worst possible",
+        "value": 10
+       }
+      ],
+      "isRequired": true,
+      "description": "State social pain, 4 pain words, 1–10 (none … Worst possible); social pain = mean of the 4."
+     },
+     {
+      "max": 100,
+      "min": 15,
+      "name": "age",
+      "type": "text",
+      "title": "What is your age in years (how old are you)?",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "sex",
+      "type": "radiogroup",
+      "title": "What is your sex?",
+      "choices": [
+       {
+        "text": "Male",
+        "value": 1
+       },
+       {
+        "text": "Female",
+        "value": 2
+       },
+       {
+        "text": "Other",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Nature Pictures and the Pain of Social Ostracism",
+  "locale": "en",
+  "spSite": {
+   "id": "site-99b01976c21f2eca",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Nature Pictures and the Pain of Social Ostracism</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Nature Pictures and the Pain of Social Ostracism\",\n  \"description\": \"Faithful replication of Study 4 of Yang, Wang, Passmore, Zhang, Zhu & Cai (2020), The Journal of Social Psychology 161(2):197–215, rebuilt from the authors' own Study 4 materials on OSF (6xv3t, CC BY 4.0). Participants recall and write about an experience of being ostracized (or, in the control condition, accepted), answer a five-item manipulation check, then view 14 photos of nature, urban scenes or neutral objects at their own pace (at least 5 s each), and report their current emotions, retrospective need satisfaction about the recalled event and state social pain. 2 × 3 between-subjects design.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"nature\",\n   \"urban\",\n   \"neutral\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"recall\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to participate in this study.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"Yes\",\n      \"labelFalse\": \"No\"\n     },\n     {\n      \"type\": \"custom\",\n      \"name\": \"recall\",\n      \"title\": \"Recall task\",\n      \"isRequired\": true,\n      \"description\": \"{ condition: 'exclusion' | 'inclusion', text, chars, seconds } — random assignment to recall a painful experience of being refused or ostracized (exclusion) or an experience of being accepted or welcomed (inclusion), written in at least five lines (here: at least 250 characters).\"\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"manip_check\",\n      \"title\": \"The five statements described your possible feelings when you are recalling the experience of being ostracized. Please indicate your agreement on a seven point scale, according your feelings of the experiences you recalled.\",\n      \"description\": \"Manipulation check, 1–7 (Completely disagree … Completely agree). Ostracism = mean of MC1, MC2 and reversed MC3 (8 − MC3); recall vividness = mean of MC4, MC5.\",\n      \"isRequired\": true,\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"Completely disagree\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"6\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"Completely agree\"\n       }\n      ],\n      \"rows\": [\n       {\n        \"value\": \"MC1\",\n        \"text\": \"I feel ostracized\"\n       },\n       {\n        \"value\": \"MC2\",\n        \"text\": \"I feel ignored\"\n       },\n       {\n        \"value\": \"MC3\",\n        \"text\": \"I feel accepted\"\n       },\n       {\n        \"value\": \"MC4\",\n        \"text\": \"I vividly recalled the experience\"\n       },\n       {\n        \"value\": \"MC5\",\n        \"text\": \"I can well recall the experience\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"pictures\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"pictures\",\n      \"title\": \"Picture viewing\",\n      \"isRequired\": true,\n      \"description\": \"{ condition: 'nature' | 'urban' | 'neutral', views: [{ file, ms }], total_s } — random assignment (independent of the recall condition) to one of three sets of 14 photos from the authors' Study 4 slides (folders nature, urban, neutral), shown one at a time in the original slide order at the participant's own pace; Next unlocks after 5 s (the original asked to watch each picture at least 5 s and imagine being immersed in the scene). ms = time on each picture.\"\n     }\n    ]\n   },\n   {\n    \"name\": \"measures\",\n    \"elements\": [\n     {\n      \"type\": \"matrix\",\n      \"name\": \"affect\",\n      \"title\": \"Measure #1. This scale consists of a number of words that describe different feelings and emotions. For each word, please indicate to what extent you feel this emotion RIGHT NOW.\",\n      \"description\": \"18 emotion words, 1–5. PA1–PA9 positive, NA1–NA9 negative; affect balance = mean(PA) − mean(NA).\",\n      \"isRequired\": true,\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"Very slightly or Not at all\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"A little\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Moderately\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Quite a bit\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Extremely\"\n       }\n      ],\n      \"rows\": [\n       {\n        \"value\": \"PA1\",\n        \"text\": \"Active\"\n       },\n       {\n        \"value\": \"PA2\",\n        \"text\": \"Enthusiastic\"\n       },\n       {\n        \"value\": \"PA3\",\n        \"text\": \"Happy\"\n       },\n       {\n        \"value\": \"PA4\",\n        \"text\": \"Cheerful\"\n       },\n       {\n        \"value\": \"PA5\",\n        \"text\": \"Excited\"\n       },\n       {\n        \"value\": \"PA6\",\n        \"text\": \"Proud\"\n       },\n       {\n        \"value\": \"PA7\",\n        \"text\": \"Delighted\"\n       },\n       {\n        \"value\": \"PA8\",\n        \"text\": \"Inspired\"\n       },\n       {\n        \"value\": \"PA9\",\n        \"text\": \"Compassionate\"\n       },\n       {\n        \"value\": \"NA1\",\n        \"text\": \"Ashamed\"\n       },\n       {\n        \"value\": \"NA2\",\n        \"text\": \"Sad\"\n       },\n       {\n        \"value\": \"NA3\",\n        \"text\": \"Afraid\"\n       },\n       {\n        \"value\": \"NA4\",\n        \"text\": \"Nervous\"\n       },\n       {\n        \"value\": \"NA5\",\n        \"text\": \"Scared\"\n       },\n       {\n        \"value\": \"NA6\",\n        \"text\": \"Guilty\"\n       },\n       {\n        \"value\": \"NA7\",\n        \"text\": \"Hostile\"\n       },\n       {\n        \"value\": \"NA8\",\n        \"text\": \"Upset\"\n       },\n       {\n        \"value\": \"NA9\",\n        \"text\": \"Irritable\"\n       }\n      ]\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"needs\",\n      \"title\": \"Measure #2. This scale consists of eight statements that describe different psychological reactions to the event you recalled. For each statement, with regard to the event you recalled, please indicate to what extent you felt:\",\n      \"description\": \"Retrospective need satisfaction about the recalled event, 8 items, 1–5; items ending in R are reversed (6 − x) before averaging.\",\n      \"isRequired\": true,\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"Very slightly or Not at all\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"A little\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Moderately\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Quite a bit\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Extremely\"\n       }\n      ],\n      \"rows\": [\n       {\n        \"value\": \"N1R\",\n        \"text\": \"I felt rejected\"\n       },\n       {\n        \"value\": \"N2R\",\n        \"text\": \"I felt like an outsider\"\n       },\n       {\n        \"value\": \"N3\",\n        \"text\": \"I felt liked\"\n       },\n       {\n        \"value\": \"N4\",\n        \"text\": \"I felt good about myself\"\n       },\n       {\n        \"value\": \"N5\",\n        \"text\": \"I felt I had control over the course of the interaction\"\n       },\n       {\n        \"value\": \"N6\",\n        \"text\": \"I felt powerful\"\n       },\n       {\n        \"value\": \"N7R\",\n        \"text\": \"I felt meaningless\"\n       },\n       {\n        \"value\": \"N8R\",\n        \"text\": \"I felt non-existent\"\n       }\n      ]\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"pain\",\n      \"title\": \"Measure #3. This questionnaire provides you with a list of words that describe some of the different qualities of pain. Please choose the number that best describes the intensity of each of the pain you feel right now about the event you recalled. Use 1 if the word does not describe your pain.\",\n      \"description\": \"State social pain, 4 pain words, 1–10 (none … Worst possible); social pain = mean of the 4.\",\n      \"isRequired\": true,\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"none\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"6\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"7\"\n       },\n       {\n        \"value\": 8,\n        \"text\": \"8\"\n       },\n       {\n        \"value\": 9,\n        \"text\": \"9\"\n       },\n       {\n        \"value\": 10,\n        \"text\": \"Worst possible\"\n       }\n      ],\n      \"rows\": [\n       {\n        \"value\": \"P1\",\n        \"text\": \"tiring-exhausting\"\n       },\n       {\n        \"value\": \"P2\",\n        \"text\": \"Sickening\"\n       },\n       {\n        \"value\": \"P3\",\n        \"text\": \"Fearful\"\n       },\n       {\n        \"value\": \"P4\",\n        \"text\": \"punishing-cruel\"\n       }\n      ]\n     },\n     {\n      \"type\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"What is your age in years (how old are you)?\",\n      \"isRequired\": true,\n      \"min\": 15,\n      \"max\": 100\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"sex\",\n      \"title\": \"What is your sex?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Other\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f3f4f1;--card:#fff;--ink:#1e221d;--muted:#5a625b;--accent:#356a4a;--accent-ink:#fff;--line:#d5dad4;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:860px;margin:0 auto;padding:24px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 10px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q>b{display:block;margin-bottom:4px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:120px}\ntextarea{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;min-height:200px}\n.cnt{font-size:.85rem;color:var(--muted);margin-top:4px}\n.pic{background:#111;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;height:min(68vh,560px)}\n.pic img{max-width:100%;max-height:100%;object-fit:contain;display:block}\n.ctl{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:12px;flex-wrap:wrap}\n.ctl .t{color:var(--muted);font-variant-numeric:tabular-nums}\n.item{padding:12px 0;border-top:1px solid var(--line)}.item:first-of-type{border-top:0}\n.item>b{display:block;font-weight:600;margin-bottom:6px}\n.sc{display:grid;gap:4px}\n.sc button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 0;font:inherit;font-weight:700;cursor:pointer;min-width:0}\n.sc button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}\n.legend{font-size:.85rem;color:var(--muted);margin:6px 0 0}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:860px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Materials and photos: Yang, Wang, Passmore, Zhang, Zhu &amp; Cai (2020), OSF 6xv3t (CC BY 4.0). Used with credit; removed if the authors object.</footer>\n<script>\n(function(){\n  var BLOCKS={\"manip_check\": {\"title\": \"The five statements described your possible feelings when you are recalling the experience of being ostracized. Please indicate your agreement on a seven point scale, according your feelings of the experiences you recalled.\", \"labels\": [\"Completely disagree\", \"\", \"\", \"\", \"\", \"\", \"Completely agree\"], \"rows\": [{\"value\": \"MC1\", \"text\": \"I feel ostracized\"}, {\"value\": \"MC2\", \"text\": \"I feel ignored\"}, {\"value\": \"MC3\", \"text\": \"I feel accepted\"}, {\"value\": \"MC4\", \"text\": \"I vividly recalled the experience\"}, {\"value\": \"MC5\", \"text\": \"I can well recall the experience\"}]}, \"affect\": {\"title\": \"Measure #1. This scale consists of a number of words that describe different feelings and emotions. For each word, please indicate to what extent you feel this emotion RIGHT NOW.\", \"labels\": [\"Very slightly or Not at all\", \"A little\", \"Moderately\", \"Quite a bit\", \"Extremely\"], \"rows\": [{\"value\": \"PA1\", \"text\": \"Active\"}, {\"value\": \"PA2\", \"text\": \"Enthusiastic\"}, {\"value\": \"PA3\", \"text\": \"Happy\"}, {\"value\": \"PA4\", \"text\": \"Cheerful\"}, {\"value\": \"PA5\", \"text\": \"Excited\"}, {\"value\": \"PA6\", \"text\": \"Proud\"}, {\"value\": \"PA7\", \"text\": \"Delighted\"}, {\"value\": \"PA8\", \"text\": \"Inspired\"}, {\"value\": \"PA9\", \"text\": \"Compassionate\"}, {\"value\": \"NA1\", \"text\": \"Ashamed\"}, {\"value\": \"NA2\", \"text\": \"Sad\"}, {\"value\": \"NA3\", \"text\": \"Afraid\"}, {\"value\": \"NA4\", \"text\": \"Nervous\"}, {\"value\": \"NA5\", \"text\": \"Scared\"}, {\"value\": \"NA6\", \"text\": \"Guilty\"}, {\"value\": \"NA7\", \"text\": \"Hostile\"}, {\"value\": \"NA8\", \"text\": \"Upset\"}, {\"value\": \"NA9\", \"text\": \"Irritable\"}]}, \"needs\": {\"title\": \"Measure #2. This scale consists of eight statements that describe different psychological reactions to the event you recalled. For each statement, with regard to the event you recalled, please indicate to what extent you felt:\", \"labels\": [\"Very slightly or Not at all\", \"A little\", \"Moderately\", \"Quite a bit\", \"Extremely\"], \"rows\": [{\"value\": \"N1R\", \"text\": \"I felt rejected\"}, {\"value\": \"N2R\", \"text\": \"I felt like an outsider\"}, {\"value\": \"N3\", \"text\": \"I felt liked\"}, {\"value\": \"N4\", \"text\": \"I felt good about myself\"}, {\"value\": \"N5\", \"text\": \"I felt I had control over the course of the interaction\"}, {\"value\": \"N6\", \"text\": \"I felt powerful\"}, {\"value\": \"N7R\", \"text\": \"I felt meaningless\"}, {\"value\": \"N8R\", \"text\": \"I felt non-existent\"}]}, \"pain\": {\"title\": \"Measure #3. This questionnaire provides you with a list of words that describe some of the different qualities of pain. Please choose the number that best describes the intensity of each of the pain you feel right now about the event you recalled. Use 1 if the word does not describe your pain.\", \"labels\": [\"none\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"\", \"Worst possible\"], \"rows\": [{\"value\": \"P1\", \"text\": \"tiring-exhausting\"}, {\"value\": \"P2\", \"text\": \"Sickening\"}, {\"value\": \"P3\", \"text\": \"Fearful\"}, {\"value\": \"P4\", \"text\": \"punishing-cruel\"}]}}, RC=['exclusion','inclusion'], PC=['nature','urban','neutral'], KEY='ostr2020:', MINCH=250, MINMS=5000*(window.__SPEED||1);\n  var RECALL={exclusion:'Please recall one of your painful life experiences where you were refused or ostracized, e.g. you were refused when inviting someone for dating, or you were ignored by most of your classmates. Please describe the details of the situation and your mood. (Please write down at least five lines.)',\n    inclusion:'Please recall one of your life experiences where you were accepted or welcomed, e.g. you were accepted when inviting someone for dating, or you were welcomed by most of your classmates. Please describe the details of the situation and your mood. (Please write down at least five lines.)'};\n  var app=document.getElementById('app'), Q={}, pics={}, rc=null, pc=null, ans={};\n  var FLOW=['intro','recall','manip_check','bridge','picIntro','pictures','qIntro','affect','needs','pain','about'];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function saveAll(list,b,cb){Promise.all(list.map(function(a){return a[2]?SPSite.answer(a[0],a[1],a[2]):SPSite.answer(a[0],a[1]);})).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}cb();});}\n  function step(){var n=0;for(var i=0;i<FLOW.length;i++)if(ans[FLOW[i]])n++;return n;}\n  function head(){return '<p style=\"font-size:.85rem\">Step '+(step()+1)+' of '+FLOW.length+'</p>';}\n  function next(){\n    window.scrollTo(0,0);\n    for(var i=0;i<FLOW.length;i++){var s=FLOW[i];if(ans[s])continue;\n      if(s==='intro')return intro();if(s==='recall')return recall();if(s==='bridge')return bridge();\n      if(s==='picIntro')return picIntro();if(s==='pictures')return slides();if(s==='qIntro')return qIntro();\n      if(s==='about')return about();if(BLOCKS[s])return block(s);}\n    finish();\n  }\n  function page(title,html,btn,cb){\n    app.innerHTML=head()+'<div class=\"card\">'+(title?'<h1>'+esc(title)+'</h1>':'')+html+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">'+esc(btn||'Continue')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=cb;\n  }\n  function intro(){\n    var miss=PC.filter(function(c){return (pics[c]||[]).length<1;});\n    if(miss.length){app.innerHTML='<h1>Pictures missing</h1><p>The media folders nature, urban and neutral must each hold the 14 study photos; empty: '+esc(miss.join(', '))+'.</p>';return;}\n    page('An investigation of college life','<p>Welcome to take part in this investigation! The aim of the study is to investigate your experiences of college life, especially regarding your interpersonal relationships. There is no right or wrong about your responses, and your responses will only be used for academic purposes. Please respond to the questionnaires according to your true thoughts.</p><p>Your participation is completely voluntary and you may refuse to participate or withdraw from the study at any time without penalty.</p><label class=\"opt\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label>','Start',function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var b=this;b.disabled=true;saveAll([['consent',true]],b,function(){ans.intro=true;next();});\n    });\n  }\n  function recall(){\n    var t0=Date.now(), d=load('draft')||'';\n    page('',  '<b style=\"display:block;color:var(--ink)\">'+esc(RECALL[rc])+'</b><textarea id=\"tx\" style=\"margin-top:10px\">'+esc(d)+'</textarea><div class=\"cnt\" id=\"cnt\"></div>','Continue',function(){\n      var t=document.getElementById('tx').value.trim();if(t.length<MINCH)return err('Please write at least five lines (about '+MINCH+' characters).');\n      var b=this;b.disabled=true;saveAll([['recall',{condition:rc,text:t,chars:t.length,seconds:Math.round((Date.now()-t0)/1000)}]],b,function(){ans.recall=true;next();});\n    });\n    var tx=document.getElementById('tx'),c=document.getElementById('cnt');\n    function upd(){var n=tx.value.trim().length;c.textContent=n+' characters'+(n<MINCH?' (at least '+MINCH+')':'');save('draft',tx.value);}\n    tx.oninput=upd;upd();\n  }\n  function block(name){\n    var B=BLOCKS[name], lab=B.labels, vals={}, n=lab.length;\n    var leg=lab.map(function(t,k){return t?(k+1)+' = '+esc(t):'';}).filter(Boolean).join(' · ');\n    app.innerHTML=head()+'<div class=\"card\"><b>'+esc(B.title)+'</b><p class=\"legend\">'+leg+'</p>'+\n      B.rows.map(function(r){var b='';for(var v=1;v<=n;v++)b+='<button type=\"button\" data-r=\"'+esc(r.value)+'\" data-v=\"'+v+'\" title=\"'+esc(lab[v-1]||String(v))+'\">'+v+'</button>';return '<div class=\"item\"><b>'+esc(r.text)+'</b><div class=\"sc\" style=\"grid-template-columns:repeat('+n+',1fr)\">'+b+'</div></div>';}).join('')+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    app.querySelectorAll('.sc button').forEach(function(x){x.onclick=function(){vals[x.dataset.r]=Number(x.dataset.v);x.parentNode.querySelectorAll('button').forEach(function(y){y.classList.toggle('on',y===x);});err('');};});\n    document.getElementById('go').onclick=function(){\n      var miss=B.rows.filter(function(r){return vals[r.value]==null;});if(miss.length)return err('Please answer every item ('+miss.length+' left).');\n      var o={};B.rows.forEach(function(r){o[r.value]=vals[r.value];});\n      var b=this;b.disabled=true;saveAll([[name,o]],b,function(){ans[name]=true;next();});\n    };\n  }\n  function bridge(){\n    page('Thank you for participating in the current study.','<p>We have another study, “Perception of Pictures and Well-being Inventory”. We are grateful if you accept our invitation to take part in it. Please continue to begin.</p>','Continue',function(){ans.bridge=true;next();});\n  }\n  function picIntro(){\n    page('Perception of Pictures and Well-being Inventory','<p style=\"color:var(--ink)\">Welcome to participate in the study of Perception of Pictures and Well-being Inventory.</p><p style=\"color:var(--ink)\">There are 14 pictures, please watch all the photos at your own pace. Note: please watch each of the pictures for at least 5 seconds, and imagine you were immersed in the scenes and feel the feelings when you were surrounded by the scenes.</p><p>If you are ready, please click to begin.</p>','Begin',function(){ans.picIntro=true;next();});\n  }\n  function slides(){\n    var L=pics[pc], k=0, views=[], t=0, tm=null, t00=Date.now();\n    L.forEach(function(f){var im=new Image();im.src=f.url;});\n    app.innerHTML='<div class=\"pic\"><img id=\"im\" alt=\"Study picture\"></div><div class=\"ctl\"><span class=\"t\" id=\"ct\"></span><button class=\"btn\" id=\"nx\" disabled>Next</button></div><div class=\"err\"></div>';\n    var im=document.getElementById('im'), nx=document.getElementById('nx');\n    function show(){im.src=L[k].url;document.getElementById('ct').textContent='Picture '+(k+1)+' of '+L.length;nx.disabled=true;nx.textContent=k===L.length-1?'Finish':'Next';t=Date.now();clearTimeout(tm);tm=setTimeout(function(){nx.disabled=false;},MINMS);}\n    nx.onclick=function(){\n      if(Date.now()-t<MINMS)return;views.push({file:L[k].name,ms:Date.now()-t});k++;\n      if(k<L.length)return show();\n      nx.disabled=true;\n      saveAll([['pictures',{condition:pc,views:views,total_s:Math.round((Date.now()-t00)/1000)},{shown:L.map(function(f){return f.name;})}]],nx,function(){ans.pictures=true;next();});\n    };\n    show();\n  }\n  function qIntro(){\n    page('','<p style=\"color:var(--ink)\">Please complete the questionnaires according to your present feelings.</p><p>Using the scale provided for each series of questions, choose the number that best reflects your thoughts or feelings about each statement. Note that the questions have different scales, so read each scale carefully, and note the TIME FRAME that each scale is asking you about. Please answer each question honestly and carefully.</p>','Continue',function(){ans.qIntro=true;next();});\n  }\n  function about(){\n    page('Demographics','<div class=\"q\"><b>'+esc(Q.age.title)+'</b><input type=\"number\" id=\"age\" min=\"15\" max=\"100\" inputmode=\"numeric\"></div><div class=\"q\"><b>'+esc(Q.sex.title)+'</b>'+(Q.sex.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"sex\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>','Finish',function(){\n      var av=document.getElementById('age').value,age=Number(av);if(!av||!(age>=15&&age<=100))return err('Please enter your age in years.');\n      var s=app.querySelector('input[name=sex]:checked');if(!s)return err('Please select your sex.');\n      var b=this;b.disabled=true;saveAll([['age',age],['sex',Number(s.value)]],b,function(){ans.about=true;next();});\n    });\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you for your conscientious participation.</h1><div class=\"card\"><p>This study looks at whether looking at pictures of nature helps people recover from the pain of being left out. You were asked to recall either an experience of being ostracized or one of being accepted, and then saw photos of nature, of cities or of everyday objects. If recalling the experience left you feeling low, it may help to talk to someone you trust.</p><p style=\"font-size:.82rem\">Materials and photos: Study 4 of Yang, Wang, Passmore, Zhang, Zhu &amp; Cai (2020), The Journal of Social Psychology, doi:10.1080/00224545.2020.1784826, OSF 6xv3t (CC BY 4.0). Used with credit and removed if the authors object.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){\n      if(x==='consent')ans.intro=false;else if(x==='pictures'){ans.pictures=false;ans.picIntro=false;}else if(x==='age'||x==='sex')ans.about=false;else ans[x]=false;});next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','age','sex'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    PC.forEach(function(c){pics[c]=(SPSite.getMedia(c)||[]).slice().sort(function(a,b){return a.name<b.name?-1:a.name>b.name?1:0;});});\n    var a=(ctx&&ctx.answers)||{};\n    var r=(a.recall&&a.recall.condition)||load('rc');if(RC.indexOf(r)<0)r=RC[Math.floor(Math.random()*2)];rc=r;save('rc',rc);\n    var ap=a.pictures&&(a.pictures.condition?a.pictures:(a.pictures.trials&&a.pictures.trials[0]&&a.pictures.trials[0].value));var p=(ap&&ap.condition)||load('pc');if(PC.indexOf(p)<0)p=PC[Math.floor(Math.random()*3)];pc=p;save('pc',pc);\n    if(a.consent===true){ans.intro=true;\n      ['recall','manip_check','affect','needs','pain'].forEach(function(k){if(a[k]!=null)ans[k]=true;});\n      if(a.manip_check!=null)ans.bridge=true;\n      if(a.pictures!=null){ans.picIntro=true;ans.pictures=true;}\n      if(a.affect!=null)ans.qIntro=true;\n      if(a.age!=null&&a.sex!=null)ans.about=true;}\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T06:47:34.131Z",
+   "mediaFolders": [
+    "nature",
+    "urban",
+    "neutral"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T06:47:34.131Z"
+  },
+  "description": "Faithful replication of Study 4 of Yang, Wang, Passmore, Zhang, Zhu & Cai (2020), The Journal of Social Psychology 161(2):197–215, rebuilt from the authors' own Study 4 materials on OSF (6xv3t, CC BY 4.0). Participants recall and write about an experience of being ostracized (or, in the control condition, accepted), answer a five-item manipulation check, then view 14 photos of nature, urban scenes or neutral objects at their own pace (at least 5 s each), and report their current emotions, retrospective need satisfaction about the recalled event and state social pain. 2 × 3 between-subjects design.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2020-yang-nature/nature/NAT_01__71c87226-3681-4dd0-aaa7-9ce837f5dbe5.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/nature/NAT_01__71c87226-3681-4dd0-aaa7-9ce837f5dbe5.jpg",
+   "name": "NAT_01.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2020-yang-nature/nature/NAT_01__71c87226-3681-4dd0-aaa7-9ce837f5dbe5.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 427867,
+   "uploaded_bytes": 427867,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/nature/NAT_02__6933f852-41c7-44ab-80ca-17684f27aa64.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/nature/NAT_02__6933f852-41c7-44ab-80ca-17684f27aa64.jpg",
+   "name": "NAT_02.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2020-yang-nature/nature/NAT_02__6933f852-41c7-44ab-80ca-17684f27aa64.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 293669,
+   "uploaded_bytes": 293669,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/nature/NAT_03__a671e0f9-1d85-44e8-bf2f-dfdae7b00c87.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/nature/NAT_03__a671e0f9-1d85-44e8-bf2f-dfdae7b00c87.jpg",
+   "name": "NAT_03.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2020-yang-nature/nature/NAT_03__a671e0f9-1d85-44e8-bf2f-dfdae7b00c87.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 252553,
+   "uploaded_bytes": 252553,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/nature/NAT_04__94f92679-2c2d-43de-a630-cbed2d552723.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/nature/NAT_04__94f92679-2c2d-43de-a630-cbed2d552723.jpg",
+   "name": "NAT_04.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2020-yang-nature/nature/NAT_04__94f92679-2c2d-43de-a630-cbed2d552723.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 265472,
+   "uploaded_bytes": 265472,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/nature/NAT_05__dd626837-2181-45a1-8132-510178127830.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/nature/NAT_05__dd626837-2181-45a1-8132-510178127830.jpg",
+   "name": "NAT_05.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2020-yang-nature/nature/NAT_05__dd626837-2181-45a1-8132-510178127830.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 280983,
+   "uploaded_bytes": 280983,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/nature/NAT_06__b75431af-08be-4e36-b2a7-acb737386620.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/nature/NAT_06__b75431af-08be-4e36-b2a7-acb737386620.jpg",
+   "name": "NAT_06.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2020-yang-nature/nature/NAT_06__b75431af-08be-4e36-b2a7-acb737386620.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 221708,
+   "uploaded_bytes": 221708,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/nature/NAT_07__a55b8270-f876-4625-8f6a-1b6381e9630b.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/nature/NAT_07__a55b8270-f876-4625-8f6a-1b6381e9630b.jpg",
+   "name": "NAT_07.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2020-yang-nature/nature/NAT_07__a55b8270-f876-4625-8f6a-1b6381e9630b.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 256538,
+   "uploaded_bytes": 256538,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/nature/NAT_08__53544bc7-7997-4c6c-97c7-4773d653b47a.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/nature/NAT_08__53544bc7-7997-4c6c-97c7-4773d653b47a.jpg",
+   "name": "NAT_08.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2020-yang-nature/nature/NAT_08__53544bc7-7997-4c6c-97c7-4773d653b47a.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 240767,
+   "uploaded_bytes": 240767,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/nature/NAT_09__a2a12d34-311c-482b-a053-1ca28f10de65.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/nature/NAT_09__a2a12d34-311c-482b-a053-1ca28f10de65.jpg",
+   "name": "NAT_09.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2020-yang-nature/nature/NAT_09__a2a12d34-311c-482b-a053-1ca28f10de65.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 165953,
+   "uploaded_bytes": 165953,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/nature/NAT_10__d4360969-1f64-4616-9b10-ae681d8af4e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/nature/NAT_10__d4360969-1f64-4616-9b10-ae681d8af4e7.jpg",
+   "name": "NAT_10.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2020-yang-nature/nature/NAT_10__d4360969-1f64-4616-9b10-ae681d8af4e7.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 249255,
+   "uploaded_bytes": 249255,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/nature/NAT_11__3d520036-3362-4f6d-b25a-1531bb5c872b.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/nature/NAT_11__3d520036-3362-4f6d-b25a-1531bb5c872b.jpg",
+   "name": "NAT_11.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2020-yang-nature/nature/NAT_11__3d520036-3362-4f6d-b25a-1531bb5c872b.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 156041,
+   "uploaded_bytes": 156041,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/nature/NAT_12__29260a68-a411-415e-a744-4c3ebf05f639.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/nature/NAT_12__29260a68-a411-415e-a744-4c3ebf05f639.jpg",
+   "name": "NAT_12.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2020-yang-nature/nature/NAT_12__29260a68-a411-415e-a744-4c3ebf05f639.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 284070,
+   "uploaded_bytes": 284070,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/nature/NAT_13__8b510130-e142-4c64-9b10-f1d06e28f12f.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/nature/NAT_13__8b510130-e142-4c64-9b10-f1d06e28f12f.jpg",
+   "name": "NAT_13.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2020-yang-nature/nature/NAT_13__8b510130-e142-4c64-9b10-f1d06e28f12f.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 286444,
+   "uploaded_bytes": 286444,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/nature/NAT_14__89c393a2-7b63-4ca2-8a0b-08075ff0092b.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/nature/NAT_14__89c393a2-7b63-4ca2-8a0b-08075ff0092b.jpg",
+   "name": "NAT_14.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2020-yang-nature/nature/NAT_14__89c393a2-7b63-4ca2-8a0b-08075ff0092b.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 72159,
+   "uploaded_bytes": 72159,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/neutral/NEU_01__f7893e27-b5ea-426a-8934-75b694bdd2e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/neutral/NEU_01__f7893e27-b5ea-426a-8934-75b694bdd2e7.jpg",
+   "name": "NEU_01.jpg",
+   "type": "image",
+   "folder": "neutral",
+   "media_id": "templates/2020-yang-nature/neutral/NEU_01__f7893e27-b5ea-426a-8934-75b694bdd2e7.jpg",
+   "logicalFolder": "neutral",
+   "original_bytes": 25402,
+   "uploaded_bytes": 25402,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/neutral/NEU_02__eb107ebb-a270-4c61-b115-173b8a5530a4.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/neutral/NEU_02__eb107ebb-a270-4c61-b115-173b8a5530a4.jpg",
+   "name": "NEU_02.jpg",
+   "type": "image",
+   "folder": "neutral",
+   "media_id": "templates/2020-yang-nature/neutral/NEU_02__eb107ebb-a270-4c61-b115-173b8a5530a4.jpg",
+   "logicalFolder": "neutral",
+   "original_bytes": 31608,
+   "uploaded_bytes": 31608,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/neutral/NEU_03__07f83828-8c0e-494a-93ad-627b2400372f.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/neutral/NEU_03__07f83828-8c0e-494a-93ad-627b2400372f.jpg",
+   "name": "NEU_03.jpg",
+   "type": "image",
+   "folder": "neutral",
+   "media_id": "templates/2020-yang-nature/neutral/NEU_03__07f83828-8c0e-494a-93ad-627b2400372f.jpg",
+   "logicalFolder": "neutral",
+   "original_bytes": 22898,
+   "uploaded_bytes": 22898,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/neutral/NEU_04__c1ac5141-18ab-47aa-94e8-748297e4e0bb.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/neutral/NEU_04__c1ac5141-18ab-47aa-94e8-748297e4e0bb.jpg",
+   "name": "NEU_04.jpg",
+   "type": "image",
+   "folder": "neutral",
+   "media_id": "templates/2020-yang-nature/neutral/NEU_04__c1ac5141-18ab-47aa-94e8-748297e4e0bb.jpg",
+   "logicalFolder": "neutral",
+   "original_bytes": 22140,
+   "uploaded_bytes": 22140,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/neutral/NEU_05__215bb9d5-76f8-4a3b-8882-52f25ff6be3e.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/neutral/NEU_05__215bb9d5-76f8-4a3b-8882-52f25ff6be3e.jpg",
+   "name": "NEU_05.jpg",
+   "type": "image",
+   "folder": "neutral",
+   "media_id": "templates/2020-yang-nature/neutral/NEU_05__215bb9d5-76f8-4a3b-8882-52f25ff6be3e.jpg",
+   "logicalFolder": "neutral",
+   "original_bytes": 39916,
+   "uploaded_bytes": 39916,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/neutral/NEU_06__cf4e0c22-a19b-4196-be1c-e51f6e6aeaaf.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/neutral/NEU_06__cf4e0c22-a19b-4196-be1c-e51f6e6aeaaf.jpg",
+   "name": "NEU_06.jpg",
+   "type": "image",
+   "folder": "neutral",
+   "media_id": "templates/2020-yang-nature/neutral/NEU_06__cf4e0c22-a19b-4196-be1c-e51f6e6aeaaf.jpg",
+   "logicalFolder": "neutral",
+   "original_bytes": 22612,
+   "uploaded_bytes": 22612,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/neutral/NEU_07__0e519811-b6ee-447d-9102-8a595201997d.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/neutral/NEU_07__0e519811-b6ee-447d-9102-8a595201997d.jpg",
+   "name": "NEU_07.jpg",
+   "type": "image",
+   "folder": "neutral",
+   "media_id": "templates/2020-yang-nature/neutral/NEU_07__0e519811-b6ee-447d-9102-8a595201997d.jpg",
+   "logicalFolder": "neutral",
+   "original_bytes": 20117,
+   "uploaded_bytes": 20117,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/neutral/NEU_08__aba8eac0-4333-4cf2-a12a-c4adbcb76c1c.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/neutral/NEU_08__aba8eac0-4333-4cf2-a12a-c4adbcb76c1c.jpg",
+   "name": "NEU_08.jpg",
+   "type": "image",
+   "folder": "neutral",
+   "media_id": "templates/2020-yang-nature/neutral/NEU_08__aba8eac0-4333-4cf2-a12a-c4adbcb76c1c.jpg",
+   "logicalFolder": "neutral",
+   "original_bytes": 14624,
+   "uploaded_bytes": 14624,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/neutral/NEU_09__09c319fd-590e-415f-a63d-f007d7098245.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/neutral/NEU_09__09c319fd-590e-415f-a63d-f007d7098245.jpg",
+   "name": "NEU_09.jpg",
+   "type": "image",
+   "folder": "neutral",
+   "media_id": "templates/2020-yang-nature/neutral/NEU_09__09c319fd-590e-415f-a63d-f007d7098245.jpg",
+   "logicalFolder": "neutral",
+   "original_bytes": 19630,
+   "uploaded_bytes": 19630,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/neutral/NEU_10__3f1af330-73e3-4ae6-80a9-043bae8eefd4.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/neutral/NEU_10__3f1af330-73e3-4ae6-80a9-043bae8eefd4.jpg",
+   "name": "NEU_10.jpg",
+   "type": "image",
+   "folder": "neutral",
+   "media_id": "templates/2020-yang-nature/neutral/NEU_10__3f1af330-73e3-4ae6-80a9-043bae8eefd4.jpg",
+   "logicalFolder": "neutral",
+   "original_bytes": 15914,
+   "uploaded_bytes": 15914,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/neutral/NEU_11__19bedf58-a177-4d88-a35e-d0dbeea957b7.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/neutral/NEU_11__19bedf58-a177-4d88-a35e-d0dbeea957b7.jpg",
+   "name": "NEU_11.jpg",
+   "type": "image",
+   "folder": "neutral",
+   "media_id": "templates/2020-yang-nature/neutral/NEU_11__19bedf58-a177-4d88-a35e-d0dbeea957b7.jpg",
+   "logicalFolder": "neutral",
+   "original_bytes": 21750,
+   "uploaded_bytes": 21750,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/neutral/NEU_12__90ac948e-bbc2-4fd2-b532-504adaafbffa.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/neutral/NEU_12__90ac948e-bbc2-4fd2-b532-504adaafbffa.jpg",
+   "name": "NEU_12.jpg",
+   "type": "image",
+   "folder": "neutral",
+   "media_id": "templates/2020-yang-nature/neutral/NEU_12__90ac948e-bbc2-4fd2-b532-504adaafbffa.jpg",
+   "logicalFolder": "neutral",
+   "original_bytes": 27544,
+   "uploaded_bytes": 27544,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/neutral/NEU_13__9a9bf323-1537-470c-af99-85d9d2c77fed.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/neutral/NEU_13__9a9bf323-1537-470c-af99-85d9d2c77fed.jpg",
+   "name": "NEU_13.jpg",
+   "type": "image",
+   "folder": "neutral",
+   "media_id": "templates/2020-yang-nature/neutral/NEU_13__9a9bf323-1537-470c-af99-85d9d2c77fed.jpg",
+   "logicalFolder": "neutral",
+   "original_bytes": 23058,
+   "uploaded_bytes": 23058,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/neutral/NEU_14__826bd638-2da9-484d-8162-21d79cec0620.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/neutral/NEU_14__826bd638-2da9-484d-8162-21d79cec0620.jpg",
+   "name": "NEU_14.jpg",
+   "type": "image",
+   "folder": "neutral",
+   "media_id": "templates/2020-yang-nature/neutral/NEU_14__826bd638-2da9-484d-8162-21d79cec0620.jpg",
+   "logicalFolder": "neutral",
+   "original_bytes": 23287,
+   "uploaded_bytes": 23287,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/urban/URB_01__ede00077-c0c1-4dea-b29e-262d0506b51a.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/urban/URB_01__ede00077-c0c1-4dea-b29e-262d0506b51a.jpg",
+   "name": "URB_01.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2020-yang-nature/urban/URB_01__ede00077-c0c1-4dea-b29e-262d0506b51a.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 249646,
+   "uploaded_bytes": 249646,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/urban/URB_02__f0894445-a0fb-4025-ae97-fa8ee167d5fc.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/urban/URB_02__f0894445-a0fb-4025-ae97-fa8ee167d5fc.jpg",
+   "name": "URB_02.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2020-yang-nature/urban/URB_02__f0894445-a0fb-4025-ae97-fa8ee167d5fc.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 86839,
+   "uploaded_bytes": 86839,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/urban/URB_03__616583c2-b605-4052-8d1d-ee46bb64c895.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/urban/URB_03__616583c2-b605-4052-8d1d-ee46bb64c895.jpg",
+   "name": "URB_03.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2020-yang-nature/urban/URB_03__616583c2-b605-4052-8d1d-ee46bb64c895.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 109035,
+   "uploaded_bytes": 109035,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/urban/URB_04__e78d2325-8f76-44c9-9750-a5d096ca5ef7.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/urban/URB_04__e78d2325-8f76-44c9-9750-a5d096ca5ef7.jpg",
+   "name": "URB_04.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2020-yang-nature/urban/URB_04__e78d2325-8f76-44c9-9750-a5d096ca5ef7.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 87281,
+   "uploaded_bytes": 87281,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/urban/URB_05__cb2581ba-e1c1-469e-be7f-59978baa2eb0.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/urban/URB_05__cb2581ba-e1c1-469e-be7f-59978baa2eb0.jpg",
+   "name": "URB_05.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2020-yang-nature/urban/URB_05__cb2581ba-e1c1-469e-be7f-59978baa2eb0.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 158881,
+   "uploaded_bytes": 158881,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/urban/URB_06__6ee71167-d6b3-4232-b2db-bce134dca7af.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/urban/URB_06__6ee71167-d6b3-4232-b2db-bce134dca7af.jpg",
+   "name": "URB_06.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2020-yang-nature/urban/URB_06__6ee71167-d6b3-4232-b2db-bce134dca7af.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 282587,
+   "uploaded_bytes": 282587,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/urban/URB_07__f1014aa3-5ea6-4f1d-886b-f0c314e17b0c.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/urban/URB_07__f1014aa3-5ea6-4f1d-886b-f0c314e17b0c.jpg",
+   "name": "URB_07.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2020-yang-nature/urban/URB_07__f1014aa3-5ea6-4f1d-886b-f0c314e17b0c.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 160474,
+   "uploaded_bytes": 160474,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/urban/URB_08__6a5e1d2d-8ea8-4239-a7a8-65807f9a9426.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/urban/URB_08__6a5e1d2d-8ea8-4239-a7a8-65807f9a9426.jpg",
+   "name": "URB_08.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2020-yang-nature/urban/URB_08__6a5e1d2d-8ea8-4239-a7a8-65807f9a9426.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 172756,
+   "uploaded_bytes": 172756,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/urban/URB_09__d5b8948b-59d6-491a-b4b7-2b9c57de5971.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/urban/URB_09__d5b8948b-59d6-491a-b4b7-2b9c57de5971.jpg",
+   "name": "URB_09.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2020-yang-nature/urban/URB_09__d5b8948b-59d6-491a-b4b7-2b9c57de5971.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 149884,
+   "uploaded_bytes": 149884,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/urban/URB_10__d7d98734-75a0-40ba-9968-cae9347dc2ab.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/urban/URB_10__d7d98734-75a0-40ba-9968-cae9347dc2ab.jpg",
+   "name": "URB_10.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2020-yang-nature/urban/URB_10__d7d98734-75a0-40ba-9968-cae9347dc2ab.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 133692,
+   "uploaded_bytes": 133692,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/urban/URB_11__bd284b3b-3332-474c-bcc4-6b45784b4b03.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/urban/URB_11__bd284b3b-3332-474c-bcc4-6b45784b4b03.jpg",
+   "name": "URB_11.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2020-yang-nature/urban/URB_11__bd284b3b-3332-474c-bcc4-6b45784b4b03.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 171075,
+   "uploaded_bytes": 171075,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/urban/URB_12__5e041d72-9966-45c3-ae1b-b6c5c8134b72.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/urban/URB_12__5e041d72-9966-45c3-ae1b-b6c5c8134b72.jpg",
+   "name": "URB_12.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2020-yang-nature/urban/URB_12__5e041d72-9966-45c3-ae1b-b6c5c8134b72.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 152573,
+   "uploaded_bytes": 152573,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/urban/URB_13__2e9fc9fb-afe3-4995-8eab-2dbb7d2977f1.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/urban/URB_13__2e9fc9fb-afe3-4995-8eab-2dbb7d2977f1.jpg",
+   "name": "URB_13.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2020-yang-nature/urban/URB_13__2e9fc9fb-afe3-4995-8eab-2dbb7d2977f1.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 67151,
+   "uploaded_bytes": 67151,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-yang-nature/urban/URB_14__56b6b78b-8fa1-496a-ab22-f67b3e2e96e4.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-yang-nature/urban/URB_14__56b6b78b-8fa1-496a-ab22-f67b3e2e96e4.jpg",
+   "name": "URB_14.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2020-yang-nature/urban/URB_14__56b6b78b-8fa1-496a-ab22-f67b3e2e96e4.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 105430,
+   "uploaded_bytes": 105430,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Viewing nature scenes reduces the pain of social ostracism",
+  "authors": [
+   "Ying Yang",
+   "Lishen Wang",
+   "Holli-Anne Passmore",
+   "Jing Zhang",
+   "Lifang Zhu",
+   "Huajian Cai"
+  ],
+  "year": 2020,
+  "venue": "The Journal of Social Psychology",
+  "doi": "10.1080/00224545.2020.1784826",
+  "url": "https://doi.org/10.1080/00224545.2020.1784826"
+ }
+}

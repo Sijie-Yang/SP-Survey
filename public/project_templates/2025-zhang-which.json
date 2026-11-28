@@ -1,0 +1,974 @@
+{
+ "id": "2025-zhang-which",
+ "name": "Which Place Looks Safer? Human Anchor Set for LLM Comparison",
+ "description": "Rebuilt from the published description of Zhang, Li, Fukuda & Wang (2025). Participants read the paper's basic safety criteria (9 safe and 11 dangerous cues) and then answer \"Which place looks safer?\" for pairs of Osaka street views, or choose \"Cannot compare\". In the paper these human votes formed the anchor set used to test whether multimodal LLMs (GPT-4o and others) judge safety like people. The paper scores each image as wins minus losses (+1 safer, 0 cannot compare, −1 less safe); the platform shows TrueSkill, and the export has every vote for the paper's score. Differences from the original study: (1) The paper does not say how many pairs each volunteer judged; here each participant judges 30 pairs. (2) The paper's main anchor set was 1,000 Chengdu images (Baidu); its Osaka comparison set used Google Street View. Bundled images are 64 Google Street View views from random points in Osaka (2018–2026), one compass direction each, not the original set. (3) The age bands follow the sample the paper reports; \"Over 65\" and the gender option \"Other / prefer not to say\" are additions.",
+ "author": "Zhang, Li, Fukuda & Wang",
+ "year": "2025",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "safety",
+  "pairwise",
+  "llm",
+  "osaka",
+  "source:paper",
+  "modality:street_view",
+  "task:pairwise",
+  "concept:safety",
+  "participants:crowd",
+  "sample:lt100",
+  "country:Japan",
+  "country:China",
+  "city:Osaka",
+  "city:Chengdu"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1016/j.cities.2025.106122",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-26T09:39:03.009+00:00",
+ "updatedAt": "2026-11-26T15:26:11.458+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "comparisons",
+    "elements": [
+     {
+      "name": "safer",
+      "type": "imagepicker",
+      "title": "Which place looks safer?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "cover",
+      "tieLabel": "Cannot compare",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 30,
+      "description": "Use the safety criteria if you are unsure. If you really cannot judge, choose “Cannot compare”.",
+      "mediaFolders": [
+       "osaka"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "18–25",
+        "value": "18-25"
+       },
+       {
+        "text": "26–35",
+        "value": "26-35"
+       },
+       {
+        "text": "36–45",
+        "value": "36-45"
+       },
+       {
+        "text": "46–55",
+        "value": "46-55"
+       },
+       {
+        "text": "56–65",
+        "value": "56-65"
+       },
+       {
+        "text": "Over 65",
+        "value": "65+"
+       }
+      ]
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ]
+     },
+     {
+      "name": "occupation",
+      "type": "radiogroup",
+      "title": "Occupation",
+      "choices": [
+       {
+        "text": "Student",
+        "value": "student"
+       },
+       {
+        "text": "White-collar worker",
+        "value": "white_collar"
+       },
+       {
+        "text": "Freelancer",
+        "value": "freelancer"
+       },
+       {
+        "text": "Engineer",
+        "value": "engineer"
+       },
+       {
+        "text": "Educator",
+        "value": "educator"
+       },
+       {
+        "text": "Other",
+        "value": "other"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "title": "Which Place Looks Safer? (Osaka, human anchor set)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-e1107ba2c7dbd334",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Which Place Looks Safer? (Osaka, human anchor set)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Which Place Looks Safer? (Osaka, human anchor set)\",\n    \"description\": \"Pairs of Osaka street views: pick the one that looks safer, or say they cannot be compared. Safety criteria are shown first. Rebuilt from Zhang, Li, Fukuda & Wang (2025), who used these human votes as the anchor set for testing multimodal LLMs.\",\n    \"locale\": \"en\",\n    \"pages\": [\n      { \"name\": \"intro\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"I agree to take part. My answers are recorded anonymously for research.\", \"isRequired\": true, \"labelTrue\": \"I agree\", \"labelFalse\": \"I do not agree\" }\n      ]},\n      { \"name\": \"comparisons\", \"elements\": [\n        { \"type\": \"imagepicker\", \"name\": \"safer\", \"title\": \"Which place looks safer?\",\n          \"description\": \"Use the safety criteria if you are unsure. If you really cannot judge, choose “Cannot compare”.\",\n          \"imageCount\": 2, \"trialCount\": 30, \"allowTie\": true, \"tieLabel\": \"Cannot compare\",\n          \"imageFit\": \"cover\", \"isRequired\": true, \"choices\": [],\n          \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true,\n          \"mediaFolders\": [\"osaka\"] }\n      ]},\n      { \"name\": \"about_you\", \"elements\": [\n        { \"type\": \"radiogroup\", \"name\": \"age_group\", \"title\": \"Age\", \"choices\": [\n          { \"value\": \"18-25\", \"text\": \"18–25\" }, { \"value\": \"26-35\", \"text\": \"26–35\" }, { \"value\": \"36-45\", \"text\": \"36–45\" },\n          { \"value\": \"46-55\", \"text\": \"46–55\" }, { \"value\": \"56-65\", \"text\": \"56–65\" }, { \"value\": \"65+\", \"text\": \"Over 65\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"gender\", \"title\": \"Gender\", \"choices\": [\n          { \"value\": \"female\", \"text\": \"Female\" }, { \"value\": \"male\", \"text\": \"Male\" }, { \"value\": \"other\", \"text\": \"Other / prefer not to say\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"occupation\", \"title\": \"Occupation\", \"choices\": [\n          { \"value\": \"student\", \"text\": \"Student\" }, { \"value\": \"white_collar\", \"text\": \"White-collar worker\" },\n          { \"value\": \"freelancer\", \"text\": \"Freelancer\" }, { \"value\": \"engineer\", \"text\": \"Engineer\" },\n          { \"value\": \"educator\", \"text\": \"Educator\" }, { \"value\": \"other\", \"text\": \"Other\" } ] }\n      ]}\n    ]\n  }\n}\n</script>\n<style>\n:root{--bg:#f6f6f4;--card:#fff;--ink:#1e2124;--muted:#5b6168;--accent:#2b5c8a;--accent-ink:#fff;--line:#dfe2e5;--safe:#e8f3ec;--danger:#fbeceb}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:24px 16px 40px}\nh1{font-size:1.5rem;margin:0 0 8px}h2{font-size:1.05rem;margin:0 0 6px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.crit{display:grid;grid-template-columns:1fr 1fr;gap:12px}.crit>div{border-radius:10px;padding:12px 14px}.crit ul{margin:0;padding-left:18px;font-size:.92rem}\n.crit .s{background:var(--safe)}.crit .d{background:var(--danger)}\ndetails.crit-mini{margin:10px 0}details.crit-mini summary{cursor:pointer;color:var(--accent)}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:8px 0 14px}.progress>i{display:block;height:100%;background:var(--accent);transition:width .25s}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:#000;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair,.crit{grid-template-columns:1fr}.pick{aspect-ratio:16/10}h1{font-size:1.3rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Osaka, Google Street View, 2018–2026 (© Google).</footer>\n<script>\n(function(){\n  var SAFE=['Areas with high pedestrian activity, such as commercial buildings or residential zones','Public service facilities, including police stations and hospitals','Well-maintained and organized street trees','Sidewalks that are clean and in good repair','Active and clean downtown roads','Clearly marked and easily accessible public transport stops','Clear and visible road signs and directions','Well-maintained street decorations or public spaces','Presence of well-maintained greenery and parks'];\n  var DANGER=['Buildings that are damaged or abandoned','Walls that are blocked or in disrepair','Remote rural or suburban roads with little traffic','Areas where garbage is piled up or the environment is neglected','Active construction sites with insufficient safety measures','Areas lacking sufficient traffic lights','Complex and confusing traffic systems','High traffic areas with disorganized vehicle and pedestrian flow','Open land that is desolate and uninhabited','Narrow, enclosed spaces','Long and narrow roads or tunnels with poor visibility'];\n  var app=document.getElementById('app'), Q={}, i=0, done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(msg){var e=app.querySelector('.err'); if(e) e.textContent=msg||'';}\n  function li(a){return a.map(function(t){return '<li>'+esc(t)+'</li>';}).join('');}\n  function criteria(){return '<div class=\"crit\"><div class=\"s\"><h2>Looks safe</h2><ul>'+li(SAFE)+'</ul></div><div class=\"d\"><h2>Looks dangerous</h2><ul>'+li(DANGER)+'</ul></div></div>';}\n  function choicesOf(k){var t=Q.safer.trials&&Q.safer.trials[k];return (t&&t.choices)||Q.safer.choices||[];}\n  function mediaOf(k){var t=Q.safer.trials&&Q.safer.trials[k];return (t&&t.media)||Q.safer.media||[];}\n  function tieText(){var t=choicesOf(0).find(function(c){return c.tie;});return t?t.text:'Cannot compare';}\n  function firstOpen(){for(var k=0;k<Q.safer.trialCount;k++){if(!done[k])return k;}return Q.safer.trialCount;}\n  function intro(){\n    app.innerHTML='<h1>Which place looks safer?</h1>'+\n      '<p>You will see '+Q.safer.trialCount+' pairs of street views from Osaka. For each pair, click the place that looks <b>safer</b>. If you really cannot judge, choose “'+esc(tieText())+'”. It takes about 5 minutes.</p>'+\n      '<div class=\"card\"><p>Please read these basic safety criteria first. They are a guide, not a checklist.</p>'+criteria()+'</div>'+\n      '<div class=\"card\"><p>'+esc(Q.consent.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(Q.consent.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);i=firstOpen();trial();});};\n  }\n  function trial(){\n    if(i>=Q.safer.trialCount) return about();\n    var ch=choicesOf(i), imgs=ch.filter(function(c){return !c.tie;}), tie=ch.find(function(c){return c.tie;}), media=mediaOf(i);\n    var html='<h1>'+esc(Q.safer.title)+'</h1><p>Pair '+(i+1)+' of '+Q.safer.trialCount+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/Q.safer.trialCount)+'%\"></i></div><div class=\"pair\">';\n    imgs.forEach(function(c,k){var src=c.imageUrl||(media[k]&&media[k].url)||'';\n      html+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Place '+(k===0?'A':'B')+' looks safer\"><img src=\"'+esc(src)+'\" alt=\"Street view '+(k===0?'A':'B')+'\"><span>'+(k===0?'A':'B')+'</span></button>';});\n    html+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'')+\n      '<details class=\"crit-mini\"><summary>Show the safety criteria</summary>'+criteria()+'</details>'+\n      (i>0?'<div class=\"row\"><button class=\"btn ghost\" id=\"back\">Back</button></div>':'')+'<div class=\"err\"></div>';\n    app.innerHTML=html;\n    app.querySelectorAll('[data-v]').forEach(function(b){b.onclick=function(){\n      var k=i; app.querySelectorAll('[data-v]').forEach(function(x){x.disabled=true;});\n      SPSite.answer('safer',b.getAttribute('data-v'),{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);app.querySelectorAll('[data-v]').forEach(function(x){x.disabled=false;});return;}\n        done[k]=true;i=k+1;trial();});};});\n    var back=document.getElementById('back'); if(back) back.onclick=function(){i-=1;trial();};\n    window.scrollTo(0,0);\n  }\n  function radios(q){return '<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+q.name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function about(){\n    app.innerHTML='<h1>About you</h1><p>Optional, used only to describe the sample.</p><div class=\"card\">'+radios(Q.age_group)+radios(Q.gender)+radios(Q.occupation)+\n      '<div class=\"row\"><button class=\"btn\" id=\"finish\">Finish</button></div><div class=\"err\"></div></div>';\n    ['age_group','gender','occupation'].forEach(function(n){app.querySelectorAll('input[name='+n+']').forEach(function(r){r.onchange=function(){SPSite.answer(n,r.value).then(function(x){if(x&&x.ok===false)err(x.error);});};});});\n    document.getElementById('finish').onclick=function(){var btn=this;btn.disabled=true;err('Submitting…');\n      SPSite.complete().then(function(r){if(r&&r.ok===false){btn.disabled=false;err(r.error||('Please answer: '+(r.missing||[]).join(', ')));var m=r.missing||[];if(m.indexOf('consent')>=0)intro();else if(m.indexOf('safer')>=0){i=firstOpen();trial();}}});};\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','safer','age_group','gender','occupation'].forEach(function(n){Q[n]=SPSite.getQuestion(n);});\n    var a=(ctx&&ctx.answers)||{}, p=a.safer, list=p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);\n    list.forEach(function(t,k){var v=t&&typeof t==='object'?t.value:t;if(v!=null&&v!=='')done[k]=true;});\n    if(a.consent===true){i=firstOpen();trial();}else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-26T09:37:14.412Z",
+   "mediaFolders": [
+    "osaka"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-26T09:37:14.412Z"
+  },
+  "description": "Pairs of Osaka street views: pick the one that looks safer, or say they cannot be compared. Safety criteria are shown first. Rebuilt from Zhang, Li, Fukuda & Wang (2025), who used these human votes as the anchor set for testing multimodal LLMs.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_01__b05d409e-fac4-431e-888b-af2be0442ac3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_01__b05d409e-fac4-431e-888b-af2be0442ac3.jpg",
+   "name": "osaka_01.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_01__b05d409e-fac4-431e-888b-af2be0442ac3.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 153539,
+   "uploaded_bytes": 153539,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_02__ba12e876-6180-4a3e-bdd8-d53e39e63002.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_02__ba12e876-6180-4a3e-bdd8-d53e39e63002.jpg",
+   "name": "osaka_02.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_02__ba12e876-6180-4a3e-bdd8-d53e39e63002.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 157146,
+   "uploaded_bytes": 157146,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_04__c58ea808-38db-4e21-a45c-55cb62dfe362.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_04__c58ea808-38db-4e21-a45c-55cb62dfe362.jpg",
+   "name": "osaka_04.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_04__c58ea808-38db-4e21-a45c-55cb62dfe362.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 163246,
+   "uploaded_bytes": 163246,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_05__502ba15b-bc8c-4fe8-bd4f-674dbde6dbd3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_05__502ba15b-bc8c-4fe8-bd4f-674dbde6dbd3.jpg",
+   "name": "osaka_05.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_05__502ba15b-bc8c-4fe8-bd4f-674dbde6dbd3.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 138292,
+   "uploaded_bytes": 138292,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_06__b2cfbe5d-c259-4f38-a2e7-af9c53386832.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_06__b2cfbe5d-c259-4f38-a2e7-af9c53386832.jpg",
+   "name": "osaka_06.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_06__b2cfbe5d-c259-4f38-a2e7-af9c53386832.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 163259,
+   "uploaded_bytes": 163259,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_07__cf24ccde-5518-4059-aac8-fb871b30796d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_07__cf24ccde-5518-4059-aac8-fb871b30796d.jpg",
+   "name": "osaka_07.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_07__cf24ccde-5518-4059-aac8-fb871b30796d.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 143874,
+   "uploaded_bytes": 143874,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_08__7db75c57-3736-48ed-943d-7afbbc3acce1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_08__7db75c57-3736-48ed-943d-7afbbc3acce1.jpg",
+   "name": "osaka_08.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_08__7db75c57-3736-48ed-943d-7afbbc3acce1.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 150702,
+   "uploaded_bytes": 150702,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_09__d66ef296-c0a5-429f-abcd-6cbedde16956.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_09__d66ef296-c0a5-429f-abcd-6cbedde16956.jpg",
+   "name": "osaka_09.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_09__d66ef296-c0a5-429f-abcd-6cbedde16956.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 155703,
+   "uploaded_bytes": 155703,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_10__70ce2a97-bd5c-4cb4-8344-23ad12c6d905.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_10__70ce2a97-bd5c-4cb4-8344-23ad12c6d905.jpg",
+   "name": "osaka_10.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_10__70ce2a97-bd5c-4cb4-8344-23ad12c6d905.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 167619,
+   "uploaded_bytes": 167619,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_11__569acfe1-2a98-4ddc-9ace-465100a341a9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_11__569acfe1-2a98-4ddc-9ace-465100a341a9.jpg",
+   "name": "osaka_11.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_11__569acfe1-2a98-4ddc-9ace-465100a341a9.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 143631,
+   "uploaded_bytes": 143631,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_12__e7019f81-3406-4dd7-97bc-db2ce7e44c72.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_12__e7019f81-3406-4dd7-97bc-db2ce7e44c72.jpg",
+   "name": "osaka_12.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_12__e7019f81-3406-4dd7-97bc-db2ce7e44c72.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 160085,
+   "uploaded_bytes": 160085,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_13__ece6692e-0552-4ff8-961c-c30ba7308510.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_13__ece6692e-0552-4ff8-961c-c30ba7308510.jpg",
+   "name": "osaka_13.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_13__ece6692e-0552-4ff8-961c-c30ba7308510.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 173095,
+   "uploaded_bytes": 173095,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_14__4e3c9b34-62c4-40a5-b1b2-0caf3b1c3f1c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_14__4e3c9b34-62c4-40a5-b1b2-0caf3b1c3f1c.jpg",
+   "name": "osaka_14.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_14__4e3c9b34-62c4-40a5-b1b2-0caf3b1c3f1c.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 135790,
+   "uploaded_bytes": 135790,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_16__fc4338bb-43fe-4f1e-833c-baf85575f0e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_16__fc4338bb-43fe-4f1e-833c-baf85575f0e7.jpg",
+   "name": "osaka_16.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_16__fc4338bb-43fe-4f1e-833c-baf85575f0e7.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 161908,
+   "uploaded_bytes": 161908,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_17__fa29d9c9-bf51-4c80-8fc3-64415688419c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_17__fa29d9c9-bf51-4c80-8fc3-64415688419c.jpg",
+   "name": "osaka_17.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_17__fa29d9c9-bf51-4c80-8fc3-64415688419c.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 160240,
+   "uploaded_bytes": 160240,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_18__9c720d89-afd4-4fa7-845b-cc207f844a5e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_18__9c720d89-afd4-4fa7-845b-cc207f844a5e.jpg",
+   "name": "osaka_18.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_18__9c720d89-afd4-4fa7-845b-cc207f844a5e.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 144906,
+   "uploaded_bytes": 144906,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_19__beb79551-f70a-4399-8ec5-9df94b5feaa9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_19__beb79551-f70a-4399-8ec5-9df94b5feaa9.jpg",
+   "name": "osaka_19.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_19__beb79551-f70a-4399-8ec5-9df94b5feaa9.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 156058,
+   "uploaded_bytes": 156058,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_21__116bb0e8-039f-49b5-b799-bddbf5f3ad67.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_21__116bb0e8-039f-49b5-b799-bddbf5f3ad67.jpg",
+   "name": "osaka_21.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_21__116bb0e8-039f-49b5-b799-bddbf5f3ad67.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 138605,
+   "uploaded_bytes": 138605,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_22__0d03f694-ed2c-48a2-9cf0-d7d86da58d94.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_22__0d03f694-ed2c-48a2-9cf0-d7d86da58d94.jpg",
+   "name": "osaka_22.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_22__0d03f694-ed2c-48a2-9cf0-d7d86da58d94.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 135269,
+   "uploaded_bytes": 135269,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_23__144c4cb8-9925-4558-83a5-28c64994c61f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_23__144c4cb8-9925-4558-83a5-28c64994c61f.jpg",
+   "name": "osaka_23.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_23__144c4cb8-9925-4558-83a5-28c64994c61f.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 184320,
+   "uploaded_bytes": 184320,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_24__afb4f8ec-179d-4c2a-a523-ac60e2990578.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_24__afb4f8ec-179d-4c2a-a523-ac60e2990578.jpg",
+   "name": "osaka_24.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_24__afb4f8ec-179d-4c2a-a523-ac60e2990578.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 179114,
+   "uploaded_bytes": 179114,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_25__d95f04db-4223-47fd-993e-6083c2a7f8bd.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_25__d95f04db-4223-47fd-993e-6083c2a7f8bd.jpg",
+   "name": "osaka_25.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_25__d95f04db-4223-47fd-993e-6083c2a7f8bd.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 140366,
+   "uploaded_bytes": 140366,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_26__a66cf04c-0b1e-4a6e-b872-f62430c09837.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_26__a66cf04c-0b1e-4a6e-b872-f62430c09837.jpg",
+   "name": "osaka_26.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_26__a66cf04c-0b1e-4a6e-b872-f62430c09837.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 180508,
+   "uploaded_bytes": 180508,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_27__b564e7fa-ea8b-4684-9e7b-d71360ca10ec.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_27__b564e7fa-ea8b-4684-9e7b-d71360ca10ec.jpg",
+   "name": "osaka_27.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_27__b564e7fa-ea8b-4684-9e7b-d71360ca10ec.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 145875,
+   "uploaded_bytes": 145875,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_28__2cfe573a-1f73-4314-91f8-7e75eed13c20.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_28__2cfe573a-1f73-4314-91f8-7e75eed13c20.jpg",
+   "name": "osaka_28.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_28__2cfe573a-1f73-4314-91f8-7e75eed13c20.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 168289,
+   "uploaded_bytes": 168289,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_29__359347fa-4675-40ea-86fc-39935830dcfe.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_29__359347fa-4675-40ea-86fc-39935830dcfe.jpg",
+   "name": "osaka_29.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_29__359347fa-4675-40ea-86fc-39935830dcfe.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 182621,
+   "uploaded_bytes": 182621,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_30__10871342-f5d3-49b4-ba28-053db40f6bbe.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_30__10871342-f5d3-49b4-ba28-053db40f6bbe.jpg",
+   "name": "osaka_30.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_30__10871342-f5d3-49b4-ba28-053db40f6bbe.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 163797,
+   "uploaded_bytes": 163797,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_31__ded5e04d-7be2-4a8e-a14f-c0511c114d3b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_31__ded5e04d-7be2-4a8e-a14f-c0511c114d3b.jpg",
+   "name": "osaka_31.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_31__ded5e04d-7be2-4a8e-a14f-c0511c114d3b.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 170833,
+   "uploaded_bytes": 170833,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_32__1f93c346-c618-45a0-9301-d5853f7561f4.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_32__1f93c346-c618-45a0-9301-d5853f7561f4.jpg",
+   "name": "osaka_32.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_32__1f93c346-c618-45a0-9301-d5853f7561f4.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 168420,
+   "uploaded_bytes": 168420,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_33__8ec10540-3b4c-4da9-bf37-a10958adecbc.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_33__8ec10540-3b4c-4da9-bf37-a10958adecbc.jpg",
+   "name": "osaka_33.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_33__8ec10540-3b4c-4da9-bf37-a10958adecbc.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 171682,
+   "uploaded_bytes": 171682,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_34__358649f2-096a-4990-9bee-29615393e510.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_34__358649f2-096a-4990-9bee-29615393e510.jpg",
+   "name": "osaka_34.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_34__358649f2-096a-4990-9bee-29615393e510.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 164243,
+   "uploaded_bytes": 164243,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_35__f941f651-fdec-4a4b-9117-7cfc29eb225d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_35__f941f651-fdec-4a4b-9117-7cfc29eb225d.jpg",
+   "name": "osaka_35.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_35__f941f651-fdec-4a4b-9117-7cfc29eb225d.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 163189,
+   "uploaded_bytes": 163189,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_36__fec04a7b-775f-4972-9df7-6b68a4da06cf.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_36__fec04a7b-775f-4972-9df7-6b68a4da06cf.jpg",
+   "name": "osaka_36.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_36__fec04a7b-775f-4972-9df7-6b68a4da06cf.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 161472,
+   "uploaded_bytes": 161472,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_37__7117337b-439c-4b1c-a4f7-8ae9424d7592.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_37__7117337b-439c-4b1c-a4f7-8ae9424d7592.jpg",
+   "name": "osaka_37.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_37__7117337b-439c-4b1c-a4f7-8ae9424d7592.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 167331,
+   "uploaded_bytes": 167331,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_38__509f6620-3902-4b0f-ac61-29cf66e678b2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_38__509f6620-3902-4b0f-ac61-29cf66e678b2.jpg",
+   "name": "osaka_38.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_38__509f6620-3902-4b0f-ac61-29cf66e678b2.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 152501,
+   "uploaded_bytes": 152501,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_39__a19f40f6-cc1c-4e5a-a63e-e5b229aa03f0.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_39__a19f40f6-cc1c-4e5a-a63e-e5b229aa03f0.jpg",
+   "name": "osaka_39.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_39__a19f40f6-cc1c-4e5a-a63e-e5b229aa03f0.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 158613,
+   "uploaded_bytes": 158613,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_41__a56a2035-7a79-484a-ad97-ae4953ab2cfe.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_41__a56a2035-7a79-484a-ad97-ae4953ab2cfe.jpg",
+   "name": "osaka_41.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_41__a56a2035-7a79-484a-ad97-ae4953ab2cfe.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 187988,
+   "uploaded_bytes": 187988,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_42__e5131d81-469f-4b4a-9e0e-e377ddbf3834.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_42__e5131d81-469f-4b4a-9e0e-e377ddbf3834.jpg",
+   "name": "osaka_42.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_42__e5131d81-469f-4b4a-9e0e-e377ddbf3834.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 173241,
+   "uploaded_bytes": 173241,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_43__76c2f3d8-ebcf-433e-8c80-4db5605e1c1a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_43__76c2f3d8-ebcf-433e-8c80-4db5605e1c1a.jpg",
+   "name": "osaka_43.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_43__76c2f3d8-ebcf-433e-8c80-4db5605e1c1a.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 160230,
+   "uploaded_bytes": 160230,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_44__4149b12b-efcd-4638-b76f-99da424becfa.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_44__4149b12b-efcd-4638-b76f-99da424becfa.jpg",
+   "name": "osaka_44.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_44__4149b12b-efcd-4638-b76f-99da424becfa.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 158750,
+   "uploaded_bytes": 158750,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_45__ce3a6738-0fa3-4ed6-9f37-51fb67fb7f61.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_45__ce3a6738-0fa3-4ed6-9f37-51fb67fb7f61.jpg",
+   "name": "osaka_45.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_45__ce3a6738-0fa3-4ed6-9f37-51fb67fb7f61.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 132714,
+   "uploaded_bytes": 132714,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_46__054503b6-0b42-4a7c-97db-11985ce96025.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_46__054503b6-0b42-4a7c-97db-11985ce96025.jpg",
+   "name": "osaka_46.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_46__054503b6-0b42-4a7c-97db-11985ce96025.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 147093,
+   "uploaded_bytes": 147093,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_47__8cc115aa-2a05-4cf4-ae0e-056b6ab0f9cc.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_47__8cc115aa-2a05-4cf4-ae0e-056b6ab0f9cc.jpg",
+   "name": "osaka_47.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_47__8cc115aa-2a05-4cf4-ae0e-056b6ab0f9cc.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 175094,
+   "uploaded_bytes": 175094,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_48__ddce3e07-171f-48e9-ba63-fd3cb60c506d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_48__ddce3e07-171f-48e9-ba63-fd3cb60c506d.jpg",
+   "name": "osaka_48.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_48__ddce3e07-171f-48e9-ba63-fd3cb60c506d.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 155372,
+   "uploaded_bytes": 155372,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_49__d3ec8195-552a-4ff0-8e4e-4fd92753287e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_49__d3ec8195-552a-4ff0-8e4e-4fd92753287e.jpg",
+   "name": "osaka_49.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_49__d3ec8195-552a-4ff0-8e4e-4fd92753287e.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 145505,
+   "uploaded_bytes": 145505,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_50__176a897e-8453-40d2-8580-442dadd9d145.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_50__176a897e-8453-40d2-8580-442dadd9d145.jpg",
+   "name": "osaka_50.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_50__176a897e-8453-40d2-8580-442dadd9d145.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 155798,
+   "uploaded_bytes": 155798,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_52__072cc0be-9a79-4ad5-b32a-74fb29d6a29f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_52__072cc0be-9a79-4ad5-b32a-74fb29d6a29f.jpg",
+   "name": "osaka_52.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_52__072cc0be-9a79-4ad5-b32a-74fb29d6a29f.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 164549,
+   "uploaded_bytes": 164549,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_53__13616540-69de-42d4-a75b-279398351bb1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_53__13616540-69de-42d4-a75b-279398351bb1.jpg",
+   "name": "osaka_53.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_53__13616540-69de-42d4-a75b-279398351bb1.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 156175,
+   "uploaded_bytes": 156175,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_54__95d999ed-d2cc-43df-85eb-db7bc2c0ee82.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_54__95d999ed-d2cc-43df-85eb-db7bc2c0ee82.jpg",
+   "name": "osaka_54.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_54__95d999ed-d2cc-43df-85eb-db7bc2c0ee82.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 170300,
+   "uploaded_bytes": 170300,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_55__d06eb5e5-f0b9-4a73-a82c-c78119252e2d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_55__d06eb5e5-f0b9-4a73-a82c-c78119252e2d.jpg",
+   "name": "osaka_55.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_55__d06eb5e5-f0b9-4a73-a82c-c78119252e2d.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 163447,
+   "uploaded_bytes": 163447,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_56__190f83c0-024f-443e-8341-5eff7de1b108.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_56__190f83c0-024f-443e-8341-5eff7de1b108.jpg",
+   "name": "osaka_56.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_56__190f83c0-024f-443e-8341-5eff7de1b108.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 181734,
+   "uploaded_bytes": 181734,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_57__2bf6ca02-766e-422d-be6e-00aa8ed73635.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_57__2bf6ca02-766e-422d-be6e-00aa8ed73635.jpg",
+   "name": "osaka_57.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_57__2bf6ca02-766e-422d-be6e-00aa8ed73635.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 174770,
+   "uploaded_bytes": 174770,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_58__6109a064-80aa-420d-a08e-54f7c4578d66.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_58__6109a064-80aa-420d-a08e-54f7c4578d66.jpg",
+   "name": "osaka_58.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_58__6109a064-80aa-420d-a08e-54f7c4578d66.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 143479,
+   "uploaded_bytes": 143479,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_59__57c8b66d-f4a9-43cb-bd59-f7a878358c09.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_59__57c8b66d-f4a9-43cb-bd59-f7a878358c09.jpg",
+   "name": "osaka_59.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_59__57c8b66d-f4a9-43cb-bd59-f7a878358c09.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 139623,
+   "uploaded_bytes": 139623,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_60__eac19450-2523-4c31-9406-f4ed944c3d0e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_60__eac19450-2523-4c31-9406-f4ed944c3d0e.jpg",
+   "name": "osaka_60.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_60__eac19450-2523-4c31-9406-f4ed944c3d0e.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 170590,
+   "uploaded_bytes": 170590,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_61__bf73a71c-cebd-466c-8d52-5d3b32d54d8d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_61__bf73a71c-cebd-466c-8d52-5d3b32d54d8d.jpg",
+   "name": "osaka_61.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_61__bf73a71c-cebd-466c-8d52-5d3b32d54d8d.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 155154,
+   "uploaded_bytes": 155154,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_62__aa848630-3e7e-4bb3-9f7c-277d100965ef.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_62__aa848630-3e7e-4bb3-9f7c-277d100965ef.jpg",
+   "name": "osaka_62.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_62__aa848630-3e7e-4bb3-9f7c-277d100965ef.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 157889,
+   "uploaded_bytes": 157889,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_63__b187a4a5-22ae-4e7a-9cab-93abe0a7a903.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_63__b187a4a5-22ae-4e7a-9cab-93abe0a7a903.jpg",
+   "name": "osaka_63.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_63__b187a4a5-22ae-4e7a-9cab-93abe0a7a903.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 182411,
+   "uploaded_bytes": 182411,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_64__287c61ee-eb1c-43ac-97b1-48eeafec7e84.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_64__287c61ee-eb1c-43ac-97b1-48eeafec7e84.jpg",
+   "name": "osaka_64.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_64__287c61ee-eb1c-43ac-97b1-48eeafec7e84.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 174696,
+   "uploaded_bytes": 174696,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_65__af2b8e5f-bff3-4f21-8413-92ed7e937bb6.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_65__af2b8e5f-bff3-4f21-8413-92ed7e937bb6.jpg",
+   "name": "osaka_65.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_65__af2b8e5f-bff3-4f21-8413-92ed7e937bb6.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 178123,
+   "uploaded_bytes": 178123,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_66__aed6e195-b0c3-46f7-b31f-7e668bb36902.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_66__aed6e195-b0c3-46f7-b31f-7e668bb36902.jpg",
+   "name": "osaka_66.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_66__aed6e195-b0c3-46f7-b31f-7e668bb36902.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 151455,
+   "uploaded_bytes": 151455,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_68__efb931a4-e933-471c-8984-bb20ab7c0310.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_68__efb931a4-e933-471c-8984-bb20ab7c0310.jpg",
+   "name": "osaka_68.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_68__efb931a4-e933-471c-8984-bb20ab7c0310.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 136220,
+   "uploaded_bytes": 136220,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_69__9cec007f-4cf3-4625-b00f-506b5637ac7b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_69__9cec007f-4cf3-4625-b00f-506b5637ac7b.jpg",
+   "name": "osaka_69.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_69__9cec007f-4cf3-4625-b00f-506b5637ac7b.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 127900,
+   "uploaded_bytes": 127900,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-which/osaka/osaka_70__bca50c8d-f0ec-49c4-93b6-ad9d1cb0c91d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-which/osaka/osaka_70__bca50c8d-f0ec-49c4-93b6-ad9d1cb0c91d.jpg",
+   "name": "osaka_70.jpg",
+   "type": "image",
+   "folder": "osaka",
+   "media_id": "templates/2025-zhang-which/osaka/osaka_70__bca50c8d-f0ec-49c4-93b6-ad9d1cb0c91d.jpg",
+   "logicalFolder": "osaka",
+   "original_bytes": 157328,
+   "uploaded_bytes": 157328,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Urban safety perception assessments via integrating multimodal large language models with street view images",
+  "authors": [
+   "Jiaxin Zhang",
+   "Yunqin Li",
+   "Tomohiro Fukuda",
+   "Bowen Wang"
+  ],
+  "year": 2025,
+  "venue": "Cities",
+  "doi": "10.1016/j.cities.2025.106122",
+  "url": "https://doi.org/10.1016/j.cities.2025.106122"
+ }
+}

@@ -1,0 +1,2639 @@
+{
+ "id": "2025-ahmed-nature",
+ "name": "Nature Sounds Through a Landline (Ahmed et al. 2025): degraded sounds, n-back and restoration",
+ "description": "Faithful replication of Ahmed, Van Hedger, Berman & Van Hedger (2025), \"Listening through a landline: Using degraded sounds to examine the relationship between cognitive restoration and preference\", Journal of Environmental Psychology 104, 102608 (doi:10.1016/j.jenvp.2025.102608; preprint \"Perceptually degraded experiences with nature are liked less but still restorative\", PsyArXiv knvy8). Rebuilt from the authors' own jsPsych script, instructions and sounds on OSF 5urta (osf.io/5urta). The OSF project gives no licence; the materials are used with credit and the template will be taken down if the authors object.\n\nWhat participants do (about 40 minutes, computer with keyboard, headphones recommended): consent; volume calibration with a 5-s noise and the 6-trial Woods et al. (2017) headphone check; auditory n-back with spoken letters every 2.5 s (1-back practice, then 2-back ×2 and 3-back ×2; ← = match, → = no match; 10 targets and 20 non-targets per run) and a fatigue rating (1–5); five mood sliders (happy, sad, calm, anxious, lonely, 0–100, one per screen); an unannounced spoken attention check (\"car\"); random assignment to one of four sets of 40 fourteen-second recordings: unaltered nature (N01), degraded nature (N02, 400–2500 Hz band-pass like a landline phone), unaltered urban (U01) or degraded urban (U02); after each recording they rate liking, sound quality and urban-vs-natural (1–5, number keys or buttons); then mood sliders, n-back and fatigue again; Perceived Restorativeness Scale (9 items + attention item \"moderately\") and Mental Bandwidth Scale (7 items + attention item \"extremely\") about the sounds; optional age, gender, education, hearing aid, health issues and a guess of the study's purpose; debriefing.\n\nData: sound_ratings is keyed by recording (e.g. N02_17; the same number is the same recording unaltered/degraded). nback_pre / nback_post keep every letter, response and RT plus a summary with hits, false alarms, timeouts and d′ per level computed as in the authors' R script (log-linear correction, two runs pooled) and the share of letters answered. Analysis as in the paper: exclude failed attention checks (auditory, PRS_ATTN ≠ 3, MBS_ATTN ≠ 5), hearing-aid users and people who answered < 75 % of n-back letters; 2 (environment) × 2 (quality) ANOVAs on mean liking, quality and naturalness; ANCOVAs on post − pre change in 2-back/3-back d′ and fatigue with the pre score as covariate (with and without liking and affect change as covariates); MANOVA on PRS and MBS subscales.\n\nDifferences from the original study: (1) runs on SP-Survey instead of jsPsych 6.3 (same order, timing, wording and stimuli); (2) n-back letters converted from WAV to MP3 for the media library; (3) on-screen buttons are added next to the arrow and number keys so touch screens also work; (4) only the auditory attention check used in the shared script (attn1, \"car\") is included; the second check described in the paper (attn2.mp3) is left out because its answer words are not in the materials; (5) the Letter of Information and consent PDFs are summarised on the first page, there is no MTurk completion code, and the debriefing is shortened from the authors' letter; (6) PRS and MBS answers are stored as 1–5 (the jsPsych data used 0–4).",
+ "author": "Ahmed, Van Hedger, Berman & Van Hedger",
+ "year": "2025",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "audio",
+  "soundscape",
+  "restoration",
+  "n-back",
+  "working memory",
+  "PRS",
+  "nature sounds",
+  "source:paper",
+  "modality:audio",
+  "task:multi_rating",
+  "task:questionnaire",
+  "task:custom_page",
+  "concept:soundscape",
+  "concept:restoration",
+  "concept:naturalness",
+  "concept:preference",
+  "concept:emotion",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:United States"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1016/j.jenvp.2025.102608",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T06:33:40.643+00:00",
+ "updatedAt": "2026-11-27T06:33:57.143+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I have read the Letter of Information, have had the nature of the study explained to me, and I agree to participate.",
+      "labelTrue": "Yes",
+      "isRequired": true,
+      "labelFalse": "No"
+     },
+     {
+      "name": "headphone",
+      "type": "custom",
+      "title": "Volume calibration and headphone check",
+      "isRequired": true,
+      "description": "{ volume_plays, trials: [{ file, correct, answer, ok }], score } — Woods et al. (2017) loudness task, 6 trials in random order: which of three 200-Hz tones was quietest (one is in anti-phase). score 5–6 = likely headphones (not required)."
+     }
+    ]
+   },
+   {
+    "name": "pre",
+    "elements": [
+     {
+      "name": "nback_pre",
+      "type": "custom",
+      "title": "Auditory n-back (before)",
+      "isRequired": true,
+      "description": "{ runs: [{ n, letters, types, resp, rt }], summary } — auditory n-back as in the authors' jsPsych script: runs 1-back (practice), 2, 2, 3, 3-back; each run has n lead-in letters then 10 targets and 20 non-targets in random order, one spoken letter every 2500 ms; ← = match, → = no match. types F/T/NT, resp 'L' | 'R' | null (no key), rt in ms from letter onset. summary: hits, false alarms, misses, correct rejections and timeouts per level, d′ per level with the log-linear correction used in the paper's R script (psycho::dprime adjusted, 2 runs pooled = 20 targets / 40 non-targets), and responded = share of scored letters with any key (the authors excluded < 75 %)."
+     },
+     {
+      "name": "fatigue_pre",
+      "type": "radiogroup",
+      "title": "How fatigued are you feeling in the present moment?",
+      "choices": [
+       {
+        "text": "Very slightly or not at all",
+        "value": 1
+       },
+       {
+        "text": "A little",
+        "value": 2
+       },
+       {
+        "text": "Moderately",
+        "value": 3
+       },
+       {
+        "text": "Quite a bit",
+        "value": 4
+       },
+       {
+        "text": "Extremely",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "Self-reported mental fatigue, 1–5 (ANB_FATIGUE)."
+     },
+     {
+      "name": "vas_pre",
+      "type": "custom",
+      "title": "Mood (before)",
+      "isRequired": true,
+      "description": "{ happy, sad, calm, anxious, lonely } on 0–100 sliders (Not at all … Extremely), one term per screen in random order. Positive affect = mean of happy and calm; negative affect = mean of sad and anxious (post − pre)."
+     },
+     {
+      "name": "attn_audio",
+      "type": "custom",
+      "title": "Auditory attention check",
+      "isRequired": true,
+      "description": "{ answer, ok, rt } — an unannounced spoken prompt (attn1.mp3) asks to click one of five words (candle, club, car, carrot, candy); correct = car; 10-s limit (answer null when it runs out)."
+     }
+    ]
+   },
+   {
+    "name": "listening",
+    "elements": [
+     {
+      "name": "listening",
+      "type": "custom",
+      "title": "Sound condition",
+      "isRequired": true,
+      "description": "{ condition: 'NAT_REG' | 'NAT_MAN' | 'URB_REG' | 'URB_MAN', environment: 'nature' | 'urban', quality: 'unaltered' | 'degraded', order, minutes } — random assignment to one of the four folders (N01 unaltered nature, N02 degraded nature, U01 unaltered urban, U02 degraded urban; degraded = 400–2500 Hz band-pass)."
+     },
+     {
+      "name": "sound_ratings",
+      "type": "imageslidergroup",
+      "title": "Ratings of each 14-second recording",
+      "choices": [],
+      "scaleMax": 5,
+      "scaleMin": 1,
+      "dimensions": [
+       {
+        "id": "like",
+        "max": 5,
+        "min": 1,
+        "left": "strongly dislike",
+        "step": 1,
+        "label": "How much did you like the sound you just heard?",
+        "right": "strongly like"
+       },
+       {
+        "id": "quality",
+        "max": 5,
+        "min": 1,
+        "left": "low quality",
+        "step": 1,
+        "label": "Please rate the sound quality of the recording you just heard.",
+        "right": "high quality"
+       },
+       {
+        "id": "natural",
+        "max": 5,
+        "min": 1,
+        "left": "very urban",
+        "step": 1,
+        "label": "To what extent did the recording convey an urban (versus natural) setting?",
+        "right": "very natural"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "description": "40 recordings of the assigned folder, each once in random order; after each: like, sound quality, urban vs natural (1–5, keys or buttons). key = file name without .mp3 (e.g. N02_17; the same number is the same recording in N01/N02 and in U01/U02). 2 × 2 ANOVAs (environment × quality) on the participant means.",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "post",
+    "elements": [
+     {
+      "name": "vas_post",
+      "type": "custom",
+      "title": "Mood (after)",
+      "isRequired": true,
+      "description": "Same five sliders after the sounds."
+     },
+     {
+      "name": "nback_post",
+      "type": "custom",
+      "title": "Auditory n-back (after)",
+      "isRequired": true,
+      "description": "Same task again. Main outcome: post − pre change in 2-back and 3-back d′ and in fatigue, 2 × 2 ANCOVA with the pre score as covariate."
+     },
+     {
+      "name": "fatigue_post",
+      "type": "radiogroup",
+      "title": "How fatigued are you feeling in the present moment?",
+      "choices": [
+       {
+        "text": "Very slightly or not at all",
+        "value": 1
+       },
+       {
+        "text": "A little",
+        "value": 2
+       },
+       {
+        "text": "Moderately",
+        "value": 3
+       },
+       {
+        "text": "Quite a bit",
+        "value": 4
+       },
+       {
+        "text": "Extremely",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "Fatigue after the second n-back."
+     },
+     {
+      "name": "prs",
+      "rows": [
+       {
+        "text": "Listening to these sounds helped me get away from it all.",
+        "value": "PRS_A_01"
+       },
+       {
+        "text": "Listening to these sounds was an escape for me.",
+        "value": "PRS_A_02"
+       },
+       {
+        "text": "Listening to these sounds helped me get relief from unwanted demands on my attention.",
+        "value": "PRS_A_03"
+       },
+       {
+        "text": "These sounds sustained my interest.",
+        "value": "PRS_E_01"
+       },
+       {
+        "text": "These sounds had qualities that drew me further in.",
+        "value": "PRS_E_02"
+       },
+       {
+        "text": "Select 'moderately' for data quality purposes.",
+        "value": "PRS_ATTN"
+       },
+       {
+        "text": "Once each sound started, I easily got pulled in.",
+        "value": "PRS_E_03"
+       },
+       {
+        "text": "While listening to the sounds, my attention was drawn to many interesting things.",
+        "value": "PRS_F_01"
+       },
+       {
+        "text": "The sounds had many fascinating qualities.",
+        "value": "PRS_F_02"
+       },
+       {
+        "text": "Listening to these sounds was a captivating experience.",
+        "value": "PRS_F_03"
+       }
+      ],
+      "type": "matrix",
+      "title": "Please make your responses in reference to the longer sounds you rated in the middle of the study.",
+      "columns": [
+       {
+        "text": "very slightly or not at all",
+        "value": 1
+       },
+       {
+        "text": "a little",
+        "value": 2
+       },
+       {
+        "text": "moderately",
+        "value": 3
+       },
+       {
+        "text": "quite a bit",
+        "value": 4
+       },
+       {
+        "text": "extremely",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "Perceived Restorativeness Scale, 9 items (being away A, extent E, fascination F) + attention item PRS_ATTN (pass = 3, 'moderately'); 1–5 here (the jsPsych data stored 0–4). Items in random order."
+     },
+     {
+      "name": "mbs",
+      "rows": [
+       {
+        "text": "While listening to the sounds, to what degree were you aware of the things going on around you?",
+        "value": "MBS_SA_01"
+       },
+       {
+        "text": "While listening to the sounds, to what degree were you able to take note of your thoughts and feelings?",
+        "value": "MBS_SA_02"
+       },
+       {
+        "text": "While listening to the sounds, to what degree were you lost in thought?",
+        "value": "MBS_D_01"
+       },
+       {
+        "text": "While listening to the sounds, to what degree were you letting your mind wander?",
+        "value": "MBS_D_02"
+       },
+       {
+        "text": "Select 'extremely' for data quality purposes.",
+        "value": "MBS_ATTN"
+       },
+       {
+        "text": "While listening to the sounds, to what degree were you thinking about the things you need to do?",
+        "value": "MBS_P_01"
+       },
+       {
+        "text": "While listening to the sounds, to what degree were you making plans for the future?",
+        "value": "MBS_P_02"
+       },
+       {
+        "text": "While listening to the sounds, to what degree were you reflecting on things that happened in the past?",
+        "value": "MBS_P_03"
+       }
+      ],
+      "type": "matrix",
+      "title": "Please make your responses in reference to the longer sounds you rated in the middle of the study.",
+      "columns": [
+       {
+        "text": "very slightly or not at all",
+        "value": 1
+       },
+       {
+        "text": "a little",
+        "value": 2
+       },
+       {
+        "text": "moderately",
+        "value": 3
+       },
+       {
+        "text": "quite a bit",
+        "value": 4
+       },
+       {
+        "text": "extremely",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "Mental Bandwidth Scale, 7 items (self-awareness SA, daydreaming D, planning P) + attention item MBS_ATTN (pass = 5, 'extremely'); 1–5. PRS and MBS: 2 × 2 MANOVA. Items in random order."
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "max": 100,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "How old are you (in years)?",
+      "inputType": "number"
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "In terms of gender, I identify as...",
+      "choices": [
+       {
+        "text": "Female",
+        "value": 1
+       },
+       {
+        "text": "Male",
+        "value": 2
+       },
+       {
+        "text": "Non-Binary",
+        "value": 3
+       },
+       {
+        "text": "You do not have an option that describes me.",
+        "value": 4
+       }
+      ]
+     },
+     {
+      "name": "gender_other",
+      "type": "text",
+      "title": "Please briefly describe your gender identity if you wish."
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "My highest level of education is...",
+      "choices": [
+       {
+        "text": "Elementary school",
+        "value": 1
+       },
+       {
+        "text": "Less than Grade 12",
+        "value": 2
+       },
+       {
+        "text": "High school",
+        "value": 3
+       },
+       {
+        "text": "Some university undergraduate schooling",
+        "value": 4
+       },
+       {
+        "text": "College Degree (2 years)",
+        "value": 5
+       },
+       {
+        "text": "Bachelor's Degree",
+        "value": 6
+       },
+       {
+        "text": "Postgraduate Degree",
+        "value": 7
+       },
+       {
+        "text": "Other",
+        "value": 8
+       }
+      ]
+     },
+     {
+      "name": "education_other",
+      "type": "text",
+      "title": "Please briefly describe your highest education level."
+     },
+     {
+      "name": "hearing_aid",
+      "type": "radiogroup",
+      "title": "Do you wear a hearing aid?",
+      "choices": [
+       {
+        "text": "No",
+        "value": 1
+       },
+       {
+        "text": "Right Ear",
+        "value": 2
+       },
+       {
+        "text": "Left Ear",
+        "value": 3
+       },
+       {
+        "text": "Both Ears",
+        "value": 4
+       }
+      ],
+      "description": "The authors excluded hearing-aid users."
+     },
+     {
+      "name": "health",
+      "type": "comment",
+      "title": "If you think that we should know of any issues that may affect your responses in the study, please use the space provided below to clarify."
+     },
+     {
+      "name": "purpose",
+      "type": "comment",
+      "title": "In a sentence or two, please try to guess the purpose of the study."
+     }
+    ]
+   }
+  ],
+  "title": "Nature Sounds Through a Landline: Degraded Sounds and Restoration",
+  "locale": "en",
+  "spSite": {
+   "id": "site-eeca2035c419c909",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Nature Sounds Through a Landline: Degraded Sounds and Restoration</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Nature Sounds Through a Landline: Degraded Sounds and Restoration\",\n  \"description\": \"Faithful replication of Ahmed, Van Hedger, Berman & Van Hedger (2025), Journal of Environmental Psychology 104:102608, rebuilt from the authors' own jsPsych script and sounds (OSF 5urta). Participants calibrate volume and do a headphone check, then an auditory n-back (2- and 3-back), a fatigue rating and five mood sliders; they are randomly assigned to listen to 40 fourteen-second recordings that are nature or urban and unaltered or degraded (band-pass filtered like a landline telephone), rating each for liking, sound quality and naturalness; then mood, n-back and fatigue again, the Perceived Restorativeness Scale, the Mental Bandwidth Scale and demographics.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"N01\",\n   \"N02\",\n   \"U01\",\n   \"U02\",\n   \"letters\",\n   \"calib\",\n   \"attn\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I have read the Letter of Information, have had the nature of the study explained to me, and I agree to participate.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"Yes\",\n      \"labelFalse\": \"No\"\n     },\n     {\n      \"type\": \"custom\",\n      \"name\": \"headphone\",\n      \"title\": \"Volume calibration and headphone check\",\n      \"isRequired\": true,\n      \"description\": \"{ volume_plays, trials: [{ file, correct, answer, ok }], score } — Woods et al. (2017) loudness task, 6 trials in random order: which of three 200-Hz tones was quietest (one is in anti-phase). score 5–6 = likely headphones (not required).\"\n     }\n    ]\n   },\n   {\n    \"name\": \"pre\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"nback_pre\",\n      \"title\": \"Auditory n-back (before)\",\n      \"isRequired\": true,\n      \"description\": \"{ runs: [{ n, letters, types, resp, rt }], summary } — auditory n-back as in the authors' jsPsych script: runs 1-back (practice), 2, 2, 3, 3-back; each run has n lead-in letters then 10 targets and 20 non-targets in random order, one spoken letter every 2500 ms; ← = match, → = no match. types F/T/NT, resp 'L' | 'R' | null (no key), rt in ms from letter onset. summary: hits, false alarms, misses, correct rejections and timeouts per level, d′ per level with the log-linear correction used in the paper's R script (psycho::dprime adjusted, 2 runs pooled = 20 targets / 40 non-targets), and responded = share of scored letters with any key (the authors excluded < 75 %).\"\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"fatigue_pre\",\n      \"title\": \"How fatigued are you feeling in the present moment?\",\n      \"isRequired\": true,\n      \"description\": \"Self-reported mental fatigue, 1–5 (ANB_FATIGUE).\",\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Very slightly or not at all\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"A little\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Moderately\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Quite a bit\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Extremely\"\n       }\n      ]\n     },\n     {\n      \"type\": \"custom\",\n      \"name\": \"vas_pre\",\n      \"title\": \"Mood (before)\",\n      \"isRequired\": true,\n      \"description\": \"{ happy, sad, calm, anxious, lonely } on 0–100 sliders (Not at all … Extremely), one term per screen in random order. Positive affect = mean of happy and calm; negative affect = mean of sad and anxious (post − pre).\"\n     },\n     {\n      \"type\": \"custom\",\n      \"name\": \"attn_audio\",\n      \"title\": \"Auditory attention check\",\n      \"isRequired\": true,\n      \"description\": \"{ answer, ok, rt } — an unannounced spoken prompt (attn1.mp3) asks to click one of five words (candle, club, car, carrot, candy); correct = car; 10-s limit (answer null when it runs out).\"\n     }\n    ]\n   },\n   {\n    \"name\": \"listening\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"listening\",\n      \"title\": \"Sound condition\",\n      \"isRequired\": true,\n      \"description\": \"{ condition: 'NAT_REG' | 'NAT_MAN' | 'URB_REG' | 'URB_MAN', environment: 'nature' | 'urban', quality: 'unaltered' | 'degraded', order, minutes } — random assignment to one of the four folders (N01 unaltered nature, N02 degraded nature, U01 unaltered urban, U02 degraded urban; degraded = 400–2500 Hz band-pass).\"\n     },\n     {\n      \"type\": \"imageslidergroup\",\n      \"name\": \"sound_ratings\",\n      \"title\": \"Ratings of each 14-second recording\",\n      \"isRequired\": true,\n      \"imageCount\": 1,\n      \"scaleMin\": 1,\n      \"scaleMax\": 5,\n      \"description\": \"40 recordings of the assigned folder, each once in random order; after each: like, sound quality, urban vs natural (1–5, keys or buttons). key = file name without .mp3 (e.g. N02_17; the same number is the same recording in N01/N02 and in U01/U02). 2 × 2 ANOVAs (environment × quality) on the participant means.\",\n      \"dimensions\": [\n       {\n        \"id\": \"like\",\n        \"label\": \"How much did you like the sound you just heard?\",\n        \"left\": \"strongly dislike\",\n        \"right\": \"strongly like\",\n        \"min\": 1,\n        \"max\": 5,\n        \"step\": 1\n       },\n       {\n        \"id\": \"quality\",\n        \"label\": \"Please rate the sound quality of the recording you just heard.\",\n        \"left\": \"low quality\",\n        \"right\": \"high quality\",\n        \"min\": 1,\n        \"max\": 5,\n        \"step\": 1\n       },\n       {\n        \"id\": \"natural\",\n        \"label\": \"To what extent did the recording convey an urban (versus natural) setting?\",\n        \"left\": \"very urban\",\n        \"right\": \"very natural\",\n        \"min\": 1,\n        \"max\": 5,\n        \"step\": 1\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"post\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"vas_post\",\n      \"title\": \"Mood (after)\",\n      \"isRequired\": true,\n      \"description\": \"Same five sliders after the sounds.\"\n     },\n     {\n      \"type\": \"custom\",\n      \"name\": \"nback_post\",\n      \"title\": \"Auditory n-back (after)\",\n      \"isRequired\": true,\n      \"description\": \"Same task again. Main outcome: post − pre change in 2-back and 3-back d′ and in fatigue, 2 × 2 ANCOVA with the pre score as covariate.\"\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"fatigue_post\",\n      \"title\": \"How fatigued are you feeling in the present moment?\",\n      \"isRequired\": true,\n      \"description\": \"Fatigue after the second n-back.\",\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Very slightly or not at all\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"A little\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Moderately\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Quite a bit\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Extremely\"\n       }\n      ]\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"prs\",\n      \"title\": \"Please make your responses in reference to the longer sounds you rated in the middle of the study.\",\n      \"description\": \"Perceived Restorativeness Scale, 9 items (being away A, extent E, fascination F) + attention item PRS_ATTN (pass = 3, 'moderately'); 1–5 here (the jsPsych data stored 0–4). Items in random order.\",\n      \"isRequired\": true,\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"very slightly or not at all\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"a little\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"moderately\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"quite a bit\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"extremely\"\n       }\n      ],\n      \"rows\": [\n       {\n        \"value\": \"PRS_A_01\",\n        \"text\": \"Listening to these sounds helped me get away from it all.\"\n       },\n       {\n        \"value\": \"PRS_A_02\",\n        \"text\": \"Listening to these sounds was an escape for me.\"\n       },\n       {\n        \"value\": \"PRS_A_03\",\n        \"text\": \"Listening to these sounds helped me get relief from unwanted demands on my attention.\"\n       },\n       {\n        \"value\": \"PRS_E_01\",\n        \"text\": \"These sounds sustained my interest.\"\n       },\n       {\n        \"value\": \"PRS_E_02\",\n        \"text\": \"These sounds had qualities that drew me further in.\"\n       },\n       {\n        \"value\": \"PRS_ATTN\",\n        \"text\": \"Select 'moderately' for data quality purposes.\"\n       },\n       {\n        \"value\": \"PRS_E_03\",\n        \"text\": \"Once each sound started, I easily got pulled in.\"\n       },\n       {\n        \"value\": \"PRS_F_01\",\n        \"text\": \"While listening to the sounds, my attention was drawn to many interesting things.\"\n       },\n       {\n        \"value\": \"PRS_F_02\",\n        \"text\": \"The sounds had many fascinating qualities.\"\n       },\n       {\n        \"value\": \"PRS_F_03\",\n        \"text\": \"Listening to these sounds was a captivating experience.\"\n       }\n      ]\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"mbs\",\n      \"title\": \"Please make your responses in reference to the longer sounds you rated in the middle of the study.\",\n      \"description\": \"Mental Bandwidth Scale, 7 items (self-awareness SA, daydreaming D, planning P) + attention item MBS_ATTN (pass = 5, 'extremely'); 1–5. PRS and MBS: 2 × 2 MANOVA. Items in random order.\",\n      \"isRequired\": true,\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"very slightly or not at all\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"a little\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"moderately\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"quite a bit\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"extremely\"\n       }\n      ],\n      \"rows\": [\n       {\n        \"value\": \"MBS_SA_01\",\n        \"text\": \"While listening to the sounds, to what degree were you aware of the things going on around you?\"\n       },\n       {\n        \"value\": \"MBS_SA_02\",\n        \"text\": \"While listening to the sounds, to what degree were you able to take note of your thoughts and feelings?\"\n       },\n       {\n        \"value\": \"MBS_D_01\",\n        \"text\": \"While listening to the sounds, to what degree were you lost in thought?\"\n       },\n       {\n        \"value\": \"MBS_D_02\",\n        \"text\": \"While listening to the sounds, to what degree were you letting your mind wander?\"\n       },\n       {\n        \"value\": \"MBS_ATTN\",\n        \"text\": \"Select 'extremely' for data quality purposes.\"\n       },\n       {\n        \"value\": \"MBS_P_01\",\n        \"text\": \"While listening to the sounds, to what degree were you thinking about the things you need to do?\"\n       },\n       {\n        \"value\": \"MBS_P_02\",\n        \"text\": \"While listening to the sounds, to what degree were you making plans for the future?\"\n       },\n       {\n        \"value\": \"MBS_P_03\",\n        \"text\": \"While listening to the sounds, to what degree were you reflecting on things that happened in the past?\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"How old are you (in years)?\",\n      \"min\": 18,\n      \"max\": 100\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"In terms of gender, I identify as...\",\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Non-Binary\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"You do not have an option that describes me.\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"gender_other\",\n      \"title\": \"Please briefly describe your gender identity if you wish.\"\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"My highest level of education is...\",\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Elementary school\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Less than Grade 12\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"High school\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Some university undergraduate schooling\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"College Degree (2 years)\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Bachelor's Degree\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"Postgraduate Degree\"\n       },\n       {\n        \"value\": 8,\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"education_other\",\n      \"title\": \"Please briefly describe your highest education level.\"\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"hearing_aid\",\n      \"title\": \"Do you wear a hearing aid?\",\n      \"description\": \"The authors excluded hearing-aid users.\",\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"No\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Right Ear\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Left Ear\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Both Ears\"\n       }\n      ]\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"health\",\n      \"title\": \"If you think that we should know of any issues that may affect your responses in the study, please use the space provided below to clarify.\"\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"purpose\",\n      \"title\": \"In a sentence or two, please try to guess the purpose of the study.\"\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f3f4f6;--card:#fff;--ink:#1b1e23;--muted:#5b616b;--accent:#2d5d8a;--accent-ink:#fff;--line:#d6dae0;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:820px;margin:0 auto;padding:28px 16px 40px}\nh1{font-size:1.35rem;margin:0 0 10px}p{margin:0 0 12px}.muted{color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.center{text-align:center}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink);margin:4px}\n.btn.ghost{background:var(--card);color:var(--accent);border:1px solid var(--accent)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.btn.hit{outline:3px solid #f0b429}\n.row{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:10px}\n.fix{font-size:56px;line-height:1;text-align:center;margin:40px 0}\n.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:14px}\n.scale button{appearance:none;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:14px 0 6px;font:inherit;cursor:pointer;color:var(--ink)}\n.scale button b{display:block;font-size:1.6rem}\n.scale button small{display:block;min-height:2.6em;font-size:.75rem;color:var(--muted);font-style:italic;line-height:1.2;padding:2px}\n.scale button.on{background:var(--accent);color:#fff}.scale button.on small{color:#e6eef7}\n.item{padding:12px 0;border-top:1px solid var(--line)}.item:first-of-type{border-top:0}\n.item>b{display:block;font-weight:600;margin-bottom:6px}\n.sc{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}\n.sc button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 0;font:inherit;font-weight:700;cursor:pointer;min-width:0}\n.sc button.on{background:var(--accent);color:#fff;border-color:var(--accent)}\n.legend{font-size:.85rem;color:var(--muted);margin:6px 0 0}\ninput[type=range]{width:100%;accent-color:var(--accent);height:34px}\ninput[type=range].untouched{accent-color:#a9b0b8}\n.ends{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted)}\n.q{margin-top:18px}.q>b{display:block;margin-bottom:4px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput[type=number],input[type=text]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%;max-width:360px}\ninput[type=number]{max-width:120px}\ntextarea{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;min-height:80px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.red{color:#c0392b;font-weight:700}.blue{color:#1f3c88}\n.credit{max-width:820px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Task and sounds: Ahmed, Van Hedger, Berman &amp; Van Hedger (2025), OSF 5urta. Used with credit; removed if the authors object.</footer>\n<script>\n(function(){\n  var BLOCKS={\"prs\": {\"title\": \"Please make your responses in reference to the longer sounds you rated in the middle of the study.\", \"labels\": [\"very slightly or not at all\", \"a little\", \"moderately\", \"quite a bit\", \"extremely\"], \"rows\": [{\"value\": \"PRS_A_01\", \"text\": \"Listening to these sounds helped me get away from it all.\"}, {\"value\": \"PRS_A_02\", \"text\": \"Listening to these sounds was an escape for me.\"}, {\"value\": \"PRS_A_03\", \"text\": \"Listening to these sounds helped me get relief from unwanted demands on my attention.\"}, {\"value\": \"PRS_E_01\", \"text\": \"These sounds sustained my interest.\"}, {\"value\": \"PRS_E_02\", \"text\": \"These sounds had qualities that drew me further in.\"}, {\"value\": \"PRS_ATTN\", \"text\": \"Select 'moderately' for data quality purposes.\"}, {\"value\": \"PRS_E_03\", \"text\": \"Once each sound started, I easily got pulled in.\"}, {\"value\": \"PRS_F_01\", \"text\": \"While listening to the sounds, my attention was drawn to many interesting things.\"}, {\"value\": \"PRS_F_02\", \"text\": \"The sounds had many fascinating qualities.\"}, {\"value\": \"PRS_F_03\", \"text\": \"Listening to these sounds was a captivating experience.\"}]}, \"mbs\": {\"title\": \"Please make your responses in reference to the longer sounds you rated in the middle of the study.\", \"labels\": [\"very slightly or not at all\", \"a little\", \"moderately\", \"quite a bit\", \"extremely\"], \"rows\": [{\"value\": \"MBS_SA_01\", \"text\": \"While listening to the sounds, to what degree were you aware of the things going on around you?\"}, {\"value\": \"MBS_SA_02\", \"text\": \"While listening to the sounds, to what degree were you able to take note of your thoughts and feelings?\"}, {\"value\": \"MBS_D_01\", \"text\": \"While listening to the sounds, to what degree were you lost in thought?\"}, {\"value\": \"MBS_D_02\", \"text\": \"While listening to the sounds, to what degree were you letting your mind wander?\"}, {\"value\": \"MBS_ATTN\", \"text\": \"Select 'extremely' for data quality purposes.\"}, {\"value\": \"MBS_P_01\", \"text\": \"While listening to the sounds, to what degree were you thinking about the things you need to do?\"}, {\"value\": \"MBS_P_02\", \"text\": \"While listening to the sounds, to what degree were you making plans for the future?\"}, {\"value\": \"MBS_P_03\", \"text\": \"While listening to the sounds, to what degree were you reflecting on things that happened in the past?\"}]}}, KEY='landline2025:';\n  var CONDS={NAT_REG:'N01',NAT_MAN:'N02',URB_REG:'U01',URB_MAN:'U02'};\n  var SPEED=window.__SPEED||1, NB_RATE=2500*SPEED, NB_SEQ=window.__NBSEQ||[1,2,2,3,3], NB_T=window.__NBT||10, NB_NT=window.__NBNT||20;\n  var CTX={}, app=document.getElementById('app'), Q={}, M={}, cond=null, ans={}, onKey=null, A={};\n  var FLOW=['intro','calib','nback_pre','vas_pre','attn','sounds','vas_post','nback_post','prs','mbs','about'];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function wait(ms){return new Promise(function(r){setTimeout(r,ms*SPEED);});}\n  function saveAll(list,b,cb){Promise.all(list.map(function(a){return SPSite.answer(a[0],a[1],a[2]);})).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}cb();});}\n  document.addEventListener('keydown',function(e){if(onKey&&!e.repeat){if(onKey(e)===true)e.preventDefault();}});\n  function audio(f){if(!f)return null;if(!A[f.url]){var a=new Audio();a.preload='auto';a.src=f.url;A[f.url]=a;}return A[f.url];}\n  function play(f,onEnd){var a=audio(f);if(!a){if(onEnd)setTimeout(onEnd,10);return null;}a.onended=null;try{a.pause();a.currentTime=0;}catch(e){}\n    var done=false;function end(){if(done)return;done=true;a.onended=null;if(onEnd)onEnd();}\n    if(onEnd){a.onended=end;if(SPEED<1)setTimeout(end,Math.max(30,((a.duration||1)*1000)*SPEED));}\n    var p=a.play();if(p&&p.catch)p.catch(function(){if(onEnd&&SPEED<1)return;var b=document.createElement('button');b.className='btn';b.textContent='▶ Tap to play the sound';b.onclick=function(){b.remove();a.play();};app.appendChild(b);});return a;}\n  function screen(html,label,cb){app.innerHTML=html+'<div class=\"center\" style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">'+esc(label||'Continue')+'</button></div><div class=\"err\"></div>';window.scrollTo(0,0);document.getElementById('go').onclick=function(){this.disabled=true;cb();};}\n  function next(){\n    window.scrollTo(0,0);onKey=null;\n    for(var i=0;i<FLOW.length;i++){var s=FLOW[i];if(ans[s])continue;\n      if(s==='intro')return intro();if(s==='calib')return calib();if(s==='nback_pre')return nback('pre');if(s==='vas_pre')return vas('vas_pre');\n      if(s==='attn')return attn();if(s==='sounds')return sounds();if(s==='vas_post')return vas('vas_post');if(s==='nback_post')return nback('post');\n      if(s==='about')return about();if(BLOCKS[s])return block(s);}\n    finish();\n  }\n  /* 1. Letter of Information and consent */\n  function intro(){\n    var need=['letters','calib','attn',CONDS[cond]].filter(function(f){return !(M[f]&&M[f].length);});\n    if(need.length){app.innerHTML='<h1>Sounds missing</h1><p>The media library needs the folders N01, N02, U01, U02 (40 recordings each), letters, calib and attn. Missing: '+esc(need.join(', '))+'.</p>';return;}\n    app.innerHTML='<h1>The Influence of Environmental Sounds on Cognition and Mood</h1><div class=\"card\"><p>This study explores how different classes of environmental sounds can influence cognitive performance and mood. You will complete several short tasks:</p><ol><li><b>Auditory calibration</b> (about 4 minutes): adjust your volume to a comfortable level and judge which of three sounds was played the quietest.</li><li><b>Auditory memory task</b> (about 14 minutes): listen to a series of spoken letters and press a key when the letters repeat in the way the instructions describe.</li><li><b>Mood rating</b> (about 1 minute): rate how you currently feel on five terms with a slider.</li><li><b>Sound rating</b> (about 12 minutes): listen to 40 longer (14-second) recordings from different environments and rate how much you liked each, its sound quality and its category.</li><li><b>Questionnaire</b>: questions about the sounds you heard and some basic demographic questions (the demographic questions are optional).</li></ol><p>Please use a computer with a keyboard, in a quiet place. Headphones or earbuds are recommended. Participation is voluntary and you may stop at any time.</p>'+\n      '<label class=\"opt\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label></div><div class=\"center\" style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div>';\n    document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('If you wish to participate, please tick the box to agree to participate in the study.');\n      Object.keys(M).forEach(function(k){if(k==='letters'||k==='calib'||k==='attn')M[k].forEach(audio);});\n      var b=this;b.disabled=true;saveAll([['consent',true]],b,function(){ans.intro=true;next();});};\n  }\n  /* 2. Volume calibration + headphone check (Woods et al., 2017) */\n  function calib(){\n    var vol=M.calib.filter(function(f){return /volumetest/.test(f.name);})[0], plays=0;\n    screen('<p>This study involves making judgments about different sounds you will hear.</p><p>Before we begin, you will complete a short sound calibration. This will make sure that you can hear the sounds in the main study.</p>','Begin Sound Calibration',function(){\n      screen('<p>The <b>volume calibration</b> will be first.</p><p>You will hear a five-second noise. Please adjust your computer’s volume so that this noise is being presented at a comfortable level.</p><p>You will have the opportunity to repeat the noise if you wish.</p>','Listen',loop);\n    });\n    function loop(){plays++;play(vol);app.innerHTML='<div class=\"fix\">🔊</div><p class=\"center\">Adjust your volume so that the noise is being played at a comfortable level.</p><div class=\"row\"><button class=\"btn ghost\" id=\"again\">Play Noise Again</button><button class=\"btn\" id=\"cont\">Continue</button></div>';\n      document.getElementById('again').onclick=loop;document.getElementById('cont').onclick=function(){var a=audio(vol);if(a)a.pause();head();};}\n    function head(){\n      screen('<p>You will now complete a short loudness judgment task.</p><p>On each trial, you will hear three tones. One of these tones will be quieter than the others. Your task is to identify whether the quiet tone occurred first, second, or third.</p><p><em>This task is relatively easy with headphones but extremely difficult without headphones. Thus, if you have access to headphones or earbuds, please wear them.</em></p><p>There are six trials in total.</p>','Begin',function(){\n        var T=shuffle([['t1_1',1],['t1_2',1],['t2_1',2],['t2_2',2],['t3_1',3],['t3_2',3]]), out=[], k=0;\n        function trial(){\n          if(k>=T.length){var sc=out.filter(function(o){return o.ok;}).length;\n            return saveAll([['headphone',{volume_plays:plays,trials:out,score:sc}]],null,function(){screen('<p>The volume calibration is now complete.</p>','Continue',function(){ans.calib=true;next();});});}\n          var t=T[k], f=M.calib.filter(function(x){return x.name===t[0]+'.mp3';})[0];\n          app.innerHTML='<div class=\"fix\">+</div>';\n          wait(500).then(function(){\n            play(f);app.innerHTML='<div class=\"fix\">🔊</div><p class=\"center\">Which tone was the quietest?</p><div class=\"row\"><button class=\"btn\" data-v=\"1\">First</button><button class=\"btn\" data-v=\"2\">Second</button><button class=\"btn\" data-v=\"3\">Third</button></div>';\n            app.querySelectorAll('.row .btn').forEach(function(b){b.onclick=function(){var a=audio(f);if(a)a.pause();var v=Number(b.dataset.v);out.push({file:t[0],correct:t[1],answer:v,ok:v===t[1]});k++;app.innerHTML='';wait(500).then(trial);};});\n          });\n        }\n        trial();\n      });\n    }\n  }\n  /* 3. Auditory n-back */\n  function nbInstr(post,cb){\n    var ex1=\"<p class='blue'>B...D...<span class='red'>D</span>...F...<span class='red'>F</span>...<span class='red'>F</span>...C...E...</p>\";\n    var ex2=\"<p class='blue'>B...D...<span class='red'>B</span>...C...<span class='red'>B</span>...<span class='red'>C</span>...E...F...</p>\";\n    var ex3=\"<p class='blue'>B...D...G...<span class='red'>B</span>...<span class='red'>D</span>...C...E...<span class='red'>D</span>...</p>\";\n    function how(n,word,ex){return '<p>If you are asked to complete a <b>'+n+'-back</b>, you must press the <b>left arrow</b> key (←) every time the current sound matches the sound presented <b>'+word+'</b> position'+(n>1?'s':'')+' previously.<br>If the current sound does not match the one presented '+word+' position'+(n>1?'s':'')+' previously, you should press the <b>right arrow</b> key (→).</p><p>For example, imagine you heard the following sound sequence:</p>'+ex+'<p>You would press <b>←</b> to the sounds printed in <span class=\"red\">red</span>, as these were repeated <b>'+word+'</b> position'+(n>1?'s':'')+' previously. For the sounds printed in <span class=\"blue\">blue</span>, you would press <b>→</b>.</p>';}\n    var P=['<p>You will now complete an auditory memory task. This will take approximately 10 minutes to complete.</p><p>To learn more about the task, please advance to the next screen.</p>'+(post?'<p>(Note: This is the same auditory memory task you were given at the beginning of the study)</p>':''),\n      '<p>In this task, you will hear a sequence of letters. The letters will be presented one at a time, and a new sound will play every 2.5 seconds.</p><p>Your job is to listen closely to these sounds for specific kinds of <b>repeats</b>.</p>',\n      how(1,'one',ex1),how(2,'two',ex2),how(3,'three',ex3),\n      '<p>As you can imagine, the task becomes harder as the delay (1, 2, or 3) increases.</p><p>Please make sure you are in a quiet listening environment and free from distraction.<br>You will receive breaks approximately every 90 seconds.</p><p class=\"muted\">On a touch screen, use the two buttons that appear under the task instead of the arrow keys.</p>',\n      '<p>This concludes the introduction to the memory task.</p><p>Please advance to the next screen to receive further instructions.</p>'];\n    var i=0;function pg(){if(i>=P.length)return cb();screen('<div class=\"card\">'+P[i]+'</div>',i===P.length-1?'Begin':'Continue',function(){i++;pg();});}pg();\n  }\n  function makeSeq(n){\n    var types=[],L=[],i;for(i=0;i<n;i++)types.push('F');\n    var tt=[];for(i=0;i<NB_NT;i++)tt.push('NT');for(i=0;i<NB_T;i++)tt.push('T');types=types.concat(shuffle(tt));\n    for(i=0;i<types.length;i++){if(types[i]==='F')L.push(1+Math.floor(Math.random()*8));else if(types[i]==='T')L.push(L[i-n]);else{var c;do{c=1+Math.floor(Math.random()*8);}while(c===L[i-n]);L.push(c);}}\n    return {types:types,L:L};\n  }\n  function runBlock(n,cb){\n    var s=makeSeq(n), resp=[], rt=[], onset=[], i=-1, t0, letters={};\n    M.letters.forEach(function(f){var m=f.name.match(/(\\d)/);if(m)letters[Number(m[1])]=f;});\n    app.innerHTML='<div class=\"fix\" id=\"fx\">🔊</div><p class=\"center muted\">'+n+'-back</p><div class=\"row\"><button class=\"btn\" id=\"bl\">← Match</button><button class=\"btn\" id=\"br\">No match →</button></div>';\n    var bl=document.getElementById('bl'), br=document.getElementById('br');\n    function respond(k){if(i<0||i>=s.types.length||resp[i]!==null)return;resp[i]=k;rt[i]=Math.round(performance.now()-onset[i]);var b=k==='L'?bl:br;b.classList.add('hit');setTimeout(function(){b.classList.remove('hit');},150);}\n    bl.onclick=function(){respond('L');};br.onclick=function(){respond('R');};\n    onKey=function(e){if(e.key==='ArrowLeft'){respond('L');return true;}if(e.key==='ArrowRight'){respond('R');return true;}};\n    function step(){\n      if(i>=0&&i<s.types.length&&resp[i]===undefined)resp[i]=null;\n      i++;\n      if(i>=s.types.length){onKey=null;return cb({n:n,letters:s.L,types:s.types,resp:resp,rt:rt});}\n      resp[i]=null;rt[i]=null;onset[i]=performance.now();play(letters[s.L[i]]);\n      setTimeout(step,Math.max(0,t0+(i+1)*NB_RATE-performance.now()));\n    }\n    t0=performance.now()+500*SPEED;setTimeout(step,500*SPEED);\n  }\n  function dprime(h,fa,nt,nn){function z(p){var a=[-39.6968302866538,220.946098424521,-275.928510446969,138.357751867269,-30.6647980661472,2.50662827745924],b=[-54.4760987982241,161.585836858041,-155.698979859887,66.8013118877197,-13.2806815528857],c=[-7.78489400243029e-3,-0.322396458041136,-2.40075827716184,-2.54973253934373,4.37466414146497,2.93816398269878],d=[7.78469570904146e-3,0.32246712907004,2.445134137143,3.75440866190742],q,r;\n      if(p<0.02425){q=Math.sqrt(-2*Math.log(p));return (((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);}\n      if(p>1-0.02425){q=Math.sqrt(-2*Math.log(1-p));return -(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);}\n      q=p-0.5;r=q*q;return (((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);}\n    return Math.round((z((h+0.5)/(nt+1))-z((fa+0.5)/(nn+1)))*1000)/1000;}\n  function summarize(runs){\n    var S={},scored=0,answered=0;\n    runs.forEach(function(r){var k='n'+r.n;S[k]=S[k]||{runs:0,targets:0,nontargets:0,hits:0,false_alarms:0,misses:0,correct_rejections:0,timeouts:0};var o=S[k];o.runs++;\n      r.types.forEach(function(t,i){if(t==='F')return;scored++;var x=r.resp[i];if(x)answered++;if(t==='T'){o.targets++;if(x==='L')o.hits++;else if(x==='R')o.misses++;else o.timeouts++;}else{o.nontargets++;if(x==='L')o.false_alarms++;else if(x==='R')o.correct_rejections++;else o.timeouts++;}});});\n    Object.keys(S).forEach(function(k){var o=S[k];o.dprime=dprime(o.hits,o.false_alarms,o.targets,o.nontargets);});\n    S.responded=scored?Math.round(1000*answered/scored)/1000:0;return S;\n  }\n  function nback(which){\n    var post=which==='post', runs=[], r=0;\n    nbInstr(post,function(){runNext();});\n    function runNext(){\n      if(r>=NB_SEQ.length)return fatigue();\n      var n=NB_SEQ[r];\n      app.innerHTML='<div class=\"card\"><p>You will now complete a <strong>'+n+'-back.</strong></p><p>Remember, this means that you should press the <b>left arrow</b> key (←) every time the sound you hear matches the one presented <strong>'+n+'</strong> position(s) previously. If the sound does not match the one presented <strong>'+n+'</strong> position(s) previously, you should press the <b>right arrow</b> key (→).</p><p>Press ← or → to begin!</p></div><div class=\"row\"><button class=\"btn\" id=\"s1\">←</button><button class=\"btn\" id=\"s2\">→</button></div>';\n      function go(){onKey=null;runBlock(n,function(res){runs.push(res);r++;\n        screen('<p>You may take a short break if you wish.</p><p>Click the button below when you are ready to continue.</p>','Continue',runNext);});}\n      document.getElementById('s1').onclick=go;document.getElementById('s2').onclick=go;\n      onKey=function(e){if(e.key==='ArrowLeft'||e.key==='ArrowRight'){go();return true;}};\n    }\n    function fatigue(){\n      var labs=['Very slightly or not at all','A little','Moderately','Quite a bit','Extremely'];\n      app.innerHTML='<div class=\"card center\"><p>Thank you for your responses!</p><p style=\"font-size:1.3rem\"><b>How fatigued are you feeling in the present moment?</b></p><p class=\"muted\">(Press the corresponding key on the keyboard, or click)</p><div class=\"scale\">'+labs.map(function(l,k){return '<button data-v=\"'+(k+1)+'\"><b>'+(k+1)+'</b><small>'+l+'</small></button>';}).join('')+'</div></div><div class=\"err\"></div>';\n      var doneF=false;\n      function pick(v){if(doneF)return;doneF=true;onKey=null;var data={runs:runs,summary:summarize(runs)};\n        saveAll([['nback_'+which,data],['fatigue_'+which,v]],null,function(){screen('<p>This concludes the auditory memory task.</p>','Continue',function(){ans['nback_'+which]=true;next();});});}\n      app.querySelectorAll('.scale button').forEach(function(b){b.onclick=function(){pick(Number(b.dataset.v));};});\n      onKey=function(e){if(/^[1-5]$/.test(e.key)){pick(Number(e.key));return true;}};\n    }\n  }\n  /* 4. VAS mood */\n  function vas(name){\n    var T=shuffle([['happy','Happy'],['sad','Sad'],['calm','Calm'],['anxious','Anxious'],['lonely','Lonely']]), out={}, k=0;\n    screen('<p>You will now be asked to rate how you are currently feeling (i.e., in the present moment).</p><p>You will be presented with five terms, one term at a time. Please think about how much you are feeling the printed term and adjust the slider on the screen accordingly.</p>','Begin',one);\n    function one(){\n      if(k>=T.length)return saveAll([[name,out]],null,function(){ans[name]=true;next();});\n      var t=T[k];\n      app.innerHTML='<div class=\"card center\"><p style=\"font-size:1.5rem\"><b>'+t[1]+'</b></p><input type=\"range\" min=\"0\" max=\"100\" step=\"1\" value=\"50\" class=\"untouched\" id=\"sl\" aria-label=\"'+t[1]+'\"><div class=\"ends\"><span>Not at all</span><span>Extremely</span></div><p class=\"muted\" style=\"margin-top:12px\">Adjust the slider to represent how you feel in the present moment.</p><button class=\"btn\" id=\"go\" disabled>Continue</button></div>';\n      var sl=document.getElementById('sl'), go=document.getElementById('go');\n      ['input','change','pointerdown','keydown'].forEach(function(ev){sl.addEventListener(ev,function(){sl.classList.remove('untouched');go.disabled=false;});});\n      go.onclick=function(){out[t[0]]=Number(sl.value);k++;app.innerHTML='';wait(500).then(one);};\n    }\n  }\n  /* 5. Auditory attention check */\n  function attn(){\n    var f=M.attn[0], W=['candle','club','car','carrot','candy'], t0=performance.now(), done=false;\n    play(f);\n    app.innerHTML='<div class=\"fix\">🔊</div><div class=\"row\">'+W.map(function(w,i){return '<button class=\"btn\" data-i=\"'+i+'\">'+w+'</button>';}).join('')+'</div>';\n    function fin(i){if(done)return;done=true;var a=audio(f);if(a)a.pause();\n      saveAll([['attn_audio',{answer:i==null?null:W[i],ok:i===2,rt:i==null?null:Math.round(performance.now()-t0)}]],null,function(){ans.attn=true;next();});}\n    app.querySelectorAll('.row .btn').forEach(function(b){b.onclick=function(){fin(Number(b.dataset.i));};});\n    setTimeout(function(){fin(null);},10000*SPEED);\n  }\n  /* 6. Sound rating intervention */\n  function sounds(){\n    var folder=CONDS[cond], files=M[folder].slice(), done={}, prev=(load('order')||[]), t0=performance.now();\n    var have=(CTX.sound_ratings&&CTX.sound_ratings.trials)||[];\n    have.forEach(function(x){if(x&&x.key!=null&&x.value!=null)done[String(x.key)]=true;});\n    var todo=shuffle(files.filter(function(f){return !done[f.name.replace(/\\.mp3$/i,'')];})), total=files.length, order=prev.filter(function(k){return done[k];});\n    var RATE=[['like','How much did you <b>like</b> the sound you just heard?',['strongly dislike','','neutral','','strongly like']],\n              ['quality','Please rate the <b>sound quality</b> of the recording you just heard.',['low quality','','neutral','','high quality']],\n              ['natural','To what extent did the recording convey an urban (versus natural) setting?',['very urban','','neutral','','very natural']]];\n    if(!todo.length)return end();\n    screen('<p>In this part of the study, you will listen to sound recordings. Each recording is 14 seconds long.</p><p>Your task is to simply listen to each recording. After each recording, you will be asked some questions.</p><p>There are '+total+' recordings you will be listening to in total. This part of the study should take around 10-15 minutes to complete.</p>','Begin',trial);\n    function trial(){\n      if(!todo.length)return end();\n      var f=todo[0], key=f.name.replace(/\\.mp3$/i,''), num=total-todo.length+1, r={};\n      app.innerHTML='<div class=\"center\" style=\"margin-top:60px\"><p>Recording '+num+' of '+total+'</p><button class=\"btn\" id=\"li\">Listen</button></div>';\n      document.getElementById('li').onclick=function(){app.innerHTML='';wait(500).then(function(){app.innerHTML='<div class=\"fix\">+</div>';play(f,function(){app.innerHTML='';wait(1000).then(function(){rate(0);});});});};\n      function rate(j){\n        if(j>=RATE.length){order.push(key);save('order',order);todo.shift();\n          return saveAll([['sound_ratings',r,{key:key,shown:[f.name]}]],null,function(){trial();});}\n        var R=RATE[j];\n        app.innerHTML='<div class=\"card center\"><p style=\"font-size:1.25rem\">'+R[1]+'</p><div class=\"scale\">'+R[2].map(function(l,k){return '<button data-v=\"'+(k+1)+'\"><b>'+(k+1)+'</b><small>'+l+'</small></button>';}).join('')+'</div><p class=\"muted\" style=\"margin-top:12px\"><em>(press the corresponding number on your keyboard to answer, or click)</em></p></div><div class=\"err\"></div>';\n        var picked=false;function pick(v){if(picked)return;picked=true;onKey=null;r[R[0]]=v;app.innerHTML='';wait(250).then(function(){rate(j+1);});}\n        app.querySelectorAll('.scale button').forEach(function(b){b.onclick=function(){pick(Number(b.dataset.v));};});\n        onKey=function(e){if(/^[1-5]$/.test(e.key)){pick(Number(e.key));return true;}};\n      }\n    }\n    function end(){\n      var c=cond;saveAll([['listening',{condition:c,environment:/^NAT/.test(c)?'nature':'urban',quality:/REG$/.test(c)?'unaltered':'degraded',order:order,minutes:Math.round((performance.now()-t0)/600)/100}]],null,function(){ans.sounds=true;next();});\n    }\n  }\n  /* 7. PRS / MBS */\n  function block(name){\n    var B=BLOCKS[name], lab=B.labels, vals={}, rows=shuffle(B.rows);\n    var intro=name==='prs'?'<p>Thank you for your responses.</p><p>You will now answer some questions related to the longer environmental sounds you rated in the middle part of the study.</p>':'';\n    app.innerHTML=(intro?'<div class=\"card\">'+intro+'</div>':'')+'<div class=\"card\"><p><em>'+esc(B.title)+'</em></p><p class=\"legend\">'+lab.map(function(t,k){return (k+1)+' = '+esc(t);}).join(' · ')+'</p>'+\n      rows.map(function(r){var b='';for(var v=1;v<=5;v++)b+='<button type=\"button\" data-r=\"'+esc(r.value)+'\" data-v=\"'+v+'\" title=\"'+esc(lab[v-1])+'\">'+v+'</button>';return '<div class=\"item\"><b>'+esc(r.text)+'</b><div class=\"sc\">'+b+'</div></div>';}).join('')+\n      '<div class=\"center\" style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    app.querySelectorAll('.sc button').forEach(function(x){x.onclick=function(){vals[x.dataset.r]=Number(x.dataset.v);x.parentNode.querySelectorAll('button').forEach(function(y){y.classList.toggle('on',y===x);});err('');};});\n    document.getElementById('go').onclick=function(){var miss=B.rows.filter(function(r){return vals[r.value]==null;});if(miss.length)return err('Please answer every statement ('+miss.length+' left).');\n      var o={};B.rows.forEach(function(r){o[r.value]=vals[r.value];});var b=this;b.disabled=true;saveAll([[name,o]],b,function(){ans[name]=true;next();});};\n  }\n  /* 8. Demographics (optional, as in the original) */\n  function radios(name){return (Q[name].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');}\n  function about(){\n    app.innerHTML='<div class=\"card\"><p>Thank you for your responses.</p><p>You will now answer some basic demographic questions. These questions are optional.</p>'+\n      '<div class=\"q\"><b>'+esc(Q.age.title)+'</b><input type=\"number\" id=\"age\" min=\"18\" max=\"100\" inputmode=\"numeric\"></div>'+\n      '<div class=\"q\"><b>'+esc(Q.gender.title)+'</b>'+radios('gender')+'<input type=\"text\" id=\"go2\" style=\"margin-top:6px;display:none\" placeholder=\"'+esc(Q.gender_other.title)+'\"></div>'+\n      '<div class=\"q\"><b>'+esc(Q.education.title)+'</b>'+radios('education')+'<input type=\"text\" id=\"eo\" style=\"margin-top:6px;display:none\" placeholder=\"'+esc(Q.education_other.title)+'\"></div>'+\n      '<div class=\"q\"><b>'+esc(Q.hearing_aid.title)+'</b>'+radios('hearing_aid')+'</div>'+\n      '<div class=\"q\"><b>'+esc(Q.health.title)+'</b><textarea id=\"hc\"></textarea></div>'+\n      '<div class=\"q\"><b>'+esc(Q.purpose.title)+'</b><textarea id=\"gp\"></textarea></div>'+\n      '<div class=\"center\" style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Finish</button></div><div class=\"err\"></div></div>';\n    function val(n){var x=app.querySelector('input[name='+n+']:checked');return x?Number(x.value):null;}\n    app.querySelectorAll('input[name=gender]').forEach(function(x){x.onchange=function(){document.getElementById('go2').style.display=x.value==='4'?'block':'none';};});\n    app.querySelectorAll('input[name=education]').forEach(function(x){x.onchange=function(){document.getElementById('eo').style.display=x.value==='8'?'block':'none';};});\n    document.getElementById('go').onclick=function(){\n      var list=[],av=document.getElementById('age').value;\n      if(av){var age=Number(av);if(!(age>=18&&age<=100))return err('Please enter an age between 18 and 100, or leave it empty.');list.push(['age',age]);}\n      var g=val('gender');if(g){list.push(['gender',g]);var gt=document.getElementById('go2').value.trim();if(g===4&&gt)list.push(['gender_other',gt]);}\n      var e=val('education');if(e){list.push(['education',e]);var et=document.getElementById('eo').value.trim();if(e===8&&et)list.push(['education_other',et]);}\n      var h=val('hearing_aid');if(h)list.push(['hearing_aid',h]);\n      var hc=document.getElementById('hc').value.trim();if(hc)list.push(['health',hc]);\n      var gp=document.getElementById('gp').value.trim();if(gp)list.push(['purpose',gp]);\n      var b=this;b.disabled=true;if(!list.length){ans.about=true;return next();}saveAll(list,b,function(){ans.about=true;next();});\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>This concludes the study. Thank you for your participation!</h1><div class=\"card\"><p>The purpose of this study was to examine nature-related benefits on cognitive performance and mood. Specifically, it assessed how perceptual richness (“sound quality”) can influence the known benefits of nature on cognitive performance and mood. You were randomly assigned to hear either natural (e.g., birdsong) or urban (e.g., traffic) sounds that were either unaltered or perceptually degraded. Before and after listening, you completed an auditory “n-back” memory task, which is thought to measure working memory, and answered questions about your current mood, so that changes could be compared between the kinds of sounds.</p><p>Note on deception: mild deception was used, as the instructions did not explicitly say how nature is related to cognitive benefits, so that knowing this would not influence performance. If you are uncomfortable with this, you are free to ask for your data to be withdrawn.</p><p class=\"muted\" style=\"font-size:.82rem\">Task, instructions and sounds: Ahmed, Van Hedger, Berman &amp; Van Hedger (2025), Journal of Environmental Psychology 104, 102608 (doi:10.1016/j.jenvp.2025.102608), OSF 5urta. Used with credit and removed if the authors object.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){\n      if(x==='consent')ans.intro=false;else if(x==='headphone')ans.calib=false;else if(x==='nback_pre'||x==='fatigue_pre')ans.nback_pre=false;else if(x==='nback_post'||x==='fatigue_post')ans.nback_post=false;\n      else if(x==='attn_audio')ans.attn=false;else if(x==='listening'||x==='sound_ratings')ans.sounds=false;else ans[x]=false;});next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved. You may close this tab.';}});\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','age','gender','gender_other','education','education_other','hearing_aid','health','purpose'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    ['N01','N02','U01','U02','letters','calib','attn'].forEach(function(k){M[k]=(SPSite.getMedia(k)||[]).slice().sort(function(a,b){return a.name<b.name?-1:1;});});\n    var a=(ctx&&ctx.answers)||{};CTX=a;\n    var c=(a.listening&&a.listening.condition)||load('cond');if(!CONDS[c])c=Object.keys(CONDS)[Math.floor(Math.random()*4)];cond=c;save('cond',cond);\n    if(a.consent===true){ans.intro=true;\n      if(a.headphone!=null)ans.calib=true;\n      if(a.nback_pre!=null&&a.fatigue_pre!=null)ans.nback_pre=true;\n      if(a.vas_pre!=null)ans.vas_pre=true;if(a.attn_audio!=null)ans.attn=true;\n      if(a.listening!=null)ans.sounds=true;\n      if(a.vas_post!=null)ans.vas_post=true;if(a.nback_post!=null&&a.fatigue_post!=null)ans.nback_post=true;\n      if(a.prs!=null)ans.prs=true;if(a.mbs!=null)ans.mbs=true;}\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T06:32:13.856Z",
+   "mediaFolders": [
+    "N01",
+    "N02",
+    "U01",
+    "U02",
+    "letters",
+    "calib",
+    "attn"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T06:32:13.856Z"
+  },
+  "description": "Faithful replication of Ahmed, Van Hedger, Berman & Van Hedger (2025), Journal of Environmental Psychology 104:102608, rebuilt from the authors' own jsPsych script and sounds (OSF 5urta). Participants calibrate volume and do a headphone check, then an auditory n-back (2- and 3-back), a fatigue rating and five mood sliders; they are randomly assigned to listen to 40 fourteen-second recordings that are nature or urban and unaltered or degraded (band-pass filtered like a landline telephone), rating each for liking, sound quality and naturalness; then mood, n-back and fatigue again, the Perceived Restorativeness Scale, the Mental Bandwidth Scale and demographics.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_01__c0041776-4183-41e4-a107-5185f5bd1a6a.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_01__c0041776-4183-41e4-a107-5185f5bd1a6a.mp3",
+   "name": "N01_01.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_01__c0041776-4183-41e4-a107-5185f5bd1a6a.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_02__e0680323-1548-42f6-be42-6340d718d225.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_02__e0680323-1548-42f6-be42-6340d718d225.mp3",
+   "name": "N01_02.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_02__e0680323-1548-42f6-be42-6340d718d225.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_03__7b0c3c90-da63-40b8-8463-cba7724114c7.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_03__7b0c3c90-da63-40b8-8463-cba7724114c7.mp3",
+   "name": "N01_03.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_03__7b0c3c90-da63-40b8-8463-cba7724114c7.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_04__c1c6f9ca-cdb9-4d9b-b599-d3bb17307ca0.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_04__c1c6f9ca-cdb9-4d9b-b599-d3bb17307ca0.mp3",
+   "name": "N01_04.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_04__c1c6f9ca-cdb9-4d9b-b599-d3bb17307ca0.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_05__b404e6a8-9546-437d-8a61-66d73be78a23.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_05__b404e6a8-9546-437d-8a61-66d73be78a23.mp3",
+   "name": "N01_05.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_05__b404e6a8-9546-437d-8a61-66d73be78a23.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_06__dcacc999-03d7-4869-9546-b0061fafe26f.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_06__dcacc999-03d7-4869-9546-b0061fafe26f.mp3",
+   "name": "N01_06.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_06__dcacc999-03d7-4869-9546-b0061fafe26f.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_07__f4f21019-eb20-4a6a-92d8-db402a82005e.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_07__f4f21019-eb20-4a6a-92d8-db402a82005e.mp3",
+   "name": "N01_07.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_07__f4f21019-eb20-4a6a-92d8-db402a82005e.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_08__4aabe6c1-1831-41dc-af65-2db062964e77.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_08__4aabe6c1-1831-41dc-af65-2db062964e77.mp3",
+   "name": "N01_08.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_08__4aabe6c1-1831-41dc-af65-2db062964e77.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_09__a57ffeed-3439-4e70-80eb-5a0af53b9497.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_09__a57ffeed-3439-4e70-80eb-5a0af53b9497.mp3",
+   "name": "N01_09.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_09__a57ffeed-3439-4e70-80eb-5a0af53b9497.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_10__3858efc8-dcd0-4460-8ebd-eadfed43ac97.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_10__3858efc8-dcd0-4460-8ebd-eadfed43ac97.mp3",
+   "name": "N01_10.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_10__3858efc8-dcd0-4460-8ebd-eadfed43ac97.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_11__13f10ce4-bbdd-42bc-915e-372612f31ac3.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_11__13f10ce4-bbdd-42bc-915e-372612f31ac3.mp3",
+   "name": "N01_11.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_11__13f10ce4-bbdd-42bc-915e-372612f31ac3.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_12__90662785-c558-4fe1-8b35-aacdaeb280d0.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_12__90662785-c558-4fe1-8b35-aacdaeb280d0.mp3",
+   "name": "N01_12.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_12__90662785-c558-4fe1-8b35-aacdaeb280d0.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_13__60a6b634-fe91-4481-a7bc-fcd749c626cf.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_13__60a6b634-fe91-4481-a7bc-fcd749c626cf.mp3",
+   "name": "N01_13.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_13__60a6b634-fe91-4481-a7bc-fcd749c626cf.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_14__1a4235d1-ecd7-4f48-8044-5e0eca529b03.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_14__1a4235d1-ecd7-4f48-8044-5e0eca529b03.mp3",
+   "name": "N01_14.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_14__1a4235d1-ecd7-4f48-8044-5e0eca529b03.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_15__a3793862-aff9-43f3-b480-5b9a0ba8c96b.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_15__a3793862-aff9-43f3-b480-5b9a0ba8c96b.mp3",
+   "name": "N01_15.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_15__a3793862-aff9-43f3-b480-5b9a0ba8c96b.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_16__791b5dbb-d89e-436a-8b27-5cc513434e9b.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_16__791b5dbb-d89e-436a-8b27-5cc513434e9b.mp3",
+   "name": "N01_16.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_16__791b5dbb-d89e-436a-8b27-5cc513434e9b.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_17__73359d08-86e1-4c2e-9e51-7873caad9955.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_17__73359d08-86e1-4c2e-9e51-7873caad9955.mp3",
+   "name": "N01_17.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_17__73359d08-86e1-4c2e-9e51-7873caad9955.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_18__3a8c868a-28f8-47ca-9988-98f701d48e94.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_18__3a8c868a-28f8-47ca-9988-98f701d48e94.mp3",
+   "name": "N01_18.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_18__3a8c868a-28f8-47ca-9988-98f701d48e94.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_19__9cdb93d8-b757-4775-a7f3-8588cc08d257.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_19__9cdb93d8-b757-4775-a7f3-8588cc08d257.mp3",
+   "name": "N01_19.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_19__9cdb93d8-b757-4775-a7f3-8588cc08d257.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_20__46944c6e-3a4d-435f-895d-46d753900f89.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_20__46944c6e-3a4d-435f-895d-46d753900f89.mp3",
+   "name": "N01_20.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_20__46944c6e-3a4d-435f-895d-46d753900f89.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_21__b22114b9-c84d-4eb2-bc23-15273ddc7975.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_21__b22114b9-c84d-4eb2-bc23-15273ddc7975.mp3",
+   "name": "N01_21.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_21__b22114b9-c84d-4eb2-bc23-15273ddc7975.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_22__071cc784-fa8a-4e18-837e-d30a03fcbc58.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_22__071cc784-fa8a-4e18-837e-d30a03fcbc58.mp3",
+   "name": "N01_22.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_22__071cc784-fa8a-4e18-837e-d30a03fcbc58.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_23__0152144c-678d-4977-93a1-f93af9c72e09.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_23__0152144c-678d-4977-93a1-f93af9c72e09.mp3",
+   "name": "N01_23.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_23__0152144c-678d-4977-93a1-f93af9c72e09.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_24__bbc0556b-80c1-4a96-b495-566f065dfcc1.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_24__bbc0556b-80c1-4a96-b495-566f065dfcc1.mp3",
+   "name": "N01_24.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_24__bbc0556b-80c1-4a96-b495-566f065dfcc1.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_25__1abcdd4a-7b8f-4547-a01d-f772abb56ace.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_25__1abcdd4a-7b8f-4547-a01d-f772abb56ace.mp3",
+   "name": "N01_25.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_25__1abcdd4a-7b8f-4547-a01d-f772abb56ace.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_26__3359d944-1b88-4c64-82c6-c49c999c9571.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_26__3359d944-1b88-4c64-82c6-c49c999c9571.mp3",
+   "name": "N01_26.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_26__3359d944-1b88-4c64-82c6-c49c999c9571.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_27__cf401f92-8fcb-443c-ae54-4a4202f5c82a.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_27__cf401f92-8fcb-443c-ae54-4a4202f5c82a.mp3",
+   "name": "N01_27.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_27__cf401f92-8fcb-443c-ae54-4a4202f5c82a.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_28__b13c1db5-1663-4bd3-ab39-6289c7085753.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_28__b13c1db5-1663-4bd3-ab39-6289c7085753.mp3",
+   "name": "N01_28.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_28__b13c1db5-1663-4bd3-ab39-6289c7085753.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_29__f910c928-cb64-487b-a541-d6f06c0868a4.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_29__f910c928-cb64-487b-a541-d6f06c0868a4.mp3",
+   "name": "N01_29.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_29__f910c928-cb64-487b-a541-d6f06c0868a4.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_30__bba3bd69-7f24-49d4-880f-76704b0fec39.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_30__bba3bd69-7f24-49d4-880f-76704b0fec39.mp3",
+   "name": "N01_30.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_30__bba3bd69-7f24-49d4-880f-76704b0fec39.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_31__ccd10476-df1c-4bf5-9abb-0847b966e3eb.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_31__ccd10476-df1c-4bf5-9abb-0847b966e3eb.mp3",
+   "name": "N01_31.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_31__ccd10476-df1c-4bf5-9abb-0847b966e3eb.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_32__ffae5750-b2de-4988-a425-b43d36fed9b6.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_32__ffae5750-b2de-4988-a425-b43d36fed9b6.mp3",
+   "name": "N01_32.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_32__ffae5750-b2de-4988-a425-b43d36fed9b6.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_33__2f39bb82-ad85-4fa1-9d01-2d5b91e94dd8.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_33__2f39bb82-ad85-4fa1-9d01-2d5b91e94dd8.mp3",
+   "name": "N01_33.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_33__2f39bb82-ad85-4fa1-9d01-2d5b91e94dd8.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_34__82ab996a-4ac8-457f-9e28-d9a8229e0430.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_34__82ab996a-4ac8-457f-9e28-d9a8229e0430.mp3",
+   "name": "N01_34.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_34__82ab996a-4ac8-457f-9e28-d9a8229e0430.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_35__6462fd40-671b-4cf5-b9d5-00bebd021646.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_35__6462fd40-671b-4cf5-b9d5-00bebd021646.mp3",
+   "name": "N01_35.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_35__6462fd40-671b-4cf5-b9d5-00bebd021646.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_36__3f33c0e3-369a-4531-b19a-48325799667a.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_36__3f33c0e3-369a-4531-b19a-48325799667a.mp3",
+   "name": "N01_36.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_36__3f33c0e3-369a-4531-b19a-48325799667a.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_37__6e1963fb-35e8-4dc8-8d63-887961b95666.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_37__6e1963fb-35e8-4dc8-8d63-887961b95666.mp3",
+   "name": "N01_37.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_37__6e1963fb-35e8-4dc8-8d63-887961b95666.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_38__222a460b-1074-4292-945a-1e9e0e0a88b6.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_38__222a460b-1074-4292-945a-1e9e0e0a88b6.mp3",
+   "name": "N01_38.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_38__222a460b-1074-4292-945a-1e9e0e0a88b6.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_39__fc45ad78-e1d4-4155-8a55-7b02c3248e17.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_39__fc45ad78-e1d4-4155-8a55-7b02c3248e17.mp3",
+   "name": "N01_39.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_39__fc45ad78-e1d4-4155-8a55-7b02c3248e17.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N01/N01_40__718c995f-1440-4737-bd41-14e0e50d537c.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N01/N01_40__718c995f-1440-4737-bd41-14e0e50d537c.mp3",
+   "name": "N01_40.mp3",
+   "type": "audio",
+   "folder": "N01",
+   "media_id": "templates/2025-ahmed-nature/N01/N01_40__718c995f-1440-4737-bd41-14e0e50d537c.mp3",
+   "logicalFolder": "N01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_01__ab070899-77c1-4f8a-9b62-100e8539fa7c.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_01__ab070899-77c1-4f8a-9b62-100e8539fa7c.mp3",
+   "name": "N02_01.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_01__ab070899-77c1-4f8a-9b62-100e8539fa7c.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_02__12d55ae2-b2a1-4abe-922b-1c0767dc3aa0.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_02__12d55ae2-b2a1-4abe-922b-1c0767dc3aa0.mp3",
+   "name": "N02_02.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_02__12d55ae2-b2a1-4abe-922b-1c0767dc3aa0.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_03__841b2f2e-a676-4917-8025-10f8f35e285c.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_03__841b2f2e-a676-4917-8025-10f8f35e285c.mp3",
+   "name": "N02_03.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_03__841b2f2e-a676-4917-8025-10f8f35e285c.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_04__3bbd7ce9-2f66-454e-9a01-17f2eac1758a.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_04__3bbd7ce9-2f66-454e-9a01-17f2eac1758a.mp3",
+   "name": "N02_04.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_04__3bbd7ce9-2f66-454e-9a01-17f2eac1758a.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_05__ff382721-f938-46bb-a442-3ab79f7f5d28.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_05__ff382721-f938-46bb-a442-3ab79f7f5d28.mp3",
+   "name": "N02_05.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_05__ff382721-f938-46bb-a442-3ab79f7f5d28.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_06__ef72966d-536b-445d-86da-57d1dc35a1e5.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_06__ef72966d-536b-445d-86da-57d1dc35a1e5.mp3",
+   "name": "N02_06.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_06__ef72966d-536b-445d-86da-57d1dc35a1e5.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_07__44996ab5-d7ea-44ac-8de5-5d76cd8c0133.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_07__44996ab5-d7ea-44ac-8de5-5d76cd8c0133.mp3",
+   "name": "N02_07.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_07__44996ab5-d7ea-44ac-8de5-5d76cd8c0133.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_08__f3610c17-3fb6-4039-b111-e4684bd8ecf7.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_08__f3610c17-3fb6-4039-b111-e4684bd8ecf7.mp3",
+   "name": "N02_08.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_08__f3610c17-3fb6-4039-b111-e4684bd8ecf7.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_09__2cf7ea60-a6a5-4cc5-8b9b-366b9cbb7d6e.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_09__2cf7ea60-a6a5-4cc5-8b9b-366b9cbb7d6e.mp3",
+   "name": "N02_09.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_09__2cf7ea60-a6a5-4cc5-8b9b-366b9cbb7d6e.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_10__f4e815c3-b3ea-40fb-9c48-37738aa2d451.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_10__f4e815c3-b3ea-40fb-9c48-37738aa2d451.mp3",
+   "name": "N02_10.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_10__f4e815c3-b3ea-40fb-9c48-37738aa2d451.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_11__1a677d3a-ddfa-45ef-96d9-5da0073d408c.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_11__1a677d3a-ddfa-45ef-96d9-5da0073d408c.mp3",
+   "name": "N02_11.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_11__1a677d3a-ddfa-45ef-96d9-5da0073d408c.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_12__9e9eba04-8852-46e0-b9ff-d23960488a6c.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_12__9e9eba04-8852-46e0-b9ff-d23960488a6c.mp3",
+   "name": "N02_12.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_12__9e9eba04-8852-46e0-b9ff-d23960488a6c.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_13__371c713f-7cbf-41f0-b6d1-a720b3646647.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_13__371c713f-7cbf-41f0-b6d1-a720b3646647.mp3",
+   "name": "N02_13.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_13__371c713f-7cbf-41f0-b6d1-a720b3646647.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_14__60db2716-c073-421f-87ff-8f1fa903a6ca.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_14__60db2716-c073-421f-87ff-8f1fa903a6ca.mp3",
+   "name": "N02_14.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_14__60db2716-c073-421f-87ff-8f1fa903a6ca.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_15__4835e9e3-1c89-40eb-a6d7-1aa346afcf56.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_15__4835e9e3-1c89-40eb-a6d7-1aa346afcf56.mp3",
+   "name": "N02_15.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_15__4835e9e3-1c89-40eb-a6d7-1aa346afcf56.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_16__94df10aa-8e1d-433c-a750-aad13fc9d352.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_16__94df10aa-8e1d-433c-a750-aad13fc9d352.mp3",
+   "name": "N02_16.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_16__94df10aa-8e1d-433c-a750-aad13fc9d352.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_17__0faf9728-af81-41ab-a631-5245d7447ddf.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_17__0faf9728-af81-41ab-a631-5245d7447ddf.mp3",
+   "name": "N02_17.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_17__0faf9728-af81-41ab-a631-5245d7447ddf.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_18__e6af354a-b54a-485c-9e74-6c38176fb458.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_18__e6af354a-b54a-485c-9e74-6c38176fb458.mp3",
+   "name": "N02_18.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_18__e6af354a-b54a-485c-9e74-6c38176fb458.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_19__cfcc9bcd-087a-4800-9a7b-4bfcbe60585a.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_19__cfcc9bcd-087a-4800-9a7b-4bfcbe60585a.mp3",
+   "name": "N02_19.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_19__cfcc9bcd-087a-4800-9a7b-4bfcbe60585a.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_20__35079f03-a6a4-4632-8af2-d3f41214b889.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_20__35079f03-a6a4-4632-8af2-d3f41214b889.mp3",
+   "name": "N02_20.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_20__35079f03-a6a4-4632-8af2-d3f41214b889.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_21__e35fbb1c-e152-4744-a9ab-54270a10a086.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_21__e35fbb1c-e152-4744-a9ab-54270a10a086.mp3",
+   "name": "N02_21.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_21__e35fbb1c-e152-4744-a9ab-54270a10a086.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_22__938bc5e9-fcee-4e7f-a24c-3172a8198e3a.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_22__938bc5e9-fcee-4e7f-a24c-3172a8198e3a.mp3",
+   "name": "N02_22.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_22__938bc5e9-fcee-4e7f-a24c-3172a8198e3a.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_23__ec666d0a-b6e5-4b3b-aa9b-ae258a9b415d.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_23__ec666d0a-b6e5-4b3b-aa9b-ae258a9b415d.mp3",
+   "name": "N02_23.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_23__ec666d0a-b6e5-4b3b-aa9b-ae258a9b415d.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_24__e06e8f2a-807a-4d89-af1a-50c0a049ef04.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_24__e06e8f2a-807a-4d89-af1a-50c0a049ef04.mp3",
+   "name": "N02_24.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_24__e06e8f2a-807a-4d89-af1a-50c0a049ef04.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_25__3ca89b1a-81c5-48e7-80c6-d91ee497e209.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_25__3ca89b1a-81c5-48e7-80c6-d91ee497e209.mp3",
+   "name": "N02_25.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_25__3ca89b1a-81c5-48e7-80c6-d91ee497e209.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_26__c7d5e744-669d-4857-be20-5ad0369e588a.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_26__c7d5e744-669d-4857-be20-5ad0369e588a.mp3",
+   "name": "N02_26.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_26__c7d5e744-669d-4857-be20-5ad0369e588a.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_27__d4b11a59-48ab-4dd2-8970-ee6aaa5d652c.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_27__d4b11a59-48ab-4dd2-8970-ee6aaa5d652c.mp3",
+   "name": "N02_27.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_27__d4b11a59-48ab-4dd2-8970-ee6aaa5d652c.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_28__d22b06cd-579d-482d-ac63-31a7d61a1c03.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_28__d22b06cd-579d-482d-ac63-31a7d61a1c03.mp3",
+   "name": "N02_28.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_28__d22b06cd-579d-482d-ac63-31a7d61a1c03.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_29__b6858fdb-69c4-4bab-92c8-dac40f8d6440.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_29__b6858fdb-69c4-4bab-92c8-dac40f8d6440.mp3",
+   "name": "N02_29.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_29__b6858fdb-69c4-4bab-92c8-dac40f8d6440.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_30__fe3a36ff-0b54-4e70-baa6-75b4f340e338.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_30__fe3a36ff-0b54-4e70-baa6-75b4f340e338.mp3",
+   "name": "N02_30.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_30__fe3a36ff-0b54-4e70-baa6-75b4f340e338.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_31__e55a67d6-7853-449f-806e-837b3e2f02a9.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_31__e55a67d6-7853-449f-806e-837b3e2f02a9.mp3",
+   "name": "N02_31.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_31__e55a67d6-7853-449f-806e-837b3e2f02a9.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_32__5b9499a4-0138-4a9c-ab9e-2f83dd0e81e9.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_32__5b9499a4-0138-4a9c-ab9e-2f83dd0e81e9.mp3",
+   "name": "N02_32.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_32__5b9499a4-0138-4a9c-ab9e-2f83dd0e81e9.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_33__03e6fb3e-dbfb-4420-bff3-6edad5a8c023.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_33__03e6fb3e-dbfb-4420-bff3-6edad5a8c023.mp3",
+   "name": "N02_33.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_33__03e6fb3e-dbfb-4420-bff3-6edad5a8c023.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_34__23f5549c-e5c0-438a-ab59-9d8a0bb4a68c.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_34__23f5549c-e5c0-438a-ab59-9d8a0bb4a68c.mp3",
+   "name": "N02_34.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_34__23f5549c-e5c0-438a-ab59-9d8a0bb4a68c.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_35__8825ef82-ede4-4c36-b484-99e38cf1c625.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_35__8825ef82-ede4-4c36-b484-99e38cf1c625.mp3",
+   "name": "N02_35.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_35__8825ef82-ede4-4c36-b484-99e38cf1c625.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_36__dc081050-ac23-4150-ae00-3d07a91df894.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_36__dc081050-ac23-4150-ae00-3d07a91df894.mp3",
+   "name": "N02_36.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_36__dc081050-ac23-4150-ae00-3d07a91df894.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_37__f1f0a019-9b98-439f-870f-7bc771c5f92d.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_37__f1f0a019-9b98-439f-870f-7bc771c5f92d.mp3",
+   "name": "N02_37.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_37__f1f0a019-9b98-439f-870f-7bc771c5f92d.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_38__1fb1f138-03c5-4791-8bf0-43944e596a74.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_38__1fb1f138-03c5-4791-8bf0-43944e596a74.mp3",
+   "name": "N02_38.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_38__1fb1f138-03c5-4791-8bf0-43944e596a74.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_39__3f019ec0-ed8f-4d29-b731-e2c2e79fc267.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_39__3f019ec0-ed8f-4d29-b731-e2c2e79fc267.mp3",
+   "name": "N02_39.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_39__3f019ec0-ed8f-4d29-b731-e2c2e79fc267.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/N02/N02_40__b4d21196-bcfc-4268-a488-d39429db6ad8.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/N02/N02_40__b4d21196-bcfc-4268-a488-d39429db6ad8.mp3",
+   "name": "N02_40.mp3",
+   "type": "audio",
+   "folder": "N02",
+   "media_id": "templates/2025-ahmed-nature/N02/N02_40__b4d21196-bcfc-4268-a488-d39429db6ad8.mp3",
+   "logicalFolder": "N02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/attn/attn1__107a0061-da0e-4e7a-a291-1843584f4550.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/attn/attn1__107a0061-da0e-4e7a-a291-1843584f4550.mp3",
+   "name": "attn1.mp3",
+   "type": "audio",
+   "folder": "attn",
+   "media_id": "templates/2025-ahmed-nature/attn/attn1__107a0061-da0e-4e7a-a291-1843584f4550.mp3",
+   "logicalFolder": "attn",
+   "original_bytes": 71078,
+   "uploaded_bytes": 71078,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/calib/t1_1__9e72c582-6edc-4e15-bb59-37fc9903da77.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/calib/t1_1__9e72c582-6edc-4e15-bb59-37fc9903da77.mp3",
+   "name": "t1_1.mp3",
+   "type": "audio",
+   "folder": "calib",
+   "media_id": "templates/2025-ahmed-nature/calib/t1_1__9e72c582-6edc-4e15-bb59-37fc9903da77.mp3",
+   "logicalFolder": "calib",
+   "original_bytes": 64809,
+   "uploaded_bytes": 64809,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/calib/t1_2__ee17ffb0-7741-4e72-ae08-ec0dda8efe07.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/calib/t1_2__ee17ffb0-7741-4e72-ae08-ec0dda8efe07.mp3",
+   "name": "t1_2.mp3",
+   "type": "audio",
+   "folder": "calib",
+   "media_id": "templates/2025-ahmed-nature/calib/t1_2__ee17ffb0-7741-4e72-ae08-ec0dda8efe07.mp3",
+   "logicalFolder": "calib",
+   "original_bytes": 64809,
+   "uploaded_bytes": 64809,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/calib/t2_1__f3d47313-ac2e-4cb4-b2a0-773bd7eafa5d.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/calib/t2_1__f3d47313-ac2e-4cb4-b2a0-773bd7eafa5d.mp3",
+   "name": "t2_1.mp3",
+   "type": "audio",
+   "folder": "calib",
+   "media_id": "templates/2025-ahmed-nature/calib/t2_1__f3d47313-ac2e-4cb4-b2a0-773bd7eafa5d.mp3",
+   "logicalFolder": "calib",
+   "original_bytes": 64809,
+   "uploaded_bytes": 64809,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/calib/t2_2__b72d2a0a-e13f-4bba-9d6a-be9c3647d683.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/calib/t2_2__b72d2a0a-e13f-4bba-9d6a-be9c3647d683.mp3",
+   "name": "t2_2.mp3",
+   "type": "audio",
+   "folder": "calib",
+   "media_id": "templates/2025-ahmed-nature/calib/t2_2__b72d2a0a-e13f-4bba-9d6a-be9c3647d683.mp3",
+   "logicalFolder": "calib",
+   "original_bytes": 64809,
+   "uploaded_bytes": 64809,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/calib/t3_1__8e918a73-d1c1-4f03-9995-202b2adddb53.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/calib/t3_1__8e918a73-d1c1-4f03-9995-202b2adddb53.mp3",
+   "name": "t3_1.mp3",
+   "type": "audio",
+   "folder": "calib",
+   "media_id": "templates/2025-ahmed-nature/calib/t3_1__8e918a73-d1c1-4f03-9995-202b2adddb53.mp3",
+   "logicalFolder": "calib",
+   "original_bytes": 64809,
+   "uploaded_bytes": 64809,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/calib/t3_2__3c0a620f-8be0-471b-aa2b-e8c5441edffa.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/calib/t3_2__3c0a620f-8be0-471b-aa2b-e8c5441edffa.mp3",
+   "name": "t3_2.mp3",
+   "type": "audio",
+   "folder": "calib",
+   "media_id": "templates/2025-ahmed-nature/calib/t3_2__3c0a620f-8be0-471b-aa2b-e8c5441edffa.mp3",
+   "logicalFolder": "calib",
+   "original_bytes": 64809,
+   "uploaded_bytes": 64809,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/calib/volumetest__077e81fe-fde6-4b07-91ca-141ac5f5ddb9.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/calib/volumetest__077e81fe-fde6-4b07-91ca-141ac5f5ddb9.mp3",
+   "name": "volumetest.mp3",
+   "type": "audio",
+   "folder": "calib",
+   "media_id": "templates/2025-ahmed-nature/calib/volumetest__077e81fe-fde6-4b07-91ca-141ac5f5ddb9.mp3",
+   "logicalFolder": "calib",
+   "original_bytes": 83327,
+   "uploaded_bytes": 83327,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/letters/letter_1__ff622653-2afb-4743-9916-018e2e049f0d.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/letters/letter_1__ff622653-2afb-4743-9916-018e2e049f0d.mp3",
+   "name": "letter_1.mp3",
+   "type": "audio",
+   "folder": "letters",
+   "media_id": "templates/2025-ahmed-nature/letters/letter_1__ff622653-2afb-4743-9916-018e2e049f0d.mp3",
+   "logicalFolder": "letters",
+   "original_bytes": 7821,
+   "uploaded_bytes": 7821,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/letters/letter_2__c41ecf47-d142-4ba5-a520-2fabfa0c0def.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/letters/letter_2__c41ecf47-d142-4ba5-a520-2fabfa0c0def.mp3",
+   "name": "letter_2.mp3",
+   "type": "audio",
+   "folder": "letters",
+   "media_id": "templates/2025-ahmed-nature/letters/letter_2__c41ecf47-d142-4ba5-a520-2fabfa0c0def.mp3",
+   "logicalFolder": "letters",
+   "original_bytes": 6525,
+   "uploaded_bytes": 6525,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/letters/letter_3__04189530-87fb-4cf3-ae79-8c0fc1ff092f.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/letters/letter_3__04189530-87fb-4cf3-ae79-8c0fc1ff092f.mp3",
+   "name": "letter_3.mp3",
+   "type": "audio",
+   "folder": "letters",
+   "media_id": "templates/2025-ahmed-nature/letters/letter_3__04189530-87fb-4cf3-ae79-8c0fc1ff092f.mp3",
+   "logicalFolder": "letters",
+   "original_bytes": 6957,
+   "uploaded_bytes": 6957,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/letters/letter_4__589b0735-35a6-48a4-8aa8-4c7d838e3b5b.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/letters/letter_4__589b0735-35a6-48a4-8aa8-4c7d838e3b5b.mp3",
+   "name": "letter_4.mp3",
+   "type": "audio",
+   "folder": "letters",
+   "media_id": "templates/2025-ahmed-nature/letters/letter_4__589b0735-35a6-48a4-8aa8-4c7d838e3b5b.mp3",
+   "logicalFolder": "letters",
+   "original_bytes": 7389,
+   "uploaded_bytes": 7389,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/letters/letter_5__a5edf5d9-29d8-4bc8-839d-94c4347f19aa.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/letters/letter_5__a5edf5d9-29d8-4bc8-839d-94c4347f19aa.mp3",
+   "name": "letter_5.mp3",
+   "type": "audio",
+   "folder": "letters",
+   "media_id": "templates/2025-ahmed-nature/letters/letter_5__a5edf5d9-29d8-4bc8-839d-94c4347f19aa.mp3",
+   "logicalFolder": "letters",
+   "original_bytes": 5661,
+   "uploaded_bytes": 5661,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/letters/letter_6__61bd309b-707a-4317-abaa-93743c383a00.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/letters/letter_6__61bd309b-707a-4317-abaa-93743c383a00.mp3",
+   "name": "letter_6.mp3",
+   "type": "audio",
+   "folder": "letters",
+   "media_id": "templates/2025-ahmed-nature/letters/letter_6__61bd309b-707a-4317-abaa-93743c383a00.mp3",
+   "logicalFolder": "letters",
+   "original_bytes": 6957,
+   "uploaded_bytes": 6957,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/letters/letter_7__cd850e9a-a277-4ae2-b61d-8039eed8cc3c.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/letters/letter_7__cd850e9a-a277-4ae2-b61d-8039eed8cc3c.mp3",
+   "name": "letter_7.mp3",
+   "type": "audio",
+   "folder": "letters",
+   "media_id": "templates/2025-ahmed-nature/letters/letter_7__cd850e9a-a277-4ae2-b61d-8039eed8cc3c.mp3",
+   "logicalFolder": "letters",
+   "original_bytes": 6093,
+   "uploaded_bytes": 6093,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/letters/letter_8__b85383cc-61d4-4da9-b0ca-2896713f381d.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/letters/letter_8__b85383cc-61d4-4da9-b0ca-2896713f381d.mp3",
+   "name": "letter_8.mp3",
+   "type": "audio",
+   "folder": "letters",
+   "media_id": "templates/2025-ahmed-nature/letters/letter_8__b85383cc-61d4-4da9-b0ca-2896713f381d.mp3",
+   "logicalFolder": "letters",
+   "original_bytes": 6093,
+   "uploaded_bytes": 6093,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_01__5d6677ee-7de3-45e8-9be0-5efcd4f09def.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_01__5d6677ee-7de3-45e8-9be0-5efcd4f09def.mp3",
+   "name": "U01_01.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_01__5d6677ee-7de3-45e8-9be0-5efcd4f09def.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_02__d1357a96-470f-46fe-b62f-296ceae11214.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_02__d1357a96-470f-46fe-b62f-296ceae11214.mp3",
+   "name": "U01_02.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_02__d1357a96-470f-46fe-b62f-296ceae11214.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_03__60552176-c86e-448d-b7de-754091ab8f51.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_03__60552176-c86e-448d-b7de-754091ab8f51.mp3",
+   "name": "U01_03.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_03__60552176-c86e-448d-b7de-754091ab8f51.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_04__b13af73c-ec68-43c6-8544-68c84f34b566.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_04__b13af73c-ec68-43c6-8544-68c84f34b566.mp3",
+   "name": "U01_04.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_04__b13af73c-ec68-43c6-8544-68c84f34b566.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_05__e7f3d443-4f47-43be-84cb-4c53fa8567cd.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_05__e7f3d443-4f47-43be-84cb-4c53fa8567cd.mp3",
+   "name": "U01_05.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_05__e7f3d443-4f47-43be-84cb-4c53fa8567cd.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_06__75501836-051c-496b-b29d-0cdfd0c8373c.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_06__75501836-051c-496b-b29d-0cdfd0c8373c.mp3",
+   "name": "U01_06.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_06__75501836-051c-496b-b29d-0cdfd0c8373c.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_07__5e02a0b8-d743-4631-baaf-7c4f1a19f938.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_07__5e02a0b8-d743-4631-baaf-7c4f1a19f938.mp3",
+   "name": "U01_07.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_07__5e02a0b8-d743-4631-baaf-7c4f1a19f938.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_08__00a2001c-9af2-4cf7-9fae-f48bdf685f9b.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_08__00a2001c-9af2-4cf7-9fae-f48bdf685f9b.mp3",
+   "name": "U01_08.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_08__00a2001c-9af2-4cf7-9fae-f48bdf685f9b.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_09__8734d5c3-99a3-4e63-b207-90c60ff7e2cd.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_09__8734d5c3-99a3-4e63-b207-90c60ff7e2cd.mp3",
+   "name": "U01_09.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_09__8734d5c3-99a3-4e63-b207-90c60ff7e2cd.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_10__3fdfceea-d5c7-4443-be05-0db85622dcff.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_10__3fdfceea-d5c7-4443-be05-0db85622dcff.mp3",
+   "name": "U01_10.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_10__3fdfceea-d5c7-4443-be05-0db85622dcff.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_11__0c53ef40-3347-49c6-b7fa-94180ec534c7.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_11__0c53ef40-3347-49c6-b7fa-94180ec534c7.mp3",
+   "name": "U01_11.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_11__0c53ef40-3347-49c6-b7fa-94180ec534c7.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_12__332602a1-20ae-4651-b1bb-332a4e1a624a.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_12__332602a1-20ae-4651-b1bb-332a4e1a624a.mp3",
+   "name": "U01_12.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_12__332602a1-20ae-4651-b1bb-332a4e1a624a.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_13__2bbc9827-d659-4690-a73e-be358c13006c.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_13__2bbc9827-d659-4690-a73e-be358c13006c.mp3",
+   "name": "U01_13.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_13__2bbc9827-d659-4690-a73e-be358c13006c.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_14__edd799f4-0fdc-4842-9f64-f32ba22054a0.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_14__edd799f4-0fdc-4842-9f64-f32ba22054a0.mp3",
+   "name": "U01_14.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_14__edd799f4-0fdc-4842-9f64-f32ba22054a0.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_15__c0089e8f-2059-45ba-94d7-0d92c0ef20ac.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_15__c0089e8f-2059-45ba-94d7-0d92c0ef20ac.mp3",
+   "name": "U01_15.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_15__c0089e8f-2059-45ba-94d7-0d92c0ef20ac.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_16__82d6f041-01ca-43df-8148-7b173a2cccec.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_16__82d6f041-01ca-43df-8148-7b173a2cccec.mp3",
+   "name": "U01_16.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_16__82d6f041-01ca-43df-8148-7b173a2cccec.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_17__4275a3f1-da19-4162-b0b1-aa2c69085873.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_17__4275a3f1-da19-4162-b0b1-aa2c69085873.mp3",
+   "name": "U01_17.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_17__4275a3f1-da19-4162-b0b1-aa2c69085873.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_18__e2488812-7cab-4aba-92ec-37b56afb34ec.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_18__e2488812-7cab-4aba-92ec-37b56afb34ec.mp3",
+   "name": "U01_18.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_18__e2488812-7cab-4aba-92ec-37b56afb34ec.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_19__ba86d93d-33d1-4924-9517-10fd2ba7a61d.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_19__ba86d93d-33d1-4924-9517-10fd2ba7a61d.mp3",
+   "name": "U01_19.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_19__ba86d93d-33d1-4924-9517-10fd2ba7a61d.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_20__9838f57f-7df3-4019-8255-9340a15ccdbd.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_20__9838f57f-7df3-4019-8255-9340a15ccdbd.mp3",
+   "name": "U01_20.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_20__9838f57f-7df3-4019-8255-9340a15ccdbd.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_21__af0f3230-f0b5-47c0-a03f-ee0f1b4abc66.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_21__af0f3230-f0b5-47c0-a03f-ee0f1b4abc66.mp3",
+   "name": "U01_21.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_21__af0f3230-f0b5-47c0-a03f-ee0f1b4abc66.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_22__feda93f2-7f5b-4dc1-847f-912e7ec1cd09.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_22__feda93f2-7f5b-4dc1-847f-912e7ec1cd09.mp3",
+   "name": "U01_22.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_22__feda93f2-7f5b-4dc1-847f-912e7ec1cd09.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_23__dc86bfaa-2dd2-4ffd-b1df-91b01658462c.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_23__dc86bfaa-2dd2-4ffd-b1df-91b01658462c.mp3",
+   "name": "U01_23.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_23__dc86bfaa-2dd2-4ffd-b1df-91b01658462c.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_24__276bb993-6cf4-47a0-b763-822cf0645432.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_24__276bb993-6cf4-47a0-b763-822cf0645432.mp3",
+   "name": "U01_24.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_24__276bb993-6cf4-47a0-b763-822cf0645432.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_25__1470d51a-65e4-4a2a-971b-afe753883986.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_25__1470d51a-65e4-4a2a-971b-afe753883986.mp3",
+   "name": "U01_25.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_25__1470d51a-65e4-4a2a-971b-afe753883986.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_26__1447f067-6206-4864-af0f-4b5e48c58420.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_26__1447f067-6206-4864-af0f-4b5e48c58420.mp3",
+   "name": "U01_26.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_26__1447f067-6206-4864-af0f-4b5e48c58420.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_27__7087141d-aa79-4d13-861a-bbaa82c4db5f.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_27__7087141d-aa79-4d13-861a-bbaa82c4db5f.mp3",
+   "name": "U01_27.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_27__7087141d-aa79-4d13-861a-bbaa82c4db5f.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_28__880b6492-fff8-4a2d-98bc-ff375c560cae.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_28__880b6492-fff8-4a2d-98bc-ff375c560cae.mp3",
+   "name": "U01_28.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_28__880b6492-fff8-4a2d-98bc-ff375c560cae.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_29__8fb69d1e-0e2e-49ee-a7c8-06238f6d0d33.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_29__8fb69d1e-0e2e-49ee-a7c8-06238f6d0d33.mp3",
+   "name": "U01_29.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_29__8fb69d1e-0e2e-49ee-a7c8-06238f6d0d33.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_30__43a5243b-4c72-4774-a40a-d86e48b18993.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_30__43a5243b-4c72-4774-a40a-d86e48b18993.mp3",
+   "name": "U01_30.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_30__43a5243b-4c72-4774-a40a-d86e48b18993.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_31__923b4d18-c121-41fd-9f80-492647ad657c.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_31__923b4d18-c121-41fd-9f80-492647ad657c.mp3",
+   "name": "U01_31.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_31__923b4d18-c121-41fd-9f80-492647ad657c.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_32__38fa8680-b47d-44e0-8f97-78a524f41691.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_32__38fa8680-b47d-44e0-8f97-78a524f41691.mp3",
+   "name": "U01_32.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_32__38fa8680-b47d-44e0-8f97-78a524f41691.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_33__d8d5d96b-55a2-458f-9db3-095346271299.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_33__d8d5d96b-55a2-458f-9db3-095346271299.mp3",
+   "name": "U01_33.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_33__d8d5d96b-55a2-458f-9db3-095346271299.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_34__2e4520e5-ab4f-4ef1-bff7-ea40e887470a.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_34__2e4520e5-ab4f-4ef1-bff7-ea40e887470a.mp3",
+   "name": "U01_34.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_34__2e4520e5-ab4f-4ef1-bff7-ea40e887470a.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_35__38587af6-0b0c-4837-8ee7-73bba055e43b.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_35__38587af6-0b0c-4837-8ee7-73bba055e43b.mp3",
+   "name": "U01_35.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_35__38587af6-0b0c-4837-8ee7-73bba055e43b.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_36__625b4316-752a-44a5-9ea1-e6f5c60aca4e.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_36__625b4316-752a-44a5-9ea1-e6f5c60aca4e.mp3",
+   "name": "U01_36.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_36__625b4316-752a-44a5-9ea1-e6f5c60aca4e.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_37__bd83d067-c88c-45a8-b670-cfb6a3dd57e5.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_37__bd83d067-c88c-45a8-b670-cfb6a3dd57e5.mp3",
+   "name": "U01_37.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_37__bd83d067-c88c-45a8-b670-cfb6a3dd57e5.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_38__cbb2f4f9-6cdb-4257-9054-2eb4d7099ad5.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_38__cbb2f4f9-6cdb-4257-9054-2eb4d7099ad5.mp3",
+   "name": "U01_38.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_38__cbb2f4f9-6cdb-4257-9054-2eb4d7099ad5.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_39__2a8145aa-88c9-4241-ac3e-b80e27bf4175.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_39__2a8145aa-88c9-4241-ac3e-b80e27bf4175.mp3",
+   "name": "U01_39.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_39__2a8145aa-88c9-4241-ac3e-b80e27bf4175.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U01/U01_40__7b2f6499-c195-493a-822a-da92d928ee2b.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U01/U01_40__7b2f6499-c195-493a-822a-da92d928ee2b.mp3",
+   "name": "U01_40.mp3",
+   "type": "audio",
+   "folder": "U01",
+   "media_id": "templates/2025-ahmed-nature/U01/U01_40__7b2f6499-c195-493a-822a-da92d928ee2b.mp3",
+   "logicalFolder": "U01",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_01__dae93fff-6b78-4b20-b830-29194dd2d862.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_01__dae93fff-6b78-4b20-b830-29194dd2d862.mp3",
+   "name": "U02_01.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_01__dae93fff-6b78-4b20-b830-29194dd2d862.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_02__76161b4f-e8fb-4504-98f1-9606d62cd6b4.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_02__76161b4f-e8fb-4504-98f1-9606d62cd6b4.mp3",
+   "name": "U02_02.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_02__76161b4f-e8fb-4504-98f1-9606d62cd6b4.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_03__d6aae90a-0a34-42c8-84a5-2d4f48db74ec.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_03__d6aae90a-0a34-42c8-84a5-2d4f48db74ec.mp3",
+   "name": "U02_03.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_03__d6aae90a-0a34-42c8-84a5-2d4f48db74ec.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_04__b57c294f-f9e3-482e-a495-8afe73856f5a.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_04__b57c294f-f9e3-482e-a495-8afe73856f5a.mp3",
+   "name": "U02_04.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_04__b57c294f-f9e3-482e-a495-8afe73856f5a.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_05__814461f5-99b3-4592-a70c-0d466b480c87.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_05__814461f5-99b3-4592-a70c-0d466b480c87.mp3",
+   "name": "U02_05.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_05__814461f5-99b3-4592-a70c-0d466b480c87.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_06__0521fdb8-018e-4044-b4fd-5e2f61bfccd2.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_06__0521fdb8-018e-4044-b4fd-5e2f61bfccd2.mp3",
+   "name": "U02_06.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_06__0521fdb8-018e-4044-b4fd-5e2f61bfccd2.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_07__4454f2b9-9ae6-4a55-959a-7c0d7bece02b.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_07__4454f2b9-9ae6-4a55-959a-7c0d7bece02b.mp3",
+   "name": "U02_07.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_07__4454f2b9-9ae6-4a55-959a-7c0d7bece02b.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_08__10030725-f433-4928-a44b-48efe43a46e7.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_08__10030725-f433-4928-a44b-48efe43a46e7.mp3",
+   "name": "U02_08.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_08__10030725-f433-4928-a44b-48efe43a46e7.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_09__828f138f-45fe-4830-a000-3775a5ce4b25.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_09__828f138f-45fe-4830-a000-3775a5ce4b25.mp3",
+   "name": "U02_09.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_09__828f138f-45fe-4830-a000-3775a5ce4b25.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_10__a2d156fe-7664-4fe1-bb8b-59bfb7bdf802.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_10__a2d156fe-7664-4fe1-bb8b-59bfb7bdf802.mp3",
+   "name": "U02_10.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_10__a2d156fe-7664-4fe1-bb8b-59bfb7bdf802.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_11__734d14a8-080b-4aa5-981d-2de42f61e678.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_11__734d14a8-080b-4aa5-981d-2de42f61e678.mp3",
+   "name": "U02_11.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_11__734d14a8-080b-4aa5-981d-2de42f61e678.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_12__532e83ff-4392-4d08-980a-7d514733e358.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_12__532e83ff-4392-4d08-980a-7d514733e358.mp3",
+   "name": "U02_12.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_12__532e83ff-4392-4d08-980a-7d514733e358.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_13__4b1cf47a-98a4-4b2a-86b3-2cf4fb0fa697.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_13__4b1cf47a-98a4-4b2a-86b3-2cf4fb0fa697.mp3",
+   "name": "U02_13.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_13__4b1cf47a-98a4-4b2a-86b3-2cf4fb0fa697.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_14__ce2272d8-8055-49a4-a261-0c64f7bd9399.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_14__ce2272d8-8055-49a4-a261-0c64f7bd9399.mp3",
+   "name": "U02_14.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_14__ce2272d8-8055-49a4-a261-0c64f7bd9399.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_15__3a9fa4fb-13c9-449e-ad54-4f08cdd722da.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_15__3a9fa4fb-13c9-449e-ad54-4f08cdd722da.mp3",
+   "name": "U02_15.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_15__3a9fa4fb-13c9-449e-ad54-4f08cdd722da.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_16__2b938914-5fd7-4860-bdb9-86e5392b5af9.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_16__2b938914-5fd7-4860-bdb9-86e5392b5af9.mp3",
+   "name": "U02_16.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_16__2b938914-5fd7-4860-bdb9-86e5392b5af9.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_17__0f1a79d7-617d-45b6-b37c-4e10ef07c4bb.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_17__0f1a79d7-617d-45b6-b37c-4e10ef07c4bb.mp3",
+   "name": "U02_17.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_17__0f1a79d7-617d-45b6-b37c-4e10ef07c4bb.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_18__0ac467b8-568f-4ad4-bdbe-008cf2e5bae9.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_18__0ac467b8-568f-4ad4-bdbe-008cf2e5bae9.mp3",
+   "name": "U02_18.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_18__0ac467b8-568f-4ad4-bdbe-008cf2e5bae9.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_19__41a42400-a176-4d50-b555-5e8073062bdc.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_19__41a42400-a176-4d50-b555-5e8073062bdc.mp3",
+   "name": "U02_19.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_19__41a42400-a176-4d50-b555-5e8073062bdc.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_20__0c16d881-72fd-49f6-aa03-dc55073fadbb.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_20__0c16d881-72fd-49f6-aa03-dc55073fadbb.mp3",
+   "name": "U02_20.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_20__0c16d881-72fd-49f6-aa03-dc55073fadbb.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_21__02f1fd24-9e1b-4f76-bc51-b075933e8636.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_21__02f1fd24-9e1b-4f76-bc51-b075933e8636.mp3",
+   "name": "U02_21.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_21__02f1fd24-9e1b-4f76-bc51-b075933e8636.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_22__5056faba-70bf-4bee-8f6c-a0a137ffef69.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_22__5056faba-70bf-4bee-8f6c-a0a137ffef69.mp3",
+   "name": "U02_22.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_22__5056faba-70bf-4bee-8f6c-a0a137ffef69.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_23__768aeb2f-2c73-46b9-b9fe-69457d5d6247.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_23__768aeb2f-2c73-46b9-b9fe-69457d5d6247.mp3",
+   "name": "U02_23.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_23__768aeb2f-2c73-46b9-b9fe-69457d5d6247.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_24__fa25daf0-b801-49e9-aec8-bd44e519c68a.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_24__fa25daf0-b801-49e9-aec8-bd44e519c68a.mp3",
+   "name": "U02_24.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_24__fa25daf0-b801-49e9-aec8-bd44e519c68a.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_25__ad0bbeeb-f50c-4eee-9557-4120be39a672.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_25__ad0bbeeb-f50c-4eee-9557-4120be39a672.mp3",
+   "name": "U02_25.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_25__ad0bbeeb-f50c-4eee-9557-4120be39a672.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_26__7b431a49-3d1e-42b7-8a7d-d3d4b2c37056.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_26__7b431a49-3d1e-42b7-8a7d-d3d4b2c37056.mp3",
+   "name": "U02_26.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_26__7b431a49-3d1e-42b7-8a7d-d3d4b2c37056.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_27__00827821-f47e-4e51-ba7b-380b9fa12394.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_27__00827821-f47e-4e51-ba7b-380b9fa12394.mp3",
+   "name": "U02_27.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_27__00827821-f47e-4e51-ba7b-380b9fa12394.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_28__9948fb69-a0cb-47bc-b00f-9c90752cac05.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_28__9948fb69-a0cb-47bc-b00f-9c90752cac05.mp3",
+   "name": "U02_28.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_28__9948fb69-a0cb-47bc-b00f-9c90752cac05.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_29__aa87799d-c61c-4aad-8bb7-33f703d4c0bd.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_29__aa87799d-c61c-4aad-8bb7-33f703d4c0bd.mp3",
+   "name": "U02_29.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_29__aa87799d-c61c-4aad-8bb7-33f703d4c0bd.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_30__02db1866-4afd-4762-ad52-3431170c5375.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_30__02db1866-4afd-4762-ad52-3431170c5375.mp3",
+   "name": "U02_30.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_30__02db1866-4afd-4762-ad52-3431170c5375.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_31__7418137f-463b-4d46-a799-f3c7b6c86e3f.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_31__7418137f-463b-4d46-a799-f3c7b6c86e3f.mp3",
+   "name": "U02_31.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_31__7418137f-463b-4d46-a799-f3c7b6c86e3f.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_32__2d6bdb75-91b8-4c2c-a8c3-8d9c486dc531.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_32__2d6bdb75-91b8-4c2c-a8c3-8d9c486dc531.mp3",
+   "name": "U02_32.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_32__2d6bdb75-91b8-4c2c-a8c3-8d9c486dc531.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_33__f82f5ce9-dfb3-4785-9a8d-fb31cc2fa4a3.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_33__f82f5ce9-dfb3-4785-9a8d-fb31cc2fa4a3.mp3",
+   "name": "U02_33.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_33__f82f5ce9-dfb3-4785-9a8d-fb31cc2fa4a3.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_34__222ac9e9-43c4-4c68-9728-43da360469ad.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_34__222ac9e9-43c4-4c68-9728-43da360469ad.mp3",
+   "name": "U02_34.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_34__222ac9e9-43c4-4c68-9728-43da360469ad.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_35__320f8a1c-c4f8-44cd-85fa-2e20ea818553.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_35__320f8a1c-c4f8-44cd-85fa-2e20ea818553.mp3",
+   "name": "U02_35.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_35__320f8a1c-c4f8-44cd-85fa-2e20ea818553.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_36__3ff89d2f-7e78-44f0-99e8-4d28ba55e740.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_36__3ff89d2f-7e78-44f0-99e8-4d28ba55e740.mp3",
+   "name": "U02_36.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_36__3ff89d2f-7e78-44f0-99e8-4d28ba55e740.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_37__16eea072-fe3e-4c80-8080-9e10d29c1b5e.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_37__16eea072-fe3e-4c80-8080-9e10d29c1b5e.mp3",
+   "name": "U02_37.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_37__16eea072-fe3e-4c80-8080-9e10d29c1b5e.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_38__8d0e91c9-e405-4011-ab88-a8b04caf50ce.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_38__8d0e91c9-e405-4011-ab88-a8b04caf50ce.mp3",
+   "name": "U02_38.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_38__8d0e91c9-e405-4011-ab88-a8b04caf50ce.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_39__7187a8e4-f0db-44e2-a029-99392e56683f.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_39__7187a8e4-f0db-44e2-a029-99392e56683f.mp3",
+   "name": "U02_39.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_39__7187a8e4-f0db-44e2-a029-99392e56683f.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-ahmed-nature/U02/U02_40__61c17e6a-4c59-4b65-9cbb-052943c6e403.mp3",
+   "url": "https://media.sp-survey.org/templates/2025-ahmed-nature/U02/U02_40__61c17e6a-4c59-4b65-9cbb-052943c6e403.mp3",
+   "name": "U02_40.mp3",
+   "type": "audio",
+   "folder": "U02",
+   "media_id": "templates/2025-ahmed-nature/U02/U02_40__61c17e6a-4c59-4b65-9cbb-052943c6e403.mp3",
+   "logicalFolder": "U02",
+   "original_bytes": 224887,
+   "uploaded_bytes": 224887,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Listening through a landline: Using degraded sounds to examine the relationship between cognitive restoration and preference",
+  "authors": [
+   "Huda Ahmed",
+   "Kathryne Van Hedger",
+   "Marc G. Berman",
+   "Stephen C. Van Hedger"
+  ],
+  "year": 2025,
+  "venue": "Journal of Environmental Psychology",
+  "doi": "10.1016/j.jenvp.2025.102608",
+  "url": "https://doi.org/10.1016/j.jenvp.2025.102608"
+ }
+}

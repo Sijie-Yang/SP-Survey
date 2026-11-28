@@ -1,0 +1,971 @@
+{
+ "id": "2021-braun-mine",
+ "name": "Mine Spoil-Heap Forests – Walk Rating & Choice Experiment",
+ "description": "Faithful replication of Braun Kohlová, Máca & Melichar (2021), \"How High Is the Recreation Value of Successional Forests Growing Spontaneously on Coal Mine Spoil Heaps?\", Forests 12:160. Part 1 (direct measure, 2 × 2 between-subjects): after viewing photos of the main forest types, each participant rates five forests in a random order: \"How attractive would it be for you to walk one hour on the pathway in this forest?\" (-2 not at all … 2 very attractive). Everyone rates the reference spruce forest (75 years), birch succession (55 years), alder and pine plantations (35 years), plus a randomly assigned 15- or 35-year-old successional forest; a label on the forest's origin is shown to a random half. Part 2 (discrete choice experiment): each participant is randomly assigned to one of four blocks and makes eight choices between two forest localities that differ in forest type, age and access time (5–25 min), or stays at home. The 32 choice tasks, their left/right layout and order were reconstructed exactly from the authors' published data (Supplementary Table S2). In the original study (869 Czech adults), all mine forests had a lower recreation value than the spruce forest, successional forests were not systematically less valuable than planted ones, recreation value grew with forest age, and the origin label had no effect.\n\nPhotographs: Braun Kohlová et al. (2021), Figure A1, CC BY 4.0. Used with credit for research; the template is removed if the authors object.\n\nDifferences from the original study: (1) each forest is shown with two photographs (as printed in Figure A1) instead of the original quartet of four; (2) English only (original Czech); (3) the five visual-feature ratings that followed the photo overview in Part 1 (reported in a separate paper, see template 2021-braun-postmining) are left out; (4) the wording of the \"planted\" forest-type label follows the paper's description, as only the spruce and succession labels are shown verbatim in Figure 3; (5) demographics are limited to gender, age and education, and a consent checkbox was added.",
+ "author": "Braun Kohlová, Máca & Melichar",
+ "year": "2021",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "source:paper",
+  "modality:scene_photo",
+  "task:rating",
+  "task:choose_from_set",
+  "task:questionnaire",
+  "concept:preference",
+  "concept:naturalness",
+  "participants:residents",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:Czech Republic",
+  "city:Sokolov"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/f12020160",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T19:58:16.683+00:00",
+ "updatedAt": "2026-11-27T19:58:44.139+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part in this survey.",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "part1",
+    "title": "Part 1: direct measure",
+    "elements": [
+     {
+      "name": "walk_attractiveness",
+      "type": "custom",
+      "items": [
+       {
+        "low": "-2 = not at all attractive",
+        "high": "2 = very attractive",
+        "name": "attractiveness",
+        "scale": [
+         -2,
+         2
+        ]
+       }
+      ],
+      "title": "How attractive would it be for you to walk one hour on the pathway in this forest?",
+      "trials": [
+       {
+        "id": "spr75",
+        "age": 75,
+        "label": "Common forest in a locality not affected by coal mining",
+        "short": "Norway spruce, commercial timber forest",
+        "origin": "common",
+        "photos": [
+         "spr75_1.jpg",
+         "spr75_2.jpg"
+        ]
+       },
+       {
+        "id": "pin35",
+        "age": 35,
+        "label": "Planted on a spoil heap after open-cast coal mining",
+        "short": "Scots pine, planted",
+        "origin": "planted",
+        "photos": [
+         "pin35_1.jpg",
+         "pin35_2.jpg"
+        ]
+       },
+       {
+        "id": "ald35",
+        "age": 35,
+        "label": "Planted on a spoil heap after open-cast coal mining",
+        "short": "Black alder, planted",
+        "origin": "planted",
+        "photos": [
+         "ald35_1.jpg",
+         "ald35_2.jpg"
+        ]
+       },
+       {
+        "id": "suc15",
+        "age": 15,
+        "label": "Spontaneously growing on a spoil heap after open-cast coal mining",
+        "short": "Succession (white birch, Scots pine, Norway spruce)",
+        "origin": "succ",
+        "photos": [
+         "suc15_1.jpg",
+         "suc15_2.jpg"
+        ]
+       },
+       {
+        "id": "suc35",
+        "age": 35,
+        "label": "Spontaneously growing on a spoil heap after open-cast coal mining",
+        "short": "Succession (goat willow)",
+        "origin": "succ",
+        "photos": [
+         "suc35_1.jpg",
+         "suc35_2.jpg"
+        ]
+       },
+       {
+        "id": "suc55",
+        "age": 55,
+        "label": "Spontaneously growing on a spoil heap after open-cast coal mining",
+        "short": "Succession (white birch)",
+        "origin": "succ",
+        "photos": [
+         "suc55_1.jpg",
+         "suc55_2.jpg"
+        ]
+       }
+      ],
+      "isRequired": true,
+      "description": "Part 1, 2 x 2 between-subjects design (paper Table A1): every participant rates Spr75, Suc55, Ald35, Pin35 plus ONE of Suc15/Suc35 (random), in a random order; a label on the forest's origin is shown to a random half. Value: {attractiveness -2 not at all attractive .. 2 very attractive, position, label_shown, fifth_forest}. Trial key = forest id. Analysis in the paper: ordinal logit with forest dummies (reference Spr75), Order, Label, region and demographics."
+     }
+    ]
+   },
+   {
+    "name": "part2",
+    "title": "Part 2: discrete choice experiment",
+    "elements": [
+     {
+      "name": "forest_choice",
+      "type": "custom",
+      "items": [
+       {
+        "name": "choice",
+        "choices": [
+         {
+          "text": "Locality 1",
+          "value": "locality_1"
+         },
+         {
+          "text": "Locality 2",
+          "value": "locality_2"
+         },
+         {
+          "text": "I would rather stay at home",
+          "value": "stay_home"
+         }
+        ]
+       }
+      ],
+      "title": "Imagine a one-hour walk on a path in forest. Which one out of the following two localities would you choose? Both localities may also differ in the time to access the locality.",
+      "trials": [
+       {
+        "id": "b1_t1",
+        "task": 1,
+        "block": 1,
+        "locality_1": {
+         "forest": "spr75",
+         "access_min": 5
+        },
+        "locality_2": {
+         "forest": "suc55",
+         "access_min": 5
+        }
+       },
+       {
+        "id": "b1_t2",
+        "task": 2,
+        "block": 1,
+        "locality_1": {
+         "forest": "pin35",
+         "access_min": 10
+        },
+        "locality_2": {
+         "forest": "suc55",
+         "access_min": 20
+        }
+       },
+       {
+        "id": "b1_t3",
+        "task": 3,
+        "block": 1,
+        "locality_1": {
+         "forest": "spr15",
+         "access_min": 20
+        },
+        "locality_2": {
+         "forest": "suc55",
+         "access_min": 25
+        }
+       },
+       {
+        "id": "b1_t4",
+        "task": 4,
+        "block": 1,
+        "locality_1": {
+         "forest": "suc35",
+         "access_min": 25
+        },
+        "locality_2": {
+         "forest": "spr75",
+         "access_min": 10
+        }
+       },
+       {
+        "id": "b1_t5",
+        "task": 5,
+        "block": 1,
+        "locality_1": {
+         "forest": "ald35",
+         "access_min": 25
+        },
+        "locality_2": {
+         "forest": "spr15",
+         "access_min": 25
+        }
+       },
+       {
+        "id": "b1_t6",
+        "task": 6,
+        "block": 1,
+        "locality_1": {
+         "forest": "suc55",
+         "access_min": 20
+        },
+        "locality_2": {
+         "forest": "spr35",
+         "access_min": 10
+        }
+       },
+       {
+        "id": "b1_t7",
+        "task": 7,
+        "block": 1,
+        "locality_1": {
+         "forest": "suc15",
+         "access_min": 10
+        },
+        "locality_2": {
+         "forest": "spr35",
+         "access_min": 5
+        }
+       },
+       {
+        "id": "b1_t8",
+        "task": 8,
+        "block": 1,
+        "locality_1": {
+         "forest": "spr35",
+         "access_min": 5
+        },
+        "locality_2": {
+         "forest": "spr15",
+         "access_min": 20
+        }
+       },
+       {
+        "id": "b2_t1",
+        "task": 1,
+        "block": 2,
+        "locality_1": {
+         "forest": "spr75",
+         "access_min": 20
+        },
+        "locality_2": {
+         "forest": "suc15",
+         "access_min": 20
+        }
+       },
+       {
+        "id": "b2_t2",
+        "task": 2,
+        "block": 2,
+        "locality_1": {
+         "forest": "spr35",
+         "access_min": 25
+        },
+        "locality_2": {
+         "forest": "suc35",
+         "access_min": 5
+        }
+       },
+       {
+        "id": "b2_t3",
+        "task": 3,
+        "block": 2,
+        "locality_1": {
+         "forest": "ald35",
+         "access_min": 5
+        },
+        "locality_2": {
+         "forest": "suc35",
+         "access_min": 10
+        }
+       },
+       {
+        "id": "b2_t4",
+        "task": 4,
+        "block": 2,
+        "locality_1": {
+         "forest": "suc55",
+         "access_min": 10
+        },
+        "locality_2": {
+         "forest": "suc15",
+         "access_min": 25
+        }
+       },
+       {
+        "id": "b2_t5",
+        "task": 5,
+        "block": 2,
+        "locality_1": {
+         "forest": "spr15",
+         "access_min": 10
+        },
+        "locality_2": {
+         "forest": "ald35",
+         "access_min": 10
+        }
+       },
+       {
+        "id": "b2_t6",
+        "task": 6,
+        "block": 2,
+        "locality_1": {
+         "forest": "suc35",
+         "access_min": 5
+        },
+        "locality_2": {
+         "forest": "pin35",
+         "access_min": 25
+        }
+       },
+       {
+        "id": "b2_t7",
+        "task": 7,
+        "block": 2,
+        "locality_1": {
+         "forest": "spr75",
+         "access_min": 25
+        },
+        "locality_2": {
+         "forest": "pin35",
+         "access_min": 20
+        }
+       },
+       {
+        "id": "b2_t8",
+        "task": 8,
+        "block": 2,
+        "locality_1": {
+         "forest": "pin35",
+         "access_min": 20
+        },
+        "locality_2": {
+         "forest": "ald35",
+         "access_min": 5
+        }
+       },
+       {
+        "id": "b3_t1",
+        "task": 1,
+        "block": 3,
+        "locality_1": {
+         "forest": "spr75",
+         "access_min": 25
+        },
+        "locality_2": {
+         "forest": "suc55",
+         "access_min": 10
+        }
+       },
+       {
+        "id": "b3_t2",
+        "task": 2,
+        "block": 3,
+        "locality_1": {
+         "forest": "pin35",
+         "access_min": 20
+        },
+        "locality_2": {
+         "forest": "spr75",
+         "access_min": 25
+        }
+       },
+       {
+        "id": "b3_t3",
+        "task": 3,
+        "block": 3,
+        "locality_1": {
+         "forest": "spr15",
+         "access_min": 10
+        },
+        "locality_2": {
+         "forest": "spr75",
+         "access_min": 20
+        }
+       },
+       {
+        "id": "b3_t4",
+        "task": 4,
+        "block": 3,
+        "locality_1": {
+         "forest": "suc35",
+         "access_min": 5
+        },
+        "locality_2": {
+         "forest": "suc55",
+         "access_min": 5
+        }
+       },
+       {
+        "id": "b3_t5",
+        "task": 5,
+        "block": 3,
+        "locality_1": {
+         "forest": "ald35",
+         "access_min": 5
+        },
+        "locality_2": {
+         "forest": "spr35",
+         "access_min": 20
+        }
+       },
+       {
+        "id": "b3_t6",
+        "task": 6,
+        "block": 3,
+        "locality_1": {
+         "forest": "suc55",
+         "access_min": 10
+        },
+        "locality_2": {
+         "forest": "spr15",
+         "access_min": 5
+        }
+       },
+       {
+        "id": "b3_t7",
+        "task": 7,
+        "block": 3,
+        "locality_1": {
+         "forest": "suc15",
+         "access_min": 20
+        },
+        "locality_2": {
+         "forest": "spr15",
+         "access_min": 10
+        }
+       },
+       {
+        "id": "b3_t8",
+        "task": 8,
+        "block": 3,
+        "locality_1": {
+         "forest": "pin35",
+         "access_min": 25
+        },
+        "locality_2": {
+         "forest": "spr35",
+         "access_min": 10
+        }
+       },
+       {
+        "id": "b4_t1",
+        "task": 1,
+        "block": 4,
+        "locality_1": {
+         "forest": "suc15",
+         "access_min": 10
+        },
+        "locality_2": {
+         "forest": "suc35",
+         "access_min": 25
+        }
+       },
+       {
+        "id": "b4_t2",
+        "task": 2,
+        "block": 4,
+        "locality_1": {
+         "forest": "spr35",
+         "access_min": 5
+        },
+        "locality_2": {
+         "forest": "suc15",
+         "access_min": 10
+        }
+       },
+       {
+        "id": "b4_t3",
+        "task": 3,
+        "block": 4,
+        "locality_1": {
+         "forest": "ald35",
+         "access_min": 25
+        },
+        "locality_2": {
+         "forest": "suc15",
+         "access_min": 5
+        }
+       },
+       {
+        "id": "b4_t4",
+        "task": 4,
+        "block": 4,
+        "locality_1": {
+         "forest": "suc55",
+         "access_min": 20
+        },
+        "locality_2": {
+         "forest": "suc35",
+         "access_min": 20
+        }
+       },
+       {
+        "id": "b4_t5",
+        "task": 5,
+        "block": 4,
+        "locality_1": {
+         "forest": "spr15",
+         "access_min": 20
+        },
+        "locality_2": {
+         "forest": "pin35",
+         "access_min": 5
+        }
+       },
+       {
+        "id": "b4_t6",
+        "task": 6,
+        "block": 4,
+        "locality_1": {
+         "forest": "suc35",
+         "access_min": 25
+        },
+        "locality_2": {
+         "forest": "ald35",
+         "access_min": 20
+        }
+       },
+       {
+        "id": "b4_t7",
+        "task": 7,
+        "block": 4,
+        "locality_1": {
+         "forest": "spr75",
+         "access_min": 5
+        },
+        "locality_2": {
+         "forest": "ald35",
+         "access_min": 25
+        }
+       },
+       {
+        "id": "b4_t8",
+        "task": 8,
+        "block": 4,
+        "locality_1": {
+         "forest": "pin35",
+         "access_min": 10
+        },
+        "locality_2": {
+         "forest": "spr35",
+         "access_min": 25
+        }
+       }
+      ],
+      "forests": [
+       {
+        "id": "spr75",
+        "age": 75,
+        "label": "Common forest in a locality not affected by coal mining",
+        "short": "Norway spruce, commercial timber forest",
+        "origin": "common",
+        "photos": [
+         "spr75_1.jpg",
+         "spr75_2.jpg"
+        ]
+       },
+       {
+        "id": "spr15",
+        "age": 15,
+        "label": "Planted on a spoil heap after open-cast coal mining",
+        "short": "Norway spruce, planted",
+        "origin": "planted",
+        "photos": [
+         "spr15_1.jpg",
+         "spr15_2.jpg"
+        ]
+       },
+       {
+        "id": "spr35",
+        "age": 35,
+        "label": "Planted on a spoil heap after open-cast coal mining",
+        "short": "Norway spruce, planted",
+        "origin": "planted",
+        "photos": [
+         "spr35_1.jpg",
+         "spr35_2.jpg"
+        ]
+       },
+       {
+        "id": "pin35",
+        "age": 35,
+        "label": "Planted on a spoil heap after open-cast coal mining",
+        "short": "Scots pine, planted",
+        "origin": "planted",
+        "photos": [
+         "pin35_1.jpg",
+         "pin35_2.jpg"
+        ]
+       },
+       {
+        "id": "ald35",
+        "age": 35,
+        "label": "Planted on a spoil heap after open-cast coal mining",
+        "short": "Black alder, planted",
+        "origin": "planted",
+        "photos": [
+         "ald35_1.jpg",
+         "ald35_2.jpg"
+        ]
+       },
+       {
+        "id": "suc15",
+        "age": 15,
+        "label": "Spontaneously growing on a spoil heap after open-cast coal mining",
+        "short": "Succession (white birch, Scots pine, Norway spruce)",
+        "origin": "succ",
+        "photos": [
+         "suc15_1.jpg",
+         "suc15_2.jpg"
+        ]
+       },
+       {
+        "id": "suc35",
+        "age": 35,
+        "label": "Spontaneously growing on a spoil heap after open-cast coal mining",
+        "short": "Succession (goat willow)",
+        "origin": "succ",
+        "photos": [
+         "suc35_1.jpg",
+         "suc35_2.jpg"
+        ]
+       },
+       {
+        "id": "suc55",
+        "age": 55,
+        "label": "Spontaneously growing on a spoil heap after open-cast coal mining",
+        "short": "Succession (white birch)",
+        "origin": "succ",
+        "photos": [
+         "suc55_1.jpg",
+         "suc55_2.jpg"
+        ]
+       }
+      ],
+      "isRequired": true,
+      "description": "Part 2 DCE: each participant is randomly assigned to one of 4 blocks and answers its 8 choice tasks in the original order; each task shows two localities (access time 5/10/20/25 min, forest type label, age, photos) and an opt-out. The 32 tasks, their left/right positions and order were reconstructed from the authors' published data (Supplementary Table S2). Value: {choice: locality_1 | locality_2 | stay_home, chosen_forest, block, task}. Analysis in the paper: multinomial logit with species dummies, Mine, Age, Time, Left, region and demographics."
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "title": "Part 3: About you",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Male",
+        "value": 1
+       },
+       {
+        "text": "Female",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "max": 110,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "Age (years)",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "Highest completed education",
+      "choices": [
+       {
+        "text": "Elementary education",
+        "value": 1
+       },
+       {
+        "text": "Vocational and secondary education",
+        "value": 2
+       },
+       {
+        "text": "High school education",
+        "value": 3
+       },
+       {
+        "text": "University education",
+        "value": 4
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Recreation Value of Forests on Coal-Mine Spoil Heaps",
+  "locale": "en",
+  "spSite": {
+   "id": "site-d45ccb4dba14f9db",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Forests for a Walk</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Recreation Value of Forests on Coal-Mine Spoil Heaps\",\n  \"description\": \"Faithful replication of Braun Kohlová, Máca & Melichar (2021), Forests 12:160: rate how attractive a one-hour walk would be in forests grown on coal-mine spoil heaps near Sokolov, Czech Republic (with or without a label on their origin), then make 8 choices between two forest localities differing in forest type, age and access time, or stay at home (discrete choice experiment, 4 blocks).\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"forests\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"boolean\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part in this survey.\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"part1\",\n    \"title\": \"Part 1: direct measure\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"walk_attractiveness\",\n      \"isRequired\": true,\n      \"title\": \"How attractive would it be for you to walk one hour on the pathway in this forest?\",\n      \"description\": \"Part 1, 2 x 2 between-subjects design (paper Table A1): every participant rates Spr75, Suc55, Ald35, Pin35 plus ONE of Suc15/Suc35 (random), in a random order; a label on the forest's origin is shown to a random half. Value: {attractiveness -2 not at all attractive .. 2 very attractive, position, label_shown, fifth_forest}. Trial key = forest id. Analysis in the paper: ordinal logit with forest dummies (reference Spr75), Order, Label, region and demographics.\",\n      \"items\": [\n       {\n        \"name\": \"attractiveness\",\n        \"scale\": [\n         -2,\n         2\n        ],\n        \"low\": \"-2 = not at all attractive\",\n        \"high\": \"2 = very attractive\"\n       }\n      ],\n      \"trials\": [\n       {\n        \"id\": \"spr75\",\n        \"short\": \"Norway spruce, commercial timber forest\",\n        \"label\": \"Common forest in a locality not affected by coal mining\",\n        \"origin\": \"common\",\n        \"age\": 75,\n        \"photos\": [\n         \"spr75_1.jpg\",\n         \"spr75_2.jpg\"\n        ]\n       },\n       {\n        \"id\": \"pin35\",\n        \"short\": \"Scots pine, planted\",\n        \"label\": \"Planted on a spoil heap after open-cast coal mining\",\n        \"origin\": \"planted\",\n        \"age\": 35,\n        \"photos\": [\n         \"pin35_1.jpg\",\n         \"pin35_2.jpg\"\n        ]\n       },\n       {\n        \"id\": \"ald35\",\n        \"short\": \"Black alder, planted\",\n        \"label\": \"Planted on a spoil heap after open-cast coal mining\",\n        \"origin\": \"planted\",\n        \"age\": 35,\n        \"photos\": [\n         \"ald35_1.jpg\",\n         \"ald35_2.jpg\"\n        ]\n       },\n       {\n        \"id\": \"suc15\",\n        \"short\": \"Succession (white birch, Scots pine, Norway spruce)\",\n        \"label\": \"Spontaneously growing on a spoil heap after open-cast coal mining\",\n        \"origin\": \"succ\",\n        \"age\": 15,\n        \"photos\": [\n         \"suc15_1.jpg\",\n         \"suc15_2.jpg\"\n        ]\n       },\n       {\n        \"id\": \"suc35\",\n        \"short\": \"Succession (goat willow)\",\n        \"label\": \"Spontaneously growing on a spoil heap after open-cast coal mining\",\n        \"origin\": \"succ\",\n        \"age\": 35,\n        \"photos\": [\n         \"suc35_1.jpg\",\n         \"suc35_2.jpg\"\n        ]\n       },\n       {\n        \"id\": \"suc55\",\n        \"short\": \"Succession (white birch)\",\n        \"label\": \"Spontaneously growing on a spoil heap after open-cast coal mining\",\n        \"origin\": \"succ\",\n        \"age\": 55,\n        \"photos\": [\n         \"suc55_1.jpg\",\n         \"suc55_2.jpg\"\n        ]\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"part2\",\n    \"title\": \"Part 2: discrete choice experiment\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"forest_choice\",\n      \"isRequired\": true,\n      \"title\": \"Imagine a one-hour walk on a path in forest. Which one out of the following two localities would you choose? Both localities may also differ in the time to access the locality.\",\n      \"description\": \"Part 2 DCE: each participant is randomly assigned to one of 4 blocks and answers its 8 choice tasks in the original order; each task shows two localities (access time 5/10/20/25 min, forest type label, age, photos) and an opt-out. The 32 tasks, their left/right positions and order were reconstructed from the authors' published data (Supplementary Table S2). Value: {choice: locality_1 | locality_2 | stay_home, chosen_forest, block, task}. Analysis in the paper: multinomial logit with species dummies, Mine, Age, Time, Left, region and demographics.\",\n      \"items\": [\n       {\n        \"name\": \"choice\",\n        \"choices\": [\n         {\n          \"value\": \"locality_1\",\n          \"text\": \"Locality 1\"\n         },\n         {\n          \"value\": \"locality_2\",\n          \"text\": \"Locality 2\"\n         },\n         {\n          \"value\": \"stay_home\",\n          \"text\": \"I would rather stay at home\"\n         }\n        ]\n       }\n      ],\n      \"forests\": [\n       {\n        \"id\": \"spr75\",\n        \"short\": \"Norway spruce, commercial timber forest\",\n        \"label\": \"Common forest in a locality not affected by coal mining\",\n        \"origin\": \"common\",\n        \"age\": 75,\n        \"photos\": [\n         \"spr75_1.jpg\",\n         \"spr75_2.jpg\"\n        ]\n       },\n       {\n        \"id\": \"spr15\",\n        \"short\": \"Norway spruce, planted\",\n        \"label\": \"Planted on a spoil heap after open-cast coal mining\",\n        \"origin\": \"planted\",\n        \"age\": 15,\n        \"photos\": [\n         \"spr15_1.jpg\",\n         \"spr15_2.jpg\"\n        ]\n       },\n       {\n        \"id\": \"spr35\",\n        \"short\": \"Norway spruce, planted\",\n        \"label\": \"Planted on a spoil heap after open-cast coal mining\",\n        \"origin\": \"planted\",\n        \"age\": 35,\n        \"photos\": [\n         \"spr35_1.jpg\",\n         \"spr35_2.jpg\"\n        ]\n       },\n       {\n        \"id\": \"pin35\",\n        \"short\": \"Scots pine, planted\",\n        \"label\": \"Planted on a spoil heap after open-cast coal mining\",\n        \"origin\": \"planted\",\n        \"age\": 35,\n        \"photos\": [\n         \"pin35_1.jpg\",\n         \"pin35_2.jpg\"\n        ]\n       },\n       {\n        \"id\": \"ald35\",\n        \"short\": \"Black alder, planted\",\n        \"label\": \"Planted on a spoil heap after open-cast coal mining\",\n        \"origin\": \"planted\",\n        \"age\": 35,\n        \"photos\": [\n         \"ald35_1.jpg\",\n         \"ald35_2.jpg\"\n        ]\n       },\n       {\n        \"id\": \"suc15\",\n        \"short\": \"Succession (white birch, Scots pine, Norway spruce)\",\n        \"label\": \"Spontaneously growing on a spoil heap after open-cast coal mining\",\n        \"origin\": \"succ\",\n        \"age\": 15,\n        \"photos\": [\n         \"suc15_1.jpg\",\n         \"suc15_2.jpg\"\n        ]\n       },\n       {\n        \"id\": \"suc35\",\n        \"short\": \"Succession (goat willow)\",\n        \"label\": \"Spontaneously growing on a spoil heap after open-cast coal mining\",\n        \"origin\": \"succ\",\n        \"age\": 35,\n        \"photos\": [\n         \"suc35_1.jpg\",\n         \"suc35_2.jpg\"\n        ]\n       },\n       {\n        \"id\": \"suc55\",\n        \"short\": \"Succession (white birch)\",\n        \"label\": \"Spontaneously growing on a spoil heap after open-cast coal mining\",\n        \"origin\": \"succ\",\n        \"age\": 55,\n        \"photos\": [\n         \"suc55_1.jpg\",\n         \"suc55_2.jpg\"\n        ]\n       }\n      ],\n      \"trials\": [\n       {\n        \"id\": \"b1_t1\",\n        \"block\": 1,\n        \"task\": 1,\n        \"locality_1\": {\n         \"forest\": \"spr75\",\n         \"access_min\": 5\n        },\n        \"locality_2\": {\n         \"forest\": \"suc55\",\n         \"access_min\": 5\n        }\n       },\n       {\n        \"id\": \"b1_t2\",\n        \"block\": 1,\n        \"task\": 2,\n        \"locality_1\": {\n         \"forest\": \"pin35\",\n         \"access_min\": 10\n        },\n        \"locality_2\": {\n         \"forest\": \"suc55\",\n         \"access_min\": 20\n        }\n       },\n       {\n        \"id\": \"b1_t3\",\n        \"block\": 1,\n        \"task\": 3,\n        \"locality_1\": {\n         \"forest\": \"spr15\",\n         \"access_min\": 20\n        },\n        \"locality_2\": {\n         \"forest\": \"suc55\",\n         \"access_min\": 25\n        }\n       },\n       {\n        \"id\": \"b1_t4\",\n        \"block\": 1,\n        \"task\": 4,\n        \"locality_1\": {\n         \"forest\": \"suc35\",\n         \"access_min\": 25\n        },\n        \"locality_2\": {\n         \"forest\": \"spr75\",\n         \"access_min\": 10\n        }\n       },\n       {\n        \"id\": \"b1_t5\",\n        \"block\": 1,\n        \"task\": 5,\n        \"locality_1\": {\n         \"forest\": \"ald35\",\n         \"access_min\": 25\n        },\n        \"locality_2\": {\n         \"forest\": \"spr15\",\n         \"access_min\": 25\n        }\n       },\n       {\n        \"id\": \"b1_t6\",\n        \"block\": 1,\n        \"task\": 6,\n        \"locality_1\": {\n         \"forest\": \"suc55\",\n         \"access_min\": 20\n        },\n        \"locality_2\": {\n         \"forest\": \"spr35\",\n         \"access_min\": 10\n        }\n       },\n       {\n        \"id\": \"b1_t7\",\n        \"block\": 1,\n        \"task\": 7,\n        \"locality_1\": {\n         \"forest\": \"suc15\",\n         \"access_min\": 10\n        },\n        \"locality_2\": {\n         \"forest\": \"spr35\",\n         \"access_min\": 5\n        }\n       },\n       {\n        \"id\": \"b1_t8\",\n        \"block\": 1,\n        \"task\": 8,\n        \"locality_1\": {\n         \"forest\": \"spr35\",\n         \"access_min\": 5\n        },\n        \"locality_2\": {\n         \"forest\": \"spr15\",\n         \"access_min\": 20\n        }\n       },\n       {\n        \"id\": \"b2_t1\",\n        \"block\": 2,\n        \"task\": 1,\n        \"locality_1\": {\n         \"forest\": \"spr75\",\n         \"access_min\": 20\n        },\n        \"locality_2\": {\n         \"forest\": \"suc15\",\n         \"access_min\": 20\n        }\n       },\n       {\n        \"id\": \"b2_t2\",\n        \"block\": 2,\n        \"task\": 2,\n        \"locality_1\": {\n         \"forest\": \"spr35\",\n         \"access_min\": 25\n        },\n        \"locality_2\": {\n         \"forest\": \"suc35\",\n         \"access_min\": 5\n        }\n       },\n       {\n        \"id\": \"b2_t3\",\n        \"block\": 2,\n        \"task\": 3,\n        \"locality_1\": {\n         \"forest\": \"ald35\",\n         \"access_min\": 5\n        },\n        \"locality_2\": {\n         \"forest\": \"suc35\",\n         \"access_min\": 10\n        }\n       },\n       {\n        \"id\": \"b2_t4\",\n        \"block\": 2,\n        \"task\": 4,\n        \"locality_1\": {\n         \"forest\": \"suc55\",\n         \"access_min\": 10\n        },\n        \"locality_2\": {\n         \"forest\": \"suc15\",\n         \"access_min\": 25\n        }\n       },\n       {\n        \"id\": \"b2_t5\",\n        \"block\": 2,\n        \"task\": 5,\n        \"locality_1\": {\n         \"forest\": \"spr15\",\n         \"access_min\": 10\n        },\n        \"locality_2\": {\n         \"forest\": \"ald35\",\n         \"access_min\": 10\n        }\n       },\n       {\n        \"id\": \"b2_t6\",\n        \"block\": 2,\n        \"task\": 6,\n        \"locality_1\": {\n         \"forest\": \"suc35\",\n         \"access_min\": 5\n        },\n        \"locality_2\": {\n         \"forest\": \"pin35\",\n         \"access_min\": 25\n        }\n       },\n       {\n        \"id\": \"b2_t7\",\n        \"block\": 2,\n        \"task\": 7,\n        \"locality_1\": {\n         \"forest\": \"spr75\",\n         \"access_min\": 25\n        },\n        \"locality_2\": {\n         \"forest\": \"pin35\",\n         \"access_min\": 20\n        }\n       },\n       {\n        \"id\": \"b2_t8\",\n        \"block\": 2,\n        \"task\": 8,\n        \"locality_1\": {\n         \"forest\": \"pin35\",\n         \"access_min\": 20\n        },\n        \"locality_2\": {\n         \"forest\": \"ald35\",\n         \"access_min\": 5\n        }\n       },\n       {\n        \"id\": \"b3_t1\",\n        \"block\": 3,\n        \"task\": 1,\n        \"locality_1\": {\n         \"forest\": \"spr75\",\n         \"access_min\": 25\n        },\n        \"locality_2\": {\n         \"forest\": \"suc55\",\n         \"access_min\": 10\n        }\n       },\n       {\n        \"id\": \"b3_t2\",\n        \"block\": 3,\n        \"task\": 2,\n        \"locality_1\": {\n         \"forest\": \"pin35\",\n         \"access_min\": 20\n        },\n        \"locality_2\": {\n         \"forest\": \"spr75\",\n         \"access_min\": 25\n        }\n       },\n       {\n        \"id\": \"b3_t3\",\n        \"block\": 3,\n        \"task\": 3,\n        \"locality_1\": {\n         \"forest\": \"spr15\",\n         \"access_min\": 10\n        },\n        \"locality_2\": {\n         \"forest\": \"spr75\",\n         \"access_min\": 20\n        }\n       },\n       {\n        \"id\": \"b3_t4\",\n        \"block\": 3,\n        \"task\": 4,\n        \"locality_1\": {\n         \"forest\": \"suc35\",\n         \"access_min\": 5\n        },\n        \"locality_2\": {\n         \"forest\": \"suc55\",\n         \"access_min\": 5\n        }\n       },\n       {\n        \"id\": \"b3_t5\",\n        \"block\": 3,\n        \"task\": 5,\n        \"locality_1\": {\n         \"forest\": \"ald35\",\n         \"access_min\": 5\n        },\n        \"locality_2\": {\n         \"forest\": \"spr35\",\n         \"access_min\": 20\n        }\n       },\n       {\n        \"id\": \"b3_t6\",\n        \"block\": 3,\n        \"task\": 6,\n        \"locality_1\": {\n         \"forest\": \"suc55\",\n         \"access_min\": 10\n        },\n        \"locality_2\": {\n         \"forest\": \"spr15\",\n         \"access_min\": 5\n        }\n       },\n       {\n        \"id\": \"b3_t7\",\n        \"block\": 3,\n        \"task\": 7,\n        \"locality_1\": {\n         \"forest\": \"suc15\",\n         \"access_min\": 20\n        },\n        \"locality_2\": {\n         \"forest\": \"spr15\",\n         \"access_min\": 10\n        }\n       },\n       {\n        \"id\": \"b3_t8\",\n        \"block\": 3,\n        \"task\": 8,\n        \"locality_1\": {\n         \"forest\": \"pin35\",\n         \"access_min\": 25\n        },\n        \"locality_2\": {\n         \"forest\": \"spr35\",\n         \"access_min\": 10\n        }\n       },\n       {\n        \"id\": \"b4_t1\",\n        \"block\": 4,\n        \"task\": 1,\n        \"locality_1\": {\n         \"forest\": \"suc15\",\n         \"access_min\": 10\n        },\n        \"locality_2\": {\n         \"forest\": \"suc35\",\n         \"access_min\": 25\n        }\n       },\n       {\n        \"id\": \"b4_t2\",\n        \"block\": 4,\n        \"task\": 2,\n        \"locality_1\": {\n         \"forest\": \"spr35\",\n         \"access_min\": 5\n        },\n        \"locality_2\": {\n         \"forest\": \"suc15\",\n         \"access_min\": 10\n        }\n       },\n       {\n        \"id\": \"b4_t3\",\n        \"block\": 4,\n        \"task\": 3,\n        \"locality_1\": {\n         \"forest\": \"ald35\",\n         \"access_min\": 25\n        },\n        \"locality_2\": {\n         \"forest\": \"suc15\",\n         \"access_min\": 5\n        }\n       },\n       {\n        \"id\": \"b4_t4\",\n        \"block\": 4,\n        \"task\": 4,\n        \"locality_1\": {\n         \"forest\": \"suc55\",\n         \"access_min\": 20\n        },\n        \"locality_2\": {\n         \"forest\": \"suc35\",\n         \"access_min\": 20\n        }\n       },\n       {\n        \"id\": \"b4_t5\",\n        \"block\": 4,\n        \"task\": 5,\n        \"locality_1\": {\n         \"forest\": \"spr15\",\n         \"access_min\": 20\n        },\n        \"locality_2\": {\n         \"forest\": \"pin35\",\n         \"access_min\": 5\n        }\n       },\n       {\n        \"id\": \"b4_t6\",\n        \"block\": 4,\n        \"task\": 6,\n        \"locality_1\": {\n         \"forest\": \"suc35\",\n         \"access_min\": 25\n        },\n        \"locality_2\": {\n         \"forest\": \"ald35\",\n         \"access_min\": 20\n        }\n       },\n       {\n        \"id\": \"b4_t7\",\n        \"block\": 4,\n        \"task\": 7,\n        \"locality_1\": {\n         \"forest\": \"spr75\",\n         \"access_min\": 5\n        },\n        \"locality_2\": {\n         \"forest\": \"ald35\",\n         \"access_min\": 25\n        }\n       },\n       {\n        \"id\": \"b4_t8\",\n        \"block\": 4,\n        \"task\": 8,\n        \"locality_1\": {\n         \"forest\": \"pin35\",\n         \"access_min\": 10\n        },\n        \"locality_2\": {\n         \"forest\": \"spr35\",\n         \"access_min\": 25\n        }\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"title\": \"Part 3: About you\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Female\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"Age (years)\",\n      \"isRequired\": true,\n      \"min\": 18,\n      \"max\": 110\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"Highest completed education\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Elementary education\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Vocational and secondary education\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"High school education\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"University education\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#eef0ea;--card:#fff;--ink:#1f231d;--muted:#5a6156;--accent:#3f6531;--line:#d4d9cd;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.3rem;margin:0 0 10px}\np{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q:first-child{margin-top:0}.q>b{display:block;margin-bottom:6px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer;background:var(--card)}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%;max-width:200px}\n.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}\n.t{color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}\n.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;flex:1;margin-left:12px;max-width:260px}.bar>i{display:block;height:100%;background:var(--accent)}\n.duo{display:grid;grid-template-columns:1fr 1fr;gap:3px;border-radius:10px;overflow:hidden}.duo img{width:100%;aspect-ratio:3/2;object-fit:cover;display:block}\n.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}\n.lab{font-size:.92rem;color:var(--ink);margin:0 0 8px}\n.loc{border:1px solid var(--ink);border-radius:8px;padding:10px;background:var(--card)}\n.loc dl{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin:0 0 8px;font-size:.92rem}.loc dt{color:var(--muted)}.loc dd{margin:0}\n.locs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}\n.seg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;max-width:360px}\n.seg label{display:block;cursor:pointer;position:relative}\n.seg input{position:absolute;opacity:0;pointer-events:none}\n.seg span{display:flex;align-items:center;justify-content:center;min-height:42px;border:1px solid var(--line);border-radius:8px;font-weight:600;font-size:.9rem}\n.seg input:checked+span{background:var(--accent);border-color:var(--accent);color:#fff}\n.seg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}\n.ends{display:flex;justify-content:space-between;max-width:360px;font-size:.8rem;color:var(--muted);margin-top:4px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n@media (max-width:640px){.locs,.grid{grid-template-columns:1fr}}\n@media (max-width:520px){.rate .duo{grid-template-columns:1fr}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs: Braun Kohlová, Máca &amp; Melichar (2021), Forests 12:160, Figure A1, doi:10.3390/f12020160 (CC BY 4.0; forests on the Sokolov coal-mine spoil heaps and in Libavské Údolí, Czech Republic). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='minewalk2021:';\n  var app=document.getElementById('app'), Q={}, files={}, done={}, SPEC=null, FOR={}, DCE=[], ATT=null, ABOUT=['gender','age','education'], C=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='visible';}}\n  function hideErr(){var e=app.querySelector('.err');if(e)e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function q(n){return Q[n]||{};}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function page(html,btn,cb){\n    app.innerHTML=html+'<div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">'+esc(btn||'Continue')+'</button></div><div class=\"err\"></div>';\n    document.getElementById('go').onclick=cb;app.onchange=hideErr;\n  }\n  function saveAll(l,b,cb){Promise.all(l.map(function(a){return SPSite.answer(a[0],a[1]);})).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}cb();});}\n  function duo(id){var f=FOR[id];return '<div class=\"duo\">'+f.photos.map(function(p,i){return '<img alt=\"'+esc(f.short)+' photo '+(i+1)+'\" src=\"'+esc(files[p].url)+'\">';}).join('')+'</div>';}\n  function cond(){\n    if(C)return C;C=load('cond');\n    if(!C||!C.order||C.order.length!==5){var fifth=Math.random()<.5?'suc15':'suc35';C={fifth:fifth,label:Math.random()<.5,order:shuffle(['spr75','suc55','ald35','pin35',fifth]),block:1+Math.floor(Math.random()*4)};save('cond',C);}\n    return C;\n  }\n  function tasks(){var b=cond().block;return DCE.filter(function(t){return t.block===b;}).sort(function(x,y){return x.task-y.task;});}\n  function next(){\n    window.scrollTo(0,0);\n    if(!done.intro)return intro();\n    if(!done.look)return look();\n    var c=cond(),k,T;\n    for(k=0;k<c.order.length;k++)if(!done['a_'+c.order[k]])return rate(c.order[k],k);\n    if(!done.p2)return p2();\n    T=tasks();for(k=0;k<T.length;k++)if(!done[T[k].id])return choice(T[k],k,T.length);\n    if(!done.about)return about();\n    finish();\n  }\n  function intro(){\n    var miss=Object.keys(FOR).some(function(k){return FOR[k].photos.some(function(p){return !files[p];});});\n    if(miss){app.innerHTML='<h1>Photographs missing</h1><p>Media folder forests must hold two photos per forest (spr75_1.jpg … suc55_2.jpg).</p>';return;}\n    page('<h1>Forests for a walk</h1><p>In this survey you will look at photographs of forests, say how attractive a walk in each would be, and then choose between pairs of forest localities for a walk. It takes about 10 minutes. Your answers are anonymous and used for research only.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(q('consent').title)+'</label></div>','Start',function(){\n      if(!document.getElementById('ok').checked)return err('Please confirm to continue.');\n      var b=this;b.disabled=true;saveAll([['consent',true]],b,function(){done.intro=true;save('d',done);next();});\n    });\n  }\n  function look(){\n    var ids=['spr75','pin35','ald35','suc55','suc35'];\n    page('<h1>Part 1</h1><div class=\"card\"><p style=\"color:var(--ink)\">First, take a close look at the following photos of forests and try to realize how individual forests may look and how they may differ. Take as long as you like.</p><div class=\"grid\">'+ids.map(function(id){return duo(id);}).join('')+'</div></div>','Continue',function(){done.look=true;save('d',done);next();});\n  }\n  function rate(id,k){\n    var c=cond(),f=FOR[id];\n    page('<div class=\"rate\"><div class=\"top\"><span class=\"t\">Part 1 · Forest '+(k+1)+' of '+c.order.length+'</span><div class=\"bar\"><i style=\"width:'+(100*k/c.order.length)+'%\"></i></div></div><div class=\"card\"><b>Forest n. '+(k+1)+'</b>'+(c.label?'<p class=\"lab\" style=\"margin-top:6px\">'+esc(f.label)+'</p>':'<div style=\"height:8px\"></div>')+duo(id)+\n      '<p style=\"margin-top:14px;color:var(--ink)\"><b>'+esc(q('walk_attractiveness').title)+'</b></p><div class=\"seg\" role=\"radiogroup\" aria-label=\"Attractiveness\">'+[-2,-1,0,1,2].map(function(v){return '<label><input type=\"radio\" name=\"att\" value=\"'+v+'\"><span>'+v+'</span></label>';}).join('')+'</div><div class=\"ends\"><span>'+esc(ATT.low)+'</span><span>'+esc(ATT.high)+'</span></div></div></div>','Continue',function(){\n      var x=app.querySelector('input[name=\"att\"]:checked');if(!x)return err('Please choose an answer.');\n      var b=this;b.disabled=true;\n      SPSite.answer('walk_attractiveness',{attractiveness:Number(x.value),position:k+1,label_shown:c.label,fifth_forest:c.fifth},{key:id,shown:f.photos}).then(function(r){if(!ok(r)){b.disabled=false;return err(r.error);}done['a_'+id]=true;save('d',done);next();});\n    });\n  }\n  function p2(){\n    page('<h1>Part 2</h1><div class=\"card\"><p style=\"color:var(--ink)\">You will now see eight pairs of forest localities. In each, imagine a one-hour walk on a path in the forest and choose the locality you would go to, or say that you would rather stay at home. The localities may differ in how long it takes to get there.</p></div>','Continue',function(){done.p2=true;save('d',done);next();});\n  }\n  function loc(n,a){var f=FOR[a.forest];return '<div class=\"loc\"><b>Locality '+n+'</b><dl><dt>Access time:</dt><dd>'+a.access_min+' minutes</dd><dt>Forest type:</dt><dd>'+esc(f.label)+'</dd><dt>Age of the forest:</dt><dd>'+f.age+' years</dd></dl>'+duo(a.forest)+'</div>';}\n  function choice(t,k,n){\n    var opts=[['locality_1','Locality 1'],['locality_2','Locality 2'],['stay_home','I would rather stay at home']];\n    page('<div class=\"top\"><span class=\"t\">Part 2 · Choice '+(k+1)+' of '+n+'</span><div class=\"bar\"><i style=\"width:'+(100*k/n)+'%\"></i></div></div><div class=\"card\"><b>'+esc(q('forest_choice').title)+'</b><div class=\"locs\">'+loc(1,t.locality_1)+loc(2,t.locality_2)+'</div>'+opts.map(function(o){return '<label class=\"opt\"><input type=\"radio\" name=\"ch\" value=\"'+o[0]+'\"> '+esc(o[1])+'</label>';}).join('')+'</div>','Continue',function(){\n      var x=app.querySelector('input[name=\"ch\"]:checked');if(!x)return err('Please choose one option.');\n      var v={choice:x.value,chosen_forest:x.value==='locality_1'?t.locality_1.forest:x.value==='locality_2'?t.locality_2.forest:null,block:t.block,task:t.task};\n      var b=this;b.disabled=true;\n      SPSite.answer('forest_choice',v,{key:t.id,shown:FOR[t.locality_1.forest].photos.concat(FOR[t.locality_2.forest].photos)}).then(function(r){if(!ok(r)){b.disabled=false;return err(r.error);}done[t.id]=true;save('d',done);next();});\n    });\n  }\n  function about(){\n    var h=ABOUT.map(function(n){var d=q(n);var s='<div class=\"q\"><b>'+esc(d.title)+'</b>';\n      if(d.type==='text')s+='<input type=\"number\" name=\"'+n+'\" min=\"18\" max=\"110\" inputmode=\"numeric\">';\n      else s+=d.choices.map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+c.value+'\"> '+esc(c.text)+'</label>';}).join('');\n      return s+'</div>';}).join('');\n    page('<h1>Part 3: About you</h1><div class=\"card\">'+h+'</div>','Finish',function(){\n      var l=[];for(var i=0;i<ABOUT.length;i++){var n=ABOUT[i],d=q(n),v;\n        if(d.type==='text'){var s=app.querySelector('input[name=\"'+n+'\"]').value.trim();v=Number(s);if(s===''||!(v>=18&&v<=110)||v%1)return err('Please enter your age in years (18 or older).');}\n        else{var x=app.querySelector('input[name=\"'+n+'\"]:checked');if(!x)return err('Please answer: '+d.title);v=Number(x.value);}\n        l.push([n,v]);}\n      var b=this;b.disabled=true;saveAll(l,b,function(){done.about=true;save('d',done);next();});\n    });\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>Seven of the eight forests grow on spoil heaps of open-cast coal mines near Sokolov, Czech Republic, either planted (spruce, pine, alder) or grown spontaneously (succession at 15, 35 and 55 years). The eighth is an ordinary 75-year-old spruce forest not affected by mining. In the original study, 869 Czech adults took part. The ratings and the choices gave similar results: all mine forests had a lower recreation value than the ordinary spruce forest, spontaneously grown forests were not systematically less valuable than planted ones, and both types became more valuable as they aged. Telling people that a forest grew on a mine spoil heap did not lower its rating.</p><p style=\"font-size:.82rem\">Braun Kohlová, M., Máca, V., &amp; Melichar, J. (2021). How High Is the Recreation Value of Successional Forests Growing Spontaneously on Coal Mine Spoil Heaps? Forests 12:160, doi:10.3390/f12020160.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){if(x==='consent')done.intro=false;else if(x==='walk_attractiveness')cond().order.forEach(function(id){done['a_'+id]=false;});else if(x==='forest_choice')tasks().forEach(function(t){done[t.id]=false;});else done.about=false;});save('d',done);next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    try{SPEC=JSON.parse(document.getElementById('sp-scheme').textContent).survey;}catch(e){SPEC={pages:[]};}\n    SPEC.pages.forEach(function(p){p.elements.forEach(function(e){var g=SPSite.getQuestion(e.name)||{};Q[e.name]={type:e.type,title:g.title||e.title,choices:(g.choices&&g.choices.length)?g.choices:e.choices};\n      if(e.name==='walk_attractiveness'){ATT=e.items[0];e.trials.forEach(function(t){FOR[t.id]=t;});}\n      if(e.name==='forest_choice'){DCE=e.trials;(e.forests||[]).forEach(function(t){FOR[t.id]=t;});}});});\n    (SPSite.getMedia('forests')||[]).forEach(function(f){files[f.name]=f;});\n    var a=(ctx&&ctx.answers)||{};done=load('d')||{};\n    done.intro=a.consent===true;\n    Object.keys(FOR).forEach(function(id){done['a_'+id]=false;});DCE.forEach(function(t){done[t.id]=false;});\n    ((a.walk_attractiveness&&a.walk_attractiveness.trials)||[]).forEach(function(t){if(t.key)done['a_'+t.key]=true;});\n    ((a.forest_choice&&a.forest_choice.trials)||[]).forEach(function(t){if(t.key)done[t.key]=true;});\n    done.about=ABOUT.every(function(n){return a[n]!=null;});\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T19:57:54.682Z",
+   "mediaFolders": [
+    "forests"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T19:57:54.682Z"
+  },
+  "description": "Faithful replication of Braun Kohlová, Máca & Melichar (2021), Forests 12:160: rate how attractive a one-hour walk would be in forests grown on coal-mine spoil heaps near Sokolov, Czech Republic (with or without a label on their origin), then make 8 choices between two forest localities differing in forest type, age and access time, or stay at home (discrete choice experiment, 4 blocks).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2021-braun-mine/forests/ald35_1__9a05ae21-b6b1-4c52-8ace-7ce2ce93a6e0.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-mine/forests/ald35_1__9a05ae21-b6b1-4c52-8ace-7ce2ce93a6e0.jpg",
+   "name": "ald35_1.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-mine/forests/ald35_1__9a05ae21-b6b1-4c52-8ace-7ce2ce93a6e0.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 57532,
+   "uploaded_bytes": 57532,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-mine/forests/ald35_2__73e213ec-e44d-4dcd-8f18-0c462dd8277d.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-mine/forests/ald35_2__73e213ec-e44d-4dcd-8f18-0c462dd8277d.jpg",
+   "name": "ald35_2.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-mine/forests/ald35_2__73e213ec-e44d-4dcd-8f18-0c462dd8277d.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 63335,
+   "uploaded_bytes": 63335,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-mine/forests/pin35_1__40b8fe2a-6267-4c57-a2b3-869914138107.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-mine/forests/pin35_1__40b8fe2a-6267-4c57-a2b3-869914138107.jpg",
+   "name": "pin35_1.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-mine/forests/pin35_1__40b8fe2a-6267-4c57-a2b3-869914138107.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 51426,
+   "uploaded_bytes": 51426,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-mine/forests/pin35_2__ee4c9c70-85ac-4bb4-a71f-8d4fe2b67bbe.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-mine/forests/pin35_2__ee4c9c70-85ac-4bb4-a71f-8d4fe2b67bbe.jpg",
+   "name": "pin35_2.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-mine/forests/pin35_2__ee4c9c70-85ac-4bb4-a71f-8d4fe2b67bbe.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 56687,
+   "uploaded_bytes": 56687,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-mine/forests/spr15_1__52120c1c-049d-4ac7-9b44-8a02abea616c.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-mine/forests/spr15_1__52120c1c-049d-4ac7-9b44-8a02abea616c.jpg",
+   "name": "spr15_1.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-mine/forests/spr15_1__52120c1c-049d-4ac7-9b44-8a02abea616c.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 62886,
+   "uploaded_bytes": 62886,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-mine/forests/spr15_2__f624c560-8d29-4c08-a99b-5d6cd1081e78.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-mine/forests/spr15_2__f624c560-8d29-4c08-a99b-5d6cd1081e78.jpg",
+   "name": "spr15_2.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-mine/forests/spr15_2__f624c560-8d29-4c08-a99b-5d6cd1081e78.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 62263,
+   "uploaded_bytes": 62263,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-mine/forests/spr35_1__1acc71c9-5985-4548-93ed-3da6713b3a68.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-mine/forests/spr35_1__1acc71c9-5985-4548-93ed-3da6713b3a68.jpg",
+   "name": "spr35_1.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-mine/forests/spr35_1__1acc71c9-5985-4548-93ed-3da6713b3a68.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 50244,
+   "uploaded_bytes": 50244,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-mine/forests/spr35_2__618e2c60-e7b2-471f-a589-a10ca1b15641.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-mine/forests/spr35_2__618e2c60-e7b2-471f-a589-a10ca1b15641.jpg",
+   "name": "spr35_2.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-mine/forests/spr35_2__618e2c60-e7b2-471f-a589-a10ca1b15641.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 54476,
+   "uploaded_bytes": 54476,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-mine/forests/spr75_1__caececf3-48dc-4698-93f2-f0733f628366.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-mine/forests/spr75_1__caececf3-48dc-4698-93f2-f0733f628366.jpg",
+   "name": "spr75_1.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-mine/forests/spr75_1__caececf3-48dc-4698-93f2-f0733f628366.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 45708,
+   "uploaded_bytes": 45708,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-mine/forests/spr75_2__89a92cf1-6315-4240-832a-f156ca2730d9.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-mine/forests/spr75_2__89a92cf1-6315-4240-832a-f156ca2730d9.jpg",
+   "name": "spr75_2.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-mine/forests/spr75_2__89a92cf1-6315-4240-832a-f156ca2730d9.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 50575,
+   "uploaded_bytes": 50575,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-mine/forests/suc15_1__5649080a-acb1-4ba8-8d40-3e5604e7ec7e.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-mine/forests/suc15_1__5649080a-acb1-4ba8-8d40-3e5604e7ec7e.jpg",
+   "name": "suc15_1.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-mine/forests/suc15_1__5649080a-acb1-4ba8-8d40-3e5604e7ec7e.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 55951,
+   "uploaded_bytes": 55951,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-mine/forests/suc15_2__5bdbff27-8f65-4749-a453-24b07f0b45c5.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-mine/forests/suc15_2__5bdbff27-8f65-4749-a453-24b07f0b45c5.jpg",
+   "name": "suc15_2.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-mine/forests/suc15_2__5bdbff27-8f65-4749-a453-24b07f0b45c5.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 50827,
+   "uploaded_bytes": 50827,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-mine/forests/suc35_1__ced571a1-68e6-4e45-9e89-ee9cc7868495.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-mine/forests/suc35_1__ced571a1-68e6-4e45-9e89-ee9cc7868495.jpg",
+   "name": "suc35_1.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-mine/forests/suc35_1__ced571a1-68e6-4e45-9e89-ee9cc7868495.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 55004,
+   "uploaded_bytes": 55004,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-mine/forests/suc35_2__5c89776b-ec09-47fd-bc7a-98807a1a1341.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-mine/forests/suc35_2__5c89776b-ec09-47fd-bc7a-98807a1a1341.jpg",
+   "name": "suc35_2.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-mine/forests/suc35_2__5c89776b-ec09-47fd-bc7a-98807a1a1341.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 53890,
+   "uploaded_bytes": 53890,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-mine/forests/suc55_1__053e700f-d35e-4758-96e4-c4476d5d60f0.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-mine/forests/suc55_1__053e700f-d35e-4758-96e4-c4476d5d60f0.jpg",
+   "name": "suc55_1.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-mine/forests/suc55_1__053e700f-d35e-4758-96e4-c4476d5d60f0.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 56401,
+   "uploaded_bytes": 56401,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-mine/forests/suc55_2__4560cb63-27bd-4359-82ea-57981be97675.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-mine/forests/suc55_2__4560cb63-27bd-4359-82ea-57981be97675.jpg",
+   "name": "suc55_2.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-mine/forests/suc55_2__4560cb63-27bd-4359-82ea-57981be97675.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 57556,
+   "uploaded_bytes": 57556,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "How High Is the Recreation Value of Successional Forests Growing Spontaneously on Coal Mine Spoil Heaps?",
+  "authors": [
+   "Markéta Braun Kohlová",
+   "Vojtěch Máca",
+   "Jan Melichar"
+  ],
+  "year": 2021,
+  "venue": "Forests",
+  "doi": "10.3390/f12020160",
+  "url": "https://doi.org/10.3390/f12020160"
+ }
+}

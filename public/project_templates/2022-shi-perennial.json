@@ -1,0 +1,606 @@
+{
+ "id": "2022-shi-perennial",
+ "name": "Perennial Plantings: Preference Rating",
+ "description": "Faithful replication of the preference rating task (Experiment B) in Shi, Zhang, Shen, Chen, Xu, Fu, Su & Xia (2022), \"Designing Perennial Landscapes: Plant form and Species Richness Influence the Gaze Perception Associated with Aesthetic Preference\", Land 11(10):1860, doi:10.3390/land11101860. The 36 images are the authors' photomontages of perennial plant combinations, printed in Figure 3 of the open-access paper (CC BY 4.0). They are used with credit for research, and the template is taken down if the authors object.\n\nWhat participants do: all 36 photomontages appear in random order. Before each one a dot is shown in the centre of the screen for 3 s, then the picture for 10 s, then the participant rates their preference from 1 to 10 and is asked to go with their first impression. The page ends with gender, age and whether they work or study in planting or landscape design.\n\nImages: <form>_<species>. Form: C = conical, M = mounding, V = vertical, CM / CV / MV = mixes of two forms. Species = number of perennial species (4 to 9). The paper's plant arrangement pattern follows the species number: 4 = E, 5 = F, 6 = C, 7 = B, 8 = A, 9 = D.\n\nOriginal study: Zhejiang University, Hangzhou, China. Experiment B had 43 participants (22 of them professionals in planting landscape design) with a Tobii TX300 eye tracker. Analysis: preference and gaze measures by plant form and species richness, gender and professional background; correlation of preference with fixation count and duration. Non-professionals gave clearly higher ratings than professionals; men and women did not differ.\n\nDifferences from the original study: (1) No eye tracking; online on any screen instead of a lab monitor with the pictures framed on a 1920 × 1080 black background. (2) The pictures come from the printed figure (about 520 × 260 pixels each) and the arrangement letters printed in each corner were removed. (3) The paper does not say whether the rating followed each picture or came after all of them; here each picture is rated right after its 10 s viewing. (4) Scale end labels \"lowest preference\" and \"highest preference\" were added; the paper only says that 1 to 10 means increasing preference. (5) The paper's sociodemographic form is not printed; gender, age and a planting-design background question were reconstructed from what the paper reports. (6) Experiment A (free viewing without ratings) is not included.",
+ "author": "Shi, Zhang, Shen, Chen, Xu, Fu, Su & Xia",
+ "year": "2022",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "photomontage",
+  "planting design",
+  "perennials",
+  "species richness",
+  "preference rating",
+  "source:paper",
+  "modality:scene_photo",
+  "task:rating",
+  "concept:aesthetics",
+  "concept:preference",
+  "concept:complexity",
+  "participants:students",
+  "participants:experts",
+  "sample:lt100",
+  "country:China",
+  "city:Hangzhou"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/land11101860",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T11:23:04.739+00:00",
+ "updatedAt": "2026-11-27T11:23:14.211+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "plantings",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I have read the information above and agree to take part.",
+      "labelTrue": "Yes",
+      "isRequired": true,
+      "labelFalse": "No"
+     },
+     {
+      "name": "ratings",
+      "type": "imageslidergroup",
+      "title": "Preference rating per photomontage",
+      "choices": [],
+      "scaleMax": 10,
+      "scaleMin": 1,
+      "dimensions": [
+       {
+        "id": "preference",
+        "max": 10,
+        "min": 1,
+        "left": "lowest preference",
+        "step": 1,
+        "label": "How much do you like this planting?",
+        "right": "highest preference"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "description": "One row per photomontage (key = <form>_<species>). Form: C = conical, M = mounding, V = vertical, CM / CV / MV = mixes of two forms. Species = number of perennial species in the combination (4–9). Plant arrangement pattern (paper's Figure 1) depends on the species number: 4 = E, 5 = F, 6 = C, 7 = B, 8 = A, 9 = D. All 36 in random order; 3 s centre dot, 10 s viewing, then a 1–10 preference rating. Analysis in the paper: preference by plant form and species richness, by gender and by professional background (planting design professionals vs others), and correlation with eye-movement measures.",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "What is your gender?",
+      "choices": [
+       {
+        "text": "Male",
+        "value": 1
+       },
+       {
+        "text": "Female",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "max": 99,
+      "min": 16,
+      "name": "age",
+      "type": "text",
+      "title": "How old are you?",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "professional",
+      "type": "radiogroup",
+      "title": "Do you work or study in planting or landscape design?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": 1
+       },
+       {
+        "text": "No",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Perennial Plantings",
+  "locale": "en",
+  "spSite": {
+   "id": "site-e90ba9ad732f3175",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Perennial Plantings</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Perennial Plantings\",\n  \"description\": \"Faithful replication of the preference rating task (Experiment B) in Shi, Zhang, Shen, Chen, Xu, Fu, Su & Xia (2022), Land 11(10):1860, with the authors' 36 photomontages of perennial plant combinations. Participants view each planting for 10 seconds and rate how much they like it from 1 to 10.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"perennials\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"plantings\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I have read the information above and agree to take part.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"Yes\",\n      \"labelFalse\": \"No\"\n     },\n     {\n      \"type\": \"imageslidergroup\",\n      \"name\": \"ratings\",\n      \"title\": \"Preference rating per photomontage\",\n      \"isRequired\": true,\n      \"imageCount\": 1,\n      \"scaleMin\": 1,\n      \"scaleMax\": 10,\n      \"description\": \"One row per photomontage (key = <form>_<species>). Form: C = conical, M = mounding, V = vertical, CM / CV / MV = mixes of two forms. Species = number of perennial species in the combination (4–9). Plant arrangement pattern (paper's Figure 1) depends on the species number: 4 = E, 5 = F, 6 = C, 7 = B, 8 = A, 9 = D. All 36 in random order; 3 s centre dot, 10 s viewing, then a 1–10 preference rating. Analysis in the paper: preference by plant form and species richness, by gender and by professional background (planting design professionals vs others), and correlation with eye-movement measures.\",\n      \"dimensions\": [\n       {\n        \"id\": \"preference\",\n        \"label\": \"How much do you like this planting?\",\n        \"left\": \"lowest preference\",\n        \"right\": \"highest preference\",\n        \"min\": 1,\n        \"max\": 10,\n        \"step\": 1\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"What is your gender?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Female\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"age\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"inputType\": \"number\",\n      \"min\": 16,\n      \"max\": 99\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"professional\",\n      \"title\": \"Do you work or study in planting or landscape design?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"No\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#eef0f2;--card:#fff;--ink:#1b1e22;--muted:#5a616b;--accent:#2f5d62;--accent-ink:#fff;--line:#d5d9de;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:820px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 10px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q>b{display:block;margin-bottom:4px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:120px}\n.pic{background:#000;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;aspect-ratio:2/1;max-height:min(58vh,560px)}\n.pic img{max-width:100%;max-height:100%;object-fit:contain;display:block}\n.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}\n.t{color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}\n.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;flex:1;margin-left:12px;max-width:260px}.bar>i{display:block;height:100%;background:var(--accent)}\n.qq{font-weight:600;margin:12px 0 6px}\n.sc{display:grid;grid-template-columns:repeat(10,1fr);gap:5px}\n@media (max-width:560px){.sc{grid-template-columns:repeat(5,1fr)}}\n.sc button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:11px 0;font:inherit;font-weight:700;cursor:pointer}\n.sc button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}\n.dot{width:10px;height:10px;border-radius:50%;background:#fff;display:block}\n.fix{background:#000;border-radius:12px;aspect-ratio:2/1;max-height:min(58vh,560px);display:flex;align-items:center;justify-content:center;color:#fff;font-size:3rem;font-weight:300}\n.ends{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted);margin-top:3px;gap:12px}.ends span:last-child{text-align:right}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:820px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photomontages: Shi et al. (2022), Land 11(10):1860, doi:10.3390/land11101860 (CC BY 4.0). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='perennials2022:';\n  var app=document.getElementById('app'), Q={}, M={}, D=null, ans={}, done={}, order=[];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function saveAll(l,b,cb){Promise.all(l.map(function(a){return a[2]?SPSite.answer(a[0],a[1],a[2]):SPSite.answer(a[0],a[1]);})).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}cb();});}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function stem(n){return n.replace(/\\.[^.]+$/,'');}\n  function list(){return M.perennials||[];}\n  function byName(n){var l=list();for(var i=0;i<l.length;i++)if(l[i].name===n)return l[i];}\n  function next(){\n    window.scrollTo(0,0);\n    if(!ans.intro)return intro();\n    if(!ans.howto)return howto();\n    for(var i=0;i<order.length;i++){if(!done[stem(order[i])])return trial(i);}\n    if(!ans.about)return about();\n    finish();\n  }\n  function page(title,html,btn,cb){\n    app.innerHTML='<div class=\"card\">'+(title?'<h1>'+esc(title)+'</h1>':'')+html+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">'+esc(btn||'Continue')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=cb;\n  }\n  function radios(name){return (Q[name].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');}\n  function val(n){var x=app.querySelector('input[name='+n+']:checked');return x?Number(x.value):null;}\n  function intro(){\n    if(list().length<36){app.innerHTML='<h1>Pictures missing</h1><p>Media folder perennials must hold the 36 photomontages.</p>';return;}\n    page('Which perennial plantings do you like?','<p>In this study you will see '+list().length+' pictures of small perennial flower plantings, one at a time, and rate how much you like each one. It takes about 10 to 15 minutes.</p><p>Participation is voluntary and anonymous.</p><label class=\"opt\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label>','Start',function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var b=this;b.disabled=true;saveAll([['consent',true]],b,function(){ans.intro=true;next();});\n    });\n  }\n  function howto(){\n    page('Instructions','<p style=\"color:var(--ink)\">Before each picture a dot appears in the centre of the screen for 3 seconds; please look at it. Then the picture is shown for 10 seconds. Please look over the whole picture.</p><p style=\"color:var(--ink)\">After that, rate how much you like the planting from <b>1 = lowest</b> to <b>10 = highest preference</b>. Go with your first impression and do not think about it for too long.</p>','Begin',function(){ans.howto=true;next();});\n  }\n  var timer=null;\n  function trial(i){\n    var f=byName(order[i]), n=0, k=stem(f.name);order.forEach(function(x){if(done[stem(x)])n++;});\n    var head='<div class=\"top\"><span class=\"t\">Picture '+(n+1)+' of '+order.length+'</span><div class=\"bar\"><i style=\"width:'+(100*n/order.length)+'%\"></i></div></div>';\n    var pre=new Image();pre.src=f.url;\n    app.innerHTML=head+'<div class=\"fix\"><span class=\"dot\"></span></div>';\n    clearTimeout(timer);\n    timer=setTimeout(function(){\n      app.innerHTML=head+'<div class=\"pic\"><img alt=\"Photomontage of a perennial planting\" src=\"'+esc(f.url)+'\"></div><p class=\"t\" style=\"margin-top:8px\">Please look over the whole picture.</p>';\n      timer=setTimeout(function(){rate(f,k,head);},10000);\n    },3000);\n  }\n  function rate(f,k,head){\n    var b='';for(var v=D.min;v<=D.max;v++)b+='<button type=\"button\" data-v=\"'+v+'\">'+v+'</button>';\n    app.innerHTML=head+'<div class=\"qq\">'+esc(D.label)+'</div><div class=\"sc\">'+b+'</div><div class=\"ends\"><span>1 = '+esc(D.left)+'</span><span>10 = '+esc(D.right)+'</span></div><div class=\"err\"></div>';\n    var busy=false;\n    app.querySelectorAll('.sc button').forEach(function(x){x.onclick=function(){\n      if(busy)return;busy=true;x.classList.add('on');\n      SPSite.answer('ratings',{preference:Number(x.dataset.v)},{key:k,shown:[f.name]}).then(function(r){\n        if(!ok(r)){busy=false;x.classList.remove('on');return err(r.error);}\n        done[k]=true;setTimeout(next,150);});\n    };});\n  }\n  function about(){\n    page('About you','<div class=\"q\"><b>'+esc(Q.gender.title)+'</b>'+radios('gender')+'</div><div class=\"q\"><b>'+esc(Q.age.title)+'</b><input type=\"number\" name=\"age\" min=\"16\" max=\"99\" inputmode=\"numeric\"></div><div class=\"q\"><b>'+esc(Q.professional.title)+'</b>'+radios('professional')+'</div>','Finish',function(){\n      var g=val('gender');if(!g)return err('Please answer: '+Q.gender.title);\n      var a=Number((app.querySelector('input[name=age]')||{}).value);if(!a||a<16||a>99)return err('Please enter your age in years.');\n      var p=val('professional');if(!p)return err('Please answer: '+Q.professional.title);\n      var b=this;b.disabled=true;saveAll([['gender',g],['age',a],['professional',p]],b,function(){ans.about=true;next();});\n    });\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>The pictures combined perennials of different plant forms (conical, mounding, vertical and their mixes) with 4 to 9 species. In the original eye-tracking study in Hangzhou, China, plant form and species richness changed how people looked at the plantings, men and women liked them about equally, and people without a planting design background gave clearly higher ratings than professionals.</p><p style=\"font-size:.82rem\">Photomontages and task: Shi, Y., Zhang, J., Shen, X., Chen, L., Xu, Y., Fu, R., Su, Y., &amp; Xia, Y. (2022). Designing perennial landscapes: Plant form and species richness influence the gaze perception associated with aesthetic preference. Land 11(10):1860, doi:10.3390/land11101860. Used with credit and removed if the authors object.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){\n      if(x==='consent')ans.intro=false;else if(x==='ratings')done={};else ans.about=false;});next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','gender','age','professional'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    var R=SPSite.getQuestion('ratings')||{};D=(R.dimensions||[])[0]||{label:'How much do you like this planting?',left:'lowest preference',right:'highest preference',min:1,max:10};\n    M.perennials=(SPSite.getMedia('perennials')||[]).slice();\n    var a=(ctx&&ctx.answers)||{};\n    var names=list().map(function(f){return f.name;});var o=load('order');\n    if(!o||o.length!==names.length||o.some(function(x){return names.indexOf(x)<0;}))o=shuffle(names);order=o;save('order',order);\n    ((a.ratings&&a.ratings.trials)||[]).forEach(function(t){if(t.key)done[t.key]=true;});\n    if(a.consent===true){ans.intro=true;if(Object.keys(done).length)ans.howto=true;}\n    if(a.professional!=null)ans.about=true;\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T11:22:34.046Z",
+   "mediaFolders": [
+    "perennials"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T11:22:34.046Z"
+  },
+  "description": "Faithful replication of the preference rating task (Experiment B) in Shi, Zhang, Shen, Chen, Xu, Fu, Su & Xia (2022), Land 11(10):1860, with the authors' 36 photomontages of perennial plant combinations. Participants view each planting for 10 seconds and rate how much they like it from 1 to 10.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2022-shi-perennial/perennials/CM_4__e6b0bdc9-92c8-483b-ae89-b9e8b788bf40.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/CM_4__e6b0bdc9-92c8-483b-ae89-b9e8b788bf40.jpg",
+   "name": "CM_4.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/CM_4__e6b0bdc9-92c8-483b-ae89-b9e8b788bf40.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 21755,
+   "uploaded_bytes": 21755,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/CM_5__1bec3286-8691-4c23-b661-d958afffa89e.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/CM_5__1bec3286-8691-4c23-b661-d958afffa89e.jpg",
+   "name": "CM_5.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/CM_5__1bec3286-8691-4c23-b661-d958afffa89e.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 17267,
+   "uploaded_bytes": 17267,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/CM_6__04dd2f45-f6c1-4832-b480-768575697642.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/CM_6__04dd2f45-f6c1-4832-b480-768575697642.jpg",
+   "name": "CM_6.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/CM_6__04dd2f45-f6c1-4832-b480-768575697642.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 17757,
+   "uploaded_bytes": 17757,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/CM_7__25fc3aab-47df-4773-9d45-7e1cb2366610.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/CM_7__25fc3aab-47df-4773-9d45-7e1cb2366610.jpg",
+   "name": "CM_7.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/CM_7__25fc3aab-47df-4773-9d45-7e1cb2366610.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 32275,
+   "uploaded_bytes": 32275,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/CM_8__3cb318c8-ec46-489c-94bf-7fedff33eeb8.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/CM_8__3cb318c8-ec46-489c-94bf-7fedff33eeb8.jpg",
+   "name": "CM_8.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/CM_8__3cb318c8-ec46-489c-94bf-7fedff33eeb8.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 22607,
+   "uploaded_bytes": 22607,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/CM_9__906d426f-5c2f-44bd-b9c7-18be49201664.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/CM_9__906d426f-5c2f-44bd-b9c7-18be49201664.jpg",
+   "name": "CM_9.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/CM_9__906d426f-5c2f-44bd-b9c7-18be49201664.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 30763,
+   "uploaded_bytes": 30763,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/CV_4__5a66320f-7f11-46b5-a985-ca6f048c246f.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/CV_4__5a66320f-7f11-46b5-a985-ca6f048c246f.jpg",
+   "name": "CV_4.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/CV_4__5a66320f-7f11-46b5-a985-ca6f048c246f.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 25722,
+   "uploaded_bytes": 25722,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/CV_5__fb95eb38-2f7e-41d2-83a0-8146d9a44870.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/CV_5__fb95eb38-2f7e-41d2-83a0-8146d9a44870.jpg",
+   "name": "CV_5.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/CV_5__fb95eb38-2f7e-41d2-83a0-8146d9a44870.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 17770,
+   "uploaded_bytes": 17770,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/CV_6__ea64422e-4be2-4d88-a5ec-472fffbd3d54.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/CV_6__ea64422e-4be2-4d88-a5ec-472fffbd3d54.jpg",
+   "name": "CV_6.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/CV_6__ea64422e-4be2-4d88-a5ec-472fffbd3d54.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 21595,
+   "uploaded_bytes": 21595,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/CV_7__67161ba5-c63e-4bc4-9c19-5e1b1c2f05fc.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/CV_7__67161ba5-c63e-4bc4-9c19-5e1b1c2f05fc.jpg",
+   "name": "CV_7.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/CV_7__67161ba5-c63e-4bc4-9c19-5e1b1c2f05fc.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 22944,
+   "uploaded_bytes": 22944,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/CV_8__c50ad273-7f69-4dba-b0c7-78b80001a7da.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/CV_8__c50ad273-7f69-4dba-b0c7-78b80001a7da.jpg",
+   "name": "CV_8.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/CV_8__c50ad273-7f69-4dba-b0c7-78b80001a7da.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 19813,
+   "uploaded_bytes": 19813,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/CV_9__2c313f1e-e4b1-4a50-8b5b-536898621b2e.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/CV_9__2c313f1e-e4b1-4a50-8b5b-536898621b2e.jpg",
+   "name": "CV_9.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/CV_9__2c313f1e-e4b1-4a50-8b5b-536898621b2e.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 27939,
+   "uploaded_bytes": 27939,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/C_4__07fc74c2-414b-4ddf-a757-9d95323c1010.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/C_4__07fc74c2-414b-4ddf-a757-9d95323c1010.jpg",
+   "name": "C_4.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/C_4__07fc74c2-414b-4ddf-a757-9d95323c1010.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 21717,
+   "uploaded_bytes": 21717,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/C_5__45bc4b47-fe83-4046-9a19-e74d05750708.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/C_5__45bc4b47-fe83-4046-9a19-e74d05750708.jpg",
+   "name": "C_5.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/C_5__45bc4b47-fe83-4046-9a19-e74d05750708.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 13372,
+   "uploaded_bytes": 13372,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/C_6__fcd879f0-de55-4b1c-bb69-9c2bc9331d32.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/C_6__fcd879f0-de55-4b1c-bb69-9c2bc9331d32.jpg",
+   "name": "C_6.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/C_6__fcd879f0-de55-4b1c-bb69-9c2bc9331d32.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 14119,
+   "uploaded_bytes": 14119,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/C_7__4c629aa4-09ba-423c-947b-af74095146cf.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/C_7__4c629aa4-09ba-423c-947b-af74095146cf.jpg",
+   "name": "C_7.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/C_7__4c629aa4-09ba-423c-947b-af74095146cf.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 22837,
+   "uploaded_bytes": 22837,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/C_8__a7557c4c-f2c6-43f7-a196-73bcea6fe684.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/C_8__a7557c4c-f2c6-43f7-a196-73bcea6fe684.jpg",
+   "name": "C_8.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/C_8__a7557c4c-f2c6-43f7-a196-73bcea6fe684.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 12612,
+   "uploaded_bytes": 12612,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/C_9__da23be55-1843-450a-a6d4-00388355492b.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/C_9__da23be55-1843-450a-a6d4-00388355492b.jpg",
+   "name": "C_9.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/C_9__da23be55-1843-450a-a6d4-00388355492b.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 19916,
+   "uploaded_bytes": 19916,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/MV_4__87fe44ae-1698-4f15-bbe8-381c66925a93.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/MV_4__87fe44ae-1698-4f15-bbe8-381c66925a93.jpg",
+   "name": "MV_4.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/MV_4__87fe44ae-1698-4f15-bbe8-381c66925a93.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 24303,
+   "uploaded_bytes": 24303,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/MV_5__7785f587-a317-4009-908a-51580504e42b.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/MV_5__7785f587-a317-4009-908a-51580504e42b.jpg",
+   "name": "MV_5.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/MV_5__7785f587-a317-4009-908a-51580504e42b.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 23455,
+   "uploaded_bytes": 23455,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/MV_6__70051a9c-3366-4d31-9e5b-1c19229b7152.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/MV_6__70051a9c-3366-4d31-9e5b-1c19229b7152.jpg",
+   "name": "MV_6.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/MV_6__70051a9c-3366-4d31-9e5b-1c19229b7152.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 18163,
+   "uploaded_bytes": 18163,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/MV_7__d64049d7-13e2-4eaa-b025-8b54fc360525.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/MV_7__d64049d7-13e2-4eaa-b025-8b54fc360525.jpg",
+   "name": "MV_7.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/MV_7__d64049d7-13e2-4eaa-b025-8b54fc360525.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 26254,
+   "uploaded_bytes": 26254,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/MV_8__a14ec11b-0af3-48a6-a5d4-979a5fbc5d26.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/MV_8__a14ec11b-0af3-48a6-a5d4-979a5fbc5d26.jpg",
+   "name": "MV_8.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/MV_8__a14ec11b-0af3-48a6-a5d4-979a5fbc5d26.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 18372,
+   "uploaded_bytes": 18372,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/MV_9__2f618ffd-86de-49bd-8761-52f81c4671d5.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/MV_9__2f618ffd-86de-49bd-8761-52f81c4671d5.jpg",
+   "name": "MV_9.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/MV_9__2f618ffd-86de-49bd-8761-52f81c4671d5.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 26569,
+   "uploaded_bytes": 26569,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/M_4__88825d01-cf00-4f42-9026-84cd3ed4c4c3.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/M_4__88825d01-cf00-4f42-9026-84cd3ed4c4c3.jpg",
+   "name": "M_4.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/M_4__88825d01-cf00-4f42-9026-84cd3ed4c4c3.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 24364,
+   "uploaded_bytes": 24364,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/M_5__43ae6d3a-fdbb-4080-b960-fbdb9d34b51b.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/M_5__43ae6d3a-fdbb-4080-b960-fbdb9d34b51b.jpg",
+   "name": "M_5.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/M_5__43ae6d3a-fdbb-4080-b960-fbdb9d34b51b.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 18078,
+   "uploaded_bytes": 18078,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/M_6__97ebe903-b25e-4ecf-916c-ca43b9240e2d.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/M_6__97ebe903-b25e-4ecf-916c-ca43b9240e2d.jpg",
+   "name": "M_6.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/M_6__97ebe903-b25e-4ecf-916c-ca43b9240e2d.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 19764,
+   "uploaded_bytes": 19764,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/M_7__ada0186d-b4a4-4e0c-8918-450510e27877.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/M_7__ada0186d-b4a4-4e0c-8918-450510e27877.jpg",
+   "name": "M_7.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/M_7__ada0186d-b4a4-4e0c-8918-450510e27877.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 28140,
+   "uploaded_bytes": 28140,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/M_8__2dec4efa-91b7-4a8c-ba4f-307642a3a356.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/M_8__2dec4efa-91b7-4a8c-ba4f-307642a3a356.jpg",
+   "name": "M_8.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/M_8__2dec4efa-91b7-4a8c-ba4f-307642a3a356.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 19266,
+   "uploaded_bytes": 19266,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/M_9__5033fd38-e0b5-46ad-b167-c5c393955fd6.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/M_9__5033fd38-e0b5-46ad-b167-c5c393955fd6.jpg",
+   "name": "M_9.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/M_9__5033fd38-e0b5-46ad-b167-c5c393955fd6.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 27694,
+   "uploaded_bytes": 27694,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/V_4__6214e2b1-10a5-45eb-b1ae-b4bc9a4fea48.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/V_4__6214e2b1-10a5-45eb-b1ae-b4bc9a4fea48.jpg",
+   "name": "V_4.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/V_4__6214e2b1-10a5-45eb-b1ae-b4bc9a4fea48.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 22036,
+   "uploaded_bytes": 22036,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/V_5__6922d5c6-d722-4389-ae7a-c75f9b9c43ae.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/V_5__6922d5c6-d722-4389-ae7a-c75f9b9c43ae.jpg",
+   "name": "V_5.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/V_5__6922d5c6-d722-4389-ae7a-c75f9b9c43ae.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 21274,
+   "uploaded_bytes": 21274,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/V_6__e41a2dd8-e1b8-4867-99c3-d5e7171493d7.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/V_6__e41a2dd8-e1b8-4867-99c3-d5e7171493d7.jpg",
+   "name": "V_6.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/V_6__e41a2dd8-e1b8-4867-99c3-d5e7171493d7.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 20164,
+   "uploaded_bytes": 20164,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/V_7__73136aa0-2ce8-4c03-89ee-4bab775aac22.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/V_7__73136aa0-2ce8-4c03-89ee-4bab775aac22.jpg",
+   "name": "V_7.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/V_7__73136aa0-2ce8-4c03-89ee-4bab775aac22.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 28112,
+   "uploaded_bytes": 28112,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/V_8__137a8f15-f387-49b5-9402-28042a3e46ae.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/V_8__137a8f15-f387-49b5-9402-28042a3e46ae.jpg",
+   "name": "V_8.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/V_8__137a8f15-f387-49b5-9402-28042a3e46ae.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 19754,
+   "uploaded_bytes": 19754,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-shi-perennial/perennials/V_9__72f2ce0b-6e71-4f59-8ad9-450cf041599d.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-shi-perennial/perennials/V_9__72f2ce0b-6e71-4f59-8ad9-450cf041599d.jpg",
+   "name": "V_9.jpg",
+   "type": "image",
+   "folder": "perennials",
+   "media_id": "templates/2022-shi-perennial/perennials/V_9__72f2ce0b-6e71-4f59-8ad9-450cf041599d.jpg",
+   "logicalFolder": "perennials",
+   "original_bytes": 27369,
+   "uploaded_bytes": 27369,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Designing Perennial Landscapes: Plant form and Species Richness Influence the Gaze Perception Associated with Aesthetic Preference",
+  "authors": [
+   "Yangyang Shi",
+   "Jiao Zhang",
+   "Xinyue Shen",
+   "Liang Chen",
+   "Yunchen Xu",
+   "Rui Fu",
+   "Yang Su",
+   "Yiping Xia"
+  ],
+  "year": 2022,
+  "venue": "Land",
+  "doi": "10.3390/land11101860",
+  "url": "https://doi.org/10.3390/land11101860"
+ }
+}

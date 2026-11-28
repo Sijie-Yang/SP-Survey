@@ -1,0 +1,864 @@
+{
+ "id": "2016-toet-simulated",
+ "name": "Simulated Darkness and Affective Appraisal of a Virtual Landscape",
+ "description": "Method replication: the four images are the paper's own screenshots of its virtual environment, but participants look at two still views instead of freely exploring the virtual world for 10 minutes. Participants are randomly assigned to one of the paper's 6 conditions: a daytime or a nighttime version of a virtual Dutch polder landscape (dikes, canals, a road, a drawbridge, no people), and either no extra assignment or a (fictitious) follow-up visit to the corresponding real area in daytime or at night, which raises the personal relevance of the simulation. Procedure as in the paper's Fig. 1: age, gender, fear of darkness in real life (8 statements, -3 to +3) and game experience (2 items, 1-5); PANAS mood (20 adjectives, 1-5); the instructions (with or without the follow-up visit); Self-Assessment Manikin pleasure, arousal and dominance (1-9); viewing the two screenshots of the assigned lighting for 60 s each; the affective appraisal scale (11 adjectives on -3 'not at all' to +3 'very much': cosiness, liveliness, tenseness, detachment); SAM and PANAS again; the 14-item Igroup Presence Questionnaire (-3 to +3); an open comment; and a debriefing that the follow-up visit was fictitious. The questionnaire items are the English wording from the paper's Supplemental Information. Rebuilt from Toet, Houtkamp & Vreugdenhil (2016), Effects of personal relevance and simulated darkness on the affective appraisal of a virtual environment, PeerJ 4: e1743, with the screenshots cropped from its Figure 2 (CC BY 4.0). Image ids: day_1, day_2, night_1, night_2; lighting and followup record the assignment. Analysis as in the paper: two-way ANOVA (lighting x follow-up assignment) on the four appraisal factor means, SAM and PANAS changes from before to after viewing, and presence; the paper found the nighttime version less cosy (F(1,66) = 10.90) and much more tense (F(1,66) = 56.16) than the daytime version, while the fictitious follow-up visit had little effect. Differences from the original study: (1) two still screenshots (small, about 350 px wide) instead of a 10-minute free exploration on a desktop screen with sound and moving water, trees, birds and sheep, and no room-light change for the night condition; (2) the map drawing task is left out, so the instruction does not mention it; (3) the paper's sample was 72 young female students, here anyone can take part and gender is asked; the age and gender questions and the instruction wording are ours, built from the paper's procedure text; (4) the SAM is shown as labelled 9-point scales (end labels ours) instead of the pictorial manikins; (5) the two navigation questions are dropped because there is no navigation, and the presence items keep their original 'virtual world' wording; (6) the paper used Dutch translations, this page uses the English wording given in the supplement.",
+ "author": "Toet, Houtkamp & Vreugdenhil",
+ "year": "2016",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "night",
+  "virtual-environment",
+  "affective-appraisal",
+  "presence",
+  "source:paper",
+  "modality:rendered",
+  "task:questionnaire",
+  "task:multi_rating",
+  "concept:emotion",
+  "concept:safety",
+  "concept:comfort",
+  "concept:liveliness",
+  "participants:lab",
+  "participants:students",
+  "sample:lt100",
+  "country:Netherlands"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.7717/peerj.1743",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T20:57:59.643+00:00",
+ "updatedAt": "2026-11-27T20:58:08.402+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "assignment",
+    "elements": [
+     {
+      "name": "lighting",
+      "type": "radiogroup",
+      "title": "Simulated lighting",
+      "choices": [
+       {
+        "text": "Daytime",
+        "value": "day"
+       },
+       {
+        "text": "Nighttime",
+        "value": "night"
+       }
+      ],
+      "description": "Set at random by the page."
+     },
+     {
+      "name": "followup",
+      "type": "radiogroup",
+      "title": "Fictitious follow-up assignment",
+      "choices": [
+       {
+        "text": "No follow-up assignment",
+        "value": "none"
+       },
+       {
+        "text": "Follow-up visit to the real area in daytime",
+        "value": "day"
+       },
+       {
+        "text": "Follow-up visit to the real area at night",
+        "value": "night"
+       }
+      ],
+      "description": "Set at random by the page."
+     }
+    ]
+   },
+   {
+    "name": "before",
+    "elements": [
+     {
+      "max": 110,
+      "min": 16,
+      "name": "age",
+      "type": "text",
+      "title": "How old are you?",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "dark_fear",
+      "rows": [
+       {
+        "text": "I'm very well able to find my way in an unfamiliar environment.",
+        "value": "f1"
+       },
+       {
+        "text": "I'm very well able to find my way in a familiar environment at night.",
+        "value": "f2"
+       },
+       {
+        "text": "I'm very well able to find my way in an unfamiliar environment at night.",
+        "value": "f3"
+       },
+       {
+        "text": "I can orientate very well in the dark.",
+        "value": "f4"
+       },
+       {
+        "text": "I can orientate very well in daytime.",
+        "value": "f5"
+       },
+       {
+        "text": "I dare to walk by myself in an unfamiliar environment at night.",
+        "value": "f6"
+       },
+       {
+        "text": "I dare to walk by myself in an unfamiliar environment in daytime.",
+        "value": "f7"
+       },
+       {
+        "text": "I feel uncomfortable in the dark.",
+        "value": "f8"
+       }
+      ],
+      "type": "matrix",
+      "title": "How much do you agree with each statement?",
+      "columns": [
+       {
+        "text": "-3 (strongly disagree)",
+        "value": -3
+       },
+       {
+        "text": "-2",
+        "value": -2
+       },
+       {
+        "text": "-1",
+        "value": -1
+       },
+       {
+        "text": "0",
+        "value": 0
+       },
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3 (strongly agree)",
+        "value": 3
+       }
+      ],
+      "isRequired": true,
+      "description": "Supplement: fear of darkness in the real world, -3 strongly disagree to 3 strongly agree."
+     },
+     {
+      "name": "game",
+      "rows": [
+       {
+        "text": "How frequently do you play 3D computer games?",
+        "value": "g1"
+       },
+       {
+        "text": "How frequently do you use other virtual environments (e.g., Second Life)?",
+        "value": "g2"
+       }
+      ],
+      "type": "matrix",
+      "title": "Game experience",
+      "columns": [
+       {
+        "text": "1 (never)",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5 (very often)",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "Supplement: 1 never to 5 very often."
+     },
+     {
+      "name": "panas_t1",
+      "rows": [
+       {
+        "text": "Distressed",
+        "value": "na1"
+       },
+       {
+        "text": "Upset",
+        "value": "na2"
+       },
+       {
+        "text": "Guilty",
+        "value": "na3"
+       },
+       {
+        "text": "Scared",
+        "value": "na4"
+       },
+       {
+        "text": "Hostile",
+        "value": "na5"
+       },
+       {
+        "text": "Irritable",
+        "value": "na6"
+       },
+       {
+        "text": "Ashamed",
+        "value": "na7"
+       },
+       {
+        "text": "Nervous",
+        "value": "na8"
+       },
+       {
+        "text": "Jittery",
+        "value": "na9"
+       },
+       {
+        "text": "Afraid",
+        "value": "na10"
+       },
+       {
+        "text": "Interested",
+        "value": "pa1"
+       },
+       {
+        "text": "Excited",
+        "value": "pa2"
+       },
+       {
+        "text": "Strong",
+        "value": "pa3"
+       },
+       {
+        "text": "Enthusiastic",
+        "value": "pa4"
+       },
+       {
+        "text": "Proud",
+        "value": "pa5"
+       },
+       {
+        "text": "Alert",
+        "value": "pa6"
+       },
+       {
+        "text": "Inspired",
+        "value": "pa7"
+       },
+       {
+        "text": "Determined",
+        "value": "pa8"
+       },
+       {
+        "text": "Attentive",
+        "value": "pa9"
+       },
+       {
+        "text": "Active",
+        "value": "pa10"
+       }
+      ],
+      "type": "matrix",
+      "title": "Indicate to what extent you feel this way right now",
+      "columns": [
+       {
+        "text": "1 not at all or very slightly",
+        "value": 1
+       },
+       {
+        "text": "2 a little",
+        "value": 2
+       },
+       {
+        "text": "3 moderately",
+        "value": 3
+       },
+       {
+        "text": "4 a lot",
+        "value": 4
+       },
+       {
+        "text": "5 extremely",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "PANAS before viewing (T1), 1-5."
+     }
+    ]
+   },
+   {
+    "name": "instructions",
+    "elements": [
+     {
+      "name": "sam_t1",
+      "rows": [
+       {
+        "text": "Pleasure: how unhappy or happy do you feel right now? [very unhappy | very happy]",
+        "value": "pleasure"
+       },
+       {
+        "text": "Arousal: how calm or excited do you feel right now? [very calm | very excited]",
+        "value": "arousal"
+       },
+       {
+        "text": "Dominance: how controlled or in control do you feel right now? [controlled | in control]",
+        "value": "dominance"
+       }
+      ],
+      "type": "matrix",
+      "title": "How do you feel right now?",
+      "columns": [
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       },
+       {
+        "text": "6",
+        "value": 6
+       },
+       {
+        "text": "7",
+        "value": 7
+       },
+       {
+        "text": "8",
+        "value": 8
+       },
+       {
+        "text": "9",
+        "value": 9
+       }
+      ],
+      "isRequired": true,
+      "description": "SAM after reading the instructions (T1), 1-9."
+     }
+    ]
+   },
+   {
+    "name": "after",
+    "elements": [
+     {
+      "name": "appraisal",
+      "rows": [
+       {
+        "text": "cosy",
+        "value": "cosy"
+       },
+       {
+        "text": "intimate",
+        "value": "intimate"
+       },
+       {
+        "text": "safe",
+        "value": "safe"
+       },
+       {
+        "text": "lively",
+        "value": "lively"
+       },
+       {
+        "text": "inspiring",
+        "value": "inspiring"
+       },
+       {
+        "text": "stimulating",
+        "value": "stimulating"
+       },
+       {
+        "text": "tense",
+        "value": "tense"
+       },
+       {
+        "text": "terrifying",
+        "value": "terrifying"
+       },
+       {
+        "text": "threatening",
+        "value": "threatening"
+       },
+       {
+        "text": "business",
+        "value": "business"
+       },
+       {
+        "text": "formal",
+        "value": "formal"
+       }
+      ],
+      "type": "matrix",
+      "title": "How well does each word describe the environment you just saw?",
+      "columns": [
+       {
+        "text": "-3 (not at all)",
+        "value": -3
+       },
+       {
+        "text": "-2",
+        "value": -2
+       },
+       {
+        "text": "-1",
+        "value": -1
+       },
+       {
+        "text": "0",
+        "value": 0
+       },
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3 (very much)",
+        "value": 3
+       }
+      ],
+      "isRequired": true,
+      "description": "Affective appraisal, -3 not at all to 3 very much. Cosiness = cosy, intimate, safe; Liveliness = lively, inspiring, stimulating; Tenseness = tense, terrifying, threatening; Detachment = business, formal. Keyed by lighting."
+     },
+     {
+      "name": "sam_t2",
+      "rows": [
+       {
+        "text": "Pleasure: how unhappy or happy do you feel right now? [very unhappy | very happy]",
+        "value": "pleasure"
+       },
+       {
+        "text": "Arousal: how calm or excited do you feel right now? [very calm | very excited]",
+        "value": "arousal"
+       },
+       {
+        "text": "Dominance: how controlled or in control do you feel right now? [controlled | in control]",
+        "value": "dominance"
+       }
+      ],
+      "type": "matrix",
+      "title": "How do you feel right now?",
+      "columns": [
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       },
+       {
+        "text": "6",
+        "value": 6
+       },
+       {
+        "text": "7",
+        "value": 7
+       },
+       {
+        "text": "8",
+        "value": 8
+       },
+       {
+        "text": "9",
+        "value": 9
+       }
+      ],
+      "isRequired": true,
+      "description": "SAM after viewing (T2), 1-9."
+     },
+     {
+      "name": "panas_t2",
+      "rows": [
+       {
+        "text": "Distressed",
+        "value": "na1"
+       },
+       {
+        "text": "Upset",
+        "value": "na2"
+       },
+       {
+        "text": "Guilty",
+        "value": "na3"
+       },
+       {
+        "text": "Scared",
+        "value": "na4"
+       },
+       {
+        "text": "Hostile",
+        "value": "na5"
+       },
+       {
+        "text": "Irritable",
+        "value": "na6"
+       },
+       {
+        "text": "Ashamed",
+        "value": "na7"
+       },
+       {
+        "text": "Nervous",
+        "value": "na8"
+       },
+       {
+        "text": "Jittery",
+        "value": "na9"
+       },
+       {
+        "text": "Afraid",
+        "value": "na10"
+       },
+       {
+        "text": "Interested",
+        "value": "pa1"
+       },
+       {
+        "text": "Excited",
+        "value": "pa2"
+       },
+       {
+        "text": "Strong",
+        "value": "pa3"
+       },
+       {
+        "text": "Enthusiastic",
+        "value": "pa4"
+       },
+       {
+        "text": "Proud",
+        "value": "pa5"
+       },
+       {
+        "text": "Alert",
+        "value": "pa6"
+       },
+       {
+        "text": "Inspired",
+        "value": "pa7"
+       },
+       {
+        "text": "Determined",
+        "value": "pa8"
+       },
+       {
+        "text": "Attentive",
+        "value": "pa9"
+       },
+       {
+        "text": "Active",
+        "value": "pa10"
+       }
+      ],
+      "type": "matrix",
+      "title": "Indicate to what extent you feel this way right now",
+      "columns": [
+       {
+        "text": "1 not at all or very slightly",
+        "value": 1
+       },
+       {
+        "text": "2 a little",
+        "value": 2
+       },
+       {
+        "text": "3 moderately",
+        "value": 3
+       },
+       {
+        "text": "4 a lot",
+        "value": 4
+       },
+       {
+        "text": "5 extremely",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "PANAS after viewing (T2), 1-5."
+     },
+     {
+      "name": "presence",
+      "rows": [
+       {
+        "text": "In the virtual environment I had a sense of 'being there'. [not at all | very much]",
+        "value": "gpr1"
+       },
+       {
+        "text": "Somehow I felt that the virtual world surrounded me. [fully disagree | fully agree]",
+        "value": "spr2"
+       },
+       {
+        "text": "I felt like I just perceived pictures. [fully disagree | fully agree]",
+        "value": "spr3"
+       },
+       {
+        "text": "I did not feel present in the virtual space. [did not feel | felt present]",
+        "value": "spr4"
+       },
+       {
+        "text": "I had a sense of acting in the virtual space, rather than operating something from outside. [fully disagree | fully agree]",
+        "value": "spr5"
+       },
+       {
+        "text": "I felt present in the virtual space. [fully disagree | fully agree]",
+        "value": "spr6"
+       },
+       {
+        "text": "How aware were you of the real world surrounding while navigating in the virtual world? (i.e., sounds, room temperature, other people, etc.)? [extremely aware | moderately aware | not aware at all]",
+        "value": "inv7"
+       },
+       {
+        "text": "I was not aware of my real environment. [fully disagree | fully agree]",
+        "value": "inv8"
+       },
+       {
+        "text": "I still paid attention to the real environment. [fully disagree | fully agree]",
+        "value": "inv9"
+       },
+       {
+        "text": "I was completely captivated by the virtual world. [fully disagree | fully agree]",
+        "value": "inv10"
+       },
+       {
+        "text": "How real did the virtual world seem to you? [completely real | not real at all]",
+        "value": "rea11"
+       },
+       {
+        "text": "How much did your experience in the virtual environment seem consistent with your real world experience? [not consistent | moderately consistent | very consistent]",
+        "value": "rea12"
+       },
+       {
+        "text": "How real did the virtual world seem to you? [about as real as an imagined world | indistinguishable from the real world]",
+        "value": "rea13"
+       },
+       {
+        "text": "The virtual world seemed more realistic than the real world. [fully disagree | fully agree]",
+        "value": "rea14"
+       }
+      ],
+      "type": "matrix",
+      "title": "Your experience of the virtual environment",
+      "columns": [
+       {
+        "text": "-3",
+        "value": -3
+       },
+       {
+        "text": "-2",
+        "value": -2
+       },
+       {
+        "text": "-1",
+        "value": -1
+       },
+       {
+        "text": "0",
+        "value": 0
+       },
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       }
+      ],
+      "isRequired": true,
+      "description": "Igroup Presence Questionnaire, -3 to 3 with the item's own anchors (in brackets). Keyed by lighting."
+     },
+     {
+      "name": "comments",
+      "type": "comment",
+      "title": "Do you have any comments about this experiment?"
+     }
+    ]
+   }
+  ],
+  "title": "Simulated Darkness and Affective Appraisal of a Virtual Landscape",
+  "locale": "en",
+  "spSite": {
+   "id": "site-a24a1188ce2a9790",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Virtual Landscape at Day and Night</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Simulated Darkness and Affective Appraisal of a Virtual Landscape\",\n  \"description\": \"Method replication: the four images are the paper's own screenshots of its virtual environment, but participants look at two still views instead of freely exploring the virtual world for 10 minutes. Participants are randomly assigned to one of the paper's 6 conditions: a daytime or a nighttime version of a virtual Dutch polder landscape (dikes, canals, a road, a drawbridge, no people), and either no extra assignment or a (fictitious) follow-up visit to the corresponding real area in daytime or at night, which raises the personal relevance of the simulation. Procedure as in the paper's Fig. 1: age, gender, fear of darkness in real life (8 statements, -3 to +3) and game experience (2 items, 1-5); PANAS mood (20 adjectives, 1-5); the instructions (with or without the follow-up visit); Self-Assessment Manikin pleasure, arousal and dominance (1-9); viewing the two screenshots of the assigned lighting for 60 s each; the affective appraisal scale (11 adjectives on -3 'not at all' to +3 'very much': cosiness, liveliness, tenseness, detachment); SAM and PANAS again; the 14-item Igroup Presence Questionnaire (-3 to +3); an open comment; and a debriefing that the follow-up visit was fictitious. All item wording is from the paper's Supplemental Information. Rebuilt from Toet, Houtkamp & Vreugdenhil (2016), Effects of personal relevance and simulated darkness on the affective appraisal of a virtual environment, PeerJ 4: e1743, with the screenshots cropped from its Figure 2 (CC BY 4.0). Image ids: day_1, day_2, night_1, night_2; lighting and followup record the assignment. Analysis as in the paper: two-way ANOVA (lighting x follow-up assignment) on the four appraisal factor means, SAM and PANAS changes from before to after viewing, and presence; the paper found the nighttime version less cosy (F(1,66) = 10.90) and much more tense (F(1,66) = 56.16) than the daytime version, while the fictitious follow-up visit had little effect. Differences from the original study: (1) two still screenshots (small, about 350 px wide) instead of a 10-minute free exploration on a desktop screen with sound and moving water, trees, birds and sheep, and no room-light change for the night condition; (2) the map drawing task is left out, so the instruction does not mention it; (3) the paper's sample was 72 young female students, here anyone can take part and gender is asked; the age and gender questions and the instruction wording are ours, built from the paper's procedure text; (4) the SAM is shown as labelled 9-point scales (end labels ours) instead of the pictorial manikins; (5) the two navigation questions are dropped because there is no navigation, and the presence items keep their original 'virtual world' wording; (6) the paper used Dutch translations, this page uses the English wording given in the supplement.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"scenes\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"assignment\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"lighting\",\n      \"title\": \"Simulated lighting\",\n      \"description\": \"Set at random by the page.\",\n      \"choices\": [\n       {\n        \"value\": \"day\",\n        \"text\": \"Daytime\"\n       },\n       {\n        \"value\": \"night\",\n        \"text\": \"Nighttime\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"followup\",\n      \"title\": \"Fictitious follow-up assignment\",\n      \"description\": \"Set at random by the page.\",\n      \"choices\": [\n       {\n        \"value\": \"none\",\n        \"text\": \"No follow-up assignment\"\n       },\n       {\n        \"value\": \"day\",\n        \"text\": \"Follow-up visit to the real area in daytime\"\n       },\n       {\n        \"value\": \"night\",\n        \"text\": \"Follow-up visit to the real area at night\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"before\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"min\": 16,\n      \"max\": 110\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"dark_fear\",\n      \"title\": \"How much do you agree with each statement?\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"f1\",\n        \"text\": \"I'm very well able to find my way in an unfamiliar environment.\"\n       },\n       {\n        \"value\": \"f2\",\n        \"text\": \"I'm very well able to find my way in a familiar environment at night.\"\n       },\n       {\n        \"value\": \"f3\",\n        \"text\": \"I'm very well able to find my way in an unfamiliar environment at night.\"\n       },\n       {\n        \"value\": \"f4\",\n        \"text\": \"I can orientate very well in the dark.\"\n       },\n       {\n        \"value\": \"f5\",\n        \"text\": \"I can orientate very well in daytime.\"\n       },\n       {\n        \"value\": \"f6\",\n        \"text\": \"I dare to walk by myself in an unfamiliar environment at night.\"\n       },\n       {\n        \"value\": \"f7\",\n        \"text\": \"I dare to walk by myself in an unfamiliar environment in daytime.\"\n       },\n       {\n        \"value\": \"f8\",\n        \"text\": \"I feel uncomfortable in the dark.\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": -3,\n        \"text\": \"-3 (strongly disagree)\"\n       },\n       {\n        \"value\": -2,\n        \"text\": \"-2\"\n       },\n       {\n        \"value\": -1,\n        \"text\": \"-1\"\n       },\n       {\n        \"value\": 0,\n        \"text\": \"0\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 (strongly agree)\"\n       }\n      ],\n      \"description\": \"Supplement: fear of darkness in the real world, -3 strongly disagree to 3 strongly agree.\"\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"game\",\n      \"title\": \"Game experience\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"g1\",\n        \"text\": \"How frequently do you play 3D computer games?\"\n       },\n       {\n        \"value\": \"g2\",\n        \"text\": \"How frequently do you use other virtual environments (e.g., Second Life)?\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1 (never)\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5 (very often)\"\n       }\n      ],\n      \"description\": \"Supplement: 1 never to 5 very often.\"\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"panas_t1\",\n      \"title\": \"Indicate to what extent you feel this way right now\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"na1\",\n        \"text\": \"Distressed\"\n       },\n       {\n        \"value\": \"na2\",\n        \"text\": \"Upset\"\n       },\n       {\n        \"value\": \"na3\",\n        \"text\": \"Guilty\"\n       },\n       {\n        \"value\": \"na4\",\n        \"text\": \"Scared\"\n       },\n       {\n        \"value\": \"na5\",\n        \"text\": \"Hostile\"\n       },\n       {\n        \"value\": \"na6\",\n        \"text\": \"Irritable\"\n       },\n       {\n        \"value\": \"na7\",\n        \"text\": \"Ashamed\"\n       },\n       {\n        \"value\": \"na8\",\n        \"text\": \"Nervous\"\n       },\n       {\n        \"value\": \"na9\",\n        \"text\": \"Jittery\"\n       },\n       {\n        \"value\": \"na10\",\n        \"text\": \"Afraid\"\n       },\n       {\n        \"value\": \"pa1\",\n        \"text\": \"Interested\"\n       },\n       {\n        \"value\": \"pa2\",\n        \"text\": \"Excited\"\n       },\n       {\n        \"value\": \"pa3\",\n        \"text\": \"Strong\"\n       },\n       {\n        \"value\": \"pa4\",\n        \"text\": \"Enthusiastic\"\n       },\n       {\n        \"value\": \"pa5\",\n        \"text\": \"Proud\"\n       },\n       {\n        \"value\": \"pa6\",\n        \"text\": \"Alert\"\n       },\n       {\n        \"value\": \"pa7\",\n        \"text\": \"Inspired\"\n       },\n       {\n        \"value\": \"pa8\",\n        \"text\": \"Determined\"\n       },\n       {\n        \"value\": \"pa9\",\n        \"text\": \"Attentive\"\n       },\n       {\n        \"value\": \"pa10\",\n        \"text\": \"Active\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1 not at all or very slightly\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 a little\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 moderately\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 a lot\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5 extremely\"\n       }\n      ],\n      \"description\": \"PANAS before viewing (T1), 1-5.\"\n     }\n    ]\n   },\n   {\n    \"name\": \"instructions\",\n    \"elements\": [\n     {\n      \"type\": \"matrix\",\n      \"name\": \"sam_t1\",\n      \"title\": \"How do you feel right now?\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"pleasure\",\n        \"text\": \"Pleasure: how unhappy or happy do you feel right now? [very unhappy | very happy]\"\n       },\n       {\n        \"value\": \"arousal\",\n        \"text\": \"Arousal: how calm or excited do you feel right now? [very calm | very excited]\"\n       },\n       {\n        \"value\": \"dominance\",\n        \"text\": \"Dominance: how controlled or in control do you feel right now? [controlled | in control]\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"6\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"7\"\n       },\n       {\n        \"value\": 8,\n        \"text\": \"8\"\n       },\n       {\n        \"value\": 9,\n        \"text\": \"9\"\n       }\n      ],\n      \"description\": \"SAM after reading the instructions (T1), 1-9.\"\n     }\n    ]\n   },\n   {\n    \"name\": \"after\",\n    \"elements\": [\n     {\n      \"type\": \"matrix\",\n      \"name\": \"appraisal\",\n      \"title\": \"How well does each word describe the environment you just saw?\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"cosy\",\n        \"text\": \"cosy\"\n       },\n       {\n        \"value\": \"intimate\",\n        \"text\": \"intimate\"\n       },\n       {\n        \"value\": \"safe\",\n        \"text\": \"safe\"\n       },\n       {\n        \"value\": \"lively\",\n        \"text\": \"lively\"\n       },\n       {\n        \"value\": \"inspiring\",\n        \"text\": \"inspiring\"\n       },\n       {\n        \"value\": \"stimulating\",\n        \"text\": \"stimulating\"\n       },\n       {\n        \"value\": \"tense\",\n        \"text\": \"tense\"\n       },\n       {\n        \"value\": \"terrifying\",\n        \"text\": \"terrifying\"\n       },\n       {\n        \"value\": \"threatening\",\n        \"text\": \"threatening\"\n       },\n       {\n        \"value\": \"business\",\n        \"text\": \"business\"\n       },\n       {\n        \"value\": \"formal\",\n        \"text\": \"formal\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": -3,\n        \"text\": \"-3 (not at all)\"\n       },\n       {\n        \"value\": -2,\n        \"text\": \"-2\"\n       },\n       {\n        \"value\": -1,\n        \"text\": \"-1\"\n       },\n       {\n        \"value\": 0,\n        \"text\": \"0\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 (very much)\"\n       }\n      ],\n      \"description\": \"Affective appraisal, -3 not at all to 3 very much. Cosiness = cosy, intimate, safe; Liveliness = lively, inspiring, stimulating; Tenseness = tense, terrifying, threatening; Detachment = business, formal. Keyed by lighting.\"\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"sam_t2\",\n      \"title\": \"How do you feel right now?\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"pleasure\",\n        \"text\": \"Pleasure: how unhappy or happy do you feel right now? [very unhappy | very happy]\"\n       },\n       {\n        \"value\": \"arousal\",\n        \"text\": \"Arousal: how calm or excited do you feel right now? [very calm | very excited]\"\n       },\n       {\n        \"value\": \"dominance\",\n        \"text\": \"Dominance: how controlled or in control do you feel right now? [controlled | in control]\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"6\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"7\"\n       },\n       {\n        \"value\": 8,\n        \"text\": \"8\"\n       },\n       {\n        \"value\": 9,\n        \"text\": \"9\"\n       }\n      ],\n      \"description\": \"SAM after viewing (T2), 1-9.\"\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"panas_t2\",\n      \"title\": \"Indicate to what extent you feel this way right now\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"na1\",\n        \"text\": \"Distressed\"\n       },\n       {\n        \"value\": \"na2\",\n        \"text\": \"Upset\"\n       },\n       {\n        \"value\": \"na3\",\n        \"text\": \"Guilty\"\n       },\n       {\n        \"value\": \"na4\",\n        \"text\": \"Scared\"\n       },\n       {\n        \"value\": \"na5\",\n        \"text\": \"Hostile\"\n       },\n       {\n        \"value\": \"na6\",\n        \"text\": \"Irritable\"\n       },\n       {\n        \"value\": \"na7\",\n        \"text\": \"Ashamed\"\n       },\n       {\n        \"value\": \"na8\",\n        \"text\": \"Nervous\"\n       },\n       {\n        \"value\": \"na9\",\n        \"text\": \"Jittery\"\n       },\n       {\n        \"value\": \"na10\",\n        \"text\": \"Afraid\"\n       },\n       {\n        \"value\": \"pa1\",\n        \"text\": \"Interested\"\n       },\n       {\n        \"value\": \"pa2\",\n        \"text\": \"Excited\"\n       },\n       {\n        \"value\": \"pa3\",\n        \"text\": \"Strong\"\n       },\n       {\n        \"value\": \"pa4\",\n        \"text\": \"Enthusiastic\"\n       },\n       {\n        \"value\": \"pa5\",\n        \"text\": \"Proud\"\n       },\n       {\n        \"value\": \"pa6\",\n        \"text\": \"Alert\"\n       },\n       {\n        \"value\": \"pa7\",\n        \"text\": \"Inspired\"\n       },\n       {\n        \"value\": \"pa8\",\n        \"text\": \"Determined\"\n       },\n       {\n        \"value\": \"pa9\",\n        \"text\": \"Attentive\"\n       },\n       {\n        \"value\": \"pa10\",\n        \"text\": \"Active\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1 not at all or very slightly\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 a little\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 moderately\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 a lot\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5 extremely\"\n       }\n      ],\n      \"description\": \"PANAS after viewing (T2), 1-5.\"\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"presence\",\n      \"title\": \"Your experience of the virtual environment\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"gpr1\",\n        \"text\": \"In the virtual environment I had a sense of 'being there'. [not at all | very much]\"\n       },\n       {\n        \"value\": \"spr2\",\n        \"text\": \"Somehow I felt that the virtual world surrounded me. [fully disagree | fully agree]\"\n       },\n       {\n        \"value\": \"spr3\",\n        \"text\": \"I felt like I just perceived pictures. [fully disagree | fully agree]\"\n       },\n       {\n        \"value\": \"spr4\",\n        \"text\": \"I did not feel present in the virtual space. [did not feel | felt present]\"\n       },\n       {\n        \"value\": \"spr5\",\n        \"text\": \"I had a sense of acting in the virtual space, rather than operating something from outside. [fully disagree | fully agree]\"\n       },\n       {\n        \"value\": \"spr6\",\n        \"text\": \"I felt present in the virtual space. [fully disagree | fully agree]\"\n       },\n       {\n        \"value\": \"inv7\",\n        \"text\": \"How aware were you of the real world surrounding while navigating in the virtual world? (i.e., sounds, room temperature, other people, etc.)? [extremely aware | moderately aware | not aware at all]\"\n       },\n       {\n        \"value\": \"inv8\",\n        \"text\": \"I was not aware of my real environment. [fully disagree | fully agree]\"\n       },\n       {\n        \"value\": \"inv9\",\n        \"text\": \"I still paid attention to the real environment. [fully disagree | fully agree]\"\n       },\n       {\n        \"value\": \"inv10\",\n        \"text\": \"I was completely captivated by the virtual world. [fully disagree | fully agree]\"\n       },\n       {\n        \"value\": \"rea11\",\n        \"text\": \"How real did the virtual world seem to you? [completely real | not real at all]\"\n       },\n       {\n        \"value\": \"rea12\",\n        \"text\": \"How much did your experience in the virtual environment seem consistent with your real world experience? [not consistent | moderately consistent | very consistent]\"\n       },\n       {\n        \"value\": \"rea13\",\n        \"text\": \"How real did the virtual world seem to you? [about as real as an imagined world | indistinguishable from the real world]\"\n       },\n       {\n        \"value\": \"rea14\",\n        \"text\": \"The virtual world seemed more realistic than the real world. [fully disagree | fully agree]\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": -3,\n        \"text\": \"-3\"\n       },\n       {\n        \"value\": -2,\n        \"text\": \"-2\"\n       },\n       {\n        \"value\": -1,\n        \"text\": \"-1\"\n       },\n       {\n        \"value\": 0,\n        \"text\": \"0\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       }\n      ],\n      \"description\": \"Igroup Presence Questionnaire, -3 to 3 with the item's own anchors (in brackets). Keyed by lighting.\"\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"comments\",\n      \"title\": \"Do you have any comments about this experiment?\"\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"darkness-ve-original\">{\"source\": \"Toet, Houtkamp & Vreugdenhil (2016) PeerJ 4: e1743\", \"n\": 72, \"participants\": \"72 female students of Utrecht University, age 17-32 (M 22.2), 12 per condition\", \"design\": \"2 (daylight / darkness VE) x 3 (no assignment / follow-up in same / opposite lighting) between subjects; 10 min desktop exploration\", \"appraisal_table1\": {\"day_none\": {\"cosiness\": 0.25, \"liveliness\": -1.0, \"tenseness\": -2.56, \"detachment\": -1.21}, \"day_followup_day\": {\"cosiness\": 0.28, \"liveliness\": -0.56, \"tenseness\": -2.25, \"detachment\": -1.17}, \"day_followup_night\": {\"cosiness\": 0.5, \"liveliness\": -0.16, \"tenseness\": -1.94, \"detachment\": -0.67}, \"night_none\": {\"cosiness\": -0.78, \"liveliness\": -0.53, \"tenseness\": -0.42, \"detachment\": -1.29}, \"night_followup_night\": {\"cosiness\": 0.06, \"liveliness\": -0.5, \"tenseness\": -0.61, \"detachment\": -0.83}, \"night_followup_day\": {\"cosiness\": -0.75, \"liveliness\": -0.42, \"tenseness\": 0.06, \"detachment\": -0.92}}, \"results\": \"lighting main effect on cosiness F(1,66)=10.90, partial eta2 .142, and tenseness F(1,66)=56.16, partial eta2 .460; night VE slightly more cosy with a nighttime follow-up task (F(1,22)=4.38, p=.048); no other follow-up effects\"}</script>\n<style>\n:root{--bg:#eef0f3;--card:#fff;--ink:#1a1f27;--muted:#59616e;--accent:#34507a;--line:#d6dbe3;--warn:#b3261e;--sel:#e1e8f3}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:820px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.5rem;margin:0 0 8px}h2{font-size:1.15rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:13px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.prog{font-size:.88rem;color:var(--muted);margin-bottom:8px}\n.ins{color:var(--ink)}\n.view{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:5;gap:12px}\n.view img{width:min(100vw,900px);height:auto;max-height:86vh;object-fit:contain;display:block}\n.view .t{color:#888;font-size:.85rem}\n.mx{margin-top:18px}.mx:first-child{margin-top:0}\n.mx h3{font-size:1rem;margin:0 0 2px}\n.it{padding:8px 0;border-top:1px solid var(--line)}\n.it .q{font-size:.95rem;margin-bottom:4px}\n.it .o{display:grid;gap:3px}\n.it label{display:flex;flex-direction:column;align-items:center;border:1px solid var(--line);border-radius:8px;padding:3px 0;cursor:pointer;font-size:.8rem;color:var(--muted)}\n.it label:has(input:checked){background:var(--sel);border-color:var(--accent);color:var(--ink)}\n.it input{margin:0 0 1px}\n.it .an{display:flex;justify-content:space-between;gap:8px;font-size:.74rem;color:var(--muted);margin-top:2px}\n.it .an span:nth-child(2):not(:last-child){text-align:center}.it .an span:last-child{text-align:right}\n.it.miss .o{outline:2px solid var(--warn);outline-offset:2px;border-radius:8px}\n.legend{display:grid;gap:3px;font-size:.72rem;color:var(--muted);text-align:center;margin-top:4px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.f{margin-top:16px}.f:first-child{margin-top:0}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:110px}\ntextarea{font:inherit;width:100%;min-height:90px;padding:8px 10px;border:1px solid var(--line);border-radius:8px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:820px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Screenshots: Toet, Houtkamp &amp; Vreugdenhil (2016), PeerJ 4: e1743, Figure 2 (doi:10.7717/peerj.1743, CC BY 4.0).</footer>\n<script>\n(function(){\n  var KEY='darkness-ve:state', T={view:window.__VIEWMS||60000};\n  var NAMES=['consent','lighting','followup','age','gender','dark_fear','game','panas_t1','sam_t1','appraisal','sam_t2','panas_t2','presence','comments'];\n  var STEPS=['intro','before','panas1','instr','view','appraisal','after','presence','comments','done'];\n  var app=document.getElementById('app'), Q={}, files={}, st=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function send(list,b,next){if(b)b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}next();});}\n  function val(name){var x=app.querySelector('input[name=\"'+name+'\"]:checked');return x?x.value:null;}\n  function nextStep(){st.step=STEPS[STEPS.indexOf(st.step)+1];save();route();}\n  function scenes(){return [st.light+'_1',st.light+'_2'];}\n  function shown(){return scenes().map(function(k){return files[k].name;});}\n  function fresh(){var l=Math.random()<.5?'day':'night',r=Math.random(),f=r<1/3?'none':(r<2/3?'day':'night');return {step:'intro',light:l,follow:f,k:0};}\n  function strip(t){return String(t).replace(/^-?\\d+\\s*\\(?/,'').replace(/\\)$/,'');}\n  function block(n){\n    var q=Q[n],cs=q.columns||[],k=cs.length,grid='grid-template-columns:repeat('+k+',1fr)';\n    var leg=k<=5?cs.map(function(c){return '<span>'+esc(strip(c.text))+'</span>';}).join(''):'';\n    return '<div class=\"mx\"><h3>'+esc(q.title)+'</h3>'+(leg?'<div class=\"legend\" style=\"'+grid+'\">'+leg+'</div>':'')+(q.rows||[]).map(function(r){\n      var nm=n+'__'+r.value,txt=String(r.text),m=txt.match(/\\s*\\[([^\\]]+)\\]\\s*$/),an=null;\n      if(m){txt=txt.slice(0,m.index);an=m[1].split('|').map(function(s){return s.trim();});}\n      else if(k>5){an=[strip(cs[0].text),strip(cs[k-1].text)];}\n      return '<div class=\"it\" data-n=\"'+nm+'\"><div class=\"q\">'+esc(txt)+'</div><div class=\"o\" style=\"'+grid+'\">'+cs.map(function(c){return '<label><input type=\"radio\" name=\"'+nm+'\" value=\"'+c.value+'\">'+c.value+'</label>';}).join('')+'</div>'+(an?'<div class=\"an\">'+an.map(function(a){return '<span>'+esc(a)+'</span>';}).join('')+'</div>':'')+'</div>';}).join('')+'</div>';}\n  function collect(names){var out={},miss=0,first=null;\n    names.forEach(function(n){out[n]={};(Q[n].rows||[]).forEach(function(r){var nm=n+'__'+r.value,x=val(nm),el=app.querySelector('.it[data-n=\"'+nm+'\"]');if(x==null){miss++;el.classList.add('miss');if(!first)first=el;}else{el.classList.remove('miss');out[n][r.value]=Number(x);}});});\n    if(miss){if(first)first.scrollIntoView({block:'center'});err('Please answer every item ('+miss+' missing).');return null;}return out;}\n  function screen(head,text,names,keyed){\n    app.innerHTML='<div class=\"prog\">'+esc(head)+'</div><div class=\"card\">'+(text?'<p class=\"ins\">'+text+'</p>':'')+names.map(block).join('')+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){var out=collect(names);if(!out)return;\n      send(names.map(function(n){return keyed?SPSite.answer(n,out[n],{key:st.light,shown:shown()}):SPSite.answer(n,out[n]);}),this,nextStep);};\n  }\n  function intro(){\n    app.innerHTML='<h1>A virtual landscape</h1><p>In this study you will look at a computer-simulated landscape and answer questions about how you feel and how you experience the environment. It takes about 15 minutes.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      send([SPSite.answer('consent',true),SPSite.answer('lighting',st.light),SPSite.answer('followup',st.follow)],this,nextStep);};\n  }\n  function before(){\n    app.innerHTML='<div class=\"prog\">About you</div><div class=\"card\"><div class=\"f\"><b>'+esc(Q.age.title)+'</b><br><input type=\"number\" id=\"age\" min=\"16\" max=\"110\"></div><div class=\"f\"><b>'+esc(Q.gender.title)+'</b>'+(Q.gender.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"gender\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div><div class=\"f\">'+block('dark_fear')+block('game')+'</div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var age=Number(document.getElementById('age').value),g=val('gender');\n      if(!(age>=16&&age<=110))return err('Please enter your age.');if(!g)return err('Please choose your gender.');\n      var out=collect(['dark_fear','game']);if(!out)return;\n      send([SPSite.answer('age',age),SPSite.answer('gender',g),SPSite.answer('dark_fear',out.dark_fear),SPSite.answer('game',out.game)],this,nextStep);};\n  }\n  function instrText(){\n    var t='You are about to explore a virtual polder landscape: a typical Dutch rural area with grasslands, dikes, roads and canals. You will see it '+(st.light==='day'?'in daytime':'at night')+', through two views of about one minute each. Look at each view carefully and imagine walking around in this area.';\n    if(st.follow!=='none')t+='<br><br><b>Follow-up task.</b> Later you will be asked to visit the real area that corresponds to this simulation, '+(st.follow==='day'?'in daytime':'at night')+'. You will not receive any assistance during that visit and will have to rely on what you saw here to find your way.';\n    return t;}\n  function view(){\n    var ids=scenes();if(st.k>=ids.length){st.k=0;return nextStep();}\n    var v=document.createElement('div');v.className='view';app.innerHTML='';app.appendChild(v);\n    v.innerHTML='<img alt=\"View of the virtual landscape\" src=\"'+esc(files[ids[st.k]].url)+'\"><div class=\"t\" id=\"tm\"></div>';\n    if(st.k+1<ids.length){var p=new Image();p.src=files[ids[st.k+1]].url;}\n    var end=Date.now()+T.view,tm=document.getElementById('tm');\n    (function tick(){var s=Math.ceil((end-Date.now())/1000);if(s<=0){st.k++;save();return route();}if(tm)tm.textContent='View '+(st.k+1)+' of '+ids.length+' · '+s+' s';setTimeout(tick,250);})();\n  }\n  function comments(){\n    app.innerHTML='<div class=\"prog\">Almost done</div><div class=\"card\"><div class=\"f\"><b>'+esc(Q.comments.title)+'</b> <span style=\"color:var(--muted)\">(optional)</span><br><textarea id=\"cm\" maxlength=\"2000\"></textarea></div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Finish</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){var c=document.getElementById('cm').value.trim();send(c?[SPSite.answer('comments',c)]:[],this,nextStep);};\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p>'+(st.follow!=='none'?'<p class=\"ins\">Please note: there is no follow-up visit. The announced visit to the real area was part of the experiment, to make the simulation feel personally relevant. Please do not tell future participants about this.</p>':'')+'<div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st.step='intro';save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  app.addEventListener('change',function(e){var r=e.target.closest&&e.target.closest('.it');if(r)r.classList.remove('miss');});\n  function route(){var s=st.step;window.scrollTo(0,0);\n    if(s==='before')return before();\n    if(s==='panas1')return screen('Your mood','Below are words that describe different feelings and emotions. Indicate to what extent you feel this way right now.',['panas_t1']);\n    if(s==='instr')return screen('Instructions',instrText(),['sam_t1']);\n    if(s==='view')return view();\n    if(s==='appraisal')return screen('The environment','',['appraisal'],true);\n    if(s==='after')return screen('Your feelings now','',['sam_t2','panas_t2']);\n    if(s==='presence')return screen('Your experience','Think about the virtual environment you just saw.',['presence'],true);\n    if(s==='comments')return comments();\n    if(s==='done')return finish();\n    intro();}\n  SPSite.onReady(function(ctx){\n    NAMES.forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('scenes')||[]).forEach(function(f){files[f.name.replace(/\\.[^.]+$/,'')]=f;});\n    var need=['day_1','day_2','night_1','night_2'].filter(function(k){return !files[k];});\n    if(need.length){app.innerHTML='<h1>Images missing</h1><p>Upload '+need.join(', ')+' (.jpg) to the media folder \"scenes\".</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    var a=(ctx&&ctx.answers)||{};\n    if(!(st&&st.light)||a.consent!==true)st=fresh();\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T20:57:29.377Z",
+   "mediaFolders": [
+    "scenes"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T20:57:29.377Z"
+  },
+  "description": "Method replication: the four images are the paper's own screenshots of its virtual environment, but participants look at two still views instead of freely exploring the virtual world for 10 minutes. Participants are randomly assigned to one of the paper's 6 conditions: a daytime or a nighttime version of a virtual Dutch polder landscape (dikes, canals, a road, a drawbridge, no people), and either no extra assignment or a (fictitious) follow-up visit to the corresponding real area in daytime or at night, which raises the personal relevance of the simulation. Procedure as in the paper's Fig. 1: age, gender, fear of darkness in real life (8 statements, -3 to +3) and game experience (2 items, 1-5); PANAS mood (20 adjectives, 1-5); the instructions (with or without the follow-up visit); Self-Assessment Manikin pleasure, arousal and dominance (1-9); viewing the two screenshots of the assigned lighting for 60 s each; the affective appraisal scale (11 adjectives on -3 'not at all' to +3 'very much': cosiness, liveliness, tenseness, detachment); SAM and PANAS again; the 14-item Igroup Presence Questionnaire (-3 to +3); an open comment; and a debriefing that the follow-up visit was fictitious. All item wording is from the paper's Supplemental Information. Rebuilt from Toet, Houtkamp & Vreugdenhil (2016), Effects of personal relevance and simulated darkness on the affective appraisal of a virtual environment, PeerJ 4: e1743, with the screenshots cropped from its Figure 2 (CC BY 4.0). Image ids: day_1, day_2, night_1, night_2; lighting and followup record the assignment. Analysis as in the paper: two-way ANOVA (lighting x follow-up assignment) on the four appraisal factor means, SAM and PANAS changes from before to after viewing, and presence; the paper found the nighttime version less cosy (F(1,66) = 10.90) and much more tense (F(1,66) = 56.16) than the daytime version, while the fictitious follow-up visit had little effect. Differences from the original study: (1) two still screenshots (small, about 350 px wide) instead of a 10-minute free exploration on a desktop screen with sound and moving water, trees, birds and sheep, and no room-light change for the night condition; (2) the map drawing task is left out, so the instruction does not mention it; (3) the paper's sample was 72 young female students, here anyone can take part and gender is asked; the age and gender questions and the instruction wording are ours, built from the paper's procedure text; (4) the SAM is shown as labelled 9-point scales (end labels ours) instead of the pictorial manikins; (5) the two navigation questions are dropped because there is no navigation, and the presence items keep their original 'virtual world' wording; (6) the paper used Dutch translations, this page uses the English wording given in the supplement.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2016-toet-simulated/scenes/day_1__7cc6c8a7-53f4-44bb-8e0f-9663043b9d98.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-toet-simulated/scenes/day_1__7cc6c8a7-53f4-44bb-8e0f-9663043b9d98.jpg",
+   "name": "day_1.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2016-toet-simulated/scenes/day_1__7cc6c8a7-53f4-44bb-8e0f-9663043b9d98.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 23169,
+   "uploaded_bytes": 23169,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-toet-simulated/scenes/day_2__c8d964df-014a-49e0-b53c-da3f0838b19e.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-toet-simulated/scenes/day_2__c8d964df-014a-49e0-b53c-da3f0838b19e.jpg",
+   "name": "day_2.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2016-toet-simulated/scenes/day_2__c8d964df-014a-49e0-b53c-da3f0838b19e.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 22810,
+   "uploaded_bytes": 22810,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-toet-simulated/scenes/night_1__414bef34-91bc-401f-904a-f674b40f4122.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-toet-simulated/scenes/night_1__414bef34-91bc-401f-904a-f674b40f4122.jpg",
+   "name": "night_1.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2016-toet-simulated/scenes/night_1__414bef34-91bc-401f-904a-f674b40f4122.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 11793,
+   "uploaded_bytes": 11793,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-toet-simulated/scenes/night_2__1367a5ea-aee5-41c4-9181-547a4c1f145b.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-toet-simulated/scenes/night_2__1367a5ea-aee5-41c4-9181-547a4c1f145b.jpg",
+   "name": "night_2.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2016-toet-simulated/scenes/night_2__1367a5ea-aee5-41c4-9181-547a4c1f145b.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 13029,
+   "uploaded_bytes": 13029,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Effects of personal relevance and simulated darkness on the affective appraisal of a virtual environment",
+  "authors": [
+   "Toet A",
+   "Houtkamp JM",
+   "Vreugdenhil PE"
+  ],
+  "year": 2016,
+  "venue": "PeerJ",
+  "doi": "10.7717/peerj.1743",
+  "url": "https://doi.org/10.7717/peerj.1743"
+ }
+}

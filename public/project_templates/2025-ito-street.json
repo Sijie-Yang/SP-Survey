@@ -1,446 +1,1252 @@
 {
-  "id": "2025-ito-street",
-  "name": "Street Bikeability (AI Generated)",
-  "description": "This survey template examines the effectiveness of design interventions and socio-economic impacts on bikeability across various urban contexts. ",
-  "author": "Ito, Koichi",
-  "year": "2025",
-  "category": "AI Template",
-  "tags": [
-    "official"
-  ],
-  "isPinned": false,
-  "isApproved": true,
-  "showOnLanding": true,
-  "thumbnailUrl": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000022.jpg",
-  "website": null,
-  "huggingfaceDataset": "koito19960406/sp_survey_bikeability",
-  "createdAt": "2026-05-20T03:11:57.273+00:00",
-  "config": {
-    "pages": [
-      {
-        "name": "introduction",
-        "title": "Survey Introduction",
-        "elements": [],
-        "description": "Welcome to the Urban Streetscape Bikeability Survey. This research examines the effectiveness of design interventions and socio-economic impacts on bikeability across various urban contexts. \n\n**Research Question:** How do design interventions and socio-economic factors influence the bikeability of urban environments?"
-      },
-      {
-        "name": "methodology",
-        "title": "Methodology and Sampling Strategy",
-        "elements": [],
-        "description": "This survey targets urban cyclists from diverse backgrounds. We aim to collect responses from 1,000 cyclists using both online and offline methods, such as partnering with local community organizations and conducting paper surveys in key urban areas. This approach ensures a representative sample across different urban contexts."
-      },
-      {
-        "name": "demographics",
-        "title": "About You",
-        "elements": [
-          {
-            "name": "age",
-            "type": "dropdown",
-            "title": "What is your age?",
-            "choices": [
-              "Under 18",
-              "18-24",
-              "25-34",
-              "35-44",
-              "45-54",
-              "55-64",
-              "65+"
-            ]
-          },
-          {
-            "name": "gender",
-            "type": "radiogroup",
-            "title": "What is your gender?",
-            "choices": [
-              "Male",
-              "Female",
-              "Non-binary",
-              "Prefer not to say"
-            ]
-          },
-          {
-            "name": "ethnicity",
-            "type": "dropdown",
-            "title": "What is your ethnicity?",
-            "choices": [
-              "White",
-              "Hispanic or Latino",
-              "Black or African American",
-              "Native American or American Indian",
-              "Asian / Pacific Islander",
-              "Other",
-              "Prefer not to say"
-            ]
-          },
-          {
-            "name": "income_level",
-            "type": "dropdown",
-            "title": "What is your household income level?",
-            "choices": [
-              "Under $20,000",
-              "$20,000-$39,999",
-              "$40,000-$59,999",
-              "$60,000-$79,999",
-              "$80,000-$99,999",
-              "$100,000 and above",
-              "Prefer not to say"
-            ]
-          },
-          {
-            "name": "living_area",
-            "type": "radiogroup",
-            "title": "What type of area do you live in?",
-            "choices": [
-              "Urban",
-              "Suburban",
-              "Rural"
-            ]
-          },
-          {
-            "name": "transport",
-            "type": "checkbox",
-            "title": "What modes of transportation do you use frequently? (select all that apply)",
-            "choices": [
-              "Walk",
-              "Bike",
-              "Bus",
-              "Car",
-              "Subway",
-              "Other"
-            ]
-          },
-          {
-            "name": "ownBike",
-            "type": "boolean",
-            "title": "Do you own a bicycle?"
-          },
-          {
-            "name": "cycling_frequency",
-            "type": "dropdown",
-            "title": "How often do you cycle in a typical week?",
-            "choices": [
-              "Never",
-              "1-2 times",
-              "3-5 times",
-              "6-7 times",
-              "More than 7 times"
-            ]
-          }
-        ],
-        "description": "Provide information about yourself to help us ensure diverse representation in our findings."
-      },
-      {
-        "name": "streetscape_elements",
-        "title": "Streetscape Elements",
-        "elements": [
-          {
-            "name": "lighting_quality",
-            "type": "imagepicker",
-            "title": "Image: How would you rate the lighting quality on this street?",
-            "choices": [
-              "Poor",
-              "Fair",
-              "Good",
-              "Very Good",
-              "Excellent"
-            ],
-            "imageCount": 1,
-            "imageSelectionMode": "curated",
-            "randomImageSelection": true
-          },
-          {
-            "name": "signage_visibility",
-            "type": "imagepicker",
-            "title": "Image: How visible and clear is the signage on this street?",
-            "choices": [
-              "Very Poor",
-              "Poor",
-              "Adequate",
-              "Good",
-              "Excellent"
-            ],
-            "imageCount": 1,
-            "imageSelectionMode": "curated",
-            "randomImageSelection": true
-          },
-          {
-            "name": "landscaping_impact",
-            "rows": [
-              "Visual Appeal",
-              "Shade Provision",
-              "Safety Enhancement",
-              "Pathway Obstruction",
-              "Maintenance Level"
-            ],
-            "type": "imagematrix",
-            "title": "Image: Rate the impact of landscaping on cycling experience:",
-            "choices": [],
-            "columns": [
-              "1",
-              "2",
-              "3",
-              "4",
-              "5"
-            ],
-            "imageCount": 1,
-            "imageLinks": [],
-            "imageSelectionMode": "curated",
-            "randomImageSelection": true
-          }
-        ],
-        "description": "Assess the presence and quality of streetscape elements that impact cycling comfort and safety."
-      },
-      {
-        "name": "bikeability_factors",
-        "title": "Factors Affecting Bikeability",
-        "elements": [
-          {
-            "name": "safety_rating",
-            "type": "imagerating",
-            "title": "Image: How safe do you feel cycling on this street?",
-            "choices": [],
-            "rateMax": 5,
-            "rateMin": 1,
-            "imageCount": 1,
-            "imageSelectionMode": "curated",
-            "maxRateDescription": "Very safe",
-            "minRateDescription": "Very unsafe",
-            "randomImageSelection": true
-          },
-          {
-            "name": "prefer_street_for_biking",
-            "type": "imagepicker",
-            "title": "Image: Which street would you prefer to cycle on?",
-            "choices": [],
-            "imageCount": 3,
-            "multiSelect": false,
-            "imageSelectionMode": "curated",
-            "randomImageSelection": true
-          },
-          {
-            "name": "multi_criteria_bike",
-            "rows": [
-              "Safety",
-              "Aesthetics",
-              "Accessibility",
-              "Infrastructure Quality",
-              "Cyclist Amenities"
-            ],
-            "type": "imagematrix",
-            "title": "Image: Rate this street on various bike-related criteria:",
-            "choices": [],
-            "columns": [
-              "1",
-              "2",
-              "3",
-              "4",
-              "5"
-            ],
-            "imageCount": 1,
-            "imageLinks": [],
-            "imageSelectionMode": "curated",
-            "randomImageSelection": true
-          }
-        ],
-        "description": "Evaluate the following streetscapes based on their suitability for cycling."
-      },
-      {
-        "name": "design_interventions",
-        "title": "Design Interventions",
-        "elements": [
-          {
-            "name": "importance_protected_bike_lanes",
-            "type": "radiogroup",
-            "title": "Do protected bike lanes improve your cycling experience?",
-            "choices": [
-              "Yes",
-              "No",
-              "Not sure"
-            ]
-          },
-          {
-            "name": "design_features",
-            "type": "checkbox",
-            "title": "What design features would most improve bikeability in your area? (Select all that apply)",
-            "choices": [
-              "Protected bike lanes",
-              "Bike traffic lights",
-              "Repair stations",
-              "Rest areas",
-              "Integration with public transport"
-            ]
-          }
-        ],
-        "description": "Explore specific design interventions that could enhance bikeability."
-      },
-      {
-        "name": "urban_theory_context",
-        "title": "Urban Theory and Contextual Factors",
-        "elements": [
-          {
-            "name": "urban_design_impact",
-            "type": "radiogroup",
-            "title": "How do you think urban design influences the bikeability of a street?",
-            "choices": [
-              "Significantly",
-              "Moderately",
-              "Slightly",
-              "Not at all"
-            ]
-          },
-          {
-            "name": "urban_planning_models",
-            "type": "radiogroup",
-            "title": "How do you perceive the impact of urban planning models on cycling infrastructure in your area?",
-            "choices": [
-              "Very Positive",
-              "Positive",
-              "Neutral",
-              "Negative",
-              "Very Negative"
-            ]
-          },
-          {
-            "name": "socio_economic_factors",
-            "type": "comment",
-            "title": "What socio-economic factors do you believe affect bikeability in urban areas?"
-          }
-        ],
-        "description": "Explore how broader urban theory and socio-economic factors impact bikeability."
-      },
-      {
-        "name": "infrastructure_evaluation",
-        "title": "Infrastructure Evaluation",
-        "elements": [
-          {
-            "name": "bike_lane_quality",
-            "type": "imagepicker",
-            "title": "Image: How would you rate the quality of bike lanes on this street?",
-            "imageFit": "cover",
-            "imageCount": 4,
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          },
-          {
-            "name": "bike_lane_separation",
-            "type": "imageboolean",
-            "title": "Image: Are the bike lanes separated from motor traffic?",
-            "choices": [],
-            "imageCount": 1,
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          },
-          {
-            "name": "bike_rack_availability",
-            "type": "imageboolean",
-            "title": "Image: Are there sufficient bike racks available?",
-            "choices": [],
-            "imageCount": 1,
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          },
-          {
-            "name": "surface_quality",
-            "type": "rating",
-            "title": "How would you rate the surface quality of bike lanes in your area?",
-            "choices": [],
-            "imageCount": 1,
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          },
-          {
-            "name": "debris_presence",
-            "type": "radiogroup",
-            "title": "How often do you encounter debris or obstacles in bike lanes?",
-            "choices": [
-              "Never",
-              "Rarely",
-              "Sometimes",
-              "Often",
-              "Always"
-            ]
-          }
-        ],
-        "description": "Assess the presence and quality of bike lanes and related infrastructure."
-      },
-      {
-        "name": "traffic_conditions",
-        "title": "Traffic Conditions",
-        "elements": [
-          {
-            "name": "question_1764144441116",
-            "type": "image",
-            "title": "Street Image",
-            "imageFit": "cover",
-            "imageCount": 1,
-            "isRequired": false,
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          },
-          {
-            "name": "traffic_volume",
-            "type": "radiogroup",
-            "title": "Image: How would you describe the traffic volume on this street?",
-            "choices": [
-              "Very Low",
-              "Low",
-              "Moderate",
-              "High",
-              "Very High"
-            ]
-          },
-          {
-            "name": "traffic_speed",
-            "type": "radiogroup",
-            "title": "Image: How would you rate the speed of traffic on this street?",
-            "choices": [
-              "Very Slow",
-              "Slow",
-              "Moderate",
-              "Fast",
-              "Very Fast"
-            ]
-          },
-          {
-            "name": "traffic_calming",
-            "type": "boolean",
-            "title": "Image: Are there traffic calming measures in place?"
-          }
-        ],
-        "description": "Evaluate the impact of traffic conditions on bikeability."
-      },
-      {
-        "name": "qualitative_insights",
-        "title": "Qualitative Insights",
-        "elements": [
-          {
-            "name": "cycling_experience",
-            "type": "comment",
-            "title": "Describe a recent experience you had while cycling in your city."
-          },
-          {
-            "name": "infrastructure_suggestions",
-            "type": "comment",
-            "title": "What changes would you like to see in cycling infrastructure to improve bikeability?"
-          }
-        ],
-        "description": "Share your personal experiences and suggestions to improve bikeability."
-      },
-      {
-        "name": "conclusion",
-        "title": "Conclusion",
-        "elements": [],
-        "description": "Thank you for participating in the Urban Streetscape Bikeability Survey. Your feedback is invaluable in helping us understand the factors that influence cycling in urban environments."
-      }
+ "id": "2025-ito-street",
+ "name": "Street Bikeability (AI Generated)",
+ "description": "This survey template examines the effectiveness of design interventions and socio-economic impacts on bikeability across various urban contexts. ",
+ "author": "Ito, Koichi",
+ "year": "2025",
+ "category": "AI Template",
+ "tags": [
+  "official",
+  "source:ai",
+  "modality:street_view",
+  "task:rating",
+  "task:questionnaire",
+  "concept:cycling"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000022.jpg",
+ "website": null,
+ "huggingfaceDataset": "koito19960406/sp_survey_bikeability",
+ "createdAt": "2026-05-20T03:11:57.273+00:00",
+ "updatedAt": "2026-11-26T14:58:00.343+00:00",
+ "config": {
+  "pages": [
+   {
+    "name": "introduction",
+    "title": "Survey Introduction",
+    "elements": [],
+    "description": "Welcome to the Urban Streetscape Bikeability Survey. This research examines the effectiveness of design interventions and socio-economic impacts on bikeability across various urban contexts. \n\n**Research Question:** How do design interventions and socio-economic factors influence the bikeability of urban environments?"
+   },
+   {
+    "name": "methodology",
+    "title": "Methodology and Sampling Strategy",
+    "elements": [],
+    "description": "This survey targets urban cyclists from diverse backgrounds. We aim to collect responses from 1,000 cyclists using both online and offline methods, such as partnering with local community organizations and conducting paper surveys in key urban areas. This approach ensures a representative sample across different urban contexts."
+   },
+   {
+    "name": "demographics",
+    "title": "About You",
+    "elements": [
+     {
+      "name": "age",
+      "type": "dropdown",
+      "title": "What is your age?",
+      "choices": [
+       "Under 18",
+       "18-24",
+       "25-34",
+       "35-44",
+       "45-54",
+       "55-64",
+       "65+"
+      ]
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "What is your gender?",
+      "choices": [
+       "Male",
+       "Female",
+       "Non-binary",
+       "Prefer not to say"
+      ]
+     },
+     {
+      "name": "ethnicity",
+      "type": "dropdown",
+      "title": "What is your ethnicity?",
+      "choices": [
+       "White",
+       "Hispanic or Latino",
+       "Black or African American",
+       "Native American or American Indian",
+       "Asian / Pacific Islander",
+       "Other",
+       "Prefer not to say"
+      ]
+     },
+     {
+      "name": "income_level",
+      "type": "dropdown",
+      "title": "What is your household income level?",
+      "choices": [
+       "Under $20,000",
+       "$20,000-$39,999",
+       "$40,000-$59,999",
+       "$60,000-$79,999",
+       "$80,000-$99,999",
+       "$100,000 and above",
+       "Prefer not to say"
+      ]
+     },
+     {
+      "name": "living_area",
+      "type": "radiogroup",
+      "title": "What type of area do you live in?",
+      "choices": [
+       "Urban",
+       "Suburban",
+       "Rural"
+      ]
+     },
+     {
+      "name": "transport",
+      "type": "checkbox",
+      "title": "What modes of transportation do you use frequently? (select all that apply)",
+      "choices": [
+       "Walk",
+       "Bike",
+       "Bus",
+       "Car",
+       "Subway",
+       "Other"
+      ]
+     },
+     {
+      "name": "ownBike",
+      "type": "boolean",
+      "title": "Do you own a bicycle?"
+     },
+     {
+      "name": "cycling_frequency",
+      "type": "dropdown",
+      "title": "How often do you cycle in a typical week?",
+      "choices": [
+       "Never",
+       "1-2 times",
+       "3-5 times",
+       "6-7 times",
+       "More than 7 times"
+      ]
+     }
     ],
-    "title": "Street Bikeability (AI Template) - New",
-    "description": "This survey focuses on understanding the impact of design interventions and socio-economic factors on the bikeability of urban streetscapes. Your insights will help us refine urban planning strategies to enhance cycling environments."
+    "description": "Provide information about yourself to help us ensure diverse representation in our findings."
+   },
+   {
+    "name": "streetscape_elements",
+    "title": "Streetscape Elements",
+    "elements": [
+     {
+      "name": "lighting_quality",
+      "type": "imagepicker",
+      "title": "Image: How would you rate the lighting quality on this street?",
+      "choices": [
+       "Poor",
+       "Fair",
+       "Good",
+       "Very Good",
+       "Excellent"
+      ],
+      "imageCount": 1,
+      "imageSelectionMode": "curated",
+      "randomImageSelection": true
+     },
+     {
+      "name": "signage_visibility",
+      "type": "imagepicker",
+      "title": "Image: How visible and clear is the signage on this street?",
+      "choices": [
+       "Very Poor",
+       "Poor",
+       "Adequate",
+       "Good",
+       "Excellent"
+      ],
+      "imageCount": 1,
+      "imageSelectionMode": "curated",
+      "randomImageSelection": true
+     },
+     {
+      "name": "landscaping_impact",
+      "rows": [
+       "Visual Appeal",
+       "Shade Provision",
+       "Safety Enhancement",
+       "Pathway Obstruction",
+       "Maintenance Level"
+      ],
+      "type": "imagematrix",
+      "title": "Image: Rate the impact of landscaping on cycling experience:",
+      "choices": [],
+      "columns": [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5"
+      ],
+      "imageCount": 1,
+      "imageLinks": [],
+      "imageSelectionMode": "curated",
+      "randomImageSelection": true
+     }
+    ],
+    "description": "Assess the presence and quality of streetscape elements that impact cycling comfort and safety."
+   },
+   {
+    "name": "bikeability_factors",
+    "title": "Factors Affecting Bikeability",
+    "elements": [
+     {
+      "name": "safety_rating",
+      "type": "imagerating",
+      "title": "Image: How safe do you feel cycling on this street?",
+      "choices": [],
+      "rateMax": 5,
+      "rateMin": 1,
+      "imageCount": 1,
+      "imageSelectionMode": "curated",
+      "maxRateDescription": "Very safe",
+      "minRateDescription": "Very unsafe",
+      "randomImageSelection": true
+     },
+     {
+      "name": "prefer_street_for_biking",
+      "type": "imagepicker",
+      "title": "Image: Which street would you prefer to cycle on?",
+      "choices": [],
+      "imageCount": 3,
+      "multiSelect": false,
+      "imageSelectionMode": "curated",
+      "randomImageSelection": true
+     },
+     {
+      "name": "multi_criteria_bike",
+      "rows": [
+       "Safety",
+       "Aesthetics",
+       "Accessibility",
+       "Infrastructure Quality",
+       "Cyclist Amenities"
+      ],
+      "type": "imagematrix",
+      "title": "Image: Rate this street on various bike-related criteria:",
+      "choices": [],
+      "columns": [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5"
+      ],
+      "imageCount": 1,
+      "imageLinks": [],
+      "imageSelectionMode": "curated",
+      "randomImageSelection": true
+     }
+    ],
+    "description": "Evaluate the following streetscapes based on their suitability for cycling."
+   },
+   {
+    "name": "design_interventions",
+    "title": "Design Interventions",
+    "elements": [
+     {
+      "name": "importance_protected_bike_lanes",
+      "type": "radiogroup",
+      "title": "Do protected bike lanes improve your cycling experience?",
+      "choices": [
+       "Yes",
+       "No",
+       "Not sure"
+      ]
+     },
+     {
+      "name": "design_features",
+      "type": "checkbox",
+      "title": "What design features would most improve bikeability in your area? (Select all that apply)",
+      "choices": [
+       "Protected bike lanes",
+       "Bike traffic lights",
+       "Repair stations",
+       "Rest areas",
+       "Integration with public transport"
+      ]
+     }
+    ],
+    "description": "Explore specific design interventions that could enhance bikeability."
+   },
+   {
+    "name": "urban_theory_context",
+    "title": "Urban Theory and Contextual Factors",
+    "elements": [
+     {
+      "name": "urban_design_impact",
+      "type": "radiogroup",
+      "title": "How do you think urban design influences the bikeability of a street?",
+      "choices": [
+       "Significantly",
+       "Moderately",
+       "Slightly",
+       "Not at all"
+      ]
+     },
+     {
+      "name": "urban_planning_models",
+      "type": "radiogroup",
+      "title": "How do you perceive the impact of urban planning models on cycling infrastructure in your area?",
+      "choices": [
+       "Very Positive",
+       "Positive",
+       "Neutral",
+       "Negative",
+       "Very Negative"
+      ]
+     },
+     {
+      "name": "socio_economic_factors",
+      "type": "comment",
+      "title": "What socio-economic factors do you believe affect bikeability in urban areas?"
+     }
+    ],
+    "description": "Explore how broader urban theory and socio-economic factors impact bikeability."
+   },
+   {
+    "name": "infrastructure_evaluation",
+    "title": "Infrastructure Evaluation",
+    "elements": [
+     {
+      "name": "bike_lane_quality",
+      "type": "imagepicker",
+      "title": "Image: How would you rate the quality of bike lanes on this street?",
+      "imageFit": "cover",
+      "imageCount": 4,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true
+     },
+     {
+      "name": "bike_lane_separation",
+      "type": "imageboolean",
+      "title": "Image: Are the bike lanes separated from motor traffic?",
+      "choices": [],
+      "imageCount": 1,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true
+     },
+     {
+      "name": "bike_rack_availability",
+      "type": "imageboolean",
+      "title": "Image: Are there sufficient bike racks available?",
+      "choices": [],
+      "imageCount": 1,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true
+     },
+     {
+      "name": "surface_quality",
+      "type": "rating",
+      "title": "How would you rate the surface quality of bike lanes in your area?",
+      "choices": [],
+      "imageCount": 1,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true
+     },
+     {
+      "name": "debris_presence",
+      "type": "radiogroup",
+      "title": "How often do you encounter debris or obstacles in bike lanes?",
+      "choices": [
+       "Never",
+       "Rarely",
+       "Sometimes",
+       "Often",
+       "Always"
+      ]
+     }
+    ],
+    "description": "Assess the presence and quality of bike lanes and related infrastructure."
+   },
+   {
+    "name": "traffic_conditions",
+    "title": "Traffic Conditions",
+    "elements": [
+     {
+      "name": "question_1764144441116",
+      "type": "image",
+      "title": "Street Image",
+      "imageFit": "cover",
+      "imageCount": 1,
+      "isRequired": false,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true
+     },
+     {
+      "name": "traffic_volume",
+      "type": "radiogroup",
+      "title": "Image: How would you describe the traffic volume on this street?",
+      "choices": [
+       "Very Low",
+       "Low",
+       "Moderate",
+       "High",
+       "Very High"
+      ]
+     },
+     {
+      "name": "traffic_speed",
+      "type": "radiogroup",
+      "title": "Image: How would you rate the speed of traffic on this street?",
+      "choices": [
+       "Very Slow",
+       "Slow",
+       "Moderate",
+       "Fast",
+       "Very Fast"
+      ]
+     },
+     {
+      "name": "traffic_calming",
+      "type": "boolean",
+      "title": "Image: Are there traffic calming measures in place?"
+     }
+    ],
+    "description": "Evaluate the impact of traffic conditions on bikeability."
+   },
+   {
+    "name": "qualitative_insights",
+    "title": "Qualitative Insights",
+    "elements": [
+     {
+      "name": "cycling_experience",
+      "type": "comment",
+      "title": "Describe a recent experience you had while cycling in your city."
+     },
+     {
+      "name": "infrastructure_suggestions",
+      "type": "comment",
+      "title": "What changes would you like to see in cycling infrastructure to improve bikeability?"
+     }
+    ],
+    "description": "Share your personal experiences and suggestions to improve bikeability."
+   },
+   {
+    "name": "conclusion",
+    "title": "Conclusion",
+    "elements": [],
+    "description": "Thank you for participating in the Urban Streetscape Bikeability Survey. Your feedback is invaluable in helping us understand the factors that influence cycling in urban environments."
+   }
+  ],
+  "title": "Street Bikeability (AI Template) - New",
+  "description": "This survey focuses on understanding the impact of design interventions and socio-economic factors on the bikeability of urban streetscapes. Your insights will help us refine urban planning strategies to enhance cycling environments."
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2025-ito-street/image_000000.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000000.jpg",
+   "name": "image_000000.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000000.jpg"
   },
-  "imageDatasetConfig": {
-    "mediaFolders": [],
-    "mediaFolderTags": {}
+  {
+   "key": "templates/2025-ito-street/image_000001.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000001.jpg",
+   "name": "image_000001.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000001.jpg"
   },
-  "preloadedImages": [],
-  "preloadedSource": null,
-  "preloadedAt": null
+  {
+   "key": "templates/2025-ito-street/image_000002.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000002.jpg",
+   "name": "image_000002.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000002.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000003.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000003.jpg",
+   "name": "image_000003.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000003.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000004.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000004.jpg",
+   "name": "image_000004.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000004.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000005.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000005.jpg",
+   "name": "image_000005.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000005.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000006.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000006.jpg",
+   "name": "image_000006.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000006.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000007.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000007.jpg",
+   "name": "image_000007.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000007.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000008.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000008.jpg",
+   "name": "image_000008.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000008.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000009.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000009.jpg",
+   "name": "image_000009.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000009.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000010.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000010.jpg",
+   "name": "image_000010.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000010.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000011.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000011.jpg",
+   "name": "image_000011.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000011.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000012.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000012.jpg",
+   "name": "image_000012.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000012.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000013.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000013.jpg",
+   "name": "image_000013.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000013.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000014.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000014.jpg",
+   "name": "image_000014.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000014.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000015.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000015.jpg",
+   "name": "image_000015.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000015.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000016.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000016.jpg",
+   "name": "image_000016.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000016.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000017.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000017.jpg",
+   "name": "image_000017.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000017.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000018.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000018.jpg",
+   "name": "image_000018.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000018.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000019.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000019.jpg",
+   "name": "image_000019.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000019.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000020.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000020.jpg",
+   "name": "image_000020.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000020.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000021.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000021.jpg",
+   "name": "image_000021.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000021.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000022.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000022.jpg",
+   "name": "image_000022.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000022.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000023.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000023.jpg",
+   "name": "image_000023.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000023.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000024.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000024.jpg",
+   "name": "image_000024.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000024.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000025.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000025.jpg",
+   "name": "image_000025.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000025.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000026.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000026.jpg",
+   "name": "image_000026.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000026.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000027.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000027.jpg",
+   "name": "image_000027.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000027.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000028.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000028.jpg",
+   "name": "image_000028.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000028.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000029.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000029.jpg",
+   "name": "image_000029.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000029.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000030.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000030.jpg",
+   "name": "image_000030.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000030.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000031.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000031.jpg",
+   "name": "image_000031.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000031.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000032.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000032.jpg",
+   "name": "image_000032.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000032.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000033.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000033.jpg",
+   "name": "image_000033.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000033.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000034.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000034.jpg",
+   "name": "image_000034.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000034.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000035.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000035.jpg",
+   "name": "image_000035.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000035.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000036.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000036.jpg",
+   "name": "image_000036.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000036.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000037.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000037.jpg",
+   "name": "image_000037.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000037.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000038.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000038.jpg",
+   "name": "image_000038.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000038.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000039.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000039.jpg",
+   "name": "image_000039.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000039.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000040.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000040.jpg",
+   "name": "image_000040.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000040.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000041.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000041.jpg",
+   "name": "image_000041.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000041.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000042.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000042.jpg",
+   "name": "image_000042.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000042.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000043.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000043.jpg",
+   "name": "image_000043.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000043.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000044.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000044.jpg",
+   "name": "image_000044.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000044.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000045.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000045.jpg",
+   "name": "image_000045.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000045.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000046.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000046.jpg",
+   "name": "image_000046.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000046.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000047.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000047.jpg",
+   "name": "image_000047.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000047.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000048.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000048.jpg",
+   "name": "image_000048.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000048.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000049.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000049.jpg",
+   "name": "image_000049.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000049.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000050.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000050.jpg",
+   "name": "image_000050.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000050.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000051.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000051.jpg",
+   "name": "image_000051.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000051.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000052.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000052.jpg",
+   "name": "image_000052.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000052.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000053.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000053.jpg",
+   "name": "image_000053.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000053.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000054.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000054.jpg",
+   "name": "image_000054.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000054.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000055.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000055.jpg",
+   "name": "image_000055.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000055.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000056.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000056.jpg",
+   "name": "image_000056.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000056.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000057.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000057.jpg",
+   "name": "image_000057.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000057.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000058.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000058.jpg",
+   "name": "image_000058.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000058.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000059.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000059.jpg",
+   "name": "image_000059.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000059.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000060.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000060.jpg",
+   "name": "image_000060.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000060.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000061.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000061.jpg",
+   "name": "image_000061.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000061.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000062.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000062.jpg",
+   "name": "image_000062.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000062.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000063.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000063.jpg",
+   "name": "image_000063.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000063.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000064.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000064.jpg",
+   "name": "image_000064.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000064.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000065.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000065.jpg",
+   "name": "image_000065.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000065.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000066.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000066.jpg",
+   "name": "image_000066.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000066.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000067.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000067.jpg",
+   "name": "image_000067.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000067.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000068.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000068.jpg",
+   "name": "image_000068.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000068.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000069.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000069.jpg",
+   "name": "image_000069.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000069.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000070.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000070.jpg",
+   "name": "image_000070.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000070.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000071.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000071.jpg",
+   "name": "image_000071.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000071.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000072.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000072.jpg",
+   "name": "image_000072.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000072.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000073.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000073.jpg",
+   "name": "image_000073.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000073.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000074.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000074.jpg",
+   "name": "image_000074.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000074.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000075.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000075.jpg",
+   "name": "image_000075.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000075.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000076.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000076.jpg",
+   "name": "image_000076.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000076.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000077.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000077.jpg",
+   "name": "image_000077.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000077.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000078.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000078.jpg",
+   "name": "image_000078.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000078.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000079.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000079.jpg",
+   "name": "image_000079.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000079.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000080.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000080.jpg",
+   "name": "image_000080.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000080.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000081.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000081.jpg",
+   "name": "image_000081.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000081.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000082.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000082.jpg",
+   "name": "image_000082.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000082.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000083.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000083.jpg",
+   "name": "image_000083.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000083.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000084.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000084.jpg",
+   "name": "image_000084.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000084.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000085.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000085.jpg",
+   "name": "image_000085.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000085.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000086.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000086.jpg",
+   "name": "image_000086.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000086.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000087.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000087.jpg",
+   "name": "image_000087.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000087.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000088.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000088.jpg",
+   "name": "image_000088.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000088.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000089.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000089.jpg",
+   "name": "image_000089.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000089.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000090.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000090.jpg",
+   "name": "image_000090.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000090.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000091.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000091.jpg",
+   "name": "image_000091.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000091.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000092.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000092.jpg",
+   "name": "image_000092.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000092.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000093.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000093.jpg",
+   "name": "image_000093.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000093.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000094.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000094.jpg",
+   "name": "image_000094.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000094.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000095.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000095.jpg",
+   "name": "image_000095.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000095.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000096.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000096.jpg",
+   "name": "image_000096.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000096.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000097.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000097.jpg",
+   "name": "image_000097.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000097.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000098.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000098.jpg",
+   "name": "image_000098.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000098.jpg"
+  },
+  {
+   "key": "templates/2025-ito-street/image_000099.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-ito-street/image_000099.jpg",
+   "name": "image_000099.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-ito-street/image_000099.jpg"
+  }
+ ],
+ "paper": null
 }

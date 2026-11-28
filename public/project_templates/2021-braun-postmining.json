@@ -1,0 +1,477 @@
+{
+ "id": "2021-braun-postmining",
+ "name": "Post-Mining Forests – Perceived Characteristics & Walk Attractiveness",
+ "description": "Faithful replication of Braun Kohlová, Nepožitková & Melichar (2021), \"How Do Observable Characteristics of Post-Mining Forests Affect Their Attractiveness for Recreation?\", Land 10:910. Participants first look at an overview of forest photographs, then see six forests in a random order: five restored forests on coal-mine spoil heaps near Sokolov, Czech Republic (re-planted alder and pine at 35 years; spontaneous succession at 15, 35 and 55 years) and one ordinary 75-year-old spruce forest. In Part 1 they rate each forest on five bipolar items (unnatural–natural, not maintained–maintained, inaccessible–accessible, not familiar–familiar, dangerous–safe; -2..2). In Part 2, in the same order, they rate \"How tempting would it be for you to walk on a forest way in this forest for one hour?\" (-2 not at all … 2 very tempting). In the original study (869 Czech adults), post-mining forests were less attractive than the spruce forest mainly because they looked less accessible, less maintained and less safe.\n\nPhotographs and questionnaire wording: Braun Kohlová et al. (2021), Figure 1 and Appendix A, CC BY 4.0. Used with credit for research; the template is removed if the authors object.\n\nDifferences from the original study: (1) each forest is shown with one photograph (the paper's Figure 1) instead of a quartet of four, because only one photo per forest is published; (2) the overview uses the 8 overview photos printed in Appendix A; (3) English only (original Czech); (4) the discrete choice experiment in Part 3 (reported elsewhere) is left out; (5) demographics are limited to gender, age and education, and a consent checkbox was added.",
+ "author": "Braun Kohlová, Nepožitková & Melichar",
+ "year": "2021",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "source:paper",
+  "modality:scene_photo",
+  "task:multi_rating",
+  "task:rating",
+  "task:questionnaire",
+  "concept:preference",
+  "concept:naturalness",
+  "concept:safety",
+  "participants:residents",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:Czech Republic",
+  "city:Sokolov"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/land10090910",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T19:39:31.666+00:00",
+ "updatedAt": "2026-11-27T19:39:59.911+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part in this survey.",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "part1",
+    "title": "Part 1: How do you perceive forests?",
+    "elements": [
+     {
+      "name": "forest_characteristics",
+      "type": "custom",
+      "items": [
+       {
+        "low": "Unnatural",
+        "high": "Natural (close to the natural state)",
+        "name": "naturalness",
+        "scale": [
+         -2,
+         2
+        ]
+       },
+       {
+        "low": "Not maintained",
+        "high": "Maintained",
+        "name": "stewardship",
+        "scale": [
+         -2,
+         2
+        ]
+       },
+       {
+        "low": "Inaccessible",
+        "high": "Accessible",
+        "name": "permeability",
+        "scale": [
+         -2,
+         2
+        ]
+       },
+       {
+        "low": "Not familiar to me",
+        "high": "Familiar to me",
+        "name": "familiarity",
+        "scale": [
+         -2,
+         2
+        ]
+       },
+       {
+        "low": "Dangerous",
+        "high": "Safe",
+        "name": "safety",
+        "scale": [
+         -2,
+         2
+        ]
+       }
+      ],
+      "title": "Try to state how much this forest meets the individual characteristics.",
+      "trials": [
+       {
+        "id": "ald35",
+        "file": "ald35.jpg",
+        "forest_type": "Re-planted alder forest (Alnus glutinosa), 35 years",
+        "post_mining": 1
+       },
+       {
+        "id": "pin35",
+        "file": "pin35.jpg",
+        "forest_type": "Re-planted Scots pine forest (Pinus sylvestris), 35 years",
+        "post_mining": 1
+       },
+       {
+        "id": "suc15",
+        "file": "suc15.jpg",
+        "forest_type": "Spontaneous succession forest (birch, pine, spruce), 15 years",
+        "post_mining": 1
+       },
+       {
+        "id": "suc35",
+        "file": "suc35.jpg",
+        "forest_type": "Spontaneous succession forest (goat willow), 35 years",
+        "post_mining": 1
+       },
+       {
+        "id": "suc55",
+        "file": "suc55.jpg",
+        "forest_type": "Spontaneous succession forest (white birch), 55 years",
+        "post_mining": 1
+       },
+       {
+        "id": "ref75",
+        "file": "ref75.jpg",
+        "forest_type": "Reference commercial Norway spruce forest, 75 years, not affected by mining",
+        "post_mining": 0
+       }
+      ],
+      "isRequired": true,
+      "description": "Six forest stands (five restored forests on Sokolov coal-mine spoil heaps + one reference spruce forest), shown one at a time in a random order per participant (order kept for Part 2), after an overview of 8 photos. Five bipolar items, -2..2. Value: {naturalness, stewardship, permeability, familiarity, safety, position}. Trial key = forest type (Ald35, Pin35, Suc15, Suc35, Suc55, Ref75 in the paper)."
+     }
+    ]
+   },
+   {
+    "name": "part2",
+    "title": "Part 2: Assessment of the forest sites",
+    "elements": [
+     {
+      "name": "forest_attractiveness",
+      "type": "custom",
+      "items": [
+       {
+        "low": "not at all",
+        "high": "very tempting",
+        "name": "attractiveness",
+        "scale": [
+         -2,
+         2
+        ]
+       }
+      ],
+      "title": "How tempting would it be for you to walk on a forest way in this forest for one hour?",
+      "trials": [
+       {
+        "id": "ald35",
+        "file": "ald35.jpg",
+        "forest_type": "Re-planted alder forest (Alnus glutinosa), 35 years",
+        "post_mining": 1
+       },
+       {
+        "id": "pin35",
+        "file": "pin35.jpg",
+        "forest_type": "Re-planted Scots pine forest (Pinus sylvestris), 35 years",
+        "post_mining": 1
+       },
+       {
+        "id": "suc15",
+        "file": "suc15.jpg",
+        "forest_type": "Spontaneous succession forest (birch, pine, spruce), 15 years",
+        "post_mining": 1
+       },
+       {
+        "id": "suc35",
+        "file": "suc35.jpg",
+        "forest_type": "Spontaneous succession forest (goat willow), 35 years",
+        "post_mining": 1
+       },
+       {
+        "id": "suc55",
+        "file": "suc55.jpg",
+        "forest_type": "Spontaneous succession forest (white birch), 55 years",
+        "post_mining": 1
+       },
+       {
+        "id": "ref75",
+        "file": "ref75.jpg",
+        "forest_type": "Reference commercial Norway spruce forest, 75 years, not affected by mining",
+        "post_mining": 0
+       }
+      ],
+      "isRequired": true,
+      "description": "Same six forests in the same order as Part 1. Value: {attractiveness -2 not at all .. 2 very tempting, position}. Analysis in the paper: structural equation mediation models (lavaan), forest type -> five observed characteristics -> attractiveness."
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "title": "About you",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Male",
+        "value": 1
+       },
+       {
+        "text": "Female",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "max": 110,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "Age (years)",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "Highest completed education",
+      "choices": [
+       {
+        "text": "Elementary education",
+        "value": 1
+       },
+       {
+        "text": "Vocational and secondary education",
+        "value": 2
+       },
+       {
+        "text": "High school education",
+        "value": 3
+       },
+       {
+        "text": "University education",
+        "value": 4
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Post-Mining Forests: Characteristics and Attractiveness",
+  "locale": "en",
+  "spSite": {
+   "id": "site-eaf61c87e2b41dd9",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Post-Mining Forests</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Post-Mining Forests: Characteristics and Attractiveness\",\n  \"description\": \"Faithful replication of Braun Kohlová, Nepožitková & Melichar (2021), Land 10:910: view photographs of six forests (five restored forests on coal-mine spoil heaps near Sokolov, Czech Republic, and one ordinary spruce forest), rate each on five perceived characteristics (naturalness, stewardship, accessibility, familiarity, safety; -2..2) and then on how tempting a one-hour walk in it would be (-2..2).\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"forests\",\n   \"overview\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"boolean\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part in this survey.\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"part1\",\n    \"title\": \"Part 1: How do you perceive forests?\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"forest_characteristics\",\n      \"isRequired\": true,\n      \"title\": \"Try to state how much this forest meets the individual characteristics.\",\n      \"description\": \"Six forest stands (five restored forests on Sokolov coal-mine spoil heaps + one reference spruce forest), shown one at a time in a random order per participant (order kept for Part 2), after an overview of 8 photos. Five bipolar items, -2..2. Value: {naturalness, stewardship, permeability, familiarity, safety, position}. Trial key = forest type (Ald35, Pin35, Suc15, Suc35, Suc55, Ref75 in the paper).\",\n      \"items\": [\n       {\n        \"name\": \"naturalness\",\n        \"scale\": [\n         -2,\n         2\n        ],\n        \"low\": \"Unnatural\",\n        \"high\": \"Natural (close to the natural state)\"\n       },\n       {\n        \"name\": \"stewardship\",\n        \"scale\": [\n         -2,\n         2\n        ],\n        \"low\": \"Not maintained\",\n        \"high\": \"Maintained\"\n       },\n       {\n        \"name\": \"permeability\",\n        \"scale\": [\n         -2,\n         2\n        ],\n        \"low\": \"Inaccessible\",\n        \"high\": \"Accessible\"\n       },\n       {\n        \"name\": \"familiarity\",\n        \"scale\": [\n         -2,\n         2\n        ],\n        \"low\": \"Not familiar to me\",\n        \"high\": \"Familiar to me\"\n       },\n       {\n        \"name\": \"safety\",\n        \"scale\": [\n         -2,\n         2\n        ],\n        \"low\": \"Dangerous\",\n        \"high\": \"Safe\"\n       }\n      ],\n      \"trials\": [\n       {\n        \"id\": \"ald35\",\n        \"file\": \"ald35.jpg\",\n        \"forest_type\": \"Re-planted alder forest (Alnus glutinosa), 35 years\",\n        \"post_mining\": 1\n       },\n       {\n        \"id\": \"pin35\",\n        \"file\": \"pin35.jpg\",\n        \"forest_type\": \"Re-planted Scots pine forest (Pinus sylvestris), 35 years\",\n        \"post_mining\": 1\n       },\n       {\n        \"id\": \"suc15\",\n        \"file\": \"suc15.jpg\",\n        \"forest_type\": \"Spontaneous succession forest (birch, pine, spruce), 15 years\",\n        \"post_mining\": 1\n       },\n       {\n        \"id\": \"suc35\",\n        \"file\": \"suc35.jpg\",\n        \"forest_type\": \"Spontaneous succession forest (goat willow), 35 years\",\n        \"post_mining\": 1\n       },\n       {\n        \"id\": \"suc55\",\n        \"file\": \"suc55.jpg\",\n        \"forest_type\": \"Spontaneous succession forest (white birch), 55 years\",\n        \"post_mining\": 1\n       },\n       {\n        \"id\": \"ref75\",\n        \"file\": \"ref75.jpg\",\n        \"forest_type\": \"Reference commercial Norway spruce forest, 75 years, not affected by mining\",\n        \"post_mining\": 0\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"part2\",\n    \"title\": \"Part 2: Assessment of the forest sites\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"forest_attractiveness\",\n      \"isRequired\": true,\n      \"title\": \"How tempting would it be for you to walk on a forest way in this forest for one hour?\",\n      \"description\": \"Same six forests in the same order as Part 1. Value: {attractiveness -2 not at all .. 2 very tempting, position}. Analysis in the paper: structural equation mediation models (lavaan), forest type -> five observed characteristics -> attractiveness.\",\n      \"items\": [\n       {\n        \"name\": \"attractiveness\",\n        \"scale\": [\n         -2,\n         2\n        ],\n        \"low\": \"not at all\",\n        \"high\": \"very tempting\"\n       }\n      ],\n      \"trials\": [\n       {\n        \"id\": \"ald35\",\n        \"file\": \"ald35.jpg\",\n        \"forest_type\": \"Re-planted alder forest (Alnus glutinosa), 35 years\",\n        \"post_mining\": 1\n       },\n       {\n        \"id\": \"pin35\",\n        \"file\": \"pin35.jpg\",\n        \"forest_type\": \"Re-planted Scots pine forest (Pinus sylvestris), 35 years\",\n        \"post_mining\": 1\n       },\n       {\n        \"id\": \"suc15\",\n        \"file\": \"suc15.jpg\",\n        \"forest_type\": \"Spontaneous succession forest (birch, pine, spruce), 15 years\",\n        \"post_mining\": 1\n       },\n       {\n        \"id\": \"suc35\",\n        \"file\": \"suc35.jpg\",\n        \"forest_type\": \"Spontaneous succession forest (goat willow), 35 years\",\n        \"post_mining\": 1\n       },\n       {\n        \"id\": \"suc55\",\n        \"file\": \"suc55.jpg\",\n        \"forest_type\": \"Spontaneous succession forest (white birch), 55 years\",\n        \"post_mining\": 1\n       },\n       {\n        \"id\": \"ref75\",\n        \"file\": \"ref75.jpg\",\n        \"forest_type\": \"Reference commercial Norway spruce forest, 75 years, not affected by mining\",\n        \"post_mining\": 0\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"title\": \"About you\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Female\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"Age (years)\",\n      \"isRequired\": true,\n      \"min\": 18,\n      \"max\": 110\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"Highest completed education\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Elementary education\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Vocational and secondary education\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"High school education\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"University education\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#eff0ea;--card:#fff;--ink:#20241e;--muted:#5b6157;--accent:#4f6a2e;--line:#d6dacf;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:780px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.3rem;margin:0 0 10px}\np{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q:first-child{margin-top:0}.q>b{display:block;margin-bottom:6px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer;background:var(--card)}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%;max-width:200px}\n.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}\n.t{color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}\n.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;flex:1;margin-left:12px;max-width:260px}.bar>i{display:block;height:100%;background:var(--accent)}\n.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.grid img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:8px;display:block}\n.pic{background:#e2e5dc;border-radius:12px;overflow:hidden;display:flex;justify-content:center}.pic img{width:100%;max-width:760px;max-height:min(46vh,480px);object-fit:contain;display:block}\n.item{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:center;margin-top:12px}\n.item .l{text-align:right;font-size:.88rem}.item .r{font-size:.88rem}\n.seg{display:grid;grid-template-columns:repeat(5,44px);gap:3px}\n.seg label{display:block;cursor:pointer;position:relative}\n.seg input{position:absolute;opacity:0;pointer-events:none}\n.seg span{display:flex;align-items:center;justify-content:center;min-height:42px;border:1px solid var(--line);border-radius:8px;font-weight:600;font-size:.9rem}\n.seg input:checked+span{background:var(--accent);border-color:var(--accent);color:#fff}\n.seg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:780px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n@media (max-width:520px){.item{grid-template-columns:1fr 1fr;row-gap:4px}.item .l{text-align:left;grid-column:1}.item .r{text-align:right;grid-column:2;grid-row:1}.item .seg{grid-column:1 / span 2;grid-template-columns:repeat(5,minmax(0,1fr))}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs: Braun Kohlová, Nepožitková &amp; Melichar (2021), Land 10:910, Figure 1 and Appendix A, doi:10.3390/land10090910 (CC BY 4.0; forests on the Sokolov spoil heaps and in Libavské Údolí, Czech Republic). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='postmining2021:';\n  var app=document.getElementById('app'), Q={}, files={}, prev={}, done={}, SPEC=null, TR=[], CHAR=[], ATT=[], ORDER=null, ABOUT=['gender','age','education'];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='visible';}}\n  function hideErr(){var e=app.querySelector('.err');if(e)e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function q(n){return Q[n]||{};}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function page(html,btn,cb){\n    app.innerHTML=html+'<div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">'+esc(btn||'Continue')+'</button></div><div class=\"err\"></div>';\n    document.getElementById('go').onclick=cb;app.onchange=hideErr;\n  }\n  function saveAll(l,b,cb){Promise.all(l.map(function(a){return SPSite.answer(a[0],a[1]);})).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}cb();});}\n  function order(){if(!ORDER){var o=load('order');var ids=TR.map(function(t){return t.id;});if(!o||o.length!==ids.length||o.some(function(x){return ids.indexOf(x)<0;})){o=shuffle(ids);save('order',o);}ORDER=o.map(function(id){return TR.filter(function(t){return t.id===id;})[0];});}return ORDER;}\n  function next(){\n    window.scrollTo(0,0);\n    if(!done.intro)return intro();\n    if(!done.look)return look();\n    var o=order(),k;\n    for(k=0;k<o.length;k++)if(!done['c_'+o[k].id])return part1(o[k],k);\n    if(!done.p2)return p2intro();\n    for(k=0;k<o.length;k++)if(!done['a_'+o[k].id])return part2(o[k],k);\n    if(!done.about)return about();\n    finish();\n  }\n  function intro(){\n    if(TR.some(function(t){return !files[t.file];})){app.innerHTML='<h1>Photographs missing</h1><p>Media folder forests must hold ald35.jpg, pin35.jpg, suc15.jpg, suc35.jpg, suc55.jpg and ref75.jpg.</p>';return;}\n    page('<h1>How do you perceive forests?</h1><p>In this survey you will look at photographs of six forests and say how you perceive each one and how tempting it would be to walk in it. It takes about 10 minutes. Your answers are anonymous and used for research only.</p>'+\n      '<div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(q('consent').title)+'</label></div>','Start',function(){\n      if(!document.getElementById('ok').checked)return err('Please confirm to continue.');\n      var b=this;b.disabled=true;saveAll([['consent',true]],b,function(){done.intro=true;save('d',done);next();});\n    });\n  }\n  function look(){\n    var names=Object.keys(prev).sort();\n    page('<h1>Part 1: How do you perceive forests?</h1><div class=\"card\"><p style=\"color:var(--ink)\">First, take a close look at the following photos and try to realize how individual forests may look and how they may differ.</p><div class=\"grid\">'+names.map(function(n,i){return '<img alt=\"Forest overview photo '+(i+1)+'\" src=\"'+esc(prev[n].url)+'\">';}).join('')+'</div><p style=\"margin-top:12px\">Take as long as you like. Continue when you are ready.</p></div>','Continue',function(){done.look=true;save('d',done);next();});\n  }\n  function seg(name,lo,hi){\n    return '<div class=\"item\"><span class=\"l\">'+esc(lo)+'</span><div class=\"seg\" role=\"radiogroup\" aria-label=\"'+esc(lo)+' to '+esc(hi)+'\">'+[-2,-1,0,1,2].map(function(v){return '<label><input type=\"radio\" name=\"'+name+'\" value=\"'+v+'\"><span>'+(v>0?v:v)+'</span></label>';}).join('')+'</div><span class=\"r\">'+esc(hi)+'</span></div>';\n  }\n  function bar(k,n,label){return '<div class=\"top\"><span class=\"t\">'+label+' '+(k+1)+' of '+n+'</span><div class=\"bar\"><i style=\"width:'+(100*k/n)+'%\"></i></div></div>';}\n  function part1(t,k){\n    var f=files[t.file];\n    page(bar(k,TR.length,'Part 1 · Forest')+'<div class=\"card\">'+(k===0?'<p style=\"color:var(--ink)\">See the photo of this forest. The forest is characterized by various characteristics. We would like you to indicate how much different forests meet the individual characteristics. For example, if you perceive the forest to be completely inaccessible, then mark the option -2, or if quite accessible, then mark option -1.</p>':'')+\n      '<b>Forest n. '+(k+1)+'</b><div class=\"pic\" style=\"margin-top:8px\"><img alt=\"Forest '+(k+1)+'\" src=\"'+esc(f.url)+'\"></div><p style=\"margin-top:12px;color:var(--ink)\">'+esc(q('forest_characteristics').title)+'</p>'+CHAR.map(function(it){return seg(it.name,it.low,it.high);}).join('')+'</div>','Continue',function(){\n      var v={};for(var i=0;i<CHAR.length;i++){var x=app.querySelector('input[name=\"'+CHAR[i].name+'\"]:checked');if(!x)return err('Please answer all five characteristics.');v[CHAR[i].name]=Number(x.value);}\n      v.position=k+1;var b=this;b.disabled=true;\n      SPSite.answer('forest_characteristics',v,{key:t.id,shown:[f.name]}).then(function(r){if(!ok(r)){b.disabled=false;return err(r.error);}done['c_'+t.id]=true;save('d',done);next();});\n    });\n  }\n  function p2intro(){\n    page('<h1>Part 2: Assessment of the forest sites</h1><div class=\"card\"><p style=\"color:var(--ink)\">You will now see the same six forests again, in the same order. For each one, try to imagine yourself on a one sunny summer weekend day walking for one hour on a path surrounded by this forest.</p></div>','Continue',function(){done.p2=true;save('d',done);next();});\n  }\n  function part2(t,k){\n    var f=files[t.file],it=ATT[0];\n    page(bar(k,TR.length,'Part 2 · Forest')+'<div class=\"card\"><p style=\"color:var(--ink)\">Try to imagine yourself on a one sunny summer weekend day walking for one hour on a path surrounded by this forest.</p><div class=\"pic\"><img alt=\"Forest '+(k+1)+'\" src=\"'+esc(f.url)+'\"></div><p style=\"margin-top:12px;color:var(--ink)\"><b>'+esc(q('forest_attractiveness').title)+'</b></p>'+seg(it.name,it.low,it.high)+'</div>','Continue',function(){\n      var x=app.querySelector('input[name=\"'+it.name+'\"]:checked');if(!x)return err('Please choose an answer.');\n      var v={};v[it.name]=Number(x.value);v.position=k+1;var b=this;b.disabled=true;\n      SPSite.answer('forest_attractiveness',v,{key:t.id,shown:[f.name]}).then(function(r){if(!ok(r)){b.disabled=false;return err(r.error);}done['a_'+t.id]=true;save('d',done);next();});\n    });\n  }\n  function about(){\n    var h=ABOUT.map(function(n){var d=q(n);var s='<div class=\"q\"><b>'+esc(d.title)+'</b>';\n      if(d.type==='text')s+='<input type=\"number\" name=\"'+n+'\" min=\"18\" max=\"110\" inputmode=\"numeric\">';\n      else s+=d.choices.map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+c.value+'\"> '+esc(c.text)+'</label>';}).join('');\n      return s+'</div>';}).join('');\n    page('<h1>About you</h1><div class=\"card\">'+h+'</div>','Finish',function(){\n      var l=[];for(var i=0;i<ABOUT.length;i++){var n=ABOUT[i],d=q(n),v;\n        if(d.type==='text'){var s=app.querySelector('input[name=\"'+n+'\"]').value.trim();v=Number(s);if(s===''||!(v>=18&&v<=110)||v%1)return err('Please enter your age in years (18 or older).');}\n        else{var x=app.querySelector('input[name=\"'+n+'\"]:checked');if(!x)return err('Please answer: '+d.title);v=Number(x.value);}\n        l.push([n,v]);}\n      var b=this;b.disabled=true;saveAll(l,b,function(){done.about=true;save('d',done);next();});\n    });\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>Five of the six forests grow on spoil heaps of open-cast coal mines near Sokolov, Czech Republic: replanted alder and pine (35 years), and spontaneous succession at 15, 35 and 55 years. The sixth is an ordinary 75-year-old spruce forest not affected by mining. In the original study, 869 Czech adults saw these forests. Post-mining forests were less attractive for a walk than the spruce forest, mainly because they looked less permeable, less maintained and less safe; they were not seen as less natural. Among 35-year-old forests, pine was the most attractive, then succession, then alder. Successional forests became more attractive with age, as they came to look more permeable, safer and more natural.</p><p style=\"font-size:.82rem\">Braun Kohlová, M., Nepožitková, P., &amp; Melichar, J. (2021). How Do Observable Characteristics of Post-Mining Forests Affect Their Attractiveness for Recreation? Land 10:910, doi:10.3390/land10090910.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){if(x==='consent')done.intro=false;else if(x==='forest_characteristics')TR.forEach(function(t){done['c_'+t.id]=false;});else if(x==='forest_attractiveness')TR.forEach(function(t){done['a_'+t.id]=false;});else done.about=false;});save('d',done);next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    try{SPEC=JSON.parse(document.getElementById('sp-scheme').textContent).survey;}catch(e){SPEC={pages:[]};}\n    SPEC.pages.forEach(function(p){p.elements.forEach(function(e){var g=SPSite.getQuestion(e.name)||{};Q[e.name]={type:e.type,title:g.title||e.title,choices:(g.choices&&g.choices.length)?g.choices:e.choices};if(e.name==='forest_characteristics'){TR=e.trials;CHAR=e.items;}if(e.name==='forest_attractiveness')ATT=e.items;});});\n    (SPSite.getMedia('forests')||[]).forEach(function(f){files[f.name]=f;});\n    (SPSite.getMedia('overview')||[]).forEach(function(f){prev[f.name]=f;});\n    var a=(ctx&&ctx.answers)||{};done=load('d')||{};\n    done.intro=a.consent===true;\n    TR.forEach(function(t){done['c_'+t.id]=false;done['a_'+t.id]=false;});\n    ((a.forest_characteristics&&a.forest_characteristics.trials)||[]).forEach(function(t){if(t.key)done['c_'+t.key]=true;});\n    ((a.forest_attractiveness&&a.forest_attractiveness.trials)||[]).forEach(function(t){if(t.key)done['a_'+t.key]=true;});\n    done.about=ABOUT.every(function(n){return a[n]!=null;});\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T19:39:12.046Z",
+   "mediaFolders": [
+    "forests",
+    "overview"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T19:39:12.046Z"
+  },
+  "description": "Faithful replication of Braun Kohlová, Nepožitková & Melichar (2021), Land 10:910: view photographs of six forests (five restored forests on coal-mine spoil heaps near Sokolov, Czech Republic, and one ordinary spruce forest), rate each on five perceived characteristics (naturalness, stewardship, accessibility, familiarity, safety; -2..2) and then on how tempting a one-hour walk in it would be (-2..2).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2021-braun-postmining/forests/ald35__52996757-4416-4096-b359-1f886c06b4a5.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-postmining/forests/ald35__52996757-4416-4096-b359-1f886c06b4a5.jpg",
+   "name": "ald35.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-postmining/forests/ald35__52996757-4416-4096-b359-1f886c06b4a5.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 140824,
+   "uploaded_bytes": 140824,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-postmining/forests/pin35__4681bdca-f399-47b7-84a1-d4690145cdb7.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-postmining/forests/pin35__4681bdca-f399-47b7-84a1-d4690145cdb7.jpg",
+   "name": "pin35.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-postmining/forests/pin35__4681bdca-f399-47b7-84a1-d4690145cdb7.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 134711,
+   "uploaded_bytes": 134711,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-postmining/forests/ref75__9bdfd3d0-69ab-4c27-984c-8df2d2616b88.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-postmining/forests/ref75__9bdfd3d0-69ab-4c27-984c-8df2d2616b88.jpg",
+   "name": "ref75.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-postmining/forests/ref75__9bdfd3d0-69ab-4c27-984c-8df2d2616b88.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 107717,
+   "uploaded_bytes": 107717,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-postmining/forests/suc15__8fdf453d-483b-4287-8093-f1bead573953.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-postmining/forests/suc15__8fdf453d-483b-4287-8093-f1bead573953.jpg",
+   "name": "suc15.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-postmining/forests/suc15__8fdf453d-483b-4287-8093-f1bead573953.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 124650,
+   "uploaded_bytes": 124650,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-postmining/forests/suc35__bbc593b7-765f-4b55-ba00-ea525accc05a.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-postmining/forests/suc35__bbc593b7-765f-4b55-ba00-ea525accc05a.jpg",
+   "name": "suc35.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-postmining/forests/suc35__bbc593b7-765f-4b55-ba00-ea525accc05a.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 134176,
+   "uploaded_bytes": 134176,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-postmining/forests/suc55__e1d90f8e-2747-483b-ad80-54b156218c21.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-postmining/forests/suc55__e1d90f8e-2747-483b-ad80-54b156218c21.jpg",
+   "name": "suc55.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2021-braun-postmining/forests/suc55__e1d90f8e-2747-483b-ad80-54b156218c21.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 141146,
+   "uploaded_bytes": 141146,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-postmining/overview/overview_01__6417ead0-7f21-4d70-bd1f-6606235f5991.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-postmining/overview/overview_01__6417ead0-7f21-4d70-bd1f-6606235f5991.jpg",
+   "name": "overview_01.jpg",
+   "type": "image",
+   "folder": "overview",
+   "media_id": "templates/2021-braun-postmining/overview/overview_01__6417ead0-7f21-4d70-bd1f-6606235f5991.jpg",
+   "logicalFolder": "overview",
+   "original_bytes": 151868,
+   "uploaded_bytes": 151868,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-postmining/overview/overview_02__a9e1dbb9-bac4-4881-83b2-db174382f821.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-postmining/overview/overview_02__a9e1dbb9-bac4-4881-83b2-db174382f821.jpg",
+   "name": "overview_02.jpg",
+   "type": "image",
+   "folder": "overview",
+   "media_id": "templates/2021-braun-postmining/overview/overview_02__a9e1dbb9-bac4-4881-83b2-db174382f821.jpg",
+   "logicalFolder": "overview",
+   "original_bytes": 139065,
+   "uploaded_bytes": 139065,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-postmining/overview/overview_03__884852d9-435f-40b3-bd94-e1cd2a203928.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-postmining/overview/overview_03__884852d9-435f-40b3-bd94-e1cd2a203928.jpg",
+   "name": "overview_03.jpg",
+   "type": "image",
+   "folder": "overview",
+   "media_id": "templates/2021-braun-postmining/overview/overview_03__884852d9-435f-40b3-bd94-e1cd2a203928.jpg",
+   "logicalFolder": "overview",
+   "original_bytes": 130426,
+   "uploaded_bytes": 130426,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-postmining/overview/overview_04__0345c3e8-dc50-43f1-b481-94ab74432750.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-postmining/overview/overview_04__0345c3e8-dc50-43f1-b481-94ab74432750.jpg",
+   "name": "overview_04.jpg",
+   "type": "image",
+   "folder": "overview",
+   "media_id": "templates/2021-braun-postmining/overview/overview_04__0345c3e8-dc50-43f1-b481-94ab74432750.jpg",
+   "logicalFolder": "overview",
+   "original_bytes": 141309,
+   "uploaded_bytes": 141309,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-postmining/overview/overview_05__a2ad480a-eb36-4f06-b858-ce0b7aafb51d.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-postmining/overview/overview_05__a2ad480a-eb36-4f06-b858-ce0b7aafb51d.jpg",
+   "name": "overview_05.jpg",
+   "type": "image",
+   "folder": "overview",
+   "media_id": "templates/2021-braun-postmining/overview/overview_05__a2ad480a-eb36-4f06-b858-ce0b7aafb51d.jpg",
+   "logicalFolder": "overview",
+   "original_bytes": 154737,
+   "uploaded_bytes": 154737,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-postmining/overview/overview_06__7012e111-f6c3-4d44-9f3f-d87abf554af4.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-postmining/overview/overview_06__7012e111-f6c3-4d44-9f3f-d87abf554af4.jpg",
+   "name": "overview_06.jpg",
+   "type": "image",
+   "folder": "overview",
+   "media_id": "templates/2021-braun-postmining/overview/overview_06__7012e111-f6c3-4d44-9f3f-d87abf554af4.jpg",
+   "logicalFolder": "overview",
+   "original_bytes": 160028,
+   "uploaded_bytes": 160028,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-postmining/overview/overview_07__9ca658a3-7810-4944-930d-adee499ead0e.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-postmining/overview/overview_07__9ca658a3-7810-4944-930d-adee499ead0e.jpg",
+   "name": "overview_07.jpg",
+   "type": "image",
+   "folder": "overview",
+   "media_id": "templates/2021-braun-postmining/overview/overview_07__9ca658a3-7810-4944-930d-adee499ead0e.jpg",
+   "logicalFolder": "overview",
+   "original_bytes": 144377,
+   "uploaded_bytes": 144377,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-braun-postmining/overview/overview_08__5791f1ca-f032-4763-9d9d-d25190a74d13.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-braun-postmining/overview/overview_08__5791f1ca-f032-4763-9d9d-d25190a74d13.jpg",
+   "name": "overview_08.jpg",
+   "type": "image",
+   "folder": "overview",
+   "media_id": "templates/2021-braun-postmining/overview/overview_08__5791f1ca-f032-4763-9d9d-d25190a74d13.jpg",
+   "logicalFolder": "overview",
+   "original_bytes": 124977,
+   "uploaded_bytes": 124977,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "How Do Observable Characteristics of Post-Mining Forests Affect Their Attractiveness for Recreation?",
+  "authors": [
+   "Markéta Braun Kohlová",
+   "Petra Nepožitková",
+   "Jan Melichar"
+  ],
+  "year": 2021,
+  "venue": "Land",
+  "doi": "10.3390/land10090910",
+  "url": "https://doi.org/10.3390/land10090910"
+ }
+}

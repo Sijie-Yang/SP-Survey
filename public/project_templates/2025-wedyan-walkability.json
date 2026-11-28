@@ -1,0 +1,1105 @@
+{
+ "id": "2025-wedyan-walkability",
+ "name": "Walkability Through Different Lenses (Michigan street pairs)",
+ "description": "Method replication: same task, aspects and design as the paper; the images are not the paper's stimuli (new Google Street View views of the same towns, © Google). Wedyan, Yeh, Saeidi-Rizi, Peng & Chang (2025, PLOS ONE 20:e0322078) compared how people and GPT-4o judge walkability. 174 online participants saw pairs of street photos from Lansing, East Lansing and Williamston, Michigan; each pair belonged to one of six aspects: overall walkability (ease and appeal of walking), feasibility (practicality of walking), accessibility (for people of diverse abilities), safety, comfort and liveliness. For each pair they rated both photos from 1 to 10 and explained in at least 20 words why the higher-rated photo was better; GPT-4o got the same pairs and prompt 15 times each. People and GPT-4o picked the same photo for overall walkability, feasibility, accessibility and safety but differed on comfort and liveliness; people's reasons covered more topics and stressed natural features and atmosphere, GPT-4o's stressed infrastructure and practical use. Analysis as in the paper: per pair, which photo won (equal ratings dropped), agreement with a model run on the same pairs, then text analysis of the explanations (sentiment, LDA topics, keyword frequencies, similarity between human and model reasons). Differences from the original study: (1) the paper used 96 iPhone photos taken from the sidewalk, paired once into 48 fixed pairs split over 8 survey groups; this template bundles 59 Google Street View views (2016–2026) from the three towns and draws a new random pair for every aspect, so each participant sees 6 pairs; (2) the six aspect definitions are shown on the intro screen and on each pair; the paper's pilot-tested wording is not published, so these follow the paper's one-line definitions; (3) the 20-word minimum is enforced by the page; (4) the background questions follow the paper's reported demographics (gender, age, urban or rural residence, country, walking frequency and weekly walking time), with our wording.",
+ "author": "Wedyan, Yeh, Saeidi-Rizi, Peng & Chang",
+ "year": "2025",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "walkability",
+  "llm-vs-human",
+  "open-text",
+  "michigan",
+  "usa",
+  "source:paper",
+  "modality:street_view",
+  "task:rating",
+  "task:questionnaire",
+  "concept:walkability",
+  "concept:practicality",
+  "concept:accessibility",
+  "concept:safety",
+  "concept:comfort",
+  "concept:liveliness",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:USA",
+  "city:Lansing",
+  "city:East Lansing",
+  "city:Williamston"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1371/journal.pone.0322078",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-26T23:42:23.228+00:00",
+ "updatedAt": "2026-11-26T23:42:47.626+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research. I will answer without using AI tools.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "pairs",
+    "elements": [
+     {
+      "name": "walkability_rating",
+      "type": "imagerating",
+      "title": "How do you rate the overall walkability of this environment, from 1 to 10?",
+      "choices": [],
+      "rateMax": 10,
+      "rateMin": 1,
+      "imageCount": 1,
+      "isRequired": true,
+      "trialCount": 2,
+      "description": "Overall walkability: The ease and appeal of walking around the area shown in the photo.",
+      "mediaFolders": [
+       "michigan"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "10 = very high",
+      "minRateDescription": "1 = very low",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "walkability_why",
+      "rows": 4,
+      "type": "comment",
+      "title": "Based on the photo you rated higher, why do you think it is better for overall walkability? Please explain in at least 20 words.",
+      "isRequired": true
+     },
+     {
+      "name": "feasibility_rating",
+      "type": "imagerating",
+      "title": "How do you rate the feasibility of this environment, from 1 to 10?",
+      "choices": [],
+      "rateMax": 10,
+      "rateMin": 1,
+      "imageCount": 1,
+      "isRequired": true,
+      "trialCount": 2,
+      "description": "Feasibility: How practical walking is here, given individual and environmental factors such as distances and destinations.",
+      "mediaFolders": [
+       "michigan"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "10 = very high",
+      "minRateDescription": "1 = very low",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "feasibility_why",
+      "rows": 4,
+      "type": "comment",
+      "title": "Based on the photo you rated higher, why do you think it is better for feasibility? Please explain in at least 20 words.",
+      "isRequired": true
+     },
+     {
+      "name": "accessibility_rating",
+      "type": "imagerating",
+      "title": "How do you rate the accessibility of this environment, from 1 to 10?",
+      "choices": [],
+      "rateMax": 10,
+      "rateMin": 1,
+      "imageCount": 1,
+      "isRequired": true,
+      "trialCount": 2,
+      "description": "Accessibility: How well the area accommodates people of diverse abilities, for example wheelchair users, older people or parents with strollers.",
+      "mediaFolders": [
+       "michigan"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "10 = very high",
+      "minRateDescription": "1 = very low",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "accessibility_why",
+      "rows": 4,
+      "type": "comment",
+      "title": "Based on the photo you rated higher, why do you think it is better for accessibility? Please explain in at least 20 words.",
+      "isRequired": true
+     },
+     {
+      "name": "safety_rating",
+      "type": "imagerating",
+      "title": "How do you rate the safety of this environment, from 1 to 10?",
+      "choices": [],
+      "rateMax": 10,
+      "rateMin": 1,
+      "imageCount": 1,
+      "isRequired": true,
+      "trialCount": 2,
+      "description": "Safety: How secure you would feel walking here.",
+      "mediaFolders": [
+       "michigan"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "10 = very high",
+      "minRateDescription": "1 = very low",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "safety_why",
+      "rows": 4,
+      "type": "comment",
+      "title": "Based on the photo you rated higher, why do you think it is better for safety? Please explain in at least 20 words.",
+      "isRequired": true
+     },
+     {
+      "name": "comfort_rating",
+      "type": "imagerating",
+      "title": "How do you rate the comfort of this environment, from 1 to 10?",
+      "choices": [],
+      "rateMax": 10,
+      "rateMin": 1,
+      "imageCount": 1,
+      "isRequired": true,
+      "trialCount": 2,
+      "description": "Comfort: How comfortable the area is for a pedestrian.",
+      "mediaFolders": [
+       "michigan"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "10 = very high",
+      "minRateDescription": "1 = very low",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "comfort_why",
+      "rows": 4,
+      "type": "comment",
+      "title": "Based on the photo you rated higher, why do you think it is better for comfort? Please explain in at least 20 words.",
+      "isRequired": true
+     },
+     {
+      "name": "liveliness_rating",
+      "type": "imagerating",
+      "title": "How do you rate the liveliness of this environment, from 1 to 10?",
+      "choices": [],
+      "rateMax": 10,
+      "rateMin": 1,
+      "imageCount": 1,
+      "isRequired": true,
+      "trialCount": 2,
+      "description": "Liveliness: How vibrant and lively the area feels.",
+      "mediaFolders": [
+       "michigan"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "10 = very high",
+      "minRateDescription": "1 = very low",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "liveliness_why",
+      "rows": 4,
+      "type": "comment",
+      "title": "Based on the photo you rated higher, why do you think it is better for liveliness? Please explain in at least 20 words.",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Prefer not to say",
+        "value": "na"
+       }
+      ]
+     },
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "18–25",
+        "value": "18-25"
+       },
+       {
+        "text": "26–35",
+        "value": "26-35"
+       },
+       {
+        "text": "36–45",
+        "value": "36-45"
+       },
+       {
+        "text": "46–55",
+        "value": "46-55"
+       },
+       {
+        "text": "56–65",
+        "value": "56-65"
+       },
+       {
+        "text": "Over 65",
+        "value": "65+"
+       }
+      ]
+     },
+     {
+      "name": "residence",
+      "type": "radiogroup",
+      "title": "Where do you live?",
+      "choices": [
+       {
+        "text": "Urban area",
+        "value": "urban"
+       },
+       {
+        "text": "Rural area",
+        "value": "rural"
+       }
+      ]
+     },
+     {
+      "name": "country",
+      "type": "text",
+      "title": "Country of residence"
+     },
+     {
+      "name": "walk_freq",
+      "type": "radiogroup",
+      "title": "How often do you walk (for any purpose)?",
+      "choices": [
+       {
+        "text": "Daily",
+        "value": "daily"
+       },
+       {
+        "text": "4–5 times a week",
+        "value": "4-5"
+       },
+       {
+        "text": "2–3 times a week",
+        "value": "2-3"
+       },
+       {
+        "text": "Once a week",
+        "value": "once"
+       },
+       {
+        "text": "Rarely",
+        "value": "rarely"
+       }
+      ]
+     },
+     {
+      "name": "walk_time",
+      "type": "radiogroup",
+      "title": "How long do you walk in a typical week?",
+      "choices": [
+       {
+        "text": "Less than 30 minutes",
+        "value": "lt30"
+       },
+       {
+        "text": "30 minutes to 1 hour",
+        "value": "30-60"
+       },
+       {
+        "text": "1–2 hours",
+        "value": "1-2h"
+       },
+       {
+        "text": "More than 2 hours",
+        "value": "gt2h"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "title": "Walkability Through Different Lenses (Michigan street pairs)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-bdcdda9817ac982c",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Walkability Through Different Lenses (Michigan street pairs)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Walkability Through Different Lenses (Michigan street pairs)\",\n  \"description\": \"Compare pairs of street scenes from Lansing, East Lansing and Williamston, Michigan, on six aspects of walkability: rate each photo 1–10 and explain why the higher one is better. Method replication of the human survey in Wedyan et al. (2025, PLOS ONE), which compared people with GPT-4o.\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research. I will answer without using AI tools.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"pairs\",\n    \"elements\": [\n     {\n      \"type\": \"imagerating\",\n      \"name\": \"walkability_rating\",\n      \"title\": \"How do you rate the overall walkability of this environment, from 1 to 10?\",\n      \"description\": \"Overall walkability: The ease and appeal of walking around the area shown in the photo.\",\n      \"imageCount\": 1,\n      \"trialCount\": 2,\n      \"rateMin\": 1,\n      \"rateMax\": 10,\n      \"minRateDescription\": \"1 = very low\",\n      \"maxRateDescription\": \"10 = very high\",\n      \"isRequired\": true,\n      \"choices\": [],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"mediaFolders\": [\n       \"michigan\"\n      ]\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"walkability_why\",\n      \"title\": \"Based on the photo you rated higher, why do you think it is better for overall walkability? Please explain in at least 20 words.\",\n      \"rows\": 4,\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"imagerating\",\n      \"name\": \"feasibility_rating\",\n      \"title\": \"How do you rate the feasibility of this environment, from 1 to 10?\",\n      \"description\": \"Feasibility: How practical walking is here, given individual and environmental factors such as distances and destinations.\",\n      \"imageCount\": 1,\n      \"trialCount\": 2,\n      \"rateMin\": 1,\n      \"rateMax\": 10,\n      \"minRateDescription\": \"1 = very low\",\n      \"maxRateDescription\": \"10 = very high\",\n      \"isRequired\": true,\n      \"choices\": [],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"mediaFolders\": [\n       \"michigan\"\n      ]\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"feasibility_why\",\n      \"title\": \"Based on the photo you rated higher, why do you think it is better for feasibility? Please explain in at least 20 words.\",\n      \"rows\": 4,\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"imagerating\",\n      \"name\": \"accessibility_rating\",\n      \"title\": \"How do you rate the accessibility of this environment, from 1 to 10?\",\n      \"description\": \"Accessibility: How well the area accommodates people of diverse abilities, for example wheelchair users, older people or parents with strollers.\",\n      \"imageCount\": 1,\n      \"trialCount\": 2,\n      \"rateMin\": 1,\n      \"rateMax\": 10,\n      \"minRateDescription\": \"1 = very low\",\n      \"maxRateDescription\": \"10 = very high\",\n      \"isRequired\": true,\n      \"choices\": [],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"mediaFolders\": [\n       \"michigan\"\n      ]\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"accessibility_why\",\n      \"title\": \"Based on the photo you rated higher, why do you think it is better for accessibility? Please explain in at least 20 words.\",\n      \"rows\": 4,\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"imagerating\",\n      \"name\": \"safety_rating\",\n      \"title\": \"How do you rate the safety of this environment, from 1 to 10?\",\n      \"description\": \"Safety: How secure you would feel walking here.\",\n      \"imageCount\": 1,\n      \"trialCount\": 2,\n      \"rateMin\": 1,\n      \"rateMax\": 10,\n      \"minRateDescription\": \"1 = very low\",\n      \"maxRateDescription\": \"10 = very high\",\n      \"isRequired\": true,\n      \"choices\": [],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"mediaFolders\": [\n       \"michigan\"\n      ]\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"safety_why\",\n      \"title\": \"Based on the photo you rated higher, why do you think it is better for safety? Please explain in at least 20 words.\",\n      \"rows\": 4,\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"imagerating\",\n      \"name\": \"comfort_rating\",\n      \"title\": \"How do you rate the comfort of this environment, from 1 to 10?\",\n      \"description\": \"Comfort: How comfortable the area is for a pedestrian.\",\n      \"imageCount\": 1,\n      \"trialCount\": 2,\n      \"rateMin\": 1,\n      \"rateMax\": 10,\n      \"minRateDescription\": \"1 = very low\",\n      \"maxRateDescription\": \"10 = very high\",\n      \"isRequired\": true,\n      \"choices\": [],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"mediaFolders\": [\n       \"michigan\"\n      ]\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"comfort_why\",\n      \"title\": \"Based on the photo you rated higher, why do you think it is better for comfort? Please explain in at least 20 words.\",\n      \"rows\": 4,\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"imagerating\",\n      \"name\": \"liveliness_rating\",\n      \"title\": \"How do you rate the liveliness of this environment, from 1 to 10?\",\n      \"description\": \"Liveliness: How vibrant and lively the area feels.\",\n      \"imageCount\": 1,\n      \"trialCount\": 2,\n      \"rateMin\": 1,\n      \"rateMax\": 10,\n      \"minRateDescription\": \"1 = very low\",\n      \"maxRateDescription\": \"10 = very high\",\n      \"isRequired\": true,\n      \"choices\": [],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"mediaFolders\": [\n       \"michigan\"\n      ]\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"liveliness_why\",\n      \"title\": \"Based on the photo you rated higher, why do you think it is better for liveliness? Please explain in at least 20 words.\",\n      \"rows\": 4,\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"na\",\n        \"text\": \"Prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"Age\",\n      \"choices\": [\n       {\n        \"value\": \"18-25\",\n        \"text\": \"18–25\"\n       },\n       {\n        \"value\": \"26-35\",\n        \"text\": \"26–35\"\n       },\n       {\n        \"value\": \"36-45\",\n        \"text\": \"36–45\"\n       },\n       {\n        \"value\": \"46-55\",\n        \"text\": \"46–55\"\n       },\n       {\n        \"value\": \"56-65\",\n        \"text\": \"56–65\"\n       },\n       {\n        \"value\": \"65+\",\n        \"text\": \"Over 65\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"residence\",\n      \"title\": \"Where do you live?\",\n      \"choices\": [\n       {\n        \"value\": \"urban\",\n        \"text\": \"Urban area\"\n       },\n       {\n        \"value\": \"rural\",\n        \"text\": \"Rural area\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"country\",\n      \"title\": \"Country of residence\"\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"walk_freq\",\n      \"title\": \"How often do you walk (for any purpose)?\",\n      \"choices\": [\n       {\n        \"value\": \"daily\",\n        \"text\": \"Daily\"\n       },\n       {\n        \"value\": \"4-5\",\n        \"text\": \"4–5 times a week\"\n       },\n       {\n        \"value\": \"2-3\",\n        \"text\": \"2–3 times a week\"\n       },\n       {\n        \"value\": \"once\",\n        \"text\": \"Once a week\"\n       },\n       {\n        \"value\": \"rarely\",\n        \"text\": \"Rarely\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"walk_time\",\n      \"title\": \"How long do you walk in a typical week?\",\n      \"choices\": [\n       {\n        \"value\": \"lt30\",\n        \"text\": \"Less than 30 minutes\"\n       },\n       {\n        \"value\": \"30-60\",\n        \"text\": \"30 minutes to 1 hour\"\n       },\n       {\n        \"value\": \"1-2h\",\n        \"text\": \"1–2 hours\"\n       },\n       {\n        \"value\": \"gt2h\",\n        \"text\": \"More than 2 hours\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f5f5f2;--card:#fff;--ink:#1d2125;--muted:#5d646b;--accent:#2f5d50;--line:#dde1e3;--sel:#e3efe9}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:1100px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.45rem;margin:0 0 8px}h2{font-size:1.05rem;margin:0 0 6px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.defs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.defs div{background:var(--sel);border-radius:10px;padding:10px 12px;font-size:.93rem}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:8px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pano{overflow-x:auto;border-radius:12px;background:#000;-webkit-overflow-scrolling:touch}\n.pano img{display:block;width:100%;height:auto;min-width:720px}\n.hint{font-size:.82rem;color:var(--muted);margin:4px 0 0;display:none}\n.sd{margin-top:10px}.sd .r{display:grid;grid-template-columns:150px 1fr 150px;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}\n.sd .l{text-align:right;font-size:.92rem}.sd .rt{font-size:.92rem}\n.opts{display:flex;justify-content:space-between;gap:6px}\n.opts label{flex:1;text-align:center;border:1px solid var(--line);border-radius:8px;padding:7px 0;cursor:pointer;font-weight:600}\n.opts input{position:absolute;opacity:0;pointer-events:none}\n.opts label:has(input:checked){background:var(--accent);color:#fff;border-color:var(--accent)}\n.opts label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:1100px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:700px){.defs{grid-template-columns:1fr}.sd .r{grid-template-columns:1fr 1fr;row-gap:6px}.sd .l{text-align:left;order:1}.sd .rt{text-align:right;order:2}.sd .opts{order:3;grid-column:1/3}.hint{display:block}.pano img{width:auto;height:260px;min-width:0}}\n\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}\n.photo{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}\n.photo img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;background:#000}\n.photo .in{padding:10px 12px}.photo b{display:block;margin-bottom:6px}\n.scale10{display:grid;grid-template-columns:repeat(10,1fr);gap:4px}\n.scale10 label{text-align:center;border:1px solid var(--line);border-radius:6px;padding:6px 0;cursor:pointer;font-weight:600;font-size:.9rem}\n.scale10 input{position:absolute;opacity:0;pointer-events:none}\n.scale10 label:has(input:checked){background:var(--accent);color:#fff;border-color:var(--accent)}\n.scale10 label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}\n.ends{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:3px}\ntextarea{width:100%;font:inherit;padding:10px;border:1px solid var(--line);border-radius:10px;min-height:96px}\n.count{font-size:.82rem;color:var(--muted)}\n@media (max-width:700px){.pair{grid-template-columns:1fr}.scale10{grid-template-columns:repeat(5,1fr)}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Lansing, East Lansing and Williamston, Michigan, Google Street View (© Google). Task from Wedyan, Yeh, Saeidi-Rizi, Peng &amp; Chang (2025), PLOS ONE 20(4): e0322078.</footer>\n<script>\n(function(){\n  var ASPECTS=[[\"walkability\", \"Overall walkability\", \"The ease and appeal of walking around the area shown in the photo.\"], [\"feasibility\", \"Feasibility\", \"How practical walking is here, given individual and environmental factors such as distances and destinations.\"], [\"accessibility\", \"Accessibility\", \"How well the area accommodates people of diverse abilities, for example wheelchair users, older people or parents with strollers.\"], [\"safety\", \"Safety\", \"How secure you would feel walking here.\"], [\"comfort\", \"Comfort\", \"How comfortable the area is for a pedestrian.\"], [\"liveliness\", \"Liveliness\", \"How vibrant and lively the area feels.\"]];\n  var ABOUT=['gender','age_group','residence','country','walk_freq','walk_time'];\n  var app=document.getElementById('app'),Q={},step=0,state={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function words(t){return (t.trim().match(/\\S+/g)||[]).length;}\n  function media(q,t){var tr=q.trials&&q.trials[t];return ((tr&&tr.media)||q.media||[])[0]||{};}\n  function defs(){return '<div class=\"defs\">'+ASPECTS.map(function(a){return '<div><b>'+esc(a[1])+'</b><br>'+esc(a[2])+'</div>';}).join('')+'</div>';}\n  function intro(){\n    app.innerHTML='<h1>Walkability through different lenses</h1>'+\n      '<p>You will see six pairs of street scenes from Lansing, East Lansing and Williamston in Michigan, USA. Each pair is about one aspect of walkability. Rate both photos from 1 to 10, then explain in at least 20 words why the photo you rated higher is better. Please answer in your own words, without AI tools. It takes about 15 minutes.</p>'+\n      '<div class=\"card\"><h2>The six aspects</h2>'+defs()+'</div>'+\n      '<div class=\"card\"><p>'+esc(Q.consent.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(Q.consent.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);step=0;aspect();});};\n  }\n  function aspect(){\n    if(step>=ASPECTS.length)return about();\n    var a=ASPECTS[step],qr=Q[a[0]+'_rating'],qw=Q[a[0]+'_why'],st=state[a[0]]||(state[a[0]]={r:[null,null],w:''});\n    var h='<h1>'+esc(a[1])+'</h1><p>Pair '+(step+1)+' of '+ASPECTS.length+'. <b>'+esc(a[1])+':</b> '+esc(a[2])+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*step/ASPECTS.length)+'%\"></i></div><div class=\"pair\">';\n    [0,1].forEach(function(t){var m=media(qr,t);\n      h+='<div class=\"photo\"><img src=\"'+esc(m.url)+'\" alt=\"Street scene, photo '+(t+1)+'\"><div class=\"in\"><b>Photo '+(t+1)+'</b><div class=\"scale10\" role=\"radiogroup\" aria-label=\"Photo '+(t+1)+' rating\">';\n      for(var s=1;s<=10;s++)h+='<label><input type=\"radio\" name=\"p'+t+'\" value=\"'+s+'\"'+(st.r[t]===s?' checked':'')+'>'+s+'</label>';\n      h+='</div><div class=\"ends\"><span>1 very low</span><span>10 very high</span></div></div></div>';});\n    h+='</div><div class=\"card\"><b>'+esc(qw.title)+'</b><textarea id=\"why\" aria-label=\"Your explanation\">'+esc(st.w)+'</textarea><div class=\"count\" id=\"cnt\"></div>'+\n      '<div class=\"row\">'+(step>0?'<button class=\"btn ghost\" id=\"back\">Back</button>':'')+'<button class=\"btn\" id=\"next\">Next</button></div><div class=\"err\"></div></div>';\n    app.innerHTML=h;\n    var ta=document.getElementById('why'),cnt=document.getElementById('cnt');\n    function upd(){st.w=ta.value;cnt.textContent=words(ta.value)+' / 20 words';}\n    ta.oninput=upd;upd();\n    app.querySelectorAll('.scale10 input').forEach(function(r){r.onchange=function(){st.r[Number(r.name.slice(1))]=Number(r.value);err('');};});\n    var back=document.getElementById('back');if(back)back.onclick=function(){step-=1;aspect();};\n    document.getElementById('next').onclick=function(){\n      if(st.r[0]==null||st.r[1]==null)return err('Please rate both photos.');\n      if(words(st.w)<20)return err('Please write at least 20 words.');\n      var btn=this;btn.disabled=true;\n      SPSite.answer(a[0]+'_rating',st.r[0],{trial:0}).then(function(r){if(r&&r.ok===false)throw new Error(r.error);return SPSite.answer(a[0]+'_rating',st.r[1],{trial:1});})\n        .then(function(r){if(r&&r.ok===false)throw new Error(r.error);return SPSite.answer(a[0]+'_why',st.w.trim());})\n        .then(function(r){if(r&&r.ok===false)throw new Error(r.error);step+=1;aspect();})\n        .catch(function(e){btn.disabled=false;err(e.message);});\n    };\n    window.scrollTo(0,0);\n  }\n  function field(q){\n    if(q.kind==='text')return '<div class=\"q\"><b>'+esc(q.title)+'</b><input type=\"text\" name=\"'+q.name+'\" style=\"width:100%;font:inherit;padding:9px;border:1px solid var(--line);border-radius:10px\"></div>';\n    return '<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+q.name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function about(){\n    app.innerHTML='<h1>About you</h1><p>Optional, used only to describe the sample.</p><div class=\"card\">'+ABOUT.map(function(n){return field(Q[n]);}).join('')+\n      '<div class=\"row\"><button class=\"btn ghost\" id=\"back\">Back</button><button class=\"btn\" id=\"finish\">Finish</button></div><div class=\"err\"></div></div>';\n    ABOUT.forEach(function(n){app.querySelectorAll('[name='+n+']').forEach(function(r){r.onchange=function(){SPSite.answer(n,r.value||null).then(function(x){if(x&&x.ok===false)err(x.error);});};});});\n    document.getElementById('back').onclick=function(){step=ASPECTS.length-1;aspect();};\n    document.getElementById('finish').onclick=function(){var btn=this;btn.disabled=true;err('Submitting…');\n      SPSite.complete().then(function(r){if(r&&r.ok===false){btn.disabled=false;err(r.error||('Please answer: '+(r.missing||[]).join(', ')));var m=r.missing||[];\n        if(m.indexOf('consent')>=0)return intro();for(var k=0;k<ASPECTS.length;k++){if(m.indexOf(ASPECTS[k][0]+'_rating')>=0||m.indexOf(ASPECTS[k][0]+'_why')>=0){step=k;return aspect();}}}});};\n  }\n  SPSite.onReady(function(ctx){\n    (SPSite.getQuestions?SPSite.getQuestions():ctx.questions).forEach(function(q){Q[q.name]=q;});\n    var a=(ctx&&ctx.answers)||{};\n    ASPECTS.forEach(function(x,k){var r=a[x[0]+'_rating'],w=a[x[0]+'_why'];var t=r&&r.trials||[];\n      var st=state[x[0]]={r:[t[0]&&t[0].value!=null?t[0].value:null,t[1]&&t[1].value!=null?t[1].value:null],w:typeof w==='string'?w:''};});\n    if(a.consent===true){step=0;while(step<ASPECTS.length&&state[ASPECTS[step][0]].r[1]!=null&&words(state[ASPECTS[step][0]].w)>=20)step++;aspect();}else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-26T23:41:48.324Z",
+   "mediaFolders": [
+    "michigan"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-26T23:41:48.324Z"
+  },
+  "description": "Compare pairs of street scenes from Lansing, East Lansing and Williamston, Michigan, on six aspects of walkability: rate each photo 1–10 and explain why the higher one is better. Method replication of the human survey in Wedyan et al. (2025, PLOS ONE), which compared people with GPT-4o.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_01__391d2826-1c3b-49f4-8f59-ac52e7480cbe.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_01__391d2826-1c3b-49f4-8f59-ac52e7480cbe.jpg",
+   "name": "eastlansing_01.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_01__391d2826-1c3b-49f4-8f59-ac52e7480cbe.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 218943,
+   "uploaded_bytes": 218943,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_02__1994ad8f-9b17-436e-91de-094d76d934bb.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_02__1994ad8f-9b17-436e-91de-094d76d934bb.jpg",
+   "name": "eastlansing_02.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_02__1994ad8f-9b17-436e-91de-094d76d934bb.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 146446,
+   "uploaded_bytes": 146446,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_03__245ee216-ec70-4d92-95b6-9e92908fd871.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_03__245ee216-ec70-4d92-95b6-9e92908fd871.jpg",
+   "name": "eastlansing_03.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_03__245ee216-ec70-4d92-95b6-9e92908fd871.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 166975,
+   "uploaded_bytes": 166975,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_04__229a16dc-6355-4a41-8bb7-7833e287127b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_04__229a16dc-6355-4a41-8bb7-7833e287127b.jpg",
+   "name": "eastlansing_04.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_04__229a16dc-6355-4a41-8bb7-7833e287127b.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 142415,
+   "uploaded_bytes": 142415,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_05__e581987d-db01-44ca-b04a-4e8aa8e919a7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_05__e581987d-db01-44ca-b04a-4e8aa8e919a7.jpg",
+   "name": "eastlansing_05.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_05__e581987d-db01-44ca-b04a-4e8aa8e919a7.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 123777,
+   "uploaded_bytes": 123777,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_06__d4d24eb6-d5f7-4083-9094-e198c94c3c87.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_06__d4d24eb6-d5f7-4083-9094-e198c94c3c87.jpg",
+   "name": "eastlansing_06.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_06__d4d24eb6-d5f7-4083-9094-e198c94c3c87.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 155613,
+   "uploaded_bytes": 155613,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_07__fed30305-3493-4a54-8b08-852b55c2ddb1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_07__fed30305-3493-4a54-8b08-852b55c2ddb1.jpg",
+   "name": "eastlansing_07.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_07__fed30305-3493-4a54-8b08-852b55c2ddb1.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 166903,
+   "uploaded_bytes": 166903,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_08__7f3e3cc0-8704-4aa6-b97e-fdbc3b8df46e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_08__7f3e3cc0-8704-4aa6-b97e-fdbc3b8df46e.jpg",
+   "name": "eastlansing_08.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_08__7f3e3cc0-8704-4aa6-b97e-fdbc3b8df46e.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 201814,
+   "uploaded_bytes": 201814,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_09__e5db2725-360d-4098-bb8c-82abfac5e76e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_09__e5db2725-360d-4098-bb8c-82abfac5e76e.jpg",
+   "name": "eastlansing_09.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_09__e5db2725-360d-4098-bb8c-82abfac5e76e.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 144237,
+   "uploaded_bytes": 144237,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_10__c9f31c7f-4007-4d82-8051-d57d30dbcd36.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_10__c9f31c7f-4007-4d82-8051-d57d30dbcd36.jpg",
+   "name": "eastlansing_10.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_10__c9f31c7f-4007-4d82-8051-d57d30dbcd36.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 174597,
+   "uploaded_bytes": 174597,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_11__a123a126-5d62-41d0-80a1-ad1d47449301.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_11__a123a126-5d62-41d0-80a1-ad1d47449301.jpg",
+   "name": "eastlansing_11.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_11__a123a126-5d62-41d0-80a1-ad1d47449301.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 170965,
+   "uploaded_bytes": 170965,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_12__3a4661aa-5837-4f43-aa4e-1d22dd22c5ea.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_12__3a4661aa-5837-4f43-aa4e-1d22dd22c5ea.jpg",
+   "name": "eastlansing_12.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_12__3a4661aa-5837-4f43-aa4e-1d22dd22c5ea.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 207833,
+   "uploaded_bytes": 207833,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_13__f8ef7378-cb80-427e-86a7-05ed0b4a2cbc.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_13__f8ef7378-cb80-427e-86a7-05ed0b4a2cbc.jpg",
+   "name": "eastlansing_13.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_13__f8ef7378-cb80-427e-86a7-05ed0b4a2cbc.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 137093,
+   "uploaded_bytes": 137093,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_14__65103a10-5d4a-4e6e-af6e-0106acc28205.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_14__65103a10-5d4a-4e6e-af6e-0106acc28205.jpg",
+   "name": "eastlansing_14.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_14__65103a10-5d4a-4e6e-af6e-0106acc28205.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 150479,
+   "uploaded_bytes": 150479,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_15__c61ab73d-293e-4d3e-8d59-0507bd101887.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_15__c61ab73d-293e-4d3e-8d59-0507bd101887.jpg",
+   "name": "eastlansing_15.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_15__c61ab73d-293e-4d3e-8d59-0507bd101887.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 199270,
+   "uploaded_bytes": 199270,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_16__434cc1bc-c325-4779-a2a4-b81296e22afa.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_16__434cc1bc-c325-4779-a2a4-b81296e22afa.jpg",
+   "name": "eastlansing_16.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_16__434cc1bc-c325-4779-a2a4-b81296e22afa.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 114666,
+   "uploaded_bytes": 114666,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_17__1d5f3a2b-8be9-4d2c-aac5-f6b1304bfbe1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_17__1d5f3a2b-8be9-4d2c-aac5-f6b1304bfbe1.jpg",
+   "name": "eastlansing_17.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_17__1d5f3a2b-8be9-4d2c-aac5-f6b1304bfbe1.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 230167,
+   "uploaded_bytes": 230167,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_18__1b4297b1-2ded-4e62-b356-863f9a97c41c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_18__1b4297b1-2ded-4e62-b356-863f9a97c41c.jpg",
+   "name": "eastlansing_18.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_18__1b4297b1-2ded-4e62-b356-863f9a97c41c.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 94003,
+   "uploaded_bytes": 94003,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_19__ce83e691-f204-4bfe-a43e-82077b9e042d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_19__ce83e691-f204-4bfe-a43e-82077b9e042d.jpg",
+   "name": "eastlansing_19.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_19__ce83e691-f204-4bfe-a43e-82077b9e042d.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 147426,
+   "uploaded_bytes": 147426,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_20__3d04f0d2-d802-4e8e-8902-c96f37bbd0eb.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_20__3d04f0d2-d802-4e8e-8902-c96f37bbd0eb.jpg",
+   "name": "eastlansing_20.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_20__3d04f0d2-d802-4e8e-8902-c96f37bbd0eb.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 123926,
+   "uploaded_bytes": 123926,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_21__f8d7c69f-c905-4e7b-bfb7-ddb080e8d5a9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_21__f8d7c69f-c905-4e7b-bfb7-ddb080e8d5a9.jpg",
+   "name": "eastlansing_21.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_21__f8d7c69f-c905-4e7b-bfb7-ddb080e8d5a9.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 174165,
+   "uploaded_bytes": 174165,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/eastlansing_22__b24819d2-88af-4107-ae59-f6dfb5b51380.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/eastlansing_22__b24819d2-88af-4107-ae59-f6dfb5b51380.jpg",
+   "name": "eastlansing_22.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/eastlansing_22__b24819d2-88af-4107-ae59-f6dfb5b51380.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 135308,
+   "uploaded_bytes": 135308,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_01__fb680845-6a40-45cb-b7de-e2a4b843f315.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_01__fb680845-6a40-45cb-b7de-e2a4b843f315.jpg",
+   "name": "lansing_01.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_01__fb680845-6a40-45cb-b7de-e2a4b843f315.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 176453,
+   "uploaded_bytes": 176453,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_02__ec1c0ae0-253b-44e9-97aa-e14ff93ad7ee.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_02__ec1c0ae0-253b-44e9-97aa-e14ff93ad7ee.jpg",
+   "name": "lansing_02.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_02__ec1c0ae0-253b-44e9-97aa-e14ff93ad7ee.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 119211,
+   "uploaded_bytes": 119211,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_03__dd0a1887-0849-4035-822a-90cc8aff1bc8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_03__dd0a1887-0849-4035-822a-90cc8aff1bc8.jpg",
+   "name": "lansing_03.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_03__dd0a1887-0849-4035-822a-90cc8aff1bc8.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 182345,
+   "uploaded_bytes": 182345,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_04__0d824882-5535-4586-92c2-bad5540acdb2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_04__0d824882-5535-4586-92c2-bad5540acdb2.jpg",
+   "name": "lansing_04.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_04__0d824882-5535-4586-92c2-bad5540acdb2.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 149060,
+   "uploaded_bytes": 149060,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_05__64a18725-2910-4214-b9a7-1a54e9522980.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_05__64a18725-2910-4214-b9a7-1a54e9522980.jpg",
+   "name": "lansing_05.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_05__64a18725-2910-4214-b9a7-1a54e9522980.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 176216,
+   "uploaded_bytes": 176216,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_06__a61cfad0-81b2-4f79-b0c0-79658511d54e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_06__a61cfad0-81b2-4f79-b0c0-79658511d54e.jpg",
+   "name": "lansing_06.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_06__a61cfad0-81b2-4f79-b0c0-79658511d54e.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 170498,
+   "uploaded_bytes": 170498,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_07__2a8b2d8a-8dc3-4113-bc6b-aa38529e3e76.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_07__2a8b2d8a-8dc3-4113-bc6b-aa38529e3e76.jpg",
+   "name": "lansing_07.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_07__2a8b2d8a-8dc3-4113-bc6b-aa38529e3e76.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 120387,
+   "uploaded_bytes": 120387,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_08__771fee66-f34a-4631-8f11-99ac453b7ab1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_08__771fee66-f34a-4631-8f11-99ac453b7ab1.jpg",
+   "name": "lansing_08.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_08__771fee66-f34a-4631-8f11-99ac453b7ab1.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 158194,
+   "uploaded_bytes": 158194,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_09__27ab0f10-e6c2-48ea-b061-4ce67865cd41.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_09__27ab0f10-e6c2-48ea-b061-4ce67865cd41.jpg",
+   "name": "lansing_09.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_09__27ab0f10-e6c2-48ea-b061-4ce67865cd41.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 117603,
+   "uploaded_bytes": 117603,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_10__737455cd-163c-4704-8f17-1aea3ca4bdea.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_10__737455cd-163c-4704-8f17-1aea3ca4bdea.jpg",
+   "name": "lansing_10.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_10__737455cd-163c-4704-8f17-1aea3ca4bdea.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 106942,
+   "uploaded_bytes": 106942,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_11__6cecd2ab-9fa6-4cb0-9181-619622399733.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_11__6cecd2ab-9fa6-4cb0-9181-619622399733.jpg",
+   "name": "lansing_11.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_11__6cecd2ab-9fa6-4cb0-9181-619622399733.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 149485,
+   "uploaded_bytes": 149485,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_12__24506ad5-e381-43b6-bd38-9eb607e471e0.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_12__24506ad5-e381-43b6-bd38-9eb607e471e0.jpg",
+   "name": "lansing_12.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_12__24506ad5-e381-43b6-bd38-9eb607e471e0.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 152233,
+   "uploaded_bytes": 152233,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_13__7994ab96-d847-4a45-a239-dd566268ebdf.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_13__7994ab96-d847-4a45-a239-dd566268ebdf.jpg",
+   "name": "lansing_13.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_13__7994ab96-d847-4a45-a239-dd566268ebdf.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 114460,
+   "uploaded_bytes": 114460,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_14__e77e1188-fa19-48ff-b690-440999328e62.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_14__e77e1188-fa19-48ff-b690-440999328e62.jpg",
+   "name": "lansing_14.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_14__e77e1188-fa19-48ff-b690-440999328e62.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 125430,
+   "uploaded_bytes": 125430,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_15__1d7977d5-f0e9-4cac-a352-d295eb045202.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_15__1d7977d5-f0e9-4cac-a352-d295eb045202.jpg",
+   "name": "lansing_15.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_15__1d7977d5-f0e9-4cac-a352-d295eb045202.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 175157,
+   "uploaded_bytes": 175157,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_16__ff284842-f741-4970-9a78-ad69cd257bfa.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_16__ff284842-f741-4970-9a78-ad69cd257bfa.jpg",
+   "name": "lansing_16.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_16__ff284842-f741-4970-9a78-ad69cd257bfa.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 182194,
+   "uploaded_bytes": 182194,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_17__54b89612-6e66-49be-b2f4-e192eeaa2c0c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_17__54b89612-6e66-49be-b2f4-e192eeaa2c0c.jpg",
+   "name": "lansing_17.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_17__54b89612-6e66-49be-b2f4-e192eeaa2c0c.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 124417,
+   "uploaded_bytes": 124417,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_18__9f17d90c-d291-4cb8-b7bf-8092e983938d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_18__9f17d90c-d291-4cb8-b7bf-8092e983938d.jpg",
+   "name": "lansing_18.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_18__9f17d90c-d291-4cb8-b7bf-8092e983938d.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 158195,
+   "uploaded_bytes": 158195,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_19__f7a69335-f71e-497f-ac76-a4e2eda9a69c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_19__f7a69335-f71e-497f-ac76-a4e2eda9a69c.jpg",
+   "name": "lansing_19.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_19__f7a69335-f71e-497f-ac76-a4e2eda9a69c.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 175212,
+   "uploaded_bytes": 175212,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_20__76b8cf83-2d57-45bd-a530-f4c87ee8c67a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_20__76b8cf83-2d57-45bd-a530-f4c87ee8c67a.jpg",
+   "name": "lansing_20.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_20__76b8cf83-2d57-45bd-a530-f4c87ee8c67a.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 140170,
+   "uploaded_bytes": 140170,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_21__d6a86cd0-5805-4ea6-83fa-c1ea33ea1857.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_21__d6a86cd0-5805-4ea6-83fa-c1ea33ea1857.jpg",
+   "name": "lansing_21.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_21__d6a86cd0-5805-4ea6-83fa-c1ea33ea1857.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 154297,
+   "uploaded_bytes": 154297,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/lansing_22__1e62ed5e-bb77-4e9c-80c2-5cc868c491f1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/lansing_22__1e62ed5e-bb77-4e9c-80c2-5cc868c491f1.jpg",
+   "name": "lansing_22.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/lansing_22__1e62ed5e-bb77-4e9c-80c2-5cc868c491f1.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 142915,
+   "uploaded_bytes": 142915,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/williamston_01__d7f7ff58-ff7b-481c-8f68-18d805ab8669.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/williamston_01__d7f7ff58-ff7b-481c-8f68-18d805ab8669.jpg",
+   "name": "williamston_01.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/williamston_01__d7f7ff58-ff7b-481c-8f68-18d805ab8669.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 171923,
+   "uploaded_bytes": 171923,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/williamston_02__689e0e57-4384-4be8-b39d-1228f6fe4864.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/williamston_02__689e0e57-4384-4be8-b39d-1228f6fe4864.jpg",
+   "name": "williamston_02.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/williamston_02__689e0e57-4384-4be8-b39d-1228f6fe4864.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 185306,
+   "uploaded_bytes": 185306,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/williamston_03__20b13496-fd21-4bbe-8dcf-6096ad7e6740.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/williamston_03__20b13496-fd21-4bbe-8dcf-6096ad7e6740.jpg",
+   "name": "williamston_03.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/williamston_03__20b13496-fd21-4bbe-8dcf-6096ad7e6740.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 144740,
+   "uploaded_bytes": 144740,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/williamston_04__e196932e-4515-4fbb-b609-26e48fe0a1d4.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/williamston_04__e196932e-4515-4fbb-b609-26e48fe0a1d4.jpg",
+   "name": "williamston_04.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/williamston_04__e196932e-4515-4fbb-b609-26e48fe0a1d4.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 86831,
+   "uploaded_bytes": 86831,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/williamston_05__b4ca1dec-894e-4844-b63d-4988522e911d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/williamston_05__b4ca1dec-894e-4844-b63d-4988522e911d.jpg",
+   "name": "williamston_05.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/williamston_05__b4ca1dec-894e-4844-b63d-4988522e911d.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 167410,
+   "uploaded_bytes": 167410,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/williamston_07__0c209bb8-66a4-420a-9116-d7445c46295b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/williamston_07__0c209bb8-66a4-420a-9116-d7445c46295b.jpg",
+   "name": "williamston_07.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/williamston_07__0c209bb8-66a4-420a-9116-d7445c46295b.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 208855,
+   "uploaded_bytes": 208855,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/williamston_08__67ae899c-517c-4c32-b79d-8b5be98e6f23.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/williamston_08__67ae899c-517c-4c32-b79d-8b5be98e6f23.jpg",
+   "name": "williamston_08.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/williamston_08__67ae899c-517c-4c32-b79d-8b5be98e6f23.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 219341,
+   "uploaded_bytes": 219341,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/williamston_09__9518082d-7d79-43d7-a59e-37773d6d87bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/williamston_09__9518082d-7d79-43d7-a59e-37773d6d87bf.jpg",
+   "name": "williamston_09.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/williamston_09__9518082d-7d79-43d7-a59e-37773d6d87bf.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 206873,
+   "uploaded_bytes": 206873,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/williamston_10__3204de68-aa71-469e-a2db-e339e5f96c15.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/williamston_10__3204de68-aa71-469e-a2db-e339e5f96c15.jpg",
+   "name": "williamston_10.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/williamston_10__3204de68-aa71-469e-a2db-e339e5f96c15.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 122076,
+   "uploaded_bytes": 122076,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/williamston_11__500c8a6a-cf64-472b-99b7-35f419c6faad.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/williamston_11__500c8a6a-cf64-472b-99b7-35f419c6faad.jpg",
+   "name": "williamston_11.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/williamston_11__500c8a6a-cf64-472b-99b7-35f419c6faad.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 180593,
+   "uploaded_bytes": 180593,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/williamston_12__2d1ab44b-25ab-450a-95bd-ad352c293f4b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/williamston_12__2d1ab44b-25ab-450a-95bd-ad352c293f4b.jpg",
+   "name": "williamston_12.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/williamston_12__2d1ab44b-25ab-450a-95bd-ad352c293f4b.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 157357,
+   "uploaded_bytes": 157357,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/williamston_13__b296a413-2df9-4a74-b594-c552960866a3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/williamston_13__b296a413-2df9-4a74-b594-c552960866a3.jpg",
+   "name": "williamston_13.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/williamston_13__b296a413-2df9-4a74-b594-c552960866a3.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 148909,
+   "uploaded_bytes": 148909,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/williamston_14__29f4cbcf-855e-4226-9834-95648c38c399.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/williamston_14__29f4cbcf-855e-4226-9834-95648c38c399.jpg",
+   "name": "williamston_14.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/williamston_14__29f4cbcf-855e-4226-9834-95648c38c399.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 196406,
+   "uploaded_bytes": 196406,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/williamston_15__d04f4824-3da9-48a4-97d0-76aa4d2533dc.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/williamston_15__d04f4824-3da9-48a4-97d0-76aa4d2533dc.jpg",
+   "name": "williamston_15.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/williamston_15__d04f4824-3da9-48a4-97d0-76aa4d2533dc.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 180922,
+   "uploaded_bytes": 180922,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wedyan-walkability/michigan/williamston_16__da8e0590-d744-4a68-9738-69a68d9dd8e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wedyan-walkability/michigan/williamston_16__da8e0590-d744-4a68-9738-69a68d9dd8e7.jpg",
+   "name": "williamston_16.jpg",
+   "type": "image",
+   "folder": "michigan",
+   "media_id": "templates/2025-wedyan-walkability/michigan/williamston_16__da8e0590-d744-4a68-9738-69a68d9dd8e7.jpg",
+   "logicalFolder": "michigan",
+   "original_bytes": 102389,
+   "uploaded_bytes": 102389,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Urban walkability through different lenses: A comparative study of GPT-4o and human perceptions",
+  "authors": [
+   "Wedyan M.",
+   "Yeh Y.-C.",
+   "Saeidi-Rizi F.",
+   "Peng T.-Q.",
+   "Chang C.-Y."
+  ],
+  "year": 2025,
+  "venue": "PLoS ONE",
+  "doi": "10.1371/journal.pone.0322078",
+  "url": "https://doi.org/10.1371/journal.pone.0322078"
+ }
+}

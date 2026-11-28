@@ -1,0 +1,871 @@
+{
+ "id": "2015-berry-nature",
+ "name": "Nature Photos, Time and Impatience",
+ "description": "Method replication: same task, timing and design as the paper; the photographs are not the paper's stimuli (they are the CC BY natural and urban sets of Berman et al. 2014, PLOS ONE). Does looking at nature make people less impulsive and make time feel longer? Each participant is randomly assigned to natural or built photographs and sees 25 of them for 10 s each, then a delay-discounting task: \"Would you rather have $X now or $100 in [delay]?\" for 1 day, 1 week, 1 month, 6 months, 1 year, 5 years and 25 years, 10 titrating choices per delay (start $50, adjustment $25 then halved each time), with 5 more photographs between delay blocks. The page records one indifference point per delay, the area under the discounting curve, every choice, and the photographs shown. Afterwards: \"How quickly has time seemed to pass?\" (1 = time flew, 5 = time dragged), an estimate of the minutes elapsed (plus the actual minutes), age and sex. Rebuilt from Berry et al. (2015), PLOS ONE 10(11): e0141030 (n = 43; nature group less impulsive and estimated longer sessions). Differences from the original study: (1) photographs are the 25 most natural of Berman et al.'s 50 nature images and the 25 most urban of their 50 urban images (by their naturalness ratings; one blurred urban image swapped for the next), not the photo sets of the paper; (2) online instead of a quiet lab room without clocks; (3) the short-interval bisection task (null result in the paper) is not included; (4) condition is assigned by simple randomisation, not block randomisation; (5) the 10 practice choices ($10–$100 now vs $100 in 1 week) follow Berry et al. 2014; (6) the indifference point is taken as the immediate amount after the 10th choice.",
+ "author": "Berry, Repke, Nickerson, Conway, Odum & Jordan",
+ "year": "2015",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "delay discounting",
+  "time perception",
+  "nature exposure",
+  "impulsivity",
+  "source:paper",
+  "modality:scene_photo",
+  "task:custom_page",
+  "task:questionnaire",
+  "concept:naturalness",
+  "concept:restoration",
+  "participants:students",
+  "participants:lab",
+  "sample:lt100",
+  "country:USA",
+  "city:Missoula"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1371/journal.pone.0141030",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-26T23:41:50.224+00:00",
+ "updatedAt": "2026-11-26T23:42:08.599+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     },
+     {
+      "name": "condition",
+      "type": "radiogroup",
+      "title": "Photograph condition (assigned at random by the page)",
+      "choices": [
+       {
+        "text": "Natural scenes",
+        "value": "natural"
+       },
+       {
+        "text": "Built scenes",
+        "value": "built"
+       }
+      ],
+      "isRequired": true,
+      "description": "natural = photographs of natural scenes (folder “natural”); built = photographs of built scenes (folder “built”). Compare the two groups on the outcomes below (Mann–Whitney tests, as in the paper)."
+     }
+    ]
+   },
+   {
+    "name": "photographs",
+    "elements": [
+     {
+      "name": "photos_viewed",
+      "type": "custom",
+      "title": "Recorded by the page: the photographs shown, in order, with the phase they were shown in: [{ phase: 'before' | 'after_<delay>', file }]. Each is on screen for 10 s."
+     }
+    ]
+   },
+   {
+    "name": "delay_discounting",
+    "elements": [
+     {
+      "max": 100,
+      "min": 0,
+      "name": "ip_1d",
+      "type": "text",
+      "title": "Indifference point, 1 day: the immediate amount ($) judged equal to $100 in 1 day",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "max": 100,
+      "min": 0,
+      "name": "ip_1w",
+      "type": "text",
+      "title": "Indifference point, 1 week ($)",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "max": 100,
+      "min": 0,
+      "name": "ip_1m",
+      "type": "text",
+      "title": "Indifference point, 1 month ($)",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "max": 100,
+      "min": 0,
+      "name": "ip_6m",
+      "type": "text",
+      "title": "Indifference point, 6 months ($)",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "max": 100,
+      "min": 0,
+      "name": "ip_1y",
+      "type": "text",
+      "title": "Indifference point, 1 year ($)",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "max": 100,
+      "min": 0,
+      "name": "ip_5y",
+      "type": "text",
+      "title": "Indifference point, 5 years ($)",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "max": 100,
+      "min": 0,
+      "name": "ip_25y",
+      "type": "text",
+      "title": "Indifference point, 25 years ($)",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "max": 1,
+      "min": 0,
+      "name": "auc",
+      "type": "text",
+      "title": "Area under the discounting curve (0–1, higher = more self-control), computed by the page from the seven indifference points (Myerson, Green & Warusawitharana 2001; delays in days, normalised by 25 years).",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "dd_choices",
+      "type": "custom",
+      "title": "Recorded by the page: every titrating choice, keyed by delay: { '1 day': [{ trial, immediate, choice: 'now' | 'later', nowOnLeft }], … }. Each delay starts at $50 now vs $100 later; the first adjustment is $25 and each later adjustment is half the previous one; 10 trials per delay; the indifference point is the immediate amount after the 10th choice. Practice trials are not recorded."
+     }
+    ]
+   },
+   {
+    "name": "time_and_you",
+    "elements": [
+     {
+      "name": "time_scale",
+      "type": "rating",
+      "title": "How quickly has time seemed to pass since you first started this study and gave your consent?",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "maxRateDescription": "Time dragged",
+      "minRateDescription": "Time flew"
+     },
+     {
+      "max": 600,
+      "min": 0,
+      "name": "time_estimate_min",
+      "type": "text",
+      "title": "How many minutes would you estimate have elapsed since you gave your consent?",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "max": 10000,
+      "min": 0,
+      "name": "session_minutes",
+      "type": "text",
+      "title": "Recorded by the page: actual minutes from consent to the time questions.",
+      "inputType": "number"
+     },
+     {
+      "max": 99,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "Age (years)",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "sex",
+      "type": "radiogroup",
+      "title": "Sex",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Nature Photos, Time and Impatience",
+  "locale": "en",
+  "spSite": {
+   "id": "site-491fd2a7472a6b1b",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Nature Photos, Time and Impatience</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Nature Photos, Time and Impatience\",\n    \"description\": \"Between-subjects experiment. Each participant is randomly assigned to look at photographs of natural scenes or of built (urban) scenes, 10 s each: 25 photographs before a delay-discounting task and 5 between its delay blocks. The task asks “Would you rather have $X now or $100 in [delay]?” for 7 delays (1 day to 25 years), 10 titrating choices each, giving one indifference point per delay. Afterwards participants judge how fast time passed and estimate how many minutes have gone by. Method replication of Berry, Repke, Nickerson, Conway, Odum & Jordan (2015), PLOS ONE 10(11): e0141030.\",\n    \"locale\": \"en\",\n    \"mediaFolders\": [\"natural\", \"built\"],\n    \"pages\": [\n      { \"name\": \"start\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\", \"isRequired\": true, \"labelTrue\": \"I agree\", \"labelFalse\": \"I do not agree\" },\n        { \"type\": \"radiogroup\", \"name\": \"condition\", \"title\": \"Photograph condition (assigned at random by the page)\", \"description\": \"natural = photographs of natural scenes (folder “natural”); built = photographs of built scenes (folder “built”). Compare the two groups on the outcomes below (Mann–Whitney tests, as in the paper).\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"natural\", \"text\": \"Natural scenes\" }, { \"value\": \"built\", \"text\": \"Built scenes\" } ] }\n      ]},\n      { \"name\": \"photographs\", \"elements\": [\n        { \"type\": \"custom\", \"name\": \"photos_viewed\", \"title\": \"Recorded by the page: the photographs shown, in order, with the phase they were shown in: [{ phase: 'before' | 'after_<delay>', file }]. Each is on screen for 10 s.\" }\n      ]},\n      { \"name\": \"delay_discounting\", \"elements\": [\n        { \"type\": \"number\", \"name\": \"ip_1d\", \"title\": \"Indifference point, 1 day: the immediate amount ($) judged equal to $100 in 1 day\", \"min\": 0, \"max\": 100, \"isRequired\": true },\n        { \"type\": \"number\", \"name\": \"ip_1w\", \"title\": \"Indifference point, 1 week ($)\", \"min\": 0, \"max\": 100, \"isRequired\": true },\n        { \"type\": \"number\", \"name\": \"ip_1m\", \"title\": \"Indifference point, 1 month ($)\", \"min\": 0, \"max\": 100, \"isRequired\": true },\n        { \"type\": \"number\", \"name\": \"ip_6m\", \"title\": \"Indifference point, 6 months ($)\", \"min\": 0, \"max\": 100, \"isRequired\": true },\n        { \"type\": \"number\", \"name\": \"ip_1y\", \"title\": \"Indifference point, 1 year ($)\", \"min\": 0, \"max\": 100, \"isRequired\": true },\n        { \"type\": \"number\", \"name\": \"ip_5y\", \"title\": \"Indifference point, 5 years ($)\", \"min\": 0, \"max\": 100, \"isRequired\": true },\n        { \"type\": \"number\", \"name\": \"ip_25y\", \"title\": \"Indifference point, 25 years ($)\", \"min\": 0, \"max\": 100, \"isRequired\": true },\n        { \"type\": \"number\", \"name\": \"auc\", \"title\": \"Area under the discounting curve (0–1, higher = more self-control), computed by the page from the seven indifference points (Myerson, Green & Warusawitharana 2001; delays in days, normalised by 25 years).\", \"min\": 0, \"max\": 1, \"isRequired\": true },\n        { \"type\": \"custom\", \"name\": \"dd_choices\", \"title\": \"Recorded by the page: every titrating choice, keyed by delay: { '1 day': [{ trial, immediate, choice: 'now' | 'later', nowOnLeft }], … }. Each delay starts at $50 now vs $100 later; the first adjustment is $25 and each later adjustment is half the previous one; 10 trials per delay; the indifference point is the immediate amount after the 10th choice. Practice trials are not recorded.\" }\n      ]},\n      { \"name\": \"time_and_you\", \"elements\": [\n        { \"type\": \"rating\", \"name\": \"time_scale\", \"title\": \"How quickly has time seemed to pass since you first started this study and gave your consent?\", \"rateMin\": 1, \"rateMax\": 5, \"minRateDescription\": \"Time flew\", \"maxRateDescription\": \"Time dragged\", \"isRequired\": true },\n        { \"type\": \"number\", \"name\": \"time_estimate_min\", \"title\": \"How many minutes would you estimate have elapsed since you gave your consent?\", \"min\": 0, \"max\": 600, \"isRequired\": true },\n        { \"type\": \"number\", \"name\": \"session_minutes\", \"title\": \"Recorded by the page: actual minutes from consent to the time questions.\", \"min\": 0, \"max\": 10000 },\n        { \"type\": \"number\", \"name\": \"age\", \"title\": \"Age (years)\", \"min\": 18, \"max\": 99, \"isRequired\": true },\n        { \"type\": \"radiogroup\", \"name\": \"sex\", \"title\": \"Sex\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"female\", \"text\": \"Female\" }, { \"value\": \"male\", \"text\": \"Male\" }, { \"value\": \"other\", \"text\": \"Other / prefer not to say\" } ] }\n      ]}\n    ]\n  }\n}\n</script>\n<style>\n:root{--bg:#f3f2ee;--card:#fff;--ink:#1e1f1c;--muted:#5d5f58;--accent:#36584a;--accent-ink:#fff;--line:#d8d8d0;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:820px;margin:0 auto;padding:24px 16px 40px}\nh1{font-size:1.45rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.view{background:#111;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;max-height:72vh;margin:0 auto}\n.view img{width:100%;height:100%;object-fit:contain;display:block}\n.timer{height:5px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:10px}.timer>i{display:block;height:100%;background:var(--accent)}\n.choice{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}\n.choice button{appearance:none;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:26px 10px;font:inherit;font-size:1.25rem;font-weight:700;cursor:pointer;line-height:1.3}\n.choice button:hover,.choice button:focus-visible{border-color:var(--accent);outline:none}\n.choice small{display:block;font-size:.9rem;font-weight:500;color:var(--muted)}\n.q{font-size:1.1rem;color:var(--ink);text-align:center;margin-top:8px}\n.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}\n.scale button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:10px 0;font:inherit;font-weight:700;cursor:pointer}\n.scale button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}\n.ends{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-top:3px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.f{margin-top:16px}.f>b{display:block;margin-bottom:6px}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:140px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.small{font-size:.85rem}\n.credit{max-width:820px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs: Berman et al. (2014), PLOS ONE 9(12): e114572, S2 stimuli (natural and urban sets), Creative Commons Attribution licence (CC BY 4.0). They are not the photographs used by Berry et al. (2015).</footer>\n<script>\n(function(){\n  var VIEW=window.__VIEWMS||10000, FIRST=25, BETWEEN=5, TRIALS=10;\n  var DELAYS=[{id:'1d',label:'1 day',days:1},{id:'1w',label:'1 week',days:7},{id:'1m',label:'1 month',days:30.44},{id:'6m',label:'6 months',days:182.6},{id:'1y',label:'1 year',days:365.25},{id:'5y',label:'5 years',days:1826.25},{id:'25y',label:'25 years',days:9131.25}];\n  var app=document.getElementById('app'), files={natural:[],built:[]}, st=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function money(v){return '$'+(Math.round(v*100)%100?v.toFixed(2):String(Math.round(v)));}\n  function save(){try{localStorage.setItem('berry2015:state',JSON.stringify(st));}catch(e){}}\n  function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var x=a[k];a[k]=a[j];a[j]=x;}return a;}\n  function set(){return files[st.condition]||[];}\n\n  function intro(){\n    if(files.natural.length<FIRST||files.built.length<FIRST){app.innerHTML='<h1>Photographs missing</h1><p>The media folders “natural” and “built” each need at least '+FIRST+' photographs (now: '+files.natural.length+' and '+files.built.length+').</p>';return;}\n    app.innerHTML='<h1>Photographs and choices</h1><p>In this study you will look at a series of photographs and make choices between amounts of money. The amounts are hypothetical, but please choose as if they were real. There are no right or wrong answers: simply choose whichever option you prefer. The study takes about 20 minutes. Please do it in one sitting, without checking a clock or your phone.</p>'+\n      '<div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var b=this;b.disabled=true;\n      Promise.all([SPSite.answer('consent',true),SPSite.answer('condition',st.condition)]).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}st.t0=Date.now();st.step='practice';save();route();});\n    };\n  }\n\n  // 10 practice choices: $10 now vs $100 in 1 week, the immediate amount rising by $10 each time; not recorded\n  function practice(){\n    var n=st.practice||0;\n    if(n>=10){st.step='photos_before';save();return route();}\n    choiceScreen('Practice '+(n+1)+' of 10',10*(n+1),'1 week',function(){st.practice=n+1;save();practice();});\n  }\n\n  function choiceScreen(head,now,delayLabel,done){\n    var left=Math.random()<.5;\n    var a='<button id=\"cn\">'+money(now)+' now</button>', b='<button id=\"cl\">$100 in '+esc(delayLabel)+'</button>';\n    app.innerHTML='<p>'+esc(head)+'</p><div class=\"card\"><p class=\"q\">Would you rather have <b>'+money(now)+' now</b> or <b>$100 in '+esc(delayLabel)+'</b>?</p><div class=\"choice\">'+(left?a+b:b+a)+'</div></div>';\n    document.getElementById('cn').onclick=function(){done('now',left);};\n    document.getElementById('cl').onclick=function(){done('later',left);};\n  }\n\n  function slideshow(list,phase,done){\n    var i=0, shown=st.viewed||[];\n    function one(){\n      if(i>=list.length)return done();\n      var f=list[i], t0=0, tm;\n      app.innerHTML='<p>Please look at the photograph.</p><div class=\"view\"><img alt=\"Photograph of a scene\" src=\"'+esc(f.url)+'\"></div><div class=\"timer\"><i id=\"tb\" style=\"width:100%\"></i></div><p class=\"small\" style=\"margin-top:8px\">'+(i+1)+' / '+list.length+'</p>';\n      var nf=list[i+1];if(nf){var pre=new Image();pre.src=nf.url;}\n      var img=app.querySelector('img'), tb=document.getElementById('tb');\n      function start(){if(t0)return;t0=Date.now();tm=setInterval(function(){var e=Date.now()-t0;tb.style.width=Math.max(0,100*(1-e/VIEW))+'%';if(e>=VIEW){clearInterval(tm);shown.push({phase:phase,file:f.name});st.viewed=shown;save();SPSite.answer('photos_viewed',shown).then(function(){i++;one();});}},100);}\n      if(img.complete&&img.naturalWidth)start();else{img.onload=start;img.onerror=start;}\n    }\n    one();\n  }\n\n  function block(){\n    var b=st.block||0;\n    if(b>=DELAYS.length){st.step='time';save();return route();}\n    var d=DELAYS[b], rec=(st.choices[d.label]=st.choices[d.label]||[]);\n    if(rec.length===0)st.cur={now:50,adj:25};\n    if(rec.length>=TRIALS){\n      var ip=st.cur.now;\n      return SPSite.answer('ip_'+d.id,Math.round(ip*100)/100).then(function(r){\n        if(!ok(r))return err(r.error);\n        st.ip[d.id]=ip;st.block=b+1;st.cur=null;save();\n        if(b+1<DELAYS.length){st.step='photos_between';save();route();}else{finishDD();}\n      });\n    }\n    choiceScreen('Delay '+(b+1)+' of 7 · choice '+(rec.length+1)+' of '+TRIALS,st.cur.now,d.label,function(c,left){\n      rec.push({trial:rec.length+1,immediate:st.cur.now,choice:c,nowOnLeft:left});\n      st.cur.now=c==='now'?st.cur.now-st.cur.adj:st.cur.now+st.cur.adj; st.cur.adj=st.cur.adj/2; save();\n      SPSite.answer('dd_choices',st.choices).then(function(){block();});\n    });\n  }\n\n  function finishDD(){\n    // AUC (Myerson et al. 2001): x = delay / longest delay, y = indifference point / 100, starting at (0, 1)\n    var xs=[0], ys=[1], max=DELAYS[DELAYS.length-1].days, auc=0;\n    DELAYS.forEach(function(d){xs.push(d.days/max);ys.push(st.ip[d.id]/100);});\n    for(var k=1;k<xs.length;k++)auc+=(xs[k]-xs[k-1])*(ys[k]+ys[k-1])/2;\n    SPSite.answer('auc',Math.round(auc*10000)/10000).then(function(){st.step='time';save();route();});\n  }\n\n  function timeQs(){\n    var v=null;\n    app.innerHTML='<h1>A few last questions</h1><div class=\"card\">'+\n      '<div class=\"f\" style=\"margin-top:0\"><b>How quickly has time seemed to pass since you first started this study and gave your consent?</b><div class=\"scale\">'+[1,2,3,4,5].map(function(x){return '<button data-v=\"'+x+'\">'+x+'</button>';}).join('')+'</div><div class=\"ends\"><span>Time flew</span><span>Time dragged</span></div></div>'+\n      '<div class=\"f\"><b>How many minutes would you estimate have elapsed since you gave your consent?</b><input type=\"number\" id=\"est\" min=\"0\" max=\"600\" inputmode=\"numeric\"> minutes</div>'+\n      '<div class=\"f\"><b>Age (years)</b><input type=\"number\" id=\"age\" min=\"18\" max=\"99\" inputmode=\"numeric\"></div>'+\n      '<div class=\"f\"><b>Sex</b>'+[['female','Female'],['male','Male'],['other','Other / prefer not to say']].map(function(o){return '<label class=\"opt\"><input type=\"radio\" name=\"sex\" value=\"'+o[0]+'\"> '+o[1]+'</label>';}).join('')+'</div>'+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"nx\">Finish</button></div><div class=\"err\"></div></div>';\n    var mins=Math.round((Date.now()-(st.t0||Date.now()))/600)/100;\n    app.querySelectorAll('.scale button').forEach(function(x){x.onclick=function(){v=Number(x.getAttribute('data-v'));app.querySelectorAll('.scale button').forEach(function(y){y.classList.toggle('on',y===x);});err('');};});\n    document.getElementById('nx').onclick=function(){\n      var est=document.getElementById('est').value, age=Number(document.getElementById('age').value), sx=app.querySelector('input[name=sex]:checked');\n      if(v==null)return err('Please say how quickly time seemed to pass.');\n      if(est===''||!(Number(est)>=0&&Number(est)<=600))return err('Please estimate the minutes (0–600).');\n      if(!(age>=18&&age<=99))return err('Please enter your age (18–99).');\n      if(!sx)return err('Please answer: Sex');\n      var bt=this;bt.disabled=true;\n      Promise.all([SPSite.answer('time_scale',v),SPSite.answer('time_estimate_min',Number(est)),SPSite.answer('session_minutes',mins),SPSite.answer('age',age),SPSite.answer('sex',sx.value)]).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){bt.disabled=false;return err(bad.error);}st.step='end';save();finish();});\n    };\n  }\n\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st.step=(r.missing||[]).indexOf('consent')>=0?'intro':'time';save();route();},1800);}else{try{localStorage.removeItem('berry2015:state');}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n\n  function route(){\n    var s=st.step;\n    if(s==='practice')return practice();\n    if(s==='photos_before'){app.innerHTML='<h1>Photographs</h1><div class=\"card\"><p>You will now see 25 photographs, one at a time, for 10 seconds each. Just look at each one; nothing needs to be clicked. After that, the choices begin. More photographs appear between groups of choices.</p><button class=\"btn\" id=\"go\">Show the photographs</button></div>';document.getElementById('go').onclick=function(){slideshow(st.firstSet,'before',function(){st.step='dd';save();route();});};return;}\n    if(s==='photos_between'){var prev=DELAYS[(st.block||1)-1].label;return slideshow(shuffle(st.firstSet).slice(0,BETWEEN),'after_'+prev,function(){st.step='dd';save();route();});}\n    if(s==='dd'){if(!st.ddIntro){st.ddIntro=1;save();app.innerHTML='<h1>Choices</h1><div class=\"card\"><p>Now choose between an amount of money now and $100 after a delay. Choose whichever option you prefer. There are 7 delays with 10 choices each.</p><button class=\"btn\" id=\"go\">Begin</button></div>';document.getElementById('go').onclick=block;return;}return block();}\n    if(s==='time')return timeQs();\n    if(s==='end')return finish();\n    intro();\n  }\n\n  SPSite.onReady(function(ctx){\n    ['natural','built'].forEach(function(k){files[k]=(SPSite.getMedia(k)||[]).filter(function(f){return !f.type||f.type==='image';});});\n    try{st=JSON.parse(localStorage.getItem('berry2015:state'));}catch(e){st=null;}\n    var a=(ctx&&ctx.answers)||{};\n    if(!st||typeof st!=='object'||!st.condition){st={condition:a.condition||(Math.random()<.5?'natural':'built'),step:'intro',choices:{},ip:{},block:0}; }\n    if(!st.firstSet||!st.firstSet.length)st.firstSet=shuffle(set()).slice(0,FIRST);\n    if(a.consent!==true)st.step='intro';\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-26T23:41:09.998Z",
+   "mediaFolders": [
+    "natural",
+    "built"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-26T23:41:09.998Z"
+  },
+  "description": "Between-subjects experiment. Each participant is randomly assigned to look at photographs of natural scenes or of built (urban) scenes, 10 s each: 25 photographs before a delay-discounting task and 5 between its delay blocks. The task asks “Would you rather have $X now or $100 in [delay]?” for 7 delays (1 day to 25 years), 10 titrating choices each, giving one indifference point per delay. Afterwards participants judge how fast time passed and estimate how many minutes have gone by. Method replication of Berry, Repke, Nickerson, Conway, Odum & Jordan (2015), PLOS ONE 10(11): e0141030.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2015-berry-nature/built/urban1__907675eb-6184-4ff9-a299-7e15ad71425b.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban1__907675eb-6184-4ff9-a299-7e15ad71425b.jpg",
+   "name": "urban1.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban1__907675eb-6184-4ff9-a299-7e15ad71425b.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 68062,
+   "uploaded_bytes": 68062,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban15__60ab9238-a0c7-4968-b654-d75b1ef2b5bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban15__60ab9238-a0c7-4968-b654-d75b1ef2b5bf.jpg",
+   "name": "urban15.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban15__60ab9238-a0c7-4968-b654-d75b1ef2b5bf.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 63580,
+   "uploaded_bytes": 63580,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban16__a5f1e8d1-1d94-4a3d-80e8-cd98132e5b74.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban16__a5f1e8d1-1d94-4a3d-80e8-cd98132e5b74.jpg",
+   "name": "urban16.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban16__a5f1e8d1-1d94-4a3d-80e8-cd98132e5b74.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 42517,
+   "uploaded_bytes": 42517,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban19__1663495a-67ec-43cc-92a9-09a0a8e72338.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban19__1663495a-67ec-43cc-92a9-09a0a8e72338.jpg",
+   "name": "urban19.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban19__1663495a-67ec-43cc-92a9-09a0a8e72338.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 40175,
+   "uploaded_bytes": 40175,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban2__a793422a-994f-4534-a709-5340d9652367.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban2__a793422a-994f-4534-a709-5340d9652367.jpg",
+   "name": "urban2.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban2__a793422a-994f-4534-a709-5340d9652367.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 69213,
+   "uploaded_bytes": 69213,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban21__7e06a77a-73ee-44da-b846-cd656048d2a9.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban21__7e06a77a-73ee-44da-b846-cd656048d2a9.jpg",
+   "name": "urban21.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban21__7e06a77a-73ee-44da-b846-cd656048d2a9.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 48994,
+   "uploaded_bytes": 48994,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban23__6f92c2af-4dcc-4def-8c60-db10d66e6127.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban23__6f92c2af-4dcc-4def-8c60-db10d66e6127.jpg",
+   "name": "urban23.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban23__6f92c2af-4dcc-4def-8c60-db10d66e6127.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 52923,
+   "uploaded_bytes": 52923,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban26__00fecd49-b7bb-422b-a83a-de0ec7b2fca0.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban26__00fecd49-b7bb-422b-a83a-de0ec7b2fca0.jpg",
+   "name": "urban26.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban26__00fecd49-b7bb-422b-a83a-de0ec7b2fca0.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 62566,
+   "uploaded_bytes": 62566,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban28__590a2e3d-9bb3-4da6-bc4f-f1ab880e19bc.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban28__590a2e3d-9bb3-4da6-bc4f-f1ab880e19bc.jpg",
+   "name": "urban28.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban28__590a2e3d-9bb3-4da6-bc4f-f1ab880e19bc.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 41793,
+   "uploaded_bytes": 41793,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban31__db92a3f4-ca44-4a36-b2e6-c540fafddb31.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban31__db92a3f4-ca44-4a36-b2e6-c540fafddb31.jpg",
+   "name": "urban31.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban31__db92a3f4-ca44-4a36-b2e6-c540fafddb31.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 75553,
+   "uploaded_bytes": 75553,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban32__8e4c1e36-5608-4ee6-bda7-4e5b77e715d0.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban32__8e4c1e36-5608-4ee6-bda7-4e5b77e715d0.jpg",
+   "name": "urban32.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban32__8e4c1e36-5608-4ee6-bda7-4e5b77e715d0.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 64256,
+   "uploaded_bytes": 64256,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban34__a341335c-5672-4962-836f-0cb0427fe198.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban34__a341335c-5672-4962-836f-0cb0427fe198.jpg",
+   "name": "urban34.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban34__a341335c-5672-4962-836f-0cb0427fe198.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 50208,
+   "uploaded_bytes": 50208,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban36__0515109f-56d2-41bf-acbb-fae799b5925c.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban36__0515109f-56d2-41bf-acbb-fae799b5925c.jpg",
+   "name": "urban36.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban36__0515109f-56d2-41bf-acbb-fae799b5925c.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 68345,
+   "uploaded_bytes": 68345,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban37__99f691e9-0cda-441c-bdbd-e0ff82a9a888.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban37__99f691e9-0cda-441c-bdbd-e0ff82a9a888.jpg",
+   "name": "urban37.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban37__99f691e9-0cda-441c-bdbd-e0ff82a9a888.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 54332,
+   "uploaded_bytes": 54332,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban38__1e3f3d7b-4402-4871-9d4e-28d52185f709.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban38__1e3f3d7b-4402-4871-9d4e-28d52185f709.jpg",
+   "name": "urban38.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban38__1e3f3d7b-4402-4871-9d4e-28d52185f709.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 59362,
+   "uploaded_bytes": 59362,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban4__8cf2f92d-a076-4ef3-a62f-9518e483ca51.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban4__8cf2f92d-a076-4ef3-a62f-9518e483ca51.jpg",
+   "name": "urban4.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban4__8cf2f92d-a076-4ef3-a62f-9518e483ca51.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 56153,
+   "uploaded_bytes": 56153,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban42__f8ccb5cf-11ae-41be-a278-96ff2d33c846.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban42__f8ccb5cf-11ae-41be-a278-96ff2d33c846.jpg",
+   "name": "urban42.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban42__f8ccb5cf-11ae-41be-a278-96ff2d33c846.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 45292,
+   "uploaded_bytes": 45292,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban43__4bcbb1af-7458-45ca-a82d-a8713f18c183.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban43__4bcbb1af-7458-45ca-a82d-a8713f18c183.jpg",
+   "name": "urban43.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban43__4bcbb1af-7458-45ca-a82d-a8713f18c183.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 60165,
+   "uploaded_bytes": 60165,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban44__42f10d00-e528-43f7-9354-f0b9fe695bc8.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban44__42f10d00-e528-43f7-9354-f0b9fe695bc8.jpg",
+   "name": "urban44.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban44__42f10d00-e528-43f7-9354-f0b9fe695bc8.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 65826,
+   "uploaded_bytes": 65826,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban45__74323b5f-02cc-49a2-90b0-ba0fc3408664.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban45__74323b5f-02cc-49a2-90b0-ba0fc3408664.jpg",
+   "name": "urban45.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban45__74323b5f-02cc-49a2-90b0-ba0fc3408664.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 46565,
+   "uploaded_bytes": 46565,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban47__5e80f6bc-abc9-43b4-a47f-bc2b178fd20d.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban47__5e80f6bc-abc9-43b4-a47f-bc2b178fd20d.jpg",
+   "name": "urban47.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban47__5e80f6bc-abc9-43b4-a47f-bc2b178fd20d.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 66612,
+   "uploaded_bytes": 66612,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban49__a831e3ba-cfe5-48f9-b00d-d33d2bda863b.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban49__a831e3ba-cfe5-48f9-b00d-d33d2bda863b.jpg",
+   "name": "urban49.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban49__a831e3ba-cfe5-48f9-b00d-d33d2bda863b.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 49495,
+   "uploaded_bytes": 49495,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban5__5c55be58-e03a-4dc0-b667-8b229f9fd341.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban5__5c55be58-e03a-4dc0-b667-8b229f9fd341.jpg",
+   "name": "urban5.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban5__5c55be58-e03a-4dc0-b667-8b229f9fd341.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 56365,
+   "uploaded_bytes": 56365,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban6__17854420-7c22-4612-ae2c-7df1a6c04d10.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban6__17854420-7c22-4612-ae2c-7df1a6c04d10.jpg",
+   "name": "urban6.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban6__17854420-7c22-4612-ae2c-7df1a6c04d10.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 59632,
+   "uploaded_bytes": 59632,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/built/urban7__e089961f-e492-4e30-8b25-b87bcc68f9e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/built/urban7__e089961f-e492-4e30-8b25-b87bcc68f9e6.jpg",
+   "name": "urban7.jpg",
+   "type": "image",
+   "folder": "built",
+   "media_id": "templates/2015-berry-nature/built/urban7__e089961f-e492-4e30-8b25-b87bcc68f9e6.jpg",
+   "logicalFolder": "built",
+   "original_bytes": 47108,
+   "uploaded_bytes": 47108,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature1__39903783-14f6-43e2-919f-25249f6a496a.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature1__39903783-14f6-43e2-919f-25249f6a496a.jpg",
+   "name": "nature1.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature1__39903783-14f6-43e2-919f-25249f6a496a.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 59079,
+   "uploaded_bytes": 59079,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature10__ba26cf80-0d87-40ad-90ca-30e8977273e9.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature10__ba26cf80-0d87-40ad-90ca-30e8977273e9.jpg",
+   "name": "nature10.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature10__ba26cf80-0d87-40ad-90ca-30e8977273e9.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 103364,
+   "uploaded_bytes": 103364,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature19__43c53ce0-e82b-4597-9a8c-53d86968064e.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature19__43c53ce0-e82b-4597-9a8c-53d86968064e.jpg",
+   "name": "nature19.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature19__43c53ce0-e82b-4597-9a8c-53d86968064e.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 107688,
+   "uploaded_bytes": 107688,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature2__d2632a97-1d78-4d75-84d3-17dd2569d8e3.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature2__d2632a97-1d78-4d75-84d3-17dd2569d8e3.jpg",
+   "name": "nature2.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature2__d2632a97-1d78-4d75-84d3-17dd2569d8e3.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 60951,
+   "uploaded_bytes": 60951,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature20__7da7ac66-9ab0-4a56-99da-364903324494.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature20__7da7ac66-9ab0-4a56-99da-364903324494.jpg",
+   "name": "nature20.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature20__7da7ac66-9ab0-4a56-99da-364903324494.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 144157,
+   "uploaded_bytes": 144157,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature21__0eecb8f0-edcb-4c7d-8c40-a1c11d8f00b2.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature21__0eecb8f0-edcb-4c7d-8c40-a1c11d8f00b2.jpg",
+   "name": "nature21.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature21__0eecb8f0-edcb-4c7d-8c40-a1c11d8f00b2.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 166734,
+   "uploaded_bytes": 166734,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature22__11d8a8f5-b060-4a63-8dce-a1e94d5c3451.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature22__11d8a8f5-b060-4a63-8dce-a1e94d5c3451.jpg",
+   "name": "nature22.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature22__11d8a8f5-b060-4a63-8dce-a1e94d5c3451.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 163370,
+   "uploaded_bytes": 163370,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature23__bccbba79-154b-4d91-9c24-1ac8b6aecfa4.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature23__bccbba79-154b-4d91-9c24-1ac8b6aecfa4.jpg",
+   "name": "nature23.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature23__bccbba79-154b-4d91-9c24-1ac8b6aecfa4.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 91150,
+   "uploaded_bytes": 91150,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature28__b65ca65f-cae4-45d9-8aad-dea4ea67f8bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature28__b65ca65f-cae4-45d9-8aad-dea4ea67f8bf.jpg",
+   "name": "nature28.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature28__b65ca65f-cae4-45d9-8aad-dea4ea67f8bf.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 98475,
+   "uploaded_bytes": 98475,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature3__7e1d11cb-38de-45cb-b3f2-6d9b8127addb.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature3__7e1d11cb-38de-45cb-b3f2-6d9b8127addb.jpg",
+   "name": "nature3.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature3__7e1d11cb-38de-45cb-b3f2-6d9b8127addb.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 96426,
+   "uploaded_bytes": 96426,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature39__0289e7fb-affb-4b00-a2d1-3e9794a2e4a4.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature39__0289e7fb-affb-4b00-a2d1-3e9794a2e4a4.jpg",
+   "name": "nature39.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature39__0289e7fb-affb-4b00-a2d1-3e9794a2e4a4.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 148297,
+   "uploaded_bytes": 148297,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature4__bb00f80c-d3dc-43a3-8e13-b2e604c1d82b.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature4__bb00f80c-d3dc-43a3-8e13-b2e604c1d82b.jpg",
+   "name": "nature4.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature4__bb00f80c-d3dc-43a3-8e13-b2e604c1d82b.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 125225,
+   "uploaded_bytes": 125225,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature40__7f193cfb-6913-4c6a-9ff4-6beced6aaa01.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature40__7f193cfb-6913-4c6a-9ff4-6beced6aaa01.jpg",
+   "name": "nature40.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature40__7f193cfb-6913-4c6a-9ff4-6beced6aaa01.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 129543,
+   "uploaded_bytes": 129543,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature41__77915090-ae6d-48b5-a423-04ed5b94bee8.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature41__77915090-ae6d-48b5-a423-04ed5b94bee8.jpg",
+   "name": "nature41.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature41__77915090-ae6d-48b5-a423-04ed5b94bee8.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 131008,
+   "uploaded_bytes": 131008,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature42__04d05a53-ab2b-4851-8344-4c03c595f8ec.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature42__04d05a53-ab2b-4851-8344-4c03c595f8ec.jpg",
+   "name": "nature42.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature42__04d05a53-ab2b-4851-8344-4c03c595f8ec.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 144058,
+   "uploaded_bytes": 144058,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature43__d67d90e0-fb67-43db-bc1c-57b2e2965b62.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature43__d67d90e0-fb67-43db-bc1c-57b2e2965b62.jpg",
+   "name": "nature43.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature43__d67d90e0-fb67-43db-bc1c-57b2e2965b62.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 130350,
+   "uploaded_bytes": 130350,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature44__05d003a7-8bc1-49dc-aaba-ca4069301507.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature44__05d003a7-8bc1-49dc-aaba-ca4069301507.jpg",
+   "name": "nature44.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature44__05d003a7-8bc1-49dc-aaba-ca4069301507.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 114340,
+   "uploaded_bytes": 114340,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature45__cc0d61ff-0255-4808-a76f-3ed2fd641c2e.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature45__cc0d61ff-0255-4808-a76f-3ed2fd641c2e.jpg",
+   "name": "nature45.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature45__cc0d61ff-0255-4808-a76f-3ed2fd641c2e.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 74699,
+   "uploaded_bytes": 74699,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature48__d551588c-6c47-4935-b3b4-7b9e2c5e6393.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature48__d551588c-6c47-4935-b3b4-7b9e2c5e6393.jpg",
+   "name": "nature48.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature48__d551588c-6c47-4935-b3b4-7b9e2c5e6393.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 57611,
+   "uploaded_bytes": 57611,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature49__32860135-49ce-417b-aa66-ff1b4f4c001a.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature49__32860135-49ce-417b-aa66-ff1b4f4c001a.jpg",
+   "name": "nature49.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature49__32860135-49ce-417b-aa66-ff1b4f4c001a.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 68266,
+   "uploaded_bytes": 68266,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature50__b77d16a6-3cf1-438a-97c2-06c75eef96f9.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature50__b77d16a6-3cf1-438a-97c2-06c75eef96f9.jpg",
+   "name": "nature50.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature50__b77d16a6-3cf1-438a-97c2-06c75eef96f9.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 98612,
+   "uploaded_bytes": 98612,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature6__6ac73596-1e20-47d4-ad2a-a44cf18e9385.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature6__6ac73596-1e20-47d4-ad2a-a44cf18e9385.jpg",
+   "name": "nature6.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature6__6ac73596-1e20-47d4-ad2a-a44cf18e9385.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 100099,
+   "uploaded_bytes": 100099,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature7__36854590-d9ab-4a9f-87f1-05827c735e0d.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature7__36854590-d9ab-4a9f-87f1-05827c735e0d.jpg",
+   "name": "nature7.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature7__36854590-d9ab-4a9f-87f1-05827c735e0d.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 54657,
+   "uploaded_bytes": 54657,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature8__c28b4a77-c322-40e0-9a44-ac509500945e.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature8__c28b4a77-c322-40e0-9a44-ac509500945e.jpg",
+   "name": "nature8.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature8__c28b4a77-c322-40e0-9a44-ac509500945e.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 88062,
+   "uploaded_bytes": 88062,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2015-berry-nature/natural/nature9__8666835d-89bb-454c-81f0-109799d59b85.jpg",
+   "url": "https://media.sp-survey.org/templates/2015-berry-nature/natural/nature9__8666835d-89bb-454c-81f0-109799d59b85.jpg",
+   "name": "nature9.jpg",
+   "type": "image",
+   "folder": "natural",
+   "media_id": "templates/2015-berry-nature/natural/nature9__8666835d-89bb-454c-81f0-109799d59b85.jpg",
+   "logicalFolder": "natural",
+   "original_bytes": 96475,
+   "uploaded_bytes": 96475,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Making Time for Nature: Visual Exposure to Natural Environments Lengthens Subjective Time Perception and Reduces Impulsivity",
+  "authors": [
+   "Meredith S. Berry",
+   "Meredith A. Repke",
+   "Norma P. Nickerson",
+   "Lucian G. Conway",
+   "Amy L. Odum",
+   "Kerry E. Jordan"
+  ],
+  "year": 2015,
+  "venue": "PLOS ONE",
+  "doi": "10.1371/journal.pone.0141030",
+  "url": "https://doi.org/10.1371/journal.pone.0141030"
+ }
+}

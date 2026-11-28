@@ -1,0 +1,845 @@
+{
+ "id": "2022-kortmann-bark",
+ "name": "Bark Beetle Disturbance and Hiking Well-Being (slider)",
+ "description": "Faithful replication of Kortmann et al. (2022), Forests 13:1954, a survey of how much bark-beetle-killed forest hikers in national parks accept. Participants give age, gender, education, occupation and national-park visits, answer the 20-item 2-MEV environmental-values scale (5 = fully agree … 1 = strongly disagree), pick an Inclusion of Nature in Self diagram (A–G), and then move a slider under a photomontage of Bavarian Forest National Park (from dead to living trees) to where their well-being on a hike would be highest. The share of living and dead trees (0–100%) is recorded. In the original study (1,008 respondents) the median preferred share of dead trees was 26%.\n\nDifferences from the original study: (1) the slider starts in the middle and must be moved (the paper does not report the start position); (2) the Inclusion of Nature in Self circles are redrawn after Schultz (2001); (3) age is entered as a number; (4) gender option wording was written for this template; (5) the photomontage is cut from Figure 1 of the paper without its slider bar.\n\nImage: photomontage from Kortmann et al. (2022), Figure 1 (CC BY 4.0). Used with credit for research; the template is removed if the authors object.",
+ "author": "Kortmann, Angelstam, Mayer, Leibl, Reichert, Thorn & Thorn",
+ "year": "2022",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "source:paper",
+  "modality:scene_photo",
+  "task:custom_page",
+  "task:questionnaire",
+  "concept:preference",
+  "concept:naturalness",
+  "concept:restoration",
+  "participants:crowd",
+  "sample:gt1000",
+  "country:Germany",
+  "city:Bavarian Forest"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/f13111954",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T15:53:38.339+00:00",
+ "updatedAt": "2026-11-27T15:53:44.406+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I am 18 or older and agree to take part in this anonymous survey.",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "title": "About you",
+    "elements": [
+     {
+      "max": 110,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "Age",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": 1
+       },
+       {
+        "text": "Male",
+        "value": 2
+       },
+       {
+        "text": "Diverse / prefer not to say",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "Highest educational attainment",
+      "choices": [
+       {
+        "text": "No educational degree",
+        "value": 1
+       },
+       {
+        "text": "Elementary school",
+        "value": 2
+       },
+       {
+        "text": "Lower secondary school",
+        "value": 3
+       },
+       {
+        "text": "Higher secondary school",
+        "value": 4
+       },
+       {
+        "text": "University degree",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "occupation",
+      "type": "text",
+      "title": "Occupation",
+      "isRequired": false
+     },
+     {
+      "name": "np_visited",
+      "type": "radiogroup",
+      "title": "Have you ever visited a national park in Germany?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": 1
+       },
+       {
+        "text": "No",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "np_which",
+      "type": "text",
+      "title": "If so, which one(s)?",
+      "isRequired": false
+     }
+    ]
+   },
+   {
+    "name": "mev",
+    "title": "Attitudes towards nature",
+    "elements": [
+     {
+      "name": "mev01",
+      "type": "radiogroup",
+      "title": "It makes me sad when natural landscapes are built on.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 1 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     },
+     {
+      "name": "mev02",
+      "type": "radiogroup",
+      "title": "I save water by taking a shower instead of a bath.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 2 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     },
+     {
+      "name": "mev03",
+      "type": "radiogroup",
+      "title": "People will die out if they don't live in harmony with nature soon.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 3 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     },
+     {
+      "name": "mev04",
+      "type": "radiogroup",
+      "title": "I always turn off the light when I don't need it anymore.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 4 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     },
+     {
+      "name": "mev05",
+      "type": "radiogroup",
+      "title": "Dirty smoke from factory chimneys makes me angry.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 5 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     },
+     {
+      "name": "mev06",
+      "type": "radiogroup",
+      "title": "It is interesting to know what creatures live in ponds and rivers.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 6 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     },
+     {
+      "name": "mev07",
+      "type": "radiogroup",
+      "title": "There is no need to set aside land for nature and species conservation.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 7 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     },
+     {
+      "name": "mev08",
+      "type": "radiogroup",
+      "title": "Our society will continue to solve even the biggest environmental problems.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 8 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     },
+     {
+      "name": "mev09",
+      "type": "radiogroup",
+      "title": "The silent nature outside makes me afraid.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 9 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     },
+     {
+      "name": "mev10",
+      "type": "radiogroup",
+      "title": "Sitting at the edge of a pond watching dragonflies is boring.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 10 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     },
+     {
+      "name": "mev11",
+      "type": "radiogroup",
+      "title": "Our planet has unlimited resources.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 11 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     },
+     {
+      "name": "mev12",
+      "type": "radiogroup",
+      "title": "Nature is always able to restore/recover itself.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 12 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     },
+     {
+      "name": "mev13",
+      "type": "radiogroup",
+      "title": "We need to clear forests so that crops can be grown.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 13 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     },
+     {
+      "name": "mev14",
+      "type": "radiogroup",
+      "title": "We need to build more roads so people can go to the countryside.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 14 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     },
+     {
+      "name": "mev15",
+      "type": "radiogroup",
+      "title": "People worry too much about pollution.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 15 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     },
+     {
+      "name": "mev16",
+      "type": "radiogroup",
+      "title": "Weeds are as important as pretty flowers.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 16 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     },
+     {
+      "name": "mev17",
+      "type": "radiogroup",
+      "title": "Worries about the environment often hold up development projects.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 17 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     },
+     {
+      "name": "mev18",
+      "type": "radiogroup",
+      "title": "People do not have the right to change nature as they see fit.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 18 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     },
+     {
+      "name": "mev19",
+      "type": "radiogroup",
+      "title": "People are not more important than other living things.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 19 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     },
+     {
+      "name": "mev20",
+      "type": "radiogroup",
+      "title": "Not only plants and animals of economic importance should be protected.",
+      "choices": [
+       {
+        "text": "5 fully agree",
+        "value": 5
+       },
+       {
+        "text": "4 rather agree",
+        "value": 4
+       },
+       {
+        "text": "3 neither / undecided",
+        "value": 3
+       },
+       {
+        "text": "2 rather disagree",
+        "value": 2
+       },
+       {
+        "text": "1 strongly disagree",
+        "value": 1
+       }
+      ],
+      "isRequired": true,
+      "description": "2-MEV item 20 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items."
+     }
+    ]
+   },
+   {
+    "name": "ins",
+    "title": "Connection with nature",
+    "elements": [
+     {
+      "name": "inclusion_of_nature",
+      "type": "radiogroup",
+      "title": "Please rate how connected you feel to nature.",
+      "choices": [
+       {
+        "text": "A — separate",
+        "value": 1
+       },
+       {
+        "text": "B",
+        "value": 2
+       },
+       {
+        "text": "C",
+        "value": 3
+       },
+       {
+        "text": "D",
+        "value": 4
+       },
+       {
+        "text": "E",
+        "value": 5
+       },
+       {
+        "text": "F",
+        "value": 6
+       },
+       {
+        "text": "G — fully overlapping",
+        "value": 7
+       }
+      ],
+      "isRequired": true,
+      "description": "Inclusion of Nature in Self (INS): seven pairs of circles A–G from separate (1) to fully overlapping (7)."
+     }
+    ]
+   },
+   {
+    "name": "slider",
+    "elements": [
+     {
+      "name": "wellbeing_position",
+      "type": "custom",
+      "title": "Imagine you are hiking through a forested national park. The hiking trail crosses areas with different proportions of living and dead trees (0–100%). Please move the slider to the position at which your personal well-being would be the highest.",
+      "trials": [
+       {
+        "id": "gradient",
+        "file": "bark_beetle_gradient.jpg"
+       }
+      ],
+      "isRequired": true,
+      "description": "One photomontage of the Bavarian Forest National Park running from entirely beetle-killed forest (left) to entirely intact forest (right), with a slider underneath. Value: {living_trees_percent, dead_trees_percent} (integers 0–100, slider position from the left = % living trees). Paper: median 26% / mean 30% dead trees; 41% of respondents chose < 20% dead, 77% < 50% dead."
+     }
+    ]
+   }
+  ],
+  "title": "Bark Beetle Disturbance and Hiking Well-Being",
+  "locale": "en",
+  "spSite": {
+   "id": "site-6e0ea84e3001b21a",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Bark Beetle Forest Hike</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Bark Beetle Disturbance and Hiking Well-Being\",\n  \"description\": \"Faithful replication of Kortmann et al. (2022), Forests 13:1954: move a slider along a photomontage of a bark-beetle-affected forest to the point where your well-being on a hike would be highest, after the 2-MEV environmental values scale and the Inclusion of Nature in Self question.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"landscape\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"boolean\",\n      \"name\": \"consent\",\n      \"title\": \"I am 18 or older and agree to take part in this anonymous survey.\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"title\": \"About you\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"min\": 18,\n      \"max\": 110\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Diverse / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"Highest educational attainment\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"No educational degree\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Elementary school\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Lower secondary school\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Higher secondary school\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"University degree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"occupation\",\n      \"title\": \"Occupation\",\n      \"isRequired\": false\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"np_visited\",\n      \"title\": \"Have you ever visited a national park in Germany?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"No\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"np_which\",\n      \"title\": \"If so, which one(s)?\",\n      \"isRequired\": false\n     }\n    ]\n   },\n   {\n    \"name\": \"mev\",\n    \"title\": \"Attitudes towards nature\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev01\",\n      \"title\": \"It makes me sad when natural landscapes are built on.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 1 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev02\",\n      \"title\": \"I save water by taking a shower instead of a bath.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 2 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev03\",\n      \"title\": \"People will die out if they don't live in harmony with nature soon.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 3 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev04\",\n      \"title\": \"I always turn off the light when I don't need it anymore.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 4 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev05\",\n      \"title\": \"Dirty smoke from factory chimneys makes me angry.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 5 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev06\",\n      \"title\": \"It is interesting to know what creatures live in ponds and rivers.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 6 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev07\",\n      \"title\": \"There is no need to set aside land for nature and species conservation.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 7 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev08\",\n      \"title\": \"Our society will continue to solve even the biggest environmental problems.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 8 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev09\",\n      \"title\": \"The silent nature outside makes me afraid.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 9 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev10\",\n      \"title\": \"Sitting at the edge of a pond watching dragonflies is boring.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 10 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev11\",\n      \"title\": \"Our planet has unlimited resources.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 11 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev12\",\n      \"title\": \"Nature is always able to restore/recover itself.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 12 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev13\",\n      \"title\": \"We need to clear forests so that crops can be grown.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 13 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev14\",\n      \"title\": \"We need to build more roads so people can go to the countryside.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 14 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev15\",\n      \"title\": \"People worry too much about pollution.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 15 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev16\",\n      \"title\": \"Weeds are as important as pretty flowers.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 16 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev17\",\n      \"title\": \"Worries about the environment often hold up development projects.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 17 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev18\",\n      \"title\": \"People do not have the right to change nature as they see fit.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 18 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev19\",\n      \"title\": \"People are not more important than other living things.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 19 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mev20\",\n      \"title\": \"Not only plants and animals of economic importance should be protected.\",\n      \"isRequired\": true,\n      \"description\": \"2-MEV item 20 of 20 (Kibbe et al. 2014). 5 = fully agree … 1 = strongly disagree; preservation and utilization scores are means of their items.\",\n      \"choices\": [\n       {\n        \"value\": 5,\n        \"text\": \"5 fully agree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 rather agree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 neither / undecided\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 rather disagree\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"1 strongly disagree\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"ins\",\n    \"title\": \"Connection with nature\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"inclusion_of_nature\",\n      \"title\": \"Please rate how connected you feel to nature.\",\n      \"isRequired\": true,\n      \"description\": \"Inclusion of Nature in Self (INS): seven pairs of circles A–G from separate (1) to fully overlapping (7).\",\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"A — separate\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"B\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"C\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"D\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"E\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"F\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"G — fully overlapping\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"slider\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"wellbeing_position\",\n      \"title\": \"Imagine you are hiking through a forested national park. The hiking trail crosses areas with different proportions of living and dead trees (0–100%). Please move the slider to the position at which your personal well-being would be the highest.\",\n      \"isRequired\": true,\n      \"description\": \"One photomontage of the Bavarian Forest National Park running from entirely beetle-killed forest (left) to entirely intact forest (right), with a slider underneath. Value: {living_trees_percent, dead_trees_percent} (integers 0–100, slider position from the left = % living trees). Paper: median 26% / mean 30% dead trees; 41% of respondents chose < 20% dead, 77% < 50% dead.\",\n      \"trials\": [\n       {\n        \"id\": \"gradient\",\n        \"file\": \"bark_beetle_gradient.jpg\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#eff1ec;--card:#fff;--ink:#1f2420;--muted:#5b6359;--accent:#2f6a3f;--accent-ink:#fff;--line:#d5dbd2;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.3rem;margin:0 0 10px}\np{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q:first-child{margin-top:0}.q>b{display:block;margin-bottom:6px}.on{font-weight:400;color:var(--muted);font-size:.85rem}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer;background:var(--card)}\ninput[type=text],input[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%;max-width:360px;background:#fff;color:var(--ink)}\n.seg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}\n.seg label{display:block;cursor:pointer;position:relative}\n.seg input{position:absolute;opacity:0;pointer-events:none}\n.seg span{display:flex;align-items:center;justify-content:center;text-align:center;min-height:42px;padding:3px;border:1px solid var(--line);border-radius:8px;font-size:.8rem;font-weight:600;line-height:1.15}\n.seg input:checked+span{background:var(--accent);border-color:var(--accent);color:#fff}\n.seg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}\n.ins{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}\n.ins label{display:block;cursor:pointer;position:relative;border:2px solid var(--line);border-radius:12px;padding:6px;text-align:center;background:#fff}\n.ins input{position:absolute;opacity:0;pointer-events:none}\n.ins label:has(input:checked){border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}\n.ins label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}\n.ins svg{width:100%;height:auto;display:block}.ins b{display:block;font-size:.95rem}\n.pic{border-radius:12px 12px 0 0;overflow:hidden;background:#ddd}.pic img{width:100%;display:block}\n.sl{position:relative;padding:10px 0 4px}\ninput[type=range]{width:100%;margin:0;appearance:none;-webkit-appearance:none;height:14px;border-radius:7px;background:linear-gradient(90deg,#a9aba6,#2f6a3f);outline-offset:4px}\ninput[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:38px;border-radius:6px;background:#fff;border:2px solid #555;cursor:pointer}\ninput[type=range]::-moz-range-thumb{width:28px;height:36px;border-radius:6px;background:#fff;border:2px solid #555;cursor:pointer}\ninput[type=range].untouched::-webkit-slider-thumb{opacity:.55}\n.ends{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-top:6px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photomontage: Kortmann et al. (2022), Forests 13:1954, Figure 1, doi:10.3390/f13111954 (CC BY 4.0; edited photograph of the Bavarian Forest National Park). Circle diagrams redrawn after Schultz (2001). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='barkbeetle2022:';\n  var app=document.getElementById('app'), Q={}, files={}, done={}, SPEC=null, TRIAL=null, MEV=[], ABOUT=['age','gender','education','occupation','np_visited','np_which'];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='visible';}}\n  function hideErr(){var e=app.querySelector('.err');if(e)e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function q(n){return Q[n]||{};}\n  function page(html,btn,cb){\n    app.innerHTML=html+'<div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">'+esc(btn||'Continue')+'</button></div><div class=\"err\"></div>';\n    document.getElementById('go').onclick=cb;app.onchange=hideErr;app.oninput=hideErr;\n  }\n  function saveAll(l,b,cb){Promise.all(l.map(function(a){return SPSite.answer(a[0],a[1]);})).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}cb();});}\n  function next(){\n    window.scrollTo(0,0);\n    if(!done.intro)return intro();\n    if(!done.about)return about();\n    if(!done.mev)return mev();\n    if(!done.ins)return ins();\n    if(!done.slider)return slider();\n    finish();\n  }\n  function intro(){\n    if(!files[TRIAL.file]){app.innerHTML='<h1>Picture missing</h1><p>Media folder landscape must hold bark_beetle_gradient.jpg.</p>';return;}\n    page('<h1>Forests, nature and well-being</h1><p>This short survey asks about your attitudes towards nature and about forests in national parks. At the end you will see a forest landscape and choose, with a slider, where you would feel best on a hike.</p><p>It takes about 10 minutes. Your answers are anonymous.</p>'+\n      '<div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(q('consent').title)+'</label></div>','Start',function(){\n      if(!document.getElementById('ok').checked)return err('Please confirm to continue.');\n      var b=this;b.disabled=true;saveAll([['consent',true]],b,function(){done.intro=true;save('d',done);next();});\n    });\n  }\n  function about(){\n    var h=ABOUT.map(function(n){var d=q(n);var t='<div class=\"q\"><b>'+esc(d.title)+(d.isRequired?'':' <span class=\"on\">(optional)</span>')+'</b>';\n      if(d.type==='text')t+='<input type=\"'+(d.inputType==='number'?'number':'text')+'\" name=\"'+n+'\"'+(d.inputType==='number'?' min=\"18\" max=\"110\" inputmode=\"numeric\"':'')+'>';\n      else t+=d.choices.map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+c.value+'\"> '+esc(c.text)+'</label>';}).join('');\n      return t+'</div>';}).join('');\n    page('<h1>About you</h1><div class=\"card\">'+h+'</div>','Continue',function(){\n      var l=[];for(var i=0;i<ABOUT.length;i++){var n=ABOUT[i],d=q(n),v;\n        if(d.type==='text'){var s=app.querySelector('input[name=\"'+n+'\"]').value.trim();if(d.inputType==='number'){v=s===''?undefined:Number(s);if(v!==undefined&&(!(v>=18&&v<=110)||v%1))return err('Please enter your age in whole years (18 or older).');}else v=s||undefined;}\n        else{var x=app.querySelector('input[name=\"'+n+'\"]:checked');v=x?Number(x.value):undefined;}\n        if(v===undefined){if(d.isRequired)return err('Please answer: '+d.title);continue;}l.push([n,v]);}\n      var b=this;b.disabled=true;saveAll(l,b,function(){done.about=true;save('d',done);next();});\n    });\n  }\n  function mev(){\n    var h=MEV.map(function(n,k){var d=q(n);return '<div class=\"q\"><b>'+(k+1)+'. '+esc(d.title)+'</b><div class=\"seg\" role=\"radiogroup\" aria-label=\"'+esc(d.title)+'\">'+d.choices.slice().sort(function(a,b){return a.value-b.value;}).map(function(c){return '<label><input type=\"radio\" name=\"'+n+'\" value=\"'+c.value+'\"><span>'+esc(c.text)+'</span></label>';}).join('')+'</div></div>';}).join('');\n    page('<h1>Attitudes towards nature</h1><div class=\"card\"><p style=\"color:var(--ink)\">Please rate the following statements from 5 (fully agree) to 4 (rather agree), 3 (neither/undecided), 2 (rather disagree) to 1 (strongly disagree).</p>'+h+'</div>','Continue',function(){\n      var l=[];for(var i=0;i<MEV.length;i++){var x=app.querySelector('input[name=\"'+MEV[i]+'\"]:checked');if(!x)return err('Please answer statement '+(i+1)+'.');l.push([MEV[i],Number(x.value)]);}\n      var b=this;b.disabled=true;saveAll(l,b,function(){done.mev=true;save('d',done);next();});\n    });\n  }\n  function circles(k){\n    var gap=[110,92,76,60,40,22,0][k],cx1=70-gap/2,cx2=70+gap/2,r=34;\n    if(k===6)return '<svg viewBox=\"0 0 140 80\" aria-hidden=\"true\"><circle cx=\"70\" cy=\"40\" r=\"'+r+'\" fill=\"none\" stroke=\"#222\" stroke-width=\"2.5\"/><circle cx=\"70\" cy=\"40\" r=\"'+(r-2)+'\" fill=\"none\" stroke=\"#222\" stroke-width=\"2\" stroke-dasharray=\"4 3\"/><text x=\"70\" y=\"44\" font-size=\"10\" text-anchor=\"middle\">Self Nature</text></svg>';\n    return '<svg viewBox=\"0 0 140 80\" aria-hidden=\"true\"><circle cx=\"'+cx1+'\" cy=\"40\" r=\"'+r+'\" fill=\"none\" stroke=\"#222\" stroke-width=\"2\" stroke-dasharray=\"4 3\"/><circle cx=\"'+cx2+'\" cy=\"40\" r=\"'+r+'\" fill=\"none\" stroke=\"#222\" stroke-width=\"2.5\"/><text x=\"'+(cx1-(gap>40?0:12))+'\" y=\"44\" font-size=\"10\" text-anchor=\"middle\">Self</text><text x=\"'+(cx2+(gap>40?0:12))+'\" y=\"44\" font-size=\"10\" text-anchor=\"middle\">Nature</text></svg>';\n  }\n  function ins(){\n    var d=q('inclusion_of_nature');\n    var h='<div class=\"ins\" role=\"radiogroup\" aria-label=\"Connection with nature\">'+'ABCDEFG'.split('').map(function(L,k){return '<label><input type=\"radio\" name=\"ins\" value=\"'+(k+1)+'\">'+circles(k)+'<b>'+L+'</b></label>';}).join('')+'</div>';\n    page('<h1>Connection with nature</h1><div class=\"card\"><div class=\"q\"><b>'+esc(d.title)+'</b><p>Choose the picture that best describes your relationship with nature: from A (self and nature separate) to G (self and nature fully overlapping).</p>'+h+'</div></div>','Continue',function(){\n      var x=app.querySelector('input[name=ins]:checked');if(!x)return err('Please choose one picture (A–G).');\n      var b=this;b.disabled=true;saveAll([['inclusion_of_nature',Number(x.value)]],b,function(){done.ins=true;save('d',done);next();});\n    });\n  }\n  function slider(){\n    var f=files[TRIAL.file],touched=false;\n    page('<div class=\"card\"><p style=\"color:var(--ink);font-weight:600\">'+esc(q('wellbeing_position').title)+'</p><div class=\"pic\"><img alt=\"Forest landscape from entirely beetle-killed (left) to entirely intact (right)\" src=\"'+esc(f.url)+'\"></div><div class=\"sl\"><input type=\"range\" id=\"r\" class=\"untouched\" min=\"0\" max=\"100\" step=\"1\" value=\"50\" aria-label=\"Position in the landscape\"></div><div class=\"ends\"><span>← more dead trees</span><span>more living trees →</span></div></div>','Finish',function(){\n      if(!touched)return err('Please move the slider to the position where your well-being would be highest.');\n      var v=Number(document.getElementById('r').value),b=this;b.disabled=true;\n      SPSite.answer('wellbeing_position',{living_trees_percent:v,dead_trees_percent:100-v},{key:TRIAL.id,shown:[f.name]}).then(function(r){if(!ok(r)){b.disabled=false;return err(r.error);}done.slider=true;save('d',done);next();});\n    });\n    var r=document.getElementById('r');function t(){touched=true;r.classList.remove('untouched');}\n    r.addEventListener('input',t);r.addEventListener('change',t);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>The landscape was an edited photograph of the Bavarian Forest National Park, running from entirely beetle-killed forest on the left to intact forest on the right. In the original survey of 1008 German residents, the chosen position corresponded to a median of 26% and a mean of 30% dead trees; 41% of people chose fewer than 20% dead trees and 77% fewer than 50%. People who felt more connected with nature and valued preservation preferred more living trees, while people who had already visited a national park with bark beetle outbreaks were more accepting of dead trees.</p><p style=\"font-size:.82rem\">Kortmann, M., Angelstam, P., Mayer, M., Leibl, F., Reichert, J., Thorn, C., &amp; Thorn, S. (2022). Disturbance Severity and Human–Nature Relationships: A New Approach to Analyze People’s Well-Being along a Bark Beetle Infestation Gradient. Forests 13:1954, doi:10.3390/f13111954.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){if(x==='consent')done.intro=false;else if(x==='wellbeing_position')done.slider=false;else if(x==='inclusion_of_nature')done.ins=false;else if(/^mev/.test(x))done.mev=false;else done.about=false;});save('d',done);next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    try{SPEC=JSON.parse(document.getElementById('sp-scheme').textContent).survey;}catch(e){SPEC={pages:[]};}\n    SPEC.pages.forEach(function(p){p.elements.forEach(function(e){var g=SPSite.getQuestion(e.name)||{};Q[e.name]={type:e.type,inputType:e.inputType,title:g.title||e.title,isRequired:e.isRequired,choices:(g.choices&&g.choices.length)?g.choices:e.choices};if(/^mev\\d+$/.test(e.name))MEV.push(e.name);if(e.name==='wellbeing_position')TRIAL=e.trials[0];});});\n    (SPSite.getMedia('landscape')||[]).forEach(function(f){files[f.name]=f;});\n    var a=(ctx&&ctx.answers)||{};done=load('d')||{};\n    done.intro=a.consent===true;\n    done.about=['age','gender','education','np_visited'].every(function(n){return a[n]!=null;});\n    done.mev=MEV.every(function(n){return a[n]!=null;});\n    done.ins=a.inclusion_of_nature!=null;\n    done.slider=!!(a.wellbeing_position&&((a.wellbeing_position.trials||[]).length||a.wellbeing_position.living_trees_percent!=null));\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T15:53:17.063Z",
+   "mediaFolders": [
+    "landscape"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T15:53:17.063Z"
+  },
+  "description": "Faithful replication of Kortmann et al. (2022), Forests 13:1954: move a slider along a photomontage of a bark-beetle-affected forest to the point where your well-being on a hike would be highest, after the 2-MEV environmental values scale and the Inclusion of Nature in Self question.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2022-kortmann-bark/landscape/bark_beetle_gradient__79b5b6d4-7e4e-4812-92e2-97330ba43f32.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kortmann-bark/landscape/bark_beetle_gradient__79b5b6d4-7e4e-4812-92e2-97330ba43f32.jpg",
+   "name": "bark_beetle_gradient.jpg",
+   "type": "image",
+   "folder": "landscape",
+   "media_id": "templates/2022-kortmann-bark/landscape/bark_beetle_gradient__79b5b6d4-7e4e-4812-92e2-97330ba43f32.jpg",
+   "logicalFolder": "landscape",
+   "original_bytes": 489192,
+   "uploaded_bytes": 489192,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Disturbance Severity and Human–Nature Relationships: A New Approach to Analyze People’s Well-Being along a Bark Beetle Infestation Gradient",
+  "authors": [
+   "Mareike Kortmann",
+   "Per Angelstam",
+   "Marius Mayer",
+   "Franz Leibl",
+   "Jessica Reichert",
+   "Christine Thorn",
+   "Simon Thorn"
+  ],
+  "year": 2022,
+  "venue": "Forests",
+  "doi": "10.3390/f13111954",
+  "url": "https://doi.org/10.3390/f13111954"
+ }
+}

@@ -5,10 +5,13 @@
 //   node scripts/sync-templates.mjs --media    also download media files into
 //                                              public/project_templates/<id>/media/
 //                                              (large: several GB; Git ignores it)
+//   node scripts/sync-templates.mjs --media-only   download media for the template
+//                                              files already here, change nothing else
 //
 // The source is the public API of sp-survey.org (SP_SURVEY_URL overrides it).
 // One file per template: public/project_templates/<id>.json. Files of
-// templates that are not online are left alone. It also writes catalog.json,
+// templates that are not online, and of templates whose media ship in this
+// repository (the bundled demos), are left alone. It also writes catalog.json,
 // the light list that the Template Library page and the README are built from.
 // Afterwards run `node scripts/build-template-catalog.mjs` to refresh the README.
 import { mkdir, readFile, readdir, writeFile, stat } from 'node:fs/promises';
@@ -18,7 +21,8 @@ import path from 'node:path';
 const SOURCE = (process.env.SP_SURVEY_URL || 'https://sp-survey.org').replace(/\/$/, '');
 const DIR = fileURLToPath(new URL('../public/project_templates/', import.meta.url));
 const ALL = process.argv.includes('--all');
-const MEDIA = process.argv.includes('--media');
+const MEDIA_ONLY = process.argv.includes('--media-only');
+const MEDIA = MEDIA_ONLY || process.argv.includes('--media');
 const HEADERS = { 'user-agent': 'sp-survey-template-sync' };
 
 async function getJson(url, tries = 3) {
@@ -78,6 +82,17 @@ async function downloadMedia(template) {
   return fetched;
 }
 
+if (MEDIA_ONLY) {
+  const names = (await readdir(DIR)).filter((name) => name.endsWith('.json') && !['index.json', 'catalog.json'].includes(name));
+  let total = 0;
+  for (const name of names) {
+    const template = await readJson(path.join(DIR, name));
+    if (template?.id) total += await downloadMedia(template);
+  }
+  console.log(`${names.length} templates: ${total} media files downloaded.`);
+  process.exit(0);
+}
+
 const { templates: online } = await getJson(`${SOURCE}/api/public/templates`);
 if (!Array.isArray(online) || !online.length) throw new Error('The library came back empty; nothing was changed.');
 await mkdir(DIR, { recursive: true });
@@ -86,12 +101,17 @@ let written = 0;
 let unchanged = 0;
 let mediaFiles = 0;
 const failed = [];
+const bundled = [];
+const bundlesMedia = (template) => (template.preloadedImages || []).some((entry) => String(entry?.url || '').startsWith('/project_templates/'));
 await pool(online, 4, async (row) => {
   const file = path.join(DIR, `${row.id}.json`);
   let template = await readJson(file);
   const fresh = !ALL && template && template.updatedAt && template.updatedAt === row.updatedAt;
   try {
-    if (!fresh) {
+    if (template && bundlesMedia(template)) {
+      // Its media files ship in this repository, so the local file stays.
+      bundled.push(row.id);
+    } else if (!fresh) {
       template = (await getJson(`${SOURCE}/api/public/templates?id=${encodeURIComponent(row.id)}`)).template;
       await writeFile(file, `${JSON.stringify(template, null, 1)}\n`);
       written += 1;
@@ -117,6 +137,14 @@ await writeFile(path.join(DIR, 'index.json'), `${JSON.stringify({ templates: met
 // login of whoever sent the study in) is kept from the previous catalog.
 const facet = (tpl, key) => (tpl.tags || [])
   .filter((tag) => String(tag).startsWith(`${key}:`)).map((tag) => String(tag).slice(key.length + 1));
+// Hong Kong and Macau are listed as their own places, never under "China".
+const OWN_PLACE = ['Hong Kong', 'Macau'];
+function placeOf(countries, cities) {
+  const own = OWN_PLACE.filter((place) => cities.includes(place));
+  if (!own.length) return countries;
+  const onlyThere = cities.every((city) => OWN_PLACE.includes(city));
+  return [...new Set([...countries.filter((country) => !(onlyThere && country === 'China')), ...own])];
+}
 const authorName = (author) => (typeof author === 'string' ? author : author?.name || '');
 const previous = new Map(((await readJson(path.join(DIR, 'catalog.json')))?.templates || []).map((entry) => [entry.id, entry]));
 const wanted = new Set(online.map((row) => row.id));
@@ -136,7 +164,7 @@ const catalog = loaded.filter(({ tpl }) => tpl && wanted.has(tpl.id)).map(({ tpl
     stimulus: facet(tpl, 'modality'),
     task: facet(tpl, 'task'),
     concept: facet(tpl, 'concept'),
-    location: facet(tpl, 'country'),
+    location: placeOf(facet(tpl, 'country'), facet(tpl, 'city')),
     city: facet(tpl, 'city'),
     media: (tpl.preloadedImages || []).length,
     added: String(tpl.createdAt || '').slice(0, 10),
@@ -155,5 +183,6 @@ if (!failed.length) {
 const onlineIds = new Set(online.map((row) => `${row.id}.json`));
 const localOnly = files.filter((name) => !onlineIds.has(name));
 console.log(`${online.length} templates online: ${written} written, ${unchanged} unchanged${MEDIA ? `, ${mediaFiles} media files downloaded` : ''}.`);
+if (bundled.length) console.log(`Kept as they are (their media ship in this repository): ${bundled.join(', ')}`);
 if (localOnly.length) console.log(`Only in this repository (left as they are): ${localOnly.join(', ')}`);
 if (failed.length) { console.error(`Failed:\n  ${failed.join('\n  ')}`); process.exitCode = 1; }

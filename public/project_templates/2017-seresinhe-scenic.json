@@ -1,325 +1,1167 @@
 {
-  "id": "2017-seresinhe-scenic",
-  "name": "Scenic Beauty of Outdoor Places",
-  "description": "Perceived scenic beauty assessment of outdoor environments using deep learning-aligned human judgments. Participants rate street scenes and outdoor places on beauty, naturalness, and green quality. Based on Seresinhe et al. (2017) using the Scenic-Or-Not dataset. Bundled images are photographs from the paper PDF (29 scenes), not the original full stimulus set.",
-  "author": "Seresinhe et al.",
-  "year": "2017",
-  "category": "Urban Theory",
-  "tags": [
-    "reference",
-    "ai-generated",
-    "official"
-  ],
-  "isPinned": false,
-  "isApproved": true,
-  "showOnLanding": true,
-  "thumbnailUrl": null,
-  "website": "https://doi.org/10.1098/rsos.170170",
-  "huggingfaceDataset": null,
-  "createdAt": "2026-05-04T00:00:00+00:00",
-  "config": {
-    "pages": [
-      {
-        "name": "page_beauty_1",
-        "title": "Scenic Beauty Rating",
-        "elements": [
-          {
-            "name": "scenic_beauty_1",
-            "type": "imagerating",
-            "title": "How scenic / beautiful is this outdoor place?",
-            "rateMax": 10,
-            "rateMin": 1,
-            "isRequired": true,
-            "maxRateDescription": "Extremely scenic",
-            "minRateDescription": "Not at all scenic",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "imageCount": 1
-          }
-        ],
-        "description": "Rate the scenic beauty of the street scene shown below."
-      },
-      {
-        "name": "page_beauty_2",
-        "title": "Scenic Beauty Rating",
-        "elements": [
-          {
-            "name": "scenic_beauty_2",
-            "type": "imagerating",
-            "title": "How scenic / beautiful is this outdoor place?",
-            "rateMax": 10,
-            "rateMin": 1,
-            "isRequired": true,
-            "maxRateDescription": "Extremely scenic",
-            "minRateDescription": "Not at all scenic",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "imageCount": 1
-          }
-        ],
-        "description": "Rate the scenic beauty of the street scene shown below."
-      },
-      {
-        "name": "page_extension",
-        "title": "Optional extension (not in original study)",
-        "description": "These items are not part of Scenic-Or-Not, which asked only for a 1–10 scenicness rating.",
-        "elements": [
-          {
-            "name": "scene_qualities_1",
-            "rows": [
-              {
-                "text": "Naturalness (presence of nature)",
-                "value": "naturalness"
-              },
-              {
-                "text": "Greenery (trees, plants, grass)",
-                "value": "greenery"
-              },
-              {
-                "text": "Openness / spaciousness",
-                "value": "openness"
-              },
-              {
-                "text": "Maintenance / cleanliness",
-                "value": "maintenance"
-              },
-              {
-                "text": "Human scale (comfortable for pedestrians)",
-                "value": "human_scale"
-              }
-            ],
-            "type": "imagematrix",
-            "title": "Rate the following qualities of this scene (1 = Very Low, 5 = Very High):",
-            "columns": [
-              {
-                "text": "1",
-                "value": "1"
-              },
-              {
-                "text": "2",
-                "value": "2"
-              },
-              {
-                "text": "3",
-                "value": "3"
-              },
-              {
-                "text": "4",
-                "value": "4"
-              },
-              {
-                "text": "5",
-                "value": "5"
-              }
-            ],
-            "isRequired": false,
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "imageCount": 1
-          },
-          {
-            "name": "scene_qualities_2",
-            "rows": [
-              {
-                "text": "Naturalness (presence of nature)",
-                "value": "naturalness"
-              },
-              {
-                "text": "Greenery (trees, plants, grass)",
-                "value": "greenery"
-              },
-              {
-                "text": "Openness / spaciousness",
-                "value": "openness"
-              },
-              {
-                "text": "Maintenance / cleanliness",
-                "value": "maintenance"
-              },
-              {
-                "text": "Human scale (comfortable for pedestrians)",
-                "value": "human_scale"
-              }
-            ],
-            "type": "imagematrix",
-            "title": "Rate the following qualities of this scene (1 = Very Low, 5 = Very High):",
-            "columns": [
-              {
-                "text": "1",
-                "value": "1"
-              },
-              {
-                "text": "2",
-                "value": "2"
-              },
-              {
-                "text": "3",
-                "value": "3"
-              },
-              {
-                "text": "4",
-                "value": "4"
-              },
-              {
-                "text": "5",
-                "value": "5"
-              }
-            ],
-            "isRequired": false,
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "imageCount": 1
-          },
-          {
-            "name": "beauty_pairwise",
-            "type": "imagepicker",
-            "title": "Which outdoor place looks more beautiful / scenic?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": false,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          },
-          {
-            "name": "green_view_pairwise",
-            "type": "imagepicker",
-            "title": "Which of these scenes has the most visible greenery / natural elements?",
-            "imageFit": "cover",
-            "imageCount": 4,
-            "isRequired": false,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          }
-        ]
-      },
-      {
-        "name": "page_demographics",
-        "title": "Background Information (Optional)",
-        "elements": [
-          {
-            "name": "age_group",
-            "type": "dropdown",
-            "title": "Age group",
-            "choices": [
-              {
-                "text": "Under 18",
-                "value": "under_18"
-              },
-              {
-                "text": "18–24",
-                "value": "18_24"
-              },
-              {
-                "text": "25–34",
-                "value": "25_34"
-              },
-              {
-                "text": "35–44",
-                "value": "35_44"
-              },
-              {
-                "text": "45–54",
-                "value": "45_54"
-              },
-              {
-                "text": "55–64",
-                "value": "55_64"
-              },
-              {
-                "text": "65 or older",
-                "value": "65_plus"
-              }
-            ],
-            "isRequired": false
-          },
-          {
-            "name": "nature_exposure",
-            "type": "dropdown",
-            "title": "How often do you visit parks or green spaces?",
-            "choices": [
-              {
-                "text": "Daily",
-                "value": "daily"
-              },
-              {
-                "text": "A few times a week",
-                "value": "weekly"
-              },
-              {
-                "text": "A few times a month",
-                "value": "monthly"
-              },
-              {
-                "text": "Rarely",
-                "value": "rarely"
-              },
-              {
-                "text": "Never",
-                "value": "never"
-              }
-            ],
-            "isRequired": false
-          },
-          {
-            "name": "residence_type",
-            "type": "radiogroup",
-            "title": "Current living environment",
-            "choices": [
-              {
-                "text": "Urban (city centre)",
-                "value": "urban"
-              },
-              {
-                "text": "Suburban",
-                "value": "suburban"
-              },
-              {
-                "text": "Rural",
-                "value": "rural"
-              }
-            ],
-            "isRequired": false
-          }
-        ]
-      }
-    ],
-    "title": "Scenic Beauty of Urban Outdoor Places",
-    "description": "Rate the scenic beauty and naturalness of street scenes. Based on: Seresinhe, C. I., Preis, T., & Moat, H. S. (2017). Using deep learning to quantify the beauty of outdoor places. Royal Society Open Science, 4(7), 170170.",
-    "logoPosition": "right",
-    "autoGrowComment": true,
-    "progressBarType": "questions",
-    "showProgressBar": "aboveheader",
-    "showQuestionNumbers": "off",
-    "showPreviewBeforeComplete": "showAllQuestions",
-    "spAnalysisRecommendation": {
-      "citation": "Seresinhe et al. 2017",
-      "items": [
-        {
-          "questions": [
-            "scenic_beauty_1",
-            "scenic_beauty_2"
-          ],
-          "method": "scalar_distribution",
-          "minPerImage": 12
-        }
+ "id": "2017-seresinhe-scenic",
+ "name": "Scenic-Or-Not: Scenic Beauty Ratings",
+ "description": "Faithful replication of the Scenic-Or-Not rating task used by Seresinhe, Preis & Moat (2017, Royal Society Open Science): random geotagged photographs of Great Britain from Geograph, each rated on an integer scale from 1 (not scenic) to 10 (very scenic). The 82 images are real Scenic-Or-Not photographs (Geograph contributors, CC BY-SA 2.0; file names hold the Geograph photo id, where each photographer is credited), chosen across the whole range of crowd ratings. Differences from the original study: (1) 82 images instead of 217,000; (2) each participant rates 30 random images rather than as many as they like; (3) a short About-you page was added.",
+ "author": "Seresinhe, Preis & Moat",
+ "year": "2017",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "source:paper",
+  "modality:scene_photo",
+  "task:rating",
+  "concept:aesthetics",
+  "sample:gt1000",
+  "country:United Kingdom"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1098/rsos.170170",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-05-04T00:00:00+00:00",
+ "updatedAt": "2026-11-27T06:14:38.132+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "scenicness",
+      "type": "imagerating",
+      "title": "How scenic is this place?",
+      "choices": [],
+      "rateMax": 10,
+      "rateMin": 1,
+      "imageFit": "contain",
+      "imageCount": 1,
+      "isRequired": true,
+      "trialCount": 30,
+      "mediaFolders": [
+       "scenicornot"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Very scenic",
+      "minRateDescription": "Not scenic",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "18–24",
+        "value": "18-24"
+       },
+       {
+        "text": "25–34",
+        "value": "25-34"
+       },
+       {
+        "text": "35–54",
+        "value": "35-54"
+       },
+       {
+        "text": "55 or older",
+        "value": "55plus"
+       },
+       {
+        "text": "Prefer not to say",
+        "value": "na"
+       }
       ]
-    }
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ]
+     },
+     {
+      "name": "gb_familiarity",
+      "type": "radiogroup",
+      "title": "How well do you know Great Britain?",
+      "choices": [
+       {
+        "text": "I live there",
+        "value": "live"
+       },
+       {
+        "text": "I have visited",
+        "value": "visited"
+       },
+       {
+        "text": "I have never been there",
+        "value": "never"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "title": "Scenic-Or-Not: How Scenic Is This Place?",
+  "locale": "en",
+  "spSite": {
+   "id": "site-5e904950844065c2",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Scenic-Or-Not: How Scenic Is This Place?</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Scenic-Or-Not: How Scenic Is This Place?\",\n  \"description\": \"Faithful replication of the Scenic-Or-Not rating task used by Seresinhe, Preis & Moat (2017, Royal Society Open Science): random geotagged photographs of Great Britain from Geograph, each rated on an integer scale from 1 (not scenic) to 10 (very scenic). The 82 images are real Scenic-Or-Not photographs (Geograph, CC BY-SA), chosen across the whole range of crowd ratings. Differences from the original study: (1) 82 images instead of 217,000; (2) each participant rates 30 random images rather than as many as they like; (3) a short About-you page was added.\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imagerating\",\n      \"name\": \"scenicness\",\n      \"title\": \"How scenic is this place?\",\n      \"imageCount\": 1,\n      \"trialCount\": 30,\n      \"rateMin\": 1,\n      \"rateMax\": 10,\n      \"minRateDescription\": \"Not scenic\",\n      \"maxRateDescription\": \"Very scenic\",\n      \"isRequired\": true,\n      \"imageFit\": \"contain\",\n      \"mediaFolders\": [\n       \"scenicornot\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"Age\",\n      \"choices\": [\n       {\n        \"value\": \"18-24\",\n        \"text\": \"18–24\"\n       },\n       {\n        \"value\": \"25-34\",\n        \"text\": \"25–34\"\n       },\n       {\n        \"value\": \"35-54\",\n        \"text\": \"35–54\"\n       },\n       {\n        \"value\": \"55plus\",\n        \"text\": \"55 or older\"\n       },\n       {\n        \"value\": \"na\",\n        \"text\": \"Prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gb_familiarity\",\n      \"title\": \"How well do you know Great Britain?\",\n      \"choices\": [\n       {\n        \"value\": \"live\",\n        \"text\": \"I live there\"\n       },\n       {\n        \"value\": \"visited\",\n        \"text\": \"I have visited\"\n       },\n       {\n        \"value\": \"never\",\n        \"text\": \"I have never been there\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#3d6b4f;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.rng{accent-color:var(--accent)}.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}.scale.num{grid-template-columns:repeat(5,1fr)}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs: Geograph Britain and Ireland contributors, CC BY-SA 2.0, from the Scenic-Or-Not dataset (copy on Hugging Face: ddecosmo/ScenicOrNot_640x480_training_v1). Each file name holds its Geograph photo id (geograph.org.uk/photo/&lt;id&gt;), where the photographer is credited. Task from Seresinhe, Preis &amp; Moat (2017), Royal Society Open Science 4, 170170, doi:10.1098/rsos.170170.</footer>\n<script>\n(function(){\n  var C={\"before\": [], \"after\": [\"age_group\", \"gender\", \"gb_familiarity\"], \"tasks\": [\"scenicness\"], \"minutes\": 5, \"alt\": \"Photograph of a place in Great Britain\", \"labels\": {\"scenicness\": null}, \"pickOne\": null, \"heading\": \"How scenic is this place?\", \"intro\": \"<p>You will see <b>30 photographs of places in Great Britain</b>, one at a time. Rate how scenic each place is, from <b>1 (not scenic)</b> to <b>10 (very scenic)</b>. Go with your first impression; there are no right or wrong answers.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?'Pair ':'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else if(q.kind==='sliders'||/slidergroup$/.test(q.type)){\n      h+='<img class=\"shot\" style=\"max-height:'+((q.dimensions||[]).length>2?'40vh':'56vh')+'\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">';\n      (q.dimensions||[]).forEach(function(d){h+='<div class=\"q\"><b>'+esc(d.label)+': <span id=\"v_'+esc(d.id)+'\">–</span></b><input type=\"range\" class=\"rng\" data-d=\"'+esc(d.id)+'\" min=\"'+d.min+'\" max=\"'+d.max+'\" step=\"'+(d.step||1)+'\" value=\"'+Math.round((d.min+d.max)/2)+'\" style=\"width:100%\"><p style=\"display:flex;justify-content:space-between;margin:0\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      h+='<div class=\"row\"><button class=\"btn\" id=\"next\" disabled>Next</button></div><p style=\"font-size:.85rem\">Move the slider to give your answer.</p>';\n      app.innerHTML=h+'<div class=\"err\"></div>';\n      var vals={},rs=app.querySelectorAll('.rng'),nx=document.getElementById('next');\n      rs.forEach(function(r){r.oninput=function(){vals[r.getAttribute('data-d')]=Number(r.value);document.getElementById('v_'+r.getAttribute('data-d')).textContent=r.value;nx.disabled=Object.keys(vals).length<rs.length;};});\n      nx.onclick=function(){nx.disabled=true;SPSite.answer(n,vals,{trial:k}).then(function(r){if(r&&r.ok===false){err(r.error);nx.disabled=false;return;}(done[n]=done[n]||{})[k]=true;nextStep();});};\n      window.scrollTo(0,0);return;\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      var words=!!(lab&&lab.some(function(x){return isNaN(Number(x));}));\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale'+(words?'':' num')+'\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(words?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T06:13:51.801Z",
+   "mediaFolders": [
+    "scenicornot"
+   ]
   },
-  "imageDatasetConfig": {
-    "mediaFolderTags": {},
-    "mediaFolders": []
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T06:13:51.801Z"
   },
-  "preloadedImages": [],
-  "preloadedSource": null,
-  "preloadedAt": null
+  "description": "Faithful replication of the Scenic-Or-Not rating task used by Seresinhe, Preis & Moat (2017, Royal Society Open Science): random geotagged photographs of Great Britain from Geograph, each rated on an integer scale from 1 (not scenic) to 10 (very scenic). The 82 images are real Scenic-Or-Not photographs (Geograph, CC BY-SA), chosen across the whole range of crowd ratings. Differences from the original study: (1) 82 images instead of 217,000; (2) each participant rates 30 random images rather than as many as they like; (3) a short About-you page was added.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_1006918__db7c785e-c255-4905-ba41-1be0ed7e0ca6.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_1006918__db7c785e-c255-4905-ba41-1be0ed7e0ca6.jpg",
+   "name": "son_1006918.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_1006918__db7c785e-c255-4905-ba41-1be0ed7e0ca6.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 51733,
+   "uploaded_bytes": 51733,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_1008101__c74245fc-7d56-4608-ac14-3c70fc61c939.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_1008101__c74245fc-7d56-4608-ac14-3c70fc61c939.jpg",
+   "name": "son_1008101.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_1008101__c74245fc-7d56-4608-ac14-3c70fc61c939.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 105040,
+   "uploaded_bytes": 105040,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_1060755__e23b619b-5f09-4fb6-b6c6-ff0dc81a1985.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_1060755__e23b619b-5f09-4fb6-b6c6-ff0dc81a1985.jpg",
+   "name": "son_1060755.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_1060755__e23b619b-5f09-4fb6-b6c6-ff0dc81a1985.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 108393,
+   "uploaded_bytes": 108393,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_1084528__a7f3847d-d686-45f7-9f74-c493b42efdf2.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_1084528__a7f3847d-d686-45f7-9f74-c493b42efdf2.jpg",
+   "name": "son_1084528.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_1084528__a7f3847d-d686-45f7-9f74-c493b42efdf2.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 101453,
+   "uploaded_bytes": 101453,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_1095441__adb4a0ef-3519-4816-9cea-071872f8d7f4.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_1095441__adb4a0ef-3519-4816-9cea-071872f8d7f4.jpg",
+   "name": "son_1095441.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_1095441__adb4a0ef-3519-4816-9cea-071872f8d7f4.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 71525,
+   "uploaded_bytes": 71525,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_1112325__7bf425a8-cc4a-4ed0-a115-9a503a9d6d0e.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_1112325__7bf425a8-cc4a-4ed0-a115-9a503a9d6d0e.jpg",
+   "name": "son_1112325.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_1112325__7bf425a8-cc4a-4ed0-a115-9a503a9d6d0e.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 80643,
+   "uploaded_bytes": 80643,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_1113303__a8f1fe43-ceaa-495d-bd15-9b35288daafa.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_1113303__a8f1fe43-ceaa-495d-bd15-9b35288daafa.jpg",
+   "name": "son_1113303.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_1113303__a8f1fe43-ceaa-495d-bd15-9b35288daafa.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 136844,
+   "uploaded_bytes": 136844,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_1145516__3ab5e8ca-7a29-4fbf-8ba9-cc677ec03327.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_1145516__3ab5e8ca-7a29-4fbf-8ba9-cc677ec03327.jpg",
+   "name": "son_1145516.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_1145516__3ab5e8ca-7a29-4fbf-8ba9-cc677ec03327.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 109261,
+   "uploaded_bytes": 109261,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_135511__0a4d1f06-2574-40e6-92bf-1f8b15ea8cdf.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_135511__0a4d1f06-2574-40e6-92bf-1f8b15ea8cdf.jpg",
+   "name": "son_135511.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_135511__0a4d1f06-2574-40e6-92bf-1f8b15ea8cdf.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 82234,
+   "uploaded_bytes": 82234,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_138977__19d1d2cc-4251-44c6-a0d6-66b1e35179b8.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_138977__19d1d2cc-4251-44c6-a0d6-66b1e35179b8.jpg",
+   "name": "son_138977.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_138977__19d1d2cc-4251-44c6-a0d6-66b1e35179b8.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 93966,
+   "uploaded_bytes": 93966,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_139439__77fd46ef-b196-42c2-a44e-3acd3481e50a.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_139439__77fd46ef-b196-42c2-a44e-3acd3481e50a.jpg",
+   "name": "son_139439.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_139439__77fd46ef-b196-42c2-a44e-3acd3481e50a.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 98881,
+   "uploaded_bytes": 98881,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_139929__2f4bfab8-b9ac-4bbf-9eb9-579dade6f767.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_139929__2f4bfab8-b9ac-4bbf-9eb9-579dade6f767.jpg",
+   "name": "son_139929.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_139929__2f4bfab8-b9ac-4bbf-9eb9-579dade6f767.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 64608,
+   "uploaded_bytes": 64608,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_146936__5dc08029-3f2c-430e-84bc-25e080d6498b.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_146936__5dc08029-3f2c-430e-84bc-25e080d6498b.jpg",
+   "name": "son_146936.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_146936__5dc08029-3f2c-430e-84bc-25e080d6498b.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 123769,
+   "uploaded_bytes": 123769,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_147975__f374e906-5477-4a03-8096-0c8f0e84ee57.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_147975__f374e906-5477-4a03-8096-0c8f0e84ee57.jpg",
+   "name": "son_147975.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_147975__f374e906-5477-4a03-8096-0c8f0e84ee57.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 120631,
+   "uploaded_bytes": 120631,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_179995__2a993000-fa38-4ab9-acd9-db8aab10c812.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_179995__2a993000-fa38-4ab9-acd9-db8aab10c812.jpg",
+   "name": "son_179995.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_179995__2a993000-fa38-4ab9-acd9-db8aab10c812.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 94018,
+   "uploaded_bytes": 94018,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_180966__408f38ff-2f32-4bfa-9118-c23cd893d686.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_180966__408f38ff-2f32-4bfa-9118-c23cd893d686.jpg",
+   "name": "son_180966.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_180966__408f38ff-2f32-4bfa-9118-c23cd893d686.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 107049,
+   "uploaded_bytes": 107049,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_199238__4d88ac9f-045e-4b22-999c-32aa4bd457cf.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_199238__4d88ac9f-045e-4b22-999c-32aa4bd457cf.jpg",
+   "name": "son_199238.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_199238__4d88ac9f-045e-4b22-999c-32aa4bd457cf.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 46102,
+   "uploaded_bytes": 46102,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_205318__926372e5-37d8-4d15-b503-bcd6c1db6d93.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_205318__926372e5-37d8-4d15-b503-bcd6c1db6d93.jpg",
+   "name": "son_205318.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_205318__926372e5-37d8-4d15-b503-bcd6c1db6d93.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 68033,
+   "uploaded_bytes": 68033,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_209762__63c7205f-eb00-40f2-9d4e-8fd04117120d.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_209762__63c7205f-eb00-40f2-9d4e-8fd04117120d.jpg",
+   "name": "son_209762.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_209762__63c7205f-eb00-40f2-9d4e-8fd04117120d.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 57869,
+   "uploaded_bytes": 57869,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_210858__59b741f9-be1e-45a4-9159-959bf85e0afb.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_210858__59b741f9-be1e-45a4-9159-959bf85e0afb.jpg",
+   "name": "son_210858.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_210858__59b741f9-be1e-45a4-9159-959bf85e0afb.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 89806,
+   "uploaded_bytes": 89806,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_220566__cb4172ff-f544-4e70-a6cc-17a0686779bd.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_220566__cb4172ff-f544-4e70-a6cc-17a0686779bd.jpg",
+   "name": "son_220566.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_220566__cb4172ff-f544-4e70-a6cc-17a0686779bd.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 68230,
+   "uploaded_bytes": 68230,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_275908__880a3d22-3751-400f-9be2-0e5e7294467c.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_275908__880a3d22-3751-400f-9be2-0e5e7294467c.jpg",
+   "name": "son_275908.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_275908__880a3d22-3751-400f-9be2-0e5e7294467c.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 58838,
+   "uploaded_bytes": 58838,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_293427__2e8a0a5c-3fd8-43e1-b78f-803bc68943e2.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_293427__2e8a0a5c-3fd8-43e1-b78f-803bc68943e2.jpg",
+   "name": "son_293427.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_293427__2e8a0a5c-3fd8-43e1-b78f-803bc68943e2.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 102983,
+   "uploaded_bytes": 102983,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_312753__2069b386-289e-4283-813f-83ae443fa7f5.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_312753__2069b386-289e-4283-813f-83ae443fa7f5.jpg",
+   "name": "son_312753.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_312753__2069b386-289e-4283-813f-83ae443fa7f5.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 79556,
+   "uploaded_bytes": 79556,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_339352__a14fcfae-1c12-4c54-b8ce-a31a73258a07.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_339352__a14fcfae-1c12-4c54-b8ce-a31a73258a07.jpg",
+   "name": "son_339352.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_339352__a14fcfae-1c12-4c54-b8ce-a31a73258a07.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 55400,
+   "uploaded_bytes": 55400,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_348195__a103f764-dc34-48c8-aec5-53fca9fc84df.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_348195__a103f764-dc34-48c8-aec5-53fca9fc84df.jpg",
+   "name": "son_348195.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_348195__a103f764-dc34-48c8-aec5-53fca9fc84df.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 88112,
+   "uploaded_bytes": 88112,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_349073__7549b002-aac7-4e40-85c5-adf536c08718.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_349073__7549b002-aac7-4e40-85c5-adf536c08718.jpg",
+   "name": "son_349073.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_349073__7549b002-aac7-4e40-85c5-adf536c08718.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 66449,
+   "uploaded_bytes": 66449,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_359793__4f6f9199-954b-4e22-b312-fc8fa8e18746.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_359793__4f6f9199-954b-4e22-b312-fc8fa8e18746.jpg",
+   "name": "son_359793.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_359793__4f6f9199-954b-4e22-b312-fc8fa8e18746.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 37094,
+   "uploaded_bytes": 37094,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_377117__ed97d48f-9e2f-4551-ae13-72726353bbf2.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_377117__ed97d48f-9e2f-4551-ae13-72726353bbf2.jpg",
+   "name": "son_377117.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_377117__ed97d48f-9e2f-4551-ae13-72726353bbf2.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 129993,
+   "uploaded_bytes": 129993,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_377401__4a2c9614-815f-4511-9212-af99033a9a3c.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_377401__4a2c9614-815f-4511-9212-af99033a9a3c.jpg",
+   "name": "son_377401.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_377401__4a2c9614-815f-4511-9212-af99033a9a3c.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 71317,
+   "uploaded_bytes": 71317,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_394121__7d6ae51e-e288-4110-94e6-337c29fffe61.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_394121__7d6ae51e-e288-4110-94e6-337c29fffe61.jpg",
+   "name": "son_394121.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_394121__7d6ae51e-e288-4110-94e6-337c29fffe61.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 74232,
+   "uploaded_bytes": 74232,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_394657__91361fc8-9c6c-4b25-b0bc-a3255302a14c.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_394657__91361fc8-9c6c-4b25-b0bc-a3255302a14c.jpg",
+   "name": "son_394657.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_394657__91361fc8-9c6c-4b25-b0bc-a3255302a14c.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 82306,
+   "uploaded_bytes": 82306,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_395205__5a2c6e7d-5d6b-4e89-a2b5-21d42bca235e.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_395205__5a2c6e7d-5d6b-4e89-a2b5-21d42bca235e.jpg",
+   "name": "son_395205.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_395205__5a2c6e7d-5d6b-4e89-a2b5-21d42bca235e.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 74782,
+   "uploaded_bytes": 74782,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_398639__6a71235b-3fc6-4d39-9a31-96c413cf906c.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_398639__6a71235b-3fc6-4d39-9a31-96c413cf906c.jpg",
+   "name": "son_398639.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_398639__6a71235b-3fc6-4d39-9a31-96c413cf906c.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 75189,
+   "uploaded_bytes": 75189,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_424311__b94f311a-e341-4e78-920c-2afdd4138c77.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_424311__b94f311a-e341-4e78-920c-2afdd4138c77.jpg",
+   "name": "son_424311.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_424311__b94f311a-e341-4e78-920c-2afdd4138c77.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 94744,
+   "uploaded_bytes": 94744,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_437141__5123fa9b-f191-449b-a014-436dec91564c.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_437141__5123fa9b-f191-449b-a014-436dec91564c.jpg",
+   "name": "son_437141.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_437141__5123fa9b-f191-449b-a014-436dec91564c.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 53056,
+   "uploaded_bytes": 53056,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_438206__494519a1-de35-4449-a915-55b856568a05.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_438206__494519a1-de35-4449-a915-55b856568a05.jpg",
+   "name": "son_438206.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_438206__494519a1-de35-4449-a915-55b856568a05.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 120780,
+   "uploaded_bytes": 120780,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_461960__fe2cdf6e-28cd-4631-b1e0-67230c61dbb7.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_461960__fe2cdf6e-28cd-4631-b1e0-67230c61dbb7.jpg",
+   "name": "son_461960.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_461960__fe2cdf6e-28cd-4631-b1e0-67230c61dbb7.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 90886,
+   "uploaded_bytes": 90886,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_478904__2cbb92c4-acb8-4029-976b-3748bbccecf6.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_478904__2cbb92c4-acb8-4029-976b-3748bbccecf6.jpg",
+   "name": "son_478904.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_478904__2cbb92c4-acb8-4029-976b-3748bbccecf6.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 68115,
+   "uploaded_bytes": 68115,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_488355__330de7c8-d5e8-436c-9cac-62dd128e1b28.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_488355__330de7c8-d5e8-436c-9cac-62dd128e1b28.jpg",
+   "name": "son_488355.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_488355__330de7c8-d5e8-436c-9cac-62dd128e1b28.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 90189,
+   "uploaded_bytes": 90189,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_490644__148e3926-0b03-4b32-bc49-9c24642e2356.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_490644__148e3926-0b03-4b32-bc49-9c24642e2356.jpg",
+   "name": "son_490644.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_490644__148e3926-0b03-4b32-bc49-9c24642e2356.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 92692,
+   "uploaded_bytes": 92692,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_494673__5a4c5c31-747e-4bc7-912e-07a358a0db6f.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_494673__5a4c5c31-747e-4bc7-912e-07a358a0db6f.jpg",
+   "name": "son_494673.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_494673__5a4c5c31-747e-4bc7-912e-07a358a0db6f.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 110033,
+   "uploaded_bytes": 110033,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_526452__34bb721e-f9d7-49fd-ace7-811889917e1d.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_526452__34bb721e-f9d7-49fd-ace7-811889917e1d.jpg",
+   "name": "son_526452.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_526452__34bb721e-f9d7-49fd-ace7-811889917e1d.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 129450,
+   "uploaded_bytes": 129450,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_537153__dc4a009d-7d53-4658-85d0-1c9c3a2c8869.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_537153__dc4a009d-7d53-4658-85d0-1c9c3a2c8869.jpg",
+   "name": "son_537153.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_537153__dc4a009d-7d53-4658-85d0-1c9c3a2c8869.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 66183,
+   "uploaded_bytes": 66183,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_54746__5e32a93a-7fd6-4660-94ba-1638dac68a51.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_54746__5e32a93a-7fd6-4660-94ba-1638dac68a51.jpg",
+   "name": "son_54746.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_54746__5e32a93a-7fd6-4660-94ba-1638dac68a51.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 61886,
+   "uploaded_bytes": 61886,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_556210__df5b4b87-53b7-47cd-9f70-38d8278e10b4.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_556210__df5b4b87-53b7-47cd-9f70-38d8278e10b4.jpg",
+   "name": "son_556210.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_556210__df5b4b87-53b7-47cd-9f70-38d8278e10b4.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 50672,
+   "uploaded_bytes": 50672,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_57213__9a8e1378-d9e1-49e8-a6c5-802f8676ea5b.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_57213__9a8e1378-d9e1-49e8-a6c5-802f8676ea5b.jpg",
+   "name": "son_57213.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_57213__9a8e1378-d9e1-49e8-a6c5-802f8676ea5b.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 135506,
+   "uploaded_bytes": 135506,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_583608__8e83642b-cbe4-4737-be57-0306bd48d60f.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_583608__8e83642b-cbe4-4737-be57-0306bd48d60f.jpg",
+   "name": "son_583608.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_583608__8e83642b-cbe4-4737-be57-0306bd48d60f.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 79026,
+   "uploaded_bytes": 79026,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_639396__e2ea4248-4595-478b-bb79-28b6666aef22.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_639396__e2ea4248-4595-478b-bb79-28b6666aef22.jpg",
+   "name": "son_639396.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_639396__e2ea4248-4595-478b-bb79-28b6666aef22.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 92463,
+   "uploaded_bytes": 92463,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_646741__59dfd761-dda6-4c49-8802-c66757bda1fb.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_646741__59dfd761-dda6-4c49-8802-c66757bda1fb.jpg",
+   "name": "son_646741.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_646741__59dfd761-dda6-4c49-8802-c66757bda1fb.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 109504,
+   "uploaded_bytes": 109504,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_646904__7fc74e9a-8248-4a97-bf04-c4d4b9fb79e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_646904__7fc74e9a-8248-4a97-bf04-c4d4b9fb79e6.jpg",
+   "name": "son_646904.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_646904__7fc74e9a-8248-4a97-bf04-c4d4b9fb79e6.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 81753,
+   "uploaded_bytes": 81753,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_653014__f5ccea3e-e5ae-43a4-a945-c0f9f11e92c0.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_653014__f5ccea3e-e5ae-43a4-a945-c0f9f11e92c0.jpg",
+   "name": "son_653014.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_653014__f5ccea3e-e5ae-43a4-a945-c0f9f11e92c0.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 86785,
+   "uploaded_bytes": 86785,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_667707__833ad750-69f4-4613-8ee1-f38e21daec59.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_667707__833ad750-69f4-4613-8ee1-f38e21daec59.jpg",
+   "name": "son_667707.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_667707__833ad750-69f4-4613-8ee1-f38e21daec59.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 75534,
+   "uploaded_bytes": 75534,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_684046__3ff23357-1046-4e56-b6b2-c7c7237dd6d7.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_684046__3ff23357-1046-4e56-b6b2-c7c7237dd6d7.jpg",
+   "name": "son_684046.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_684046__3ff23357-1046-4e56-b6b2-c7c7237dd6d7.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 63834,
+   "uploaded_bytes": 63834,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_693588__07a3f6a3-ff7d-43b7-91a5-3089014d07e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_693588__07a3f6a3-ff7d-43b7-91a5-3089014d07e7.jpg",
+   "name": "son_693588.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_693588__07a3f6a3-ff7d-43b7-91a5-3089014d07e7.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 56434,
+   "uploaded_bytes": 56434,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_708687__3b9b8103-ca2c-4548-9eb4-7dca47684499.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_708687__3b9b8103-ca2c-4548-9eb4-7dca47684499.jpg",
+   "name": "son_708687.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_708687__3b9b8103-ca2c-4548-9eb4-7dca47684499.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 45245,
+   "uploaded_bytes": 45245,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_717016__fe7b0b49-b711-4786-af55-ca15ebe287b2.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_717016__fe7b0b49-b711-4786-af55-ca15ebe287b2.jpg",
+   "name": "son_717016.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_717016__fe7b0b49-b711-4786-af55-ca15ebe287b2.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 54943,
+   "uploaded_bytes": 54943,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_749315__9ba19750-05ba-4757-aa2b-c464eef307fd.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_749315__9ba19750-05ba-4757-aa2b-c464eef307fd.jpg",
+   "name": "son_749315.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_749315__9ba19750-05ba-4757-aa2b-c464eef307fd.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 50931,
+   "uploaded_bytes": 50931,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_767216__0f4dc32f-2061-43b7-a240-a082da6865ca.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_767216__0f4dc32f-2061-43b7-a240-a082da6865ca.jpg",
+   "name": "son_767216.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_767216__0f4dc32f-2061-43b7-a240-a082da6865ca.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 72680,
+   "uploaded_bytes": 72680,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_773795__62cd4695-0f29-4bb1-9adb-ea86eab001fe.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_773795__62cd4695-0f29-4bb1-9adb-ea86eab001fe.jpg",
+   "name": "son_773795.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_773795__62cd4695-0f29-4bb1-9adb-ea86eab001fe.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 76863,
+   "uploaded_bytes": 76863,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_792165__a44fc041-9ca7-4e60-ac6b-6912cb801de1.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_792165__a44fc041-9ca7-4e60-ac6b-6912cb801de1.jpg",
+   "name": "son_792165.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_792165__a44fc041-9ca7-4e60-ac6b-6912cb801de1.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 50882,
+   "uploaded_bytes": 50882,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_794328__9f3e7c88-a613-44be-9cd0-88b6eae19c65.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_794328__9f3e7c88-a613-44be-9cd0-88b6eae19c65.jpg",
+   "name": "son_794328.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_794328__9f3e7c88-a613-44be-9cd0-88b6eae19c65.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 73400,
+   "uploaded_bytes": 73400,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_796140__449226c9-ff00-4b76-b7f4-27db06750f43.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_796140__449226c9-ff00-4b76-b7f4-27db06750f43.jpg",
+   "name": "son_796140.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_796140__449226c9-ff00-4b76-b7f4-27db06750f43.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 193495,
+   "uploaded_bytes": 193495,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_821807__e7f18b79-1fb6-4c73-964b-aff2cfda1b84.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_821807__e7f18b79-1fb6-4c73-964b-aff2cfda1b84.jpg",
+   "name": "son_821807.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_821807__e7f18b79-1fb6-4c73-964b-aff2cfda1b84.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 65229,
+   "uploaded_bytes": 65229,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_823152__75da683f-973f-4e4a-b6fc-f840343a32e4.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_823152__75da683f-973f-4e4a-b6fc-f840343a32e4.jpg",
+   "name": "son_823152.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_823152__75da683f-973f-4e4a-b6fc-f840343a32e4.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 41422,
+   "uploaded_bytes": 41422,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_831210__e9b25564-b2fe-41e8-8641-bd94ca2ed40f.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_831210__e9b25564-b2fe-41e8-8641-bd94ca2ed40f.jpg",
+   "name": "son_831210.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_831210__e9b25564-b2fe-41e8-8641-bd94ca2ed40f.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 51572,
+   "uploaded_bytes": 51572,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_846376__8006c562-9e0c-497d-9c1b-629168b801ab.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_846376__8006c562-9e0c-497d-9c1b-629168b801ab.jpg",
+   "name": "son_846376.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_846376__8006c562-9e0c-497d-9c1b-629168b801ab.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 89610,
+   "uploaded_bytes": 89610,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_852088__2b39863f-920d-4da7-98bd-0661ab02ffd8.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_852088__2b39863f-920d-4da7-98bd-0661ab02ffd8.jpg",
+   "name": "son_852088.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_852088__2b39863f-920d-4da7-98bd-0661ab02ffd8.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 44317,
+   "uploaded_bytes": 44317,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_865920__98e3edee-09ae-4d06-9860-704c45f0df79.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_865920__98e3edee-09ae-4d06-9860-704c45f0df79.jpg",
+   "name": "son_865920.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_865920__98e3edee-09ae-4d06-9860-704c45f0df79.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 90797,
+   "uploaded_bytes": 90797,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_875769__a26412ee-1c74-4111-9bf5-7f3c5b87b8fc.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_875769__a26412ee-1c74-4111-9bf5-7f3c5b87b8fc.jpg",
+   "name": "son_875769.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_875769__a26412ee-1c74-4111-9bf5-7f3c5b87b8fc.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 81116,
+   "uploaded_bytes": 81116,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_882612__70c97985-ddc8-4e3b-aa98-f55abb316d36.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_882612__70c97985-ddc8-4e3b-aa98-f55abb316d36.jpg",
+   "name": "son_882612.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_882612__70c97985-ddc8-4e3b-aa98-f55abb316d36.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 75375,
+   "uploaded_bytes": 75375,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_889586__bbab1e49-badb-4165-97a5-4758ff6ef947.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_889586__bbab1e49-badb-4165-97a5-4758ff6ef947.jpg",
+   "name": "son_889586.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_889586__bbab1e49-badb-4165-97a5-4758ff6ef947.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 88944,
+   "uploaded_bytes": 88944,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_907561__e0e3a9f6-9f9b-42e4-bb06-b64dac26d36a.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_907561__e0e3a9f6-9f9b-42e4-bb06-b64dac26d36a.jpg",
+   "name": "son_907561.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_907561__e0e3a9f6-9f9b-42e4-bb06-b64dac26d36a.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 95031,
+   "uploaded_bytes": 95031,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_928794__cb647aff-447d-4468-aff9-2882ab58c72a.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_928794__cb647aff-447d-4468-aff9-2882ab58c72a.jpg",
+   "name": "son_928794.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_928794__cb647aff-447d-4468-aff9-2882ab58c72a.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 70898,
+   "uploaded_bytes": 70898,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_939051__84d58b3c-8b36-4d79-9601-4e472d497efb.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_939051__84d58b3c-8b36-4d79-9601-4e472d497efb.jpg",
+   "name": "son_939051.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_939051__84d58b3c-8b36-4d79-9601-4e472d497efb.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 112747,
+   "uploaded_bytes": 112747,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_947392__fcee4590-caa3-4842-88b0-1a794ce865c9.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_947392__fcee4590-caa3-4842-88b0-1a794ce865c9.jpg",
+   "name": "son_947392.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_947392__fcee4590-caa3-4842-88b0-1a794ce865c9.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 79213,
+   "uploaded_bytes": 79213,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_950583__57c91ff4-fe95-4b36-83e8-354f78f89008.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_950583__57c91ff4-fe95-4b36-83e8-354f78f89008.jpg",
+   "name": "son_950583.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_950583__57c91ff4-fe95-4b36-83e8-354f78f89008.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 78563,
+   "uploaded_bytes": 78563,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_970743__d435e168-0d79-4329-866a-f7b60a5492ba.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_970743__d435e168-0d79-4329-866a-f7b60a5492ba.jpg",
+   "name": "son_970743.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_970743__d435e168-0d79-4329-866a-f7b60a5492ba.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 88268,
+   "uploaded_bytes": 88268,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_972333__1d2ab1b3-4c48-42b9-96fc-03e07853298d.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_972333__1d2ab1b3-4c48-42b9-96fc-03e07853298d.jpg",
+   "name": "son_972333.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_972333__1d2ab1b3-4c48-42b9-96fc-03e07853298d.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 71733,
+   "uploaded_bytes": 71733,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_98177__8fee5032-64cc-4880-964d-24e28be006e0.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_98177__8fee5032-64cc-4880-964d-24e28be006e0.jpg",
+   "name": "son_98177.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_98177__8fee5032-64cc-4880-964d-24e28be006e0.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 83629,
+   "uploaded_bytes": 83629,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_985903__2d8dd28a-0677-4d59-b4fd-b18de23de416.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_985903__2d8dd28a-0677-4d59-b4fd-b18de23de416.jpg",
+   "name": "son_985903.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_985903__2d8dd28a-0677-4d59-b4fd-b18de23de416.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 41245,
+   "uploaded_bytes": 41245,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-seresinhe-scenic/scenicornot/son_987841__24a628a3-8d67-4ddb-97a6-133952fe6fc4.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-seresinhe-scenic/scenicornot/son_987841__24a628a3-8d67-4ddb-97a6-133952fe6fc4.jpg",
+   "name": "son_987841.jpg",
+   "type": "image",
+   "folder": "scenicornot",
+   "media_id": "templates/2017-seresinhe-scenic/scenicornot/son_987841__24a628a3-8d67-4ddb-97a6-133952fe6fc4.jpg",
+   "logicalFolder": "scenicornot",
+   "original_bytes": 63445,
+   "uploaded_bytes": 63445,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Using deep learning to quantify the beauty of outdoor places",
+  "authors": [
+   "Seresinhe C.I.",
+   "Preis T.",
+   "Moat H.S."
+  ],
+  "year": 2017,
+  "venue": "Royal Society Open Science",
+  "doi": "10.1098/rsos.170170",
+  "url": "https://doi.org/10.1098/rsos.170170"
+ }
 }

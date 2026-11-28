@@ -1,0 +1,1376 @@
+{
+ "id": "2025-wu-restorative",
+ "name": "Restorative Campus Spaces at Southeast University (PRS-11 Panoramas)",
+ "description": "Method replication: same task, scale and design as the paper; the images are not the paper's stimuli (88 Baidu street views re-fetched on and around the Jiulonghu campus of Southeast University, Nanjing, 2015–2022; like the paper, each is four views at 90° field of view and 20° upward pitch, front, right, rear and left, joined into one strip).\n\nOriginal study: Wu, Lin, Chen & Wu (2025), Land 14(3), 610. Panoramas of the Jiulonghu campus were stitched from four Baidu Map API views. In an online survey (15 September to 15 October 2024), 670 respondents each got five randomly assigned panoramas, one per page, imagined themselves in the scene and scored the 11 PRS-11 statements (being away, fascination, coherence, scope) from 1 to 7. 3,350 records over 250 scenes gave restorative benefit scores used to train an XGBoost model for the whole campus, combined with sDNA accessibility.\n\nDifferences from the original study: (1) 88 new panoramas instead of the paper's 250; the sampling box also covers some campus edges, and the views are from Baidu's 2015–2022 captures, not August 2024. (2) The five panoramas are drawn at random for each participant; the paper balanced how often each scene appeared. (3) PRS-11 wording follows Pasini et al. (2014) in English; the paper's Chinese wording is not printed. (4) The questions about the participant (gender, age, university role, knowing the campus) are ours. (5) The paper's 118 on-site campus questionnaires are not part of this template.",
+ "author": "Wu, Lin, Chen & Wu",
+ "year": "2025",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "street-view",
+  "panorama",
+  "restorativeness",
+  "prs-11",
+  "campus",
+  "nanjing",
+  "baidu",
+  "source:paper",
+  "modality:panorama",
+  "modality:street_view",
+  "task:multi_rating",
+  "concept:restoration",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:China",
+  "city:Nanjing"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/land14030610",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T15:21:24.394+00:00",
+ "updatedAt": "2026-11-27T15:21:37.012+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "Under 18",
+        "value": "lt18"
+       },
+       {
+        "text": "18–24",
+        "value": "18-24"
+       },
+       {
+        "text": "25–34",
+        "value": "25-34"
+       },
+       {
+        "text": "35 or older",
+        "value": "35plus"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "campus_role",
+      "type": "radiogroup",
+      "title": "Are you a student or staff member at a university?",
+      "choices": [
+       {
+        "text": "Student",
+        "value": "student"
+       },
+       {
+        "text": "Staff",
+        "value": "staff"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "know_campus",
+      "type": "radiogroup",
+      "title": "Do you know the Jiulonghu campus of Southeast University?",
+      "choices": [
+       {
+        "text": "I study or work there",
+        "value": "study_work"
+       },
+       {
+        "text": "I have visited",
+        "value": "visited"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "scenes",
+    "elements": [
+     {
+      "name": "photo_set",
+      "type": "custom",
+      "title": "The 5 panoramas drawn for this participant, in order",
+      "isRequired": true
+     },
+     {
+      "name": "prs_ba1",
+      "type": "rating",
+      "title": "Places like that are a refuge from nuisances.",
+      "rateMax": 7,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Being away (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.",
+      "maxRateDescription": "7 Completely",
+      "minRateDescription": "1 Not at all"
+     },
+     {
+      "name": "prs_ba2",
+      "type": "rating",
+      "title": "To get away from things that usually demand my attention I like to go to places like that.",
+      "rateMax": 7,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Being away (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.",
+      "maxRateDescription": "7 Completely",
+      "minRateDescription": "1 Not at all"
+     },
+     {
+      "name": "prs_ba3",
+      "type": "rating",
+      "title": "To stop thinking about the things that I must get done I like to go to places like that.",
+      "rateMax": 7,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Being away (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.",
+      "maxRateDescription": "7 Completely",
+      "minRateDescription": "1 Not at all"
+     },
+     {
+      "name": "prs_fa1",
+      "type": "rating",
+      "title": "Places like that are fascinating.",
+      "rateMax": 7,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Fascination (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.",
+      "maxRateDescription": "7 Completely",
+      "minRateDescription": "1 Not at all"
+     },
+     {
+      "name": "prs_fa2",
+      "type": "rating",
+      "title": "In places like that my attention is drawn to many interesting things.",
+      "rateMax": 7,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Fascination (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.",
+      "maxRateDescription": "7 Completely",
+      "minRateDescription": "1 Not at all"
+     },
+     {
+      "name": "prs_fa3",
+      "type": "rating",
+      "title": "In places like that it is hard to be bored.",
+      "rateMax": 7,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Fascination (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.",
+      "maxRateDescription": "7 Completely",
+      "minRateDescription": "1 Not at all"
+     },
+     {
+      "name": "prs_co1",
+      "type": "rating",
+      "title": "There is a clear order in the physical arrangement of places like that.",
+      "rateMax": 7,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Coherence (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.",
+      "maxRateDescription": "7 Completely",
+      "minRateDescription": "1 Not at all"
+     },
+     {
+      "name": "prs_co2",
+      "type": "rating",
+      "title": "In places like that it is easy to see how things are organised.",
+      "rateMax": 7,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Coherence (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.",
+      "maxRateDescription": "7 Completely",
+      "minRateDescription": "1 Not at all"
+     },
+     {
+      "name": "prs_co3",
+      "type": "rating",
+      "title": "In places like that everything seems to have its proper place.",
+      "rateMax": 7,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Coherence (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.",
+      "maxRateDescription": "7 Completely",
+      "minRateDescription": "1 Not at all"
+     },
+     {
+      "name": "prs_sc1",
+      "type": "rating",
+      "title": "That place is large enough to allow exploration in many directions.",
+      "rateMax": 7,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Scope (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.",
+      "maxRateDescription": "7 Completely",
+      "minRateDescription": "1 Not at all"
+     },
+     {
+      "name": "prs_sc2",
+      "type": "rating",
+      "title": "In places like that there are few boundaries to limit my possibility for moving about.",
+      "rateMax": 7,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Scope (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.",
+      "maxRateDescription": "7 Completely",
+      "minRateDescription": "1 Not at all"
+     }
+    ]
+   }
+  ],
+  "title": "Restorative Campus Spaces at Southeast University",
+  "locale": "en",
+  "spSite": {
+   "id": "site-033ff4d6d870a340",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Restorative Campus Spaces at Southeast University</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Restorative Campus Spaces at Southeast University\",\n  \"description\": \"Participants see 5 random Baidu street-view panoramas of the Jiulonghu campus of Southeast University (Nanjing) and rate each on the 11 PRS-11 statements from 1 to 7. Restorative benefit = mean of the 11 items. Method replication of Wu, Lin, Chen & Wu (2025), Land 14(3): 610.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"seu\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"lt18\",\n        \"text\": \"Under 18\"\n       },\n       {\n        \"value\": \"18-24\",\n        \"text\": \"18–24\"\n       },\n       {\n        \"value\": \"25-34\",\n        \"text\": \"25–34\"\n       },\n       {\n        \"value\": \"35plus\",\n        \"text\": \"35 or older\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"campus_role\",\n      \"title\": \"Are you a student or staff member at a university?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"student\",\n        \"text\": \"Student\"\n       },\n       {\n        \"value\": \"staff\",\n        \"text\": \"Staff\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"know_campus\",\n      \"title\": \"Do you know the Jiulonghu campus of Southeast University?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"study_work\",\n        \"text\": \"I study or work there\"\n       },\n       {\n        \"value\": \"visited\",\n        \"text\": \"I have visited\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"scenes\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"photo_set\",\n      \"title\": \"The 5 panoramas drawn for this participant, in order\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"prs_ba1\",\n      \"title\": \"Places like that are a refuge from nuisances.\",\n      \"description\": \"Being away (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.\",\n      \"isRequired\": true,\n      \"rateMin\": 1,\n      \"rateMax\": 7,\n      \"minRateDescription\": \"1 Not at all\",\n      \"maxRateDescription\": \"7 Completely\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"prs_ba2\",\n      \"title\": \"To get away from things that usually demand my attention I like to go to places like that.\",\n      \"description\": \"Being away (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.\",\n      \"isRequired\": true,\n      \"rateMin\": 1,\n      \"rateMax\": 7,\n      \"minRateDescription\": \"1 Not at all\",\n      \"maxRateDescription\": \"7 Completely\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"prs_ba3\",\n      \"title\": \"To stop thinking about the things that I must get done I like to go to places like that.\",\n      \"description\": \"Being away (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.\",\n      \"isRequired\": true,\n      \"rateMin\": 1,\n      \"rateMax\": 7,\n      \"minRateDescription\": \"1 Not at all\",\n      \"maxRateDescription\": \"7 Completely\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"prs_fa1\",\n      \"title\": \"Places like that are fascinating.\",\n      \"description\": \"Fascination (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.\",\n      \"isRequired\": true,\n      \"rateMin\": 1,\n      \"rateMax\": 7,\n      \"minRateDescription\": \"1 Not at all\",\n      \"maxRateDescription\": \"7 Completely\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"prs_fa2\",\n      \"title\": \"In places like that my attention is drawn to many interesting things.\",\n      \"description\": \"Fascination (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.\",\n      \"isRequired\": true,\n      \"rateMin\": 1,\n      \"rateMax\": 7,\n      \"minRateDescription\": \"1 Not at all\",\n      \"maxRateDescription\": \"7 Completely\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"prs_fa3\",\n      \"title\": \"In places like that it is hard to be bored.\",\n      \"description\": \"Fascination (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.\",\n      \"isRequired\": true,\n      \"rateMin\": 1,\n      \"rateMax\": 7,\n      \"minRateDescription\": \"1 Not at all\",\n      \"maxRateDescription\": \"7 Completely\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"prs_co1\",\n      \"title\": \"There is a clear order in the physical arrangement of places like that.\",\n      \"description\": \"Coherence (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.\",\n      \"isRequired\": true,\n      \"rateMin\": 1,\n      \"rateMax\": 7,\n      \"minRateDescription\": \"1 Not at all\",\n      \"maxRateDescription\": \"7 Completely\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"prs_co2\",\n      \"title\": \"In places like that it is easy to see how things are organised.\",\n      \"description\": \"Coherence (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.\",\n      \"isRequired\": true,\n      \"rateMin\": 1,\n      \"rateMax\": 7,\n      \"minRateDescription\": \"1 Not at all\",\n      \"maxRateDescription\": \"7 Completely\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"prs_co3\",\n      \"title\": \"In places like that everything seems to have its proper place.\",\n      \"description\": \"Coherence (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.\",\n      \"isRequired\": true,\n      \"rateMin\": 1,\n      \"rateMax\": 7,\n      \"minRateDescription\": \"1 Not at all\",\n      \"maxRateDescription\": \"7 Completely\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"prs_sc1\",\n      \"title\": \"That place is large enough to allow exploration in many directions.\",\n      \"description\": \"Scope (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.\",\n      \"isRequired\": true,\n      \"rateMin\": 1,\n      \"rateMax\": 7,\n      \"minRateDescription\": \"1 Not at all\",\n      \"maxRateDescription\": \"7 Completely\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"prs_sc2\",\n      \"title\": \"In places like that there are few boundaries to limit my possibility for moving about.\",\n      \"description\": \"Scope (PRS-11, Pasini et al. 2014). One trial per panorama, key = image file name.\",\n      \"isRequired\": true,\n      \"rateMin\": 1,\n      \"rateMax\": 7,\n      \"minRateDescription\": \"1 Not at all\",\n      \"maxRateDescription\": \"7 Completely\"\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f5f3f6;--card:#fff;--ink:#211d24;--muted:#5d5763;--accent:#3d6b4a;--accent-ink:#fff;--line:#ddd7e1;--sel:#e4f0e7}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:900px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}\n.photo{position:sticky;top:0;z-index:2;width:100%;aspect-ratio:4/1;object-fit:contain;display:block;border-radius:12px;background:#000}\n.meta{display:flex;justify-content:space-between;font-size:.88rem;color:var(--muted);margin-top:8px}\n.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:6px}.bar>i{display:block;height:100%;background:var(--accent)}\n.item{padding:11px 0;border-top:1px solid var(--line)}.item:first-child{border-top:0}\n.item>b{display:block;font-weight:600}.item>small{display:block;color:var(--muted);margin-bottom:6px}\n.scale{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}\n.scale button{appearance:none;border:1px solid var(--line);background:var(--card);border-radius:9px;padding:9px 2px;font:inherit;font-size:.9rem;font-weight:600;cursor:pointer;color:var(--ink)}\n.scale button.on{border-color:var(--accent);background:var(--sel);box-shadow:0 0 0 2px var(--accent) inset}\n.ends{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:3px}\n.item.miss>b{color:#b3261e}\n.wait{color:var(--muted);font-size:.95rem;min-height:1.2em}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:900px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){h1{font-size:1.2rem}.scale{gap:3px}.scale button{font-size:.78rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Panoramas: Jiulonghu campus of Southeast University, Nanjing, Baidu street view (© Baidu). Task and scale from Wu, Lin, Chen &amp; Wu, “Integrating Street View Images, Deep Learning, and sDNA for Evaluating University Campus Outdoor Public Spaces: A Focus on Restorative Benefits and Accessibility”, Land 14(3), 610 (2025), doi:10.3390/land14030610. Statements: PRS-11 (Pasini et al., 2014).</footer>\n<script>\n(function(){\n  var ITEMS=[[\"prs_ba1\", \"Being away\"], [\"prs_ba2\", \"Being away\"], [\"prs_ba3\", \"Being away\"], [\"prs_fa1\", \"Fascination\"], [\"prs_fa2\", \"Fascination\"], [\"prs_fa3\", \"Fascination\"], [\"prs_co1\", \"Coherence\"], [\"prs_co2\", \"Coherence\"], [\"prs_co3\", \"Coherence\"], [\"prs_sc1\", \"Scope\"], [\"prs_sc2\", \"Scope\"]],NAMES=ITEMS.map(function(x){return x[0];});\n  var N=5,VIEW=0,LBL=['1','2','3','4','5','6','7'];\n  var DEMO=[\"gender\", \"age_group\", \"campus_role\", \"know_campus\"];\n  var app=document.getElementById('app'),plan=null,byName={},score={},ans={},idx=0,timer=null,tick=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function chk(r){if(r&&r.ok===false)throw new Error(r.error||'Not saved');return r;}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function done(v){return NAMES.every(function(n){return score[v]&&score[v][n]!=null;});}\n  function firstOpen(){for(var i=0;i<plan.length;i++)if(!done(plan[i]))return i;return plan.length;}\n  function stop(){clearTimeout(timer);clearInterval(tick);}\n  function intro(){\n    var c=SPSite.getQuestion('consent');\n    app.innerHTML='<h1>How restorative are these campus spaces?</h1><p>You will see '+plan.length+' street-view panoramas of outdoor spaces on the Jiulonghu campus of Southeast University in Nanjing, one at a time. Each picture joins four views (front, right, behind, left) into one strip. <b>Imagine you are standing in the scene</b>, then rate how well each of 11 statements matches what you see, from 1 (not at all) to 7 (completely). First, a few questions about you. It takes about 8 minutes.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(chk).then(about).catch(function(e){err(e.message);});};\n  }\n  function about(){\n    stop();\n    app.innerHTML='<h1>About you</h1><div class=\"card\">'+DEMO.map(function(n){var q=SPSite.getQuestion(n);\n      return '<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"'+(ans[n]===c.value?' checked':'')+'> '+esc(c.text)+'</label>';}).join('')+'</div>';}).join('')+\n      '<div class=\"row\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    DEMO.forEach(function(n){app.querySelectorAll('input[name=\"'+n+'\"]').forEach(function(r){r.onchange=function(){err('');SPSite.answer(n,r.value).then(chk).then(function(){ans[n]=r.value;}).catch(function(e){err(e.message);});};});});\n    document.getElementById('go').onclick=function(){\n      if(DEMO.some(function(n){return !app.querySelector('input[name=\"'+n+'\"]:checked');}))return err('Please answer each question.');\n      idx=firstOpen();idx<plan.length?rate():finish();};\n    window.scrollTo(0,0);\n  }\n  function rate(){\n    stop();\n    var v=plan[idx],s=score[v]||{},seen=done(v);\n    var h='<img class=\"photo\" src=\"'+esc(byName[v].url)+'\" alt=\"Street photo\"><div class=\"meta\"><span>Scene '+(idx+1)+' of '+plan.length+'</span></div><div class=\"bar\"><i style=\"width:'+(100*idx/plan.length)+'%\"></i></div><div class=\"card\">';\n    ITEMS.forEach(function(it){var n=it[0],q=SPSite.getQuestion(n);h+='<div class=\"item\" data-n=\"'+n+'\"><b>'+esc(q.title)+'</b><small>'+esc(it[1])+'</small><div class=\"scale\">';\n      for(var k=1;k<=7;k++)h+='<button type=\"button\" data-n=\"'+n+'\" data-v=\"'+k+'\"'+(s[n]===k?' class=\"on\"':'')+(seen||!VIEW?'':' disabled')+'>'+LBL[k-1]+'</button>';\n      h+='</div><div class=\"ends\"><span>1 Not at all</span><span>7 Completely</span></div></div>';});\n    app.innerHTML=h+'<p class=\"wait\" id=\"wait\"></p><div class=\"row\"><button class=\"btn\" id=\"go\"'+(seen||!VIEW?'':' disabled')+'>'+(idx+1<plan.length?'Next scene':'Continue')+'</button></div><div class=\"err\"></div></div>';\n    if(!seen&&VIEW){var left=VIEW,w=document.getElementById('wait');w.textContent='Look at the photo… '+left+' s';\n      tick=setInterval(function(){left--;if(left>0&&w)w.textContent='Look at the photo… '+left+' s';},1000);\n      timer=setTimeout(function(){clearInterval(tick);app.querySelectorAll('.scale button,#go').forEach(function(b){b.disabled=false;});if(w)w.textContent='';},VIEW*1000);}\n    app.querySelectorAll('.scale button').forEach(function(b){b.onclick=function(){var n=b.getAttribute('data-n'),k=Number(b.getAttribute('data-v'));\n      b.parentNode.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);});b.closest('.item').classList.remove('miss');err('');\n      SPSite.answer(n,k,{key:v,shown:[v]}).then(chk).then(function(){(score[v]=score[v]||{})[n]=k;}).catch(function(e){err(e.message);});};});\n    document.getElementById('go').onclick=function(){\n      var miss=NAMES.filter(function(n){return !app.querySelector('.item[data-n=\"'+n+'\"] button.on');});\n      app.querySelectorAll('.item').forEach(function(it){it.classList.toggle('miss',miss.indexOf(it.getAttribute('data-n'))>=0);});\n      if(miss.length)return err('Please answer every statement.');\n      idx++;if(idx<plan.length)rate();else{var o=firstOpen();if(o<plan.length){idx=o;rate();}else finish();}};\n    window.scrollTo(0,0);\n  }\n  function finish(){\n    stop();\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>You have rated all '+plan.length+' scenes. Press Submit to send your answers.</p><div class=\"row\"><button class=\"btn\" id=\"fin\">Submit</button></div><div class=\"err\"></div></div>';\n    document.getElementById('fin').onclick=function(){var btn=this;btn.disabled=true;err('Submitting…');\n      SPSite.complete().then(function(r){if(r&&r.ok===false){btn.disabled=false;var m=r.missing||[];err(r.error||('Please answer: '+m.join(', ')));\n        if(m.indexOf('consent')>=0)intro();else if(DEMO.some(function(n){return m.indexOf(n)>=0;}))about();else{idx=firstOpen();if(idx>=plan.length)idx=0;rate();}}\n        else{btn.textContent='Submitted';err('');}});};\n    window.scrollTo(0,0);\n  }\n  SPSite.onReady(function(ctx){\n    var media=(SPSite.getMedia('seu')||[]).filter(function(m){return m.type!=='video';});\n    if(!media.length){app.innerHTML='<h1>No street photos yet</h1><p>The researcher has not added photos to the folder “seu”.</p>';return;}\n    media.forEach(function(m){byName[m.name]=m;});\n    var a=(ctx&&ctx.answers)||{},p=a.photo_set;\n    if(Array.isArray(p)&&p.length&&p.every(function(n){return byName[n];}))plan=p;\n    else{plan=shuffle(media.map(function(m){return m.name;})).slice(0,N);SPSite.answer('photo_set',plan).catch(function(){});}\n    NAMES.forEach(function(n){var x=a[n],t=x&&Array.isArray(x.trials)?x.trials:[];t.forEach(function(y){if(y&&y.key&&y.value!=null)(score[y.key]=score[y.key]||{})[n]=Number(y.value);});});\n    DEMO.forEach(function(n){if(a[n]!=null)ans[n]=String(a[n]);});\n    if(a.consent!==true)intro();\n    else if(DEMO.some(function(n){return ans[n]==null;}))about();\n    else{idx=firstOpen();idx<plan.length?rate():finish();}\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T15:20:42.099Z",
+   "mediaFolders": [
+    "seu"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T15:20:42.099Z"
+  },
+  "description": "Participants see 5 random Baidu street-view panoramas of the Jiulonghu campus of Southeast University (Nanjing) and rate each on the 11 PRS-11 statements from 1 to 7. Restorative benefit = mean of the 11 items. Method replication of Wu, Lin, Chen & Wu (2025), Land 14(3): 610.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2025-wu-restorative/seu/seua_001__a15f7071-fd28-4056-9c03-cb626b553ff5.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seua_001__a15f7071-fd28-4056-9c03-cb626b553ff5.jpg",
+   "name": "seua_001.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seua_001__a15f7071-fd28-4056-9c03-cb626b553ff5.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 239450,
+   "uploaded_bytes": 239450,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seua_003__1a19163a-6cc7-42bc-856d-24299310dda7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seua_003__1a19163a-6cc7-42bc-856d-24299310dda7.jpg",
+   "name": "seua_003.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seua_003__1a19163a-6cc7-42bc-856d-24299310dda7.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 117743,
+   "uploaded_bytes": 117743,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seua_004__5afcbda5-8b1d-434d-b315-b2a069862e98.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seua_004__5afcbda5-8b1d-434d-b315-b2a069862e98.jpg",
+   "name": "seua_004.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seua_004__5afcbda5-8b1d-434d-b315-b2a069862e98.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 100580,
+   "uploaded_bytes": 100580,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seua_005__ba0ac8c3-af39-45c8-906f-301b4137bd9d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seua_005__ba0ac8c3-af39-45c8-906f-301b4137bd9d.jpg",
+   "name": "seua_005.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seua_005__ba0ac8c3-af39-45c8-906f-301b4137bd9d.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 159029,
+   "uploaded_bytes": 159029,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seua_007__1d93d826-d111-4548-a5f8-ec4bf0c11cde.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seua_007__1d93d826-d111-4548-a5f8-ec4bf0c11cde.jpg",
+   "name": "seua_007.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seua_007__1d93d826-d111-4548-a5f8-ec4bf0c11cde.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 154683,
+   "uploaded_bytes": 154683,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seua_008__24e250de-0ea1-4c89-923e-e7f2e64017b0.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seua_008__24e250de-0ea1-4c89-923e-e7f2e64017b0.jpg",
+   "name": "seua_008.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seua_008__24e250de-0ea1-4c89-923e-e7f2e64017b0.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 167030,
+   "uploaded_bytes": 167030,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seua_009__6d582d05-4fbb-4899-9349-97d59e9306ca.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seua_009__6d582d05-4fbb-4899-9349-97d59e9306ca.jpg",
+   "name": "seua_009.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seua_009__6d582d05-4fbb-4899-9349-97d59e9306ca.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 223432,
+   "uploaded_bytes": 223432,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seua_013__4880b287-a35f-4f43-9fc9-2ba54762c0df.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seua_013__4880b287-a35f-4f43-9fc9-2ba54762c0df.jpg",
+   "name": "seua_013.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seua_013__4880b287-a35f-4f43-9fc9-2ba54762c0df.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 245346,
+   "uploaded_bytes": 245346,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seua_014__42a1340c-1ce6-4d25-969a-83b89e781e15.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seua_014__42a1340c-1ce6-4d25-969a-83b89e781e15.jpg",
+   "name": "seua_014.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seua_014__42a1340c-1ce6-4d25-969a-83b89e781e15.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 173102,
+   "uploaded_bytes": 173102,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seua_015__6662be63-50c4-4c49-bd7e-6529eea7966e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seua_015__6662be63-50c4-4c49-bd7e-6529eea7966e.jpg",
+   "name": "seua_015.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seua_015__6662be63-50c4-4c49-bd7e-6529eea7966e.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 136368,
+   "uploaded_bytes": 136368,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seub_001__6f0d2584-f233-4994-b81c-f332b1384bfb.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seub_001__6f0d2584-f233-4994-b81c-f332b1384bfb.jpg",
+   "name": "seub_001.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seub_001__6f0d2584-f233-4994-b81c-f332b1384bfb.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 224710,
+   "uploaded_bytes": 224710,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seub_002__0db04bfc-d883-4b18-ba2c-41880bc62712.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seub_002__0db04bfc-d883-4b18-ba2c-41880bc62712.jpg",
+   "name": "seub_002.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seub_002__0db04bfc-d883-4b18-ba2c-41880bc62712.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 135895,
+   "uploaded_bytes": 135895,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seub_003__48bbe628-4dfa-481c-984a-b7284bfbf244.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seub_003__48bbe628-4dfa-481c-984a-b7284bfbf244.jpg",
+   "name": "seub_003.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seub_003__48bbe628-4dfa-481c-984a-b7284bfbf244.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 150360,
+   "uploaded_bytes": 150360,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seub_004__f5cda70c-2c72-46a0-9a64-831de4a9cac1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seub_004__f5cda70c-2c72-46a0-9a64-831de4a9cac1.jpg",
+   "name": "seub_004.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seub_004__f5cda70c-2c72-46a0-9a64-831de4a9cac1.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 126248,
+   "uploaded_bytes": 126248,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seub_005__b5e57513-426b-4413-b96d-da66085c8277.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seub_005__b5e57513-426b-4413-b96d-da66085c8277.jpg",
+   "name": "seub_005.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seub_005__b5e57513-426b-4413-b96d-da66085c8277.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 194518,
+   "uploaded_bytes": 194518,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seub_006__8df303a4-5b8c-433a-86d4-2af3428d2388.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seub_006__8df303a4-5b8c-433a-86d4-2af3428d2388.jpg",
+   "name": "seub_006.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seub_006__8df303a4-5b8c-433a-86d4-2af3428d2388.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 99095,
+   "uploaded_bytes": 99095,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seub_007__71487b7d-8bb5-4a2b-aa4f-c960ab81dc13.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seub_007__71487b7d-8bb5-4a2b-aa4f-c960ab81dc13.jpg",
+   "name": "seub_007.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seub_007__71487b7d-8bb5-4a2b-aa4f-c960ab81dc13.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 239690,
+   "uploaded_bytes": 239690,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seub_008__a0c3f939-d37e-4b89-8cff-891566fb2891.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seub_008__a0c3f939-d37e-4b89-8cff-891566fb2891.jpg",
+   "name": "seub_008.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seub_008__a0c3f939-d37e-4b89-8cff-891566fb2891.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 143216,
+   "uploaded_bytes": 143216,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seub_009__4b8e3095-16bf-48dc-94ba-3b51c4528844.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seub_009__4b8e3095-16bf-48dc-94ba-3b51c4528844.jpg",
+   "name": "seub_009.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seub_009__4b8e3095-16bf-48dc-94ba-3b51c4528844.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 176016,
+   "uploaded_bytes": 176016,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seub_010__a97294fd-3c35-4e66-b9f9-9a925a23d845.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seub_010__a97294fd-3c35-4e66-b9f9-9a925a23d845.jpg",
+   "name": "seub_010.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seub_010__a97294fd-3c35-4e66-b9f9-9a925a23d845.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 244276,
+   "uploaded_bytes": 244276,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seub_011__c425e5c5-072a-4df5-87c9-01a42872bef9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seub_011__c425e5c5-072a-4df5-87c9-01a42872bef9.jpg",
+   "name": "seub_011.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seub_011__c425e5c5-072a-4df5-87c9-01a42872bef9.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 127829,
+   "uploaded_bytes": 127829,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seub_012__bc093093-43a2-4e36-b8fb-99a5d3f44692.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seub_012__bc093093-43a2-4e36-b8fb-99a5d3f44692.jpg",
+   "name": "seub_012.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seub_012__bc093093-43a2-4e36-b8fb-99a5d3f44692.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 170898,
+   "uploaded_bytes": 170898,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seub_013__214153f9-1543-47e2-841b-a0dcc01e5f04.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seub_013__214153f9-1543-47e2-841b-a0dcc01e5f04.jpg",
+   "name": "seub_013.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seub_013__214153f9-1543-47e2-841b-a0dcc01e5f04.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 114477,
+   "uploaded_bytes": 114477,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seub_014__3b6eac21-338e-46ef-814c-850414e620e3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seub_014__3b6eac21-338e-46ef-814c-850414e620e3.jpg",
+   "name": "seub_014.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seub_014__3b6eac21-338e-46ef-814c-850414e620e3.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 197748,
+   "uploaded_bytes": 197748,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seub_015__61afdef2-b0f4-42ef-b45f-4f52d32ec35a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seub_015__61afdef2-b0f4-42ef-b45f-4f52d32ec35a.jpg",
+   "name": "seub_015.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seub_015__61afdef2-b0f4-42ef-b45f-4f52d32ec35a.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 124692,
+   "uploaded_bytes": 124692,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuc_002__836b4c23-9ac7-44af-b27f-007f78cd30be.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuc_002__836b4c23-9ac7-44af-b27f-007f78cd30be.jpg",
+   "name": "seuc_002.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuc_002__836b4c23-9ac7-44af-b27f-007f78cd30be.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 130714,
+   "uploaded_bytes": 130714,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuc_003__fa7b58d7-4041-4f08-a44e-d7e4f2552963.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuc_003__fa7b58d7-4041-4f08-a44e-d7e4f2552963.jpg",
+   "name": "seuc_003.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuc_003__fa7b58d7-4041-4f08-a44e-d7e4f2552963.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 168218,
+   "uploaded_bytes": 168218,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuc_004__66fa7794-82ec-4c36-865b-310a32594df2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuc_004__66fa7794-82ec-4c36-865b-310a32594df2.jpg",
+   "name": "seuc_004.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuc_004__66fa7794-82ec-4c36-865b-310a32594df2.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 201062,
+   "uploaded_bytes": 201062,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuc_005__d966a6f6-dc4e-4155-8ac3-8888ff370e9f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuc_005__d966a6f6-dc4e-4155-8ac3-8888ff370e9f.jpg",
+   "name": "seuc_005.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuc_005__d966a6f6-dc4e-4155-8ac3-8888ff370e9f.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 202435,
+   "uploaded_bytes": 202435,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuc_006__80776f71-b408-45c8-8aa7-0bee61534d0e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuc_006__80776f71-b408-45c8-8aa7-0bee61534d0e.jpg",
+   "name": "seuc_006.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuc_006__80776f71-b408-45c8-8aa7-0bee61534d0e.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 94460,
+   "uploaded_bytes": 94460,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuc_009__062d5316-33d9-48e8-8791-af19d6fea531.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuc_009__062d5316-33d9-48e8-8791-af19d6fea531.jpg",
+   "name": "seuc_009.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuc_009__062d5316-33d9-48e8-8791-af19d6fea531.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 114728,
+   "uploaded_bytes": 114728,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuc_013__5512806e-45eb-4d2a-bde0-1e18c3b3d830.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuc_013__5512806e-45eb-4d2a-bde0-1e18c3b3d830.jpg",
+   "name": "seuc_013.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuc_013__5512806e-45eb-4d2a-bde0-1e18c3b3d830.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 175756,
+   "uploaded_bytes": 175756,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuc_014__49de35ce-87c7-418b-83b6-66c81a61f015.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuc_014__49de35ce-87c7-418b-83b6-66c81a61f015.jpg",
+   "name": "seuc_014.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuc_014__49de35ce-87c7-418b-83b6-66c81a61f015.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 183669,
+   "uploaded_bytes": 183669,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuc_015__55a5e33d-d957-4199-b633-031d7a3eb5d7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuc_015__55a5e33d-d957-4199-b633-031d7a3eb5d7.jpg",
+   "name": "seuc_015.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuc_015__55a5e33d-d957-4199-b633-031d7a3eb5d7.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 109767,
+   "uploaded_bytes": 109767,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seud_001__046cd301-f6bd-41b2-9b5e-8961e8b86b57.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seud_001__046cd301-f6bd-41b2-9b5e-8961e8b86b57.jpg",
+   "name": "seud_001.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seud_001__046cd301-f6bd-41b2-9b5e-8961e8b86b57.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 111391,
+   "uploaded_bytes": 111391,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seud_002__c185ac26-898a-4ba2-b162-9db52a670b46.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seud_002__c185ac26-898a-4ba2-b162-9db52a670b46.jpg",
+   "name": "seud_002.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seud_002__c185ac26-898a-4ba2-b162-9db52a670b46.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 130583,
+   "uploaded_bytes": 130583,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seud_003__da98d57b-1d5d-470e-8b90-7b55f5483d1f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seud_003__da98d57b-1d5d-470e-8b90-7b55f5483d1f.jpg",
+   "name": "seud_003.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seud_003__da98d57b-1d5d-470e-8b90-7b55f5483d1f.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 286737,
+   "uploaded_bytes": 286737,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seud_004__5bb8d2da-eedf-4c9a-a2c5-d853d9ab8022.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seud_004__5bb8d2da-eedf-4c9a-a2c5-d853d9ab8022.jpg",
+   "name": "seud_004.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seud_004__5bb8d2da-eedf-4c9a-a2c5-d853d9ab8022.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 146048,
+   "uploaded_bytes": 146048,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seud_005__04114b35-2d27-4e82-84ed-6c960aa5d9d9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seud_005__04114b35-2d27-4e82-84ed-6c960aa5d9d9.jpg",
+   "name": "seud_005.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seud_005__04114b35-2d27-4e82-84ed-6c960aa5d9d9.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 182772,
+   "uploaded_bytes": 182772,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seud_006__2d979e99-6588-4cde-81d1-19c029045b89.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seud_006__2d979e99-6588-4cde-81d1-19c029045b89.jpg",
+   "name": "seud_006.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seud_006__2d979e99-6588-4cde-81d1-19c029045b89.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 271204,
+   "uploaded_bytes": 271204,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seud_007__77d40c47-5993-44a6-b909-3df6bb2d5210.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seud_007__77d40c47-5993-44a6-b909-3df6bb2d5210.jpg",
+   "name": "seud_007.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seud_007__77d40c47-5993-44a6-b909-3df6bb2d5210.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 156347,
+   "uploaded_bytes": 156347,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seud_008__45817882-5b39-4c75-a587-9f5b55cf45cc.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seud_008__45817882-5b39-4c75-a587-9f5b55cf45cc.jpg",
+   "name": "seud_008.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seud_008__45817882-5b39-4c75-a587-9f5b55cf45cc.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 115213,
+   "uploaded_bytes": 115213,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seud_009__de6d0401-283a-4c9a-8a79-94e274762f0d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seud_009__de6d0401-283a-4c9a-8a79-94e274762f0d.jpg",
+   "name": "seud_009.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seud_009__de6d0401-283a-4c9a-8a79-94e274762f0d.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 142001,
+   "uploaded_bytes": 142001,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seud_010__b5f72266-4a84-4687-b3fd-2d2bdd3dde1f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seud_010__b5f72266-4a84-4687-b3fd-2d2bdd3dde1f.jpg",
+   "name": "seud_010.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seud_010__b5f72266-4a84-4687-b3fd-2d2bdd3dde1f.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 185055,
+   "uploaded_bytes": 185055,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seud_011__88374876-57ad-4ba2-91d6-1adf3756e5be.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seud_011__88374876-57ad-4ba2-91d6-1adf3756e5be.jpg",
+   "name": "seud_011.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seud_011__88374876-57ad-4ba2-91d6-1adf3756e5be.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 144327,
+   "uploaded_bytes": 144327,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seud_012__17519a73-adf3-4b9d-b089-d86f35017dd8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seud_012__17519a73-adf3-4b9d-b089-d86f35017dd8.jpg",
+   "name": "seud_012.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seud_012__17519a73-adf3-4b9d-b089-d86f35017dd8.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 275549,
+   "uploaded_bytes": 275549,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seud_013__8a762f3d-d5b7-487f-8fe8-bd83d03bbda3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seud_013__8a762f3d-d5b7-487f-8fe8-bd83d03bbda3.jpg",
+   "name": "seud_013.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seud_013__8a762f3d-d5b7-487f-8fe8-bd83d03bbda3.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 252750,
+   "uploaded_bytes": 252750,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seud_014__9d25053c-4876-4d5c-841b-a46c27b98d95.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seud_014__9d25053c-4876-4d5c-841b-a46c27b98d95.jpg",
+   "name": "seud_014.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seud_014__9d25053c-4876-4d5c-841b-a46c27b98d95.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 170375,
+   "uploaded_bytes": 170375,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seue_001__338ac5fd-9102-4477-8408-8f4de0ae549c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seue_001__338ac5fd-9102-4477-8408-8f4de0ae549c.jpg",
+   "name": "seue_001.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seue_001__338ac5fd-9102-4477-8408-8f4de0ae549c.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 83985,
+   "uploaded_bytes": 83985,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seue_002__79ed5d5a-525f-4d05-a1fb-73d01dd9acc6.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seue_002__79ed5d5a-525f-4d05-a1fb-73d01dd9acc6.jpg",
+   "name": "seue_002.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seue_002__79ed5d5a-525f-4d05-a1fb-73d01dd9acc6.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 149088,
+   "uploaded_bytes": 149088,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seue_003__e5233a70-dfbb-4d59-b7ca-ce05a13e12f8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seue_003__e5233a70-dfbb-4d59-b7ca-ce05a13e12f8.jpg",
+   "name": "seue_003.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seue_003__e5233a70-dfbb-4d59-b7ca-ce05a13e12f8.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 168085,
+   "uploaded_bytes": 168085,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seue_004__0c233f62-da90-4a8e-9831-b371ba4c3443.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seue_004__0c233f62-da90-4a8e-9831-b371ba4c3443.jpg",
+   "name": "seue_004.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seue_004__0c233f62-da90-4a8e-9831-b371ba4c3443.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 112262,
+   "uploaded_bytes": 112262,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seue_007__ddc6a00c-154d-4922-b332-ee339fd9bbc7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seue_007__ddc6a00c-154d-4922-b332-ee339fd9bbc7.jpg",
+   "name": "seue_007.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seue_007__ddc6a00c-154d-4922-b332-ee339fd9bbc7.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 181819,
+   "uploaded_bytes": 181819,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seue_008__20930f9c-8bd2-471d-8ee5-a6d8d5a57ee2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seue_008__20930f9c-8bd2-471d-8ee5-a6d8d5a57ee2.jpg",
+   "name": "seue_008.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seue_008__20930f9c-8bd2-471d-8ee5-a6d8d5a57ee2.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 135612,
+   "uploaded_bytes": 135612,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seue_009__30e94784-37fb-41b7-ad9b-61a353e57c10.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seue_009__30e94784-37fb-41b7-ad9b-61a353e57c10.jpg",
+   "name": "seue_009.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seue_009__30e94784-37fb-41b7-ad9b-61a353e57c10.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 97951,
+   "uploaded_bytes": 97951,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seue_010__225f2de1-4a11-4d16-aee4-8445a8534497.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seue_010__225f2de1-4a11-4d16-aee4-8445a8534497.jpg",
+   "name": "seue_010.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seue_010__225f2de1-4a11-4d16-aee4-8445a8534497.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 100774,
+   "uploaded_bytes": 100774,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seue_011__571647c8-ff42-4144-8184-1a00d598d7cd.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seue_011__571647c8-ff42-4144-8184-1a00d598d7cd.jpg",
+   "name": "seue_011.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seue_011__571647c8-ff42-4144-8184-1a00d598d7cd.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 171437,
+   "uploaded_bytes": 171437,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuf_001__16f35b60-f21b-4bee-b7c1-233a03a62dfa.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuf_001__16f35b60-f21b-4bee-b7c1-233a03a62dfa.jpg",
+   "name": "seuf_001.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuf_001__16f35b60-f21b-4bee-b7c1-233a03a62dfa.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 111302,
+   "uploaded_bytes": 111302,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuf_002__b90538c6-ec66-4d20-beed-ca1aa17d0418.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuf_002__b90538c6-ec66-4d20-beed-ca1aa17d0418.jpg",
+   "name": "seuf_002.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuf_002__b90538c6-ec66-4d20-beed-ca1aa17d0418.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 166909,
+   "uploaded_bytes": 166909,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuf_003__b16bad2f-ec71-49d6-bf29-7f17ecc6ad2b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuf_003__b16bad2f-ec71-49d6-bf29-7f17ecc6ad2b.jpg",
+   "name": "seuf_003.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuf_003__b16bad2f-ec71-49d6-bf29-7f17ecc6ad2b.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 112626,
+   "uploaded_bytes": 112626,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuf_004__11b1362d-03a7-43b7-8bc9-dc61cbb9e220.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuf_004__11b1362d-03a7-43b7-8bc9-dc61cbb9e220.jpg",
+   "name": "seuf_004.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuf_004__11b1362d-03a7-43b7-8bc9-dc61cbb9e220.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 172958,
+   "uploaded_bytes": 172958,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuf_006__742f0e64-3d96-41db-82f9-591e323a9b8e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuf_006__742f0e64-3d96-41db-82f9-591e323a9b8e.jpg",
+   "name": "seuf_006.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuf_006__742f0e64-3d96-41db-82f9-591e323a9b8e.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 104826,
+   "uploaded_bytes": 104826,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuf_007__67dab4bb-63bd-411f-9e49-b0b70d687ced.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuf_007__67dab4bb-63bd-411f-9e49-b0b70d687ced.jpg",
+   "name": "seuf_007.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuf_007__67dab4bb-63bd-411f-9e49-b0b70d687ced.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 248685,
+   "uploaded_bytes": 248685,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuf_008__df1477ba-902a-49b8-b25f-76fbd5357ce7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuf_008__df1477ba-902a-49b8-b25f-76fbd5357ce7.jpg",
+   "name": "seuf_008.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuf_008__df1477ba-902a-49b8-b25f-76fbd5357ce7.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 151475,
+   "uploaded_bytes": 151475,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuf_009__012321eb-f027-42f5-b982-b68679655967.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuf_009__012321eb-f027-42f5-b982-b68679655967.jpg",
+   "name": "seuf_009.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuf_009__012321eb-f027-42f5-b982-b68679655967.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 194507,
+   "uploaded_bytes": 194507,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuf_010__4825c177-d924-4076-ae97-39618e19c06e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuf_010__4825c177-d924-4076-ae97-39618e19c06e.jpg",
+   "name": "seuf_010.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuf_010__4825c177-d924-4076-ae97-39618e19c06e.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 111159,
+   "uploaded_bytes": 111159,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuf_011__ee3ec4b5-8822-4b24-81cb-6f4075eb37d3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuf_011__ee3ec4b5-8822-4b24-81cb-6f4075eb37d3.jpg",
+   "name": "seuf_011.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuf_011__ee3ec4b5-8822-4b24-81cb-6f4075eb37d3.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 232615,
+   "uploaded_bytes": 232615,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuf_012__58a6e535-3e08-4de8-92e2-366528dcdbf1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuf_012__58a6e535-3e08-4de8-92e2-366528dcdbf1.jpg",
+   "name": "seuf_012.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuf_012__58a6e535-3e08-4de8-92e2-366528dcdbf1.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 109531,
+   "uploaded_bytes": 109531,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seug_002__00cb46b2-7cba-43ea-a6c1-358e6977e050.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seug_002__00cb46b2-7cba-43ea-a6c1-358e6977e050.jpg",
+   "name": "seug_002.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seug_002__00cb46b2-7cba-43ea-a6c1-358e6977e050.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 151061,
+   "uploaded_bytes": 151061,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seug_003__04b70bcc-ae82-4867-bf40-cb982619a746.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seug_003__04b70bcc-ae82-4867-bf40-cb982619a746.jpg",
+   "name": "seug_003.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seug_003__04b70bcc-ae82-4867-bf40-cb982619a746.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 234812,
+   "uploaded_bytes": 234812,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seug_004__5a0a27fc-096d-4c26-8223-238d9540b8f8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seug_004__5a0a27fc-096d-4c26-8223-238d9540b8f8.jpg",
+   "name": "seug_004.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seug_004__5a0a27fc-096d-4c26-8223-238d9540b8f8.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 179175,
+   "uploaded_bytes": 179175,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seug_005__9185fd9a-58c9-409d-ab60-dbf16bb8c8e3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seug_005__9185fd9a-58c9-409d-ab60-dbf16bb8c8e3.jpg",
+   "name": "seug_005.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seug_005__9185fd9a-58c9-409d-ab60-dbf16bb8c8e3.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 200974,
+   "uploaded_bytes": 200974,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seug_006__e27d1491-f20f-49f3-8249-b969cdde89cc.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seug_006__e27d1491-f20f-49f3-8249-b969cdde89cc.jpg",
+   "name": "seug_006.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seug_006__e27d1491-f20f-49f3-8249-b969cdde89cc.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 143991,
+   "uploaded_bytes": 143991,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seug_007__e12ed70d-999e-4a79-9f68-a42cbc1f7312.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seug_007__e12ed70d-999e-4a79-9f68-a42cbc1f7312.jpg",
+   "name": "seug_007.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seug_007__e12ed70d-999e-4a79-9f68-a42cbc1f7312.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 127522,
+   "uploaded_bytes": 127522,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seug_010__906b5de7-a207-4f5f-be30-8e11f15bc449.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seug_010__906b5de7-a207-4f5f-be30-8e11f15bc449.jpg",
+   "name": "seug_010.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seug_010__906b5de7-a207-4f5f-be30-8e11f15bc449.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 207032,
+   "uploaded_bytes": 207032,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seug_012__b1afb109-552b-4ed4-850b-205ad99d8b01.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seug_012__b1afb109-552b-4ed4-850b-205ad99d8b01.jpg",
+   "name": "seug_012.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seug_012__b1afb109-552b-4ed4-850b-205ad99d8b01.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 101139,
+   "uploaded_bytes": 101139,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuh_001__6da98fd7-ea2c-4090-a51f-334427facfc1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuh_001__6da98fd7-ea2c-4090-a51f-334427facfc1.jpg",
+   "name": "seuh_001.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuh_001__6da98fd7-ea2c-4090-a51f-334427facfc1.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 111619,
+   "uploaded_bytes": 111619,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuh_002__65f606be-b0ff-4a6a-9587-71b9922ff1df.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuh_002__65f606be-b0ff-4a6a-9587-71b9922ff1df.jpg",
+   "name": "seuh_002.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuh_002__65f606be-b0ff-4a6a-9587-71b9922ff1df.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 157607,
+   "uploaded_bytes": 157607,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuh_003__3e8ba810-d95b-41ea-906b-1f9b604eedaa.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuh_003__3e8ba810-d95b-41ea-906b-1f9b604eedaa.jpg",
+   "name": "seuh_003.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuh_003__3e8ba810-d95b-41ea-906b-1f9b604eedaa.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 174014,
+   "uploaded_bytes": 174014,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuh_004__9d5a32e7-cd7d-4138-acee-57a2286bc6fe.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuh_004__9d5a32e7-cd7d-4138-acee-57a2286bc6fe.jpg",
+   "name": "seuh_004.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuh_004__9d5a32e7-cd7d-4138-acee-57a2286bc6fe.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 127795,
+   "uploaded_bytes": 127795,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuh_005__3bc23b6a-40ab-4b39-97ab-1aa10ba2973d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuh_005__3bc23b6a-40ab-4b39-97ab-1aa10ba2973d.jpg",
+   "name": "seuh_005.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuh_005__3bc23b6a-40ab-4b39-97ab-1aa10ba2973d.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 186001,
+   "uploaded_bytes": 186001,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuh_006__c4845857-ccd1-4a2d-a54a-da3667c1d1ec.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuh_006__c4845857-ccd1-4a2d-a54a-da3667c1d1ec.jpg",
+   "name": "seuh_006.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuh_006__c4845857-ccd1-4a2d-a54a-da3667c1d1ec.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 179030,
+   "uploaded_bytes": 179030,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuh_007__909c6d85-d6f1-4ce4-a2b4-495cf3249887.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuh_007__909c6d85-d6f1-4ce4-a2b4-495cf3249887.jpg",
+   "name": "seuh_007.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuh_007__909c6d85-d6f1-4ce4-a2b4-495cf3249887.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 165437,
+   "uploaded_bytes": 165437,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuh_008__d2c76452-0b8f-40e9-b20f-e91082b69335.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuh_008__d2c76452-0b8f-40e9-b20f-e91082b69335.jpg",
+   "name": "seuh_008.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuh_008__d2c76452-0b8f-40e9-b20f-e91082b69335.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 153717,
+   "uploaded_bytes": 153717,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuh_009__81968051-e79c-498a-8f4a-c09423dc8be5.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuh_009__81968051-e79c-498a-8f4a-c09423dc8be5.jpg",
+   "name": "seuh_009.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuh_009__81968051-e79c-498a-8f4a-c09423dc8be5.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 121315,
+   "uploaded_bytes": 121315,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuh_010__babbe87f-7615-447e-b150-32ea2b847a82.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuh_010__babbe87f-7615-447e-b150-32ea2b847a82.jpg",
+   "name": "seuh_010.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuh_010__babbe87f-7615-447e-b150-32ea2b847a82.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 158319,
+   "uploaded_bytes": 158319,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuh_011__baa8f656-82f3-44d9-a902-9e01c9621657.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuh_011__baa8f656-82f3-44d9-a902-9e01c9621657.jpg",
+   "name": "seuh_011.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuh_011__baa8f656-82f3-44d9-a902-9e01c9621657.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 233127,
+   "uploaded_bytes": 233127,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-wu-restorative/seu/seuh_012__1525c727-b812-4509-80d9-cb7f1cfe6eb8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-wu-restorative/seu/seuh_012__1525c727-b812-4509-80d9-cb7f1cfe6eb8.jpg",
+   "name": "seuh_012.jpg",
+   "type": "image",
+   "folder": "seu",
+   "media_id": "templates/2025-wu-restorative/seu/seuh_012__1525c727-b812-4509-80d9-cb7f1cfe6eb8.jpg",
+   "logicalFolder": "seu",
+   "original_bytes": 158581,
+   "uploaded_bytes": 158581,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Integrating Street View Images, Deep Learning, and sDNA for Evaluating University Campus Outdoor Public Spaces: A Focus on Restorative Benefits and Accessibility",
+  "authors": [
+   "Wu T.",
+   "Lin D.",
+   "Chen Y.",
+   "Wu J."
+  ],
+  "year": 2025,
+  "venue": "Land",
+  "doi": "10.3390/land14030610",
+  "url": "https://doi.org/10.3390/land14030610"
+ }
+}

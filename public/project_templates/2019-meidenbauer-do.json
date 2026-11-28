@@ -1,0 +1,420 @@
+{
+ "id": "2019-meidenbauer-do",
+ "name": "Do Children Prefer Nature? Picture Sorting",
+ "description": "Rebuilt from the published description of Meidenbauer, Stenfors, Young, Layden, Schertz, Kardan, Decety & Berman (2019) and the task paper by Meidenbauer, Stenfors, Ingram & Berman (2019, MethodsX). Children aged 4–11 and their parents sort sets of four nature and city pictures by dragging them from the one they like least (frowny face) to the one they like most (smiley face). There are 10 sets drawn from one picture set of 10 (5 nature, 5 urban); every picture appears four times and every pair of pictures meets at least once, as in the paper's app. Picture and start positions are random. The researcher enters role (child or parent), age and gender; a family code pairs each child with their parent. In the paper, parents preferred nature, while children preferred the urban scenes, and that urban preference weakened with age. Differences from the original study: (1) The paper used an Android tablet app; this is a web page that works on any tablet, with drag or tap-to-swap. (2) The paper's two 10-picture sets were matched on adult preference (from the authors' validation ratings) and are on OSF (osf.io/xj3pk). The bundled sets are 2 × (5 nature + 5 urban) pictures from the same CC BY source set (Berman et al., 2014), chosen at random and not matched on preference. For a faithful replication, replace folders set1 and set2 with the OSF sets. (3) The practice round with pictures of children's bedrooms is replaced by spoken instructions on screen. (4) The family code is an addition.",
+ "author": "Meidenbauer, Stenfors, Young, Layden, Schertz, Kardan, Decety & Berman",
+ "year": "2019",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "ranking",
+  "children",
+  "nature",
+  "preference",
+  "tablet",
+  "source:paper",
+  "modality:scene_photo",
+  "task:choose_from_set",
+  "concept:preference",
+  "concept:naturalness",
+  "participants:lab",
+  "country:USA",
+  "city:Chicago"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1016/j.jenvp.2019.101328",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-26T15:31:45.056+00:00",
+ "updatedAt": "2026-11-26T15:31:57.43+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "setup",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "A parent or guardian agrees that the child and the parent take part. Answers are recorded anonymously for research.",
+      "labelTrue": "We agree",
+      "isRequired": true,
+      "labelFalse": "We do not agree"
+     },
+     {
+      "name": "role",
+      "type": "radiogroup",
+      "title": "Who is sorting the pictures? (filled in by the researcher)",
+      "choices": [
+       {
+        "text": "Child",
+        "value": "child"
+       },
+       {
+        "text": "Parent or guardian",
+        "value": "parent"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "max": 99,
+      "min": 3,
+      "name": "age",
+      "type": "text",
+      "title": "Age (years)",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Girl / woman",
+        "value": "girl_woman"
+       },
+       {
+        "text": "Boy / man",
+        "value": "boy_man"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ]
+     },
+     {
+      "name": "family_id",
+      "type": "text",
+      "title": "Family code, to pair a child with their parent (optional)"
+     },
+     {
+      "name": "picture_set",
+      "type": "radiogroup",
+      "title": "Picture set (set by the page at random)",
+      "choices": [
+       {
+        "text": "Picture set 1",
+        "value": "set1"
+       },
+       {
+        "text": "Picture set 2",
+        "value": "set2"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "sorting",
+    "elements": [
+     {
+      "name": "sort_pictures",
+      "type": "imageranking",
+      "title": "Put the pictures in order, from the one you like least (frowny face) to the one you like most (smiley face).",
+      "choices": [],
+      "imageCount": 4,
+      "isRequired": true,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   }
+  ],
+  "title": "Do Children Prefer Nature? Picture Sorting",
+  "locale": "en",
+  "spSite": {
+   "id": "site-ade2790c95984ee4",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Do Children Prefer Nature? Picture Sorting</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Do Children Prefer Nature? Picture Sorting\",\n    \"description\": \"Children (4–11) and their parents sort sets of four nature and city pictures from the one they like least (frowny face) to the one they like most (smiley face). Rebuilt from Meidenbauer, Stenfors, Young, Layden, Schertz, Kardan, Decety & Berman (2019).\",\n    \"locale\": \"en\",\n    \"mediaFolders\": [\"set1\", \"set2\"],\n    \"pages\": [\n      { \"name\": \"setup\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"A parent or guardian agrees that the child and the parent take part. Answers are recorded anonymously for research.\", \"isRequired\": true, \"labelTrue\": \"We agree\", \"labelFalse\": \"We do not agree\" },\n        { \"type\": \"radiogroup\", \"name\": \"role\", \"title\": \"Who is sorting the pictures? (filled in by the researcher)\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"child\", \"text\": \"Child\" }, { \"value\": \"parent\", \"text\": \"Parent or guardian\" } ] },\n        { \"type\": \"text\", \"inputType\": \"number\", \"name\": \"age\", \"title\": \"Age (years)\", \"min\": 3, \"max\": 99, \"isRequired\": true },\n        { \"type\": \"radiogroup\", \"name\": \"gender\", \"title\": \"Gender\", \"choices\": [\n          { \"value\": \"girl_woman\", \"text\": \"Girl / woman\" }, { \"value\": \"boy_man\", \"text\": \"Boy / man\" }, { \"value\": \"other\", \"text\": \"Other / prefer not to say\" } ] },\n        { \"type\": \"text\", \"name\": \"family_id\", \"title\": \"Family code, to pair a child with their parent (optional)\" },\n        { \"type\": \"radiogroup\", \"name\": \"picture_set\", \"title\": \"Picture set (set by the page at random)\", \"choices\": [\n          { \"value\": \"set1\", \"text\": \"Picture set 1\" }, { \"value\": \"set2\", \"text\": \"Picture set 2\" } ] }\n      ]},\n      { \"name\": \"sorting\", \"elements\": [\n        { \"type\": \"imageranking\", \"name\": \"sort_pictures\", \"title\": \"Put the pictures in order, from the one you like least (frowny face) to the one you like most (smiley face).\", \"imageCount\": 4, \"isRequired\": true }\n      ]}\n    ]\n  }\n}\n</script>\n<style>\n:root{--bg:#fbf8f2;--card:#fff;--ink:#22201b;--muted:#625d52;--accent:#2f7d5b;--accent-ink:#fff;--line:#e4ddcf;--pick:#f3c64f}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:1100px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.5rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:12px;padding:14px 22px;font:inherit;font-weight:700;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput[type=number],input[type=text]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:200px}\n.progress{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin:8px 0 14px}.progress>i{display:block;height:100%;background:var(--accent)}\n.board{display:flex;align-items:center;gap:10px}\n.face{font-size:2.6rem;line-height:1;flex:0 0 auto;user-select:none}\n.row{flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;touch-action:none}\n.pic{position:relative;border-radius:12px;overflow:hidden;border:4px solid transparent;cursor:grab;background:#ddd;aspect-ratio:4/3;user-select:none;-webkit-user-select:none}\n.pic img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}\n.pic.sel{border-color:var(--pick)}\n.pic.drag{opacity:.85;cursor:grabbing;z-index:5;box-shadow:0 8px 24px rgba(0,0,0,.25)}\n.hint{font-size:.9rem;color:var(--muted);margin-top:8px}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n@media (max-width:700px){.row{grid-template-columns:repeat(2,1fr)}.face{font-size:2rem}}\n.credit{max-width:1100px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Pictures: stimuli of Berman et al. (2014), PLOS ONE 9(12): e114572, S2 Data, Creative Commons Attribution License.</footer>\n<script>\n(function(){\n  // 10 trials of 4 pictures from a set of 10: every picture appears 4 times and\n  // every pair of pictures meets at least once, as in the paper's app.\n  var DESIGN=[[0,1,2,9],[0,1,3,4],[0,3,5,6],[0,6,7,8],[1,3,6,8],[1,4,5,7],[2,3,7,9],[2,4,5,8],[2,4,6,9],[5,7,8,9]];\n  var app=document.getElementById('app'), Q={}, set=null, files=[], trials=[], done={}, t=0;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var x=a[k];a[k]=a[j];a[j]=x;}return a;}\n  function store(k,v){try{localStorage.setItem('kidsnature2019:'+k,JSON.stringify(v));}catch(e){}}\n  function load(k){try{return JSON.parse(localStorage.getItem('kidsnature2019:'+k));}catch(e){return null;}}\n  function setup(){\n    var sets=['set1','set2'].filter(function(s){return (SPSite.getMedia(s)||[]).length>=10;});\n    var saved=load('plan');\n    if(saved&&sets.indexOf(saved.set)>=0){\n      var by={};(SPSite.getMedia(saved.set)||[]).forEach(function(f){by[f.name]=f;});\n      if(saved.files.every(function(n){return by[n];})){set=saved.set;files=saved.files.map(function(n){return by[n];});trials=saved.trials;return;}\n    }\n    if(!sets.length)return;\n    set=sets[Math.floor(Math.random()*sets.length)];\n    files=shuffle(SPSite.getMedia(set)).slice(0,10);          // random picture-to-slot mapping\n    trials=shuffle(DESIGN).map(function(b){return shuffle(b);}); // random trial order and start positions\n    store('plan',{set:set,files:files.map(function(f){return f.name;}),trials:trials});\n  }\n  function setupPage(){\n    if(!files.length){app.innerHTML='<h1>No pictures yet</h1><p>The researcher has not added 10 pictures to the folder “set1” or “set2”.</p>';return;}\n    var radios=function(n){return (Q[n].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');};\n    app.innerHTML='<h1>Picture sorting</h1><p>For the researcher: fill this in, then hand the tablet to the participant. A child and their parent each do the task once; give both the same family code.</p>'+\n      '<div class=\"card\"><label class=\"opt\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label>'+\n      '<div class=\"q\"><b>'+esc(Q.role.title)+'</b>'+radios('role')+'</div>'+\n      '<div class=\"q\"><b>'+esc(Q.age.title)+'</b><input type=\"number\" id=\"age\" min=\"3\" max=\"99\" inputmode=\"numeric\"></div>'+\n      '<div class=\"q\"><b>'+esc(Q.gender.title)+'</b>'+radios('gender')+'</div>'+\n      '<div class=\"q\"><b>'+esc(Q.family_id.title)+'</b><input type=\"text\" id=\"fam\" maxlength=\"40\"></div>'+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var role=(app.querySelector('input[name=role]:checked')||{}).value, age=document.getElementById('age').value, g=(app.querySelector('input[name=gender]:checked')||{}).value, fam=document.getElementById('fam').value.trim();\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      if(!role)return err('Please choose who is sorting the pictures.');\n      if(age==='')return err('Please enter the age.');\n      var b=this;b.disabled=true;\n      var steps=[SPSite.answer('consent',true),SPSite.answer('role',role),SPSite.answer('age',Number(age)),SPSite.answer('picture_set',set)];\n      if(g)steps.push(SPSite.answer('gender',g)); if(fam)steps.push(SPSite.answer('family_id',fam));\n      Promise.all(steps).then(function(rs){var bad=rs.filter(function(r){return r&&r.ok===false;})[0];if(bad){b.disabled=false;return err(bad.error);}instructions(role);});\n    };\n  }\n  function instructions(role){\n    var child=role!=='parent';\n    app.innerHTML='<h1>'+(child?'Let’s sort some pictures!':'Sort the pictures')+'</h1><div class=\"card\"><p style=\"color:var(--ink)\">You are about to see sets of four pictures. Put them in order based on how much you like them. On one end there is a frowny face 🙁 and on the other a smiley face 🙂. Move the pictures so that the one you like the <b>least</b> is next to the frowny face and the one you like the <b>most</b> is next to the smiley face. Then press the green button to go to the next set.</p>'+\n      '<p>Drag a picture to move it, or tap two pictures to swap them.</p><button class=\"btn\" id=\"go\">Start</button></div>';\n    document.getElementById('go').onclick=function(){t=0;next();};\n  }\n  function next(){\n    while(t<trials.length&&done[t])t++;\n    if(t>=trials.length)return finish();\n    var order=trials[t].map(function(k){return files[k];}); // left (frowny) to right (smiley)\n    var shown=order.map(function(f){return f.name;});       // as first shown: image_0..image_3\n    app.innerHTML='<p>Set '+(t+1)+' of '+trials.length+'</p><div class=\"progress\"><i style=\"width:'+(100*t/trials.length)+'%\"></i></div>'+\n      '<div class=\"board\"><span class=\"face\" aria-label=\"least liked\">🙁</span><div class=\"row\" id=\"row\"></div><span class=\"face\" aria-label=\"most liked\">🙂</span></div>'+\n      '<div class=\"hint\">Least liked ← → Most liked</div><div style=\"margin-top:18px\"><button class=\"btn\" id=\"nx\">Done ✓</button></div><div class=\"err\"></div>';\n    var row=document.getElementById('row'), cur=order.slice(), sel=-1;\n    function draw(){row.innerHTML=cur.map(function(f,i){return '<div class=\"pic'+(i===sel?' sel':'')+'\" data-i=\"'+i+'\"><img src=\"'+esc(f.url)+'\" alt=\"Picture\" draggable=\"false\"></div>';}).join('');}\n    draw();\n    var drag=null;\n    row.addEventListener('pointerdown',function(e){var el=e.target.closest('.pic');if(!el)return;drag={i:+el.getAttribute('data-i'),x:e.clientX,y:e.clientY,el:el,moved:false};el.setPointerCapture(e.pointerId);});\n    row.addEventListener('pointermove',function(e){if(!drag)return;var dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(!drag.moved&&Math.hypot(dx,dy)<8)return;drag.moved=true;drag.el.classList.add('drag');drag.el.style.transform='translate('+dx+'px,'+dy+'px)';});\n    row.addEventListener('pointerup',function(e){\n      if(!drag)return;var d=drag;drag=null;\n      if(!d.moved){ // tap: select, then tap another to swap\n        if(sel<0){sel=d.i;}else if(sel===d.i){sel=-1;}else{var x=cur[sel];cur[sel]=cur[d.i];cur[d.i]=x;sel=-1;}\n        draw();return;\n      }\n      d.el.style.visibility='hidden';var under=document.elementFromPoint(e.clientX,e.clientY);d.el.style.visibility='';\n      var tgt=under&&under.closest?under.closest('.pic'):null;\n      if(tgt&&row.contains(tgt)){var j=+tgt.getAttribute('data-i');var f=cur.splice(d.i,1)[0];cur.splice(j,0,f);}\n      sel=-1;draw();\n    });\n    row.addEventListener('pointercancel',function(){drag=null;draw();});\n    document.getElementById('nx').onclick=function(){\n      var b=this;b.disabled=true;\n      // ranking value: best first, as image_<position in which it was first shown>\n      var best=cur.slice().reverse().map(function(f){return 'image_'+shown.indexOf(f.name);});\n      SPSite.answer('sort_pictures',best,{key:'set'+(t+1),shown:shown}).then(function(r){\n        if(r&&r.ok===false){b.disabled=false;return err(r.error);}\n        done[t]=true;t++;next();\n      });\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>All done — thank you!</h1><div class=\"card\"><p>Saving…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){err(r.error||'Some answers are missing.');var m=r.missing||[];if(m.indexOf('consent')>=0||m.indexOf('role')>=0||m.indexOf('age')>=0)setupPage();else{done={};t=0;next();}}});\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','role','age','gender','family_id','picture_set','sort_pictures'].forEach(function(n){Q[n]=SPSite.getQuestion(n);});\n    setup();\n    var a=(ctx&&ctx.answers)||{};\n    var p=a.sort_pictures; var keys={};(p&&Array.isArray(p.trials)?p.trials:[]).forEach(function(x){if(x&&x.key!=null&&x.value!=null)keys[x.key]=1;});\n    trials.forEach(function(_,i){if(keys['set'+(i+1)])done[i]=true;});\n    if(a.consent===true&&a.role&&a.age!=null)instructions(a.role);else setupPage();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-26T15:31:14.580Z",
+   "mediaFolders": [
+    "set1",
+    "set2"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-26T15:31:14.580Z"
+  },
+  "description": "Children (4–11) and their parents sort sets of four nature and city pictures from the one they like least (frowny face) to the one they like most (smiley face). Rebuilt from Meidenbauer, Stenfors, Young, Layden, Schertz, Kardan, Decety & Berman (2019).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2019-meidenbauer-do/set1/nature_Nature18__0a46b35c-f7d7-4348-bdf8-9fc2dbe0614e.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set1/nature_Nature18__0a46b35c-f7d7-4348-bdf8-9fc2dbe0614e.jpg",
+   "name": "nature_Nature18.jpg",
+   "type": "image",
+   "folder": "set1",
+   "media_id": "templates/2019-meidenbauer-do/set1/nature_Nature18__0a46b35c-f7d7-4348-bdf8-9fc2dbe0614e.jpg",
+   "logicalFolder": "set1",
+   "original_bytes": 88263,
+   "uploaded_bytes": 88263,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-meidenbauer-do/set1/nature_Nature19__eae0b546-0189-4729-ad22-5f78f8ef2f52.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set1/nature_Nature19__eae0b546-0189-4729-ad22-5f78f8ef2f52.jpg",
+   "name": "nature_Nature19.jpg",
+   "type": "image",
+   "folder": "set1",
+   "media_id": "templates/2019-meidenbauer-do/set1/nature_Nature19__eae0b546-0189-4729-ad22-5f78f8ef2f52.jpg",
+   "logicalFolder": "set1",
+   "original_bytes": 76275,
+   "uploaded_bytes": 76275,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-meidenbauer-do/set1/nature_Nature23__0165db97-79ca-4338-89b4-07c39c4e44f7.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set1/nature_Nature23__0165db97-79ca-4338-89b4-07c39c4e44f7.jpg",
+   "name": "nature_Nature23.jpg",
+   "type": "image",
+   "folder": "set1",
+   "media_id": "templates/2019-meidenbauer-do/set1/nature_Nature23__0165db97-79ca-4338-89b4-07c39c4e44f7.jpg",
+   "logicalFolder": "set1",
+   "original_bytes": 65999,
+   "uploaded_bytes": 65999,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-meidenbauer-do/set1/nature_Nature38__72d3475a-06ea-41d6-b893-42c0139f1ebd.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set1/nature_Nature38__72d3475a-06ea-41d6-b893-42c0139f1ebd.jpg",
+   "name": "nature_Nature38.jpg",
+   "type": "image",
+   "folder": "set1",
+   "media_id": "templates/2019-meidenbauer-do/set1/nature_Nature38__72d3475a-06ea-41d6-b893-42c0139f1ebd.jpg",
+   "logicalFolder": "set1",
+   "original_bytes": 106219,
+   "uploaded_bytes": 106219,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-meidenbauer-do/set1/nature_Nature8__c2997951-4fac-4cb7-960f-37c30139b449.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set1/nature_Nature8__c2997951-4fac-4cb7-960f-37c30139b449.jpg",
+   "name": "nature_Nature8.jpg",
+   "type": "image",
+   "folder": "set1",
+   "media_id": "templates/2019-meidenbauer-do/set1/nature_Nature8__c2997951-4fac-4cb7-960f-37c30139b449.jpg",
+   "logicalFolder": "set1",
+   "original_bytes": 65853,
+   "uploaded_bytes": 65853,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-meidenbauer-do/set1/urban_Urban26__9cde967e-66af-4769-bc94-2673eb097a64.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set1/urban_Urban26__9cde967e-66af-4769-bc94-2673eb097a64.jpg",
+   "name": "urban_Urban26.jpg",
+   "type": "image",
+   "folder": "set1",
+   "media_id": "templates/2019-meidenbauer-do/set1/urban_Urban26__9cde967e-66af-4769-bc94-2673eb097a64.jpg",
+   "logicalFolder": "set1",
+   "original_bytes": 50151,
+   "uploaded_bytes": 50151,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-meidenbauer-do/set1/urban_Urban33__f8914650-9c2b-45a5-9913-4d86c40877dd.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set1/urban_Urban33__f8914650-9c2b-45a5-9913-4d86c40877dd.jpg",
+   "name": "urban_Urban33.jpg",
+   "type": "image",
+   "folder": "set1",
+   "media_id": "templates/2019-meidenbauer-do/set1/urban_Urban33__f8914650-9c2b-45a5-9913-4d86c40877dd.jpg",
+   "logicalFolder": "set1",
+   "original_bytes": 48470,
+   "uploaded_bytes": 48470,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-meidenbauer-do/set1/urban_Urban44__d3934a80-bf05-4cc5-b16a-b7b9f1981836.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set1/urban_Urban44__d3934a80-bf05-4cc5-b16a-b7b9f1981836.jpg",
+   "name": "urban_Urban44.jpg",
+   "type": "image",
+   "folder": "set1",
+   "media_id": "templates/2019-meidenbauer-do/set1/urban_Urban44__d3934a80-bf05-4cc5-b16a-b7b9f1981836.jpg",
+   "logicalFolder": "set1",
+   "original_bytes": 52063,
+   "uploaded_bytes": 52063,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-meidenbauer-do/set1/urban_Urban47__7d36054d-55e2-4903-ba78-579a00a8cfae.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set1/urban_Urban47__7d36054d-55e2-4903-ba78-579a00a8cfae.jpg",
+   "name": "urban_Urban47.jpg",
+   "type": "image",
+   "folder": "set1",
+   "media_id": "templates/2019-meidenbauer-do/set1/urban_Urban47__7d36054d-55e2-4903-ba78-579a00a8cfae.jpg",
+   "logicalFolder": "set1",
+   "original_bytes": 53223,
+   "uploaded_bytes": 53223,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-meidenbauer-do/set1/urban_Urban8__f5fc87ff-5855-4323-9112-983d717d6832.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set1/urban_Urban8__f5fc87ff-5855-4323-9112-983d717d6832.jpg",
+   "name": "urban_Urban8.jpg",
+   "type": "image",
+   "folder": "set1",
+   "media_id": "templates/2019-meidenbauer-do/set1/urban_Urban8__f5fc87ff-5855-4323-9112-983d717d6832.jpg",
+   "logicalFolder": "set1",
+   "original_bytes": 48758,
+   "uploaded_bytes": 48758,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-meidenbauer-do/set2/nature_Nature28__37d0c02d-d837-4f68-bc9a-a0d643a44041.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set2/nature_Nature28__37d0c02d-d837-4f68-bc9a-a0d643a44041.jpg",
+   "name": "nature_Nature28.jpg",
+   "type": "image",
+   "folder": "set2",
+   "media_id": "templates/2019-meidenbauer-do/set2/nature_Nature28__37d0c02d-d837-4f68-bc9a-a0d643a44041.jpg",
+   "logicalFolder": "set2",
+   "original_bytes": 69864,
+   "uploaded_bytes": 69864,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-meidenbauer-do/set2/nature_Nature46__3db56819-9308-416f-bdbc-40ab172b5dfb.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set2/nature_Nature46__3db56819-9308-416f-bdbc-40ab172b5dfb.jpg",
+   "name": "nature_Nature46.jpg",
+   "type": "image",
+   "folder": "set2",
+   "media_id": "templates/2019-meidenbauer-do/set2/nature_Nature46__3db56819-9308-416f-bdbc-40ab172b5dfb.jpg",
+   "logicalFolder": "set2",
+   "original_bytes": 61233,
+   "uploaded_bytes": 61233,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-meidenbauer-do/set2/nature_Nature47__a3662f77-5e4d-43bc-b38a-a2ecec7c899c.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set2/nature_Nature47__a3662f77-5e4d-43bc-b38a-a2ecec7c899c.jpg",
+   "name": "nature_Nature47.jpg",
+   "type": "image",
+   "folder": "set2",
+   "media_id": "templates/2019-meidenbauer-do/set2/nature_Nature47__a3662f77-5e4d-43bc-b38a-a2ecec7c899c.jpg",
+   "logicalFolder": "set2",
+   "original_bytes": 64144,
+   "uploaded_bytes": 64144,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-meidenbauer-do/set2/nature_Nature5__703b9d9c-5418-4d23-87e5-8ea5dd1fc902.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set2/nature_Nature5__703b9d9c-5418-4d23-87e5-8ea5dd1fc902.jpg",
+   "name": "nature_Nature5.jpg",
+   "type": "image",
+   "folder": "set2",
+   "media_id": "templates/2019-meidenbauer-do/set2/nature_Nature5__703b9d9c-5418-4d23-87e5-8ea5dd1fc902.jpg",
+   "logicalFolder": "set2",
+   "original_bytes": 88714,
+   "uploaded_bytes": 88714,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-meidenbauer-do/set2/nature_Nature50__10b37d6f-df9d-4ab2-a9fa-04334c52f912.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set2/nature_Nature50__10b37d6f-df9d-4ab2-a9fa-04334c52f912.jpg",
+   "name": "nature_Nature50.jpg",
+   "type": "image",
+   "folder": "set2",
+   "media_id": "templates/2019-meidenbauer-do/set2/nature_Nature50__10b37d6f-df9d-4ab2-a9fa-04334c52f912.jpg",
+   "logicalFolder": "set2",
+   "original_bytes": 70999,
+   "uploaded_bytes": 70999,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-meidenbauer-do/set2/urban_Urban13__1145fa52-7ed0-4270-a78e-2117182dcb19.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set2/urban_Urban13__1145fa52-7ed0-4270-a78e-2117182dcb19.jpg",
+   "name": "urban_Urban13.jpg",
+   "type": "image",
+   "folder": "set2",
+   "media_id": "templates/2019-meidenbauer-do/set2/urban_Urban13__1145fa52-7ed0-4270-a78e-2117182dcb19.jpg",
+   "logicalFolder": "set2",
+   "original_bytes": 66109,
+   "uploaded_bytes": 66109,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-meidenbauer-do/set2/urban_Urban23__03b6ee22-f89e-4520-9d54-16e0fc66e5e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set2/urban_Urban23__03b6ee22-f89e-4520-9d54-16e0fc66e5e7.jpg",
+   "name": "urban_Urban23.jpg",
+   "type": "image",
+   "folder": "set2",
+   "media_id": "templates/2019-meidenbauer-do/set2/urban_Urban23__03b6ee22-f89e-4520-9d54-16e0fc66e5e7.jpg",
+   "logicalFolder": "set2",
+   "original_bytes": 41177,
+   "uploaded_bytes": 41177,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-meidenbauer-do/set2/urban_Urban36__e3f1aea3-af89-4c88-921f-9f7c3d8f84ba.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set2/urban_Urban36__e3f1aea3-af89-4c88-921f-9f7c3d8f84ba.jpg",
+   "name": "urban_Urban36.jpg",
+   "type": "image",
+   "folder": "set2",
+   "media_id": "templates/2019-meidenbauer-do/set2/urban_Urban36__e3f1aea3-af89-4c88-921f-9f7c3d8f84ba.jpg",
+   "logicalFolder": "set2",
+   "original_bytes": 54080,
+   "uploaded_bytes": 54080,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-meidenbauer-do/set2/urban_Urban45__e5fb9469-e0b7-4c39-8eaa-bc2edc5ffb47.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set2/urban_Urban45__e5fb9469-e0b7-4c39-8eaa-bc2edc5ffb47.jpg",
+   "name": "urban_Urban45.jpg",
+   "type": "image",
+   "folder": "set2",
+   "media_id": "templates/2019-meidenbauer-do/set2/urban_Urban45__e5fb9469-e0b7-4c39-8eaa-bc2edc5ffb47.jpg",
+   "logicalFolder": "set2",
+   "original_bytes": 37605,
+   "uploaded_bytes": 37605,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-meidenbauer-do/set2/urban_Urban50__a9082ea8-1cb8-46b3-b834-11c3013ce232.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-meidenbauer-do/set2/urban_Urban50__a9082ea8-1cb8-46b3-b834-11c3013ce232.jpg",
+   "name": "urban_Urban50.jpg",
+   "type": "image",
+   "folder": "set2",
+   "media_id": "templates/2019-meidenbauer-do/set2/urban_Urban50__a9082ea8-1cb8-46b3-b834-11c3013ce232.jpg",
+   "logicalFolder": "set2",
+   "original_bytes": 51649,
+   "uploaded_bytes": 51649,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "The gradual development of the preference for natural environments",
+  "authors": [
+   "Kimberly L. Meidenbauer",
+   "Cecilia U.D. Stenfors",
+   "Jaime Young",
+   "Elliot A. Layden",
+   "Kathryn E. Schertz",
+   "Omid Kardan",
+   "Jean Decety",
+   "Marc G. Berman"
+  ],
+  "year": 2019,
+  "venue": "Journal of Environmental Psychology",
+  "doi": "10.1016/j.jenvp.2019.101328",
+  "url": "https://doi.org/10.1016/j.jenvp.2019.101328"
+ }
+}

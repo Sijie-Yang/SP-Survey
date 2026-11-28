@@ -48,14 +48,16 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000/studio and click **Start from the example**: a working study with a participant preview, with no key and no account. Open http://localhost:3000/templates to browse the whole template library and start a project from any study; every template is a file in [`public/project_templates/`](./public/project_templates), mirrored from the online library once a month. To collect real responses you connect your own Supabase and deploy the participant site; [docs/GETTING_STARTED.md](./docs/GETTING_STARTED.md) walks through it. Don't want to install anything? The [hosted platform](https://sp-survey.org) has the same features.
+Open http://localhost:3000/studio and click **Start from the example**: a working study with a participant preview, with no key and no account. Open http://localhost:3000/templates to browse the whole template library and start a project from any study; every template is a file in [`public/project_templates/`](./public/project_templates), mirrored from the online library once a month. Their images, video and audio load from the online library; a full copy is archived under [Releases](https://github.com/Sijie-Yang/SP-Survey/releases). To collect real responses you connect your own Supabase and deploy the participant site; [docs/GETTING_STARTED.md](./docs/GETTING_STARTED.md) walks through it. Don't want to install anything? The [hosted platform](https://sp-survey.org) has the same features.
 
 ## Template library
 
 <!-- templates:start (written by scripts/build-template-catalog.mjs; do not edit this list by hand) -->
-**315 published perception studies**, from 1876 to 2027, across 47 countries and regions. Each one is rebuilt as a ready-to-run survey: [preview, use or download it at sp-survey.org/templates](https://sp-survey.org/templates). Snapshot of 2026-11-28.
+**319 published perception studies**, from 1876 to 2027, across 48 countries and regions. Each one is rebuilt as a ready-to-run survey: [preview, use or download it at sp-survey.org/templates](https://sp-survey.org/templates). Snapshot of 2026-11-28.
 
-[Street view](#street-view) (83) · [Panorama and 360°](#panorama-and-360) (6) · [Landscape, nature and other scene photos](#landscape-nature-and-other-scene-photos) (150) · [Rendered and simulated scenes](#rendered-and-simulated-scenes) (51) · [Indoor](#indoor) (5) · [Window view](#window-view) (1) · [Video](#video) (6) · [Sound](#sound) (5) · [Map](#map) (3) · [In situ](#in-situ) (3) · [Other](#other) (2) · [Demos and examples](#demos-and-examples) (10)
+**Recently added:** Alpine Landscape Liking (rating) (2026-11-28) · Meadows and Lawns: First Impressions and Attractiveness Ratings (Tübingen) (2026-11-28) · Building and Background Trees - Height Ratio Integration Rating (2026-11-28) · Trees Outside Forests Landscape Ranking (2026-11-28) · Urban Meadows and Lawns: Choosing the Most Appealing Green Space (Tübingen) (2026-11-28)
+
+[Street view](#street-view) (84) · [Panorama and 360°](#panorama-and-360) (6) · [Landscape, nature and other scene photos](#landscape-nature-and-other-scene-photos) (150) · [Rendered and simulated scenes](#rendered-and-simulated-scenes) (54) · [Indoor](#indoor) (5) · [Window view](#window-view) (1) · [Video](#video) (6) · [Sound](#sound) (5) · [Map](#map) (3) · [In situ](#in-situ) (3) · [Other](#other) (2) · [Demos and examples](#demos-and-examples) (12)
 
 ### Street view
 
@@ -70,7 +72,7 @@ Open http://localhost:3000/studio and click **Start from the example**: a workin
 | 2026 | Street Perception of Residents and Tourists in Xi'an | [Kuang B. et al. (2026)](https://doi.org/10.1371/journal.pone.0345073), *PLOS ONE* | Multi-scale rating | Xi'an, Mainland China |
 | 2026 | Campus Streetscape Pairwise Comparison (China) – safe, lively, beautiful | [Lin Y. et al. (2026)](https://doi.org/10.3390/buildings16081623), *Buildings* | Pairwise | Beijing, Nanjing, Wuhan, Xiamen, Tianjin, Mainland China |
 | 2026 | Public Art and Restorative Streets | [Liu L. et al. (2026)](https://doi.org/10.3390/buildings16030593), *Buildings* | Multi-scale rating, Questionnaire | Wuhan, Mainland China |
-| 2026 | Street Intervention Before–After Preferences (GSV Time Travel) | [Lopes M.I. et al. (2026)](https://doi.org/10.1016/j.landurbplan.2026.105686), *Landscape and Urban Planning* | Pairwise, Questionnaire | Lisbon, Portugal |
+| 2026 | Street Intervention Before–After Preferences (GSV Time Travel) | [Lopes M.I. et al. (2026)](https://doi.org/10.1016/j.landurbplan.2026.105686), *Landscape and Urban Planning* | Pairwise, Multi-scale rating, Questionnaire | Lisbon, Barcelona, Auckland, Brussels, Portugal, Spain, New Zealand, United States, Belgium, Brazil |
 | 2026 | Street Comfort in Zibo: Twelve Roads | [Ma H. et al. (2026)](https://doi.org/10.3390/su18052220), *Sustainability (Switzerland)* | Rating | Zibo, Mainland China |
 | 2026 | Street Review: rating Montréal streets for inclusivity, aesthetics, practicality and accessibility | [Rashid Mushkani et al. (2026)](https://doi.org/10.1016/j.cities.2025.106602), *Cities* | Multi-scale rating | Montréal, Canada |
 | 2026 | Which Place Looks Greener? Greenery Perception (SPECS, 5 cities) | [Quintana M. et al. (2026)](https://doi.org/10.1016/j.landurbplan.2026.105618), *Landscape and Urban Planning* | Pairwise, Questionnaire | Abuja, Amsterdam, Santiago, Singapore, San Francisco, Nigeria, Netherlands, Chile, United States |
@@ -93,6 +95,7 @@ Open http://localhost:3000/studio and click **Start from the example**: a workin
 | 2025 | Historic District Perceptions (Shanghai) – seven dimensions | [Wang Z. et al. (2025)](https://doi.org/10.3390/su172411075), *Sustainability (Switzerland)* | Multi-scale rating | Shanghai, Mainland China |
 | 2025 | Walkability Through Different Lenses (Michigan street pairs) | [Wedyan M. et al. (2025)](https://doi.org/10.1371/journal.pone.0322078), *PLoS ONE* | Rating, Questionnaire | Lansing, East Lansing, Williamston, United States |
 | 2025 | Restorative Campus Spaces at Southeast University (PRS-11 Panoramas) | [Wu T. et al. (2025)](https://doi.org/10.3390/land14030610), *Land* | Multi-scale rating | Nanjing, Mainland China |
+| 2025 | Perceived Walkability of Xi'an Streets: Professionals and Residents | [Xiao Y. et al. (2025)](https://doi.org/10.1080/12265934.2024.2429824), *International Journal of Urban Sciences* | Rating | Xi'an, Mainland China |
 | 2025 | Riverfront Streets of Suzhou: Beauty and Uniqueness | [Xiong X. et al. (2025)](https://doi.org/10.3390/land14102039), *Land* | Multi-scale rating | Suzhou, Mainland China |
 | 2025 | Emotional Perception of Old Residential Streets (Yangzhou) – six dimensions | [Xu Y. et al. (2025)](https://doi.org/10.3390/ijgi14120471), *ISPRS International Journal of Geo-Information* | Multi-scale rating | Yangzhou, Mainland China |
 | 2025 | Scenic Beauty of Historic Districts (Wuhan) | [Xu H. et al. (2025)](https://doi.org/10.3390/buildings15234338), *Buildings* | Multi-scale rating | Wuhan, Mainland China |
@@ -138,11 +141,11 @@ Open http://localhost:3000/studio and click **Start from the example**: a workin
 | 2017 | Street Panorama Visual Perception (Nanjing) – five grades | [Cheng L. et al. (2017)](https://doi.org/10.3390/ijgi6090265), *ISPRS International Journal of Geo-Information* | Multi-scale rating | Nanjing, Mainland China |
 | 2017 | Perceived Naturalness of Edinburgh Street View (1–7 rating) | [Roger Hyam (2017)](https://doi.org/10.1371/journal.pone.0169357), *PLOS ONE* | Rating | Edinburgh, United Kingdom |
 | 2017 | Facade Quality and Street-Wall Continuity (Beijing) | [Liu L. et al. (2017)](https://doi.org/10.1016/j.compenvurbsys.2017.06.003), *Computers, Environment and Urban Systems* | Rating | Beijing, Mainland China |
-| 2016 | Place Pulse 2.0: Six Urban Perceptions (16 cities) | [Dubey A. et al. (2016)](https://doi.org/10.1007/978-3-319-46448-0_12), *ECCV (Lecture Notes in Computer Science)* | Pairwise | New York, Boston, Toronto, Mexico City, São Paulo, Santiago, London, Paris, Amsterdam, Stockholm, Linz, Salzburg, Bucharest, Johannesburg, Tokyo, Sydney, United States, Canada, Mexico, Brazil, Chile, United Kingdom, France, Netherlands, Sweden, Austria, Romania, South Africa, Japan, Australia |
+| 2016 | Place Pulse 2.0: Six Urban Perceptions (16 cities) | [Dubey A. et al. (2016)](https://doi.org/10.1007/978-3-319-46448-0_12), *Lecture Notes in Computer Science* | Pairwise | New York, Boston, Toronto, Mexico City, São Paulo, Santiago, London, Paris, Amsterdam, Stockholm, Linz, Salzburg, Bucharest, Johannesburg, Tokyo, Sydney, United States, Canada, Mexico, Brazil, Chile, United Kingdom, France, Netherlands, Sweden, Austria, Romania, South Africa, Japan, Australia |
 | 2016 | Perception of Bike Lane Colour: Safety and Liking (15 colour-design pictures) | [Pablo Vera-Villarroel et al. (2016)](https://doi.org/10.1371/journal.pone.0160399), *PLOS ONE* | Multi-scale rating | Santiago, Chile |
-| 2014 | Streetscore: Which Place Looks Safer? (New York, Boston) | [Naik N. et al. (2014)](https://doi.org/10.1109/cvprw.2014.121), *IEEE CVPR Workshops* | Pairwise | New York, Boston, United States |
-| 2014 | UrbanGems: Beautiful, Quiet, Happy? (London) | [Quercia D. et al. (2014)](https://doi.org/10.1145/2531602.2531613), *ACM CSCW* | Pairwise | London, United Kingdom |
-| 2013 | Place Pulse 1.0: Safety, Class and Uniqueness (4 cities) | [Salesses P. et al. (2013)](https://doi.org/10.1371/journal.pone.0068400), *PLOS ONE* | Pairwise | New York, Boston, Linz, Salzburg, United States, Austria |
+| 2014 | Streetscore: Which Place Looks Safer? (New York, Boston) | [Naik N. et al. (2014)](https://doi.org/10.1109/cvprw.2014.121), *2014 IEEE Conference on Computer Vision and Pattern Recognition Workshops* | Pairwise | New York, Boston, United States |
+| 2014 | UrbanGems: Beautiful, Quiet, Happy? (London) | [Quercia D. et al. (2014)](https://doi.org/10.1145/2531602.2531613), *Proceedings of the 17th ACM conference on Computer supported cooperative work & social computing* | Pairwise | London, United Kingdom |
+| 2013 | Place Pulse 1.0: Safety, Class and Uniqueness (4 cities) | [Salesses P. et al. (2013)](https://doi.org/10.1371/journal.pone.0068400), *PLoS ONE* | Pairwise | New York, Boston, Linz, Salzburg, United States, Austria |
 | 1995 | ART – Restorative Streetscape Perception | [Kaplan S. (1995)](https://doi.org/10.1016/0272-4944%2895%2990001-2), *Journal of Environmental Psychology* | Multi-scale rating, Questionnaire |  |
 
 ### Panorama and 360°
@@ -304,12 +307,12 @@ Open http://localhost:3000/studio and click **Start from the example**: a workin
 | 2015 | Nature Photos, Time and Impatience | [Meredith S. Berry et al. (2015)](https://doi.org/10.1371/journal.pone.0141030), *PLOS ONE* | Custom page, Questionnaire | Missoula, United States |
 | 2015 | Townscape Preference Street Elevations | [Morten Gjerde (2015)](https://doi.org/10.26686/wgtn.17021132), *PhD thesis, Victoria University of Wellington* | Rating, Open answers, Questionnaire | United Kingdom, Norway, New Zealand |
 | 2015 | Preference and Naturalness of Scenes | [Omid Kardan et al. (2015)](https://doi.org/10.3389/fpsyg.2015.00471), *Frontiers in Psychology* | Rating | United States |
-| 2014 | Natural or Manmade? Arranging and Rating Park Scenes | [Marc G. Berman et al. (2014)](https://doi.org/10.1371/journal.pone.0114572), *PLOS ONE* | Custom page, Rating, Open answers | Ann Arbor, United States |
+| 2014 | Natural or Manmade? Arranging and Rating Park Scenes | [Marc G. Berman et al. (2014)](https://doi.org/10.1371/journal.pone.0114572), *PLoS ONE* | Custom page, Rating, Open answers | Ann Arbor, United States |
 | 2014 | Awareness of Street Trees: Attention Restoration and Restorativeness | [Ying-Hsuan Lin et al. (2014)](https://doi.org/10.3389/fpsyg.2014.00906), *Frontiers in Psychology* | Custom page, Rating, Questionnaire | Taipei, Taiwan |
 | 2014 | Mystery in Nature: Recognition Memory for Trail Scenes | [Szolosi AM et al. (2014)](https://doi.org/10.3389/fpsyg.2014.01360), *Frontiers in Psychology* | Custom page | United States |
 | 2014 | Furnishing and Perceived Room Size | [von Castell C et al. (2014)](https://doi.org/10.1371/journal.pone.0113267), *PLoS ONE* | Rating, Custom page | Mainz, Germany |
-| 1976 | Scenic Beauty Estimation (SBE) – Arizona ponderosa pine forests | [Terry C. Daniel et al. (1976)](https://www.fs.usda.gov/rm/pubs_rm/rm_rp167.pdf), *USDA Forest Service Research Paper RM-167* | Rating | United States |
-| 1970 | Wildland landscape preference ranking – 1960s Utah photographs | [Elwood L. Shafer, Jr. et al. (1970)](https://www.fs.usda.gov/ne/newtown_square/publications/research_papers/pdfs/scanned/OCR/ne_rp162.pdf), *USDA Forest Service Research Paper NE-162* | Choose / rank, Custom page | Salt Lake City, United States |
+| 1976 | Scenic Beauty Estimation (SBE) – Arizona ponderosa pine forests | [Terry C. Daniel et al. (1976)](https://www.fs.usda.gov/rm/pubs_rm/rm_rp167.pdf), *USDA Forest Service Research Paper RM-167, Rocky Mountain Forest and Range Experiment Station* | Rating | United States |
+| 1970 | Wildland landscape preference ranking – 1960s Utah photographs | [Elwood L. Shafer, Jr. et al. (1970)](https://www.fs.usda.gov/ne/newtown_square/publications/research_papers/pdfs/scanned/OCR/ne_rp162.pdf), *USDA Forest Service Research Paper NE-162, Northeastern Forest Experiment Station* | Choose / rank, Custom page | Salt Lake City, United States |
 
 ### Rendered and simulated scenes
 
@@ -318,9 +321,11 @@ Open http://localhost:3000/studio and click **Start from the example**: a workin
 | 2026 | Wind Turbines in Rural Landscapes: Visual Assessment (rating) | [Sylwia Barwicka et al. (2026)](https://doi.org/10.3390/land15030435), *Land* | Rating, Questionnaire | Poland |
 | 2026 | Rooftop Green Spaces: Activity and Social Well-being | [Chen Z et al. (2026)](https://doi.org/10.3389/fpsyg.2026.1807425), *Frontiers in Psychology* | Multi-scale rating | Chengdu, Mainland China |
 | 2026 | Colour, Shape and Area in Interior Space (SAM ratings) | [Xiaoxiao Dou et al. (2026)](https://doi.org/10.3390/bs16081364), *Behavioral Sciences* | Multi-scale rating | Shenyang, Mainland China |
+| 2026 | Streatery Interfaces: Publicness and Restoration | [Yan He et al. (2026)](https://doi.org/10.3390/su18136927), *Sustainability* | Multi-scale rating, Questionnaire | Southern Chinese cities, Mainland China |
 | 2026 | Ornamental Pools: Kansei semantic differential of 8 designs | [Karaca, E. et al. (2026)](https://doi.org/10.3390/su18146954), *Sustainability* | Multi-scale rating |  |
 | 2026 | Greenery in Urban Views (matched-scene ratings) | [Lee J et al. (2026)](https://doi.org/10.3390/buildings16193777), *Buildings* | Multi-scale rating | Daejeon, South Korea |
 | 2026 | Pavilions in Chinese Garden Paintings: Free Viewing and Impressions | [Ning Liu et al. (2026)](https://doi.org/10.3390/jemr19060122), *Journal of Eye Movement Research* | Questionnaire, Choose / rank | Beijing, Mainland China |
+| 2026 | Bathroom Cladding Materials and Perceived Well-Being (5 Renderings) | [María Luisa Nolé et al. (2026)](https://doi.org/10.3390/architecture6020052), *Architecture* | Multi-scale rating, Rating, Questionnaire | Valencia, Spain |
 | 2026 | Curved and Angular Interiors Rating | [Wei N et al. (2026)](https://doi.org/10.3389/fpsyg.2026.1666480), *Frontiers in Psychology* | Multi-scale rating, Questionnaire |  |
 | 2026 | Makerspace Colour Preference and Comfort | [Yu H et al. (2026)](https://doi.org/10.3389/fpsyg.2026.1826920), *Frontiers in Psychology* | Multi-scale rating | Mainland China |
 | 2026 | Color Contrast Arrangements Harmony, Preference and Liking | [M.S. Zümrüt Tokçiftçi et al. (2026)](https://doi.org/10.3390/buildings16142906), *Buildings* | Multi-scale rating, Open answers |  |
@@ -338,6 +343,7 @@ Open http://localhost:3000/studio and click **Start from the example**: a workin
 | 2024 | Sense of Spaciousness in Interiors: 16-Room Rating | [Alp Tural et al. (2024)](https://doi.org/10.3389/fpsyg.2024.1473520), *Frontiers in Psychology* | Rating | Blacksburg, United States |
 | 2024 | Classroom Design for Concentration and Creativity | [Wang ZY et al. (2024)](https://doi.org/10.3390/s24237838), *Sensors* | Choose / rank | South Korea |
 | 2024 | Small Urban Open Spaces: PRS-11 Rating | [Zhai, Y. et al. (2024)](https://doi.org/10.3390/land13091370), *Land* | Multi-scale rating | Mainland China |
+| 2024 | Wayfinding Signage Preferences: Designers vs Non-Designers (4 × 4 Choices) | [Jialu Zhou et al. (2024)](https://doi.org/10.3390/su16229653), *Sustainability* | Choose / rank, Open answers, Questionnaire | Nanning, Mainland China |
 | 2024 | Shopping Mall Facade Color Emotion, Aesthetics and Entry | [Z. Zhu et al. (2024)](https://doi.org/10.3390/buildings14082302), *Buildings* | Multi-scale rating, Questionnaire | Nanjing, Mainland China |
 | 2023 | Demographic Differences in Liking Subway Entrance Pavilions (9 Renderings, 1–5) | [Guanjun Li et al. (2023)](https://doi.org/10.3390/app13064030), *Applied Sciences* | Rating, Questionnaire | Changsha, Taiyuan, Tianjin, Shanghai, Chengdu, Xi'an, Beijing, Xiamen, Nanning, Mainland China |
 | 2023 | Emotional Reactions to Rooms: 5 bedrooms x 6 feelings | [Rapuano, M. et al. (2023)](https://doi.org/10.3390/buildings13071737), *Buildings* | Multi-scale rating | Italy |
@@ -360,12 +366,12 @@ Open http://localhost:3000/studio and click **Start from the example**: a workin
 | 2018 | Where Would You Rather Live? Nine Landscapes in Pairs | [Caroline M. Hägerhäll et al. (2018)](https://doi.org/10.3389/fpsyg.2018.00822), *Frontiers in Psychology* | Pairwise | Sweden, Malaysia, Suriname, East Timor, Colombia |
 | 2016 | Orange Is the New Green: Schoolyard Trees and Perceived Restoration | [Eli Paddle et al. (2016)](https://doi.org/10.3390/ijerph13050497), *International Journal of Environmental Research and Public Health* | Multi-scale rating, Custom page | London (Ontario), Canada |
 | 2016 | Simulated Darkness and Affective Appraisal of a Virtual Landscape | [Toet A et al. (2016)](https://doi.org/10.7717/peerj.1743), *PeerJ* | Questionnaire, Multi-scale rating | Netherlands |
-| 1921 | Paired comparisons of colours and forms (Yokoyama 1921) | [Matsusaburo Yokoyama (1921)](https://archive.org/details/jstor-1413477), *American Journal of Psychology* | Pairwise | Worcester, United States |
-| 1917 | Beauty of simple forms ranking (Thorndike 1917 rectangles, triangles, crosses) | [Edward L. Thorndike (1917)](https://archive.org/details/sim_psychological-review_1917-03_24_2/page/147), *Psychological Review* | Custom page | New York, United States |
-| 1903 | Most pleasing division of a line (Angier 1903 unequal division) | [Roswell Parker Angier (1903)](https://archive.org/details/harvardpsycholog16266gut), *Harvard Psychological Studies* | Custom page | Cambridge, MA, United States |
-| 1903 | Balancing two lines in a picture frame (Puffer 1903 symmetry) | [Ethel D. Puffer (1903)](https://archive.org/details/harvardpsycholog16266gut), *Harvard Psychological Studies* | Custom page | Cambridge, MA, United States |
-| 1897 | Favourite colour and colour pair (Jastrow 1897 World's Fair colour census) | [Joseph Jastrow (1897)](https://archive.org/details/popularsciencemo50newy/page/361), *Popular Science Monthly* | Choose / rank | Chicago, United States |
-| 1876 | Golden section rectangles – which shape pleases most? | [Gustav Theodor Fechner (1876)](https://archive.org/details/vorschulederaest12fechuoft), *Leipzig: Breitkopf & Härtel (book)* | Choose / rank, Custom page | Leipzig, Germany |
+| 1921 | Paired comparisons of colours and forms (Yokoyama 1921) | [Matsusaburo Yokoyama (1921)](https://archive.org/details/jstor-1413477), *American Journal of Psychology, 32, 81–107* | Pairwise | Worcester, United States |
+| 1917 | Beauty of simple forms ranking (Thorndike 1917 rectangles, triangles, crosses) | [Edward L. Thorndike (1917)](https://archive.org/details/sim_psychological-review_1917-03_24_2/page/147), *Psychological Review, 24(2), 147–153* | Custom page | New York, United States |
+| 1903 | Most pleasing division of a line (Angier 1903 unequal division) | [Roswell Parker Angier (1903)](https://archive.org/details/harvardpsycholog16266gut), *Harvard Psychological Studies, 1, 541–561 (Psychological Review Monograph Supplements, 4)* | Custom page | Cambridge, MA, United States |
+| 1903 | Balancing two lines in a picture frame (Puffer 1903 symmetry) | [Ethel D. Puffer (1903)](https://archive.org/details/harvardpsycholog16266gut), *Harvard Psychological Studies, 1, 467–539 (Psychological Review Monograph Supplements, 4)* | Custom page | Cambridge, MA, United States |
+| 1897 | Favourite colour and colour pair (Jastrow 1897 World's Fair colour census) | [Joseph Jastrow (null)](https://archive.org/details/popularsciencemo50newy/page/361), *Popular Science Monthly, 50, 361–368 (January 1897)* | Choose / rank | Chicago, United States |
+| 1876 | Golden section rectangles – which shape pleases most? | [Gustav Theodor Fechner (null)](https://archive.org/details/vorschulederaest12fechuoft), *Leipzig: Breitkopf & Härtel, 1876 (book, 2 parts)* | Choose / rank, Custom page | Leipzig, Germany |
 
 ### Indoor
 
@@ -431,16 +437,18 @@ Open http://localhost:3000/studio and click **Start from the example**: a workin
 
 | Template | Task |
 |---|---|
-| SP-Scheme-Perception | Custom page |
-| SP-Scheme-Night | Custom page |
-| Photo and map pin / 照片与地图标点 | Map annotation |
-| SP-Scheme-Heat | Custom page |
-| 猫咪品种二选一 Cat Breed Choice | Pairwise |
-| All Question Types (QA Template) | Questionnaire |
+| Gehl – Street Quality Criteria (12 Quality Criteria) | Multi-scale rating, Questionnaire |
+| [Duplicate - to delete] Bike Lane Colours |  |
+| [Duplicate - to delete] Fractal Complexity in Alpine Scenes |  |
 | City Landmark (AI Template) | Rating, Questionnaire |
 | Street Bikeability (AI Generated) | Rating, Questionnaire |
 | Urban Greenery (AI Generated) | Rating, Questionnaire |
-| Gehl – Street Quality Criteria (12 Quality Criteria) | Multi-scale rating, Questionnaire |
+| SP-Scheme-Heat | Custom page |
+| SP-Scheme-Night | Custom page |
+| SP-Scheme-Perception | Custom page |
+| 猫咪品种二选一 Cat Breed Choice |  |
+| Photo and map pin / 照片与地图标点 | Map annotation |
+| All Question Types (QA Template) | Questionnaire |
 <!-- templates:end -->
 
 ## Citation

@@ -1,0 +1,460 @@
+{
+ "id": "2020-van-digital",
+ "name": "Digital Nature Scenes and Social Aspirations",
+ "description": "Faithful replication with the original scenes: participants are randomly assigned to wild or tended (park-like) nature and see two computer-generated nature scenes of that type, one dense (many view-restricting trees) and one spacious (a wide-open landscape), in random order. Each scene is shown for about one minute; participants then rate it on four scales from the paper's Table 1, all 1-5: social aspirations (5 items, e.g. 'I would like to meet here with a friend'; the last item is reverse-scored), awe (11 items of the Awe Experience Scale), fascination (5 Perceived Restorativeness Scale items) and sense of presence (Spatial Presence Experience Scale self-location items). Age, gender and nationality are asked at the end. Rebuilt from van Houwelingen-Snippe, van Rompay, de Jong & Ben Allouch (2020), Does Digital Nature Enhance Social Aspirations? An Experimental Study, International Journal of Environmental Research and Public Health 17(4): 1454, with the four scenes cropped from its Figure 3 (CC BY 4.0, made by the authors in Unity with the Gaia package). Image ids: tended_dense, tended_spacious, wild_dense, wild_spacious; nature_type and scene_order record the assignment. Analysis as in the paper: mixed ANOVA of each scale mean with spaciousness (within) and type of nature (between), with order of appearance as a factor; the paper found spacious scenes raised social aspirations (M 3.87 vs 3.67) and awe, mainly when people watched alone. Differences from the original study: (1) still images instead of animated scenes projected 4 x 2.4 m with bird sounds and a wood scent; (2) participants always watch alone online, so the paper's social (pairs) viewing condition is not included; (3) the Likert anchor labels are ours (the paper gives only '5-point Likert scales'); (4) the paper lists 8 presence items but prints 6, and only the 6 printed items are used; English items only (the paper also used a Dutch translation); (5) the paper's manipulation checks are not described in enough detail to copy and are left out; demographic wording is ours.",
+ "author": "van Houwelingen-Snippe, van Rompay, de Jong & Ben Allouch",
+ "year": "2020",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "nature",
+  "awe",
+  "spaciousness",
+  "virtual-nature",
+  "source:paper",
+  "modality:rendered",
+  "task:multi_rating",
+  "concept:restoration",
+  "concept:emotion",
+  "concept:naturalness",
+  "concept:openness",
+  "participants:students",
+  "participants:lab",
+  "sample:lt100",
+  "country:Netherlands"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/ijerph17041454",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T20:29:05.032+00:00",
+ "updatedAt": "2026-11-27T20:29:21.242+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "assignment",
+    "elements": [
+     {
+      "name": "nature_type",
+      "type": "radiogroup",
+      "title": "Assigned type of nature",
+      "choices": [
+       {
+        "text": "Wild nature",
+        "value": "wild"
+       },
+       {
+        "text": "Tended nature",
+        "value": "tended"
+       }
+      ],
+      "description": "Set at random by the page."
+     },
+     {
+      "name": "scene_order",
+      "type": "radiogroup",
+      "title": "Order of appearance",
+      "choices": [
+       {
+        "text": "Dense, then spacious",
+        "value": "dense_first"
+       },
+       {
+        "text": "Spacious, then dense",
+        "value": "spacious_first"
+       }
+      ],
+      "description": "Set at random by the page."
+     }
+    ]
+   },
+   {
+    "name": "scene",
+    "elements": [
+     {
+      "name": "social",
+      "rows": [
+       {
+        "text": "I would like to show this landscape to someone",
+        "value": "s1"
+       },
+       {
+        "text": "I would like to meet here with a friend",
+        "value": "s2"
+       },
+       {
+        "text": "I would like to have a spontaneous chat",
+        "value": "s3"
+       },
+       {
+        "text": "This landscape is suitable to experience together",
+        "value": "s4"
+       },
+       {
+        "text": "If I would encounter someone here, I would feel uncomfortable",
+        "value": "s5r"
+       }
+      ],
+      "type": "matrix",
+      "title": "Social aspirations",
+      "columns": [
+       {
+        "text": "1 Strongly disagree",
+        "value": 1
+       },
+       {
+        "text": "2 Disagree",
+        "value": 2
+       },
+       {
+        "text": "3 Neutral",
+        "value": 3
+       },
+       {
+        "text": "4 Agree",
+        "value": 4
+       },
+       {
+        "text": "5 Strongly agree",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "Paper's Table 1, new scale; s5r is reverse-scored. 1-5. Keyed by image id."
+     },
+     {
+      "name": "awe",
+      "rows": [
+       {
+        "text": "I felt my sense of self become somehow smaller",
+        "value": "a1"
+       },
+       {
+        "text": "I felt small compared to everything else",
+        "value": "a2"
+       },
+       {
+        "text": "I had the sense of being connected to everything",
+        "value": "a3"
+       },
+       {
+        "text": "I felt a sense of communion with all living things",
+        "value": "a4"
+       },
+       {
+        "text": "I experienced a sense of oneness with all things",
+        "value": "a5"
+       },
+       {
+        "text": "I felt closely connected to humanity",
+        "value": "a6"
+       },
+       {
+        "text": "I had a sense of complete connectedness",
+        "value": "a7"
+       },
+       {
+        "text": "I felt that I was in the presence of something grand",
+        "value": "a8"
+       },
+       {
+        "text": "I experienced something greater than myself",
+        "value": "a9"
+       },
+       {
+        "text": "I felt in the presence of greatness",
+        "value": "a10"
+       },
+       {
+        "text": "I perceived something that was much larger than me",
+        "value": "a11"
+       }
+      ],
+      "type": "matrix",
+      "title": "Awe",
+      "columns": [
+       {
+        "text": "1 Strongly disagree",
+        "value": 1
+       },
+       {
+        "text": "2 Disagree",
+        "value": 2
+       },
+       {
+        "text": "3 Neutral",
+        "value": 3
+       },
+       {
+        "text": "4 Agree",
+        "value": 4
+       },
+       {
+        "text": "5 Strongly agree",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "Paper's Table 1, Awe Experience Scale (11 of 15 items). 1-5. Keyed by image id."
+     },
+     {
+      "name": "fascination",
+      "rows": [
+       {
+        "text": "The setting has fascinating qualities",
+        "value": "f1"
+       },
+       {
+        "text": "My attention is drawn to many interesting things",
+        "value": "f2"
+       },
+       {
+        "text": "I would like to get to know this place better",
+        "value": "f3"
+       },
+       {
+        "text": "There is much to explore and discover here",
+        "value": "f4"
+       },
+       {
+        "text": "I would like to spend more time looking at the surroundings",
+        "value": "f5"
+       }
+      ],
+      "type": "matrix",
+      "title": "Fascination",
+      "columns": [
+       {
+        "text": "1 Strongly disagree",
+        "value": 1
+       },
+       {
+        "text": "2 Disagree",
+        "value": 2
+       },
+       {
+        "text": "3 Neutral",
+        "value": 3
+       },
+       {
+        "text": "4 Agree",
+        "value": 4
+       },
+       {
+        "text": "5 Strongly agree",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "Paper's Table 1, Perceived Restorativeness Scale fascination items. 1-5. Keyed by image id."
+     },
+     {
+      "name": "presence",
+      "rows": [
+       {
+        "text": "I felt like I was actually there in the environment of the presentation",
+        "value": "p1"
+       },
+       {
+        "text": "It was as though my true location had shifted into the environment in the presentation",
+        "value": "p2"
+       },
+       {
+        "text": "I felt as though I was physically present in the environment of the presentation",
+        "value": "p3"
+       },
+       {
+        "text": "I experienced the environment of the presentation as though I had stepped into a different place",
+        "value": "p4"
+       },
+       {
+        "text": "I was convinced that things were actually happening around me",
+        "value": "p5"
+       },
+       {
+        "text": "I had the feeling that I was in the middle of the action rather than merely observing",
+        "value": "p6"
+       }
+      ],
+      "type": "matrix",
+      "title": "Sense of presence",
+      "columns": [
+       {
+        "text": "1 Strongly disagree",
+        "value": 1
+       },
+       {
+        "text": "2 Disagree",
+        "value": 2
+       },
+       {
+        "text": "3 Neutral",
+        "value": 3
+       },
+       {
+        "text": "4 Agree",
+        "value": 4
+       },
+       {
+        "text": "5 Strongly agree",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "Paper's Table 1, Spatial Presence Experience Scale self-location items (6 printed). 1-5. Keyed by image id."
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "max": 110,
+      "min": 16,
+      "name": "age",
+      "type": "text",
+      "title": "How old are you?",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "nationality",
+      "type": "text",
+      "title": "What is your nationality?",
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Digital Nature Scenes and Social Aspirations",
+  "locale": "en",
+  "spSite": {
+   "id": "site-758554bcc05fc98e",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Digital Nature Scenes</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Digital Nature Scenes and Social Aspirations\",\n  \"description\": \"Faithful replication with the original scenes: participants are randomly assigned to wild or tended (park-like) nature and see two computer-generated nature scenes of that type, one dense (many view-restricting trees) and one spacious (a wide-open landscape), in random order. Each scene is shown for about one minute; participants then rate it on four scales from the paper's Table 1, all 1-5: social aspirations (5 items, e.g. 'I would like to meet here with a friend'; the last item is reverse-scored), awe (11 items of the Awe Experience Scale), fascination (5 Perceived Restorativeness Scale items) and sense of presence (Spatial Presence Experience Scale self-location items). Age, gender and nationality are asked at the end. Rebuilt from van Houwelingen-Snippe, van Rompay, de Jong & Ben Allouch (2020), Does Digital Nature Enhance Social Aspirations? An Experimental Study, International Journal of Environmental Research and Public Health 17(4): 1454, with the four scenes cropped from its Figure 3 (CC BY 4.0, made by the authors in Unity with the Gaia package). Image ids: tended_dense, tended_spacious, wild_dense, wild_spacious; nature_type and scene_order record the assignment. Analysis as in the paper: mixed ANOVA of each scale mean with spaciousness (within) and type of nature (between), with order of appearance as a factor; the paper found spacious scenes raised social aspirations (M 3.87 vs 3.67) and awe, mainly when people watched alone. Differences from the original study: (1) still images instead of animated scenes projected 4 x 2.4 m with bird sounds and a wood scent; (2) participants always watch alone online, so the paper's social (pairs) viewing condition is not included; (3) the Likert anchor labels are ours (the paper gives only '5-point Likert scales'); (4) the paper lists 8 presence items but prints 6, and only the 6 printed items are used; English items only (the paper also used a Dutch translation); (5) the paper's manipulation checks are not described in enough detail to copy and are left out; demographic wording is ours.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"scenes\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"assignment\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"nature_type\",\n      \"title\": \"Assigned type of nature\",\n      \"description\": \"Set at random by the page.\",\n      \"choices\": [\n       {\n        \"value\": \"wild\",\n        \"text\": \"Wild nature\"\n       },\n       {\n        \"value\": \"tended\",\n        \"text\": \"Tended nature\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"scene_order\",\n      \"title\": \"Order of appearance\",\n      \"description\": \"Set at random by the page.\",\n      \"choices\": [\n       {\n        \"value\": \"dense_first\",\n        \"text\": \"Dense, then spacious\"\n       },\n       {\n        \"value\": \"spacious_first\",\n        \"text\": \"Spacious, then dense\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"scene\",\n    \"elements\": [\n     {\n      \"type\": \"matrix\",\n      \"name\": \"social\",\n      \"title\": \"Social aspirations\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"s1\",\n        \"text\": \"I would like to show this landscape to someone\"\n       },\n       {\n        \"value\": \"s2\",\n        \"text\": \"I would like to meet here with a friend\"\n       },\n       {\n        \"value\": \"s3\",\n        \"text\": \"I would like to have a spontaneous chat\"\n       },\n       {\n        \"value\": \"s4\",\n        \"text\": \"This landscape is suitable to experience together\"\n       },\n       {\n        \"value\": \"s5r\",\n        \"text\": \"If I would encounter someone here, I would feel uncomfortable\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1 Strongly disagree\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 Disagree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 Neutral\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 Agree\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5 Strongly agree\"\n       }\n      ],\n      \"description\": \"Paper's Table 1, new scale; s5r is reverse-scored. 1-5. Keyed by image id.\"\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"awe\",\n      \"title\": \"Awe\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"a1\",\n        \"text\": \"I felt my sense of self become somehow smaller\"\n       },\n       {\n        \"value\": \"a2\",\n        \"text\": \"I felt small compared to everything else\"\n       },\n       {\n        \"value\": \"a3\",\n        \"text\": \"I had the sense of being connected to everything\"\n       },\n       {\n        \"value\": \"a4\",\n        \"text\": \"I felt a sense of communion with all living things\"\n       },\n       {\n        \"value\": \"a5\",\n        \"text\": \"I experienced a sense of oneness with all things\"\n       },\n       {\n        \"value\": \"a6\",\n        \"text\": \"I felt closely connected to humanity\"\n       },\n       {\n        \"value\": \"a7\",\n        \"text\": \"I had a sense of complete connectedness\"\n       },\n       {\n        \"value\": \"a8\",\n        \"text\": \"I felt that I was in the presence of something grand\"\n       },\n       {\n        \"value\": \"a9\",\n        \"text\": \"I experienced something greater than myself\"\n       },\n       {\n        \"value\": \"a10\",\n        \"text\": \"I felt in the presence of greatness\"\n       },\n       {\n        \"value\": \"a11\",\n        \"text\": \"I perceived something that was much larger than me\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1 Strongly disagree\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 Disagree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 Neutral\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 Agree\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5 Strongly agree\"\n       }\n      ],\n      \"description\": \"Paper's Table 1, Awe Experience Scale (11 of 15 items). 1-5. Keyed by image id.\"\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"fascination\",\n      \"title\": \"Fascination\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"f1\",\n        \"text\": \"The setting has fascinating qualities\"\n       },\n       {\n        \"value\": \"f2\",\n        \"text\": \"My attention is drawn to many interesting things\"\n       },\n       {\n        \"value\": \"f3\",\n        \"text\": \"I would like to get to know this place better\"\n       },\n       {\n        \"value\": \"f4\",\n        \"text\": \"There is much to explore and discover here\"\n       },\n       {\n        \"value\": \"f5\",\n        \"text\": \"I would like to spend more time looking at the surroundings\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1 Strongly disagree\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 Disagree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 Neutral\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 Agree\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5 Strongly agree\"\n       }\n      ],\n      \"description\": \"Paper's Table 1, Perceived Restorativeness Scale fascination items. 1-5. Keyed by image id.\"\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"presence\",\n      \"title\": \"Sense of presence\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"p1\",\n        \"text\": \"I felt like I was actually there in the environment of the presentation\"\n       },\n       {\n        \"value\": \"p2\",\n        \"text\": \"It was as though my true location had shifted into the environment in the presentation\"\n       },\n       {\n        \"value\": \"p3\",\n        \"text\": \"I felt as though I was physically present in the environment of the presentation\"\n       },\n       {\n        \"value\": \"p4\",\n        \"text\": \"I experienced the environment of the presentation as though I had stepped into a different place\"\n       },\n       {\n        \"value\": \"p5\",\n        \"text\": \"I was convinced that things were actually happening around me\"\n       },\n       {\n        \"value\": \"p6\",\n        \"text\": \"I had the feeling that I was in the middle of the action rather than merely observing\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1 Strongly disagree\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 Disagree\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 Neutral\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 Agree\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5 Strongly agree\"\n       }\n      ],\n      \"description\": \"Paper's Table 1, Spatial Presence Experience Scale self-location items (6 printed). 1-5. Keyed by image id.\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"min\": 16,\n      \"max\": 110\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"nationality\",\n      \"title\": \"What is your nationality?\",\n      \"isRequired\": true\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"digital-nature-original\">{\"source\": \"van Houwelingen-Snippe, van Rompay, de Jong & Ben Allouch (2020) IJERPH 17(4): 1454\", \"n\": 96, \"analysed\": 95, \"participants\": \"96 campus participants at a Dutch university (58 female), age 18-35 (mean 23.48); 54 Dutch, 26 German, 6 other European, 10 non-European\", \"design\": \"spaciousness within (dense/spacious, order balanced) x type of nature between (wild/tended) x viewing condition between (alone/pairs); watch about 1 min, then iPad questionnaire\", \"alpha\": {\"social\": 0.74, \"awe\": 0.93, \"fascination\": 0.85, \"presence\": 0.91}, \"results\": {\"social_aspirations\": {\"spacious\": {\"M\": 3.87, \"SD\": 0.75}, \"dense\": {\"M\": 3.67, \"SD\": 0.55}, \"spaciousness_F\": 7.33, \"partial_eta2\": 0.08}, \"notes\": \"type of nature and viewing condition: no main effects; spaciousness x viewing condition interactions for social aspirations, fascination, awe and presence; spacious scenes raised social aspirations and awe mainly when watching alone\"}}</script>\n<style>\n:root{--bg:#edf1ec;--card:#fff;--ink:#1b231d;--muted:#58635a;--accent:#2f6a4f;--line:#d5ded6;--warn:#b3261e;--sel:#e0eee6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:820px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.5rem;margin:0 0 8px}h2{font-size:1.15rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:13px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.prog{font-size:.88rem;color:var(--muted);margin-bottom:8px}\n.view{position:fixed;inset:0;background:#111;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:5;gap:12px}\n.view img{width:100vw;height:auto;max-height:90vh;object-fit:contain;display:block}\n.view .t{color:#aaa;font-size:.85rem}\n.pano{position:sticky;top:0;z-index:2;background:var(--bg);padding:6px 0}\n.pano img{width:100%;display:block;border-radius:8px}\n.mx{margin-top:18px}\n.mx h3{font-size:1rem;margin:0 0 2px}\n.it{padding:8px 0;border-top:1px solid var(--line)}\n.it .q{font-size:.95rem;margin-bottom:4px}\n.it .o{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}\n.it label{display:flex;flex-direction:column;align-items:center;border:1px solid var(--line);border-radius:8px;padding:3px 0;cursor:pointer;font-size:.8rem;color:var(--muted)}\n.it label:has(input:checked){background:var(--sel);border-color:var(--accent);color:var(--ink)}\n.it input{margin:0 0 1px}\n.it.miss .o{outline:2px solid var(--warn);outline-offset:2px;border-radius:8px}\n.legend{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;font-size:.72rem;color:var(--muted);text-align:center;margin-top:4px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.f{margin-top:16px}.f:first-child{margin-top:0}\ninput[type=number],input[type=text]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px}\ninput[type=number]{width:110px}input[type=text]{width:min(100%,320px)}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:820px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Scenes: van Houwelingen-Snippe, van Rompay, de Jong &amp; Ben Allouch (2020), IJERPH 17(4): 1454, Figure 3 (doi:10.3390/ijerph17041454, CC BY 4.0).</footer>\n<script>\n(function(){\n  var KEY='digital-nature:state', T={view:window.__VIEWMS||60000};\n  var SC=['social','awe','fascination','presence'];\n  var app=document.getElementById('app'), Q={}, files={}, st=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function send(list,b,next){if(b)b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}next();});}\n  function val(name){var x=app.querySelector('input[name=\"'+name+'\"]:checked');return x?x.value:null;}\n  function radios(q){return '<div class=\"f\"><b>'+esc(Q[q].title)+'</b>'+(Q[q].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+q+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function fresh(){var t=Math.random()<.5?'wild':'tended',o=Math.random()<.5?'dense_first':'spacious_first';\n    return {step:'intro',type:t,ord:o,order:o==='dense_first'?[t+'_dense',t+'_spacious']:[t+'_spacious',t+'_dense'],k:0,phase:'view'};}\n  function intro(){\n    app.innerHTML='<h1>Nature scenes</h1><p>You will see two computer-generated nature scenes, one after the other. Take about a minute to look at each scene and imagine being there; the page moves on by itself. After each scene you answer a few short sets of statements about it, from 1 (strongly disagree) to 5 (strongly agree). It takes about 10 minutes.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      send([SPSite.answer('consent',true),SPSite.answer('nature_type',st.type),SPSite.answer('scene_order',st.ord)],this,function(){st.step='trial';st.phase='view';save();route();});};\n  }\n  function trial(){\n    if(st.k>=st.order.length){st.step='about';save();return route();}\n    if(st.phase==='q')return ask();\n    var id=st.order[st.k],v=document.createElement('div');v.className='view';app.innerHTML='';app.appendChild(v);\n    v.innerHTML='<img alt=\"Nature scene\" src=\"'+esc(files[id].url)+'\"><div class=\"t\" id=\"tm\"></div>';\n    if(st.k+1<st.order.length){var p=new Image();p.src=files[st.order[st.k+1]].url;}\n    var end=Date.now()+T.view,tm=document.getElementById('tm');\n    (function tick(){var s=Math.ceil((end-Date.now())/1000);if(s<=0){st.phase='q';save();return route();}if(tm)tm.textContent=s+' s';setTimeout(tick,250);})();\n  }\n  function block(n){var q=Q[n];return '<div class=\"mx\"><h3>'+esc(q.title)+'</h3><div class=\"legend\">'+(q.columns||[]).map(function(c){return '<span>'+esc(c.text)+'</span>';}).join('')+'</div>'+(q.rows||[]).map(function(r){var nm=n+'__'+r.value;return '<div class=\"it\" data-n=\"'+nm+'\"><div class=\"q\">'+esc(r.text)+'</div><div class=\"o\">'+(q.columns||[]).map(function(c){return '<label><input type=\"radio\" name=\"'+nm+'\" value=\"'+c.value+'\">'+c.value+'</label>';}).join('')+'</div></div>';}).join('')+'</div>';}\n  function ask(){\n    var id=st.order[st.k],f=files[id];\n    app.innerHTML='<div class=\"prog\">Scene '+(st.k+1)+' of '+st.order.length+'</div><div class=\"pano\"><img alt=\"The scene you just watched\" src=\"'+esc(f.url)+'\"></div><div class=\"card\"><p style=\"color:var(--ink);margin:0\">Thinking about the scene you just watched, how much do you agree with each statement?</p>'+SC.map(block).join('')+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var out={},miss=0,first=null;\n      SC.forEach(function(n){out[n]={};(Q[n].rows||[]).forEach(function(r){var nm=n+'__'+r.value,x=val(nm),el=app.querySelector('.it[data-n=\"'+nm+'\"]');if(x==null){miss++;el.classList.add('miss');if(!first)first=el;}else{el.classList.remove('miss');out[n][r.value]=Number(x);}});});\n      if(miss){if(first)first.scrollIntoView({block:'center'});return err('Please answer every statement ('+miss+' missing).');}\n      send(SC.map(function(n){return SPSite.answer(n,out[n],{key:id,shown:[f.name]});}),this,function(){st.k++;st.phase='view';save();route();});\n    };\n  }\n  function about(){\n    app.innerHTML='<h2>About you</h2><div class=\"card\"><div class=\"f\"><b>'+esc(Q.age.title)+'</b><br><input type=\"number\" id=\"age\" min=\"16\" max=\"110\"></div>'+radios('gender')+'<div class=\"f\"><b>'+esc(Q.nationality.title)+'</b><br><input type=\"text\" id=\"nat\" maxlength=\"80\"></div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Finish</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var age=Number(document.getElementById('age').value),g=val('gender'),nat=document.getElementById('nat').value.trim();\n      if(!(age>=16&&age<=110))return err('Please enter your age.');if(!g||!nat)return err('Please answer every question.');\n      send([SPSite.answer('age',age),SPSite.answer('gender',g),SPSite.answer('nationality',nat)],this,function(){st.step='done';save();route();});\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st.step='intro';save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  app.addEventListener('change',function(e){var r=e.target.closest&&e.target.closest('.it');if(r)r.classList.remove('miss');});\n  function route(){var s=st.step;window.scrollTo(0,0);if(s==='trial')return trial();if(s==='about')return about();if(s==='done')return finish();intro();}\n  SPSite.onReady(function(ctx){\n    ['consent','nature_type','scene_order','social','awe','fascination','presence','age','gender','nationality'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('scenes')||[]).forEach(function(f){files[f.name.replace(/\\.[^.]+$/,'')]=f;});\n    var need=['wild_dense','wild_spacious','tended_dense','tended_spacious'].filter(function(k){return !files[k];});\n    if(need.length){app.innerHTML='<h1>Scenes missing</h1><p>Upload '+need.join(', ')+' (.jpg) to the media folder \"scenes\".</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    var a=(ctx&&ctx.answers)||{};\n    if(!(st&&st.order)||a.consent!==true)st=fresh();\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T20:28:38.232Z",
+   "mediaFolders": [
+    "scenes"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T20:28:38.232Z"
+  },
+  "description": "Faithful replication with the original scenes: participants are randomly assigned to wild or tended (park-like) nature and see two computer-generated nature scenes of that type, one dense (many view-restricting trees) and one spacious (a wide-open landscape), in random order. Each scene is shown for about one minute; participants then rate it on four scales from the paper's Table 1, all 1-5: social aspirations (5 items, e.g. 'I would like to meet here with a friend'; the last item is reverse-scored), awe (11 items of the Awe Experience Scale), fascination (5 Perceived Restorativeness Scale items) and sense of presence (Spatial Presence Experience Scale self-location items). Age, gender and nationality are asked at the end. Rebuilt from van Houwelingen-Snippe, van Rompay, de Jong & Ben Allouch (2020), Does Digital Nature Enhance Social Aspirations? An Experimental Study, International Journal of Environmental Research and Public Health 17(4): 1454, with the four scenes cropped from its Figure 3 (CC BY 4.0, made by the authors in Unity with the Gaia package). Image ids: tended_dense, tended_spacious, wild_dense, wild_spacious; nature_type and scene_order record the assignment. Analysis as in the paper: mixed ANOVA of each scale mean with spaciousness (within) and type of nature (between), with order of appearance as a factor; the paper found spacious scenes raised social aspirations (M 3.87 vs 3.67) and awe, mainly when people watched alone. Differences from the original study: (1) still images instead of animated scenes projected 4 x 2.4 m with bird sounds and a wood scent; (2) participants always watch alone online, so the paper's social (pairs) viewing condition is not included; (3) the Likert anchor labels are ours (the paper gives only '5-point Likert scales'); (4) the paper lists 8 presence items but prints 6, and only the 6 printed items are used; English items only (the paper also used a Dutch translation); (5) the paper's manipulation checks are not described in enough detail to copy and are left out; demographic wording is ours.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2020-van-digital/scenes/tended_dense__4247f9bb-c0c8-4f84-bbe9-bd9935792016.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-van-digital/scenes/tended_dense__4247f9bb-c0c8-4f84-bbe9-bd9935792016.jpg",
+   "name": "tended_dense.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-van-digital/scenes/tended_dense__4247f9bb-c0c8-4f84-bbe9-bd9935792016.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 259097,
+   "uploaded_bytes": 259097,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-van-digital/scenes/tended_spacious__2b612bf1-0100-4032-8a9d-69026aefe5a1.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-van-digital/scenes/tended_spacious__2b612bf1-0100-4032-8a9d-69026aefe5a1.jpg",
+   "name": "tended_spacious.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-van-digital/scenes/tended_spacious__2b612bf1-0100-4032-8a9d-69026aefe5a1.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 371675,
+   "uploaded_bytes": 371675,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-van-digital/scenes/wild_dense__95f2d249-9b17-42bf-b813-0bc8e32fa8ae.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-van-digital/scenes/wild_dense__95f2d249-9b17-42bf-b813-0bc8e32fa8ae.jpg",
+   "name": "wild_dense.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-van-digital/scenes/wild_dense__95f2d249-9b17-42bf-b813-0bc8e32fa8ae.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 312871,
+   "uploaded_bytes": 312871,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-van-digital/scenes/wild_spacious__5190b7ce-a35f-403f-bcbc-1d615ddfaac7.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-van-digital/scenes/wild_spacious__5190b7ce-a35f-403f-bcbc-1d615ddfaac7.jpg",
+   "name": "wild_spacious.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-van-digital/scenes/wild_spacious__5190b7ce-a35f-403f-bcbc-1d615ddfaac7.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 394489,
+   "uploaded_bytes": 394489,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Does Digital Nature Enhance Social Aspirations? An Experimental Study",
+  "authors": [
+   "van Houwelingen-Snippe J",
+   "van Rompay TJL",
+   "de Jong MDT",
+   "Ben Allouch S"
+  ],
+  "year": 2020,
+  "venue": "International Journal of Environmental Research and Public Health",
+  "doi": "10.3390/ijerph17041454",
+  "url": "https://doi.org/10.3390/ijerph17041454"
+ }
+}

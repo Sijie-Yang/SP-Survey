@@ -1,0 +1,492 @@
+{
+ "id": "2021-qiao-west",
+ "name": "West Lake Green Spaces: Emotional Responses",
+ "description": "Method replication with the paper's own panoramic photos of the same places (the original showed 360-degree videos of them): participants give age and gender, then visit 15 urban green spaces in the West Lake scenic area of Hangzhou in random order as horizontal panoramic photos (scroll sideways, at least 15 s each). For each place they rate valence and arousal on the 9-point Self-Assessment Manikin, rate five perceived plant attributes (vegetation layers, tree shape, tree texture, colour diversity, cultural connotation; 1-5), and tick which of six factors would make them use the place; at the end they say how often they visit such green spaces. Rebuilt from Qiao, Zhuang, Zhang, Su & Xia (2021), International Journal of Environmental Research and Public Health 18(16): 8526, with the panoramas printed in the paper's Figure A1, the manikin figures and wording of its Questionnaire 2, and the items of its Table A2 and Questionnaire 1 (CC BY 4.0). Analysis as in the paper: mean SAM valence and arousal per place; Pearson correlations and backward linear regression of valence and arousal on the plant attributes, use-function score and the places' measured structure (size, edge shape index, canopy density, water and plant share, listed in the paper's Table 2); ANOVA across structure levels; t-tests by gender. Differences from the original study: (1) the original showed one-minute 360-degree panoramic videos; here participants view the paper's horizontal panoramic photos (1269 x 288 px from the published appendix); (2) no facial-expression recording (the paper also estimated valence and arousal from webcam video with a face-recognition model); (3) the paper's GAPED baseline pictures are not included (not openly licensed); (4) ratings come right after each place instead of in one questionnaire at the end; (5) the plant attributes are phrased as statements ('The layers of vegetation are abundant') where the paper's table asks 'Whether the layers of vegetation are abundant'; (6) age and gender questions and the per-place minimum viewing time are our additions.",
+ "author": "Qiao, Zhuang, Zhang, Su & Xia",
+ "year": "2021",
+ "category": "Academic Research",
+ "tags": [
+  "method-replication",
+  "official",
+  "paper",
+  "SAM",
+  "valence-arousal",
+  "panorama",
+  "urban-green-space",
+  "emotion",
+  "source:paper",
+  "modality:scene_photo",
+  "task:multi_rating",
+  "task:questionnaire",
+  "concept:emotion",
+  "concept:greenery",
+  "concept:restoration",
+  "participants:students",
+  "sample:lt100",
+  "country:China",
+  "city:Hangzhou"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/ijerph18168526",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T15:48:43.138+00:00",
+ "updatedAt": "2026-11-27T15:48:55.602+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "max": 110,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "How old are you?",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "places",
+    "elements": [
+     {
+      "name": "sam_valence",
+      "type": "rating",
+      "title": "How pleasant do you feel in this place?",
+      "rateMax": 9,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Self-Assessment Manikin, valence (paper's Questionnaire 2 with its manikin figure): 1 frown, 3 unhappy, 5 neutral, 7 smiling, 9 happy; even numbers in between. Keyed by place: ugs_01 to ugs_15, numbered in the order of the paper's Figure A1 (panels a-c, top to bottom).",
+      "maxRateDescription": "Smiling, happy",
+      "minRateDescription": "Frowning, unhappy"
+     },
+     {
+      "name": "sam_arousal",
+      "type": "rating",
+      "title": "How aroused do you feel in this place?",
+      "rateMax": 9,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Self-Assessment Manikin, arousal (paper's Questionnaire 2 with its manikin figure): 1 sleepy, 3 drowsy, 5 neutral, 7 excited, 9 stimulation. Keyed by place: ugs_01 to ugs_15, numbered in the order of the paper's Figure A1 (panels a-c, top to bottom).",
+      "maxRateDescription": "Stimulated, eyes wide open",
+      "minRateDescription": "Sleepy, eyes closed"
+     },
+     {
+      "name": "vegetation_layers",
+      "type": "rating",
+      "title": "The layers of vegetation are abundant.",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Perceived plant attribute A1 (paper's Table A2, 'Whether ...' turned into a statement). Keyed by place: ugs_01 to ugs_15, numbered in the order of the paper's Figure A1 (panels a-c, top to bottom).",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree"
+     },
+     {
+      "name": "tree_shape",
+      "type": "rating",
+      "title": "The shape of the trees is beautiful.",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Perceived plant attribute A2 (paper's Table A2, 'Whether ...' turned into a statement). Keyed by place: ugs_01 to ugs_15, numbered in the order of the paper's Figure A1 (panels a-c, top to bottom).",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree"
+     },
+     {
+      "name": "tree_texture",
+      "type": "rating",
+      "title": "The texture of the trees is smooth.",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Perceived plant attribute A3 (paper's Table A2, 'Whether ...' turned into a statement). Keyed by place: ugs_01 to ugs_15, numbered in the order of the paper's Figure A1 (panels a-c, top to bottom).",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree"
+     },
+     {
+      "name": "color_diversity",
+      "type": "rating",
+      "title": "The green space is rich in colour.",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Perceived plant attribute A4 (paper's Table A2, 'Whether ...' turned into a statement). Keyed by place: ugs_01 to ugs_15, numbered in the order of the paper's Figure A1 (panels a-c, top to bottom).",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree"
+     },
+     {
+      "name": "culture",
+      "type": "rating",
+      "title": "The green space is rich in cultural connotation.",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Perceived plant attribute A5 (paper's Table A2, 'Whether ...' turned into a statement). Keyed by place: ugs_01 to ugs_15, numbered in the order of the paper's Figure A1 (panels a-c, top to bottom).",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree"
+     },
+     {
+      "name": "use_motivation",
+      "type": "checkbox",
+      "title": "Would any of these make you want to use this place? Tick all that apply.",
+      "choices": [
+       {
+        "text": "The scene is soothing",
+        "value": "soothing"
+       },
+       {
+        "text": "The scene is beautiful",
+        "value": "beautiful"
+       },
+       {
+        "text": "The scene is relaxing",
+        "value": "relaxing"
+       },
+       {
+        "text": "The scene is accessible",
+        "value": "accessible"
+       },
+       {
+        "text": "It provides rich activities",
+        "value": "rich_activities"
+       },
+       {
+        "text": "It provides a place to stay",
+        "value": "place_to_stay"
+       }
+      ],
+      "isRequired": false,
+      "description": "Paper's Questionnaire 1, six yes/no items; the use-function score D1 is the number ticked (0-6). Keyed by place: ugs_01 to ugs_15, numbered in the order of the paper's Figure A1 (panels a-c, top to bottom)."
+     }
+    ]
+   },
+   {
+    "name": "end",
+    "elements": [
+     {
+      "name": "visit_frequency",
+      "type": "radiogroup",
+      "title": "How often do you visit urban green spaces like the ones shown?",
+      "choices": [
+       {
+        "text": "Almost every day",
+        "value": "almost_every_day"
+       },
+       {
+        "text": "2 or 3 times a week",
+        "value": "2_3_week"
+       },
+       {
+        "text": "2 or 3 times a month",
+        "value": "2_3_month"
+       },
+       {
+        "text": "2 or 3 times a quarter",
+        "value": "2_3_quarter"
+       },
+       {
+        "text": "2 or 3 times a year",
+        "value": "2_3_year"
+       },
+       {
+        "text": "Almost never",
+        "value": "almost_never"
+       }
+      ],
+      "isRequired": true,
+      "description": "Paper's Questionnaire 1 asks 'How often do you visit the UGSs shown in the videos'; reworded for photos. Variable D2."
+     }
+    ]
+   }
+  ],
+  "title": "West Lake Green Spaces: Emotional Responses",
+  "locale": "en",
+  "spSite": {
+   "id": "site-92e5047236f49634",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>West Lake Green Spaces</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"West Lake Green Spaces: Emotional Responses\",\n  \"description\": \"Method replication with the paper's own panoramic photos of the same places (the original showed 360-degree videos of them): participants give age and gender, then visit 15 urban green spaces in the West Lake scenic area of Hangzhou in random order as horizontal panoramic photos (scroll sideways, at least 15 s each). For each place they rate valence and arousal on the 9-point Self-Assessment Manikin, rate five perceived plant attributes (vegetation layers, tree shape, tree texture, colour diversity, cultural connotation; 1-5), and tick which of six factors would make them use the place; at the end they say how often they visit such green spaces. Rebuilt from Qiao, Zhuang, Zhang, Su & Xia (2021), International Journal of Environmental Research and Public Health 18(16): 8526, with the panoramas printed in the paper's Figure A1, the manikin figures and wording of its Questionnaire 2, and the items of its Table A2 and Questionnaire 1 (CC BY 4.0). Analysis as in the paper: mean SAM valence and arousal per place; Pearson correlations and backward linear regression of valence and arousal on the plant attributes, use-function score and the places' measured structure (size, edge shape index, canopy density, water and plant share, listed in the paper's Table 2); ANOVA across structure levels; t-tests by gender. Differences from the original study: (1) the original showed one-minute 360-degree panoramic videos; here participants view the paper's horizontal panoramic photos (1269 x 288 px from the published appendix); (2) no facial-expression recording (the paper also estimated valence and arousal from webcam video with a face-recognition model); (3) the paper's GAPED baseline pictures are not included (not openly licensed); (4) ratings come right after each place instead of in one questionnaire at the end; (5) the plant attributes are phrased as statements ('The layers of vegetation are abundant') where the paper's table asks 'Whether the layers of vegetation are abundant'; (6) age and gender questions and the per-place minimum viewing time are our additions.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"places\",\n   \"sam\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"min\": 18,\n      \"max\": 110\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"places\",\n    \"elements\": [\n     {\n      \"type\": \"rating\",\n      \"name\": \"sam_valence\",\n      \"title\": \"How pleasant do you feel in this place?\",\n      \"rateMin\": 1,\n      \"rateMax\": 9,\n      \"minRateDescription\": \"Frowning, unhappy\",\n      \"maxRateDescription\": \"Smiling, happy\",\n      \"isRequired\": true,\n      \"description\": \"Self-Assessment Manikin, valence (paper's Questionnaire 2 with its manikin figure): 1 frown, 3 unhappy, 5 neutral, 7 smiling, 9 happy; even numbers in between. Keyed by place: ugs_01 to ugs_15, numbered in the order of the paper's Figure A1 (panels a-c, top to bottom).\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sam_arousal\",\n      \"title\": \"How aroused do you feel in this place?\",\n      \"rateMin\": 1,\n      \"rateMax\": 9,\n      \"minRateDescription\": \"Sleepy, eyes closed\",\n      \"maxRateDescription\": \"Stimulated, eyes wide open\",\n      \"isRequired\": true,\n      \"description\": \"Self-Assessment Manikin, arousal (paper's Questionnaire 2 with its manikin figure): 1 sleepy, 3 drowsy, 5 neutral, 7 excited, 9 stimulation. Keyed by place: ugs_01 to ugs_15, numbered in the order of the paper's Figure A1 (panels a-c, top to bottom).\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"vegetation_layers\",\n      \"title\": \"The layers of vegetation are abundant.\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Strongly disagree\",\n      \"maxRateDescription\": \"Strongly agree\",\n      \"isRequired\": true,\n      \"description\": \"Perceived plant attribute A1 (paper's Table A2, 'Whether ...' turned into a statement). Keyed by place: ugs_01 to ugs_15, numbered in the order of the paper's Figure A1 (panels a-c, top to bottom).\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"tree_shape\",\n      \"title\": \"The shape of the trees is beautiful.\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Strongly disagree\",\n      \"maxRateDescription\": \"Strongly agree\",\n      \"isRequired\": true,\n      \"description\": \"Perceived plant attribute A2 (paper's Table A2, 'Whether ...' turned into a statement). Keyed by place: ugs_01 to ugs_15, numbered in the order of the paper's Figure A1 (panels a-c, top to bottom).\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"tree_texture\",\n      \"title\": \"The texture of the trees is smooth.\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Strongly disagree\",\n      \"maxRateDescription\": \"Strongly agree\",\n      \"isRequired\": true,\n      \"description\": \"Perceived plant attribute A3 (paper's Table A2, 'Whether ...' turned into a statement). Keyed by place: ugs_01 to ugs_15, numbered in the order of the paper's Figure A1 (panels a-c, top to bottom).\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"color_diversity\",\n      \"title\": \"The green space is rich in colour.\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Strongly disagree\",\n      \"maxRateDescription\": \"Strongly agree\",\n      \"isRequired\": true,\n      \"description\": \"Perceived plant attribute A4 (paper's Table A2, 'Whether ...' turned into a statement). Keyed by place: ugs_01 to ugs_15, numbered in the order of the paper's Figure A1 (panels a-c, top to bottom).\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"culture\",\n      \"title\": \"The green space is rich in cultural connotation.\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Strongly disagree\",\n      \"maxRateDescription\": \"Strongly agree\",\n      \"isRequired\": true,\n      \"description\": \"Perceived plant attribute A5 (paper's Table A2, 'Whether ...' turned into a statement). Keyed by place: ugs_01 to ugs_15, numbered in the order of the paper's Figure A1 (panels a-c, top to bottom).\"\n     },\n     {\n      \"type\": \"checkbox\",\n      \"name\": \"use_motivation\",\n      \"title\": \"Would any of these make you want to use this place? Tick all that apply.\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": \"soothing\",\n        \"text\": \"The scene is soothing\"\n       },\n       {\n        \"value\": \"beautiful\",\n        \"text\": \"The scene is beautiful\"\n       },\n       {\n        \"value\": \"relaxing\",\n        \"text\": \"The scene is relaxing\"\n       },\n       {\n        \"value\": \"accessible\",\n        \"text\": \"The scene is accessible\"\n       },\n       {\n        \"value\": \"rich_activities\",\n        \"text\": \"It provides rich activities\"\n       },\n       {\n        \"value\": \"place_to_stay\",\n        \"text\": \"It provides a place to stay\"\n       }\n      ],\n      \"description\": \"Paper's Questionnaire 1, six yes/no items; the use-function score D1 is the number ticked (0-6). Keyed by place: ugs_01 to ugs_15, numbered in the order of the paper's Figure A1 (panels a-c, top to bottom).\"\n     }\n    ]\n   },\n   {\n    \"name\": \"end\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"visit_frequency\",\n      \"title\": \"How often do you visit urban green spaces like the ones shown?\",\n      \"description\": \"Paper's Questionnaire 1 asks 'How often do you visit the UGSs shown in the videos'; reworded for photos. Variable D2.\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"almost_every_day\",\n        \"text\": \"Almost every day\"\n       },\n       {\n        \"value\": \"2_3_week\",\n        \"text\": \"2 or 3 times a week\"\n       },\n       {\n        \"value\": \"2_3_month\",\n        \"text\": \"2 or 3 times a month\"\n       },\n       {\n        \"value\": \"2_3_quarter\",\n        \"text\": \"2 or 3 times a quarter\"\n       },\n       {\n        \"value\": \"2_3_year\",\n        \"text\": \"2 or 3 times a year\"\n       },\n       {\n        \"value\": \"almost_never\",\n        \"text\": \"Almost never\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"ugs-original\">{\"source\": \"Qiao, Zhuang, Zhang, Su & Xia (2021) International Journal of Environmental Research and Public Health 18(16): 8526\", \"n\": 34, \"participants\": \"34 participants (almost all college students, aged 18-33, mean 24; 18 women) recruited through website forums; 15 one-minute 360-degree videos in random order, SAM and questionnaires afterwards, webcam face recognition during viewing\", \"result\": \"Perceived plant attributes correlated with SAM valence (r 0.38-0.60) and arousal (0.40-0.60). Plant and water share were the strongest predictors of valence (model R2 0.497) and water share of arousal (R2 0.461); more water gave higher valence and arousal; medium-sized spaces (0.3-0.8 ha) were rated highest; colour diversity had a negative regression weight. Women reported higher valence and arousal than men.\"}</script>\n<style>\n:root{--bg:#f0f4ef;--card:#fff;--ink:#1d261c;--muted:#59665a;--accent:#3a6b35;--line:#d5ded3;--warn:#b3261e;--sel:#e4f0e1}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:760px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.5rem;margin:0 0 8px}h2{font-size:1.15rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:13px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.prog{font-size:.88rem;color:var(--muted);margin-bottom:8px}\n.view{position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:5}\n.view img{width:min(96vw,720px);height:auto;display:block}\n.cross{font-size:48px;color:#333;font-weight:300}\n.thumb{width:100%;max-width:420px;border-radius:8px;display:block;margin:0 auto 12px}\n.bi{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin-top:10px}.bi .l{text-align:right;font-size:.88rem}.bi .r{font-size:.88rem}.row{display:grid;grid-template-columns:repeat(5,40px);gap:4px}\n.row label{display:flex;flex-direction:column;align-items:center;border:1px solid var(--line);border-radius:8px;padding:6px 0;cursor:pointer;font-size:.82rem}\n.row label:has(input:checked){background:var(--sel);border-color:var(--accent)}\n.row input{margin:0 0 2px}\n@media(max-width:520px){.bi{grid-template-columns:1fr 1fr}.bi .row{grid-column:1/-1;order:3;grid-template-columns:repeat(5,1fr)}.bi .l{text-align:left}.bi .r{text-align:right}}\n.ends{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-top:3px}\ntextarea{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;min-height:60px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.f{margin-top:16px}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:110px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:760px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n.pano{overflow-x:auto;border-radius:8px;background:#000;-webkit-overflow-scrolling:touch}\n.pano img{height:min(300px,42vh);width:auto;max-width:none;display:block}\n.thumbp{width:100%;border-radius:6px;display:block;margin-bottom:10px}\n.sam img{width:100%;max-width:520px;display:block;margin:6px auto 4px}\n.n9{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:3px;max-width:520px;margin:0 auto}\n.n9 label,.n5 label{display:flex;flex-direction:column;align-items:center;border:1px solid var(--line);border-radius:8px;padding:5px 0;cursor:pointer;font-size:.82rem}\n.n9 label:has(input:checked),.n5 label:has(input:checked){background:var(--sel);border-color:var(--accent)}\n.n5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;margin-top:4px}\n.it{margin-top:14px}\n.chk label{display:flex;gap:10px;align-items:center;padding:7px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.chk label:has(input:checked){background:var(--sel);border-color:var(--accent)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Panoramic photographs and Self-Assessment Manikin figures: Qiao, Zhuang, Zhang, Su &amp; Xia (2021), International Journal of Environmental Research and Public Health 18(16): 8526, Figure A1 and Questionnaire 2 (doi:10.3390/ijerph18168526, CC BY 4.0).</footer>\n<script>\n(function(){\n  var KEY='westlake-ugs:state', MINV=window.__VIEWMS||15000;\n  var PLANT=[['vegetation_layers','The layers of vegetation are abundant.'],['tree_shape','The shape of the trees is beautiful.'],['tree_texture','The texture of the trees is smooth.'],['color_diversity','The green space is rich in colour.'],['culture','The green space is rich in cultural connotation.']];\n  var app=document.getElementById('app'), Q={}, files={}, ids=[], sam={}, st=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function send(list,b,next){if(b)b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}next();});}\n  function val(name){var x=app.querySelector('input[name=\"'+name+'\"]:checked');return x?x.value:null;}\n  function radios(q){return '<div class=\"f\"><b>'+esc(Q[q].title)+'</b>'+(Q[q].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+q+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function intro(){\n    app.innerHTML='<h1>Green spaces by West Lake</h1><p>You will visit '+st.order.length+' green spaces in the West Lake scenic area of Hangzhou, China, through wide panoramic photos. Look around each place (scroll sideways) and imagine how you would feel being there. Then rate your feelings with two picture scales, five statements about the plants, and what would make you use the place. It takes about 20 minutes.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');send([SPSite.answer('consent',true)],this,function(){st.step='about';save();route();});};\n  }\n  function about(){\n    app.innerHTML='<h2>About you</h2><div class=\"card\"><div class=\"f\" style=\"margin-top:0\"><b>'+esc(Q.age.title)+'</b><br><input type=\"number\" id=\"age\" min=\"18\" max=\"110\"></div>'+radios('gender')+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var age=Number(document.getElementById('age').value),g=val('gender');\n      if(!(age>=18&&age<=110))return err('Please enter your age.');if(!g)return err('Please choose an option.');\n      send([SPSite.answer('age',age),SPSite.answer('gender',g)],this,function(){st.step='scene';st.k=0;st.phase='view';save();route();});\n    };\n  }\n  function view(){\n    var id=st.order[st.k];\n    app.innerHTML='<div class=\"prog\">Place '+(st.k+1)+' of '+st.order.length+'</div><div class=\"card\"><p style=\"color:var(--ink)\">Scroll sideways to look around. Imagine you are standing here: what do you feel?</p><div class=\"pano\"><img alt=\"Panoramic photograph of a green space by West Lake\" src=\"'+esc(files[id].url)+'\"></div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\" disabled>Rate this place</button></div><div class=\"err\"></div></div>';\n    var go=document.getElementById('go');setTimeout(function(){go.disabled=false;},MINV);\n    go.onclick=function(){st.phase='q';save();route();};\n  }\n  function nine(n){var h='<div class=\"n9\">';for(var i=1;i<=9;i++)h+='<label><input type=\"radio\" name=\"'+n+'\" value=\"'+i+'\">'+i+'</label>';return h+'</div>';}\n  function rate(){\n    var id=st.order[st.k],h='';\n    h+='<div class=\"it sam\"><b>'+esc(Q.sam_valence.title)+'</b><img alt=\"Self-Assessment Manikin, pleasure: from frowning (1) to smiling (9)\" src=\"'+esc(sam.valence.url)+'\">'+nine('q_v')+'<div class=\"ends\"><span>Unhappy</span><span>Happy</span></div></div>';\n    h+='<div class=\"it sam\"><b>'+esc(Q.sam_arousal.title)+'</b><img alt=\"Self-Assessment Manikin, arousal: from calm (1) to excited (9)\" src=\"'+esc(sam.arousal.url)+'\">'+nine('q_a')+'<div class=\"ends\"><span>Calm, sleepy</span><span>Excited</span></div></div>';\n    h+='<div class=\"it\"><b>How much do you agree?</b> <span style=\"color:var(--muted)\">1 = strongly disagree, 5 = strongly agree</span>';\n    PLANT.forEach(function(p){h+='<div class=\"it\" style=\"margin-top:10px\">'+esc(Q[p[0]].title)+'<div class=\"n5\">';for(var i=1;i<=5;i++)h+='<label><input type=\"radio\" name=\"q_'+p[0]+'\" value=\"'+i+'\">'+i+'</label>';h+='</div></div>';});\n    h+='</div><div class=\"it chk\"><b>'+esc(Q.use_motivation.title)+'</b>'+(Q.use_motivation.choices||[]).map(function(c){return '<label><input type=\"checkbox\" name=\"q_use\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';\n    app.innerHTML='<div class=\"prog\">Place '+(st.k+1)+' of '+st.order.length+'</div><div class=\"card\"><img class=\"thumbp\" alt=\"The place you just saw\" src=\"'+esc(files[id].url)+'\">'+h+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">'+(st.k+1<st.order.length?'Next place':'Continue')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var v=val('q_v'),a=val('q_a');if(v==null||a==null)return err('Please answer both picture scales.');\n      var pv={},miss=PLANT.some(function(p){var x=val('q_'+p[0]);pv[p[0]]=x;return x==null;});if(miss)return err('Please answer all five statements.');\n      var use=[].map.call(app.querySelectorAll('input[name=q_use]:checked'),function(x){return x.value;});\n      var sh=[files[id].name],o={key:id,shown:sh};\n      var list=[SPSite.answer('sam_valence',Number(v),o),SPSite.answer('sam_arousal',Number(a),o),SPSite.answer('use_motivation',use,o)].concat(PLANT.map(function(p){return SPSite.answer(p[0],Number(pv[p[0]]),o);}));\n      send(list,this,function(){st.k++;st.phase='view';if(st.k>=st.order.length)st.step='visits';save();route();});\n    };\n  }\n  function visits(){\n    app.innerHTML='<h2>One last question</h2><div class=\"card\">'+radios('visit_frequency')+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Finish</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){var f=val('visit_frequency');if(!f)return err('Please choose an option.');send([SPSite.answer('visit_frequency',f)],this,function(){st.step='done';save();route();});};\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st.step='intro';save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  function route(){var s=st.step;window.scrollTo(0,0);if(s==='about')return about();if(s==='scene')return st.phase==='q'?rate():view();if(s==='visits')return visits();if(s==='done')return finish();intro();}\n  SPSite.onReady(function(ctx){\n    ['consent','age','gender','sam_valence','sam_arousal','use_motivation','visit_frequency'].concat(PLANT.map(function(p){return p[0];})).forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('places')||[]).forEach(function(f){if(/\\.(png|jpe?g|webp)$/i.test(f.name)){var k=f.name.replace(/\\.[^.]+$/,'');files[k]=f;ids.push(k);}});\n    (SPSite.getMedia('sam')||[]).forEach(function(f){if(/valence/i.test(f.name))sam.valence=f;if(/arousal/i.test(f.name))sam.arousal=f;});\n    if(ids.length<2||!sam.valence||!sam.arousal){app.innerHTML='<h1>Images missing</h1><p>Upload the panoramas to the media folder \"places\" and the two manikin figures to \"sam\".</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    var valid=st&&st.order&&st.order.length===ids.length&&st.order.every(function(x){return files[x];});\n    if(!valid)st={step:'intro',order:shuffle(ids),k:0,phase:'view'};\n    var a=(ctx&&ctx.answers)||{};if(a.consent!==true){st.step='intro';st.k=0;}\n    if(st.step==='scene'&&st.phase!=='q')st.phase='view';\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T15:48:15.052Z",
+   "mediaFolders": [
+    "places",
+    "sam"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T15:48:15.052Z"
+  },
+  "description": "Method replication with the paper's own panoramic photos of the same places (the original showed 360-degree videos of them): participants give age and gender, then visit 15 urban green spaces in the West Lake scenic area of Hangzhou in random order as horizontal panoramic photos (scroll sideways, at least 15 s each). For each place they rate valence and arousal on the 9-point Self-Assessment Manikin, rate five perceived plant attributes (vegetation layers, tree shape, tree texture, colour diversity, cultural connotation; 1-5), and tick which of six factors would make them use the place; at the end they say how often they visit such green spaces. Rebuilt from Qiao, Zhuang, Zhang, Su & Xia (2021), International Journal of Environmental Research and Public Health 18(16): 8526, with the panoramas printed in the paper's Figure A1, the manikin figures and wording of its Questionnaire 2, and the items of its Table A2 and Questionnaire 1 (CC BY 4.0). Analysis as in the paper: mean SAM valence and arousal per place; Pearson correlations and backward linear regression of valence and arousal on the plant attributes, use-function score and the places' measured structure (size, edge shape index, canopy density, water and plant share, listed in the paper's Table 2); ANOVA across structure levels; t-tests by gender. Differences from the original study: (1) the original showed one-minute 360-degree panoramic videos; here participants view the paper's horizontal panoramic photos (1269 x 288 px from the published appendix); (2) no facial-expression recording (the paper also estimated valence and arousal from webcam video with a face-recognition model); (3) the paper's GAPED baseline pictures are not included (not openly licensed); (4) ratings come right after each place instead of in one questionnaire at the end; (5) the plant attributes are phrased as statements ('The layers of vegetation are abundant') where the paper's table asks 'Whether the layers of vegetation are abundant'; (6) age and gender questions and the per-place minimum viewing time are our additions.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2021-qiao-west/places/ugs_01__cbb3b26e-3207-4865-bb2d-3ac88e91704b.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-qiao-west/places/ugs_01__cbb3b26e-3207-4865-bb2d-3ac88e91704b.jpg",
+   "name": "ugs_01.jpg",
+   "type": "image",
+   "folder": "places",
+   "media_id": "templates/2021-qiao-west/places/ugs_01__cbb3b26e-3207-4865-bb2d-3ac88e91704b.jpg",
+   "logicalFolder": "places",
+   "original_bytes": 238988,
+   "uploaded_bytes": 238988,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-qiao-west/places/ugs_02__292aa4b5-0d56-40da-a02a-37d6491067d6.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-qiao-west/places/ugs_02__292aa4b5-0d56-40da-a02a-37d6491067d6.jpg",
+   "name": "ugs_02.jpg",
+   "type": "image",
+   "folder": "places",
+   "media_id": "templates/2021-qiao-west/places/ugs_02__292aa4b5-0d56-40da-a02a-37d6491067d6.jpg",
+   "logicalFolder": "places",
+   "original_bytes": 202297,
+   "uploaded_bytes": 202297,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-qiao-west/places/ugs_03__1c90b663-9a05-4c3c-8255-6c64c2f57eb2.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-qiao-west/places/ugs_03__1c90b663-9a05-4c3c-8255-6c64c2f57eb2.jpg",
+   "name": "ugs_03.jpg",
+   "type": "image",
+   "folder": "places",
+   "media_id": "templates/2021-qiao-west/places/ugs_03__1c90b663-9a05-4c3c-8255-6c64c2f57eb2.jpg",
+   "logicalFolder": "places",
+   "original_bytes": 218707,
+   "uploaded_bytes": 218707,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-qiao-west/places/ugs_04__46af221c-ecfb-4832-9f85-3ad35ff2028d.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-qiao-west/places/ugs_04__46af221c-ecfb-4832-9f85-3ad35ff2028d.jpg",
+   "name": "ugs_04.jpg",
+   "type": "image",
+   "folder": "places",
+   "media_id": "templates/2021-qiao-west/places/ugs_04__46af221c-ecfb-4832-9f85-3ad35ff2028d.jpg",
+   "logicalFolder": "places",
+   "original_bytes": 231002,
+   "uploaded_bytes": 231002,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-qiao-west/places/ugs_05__e29aa94d-3409-44b1-9a14-3871a940648b.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-qiao-west/places/ugs_05__e29aa94d-3409-44b1-9a14-3871a940648b.jpg",
+   "name": "ugs_05.jpg",
+   "type": "image",
+   "folder": "places",
+   "media_id": "templates/2021-qiao-west/places/ugs_05__e29aa94d-3409-44b1-9a14-3871a940648b.jpg",
+   "logicalFolder": "places",
+   "original_bytes": 178595,
+   "uploaded_bytes": 178595,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-qiao-west/places/ugs_06__8662006e-4e97-4d81-b358-6803e77ccef1.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-qiao-west/places/ugs_06__8662006e-4e97-4d81-b358-6803e77ccef1.jpg",
+   "name": "ugs_06.jpg",
+   "type": "image",
+   "folder": "places",
+   "media_id": "templates/2021-qiao-west/places/ugs_06__8662006e-4e97-4d81-b358-6803e77ccef1.jpg",
+   "logicalFolder": "places",
+   "original_bytes": 209454,
+   "uploaded_bytes": 209454,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-qiao-west/places/ugs_07__ed888efc-34ad-48a8-8bd0-6a4a220aa5d4.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-qiao-west/places/ugs_07__ed888efc-34ad-48a8-8bd0-6a4a220aa5d4.jpg",
+   "name": "ugs_07.jpg",
+   "type": "image",
+   "folder": "places",
+   "media_id": "templates/2021-qiao-west/places/ugs_07__ed888efc-34ad-48a8-8bd0-6a4a220aa5d4.jpg",
+   "logicalFolder": "places",
+   "original_bytes": 132158,
+   "uploaded_bytes": 132158,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-qiao-west/places/ugs_08__9e2a4022-1684-4a8e-854e-5329e6592225.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-qiao-west/places/ugs_08__9e2a4022-1684-4a8e-854e-5329e6592225.jpg",
+   "name": "ugs_08.jpg",
+   "type": "image",
+   "folder": "places",
+   "media_id": "templates/2021-qiao-west/places/ugs_08__9e2a4022-1684-4a8e-854e-5329e6592225.jpg",
+   "logicalFolder": "places",
+   "original_bytes": 211436,
+   "uploaded_bytes": 211436,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-qiao-west/places/ugs_09__6080f592-d86e-462e-a5dc-60dcea45768d.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-qiao-west/places/ugs_09__6080f592-d86e-462e-a5dc-60dcea45768d.jpg",
+   "name": "ugs_09.jpg",
+   "type": "image",
+   "folder": "places",
+   "media_id": "templates/2021-qiao-west/places/ugs_09__6080f592-d86e-462e-a5dc-60dcea45768d.jpg",
+   "logicalFolder": "places",
+   "original_bytes": 199782,
+   "uploaded_bytes": 199782,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-qiao-west/places/ugs_10__24a0301b-5e7b-4903-9f08-80f9ec4e4288.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-qiao-west/places/ugs_10__24a0301b-5e7b-4903-9f08-80f9ec4e4288.jpg",
+   "name": "ugs_10.jpg",
+   "type": "image",
+   "folder": "places",
+   "media_id": "templates/2021-qiao-west/places/ugs_10__24a0301b-5e7b-4903-9f08-80f9ec4e4288.jpg",
+   "logicalFolder": "places",
+   "original_bytes": 142811,
+   "uploaded_bytes": 142811,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-qiao-west/places/ugs_11__5cfe2e9e-7e3c-46f2-92f9-b9e96cb64200.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-qiao-west/places/ugs_11__5cfe2e9e-7e3c-46f2-92f9-b9e96cb64200.jpg",
+   "name": "ugs_11.jpg",
+   "type": "image",
+   "folder": "places",
+   "media_id": "templates/2021-qiao-west/places/ugs_11__5cfe2e9e-7e3c-46f2-92f9-b9e96cb64200.jpg",
+   "logicalFolder": "places",
+   "original_bytes": 204106,
+   "uploaded_bytes": 204106,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-qiao-west/places/ugs_12__72349103-3ef3-4413-8818-2c8656b717b7.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-qiao-west/places/ugs_12__72349103-3ef3-4413-8818-2c8656b717b7.jpg",
+   "name": "ugs_12.jpg",
+   "type": "image",
+   "folder": "places",
+   "media_id": "templates/2021-qiao-west/places/ugs_12__72349103-3ef3-4413-8818-2c8656b717b7.jpg",
+   "logicalFolder": "places",
+   "original_bytes": 224349,
+   "uploaded_bytes": 224349,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-qiao-west/places/ugs_13__186bc842-f515-4b0c-affd-ee69de8219ff.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-qiao-west/places/ugs_13__186bc842-f515-4b0c-affd-ee69de8219ff.jpg",
+   "name": "ugs_13.jpg",
+   "type": "image",
+   "folder": "places",
+   "media_id": "templates/2021-qiao-west/places/ugs_13__186bc842-f515-4b0c-affd-ee69de8219ff.jpg",
+   "logicalFolder": "places",
+   "original_bytes": 134773,
+   "uploaded_bytes": 134773,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-qiao-west/places/ugs_14__7944c1e0-bf28-4262-a272-dfcf130727a2.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-qiao-west/places/ugs_14__7944c1e0-bf28-4262-a272-dfcf130727a2.jpg",
+   "name": "ugs_14.jpg",
+   "type": "image",
+   "folder": "places",
+   "media_id": "templates/2021-qiao-west/places/ugs_14__7944c1e0-bf28-4262-a272-dfcf130727a2.jpg",
+   "logicalFolder": "places",
+   "original_bytes": 215962,
+   "uploaded_bytes": 215962,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-qiao-west/places/ugs_15__0ad1b6a9-665f-4d44-8a1d-c2bfbe805133.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-qiao-west/places/ugs_15__0ad1b6a9-665f-4d44-8a1d-c2bfbe805133.jpg",
+   "name": "ugs_15.jpg",
+   "type": "image",
+   "folder": "places",
+   "media_id": "templates/2021-qiao-west/places/ugs_15__0ad1b6a9-665f-4d44-8a1d-c2bfbe805133.jpg",
+   "logicalFolder": "places",
+   "original_bytes": 139542,
+   "uploaded_bytes": 139542,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-qiao-west/sam/sam_arousal__cc57f951-2f70-47bf-b44d-f5a1da144b9e.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-qiao-west/sam/sam_arousal__cc57f951-2f70-47bf-b44d-f5a1da144b9e.jpg",
+   "name": "sam_arousal.jpg",
+   "type": "image",
+   "folder": "sam",
+   "media_id": "templates/2021-qiao-west/sam/sam_arousal__cc57f951-2f70-47bf-b44d-f5a1da144b9e.jpg",
+   "logicalFolder": "sam",
+   "original_bytes": 20442,
+   "uploaded_bytes": 20442,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-qiao-west/sam/sam_valence__5e0117cd-0abb-4651-975a-8528c21f183c.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-qiao-west/sam/sam_valence__5e0117cd-0abb-4651-975a-8528c21f183c.jpg",
+   "name": "sam_valence.jpg",
+   "type": "image",
+   "folder": "sam",
+   "media_id": "templates/2021-qiao-west/sam/sam_valence__5e0117cd-0abb-4651-975a-8528c21f183c.jpg",
+   "logicalFolder": "sam",
+   "original_bytes": 18594,
+   "uploaded_bytes": 18594,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Assessing Emotional Responses to the Spatial Quality of Urban Green Spaces through Self-Report and Face Recognition Measures",
+  "authors": [
+   "Lin Qiao",
+   "Jingwei Zhuang",
+   "Xuan Zhang",
+   "Yang Su",
+   "Yiping Xia"
+  ],
+  "year": 2021,
+  "venue": "International Journal of Environmental Research and Public Health",
+  "doi": "10.3390/ijerph18168526",
+  "url": "https://doi.org/10.3390/ijerph18168526"
+ }
+}

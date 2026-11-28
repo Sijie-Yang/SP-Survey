@@ -1,366 +1,1172 @@
 {
-  "id": "2025-torkko-urban",
-  "name": "Urban Greenery (AI Generated)",
-  "description": "This survey template explores the psychological, aesthetic, and functional impacts of urban greenery in streetscapes. Your responses will guide improvements in urban planning and design, focusing on how greenery influences urban street environments.",
-  "author": "Torkko, Jussi",
-  "year": "2025",
-  "category": "AI Template",
-  "tags": [
-    "official"
-  ],
-  "isPinned": false,
-  "isApproved": true,
-  "showOnLanding": true,
-  "thumbnailUrl": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/185634169984416.jpg",
-  "website": null,
-  "huggingfaceDataset": "Jusba/Greenery_Survey_Helsinki_Mapillary/images",
-  "createdAt": "2026-05-20T04:13:07.377+00:00",
-  "config": {
-    "pages": [
-      {
-        "name": "research_objective",
-        "title": "Research Objective",
-        "elements": [],
-        "description": "The purpose of this survey is to investigate how urban greenery affects perceptions of streetscapes, including aesthetic appeal, environmental benefits, and personal preferences. We aim to understand the impact of greenery on urban street environments."
-      },
-      {
-        "name": "introduction",
-        "title": "Introduction",
-        "elements": [],
-        "description": "Welcome to the Urban Greenery Perception Survey. This study aims to explore the psychological and functional impacts of urban greenery on residents across various environments. Your insights will aid in enhancing urban design and planning."
-      },
-      {
-        "name": "theoretical_context",
-        "title": "Theoretical Context",
-        "elements": [],
-        "description": "Urban greenery plays a crucial role in enhancing the quality of life in cities. Concepts from urban ecology and environmental psychology suggest that greenery can improve mental health, increase biodiversity, and enhance urban aesthetics."
-      },
-      {
-        "name": "demographics",
-        "title": "Demographics",
-        "elements": [
-          {
-            "name": "age",
-            "type": "text",
-            "title": "What is your age?"
-          },
-          {
-            "name": "gender",
-            "type": "radiogroup",
-            "title": "What is your gender?",
-            "choices": [
-              "Male",
-              "Female",
-              "Other",
-              "Prefer not to say"
-            ]
-          },
-          {
-            "name": "education",
-            "type": "dropdown",
-            "title": "What is your highest level of education?",
-            "choices": [
-              "High school",
-              "Bachelor's",
-              "Master's",
-              "PhD",
-              "Other"
-            ]
-          },
-          {
-            "name": "transport",
-            "type": "checkbox",
-            "title": "What modes of transportation do you use? (select all that apply)",
-            "choices": [
-              "Walk",
-              "Bike",
-              "Bus",
-              "Car",
-              "Subway",
-              "Other"
-            ]
-          },
-          {
-            "name": "urban_area",
-            "type": "dropdown",
-            "title": "Which type of urban area do you reside in?",
-            "choices": [
-              "City center",
-              "Suburb",
-              "Rural area",
-              "Other"
-            ]
-          }
-        ],
-        "description": "To help us understand the diversity of our participants, please provide some information about yourself."
-      },
-      {
-        "name": "sampling_strategy",
-        "title": "Sampling Strategy",
-        "elements": [],
-        "description": "We plan to gather perspectives from a diverse range of urban environments. Participants will be recruited using online platforms and community outreach, stratified by urban area types to ensure a representative sample."
-      },
-      {
-        "name": "greenery_psychological_impact",
-        "title": "Psychological Impact of Urban Greenery",
-        "elements": [
-          {
-            "name": "stress_reduction",
-            "type": "rating",
-            "title": "On a scale of 1-5, how does urban greenery in your area contribute to your stress reduction?",
-            "rateMax": 5,
-            "rateMin": 1,
-            "maxRateDescription": "Significant impact",
-            "minRateDescription": "No impact"
-          },
-          {
-            "name": "mood_enhancement_frequency",
-            "type": "radiogroup",
-            "title": "How frequently do you feel that greenery in urban areas enhances your mood?",
-            "choices": [
-              "Daily",
-              "Weekly",
-              "Rarely",
-              "Never"
-            ]
-          }
-        ],
-        "description": "Evaluate how urban greenery impacts your psychological well-being."
-      },
-      {
-        "name": "greenery_perception",
-        "title": "Perception of Urban Greenery",
-        "elements": [
-          {
-            "name": "beauty_rating",
-            "type": "imagerating",
-            "title": "How visually pleasing do you find these streets due to greenery?",
-            "choices": [],
-            "rateMax": 5,
-            "rateMin": 1,
-            "imageCount": 3,
-            "imageSelectionMode": "curated",
-            "maxRateDescription": "Very pleasing",
-            "minRateDescription": "Not pleasing",
-            "randomImageSelection": true
-          },
-          {
-            "name": "greenery_preference",
-            "type": "imagepicker",
-            "title": "Which street do you prefer based on greenery?",
-            "choices": [],
-            "imageCount": 4,
-            "multiSelect": false,
-            "imageSelectionMode": "curated",
-            "randomImageSelection": true
-          },
-          {
-            "name": "green_space_rank",
-            "type": "imageranking",
-            "title": "Rank these streets from most to least green:",
-            "choices": [],
-            "imageCount": 4,
-            "imageSelectionMode": "curated",
-            "randomImageSelection": true
-          }
-        ],
-        "description": "Evaluate these street environments based on the presence and impact of greenery."
-      },
-      {
-        "name": "greenery_functional_benefits",
-        "title": "Functional Benefits of Urban Greenery",
-        "elements": [
-          {
-            "name": "greenery_criteria",
-            "rows": [
-              "Safety",
-              "Beauty",
-              "Walkability",
-              "Satisfaction"
-            ],
-            "type": "imagematrix",
-            "title": "Rate these streets based on these criteria:",
-            "choices": [],
-            "columns": [
-              "1",
-              "2",
-              "3",
-              "4",
-              "5"
-            ],
-            "imageCount": 1,
-            "imageLinks": [],
-            "imageSelectionMode": "curated",
-            "randomImageSelection": true
-          },
-          {
-            "name": "functional_effectiveness",
-            "type": "rating",
-            "title": "Rate the effectiveness of urban greenery in providing shading and noise reduction.",
-            "rateMax": 5,
-            "rateMin": 1,
-            "maxRateDescription": "Very effective",
-            "minRateDescription": "Not effective"
-          }
-        ],
-        "description": "Evaluate how urban greenery provides functional benefits in these streets."
-      },
-      {
-        "name": "greenery_awareness",
-        "title": "Awareness of Urban Greenery Benefits",
-        "elements": [
-          {
-            "name": "psychological_benefits_awareness",
-            "type": "rating",
-            "title": "On a scale of 1 to 5, how aware are you of the psychological benefits provided by urban greenery in your environment?",
-            "rateMax": 5,
-            "rateMin": 1,
-            "maxRateDescription": "Very aware",
-            "minRateDescription": "Not aware"
-          },
-          {
-            "name": "types_of_greenery_awareness",
-            "type": "checkbox",
-            "title": "Which types of greenery are you aware of in your urban environment? (select all that apply)",
-            "choices": [
-              "Trees",
-              "Shrubs",
-              "Gardens",
-              "Green walls",
-              "Rooftop gardens",
-              "None"
-            ]
-          },
-          {
-            "name": "personal_engagement",
-            "type": "radiogroup",
-            "title": "How often do you engage with green spaces in your area?",
-            "choices": [
-              "Daily",
-              "Weekly",
-              "Monthly",
-              "Rarely",
-              "Never"
-            ]
-          }
-        ],
-        "description": "Assess your awareness of the benefits provided by urban greenery."
-      },
-      {
-        "name": "greenery_impact",
-        "title": "Impact of Greenery",
-        "elements": [
-          {
-            "name": "environmental_benefits",
-            "type": "likert",
-            "title": "To what extent do you agree that these streets improve air quality and temperature regulation due to greenery?",
-            "choices": [
-              "Strongly disagree",
-              "Disagree",
-              "Neutral",
-              "Agree",
-              "Strongly agree"
-            ]
-          }
-        ],
-        "description": "Assess how urban greenery impacts your perception of these streets."
-      },
-      {
-        "name": "streetscape_design_elements",
-        "title": "Streetscape Design Elements",
-        "elements": [
-          {
-            "name": "tree_placement",
-            "type": "imagerating",
-            "title": "How effective is the tree placement in enhancing the street's aesthetic appeal?",
-            "choices": [],
-            "rateMax": 5,
-            "rateMin": 1,
-            "imageCount": 2,
-            "imageSelectionMode": "curated",
-            "maxRateDescription": "Very effective",
-            "minRateDescription": "Not effective",
-            "randomImageSelection": true
-          },
-          {
-            "name": "pedestrian_pathways",
-            "type": "imagerating",
-            "title": "How do pedestrian pathways integrate with greenery in these streets?",
-            "choices": [],
-            "rateMax": 5,
-            "rateMin": 1,
-            "imageCount": 2,
-            "imageSelectionMode": "curated",
-            "maxRateDescription": "Excellent integration",
-            "minRateDescription": "Poor integration",
-            "randomImageSelection": true
-          }
-        ],
-        "description": "Evaluate specific streetscape design elements and their impact on your perception."
-      },
-      {
-        "name": "specific_greenery_assessment",
-        "title": "Detailed Greenery Assessment",
-        "elements": [
-          {
-            "name": "street_view_1",
-            "type": "image",
-            "choices": [],
-            "imageUrl": "curated",
-            "imageSelectionMode": "curated",
-            "randomImageSelection": true
-          },
-          {
-            "name": "thermal_comfort",
-            "type": "radiogroup",
-            "title": "How comfortable is the thermal environment in this street?",
-            "choices": [
-              "Very cold",
-              "Cold",
-              "Neutral",
-              "Hot",
-              "Very hot"
-            ]
-          },
-          {
-            "name": "describe_street",
-            "type": "comment",
-            "title": "Describe what you see in this street and any emotional benefits you associate with it:"
-          },
-          {
-            "name": "personal_experience",
-            "type": "comment",
-            "title": "Please describe a personal experience where urban greenery significantly impacted your well-being."
-          },
-          {
-            "name": "suggestions",
-            "type": "comment",
-            "title": "What improvements would you suggest for the integration of greenery in urban areas?"
-          }
-        ],
-        "description": "Provide detailed feedback on specific street environments."
-      },
-      {
-        "name": "conclusion",
-        "title": "Conclusion",
-        "elements": [
-          {
-            "name": "feedback",
-            "type": "comment",
-            "title": "Any additional comments or feedback?"
-          }
-        ],
-        "description": "Thank you for participating in our survey."
-      }
+ "id": "2025-torkko-urban",
+ "name": "Urban Greenery (AI Generated)",
+ "description": "This survey template explores the psychological, aesthetic, and functional impacts of urban greenery in streetscapes. Your responses will guide improvements in urban planning and design, focusing on how greenery influences urban street environments.",
+ "author": "Torkko, Jussi",
+ "year": "2025",
+ "category": "AI Template",
+ "tags": [
+  "official",
+  "source:ai",
+  "modality:street_view",
+  "task:rating",
+  "task:questionnaire",
+  "concept:greenery"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/185634169984416.jpg",
+ "website": null,
+ "huggingfaceDataset": "Jusba/Greenery_Survey_Helsinki_Mapillary/images",
+ "createdAt": "2026-05-20T04:13:07.377+00:00",
+ "updatedAt": "2026-11-26T14:57:59.799+00:00",
+ "config": {
+  "pages": [
+   {
+    "name": "research_objective",
+    "title": "Research Objective",
+    "elements": [],
+    "description": "The purpose of this survey is to investigate how urban greenery affects perceptions of streetscapes, including aesthetic appeal, environmental benefits, and personal preferences. We aim to understand the impact of greenery on urban street environments."
+   },
+   {
+    "name": "introduction",
+    "title": "Introduction",
+    "elements": [],
+    "description": "Welcome to the Urban Greenery Perception Survey. This study aims to explore the psychological and functional impacts of urban greenery on residents across various environments. Your insights will aid in enhancing urban design and planning."
+   },
+   {
+    "name": "theoretical_context",
+    "title": "Theoretical Context",
+    "elements": [],
+    "description": "Urban greenery plays a crucial role in enhancing the quality of life in cities. Concepts from urban ecology and environmental psychology suggest that greenery can improve mental health, increase biodiversity, and enhance urban aesthetics."
+   },
+   {
+    "name": "demographics",
+    "title": "Demographics",
+    "elements": [
+     {
+      "name": "age",
+      "type": "text",
+      "title": "What is your age?"
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "What is your gender?",
+      "choices": [
+       "Male",
+       "Female",
+       "Other",
+       "Prefer not to say"
+      ]
+     },
+     {
+      "name": "education",
+      "type": "dropdown",
+      "title": "What is your highest level of education?",
+      "choices": [
+       "High school",
+       "Bachelor's",
+       "Master's",
+       "PhD",
+       "Other"
+      ]
+     },
+     {
+      "name": "transport",
+      "type": "checkbox",
+      "title": "What modes of transportation do you use? (select all that apply)",
+      "choices": [
+       "Walk",
+       "Bike",
+       "Bus",
+       "Car",
+       "Subway",
+       "Other"
+      ]
+     },
+     {
+      "name": "urban_area",
+      "type": "dropdown",
+      "title": "Which type of urban area do you reside in?",
+      "choices": [
+       "City center",
+       "Suburb",
+       "Rural area",
+       "Other"
+      ]
+     }
     ],
-    "title": "Urban Greenery (AI Generated)",
-    "description": "This survey explores the psychological, aesthetic, and functional impacts of urban greenery in streetscapes. Your responses will guide improvements in urban planning and design, focusing on how greenery influences urban street environments."
+    "description": "To help us understand the diversity of our participants, please provide some information about yourself."
+   },
+   {
+    "name": "sampling_strategy",
+    "title": "Sampling Strategy",
+    "elements": [],
+    "description": "We plan to gather perspectives from a diverse range of urban environments. Participants will be recruited using online platforms and community outreach, stratified by urban area types to ensure a representative sample."
+   },
+   {
+    "name": "greenery_psychological_impact",
+    "title": "Psychological Impact of Urban Greenery",
+    "elements": [
+     {
+      "name": "stress_reduction",
+      "type": "rating",
+      "title": "On a scale of 1-5, how does urban greenery in your area contribute to your stress reduction?",
+      "rateMax": 5,
+      "rateMin": 1,
+      "maxRateDescription": "Significant impact",
+      "minRateDescription": "No impact"
+     },
+     {
+      "name": "mood_enhancement_frequency",
+      "type": "radiogroup",
+      "title": "How frequently do you feel that greenery in urban areas enhances your mood?",
+      "choices": [
+       "Daily",
+       "Weekly",
+       "Rarely",
+       "Never"
+      ]
+     }
+    ],
+    "description": "Evaluate how urban greenery impacts your psychological well-being."
+   },
+   {
+    "name": "greenery_perception",
+    "title": "Perception of Urban Greenery",
+    "elements": [
+     {
+      "name": "beauty_rating",
+      "type": "imagerating",
+      "title": "How visually pleasing do you find these streets due to greenery?",
+      "choices": [],
+      "rateMax": 5,
+      "rateMin": 1,
+      "imageCount": 3,
+      "imageSelectionMode": "curated",
+      "maxRateDescription": "Very pleasing",
+      "minRateDescription": "Not pleasing",
+      "randomImageSelection": true
+     },
+     {
+      "name": "greenery_preference",
+      "type": "imagepicker",
+      "title": "Which street do you prefer based on greenery?",
+      "choices": [],
+      "imageCount": 4,
+      "multiSelect": false,
+      "imageSelectionMode": "curated",
+      "randomImageSelection": true
+     },
+     {
+      "name": "green_space_rank",
+      "type": "imageranking",
+      "title": "Rank these streets from most to least green:",
+      "choices": [],
+      "imageCount": 4,
+      "imageSelectionMode": "curated",
+      "randomImageSelection": true
+     }
+    ],
+    "description": "Evaluate these street environments based on the presence and impact of greenery."
+   },
+   {
+    "name": "greenery_functional_benefits",
+    "title": "Functional Benefits of Urban Greenery",
+    "elements": [
+     {
+      "name": "greenery_criteria",
+      "rows": [
+       "Safety",
+       "Beauty",
+       "Walkability",
+       "Satisfaction"
+      ],
+      "type": "imagematrix",
+      "title": "Rate these streets based on these criteria:",
+      "choices": [],
+      "columns": [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5"
+      ],
+      "imageCount": 1,
+      "imageLinks": [],
+      "imageSelectionMode": "curated",
+      "randomImageSelection": true
+     },
+     {
+      "name": "functional_effectiveness",
+      "type": "rating",
+      "title": "Rate the effectiveness of urban greenery in providing shading and noise reduction.",
+      "rateMax": 5,
+      "rateMin": 1,
+      "maxRateDescription": "Very effective",
+      "minRateDescription": "Not effective"
+     }
+    ],
+    "description": "Evaluate how urban greenery provides functional benefits in these streets."
+   },
+   {
+    "name": "greenery_awareness",
+    "title": "Awareness of Urban Greenery Benefits",
+    "elements": [
+     {
+      "name": "psychological_benefits_awareness",
+      "type": "rating",
+      "title": "On a scale of 1 to 5, how aware are you of the psychological benefits provided by urban greenery in your environment?",
+      "rateMax": 5,
+      "rateMin": 1,
+      "maxRateDescription": "Very aware",
+      "minRateDescription": "Not aware"
+     },
+     {
+      "name": "types_of_greenery_awareness",
+      "type": "checkbox",
+      "title": "Which types of greenery are you aware of in your urban environment? (select all that apply)",
+      "choices": [
+       "Trees",
+       "Shrubs",
+       "Gardens",
+       "Green walls",
+       "Rooftop gardens",
+       "None"
+      ]
+     },
+     {
+      "name": "personal_engagement",
+      "type": "radiogroup",
+      "title": "How often do you engage with green spaces in your area?",
+      "choices": [
+       "Daily",
+       "Weekly",
+       "Monthly",
+       "Rarely",
+       "Never"
+      ]
+     }
+    ],
+    "description": "Assess your awareness of the benefits provided by urban greenery."
+   },
+   {
+    "name": "greenery_impact",
+    "title": "Impact of Greenery",
+    "elements": [
+     {
+      "name": "environmental_benefits",
+      "type": "likert",
+      "title": "To what extent do you agree that these streets improve air quality and temperature regulation due to greenery?",
+      "choices": [
+       "Strongly disagree",
+       "Disagree",
+       "Neutral",
+       "Agree",
+       "Strongly agree"
+      ]
+     }
+    ],
+    "description": "Assess how urban greenery impacts your perception of these streets."
+   },
+   {
+    "name": "streetscape_design_elements",
+    "title": "Streetscape Design Elements",
+    "elements": [
+     {
+      "name": "tree_placement",
+      "type": "imagerating",
+      "title": "How effective is the tree placement in enhancing the street's aesthetic appeal?",
+      "choices": [],
+      "rateMax": 5,
+      "rateMin": 1,
+      "imageCount": 2,
+      "imageSelectionMode": "curated",
+      "maxRateDescription": "Very effective",
+      "minRateDescription": "Not effective",
+      "randomImageSelection": true
+     },
+     {
+      "name": "pedestrian_pathways",
+      "type": "imagerating",
+      "title": "How do pedestrian pathways integrate with greenery in these streets?",
+      "choices": [],
+      "rateMax": 5,
+      "rateMin": 1,
+      "imageCount": 2,
+      "imageSelectionMode": "curated",
+      "maxRateDescription": "Excellent integration",
+      "minRateDescription": "Poor integration",
+      "randomImageSelection": true
+     }
+    ],
+    "description": "Evaluate specific streetscape design elements and their impact on your perception."
+   },
+   {
+    "name": "specific_greenery_assessment",
+    "title": "Detailed Greenery Assessment",
+    "elements": [
+     {
+      "name": "street_view_1",
+      "type": "image",
+      "choices": [],
+      "imageUrl": "curated",
+      "imageSelectionMode": "curated",
+      "randomImageSelection": true
+     },
+     {
+      "name": "thermal_comfort",
+      "type": "radiogroup",
+      "title": "How comfortable is the thermal environment in this street?",
+      "choices": [
+       "Very cold",
+       "Cold",
+       "Neutral",
+       "Hot",
+       "Very hot"
+      ]
+     },
+     {
+      "name": "describe_street",
+      "type": "comment",
+      "title": "Describe what you see in this street and any emotional benefits you associate with it:"
+     },
+     {
+      "name": "personal_experience",
+      "type": "comment",
+      "title": "Please describe a personal experience where urban greenery significantly impacted your well-being."
+     },
+     {
+      "name": "suggestions",
+      "type": "comment",
+      "title": "What improvements would you suggest for the integration of greenery in urban areas?"
+     }
+    ],
+    "description": "Provide detailed feedback on specific street environments."
+   },
+   {
+    "name": "conclusion",
+    "title": "Conclusion",
+    "elements": [
+     {
+      "name": "feedback",
+      "type": "comment",
+      "title": "Any additional comments or feedback?"
+     }
+    ],
+    "description": "Thank you for participating in our survey."
+   }
+  ],
+  "title": "Urban Greenery (AI Generated)",
+  "description": "This survey explores the psychological, aesthetic, and functional impacts of urban greenery in streetscapes. Your responses will guide improvements in urban planning and design, focusing on how greenery influences urban street environments."
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2025-torkko-urban/111611565366563.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/111611565366563.jpg",
+   "name": "111611565366563.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/111611565366563.jpg"
   },
-  "imageDatasetConfig": {
-    "mediaFolders": [],
-    "mediaFolderTags": {}
+  {
+   "key": "templates/2025-torkko-urban/128621102558740.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/128621102558740.jpg",
+   "name": "128621102558740.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/128621102558740.jpg"
   },
-  "preloadedImages": [],
-  "preloadedSource": null,
-  "preloadedAt": null
+  {
+   "key": "templates/2025-torkko-urban/134545901946839.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/134545901946839.jpg",
+   "name": "134545901946839.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/134545901946839.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/140726821365856.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/140726821365856.jpg",
+   "name": "140726821365856.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/140726821365856.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/154855306517962.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/154855306517962.jpg",
+   "name": "154855306517962.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/154855306517962.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/155682839771676.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/155682839771676.jpg",
+   "name": "155682839771676.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/155682839771676.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/161185982520364.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/161185982520364.jpg",
+   "name": "161185982520364.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/161185982520364.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/161217822519727.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/161217822519727.jpg",
+   "name": "161217822519727.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/161217822519727.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/167538478595143.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/167538478595143.jpg",
+   "name": "167538478595143.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/167538478595143.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/174767727897950.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/174767727897950.jpg",
+   "name": "174767727897950.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/174767727897950.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/185325403448999.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/185325403448999.jpg",
+   "name": "185325403448999.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/185325403448999.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/185634169984416.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/185634169984416.jpg",
+   "name": "185634169984416.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/185634169984416.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/195760322276407.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/195760322276407.jpg",
+   "name": "195760322276407.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/195760322276407.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/203233578283068.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/203233578283068.jpg",
+   "name": "203233578283068.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/203233578283068.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/212321607387477.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/212321607387477.jpg",
+   "name": "212321607387477.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/212321607387477.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/214349670196126.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/214349670196126.jpg",
+   "name": "214349670196126.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/214349670196126.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/215334356768435.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/215334356768435.jpg",
+   "name": "215334356768435.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/215334356768435.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/215652870111354.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/215652870111354.jpg",
+   "name": "215652870111354.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/215652870111354.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/215714866729798.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/215714866729798.jpg",
+   "name": "215714866729798.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/215714866729798.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/218368943106095.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/218368943106095.jpg",
+   "name": "218368943106095.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/218368943106095.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/223982136195777.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/223982136195777.jpg",
+   "name": "223982136195777.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/223982136195777.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/249256176993225.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/249256176993225.jpg",
+   "name": "249256176993225.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/249256176993225.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/258738789324402.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/258738789324402.jpg",
+   "name": "258738789324402.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/258738789324402.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/263008298938068.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/263008298938068.jpg",
+   "name": "263008298938068.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/263008298938068.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/269369574922735.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/269369574922735.jpg",
+   "name": "269369574922735.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/269369574922735.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/272475164577175.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/272475164577175.jpg",
+   "name": "272475164577175.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/272475164577175.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/279263606935359.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/279263606935359.jpg",
+   "name": "279263606935359.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/279263606935359.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/286358583183759.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/286358583183759.jpg",
+   "name": "286358583183759.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/286358583183759.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/294026222375881.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/294026222375881.jpg",
+   "name": "294026222375881.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/294026222375881.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/298121332262820.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/298121332262820.jpg",
+   "name": "298121332262820.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/298121332262820.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/299298461682980.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/299298461682980.jpg",
+   "name": "299298461682980.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/299298461682980.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/300097921820823.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/300097921820823.jpg",
+   "name": "300097921820823.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/300097921820823.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/300471928203773.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/300471928203773.jpg",
+   "name": "300471928203773.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/300471928203773.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/303124291358683.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/303124291358683.jpg",
+   "name": "303124291358683.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/303124291358683.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/304708805137534.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/304708805137534.jpg",
+   "name": "304708805137534.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/304708805137534.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/311017607101538.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/311017607101538.jpg",
+   "name": "311017607101538.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/311017607101538.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/315185513323950.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/315185513323950.jpg",
+   "name": "315185513323950.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/315185513323950.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/317567193055807.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/317567193055807.jpg",
+   "name": "317567193055807.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/317567193055807.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/318177756440535.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/318177756440535.jpg",
+   "name": "318177756440535.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/318177756440535.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/339984704218218.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/339984704218218.jpg",
+   "name": "339984704218218.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/339984704218218.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/373166457373736.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/373166457373736.jpg",
+   "name": "373166457373736.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/373166457373736.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/381493123151067.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/381493123151067.jpg",
+   "name": "381493123151067.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/381493123151067.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/424717696058641.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/424717696058641.jpg",
+   "name": "424717696058641.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/424717696058641.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/464233061301930.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/464233061301930.jpg",
+   "name": "464233061301930.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/464233061301930.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/464838988106127.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/464838988106127.jpg",
+   "name": "464838988106127.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/464838988106127.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/465180817882594.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/465180817882594.jpg",
+   "name": "465180817882594.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/465180817882594.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/471955927461486.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/471955927461486.jpg",
+   "name": "471955927461486.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/471955927461486.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/475821483701035.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/475821483701035.jpg",
+   "name": "475821483701035.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/475821483701035.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/478710333381171.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/478710333381171.jpg",
+   "name": "478710333381171.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/478710333381171.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/484735116069015.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/484735116069015.jpg",
+   "name": "484735116069015.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/484735116069015.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/491466848731177.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/491466848731177.jpg",
+   "name": "491466848731177.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/491466848731177.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/497550007963307.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/497550007963307.jpg",
+   "name": "497550007963307.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/497550007963307.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/497874691561498.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/497874691561498.jpg",
+   "name": "497874691561498.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/497874691561498.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/503869787290186.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/503869787290186.jpg",
+   "name": "503869787290186.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/503869787290186.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/507904866900301.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/507904866900301.jpg",
+   "name": "507904866900301.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/507904866900301.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/512136756496018.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/512136756496018.jpg",
+   "name": "512136756496018.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/512136756496018.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/513284423385787.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/513284423385787.jpg",
+   "name": "513284423385787.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/513284423385787.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/516653982680193.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/516653982680193.jpg",
+   "name": "516653982680193.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/516653982680193.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/519662126062480.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/519662126062480.jpg",
+   "name": "519662126062480.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/519662126062480.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/574433653960063.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/574433653960063.jpg",
+   "name": "574433653960063.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/574433653960063.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/599907358078232.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/599907358078232.jpg",
+   "name": "599907358078232.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/599907358078232.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/630576847919896.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/630576847919896.jpg",
+   "name": "630576847919896.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/630576847919896.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/648555876753773.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/648555876753773.jpg",
+   "name": "648555876753773.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/648555876753773.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/751320122227180.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/751320122227180.jpg",
+   "name": "751320122227180.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/751320122227180.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/763837979900523.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/763837979900523.jpg",
+   "name": "763837979900523.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/763837979900523.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/774668033216254.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/774668033216254.jpg",
+   "name": "774668033216254.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/774668033216254.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/788478755202855.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/788478755202855.jpg",
+   "name": "788478755202855.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/788478755202855.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/797720077827195.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/797720077827195.jpg",
+   "name": "797720077827195.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/797720077827195.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/817245062267666.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/817245062267666.jpg",
+   "name": "817245062267666.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/817245062267666.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/830308820908543.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/830308820908543.jpg",
+   "name": "830308820908543.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/830308820908543.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/833003544238726.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/833003544238726.jpg",
+   "name": "833003544238726.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/833003544238726.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/847699955956939.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/847699955956939.jpg",
+   "name": "847699955956939.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/847699955956939.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/864574574125431.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/864574574125431.jpg",
+   "name": "864574574125431.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/864574574125431.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/880087059388550.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/880087059388550.jpg",
+   "name": "880087059388550.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/880087059388550.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/882554609191088.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/882554609191088.jpg",
+   "name": "882554609191088.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/882554609191088.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/906144804653688.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/906144804653688.jpg",
+   "name": "906144804653688.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/906144804653688.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/919840065481850.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/919840065481850.jpg",
+   "name": "919840065481850.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/919840065481850.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/960106004764550.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/960106004764550.jpg",
+   "name": "960106004764550.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/960106004764550.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/1082279519365580.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/1082279519365580.jpg",
+   "name": "1082279519365580.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/1082279519365580.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/1127904514384930.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/1127904514384930.jpg",
+   "name": "1127904514384930.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/1127904514384930.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/1130498087417770.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/1130498087417770.jpg",
+   "name": "1130498087417770.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/1130498087417770.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/1155817454909983.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/1155817454909983.jpg",
+   "name": "1155817454909983.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/1155817454909983.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/1167000087078125.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/1167000087078125.jpg",
+   "name": "1167000087078125.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/1167000087078125.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/1259906288101366.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/1259906288101366.jpg",
+   "name": "1259906288101366.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/1259906288101366.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/1269230803493377.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/1269230803493377.jpg",
+   "name": "1269230803493377.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/1269230803493377.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/1341973059519382.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/1341973059519382.jpg",
+   "name": "1341973059519382.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/1341973059519382.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/1355245908182432.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/1355245908182432.jpg",
+   "name": "1355245908182432.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/1355245908182432.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/1451998668483411.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/1451998668483411.jpg",
+   "name": "1451998668483411.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/1451998668483411.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/1606862832847623.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/1606862832847623.jpg",
+   "name": "1606862832847623.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/1606862832847623.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/1641320050025397.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/1641320050025397.jpg",
+   "name": "1641320050025397.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/1641320050025397.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/1643985519710360.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/1643985519710360.jpg",
+   "name": "1643985519710360.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/1643985519710360.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/1781965625298058.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/1781965625298058.jpg",
+   "name": "1781965625298058.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/1781965625298058.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/1879523762896784.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/1879523762896784.jpg",
+   "name": "1879523762896784.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/1879523762896784.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/1925725637593434.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/1925725637593434.jpg",
+   "name": "1925725637593434.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/1925725637593434.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/2566354123660551.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/2566354123660551.jpg",
+   "name": "2566354123660551.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/2566354123660551.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/2837606099890930.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/2837606099890930.jpg",
+   "name": "2837606099890930.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/2837606099890930.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/2938543903060825.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/2938543903060825.jpg",
+   "name": "2938543903060825.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/2938543903060825.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/2985385785120632.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/2985385785120632.jpg",
+   "name": "2985385785120632.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/2985385785120632.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/4333566116674396.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/4333566116674396.jpg",
+   "name": "4333566116674396.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/4333566116674396.jpg"
+  },
+  {
+   "key": "templates/2025-torkko-urban/5652832348096667.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2025-torkko-urban/5652832348096667.jpg",
+   "name": "5652832348096667.jpg",
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2025-torkko-urban/5652832348096667.jpg"
+  }
+ ],
+ "paper": null
 }

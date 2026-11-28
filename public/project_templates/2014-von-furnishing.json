@@ -1,0 +1,338 @@
+{
+ "id": "2014-von-furnishing",
+ "name": "Furnishing and Perceived Room Size",
+ "description": "Method replication: the photographs are the paper's own views into its two 1:10 scale model rooms, shown on screen instead of through the viewport of the real models. Two identical wooden model rooms of a square 16 m2 room with 2.70 m ceiling height (40 x 40 x 27 cm as models, white walls and ceiling, grey floor), one empty and one furnished with light grey cuboids standing for a cupboard, a sideboard, a table and three stools, each photographed from the leftmost, default and rightmost viewing direction. Participants are randomly assigned, as in the paper's between-subjects design, to a scaling-cue condition (a silhouette of a person on the rear wall; they estimate the size of the full-scale room in metres) or a no-cue condition (they estimate the size of the model room in centimetres), and to one of two orders (furnished room first or unfurnished room first). For each room they can switch between the three views, estimate its width, depth and height and judge its spaciousness on the paper's 10-point scale from narrow (0) to spacious (9). Age and gender are asked at the end. Rebuilt from von Castell, Oberfeld & Hecht (2014), The effect of furnishing on perceived spatial dimensions and spaciousness of interior space, PLoS ONE 9(11): e113267 (Experiment 1), with the photographs cropped from its Figure 3 (CC BY 4.0). Image ids: furnished_cue_left/default/right, unfurnished_cue_..., furnished_nocue_..., unfurnished_nocue_...; group records the condition and order; estimates are keyed by room (furnished, unfurnished). Analysis as in the paper: relative estimation error per dimension, estimate / physical size - 1 (physical size 400 x 400 x 270 cm full scale, 40 x 40 x 27 cm model), compared between furnished and unfurnished rooms with repeated-measures (M)ANOVA, scaling cue and order as between-subjects factors, and the same for spaciousness; the paper (80 participants) found the furnished room perceived as higher but less spacious (dz = 0.38), both rooms more spacious when the furnished room came first, and spaciousness unaffected by the scaling cue; its virtual-reality Experiment 2 found no furnishing effect. Differences from the original study: (1) photographs on a screen instead of looking into the lit model rooms through a viewport at a fixed eye height of 16 cm (1.60 m at full scale), so the monocular / binocular viewing factor is dropped and the three views replace head movement at the viewport; (2) the instruction texts and question wording are ours (the paper gives the task and the scale anchors, narrow - spacious, in German eng - weit, but not its written instructions); (3) Experiment 2 (virtual rooms of seven sizes) is not included because its figure shows only the smallest and largest rooms; (4) the age and gender questions are ours; the paper's participants were 18-64 years and came from a region using the metric system.",
+ "author": "von Castell, Oberfeld & Hecht",
+ "year": "2014",
+ "category": "Academic Research",
+ "tags": [
+  "method-replication",
+  "official",
+  "paper",
+  "interior",
+  "spaciousness",
+  "furniture",
+  "room-size",
+  "source:paper",
+  "modality:scene_photo",
+  "task:rating",
+  "task:custom_page",
+  "concept:openness",
+  "participants:lab",
+  "sample:lt100",
+  "country:Germany",
+  "city:Mainz"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1371/journal.pone.0113267",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T22:15:27.863+00:00",
+ "updatedAt": "2026-11-27T22:15:39.954+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     },
+     {
+      "name": "group",
+      "type": "radiogroup",
+      "title": "Condition and order (set by the page)",
+      "choices": [
+       {
+        "text": "cue_furnished_first",
+        "value": "cue_furnished_first"
+       },
+       {
+        "text": "cue_unfurnished_first",
+        "value": "cue_unfurnished_first"
+       },
+       {
+        "text": "nocue_furnished_first",
+        "value": "nocue_furnished_first"
+       },
+       {
+        "text": "nocue_unfurnished_first",
+        "value": "nocue_unfurnished_first"
+       }
+      ],
+      "visible": false,
+      "isRequired": false
+     }
+    ]
+   },
+   {
+    "name": "rooms",
+    "elements": [
+     {
+      "name": "width",
+      "type": "text",
+      "title": "Width (from the left wall to the right wall)",
+      "inputType": "number",
+      "isRequired": true,
+      "description": "Estimate in centimetres: of the full-scale room in the cue condition, of the model in the no-cue condition (see group). Keyed by room."
+     },
+     {
+      "name": "depth",
+      "type": "text",
+      "title": "Depth (from the front to the back wall)",
+      "inputType": "number",
+      "isRequired": true,
+      "description": "Centimetres, as for width. Keyed by room."
+     },
+     {
+      "name": "height",
+      "type": "text",
+      "title": "Height (from the floor to the ceiling)",
+      "inputType": "number",
+      "isRequired": true,
+      "description": "Centimetres, as for width. Keyed by room."
+     },
+     {
+      "name": "spaciousness",
+      "type": "rating",
+      "title": "How spacious does the room look?",
+      "rateMax": 9,
+      "rateMin": 0,
+      "isRequired": true,
+      "description": "0 = narrow, 9 = spacious. Keyed by room.",
+      "maxRateDescription": "spacious",
+      "minRateDescription": "narrow"
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "max": 110,
+      "min": 16,
+      "name": "age",
+      "type": "text",
+      "title": "How old are you?",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Furnishing and Perceived Room Size",
+  "locale": "en",
+  "spSite": {
+   "id": "site-2895bc19e67394c1",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Room Size</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Furnishing and Perceived Room Size\",\n  \"description\": \"Method replication: the photographs are the paper's own views into its two 1:10 scale model rooms, shown on screen instead of through the viewport of the real models. Two identical wooden model rooms of a square 16 m2 room with 2.70 m ceiling height (40 x 40 x 27 cm as models, white walls and ceiling, grey floor), one empty and one furnished with light grey cuboids standing for a cupboard, a sideboard, a table and three stools, each photographed from the leftmost, default and rightmost viewing direction. Participants are randomly assigned, as in the paper's between-subjects design, to a scaling-cue condition (a silhouette of a person on the rear wall; they estimate the size of the full-scale room in metres) or a no-cue condition (they estimate the size of the model room in centimetres), and to one of two orders (furnished room first or unfurnished room first). For each room they can switch between the three views, estimate its width, depth and height and judge its spaciousness on the paper's 10-point scale from narrow (0) to spacious (9). Age and gender are asked at the end. Rebuilt from von Castell, Oberfeld & Hecht (2014), The effect of furnishing on perceived spatial dimensions and spaciousness of interior space, PLoS ONE 9(11): e113267 (Experiment 1), with the photographs cropped from its Figure 3 (CC BY 4.0). Image ids: furnished_cue_left/default/right, unfurnished_cue_..., furnished_nocue_..., unfurnished_nocue_...; group records the condition and order; estimates are keyed by room (furnished, unfurnished). Analysis as in the paper: relative estimation error per dimension, estimate / physical size - 1 (physical size 400 x 400 x 270 cm full scale, 40 x 40 x 27 cm model), compared between furnished and unfurnished rooms with repeated-measures (M)ANOVA, scaling cue and order as between-subjects factors, and the same for spaciousness; the paper (80 participants) found the furnished room perceived as higher but less spacious (dz = 0.38), both rooms more spacious when the furnished room came first, and spaciousness unaffected by the scaling cue; its virtual-reality Experiment 2 found no furnishing effect. Differences from the original study: (1) photographs on a screen instead of looking into the lit model rooms through a viewport at a fixed eye height of 16 cm (1.60 m at full scale), so the monocular / binocular viewing factor is dropped and the three views replace head movement at the viewport; (2) the instruction texts and question wording are ours (the paper gives the task and the scale anchors, narrow - spacious, in German eng - weit, but not its written instructions); (3) Experiment 2 (virtual rooms of seven sizes) is not included because its figure shows only the smallest and largest rooms; (4) the age and gender questions are ours; the paper's participants were 18-64 years and came from a region using the metric system.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"rooms\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"group\",\n      \"title\": \"Condition and order (set by the page)\",\n      \"isRequired\": false,\n      \"visible\": false,\n      \"choices\": [\n       {\n        \"value\": \"cue_furnished_first\",\n        \"text\": \"cue_furnished_first\"\n       },\n       {\n        \"value\": \"cue_unfurnished_first\",\n        \"text\": \"cue_unfurnished_first\"\n       },\n       {\n        \"value\": \"nocue_furnished_first\",\n        \"text\": \"nocue_furnished_first\"\n       },\n       {\n        \"value\": \"nocue_unfurnished_first\",\n        \"text\": \"nocue_unfurnished_first\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"rooms\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"width\",\n      \"title\": \"Width (from the left wall to the right wall)\",\n      \"isRequired\": true,\n      \"description\": \"Estimate in centimetres: of the full-scale room in the cue condition, of the model in the no-cue condition (see group). Keyed by room.\"\n     },\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"depth\",\n      \"title\": \"Depth (from the front to the back wall)\",\n      \"isRequired\": true,\n      \"description\": \"Centimetres, as for width. Keyed by room.\"\n     },\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"height\",\n      \"title\": \"Height (from the floor to the ceiling)\",\n      \"isRequired\": true,\n      \"description\": \"Centimetres, as for width. Keyed by room.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"spaciousness\",\n      \"title\": \"How spacious does the room look?\",\n      \"isRequired\": true,\n      \"rateMin\": 0,\n      \"rateMax\": 9,\n      \"minRateDescription\": \"narrow\",\n      \"maxRateDescription\": \"spacious\",\n      \"description\": \"0 = narrow, 9 = spacious. Keyed by room.\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"min\": 16,\n      \"max\": 110\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"room-original\">{\"source\": \"von Castell, Oberfeld & Hecht (2014) PLoS ONE 9(11): e113267, Experiment 1\", \"n\": 80, \"physical_cm\": {\"full_scale\": {\"width\": 400, \"depth\": 400, \"height\": 270}, \"model\": {\"width\": 40, \"depth\": 40, \"height\": 27}}}</script>\n<style>\n:root{--bg:#eef0f2;--card:#fff;--ink:#1e2226;--muted:#5d646b;--accent:#38556e;--line:#d6dbe0;--warn:#b3261e;--sel:#dfe8f0}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:760px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.5rem;margin:0 0 8px}h2{font-size:1.15rem;margin:0 0 6px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:13px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.prog{font-size:.88rem;color:var(--muted);margin-bottom:8px}\n.pic img{width:100%;height:auto;display:block;border-radius:10px;background:#ccc}\n.views{display:flex;gap:6px;margin-top:8px}\n.views button{flex:1;appearance:none;border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 4px;font:inherit;font-size:.9rem;cursor:pointer;color:var(--ink)}\n.views button.on{background:var(--sel);border-color:var(--accent);font-weight:600}\n.dim{display:flex;align-items:center;gap:10px;margin-top:10px}\n.dim label{flex:1}\n.dim input{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:120px}\n.dim .u{color:var(--muted);width:2.5em}\n.dim.miss input{outline:2px solid var(--warn)}\n.sp{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;margin-top:8px}\n.sp label{display:flex;flex-direction:column;align-items:center;border:1px solid var(--line);border-radius:6px;padding:4px 0;cursor:pointer;font-size:.85rem}\n.sp label:has(input:checked){background:var(--sel);border-color:var(--accent)}\n.sp.miss{outline:2px solid var(--warn);outline-offset:3px;border-radius:6px}\n.ends{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-top:3px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.qt{font-weight:600;margin:0 0 4px;color:var(--ink)}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:760px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs: von Castell, Oberfeld &amp; Hecht (2014), PLoS ONE 9(11): e113267, Figure 3 (doi:10.1371/journal.pone.0113267, CC BY 4.0).</footer>\n<script>\n(function(){\n  var KEY='room-size:state', GROUPS=['cue_furnished_first','cue_unfurnished_first','nocue_furnished_first','nocue_unfurnished_first'], VIEWS=[['left','Left'],['default','Straight ahead'],['right','Right']];\n  var app=document.getElementById('app'), Q={}, files={}, st=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function send(list,b,next){if(b)b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}next();});}\n  function fresh(){var g=GROUPS[Math.floor(Math.random()*4)];return {step:'intro',group:g,cue:g.indexOf('nocue')!==0,order:g.indexOf('unfurnished_first')>0?['unfurnished','furnished']:['furnished','unfurnished'],k:0};}\n  function intro(){\n    var task=st.cue?'<p>You will see two rooms, one after the other. For each room, please estimate how wide, how deep and how high the room is, in metres (for example 3.25), and say how spacious it looks. You can look to the left and to the right with the buttons under the picture.</p>':\n      '<p>You will see two small model rooms, one after the other. For each model, please estimate how wide, how deep and how high the model is, in centimetres, and say how spacious the room looks. You can look to the left and to the right with the buttons under the picture.</p>';\n    app.innerHTML='<h1>How big is this room?</h1>'+task+'<p>There are no right or wrong answers; give your best guess. It takes about 5 minutes.</p>'+\n     '<div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      send([SPSite.answer('consent',true),SPSite.answer('group',st.group)],this,function(){st.step='room';st.k=0;save();route();});};\n  }\n  function room(){\n    if(st.k>=2){st.step='about';save();return route();}\n    var r=st.order[st.k], base=r+(st.cue?'_cue_':'_nocue_'), view='default', unit=st.cue?'m':'cm';\n    app.innerHTML='<div class=\"prog\">Room '+(st.k+1)+' of 2</div><div class=\"pic\"><img id=\"im\" alt=\"'+(st.cue?'Room':'Model room')+'\" src=\"\"></div>'+\n     '<div class=\"views\">'+VIEWS.map(function(v){return '<button type=\"button\" data-v=\"'+v[0]+'\">'+v[1]+'</button>';}).join('')+'</div>'+\n     '<div class=\"card\"><p class=\"qt\">'+(st.cue?'How big is this room? (metres)':'How big is this model? (centimetres)')+'</p>'+\n      ['width','depth','height'].map(function(d){return '<div class=\"dim\" data-d=\"'+d+'\"><label for=\"'+d+'\">'+esc(Q[d].title)+'</label><input id=\"'+d+'\" type=\"text\" inputmode=\"decimal\" autocomplete=\"off\"><span class=\"u\">'+unit+'</span></div>';}).join('')+\n     '<div style=\"margin-top:18px\"><p class=\"qt\">'+esc(Q.spaciousness.title)+'</p><div class=\"sp\" id=\"sp\">'+[0,1,2,3,4,5,6,7,8,9].map(function(v){return '<label><input type=\"radio\" name=\"sp\" value=\"'+v+'\">'+v+'</label>';}).join('')+'</div><div class=\"ends\"><span>0 = narrow</span><span>9 = spacious</span></div></div>'+\n     '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">'+(st.k<1?'Next room':'Continue')+'</button></div><div class=\"err\"></div></div>';\n    var im=document.getElementById('im'), seen={};\n    function show(v){view=v;seen[v]=1;im.src=files[base+v].url;app.querySelectorAll('.views button').forEach(function(b){b.classList.toggle('on',b.dataset.v===v);});}\n    app.querySelectorAll('.views button').forEach(function(b){b.onclick=function(){show(b.dataset.v);};});\n    show('default');\n    document.getElementById('go').onclick=function(){\n      var vals={},first=null;\n      ['width','depth','height'].forEach(function(d){var x=parseFloat(String(document.getElementById(d).value).replace(',','.')),el=app.querySelector('.dim[data-d=\"'+d+'\"]');if(!(x>0)){el.classList.add('miss');if(!first)first=el;}else vals[d]=Math.round((st.cue?x*100:x)*10)/10;});\n      var s=app.querySelector('input[name=sp]:checked');if(!s){document.getElementById('sp').classList.add('miss');if(!first)first=document.getElementById('sp');}\n      if(first){first.scrollIntoView({block:'center'});return err('Please give all three sizes (numbers above 0) and a spaciousness rating.');}\n      var shown=VIEWS.filter(function(v){return seen[v[0]];}).map(function(v){return files[base+v[0]].name;}),meta={key:r,shown:shown};\n      send([SPSite.answer('width',vals.width,meta),SPSite.answer('depth',vals.depth,meta),SPSite.answer('height',vals.height,meta),SPSite.answer('spaciousness',Number(s.value),meta)],this,function(){st.k++;save();route();});};\n  }\n  function about(){\n    app.innerHTML='<h2>About you</h2><div class=\"card\"><div><b>'+esc(Q.age.title)+'</b><br><input type=\"number\" id=\"age\" min=\"16\" max=\"110\" style=\"font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:110px\"></div><div style=\"margin-top:16px\"><b>'+esc(Q.gender.title)+'</b>'+(Q.gender.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"gender\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Finish</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){var age=Number(document.getElementById('age').value),g=app.querySelector('input[name=gender]:checked');if(!(age>=16&&age<=110))return err('Please enter your age.');if(!g)return err('Please choose your gender.');\n      send([SPSite.answer('age',age),SPSite.answer('gender',g.value)],this,function(){st.step='done';save();route();});};\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st.step='intro';save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  app.addEventListener('input',function(e){var r=e.target.closest&&e.target.closest('.miss');if(r){r.classList.remove('miss');if(!app.querySelector('.miss'))err('');}});\n  app.addEventListener('change',function(e){var r=e.target.closest&&e.target.closest('.miss');if(r){r.classList.remove('miss');if(!app.querySelector('.miss'))err('');}});\n  function route(){var s=st.step;window.scrollTo(0,0);if(s==='room')return room();if(s==='about')return about();if(s==='done')return finish();intro();}\n  SPSite.onReady(function(ctx){\n    ['consent','group','width','depth','height','spaciousness','age','gender'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('rooms')||[]).forEach(function(f){files[f.name.replace(/\\.[^.]+$/,'')]=f;});\n    var need=[];['furnished','unfurnished'].forEach(function(r){['cue','nocue'].forEach(function(c){VIEWS.forEach(function(v){var k=r+'_'+c+'_'+v[0];if(!files[k])need.push(k);});});});\n    if(need.length){app.innerHTML='<h1>Images missing</h1><p>Upload '+esc(need.join(', '))+' (.jpg) to the media folder \"rooms\".</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    var a=(ctx&&ctx.answers)||{};\n    if(!(st&&st.group)||a.consent!==true)st=fresh();\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T22:15:05.033Z",
+   "mediaFolders": [
+    "rooms"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T22:15:05.033Z"
+  },
+  "description": "Method replication: the photographs are the paper's own views into its two 1:10 scale model rooms, shown on screen instead of through the viewport of the real models. Two identical wooden model rooms of a square 16 m2 room with 2.70 m ceiling height (40 x 40 x 27 cm as models, white walls and ceiling, grey floor), one empty and one furnished with light grey cuboids standing for a cupboard, a sideboard, a table and three stools, each photographed from the leftmost, default and rightmost viewing direction. Participants are randomly assigned, as in the paper's between-subjects design, to a scaling-cue condition (a silhouette of a person on the rear wall; they estimate the size of the full-scale room in metres) or a no-cue condition (they estimate the size of the model room in centimetres), and to one of two orders (furnished room first or unfurnished room first). For each room they can switch between the three views, estimate its width, depth and height and judge its spaciousness on the paper's 10-point scale from narrow (0) to spacious (9). Age and gender are asked at the end. Rebuilt from von Castell, Oberfeld & Hecht (2014), The effect of furnishing on perceived spatial dimensions and spaciousness of interior space, PLoS ONE 9(11): e113267 (Experiment 1), with the photographs cropped from its Figure 3 (CC BY 4.0). Image ids: furnished_cue_left/default/right, unfurnished_cue_..., furnished_nocue_..., unfurnished_nocue_...; group records the condition and order; estimates are keyed by room (furnished, unfurnished). Analysis as in the paper: relative estimation error per dimension, estimate / physical size - 1 (physical size 400 x 400 x 270 cm full scale, 40 x 40 x 27 cm model), compared between furnished and unfurnished rooms with repeated-measures (M)ANOVA, scaling cue and order as between-subjects factors, and the same for spaciousness; the paper (80 participants) found the furnished room perceived as higher but less spacious (dz = 0.38), both rooms more spacious when the furnished room came first, and spaciousness unaffected by the scaling cue; its virtual-reality Experiment 2 found no furnishing effect. Differences from the original study: (1) photographs on a screen instead of looking into the lit model rooms through a viewport at a fixed eye height of 16 cm (1.60 m at full scale), so the monocular / binocular viewing factor is dropped and the three views replace head movement at the viewport; (2) the instruction texts and question wording are ours (the paper gives the task and the scale anchors, narrow - spacious, in German eng - weit, but not its written instructions); (3) Experiment 2 (virtual rooms of seven sizes) is not included because its figure shows only the smallest and largest rooms; (4) the age and gender questions are ours; the paper's participants were 18-64 years and came from a region using the metric system.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2014-von-furnishing/rooms/furnished_cue_default__d94e8081-0c48-41a3-8698-bc006bae4474.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-von-furnishing/rooms/furnished_cue_default__d94e8081-0c48-41a3-8698-bc006bae4474.jpg",
+   "name": "furnished_cue_default.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2014-von-furnishing/rooms/furnished_cue_default__d94e8081-0c48-41a3-8698-bc006bae4474.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 21558,
+   "uploaded_bytes": 21558,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-von-furnishing/rooms/furnished_cue_left__a1047b37-636f-4000-a422-34d3750928c3.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-von-furnishing/rooms/furnished_cue_left__a1047b37-636f-4000-a422-34d3750928c3.jpg",
+   "name": "furnished_cue_left.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2014-von-furnishing/rooms/furnished_cue_left__a1047b37-636f-4000-a422-34d3750928c3.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 23472,
+   "uploaded_bytes": 23472,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-von-furnishing/rooms/furnished_cue_right__dc84a9fb-432b-4b25-96bb-ee4def13fcf0.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-von-furnishing/rooms/furnished_cue_right__dc84a9fb-432b-4b25-96bb-ee4def13fcf0.jpg",
+   "name": "furnished_cue_right.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2014-von-furnishing/rooms/furnished_cue_right__dc84a9fb-432b-4b25-96bb-ee4def13fcf0.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 23706,
+   "uploaded_bytes": 23706,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-von-furnishing/rooms/furnished_nocue_default__a261d24d-7d26-481f-8254-11e3c639f17a.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-von-furnishing/rooms/furnished_nocue_default__a261d24d-7d26-481f-8254-11e3c639f17a.jpg",
+   "name": "furnished_nocue_default.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2014-von-furnishing/rooms/furnished_nocue_default__a261d24d-7d26-481f-8254-11e3c639f17a.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 14870,
+   "uploaded_bytes": 14870,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-von-furnishing/rooms/furnished_nocue_left__3cfcda97-37a5-4f36-a8e2-e1d982f74efe.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-von-furnishing/rooms/furnished_nocue_left__3cfcda97-37a5-4f36-a8e2-e1d982f74efe.jpg",
+   "name": "furnished_nocue_left.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2014-von-furnishing/rooms/furnished_nocue_left__3cfcda97-37a5-4f36-a8e2-e1d982f74efe.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 18806,
+   "uploaded_bytes": 18806,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-von-furnishing/rooms/furnished_nocue_right__802452c6-4ffe-4e6b-a905-571ad93fd90a.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-von-furnishing/rooms/furnished_nocue_right__802452c6-4ffe-4e6b-a905-571ad93fd90a.jpg",
+   "name": "furnished_nocue_right.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2014-von-furnishing/rooms/furnished_nocue_right__802452c6-4ffe-4e6b-a905-571ad93fd90a.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 19381,
+   "uploaded_bytes": 19381,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-von-furnishing/rooms/unfurnished_cue_default__fded27bb-dd11-4fc4-96fc-2cdf8cd7ca42.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-von-furnishing/rooms/unfurnished_cue_default__fded27bb-dd11-4fc4-96fc-2cdf8cd7ca42.jpg",
+   "name": "unfurnished_cue_default.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2014-von-furnishing/rooms/unfurnished_cue_default__fded27bb-dd11-4fc4-96fc-2cdf8cd7ca42.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 18545,
+   "uploaded_bytes": 18545,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-von-furnishing/rooms/unfurnished_cue_left__823aa853-4976-4be4-9cb7-47169565850c.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-von-furnishing/rooms/unfurnished_cue_left__823aa853-4976-4be4-9cb7-47169565850c.jpg",
+   "name": "unfurnished_cue_left.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2014-von-furnishing/rooms/unfurnished_cue_left__823aa853-4976-4be4-9cb7-47169565850c.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 20766,
+   "uploaded_bytes": 20766,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-von-furnishing/rooms/unfurnished_cue_right__252a28db-1e31-4f06-ac93-466274f94732.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-von-furnishing/rooms/unfurnished_cue_right__252a28db-1e31-4f06-ac93-466274f94732.jpg",
+   "name": "unfurnished_cue_right.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2014-von-furnishing/rooms/unfurnished_cue_right__252a28db-1e31-4f06-ac93-466274f94732.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 19986,
+   "uploaded_bytes": 19986,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-von-furnishing/rooms/unfurnished_nocue_default__786fda28-b990-4fbf-a388-6a153c94006f.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-von-furnishing/rooms/unfurnished_nocue_default__786fda28-b990-4fbf-a388-6a153c94006f.jpg",
+   "name": "unfurnished_nocue_default.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2014-von-furnishing/rooms/unfurnished_nocue_default__786fda28-b990-4fbf-a388-6a153c94006f.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 17841,
+   "uploaded_bytes": 17841,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-von-furnishing/rooms/unfurnished_nocue_left__dc9c1746-cc18-4571-8650-c771e5224949.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-von-furnishing/rooms/unfurnished_nocue_left__dc9c1746-cc18-4571-8650-c771e5224949.jpg",
+   "name": "unfurnished_nocue_left.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2014-von-furnishing/rooms/unfurnished_nocue_left__dc9c1746-cc18-4571-8650-c771e5224949.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 20390,
+   "uploaded_bytes": 20390,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-von-furnishing/rooms/unfurnished_nocue_right__cdc17e14-1356-42d0-bf6a-70f42c6200cc.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-von-furnishing/rooms/unfurnished_nocue_right__cdc17e14-1356-42d0-bf6a-70f42c6200cc.jpg",
+   "name": "unfurnished_nocue_right.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2014-von-furnishing/rooms/unfurnished_nocue_right__cdc17e14-1356-42d0-bf6a-70f42c6200cc.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 20181,
+   "uploaded_bytes": 20181,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "The effect of furnishing on perceived spatial dimensions and spaciousness of interior space",
+  "authors": [
+   "von Castell C",
+   "Oberfeld D",
+   "Hecht H"
+  ],
+  "year": 2014,
+  "venue": "PLoS ONE",
+  "doi": "10.1371/journal.pone.0113267",
+  "url": "https://doi.org/10.1371/journal.pone.0113267"
+ }
+}

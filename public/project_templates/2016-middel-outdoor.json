@@ -1,0 +1,511 @@
+{
+ "id": "2016-middel-outdoor",
+ "name": "Outdoor Thermal Comfort in Sun and Shade",
+ "description": "On-site thermal comfort questionnaire from Middel et al. (2016, International Journal of Biometeorology), who surveyed 1,284 people in full sun, under photovoltaic canopies and under trees on a pedestrian mall in Tempe, Arizona, across four seasons. Each person answers once (3–5 minutes): health-related mood (5-point), climate familiarity (4 categories), reason for being there, thermal sensation vote on the 9-point scale from very cold (−4) to very hot (+4), comfort (comfortable 0 to very uncomfortable 3), thermal preference (much cooler −3 to much warmer +3), estimated air temperature in sun and shade, where they were and what they did 5 and 30 minutes before (thermal history, e.g. air-conditioning), clothing, gender, age group and sun exposure (full sun / built shade / tree shade). The page stamps the completion time so answers can be linked to your own weather measurements. Analysis as in the paper: compare thermal sensation and comfort between sun, built shade and tree shade (and by season); regress thermal sensation on a measured or modelled thermal index (the paper used PET) to estimate neutral and preferred temperature. Differences from the original study: (1) intermediate labels of the comfort and preference scales follow ISO 10551 (the paper gives the end points and cites ISO 10551); (2) \"shaded by the solar canopy\" is generalised to \"shaded by a built structure\"; (3) climate familiarity wording is adapted from Arizona to \"this climate\"; (4) age groups, clothing items and activity options are our own short lists (the paper converted clothing to clo with ISO 9920 and activity to metabolic rate with ISO 8996, which you do afterwards); (5) no meteorological measurements are included — the researcher records them separately and gives each spot a location code.",
+ "author": "Middel, Selover, Hagen & Chhetri",
+ "year": "2016",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "thermal comfort",
+  "shade",
+  "in-situ",
+  "ISO 10551",
+  "source:paper",
+  "modality:in_situ",
+  "task:questionnaire",
+  "task:multi_rating",
+  "concept:thermal_comfort",
+  "concept:comfort",
+  "concept:protection",
+  "participants:students",
+  "sample:gt1000",
+  "country:USA",
+  "city:Tempe"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1007/s00484-016-1172-5",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-26T15:47:26.88+00:00",
+ "updatedAt": "2026-11-26T15:47:36.605+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "title": "Before we start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers, the location code and the time are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     },
+     {
+      "name": "location",
+      "type": "text",
+      "title": "Location code (given by the researcher)",
+      "isRequired": true
+     },
+     {
+      "name": "sun_exposure",
+      "type": "radiogroup",
+      "title": "Where are you right now?",
+      "choices": [
+       {
+        "text": "In full sun",
+        "value": "full_sun"
+       },
+       {
+        "text": "Shaded by a built structure (canopy, arcade, building)",
+        "value": "built_shade"
+       },
+       {
+        "text": "Shaded by a tree",
+        "value": "tree_shade"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "mood",
+      "type": "rating",
+      "title": "How do you feel today (health and mood)?",
+      "isRequired": true,
+      "rateValues": [
+       {
+        "text": "Very bad",
+        "value": 0
+       },
+       {
+        "text": "Bad",
+        "value": 1
+       },
+       {
+        "text": "Fair",
+        "value": 2
+       },
+       {
+        "text": "Good",
+        "value": 3
+       },
+       {
+        "text": "Very good",
+        "value": 4
+       }
+      ]
+     },
+     {
+      "name": "climate_familiarity",
+      "type": "radiogroup",
+      "title": "How long have you lived in this climate?",
+      "choices": [
+       {
+        "text": "I just moved here",
+        "value": "not_familiar"
+       },
+       {
+        "text": "I have experienced a summer here before",
+        "value": "somewhat_familiar"
+       },
+       {
+        "text": "I have lived here for up to 5 years",
+        "value": "familiar"
+       },
+       {
+        "text": "More than 5 years, or I moved here from a similar climate",
+        "value": "very_familiar"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "reason_here",
+      "type": "radiogroup",
+      "title": "Why are you here?",
+      "choices": [
+       {
+        "text": "Passing by",
+        "value": "passing_by"
+       },
+       {
+        "text": "Going to a class or work",
+        "value": "class_or_work"
+       },
+       {
+        "text": "Meeting someone",
+        "value": "meeting"
+       },
+       {
+        "text": "Lunch / resting",
+        "value": "lunch_resting"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "thermal",
+    "title": "Right now, here",
+    "elements": [
+     {
+      "name": "thermal_sensation",
+      "type": "rating",
+      "title": "How do you feel right now?",
+      "isRequired": true,
+      "rateValues": [
+       {
+        "text": "Very cold",
+        "value": -4
+       },
+       {
+        "text": "Cold",
+        "value": -3
+       },
+       {
+        "text": "Cool",
+        "value": -2
+       },
+       {
+        "text": "Slightly cool",
+        "value": -1
+       },
+       {
+        "text": "Neutral",
+        "value": 0
+       },
+       {
+        "text": "Slightly warm",
+        "value": 1
+       },
+       {
+        "text": "Warm",
+        "value": 2
+       },
+       {
+        "text": "Hot",
+        "value": 3
+       },
+       {
+        "text": "Very hot",
+        "value": 4
+       }
+      ]
+     },
+     {
+      "name": "thermal_comfort",
+      "type": "rating",
+      "title": "Do you find this...",
+      "isRequired": true,
+      "rateValues": [
+       {
+        "text": "Comfortable",
+        "value": 0
+       },
+       {
+        "text": "Slightly uncomfortable",
+        "value": 1
+       },
+       {
+        "text": "Uncomfortable",
+        "value": 2
+       },
+       {
+        "text": "Very uncomfortable",
+        "value": 3
+       }
+      ]
+     },
+     {
+      "name": "thermal_preference",
+      "type": "rating",
+      "title": "Right now, would you prefer to be...",
+      "isRequired": true,
+      "rateValues": [
+       {
+        "text": "Much cooler",
+        "value": -3
+       },
+       {
+        "text": "Cooler",
+        "value": -2
+       },
+       {
+        "text": "Slightly cooler",
+        "value": -1
+       },
+       {
+        "text": "Neither warmer nor cooler",
+        "value": 0
+       },
+       {
+        "text": "Slightly warmer",
+        "value": 1
+       },
+       {
+        "text": "Warmer",
+        "value": 2
+       },
+       {
+        "text": "Much warmer",
+        "value": 3
+       }
+      ]
+     },
+     {
+      "max": 60,
+      "min": -30,
+      "name": "estimated_temp_sun",
+      "type": "text",
+      "title": "Your guess: the air temperature in the sun right now (°C)",
+      "inputType": "number"
+     },
+     {
+      "max": 60,
+      "min": -30,
+      "name": "estimated_temp_shade",
+      "type": "text",
+      "title": "Your guess: the air temperature in the shade right now (°C)",
+      "inputType": "number"
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "title": "About you",
+    "elements": [
+     {
+      "name": "where_5min",
+      "type": "radiogroup",
+      "title": "Where were you 5 minutes ago?",
+      "choices": [
+       {
+        "text": "Indoors, air-conditioned",
+        "value": "indoors_ac"
+       },
+       {
+        "text": "Indoors, not air-conditioned",
+        "value": "indoors_no_ac"
+       },
+       {
+        "text": "Outdoors in the sun",
+        "value": "outdoors_sun"
+       },
+       {
+        "text": "Outdoors in the shade",
+        "value": "outdoors_shade"
+       },
+       {
+        "text": "In a car, bus or train",
+        "value": "vehicle"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "where_30min",
+      "type": "radiogroup",
+      "title": "Where were you 30 minutes ago?",
+      "choices": [
+       {
+        "text": "Indoors, air-conditioned",
+        "value": "indoors_ac"
+       },
+       {
+        "text": "Indoors, not air-conditioned",
+        "value": "indoors_no_ac"
+       },
+       {
+        "text": "Outdoors in the sun",
+        "value": "outdoors_sun"
+       },
+       {
+        "text": "Outdoors in the shade",
+        "value": "outdoors_shade"
+       },
+       {
+        "text": "In a car, bus or train",
+        "value": "vehicle"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "activity_5min",
+      "type": "radiogroup",
+      "title": "What were you doing in the last 5 minutes?",
+      "choices": [
+       {
+        "text": "Sitting",
+        "value": "sitting"
+       },
+       {
+        "text": "Standing",
+        "value": "standing"
+       },
+       {
+        "text": "Walking",
+        "value": "walking"
+       },
+       {
+        "text": "Cycling",
+        "value": "cycling"
+       },
+       {
+        "text": "Running or exercising",
+        "value": "exercise"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "clothing",
+      "type": "checkbox",
+      "title": "What are you wearing? (tick all)",
+      "choices": [
+       {
+        "text": "T-shirt / short sleeves",
+        "value": "tshirt"
+       },
+       {
+        "text": "Long-sleeved shirt",
+        "value": "long_sleeves"
+       },
+       {
+        "text": "Sweater / hoodie",
+        "value": "sweater"
+       },
+       {
+        "text": "Jacket / coat",
+        "value": "jacket"
+       },
+       {
+        "text": "Shorts / short skirt",
+        "value": "shorts_skirt"
+       },
+       {
+        "text": "Long trousers / long skirt",
+        "value": "trousers"
+       },
+       {
+        "text": "Dress",
+        "value": "dress"
+       },
+       {
+        "text": "Sandals",
+        "value": "sandals"
+       },
+       {
+        "text": "Closed shoes",
+        "value": "shoes"
+       },
+       {
+        "text": "Hat / cap",
+        "value": "hat"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ]
+     },
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age group",
+      "choices": [
+       {
+        "text": "Under 18",
+        "value": "under_18"
+       },
+       {
+        "text": "18–24",
+        "value": "18_24"
+       },
+       {
+        "text": "25–34",
+        "value": "25_34"
+       },
+       {
+        "text": "35–54",
+        "value": "35_54"
+       },
+       {
+        "text": "55 or older",
+        "value": "55_plus"
+       }
+      ]
+     },
+     {
+      "name": "survey_time",
+      "type": "custom",
+      "title": "Recorded by the page when the participant finishes: { at (ISO time), local_hour, month }. Link it to your weather measurements."
+     }
+    ]
+   }
+  ],
+  "title": "Outdoor Thermal Comfort in Sun and Shade",
+  "locale": "en",
+  "spSite": {
+   "id": "site-c8e5b58e9edc33f6",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Outdoor Thermal Comfort in Sun and Shade</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Outdoor Thermal Comfort in Sun and Shade\",\n    \"description\": \"A 3–5 minute on-site questionnaire for people in an outdoor public space: thermal sensation (9-point), comfort, thermal preference, mood, climate familiarity, clothing, recent thermal history, estimated air temperature and whether they stand in sun, built shade or tree shade. Rebuilt from Middel, Selover, Hagen & Chhetri (2016).\",\n    \"locale\": \"en\",\n    \"pages\": [\n      { \"name\": \"start\", \"title\": \"Before we start\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"I agree to take part. My answers, the location code and the time are recorded anonymously for research.\", \"isRequired\": true, \"labelTrue\": \"I agree\", \"labelFalse\": \"I do not agree\" },\n        { \"type\": \"text\", \"name\": \"location\", \"title\": \"Location code (given by the researcher)\", \"isRequired\": true },\n        { \"type\": \"radiogroup\", \"name\": \"sun_exposure\", \"title\": \"Where are you right now?\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"full_sun\", \"text\": \"In full sun\" }, { \"value\": \"built_shade\", \"text\": \"Shaded by a built structure (canopy, arcade, building)\" }, { \"value\": \"tree_shade\", \"text\": \"Shaded by a tree\" } ] },\n        { \"type\": \"rating\", \"name\": \"mood\", \"title\": \"How do you feel today (health and mood)?\", \"isRequired\": true, \"rateValues\": [\n          { \"value\": 0, \"text\": \"Very bad\" }, { \"value\": 1, \"text\": \"Bad\" }, { \"value\": 2, \"text\": \"Fair\" }, { \"value\": 3, \"text\": \"Good\" }, { \"value\": 4, \"text\": \"Very good\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"climate_familiarity\", \"title\": \"How long have you lived in this climate?\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"not_familiar\", \"text\": \"I just moved here\" }, { \"value\": \"somewhat_familiar\", \"text\": \"I have experienced a summer here before\" }, { \"value\": \"familiar\", \"text\": \"I have lived here for up to 5 years\" }, { \"value\": \"very_familiar\", \"text\": \"More than 5 years, or I moved here from a similar climate\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"reason_here\", \"title\": \"Why are you here?\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"passing_by\", \"text\": \"Passing by\" }, { \"value\": \"class_or_work\", \"text\": \"Going to a class or work\" }, { \"value\": \"meeting\", \"text\": \"Meeting someone\" }, { \"value\": \"lunch_resting\", \"text\": \"Lunch / resting\" } ] }\n      ]},\n      { \"name\": \"thermal\", \"title\": \"Right now, here\", \"elements\": [\n        { \"type\": \"rating\", \"name\": \"thermal_sensation\", \"title\": \"How do you feel right now?\", \"isRequired\": true, \"rateValues\": [\n          { \"value\": -4, \"text\": \"Very cold\" }, { \"value\": -3, \"text\": \"Cold\" }, { \"value\": -2, \"text\": \"Cool\" }, { \"value\": -1, \"text\": \"Slightly cool\" }, { \"value\": 0, \"text\": \"Neutral\" }, { \"value\": 1, \"text\": \"Slightly warm\" }, { \"value\": 2, \"text\": \"Warm\" }, { \"value\": 3, \"text\": \"Hot\" }, { \"value\": 4, \"text\": \"Very hot\" } ] },\n        { \"type\": \"rating\", \"name\": \"thermal_comfort\", \"title\": \"Do you find this...\", \"isRequired\": true, \"rateValues\": [\n          { \"value\": 0, \"text\": \"Comfortable\" }, { \"value\": 1, \"text\": \"Slightly uncomfortable\" }, { \"value\": 2, \"text\": \"Uncomfortable\" }, { \"value\": 3, \"text\": \"Very uncomfortable\" } ] },\n        { \"type\": \"rating\", \"name\": \"thermal_preference\", \"title\": \"Right now, would you prefer to be...\", \"isRequired\": true, \"rateValues\": [\n          { \"value\": -3, \"text\": \"Much cooler\" }, { \"value\": -2, \"text\": \"Cooler\" }, { \"value\": -1, \"text\": \"Slightly cooler\" }, { \"value\": 0, \"text\": \"Neither warmer nor cooler\" }, { \"value\": 1, \"text\": \"Slightly warmer\" }, { \"value\": 2, \"text\": \"Warmer\" }, { \"value\": 3, \"text\": \"Much warmer\" } ] },\n        { \"type\": \"text\", \"inputType\": \"number\", \"name\": \"estimated_temp_sun\", \"title\": \"Your guess: the air temperature in the sun right now (°C)\", \"min\": -30, \"max\": 60 },\n        { \"type\": \"text\", \"inputType\": \"number\", \"name\": \"estimated_temp_shade\", \"title\": \"Your guess: the air temperature in the shade right now (°C)\", \"min\": -30, \"max\": 60 }\n      ]},\n      { \"name\": \"about\", \"title\": \"About you\", \"elements\": [\n        { \"type\": \"radiogroup\", \"name\": \"where_5min\", \"title\": \"Where were you 5 minutes ago?\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"indoors_ac\", \"text\": \"Indoors, air-conditioned\" }, { \"value\": \"indoors_no_ac\", \"text\": \"Indoors, not air-conditioned\" }, { \"value\": \"outdoors_sun\", \"text\": \"Outdoors in the sun\" }, { \"value\": \"outdoors_shade\", \"text\": \"Outdoors in the shade\" }, { \"value\": \"vehicle\", \"text\": \"In a car, bus or train\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"where_30min\", \"title\": \"Where were you 30 minutes ago?\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"indoors_ac\", \"text\": \"Indoors, air-conditioned\" }, { \"value\": \"indoors_no_ac\", \"text\": \"Indoors, not air-conditioned\" }, { \"value\": \"outdoors_sun\", \"text\": \"Outdoors in the sun\" }, { \"value\": \"outdoors_shade\", \"text\": \"Outdoors in the shade\" }, { \"value\": \"vehicle\", \"text\": \"In a car, bus or train\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"activity_5min\", \"title\": \"What were you doing in the last 5 minutes?\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"sitting\", \"text\": \"Sitting\" }, { \"value\": \"standing\", \"text\": \"Standing\" }, { \"value\": \"walking\", \"text\": \"Walking\" }, { \"value\": \"cycling\", \"text\": \"Cycling\" }, { \"value\": \"exercise\", \"text\": \"Running or exercising\" } ] },\n        { \"type\": \"checkbox\", \"name\": \"clothing\", \"title\": \"What are you wearing? (tick all)\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"tshirt\", \"text\": \"T-shirt / short sleeves\" }, { \"value\": \"long_sleeves\", \"text\": \"Long-sleeved shirt\" }, { \"value\": \"sweater\", \"text\": \"Sweater / hoodie\" }, { \"value\": \"jacket\", \"text\": \"Jacket / coat\" }, { \"value\": \"shorts_skirt\", \"text\": \"Shorts / short skirt\" }, { \"value\": \"trousers\", \"text\": \"Long trousers / long skirt\" }, { \"value\": \"dress\", \"text\": \"Dress\" }, { \"value\": \"sandals\", \"text\": \"Sandals\" }, { \"value\": \"shoes\", \"text\": \"Closed shoes\" }, { \"value\": \"hat\", \"text\": \"Hat / cap\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"gender\", \"title\": \"Gender\", \"choices\": [\n          { \"value\": \"female\", \"text\": \"Female\" }, { \"value\": \"male\", \"text\": \"Male\" }, { \"value\": \"other\", \"text\": \"Other / prefer not to say\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"age_group\", \"title\": \"Age group\", \"choices\": [\n          { \"value\": \"under_18\", \"text\": \"Under 18\" }, { \"value\": \"18_24\", \"text\": \"18–24\" }, { \"value\": \"25_34\", \"text\": \"25–34\" }, { \"value\": \"35_54\", \"text\": \"35–54\" }, { \"value\": \"55_plus\", \"text\": \"55 or older\" } ] },\n        { \"type\": \"custom\", \"name\": \"survey_time\", \"title\": \"Recorded by the page when the participant finishes: { at (ISO time), local_hour, month }. Link it to your weather measurements.\" }\n      ]}\n    ]\n  }\n}\n</script>\n<style>\n:root{--bg:#fbf7f0;--card:#fff;--ink:#22201c;--muted:#6a645a;--accent:#c4561b;--accent-ink:#fff;--line:#e4dccd;--on:#fbe3d3}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:640px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 8px}h2{font-size:1rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:12px;padding:14px 20px;font:inherit;font-weight:700;cursor:pointer;background:var(--accent);color:var(--accent-ink);width:100%}\n.btn:disabled{opacity:.4}\n.q{margin-top:20px}.q:first-child{margin-top:0}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput[type=number],input[type=text]{font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);width:100%}\n.scale{display:flex;flex-direction:column;gap:4px}\n.scale button{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:9px 12px;font:inherit;font-size:.95rem;text-align:left;cursor:pointer;display:flex;gap:10px;align-items:center}\n.scale button i{display:inline-block;width:14px;height:14px;border-radius:50%;flex:none}\n.scale button.on{border-color:var(--accent);background:var(--on);font-weight:700}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.step{font-size:.82rem;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}\n.req{color:var(--accent)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<script>\n(function(){\n  var PAGES, app=document.getElementById('app'), A={}, idx=0;\n  var COLD=['#2b6cb0','#3d85c6','#6fa8dc','#a9cbe8'], WARM=['#f6c49b','#ef9a5a','#e06c2c','#b8401a'];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function dot(n,v){v=Number(v);if(n!=='thermal_sensation'&&n!=='thermal_preference')return '';var c=v<0?COLD[4+v]||COLD[0]:v>0?WARM[v-1]:'#d8d2c6';if(n==='thermal_preference')c=v<0?COLD[Math.max(0,3+v)]:v>0?WARM[v-1]:'#d8d2c6';return '<i style=\"background:'+c+'\"></i>';}\n  function field(el){var n=el.name,q=SPSite.getQuestion(n)||el,t=esc(q.title)+(el.isRequired?' <span class=\"req\">*</span>':''),v=A[n];\n    if(el.type==='consent')return '<div class=\"q\"><label class=\"opt\"><input type=\"checkbox\" data-n=\"'+n+'\"'+(v===true?' checked':'')+'> '+esc(q.title)+'</label></div>';\n    if(el.type==='rating')return '<div class=\"q\"><h2>'+t+'</h2><div class=\"scale\">'+(q.rateValues||[]).map(function(o){return '<button type=\"button\" data-n=\"'+n+'\" data-v=\"'+o.value+'\"'+(v===Number(o.value)?' class=\"on\"':'')+'>'+dot(n,o.value)+esc(o.text)+'</button>';}).join('')+'</div></div>';\n    if(el.type==='radiogroup'||el.type==='checkbox'){var ty=el.type==='checkbox'?'checkbox':'radio';return '<div class=\"q\"><h2>'+t+'</h2>'+(q.choices||[]).map(function(c){var on=ty==='radio'?v===c.value:(v||[]).indexOf(c.value)>=0;return '<label class=\"opt\"><input type=\"'+ty+'\" name=\"'+n+'\" data-n=\"'+n+'\" value=\"'+esc(c.value)+'\"'+(on?' checked':'')+'> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n    if(el.type==='text')return '<div class=\"q\"><h2>'+t+'</h2><input type=\"'+(el.inputType==='number'?'number':'text')+'\" data-n=\"'+n+'\" '+(el.inputType==='number'?'inputmode=\"decimal\" step=\"any\" min=\"'+el.min+'\" max=\"'+el.max+'\"':'maxlength=\"40\"')+' value=\"'+esc(v==null?'':v)+'\"></div>';\n    return '';}\n  function read(el){var n=el.name;\n    if(el.type==='consent'){var c=app.querySelector('input[data-n=\"'+n+'\"]');return c&&c.checked?true:undefined;}\n    if(el.type==='rating')return A[n];\n    if(el.type==='radiogroup'){var r=app.querySelector('input[data-n=\"'+n+'\"]:checked');return r?r.value:undefined;}\n    if(el.type==='checkbox'){var l=[].map.call(app.querySelectorAll('input[data-n=\"'+n+'\"]:checked'),function(x){return x.value;});return l.length?l:undefined;}\n    if(el.type==='text'){var s=app.querySelector('input[data-n=\"'+n+'\"]').value.trim();if(s==='')return undefined;if(el.inputType==='number'){var x=Number(s);return isFinite(x)?x:undefined;}return s;}}\n  function show(){\n    var pg=PAGES[idx], els=pg.elements.filter(function(e){return e.type!=='custom';});\n    app.innerHTML='<div class=\"step\">Part '+(idx+1)+' of '+PAGES.length+'</div><h1>'+esc(pg.title)+'</h1>'+(idx===0?'<p>Takes 3–5 minutes. Please answer about how you feel right here, right now.</p>':'')+\n      '<div class=\"card\">'+els.map(field).join('')+'<div style=\"margin-top:20px\"><button class=\"btn\" id=\"go\">'+(idx===PAGES.length-1?'Finish':'Next')+'</button></div><div class=\"err\"></div></div>';\n    window.scrollTo(0,0);\n    app.querySelectorAll('.scale button').forEach(function(b){b.onclick=function(){var n=b.getAttribute('data-n');A[n]=Number(b.getAttribute('data-v'));app.querySelectorAll('.scale button[data-n=\"'+n+'\"]').forEach(function(x){x.classList.toggle('on',x===b);});err('');};});\n    document.getElementById('go').onclick=function(){\n      var vals={},miss=[];\n      els.forEach(function(el){var v=read(el);if(v===undefined){if(el.isRequired)miss.push(el);}else vals[el.name]=v;});\n      if(miss.length)return err(miss[0].type==='consent'?'Consent is needed to continue.':'Please answer: '+(SPSite.getQuestion(miss[0].name)||miss[0]).title);\n      var b=this;b.disabled=true;var now=new Date();\n      var calls=Object.keys(vals).map(function(n){A[n]=vals[n];return SPSite.answer(n,vals[n]);});\n      if(idx===PAGES.length-1)calls.push(SPSite.answer('survey_time',{at:now.toISOString(),local_hour:Math.round((now.getHours()+now.getMinutes()/60)*100)/100,month:now.getMonth()+1}));\n      Promise.all(calls).then(function(rs){var bad=rs.filter(function(x){return x&&x.ok===false;})[0];if(bad){b.disabled=false;return err(bad.error);}\n        if(idx<PAGES.length-1){idx++;show();}else finish();});\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p id=\"st\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){err(r.error||'Some answers are missing.');var m=(r.missing||[])[0];setTimeout(function(){for(var i=0;i<PAGES.length;i++){if(PAGES[i].elements.some(function(e){return e.name===m;})){idx=i;break;}}show();},1500);}else{var s=document.getElementById('st');if(s)s.textContent='Your answers are saved. Thanks for helping us design cooler public spaces.';}});\n  }\n  SPSite.onReady(function(ctx){\n    PAGES=JSON.parse(document.getElementById('sp-scheme').textContent).survey.pages;\n    var a=(ctx&&ctx.answers)||{};Object.keys(a).forEach(function(k){A[k]=a[k];});\n    if(a.survey_time)return finish();\n    idx=0;for(var i=0;i<PAGES.length;i++){var need=PAGES[i].elements.filter(function(e){return e.isRequired;});if(need.every(function(e){return A[e.name]!==undefined;})&&i<PAGES.length-1)idx=i+1;else break;}\n    show();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-26T15:46:59.128Z"
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-26T15:46:59.128Z"
+  },
+  "description": "A 3–5 minute on-site questionnaire for people in an outdoor public space: thermal sensation (9-point), comfort, thermal preference, mood, climate familiarity, clothing, recent thermal history, estimated air temperature and whether they stand in sun, built shade or tree shade. Rebuilt from Middel, Selover, Hagen & Chhetri (2016).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [],
+ "paper": {
+  "title": "Impact of shade on outdoor thermal comfort—a seasonal field study in Tempe, Arizona",
+  "authors": [
+   "Middel A",
+   "Selover N",
+   "Hagen B",
+   "Chhetri N"
+  ],
+  "year": 2016,
+  "venue": "International Journal of Biometeorology",
+  "doi": "10.1007/s00484-016-1172-5",
+  "url": "https://doi.org/10.1007/s00484-016-1172-5"
+ }
+}

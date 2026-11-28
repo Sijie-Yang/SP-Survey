@@ -1,112 +1,1096 @@
 {
-  "id": "2019-yao-human",
-  "name": "Human–Machine Scoring (human-only version)",
-  "description": "Rebuilt from the published description of Yao et al. (2019). Participants score street views from 0 to 100 on six perceptions (safe, lively, beautiful, wealthy, boring, depressing). Differences from the original study: (1) In the original, a random-forest model learned each rater's scoring and showed a recommended score after the first 50 images; this template has no model. (2) Slider end labels are not in the paper. (3) Bundled images are photographs from the paper PDF (9 scenes), not the original full stimulus set.",
-  "author": "Yao et al.",
-  "year": "2019",
-  "category": "Academic Research",
-  "tags": [
-    "official",
-    "paper"
-  ],
-  "isPinned": false,
-  "isApproved": true,
-  "showOnLanding": true,
-  "thumbnailUrl": null,
-  "website": "https://doi.org/10.1080/13658816.2019.1643024",
-  "huggingfaceDataset": null,
-  "createdAt": "2026-10-02T00:00:00+00:00",
-  "imageDatasetConfig": {
-    "mediaFolderTags": {},
-    "mediaFolders": []
-  },
-  "preloadedImages": [],
-  "preloadedSource": null,
-  "preloadedAt": null,
-  "config": {
-    "title": "Street View Perception Scoring",
-    "description": "Score each street view from 0 to 100 on each of the six perceptions.",
-    "logoPosition": "right",
-    "autoGrowComment": true,
-    "progressBarType": "questions",
-    "showProgressBar": "aboveheader",
-    "showQuestionNumbers": "off",
-    "spAnalysisRecommendation": {
-      "citation": "Yao et al. 2019",
-      "items": [
-        {
-          "questions": [
-            "perception_scores"
-          ],
-          "method": "robust_median"
-        },
-        {
-          "questions": [
-            "perception_scores"
-          ],
-          "method": "rater_agreement"
-        }
-      ]
-    },
-    "pages": [
-      {
-        "name": "page_scoring",
-        "elements": [
-          {
-            "name": "perception_scores",
-            "type": "imageslidergroup",
-            "title": "Score this street view on each perception (0–100).",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 1,
-            "trialCount": 50,
-            "dimensions": [
-              {
-                "id": "safe",
-                "label": "Safe",
-                "left": "0",
-                "right": "100"
-              },
-              {
-                "id": "lively",
-                "label": "Lively",
-                "left": "0",
-                "right": "100"
-              },
-              {
-                "id": "beautiful",
-                "label": "Beautiful",
-                "left": "0",
-                "right": "100"
-              },
-              {
-                "id": "wealthy",
-                "label": "Wealthy",
-                "left": "0",
-                "right": "100"
-              },
-              {
-                "id": "boring",
-                "label": "Boring",
-                "left": "0",
-                "right": "100"
-              },
-              {
-                "id": "depressing",
-                "label": "Depressing",
-                "left": "0",
-                "right": "100"
-              }
-            ],
-            "scaleMin": 0,
-            "scaleMax": 100,
-            "scaleStep": 1
-          }
-        ]
-      }
+ "id": "2019-yao-human",
+ "name": "Street View Perception Scoring (Wuhan)",
+ "description": "Method replication: the images are new Baidu street views of Wuhan chosen for this template, not the paper's stimuli. Participants score 30 street views from 0 to 100 on six perceptions (safe, lively, beautiful, wealthy, boring, depressing), the human scoring step of the human–machine adversarial scoring framework of Yao et al. (2019, IJGIS) for Chinese cities. Differences from the original study: (1) no machine model suggests scores; (2) 30 images per participant.",
+ "author": "Yao et al.",
+ "year": "2019",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "source:paper",
+  "modality:street_view",
+  "task:rating",
+  "concept:safety",
+  "concept:liveliness",
+  "concept:beauty",
+  "concept:wealth",
+  "concept:boring",
+  "concept:depressing",
+  "country:China",
+  "city:Wuhan"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1080/13658816.2019.1643024",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-10-02T00:00:00+00:00",
+ "updatedAt": "2026-11-27T06:32:45.896+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
     ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "perception_scores",
+      "type": "imageslidergroup",
+      "title": "Score this street view on each perception (0–100)",
+      "choices": [],
+      "imageFit": "contain",
+      "scaleMax": 100,
+      "scaleMin": 0,
+      "scaleStep": 1,
+      "dimensions": [
+       {
+        "id": "safe",
+        "left": "0",
+        "label": "Safe",
+        "right": "100"
+       },
+       {
+        "id": "lively",
+        "left": "0",
+        "label": "Lively",
+        "right": "100"
+       },
+       {
+        "id": "beautiful",
+        "left": "0",
+        "label": "Beautiful",
+        "right": "100"
+       },
+       {
+        "id": "wealthy",
+        "left": "0",
+        "label": "Wealthy",
+        "right": "100"
+       },
+       {
+        "id": "boring",
+        "left": "0",
+        "label": "Boring",
+        "right": "100"
+       },
+       {
+        "id": "depressing",
+        "left": "0",
+        "label": "Depressing",
+        "right": "100"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "trialCount": 30,
+      "mediaFolders": [
+       "wuhan"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "18–24",
+        "value": "18-24"
+       },
+       {
+        "text": "25–34",
+        "value": "25-34"
+       },
+       {
+        "text": "35–54",
+        "value": "35-54"
+       },
+       {
+        "text": "55 or older",
+        "value": "55plus"
+       }
+      ]
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "title": "Street View Perception Scoring (Wuhan)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-f66be71ac8a4ec30",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Street View Perception Scoring (Wuhan)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Street View Perception Scoring (Wuhan)\",\n  \"description\": \"Participants score street views from 0 to 100 on six perceptions (safe, lively, beautiful, wealthy, boring, depressing), the human scoring step of the human–machine adversarial scoring framework of Yao et al. (2019, IJGIS), which assessed perceptions in Chinese cities. Method replication: the images are new Baidu street views of Wuhan chosen for this template, not the paper's stimuli. Differences from the original study: (1) no machine model suggests scores; (2) 30 images per participant.\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imageslidergroup\",\n      \"name\": \"perception_scores\",\n      \"title\": \"Score this street view on each perception (0–100)\",\n      \"imageCount\": 1,\n      \"trialCount\": 30,\n      \"scaleMin\": 0,\n      \"scaleMax\": 100,\n      \"scaleStep\": 1,\n      \"isRequired\": true,\n      \"imageFit\": \"contain\",\n      \"dimensions\": [\n       {\n        \"id\": \"safe\",\n        \"label\": \"Safe\",\n        \"left\": \"0\",\n        \"right\": \"100\"\n       },\n       {\n        \"id\": \"lively\",\n        \"label\": \"Lively\",\n        \"left\": \"0\",\n        \"right\": \"100\"\n       },\n       {\n        \"id\": \"beautiful\",\n        \"label\": \"Beautiful\",\n        \"left\": \"0\",\n        \"right\": \"100\"\n       },\n       {\n        \"id\": \"wealthy\",\n        \"label\": \"Wealthy\",\n        \"left\": \"0\",\n        \"right\": \"100\"\n       },\n       {\n        \"id\": \"boring\",\n        \"label\": \"Boring\",\n        \"left\": \"0\",\n        \"right\": \"100\"\n       },\n       {\n        \"id\": \"depressing\",\n        \"label\": \"Depressing\",\n        \"left\": \"0\",\n        \"right\": \"100\"\n       }\n      ],\n      \"mediaFolders\": [\n       \"wuhan\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"Age\",\n      \"choices\": [\n       {\n        \"value\": \"18-24\",\n        \"text\": \"18–24\"\n       },\n       {\n        \"value\": \"25-34\",\n        \"text\": \"25–34\"\n       },\n       {\n        \"value\": \"35-54\",\n        \"text\": \"35–54\"\n       },\n       {\n        \"value\": \"55plus\",\n        \"text\": \"55 or older\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#2c5d8a;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.rng{accent-color:var(--accent)}.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}.scale.num{grid-template-columns:repeat(5,1fr)}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Wuhan, Baidu street view (© Baidu). Task from Yao et al. (2019), International Journal of Geographical Information Science, doi:10.1080/13658816.2019.1643024.</footer>\n<script>\n(function(){\n  var C={\"before\": [], \"after\": [\"age_group\", \"gender\"], \"tasks\": [\"perception_scores\"], \"minutes\": 15, \"alt\": \"Street view in Wuhan\", \"labels\": {}, \"pickOne\": null, \"heading\": \"Score street views on six perceptions\", \"intro\": \"<p>You will see 30 street views from Wuhan, China. For each one, move all six sliders to score how <b>safe, lively, beautiful, wealthy, boring</b> and <b>depressing</b> the place looks, from 0 to 100. There are no right or wrong answers.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?'Pair ':'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else if(q.kind==='sliders'||/slidergroup$/.test(q.type)){\n      h+='<img class=\"shot\" style=\"max-height:'+((q.dimensions||[]).length>2?'40vh':'56vh')+'\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">';\n      (q.dimensions||[]).forEach(function(d){h+='<div class=\"q\"><b>'+esc(d.label)+': <span id=\"v_'+esc(d.id)+'\">–</span></b><input type=\"range\" class=\"rng\" data-d=\"'+esc(d.id)+'\" min=\"'+d.min+'\" max=\"'+d.max+'\" step=\"'+(d.step||1)+'\" value=\"'+Math.round((d.min+d.max)/2)+'\" style=\"width:100%\"><p style=\"display:flex;justify-content:space-between;margin:0\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      h+='<div class=\"row\"><button class=\"btn\" id=\"next\" disabled>Next</button></div><p style=\"font-size:.85rem\">Move the slider to give your answer.</p>';\n      app.innerHTML=h+'<div class=\"err\"></div>';\n      var vals={},rs=app.querySelectorAll('.rng'),nx=document.getElementById('next');\n      rs.forEach(function(r){r.oninput=function(){vals[r.getAttribute('data-d')]=Number(r.value);document.getElementById('v_'+r.getAttribute('data-d')).textContent=r.value;nx.disabled=Object.keys(vals).length<rs.length;};});\n      nx.onclick=function(){nx.disabled=true;SPSite.answer(n,vals,{trial:k}).then(function(r){if(r&&r.ok===false){err(r.error);nx.disabled=false;return;}(done[n]=done[n]||{})[k]=true;nextStep();});};\n      window.scrollTo(0,0);return;\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      var words=!!(lab&&lab.some(function(x){return isNaN(Number(x));}));\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale'+(words?'':' num')+'\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(words?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T06:30:02.184Z",
+   "mediaFolders": [
+    "wuhan"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T06:30:02.184Z"
+  },
+  "description": "Participants score street views from 0 to 100 on six perceptions (safe, lively, beautiful, wealthy, boring, depressing), the human scoring step of the human–machine adversarial scoring framework of Yao et al. (2019, IJGIS), which assessed perceptions in Chinese cities. Method replication: the images are new Baidu street views of Wuhan chosen for this template, not the paper's stimuli. Differences from the original study: (1) no machine model suggests scores; (2) 30 images per participant.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_001__59bea1e5-5fb5-4924-98fe-5434cd04090e.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_001__59bea1e5-5fb5-4924-98fe-5434cd04090e.jpg",
+   "name": "wh_001.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_001__59bea1e5-5fb5-4924-98fe-5434cd04090e.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 108101,
+   "uploaded_bytes": 108101,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_002__6194a218-1b00-464b-839e-dd4d1f98e268.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_002__6194a218-1b00-464b-839e-dd4d1f98e268.jpg",
+   "name": "wh_002.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_002__6194a218-1b00-464b-839e-dd4d1f98e268.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 153334,
+   "uploaded_bytes": 153334,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_003__f455b51e-4c1f-4404-9d0c-68eb89066ef1.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_003__f455b51e-4c1f-4404-9d0c-68eb89066ef1.jpg",
+   "name": "wh_003.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_003__f455b51e-4c1f-4404-9d0c-68eb89066ef1.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 139074,
+   "uploaded_bytes": 139074,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_004__e2c17f72-b958-41bb-a249-e1463f56975e.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_004__e2c17f72-b958-41bb-a249-e1463f56975e.jpg",
+   "name": "wh_004.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_004__e2c17f72-b958-41bb-a249-e1463f56975e.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 125527,
+   "uploaded_bytes": 125527,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_005__426f1cb4-d68d-4a9e-a326-ce9d0658fa0b.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_005__426f1cb4-d68d-4a9e-a326-ce9d0658fa0b.jpg",
+   "name": "wh_005.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_005__426f1cb4-d68d-4a9e-a326-ce9d0658fa0b.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 215957,
+   "uploaded_bytes": 215957,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_006__22f04b54-0661-41c4-9e63-69b55739bf33.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_006__22f04b54-0661-41c4-9e63-69b55739bf33.jpg",
+   "name": "wh_006.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_006__22f04b54-0661-41c4-9e63-69b55739bf33.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 118307,
+   "uploaded_bytes": 118307,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_007__90c5ee12-523a-40a6-91bb-cd7c1c6a78e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_007__90c5ee12-523a-40a6-91bb-cd7c1c6a78e7.jpg",
+   "name": "wh_007.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_007__90c5ee12-523a-40a6-91bb-cd7c1c6a78e7.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 110046,
+   "uploaded_bytes": 110046,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_009__89e7a955-9f1a-4be2-8e2a-5ab2ae008702.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_009__89e7a955-9f1a-4be2-8e2a-5ab2ae008702.jpg",
+   "name": "wh_009.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_009__89e7a955-9f1a-4be2-8e2a-5ab2ae008702.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 70899,
+   "uploaded_bytes": 70899,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_010__2eccb5ef-9a3b-4de3-aa48-983a395b5b62.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_010__2eccb5ef-9a3b-4de3-aa48-983a395b5b62.jpg",
+   "name": "wh_010.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_010__2eccb5ef-9a3b-4de3-aa48-983a395b5b62.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 146519,
+   "uploaded_bytes": 146519,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_011__fc56545c-af46-4f2b-9dda-1bcd8ba37861.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_011__fc56545c-af46-4f2b-9dda-1bcd8ba37861.jpg",
+   "name": "wh_011.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_011__fc56545c-af46-4f2b-9dda-1bcd8ba37861.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 232750,
+   "uploaded_bytes": 232750,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_012__34087365-a784-4f3f-89bd-384bb971bad4.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_012__34087365-a784-4f3f-89bd-384bb971bad4.jpg",
+   "name": "wh_012.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_012__34087365-a784-4f3f-89bd-384bb971bad4.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 117551,
+   "uploaded_bytes": 117551,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_013__10d09cb7-0d19-42d4-af0e-358d1262f37b.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_013__10d09cb7-0d19-42d4-af0e-358d1262f37b.jpg",
+   "name": "wh_013.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_013__10d09cb7-0d19-42d4-af0e-358d1262f37b.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 184521,
+   "uploaded_bytes": 184521,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_014__a6cc6380-762c-4715-866c-00b3c16cbbc3.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_014__a6cc6380-762c-4715-866c-00b3c16cbbc3.jpg",
+   "name": "wh_014.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_014__a6cc6380-762c-4715-866c-00b3c16cbbc3.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 160083,
+   "uploaded_bytes": 160083,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_015__7585cea3-2860-4aec-9451-c2a20c474e89.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_015__7585cea3-2860-4aec-9451-c2a20c474e89.jpg",
+   "name": "wh_015.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_015__7585cea3-2860-4aec-9451-c2a20c474e89.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 112544,
+   "uploaded_bytes": 112544,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_016__b9aab37b-ea1c-427e-a577-c4d8cb031198.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_016__b9aab37b-ea1c-427e-a577-c4d8cb031198.jpg",
+   "name": "wh_016.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_016__b9aab37b-ea1c-427e-a577-c4d8cb031198.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 181961,
+   "uploaded_bytes": 181961,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_017__46feea38-c425-4fe9-9177-fddc2e508af0.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_017__46feea38-c425-4fe9-9177-fddc2e508af0.jpg",
+   "name": "wh_017.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_017__46feea38-c425-4fe9-9177-fddc2e508af0.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 138887,
+   "uploaded_bytes": 138887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_019__938ea3bf-603d-48af-a573-35b345cc39e4.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_019__938ea3bf-603d-48af-a573-35b345cc39e4.jpg",
+   "name": "wh_019.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_019__938ea3bf-603d-48af-a573-35b345cc39e4.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 186255,
+   "uploaded_bytes": 186255,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_020__cd40db0d-c9ee-4063-b568-ccbe847f1887.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_020__cd40db0d-c9ee-4063-b568-ccbe847f1887.jpg",
+   "name": "wh_020.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_020__cd40db0d-c9ee-4063-b568-ccbe847f1887.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 79723,
+   "uploaded_bytes": 79723,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_021__58b21297-838a-4627-a044-8c57088b73ef.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_021__58b21297-838a-4627-a044-8c57088b73ef.jpg",
+   "name": "wh_021.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_021__58b21297-838a-4627-a044-8c57088b73ef.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 121055,
+   "uploaded_bytes": 121055,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_022__34bcf10d-d47d-4170-aa3a-c875e0a032ba.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_022__34bcf10d-d47d-4170-aa3a-c875e0a032ba.jpg",
+   "name": "wh_022.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_022__34bcf10d-d47d-4170-aa3a-c875e0a032ba.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 123128,
+   "uploaded_bytes": 123128,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_023__4ed25b85-9289-42ab-8711-6dd3c85b3d3b.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_023__4ed25b85-9289-42ab-8711-6dd3c85b3d3b.jpg",
+   "name": "wh_023.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_023__4ed25b85-9289-42ab-8711-6dd3c85b3d3b.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 138433,
+   "uploaded_bytes": 138433,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_024__72031ca8-49d6-4734-93c5-f73ec906edd6.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_024__72031ca8-49d6-4734-93c5-f73ec906edd6.jpg",
+   "name": "wh_024.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_024__72031ca8-49d6-4734-93c5-f73ec906edd6.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 223767,
+   "uploaded_bytes": 223767,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_025__7cd42aa6-aa09-432b-bcbd-a634c93fe417.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_025__7cd42aa6-aa09-432b-bcbd-a634c93fe417.jpg",
+   "name": "wh_025.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_025__7cd42aa6-aa09-432b-bcbd-a634c93fe417.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 153300,
+   "uploaded_bytes": 153300,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_026__5f6b39fa-961c-4483-8360-411805e5d1a1.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_026__5f6b39fa-961c-4483-8360-411805e5d1a1.jpg",
+   "name": "wh_026.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_026__5f6b39fa-961c-4483-8360-411805e5d1a1.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 100251,
+   "uploaded_bytes": 100251,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_027__96a521fb-dd9a-4e30-b9dc-a4976f139dcb.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_027__96a521fb-dd9a-4e30-b9dc-a4976f139dcb.jpg",
+   "name": "wh_027.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_027__96a521fb-dd9a-4e30-b9dc-a4976f139dcb.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 161577,
+   "uploaded_bytes": 161577,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_028__e2135a40-cfa3-4df0-80bc-4243a52a9b65.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_028__e2135a40-cfa3-4df0-80bc-4243a52a9b65.jpg",
+   "name": "wh_028.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_028__e2135a40-cfa3-4df0-80bc-4243a52a9b65.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 130095,
+   "uploaded_bytes": 130095,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_029__6c5a351e-4275-48cd-aed1-417dada4ffbb.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_029__6c5a351e-4275-48cd-aed1-417dada4ffbb.jpg",
+   "name": "wh_029.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_029__6c5a351e-4275-48cd-aed1-417dada4ffbb.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 87954,
+   "uploaded_bytes": 87954,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_030__04d1f262-38f4-4612-b9e6-af74fb62822c.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_030__04d1f262-38f4-4612-b9e6-af74fb62822c.jpg",
+   "name": "wh_030.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_030__04d1f262-38f4-4612-b9e6-af74fb62822c.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 150050,
+   "uploaded_bytes": 150050,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_031__72f45c4c-eae7-41eb-8b70-2a55ce5b9bdb.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_031__72f45c4c-eae7-41eb-8b70-2a55ce5b9bdb.jpg",
+   "name": "wh_031.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_031__72f45c4c-eae7-41eb-8b70-2a55ce5b9bdb.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 96156,
+   "uploaded_bytes": 96156,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_032__f0792163-6be6-4592-9b58-2ba84d0dcac1.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_032__f0792163-6be6-4592-9b58-2ba84d0dcac1.jpg",
+   "name": "wh_032.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_032__f0792163-6be6-4592-9b58-2ba84d0dcac1.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 143198,
+   "uploaded_bytes": 143198,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_033__de5d9b4b-e073-443c-a2b4-9afd7e3b20c0.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_033__de5d9b4b-e073-443c-a2b4-9afd7e3b20c0.jpg",
+   "name": "wh_033.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_033__de5d9b4b-e073-443c-a2b4-9afd7e3b20c0.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 127767,
+   "uploaded_bytes": 127767,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_034__86c23a9a-45f9-4106-b71c-7ffcd4b86fe7.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_034__86c23a9a-45f9-4106-b71c-7ffcd4b86fe7.jpg",
+   "name": "wh_034.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_034__86c23a9a-45f9-4106-b71c-7ffcd4b86fe7.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 175515,
+   "uploaded_bytes": 175515,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_035__a0287580-06a8-4929-bdc4-fcadfec72656.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_035__a0287580-06a8-4929-bdc4-fcadfec72656.jpg",
+   "name": "wh_035.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_035__a0287580-06a8-4929-bdc4-fcadfec72656.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 127251,
+   "uploaded_bytes": 127251,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_036__da2a7936-c5b0-4ba6-933b-33204d326a6d.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_036__da2a7936-c5b0-4ba6-933b-33204d326a6d.jpg",
+   "name": "wh_036.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_036__da2a7936-c5b0-4ba6-933b-33204d326a6d.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 163554,
+   "uploaded_bytes": 163554,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_037__948546df-1529-4eb0-8dfd-43f869a206b0.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_037__948546df-1529-4eb0-8dfd-43f869a206b0.jpg",
+   "name": "wh_037.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_037__948546df-1529-4eb0-8dfd-43f869a206b0.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 92155,
+   "uploaded_bytes": 92155,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_038__f117871d-dcf4-43cc-b574-dc629addc6fb.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_038__f117871d-dcf4-43cc-b574-dc629addc6fb.jpg",
+   "name": "wh_038.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_038__f117871d-dcf4-43cc-b574-dc629addc6fb.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 117736,
+   "uploaded_bytes": 117736,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_039__007d592e-afd6-48f4-a061-b191a68ab9f2.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_039__007d592e-afd6-48f4-a061-b191a68ab9f2.jpg",
+   "name": "wh_039.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_039__007d592e-afd6-48f4-a061-b191a68ab9f2.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 125650,
+   "uploaded_bytes": 125650,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_040__5eef1f6f-9f20-4852-8276-c8bd80637b51.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_040__5eef1f6f-9f20-4852-8276-c8bd80637b51.jpg",
+   "name": "wh_040.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_040__5eef1f6f-9f20-4852-8276-c8bd80637b51.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 107891,
+   "uploaded_bytes": 107891,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_041__c09d1fef-a4de-485b-be7f-e595e6f2fa81.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_041__c09d1fef-a4de-485b-be7f-e595e6f2fa81.jpg",
+   "name": "wh_041.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_041__c09d1fef-a4de-485b-be7f-e595e6f2fa81.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 112231,
+   "uploaded_bytes": 112231,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_042__d1e4e5eb-7c75-4bb5-84a8-9469c227724c.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_042__d1e4e5eb-7c75-4bb5-84a8-9469c227724c.jpg",
+   "name": "wh_042.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_042__d1e4e5eb-7c75-4bb5-84a8-9469c227724c.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 120788,
+   "uploaded_bytes": 120788,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_043__ae67f81b-4b0a-4dac-9ec4-5942c474a5aa.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_043__ae67f81b-4b0a-4dac-9ec4-5942c474a5aa.jpg",
+   "name": "wh_043.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_043__ae67f81b-4b0a-4dac-9ec4-5942c474a5aa.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 100875,
+   "uploaded_bytes": 100875,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_044__9510f9f5-257e-4849-948e-6c57d2545319.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_044__9510f9f5-257e-4849-948e-6c57d2545319.jpg",
+   "name": "wh_044.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_044__9510f9f5-257e-4849-948e-6c57d2545319.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 121757,
+   "uploaded_bytes": 121757,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_045__0e08486e-b6d5-4bda-8458-1fe0db158dc3.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_045__0e08486e-b6d5-4bda-8458-1fe0db158dc3.jpg",
+   "name": "wh_045.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_045__0e08486e-b6d5-4bda-8458-1fe0db158dc3.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 138244,
+   "uploaded_bytes": 138244,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_046__9f0bfb2b-afdb-4f65-a5a3-1703a253120f.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_046__9f0bfb2b-afdb-4f65-a5a3-1703a253120f.jpg",
+   "name": "wh_046.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_046__9f0bfb2b-afdb-4f65-a5a3-1703a253120f.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 142586,
+   "uploaded_bytes": 142586,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_047__ce087081-0aa2-493c-b128-898bc8997f07.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_047__ce087081-0aa2-493c-b128-898bc8997f07.jpg",
+   "name": "wh_047.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_047__ce087081-0aa2-493c-b128-898bc8997f07.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 122956,
+   "uploaded_bytes": 122956,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_048__b06fb810-8659-4399-a1c3-617d54782720.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_048__b06fb810-8659-4399-a1c3-617d54782720.jpg",
+   "name": "wh_048.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_048__b06fb810-8659-4399-a1c3-617d54782720.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 116723,
+   "uploaded_bytes": 116723,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_049__1f59312a-a6ec-43dc-be93-946e83ddca2a.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_049__1f59312a-a6ec-43dc-be93-946e83ddca2a.jpg",
+   "name": "wh_049.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_049__1f59312a-a6ec-43dc-be93-946e83ddca2a.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 188846,
+   "uploaded_bytes": 188846,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_050__af25944e-c514-4064-a4d0-73d6ccbef593.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_050__af25944e-c514-4064-a4d0-73d6ccbef593.jpg",
+   "name": "wh_050.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_050__af25944e-c514-4064-a4d0-73d6ccbef593.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 175218,
+   "uploaded_bytes": 175218,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_051__ab042c95-6226-4cd0-9a81-698672a48516.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_051__ab042c95-6226-4cd0-9a81-698672a48516.jpg",
+   "name": "wh_051.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_051__ab042c95-6226-4cd0-9a81-698672a48516.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 122731,
+   "uploaded_bytes": 122731,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_052__0f66ef23-cc3f-4b94-a2fb-4f80ef451345.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_052__0f66ef23-cc3f-4b94-a2fb-4f80ef451345.jpg",
+   "name": "wh_052.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_052__0f66ef23-cc3f-4b94-a2fb-4f80ef451345.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 108786,
+   "uploaded_bytes": 108786,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_053__9ce8b13e-b952-4db3-86cc-f8ae3668f9b5.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_053__9ce8b13e-b952-4db3-86cc-f8ae3668f9b5.jpg",
+   "name": "wh_053.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_053__9ce8b13e-b952-4db3-86cc-f8ae3668f9b5.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 125002,
+   "uploaded_bytes": 125002,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_054__7c844186-e2f9-40ce-88c3-97e0191ed773.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_054__7c844186-e2f9-40ce-88c3-97e0191ed773.jpg",
+   "name": "wh_054.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_054__7c844186-e2f9-40ce-88c3-97e0191ed773.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 91278,
+   "uploaded_bytes": 91278,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_055__6e76413d-b69a-45d9-9315-c5129f2452fb.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_055__6e76413d-b69a-45d9-9315-c5129f2452fb.jpg",
+   "name": "wh_055.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_055__6e76413d-b69a-45d9-9315-c5129f2452fb.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 130022,
+   "uploaded_bytes": 130022,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_056__6ff42a4b-9c9e-4ab5-9e28-0a3ae507307a.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_056__6ff42a4b-9c9e-4ab5-9e28-0a3ae507307a.jpg",
+   "name": "wh_056.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_056__6ff42a4b-9c9e-4ab5-9e28-0a3ae507307a.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 76230,
+   "uploaded_bytes": 76230,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_057__131e0d29-49f5-4dc8-a80a-6d0804339169.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_057__131e0d29-49f5-4dc8-a80a-6d0804339169.jpg",
+   "name": "wh_057.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_057__131e0d29-49f5-4dc8-a80a-6d0804339169.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 134545,
+   "uploaded_bytes": 134545,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_058__9cf89a72-fbd1-47d9-9d27-b1901f2aa5f9.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_058__9cf89a72-fbd1-47d9-9d27-b1901f2aa5f9.jpg",
+   "name": "wh_058.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_058__9cf89a72-fbd1-47d9-9d27-b1901f2aa5f9.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 87158,
+   "uploaded_bytes": 87158,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_059__3bd77085-4159-4b14-8fcb-06195c764dc2.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_059__3bd77085-4159-4b14-8fcb-06195c764dc2.jpg",
+   "name": "wh_059.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_059__3bd77085-4159-4b14-8fcb-06195c764dc2.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 174831,
+   "uploaded_bytes": 174831,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_060__928e41d9-8951-495e-bb81-5bd0832e8403.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_060__928e41d9-8951-495e-bb81-5bd0832e8403.jpg",
+   "name": "wh_060.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_060__928e41d9-8951-495e-bb81-5bd0832e8403.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 160710,
+   "uploaded_bytes": 160710,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_061__2bf132fb-47c7-4e91-923d-6586762db0a8.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_061__2bf132fb-47c7-4e91-923d-6586762db0a8.jpg",
+   "name": "wh_061.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_061__2bf132fb-47c7-4e91-923d-6586762db0a8.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 152119,
+   "uploaded_bytes": 152119,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_062__ce4cd001-e1e0-40f6-a723-770f8ff5007e.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_062__ce4cd001-e1e0-40f6-a723-770f8ff5007e.jpg",
+   "name": "wh_062.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_062__ce4cd001-e1e0-40f6-a723-770f8ff5007e.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 125335,
+   "uploaded_bytes": 125335,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_063__46f07ec1-41b6-4688-8d41-8d9df5bee283.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_063__46f07ec1-41b6-4688-8d41-8d9df5bee283.jpg",
+   "name": "wh_063.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_063__46f07ec1-41b6-4688-8d41-8d9df5bee283.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 79415,
+   "uploaded_bytes": 79415,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_064__26f03527-c1ce-4913-8d2c-a84da55ef5e3.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_064__26f03527-c1ce-4913-8d2c-a84da55ef5e3.jpg",
+   "name": "wh_064.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_064__26f03527-c1ce-4913-8d2c-a84da55ef5e3.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 92163,
+   "uploaded_bytes": 92163,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_065__49945904-e344-45ce-9d8b-10f2d20a0847.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_065__49945904-e344-45ce-9d8b-10f2d20a0847.jpg",
+   "name": "wh_065.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_065__49945904-e344-45ce-9d8b-10f2d20a0847.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 158073,
+   "uploaded_bytes": 158073,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_066__b0c27af3-dd23-4f3d-8f47-7f1510b40f67.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_066__b0c27af3-dd23-4f3d-8f47-7f1510b40f67.jpg",
+   "name": "wh_066.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_066__b0c27af3-dd23-4f3d-8f47-7f1510b40f67.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 104788,
+   "uploaded_bytes": 104788,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_067__edf0f1f4-6f10-4926-989d-d22999080fe2.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_067__edf0f1f4-6f10-4926-989d-d22999080fe2.jpg",
+   "name": "wh_067.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_067__edf0f1f4-6f10-4926-989d-d22999080fe2.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 113055,
+   "uploaded_bytes": 113055,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_069__397cf41f-6f61-4f50-8fb6-25df7ce00cd1.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_069__397cf41f-6f61-4f50-8fb6-25df7ce00cd1.jpg",
+   "name": "wh_069.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_069__397cf41f-6f61-4f50-8fb6-25df7ce00cd1.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 130180,
+   "uploaded_bytes": 130180,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_070__e4281158-8472-43c9-92bc-4ee773cf77d0.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_070__e4281158-8472-43c9-92bc-4ee773cf77d0.jpg",
+   "name": "wh_070.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_070__e4281158-8472-43c9-92bc-4ee773cf77d0.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 108116,
+   "uploaded_bytes": 108116,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_071__392a2a13-eb67-4bc9-90bf-0ca88f695bc6.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_071__392a2a13-eb67-4bc9-90bf-0ca88f695bc6.jpg",
+   "name": "wh_071.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_071__392a2a13-eb67-4bc9-90bf-0ca88f695bc6.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 98413,
+   "uploaded_bytes": 98413,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_072__537be5b7-d6ad-474b-8754-4c625be503d3.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_072__537be5b7-d6ad-474b-8754-4c625be503d3.jpg",
+   "name": "wh_072.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_072__537be5b7-d6ad-474b-8754-4c625be503d3.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 112953,
+   "uploaded_bytes": 112953,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_074__f683aac9-cbe1-4390-85d9-6247d7d1601f.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_074__f683aac9-cbe1-4390-85d9-6247d7d1601f.jpg",
+   "name": "wh_074.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_074__f683aac9-cbe1-4390-85d9-6247d7d1601f.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 72640,
+   "uploaded_bytes": 72640,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_075__10862d06-497e-4aee-aae7-8942852e27e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_075__10862d06-497e-4aee-aae7-8942852e27e6.jpg",
+   "name": "wh_075.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_075__10862d06-497e-4aee-aae7-8942852e27e6.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 87257,
+   "uploaded_bytes": 87257,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_076__71b2ef23-c745-424c-9089-0644b6491ea7.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_076__71b2ef23-c745-424c-9089-0644b6491ea7.jpg",
+   "name": "wh_076.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_076__71b2ef23-c745-424c-9089-0644b6491ea7.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 96431,
+   "uploaded_bytes": 96431,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_078__60778a43-e7ac-4a43-bee6-0bb8b8da0eed.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_078__60778a43-e7ac-4a43-bee6-0bb8b8da0eed.jpg",
+   "name": "wh_078.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_078__60778a43-e7ac-4a43-bee6-0bb8b8da0eed.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 129108,
+   "uploaded_bytes": 129108,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-yao-human/wuhan/wh_080__1e61f09c-610f-4b85-aa17-d29c603872e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-yao-human/wuhan/wh_080__1e61f09c-610f-4b85-aa17-d29c603872e6.jpg",
+   "name": "wh_080.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2019-yao-human/wuhan/wh_080__1e61f09c-610f-4b85-aa17-d29c603872e6.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 92620,
+   "uploaded_bytes": 92620,
+   "image_compressed": false
   }
+ ],
+ "paper": {
+  "title": "A human-machine adversarial scoring framework for urban perception assessment using street-view images",
+  "authors": [
+   "Yao Y.",
+   "Liang Z.",
+   "Yuan Z.",
+   "Liu P.",
+   "Bie Y.",
+   "Zhang J.",
+   "Wang R.",
+   "Wang J.",
+   "Guan Q."
+  ],
+  "year": 2019,
+  "venue": "International Journal of Geographical Information Science",
+  "doi": "10.1080/13658816.2019.1643024",
+  "url": "https://doi.org/10.1080/13658816.2019.1643024"
+ }
 }

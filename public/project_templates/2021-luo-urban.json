@@ -1,0 +1,366 @@
+{
+ "id": "2021-luo-urban",
+ "name": "Urban Park Blue Space: Preference and Restoration",
+ "description": "Faithful replication of Luo, S., Xie, J., & Furuya, K. (2021). Assessing the preference and restorative potential of urban park blue space. Land 10(11):1233. https://doi.org/10.3390/land10111233\n\nParticipants see the paper's ten photographs of blue spaces (creeks, channels and ponds) in Huanhuaxi Park, Chengdu, one at a time in random order. For each, they imagine being in the scene and rate seven statements from 1 (totally disagree) to 7 (totally agree): the five-item short Perceived Restorativeness Scale (fascination, compatibility, being away, scope, coherence), \"The landscape is beautiful\" (aesthetic preference) and \"This place is natural\" (perceived naturalness), as in the paper's Table 2. They then give age, gender, education, major and childhood living environment.\n\nOriginal study: 93 university students in a lab, one minute per slide (October 2020). Image 5, a large pond surrounded by bamboo and traditional buildings, was most preferred (5.67) and most restorative (5.10); image 2, a small channel beside a nature trail, was least preferred (4.25) and least restorative (4.20); image 7 was rated most natural. Demographic groups did not differ. Clean, natural-looking water and diverse vegetation predicted preference and restorative potential.\n\nAnalysis as in the paper: restorative potential = mean of the five PRS items; means per image; Mann–Whitney / Kruskal–Wallis tests across demographic groups; correlations and regressions with landscape features (the experts' feature scores of the paper's Table 3 can be added as image attributes).\n\nDifferences from the original study: (1) online and self-paced instead of a group lab session with one minute per projected slide (the instructions suggest about a minute per picture); (2) the images are the versions printed in the paper's Table 1, smaller than the projected slides; (3) English wording of the items follows the paper's Table 2 (the original questionnaire was in Chinese); (4) the expert rating of landscape characteristics (Table 3) is not part of this template.\n\nImages: Table 1 of the open-access article (CC BY 4.0), shown with credit for research; the template is removed if the authors object.",
+ "author": "Luo, Xie & Furuya",
+ "year": "2021",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "blue space",
+  "urban park",
+  "restoration",
+  "China",
+  "source:paper",
+  "modality:scene_photo",
+  "task:multi_rating",
+  "task:questionnaire",
+  "concept:preference",
+  "concept:restoration",
+  "concept:beauty",
+  "concept:naturalness",
+  "participants:students",
+  "sample:lt100",
+  "country:China",
+  "city:Chengdu"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/land10111233",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T12:58:36.815+00:00",
+ "updatedAt": "2026-11-27T12:58:46.228+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part and know I can stop at any time.",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "images",
+    "elements": [
+     {
+      "name": "blue_space_ratings",
+      "type": "custom",
+      "items": [
+       {
+        "id": "fascination",
+        "text": "That place is fascinating."
+       },
+       {
+        "id": "compatibility",
+        "text": "I can enjoy myself in this setting and do anything I like."
+       },
+       {
+        "id": "being_away",
+        "text": "This is a place away from daily routine and stress."
+       },
+       {
+        "id": "scope",
+        "text": "There are few hard boundaries here to limit me."
+       },
+       {
+        "id": "coherence",
+        "text": "Everything here seems to have a proper place."
+       },
+       {
+        "id": "beautiful",
+        "text": "The landscape is beautiful."
+       },
+       {
+        "id": "natural",
+        "text": "This place is natural."
+       }
+      ],
+      "title": "Imagine you are in this place. How much do you agree with each statement?",
+      "trials": [
+       {
+        "id": "image_01"
+       },
+       {
+        "id": "image_02"
+       },
+       {
+        "id": "image_03"
+       },
+       {
+        "id": "image_04"
+       },
+       {
+        "id": "image_05"
+       },
+       {
+        "id": "image_06"
+       },
+       {
+        "id": "image_07"
+       },
+       {
+        "id": "image_08"
+       },
+       {
+        "id": "image_09"
+       },
+       {
+        "id": "image_10"
+       }
+      ],
+      "isRequired": true,
+      "description": "One trial per image (key image_01 … image_10, numbered as in the paper's Table 1), shown one at a time in random order. Value: { fascination, compatibility, being_away, scope, coherence, beautiful, natural }, each 1 = totally disagree … 7 = totally agree. Restorative potential = mean of the first five (short PRS); aesthetic preference = beautiful; perceived naturalness = natural."
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "name": "age",
+      "type": "text",
+      "title": "Age (years)",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Male",
+        "value": 1
+       },
+       {
+        "text": "Female",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "Education",
+      "choices": [
+       {
+        "text": "Undergraduate",
+        "value": 1
+       },
+       {
+        "text": "Postgraduate",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "major",
+      "type": "radiogroup",
+      "title": "Major",
+      "choices": [
+       {
+        "text": "Landscape architecture",
+        "value": 1
+       },
+       {
+        "text": "Other",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "childhood_environment",
+      "type": "radiogroup",
+      "title": "Where did you live during your childhood?",
+      "choices": [
+       {
+        "text": "Rural area",
+        "value": 1
+       },
+       {
+        "text": "Urban area",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Urban Park Blue Space: Preference and Restoration",
+  "locale": "en",
+  "spSite": {
+   "id": "site-dbd2fb466fd6c144",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Park Blue Space Survey</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Urban Park Blue Space: Preference and Restoration\",\n  \"description\": \"Faithful replication of Luo, Xie & Furuya (2021), Land 10:1233: rate ten photographs of blue spaces (creeks, channels, ponds) in Huanhuaxi Park, Chengdu, on the short Perceived Restorativeness Scale, beauty and naturalness (1–7).\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"blue\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"boolean\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part and know I can stop at any time.\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"images\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"blue_space_ratings\",\n      \"title\": \"Imagine you are in this place. How much do you agree with each statement?\",\n      \"isRequired\": true,\n      \"description\": \"One trial per image (key image_01 … image_10, numbered as in the paper's Table 1), shown one at a time in random order. Value: { fascination, compatibility, being_away, scope, coherence, beautiful, natural }, each 1 = totally disagree … 7 = totally agree. Restorative potential = mean of the first five (short PRS); aesthetic preference = beautiful; perceived naturalness = natural.\",\n      \"items\": [\n       {\n        \"id\": \"fascination\",\n        \"text\": \"That place is fascinating.\"\n       },\n       {\n        \"id\": \"compatibility\",\n        \"text\": \"I can enjoy myself in this setting and do anything I like.\"\n       },\n       {\n        \"id\": \"being_away\",\n        \"text\": \"This is a place away from daily routine and stress.\"\n       },\n       {\n        \"id\": \"scope\",\n        \"text\": \"There are few hard boundaries here to limit me.\"\n       },\n       {\n        \"id\": \"coherence\",\n        \"text\": \"Everything here seems to have a proper place.\"\n       },\n       {\n        \"id\": \"beautiful\",\n        \"text\": \"The landscape is beautiful.\"\n       },\n       {\n        \"id\": \"natural\",\n        \"text\": \"This place is natural.\"\n       }\n      ],\n      \"trials\": [\n       {\n        \"id\": \"image_01\"\n       },\n       {\n        \"id\": \"image_02\"\n       },\n       {\n        \"id\": \"image_03\"\n       },\n       {\n        \"id\": \"image_04\"\n       },\n       {\n        \"id\": \"image_05\"\n       },\n       {\n        \"id\": \"image_06\"\n       },\n       {\n        \"id\": \"image_07\"\n       },\n       {\n        \"id\": \"image_08\"\n       },\n       {\n        \"id\": \"image_09\"\n       },\n       {\n        \"id\": \"image_10\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"name\": \"age\",\n      \"inputType\": \"number\",\n      \"title\": \"Age (years)\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Female\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"Education\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Undergraduate\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Postgraduate\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"major\",\n      \"title\": \"Major\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Landscape architecture\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"childhood_environment\",\n      \"title\": \"Where did you live during your childhood?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Rural area\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Urban area\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#edf3f1;--card:#fff;--ink:#16231f;--muted:#53645e;--accent:#2a6b5c;--accent-ink:#fff;--line:#d2ddd9;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:820px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.3rem;margin:0 0 10px}\np{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:16px}.q>b{display:block;margin-bottom:6px;font-weight:600}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer;background:var(--card)}\ninput[type=text]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%;max-width:200px;background:#fff;color:var(--ink)}\n.pic{background:#dfe6e3;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center}\n.pic img{width:100%;max-height:min(50vh,460px);object-fit:contain;display:block}\n.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}\n.t{color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}\n.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;flex:1;margin-left:12px;max-width:260px}.bar>i{display:block;height:100%;background:var(--accent)}\n.seg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}\n.seg label{display:block;cursor:pointer}\n.seg input{position:absolute;opacity:0;pointer-events:none}\n.seg span{display:flex;align-items:center;justify-content:center;height:38px;border:1px solid var(--line);border-radius:8px;font-weight:600;font-variant-numeric:tabular-nums}\n.seg input:checked+span{background:var(--accent);border-color:var(--accent);color:#fff}\n.seg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}\n.anch{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:2px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:820px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs: Luo, Xie &amp; Furuya (2021), Land 10:1233, doi:10.3390/land10111233, Table 1 (CC BY 4.0). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='parkblue2021:', IDS=[];for(var i=1;i<=10;i++)IDS.push('image_'+(i<10?'0':'')+i);\n  var app=document.getElementById('app'), Q={}, files={}, ans={}, done={}, order=[], SPEC=null, ITEMS=[];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='visible';}}\n  function hideErr(){var e=app.querySelector('.err');if(e)e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function q(n){return Q[n]||{};}\n  function saveAll(l,b,cb){Promise.all(l.map(function(a){return SPSite.answer(a[0],a[1]);})).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}cb();});}\n  function page(html,btn,cb){\n    app.innerHTML=html+'<div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">'+esc(btn||'Continue')+'</button></div><div class=\"err\"></div>';\n    document.getElementById('go').onclick=cb;app.onchange=hideErr;\n  }\n  function next(){\n    window.scrollTo(0,0);\n    if(!ans.intro)return intro();\n    for(var i=0;i<order.length;i++){if(!done[order[i]])return image(i);}\n    if(!ans.about)return about();\n    finish();\n  }\n  function intro(){\n    if(IDS.some(function(k){return !files[k+'.jpg'];})){app.innerHTML='<h1>Pictures missing</h1><p>Media folder blue must hold image_01.jpg … image_10.jpg.</p>';return;}\n    page('<h1>Water spaces in an urban park</h1><p>You will see ten photographs of creeks, channels and ponds in an urban park, one at a time. For each, imagine that you are in the scene and say how much you agree with seven statements, from 1 (totally disagree) to 7 (totally agree). Take your time with each picture; about a minute each is enough. You can change an answer before moving on. Your answers are anonymous.</p>'+\n      '<div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(q('consent').title)+'</label></div>','Start',function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var b=this;b.disabled=true;saveAll([['consent',true]],b,function(){ans.intro=true;save('a',ans);next();});\n    });\n  }\n  function image(i){\n    var k=order[i], f=files[k+'.jpg'], n=0;order.forEach(function(x){if(done[x])n++;});\n    var rows=ITEMS.map(function(it){return '<div class=\"q\"><b>'+esc(it.text)+'</b><div class=\"seg\" role=\"radiogroup\" aria-label=\"'+esc(it.text)+'\">'+[1,2,3,4,5,6,7].map(function(v){return '<label><input type=\"radio\" name=\"'+it.id+'\" value=\"'+v+'\"><span>'+v+'</span></label>';}).join('')+'</div><div class=\"anch\"><span>Totally disagree</span><span>Totally agree</span></div></div>';}).join('');\n    page('<div class=\"top\"><span class=\"t\">Picture '+(n+1)+' of 10</span><div class=\"bar\"><i style=\"width:'+(n*10)+'%\"></i></div></div>'+\n      '<div class=\"card\"><div class=\"pic\"><img alt=\"Blue space in an urban park\" src=\"'+esc(f.url)+'\"></div><p style=\"margin-top:12px;color:var(--ink);font-weight:600\">'+esc(q('blue_space_ratings').title)+'</p>'+rows+'</div>',n===9?'Continue':'Next picture',function(){\n      var v={};for(var j=0;j<ITEMS.length;j++){var x=app.querySelector('input[name=\"'+ITEMS[j].id+'\"]:checked');if(!x)return err('Please answer every statement.');v[ITEMS[j].id]=Number(x.value);}\n      var b=this;b.disabled=true;\n      SPSite.answer('blue_space_ratings',v,{key:k,shown:[f.name]}).then(function(r){if(!ok(r)){b.disabled=false;return err(r.error);}done[k]=true;next();});\n    });\n  }\n  function about(){\n    var ns=['age','gender','education','major','childhood_environment'];\n    var h=ns.map(function(n){var d=q(n);if(d.type!=='radiogroup')return '<div class=\"q\"><b>'+esc(d.title)+'</b><input type=\"text\" inputmode=\"numeric\" name=\"'+n+'\"></div>';\n      return '<div class=\"q\"><b>'+esc(d.title)+'</b>'+(d.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}).join('');\n    page('<h1>About you</h1><div class=\"card\">'+h+'</div>','Finish',function(){\n      var a=Number(app.querySelector('input[name=age]').value.trim());if(!a||a<10||a>110)return err('Please enter your age in years.');\n      var l=[['age',a]];for(var i=1;i<ns.length;i++){var x=app.querySelector('input[name=\"'+ns[i]+'\"]:checked');if(!x)return err('Please answer: '+q(ns[i]).title);l.push([ns[i],Number(x.value)]);}\n      var b=this;b.disabled=true;saveAll(l,b,function(){ans.about=true;save('a',ans);next();});\n    });\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>All ten photographs were taken in Huanhuaxi Park in Chengdu, China. In the original study with 93 students, the large pond surrounded by bamboo and traditional buildings was liked most and rated the most restorative, while the narrow channel beside a nature trail was liked least. Water that looked clean and natural, and rich planting, went with higher scores.</p><p style=\"font-size:.82rem\">Photographs and questions: Luo, S., Xie, J., &amp; Furuya, K. (2021). Assessing the preference and restorative potential of urban park blue space. Land 10:1233, doi:10.3390/land10111233.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){if(x==='consent')ans.intro=false;else if(x==='blue_space_ratings')done={};else ans.about=false;});save('a',ans);next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    try{SPEC=JSON.parse(document.getElementById('sp-scheme').textContent).survey;}catch(e){SPEC={pages:[]};}\n    SPEC.pages.forEach(function(p){p.elements.forEach(function(e){var g=SPSite.getQuestion(e.name)||{};Q[e.name]={type:e.type,title:g.title||e.title,isRequired:e.isRequired,choices:(g.choices&&g.choices.length)?g.choices:e.choices};if(e.name==='blue_space_ratings')ITEMS=e.items;});});\n    (SPSite.getMedia('blue')||[]).forEach(function(f){files[f.name]=f;});\n    var o=load('order');if(!o||o.length!==10)o=shuffle(IDS);order=o;save('order',order);\n    var a=(ctx&&ctx.answers)||{};ans=load('a')||{};\n    ((a.blue_space_ratings&&a.blue_space_ratings.trials)||[]).forEach(function(t){if(t.key)done[t.key]=true;});\n    ans.intro=a.consent===true;ans.about=a.childhood_environment!=null;\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T12:58:14.316Z",
+   "mediaFolders": [
+    "blue"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T12:58:14.316Z"
+  },
+  "description": "Faithful replication of Luo, Xie & Furuya (2021), Land 10:1233: rate ten photographs of blue spaces (creeks, channels, ponds) in Huanhuaxi Park, Chengdu, on the short Perceived Restorativeness Scale, beauty and naturalness (1–7).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2021-luo-urban/blue/image_01__bbacb936-a01e-44ab-bde3-b923c643f35d.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-luo-urban/blue/image_01__bbacb936-a01e-44ab-bde3-b923c643f35d.jpg",
+   "name": "image_01.jpg",
+   "type": "image",
+   "folder": "blue",
+   "media_id": "templates/2021-luo-urban/blue/image_01__bbacb936-a01e-44ab-bde3-b923c643f35d.jpg",
+   "logicalFolder": "blue",
+   "original_bytes": 71478,
+   "uploaded_bytes": 71478,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-luo-urban/blue/image_02__13955419-dcba-449d-ad17-1fe942ab3194.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-luo-urban/blue/image_02__13955419-dcba-449d-ad17-1fe942ab3194.jpg",
+   "name": "image_02.jpg",
+   "type": "image",
+   "folder": "blue",
+   "media_id": "templates/2021-luo-urban/blue/image_02__13955419-dcba-449d-ad17-1fe942ab3194.jpg",
+   "logicalFolder": "blue",
+   "original_bytes": 80199,
+   "uploaded_bytes": 80199,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-luo-urban/blue/image_03__a16913e3-6701-4d8f-8edd-8742b052e258.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-luo-urban/blue/image_03__a16913e3-6701-4d8f-8edd-8742b052e258.jpg",
+   "name": "image_03.jpg",
+   "type": "image",
+   "folder": "blue",
+   "media_id": "templates/2021-luo-urban/blue/image_03__a16913e3-6701-4d8f-8edd-8742b052e258.jpg",
+   "logicalFolder": "blue",
+   "original_bytes": 69711,
+   "uploaded_bytes": 69711,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-luo-urban/blue/image_04__6fb8894c-bac1-4e7a-974f-f0bc55f8b818.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-luo-urban/blue/image_04__6fb8894c-bac1-4e7a-974f-f0bc55f8b818.jpg",
+   "name": "image_04.jpg",
+   "type": "image",
+   "folder": "blue",
+   "media_id": "templates/2021-luo-urban/blue/image_04__6fb8894c-bac1-4e7a-974f-f0bc55f8b818.jpg",
+   "logicalFolder": "blue",
+   "original_bytes": 99440,
+   "uploaded_bytes": 99440,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-luo-urban/blue/image_05__4e0bed1c-e65c-46bf-93fd-daa49a81f2d6.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-luo-urban/blue/image_05__4e0bed1c-e65c-46bf-93fd-daa49a81f2d6.jpg",
+   "name": "image_05.jpg",
+   "type": "image",
+   "folder": "blue",
+   "media_id": "templates/2021-luo-urban/blue/image_05__4e0bed1c-e65c-46bf-93fd-daa49a81f2d6.jpg",
+   "logicalFolder": "blue",
+   "original_bytes": 88530,
+   "uploaded_bytes": 88530,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-luo-urban/blue/image_06__cf8f7ee5-88c2-43c7-871f-2635b27fc348.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-luo-urban/blue/image_06__cf8f7ee5-88c2-43c7-871f-2635b27fc348.jpg",
+   "name": "image_06.jpg",
+   "type": "image",
+   "folder": "blue",
+   "media_id": "templates/2021-luo-urban/blue/image_06__cf8f7ee5-88c2-43c7-871f-2635b27fc348.jpg",
+   "logicalFolder": "blue",
+   "original_bytes": 74950,
+   "uploaded_bytes": 74950,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-luo-urban/blue/image_07__527d42a9-8932-4544-b34c-b4a024e21a78.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-luo-urban/blue/image_07__527d42a9-8932-4544-b34c-b4a024e21a78.jpg",
+   "name": "image_07.jpg",
+   "type": "image",
+   "folder": "blue",
+   "media_id": "templates/2021-luo-urban/blue/image_07__527d42a9-8932-4544-b34c-b4a024e21a78.jpg",
+   "logicalFolder": "blue",
+   "original_bytes": 49480,
+   "uploaded_bytes": 49480,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-luo-urban/blue/image_08__5fa9a6b6-0626-46cd-bccc-c9483a8adf20.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-luo-urban/blue/image_08__5fa9a6b6-0626-46cd-bccc-c9483a8adf20.jpg",
+   "name": "image_08.jpg",
+   "type": "image",
+   "folder": "blue",
+   "media_id": "templates/2021-luo-urban/blue/image_08__5fa9a6b6-0626-46cd-bccc-c9483a8adf20.jpg",
+   "logicalFolder": "blue",
+   "original_bytes": 52431,
+   "uploaded_bytes": 52431,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-luo-urban/blue/image_09__fe745fdc-0327-476f-b3a9-a6504ae7b487.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-luo-urban/blue/image_09__fe745fdc-0327-476f-b3a9-a6504ae7b487.jpg",
+   "name": "image_09.jpg",
+   "type": "image",
+   "folder": "blue",
+   "media_id": "templates/2021-luo-urban/blue/image_09__fe745fdc-0327-476f-b3a9-a6504ae7b487.jpg",
+   "logicalFolder": "blue",
+   "original_bytes": 53379,
+   "uploaded_bytes": 53379,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-luo-urban/blue/image_10__a695ae90-76f4-4160-82f2-32c770aa32ed.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-luo-urban/blue/image_10__a695ae90-76f4-4160-82f2-32c770aa32ed.jpg",
+   "name": "image_10.jpg",
+   "type": "image",
+   "folder": "blue",
+   "media_id": "templates/2021-luo-urban/blue/image_10__a695ae90-76f4-4160-82f2-32c770aa32ed.jpg",
+   "logicalFolder": "blue",
+   "original_bytes": 65464,
+   "uploaded_bytes": 65464,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Assessing the Preference and Restorative Potential of Urban Park Blue Space",
+  "authors": [
+   "Shixian Luo",
+   "Jing Xie",
+   "Katsunori Furuya"
+  ],
+  "year": 2021,
+  "venue": "Land",
+  "doi": "10.3390/land10111233",
+  "url": "https://doi.org/10.3390/land10111233"
+ }
+}
