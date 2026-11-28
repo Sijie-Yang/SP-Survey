@@ -35,6 +35,7 @@ This list grows by contributions. If you ran an image-based perception study, pu
 
 - **With a pull request:** copy [`contributions/_template/`](./contributions/_template) to `contributions/<year>-<first-author>-<keyword>/`, fill in `study.md`, add your survey materials and images, and open the PR.
 - **Without git:** open an [Add a study](https://github.com/Sijie-Yang/SP-Survey/issues/new?template=add-study.yml) issue and drag your files in.
+- **Without a GitHub account:** fill in the [Add a template](https://sp-survey.org/add-template) form on sp-survey.org. It asks for the paper's title, authors and link, and takes your images and other files.
 
 We build the template from your materials, publish it at [sp-survey.org/templates](https://sp-survey.org/templates), and add the row here with your name on it. What to send is described in [contributions/README.md](./contributions/README.md).
 
