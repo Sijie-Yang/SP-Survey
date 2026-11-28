@@ -29,9 +29,9 @@ SP-Survey is an open-source tool for studies where people look at streets, build
 
 <div align="center">
 <br>
-<a href="https://ual.sg"><picture><source media="(prefers-color-scheme: dark)" srcset="./docs/ual-logo-dark.png"><img src="./docs/ual-logo.png" alt="Urban Analytics Lab" height="72"></picture></a>
+<picture><source media="(prefers-color-scheme: dark)" srcset="./docs/logos-dark.png"><img src="./docs/logos.png" alt="Urban Analytics Lab and National University of Singapore" height="104"></picture>
 <br>
-<sub>Developed at the <a href="https://ual.sg">Urban Analytics Lab</a>, National University of Singapore</sub>
+<sub>Developed at the <a href="https://ual.sg">Urban Analytics Lab</a>, <a href="https://nus.edu.sg">National University of Singapore</a></sub>
 </div>
 
 ## Add your study
