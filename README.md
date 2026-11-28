@@ -2,11 +2,13 @@
 
 # SP-Survey
 
-**Run image-based perception surveys. Start from 230+ published studies, or describe yours and let an AI write it.**
+### Platform & Template Library for Urban Visual Surveys
+
+**Run image-based perception surveys. Start from 300+ published studies, or describe yours and let an AI write it.**
 
 [![Stars](https://img.shields.io/github/stars/Sijie-Yang/SP-Survey?style=social)](https://github.com/Sijie-Yang/SP-Survey)
 [![Website](https://img.shields.io/badge/🌐-sp--survey.org-blue)](https://sp-survey.org)
-[![Templates](https://img.shields.io/badge/paper_templates-230+-8A2BE2)](./TEMPLATES.md)
+[![Templates](https://img.shields.io/badge/paper_templates-300+-8A2BE2)](./TEMPLATES.md)
 [![Paper](https://img.shields.io/badge/📄-Paper-9cf)](https://www.sciencedirect.com/science/article/pii/S0360132325000514)
 [![License](https://img.shields.io/badge/License-CC_BY_4.0-green)](https://creativecommons.org/licenses/by/4.0/)
 
@@ -18,7 +20,7 @@
 
 SP-Survey is an open-source tool for studies where people look at streets, buildings, landscapes or interiors (images, video or audio) and say what they perceive: safer, greener, more beautiful, more comfortable.
 
-- **Start from a published study.** Place Pulse, Streetscore, Scenic-Or-Not, Kaplan's restoration scale and 230+ more are rebuilt as surveys you can rerun or adapt.
+- **Start from a published study.** Place Pulse, Streetscore, Scenic-Or-Not, Kaplan's restoration scale and 300+ more are rebuilt as surveys you can rerun or adapt.
 - **Or describe your study.** In Studio you write one paragraph and the AI writes the whole participant page. A page is saved only when it passes the SP-Scheme check, so responses are always recorded in a form the platform can analyse.
 - **Keep your data.** No login. Projects are local files, responses and media go to your own Supabase, and you deploy the participant site yourself.
 
@@ -27,10 +29,10 @@ If this saves you time, a ⭐ helps other researchers find it.
 ## Template library
 
 <!-- templates:start (written by scripts/build-template-catalog.mjs) -->
-**232 published perception studies** are rebuilt as ready-to-run surveys, from 1876 to 2027, across 41 countries and regions.
+**315 published perception studies** are rebuilt as ready-to-run surveys, from 1876 to 2027, across 47 countries and regions.
 
-- **Stimuli:** Scene photos 101 · Street view 81 · Rendered 29 · Indoor 14 · Panorama 12 · Video 8 · Audio 8
-- **Tasks:** Multi-scale rating 105 · Rating 70 · Questionnaire 69 · Pairwise 40 · Custom page 33 · Choose / rank 23
+- **Stimuli:** Scene photos 154 · Street view 83 · Rendered 58 · Indoor 14 · Panorama 13 · Video 9 · Audio 8
+- **Tasks:** Multi-scale rating 146 · Questionnaire 115 · Rating 97 · Pairwise 46 · Choose / rank 41 · Custom page 37
 
 | Study | Paper | Task |
 |---|---|---|
@@ -45,10 +47,20 @@ If this saves you time, a ⭐ helps other researchers find it.
 | Scenic Beauty Estimation (SBE) – Arizona ponderosa pine forests | [Terry C. Daniel et al. (1976)](https://www.fs.usda.gov/rm/pubs_rm/rm_rp167.pdf), *USDA Forest Service Research Paper RM-167* | Rating |
 | Golden section rectangles – which shape pleases most? | [Gustav Theodor Fechner (1876)](https://archive.org/details/vorschulederaest12fechuoft), *Leipzig: Breitkopf & Härtel (book)* | Choose / rank, Custom page |
 
-**[See all 232 in TEMPLATES.md](./TEMPLATES.md)** · [browse and preview them online](https://sp-survey.org/templates)
+**[See all 315 in TEMPLATES.md](./TEMPLATES.md)** · [browse and preview them online](https://sp-survey.org/templates)
 <!-- templates:end -->
 
-Published a perception study? [Request a template for your paper](https://sp-survey.org/request-template).
+### Add your study to the library
+
+Anyone can submit a template. Every submission is reviewed before it appears in the public library, and the paper is credited on the template.
+
+| You have | Do this |
+|---|---|
+| A published paper | Fill in the [request form](https://sp-survey.org/request-template) with the paper, and the images if you can share them. No account needed. We build the template. |
+| A survey you built | On [sp-survey.org](https://sp-survey.org), open the project and choose **Save as Template** in the project menu. |
+| An AI assistant (Claude, Codex, Cursor) | Connect it to SP-Survey ([how](https://sp-survey.org/docs/connect-ai)) and ask it to build the survey from your paper and submit it as a template. |
+
+Something wrong in a template of your paper? [Open an issue](https://github.com/Sijie-Yang/SP-Survey/issues) and we will fix it or take it down.
 
 ## Quick start
 

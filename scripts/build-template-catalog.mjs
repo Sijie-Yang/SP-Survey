@@ -32,8 +32,9 @@ function countBy(list, key, map) {
   return [...counts.entries()].sort((a, b) => b[1] - a[1]);
 }
 
-const papers = data.templates.filter((tpl) => tpl.paper).sort((a, b) => yearOf(b) - yearOf(a) || a.id.localeCompare(b.id));
-const others = data.templates.filter((tpl) => !tpl.paper);
+const isPaper = (tpl) => tpl.paper || tpl.source === 'paper';
+const papers = data.templates.filter(isPaper).sort((a, b) => yearOf(b) - yearOf(a) || a.id.localeCompare(b.id));
+const others = data.templates.filter((tpl) => !isPaper(tpl));
 const places = countBy(papers, 'location', LOCATION).filter(([label]) => !['Global', 'International', 'Europe'].includes(label));
 
 const lines = [
@@ -66,7 +67,7 @@ const lines = [
   '',
   '## Add your study',
   '',
-  'Published an image-based perception study? Request a template at [sp-survey.org/request-template](https://sp-survey.org/request-template).',
+  'See [Add your study to the library](./README.md#add-your-study-to-the-library) in the README: send the paper, submit a survey you built, or let your AI submit it. Every submission is reviewed before it is listed.',
   '',
 ];
 
@@ -96,5 +97,7 @@ const block = [
 const readmeUrl = new URL('../README.md', import.meta.url);
 const readme = readFileSync(readmeUrl, 'utf8');
 const marked = /<!-- templates:start[\s\S]*?<!-- templates:end -->/;
-if (marked.test(readme)) writeFileSync(readmeUrl, readme.replace(marked, () => block));
+// Round the headline number down to the nearest 50 ("300+") wherever the README uses it.
+const rounded = `${Math.floor(papers.length / 50) * 50}+`;
+if (marked.test(readme)) writeFileSync(readmeUrl, readme.replace(marked, () => block).replace(/\b\d{3}\+/g, rounded));
 console.log(`TEMPLATES.md: ${papers.length} paper templates, ${others.length} others`);
