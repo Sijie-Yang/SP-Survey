@@ -69,23 +69,30 @@ async function downloadMedia(template) {
   // Files that ship in this repository have a path, not a web address: nothing to fetch.
   const entries = (template.preloadedImages || []).filter((entry) => /^https?:\/\//.test(String(entry?.url || '')));
   let fetched = 0;
-  await pool(entries, 16, async (entry) => {
+  await pool(entries, 8, async (entry) => {
     const rel = mediaPath(template.id, entry);
     if (!rel || rel.includes('..')) return;
     const file = path.join(DIR, template.id, 'media', rel);
     const existing = await stat(file).catch(() => null);
     if (existing && (!entry.size || existing.size === entry.size)) return;
-    for (let attempt = 0; attempt < 3; attempt += 1) {
+    const TRIES = 6;
+    for (let attempt = 0; attempt < TRIES; attempt += 1) {
+      let wait = 1500 * (attempt + 1);
       try {
         const res = await fetch(entry.url, { headers: HEADERS });
+        if (res.status === 429) {
+          // The media host is asking us to slow down: wait as long as it says, or longer each time.
+          const asked = Number(res.headers.get('retry-after'));
+          wait = Math.min(60000, asked > 0 ? asked * 1000 : 10000 * (attempt + 1));
+        }
         if (!res.ok) throw new Error(String(res.status));
         await mkdir(path.dirname(file), { recursive: true });
         await writeFile(file, Buffer.from(await res.arrayBuffer()));
         fetched += 1;
         return;
       } catch (error) {
-        if (attempt === 2) { missed += 1; console.warn(`  media ${template.id}/${rel}: ${error.message}`); }
-        else await new Promise((resolve) => setTimeout(resolve, 1500 * (attempt + 1)));
+        if (attempt === TRIES - 1) { missed += 1; console.warn(`  media ${template.id}/${rel}: ${error.message}`); }
+        else await new Promise((resolve) => setTimeout(resolve, wait));
       }
     }
   });
