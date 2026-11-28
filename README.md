@@ -2,6 +2,8 @@
 
 <p><img src="./docs/cover.jpg" alt="SP-Survey: open-source platform and template library for visual assessment of urban environment. 319 published studies from 48 countries and regions, 17,169 images, 280 videos and 694 audio clips, with a world map of study locations" width="100%"></p>
 
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="./docs/logos-dark.png"><img src="./docs/logos.png" alt="National University of Singapore and Urban Analytics Lab" height="125"></picture></p>
+
 [**Template library**](#template-library) &nbsp;·&nbsp; [**Add your study**](#add-your-study) &nbsp;·&nbsp; [**Run it yourself**](#run-it-yourself) &nbsp;·&nbsp; [**Hosted platform**](https://sp-survey.org)
 
 [![Stars](https://img.shields.io/github/stars/Sijie-Yang/SP-Survey?style=flat-square&logo=github&label=stars&labelColor=0b1320&color=2f8cff)](https://github.com/Sijie-Yang/SP-Survey/stargazers)
