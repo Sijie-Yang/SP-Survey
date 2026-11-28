@@ -1,0 +1,565 @@
+{
+ "id": "2021-zhang-community",
+ "name": "Community Park Elements: View and Rank Preference",
+ "description": "Faithful replication with the paper's own stimuli: participants watch 35 photographs of landscape elements in Shanghai community parks (10 s each, 5 s black screen between), then rank the photos within each of nine element groups (amount of greenery, plant colour, waterscapes, fitness facilities, fitness trails, activity spaces, seats, pavilions and corridors, green corridors) from most to least liked. Answers are keyed by scene id, so mean ranks per scene can be compared with the paper's preference scores (Tables 8–16 of Zhang, Liu & Liu 2021, IJERPH 18(15): 7888; photos CC BY 4.0). Differences from the original study: (1) online instead of a quiet lab, with no heart-rate or skin-conductance recording and no 3-minute rest; (2) photos are the small versions printed in the paper's tables; (3) viewing order and group order are random per participant; (4) the paper only says participants \"prioritized the landscape scenes\", so ranking within each group by tapping is our implementation; (5) the separate park-user questionnaire (440 users) is not included; age and gender questions are added.",
+ "author": "Zhang, Liu & Liu",
+ "year": "2021",
+ "category": "Academic Research",
+ "tags": [
+  "faithful-replication",
+  "official",
+  "paper",
+  "ranking",
+  "community park",
+  "restoration",
+  "Shanghai",
+  "source:paper",
+  "modality:scene_photo",
+  "task:choose_from_set",
+  "task:custom_page",
+  "concept:restoration",
+  "concept:greenery",
+  "concept:preference",
+  "participants:lab",
+  "sample:lt100",
+  "country:China",
+  "city:Shanghai"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/ijerph18157888",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T09:53:11.805+00:00",
+ "updatedAt": "2026-11-27T09:53:24.242+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part in this study.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "max": 110,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "How old are you?",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "What is your gender?",
+      "choices": [
+       {
+        "text": "Woman",
+        "value": "woman"
+       },
+       {
+        "text": "Man",
+        "value": "man"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "ranking",
+    "elements": [
+     {
+      "name": "preference_rank",
+      "type": "rating",
+      "title": "Put these photos in order of how much you like the scenes.",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Keyed by scene id <group>_<n> (group numbering as in the paper's Tables 8-16): n1 amount of greenery (1 large lawn, 2 sparse forest, 3 dense forest); n2 plant colour (1 colourful flower cluster, 2 bright ground cover, 3 monotonous bushes); n4 waterscapes (5 scenes); e1 fitness facilities (1 plastic, 2 stone, 3 cement paving); e2 fitness trails (5); e4 activity spaces (4); r1 seats (5); r2 pavilions and corridors (1 modern pavilion, 2 new Chinese-style corridor, 3 Chinese pavilion, 4 new Chinese-style pavilion); r3 green corridors (1 plant-covered, 2 glass-topped, 3 undecorated). Value = rank within the group, 1 = liked most; shown = all photos of that group."
+     }
+    ]
+   }
+  ],
+  "title": "Community Park Landscape Elements: Viewing and Preference Ranking",
+  "locale": "en",
+  "spSite": {
+   "id": "site-697c4eb3270ad70f",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Community Park Elements</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Community Park Landscape Elements: Viewing and Preference Ranking\",\n  \"description\": \"Participants first watch 35 photographs of landscape elements in Shanghai community parks, each for 10 s with a 5 s black screen between photos (random order), then rank the photos within each of nine element groups (greenery amount, plant colour, waterscapes, fitness facilities, fitness trails, activity spaces, seats, pavilions and corridors, green corridors) by preference. Rebuilt from Zhang, Liu & Liu (2021), IJERPH 18(15): 7888, with the paper's own scene photographs from Tables 8-16 (CC BY 4.0). Scoring: per scene, mean rank within its group; the paper reports a preference score per scene (higher = more preferred), which appears to equal group size + 1 - mean rank.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"park\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part in this study.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"min\": 18,\n      \"max\": 110\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"What is your gender?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"woman\",\n        \"text\": \"Woman\"\n       },\n       {\n        \"value\": \"man\",\n        \"text\": \"Man\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"ranking\",\n    \"elements\": [\n     {\n      \"type\": \"rating\",\n      \"name\": \"preference_rank\",\n      \"title\": \"Put these photos in order of how much you like the scenes.\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"isRequired\": true,\n      \"description\": \"Keyed by scene id <group>_<n> (group numbering as in the paper's Tables 8-16): n1 amount of greenery (1 large lawn, 2 sparse forest, 3 dense forest); n2 plant colour (1 colourful flower cluster, 2 bright ground cover, 3 monotonous bushes); n4 waterscapes (5 scenes); e1 fitness facilities (1 plastic, 2 stone, 3 cement paving); e2 fitness trails (5); e4 activity spaces (4); r1 seats (5); r2 pavilions and corridors (1 modern pavilion, 2 new Chinese-style corridor, 3 Chinese pavilion, 4 new Chinese-style pavilion); r3 green corridors (1 plant-covered, 2 glass-topped, 3 undecorated). Value = rank within the group, 1 = liked most; shown = all photos of that group.\"\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"cpark-original\">{\"source\": \"Zhang, Liu & Liu (2021) International Journal of Environmental Research and Public Health 18(15): 7888\", \"n\": 50, \"participants\": \"healthy adults in a quiet lab; 3 min rest, then 35 scenes x 10 s with 5 s black screens while heart rate and skin conductance were recorded (ErgoLAB), then they prioritized the scenes\", \"preference_score\": {\"n1_1\": 2.52, \"n1_2\": 1.9, \"n1_3\": 1.54, \"n2_1\": 2.15, \"n2_2\": 2.04, \"n2_3\": 1.73, \"n4_1\": 3.52, \"n4_2\": 3.27, \"n4_3\": 3.44, \"n4_4\": 2.08, \"n4_5\": 2.67, \"e1_1\": 2.04, \"e1_2\": 2.1, \"e1_3\": 1.85, \"e2_1\": 3.71, \"e2_2\": 3.04, \"e2_3\": 3.08, \"e2_4\": 3.04, \"e2_5\": 2.08, \"e4_1\": 3.21, \"e4_2\": 2.75, \"e4_3\": 2.1, \"e4_4\": 1.94, \"r1_1\": 3.29, \"r1_2\": 2.9, \"r1_3\": 2.44, \"r1_4\": 2.83, \"r1_5\": 3.52, \"r2_1\": 2.5, \"r2_2\": 2.69, \"r2_3\": 2.63, \"r2_4\": 2.17, \"r3_1\": 2.31, \"r3_2\": 1.79, \"r3_3\": 1.88}, \"result\": \"Most preferred within groups: large lawn (n1_1), colourful flower cluster (n2_1), waterscape n4_1, stone fitness paving (e1_2), trail e2_1, activity space e4_1, seat r1_5, new Chinese-style corridor (r2_2), plant-covered green corridor (r3_1).\"}</script>\n<style>\n:root{--bg:#f2f5f1;--card:#fff;--ink:#1d241e;--muted:#5c685e;--accent:#2d6a4f;--line:#d7dfd8;--warn:#b3261e;--sel:#e3f0e8}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:820px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.5rem;margin:0 0 8px}h2{font-size:1.15rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:13px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn.sec{background:#fff;color:var(--ink);border:1px solid var(--line)}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.prog{font-size:.88rem;color:var(--muted);margin-bottom:8px}\n.view{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;z-index:5}\n.view img{width:min(94vw,560px);height:auto;display:block}\n.view .t{position:absolute;bottom:12px;left:0;right:0;text-align:center;color:#888;font-size:.85rem}\n.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}\n.tile{position:relative;border:2px solid var(--line);border-radius:10px;overflow:hidden;cursor:pointer;background:#fff;padding:0}\n.tile img{width:100%;display:block}\n.tile.on{border-color:var(--accent)}\n.tile .n{position:absolute;top:6px;left:6px;min-width:30px;height:30px;border-radius:15px;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.f{margin-top:16px}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:110px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:820px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs: Zhang, Liu &amp; Liu (2021), International Journal of Environmental Research and Public Health 18(15): 7888, Tables 8–16 (doi:10.3390/ijerph18157888, CC BY 4.0).</footer>\n<script>\n(function(){\n  var KEY='cpark-elements:state', T=window.__VIEWMS?{view:window.__VIEWMS,black:window.__VIEWMS}:{view:10000,black:5000};\n  var GROUPS=[['n1','Amount of greenery'],['n2','Plant colour'],['n4','Waterscapes'],['e1','Fitness facilities'],['e2','Fitness trails'],['e4','Activity spaces'],['r1','Seats'],['r2','Pavilions and corridors'],['r3','Green corridors']];\n  var app=document.getElementById('app'), Q={}, files={}, ids=[], st=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function send(list,b,next){if(b)b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}next();});}\n  function val(name){var x=app.querySelector('input[name=\"'+name+'\"]:checked');return x?x.value:null;}\n  function members(g){return ids.filter(function(id){return id.indexOf(g+'_')===0;}).sort();}\n  function intro(){\n    app.innerHTML='<h1>Community park scenes</h1><p>First you will watch '+st.view.length+' photographs of community parks in Shanghai, each for 10 seconds with a short black screen in between (about 9 minutes). Just look and imagine being there. Then you will see the photos again in small groups and put each group in order of how much you like the scenes.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');send([SPSite.answer('consent',true)],this,function(){st.step='about';save();route();});};\n  }\n  function about(){\n    app.innerHTML='<h2>About you</h2><div class=\"card\"><div class=\"f\" style=\"margin-top:0\"><b>'+esc(Q.age.title)+'</b><br><input type=\"number\" id=\"age\" min=\"18\" max=\"110\"></div><div class=\"f\"><b>'+esc(Q.gender.title)+'</b>'+Q.gender.choices.map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"gender\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var age=Number(document.getElementById('age').value),g=val('gender');\n      if(!(age>=18&&age<=110))return err('Please enter your age.');if(!g)return err('Please choose an option.');\n      send([SPSite.answer('age',age),SPSite.answer('gender',g)],this,function(){st.step='ready';save();route();});\n    };\n  }\n  function ready(){\n    app.innerHTML='<h2>Watching the photos</h2><div class=\"card\"><p style=\"color:var(--ink)\">Sit comfortably. The photos will now play by themselves, 10 seconds each. You do not need to press anything.</p><button class=\"btn\" id=\"go\">Begin</button></div>';\n    document.getElementById('go').onclick=function(){st.step='watch';st.k=0;save();route();};\n  }\n  function watch(){\n    var v=document.createElement('div');v.className='view';app.innerHTML='';app.appendChild(v);\n    function show(){\n      if(st.k>=st.view.length){st.step='rank';st.g=0;save();return route();}\n      var id=st.view[st.k],im=new Image();im.src=files[id].url;im.alt='Park photograph';\n      v.innerHTML='';v.appendChild(im);var t=document.createElement('div');t.className='t';t.textContent=(st.k+1)+' / '+st.view.length;v.appendChild(t);\n      setTimeout(function(){v.innerHTML='';st.k++;save();setTimeout(show,T.black);},T.view);\n    }\n    show();\n  }\n  function rank(){\n    var g=GROUPS[st.groups[st.g]],m=st.tiles[g[0]],order=[];\n    app.innerHTML='<div class=\"prog\">Group '+(st.g+1)+' of '+st.groups.length+': '+esc(g[1])+'</div><div class=\"card\"><p style=\"color:var(--ink)\">'+esc(Q.preference_rank.title)+' Tap the photos in order, starting with the one you like most. Tap again to undo.</p><div class=\"grid\">'+m.map(function(id){return '<button type=\"button\" class=\"tile\" data-id=\"'+id+'\"><img alt=\"Park scene\" src=\"'+esc(files[id].url)+'\"></button>';}).join('')+'</div><div style=\"margin-top:16px;display:flex;gap:8px\"><button class=\"btn\" id=\"go\" disabled>Next</button><button class=\"btn sec\" id=\"clr\">Start over</button></div><div class=\"err\"></div></div>';\n    var go=document.getElementById('go');\n    function paint(){app.querySelectorAll('.tile').forEach(function(t){var i=order.indexOf(t.dataset.id),n=t.querySelector('.n');t.classList.toggle('on',i>=0);if(n)n.remove();if(i>=0){var b=document.createElement('span');b.className='n';b.textContent=i+1;t.appendChild(b);}});go.disabled=order.length<m.length;}\n    app.querySelectorAll('.tile').forEach(function(t){t.onclick=function(){var id=t.dataset.id,i=order.indexOf(id);if(i>=0)order.splice(i,1);else order.push(id);paint();};});\n    document.getElementById('clr').onclick=function(){order=[];paint();};\n    go.onclick=function(){\n      var sh=m.map(function(id){return files[id].name;});\n      send(order.map(function(id,i){return SPSite.answer('preference_rank',i+1,{key:id,shown:sh});}),this,function(){st.g++;if(st.g>=st.groups.length)st.step='done';save();route();});\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st.step='intro';save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  function route(){var s=st.step;window.scrollTo(0,0);if(s==='about')return about();if(s==='ready')return ready();if(s==='watch')return watch();if(s==='rank')return rank();if(s==='done')return finish();intro();}\n  SPSite.onReady(function(ctx){\n    ['consent','age','gender','preference_rank'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('park')||[]).forEach(function(f){if(/\\.(png|jpe?g|webp)$/i.test(f.name)){var k=f.name.replace(/\\.[^.]+$/,'');files[k]=f;ids.push(k);}});\n    if(ids.length<2){app.innerHTML='<h1>Photos missing</h1><p>Upload the photographs to the media folder \"park\".</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    var valid=st&&st.view&&st.view.length===ids.length&&st.view.every(function(x){return files[x];});\n    if(!valid){var gi=[],tiles={};GROUPS.forEach(function(g,i){var m=members(g[0]);if(m.length>1){gi.push(i);tiles[g[0]]=shuffle(m);}});\n      st={step:'intro',view:shuffle(ids),k:0,groups:shuffle(gi),tiles:tiles,g:0};}\n    var a=(ctx&&ctx.answers)||{};if(a.consent!==true){st.step='intro';st.k=0;st.g=0;}\n    if(st.step==='watch')st.step='ready';\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T09:52:38.649Z",
+   "mediaFolders": [
+    "park"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T09:52:38.649Z"
+  },
+  "description": "Participants first watch 35 photographs of landscape elements in Shanghai community parks, each for 10 s with a 5 s black screen between photos (random order), then rank the photos within each of nine element groups (greenery amount, plant colour, waterscapes, fitness facilities, fitness trails, activity spaces, seats, pavilions and corridors, green corridors) by preference. Rebuilt from Zhang, Liu & Liu (2021), IJERPH 18(15): 7888, with the paper's own scene photographs from Tables 8-16 (CC BY 4.0). Scoring: per scene, mean rank within its group; the paper reports a preference score per scene (higher = more preferred), which appears to equal group size + 1 - mean rank.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2021-zhang-community/park/e1_1__789fa6d5-4b96-48e5-873d-cc0d5a21979a.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/e1_1__789fa6d5-4b96-48e5-873d-cc0d5a21979a.jpg",
+   "name": "e1_1.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/e1_1__789fa6d5-4b96-48e5-873d-cc0d5a21979a.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 14134,
+   "uploaded_bytes": 14134,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/e1_2__355dd5bb-4b55-4de9-895d-bc119665641b.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/e1_2__355dd5bb-4b55-4de9-895d-bc119665641b.jpg",
+   "name": "e1_2.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/e1_2__355dd5bb-4b55-4de9-895d-bc119665641b.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 13816,
+   "uploaded_bytes": 13816,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/e1_3__3779d381-ba21-4667-96d1-962416e51db7.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/e1_3__3779d381-ba21-4667-96d1-962416e51db7.jpg",
+   "name": "e1_3.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/e1_3__3779d381-ba21-4667-96d1-962416e51db7.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 12217,
+   "uploaded_bytes": 12217,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/e2_1__215cea87-b353-4746-98ea-a0d75355630e.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/e2_1__215cea87-b353-4746-98ea-a0d75355630e.jpg",
+   "name": "e2_1.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/e2_1__215cea87-b353-4746-98ea-a0d75355630e.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 14995,
+   "uploaded_bytes": 14995,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/e2_2__634ada59-f696-45fa-897e-b69364de1cc5.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/e2_2__634ada59-f696-45fa-897e-b69364de1cc5.jpg",
+   "name": "e2_2.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/e2_2__634ada59-f696-45fa-897e-b69364de1cc5.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 13151,
+   "uploaded_bytes": 13151,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/e2_3__52f3132c-4219-49df-b58f-86f15817b519.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/e2_3__52f3132c-4219-49df-b58f-86f15817b519.jpg",
+   "name": "e2_3.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/e2_3__52f3132c-4219-49df-b58f-86f15817b519.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 12977,
+   "uploaded_bytes": 12977,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/e2_4__55fb1608-8aec-468c-bd72-39a6e3958884.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/e2_4__55fb1608-8aec-468c-bd72-39a6e3958884.jpg",
+   "name": "e2_4.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/e2_4__55fb1608-8aec-468c-bd72-39a6e3958884.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 12092,
+   "uploaded_bytes": 12092,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/e2_5__dad505a3-ed83-4e78-a46d-fe8df58a524a.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/e2_5__dad505a3-ed83-4e78-a46d-fe8df58a524a.jpg",
+   "name": "e2_5.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/e2_5__dad505a3-ed83-4e78-a46d-fe8df58a524a.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 12446,
+   "uploaded_bytes": 12446,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/e4_1__c484ee9b-37ae-4fe7-bc11-be5cd94506d8.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/e4_1__c484ee9b-37ae-4fe7-bc11-be5cd94506d8.jpg",
+   "name": "e4_1.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/e4_1__c484ee9b-37ae-4fe7-bc11-be5cd94506d8.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 12787,
+   "uploaded_bytes": 12787,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/e4_2__bd874773-a873-4684-ab24-bb5511a011dd.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/e4_2__bd874773-a873-4684-ab24-bb5511a011dd.jpg",
+   "name": "e4_2.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/e4_2__bd874773-a873-4684-ab24-bb5511a011dd.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 13686,
+   "uploaded_bytes": 13686,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/e4_3__ba39d42b-92b1-471d-b35d-c21decfde438.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/e4_3__ba39d42b-92b1-471d-b35d-c21decfde438.jpg",
+   "name": "e4_3.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/e4_3__ba39d42b-92b1-471d-b35d-c21decfde438.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 14237,
+   "uploaded_bytes": 14237,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/e4_4__63965c71-ed29-43b3-b647-0d7e3a37d55b.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/e4_4__63965c71-ed29-43b3-b647-0d7e3a37d55b.jpg",
+   "name": "e4_4.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/e4_4__63965c71-ed29-43b3-b647-0d7e3a37d55b.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 12531,
+   "uploaded_bytes": 12531,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/n1_1__df2858a5-a27f-4f9f-9884-59c956d4b408.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/n1_1__df2858a5-a27f-4f9f-9884-59c956d4b408.jpg",
+   "name": "n1_1.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/n1_1__df2858a5-a27f-4f9f-9884-59c956d4b408.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 12753,
+   "uploaded_bytes": 12753,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/n1_2__297a6ba0-8118-4429-b0c3-1414a3a289ca.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/n1_2__297a6ba0-8118-4429-b0c3-1414a3a289ca.jpg",
+   "name": "n1_2.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/n1_2__297a6ba0-8118-4429-b0c3-1414a3a289ca.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 12949,
+   "uploaded_bytes": 12949,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/n1_3__5881293e-e984-4bcf-9059-f187e86bac8f.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/n1_3__5881293e-e984-4bcf-9059-f187e86bac8f.jpg",
+   "name": "n1_3.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/n1_3__5881293e-e984-4bcf-9059-f187e86bac8f.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 15223,
+   "uploaded_bytes": 15223,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/n2_1__34ea1986-6427-47c0-bc4b-2eb9f5ec996d.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/n2_1__34ea1986-6427-47c0-bc4b-2eb9f5ec996d.jpg",
+   "name": "n2_1.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/n2_1__34ea1986-6427-47c0-bc4b-2eb9f5ec996d.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 16554,
+   "uploaded_bytes": 16554,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/n2_2__9de6e278-1348-429a-9173-54db2d82eccc.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/n2_2__9de6e278-1348-429a-9173-54db2d82eccc.jpg",
+   "name": "n2_2.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/n2_2__9de6e278-1348-429a-9173-54db2d82eccc.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 16218,
+   "uploaded_bytes": 16218,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/n2_3__ea54695b-f123-4b58-a615-8fc5a7901bf1.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/n2_3__ea54695b-f123-4b58-a615-8fc5a7901bf1.jpg",
+   "name": "n2_3.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/n2_3__ea54695b-f123-4b58-a615-8fc5a7901bf1.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 15053,
+   "uploaded_bytes": 15053,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/n4_1__1541d9d2-18fc-4f5e-beba-1c0d873f2979.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/n4_1__1541d9d2-18fc-4f5e-beba-1c0d873f2979.jpg",
+   "name": "n4_1.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/n4_1__1541d9d2-18fc-4f5e-beba-1c0d873f2979.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 14890,
+   "uploaded_bytes": 14890,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/n4_2__85f8b1c1-9ded-4ec2-b717-f8f728090ef0.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/n4_2__85f8b1c1-9ded-4ec2-b717-f8f728090ef0.jpg",
+   "name": "n4_2.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/n4_2__85f8b1c1-9ded-4ec2-b717-f8f728090ef0.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 13859,
+   "uploaded_bytes": 13859,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/n4_3__bf8d4545-16f3-4c90-938c-3b7019a51e81.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/n4_3__bf8d4545-16f3-4c90-938c-3b7019a51e81.jpg",
+   "name": "n4_3.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/n4_3__bf8d4545-16f3-4c90-938c-3b7019a51e81.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 11225,
+   "uploaded_bytes": 11225,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/n4_4__8dff2755-f8fe-46d6-8dab-35dcb4a5da3b.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/n4_4__8dff2755-f8fe-46d6-8dab-35dcb4a5da3b.jpg",
+   "name": "n4_4.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/n4_4__8dff2755-f8fe-46d6-8dab-35dcb4a5da3b.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 10995,
+   "uploaded_bytes": 10995,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/n4_5__e86d8077-b4d3-4518-8904-a809bb958777.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/n4_5__e86d8077-b4d3-4518-8904-a809bb958777.jpg",
+   "name": "n4_5.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/n4_5__e86d8077-b4d3-4518-8904-a809bb958777.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 12515,
+   "uploaded_bytes": 12515,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/r1_1__70d1c67b-aa60-4972-9955-5a96780c4983.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/r1_1__70d1c67b-aa60-4972-9955-5a96780c4983.jpg",
+   "name": "r1_1.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/r1_1__70d1c67b-aa60-4972-9955-5a96780c4983.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 14159,
+   "uploaded_bytes": 14159,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/r1_2__de3e7b73-e421-4797-8a9d-e633b7419742.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/r1_2__de3e7b73-e421-4797-8a9d-e633b7419742.jpg",
+   "name": "r1_2.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/r1_2__de3e7b73-e421-4797-8a9d-e633b7419742.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 14036,
+   "uploaded_bytes": 14036,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/r1_3__fd50c913-c751-40c4-b2ed-7c4526816263.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/r1_3__fd50c913-c751-40c4-b2ed-7c4526816263.jpg",
+   "name": "r1_3.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/r1_3__fd50c913-c751-40c4-b2ed-7c4526816263.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 12835,
+   "uploaded_bytes": 12835,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/r1_4__2499d79a-fdd2-44e2-8099-b9be9e5a2564.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/r1_4__2499d79a-fdd2-44e2-8099-b9be9e5a2564.jpg",
+   "name": "r1_4.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/r1_4__2499d79a-fdd2-44e2-8099-b9be9e5a2564.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 14235,
+   "uploaded_bytes": 14235,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/r1_5__27b5a0df-ddd5-4082-a6ef-cdeb353b2229.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/r1_5__27b5a0df-ddd5-4082-a6ef-cdeb353b2229.jpg",
+   "name": "r1_5.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/r1_5__27b5a0df-ddd5-4082-a6ef-cdeb353b2229.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 12316,
+   "uploaded_bytes": 12316,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/r2_1__67f1861d-3ec0-475e-9873-df2d92a644b5.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/r2_1__67f1861d-3ec0-475e-9873-df2d92a644b5.jpg",
+   "name": "r2_1.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/r2_1__67f1861d-3ec0-475e-9873-df2d92a644b5.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 12799,
+   "uploaded_bytes": 12799,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/r2_2__e2e9b142-4f30-4e08-a953-b622e1922e46.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/r2_2__e2e9b142-4f30-4e08-a953-b622e1922e46.jpg",
+   "name": "r2_2.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/r2_2__e2e9b142-4f30-4e08-a953-b622e1922e46.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 14005,
+   "uploaded_bytes": 14005,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/r2_3__d42d39ac-8243-4c87-a0a6-f68228caa9f9.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/r2_3__d42d39ac-8243-4c87-a0a6-f68228caa9f9.jpg",
+   "name": "r2_3.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/r2_3__d42d39ac-8243-4c87-a0a6-f68228caa9f9.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 14094,
+   "uploaded_bytes": 14094,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/r2_4__ec891e61-6be5-4800-86b6-9f13321cbfe7.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/r2_4__ec891e61-6be5-4800-86b6-9f13321cbfe7.jpg",
+   "name": "r2_4.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/r2_4__ec891e61-6be5-4800-86b6-9f13321cbfe7.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 13970,
+   "uploaded_bytes": 13970,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/r3_1__16053bd4-fe62-4c49-b96a-e16da194bc2b.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/r3_1__16053bd4-fe62-4c49-b96a-e16da194bc2b.jpg",
+   "name": "r3_1.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/r3_1__16053bd4-fe62-4c49-b96a-e16da194bc2b.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 17149,
+   "uploaded_bytes": 17149,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/r3_2__53bbd58d-25fe-4838-aea5-e35a70feaf3c.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/r3_2__53bbd58d-25fe-4838-aea5-e35a70feaf3c.jpg",
+   "name": "r3_2.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/r3_2__53bbd58d-25fe-4838-aea5-e35a70feaf3c.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 17046,
+   "uploaded_bytes": 17046,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-zhang-community/park/r3_3__5b50692c-a68a-4965-9964-097c4cb1741c.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-zhang-community/park/r3_3__5b50692c-a68a-4965-9964-097c4cb1741c.jpg",
+   "name": "r3_3.jpg",
+   "type": "image",
+   "folder": "park",
+   "media_id": "templates/2021-zhang-community/park/r3_3__5b50692c-a68a-4965-9964-097c4cb1741c.jpg",
+   "logicalFolder": "park",
+   "original_bytes": 17005,
+   "uploaded_bytes": 17005,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Mechanisms Underlying the Effects of Landscape Features of Urban Community Parks on Health-Related Feelings of Users",
+  "authors": [
+   "Lin Zhang",
+   "Suyan Liu",
+   "Song Liu"
+  ],
+  "year": 2021,
+  "venue": "International Journal of Environmental Research and Public Health",
+  "doi": "10.3390/ijerph18157888",
+  "url": "https://doi.org/10.3390/ijerph18157888"
+ }
+}

@@ -1,0 +1,609 @@
+{
+ "id": "2023-pollmanns-political",
+ "name": "Political Graffiti and Neighborhood Ratings",
+ "description": "Faithful replication of Study 1 of Pollmanns, C., & Asbrock, F. (2023). \"If graffiti changed anything, it would be illegal.\" The influence of political graffiti on the perception of neighborhoods and intergroup attitudes. Frontiers in Psychology, 14, 1098105. https://doi.org/10.3389/fpsyg.2023.1098105\n\nContent note: some photos show right-wing extremist graffiti (slogans and symbols). It is shown for research only and is not endorsed.\n\nWhat participants do: participants are randomly assigned to one of three picture sets. After a neutral practice picture, they see nine photos of residential streets in a fixed order, each for 10 seconds. Each street carries right-wing graffiti, left-wing graffiti or no graffiti, so every participant sees three of each, and each street × version is seen by a third of the sample. After each photo they rate the neighborhood next to a thumbnail: three social-cohesion items (1–7), cold–warm, orderly–disorderly and safe–unsafe (11-point) and the residents' political orientation (11-point manipulation check). They then give their age, gender, their own political orientation (1–7) and answer an accuracy item.\n\nOriginal finding (Study 1, N = 199, German Prolific sample): participants rated a neighborhood's social cohesion higher when its graffiti matched their own political orientation and lower when it was counter-attitudinal. Analysis per street: Helmert-coded version (neutral vs. political; left vs. right) × political orientation (z) regression; the authors combined the six items into one cohesion factor (EFA).\n\nStimuli: the authors' own photographs and graffiti edits from OSF (https://osf.io/2cmwr/), used with credit to the authors. This template is removed if the authors object.\n\nDifferences from the original study: (1) English wording instead of the German original; instructions are paraphrased. (2) The control and accuracy items are simplified to one accuracy question. (3) A content warning on the first page and a debrief at the end were added. (4) Only Study 1 is replicated (Study 2 scale development and Study 3 dose-response are not included).",
+ "author": "Pollmanns & Asbrock",
+ "year": "2023",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "graffiti",
+  "social cohesion",
+  "street photos",
+  "political orientation",
+  "source:paper",
+  "modality:street_view",
+  "modality:scene_photo",
+  "task:multi_rating",
+  "task:rating",
+  "concept:safety",
+  "concept:emotion",
+  "concept:preference",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:Germany"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": false,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3389/fpsyg.2023.1098105",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T09:37:36.414+00:00",
+ "updatedAt": "2026-11-27T09:37:45.402+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "pictures",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I have read the information above and agree to take part.",
+      "labelTrue": "Yes",
+      "isRequired": true,
+      "labelFalse": "No"
+     },
+     {
+      "name": "condition",
+      "type": "custom",
+      "title": "Picture set",
+      "isRequired": true,
+      "description": "{ condition: 1 | 2 | 3 } — random assignment to one of the authors' three picture sets (folders cond1–cond3). Each set shows the same nine streets in a fixed order (WG_1 … WG_9); every street appears in each set in a different version, so each participant sees three right-wing (RECHTS), three left-wing (LINKS) and three neutral (NEUTRAL) versions, and each street × version is seen by a third of the sample."
+     },
+     {
+      "name": "ratings",
+      "type": "imageslidergroup",
+      "title": "Neighborhood ratings",
+      "choices": [],
+      "scaleMax": 11,
+      "scaleMin": 1,
+      "dimensions": [
+       {
+        "id": "help",
+        "max": 7,
+        "min": 1,
+        "left": "strongly disagree",
+        "step": 1,
+        "label": "People around here are willing to help their neighbors.",
+        "right": "strongly agree"
+       },
+       {
+        "id": "trust",
+        "max": 7,
+        "min": 1,
+        "left": "strongly disagree",
+        "step": 1,
+        "label": "People in this neighborhood can be trusted.",
+        "right": "strongly agree"
+       },
+       {
+        "id": "lookup",
+        "max": 7,
+        "min": 1,
+        "left": "strongly disagree",
+        "step": 1,
+        "label": "There are adults in this neighborhood that children can look up to.",
+        "right": "strongly agree"
+       },
+       {
+        "id": "warm",
+        "max": 11,
+        "min": 1,
+        "left": "cold",
+        "step": 1,
+        "label": "The people living in this neighborhood are …",
+        "right": "warm"
+       },
+       {
+        "id": "orderly",
+        "max": 11,
+        "min": 1,
+        "left": "orderly",
+        "step": 1,
+        "label": "This neighborhood is …",
+        "right": "disorderly"
+       },
+       {
+        "id": "safe",
+        "max": 11,
+        "min": 1,
+        "left": "safe",
+        "step": 1,
+        "label": "This neighborhood is …",
+        "right": "unsafe"
+       },
+       {
+        "id": "politics",
+        "max": 11,
+        "min": 1,
+        "left": "very leftist",
+        "step": 1,
+        "label": "What do you think is the political orientation of people living in this neighborhood?",
+        "right": "very rightist"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "description": "One row per picture (key = file name, e.g. WG_3_RECHTS: street 3, right-wing graffiti; Control = neutral test picture shown first, not analysed). Each picture is shown for 10 s, then rated next to a thumbnail. help, trust, lookup: 1–7 (strongly disagree … strongly agree); warm 1–11 (cold … warm); orderly 1–11 (orderly … disorderly); safe 1–11 (safe … unsafe); politics 1–11 (very leftist … very rightist, manipulation check). Social cohesion = the six items combined after reversing orderly and safe (12 − x) and putting the 7- and 11-point items on one scale (the authors used EFA, one factor). Analysis per street: version (neutral vs left+right, left vs right; Helmert coding) × political orientation (z) regression.",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "max": 100,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "How old are you?",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "What is your gender?",
+      "choices": [
+       {
+        "text": "Female",
+        "value": 1
+       },
+       {
+        "text": "Male",
+        "value": 2
+       },
+       {
+        "text": "Diverse / other",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "political_orientation",
+      "type": "radiogroup",
+      "title": "Where would you place yourself politically?",
+      "choices": [
+       {
+        "text": "1 left",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       },
+       {
+        "text": "6",
+        "value": 6
+       },
+       {
+        "text": "7 right",
+        "value": 7
+       }
+      ],
+      "isRequired": true,
+      "description": "Moderator, 1 = left … 7 = right."
+     },
+     {
+      "name": "accuracy",
+      "type": "radiogroup",
+      "title": "Did you answer all questions carefully and honestly, so that we can use your data?",
+      "choices": [
+       {
+        "text": "Yes, please use my data",
+        "value": 1
+       },
+       {
+        "text": "No, please do not use my data",
+        "value": 2
+       }
+      ],
+      "isRequired": true,
+      "description": "Accuracy item; the authors excluded participants who failed control or accuracy items."
+     }
+    ]
+   }
+  ],
+  "title": "Political Graffiti and the Perception of Neighborhoods",
+  "locale": "en",
+  "spSite": {
+   "id": "site-8e3502cbdc5dd99f",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Political Graffiti and Neighborhoods</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Political Graffiti and the Perception of Neighborhoods\",\n  \"description\": \"Faithful replication of Study 1 of Pollmanns & Asbrock (2023), Frontiers in Psychology 14:1098105, with the authors' own street photographs from OSF (2cmwr). Participants see nine photos of residential streets, each for 10 s, with right-wing, left-wing or no political graffiti added, and rate the neighborhood's social cohesion, warmth, order, safety and the residents' political orientation.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"practice\",\n   \"cond1\",\n   \"cond2\",\n   \"cond3\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"pictures\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I have read the information above and agree to take part.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"Yes\",\n      \"labelFalse\": \"No\"\n     },\n     {\n      \"type\": \"custom\",\n      \"name\": \"condition\",\n      \"title\": \"Picture set\",\n      \"isRequired\": true,\n      \"description\": \"{ condition: 1 | 2 | 3 } — random assignment to one of the authors' three picture sets (folders cond1–cond3). Each set shows the same nine streets in a fixed order (WG_1 … WG_9); every street appears in each set in a different version, so each participant sees three right-wing (RECHTS), three left-wing (LINKS) and three neutral (NEUTRAL) versions, and each street × version is seen by a third of the sample.\"\n     },\n     {\n      \"type\": \"imageslidergroup\",\n      \"name\": \"ratings\",\n      \"title\": \"Neighborhood ratings\",\n      \"isRequired\": true,\n      \"imageCount\": 1,\n      \"scaleMin\": 1,\n      \"scaleMax\": 11,\n      \"description\": \"One row per picture (key = file name, e.g. WG_3_RECHTS: street 3, right-wing graffiti; Control = neutral test picture shown first, not analysed). Each picture is shown for 10 s, then rated next to a thumbnail. help, trust, lookup: 1–7 (strongly disagree … strongly agree); warm 1–11 (cold … warm); orderly 1–11 (orderly … disorderly); safe 1–11 (safe … unsafe); politics 1–11 (very leftist … very rightist, manipulation check). Social cohesion = the six items combined after reversing orderly and safe (12 − x) and putting the 7- and 11-point items on one scale (the authors used EFA, one factor). Analysis per street: version (neutral vs left+right, left vs right; Helmert coding) × political orientation (z) regression.\",\n      \"dimensions\": [\n       {\n        \"id\": \"help\",\n        \"label\": \"People around here are willing to help their neighbors.\",\n        \"left\": \"strongly disagree\",\n        \"right\": \"strongly agree\",\n        \"min\": 1,\n        \"max\": 7,\n        \"step\": 1\n       },\n       {\n        \"id\": \"trust\",\n        \"label\": \"People in this neighborhood can be trusted.\",\n        \"left\": \"strongly disagree\",\n        \"right\": \"strongly agree\",\n        \"min\": 1,\n        \"max\": 7,\n        \"step\": 1\n       },\n       {\n        \"id\": \"lookup\",\n        \"label\": \"There are adults in this neighborhood that children can look up to.\",\n        \"left\": \"strongly disagree\",\n        \"right\": \"strongly agree\",\n        \"min\": 1,\n        \"max\": 7,\n        \"step\": 1\n       },\n       {\n        \"id\": \"warm\",\n        \"label\": \"The people living in this neighborhood are …\",\n        \"left\": \"cold\",\n        \"right\": \"warm\",\n        \"min\": 1,\n        \"max\": 11,\n        \"step\": 1\n       },\n       {\n        \"id\": \"orderly\",\n        \"label\": \"This neighborhood is …\",\n        \"left\": \"orderly\",\n        \"right\": \"disorderly\",\n        \"min\": 1,\n        \"max\": 11,\n        \"step\": 1\n       },\n       {\n        \"id\": \"safe\",\n        \"label\": \"This neighborhood is …\",\n        \"left\": \"safe\",\n        \"right\": \"unsafe\",\n        \"min\": 1,\n        \"max\": 11,\n        \"step\": 1\n       },\n       {\n        \"id\": \"politics\",\n        \"label\": \"What do you think is the political orientation of people living in this neighborhood?\",\n        \"left\": \"very leftist\",\n        \"right\": \"very rightist\",\n        \"min\": 1,\n        \"max\": 11,\n        \"step\": 1\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"min\": 18,\n      \"max\": 100\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"What is your gender?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Diverse / other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"political_orientation\",\n      \"title\": \"Where would you place yourself politically?\",\n      \"isRequired\": true,\n      \"description\": \"Moderator, 1 = left … 7 = right.\",\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"1 left\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"6\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"7 right\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"accuracy\",\n      \"title\": \"Did you answer all questions carefully and honestly, so that we can use your data?\",\n      \"isRequired\": true,\n      \"description\": \"Accuracy item; the authors excluded participants who failed control or accuracy items.\",\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Yes, please use my data\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"No, please do not use my data\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f2f3f5;--card:#fff;--ink:#1d2024;--muted:#5b616b;--accent:#3b4f8a;--accent-ink:#fff;--line:#d6d9df;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:860px;margin:0 auto;padding:24px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 10px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q>b{display:block;margin-bottom:4px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:120px}\n.note{background:#fff4e5;border:1px solid #f0c98a;border-radius:10px;padding:10px 12px;color:#6b4a0e;font-size:.92rem}\n.pic{background:#111;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;height:min(70vh,600px)}\n.pic img{max-width:100%;max-height:100%;object-fit:contain;display:block}\n.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:10px 0 6px}.bar>i{display:block;height:100%;background:var(--accent);width:0}\n.t{color:var(--muted);font-variant-numeric:tabular-nums;font-size:.9rem}\n.thumb{width:220px;max-width:60%;border-radius:8px;display:block;margin:0 0 6px}\n.item{padding:12px 0;border-top:1px solid var(--line)}.item:first-of-type{border-top:0}\n.item>b{display:block;font-weight:600;margin-bottom:6px}\n.sc{display:grid;gap:3px}\n.sc button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:7px;padding:8px 0;font:inherit;font-size:.92rem;font-weight:700;cursor:pointer;min-width:0}\n.sc button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}\n.ends{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted);margin-top:2px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:860px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photos: Pollmanns &amp; Asbrock (2023), Frontiers in Psychology, OSF 2cmwr. Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var DIMS=[{\"id\": \"help\", \"label\": \"People around here are willing to help their neighbors.\", \"left\": \"strongly disagree\", \"right\": \"strongly agree\", \"min\": 1, \"max\": 7, \"step\": 1}, {\"id\": \"trust\", \"label\": \"People in this neighborhood can be trusted.\", \"left\": \"strongly disagree\", \"right\": \"strongly agree\", \"min\": 1, \"max\": 7, \"step\": 1}, {\"id\": \"lookup\", \"label\": \"There are adults in this neighborhood that children can look up to.\", \"left\": \"strongly disagree\", \"right\": \"strongly agree\", \"min\": 1, \"max\": 7, \"step\": 1}, {\"id\": \"warm\", \"label\": \"The people living in this neighborhood are …\", \"left\": \"cold\", \"right\": \"warm\", \"min\": 1, \"max\": 11, \"step\": 1}, {\"id\": \"orderly\", \"label\": \"This neighborhood is …\", \"left\": \"orderly\", \"right\": \"disorderly\", \"min\": 1, \"max\": 11, \"step\": 1}, {\"id\": \"safe\", \"label\": \"This neighborhood is …\", \"left\": \"safe\", \"right\": \"unsafe\", \"min\": 1, \"max\": 11, \"step\": 1}, {\"id\": \"politics\", \"label\": \"What do you think is the political orientation of people living in this neighborhood?\", \"left\": \"very leftist\", \"right\": \"very rightist\", \"min\": 1, \"max\": 11, \"step\": 1}], KEY='graffiti2023:', SEC=10*(window.__SPEED||1);\n  var app=document.getElementById('app'), Q={}, M={}, cond=null, ans={}, CTX={}, list=[];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function saveAll(l,b,cb){Promise.all(l.map(function(a){return a[2]?SPSite.answer(a[0],a[1],a[2]):SPSite.answer(a[0],a[1]);})).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}cb();});}\n  function stem(n){return n.replace(/\\.[^.]+$/,'');}\n  function next(){\n    window.scrollTo(0,0);\n    if(!ans.intro)return intro();\n    if(!ans.condition)return saveAll([['condition',{condition:cond}]],null,function(){ans.condition=true;next();});\n    if(!ans.howto)return howto();\n    var done={};((CTX.ratings&&CTX.ratings.trials)||[]).forEach(function(t){done[t.key]=true;});Object.keys(ans.r||{}).forEach(function(k){done[k]=true;});\n    for(var i=0;i<list.length;i++){if(!done[stem(list[i].name)])return view(i);}\n    if(!ans.about)return about();\n    finish();\n  }\n  function page(title,html,btn,cb){\n    app.innerHTML='<div class=\"card\">'+(title?'<h1>'+esc(title)+'</h1>':'')+html+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">'+esc(btn||'Continue')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=cb;\n  }\n  function intro(){\n    var miss=['practice','cond1','cond2','cond3'].filter(function(c){return !(M[c]||[]).length;});\n    if(miss.length){app.innerHTML='<h1>Pictures missing</h1><p>Media folders practice, cond1, cond2 and cond3 must hold the study photos; empty: '+esc(miss.join(', '))+'.</p>';return;}\n    page('How do you see this neighborhood?','<p>In this study you will see photos of streets in a residential neighborhood. Each photo is shown for 10 seconds. After each photo you will be asked how you perceive the neighborhood and the people who live there. There are no right or wrong answers; please give your first impression. The study takes about 10 minutes.</p><div class=\"note\">Please note: some photos show political graffiti, including extremist slogans and symbols. They are shown for research purposes only.</div><p style=\"margin-top:12px\">Participation is voluntary and anonymous, and you can stop at any time.</p><label class=\"opt\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label>','Start',function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var b=this;b.disabled=true;saveAll([['consent',true]],b,function(){ans.intro=true;next();});\n    });\n  }\n  function howto(){\n    page('','<p style=\"color:var(--ink)\">You will now see '+list.length+' photos, one after another. Look at each photo carefully. After 10 seconds it is replaced by questions about the neighborhood shown. The first photo is a short practice.</p>','Begin',function(){ans.howto=true;next();});\n  }\n  function view(i){\n    var f=list[i], t0=Date.now();\n    app.innerHTML='<div class=\"pic\"><img alt=\"Street photo\" src=\"'+esc(f.url)+'\"></div><div class=\"bar\"><i></i></div><div class=\"t\">Photo '+(i+1)+' of '+list.length+(i===0?' (practice)':'')+'</div>';\n    var bar=app.querySelector('.bar>i'), iv=setInterval(function(){var e=(Date.now()-t0)/1000;bar.style.width=Math.min(100,100*e/SEC)+'%';if(e>=SEC){clearInterval(iv);rate(i);}},100);\n  }\n  function rate(i){\n    window.scrollTo(0,0);\n    var f=list[i], vals={};\n    app.innerHTML='<div class=\"card\"><p class=\"t\">Photo '+(i+1)+' of '+list.length+'</p><img class=\"thumb\" alt=\"Thumbnail of the photo\" src=\"'+esc(f.url)+'\"><p>Please answer the following questions about the neighborhood in the photo.</p>'+\n      DIMS.map(function(d){var b='',n=d.max-d.min+1;for(var v=d.min;v<=d.max;v++)b+='<button type=\"button\" data-d=\"'+d.id+'\" data-v=\"'+v+'\">'+v+'</button>';\n        return '<div class=\"item\"><b>'+esc(d.label)+'</b><div class=\"sc\" style=\"grid-template-columns:repeat('+n+',1fr)\">'+b+'</div><div class=\"ends\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></div></div>';}).join('')+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div></div>';\n    app.querySelectorAll('.sc button').forEach(function(x){x.onclick=function(){vals[x.dataset.d]=Number(x.dataset.v);x.parentNode.querySelectorAll('button').forEach(function(y){y.classList.toggle('on',y===x);});err('');};});\n    document.getElementById('go').onclick=function(){\n      var miss=DIMS.filter(function(d){return vals[d.id]==null;});if(miss.length)return err('Please answer every question ('+miss.length+' left).');\n      var o={};DIMS.forEach(function(d){o[d.id]=vals[d.id];});var k=stem(f.name), b=this;b.disabled=true;\n      saveAll([['ratings',o,{key:k,shown:[f.name]}]],b,function(){ans.r=ans.r||{};ans.r[k]=true;next();});\n    };\n  }\n  function radios(name){return (Q[name].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');}\n  function val(n){var x=app.querySelector('input[name='+n+']:checked');return x?Number(x.value):null;}\n  function about(){\n    page('About you','<div class=\"q\"><b>'+esc(Q.age.title)+'</b><input type=\"number\" id=\"age\" min=\"18\" max=\"100\" inputmode=\"numeric\"></div>'+\n      ['gender','political_orientation','accuracy'].map(function(n){return '<div class=\"q\"><b>'+esc(Q[n].title)+'</b>'+radios(n)+'</div>';}).join(''),'Finish',function(){\n      var av=document.getElementById('age').value,age=Number(av);if(!av||!(age>=18&&age<=100))return err('Please enter your age (18 or over).');\n      var l=[['age',age]];var N=['gender','political_orientation','accuracy'];for(var i=0;i<N.length;i++){var v=val(N[i]);if(!v)return err('Please answer: '+Q[N[i]].title);l.push([N[i],v]);}\n      var b=this;b.disabled=true;saveAll(l,b,function(){ans.about=true;next();});\n    });\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you for taking part!</h1><div class=\"card\"><p>This study examined how political graffiti shapes the way people see a neighborhood and its residents. The streets you saw were photographed in one neighborhood, and the graffiti (right-wing, left-wing or none) was added digitally by the researchers; it does not describe the people living there. Extremist slogans and symbols were shown only for research and are not endorsed.</p><p style=\"font-size:.82rem\">Photos: Study 1 of Pollmanns &amp; Asbrock (2023), Frontiers in Psychology 14:1098105, doi:10.3389/fpsyg.2023.1098105, OSF 2cmwr. Used with credit and removed if the authors object.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){\n      if(x==='consent')ans.intro=false;else if(x==='condition')ans.condition=false;else if(x==='ratings'){ans.r={};CTX.ratings=null;}else ans.about=false;});next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','age','gender','political_orientation','accuracy'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    ['practice','cond1','cond2','cond3'].forEach(function(c){M[c]=(SPSite.getMedia(c)||[]).slice().sort(function(a,b){return a.name<b.name?-1:a.name>b.name?1:0;});});\n    var a=CTX=(ctx&&ctx.answers)||{};\n    var ac=a.condition&&(a.condition.condition!=null?a.condition:(a.condition.trials&&a.condition.trials[0]&&a.condition.trials[0].value));\n    var c=Number((ac&&ac.condition)||load('cond'));if([1,2,3].indexOf(c)<0)c=1+Math.floor(Math.random()*3);cond=c;save('cond',cond);\n    list=(M.practice||[]).slice(0,1).concat(M['cond'+cond]||[]);\n    if(a.consent===true){ans.intro=true;if(a.condition!=null)ans.condition=true;if(a.ratings&&a.ratings.trials&&a.ratings.trials.length)ans.howto=true;\n      if(a.age!=null&&a.accuracy!=null)ans.about=true;}\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T09:36:33.207Z",
+   "mediaFolders": [
+    "practice",
+    "cond1",
+    "cond2",
+    "cond3"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T09:36:33.207Z"
+  },
+  "description": "Faithful replication of Study 1 of Pollmanns & Asbrock (2023), Frontiers in Psychology 14:1098105, with the authors' own street photographs from OSF (2cmwr). Participants see nine photos of residential streets, each for 10 s, with right-wing, left-wing or no political graffiti added, and rate the neighborhood's social cohesion, warmth, order, safety and the residents' political orientation.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2023-pollmanns-political/cond1/WG_1_RECHTS__7a95c0c7-9b3b-4910-9258-0813a9a8f2bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond1/WG_1_RECHTS__7a95c0c7-9b3b-4910-9258-0813a9a8f2bf.jpg",
+   "name": "WG_1_RECHTS.jpg",
+   "type": "image",
+   "folder": "cond1",
+   "media_id": "templates/2023-pollmanns-political/cond1/WG_1_RECHTS__7a95c0c7-9b3b-4910-9258-0813a9a8f2bf.jpg",
+   "logicalFolder": "cond1",
+   "original_bytes": 121013,
+   "uploaded_bytes": 121013,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond1/WG_2_LINKS__c0385520-456c-43e1-9a65-93ce221bede6.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond1/WG_2_LINKS__c0385520-456c-43e1-9a65-93ce221bede6.jpg",
+   "name": "WG_2_LINKS.jpg",
+   "type": "image",
+   "folder": "cond1",
+   "media_id": "templates/2023-pollmanns-political/cond1/WG_2_LINKS__c0385520-456c-43e1-9a65-93ce221bede6.jpg",
+   "logicalFolder": "cond1",
+   "original_bytes": 102185,
+   "uploaded_bytes": 102185,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond1/WG_3_NEUTRAL__dfdb7cf1-3f3f-479d-aa85-5362aafa3ebf.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond1/WG_3_NEUTRAL__dfdb7cf1-3f3f-479d-aa85-5362aafa3ebf.jpg",
+   "name": "WG_3_NEUTRAL.jpg",
+   "type": "image",
+   "folder": "cond1",
+   "media_id": "templates/2023-pollmanns-political/cond1/WG_3_NEUTRAL__dfdb7cf1-3f3f-479d-aa85-5362aafa3ebf.jpg",
+   "logicalFolder": "cond1",
+   "original_bytes": 108148,
+   "uploaded_bytes": 108148,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond1/WG_4_NEUTRAL__0da13cea-165e-40ef-8b47-0af04a0c78aa.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond1/WG_4_NEUTRAL__0da13cea-165e-40ef-8b47-0af04a0c78aa.jpg",
+   "name": "WG_4_NEUTRAL.jpg",
+   "type": "image",
+   "folder": "cond1",
+   "media_id": "templates/2023-pollmanns-political/cond1/WG_4_NEUTRAL__0da13cea-165e-40ef-8b47-0af04a0c78aa.jpg",
+   "logicalFolder": "cond1",
+   "original_bytes": 135777,
+   "uploaded_bytes": 135777,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond1/WG_5_LINKS__d0ff488e-6788-455e-9091-4580a91b7fcd.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond1/WG_5_LINKS__d0ff488e-6788-455e-9091-4580a91b7fcd.jpg",
+   "name": "WG_5_LINKS.jpg",
+   "type": "image",
+   "folder": "cond1",
+   "media_id": "templates/2023-pollmanns-political/cond1/WG_5_LINKS__d0ff488e-6788-455e-9091-4580a91b7fcd.jpg",
+   "logicalFolder": "cond1",
+   "original_bytes": 102889,
+   "uploaded_bytes": 102889,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond1/WG_6_RECHTS__36e30c16-c9cf-4832-9558-88691967651f.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond1/WG_6_RECHTS__36e30c16-c9cf-4832-9558-88691967651f.jpg",
+   "name": "WG_6_RECHTS.jpg",
+   "type": "image",
+   "folder": "cond1",
+   "media_id": "templates/2023-pollmanns-political/cond1/WG_6_RECHTS__36e30c16-c9cf-4832-9558-88691967651f.jpg",
+   "logicalFolder": "cond1",
+   "original_bytes": 130295,
+   "uploaded_bytes": 130295,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond1/WG_7_LINKS__cfd28c25-519e-443b-bb2a-40b8324a0ca7.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond1/WG_7_LINKS__cfd28c25-519e-443b-bb2a-40b8324a0ca7.jpg",
+   "name": "WG_7_LINKS.jpg",
+   "type": "image",
+   "folder": "cond1",
+   "media_id": "templates/2023-pollmanns-political/cond1/WG_7_LINKS__cfd28c25-519e-443b-bb2a-40b8324a0ca7.jpg",
+   "logicalFolder": "cond1",
+   "original_bytes": 133849,
+   "uploaded_bytes": 133849,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond1/WG_8_RECHTS__9c7197c8-af1f-4b5c-a2c7-aa899f3fa588.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond1/WG_8_RECHTS__9c7197c8-af1f-4b5c-a2c7-aa899f3fa588.jpg",
+   "name": "WG_8_RECHTS.jpg",
+   "type": "image",
+   "folder": "cond1",
+   "media_id": "templates/2023-pollmanns-political/cond1/WG_8_RECHTS__9c7197c8-af1f-4b5c-a2c7-aa899f3fa588.jpg",
+   "logicalFolder": "cond1",
+   "original_bytes": 120957,
+   "uploaded_bytes": 120957,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond1/WG_9_NEUTRAL__91132a27-70d7-4902-823b-e2cf77c1a813.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond1/WG_9_NEUTRAL__91132a27-70d7-4902-823b-e2cf77c1a813.jpg",
+   "name": "WG_9_NEUTRAL.jpg",
+   "type": "image",
+   "folder": "cond1",
+   "media_id": "templates/2023-pollmanns-political/cond1/WG_9_NEUTRAL__91132a27-70d7-4902-823b-e2cf77c1a813.jpg",
+   "logicalFolder": "cond1",
+   "original_bytes": 107566,
+   "uploaded_bytes": 107566,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond2/WG_1_LINKS__b9af8873-6172-473d-b6bc-b72c23c4c206.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond2/WG_1_LINKS__b9af8873-6172-473d-b6bc-b72c23c4c206.jpg",
+   "name": "WG_1_LINKS.jpg",
+   "type": "image",
+   "folder": "cond2",
+   "media_id": "templates/2023-pollmanns-political/cond2/WG_1_LINKS__b9af8873-6172-473d-b6bc-b72c23c4c206.jpg",
+   "logicalFolder": "cond2",
+   "original_bytes": 122423,
+   "uploaded_bytes": 122423,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond2/WG_2_NEUTRAL__e1c26a48-249f-4c55-84e5-2a6ec9b9db15.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond2/WG_2_NEUTRAL__e1c26a48-249f-4c55-84e5-2a6ec9b9db15.jpg",
+   "name": "WG_2_NEUTRAL.jpg",
+   "type": "image",
+   "folder": "cond2",
+   "media_id": "templates/2023-pollmanns-political/cond2/WG_2_NEUTRAL__e1c26a48-249f-4c55-84e5-2a6ec9b9db15.jpg",
+   "logicalFolder": "cond2",
+   "original_bytes": 100841,
+   "uploaded_bytes": 100841,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond2/WG_3_RECHTS__e3dd54fd-c9ef-4a86-b22b-97cd3b7a5583.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond2/WG_3_RECHTS__e3dd54fd-c9ef-4a86-b22b-97cd3b7a5583.jpg",
+   "name": "WG_3_RECHTS.jpg",
+   "type": "image",
+   "folder": "cond2",
+   "media_id": "templates/2023-pollmanns-political/cond2/WG_3_RECHTS__e3dd54fd-c9ef-4a86-b22b-97cd3b7a5583.jpg",
+   "logicalFolder": "cond2",
+   "original_bytes": 108990,
+   "uploaded_bytes": 108990,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond2/WG_4_RECHTS__68572016-af81-4640-89ba-6795b0b338b0.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond2/WG_4_RECHTS__68572016-af81-4640-89ba-6795b0b338b0.jpg",
+   "name": "WG_4_RECHTS.jpg",
+   "type": "image",
+   "folder": "cond2",
+   "media_id": "templates/2023-pollmanns-political/cond2/WG_4_RECHTS__68572016-af81-4640-89ba-6795b0b338b0.jpg",
+   "logicalFolder": "cond2",
+   "original_bytes": 136691,
+   "uploaded_bytes": 136691,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond2/WG_5_NEUTRAL__8d75ee76-f007-4cf3-a1a0-8c29e4a1d219.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond2/WG_5_NEUTRAL__8d75ee76-f007-4cf3-a1a0-8c29e4a1d219.jpg",
+   "name": "WG_5_NEUTRAL.jpg",
+   "type": "image",
+   "folder": "cond2",
+   "media_id": "templates/2023-pollmanns-political/cond2/WG_5_NEUTRAL__8d75ee76-f007-4cf3-a1a0-8c29e4a1d219.jpg",
+   "logicalFolder": "cond2",
+   "original_bytes": 90413,
+   "uploaded_bytes": 90413,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond2/WG_6_LINKS__ec00f8e3-78c0-460e-b239-25e44d7d7e63.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond2/WG_6_LINKS__ec00f8e3-78c0-460e-b239-25e44d7d7e63.jpg",
+   "name": "WG_6_LINKS.jpg",
+   "type": "image",
+   "folder": "cond2",
+   "media_id": "templates/2023-pollmanns-political/cond2/WG_6_LINKS__ec00f8e3-78c0-460e-b239-25e44d7d7e63.jpg",
+   "logicalFolder": "cond2",
+   "original_bytes": 130814,
+   "uploaded_bytes": 130814,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond2/WG_7_NEUTRAL__9a9c4599-6b8b-4286-81d6-02775cc11316.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond2/WG_7_NEUTRAL__9a9c4599-6b8b-4286-81d6-02775cc11316.jpg",
+   "name": "WG_7_NEUTRAL.jpg",
+   "type": "image",
+   "folder": "cond2",
+   "media_id": "templates/2023-pollmanns-political/cond2/WG_7_NEUTRAL__9a9c4599-6b8b-4286-81d6-02775cc11316.jpg",
+   "logicalFolder": "cond2",
+   "original_bytes": 128919,
+   "uploaded_bytes": 128919,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond2/WG_8_LINKS__69dfe3a8-402d-4b79-81aa-0c8361ffc11e.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond2/WG_8_LINKS__69dfe3a8-402d-4b79-81aa-0c8361ffc11e.jpg",
+   "name": "WG_8_LINKS.jpg",
+   "type": "image",
+   "folder": "cond2",
+   "media_id": "templates/2023-pollmanns-political/cond2/WG_8_LINKS__69dfe3a8-402d-4b79-81aa-0c8361ffc11e.jpg",
+   "logicalFolder": "cond2",
+   "original_bytes": 120935,
+   "uploaded_bytes": 120935,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond2/WG_9_RECHTS__c6d0b1e4-7b51-472c-a1df-6db92db613bb.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond2/WG_9_RECHTS__c6d0b1e4-7b51-472c-a1df-6db92db613bb.jpg",
+   "name": "WG_9_RECHTS.jpg",
+   "type": "image",
+   "folder": "cond2",
+   "media_id": "templates/2023-pollmanns-political/cond2/WG_9_RECHTS__c6d0b1e4-7b51-472c-a1df-6db92db613bb.jpg",
+   "logicalFolder": "cond2",
+   "original_bytes": 109670,
+   "uploaded_bytes": 109670,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond3/WG_1_NEUTRAL__7d4c2ebe-8ae0-4d02-a0c9-57620c81c344.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond3/WG_1_NEUTRAL__7d4c2ebe-8ae0-4d02-a0c9-57620c81c344.jpg",
+   "name": "WG_1_NEUTRAL.jpg",
+   "type": "image",
+   "folder": "cond3",
+   "media_id": "templates/2023-pollmanns-political/cond3/WG_1_NEUTRAL__7d4c2ebe-8ae0-4d02-a0c9-57620c81c344.jpg",
+   "logicalFolder": "cond3",
+   "original_bytes": 119216,
+   "uploaded_bytes": 119216,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond3/WG_2_RECHTS__43638262-d7af-4bf5-8fee-ee602d2ffffd.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond3/WG_2_RECHTS__43638262-d7af-4bf5-8fee-ee602d2ffffd.jpg",
+   "name": "WG_2_RECHTS.jpg",
+   "type": "image",
+   "folder": "cond3",
+   "media_id": "templates/2023-pollmanns-political/cond3/WG_2_RECHTS__43638262-d7af-4bf5-8fee-ee602d2ffffd.jpg",
+   "logicalFolder": "cond3",
+   "original_bytes": 101881,
+   "uploaded_bytes": 101881,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond3/WG_3_LINKS__f537134d-164a-4dc4-967b-38edabf512fa.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond3/WG_3_LINKS__f537134d-164a-4dc4-967b-38edabf512fa.jpg",
+   "name": "WG_3_LINKS.jpg",
+   "type": "image",
+   "folder": "cond3",
+   "media_id": "templates/2023-pollmanns-political/cond3/WG_3_LINKS__f537134d-164a-4dc4-967b-38edabf512fa.jpg",
+   "logicalFolder": "cond3",
+   "original_bytes": 108638,
+   "uploaded_bytes": 108638,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond3/WG_4_LINKS__9df4a409-ec45-4e17-8da9-af5c6debff64.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond3/WG_4_LINKS__9df4a409-ec45-4e17-8da9-af5c6debff64.jpg",
+   "name": "WG_4_LINKS.jpg",
+   "type": "image",
+   "folder": "cond3",
+   "media_id": "templates/2023-pollmanns-political/cond3/WG_4_LINKS__9df4a409-ec45-4e17-8da9-af5c6debff64.jpg",
+   "logicalFolder": "cond3",
+   "original_bytes": 136637,
+   "uploaded_bytes": 136637,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond3/WG_5_RECHTS__e3f4ac04-0a1c-42b8-9f40-125e3ae940b3.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond3/WG_5_RECHTS__e3f4ac04-0a1c-42b8-9f40-125e3ae940b3.jpg",
+   "name": "WG_5_RECHTS.jpg",
+   "type": "image",
+   "folder": "cond3",
+   "media_id": "templates/2023-pollmanns-political/cond3/WG_5_RECHTS__e3f4ac04-0a1c-42b8-9f40-125e3ae940b3.jpg",
+   "logicalFolder": "cond3",
+   "original_bytes": 99985,
+   "uploaded_bytes": 99985,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond3/WG_6_NEUTRAL__2e7ab63f-a16c-42c1-a81d-3c93b379224f.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond3/WG_6_NEUTRAL__2e7ab63f-a16c-42c1-a81d-3c93b379224f.jpg",
+   "name": "WG_6_NEUTRAL.jpg",
+   "type": "image",
+   "folder": "cond3",
+   "media_id": "templates/2023-pollmanns-political/cond3/WG_6_NEUTRAL__2e7ab63f-a16c-42c1-a81d-3c93b379224f.jpg",
+   "logicalFolder": "cond3",
+   "original_bytes": 128504,
+   "uploaded_bytes": 128504,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond3/WG_7_RECHTS__b9ca3b77-6ce9-4aa9-8878-f6b81c754618.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond3/WG_7_RECHTS__b9ca3b77-6ce9-4aa9-8878-f6b81c754618.jpg",
+   "name": "WG_7_RECHTS.jpg",
+   "type": "image",
+   "folder": "cond3",
+   "media_id": "templates/2023-pollmanns-political/cond3/WG_7_RECHTS__b9ca3b77-6ce9-4aa9-8878-f6b81c754618.jpg",
+   "logicalFolder": "cond3",
+   "original_bytes": 131683,
+   "uploaded_bytes": 131683,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond3/WG_8_NEUTRAL__57932131-363b-40d6-b9f7-ddbd4b9bc62f.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond3/WG_8_NEUTRAL__57932131-363b-40d6-b9f7-ddbd4b9bc62f.jpg",
+   "name": "WG_8_NEUTRAL.jpg",
+   "type": "image",
+   "folder": "cond3",
+   "media_id": "templates/2023-pollmanns-political/cond3/WG_8_NEUTRAL__57932131-363b-40d6-b9f7-ddbd4b9bc62f.jpg",
+   "logicalFolder": "cond3",
+   "original_bytes": 118304,
+   "uploaded_bytes": 118304,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/cond3/WG_9_LINKS__d42f52f0-7a10-4749-b2ce-1bb0f7a935c1.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/cond3/WG_9_LINKS__d42f52f0-7a10-4749-b2ce-1bb0f7a935c1.jpg",
+   "name": "WG_9_LINKS.jpg",
+   "type": "image",
+   "folder": "cond3",
+   "media_id": "templates/2023-pollmanns-political/cond3/WG_9_LINKS__d42f52f0-7a10-4749-b2ce-1bb0f7a935c1.jpg",
+   "logicalFolder": "cond3",
+   "original_bytes": 183850,
+   "uploaded_bytes": 183850,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-pollmanns-political/practice/Control__181dd460-0c83-4078-ad46-06c6e34445e2.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-pollmanns-political/practice/Control__181dd460-0c83-4078-ad46-06c6e34445e2.jpg",
+   "name": "Control.jpg",
+   "type": "image",
+   "folder": "practice",
+   "media_id": "templates/2023-pollmanns-political/practice/Control__181dd460-0c83-4078-ad46-06c6e34445e2.jpg",
+   "logicalFolder": "practice",
+   "original_bytes": 165029,
+   "uploaded_bytes": 165029,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "\"If graffiti changed anything, it would be illegal.\" The influence of political graffiti on the perception of neighborhoods and intergroup attitudes",
+  "authors": [
+   "Claas Pollmanns",
+   "Frank Asbrock"
+  ],
+  "year": 2023,
+  "venue": "Frontiers in Psychology",
+  "doi": "10.3389/fpsyg.2023.1098105",
+  "url": "https://doi.org/10.3389/fpsyg.2023.1098105"
+ }
+}

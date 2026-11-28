@@ -1,0 +1,566 @@
+{
+ "id": "2022-tawil-curved",
+ "name": "Curved vs Angular Living Rooms",
+ "description": "Faithful replication of the explicit rating tasks in Tawil, Ascone and Kühn (2022), Frontiers in Psychology, \"The contour effect\". Four photo-realistic living rooms in a 2 × 2 design: angular vs curved furniture and windows × modern vs classic style, using the authors' 20 renders (5 viewpoints per room). Task 1 (general appraisal): the door view of each room, in random order, rated on six 0–100 visual analogue scales shown one per screen: edginess, roundness, curiosity, novelty, order/structure and complexity. Task 2 (aesthetic and stress response): four blocks in random order (beauty, liking, restfulness, stress), each rating all 20 pictures in a fixed order on one 0–100 scale. Numbers are hidden on the scales, as in the original. Image keys match the columns of the authors' OSF data (e.g. r1a_9 = modern angular, viewpoint 9; r2c = classic curved), so new samples can be compared with the published 198-person dataset. About 15 minutes. Differences from the original study: (1) the implicit tasks (approach-avoidance, IAT, dot-probe, manikin) and the questionnaires (VAIAK, DASS-21, personality, housing) are left out; (2) English wording translated from the paper's German items (Supplementary Table 1); (3) renders resized from 5075 to 2000 px wide; (4) the slider handle appears only after the first touch, so no default answer is recorded. Stimuli: authors' renders from OSF mfpk2 (no licence stated), used with credit; the template will be removed if the authors object.",
+ "author": "Tawil, Ascone & Kühn",
+ "year": "2022",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "interior",
+  "curvature",
+  "aesthetics",
+  "stress",
+  "source:paper",
+  "modality:indoor",
+  "task:multi_rating",
+  "concept:aesthetics",
+  "concept:beauty",
+  "concept:likability",
+  "concept:restoration",
+  "concept:emotion",
+  "concept:complexity",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:Germany"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3389/fpsyg.2022.933344",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T00:02:07.555+00:00",
+ "updatedAt": "2026-11-27T00:02:30.462+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     },
+     {
+      "name": "sex",
+      "type": "radiogroup",
+      "title": "Sex",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "max": 99,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "Age (years)",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "design_profession",
+      "type": "radiogroup",
+      "title": "Do you work in architecture or interior design?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "general_appraisal",
+    "elements": [
+     {
+      "name": "gas",
+      "type": "imageslidergroup",
+      "title": "General appraisal of each room (door view)",
+      "choices": [],
+      "scaleMax": 100,
+      "scaleMin": 0,
+      "dimensions": [
+       {
+        "id": "edginess",
+        "max": 100,
+        "min": 0,
+        "left": "Not edgy at all",
+        "step": 1,
+        "label": "How edgy do you perceive this room to be?",
+        "right": "Very edgy"
+       },
+       {
+        "id": "roundness",
+        "max": 100,
+        "min": 0,
+        "left": "Not round at all",
+        "step": 1,
+        "label": "How round do you perceive this room to be?",
+        "right": "Very round"
+       },
+       {
+        "id": "curiosity",
+        "max": 100,
+        "min": 0,
+        "left": "Arouses no curiosity at all",
+        "step": 1,
+        "label": "How much curiosity does this room arouse in you?",
+        "right": "Arouses a lot of curiosity"
+       },
+       {
+        "id": "novelty",
+        "max": 100,
+        "min": 0,
+        "left": "Not novel at all",
+        "step": 1,
+        "label": "How novel does this room seem to you?",
+        "right": "Very novel"
+       },
+       {
+        "id": "order",
+        "max": 100,
+        "min": 0,
+        "left": "Very unstructured / disordered",
+        "step": 1,
+        "label": "How structured / ordered do you perceive this room to be?",
+        "right": "Very structured / ordered"
+       },
+       {
+        "id": "complexity",
+        "max": 100,
+        "min": 0,
+        "left": "Not complex at all",
+        "step": 1,
+        "label": "How complex does this room seem to you?",
+        "right": "Very complex"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "description": "Rating task 1 (GAS). One record per room: key = image id (r1a_15 angular modern, r1c_15 curved modern, r2a_15 angular classic, r2c_15 curved classic; columns of ac_dataset_manipulation_check.xlsx on OSF mfpk2). Rooms in random order; the six scales always in this order, one per screen. 0–100 visual analogue scale, numbers hidden.",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "aesthetic_stress",
+    "elements": [
+     {
+      "name": "beauty",
+      "type": "imageslidergroup",
+      "title": "Please rate the beauty of the room shown in this picture.",
+      "choices": [],
+      "scaleMax": 100,
+      "scaleMin": 0,
+      "dimensions": [
+       {
+        "id": "beauty",
+        "max": 100,
+        "min": 0,
+        "left": "Not beautiful at all",
+        "step": 1,
+        "label": "Please rate the beauty of the room shown in this picture.",
+        "right": "Very beautiful"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "description": "Rating task 2 (ASR), beauty block: 20 views in a fixed order. key = image id (r1 modern / r2 classic, a angular / c curved, _9 … _15 viewpoint), as in the columns of ac_dataset_ASR.xlsx.",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "liking",
+      "type": "imageslidergroup",
+      "title": "How much do you like the room shown in this picture?",
+      "choices": [],
+      "scaleMax": 100,
+      "scaleMin": 0,
+      "dimensions": [
+       {
+        "id": "liking",
+        "max": 100,
+        "min": 0,
+        "left": "Not at all",
+        "step": 1,
+        "label": "How much do you like the room shown in this picture?",
+        "right": "Very much"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "description": "ASR liking block: 20 views in a fixed order. key = image id.",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "rest",
+      "type": "imageslidergroup",
+      "title": "Please imagine being in the room shown in the picture. How restful does this room feel to you?",
+      "choices": [],
+      "scaleMax": 100,
+      "scaleMin": 0,
+      "dimensions": [
+       {
+        "id": "rest",
+        "max": 100,
+        "min": 0,
+        "left": "Not restful at all",
+        "step": 1,
+        "label": "Please imagine being in the room shown in the picture. How restful does this room feel to you?",
+        "right": "Very restful"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "description": "ASR rest block: 20 views in a fixed order. key = image id.",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "stress",
+      "type": "imageslidergroup",
+      "title": "Please imagine being in the room shown in the picture. How would you describe your emotional reaction?",
+      "choices": [],
+      "scaleMax": 100,
+      "scaleMin": 0,
+      "dimensions": [
+       {
+        "id": "stress",
+        "max": 100,
+        "min": 0,
+        "left": "Relaxed",
+        "step": 1,
+        "label": "Please imagine being in the room shown in the picture. How would you describe your emotional reaction?",
+        "right": "Stressed"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "description": "ASR stress block (column suffix _emotion in ac_dataset_ASR.xlsx): 20 views in a fixed order. key = image id. 0 = relaxed, 100 = stressed.",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "block_order",
+      "type": "custom",
+      "title": "Order of the four ASR blocks",
+      "isRequired": true,
+      "description": "Recorded by the page: array of the four block names in the order this participant saw them (randomised)."
+     }
+    ]
+   }
+  ],
+  "title": "Curved vs Angular Living Rooms",
+  "locale": "en",
+  "spSite": {
+   "id": "site-f43bbca52c00eee1",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Curved vs Angular Living Rooms</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Curved vs Angular Living Rooms\",\n    \"description\": \"Four photo-realistic living rooms in a 2 × 2 design: angular vs curved furniture and windows (contour) × modern vs classic style. Task 1 rates the door view of each room on six 0–100 scales (edginess, roundness, curiosity, novelty, order, complexity). Task 2 rates all 20 views (5 per room) on beauty, liking, restfulness and stress, one dimension per block. Rebuilt from Tawil, Ascone and Kühn (2022), Frontiers in Psychology, with the authors' renders from OSF mfpk2.\",\n    \"locale\": \"en\",\n    \"mediaFolders\": [\"rooms\"],\n    \"pages\": [\n      { \"name\": \"about_you\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\", \"isRequired\": true, \"labelTrue\": \"I agree\", \"labelFalse\": \"I do not agree\" },\n        { \"type\": \"radiogroup\", \"name\": \"sex\", \"title\": \"Sex\", \"isRequired\": true, \"choices\": [ { \"value\": \"female\", \"text\": \"Female\" }, { \"value\": \"male\", \"text\": \"Male\" } ] },\n        { \"type\": \"number\", \"name\": \"age\", \"title\": \"Age (years)\", \"min\": 18, \"max\": 99, \"isRequired\": true },\n        { \"type\": \"radiogroup\", \"name\": \"design_profession\", \"title\": \"Do you work in architecture or interior design?\", \"isRequired\": true, \"choices\": [ { \"value\": \"yes\", \"text\": \"Yes\" }, { \"value\": \"no\", \"text\": \"No\" } ] }\n      ]},\n      { \"name\": \"general_appraisal\", \"elements\": [\n        { \"type\": \"imageslidergroup\", \"name\": \"gas\", \"title\": \"General appraisal of each room (door view)\", \"description\": \"Rating task 1 (GAS). One record per room: key = image id (r1a_15 angular modern, r1c_15 curved modern, r2a_15 angular classic, r2c_15 curved classic; columns of ac_dataset_manipulation_check.xlsx on OSF mfpk2). Rooms in random order; the six scales always in this order, one per screen. 0–100 visual analogue scale, numbers hidden.\", \"imageCount\": 1, \"scaleMin\": 0, \"scaleMax\": 100, \"isRequired\": true, \"dimensions\": [\n          { \"id\": \"edginess\", \"label\": \"How edgy do you perceive this room to be?\", \"left\": \"Not edgy at all\", \"right\": \"Very edgy\", \"min\": 0, \"max\": 100, \"step\": 1 },\n          { \"id\": \"roundness\", \"label\": \"How round do you perceive this room to be?\", \"left\": \"Not round at all\", \"right\": \"Very round\", \"min\": 0, \"max\": 100, \"step\": 1 },\n          { \"id\": \"curiosity\", \"label\": \"How much curiosity does this room arouse in you?\", \"left\": \"Arouses no curiosity at all\", \"right\": \"Arouses a lot of curiosity\", \"min\": 0, \"max\": 100, \"step\": 1 },\n          { \"id\": \"novelty\", \"label\": \"How novel does this room seem to you?\", \"left\": \"Not novel at all\", \"right\": \"Very novel\", \"min\": 0, \"max\": 100, \"step\": 1 },\n          { \"id\": \"order\", \"label\": \"How structured / ordered do you perceive this room to be?\", \"left\": \"Very unstructured / disordered\", \"right\": \"Very structured / ordered\", \"min\": 0, \"max\": 100, \"step\": 1 },\n          { \"id\": \"complexity\", \"label\": \"How complex does this room seem to you?\", \"left\": \"Not complex at all\", \"right\": \"Very complex\", \"min\": 0, \"max\": 100, \"step\": 1 }\n        ] }\n      ]},\n      { \"name\": \"aesthetic_stress\", \"elements\": [\n        { \"type\": \"imageslidergroup\", \"name\": \"beauty\", \"title\": \"Please rate the beauty of the room shown in this picture.\", \"description\": \"Rating task 2 (ASR), beauty block: 20 views in a fixed order. key = image id (r1 modern / r2 classic, a angular / c curved, _9 … _15 viewpoint), as in the columns of ac_dataset_ASR.xlsx.\", \"imageCount\": 1, \"scaleMin\": 0, \"scaleMax\": 100, \"isRequired\": true, \"dimensions\": [\n          { \"id\": \"beauty\", \"label\": \"Please rate the beauty of the room shown in this picture.\", \"left\": \"Not beautiful at all\", \"right\": \"Very beautiful\", \"min\": 0, \"max\": 100, \"step\": 1 } ] },\n        { \"type\": \"imageslidergroup\", \"name\": \"liking\", \"title\": \"How much do you like the room shown in this picture?\", \"description\": \"ASR liking block: 20 views in a fixed order. key = image id.\", \"imageCount\": 1, \"scaleMin\": 0, \"scaleMax\": 100, \"isRequired\": true, \"dimensions\": [\n          { \"id\": \"liking\", \"label\": \"How much do you like the room shown in this picture?\", \"left\": \"Not at all\", \"right\": \"Very much\", \"min\": 0, \"max\": 100, \"step\": 1 } ] },\n        { \"type\": \"imageslidergroup\", \"name\": \"rest\", \"title\": \"Please imagine being in the room shown in the picture. How restful does this room feel to you?\", \"description\": \"ASR rest block: 20 views in a fixed order. key = image id.\", \"imageCount\": 1, \"scaleMin\": 0, \"scaleMax\": 100, \"isRequired\": true, \"dimensions\": [\n          { \"id\": \"rest\", \"label\": \"Please imagine being in the room shown in the picture. How restful does this room feel to you?\", \"left\": \"Not restful at all\", \"right\": \"Very restful\", \"min\": 0, \"max\": 100, \"step\": 1 } ] },\n        { \"type\": \"imageslidergroup\", \"name\": \"stress\", \"title\": \"Please imagine being in the room shown in the picture. How would you describe your emotional reaction?\", \"description\": \"ASR stress block (column suffix _emotion in ac_dataset_ASR.xlsx): 20 views in a fixed order. key = image id. 0 = relaxed, 100 = stressed.\", \"imageCount\": 1, \"scaleMin\": 0, \"scaleMax\": 100, \"isRequired\": true, \"dimensions\": [\n          { \"id\": \"stress\", \"label\": \"Please imagine being in the room shown in the picture. How would you describe your emotional reaction?\", \"left\": \"Relaxed\", \"right\": \"Stressed\", \"min\": 0, \"max\": 100, \"step\": 1 } ] },\n        { \"type\": \"custom\", \"name\": \"block_order\", \"title\": \"Order of the four ASR blocks\", \"description\": \"Recorded by the page: array of the four block names in the order this participant saw them (randomised).\", \"isRequired\": true }\n      ]}\n    ]\n  }\n}\n</script>\n<style>\n:root{--bg:#f2f1ee;--card:#fff;--ink:#1d1c1a;--muted:#5d5a55;--accent:#3d5a80;--accent-ink:#fff;--line:#d9d6d0;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:900px;margin:0 auto;padding:24px 16px 40px}\nh1{font-size:1.45rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:8px 0 14px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pic{background:#e4e2de;border-radius:12px;overflow:hidden;aspect-ratio:5075/2160}\n.pic img{width:100%;height:100%;object-fit:contain;display:block}\n.qtext{font-weight:600;font-size:1.05rem;margin:0 0 14px;color:var(--ink)}\ninput[type=range]{width:100%;margin:8px 0 0;accent-color:var(--accent);height:28px}\ninput[type=range].untouched::-webkit-slider-thumb{opacity:0}\ninput[type=range].untouched::-moz-range-thumb{opacity:0}\n.ends{display:flex;justify-content:space-between;gap:16px;font-size:.85rem;color:var(--muted);margin-top:2px}\n.ends span:last-child{text-align:right}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.q{margin-top:16px}.q:first-child{margin-top:0}.q>b{display:block;margin-bottom:4px}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:120px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:900px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Room renders: Tawil, Ascone &amp; Kühn (2022), OSF project mfpk2 (“Stimulus material”), used with credit to the authors and removed on request; resized to 2000 px.</footer>\n<script>\n(function(){\n  var ROOMS=['r1a','r2a','r1c','r2c'], VIEWS=[9,10,12,13,15];\n  var ASR_ORDER=[];ROOMS.forEach(function(r){VIEWS.forEach(function(v){ASR_ORDER.push(r+'_'+v);});});\n  var GAS_IMGS=ROOMS.map(function(r){return r+'_15';}), BLOCKS=['beauty','liking','rest','stress'];\n  var app=document.getElementById('app'), Q={}, files={}, plan=null, done={gas:{},beauty:{},liking:{},rest:{},stress:{}}, saved=false;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var x=a[k];a[k]=a[j];a[j]=x;}return a;}\n  function fn(id){return id+'.jpg';}\n  function setup(){\n    var s=null;try{s=JSON.parse(localStorage.getItem('contour2022:plan'));}catch(e){}\n    var good=s&&Array.isArray(s.gas)&&s.gas.length===4&&GAS_IMGS.every(function(x){return s.gas.indexOf(x)>=0;})&&Array.isArray(s.blocks)&&s.blocks.length===4&&BLOCKS.every(function(x){return s.blocks.indexOf(x)>=0;});\n    plan=good?s:{gas:shuffle(GAS_IMGS),blocks:shuffle(BLOCKS)};\n    try{localStorage.setItem('contour2022:plan',JSON.stringify(plan));}catch(e){}\n  }\n  function radios(n){return (Q[n].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');}\n  function intro(){\n    var miss=ASR_ORDER.filter(function(id){return !files[fn(id)];});\n    if(miss.length){app.innerHTML='<h1>Pictures missing</h1><p>Missing in folder “rooms”: '+esc(miss.map(fn).join(', '))+'</p>';return;}\n    app.innerHTML='<h1>How do these living rooms feel to you?</h1><p>You will see pictures of four living rooms. First you describe each room on six scales. Then you rate 20 pictures of the rooms, one question at a time, in four short rounds. Answer by placing the slider anywhere on the line. There are no right or wrong answers. About 15 minutes.</p>'+\n      '<div class=\"card\"><div class=\"q\"><b>'+esc(Q.sex.title)+'</b>'+radios('sex')+'</div><div class=\"q\"><b>'+esc(Q.age.title)+'</b><input type=\"number\" id=\"age\" min=\"18\" max=\"99\" inputmode=\"numeric\"></div><div class=\"q\"><b>'+esc(Q.design_profession.title)+'</b>'+radios('design_profession')+'</div></div>'+\n      '<div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var s=app.querySelector('input[name=sex]:checked');if(!s)return err('Please answer: Sex.');\n      var av=document.getElementById('age').value, age=Number(av);if(!av||!(age>=18&&age<=99))return err('Please enter your age (18–99).');\n      var d=app.querySelector('input[name=design_profession]:checked');if(!d)return err('Please answer: architecture or interior design.');\n      var b=this;b.disabled=true;\n      Promise.all([SPSite.answer('consent',true),SPSite.answer('sex',s.value),SPSite.answer('age',age),SPSite.answer('design_profession',d.value),SPSite.answer('block_order',plan.blocks)]).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}saved=true;next();});\n    };\n  }\n  // one visual analogue scale on one screen\n  function vas(opts,cb){\n    app.innerHTML='<p>'+esc(opts.header)+'</p><div class=\"progress\"><i style=\"width:'+opts.pct+'%\"></i></div>'+\n      '<div class=\"pic\"><img src=\"'+esc(files[fn(opts.img)].url)+'\" alt=\"Picture of a living room\"></div>'+\n      '<div class=\"card\"><p class=\"qtext\">'+esc(opts.label)+'</p><input type=\"range\" min=\"0\" max=\"100\" step=\"1\" value=\"50\" class=\"untouched\" id=\"vas\" aria-label=\"'+esc(opts.label)+'\"><div class=\"ends\"><span>'+esc(opts.left)+'</span><span>'+esc(opts.right)+'</span></div></div>'+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"nx\">Next</button></div><div class=\"err\"></div>';\n    var r=document.getElementById('vas'), touched=false;\n    function t(){touched=true;r.classList.remove('untouched');err('');}\n    r.addEventListener('input',t);r.addEventListener('pointerdown',t);r.addEventListener('keydown',t);\n    document.getElementById('nx').onclick=function(){if(!touched)return err('Please place the slider on the line.');this.disabled=true;cb(Number(r.value),this);};\n  }\n  function next(){\n    window.scrollTo(0,0);\n    var gi=plan.gas.filter(function(x){return !done.gas[x];});\n    if(gi.length)return gasRoom(gi[0],4-gi.length);\n    for(var b=0;b<plan.blocks.length;b++){\n      var bl=plan.blocks[b], left=ASR_ORDER.filter(function(x){return !done[bl][x];});\n      if(left.length)return asr(bl,b,left[0]);\n    }\n    finish();\n  }\n  function gasRoom(id,n){\n    var dims=Q.gas.dimensions||[], vals={}, k=0;\n    (function step(){\n      var d=dims[k];\n      vas({header:'Part 1 of 2 · Room '+(n+1)+' of 4 · question '+(k+1)+' of '+dims.length,pct:100*(n*dims.length+k)/(4*dims.length+80),img:id,label:d.label,left:d.left,right:d.right},function(v,bt){\n        vals[d.id]=v;k++;\n        if(k<dims.length){window.scrollTo(0,0);return step();}\n        SPSite.answer('gas',vals,{key:id,shown:[fn(id)]}).then(function(r){if(!ok(r)){bt.disabled=false;k--;return err(r.error);}done.gas[id]=true;next();});\n      });\n    })();\n  }\n  function asr(bl,b,id){\n    var d=(Q[bl].dimensions||[])[0]||{}, n=ASR_ORDER.indexOf(id);\n    vas({header:'Part 2 of 2 · Round '+(b+1)+' of 4 · picture '+(n+1)+' of 20',pct:100*(24+b*20+n)/(24+80),img:id,label:d.label,left:d.left,right:d.right},function(v,bt){\n      var val={};val[d.id]=v;\n      SPSite.answer(bl,val,{key:id,shown:[fn(id)]}).then(function(r){if(!ok(r)){bt.disabled=false;return err(r.error);}done[bl][id]=true;next();});\n    });\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){if(m.some(function(x){return ['gas','beauty','liking','rest','stress'].indexOf(x)<0;}))intro();else next();},1800);}else{var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','sex','age','design_profession','gas','beauty','liking','rest','stress','block_order'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('rooms')||[]).forEach(function(f){files[f.name]=f;});\n    setup();\n    var a=(ctx&&ctx.answers)||{};\n    if(Array.isArray(a.block_order)&&a.block_order.length===4)plan.blocks=a.block_order;\n    ['gas','beauty','liking','rest','stress'].forEach(function(q){var p=a[q];(p&&Array.isArray(p.trials)?p.trials:[]).forEach(function(x){if(x&&x.key!=null&&x.value!=null)done[q][String(x.key)]=true;});});\n    if(a.consent===true)next();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T00:01:40.379Z",
+   "mediaFolders": [
+    "rooms"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T00:01:40.379Z"
+  },
+  "description": "Four photo-realistic living rooms in a 2 × 2 design: angular vs curved furniture and windows (contour) × modern vs classic style. Task 1 rates the door view of each room on six 0–100 scales (edginess, roundness, curiosity, novelty, order, complexity). Task 2 rates all 20 views (5 per room) on beauty, liking, restfulness and stress, one dimension per block. Rebuilt from Tawil, Ascone and Kühn (2022), Frontiers in Psychology, with the authors' renders from OSF mfpk2.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2022-tawil-curved/rooms/r1a_10__177e92a1-ea35-4eba-9b46-a2c070a4f1d9.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r1a_10__177e92a1-ea35-4eba-9b46-a2c070a4f1d9.jpg",
+   "name": "r1a_10.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r1a_10__177e92a1-ea35-4eba-9b46-a2c070a4f1d9.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 165437,
+   "uploaded_bytes": 165437,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tawil-curved/rooms/r1a_12__e35ce858-c488-4b6c-8cf5-bcc2043f2004.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r1a_12__e35ce858-c488-4b6c-8cf5-bcc2043f2004.jpg",
+   "name": "r1a_12.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r1a_12__e35ce858-c488-4b6c-8cf5-bcc2043f2004.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 74605,
+   "uploaded_bytes": 74605,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tawil-curved/rooms/r1a_13__a1e77991-7d32-46b5-8e29-ee2989852af0.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r1a_13__a1e77991-7d32-46b5-8e29-ee2989852af0.jpg",
+   "name": "r1a_13.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r1a_13__a1e77991-7d32-46b5-8e29-ee2989852af0.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 103936,
+   "uploaded_bytes": 103936,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tawil-curved/rooms/r1a_15__d7cd5441-0678-4e4b-af00-f6a1d5a68558.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r1a_15__d7cd5441-0678-4e4b-af00-f6a1d5a68558.jpg",
+   "name": "r1a_15.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r1a_15__d7cd5441-0678-4e4b-af00-f6a1d5a68558.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 128321,
+   "uploaded_bytes": 128321,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tawil-curved/rooms/r1a_9__ee32643c-a5a9-4ce7-9017-b41c15de9945.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r1a_9__ee32643c-a5a9-4ce7-9017-b41c15de9945.jpg",
+   "name": "r1a_9.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r1a_9__ee32643c-a5a9-4ce7-9017-b41c15de9945.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 136763,
+   "uploaded_bytes": 136763,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tawil-curved/rooms/r1c_10__ba1c2713-aef9-4390-9d06-5ecb7fb74360.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r1c_10__ba1c2713-aef9-4390-9d06-5ecb7fb74360.jpg",
+   "name": "r1c_10.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r1c_10__ba1c2713-aef9-4390-9d06-5ecb7fb74360.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 162715,
+   "uploaded_bytes": 162715,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tawil-curved/rooms/r1c_12__97a81385-79da-4239-b1dd-0448addffe73.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r1c_12__97a81385-79da-4239-b1dd-0448addffe73.jpg",
+   "name": "r1c_12.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r1c_12__97a81385-79da-4239-b1dd-0448addffe73.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 72554,
+   "uploaded_bytes": 72554,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tawil-curved/rooms/r1c_13__ff0f6064-d1d9-420a-b347-5f2d0f86d6b9.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r1c_13__ff0f6064-d1d9-420a-b347-5f2d0f86d6b9.jpg",
+   "name": "r1c_13.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r1c_13__ff0f6064-d1d9-420a-b347-5f2d0f86d6b9.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 97222,
+   "uploaded_bytes": 97222,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tawil-curved/rooms/r1c_15__3924e3ca-4905-4d8c-bd7c-7a8dffe0c1e8.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r1c_15__3924e3ca-4905-4d8c-bd7c-7a8dffe0c1e8.jpg",
+   "name": "r1c_15.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r1c_15__3924e3ca-4905-4d8c-bd7c-7a8dffe0c1e8.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 124446,
+   "uploaded_bytes": 124446,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tawil-curved/rooms/r1c_9__d74057ce-3ebb-499e-ad47-530250243cea.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r1c_9__d74057ce-3ebb-499e-ad47-530250243cea.jpg",
+   "name": "r1c_9.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r1c_9__d74057ce-3ebb-499e-ad47-530250243cea.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 136362,
+   "uploaded_bytes": 136362,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tawil-curved/rooms/r2a_10__c82d4180-76a5-4fd6-b123-426c14aebbce.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r2a_10__c82d4180-76a5-4fd6-b123-426c14aebbce.jpg",
+   "name": "r2a_10.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r2a_10__c82d4180-76a5-4fd6-b123-426c14aebbce.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 170467,
+   "uploaded_bytes": 170467,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tawil-curved/rooms/r2a_12__f93836d0-1bc1-40b7-b334-0aa258e13593.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r2a_12__f93836d0-1bc1-40b7-b334-0aa258e13593.jpg",
+   "name": "r2a_12.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r2a_12__f93836d0-1bc1-40b7-b334-0aa258e13593.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 73734,
+   "uploaded_bytes": 73734,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tawil-curved/rooms/r2a_13__5abc5c6a-b5ac-4bbe-baa5-ea137d05c51a.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r2a_13__5abc5c6a-b5ac-4bbe-baa5-ea137d05c51a.jpg",
+   "name": "r2a_13.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r2a_13__5abc5c6a-b5ac-4bbe-baa5-ea137d05c51a.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 103682,
+   "uploaded_bytes": 103682,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tawil-curved/rooms/r2a_15__801fa9fb-451c-4548-8231-f40588b5cc30.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r2a_15__801fa9fb-451c-4548-8231-f40588b5cc30.jpg",
+   "name": "r2a_15.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r2a_15__801fa9fb-451c-4548-8231-f40588b5cc30.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 132687,
+   "uploaded_bytes": 132687,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tawil-curved/rooms/r2a_9__46aa2629-e317-4783-89d6-5f26df01d68f.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r2a_9__46aa2629-e317-4783-89d6-5f26df01d68f.jpg",
+   "name": "r2a_9.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r2a_9__46aa2629-e317-4783-89d6-5f26df01d68f.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 144158,
+   "uploaded_bytes": 144158,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tawil-curved/rooms/r2c_10__2cb7ca95-2d2b-4fe9-a42c-5fd8659b9a81.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r2c_10__2cb7ca95-2d2b-4fe9-a42c-5fd8659b9a81.jpg",
+   "name": "r2c_10.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r2c_10__2cb7ca95-2d2b-4fe9-a42c-5fd8659b9a81.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 172718,
+   "uploaded_bytes": 172718,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tawil-curved/rooms/r2c_12__135b6d36-80d0-4cb5-89fc-1e9e6d5d0f9b.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r2c_12__135b6d36-80d0-4cb5-89fc-1e9e6d5d0f9b.jpg",
+   "name": "r2c_12.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r2c_12__135b6d36-80d0-4cb5-89fc-1e9e6d5d0f9b.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 72640,
+   "uploaded_bytes": 72640,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tawil-curved/rooms/r2c_13__052c5ca0-e033-4053-a84f-3e81900e5aa6.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r2c_13__052c5ca0-e033-4053-a84f-3e81900e5aa6.jpg",
+   "name": "r2c_13.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r2c_13__052c5ca0-e033-4053-a84f-3e81900e5aa6.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 104134,
+   "uploaded_bytes": 104134,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tawil-curved/rooms/r2c_15__17a817a6-5a6e-4bcf-ad9c-e2e53a47f79a.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r2c_15__17a817a6-5a6e-4bcf-ad9c-e2e53a47f79a.jpg",
+   "name": "r2c_15.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r2c_15__17a817a6-5a6e-4bcf-ad9c-e2e53a47f79a.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 129732,
+   "uploaded_bytes": 129732,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-tawil-curved/rooms/r2c_9__a4635e82-ed53-433e-a6d2-ffc48323ee30.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-tawil-curved/rooms/r2c_9__a4635e82-ed53-433e-a6d2-ffc48323ee30.jpg",
+   "name": "r2c_9.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2022-tawil-curved/rooms/r2c_9__a4635e82-ed53-433e-a6d2-ffc48323ee30.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 145783,
+   "uploaded_bytes": 145783,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "The contour effect: Differences in the aesthetic preference and stress response to photo-realistic living environments",
+  "authors": [
+   "Nour Tawil",
+   "Leonie Ascone",
+   "Simone Kühn"
+  ],
+  "year": 2022,
+  "venue": "Frontiers in Psychology",
+  "doi": "10.3389/fpsyg.2022.933344",
+  "url": "https://doi.org/10.3389/fpsyg.2022.933344"
+ }
+}

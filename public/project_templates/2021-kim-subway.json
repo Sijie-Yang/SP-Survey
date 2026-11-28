@@ -1,0 +1,705 @@
+{
+ "id": "2021-kim-subway",
+ "name": "Subway Station Greenery: Preference, Restoration and Space Image",
+ "description": "Method replication with the paper's own model images (the original showed walk-through videos of the same 3D models): participants give gender and age group, then walk through eight versions of a subway station interior in random order (underground and ground-level station, each with a greenness index of 0, 10, 15 or 20 %), seeing four views of each (entrance, square, passage, fare gates; 4 s each). After each version they rate preference (1-5), how large the planted area looks (planted versions only), the seven recovery-scale items (coming to rest, renew energy, become myself again, lose all tension, order my thoughts again, put everything behind me, regain the ability to concentrate; 1-5) and six semantic-differential pairs (dark-bright, uncomfortable-comfortable, not beautiful-beautiful, unpleasant-pleasant, unharmonious-harmonious, not environmentally friendly-environmentally friendly). Rebuilt from Kim & Lee (2021), Sensors 21(13): 4360, with the 32 model images printed in the paper's Table 1 and the items and answer labels in its Section 2.2.2 (CC BY 4.0). Analysis as in the paper: one-way ANOVA with Games-Howell post-hoc tests across the four greenness levels, separately for underground and ground stations; mean of the seven recovery items as the attention restoration score; correspondence analysis of the recoded positive responses. Differences from the original study: (1) the original showed videos of the 3D models; here the four still views from the paper's Table 1 (221 x 124 px) are shown one after another; (2) no EEG (the paper measured prefrontal alpha and high-beta asymmetry); (3) the sentence stem 'Being in this station would help me ...' and the age-group options are our wording; (4) the eight models appear in random order.",
+ "author": "Kim & Lee",
+ "year": "2021",
+ "category": "Academic Research",
+ "tags": [
+  "method-replication",
+  "official",
+  "paper",
+  "indoor-greenery",
+  "greenness-index",
+  "subway",
+  "restoration",
+  "semantic-differential",
+  "source:paper",
+  "modality:rendered",
+  "modality:indoor",
+  "task:multi_rating",
+  "concept:greenery",
+  "concept:restoration",
+  "concept:preference",
+  "participants:lab",
+  "sample:lt100",
+  "country:South Korea",
+  "city:Busan"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/s21134360",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T15:54:26.509+00:00",
+ "updatedAt": "2026-11-27T15:54:39.455+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age group",
+      "choices": [
+       {
+        "text": "Under 20",
+        "value": "under_20"
+       },
+       {
+        "text": "20-29",
+        "value": "20s"
+       },
+       {
+        "text": "30-39",
+        "value": "30s"
+       },
+       {
+        "text": "40-49",
+        "value": "40s"
+       },
+       {
+        "text": "50 or older",
+        "value": "50_plus"
+       }
+      ],
+      "isRequired": true,
+      "description": "Our wording; the paper's sample was 30 people in their 20s and 30 in their 30s."
+     }
+    ]
+   },
+   {
+    "name": "stations",
+    "elements": [
+     {
+      "name": "preference",
+      "type": "rating",
+      "title": "How much do you prefer this station interior?",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Model preference, 5 points as in the paper. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.",
+      "maxRateDescription": "Strongly preferred",
+      "minRateDescription": "Not preferred at all"
+     },
+     {
+      "name": "planting_area",
+      "type": "rating",
+      "title": "How large does the planted area look to you?",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": false,
+      "description": "Level of recognition of the interior landscape area: 1 too low, 2 low, 3 suitable, 4 high, 5 very high. Asked only for models with planting (GI 10-20 %), as in the paper. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.",
+      "maxRateDescription": "Very high",
+      "minRateDescription": "Too low"
+     },
+     {
+      "name": "rec_rest",
+      "type": "rating",
+      "title": "Being in this station would help me come to rest.",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Recovery scale item 'coming to rest' (paper's list of seven items, 5-point answers not at all / no / moderate / yes / absolutely; sentence stem is our wording). Attention restoration score = mean of the seven items. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.",
+      "maxRateDescription": "Absolutely",
+      "minRateDescription": "Not at all"
+     },
+     {
+      "name": "rec_energy",
+      "type": "rating",
+      "title": "Being in this station would help me renew my energy.",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Recovery scale item 'renew energy' (paper's list of seven items, 5-point answers not at all / no / moderate / yes / absolutely; sentence stem is our wording). Attention restoration score = mean of the seven items. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.",
+      "maxRateDescription": "Absolutely",
+      "minRateDescription": "Not at all"
+     },
+     {
+      "name": "rec_myself",
+      "type": "rating",
+      "title": "Being in this station would help me become myself again.",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Recovery scale item 'become myself again' (paper's list of seven items, 5-point answers not at all / no / moderate / yes / absolutely; sentence stem is our wording). Attention restoration score = mean of the seven items. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.",
+      "maxRateDescription": "Absolutely",
+      "minRateDescription": "Not at all"
+     },
+     {
+      "name": "rec_tension",
+      "type": "rating",
+      "title": "Being in this station would help me lose all tension.",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Recovery scale item 'lose all tension' (paper's list of seven items, 5-point answers not at all / no / moderate / yes / absolutely; sentence stem is our wording). Attention restoration score = mean of the seven items. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.",
+      "maxRateDescription": "Absolutely",
+      "minRateDescription": "Not at all"
+     },
+     {
+      "name": "rec_thoughts",
+      "type": "rating",
+      "title": "Being in this station would help me order my thoughts again.",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Recovery scale item 'order my thoughts again' (paper's list of seven items, 5-point answers not at all / no / moderate / yes / absolutely; sentence stem is our wording). Attention restoration score = mean of the seven items. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.",
+      "maxRateDescription": "Absolutely",
+      "minRateDescription": "Not at all"
+     },
+     {
+      "name": "rec_behind",
+      "type": "rating",
+      "title": "Being in this station would help me put everything behind me.",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Recovery scale item 'put everything behind me' (paper's list of seven items, 5-point answers not at all / no / moderate / yes / absolutely; sentence stem is our wording). Attention restoration score = mean of the seven items. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.",
+      "maxRateDescription": "Absolutely",
+      "minRateDescription": "Not at all"
+     },
+     {
+      "name": "rec_concentrate",
+      "type": "rating",
+      "title": "Being in this station would help me regain the ability to concentrate.",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Recovery scale item 'regain the ability to concentrate' (paper's list of seven items, 5-point answers not at all / no / moderate / yes / absolutely; sentence stem is our wording). Attention restoration score = mean of the seven items. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.",
+      "maxRateDescription": "Absolutely",
+      "minRateDescription": "Not at all"
+     },
+     {
+      "name": "sd_bright",
+      "type": "rating",
+      "title": "Dark - Bright",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Space image, semantic differential pair from the paper, 5 points. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.",
+      "maxRateDescription": "Bright",
+      "minRateDescription": "Dark"
+     },
+     {
+      "name": "sd_comfortable",
+      "type": "rating",
+      "title": "Uncomfortable - Comfortable",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Space image, semantic differential pair from the paper, 5 points. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.",
+      "maxRateDescription": "Comfortable",
+      "minRateDescription": "Uncomfortable"
+     },
+     {
+      "name": "sd_beautiful",
+      "type": "rating",
+      "title": "Not beautiful - Beautiful",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Space image, semantic differential pair from the paper, 5 points. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.",
+      "maxRateDescription": "Beautiful",
+      "minRateDescription": "Not beautiful"
+     },
+     {
+      "name": "sd_pleasant",
+      "type": "rating",
+      "title": "Unpleasant - Pleasant",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Space image, semantic differential pair from the paper, 5 points. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.",
+      "maxRateDescription": "Pleasant",
+      "minRateDescription": "Unpleasant"
+     },
+     {
+      "name": "sd_harmonious",
+      "type": "rating",
+      "title": "Unharmonious - Harmonious",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Space image, semantic differential pair from the paper, 5 points. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.",
+      "maxRateDescription": "Harmonious",
+      "minRateDescription": "Unharmonious"
+     },
+     {
+      "name": "sd_eco",
+      "type": "rating",
+      "title": "Not environmentally friendly - Environmentally friendly",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Space image, semantic differential pair from the paper, 5 points. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.",
+      "maxRateDescription": "Environmentally friendly",
+      "minRateDescription": "Not environmentally friendly"
+     }
+    ]
+   }
+  ],
+  "title": "Subway Station Greenery: Preference, Restoration and Space Image",
+  "locale": "en",
+  "spSite": {
+   "id": "site-5b649359fd53978b",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Subway Station Greenery</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Subway Station Greenery: Preference, Restoration and Space Image\",\n  \"description\": \"Method replication with the paper's own model images (the original showed walk-through videos of the same 3D models): participants give gender and age group, then walk through eight versions of a subway station interior in random order (underground and ground-level station, each with a greenness index of 0, 10, 15 or 20 %), seeing four views of each (entrance, square, passage, fare gates; 4 s each). After each version they rate preference (1-5), how large the planted area looks (planted versions only), the seven recovery-scale items (coming to rest, renew energy, become myself again, lose all tension, order my thoughts again, put everything behind me, regain the ability to concentrate; 1-5) and six semantic-differential pairs (dark-bright, uncomfortable-comfortable, not beautiful-beautiful, unpleasant-pleasant, unharmonious-harmonious, not environmentally friendly-environmentally friendly). Rebuilt from Kim & Lee (2021), Sensors 21(13): 4360, with the 32 model images printed in the paper's Table 1 and the items and answer labels in its Section 2.2.2 (CC BY 4.0). Analysis as in the paper: one-way ANOVA with Games-Howell post-hoc tests across the four greenness levels, separately for underground and ground stations; mean of the seven recovery items as the attention restoration score; correspondence analysis of the recoded positive responses. Differences from the original study: (1) the original showed videos of the 3D models; here the four still views from the paper's Table 1 (221 x 124 px) are shown one after another; (2) no EEG (the paper measured prefrontal alpha and high-beta asymmetry); (3) the sentence stem 'Being in this station would help me ...' and the age-group options are our wording; (4) the eight models appear in random order.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"stations\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"Age group\",\n      \"description\": \"Our wording; the paper's sample was 30 people in their 20s and 30 in their 30s.\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"under_20\",\n        \"text\": \"Under 20\"\n       },\n       {\n        \"value\": \"20s\",\n        \"text\": \"20-29\"\n       },\n       {\n        \"value\": \"30s\",\n        \"text\": \"30-39\"\n       },\n       {\n        \"value\": \"40s\",\n        \"text\": \"40-49\"\n       },\n       {\n        \"value\": \"50_plus\",\n        \"text\": \"50 or older\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"stations\",\n    \"elements\": [\n     {\n      \"type\": \"rating\",\n      \"name\": \"preference\",\n      \"title\": \"How much do you prefer this station interior?\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Not preferred at all\",\n      \"maxRateDescription\": \"Strongly preferred\",\n      \"isRequired\": true,\n      \"description\": \"Model preference, 5 points as in the paper. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"planting_area\",\n      \"title\": \"How large does the planted area look to you?\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Too low\",\n      \"maxRateDescription\": \"Very high\",\n      \"isRequired\": false,\n      \"description\": \"Level of recognition of the interior landscape area: 1 too low, 2 low, 3 suitable, 4 high, 5 very high. Asked only for models with planting (GI 10-20 %), as in the paper. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"rec_rest\",\n      \"title\": \"Being in this station would help me come to rest.\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Not at all\",\n      \"maxRateDescription\": \"Absolutely\",\n      \"isRequired\": true,\n      \"description\": \"Recovery scale item 'coming to rest' (paper's list of seven items, 5-point answers not at all / no / moderate / yes / absolutely; sentence stem is our wording). Attention restoration score = mean of the seven items. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"rec_energy\",\n      \"title\": \"Being in this station would help me renew my energy.\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Not at all\",\n      \"maxRateDescription\": \"Absolutely\",\n      \"isRequired\": true,\n      \"description\": \"Recovery scale item 'renew energy' (paper's list of seven items, 5-point answers not at all / no / moderate / yes / absolutely; sentence stem is our wording). Attention restoration score = mean of the seven items. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"rec_myself\",\n      \"title\": \"Being in this station would help me become myself again.\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Not at all\",\n      \"maxRateDescription\": \"Absolutely\",\n      \"isRequired\": true,\n      \"description\": \"Recovery scale item 'become myself again' (paper's list of seven items, 5-point answers not at all / no / moderate / yes / absolutely; sentence stem is our wording). Attention restoration score = mean of the seven items. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"rec_tension\",\n      \"title\": \"Being in this station would help me lose all tension.\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Not at all\",\n      \"maxRateDescription\": \"Absolutely\",\n      \"isRequired\": true,\n      \"description\": \"Recovery scale item 'lose all tension' (paper's list of seven items, 5-point answers not at all / no / moderate / yes / absolutely; sentence stem is our wording). Attention restoration score = mean of the seven items. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"rec_thoughts\",\n      \"title\": \"Being in this station would help me order my thoughts again.\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Not at all\",\n      \"maxRateDescription\": \"Absolutely\",\n      \"isRequired\": true,\n      \"description\": \"Recovery scale item 'order my thoughts again' (paper's list of seven items, 5-point answers not at all / no / moderate / yes / absolutely; sentence stem is our wording). Attention restoration score = mean of the seven items. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"rec_behind\",\n      \"title\": \"Being in this station would help me put everything behind me.\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Not at all\",\n      \"maxRateDescription\": \"Absolutely\",\n      \"isRequired\": true,\n      \"description\": \"Recovery scale item 'put everything behind me' (paper's list of seven items, 5-point answers not at all / no / moderate / yes / absolutely; sentence stem is our wording). Attention restoration score = mean of the seven items. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"rec_concentrate\",\n      \"title\": \"Being in this station would help me regain the ability to concentrate.\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Not at all\",\n      \"maxRateDescription\": \"Absolutely\",\n      \"isRequired\": true,\n      \"description\": \"Recovery scale item 'regain the ability to concentrate' (paper's list of seven items, 5-point answers not at all / no / moderate / yes / absolutely; sentence stem is our wording). Attention restoration score = mean of the seven items. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_bright\",\n      \"title\": \"Dark - Bright\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Dark\",\n      \"maxRateDescription\": \"Bright\",\n      \"isRequired\": true,\n      \"description\": \"Space image, semantic differential pair from the paper, 5 points. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_comfortable\",\n      \"title\": \"Uncomfortable - Comfortable\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Uncomfortable\",\n      \"maxRateDescription\": \"Comfortable\",\n      \"isRequired\": true,\n      \"description\": \"Space image, semantic differential pair from the paper, 5 points. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_beautiful\",\n      \"title\": \"Not beautiful - Beautiful\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Not beautiful\",\n      \"maxRateDescription\": \"Beautiful\",\n      \"isRequired\": true,\n      \"description\": \"Space image, semantic differential pair from the paper, 5 points. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_pleasant\",\n      \"title\": \"Unpleasant - Pleasant\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Unpleasant\",\n      \"maxRateDescription\": \"Pleasant\",\n      \"isRequired\": true,\n      \"description\": \"Space image, semantic differential pair from the paper, 5 points. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_harmonious\",\n      \"title\": \"Unharmonious - Harmonious\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Unharmonious\",\n      \"maxRateDescription\": \"Harmonious\",\n      \"isRequired\": true,\n      \"description\": \"Space image, semantic differential pair from the paper, 5 points. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_eco\",\n      \"title\": \"Not environmentally friendly - Environmentally friendly\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Not environmentally friendly\",\n      \"maxRateDescription\": \"Environmentally friendly\",\n      \"isRequired\": true,\n      \"description\": \"Space image, semantic differential pair from the paper, 5 points. Keyed by station model: underground_gi00/gi10/gi15/gi20 and ground_gi00/gi10/gi15/gi20 (greenness index 0, 10, 15, 20 %), each shown as four views (entrance, square, passage, fare gates) from the paper's Table 1.\"\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"subway-original\">{\"source\": \"Kim & Lee (2021) Sensors 21(13): 4360\", \"n\": 60, \"participants\": \"60 adults (30 men, 30 women; 30 in their 20s, 30 in their 30s), Busan, Korea; videos of 3D models in a darkened lab with 2-channel EEG\", \"preference_means\": {\"underground\": {\"gi00\": 2.4, \"gi10\": 4.05, \"gi15\": 4.48, \"gi20\": 3.67}, \"ground\": {\"gi00\": 2.92, \"gi10\": 4.5, \"gi15\": 4.08, \"gi20\": 3.57}}, \"restoration_means\": {\"underground\": {\"gi00\": 2.39, \"gi10\": 4.04, \"gi15\": 4.42, \"gi20\": 4.24}, \"ground\": {\"gi00\": 2.65, \"gi10\": 4.22, \"gi15\": 4.39, \"gi20\": 4.24}}, \"result\": \"Preference peaked at a medium greenness index: GI 15 % in the underground station (4.48) and GI 10 % in the ground station (4.50); GI 20 % fell back, and no planting (GI 0 %) scored lowest. Attention restoration was lowest without planting; underground GI 15 % was highest, while GI 10-20 % did not differ in the ground station. Planted area at GI 15 % was judged mostly 'suitable'.\"}</script>\n<style>\n:root{--bg:#f2f3f5;--card:#fff;--ink:#1f2328;--muted:#5d646d;--accent:#2f7a3e;--line:#d9dde2;--warn:#b3261e;--sel:#e3f1e6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:760px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.5rem;margin:0 0 8px}h2{font-size:1.15rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:13px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.prog{font-size:.88rem;color:var(--muted);margin-bottom:8px}\n.view{position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:5}\n.view img{width:min(96vw,720px);height:auto;display:block}\n.cross{font-size:48px;color:#333;font-weight:300}\n.thumb{width:100%;max-width:420px;border-radius:8px;display:block;margin:0 auto 12px}\n.bi{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin-top:10px}.bi .l{text-align:right;font-size:.88rem}.bi .r{font-size:.88rem}.row{display:grid;grid-template-columns:repeat(5,40px);gap:4px}\n.row label{display:flex;flex-direction:column;align-items:center;border:1px solid var(--line);border-radius:8px;padding:6px 0;cursor:pointer;font-size:.82rem}\n.row label:has(input:checked){background:var(--sel);border-color:var(--accent)}\n.row input{margin:0 0 2px}\n@media(max-width:520px){.bi{grid-template-columns:1fr 1fr}.bi .row{grid-column:1/-1;order:3;grid-template-columns:repeat(5,1fr)}.bi .l{text-align:left}.bi .r{text-align:right}}\n.ends{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-top:3px}\ntextarea{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;min-height:60px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.f{margin-top:16px}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:110px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:760px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n.view img{width:min(96vw,760px);image-rendering:auto}\n.view .cap{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:#555;font-size:.9rem}\n.g4{display:grid;grid-template-columns:1fr 1fr;gap:4px;max-width:460px;margin:0 auto 12px}.g4 img{width:100%;display:block;border-radius:4px}\n.n5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;margin-top:4px}\n.n5 label{display:flex;flex-direction:column;align-items:center;border:1px solid var(--line);border-radius:8px;padding:5px 2px;cursor:pointer;font-size:.74rem;text-align:center;line-height:1.2}\n.n5 label:has(input:checked){background:var(--sel);border-color:var(--accent)}\n.n5 b{font-size:.95rem}\n.it{margin-top:12px}\nh3{font-size:1rem;margin:18px 0 0}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Model images: Kim &amp; Lee (2021), Sensors 21(13): 4360, Table 1 (doi:10.3390/s21134360, CC BY 4.0).</footer>\n<script>\n(function(){\n  var KEY='subway-greenery:state', VIEW=window.__VIEWMS||4000;\n  var PLACES=[['1entrance','Entrance'],['2square','Square'],['3passage','Passage'],['4faregate','Fare gates']];\n  var PREF=['Not preferred at all','Not preferred','Moderate','Preferred','Strongly preferred'];\n  var AREA=['Too low','Low','Suitable','High','Very high'];\n  var REC=[['rec_rest','come to rest'],['rec_energy','renew my energy'],['rec_myself','become myself again'],['rec_tension','lose all tension'],['rec_thoughts','order my thoughts again'],['rec_behind','put everything behind me'],['rec_concentrate','regain the ability to concentrate']];\n  var RECL=['Not at all','No','Moderate','Yes','Absolutely'];\n  var SD=[['sd_bright','Dark','Bright'],['sd_comfortable','Uncomfortable','Comfortable'],['sd_beautiful','Not beautiful','Beautiful'],['sd_pleasant','Unpleasant','Pleasant'],['sd_harmonious','Unharmonious','Harmonious'],['sd_eco','Not environmentally friendly','Environmentally friendly']];\n  var app=document.getElementById('app'), Q={}, files={}, models=[], st=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function send(list,b,next){if(b)b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}next();});}\n  function val(name){var x=app.querySelector('input[name=\"'+name+'\"]:checked');return x?x.value:null;}\n  function radios(q){return '<div class=\"f\"><b>'+esc(Q[q].title)+'</b>'+(Q[q].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+q+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function five(n,labs){var h='<div class=\"n5\">';for(var i=1;i<=5;i++)h+='<label><input type=\"radio\" name=\"'+n+'\" value=\"'+i+'\"><b>'+i+'</b>'+(labs?esc(labs[i-1]):'')+'</label>';return h+'</div>';}\n  function img(m,p){return files[m+'_'+p];}\n  function gi(m){return Number(m.split('_gi')[1]);}\n  function intro(){\n    app.innerHTML='<h1>Greenery in subway stations</h1><p>You will walk through '+st.order.length+' versions of a subway station, four views each (entrance, square, passage, fare gates). The versions differ in how much indoor planting they have. After each walk-through, say how much you like it, how restorative it feels and how you see the space. It takes about 15 minutes.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');send([SPSite.answer('consent',true)],this,function(){st.step='about';save();route();});};\n  }\n  function about(){\n    app.innerHTML='<h2>About you</h2><div class=\"card\">'+radios('gender')+radios('age_group')+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var g=val('gender'),a=val('age_group');if(!g||!a)return err('Please answer both questions.');\n      send([SPSite.answer('gender',g),SPSite.answer('age_group',a)],this,function(){st.step='model';st.k=0;st.phase='view';save();route();});\n    };\n  }\n  function walk(){\n    var m=st.order[st.k],v=document.createElement('div');v.className='view';app.innerHTML='';app.appendChild(v);var i=0;\n    (function next(){if(i>=PLACES.length){st.phase='q';save();return route();}\n      var f=img(m,PLACES[i][0]);v.innerHTML='<img alt=\"Subway station '+esc(PLACES[i][1].toLowerCase())+'\" src=\"'+esc(f.url)+'\"><div class=\"cap\">Station '+(st.k+1)+' of '+st.order.length+' · '+esc(PLACES[i][1])+'</div>';i++;setTimeout(next,VIEW);})();\n  }\n  function rate(){\n    var m=st.order[st.k],h='<div class=\"g4\">'+PLACES.map(function(p){return '<img alt=\"'+esc(p[1])+'\" src=\"'+esc(img(m,p[0]).url)+'\">';}).join('')+'</div>';\n    h+='<div class=\"it\"><b>'+esc(Q.preference.title)+'</b>'+five('q_pref',PREF)+'</div>';\n    if(gi(m)>0)h+='<div class=\"it\"><b>'+esc(Q.planting_area.title)+'</b>'+five('q_area',AREA)+'</div>';\n    h+='<h3>Being in this station would help me …</h3>';\n    REC.forEach(function(r){h+='<div class=\"it\">… '+esc(r[1])+five('q_'+r[0],RECL)+'</div>';});\n    h+='<h3>This space looks …</h3>';\n    SD.forEach(function(s){h+='<div class=\"it\"><div class=\"ends\" style=\"margin:0 0 2px\"><span>'+esc(s[1])+'</span><span>'+esc(s[2])+'</span></div>'+five('q_'+s[0])+'</div>';});\n    app.innerHTML='<div class=\"prog\">Station '+(st.k+1)+' of '+st.order.length+'</div><div class=\"card\">'+h+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">'+(st.k+1<st.order.length?'Next station':'Finish')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var need=['pref'].concat(gi(m)>0?['area']:[]).concat(REC.map(function(r){return r[0];})).concat(SD.map(function(s){return s[0];})),v={};\n      if(need.some(function(n){v[n]=val('q_'+n);return v[n]==null;}))return err('Please answer every question.');\n      var o={key:m,shown:PLACES.map(function(p){return img(m,p[0]).name;})};\n      var list=[SPSite.answer('preference',Number(v.pref),o)];if(gi(m)>0)list.push(SPSite.answer('planting_area',Number(v.area),o));\n      REC.concat(SD).forEach(function(r){list.push(SPSite.answer(r[0],Number(v[r[0]]),o));});\n      send(list,this,function(){st.k++;st.phase='view';if(st.k>=st.order.length)st.step='done';save();route();});\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st.step='intro';save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  function route(){var s=st.step;window.scrollTo(0,0);if(s==='about')return about();if(s==='model')return st.phase==='q'?rate():walk();if(s==='done')return finish();intro();}\n  SPSite.onReady(function(ctx){\n    ['consent','gender','age_group','preference','planting_area'].concat(REC.map(function(r){return r[0];})).concat(SD.map(function(s){return s[0];})).forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('stations')||[]).forEach(function(f){var k=f.name.replace(/\\.[^.]+$/,'');files[k]=f;});\n    ['underground','ground'].forEach(function(s){['gi00','gi10','gi15','gi20'].forEach(function(g){var m=s+'_'+g;if(PLACES.every(function(p){return files[m+'_'+p[0]];}))models.push(m);});});\n    if(models.length<2){app.innerHTML='<h1>Images missing</h1><p>Upload the station images to the media folder \"stations\".</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    var valid=st&&st.order&&st.order.length===models.length&&st.order.every(function(x){return models.indexOf(x)>=0;});\n    if(!valid)st={step:'intro',order:shuffle(models),k:0,phase:'view'};\n    var a=(ctx&&ctx.answers)||{};if(a.consent!==true){st.step='intro';st.k=0;}\n    if(st.step==='model'&&st.phase!=='q')st.phase='view';\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T15:53:53.451Z",
+   "mediaFolders": [
+    "stations"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T15:53:53.451Z"
+  },
+  "description": "Method replication with the paper's own model images (the original showed walk-through videos of the same 3D models): participants give gender and age group, then walk through eight versions of a subway station interior in random order (underground and ground-level station, each with a greenness index of 0, 10, 15 or 20 %), seeing four views of each (entrance, square, passage, fare gates; 4 s each). After each version they rate preference (1-5), how large the planted area looks (planted versions only), the seven recovery-scale items (coming to rest, renew energy, become myself again, lose all tension, order my thoughts again, put everything behind me, regain the ability to concentrate; 1-5) and six semantic-differential pairs (dark-bright, uncomfortable-comfortable, not beautiful-beautiful, unpleasant-pleasant, unharmonious-harmonious, not environmentally friendly-environmentally friendly). Rebuilt from Kim & Lee (2021), Sensors 21(13): 4360, with the 32 model images printed in the paper's Table 1 and the items and answer labels in its Section 2.2.2 (CC BY 4.0). Analysis as in the paper: one-way ANOVA with Games-Howell post-hoc tests across the four greenness levels, separately for underground and ground stations; mean of the seven recovery items as the attention restoration score; correspondence analysis of the recoded positive responses. Differences from the original study: (1) the original showed videos of the 3D models; here the four still views from the paper's Table 1 (221 x 124 px) are shown one after another; (2) no EEG (the paper measured prefrontal alpha and high-beta asymmetry); (3) the sentence stem 'Being in this station would help me ...' and the age-group options are our wording; (4) the eight models appear in random order.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2021-kim-subway/stations/ground_gi00_1entrance__148ef04a-af66-4c8d-a25d-3be73e500688.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/ground_gi00_1entrance__148ef04a-af66-4c8d-a25d-3be73e500688.jpg",
+   "name": "ground_gi00_1entrance.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/ground_gi00_1entrance__148ef04a-af66-4c8d-a25d-3be73e500688.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 6911,
+   "uploaded_bytes": 6911,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/ground_gi00_2square__3ab12f00-b723-47ba-b0cf-e8381908e6ba.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/ground_gi00_2square__3ab12f00-b723-47ba-b0cf-e8381908e6ba.jpg",
+   "name": "ground_gi00_2square.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/ground_gi00_2square__3ab12f00-b723-47ba-b0cf-e8381908e6ba.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 7420,
+   "uploaded_bytes": 7420,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/ground_gi00_3passage__08e3a834-2984-4eb3-8cdc-4019fda95738.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/ground_gi00_3passage__08e3a834-2984-4eb3-8cdc-4019fda95738.jpg",
+   "name": "ground_gi00_3passage.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/ground_gi00_3passage__08e3a834-2984-4eb3-8cdc-4019fda95738.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 6566,
+   "uploaded_bytes": 6566,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/ground_gi00_4faregate__ea515da2-5303-4661-8794-d108474d7098.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/ground_gi00_4faregate__ea515da2-5303-4661-8794-d108474d7098.jpg",
+   "name": "ground_gi00_4faregate.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/ground_gi00_4faregate__ea515da2-5303-4661-8794-d108474d7098.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 9109,
+   "uploaded_bytes": 9109,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/ground_gi10_1entrance__0b3efa0f-aabe-4830-a494-3afd846d0fbf.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/ground_gi10_1entrance__0b3efa0f-aabe-4830-a494-3afd846d0fbf.jpg",
+   "name": "ground_gi10_1entrance.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/ground_gi10_1entrance__0b3efa0f-aabe-4830-a494-3afd846d0fbf.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 8445,
+   "uploaded_bytes": 8445,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/ground_gi10_2square__41b9b297-38c3-43b2-b809-7fee0a51250e.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/ground_gi10_2square__41b9b297-38c3-43b2-b809-7fee0a51250e.jpg",
+   "name": "ground_gi10_2square.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/ground_gi10_2square__41b9b297-38c3-43b2-b809-7fee0a51250e.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 9204,
+   "uploaded_bytes": 9204,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/ground_gi10_3passage__939270c9-d310-4f91-8b01-9de6d411b4a2.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/ground_gi10_3passage__939270c9-d310-4f91-8b01-9de6d411b4a2.jpg",
+   "name": "ground_gi10_3passage.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/ground_gi10_3passage__939270c9-d310-4f91-8b01-9de6d411b4a2.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 8107,
+   "uploaded_bytes": 8107,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/ground_gi10_4faregate__b36b71ca-c219-48ee-81d2-59038d3ed1f9.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/ground_gi10_4faregate__b36b71ca-c219-48ee-81d2-59038d3ed1f9.jpg",
+   "name": "ground_gi10_4faregate.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/ground_gi10_4faregate__b36b71ca-c219-48ee-81d2-59038d3ed1f9.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 11101,
+   "uploaded_bytes": 11101,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/ground_gi15_1entrance__91c2a90a-d732-4962-a340-d4f2cf34990a.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/ground_gi15_1entrance__91c2a90a-d732-4962-a340-d4f2cf34990a.jpg",
+   "name": "ground_gi15_1entrance.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/ground_gi15_1entrance__91c2a90a-d732-4962-a340-d4f2cf34990a.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 8787,
+   "uploaded_bytes": 8787,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/ground_gi15_2square__c1f509ce-5487-4552-aa41-208aa9443ce4.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/ground_gi15_2square__c1f509ce-5487-4552-aa41-208aa9443ce4.jpg",
+   "name": "ground_gi15_2square.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/ground_gi15_2square__c1f509ce-5487-4552-aa41-208aa9443ce4.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 9663,
+   "uploaded_bytes": 9663,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/ground_gi15_3passage__72d19b7d-992f-4ddc-9805-d8710c3b9849.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/ground_gi15_3passage__72d19b7d-992f-4ddc-9805-d8710c3b9849.jpg",
+   "name": "ground_gi15_3passage.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/ground_gi15_3passage__72d19b7d-992f-4ddc-9805-d8710c3b9849.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 9015,
+   "uploaded_bytes": 9015,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/ground_gi15_4faregate__fc9db034-2ae7-45d0-9d5f-7ebb0dae61ab.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/ground_gi15_4faregate__fc9db034-2ae7-45d0-9d5f-7ebb0dae61ab.jpg",
+   "name": "ground_gi15_4faregate.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/ground_gi15_4faregate__fc9db034-2ae7-45d0-9d5f-7ebb0dae61ab.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 11744,
+   "uploaded_bytes": 11744,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/ground_gi20_1entrance__7ce50805-7372-44fd-b897-f00feb47881b.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/ground_gi20_1entrance__7ce50805-7372-44fd-b897-f00feb47881b.jpg",
+   "name": "ground_gi20_1entrance.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/ground_gi20_1entrance__7ce50805-7372-44fd-b897-f00feb47881b.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 9249,
+   "uploaded_bytes": 9249,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/ground_gi20_2square__4a57ec4d-0530-498e-aa84-1cfcc94c5dfc.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/ground_gi20_2square__4a57ec4d-0530-498e-aa84-1cfcc94c5dfc.jpg",
+   "name": "ground_gi20_2square.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/ground_gi20_2square__4a57ec4d-0530-498e-aa84-1cfcc94c5dfc.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 10214,
+   "uploaded_bytes": 10214,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/ground_gi20_3passage__cd932485-c252-4e78-af33-0b71b7433273.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/ground_gi20_3passage__cd932485-c252-4e78-af33-0b71b7433273.jpg",
+   "name": "ground_gi20_3passage.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/ground_gi20_3passage__cd932485-c252-4e78-af33-0b71b7433273.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 10074,
+   "uploaded_bytes": 10074,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/ground_gi20_4faregate__bd910343-ce4b-4d71-8730-20a77c7d423b.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/ground_gi20_4faregate__bd910343-ce4b-4d71-8730-20a77c7d423b.jpg",
+   "name": "ground_gi20_4faregate.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/ground_gi20_4faregate__bd910343-ce4b-4d71-8730-20a77c7d423b.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 12281,
+   "uploaded_bytes": 12281,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/underground_gi00_1entrance__e6dab339-af2e-42cc-a7ae-033d000d5b2a.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/underground_gi00_1entrance__e6dab339-af2e-42cc-a7ae-033d000d5b2a.jpg",
+   "name": "underground_gi00_1entrance.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/underground_gi00_1entrance__e6dab339-af2e-42cc-a7ae-033d000d5b2a.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 6307,
+   "uploaded_bytes": 6307,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/underground_gi00_2square__d6a72e08-6457-401c-998c-d4297b757a7d.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/underground_gi00_2square__d6a72e08-6457-401c-998c-d4297b757a7d.jpg",
+   "name": "underground_gi00_2square.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/underground_gi00_2square__d6a72e08-6457-401c-998c-d4297b757a7d.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 6621,
+   "uploaded_bytes": 6621,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/underground_gi00_3passage__735d1812-87d6-4be4-98f0-787bce95edc4.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/underground_gi00_3passage__735d1812-87d6-4be4-98f0-787bce95edc4.jpg",
+   "name": "underground_gi00_3passage.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/underground_gi00_3passage__735d1812-87d6-4be4-98f0-787bce95edc4.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 6651,
+   "uploaded_bytes": 6651,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/underground_gi00_4faregate__bf9192fc-42b4-4235-aace-b5b960e7142f.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/underground_gi00_4faregate__bf9192fc-42b4-4235-aace-b5b960e7142f.jpg",
+   "name": "underground_gi00_4faregate.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/underground_gi00_4faregate__bf9192fc-42b4-4235-aace-b5b960e7142f.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 8904,
+   "uploaded_bytes": 8904,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/underground_gi10_1entrance__5f72326c-3aab-4303-942b-0795d44297ad.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/underground_gi10_1entrance__5f72326c-3aab-4303-942b-0795d44297ad.jpg",
+   "name": "underground_gi10_1entrance.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/underground_gi10_1entrance__5f72326c-3aab-4303-942b-0795d44297ad.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 7844,
+   "uploaded_bytes": 7844,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/underground_gi10_2square__05e03b5f-ac10-4608-9188-8f86b71075e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/underground_gi10_2square__05e03b5f-ac10-4608-9188-8f86b71075e6.jpg",
+   "name": "underground_gi10_2square.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/underground_gi10_2square__05e03b5f-ac10-4608-9188-8f86b71075e6.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 8746,
+   "uploaded_bytes": 8746,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/underground_gi10_3passage__57629a63-c1aa-4bea-97a2-71b5e9d773d3.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/underground_gi10_3passage__57629a63-c1aa-4bea-97a2-71b5e9d773d3.jpg",
+   "name": "underground_gi10_3passage.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/underground_gi10_3passage__57629a63-c1aa-4bea-97a2-71b5e9d773d3.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 8605,
+   "uploaded_bytes": 8605,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/underground_gi10_4faregate__703f9b53-b96b-4dce-a2f3-e5758eedc2ce.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/underground_gi10_4faregate__703f9b53-b96b-4dce-a2f3-e5758eedc2ce.jpg",
+   "name": "underground_gi10_4faregate.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/underground_gi10_4faregate__703f9b53-b96b-4dce-a2f3-e5758eedc2ce.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 10398,
+   "uploaded_bytes": 10398,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/underground_gi15_1entrance__ec11c318-bce0-4d4e-b11b-47ebc30003e9.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/underground_gi15_1entrance__ec11c318-bce0-4d4e-b11b-47ebc30003e9.jpg",
+   "name": "underground_gi15_1entrance.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/underground_gi15_1entrance__ec11c318-bce0-4d4e-b11b-47ebc30003e9.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 8369,
+   "uploaded_bytes": 8369,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/underground_gi15_2square__024626b4-7d41-44b1-b0ed-6b60e27b6903.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/underground_gi15_2square__024626b4-7d41-44b1-b0ed-6b60e27b6903.jpg",
+   "name": "underground_gi15_2square.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/underground_gi15_2square__024626b4-7d41-44b1-b0ed-6b60e27b6903.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 9273,
+   "uploaded_bytes": 9273,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/underground_gi15_3passage__324e3803-9fde-4ca6-b5e6-fd822def1f00.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/underground_gi15_3passage__324e3803-9fde-4ca6-b5e6-fd822def1f00.jpg",
+   "name": "underground_gi15_3passage.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/underground_gi15_3passage__324e3803-9fde-4ca6-b5e6-fd822def1f00.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 9490,
+   "uploaded_bytes": 9490,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/underground_gi15_4faregate__ad49b248-0005-4146-a3c0-47883516ad29.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/underground_gi15_4faregate__ad49b248-0005-4146-a3c0-47883516ad29.jpg",
+   "name": "underground_gi15_4faregate.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/underground_gi15_4faregate__ad49b248-0005-4146-a3c0-47883516ad29.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 11178,
+   "uploaded_bytes": 11178,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/underground_gi20_1entrance__4972d362-2045-41ec-9fe7-bf204c6df2e5.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/underground_gi20_1entrance__4972d362-2045-41ec-9fe7-bf204c6df2e5.jpg",
+   "name": "underground_gi20_1entrance.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/underground_gi20_1entrance__4972d362-2045-41ec-9fe7-bf204c6df2e5.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 8930,
+   "uploaded_bytes": 8930,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/underground_gi20_2square__27ebb605-6e79-4f02-9608-15af91a3b854.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/underground_gi20_2square__27ebb605-6e79-4f02-9608-15af91a3b854.jpg",
+   "name": "underground_gi20_2square.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/underground_gi20_2square__27ebb605-6e79-4f02-9608-15af91a3b854.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 9798,
+   "uploaded_bytes": 9798,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/underground_gi20_3passage__1668726c-ee9e-4e66-97a1-3b2144dcefb5.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/underground_gi20_3passage__1668726c-ee9e-4e66-97a1-3b2144dcefb5.jpg",
+   "name": "underground_gi20_3passage.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/underground_gi20_3passage__1668726c-ee9e-4e66-97a1-3b2144dcefb5.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 10189,
+   "uploaded_bytes": 10189,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kim-subway/stations/underground_gi20_4faregate__1139e2e5-d4c6-4422-8151-2a4da75a6475.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kim-subway/stations/underground_gi20_4faregate__1139e2e5-d4c6-4422-8151-2a4da75a6475.jpg",
+   "name": "underground_gi20_4faregate.jpg",
+   "type": "image",
+   "folder": "stations",
+   "media_id": "templates/2021-kim-subway/stations/underground_gi20_4faregate__1139e2e5-d4c6-4422-8151-2a4da75a6475.jpg",
+   "logicalFolder": "stations",
+   "original_bytes": 11607,
+   "uploaded_bytes": 11607,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Psychophysiological Response According to the Greenness Index of Subway Station Space",
+  "authors": [
+   "Won-Ji Kim",
+   "Tae-Kyung Lee"
+  ],
+  "year": 2021,
+  "venue": "Sensors",
+  "doi": "10.3390/s21134360",
+  "url": "https://doi.org/10.3390/s21134360"
+ }
+}

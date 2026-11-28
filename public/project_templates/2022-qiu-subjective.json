@@ -1,199 +1,1143 @@
 {
-  "id": "2022-qiu-subjective",
-  "name": "Street Design Qualities (Shanghai)",
-  "description": "Rebuilt from the published description of Qiu et al. (2022). Raters compare Shanghai street views on four Ewing & Handy design qualities (with their definitions) and safety; scores are TrueSkill ratings scaled to 0–1. Differences from the original study: (1) Bundled images are photographs from the paper PDF (13 scenes), not the original full stimulus set. (2) The rater background wording is not in the paper.",
-  "author": "Qiu et al.",
-  "year": "2022",
-  "category": "Academic Research",
-  "tags": [
-    "official",
-    "paper"
-  ],
-  "isPinned": false,
-  "isApproved": true,
-  "showOnLanding": true,
-  "thumbnailUrl": null,
-  "website": "https://doi.org/10.1016/j.landurbplan.2021.104358",
-  "huggingfaceDataset": null,
-  "createdAt": "2026-10-02T00:00:00+00:00",
-  "imageDatasetConfig": {
-    "mediaFolderTags": {},
-    "mediaFolders": []
-  },
-  "preloadedImages": [],
-  "preloadedSource": null,
-  "preloadedAt": null,
-  "config": {
-    "title": "Street Design Qualities",
-    "description": "For each pair of street views, choose the one that better shows the quality described.",
-    "logoPosition": "right",
-    "autoGrowComment": true,
-    "progressBarType": "questions",
-    "showProgressBar": "aboveheader",
-    "showQuestionNumbers": "off",
-    "spAnalysisRecommendation": {
-      "citation": "Qiu et al. 2022",
-      "items": [
-        {
-          "questions": [
-            "enclosure",
-            "human_scale",
-            "complexity",
-            "imageability",
-            "safety"
-          ],
-          "method": "trueskill_pairwise",
-          "tieHandling": "exclude",
-          "scale": "0-1",
-          "minPerImage": 12
-        }
-      ]
-    },
-    "pages": [
-      {
-        "name": "page_rater",
-        "elements": [
-          {
-            "name": "discipline",
-            "type": "radiogroup",
-            "title": "Discipline (wording not in paper)",
-            "choices": [
-              {
-                "value": "planning",
-                "text": "Urban planning / urban design"
-              },
-              {
-                "value": "architecture",
-                "text": "Architecture"
-              },
-              {
-                "value": "landscape",
-                "text": "Landscape architecture"
-              },
-              {
-                "value": "geography",
-                "text": "Geography / GIS"
-              },
-              {
-                "value": "other",
-                "text": "Other"
-              }
-            ],
-            "isRequired": true
-          },
-          {
-            "name": "role",
-            "type": "radiogroup",
-            "title": "Are you a student or staff? (wording not in paper)",
-            "choices": [
-              {
-                "value": "student",
-                "text": "Student"
-              },
-              {
-                "value": "staff",
-                "text": "Staff"
-              }
-            ],
-            "isRequired": true
-          }
-        ],
-        "title": "About you"
-      },
-      {
-        "name": "page_enclosure",
-        "elements": [
-          {
-            "name": "enclosure",
-            "type": "imagepicker",
-            "title": "Which place has better Enclosure?",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 2,
-            "trialCount": 20,
-            "pairingMode": "balanced",
-            "description": "Enclosure refers to the degree to which streets and other public spaces are visually defined by buildings, walls, trees and other vertical elements. Spaces where the height of vertical elements is proportionally related to the width of the space between them have a room-like quality."
-          }
-        ]
-      },
-      {
-        "name": "page_human_scale",
-        "elements": [
-          {
-            "name": "human_scale",
-            "type": "imagepicker",
-            "title": "Which place has better Human scale?",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 2,
-            "trialCount": 20,
-            "pairingMode": "balanced",
-            "description": "Human scale refers to a size, texture, and articulation of physical elements that match the size and proportions of humans and, equally important, correspond to the speed at which humans walk. Building details, pavement texture, street trees, and street furniture are all physical elements contributing to human scale."
-          }
-        ]
-      },
-      {
-        "name": "page_complexity",
-        "elements": [
-          {
-            "name": "complexity",
-            "type": "imagepicker",
-            "title": "Which place has better Complexity?",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 2,
-            "trialCount": 20,
-            "pairingMode": "balanced",
-            "description": "Complexity refers to the visual richness of a place. The complexity of a place depends on the variety of the physical environment, specifically the numbers and types of buildings, architectural diversity and ornamentation, landscape elements, street furniture, signage and human activity."
-          }
-        ]
-      },
-      {
-        "name": "page_imageability",
-        "elements": [
-          {
-            "name": "imageability",
-            "type": "imagepicker",
-            "title": "Which place has better Imageability?",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 2,
-            "trialCount": 20,
-            "pairingMode": "balanced",
-            "description": "Imageability is the quality of a place that makes it distinct, recognizable and memorable. A place has high imageability when specific physical elements and their arrangement capture attention, evoke feelings and create a lasting impression."
-          }
-        ]
-      },
-      {
-        "name": "page_safety",
-        "elements": [
-          {
-            "name": "safety",
-            "type": "imagepicker",
-            "title": "Which place looks safer?",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 2,
-            "trialCount": 20,
-            "pairingMode": "balanced"
-          }
-        ]
-      }
+ "id": "2022-qiu-subjective",
+ "name": "Street Design Qualities (Shanghai)",
+ "description": "Method replication: the images are new Baidu street views of Shanghai, not the paper's stimuli. Raters compare pairs of street views on four urban design qualities (enclosure, human scale, complexity, imageability, with their definitions) and safety, as in the designers' visual survey of Qiu et al. (2022, Landscape and Urban Planning); scores are TrueSkill ratings. Differences from the original study: (1) 12 pairs per quality; (2) the rater background wording is not in the paper.",
+ "author": "Qiu et al.",
+ "year": "2022",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "source:paper",
+  "modality:street_view",
+  "task:pairwise",
+  "concept:enclosure",
+  "concept:human_scale",
+  "concept:complexity",
+  "concept:imageability",
+  "concept:safety",
+  "participants:experts",
+  "country:China",
+  "city:Shanghai"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1016/j.landurbplan.2022.104358",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-10-02T00:00:00+00:00",
+ "updatedAt": "2026-11-27T06:32:37.457+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
     ]
+   },
+   {
+    "name": "about_you_first",
+    "elements": [
+     {
+      "name": "discipline",
+      "type": "radiogroup",
+      "title": "Discipline",
+      "choices": [
+       {
+        "text": "Urban planning / urban design",
+        "value": "planning"
+       },
+       {
+        "text": "Architecture",
+        "value": "architecture"
+       },
+       {
+        "text": "Landscape architecture",
+        "value": "landscape"
+       },
+       {
+        "text": "Geography / GIS",
+        "value": "geography"
+       },
+       {
+        "text": "Other",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "role",
+      "type": "radiogroup",
+      "title": "Are you a student or staff?",
+      "choices": [
+       {
+        "text": "Student",
+        "value": "student"
+       },
+       {
+        "text": "Staff",
+        "value": "staff"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "enclosure",
+      "type": "imagepicker",
+      "title": "Which place has better Enclosure?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 12,
+      "description": "Enclosure refers to the degree to which streets and other public spaces are visually defined by buildings, walls, trees and other vertical elements. Spaces where the height of vertical elements is proportionally related to the width of the space between them have a room-like quality.",
+      "mediaFolders": [
+       "shanghai"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_2",
+    "elements": [
+     {
+      "name": "human_scale",
+      "type": "imagepicker",
+      "title": "Which place has better Human scale?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 12,
+      "description": "Human scale refers to a size, texture, and articulation of physical elements that match the size and proportions of humans and, equally important, correspond to the speed at which humans walk. Building details, pavement texture, street trees, and street furniture are all physical elements contributing to human scale.",
+      "mediaFolders": [
+       "shanghai"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_3",
+    "elements": [
+     {
+      "name": "complexity",
+      "type": "imagepicker",
+      "title": "Which place has better Complexity?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 12,
+      "description": "Complexity refers to the visual richness of a place. The complexity of a place depends on the variety of the physical environment, specifically the numbers and types of buildings, architectural diversity and ornamentation, landscape elements, street furniture, signage and human activity.",
+      "mediaFolders": [
+       "shanghai"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_4",
+    "elements": [
+     {
+      "name": "imageability",
+      "type": "imagepicker",
+      "title": "Which place has better Imageability?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 12,
+      "description": "Imageability is the quality of a place that makes it distinct, recognizable and memorable. A place has high imageability when specific physical elements and their arrangement capture attention, evoke feelings and create a lasting impression.",
+      "mediaFolders": [
+       "shanghai"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_5",
+    "elements": [
+     {
+      "name": "safety",
+      "type": "imagepicker",
+      "title": "Which place looks safer?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 12,
+      "mediaFolders": [
+       "shanghai"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   }
+  ],
+  "title": "Street Design Qualities (Shanghai)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-6a7bbcf16422afed",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Street Design Qualities (Shanghai)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Street Design Qualities (Shanghai)\",\n  \"description\": \"Raters compare pairs of Shanghai street views on four urban design qualities (enclosure, human scale, complexity, imageability, with their definitions) and safety, as in the designers' visual survey of Qiu et al. (2022, Landscape and Urban Planning); scores are TrueSkill ratings. Method replication: the images are new Baidu street views of Shanghai, not the paper's stimuli. Differences from the original study: (1) 12 pairs per quality; (2) the rater background wording is not in the paper.\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you_first\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"discipline\",\n      \"title\": \"Discipline\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"planning\",\n        \"text\": \"Urban planning / urban design\"\n       },\n       {\n        \"value\": \"architecture\",\n        \"text\": \"Architecture\"\n       },\n       {\n        \"value\": \"landscape\",\n        \"text\": \"Landscape architecture\"\n       },\n       {\n        \"value\": \"geography\",\n        \"text\": \"Geography / GIS\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"role\",\n      \"title\": \"Are you a student or staff?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"student\",\n        \"text\": \"Student\"\n       },\n       {\n        \"value\": \"staff\",\n        \"text\": \"Staff\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"enclosure\",\n      \"title\": \"Which place has better Enclosure?\",\n      \"imageCount\": 2,\n      \"trialCount\": 12,\n      \"isRequired\": true,\n      \"imageFit\": \"cover\",\n      \"mediaFolders\": [\n       \"shanghai\"\n      ],\n      \"description\": \"Enclosure refers to the degree to which streets and other public spaces are visually defined by buildings, walls, trees and other vertical elements. Spaces where the height of vertical elements is proportionally related to the width of the space between them have a room-like quality.\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_2\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"human_scale\",\n      \"title\": \"Which place has better Human scale?\",\n      \"imageCount\": 2,\n      \"trialCount\": 12,\n      \"isRequired\": true,\n      \"imageFit\": \"cover\",\n      \"mediaFolders\": [\n       \"shanghai\"\n      ],\n      \"description\": \"Human scale refers to a size, texture, and articulation of physical elements that match the size and proportions of humans and, equally important, correspond to the speed at which humans walk. Building details, pavement texture, street trees, and street furniture are all physical elements contributing to human scale.\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_3\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"complexity\",\n      \"title\": \"Which place has better Complexity?\",\n      \"imageCount\": 2,\n      \"trialCount\": 12,\n      \"isRequired\": true,\n      \"imageFit\": \"cover\",\n      \"mediaFolders\": [\n       \"shanghai\"\n      ],\n      \"description\": \"Complexity refers to the visual richness of a place. The complexity of a place depends on the variety of the physical environment, specifically the numbers and types of buildings, architectural diversity and ornamentation, landscape elements, street furniture, signage and human activity.\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_4\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"imageability\",\n      \"title\": \"Which place has better Imageability?\",\n      \"imageCount\": 2,\n      \"trialCount\": 12,\n      \"isRequired\": true,\n      \"imageFit\": \"cover\",\n      \"mediaFolders\": [\n       \"shanghai\"\n      ],\n      \"description\": \"Imageability is the quality of a place that makes it distinct, recognizable and memorable. A place has high imageability when specific physical elements and their arrangement capture attention, evoke feelings and create a lasting impression.\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_5\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"safety\",\n      \"title\": \"Which place looks safer?\",\n      \"imageCount\": 2,\n      \"trialCount\": 12,\n      \"isRequired\": true,\n      \"imageFit\": \"cover\",\n      \"mediaFolders\": [\n       \"shanghai\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#8a2c3b;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.rng{accent-color:var(--accent)}.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}.scale.num{grid-template-columns:repeat(5,1fr)}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Shanghai, Baidu street view (© Baidu). Qualities and definitions as used by Qiu et al. (2022), Landscape and Urban Planning 221, 104358, doi:10.1016/j.landurbplan.2022.104358.</footer>\n<script>\n(function(){\n  var C={\"before\": [\"discipline\", \"role\"], \"after\": [], \"tasks\": [\"enclosure\", \"human_scale\", \"complexity\", \"imageability\", \"safety\"], \"minutes\": 12, \"alt\": \"Street view in Shanghai\", \"labels\": {}, \"pickOne\": null, \"heading\": \"Compare Shanghai street views on five design qualities\", \"intro\": \"<p>You will compare pairs of street views from Shanghai on five qualities: <b>enclosure, human scale, complexity, imageability</b> and <b>safety</b>. Each quality has a short definition. Click the street view that shows the quality better. 12 pairs per quality, 60 in total.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?'Pair ':'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else if(q.kind==='sliders'||/slidergroup$/.test(q.type)){\n      h+='<img class=\"shot\" style=\"max-height:'+((q.dimensions||[]).length>2?'40vh':'56vh')+'\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">';\n      (q.dimensions||[]).forEach(function(d){h+='<div class=\"q\"><b>'+esc(d.label)+': <span id=\"v_'+esc(d.id)+'\">–</span></b><input type=\"range\" class=\"rng\" data-d=\"'+esc(d.id)+'\" min=\"'+d.min+'\" max=\"'+d.max+'\" step=\"'+(d.step||1)+'\" value=\"'+Math.round((d.min+d.max)/2)+'\" style=\"width:100%\"><p style=\"display:flex;justify-content:space-between;margin:0\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      h+='<div class=\"row\"><button class=\"btn\" id=\"next\" disabled>Next</button></div><p style=\"font-size:.85rem\">Move the slider to give your answer.</p>';\n      app.innerHTML=h+'<div class=\"err\"></div>';\n      var vals={},rs=app.querySelectorAll('.rng'),nx=document.getElementById('next');\n      rs.forEach(function(r){r.oninput=function(){vals[r.getAttribute('data-d')]=Number(r.value);document.getElementById('v_'+r.getAttribute('data-d')).textContent=r.value;nx.disabled=Object.keys(vals).length<rs.length;};});\n      nx.onclick=function(){nx.disabled=true;SPSite.answer(n,vals,{trial:k}).then(function(r){if(r&&r.ok===false){err(r.error);nx.disabled=false;return;}(done[n]=done[n]||{})[k]=true;nextStep();});};\n      window.scrollTo(0,0);return;\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      var words=!!(lab&&lab.some(function(x){return isNaN(Number(x));}));\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale'+(words?'':' num')+'\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(words?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T06:30:22.622Z",
+   "mediaFolders": [
+    "shanghai"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T06:30:22.622Z"
+  },
+  "description": "Raters compare pairs of Shanghai street views on four urban design qualities (enclosure, human scale, complexity, imageability, with their definitions) and safety, as in the designers' visual survey of Qiu et al. (2022, Landscape and Urban Planning); scores are TrueSkill ratings. Method replication: the images are new Baidu street views of Shanghai, not the paper's stimuli. Differences from the original study: (1) 12 pairs per quality; (2) the rater background wording is not in the paper.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_001__1218ea47-5484-4030-b72c-f7e7b1bceee3.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_001__1218ea47-5484-4030-b72c-f7e7b1bceee3.jpg",
+   "name": "sh_001.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_001__1218ea47-5484-4030-b72c-f7e7b1bceee3.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 92794,
+   "uploaded_bytes": 92794,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_002__91ad8366-ed05-4626-931e-13b9004bb3bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_002__91ad8366-ed05-4626-931e-13b9004bb3bf.jpg",
+   "name": "sh_002.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_002__91ad8366-ed05-4626-931e-13b9004bb3bf.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 156994,
+   "uploaded_bytes": 156994,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_003__90bd52d9-cb2a-47b6-8abc-67cc38417f83.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_003__90bd52d9-cb2a-47b6-8abc-67cc38417f83.jpg",
+   "name": "sh_003.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_003__90bd52d9-cb2a-47b6-8abc-67cc38417f83.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 123513,
+   "uploaded_bytes": 123513,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_004__3c733633-07c4-44ce-baac-0dcbb337f121.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_004__3c733633-07c4-44ce-baac-0dcbb337f121.jpg",
+   "name": "sh_004.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_004__3c733633-07c4-44ce-baac-0dcbb337f121.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 114978,
+   "uploaded_bytes": 114978,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_005__8c7281da-1fb0-4821-9225-71e300c10a2d.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_005__8c7281da-1fb0-4821-9225-71e300c10a2d.jpg",
+   "name": "sh_005.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_005__8c7281da-1fb0-4821-9225-71e300c10a2d.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 124730,
+   "uploaded_bytes": 124730,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_006__c46eb534-606f-4637-82ff-af58dcfb851e.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_006__c46eb534-606f-4637-82ff-af58dcfb851e.jpg",
+   "name": "sh_006.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_006__c46eb534-606f-4637-82ff-af58dcfb851e.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 147442,
+   "uploaded_bytes": 147442,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_007__fff347e3-b3a5-4d11-a7d1-080d7094798e.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_007__fff347e3-b3a5-4d11-a7d1-080d7094798e.jpg",
+   "name": "sh_007.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_007__fff347e3-b3a5-4d11-a7d1-080d7094798e.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 104803,
+   "uploaded_bytes": 104803,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_008__4745d246-e9bd-402c-834d-6e40d776029a.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_008__4745d246-e9bd-402c-834d-6e40d776029a.jpg",
+   "name": "sh_008.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_008__4745d246-e9bd-402c-834d-6e40d776029a.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 120562,
+   "uploaded_bytes": 120562,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_009__cf7ed914-fee6-4072-b2b3-f1ca4cc333e0.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_009__cf7ed914-fee6-4072-b2b3-f1ca4cc333e0.jpg",
+   "name": "sh_009.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_009__cf7ed914-fee6-4072-b2b3-f1ca4cc333e0.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 150563,
+   "uploaded_bytes": 150563,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_010__b3357e02-a25b-44cc-8735-544d8ca629ea.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_010__b3357e02-a25b-44cc-8735-544d8ca629ea.jpg",
+   "name": "sh_010.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_010__b3357e02-a25b-44cc-8735-544d8ca629ea.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 110169,
+   "uploaded_bytes": 110169,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_011__80728f23-91a6-433d-b321-26d17378a5a3.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_011__80728f23-91a6-433d-b321-26d17378a5a3.jpg",
+   "name": "sh_011.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_011__80728f23-91a6-433d-b321-26d17378a5a3.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 102675,
+   "uploaded_bytes": 102675,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_012__72564a4e-d285-4b40-9b82-6e3517491314.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_012__72564a4e-d285-4b40-9b82-6e3517491314.jpg",
+   "name": "sh_012.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_012__72564a4e-d285-4b40-9b82-6e3517491314.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 128083,
+   "uploaded_bytes": 128083,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_013__76ce9194-c0b2-4550-98e8-17ccbeb7e05e.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_013__76ce9194-c0b2-4550-98e8-17ccbeb7e05e.jpg",
+   "name": "sh_013.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_013__76ce9194-c0b2-4550-98e8-17ccbeb7e05e.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 107578,
+   "uploaded_bytes": 107578,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_014__38a85206-cd21-41e0-b194-e3ba310722d2.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_014__38a85206-cd21-41e0-b194-e3ba310722d2.jpg",
+   "name": "sh_014.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_014__38a85206-cd21-41e0-b194-e3ba310722d2.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 136498,
+   "uploaded_bytes": 136498,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_015__99f1b63e-4323-4d7e-815d-fd35ccea354e.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_015__99f1b63e-4323-4d7e-815d-fd35ccea354e.jpg",
+   "name": "sh_015.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_015__99f1b63e-4323-4d7e-815d-fd35ccea354e.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 105396,
+   "uploaded_bytes": 105396,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_016__79274745-476f-4946-abe3-6100a9b1c85c.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_016__79274745-476f-4946-abe3-6100a9b1c85c.jpg",
+   "name": "sh_016.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_016__79274745-476f-4946-abe3-6100a9b1c85c.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 192233,
+   "uploaded_bytes": 192233,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_017__deb91a51-702d-4a6f-90b3-d8899b3863ff.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_017__deb91a51-702d-4a6f-90b3-d8899b3863ff.jpg",
+   "name": "sh_017.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_017__deb91a51-702d-4a6f-90b3-d8899b3863ff.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 151515,
+   "uploaded_bytes": 151515,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_018__ad6ac00b-f4f0-4340-8c8f-4fec20f0c60c.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_018__ad6ac00b-f4f0-4340-8c8f-4fec20f0c60c.jpg",
+   "name": "sh_018.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_018__ad6ac00b-f4f0-4340-8c8f-4fec20f0c60c.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 115160,
+   "uploaded_bytes": 115160,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_019__2f50bd77-ad66-43e0-a961-7c869c0da052.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_019__2f50bd77-ad66-43e0-a961-7c869c0da052.jpg",
+   "name": "sh_019.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_019__2f50bd77-ad66-43e0-a961-7c869c0da052.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 155675,
+   "uploaded_bytes": 155675,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_020__3df5083e-3f3d-4322-8621-823ac62912c5.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_020__3df5083e-3f3d-4322-8621-823ac62912c5.jpg",
+   "name": "sh_020.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_020__3df5083e-3f3d-4322-8621-823ac62912c5.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 162504,
+   "uploaded_bytes": 162504,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_021__31b46a00-5789-4768-9828-590d8546adac.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_021__31b46a00-5789-4768-9828-590d8546adac.jpg",
+   "name": "sh_021.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_021__31b46a00-5789-4768-9828-590d8546adac.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 169673,
+   "uploaded_bytes": 169673,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_022__947efbdd-afaf-4d4e-802a-080ca82a6fc2.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_022__947efbdd-afaf-4d4e-802a-080ca82a6fc2.jpg",
+   "name": "sh_022.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_022__947efbdd-afaf-4d4e-802a-080ca82a6fc2.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 120012,
+   "uploaded_bytes": 120012,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_023__4494c0a9-e87f-423d-a731-31f88c73717b.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_023__4494c0a9-e87f-423d-a731-31f88c73717b.jpg",
+   "name": "sh_023.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_023__4494c0a9-e87f-423d-a731-31f88c73717b.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 138156,
+   "uploaded_bytes": 138156,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_024__b071b534-c1e3-4477-ae20-727ea8b377d3.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_024__b071b534-c1e3-4477-ae20-727ea8b377d3.jpg",
+   "name": "sh_024.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_024__b071b534-c1e3-4477-ae20-727ea8b377d3.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 100005,
+   "uploaded_bytes": 100005,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_025__9178c48c-0d43-4b24-b507-02d6e6297d0b.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_025__9178c48c-0d43-4b24-b507-02d6e6297d0b.jpg",
+   "name": "sh_025.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_025__9178c48c-0d43-4b24-b507-02d6e6297d0b.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 158895,
+   "uploaded_bytes": 158895,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_026__83d52fd4-5e72-4590-93d2-49828643f57b.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_026__83d52fd4-5e72-4590-93d2-49828643f57b.jpg",
+   "name": "sh_026.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_026__83d52fd4-5e72-4590-93d2-49828643f57b.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 132507,
+   "uploaded_bytes": 132507,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_027__60c143a1-179e-4582-bdb3-9e58684ed371.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_027__60c143a1-179e-4582-bdb3-9e58684ed371.jpg",
+   "name": "sh_027.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_027__60c143a1-179e-4582-bdb3-9e58684ed371.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 124430,
+   "uploaded_bytes": 124430,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_028__ee68bacb-6518-4572-8751-e5f56fb82cf9.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_028__ee68bacb-6518-4572-8751-e5f56fb82cf9.jpg",
+   "name": "sh_028.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_028__ee68bacb-6518-4572-8751-e5f56fb82cf9.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 111214,
+   "uploaded_bytes": 111214,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_029__9a4d7d2c-63ed-4a89-ae77-4668d5ceb386.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_029__9a4d7d2c-63ed-4a89-ae77-4668d5ceb386.jpg",
+   "name": "sh_029.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_029__9a4d7d2c-63ed-4a89-ae77-4668d5ceb386.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 127467,
+   "uploaded_bytes": 127467,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_030__80a3c567-b7ad-4037-a1d1-a664464d2bce.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_030__80a3c567-b7ad-4037-a1d1-a664464d2bce.jpg",
+   "name": "sh_030.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_030__80a3c567-b7ad-4037-a1d1-a664464d2bce.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 132820,
+   "uploaded_bytes": 132820,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_031__04be09b5-4a88-4d4b-bef8-f7c94ac2bfd6.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_031__04be09b5-4a88-4d4b-bef8-f7c94ac2bfd6.jpg",
+   "name": "sh_031.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_031__04be09b5-4a88-4d4b-bef8-f7c94ac2bfd6.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 116714,
+   "uploaded_bytes": 116714,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_032__4b95ed6c-a13a-42de-89dd-a080b020323c.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_032__4b95ed6c-a13a-42de-89dd-a080b020323c.jpg",
+   "name": "sh_032.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_032__4b95ed6c-a13a-42de-89dd-a080b020323c.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 81855,
+   "uploaded_bytes": 81855,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_033__507863f4-44ea-4c43-adc7-e7ad19cac3a5.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_033__507863f4-44ea-4c43-adc7-e7ad19cac3a5.jpg",
+   "name": "sh_033.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_033__507863f4-44ea-4c43-adc7-e7ad19cac3a5.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 182697,
+   "uploaded_bytes": 182697,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_035__3b771fe6-fe8d-4ca4-b090-84df3c69696e.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_035__3b771fe6-fe8d-4ca4-b090-84df3c69696e.jpg",
+   "name": "sh_035.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_035__3b771fe6-fe8d-4ca4-b090-84df3c69696e.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 101572,
+   "uploaded_bytes": 101572,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_036__8d4d0203-b69b-4ab1-88e8-47e916d26fbb.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_036__8d4d0203-b69b-4ab1-88e8-47e916d26fbb.jpg",
+   "name": "sh_036.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_036__8d4d0203-b69b-4ab1-88e8-47e916d26fbb.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 184877,
+   "uploaded_bytes": 184877,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_037__b826ce48-69af-4fe9-b250-752a8ac6182c.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_037__b826ce48-69af-4fe9-b250-752a8ac6182c.jpg",
+   "name": "sh_037.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_037__b826ce48-69af-4fe9-b250-752a8ac6182c.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 147679,
+   "uploaded_bytes": 147679,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_038__47e77c1f-06f0-4c18-84f4-301850597561.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_038__47e77c1f-06f0-4c18-84f4-301850597561.jpg",
+   "name": "sh_038.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_038__47e77c1f-06f0-4c18-84f4-301850597561.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 113813,
+   "uploaded_bytes": 113813,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_039__bf47615d-90c9-4668-8d4b-cd426cac984f.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_039__bf47615d-90c9-4668-8d4b-cd426cac984f.jpg",
+   "name": "sh_039.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_039__bf47615d-90c9-4668-8d4b-cd426cac984f.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 93632,
+   "uploaded_bytes": 93632,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_040__3ddad0ff-3302-40ee-b48f-9fd938a75151.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_040__3ddad0ff-3302-40ee-b48f-9fd938a75151.jpg",
+   "name": "sh_040.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_040__3ddad0ff-3302-40ee-b48f-9fd938a75151.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 109242,
+   "uploaded_bytes": 109242,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_041__349acc54-d821-443d-9d3e-2c7ea97bcd9f.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_041__349acc54-d821-443d-9d3e-2c7ea97bcd9f.jpg",
+   "name": "sh_041.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_041__349acc54-d821-443d-9d3e-2c7ea97bcd9f.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 189813,
+   "uploaded_bytes": 189813,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_042__007ed53b-95c8-412c-9ce2-ad4391ab33cc.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_042__007ed53b-95c8-412c-9ce2-ad4391ab33cc.jpg",
+   "name": "sh_042.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_042__007ed53b-95c8-412c-9ce2-ad4391ab33cc.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 163851,
+   "uploaded_bytes": 163851,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_044__b3b99cf3-8cb7-461d-ab2c-41aa6fed6905.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_044__b3b99cf3-8cb7-461d-ab2c-41aa6fed6905.jpg",
+   "name": "sh_044.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_044__b3b99cf3-8cb7-461d-ab2c-41aa6fed6905.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 102167,
+   "uploaded_bytes": 102167,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_045__b9c5d3f6-4a29-4fd0-b361-bc2acf818fc7.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_045__b9c5d3f6-4a29-4fd0-b361-bc2acf818fc7.jpg",
+   "name": "sh_045.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_045__b9c5d3f6-4a29-4fd0-b361-bc2acf818fc7.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 108875,
+   "uploaded_bytes": 108875,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_046__f02646b6-1862-4d04-9c16-76e71a422bd5.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_046__f02646b6-1862-4d04-9c16-76e71a422bd5.jpg",
+   "name": "sh_046.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_046__f02646b6-1862-4d04-9c16-76e71a422bd5.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 116502,
+   "uploaded_bytes": 116502,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_047__34804833-2ca1-4fa3-a311-6182f2cff8ff.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_047__34804833-2ca1-4fa3-a311-6182f2cff8ff.jpg",
+   "name": "sh_047.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_047__34804833-2ca1-4fa3-a311-6182f2cff8ff.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 103554,
+   "uploaded_bytes": 103554,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_048__68e70c23-fab0-4dd2-bda2-0b5139b29e92.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_048__68e70c23-fab0-4dd2-bda2-0b5139b29e92.jpg",
+   "name": "sh_048.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_048__68e70c23-fab0-4dd2-bda2-0b5139b29e92.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 100119,
+   "uploaded_bytes": 100119,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_049__05e4b43c-78ad-4121-b161-ae0da6337938.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_049__05e4b43c-78ad-4121-b161-ae0da6337938.jpg",
+   "name": "sh_049.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_049__05e4b43c-78ad-4121-b161-ae0da6337938.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 150180,
+   "uploaded_bytes": 150180,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_050__18ea10af-6704-4168-9365-bb6c4cbf61a0.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_050__18ea10af-6704-4168-9365-bb6c4cbf61a0.jpg",
+   "name": "sh_050.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_050__18ea10af-6704-4168-9365-bb6c4cbf61a0.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 135826,
+   "uploaded_bytes": 135826,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_051__d047dd8c-de13-4ca4-ad4f-cf03f362f67b.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_051__d047dd8c-de13-4ca4-ad4f-cf03f362f67b.jpg",
+   "name": "sh_051.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_051__d047dd8c-de13-4ca4-ad4f-cf03f362f67b.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 108718,
+   "uploaded_bytes": 108718,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_052__3fe821f7-dda7-4fee-a11b-b6b7e874d991.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_052__3fe821f7-dda7-4fee-a11b-b6b7e874d991.jpg",
+   "name": "sh_052.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_052__3fe821f7-dda7-4fee-a11b-b6b7e874d991.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 67881,
+   "uploaded_bytes": 67881,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_053__ff2cab26-11cd-448d-b72e-cda56fd1d4b3.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_053__ff2cab26-11cd-448d-b72e-cda56fd1d4b3.jpg",
+   "name": "sh_053.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_053__ff2cab26-11cd-448d-b72e-cda56fd1d4b3.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 85271,
+   "uploaded_bytes": 85271,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_054__b25286d9-4050-44db-b7b1-fe44fbc22a6a.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_054__b25286d9-4050-44db-b7b1-fe44fbc22a6a.jpg",
+   "name": "sh_054.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_054__b25286d9-4050-44db-b7b1-fe44fbc22a6a.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 103226,
+   "uploaded_bytes": 103226,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_055__b4610574-7486-4631-af2a-d973ad5b0baf.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_055__b4610574-7486-4631-af2a-d973ad5b0baf.jpg",
+   "name": "sh_055.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_055__b4610574-7486-4631-af2a-d973ad5b0baf.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 144906,
+   "uploaded_bytes": 144906,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_056__7e05d561-8278-47d1-854e-fd4f0144a5f4.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_056__7e05d561-8278-47d1-854e-fd4f0144a5f4.jpg",
+   "name": "sh_056.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_056__7e05d561-8278-47d1-854e-fd4f0144a5f4.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 117163,
+   "uploaded_bytes": 117163,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_057__82186d94-e8ec-439a-a393-4ebf2667dfef.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_057__82186d94-e8ec-439a-a393-4ebf2667dfef.jpg",
+   "name": "sh_057.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_057__82186d94-e8ec-439a-a393-4ebf2667dfef.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 83829,
+   "uploaded_bytes": 83829,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_058__3836d171-365c-4cda-97af-9b5e21627f12.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_058__3836d171-365c-4cda-97af-9b5e21627f12.jpg",
+   "name": "sh_058.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_058__3836d171-365c-4cda-97af-9b5e21627f12.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 93100,
+   "uploaded_bytes": 93100,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_059__70ff12df-dcf6-4773-9a10-1d2d9c50cdf6.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_059__70ff12df-dcf6-4773-9a10-1d2d9c50cdf6.jpg",
+   "name": "sh_059.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_059__70ff12df-dcf6-4773-9a10-1d2d9c50cdf6.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 155652,
+   "uploaded_bytes": 155652,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_060__e64b0bcd-0402-4dab-b974-37d0e882ba60.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_060__e64b0bcd-0402-4dab-b974-37d0e882ba60.jpg",
+   "name": "sh_060.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_060__e64b0bcd-0402-4dab-b974-37d0e882ba60.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 133946,
+   "uploaded_bytes": 133946,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_061__25009793-faa2-49a1-8251-d0cd94f50eba.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_061__25009793-faa2-49a1-8251-d0cd94f50eba.jpg",
+   "name": "sh_061.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_061__25009793-faa2-49a1-8251-d0cd94f50eba.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 104944,
+   "uploaded_bytes": 104944,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_062__cc227272-3407-4cc1-b306-408e15ce2d9a.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_062__cc227272-3407-4cc1-b306-408e15ce2d9a.jpg",
+   "name": "sh_062.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_062__cc227272-3407-4cc1-b306-408e15ce2d9a.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 128539,
+   "uploaded_bytes": 128539,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_064__8cd29a80-a1d2-45b9-83bb-6101c98a4408.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_064__8cd29a80-a1d2-45b9-83bb-6101c98a4408.jpg",
+   "name": "sh_064.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_064__8cd29a80-a1d2-45b9-83bb-6101c98a4408.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 125881,
+   "uploaded_bytes": 125881,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_065__033fc37e-66c7-449a-a9d6-8d569e3432fe.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_065__033fc37e-66c7-449a-a9d6-8d569e3432fe.jpg",
+   "name": "sh_065.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_065__033fc37e-66c7-449a-a9d6-8d569e3432fe.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 105433,
+   "uploaded_bytes": 105433,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_067__aeb22089-08a7-4d41-ae12-2be9a751a138.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_067__aeb22089-08a7-4d41-ae12-2be9a751a138.jpg",
+   "name": "sh_067.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_067__aeb22089-08a7-4d41-ae12-2be9a751a138.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 202978,
+   "uploaded_bytes": 202978,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_068__8cef3fc0-b32a-4db5-899f-b1f3ed037961.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_068__8cef3fc0-b32a-4db5-899f-b1f3ed037961.jpg",
+   "name": "sh_068.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_068__8cef3fc0-b32a-4db5-899f-b1f3ed037961.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 165128,
+   "uploaded_bytes": 165128,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_069__15478807-6317-411f-a9a2-30bfdb4cb2cc.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_069__15478807-6317-411f-a9a2-30bfdb4cb2cc.jpg",
+   "name": "sh_069.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_069__15478807-6317-411f-a9a2-30bfdb4cb2cc.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 167795,
+   "uploaded_bytes": 167795,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_070__f3d781b1-9ed4-4ab7-b097-c3538cdbff6b.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_070__f3d781b1-9ed4-4ab7-b097-c3538cdbff6b.jpg",
+   "name": "sh_070.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_070__f3d781b1-9ed4-4ab7-b097-c3538cdbff6b.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 158227,
+   "uploaded_bytes": 158227,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_071__425dd887-ac9d-455e-86f0-cb63a3b8bcbf.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_071__425dd887-ac9d-455e-86f0-cb63a3b8bcbf.jpg",
+   "name": "sh_071.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_071__425dd887-ac9d-455e-86f0-cb63a3b8bcbf.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 144587,
+   "uploaded_bytes": 144587,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_072__d9d1d8ef-1bf6-4634-9595-9954056bbd9b.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_072__d9d1d8ef-1bf6-4634-9595-9954056bbd9b.jpg",
+   "name": "sh_072.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_072__d9d1d8ef-1bf6-4634-9595-9954056bbd9b.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 109858,
+   "uploaded_bytes": 109858,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_074__93bdf448-b36f-4e92-9c59-b94cf7206d56.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_074__93bdf448-b36f-4e92-9c59-b94cf7206d56.jpg",
+   "name": "sh_074.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_074__93bdf448-b36f-4e92-9c59-b94cf7206d56.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 110716,
+   "uploaded_bytes": 110716,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_076__ef95be45-beb0-41b9-ae29-b0ecb52850f8.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_076__ef95be45-beb0-41b9-ae29-b0ecb52850f8.jpg",
+   "name": "sh_076.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_076__ef95be45-beb0-41b9-ae29-b0ecb52850f8.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 191099,
+   "uploaded_bytes": 191099,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_077__d0c9d0d2-b68f-4474-8ddd-f6931d22d1e1.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_077__d0c9d0d2-b68f-4474-8ddd-f6931d22d1e1.jpg",
+   "name": "sh_077.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_077__d0c9d0d2-b68f-4474-8ddd-f6931d22d1e1.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 134793,
+   "uploaded_bytes": 134793,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_078__ea514278-5711-4be6-a457-4c58d8f6d915.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_078__ea514278-5711-4be6-a457-4c58d8f6d915.jpg",
+   "name": "sh_078.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_078__ea514278-5711-4be6-a457-4c58d8f6d915.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 131775,
+   "uploaded_bytes": 131775,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_079__5322378c-08f0-45b9-bac9-009c21db9edc.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_079__5322378c-08f0-45b9-bac9-009c21db9edc.jpg",
+   "name": "sh_079.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_079__5322378c-08f0-45b9-bac9-009c21db9edc.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 196448,
+   "uploaded_bytes": 196448,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-qiu-subjective/shanghai/sh_080__f03ebfa8-3f6a-49b1-b0a2-2b84bc627122.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-qiu-subjective/shanghai/sh_080__f03ebfa8-3f6a-49b1-b0a2-2b84bc627122.jpg",
+   "name": "sh_080.jpg",
+   "type": "image",
+   "folder": "shanghai",
+   "media_id": "templates/2022-qiu-subjective/shanghai/sh_080__f03ebfa8-3f6a-49b1-b0a2-2b84bc627122.jpg",
+   "logicalFolder": "shanghai",
+   "original_bytes": 113299,
+   "uploaded_bytes": 113299,
+   "image_compressed": false
   }
+ ],
+ "paper": {
+  "title": "Subjective or objective measures of street environment, which are more effective in explaining housing prices?",
+  "authors": [
+   "Qiu W.",
+   "Zhang Z.",
+   "Liu X.",
+   "Li W.",
+   "Li X.",
+   "Xu X.",
+   "Huang X."
+  ],
+  "year": 2022,
+  "venue": "Landscape and Urban Planning",
+  "doi": "10.1016/j.landurbplan.2022.104358",
+  "url": "https://doi.org/10.1016/j.landurbplan.2022.104358"
+ }
 }

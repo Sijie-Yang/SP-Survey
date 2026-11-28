@@ -1,155 +1,1195 @@
 {
-  "id": "2021-ito-assessing",
-  "name": "Bikeability Perception",
-  "description": "Rebuilt from the published description of Ito & Biljecki (2021). Participants rate street-level images from Singapore and Tokyo from 0 to 10 on seven bikeability perceptions; scores are medians after MAD screening. Differences from the original study: (1) The bundled Hugging Face dataset is a single flat folder (no Singapore / Tokyo sub-folders), so the city is not available as a folder tag. (2) Slider end labels are not in the paper.",
-  "author": "Ito & Biljecki",
-  "year": "2021",
-  "category": "Academic Research",
-  "tags": [
-    "official",
-    "paper"
-  ],
-  "isPinned": false,
-  "isApproved": true,
-  "showOnLanding": true,
-  "thumbnailUrl": null,
-  "website": "https://doi.org/10.1016/j.trc.2021.103371",
-  "huggingfaceDataset": "koito19960406/sp_survey_bikeability",
-  "createdAt": "2026-10-02T00:00:00+00:00",
-  "imageDatasetConfig": {
-    "mediaFolders": [],
-    "mediaFolderTags": {}
-  },
-  "preloadedImages": [],
-  "preloadedSource": null,
-  "preloadedAt": null,
-  "config": {
-    "title": "Bikeability Perception",
-    "description": "Rate each street view from 0 to 10 on each aspect of cycling.",
-    "logoPosition": "right",
-    "autoGrowComment": true,
-    "progressBarType": "questions",
-    "showProgressBar": "aboveheader",
-    "showQuestionNumbers": "off",
-    "spAnalysisRecommendation": {
-      "citation": "Ito & Biljecki 2021",
-      "items": [
-        {
-          "questions": [
-            "bikeability"
-          ],
-          "method": "robust_median",
-          "madThreshold": 3,
-          "minPerImage": 8
-        },
-        {
-          "questions": [
-            "bikeability"
-          ],
-          "method": "slider_dimensions"
-        }
-      ]
-    },
-    "pages": [
-      {
-        "name": "page_rating",
-        "elements": [
-          {
-            "name": "bikeability",
-            "type": "imageslidergroup",
-            "title": "Rate this street view on each aspect (0–10).",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 1,
-            "trialCount": 20,
-            "dimensions": [
-              {
-                "id": "cycling_attractiveness",
-                "label": "Attractiveness for cycling",
-                "left": "0",
-                "right": "10"
-              },
-              {
-                "id": "spaciousness",
-                "label": "Spaciousness",
-                "left": "0",
-                "right": "10"
-              },
-              {
-                "id": "cleanliness",
-                "label": "Cleanliness",
-                "left": "0",
-                "right": "10"
-              },
-              {
-                "id": "building_design",
-                "label": "Building design attractiveness",
-                "left": "0",
-                "right": "10"
-              },
-              {
-                "id": "cyclist_safety",
-                "label": "Safety as cyclists",
-                "left": "0",
-                "right": "10"
-              },
-              {
-                "id": "beauty",
-                "label": "Beauty",
-                "left": "0",
-                "right": "10"
-              },
-              {
-                "id": "living_attractiveness",
-                "label": "Attractiveness for living",
-                "left": "0",
-                "right": "10"
-              }
-            ],
-            "scaleMin": 0,
-            "scaleMax": 10,
-            "scaleStep": 1
-          }
-        ]
-      },
-      {
-        "name": "page_check",
-        "elements": [
-          {
-            "name": "attention_check",
-            "type": "radiogroup",
-            "title": "To show that you are reading carefully, please select \"Agree\" for this question.",
-            "choices": [
-              {
-                "value": "strongly_disagree",
-                "text": "Strongly disagree"
-              },
-              {
-                "value": "disagree",
-                "text": "Disagree"
-              },
-              {
-                "value": "neutral",
-                "text": "Neutral"
-              },
-              {
-                "value": "agree",
-                "text": "Agree"
-              },
-              {
-                "value": "strongly_agree",
-                "text": "Strongly agree"
-              }
-            ],
-            "isRequired": true,
-            "isAttentionCheck": true,
-            "expectedAnswer": "agree"
-          }
-        ]
-      }
+ "id": "2021-ito-assessing",
+ "name": "Bikeability Perception of Street Views (Singapore, Tokyo)",
+ "description": "Method replication: same seven perception items and 0–10 scale as the paper; the images are not the paper's stimuli (new Google Street View views of Singapore and Tokyo, © Google). Ito & Biljecki (2021, Transportation Research Part C 132:103371) built a bikeability index of 34 indicators in five categories (connectivity, environment, infrastructure, perception, vehicle–cyclist interaction) for Singapore and Tokyo from street view imagery, OpenStreetMap and other data. For the perception category they ran an Amazon Mechanical Turk survey: 400 randomly selected Google Street View images per city, each rated by at least eight participants from 0 to 10 on attractiveness for cycling, spaciousness, cleanliness, building design attractiveness, safety as a cyclist, beauty and attractiveness for living. Outliers were removed with the median absolute deviation, and LightGBM models on image features predicted the ratings for all street points.\n\nWhat participants do: after consent, 20 street views drawn at random from 81 (Singapore 39, Tokyo 42); for each they move seven sliders from 0 to 10. Then an attention check and how often they cycle.\n\nAnalysis as in the paper: per-image median of each item after removing ratings with MAD-based outlier scores above 3; then models predicting the scores from image features (semantic segmentation, object detection, scene classes, colour).\n\nDifferences from the original study: (1) the images are 81 new Google Street View views (2016–2026) from random points in central Singapore and Tokyo, not the paper's 800; (2) slider end labels (0 and 10 only) and the cycling-frequency question are not from the paper. The earlier version of this template pointed to a gated Hugging Face dataset with no bundled images.",
+ "author": "Ito & Biljecki",
+ "year": "2021",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "bikeability",
+  "cycling",
+  "singapore",
+  "tokyo",
+  "source:paper",
+  "modality:street_view",
+  "task:multi_rating",
+  "concept:cycling",
+  "concept:safety",
+  "concept:beauty",
+  "concept:aesthetics",
+  "participants:crowd",
+  "country:Singapore",
+  "country:Japan",
+  "city:Singapore",
+  "city:Tokyo"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1016/j.trc.2021.103371",
+ "huggingfaceDataset": "koito19960406/sp_survey_bikeability",
+ "createdAt": "2026-10-02T00:00:00+00:00",
+ "updatedAt": "2026-11-27T06:08:17.088+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
     ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "bikeability",
+      "type": "imageslidergroup",
+      "title": "Rate this street view on each aspect (0–10)",
+      "choices": [],
+      "imageFit": "contain",
+      "scaleMax": 10,
+      "scaleMin": 0,
+      "dimensions": [
+       {
+        "id": "cycling_attractiveness",
+        "left": "0",
+        "label": "Attractiveness for cycling",
+        "right": "10"
+       },
+       {
+        "id": "spaciousness",
+        "left": "0",
+        "label": "Spaciousness",
+        "right": "10"
+       },
+       {
+        "id": "cleanliness",
+        "left": "0",
+        "label": "Cleanliness",
+        "right": "10"
+       },
+       {
+        "id": "building_design",
+        "left": "0",
+        "label": "Building design attractiveness",
+        "right": "10"
+       },
+       {
+        "id": "cyclist_safety",
+        "left": "0",
+        "label": "Safety as a cyclist",
+        "right": "10"
+       },
+       {
+        "id": "beauty",
+        "left": "0",
+        "label": "Beauty",
+        "right": "10"
+       },
+       {
+        "id": "living_attractiveness",
+        "left": "0",
+        "label": "Attractiveness for living",
+        "right": "10"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "trialCount": 20,
+      "mediaFolders": [
+       "singapore",
+       "tokyo"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "attention_check",
+      "type": "radiogroup",
+      "title": "To show that you are reading carefully, please select \"Agree\" for this question.",
+      "choices": [
+       {
+        "text": "Strongly disagree",
+        "value": "strongly_disagree"
+       },
+       {
+        "text": "Disagree",
+        "value": "disagree"
+       },
+       {
+        "text": "Neutral",
+        "value": "neutral"
+       },
+       {
+        "text": "Agree",
+        "value": "agree"
+       },
+       {
+        "text": "Strongly agree",
+        "value": "strongly_agree"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "cycling_frequency",
+      "type": "radiogroup",
+      "title": "How often do you cycle?",
+      "choices": [
+       {
+        "text": "Daily",
+        "value": "daily"
+       },
+       {
+        "text": "Weekly",
+        "value": "weekly"
+       },
+       {
+        "text": "Rarely",
+        "value": "rarely"
+       },
+       {
+        "text": "Never",
+        "value": "never"
+       }
+      ],
+      "isRequired": false
+     }
+    ]
+   }
+  ],
+  "title": "Bikeability Perception of Street Views (Singapore, Tokyo)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-e4ff6177299d97a1",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Bikeability Perception of Street Views (Singapore, Tokyo)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Bikeability Perception of Street Views (Singapore, Tokyo)\",\n  \"description\": \"Street views from Singapore and Tokyo rated 0–10 on seven perceptions used in a street-view bikeability index. Method replication of Ito & Biljecki (2021, Transportation Research Part C).\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imageslidergroup\",\n      \"name\": \"bikeability\",\n      \"title\": \"Rate this street view on each aspect (0–10)\",\n      \"imageCount\": 1,\n      \"trialCount\": 20,\n      \"scaleMin\": 0,\n      \"scaleMax\": 10,\n      \"isRequired\": true,\n      \"imageFit\": \"contain\",\n      \"dimensions\": [\n       {\n        \"id\": \"cycling_attractiveness\",\n        \"label\": \"Attractiveness for cycling\",\n        \"left\": \"0\",\n        \"right\": \"10\"\n       },\n       {\n        \"id\": \"spaciousness\",\n        \"label\": \"Spaciousness\",\n        \"left\": \"0\",\n        \"right\": \"10\"\n       },\n       {\n        \"id\": \"cleanliness\",\n        \"label\": \"Cleanliness\",\n        \"left\": \"0\",\n        \"right\": \"10\"\n       },\n       {\n        \"id\": \"building_design\",\n        \"label\": \"Building design attractiveness\",\n        \"left\": \"0\",\n        \"right\": \"10\"\n       },\n       {\n        \"id\": \"cyclist_safety\",\n        \"label\": \"Safety as a cyclist\",\n        \"left\": \"0\",\n        \"right\": \"10\"\n       },\n       {\n        \"id\": \"beauty\",\n        \"label\": \"Beauty\",\n        \"left\": \"0\",\n        \"right\": \"10\"\n       },\n       {\n        \"id\": \"living_attractiveness\",\n        \"label\": \"Attractiveness for living\",\n        \"left\": \"0\",\n        \"right\": \"10\"\n       }\n      ],\n      \"mediaFolders\": [\n       \"singapore\",\n       \"tokyo\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"attention_check\",\n      \"title\": \"To show that you are reading carefully, please select \\\"Agree\\\" for this question.\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"strongly_disagree\",\n        \"text\": \"Strongly disagree\"\n       },\n       {\n        \"value\": \"disagree\",\n        \"text\": \"Disagree\"\n       },\n       {\n        \"value\": \"neutral\",\n        \"text\": \"Neutral\"\n       },\n       {\n        \"value\": \"agree\",\n        \"text\": \"Agree\"\n       },\n       {\n        \"value\": \"strongly_agree\",\n        \"text\": \"Strongly agree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"cycling_frequency\",\n      \"title\": \"How often do you cycle?\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": \"daily\",\n        \"text\": \"Daily\"\n       },\n       {\n        \"value\": \"weekly\",\n        \"text\": \"Weekly\"\n       },\n       {\n        \"value\": \"rarely\",\n        \"text\": \"Rarely\"\n       },\n       {\n        \"value\": \"never\",\n        \"text\": \"Never\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#1f6a8a;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.rng{accent-color:var(--accent)}.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Singapore and Tokyo, Google Street View (© Google). Task from Ito &amp; Biljecki (2021), Assessing bikeability with street view imagery and computer vision, Transportation Research Part C 132, 103371, doi:10.1016/j.trc.2021.103371.</footer>\n<script>\n(function(){\n  var C={\"before\": [], \"after\": [\"attention_check\", \"cycling_frequency\"], \"tasks\": [\"bikeability\"], \"minutes\": 12, \"alt\": \"Street view\", \"labels\": {}, \"pickOne\": null, \"heading\": \"How good is this street for cycling?\", \"intro\": \"<p>You will see 20 street views from Singapore and Tokyo, one at a time. Rate each on seven aspects from 0 (lowest) to 10 (highest): attractiveness for cycling, spaciousness, cleanliness, building design attractiveness, safety as a cyclist, beauty, and attractiveness for living.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?'Pair ':'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else if(q.kind==='sliders'||/slidergroup$/.test(q.type)){\n      h+='<img class=\"shot\" style=\"max-height:'+((q.dimensions||[]).length>2?'40vh':'56vh')+'\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">';\n      (q.dimensions||[]).forEach(function(d){h+='<div class=\"q\"><b>'+esc(d.label)+': <span id=\"v_'+esc(d.id)+'\">–</span></b><input type=\"range\" class=\"rng\" data-d=\"'+esc(d.id)+'\" min=\"'+d.min+'\" max=\"'+d.max+'\" step=\"'+(d.step||1)+'\" value=\"'+Math.round((d.min+d.max)/2)+'\" style=\"width:100%\"><p style=\"display:flex;justify-content:space-between;margin:0\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      h+='<div class=\"row\"><button class=\"btn\" id=\"next\" disabled>Next</button></div><p style=\"font-size:.85rem\">Move the slider to give your answer.</p>';\n      app.innerHTML=h+'<div class=\"err\"></div>';\n      var vals={},rs=app.querySelectorAll('.rng'),nx=document.getElementById('next');\n      rs.forEach(function(r){r.oninput=function(){vals[r.getAttribute('data-d')]=Number(r.value);document.getElementById('v_'+r.getAttribute('data-d')).textContent=r.value;nx.disabled=Object.keys(vals).length<rs.length;};});\n      nx.onclick=function(){nx.disabled=true;SPSite.answer(n,vals,{trial:k}).then(function(r){if(r&&r.ok===false){err(r.error);nx.disabled=false;return;}(done[n]=done[n]||{})[k]=true;nextStep();});};\n      window.scrollTo(0,0);return;\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(lab?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T06:07:37.048Z",
+   "mediaFolders": [
+    "singapore",
+    "tokyo"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T06:07:37.048Z"
+  },
+  "description": "Street views from Singapore and Tokyo rated 0–10 on seven perceptions used in a street-view bikeability index. Method replication of Ito & Biljecki (2021, Transportation Research Part C).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_01__7d6b278c-7211-45d7-8de5-1ea825611b0e.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_01__7d6b278c-7211-45d7-8de5-1ea825611b0e.jpg",
+   "name": "singapore_01.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_01__7d6b278c-7211-45d7-8de5-1ea825611b0e.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 166958,
+   "uploaded_bytes": 166958,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_02__bf705541-2d45-4045-829e-99971a56e732.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_02__bf705541-2d45-4045-829e-99971a56e732.jpg",
+   "name": "singapore_02.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_02__bf705541-2d45-4045-829e-99971a56e732.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 223201,
+   "uploaded_bytes": 223201,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_03__feaae674-bcb0-4cff-a16e-427e1ddf55c0.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_03__feaae674-bcb0-4cff-a16e-427e1ddf55c0.jpg",
+   "name": "singapore_03.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_03__feaae674-bcb0-4cff-a16e-427e1ddf55c0.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 187064,
+   "uploaded_bytes": 187064,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_04__6ed6fbe8-2522-4a9b-b44a-ecd395a5d996.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_04__6ed6fbe8-2522-4a9b-b44a-ecd395a5d996.jpg",
+   "name": "singapore_04.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_04__6ed6fbe8-2522-4a9b-b44a-ecd395a5d996.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 135920,
+   "uploaded_bytes": 135920,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_05__f7a678c0-2e40-46b6-bf6f-4c1eebaa1ea1.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_05__f7a678c0-2e40-46b6-bf6f-4c1eebaa1ea1.jpg",
+   "name": "singapore_05.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_05__f7a678c0-2e40-46b6-bf6f-4c1eebaa1ea1.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 173429,
+   "uploaded_bytes": 173429,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_06__843fa297-53ba-4e88-942f-484aab81d601.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_06__843fa297-53ba-4e88-942f-484aab81d601.jpg",
+   "name": "singapore_06.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_06__843fa297-53ba-4e88-942f-484aab81d601.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 142415,
+   "uploaded_bytes": 142415,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_07__7466195a-d6f9-4f17-b89e-0d4d3682c35e.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_07__7466195a-d6f9-4f17-b89e-0d4d3682c35e.jpg",
+   "name": "singapore_07.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_07__7466195a-d6f9-4f17-b89e-0d4d3682c35e.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 147504,
+   "uploaded_bytes": 147504,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_08__9f5871b8-9fa9-4645-93a6-c403aa318c1d.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_08__9f5871b8-9fa9-4645-93a6-c403aa318c1d.jpg",
+   "name": "singapore_08.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_08__9f5871b8-9fa9-4645-93a6-c403aa318c1d.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 157457,
+   "uploaded_bytes": 157457,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_09__8c1e2a00-4e35-4904-8c08-15616f219988.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_09__8c1e2a00-4e35-4904-8c08-15616f219988.jpg",
+   "name": "singapore_09.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_09__8c1e2a00-4e35-4904-8c08-15616f219988.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 190104,
+   "uploaded_bytes": 190104,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_10__5dcd4460-e482-47a0-911a-5b54b379ffb5.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_10__5dcd4460-e482-47a0-911a-5b54b379ffb5.jpg",
+   "name": "singapore_10.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_10__5dcd4460-e482-47a0-911a-5b54b379ffb5.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 165197,
+   "uploaded_bytes": 165197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_11__ede5c02f-addf-495c-91de-af97f15ad256.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_11__ede5c02f-addf-495c-91de-af97f15ad256.jpg",
+   "name": "singapore_11.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_11__ede5c02f-addf-495c-91de-af97f15ad256.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 205427,
+   "uploaded_bytes": 205427,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_12__e49cb317-ea09-45c6-b6ab-5998a379d5e0.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_12__e49cb317-ea09-45c6-b6ab-5998a379d5e0.jpg",
+   "name": "singapore_12.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_12__e49cb317-ea09-45c6-b6ab-5998a379d5e0.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 196466,
+   "uploaded_bytes": 196466,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_13__266103bb-e916-470e-8f00-7f8a49fd6f1e.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_13__266103bb-e916-470e-8f00-7f8a49fd6f1e.jpg",
+   "name": "singapore_13.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_13__266103bb-e916-470e-8f00-7f8a49fd6f1e.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 193207,
+   "uploaded_bytes": 193207,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_14__bd767049-21cb-44ed-96ee-db22b2c46aee.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_14__bd767049-21cb-44ed-96ee-db22b2c46aee.jpg",
+   "name": "singapore_14.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_14__bd767049-21cb-44ed-96ee-db22b2c46aee.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 194410,
+   "uploaded_bytes": 194410,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_15__cedd0883-be3e-416b-87a2-3cb7ca080158.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_15__cedd0883-be3e-416b-87a2-3cb7ca080158.jpg",
+   "name": "singapore_15.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_15__cedd0883-be3e-416b-87a2-3cb7ca080158.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 153670,
+   "uploaded_bytes": 153670,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_16__cd6604e8-4b94-421a-887d-3e50f49611a2.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_16__cd6604e8-4b94-421a-887d-3e50f49611a2.jpg",
+   "name": "singapore_16.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_16__cd6604e8-4b94-421a-887d-3e50f49611a2.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 192383,
+   "uploaded_bytes": 192383,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_17__86ac4b8a-9e6d-4aca-aa99-92647b915c18.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_17__86ac4b8a-9e6d-4aca-aa99-92647b915c18.jpg",
+   "name": "singapore_17.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_17__86ac4b8a-9e6d-4aca-aa99-92647b915c18.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 197553,
+   "uploaded_bytes": 197553,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_18__3bc2387b-2235-427f-8c4e-9fb379d5d883.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_18__3bc2387b-2235-427f-8c4e-9fb379d5d883.jpg",
+   "name": "singapore_18.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_18__3bc2387b-2235-427f-8c4e-9fb379d5d883.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 183389,
+   "uploaded_bytes": 183389,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_19__02b63cf5-f1a5-4a13-8cf9-99e1b33009e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_19__02b63cf5-f1a5-4a13-8cf9-99e1b33009e6.jpg",
+   "name": "singapore_19.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_19__02b63cf5-f1a5-4a13-8cf9-99e1b33009e6.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 168533,
+   "uploaded_bytes": 168533,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_20__37a11651-facd-48fd-91d0-48b339d4c714.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_20__37a11651-facd-48fd-91d0-48b339d4c714.jpg",
+   "name": "singapore_20.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_20__37a11651-facd-48fd-91d0-48b339d4c714.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 186986,
+   "uploaded_bytes": 186986,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_21__3d122138-e304-428f-a6dd-b3dd6bb34a08.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_21__3d122138-e304-428f-a6dd-b3dd6bb34a08.jpg",
+   "name": "singapore_21.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_21__3d122138-e304-428f-a6dd-b3dd6bb34a08.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 212076,
+   "uploaded_bytes": 212076,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_22__2c2d1a86-8504-47d9-8f98-d964b338eb72.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_22__2c2d1a86-8504-47d9-8f98-d964b338eb72.jpg",
+   "name": "singapore_22.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_22__2c2d1a86-8504-47d9-8f98-d964b338eb72.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 163180,
+   "uploaded_bytes": 163180,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_23__74a7a6f1-9d23-4118-930e-fe8f7405504f.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_23__74a7a6f1-9d23-4118-930e-fe8f7405504f.jpg",
+   "name": "singapore_23.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_23__74a7a6f1-9d23-4118-930e-fe8f7405504f.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 210001,
+   "uploaded_bytes": 210001,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_24__2310552e-6fcb-4a4b-a856-bf684fcfe93c.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_24__2310552e-6fcb-4a4b-a856-bf684fcfe93c.jpg",
+   "name": "singapore_24.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_24__2310552e-6fcb-4a4b-a856-bf684fcfe93c.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 178979,
+   "uploaded_bytes": 178979,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_25__ad6fff84-94e2-4819-89fa-54d3053ddae4.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_25__ad6fff84-94e2-4819-89fa-54d3053ddae4.jpg",
+   "name": "singapore_25.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_25__ad6fff84-94e2-4819-89fa-54d3053ddae4.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 186852,
+   "uploaded_bytes": 186852,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_26__a725d027-8e51-407f-a45e-4253c3d710e3.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_26__a725d027-8e51-407f-a45e-4253c3d710e3.jpg",
+   "name": "singapore_26.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_26__a725d027-8e51-407f-a45e-4253c3d710e3.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 182765,
+   "uploaded_bytes": 182765,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_27__078a8a6b-efbf-4077-a64f-732a5a632f12.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_27__078a8a6b-efbf-4077-a64f-732a5a632f12.jpg",
+   "name": "singapore_27.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_27__078a8a6b-efbf-4077-a64f-732a5a632f12.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 143142,
+   "uploaded_bytes": 143142,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_28__1622c925-16b7-4b0c-9751-e2ba4f18feb1.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_28__1622c925-16b7-4b0c-9751-e2ba4f18feb1.jpg",
+   "name": "singapore_28.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_28__1622c925-16b7-4b0c-9751-e2ba4f18feb1.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 186419,
+   "uploaded_bytes": 186419,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_29__62fe74b5-1a3f-41b0-9132-2ec0bb7275fb.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_29__62fe74b5-1a3f-41b0-9132-2ec0bb7275fb.jpg",
+   "name": "singapore_29.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_29__62fe74b5-1a3f-41b0-9132-2ec0bb7275fb.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 156728,
+   "uploaded_bytes": 156728,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_30__a37a41cb-8992-473a-bd44-9b2aeff55a3b.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_30__a37a41cb-8992-473a-bd44-9b2aeff55a3b.jpg",
+   "name": "singapore_30.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_30__a37a41cb-8992-473a-bd44-9b2aeff55a3b.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 136376,
+   "uploaded_bytes": 136376,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_31__1ffee567-de7d-4446-a6ae-1bf84998ed1f.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_31__1ffee567-de7d-4446-a6ae-1bf84998ed1f.jpg",
+   "name": "singapore_31.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_31__1ffee567-de7d-4446-a6ae-1bf84998ed1f.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 180448,
+   "uploaded_bytes": 180448,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_32__91009f55-e993-42b2-b016-01152f088795.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_32__91009f55-e993-42b2-b016-01152f088795.jpg",
+   "name": "singapore_32.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_32__91009f55-e993-42b2-b016-01152f088795.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 151330,
+   "uploaded_bytes": 151330,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_33__cf2fd208-78dd-4a52-be6f-8c6b4583f8cc.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_33__cf2fd208-78dd-4a52-be6f-8c6b4583f8cc.jpg",
+   "name": "singapore_33.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_33__cf2fd208-78dd-4a52-be6f-8c6b4583f8cc.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 184132,
+   "uploaded_bytes": 184132,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_34__a49fa76e-0abe-4ef5-8884-315d5ac24856.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_34__a49fa76e-0abe-4ef5-8884-315d5ac24856.jpg",
+   "name": "singapore_34.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_34__a49fa76e-0abe-4ef5-8884-315d5ac24856.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 152859,
+   "uploaded_bytes": 152859,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_35__51088cec-791e-46f3-9920-c0c1b91c750e.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_35__51088cec-791e-46f3-9920-c0c1b91c750e.jpg",
+   "name": "singapore_35.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_35__51088cec-791e-46f3-9920-c0c1b91c750e.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 225564,
+   "uploaded_bytes": 225564,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_36__1c47c5ed-1674-4c9a-a3e1-7959b7e547f9.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_36__1c47c5ed-1674-4c9a-a3e1-7959b7e547f9.jpg",
+   "name": "singapore_36.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_36__1c47c5ed-1674-4c9a-a3e1-7959b7e547f9.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 197156,
+   "uploaded_bytes": 197156,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_37__2ffb8aa0-fda0-4933-856c-0554aad8cf60.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_37__2ffb8aa0-fda0-4933-856c-0554aad8cf60.jpg",
+   "name": "singapore_37.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_37__2ffb8aa0-fda0-4933-856c-0554aad8cf60.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 169546,
+   "uploaded_bytes": 169546,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_38__b33877bc-2ae8-4314-ad62-c909ec983798.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_38__b33877bc-2ae8-4314-ad62-c909ec983798.jpg",
+   "name": "singapore_38.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_38__b33877bc-2ae8-4314-ad62-c909ec983798.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 237574,
+   "uploaded_bytes": 237574,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/singapore/singapore_39__1dae1e7f-a9b7-4a2e-b92e-975bcba93c98.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/singapore/singapore_39__1dae1e7f-a9b7-4a2e-b92e-975bcba93c98.jpg",
+   "name": "singapore_39.jpg",
+   "type": "image",
+   "folder": "singapore",
+   "media_id": "templates/2021-ito-assessing/singapore/singapore_39__1dae1e7f-a9b7-4a2e-b92e-975bcba93c98.jpg",
+   "logicalFolder": "singapore",
+   "original_bytes": 170311,
+   "uploaded_bytes": 170311,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_01__7f4786df-3a0f-4a98-a7ae-f133a1c2f078.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_01__7f4786df-3a0f-4a98-a7ae-f133a1c2f078.jpg",
+   "name": "tokyo2_01.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_01__7f4786df-3a0f-4a98-a7ae-f133a1c2f078.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 162446,
+   "uploaded_bytes": 162446,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_02__2d4b0501-7239-4c06-8ffc-3ebca3024b3e.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_02__2d4b0501-7239-4c06-8ffc-3ebca3024b3e.jpg",
+   "name": "tokyo2_02.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_02__2d4b0501-7239-4c06-8ffc-3ebca3024b3e.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 167323,
+   "uploaded_bytes": 167323,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_03__313b6182-71f9-4d94-ba0f-e99270fde998.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_03__313b6182-71f9-4d94-ba0f-e99270fde998.jpg",
+   "name": "tokyo2_03.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_03__313b6182-71f9-4d94-ba0f-e99270fde998.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 171560,
+   "uploaded_bytes": 171560,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_04__63e8ea77-2cfe-4a39-bce9-4a312ab54d47.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_04__63e8ea77-2cfe-4a39-bce9-4a312ab54d47.jpg",
+   "name": "tokyo2_04.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_04__63e8ea77-2cfe-4a39-bce9-4a312ab54d47.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 125944,
+   "uploaded_bytes": 125944,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_05__b77a290a-58f0-4b0e-90f7-e5bcf3066e5c.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_05__b77a290a-58f0-4b0e-90f7-e5bcf3066e5c.jpg",
+   "name": "tokyo2_05.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_05__b77a290a-58f0-4b0e-90f7-e5bcf3066e5c.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 212070,
+   "uploaded_bytes": 212070,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_06__0728ce22-5b95-4783-a392-06b0cf872f37.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_06__0728ce22-5b95-4783-a392-06b0cf872f37.jpg",
+   "name": "tokyo2_06.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_06__0728ce22-5b95-4783-a392-06b0cf872f37.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 163464,
+   "uploaded_bytes": 163464,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_07__8fd57a69-12ad-4c80-a736-3ef6404c0d91.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_07__8fd57a69-12ad-4c80-a736-3ef6404c0d91.jpg",
+   "name": "tokyo2_07.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_07__8fd57a69-12ad-4c80-a736-3ef6404c0d91.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 167387,
+   "uploaded_bytes": 167387,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_08__a030fffd-eed2-4136-9ce9-3c8b35268325.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_08__a030fffd-eed2-4136-9ce9-3c8b35268325.jpg",
+   "name": "tokyo2_08.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_08__a030fffd-eed2-4136-9ce9-3c8b35268325.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 168287,
+   "uploaded_bytes": 168287,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_09__e076558e-19ee-40f5-ae1b-d381ebae2195.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_09__e076558e-19ee-40f5-ae1b-d381ebae2195.jpg",
+   "name": "tokyo2_09.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_09__e076558e-19ee-40f5-ae1b-d381ebae2195.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 146417,
+   "uploaded_bytes": 146417,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_10__caa5481e-353b-462e-83e1-af826e67d082.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_10__caa5481e-353b-462e-83e1-af826e67d082.jpg",
+   "name": "tokyo2_10.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_10__caa5481e-353b-462e-83e1-af826e67d082.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 151041,
+   "uploaded_bytes": 151041,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_11__81242f44-a786-4a79-ad1e-878f94d0f887.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_11__81242f44-a786-4a79-ad1e-878f94d0f887.jpg",
+   "name": "tokyo2_11.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_11__81242f44-a786-4a79-ad1e-878f94d0f887.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 181850,
+   "uploaded_bytes": 181850,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_12__1c30660d-f908-4ee2-a8f3-eefffd1ce522.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_12__1c30660d-f908-4ee2-a8f3-eefffd1ce522.jpg",
+   "name": "tokyo2_12.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_12__1c30660d-f908-4ee2-a8f3-eefffd1ce522.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 180962,
+   "uploaded_bytes": 180962,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_13__0f65d40d-6be9-49b3-96c9-d8027531a626.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_13__0f65d40d-6be9-49b3-96c9-d8027531a626.jpg",
+   "name": "tokyo2_13.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_13__0f65d40d-6be9-49b3-96c9-d8027531a626.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 167591,
+   "uploaded_bytes": 167591,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_14__06070553-fb3d-4e00-b00b-a0018969b3de.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_14__06070553-fb3d-4e00-b00b-a0018969b3de.jpg",
+   "name": "tokyo2_14.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_14__06070553-fb3d-4e00-b00b-a0018969b3de.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 120991,
+   "uploaded_bytes": 120991,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_15__8ff492c3-61bd-4f9a-b2f0-362d4752b09b.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_15__8ff492c3-61bd-4f9a-b2f0-362d4752b09b.jpg",
+   "name": "tokyo2_15.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_15__8ff492c3-61bd-4f9a-b2f0-362d4752b09b.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 157400,
+   "uploaded_bytes": 157400,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_16__8c23e7a2-9a82-456a-980b-f1f394aac058.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_16__8c23e7a2-9a82-456a-980b-f1f394aac058.jpg",
+   "name": "tokyo2_16.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_16__8c23e7a2-9a82-456a-980b-f1f394aac058.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 181591,
+   "uploaded_bytes": 181591,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_17__0de6abb3-f8e5-415b-9049-ae9c01ca0dc8.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_17__0de6abb3-f8e5-415b-9049-ae9c01ca0dc8.jpg",
+   "name": "tokyo2_17.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_17__0de6abb3-f8e5-415b-9049-ae9c01ca0dc8.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 162880,
+   "uploaded_bytes": 162880,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_18__ea53a9c3-0a91-43e6-80ff-63d4fbdc3288.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_18__ea53a9c3-0a91-43e6-80ff-63d4fbdc3288.jpg",
+   "name": "tokyo2_18.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_18__ea53a9c3-0a91-43e6-80ff-63d4fbdc3288.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 158174,
+   "uploaded_bytes": 158174,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_19__da50c163-c476-4a5e-a9b0-03cbef0a96e2.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_19__da50c163-c476-4a5e-a9b0-03cbef0a96e2.jpg",
+   "name": "tokyo2_19.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_19__da50c163-c476-4a5e-a9b0-03cbef0a96e2.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 148771,
+   "uploaded_bytes": 148771,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_20__5921e4ad-eecc-46df-888b-d691dda19b9f.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_20__5921e4ad-eecc-46df-888b-d691dda19b9f.jpg",
+   "name": "tokyo2_20.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_20__5921e4ad-eecc-46df-888b-d691dda19b9f.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 182111,
+   "uploaded_bytes": 182111,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_21__0c37845d-b556-4d73-80de-3b4ada838e0e.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_21__0c37845d-b556-4d73-80de-3b4ada838e0e.jpg",
+   "name": "tokyo2_21.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_21__0c37845d-b556-4d73-80de-3b4ada838e0e.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 153950,
+   "uploaded_bytes": 153950,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_22__83188e88-2b2f-40ae-a13f-4689a2018d19.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_22__83188e88-2b2f-40ae-a13f-4689a2018d19.jpg",
+   "name": "tokyo2_22.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_22__83188e88-2b2f-40ae-a13f-4689a2018d19.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 158773,
+   "uploaded_bytes": 158773,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_23__c8667ab9-96e2-4226-b4ca-f99be96e4ef8.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_23__c8667ab9-96e2-4226-b4ca-f99be96e4ef8.jpg",
+   "name": "tokyo2_23.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_23__c8667ab9-96e2-4226-b4ca-f99be96e4ef8.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 155856,
+   "uploaded_bytes": 155856,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_24__64aade30-aca7-46ab-86a6-e56e0ae42e17.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_24__64aade30-aca7-46ab-86a6-e56e0ae42e17.jpg",
+   "name": "tokyo2_24.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_24__64aade30-aca7-46ab-86a6-e56e0ae42e17.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 136387,
+   "uploaded_bytes": 136387,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_25__c24863bd-99aa-4bbe-9bed-c16bd8aa9af0.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_25__c24863bd-99aa-4bbe-9bed-c16bd8aa9af0.jpg",
+   "name": "tokyo2_25.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_25__c24863bd-99aa-4bbe-9bed-c16bd8aa9af0.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 147061,
+   "uploaded_bytes": 147061,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_26__78046a5b-03c6-4283-865a-4d11a1105bbc.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_26__78046a5b-03c6-4283-865a-4d11a1105bbc.jpg",
+   "name": "tokyo2_26.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_26__78046a5b-03c6-4283-865a-4d11a1105bbc.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 164381,
+   "uploaded_bytes": 164381,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_27__cf3b899a-dcad-4970-ba99-ae779e1a0d22.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_27__cf3b899a-dcad-4970-ba99-ae779e1a0d22.jpg",
+   "name": "tokyo2_27.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_27__cf3b899a-dcad-4970-ba99-ae779e1a0d22.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 173966,
+   "uploaded_bytes": 173966,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_28__44c49436-3fdd-45e1-952b-c928aa10e45d.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_28__44c49436-3fdd-45e1-952b-c928aa10e45d.jpg",
+   "name": "tokyo2_28.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_28__44c49436-3fdd-45e1-952b-c928aa10e45d.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 190997,
+   "uploaded_bytes": 190997,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_29__f64a8afb-a8a8-41bc-8724-bc591572f11c.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_29__f64a8afb-a8a8-41bc-8724-bc591572f11c.jpg",
+   "name": "tokyo2_29.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_29__f64a8afb-a8a8-41bc-8724-bc591572f11c.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 144753,
+   "uploaded_bytes": 144753,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_30__be77b7f1-4ccf-4be1-a0a3-c3c8f1f45fb6.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_30__be77b7f1-4ccf-4be1-a0a3-c3c8f1f45fb6.jpg",
+   "name": "tokyo2_30.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_30__be77b7f1-4ccf-4be1-a0a3-c3c8f1f45fb6.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 181524,
+   "uploaded_bytes": 181524,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_31__b189f274-76a4-4d32-bc3d-1ed90a234ebb.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_31__b189f274-76a4-4d32-bc3d-1ed90a234ebb.jpg",
+   "name": "tokyo2_31.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_31__b189f274-76a4-4d32-bc3d-1ed90a234ebb.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 175742,
+   "uploaded_bytes": 175742,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_32__de552250-adb1-4914-b9e2-087638fb9f9f.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_32__de552250-adb1-4914-b9e2-087638fb9f9f.jpg",
+   "name": "tokyo2_32.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_32__de552250-adb1-4914-b9e2-087638fb9f9f.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 171431,
+   "uploaded_bytes": 171431,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_33__91158321-d1a2-448c-8000-cfeb5bbe40e5.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_33__91158321-d1a2-448c-8000-cfeb5bbe40e5.jpg",
+   "name": "tokyo2_33.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_33__91158321-d1a2-448c-8000-cfeb5bbe40e5.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 135713,
+   "uploaded_bytes": 135713,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_34__97bb38ad-5ad5-45b6-8300-5ed8d241ef04.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_34__97bb38ad-5ad5-45b6-8300-5ed8d241ef04.jpg",
+   "name": "tokyo2_34.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_34__97bb38ad-5ad5-45b6-8300-5ed8d241ef04.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 183761,
+   "uploaded_bytes": 183761,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_35__07309f8f-d0f2-4381-a284-373d8721be25.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_35__07309f8f-d0f2-4381-a284-373d8721be25.jpg",
+   "name": "tokyo2_35.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_35__07309f8f-d0f2-4381-a284-373d8721be25.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 179663,
+   "uploaded_bytes": 179663,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_36__b6babc6e-a012-4367-b1f5-771f14772caa.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_36__b6babc6e-a012-4367-b1f5-771f14772caa.jpg",
+   "name": "tokyo2_36.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_36__b6babc6e-a012-4367-b1f5-771f14772caa.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 164630,
+   "uploaded_bytes": 164630,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_37__50320d33-0909-445a-a9f1-4016718ce527.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_37__50320d33-0909-445a-a9f1-4016718ce527.jpg",
+   "name": "tokyo2_37.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_37__50320d33-0909-445a-a9f1-4016718ce527.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 163982,
+   "uploaded_bytes": 163982,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_38__4fcabab1-4e80-45fe-aa97-7ad00ca46248.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_38__4fcabab1-4e80-45fe-aa97-7ad00ca46248.jpg",
+   "name": "tokyo2_38.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_38__4fcabab1-4e80-45fe-aa97-7ad00ca46248.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 168904,
+   "uploaded_bytes": 168904,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_39__c83ec02a-f7bc-4749-9078-25cabaf2f001.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_39__c83ec02a-f7bc-4749-9078-25cabaf2f001.jpg",
+   "name": "tokyo2_39.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_39__c83ec02a-f7bc-4749-9078-25cabaf2f001.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 146092,
+   "uploaded_bytes": 146092,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_40__3e4a71c8-c609-4f23-9d71-3c85268d3eac.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_40__3e4a71c8-c609-4f23-9d71-3c85268d3eac.jpg",
+   "name": "tokyo2_40.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_40__3e4a71c8-c609-4f23-9d71-3c85268d3eac.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 172602,
+   "uploaded_bytes": 172602,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_41__1cc6fd0b-d8c2-425b-88db-095370ad905e.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_41__1cc6fd0b-d8c2-425b-88db-095370ad905e.jpg",
+   "name": "tokyo2_41.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_41__1cc6fd0b-d8c2-425b-88db-095370ad905e.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 169623,
+   "uploaded_bytes": 169623,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-ito-assessing/tokyo/tokyo2_42__1624b1bd-7ee8-4848-ab33-de1aea09ff03.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-ito-assessing/tokyo/tokyo2_42__1624b1bd-7ee8-4848-ab33-de1aea09ff03.jpg",
+   "name": "tokyo2_42.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2021-ito-assessing/tokyo/tokyo2_42__1624b1bd-7ee8-4848-ab33-de1aea09ff03.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 161619,
+   "uploaded_bytes": 161619,
+   "image_compressed": false
   }
+ ],
+ "paper": {
+  "title": "Assessing bikeability with street view imagery and computer vision",
+  "authors": [
+   "Ito K.",
+   "Biljecki F."
+  ],
+  "year": 2021,
+  "venue": "Transportation Research Part C: Emerging Technologies",
+  "doi": "10.1016/j.trc.2021.103371",
+  "url": "https://doi.org/10.1016/j.trc.2021.103371"
+ }
 }

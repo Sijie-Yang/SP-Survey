@@ -1,0 +1,1368 @@
+{
+ "id": "2020-meidenbauer-equally",
+ "name": "Equally Liked Nature, City and Animals: Image Ratings and Mood",
+ "description": "Faithful replication of Study 4 in Meidenbauer, Stenfors, Bratman, Gross, Schertz, Choe & Berman (2020), \"The affective benefits of nature exposure: What's nature got to do with it?\", Journal of Environmental Psychology 72: 101498. Does nature improve mood more than other pictures people like just as much? Each participant is randomly assigned to one of three sets of 30 very highly liked photographs: natural scenes, city scenes or animals, matched on preference in the authors' validation study (Study 3). Mood is measured before and after viewing with the 6-item STAI (calm, relaxed, content; upset, tense, worried; 1–4) and four 1–100 visual analogue scales (happy, sad, inspired, angry). Each photograph stays on screen for at least 7 s and is then rated from 1 (strongly dislike) to 7 (strongly like). Answers use the same condition codes (Nat / Urb / Anim) and image names as the authors' open data on OSF (ehtk9), so results can be compared with Study4_data.csv. Photographs: the authors' Study 3 image sets from OSF ehtk9 (taken from the SUN database and non-copyrighted web images), used with credit to the authors; the template will be removed if the authors object. Differences from the original study: (1) the mood induction is left out: the original randomly assigned each participant to read a negative story or a neutral story (an excerpt from A Brief History of Time) for at least 2 minutes before the first mood measure; this template starts directly with the mood questions, which is closest to the neutral condition; (2) age and gender are asked on the first page; the original collected them as well but the position is not reported; (3) the order of the STAI items and of the four sliders is randomised on each page, which the paper does not specify.",
+ "author": "Meidenbauer, Stenfors, Bratman, Gross, Schertz, Choe & Berman",
+ "year": "2020",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "source:paper",
+  "modality:scene_photo",
+  "task:rating",
+  "task:questionnaire",
+  "concept:preference",
+  "concept:naturalness",
+  "concept:emotion",
+  "concept:restoration",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:United States"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1016/j.jenvp.2020.101498",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T23:04:56.249+00:00",
+ "updatedAt": "2026-11-27T23:05:05.471+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     },
+     {
+      "max": 99,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "Age (years)",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "condition",
+      "type": "radiogroup",
+      "title": "Image condition (assigned at random by the page)",
+      "choices": [
+       {
+        "text": "Very highly liked nature",
+        "value": "Nat"
+       },
+       {
+        "text": "Very highly liked urban",
+        "value": "Urb"
+       },
+       {
+        "text": "Very highly liked animals",
+        "value": "Anim"
+       }
+      ],
+      "isRequired": true,
+      "description": "Matches Pic_Con in Study4_data.csv on OSF ehtk9."
+     }
+    ]
+   },
+   {
+    "name": "mood_before",
+    "elements": [
+     {
+      "name": "stai_t1",
+      "rows": [
+       {
+        "text": "I feel calm",
+        "value": "calm"
+       },
+       {
+        "text": "I am tense",
+        "value": "tense"
+       },
+       {
+        "text": "I feel upset",
+        "value": "upset"
+       },
+       {
+        "text": "I am relaxed",
+        "value": "relaxed"
+       },
+       {
+        "text": "I feel content",
+        "value": "content"
+       },
+       {
+        "text": "I am worried",
+        "value": "worried"
+       }
+      ],
+      "type": "matrix",
+      "title": "Before the pictures (T1): how do you feel right now, at this moment?",
+      "columns": [
+       {
+        "text": "Not at all",
+        "value": 1
+       },
+       {
+        "text": "Somewhat",
+        "value": 2
+       },
+       {
+        "text": "Moderately",
+        "value": 3
+       },
+       {
+        "text": "Very much",
+        "value": 4
+       }
+      ],
+      "isRequired": true,
+      "description": "6-item STAI (Marteau & Bekker, 1992), 1 = not at all … 4 = very much; item order random. STAI-Pos = mean(calm, relaxed, content), STAI-Neg = mean(upset, tense, worried), as STAI1_pos / STAI1_neg in the open data."
+     },
+     {
+      "name": "mood_t1",
+      "type": "custom",
+      "title": "Before the pictures (T1): happy, sad, inspired, angry (1–100)",
+      "isRequired": true,
+      "description": "Visual analogue scales 1–100, order random: { happy, sad, inspired, angry } as mood1_* in the open data."
+     }
+    ]
+   },
+   {
+    "name": "pictures",
+    "elements": [
+     {
+      "name": "preference",
+      "type": "imageslidergroup",
+      "title": "How much do you like this image?",
+      "choices": [],
+      "scaleMax": 7,
+      "scaleMin": 1,
+      "dimensions": [
+       {
+        "id": "preference",
+        "max": 7,
+        "min": 1,
+        "left": "Strongly dislike",
+        "step": 1,
+        "label": "How much do you like this image?",
+        "right": "Strongly like"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "description": "30 photographs of the assigned set in random order, each at least 7 s on screen. 1 = strongly dislike … 7 = strongly like. key = condition/file (e.g. Anim/animals06), matching Study3_ImageSets_ratings.csv on OSF ehtk9.",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "mood_after",
+    "elements": [
+     {
+      "name": "stai_t2",
+      "rows": [
+       {
+        "text": "I feel calm",
+        "value": "calm"
+       },
+       {
+        "text": "I am tense",
+        "value": "tense"
+       },
+       {
+        "text": "I feel upset",
+        "value": "upset"
+       },
+       {
+        "text": "I am relaxed",
+        "value": "relaxed"
+       },
+       {
+        "text": "I feel content",
+        "value": "content"
+       },
+       {
+        "text": "I am worried",
+        "value": "worried"
+       }
+      ],
+      "type": "matrix",
+      "title": "After the pictures (T2): how do you feel right now, at this moment?",
+      "columns": [
+       {
+        "text": "Not at all",
+        "value": 1
+       },
+       {
+        "text": "Somewhat",
+        "value": 2
+       },
+       {
+        "text": "Moderately",
+        "value": 3
+       },
+       {
+        "text": "Very much",
+        "value": 4
+       }
+      ],
+      "isRequired": true,
+      "description": "Same 6-item STAI as T1 (STAI2_pos / STAI2_neg)."
+     },
+     {
+      "name": "mood_t2",
+      "type": "custom",
+      "title": "After the pictures (T2): happy, sad, inspired, angry (1–100)",
+      "isRequired": true,
+      "description": "Same scales as T1 (mood2_* in the open data)."
+     }
+    ]
+   }
+  ],
+  "title": "Equally Liked Nature, City and Animals",
+  "locale": "en",
+  "spSite": {
+   "id": "site-44acd565f392d5f1",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Equally Liked Nature, City and Animals</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Equally Liked Nature, City and Animals\",\n    \"description\": \"Does nature lift mood more than other pictures people like just as much? Each participant is assigned at random to one of three image sets of 30 very highly liked photographs: natural scenes, city scenes or animals, matched on preference in the authors' validation study. Mood is measured before and after viewing with a 6-item STAI (calm, relaxed, content; upset, tense, worried) and four 1–100 scales (happy, sad, inspired, angry). Each photograph stays on screen at least 7 s and is rated from strongly dislike (1) to strongly like (7). Rebuilt from Study 4 of Meidenbauer, Stenfors, Bratman, Gross, Schertz, Choe and Berman (2020), Journal of Environmental Psychology, with the authors' image sets from OSF ehtk9; the mood induction stories are not included.\",\n    \"locale\": \"en\",\n    \"mediaFolders\": [\"scenes\"],\n    \"pages\": [\n      { \"name\": \"about_you\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\", \"isRequired\": true, \"labelTrue\": \"I agree\", \"labelFalse\": \"I do not agree\" },\n        { \"type\": \"number\", \"name\": \"age\", \"title\": \"Age (years)\", \"min\": 18, \"max\": 99, \"isRequired\": true },\n        { \"type\": \"radiogroup\", \"name\": \"gender\", \"title\": \"Gender\", \"isRequired\": true, \"choices\": [ { \"value\": \"male\", \"text\": \"Male\" }, { \"value\": \"female\", \"text\": \"Female\" }, { \"value\": \"other\", \"text\": \"Other / prefer not to say\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"condition\", \"title\": \"Image condition (assigned at random by the page)\", \"description\": \"Matches Pic_Con in Study4_data.csv on OSF ehtk9.\", \"isRequired\": true, \"choices\": [ { \"value\": \"Nat\", \"text\": \"Very highly liked nature\" }, { \"value\": \"Urb\", \"text\": \"Very highly liked urban\" }, { \"value\": \"Anim\", \"text\": \"Very highly liked animals\" } ] }\n      ]},\n      { \"name\": \"mood_before\", \"elements\": [\n        { \"type\": \"matrix\", \"name\": \"stai_t1\", \"title\": \"Before the pictures (T1): how do you feel right now, at this moment?\", \"description\": \"6-item STAI (Marteau & Bekker, 1992), 1 = not at all … 4 = very much; item order random. STAI-Pos = mean(calm, relaxed, content), STAI-Neg = mean(upset, tense, worried), as STAI1_pos / STAI1_neg in the open data.\", \"isRequired\": true,\n          \"rows\": [ { \"value\": \"calm\", \"text\": \"I feel calm\" }, { \"value\": \"tense\", \"text\": \"I am tense\" }, { \"value\": \"upset\", \"text\": \"I feel upset\" }, { \"value\": \"relaxed\", \"text\": \"I am relaxed\" }, { \"value\": \"content\", \"text\": \"I feel content\" }, { \"value\": \"worried\", \"text\": \"I am worried\" } ],\n          \"columns\": [ { \"value\": 1, \"text\": \"Not at all\" }, { \"value\": 2, \"text\": \"Somewhat\" }, { \"value\": 3, \"text\": \"Moderately\" }, { \"value\": 4, \"text\": \"Very much\" } ] },\n        { \"type\": \"custom\", \"name\": \"mood_t1\", \"title\": \"Before the pictures (T1): happy, sad, inspired, angry (1–100)\", \"description\": \"Visual analogue scales 1–100, order random: { happy, sad, inspired, angry } as mood1_* in the open data.\", \"isRequired\": true }\n      ]},\n      { \"name\": \"pictures\", \"elements\": [\n        { \"type\": \"imageslidergroup\", \"name\": \"preference\", \"title\": \"How much do you like this image?\", \"description\": \"30 photographs of the assigned set in random order, each at least 7 s on screen. 1 = strongly dislike … 7 = strongly like. key = condition/file (e.g. Anim/animals06), matching Study3_ImageSets_ratings.csv on OSF ehtk9.\", \"imageCount\": 1, \"scaleMin\": 1, \"scaleMax\": 7, \"isRequired\": true, \"dimensions\": [\n          { \"id\": \"preference\", \"label\": \"How much do you like this image?\", \"left\": \"Strongly dislike\", \"right\": \"Strongly like\", \"min\": 1, \"max\": 7, \"step\": 1 } ] }\n      ]},\n      { \"name\": \"mood_after\", \"elements\": [\n        { \"type\": \"matrix\", \"name\": \"stai_t2\", \"title\": \"After the pictures (T2): how do you feel right now, at this moment?\", \"description\": \"Same 6-item STAI as T1 (STAI2_pos / STAI2_neg).\", \"isRequired\": true,\n          \"rows\": [ { \"value\": \"calm\", \"text\": \"I feel calm\" }, { \"value\": \"tense\", \"text\": \"I am tense\" }, { \"value\": \"upset\", \"text\": \"I feel upset\" }, { \"value\": \"relaxed\", \"text\": \"I am relaxed\" }, { \"value\": \"content\", \"text\": \"I feel content\" }, { \"value\": \"worried\", \"text\": \"I am worried\" } ],\n          \"columns\": [ { \"value\": 1, \"text\": \"Not at all\" }, { \"value\": 2, \"text\": \"Somewhat\" }, { \"value\": 3, \"text\": \"Moderately\" }, { \"value\": 4, \"text\": \"Very much\" } ] },\n        { \"type\": \"custom\", \"name\": \"mood_t2\", \"title\": \"After the pictures (T2): happy, sad, inspired, angry (1–100)\", \"description\": \"Same scales as T1 (mood2_* in the open data).\", \"isRequired\": true }\n      ]}\n    ]\n  }\n}\n</script>\n<style>\n:root{--bg:#f1f3f1;--card:#fff;--ink:#1b1e1c;--muted:#58605b;--accent:#2f6d5c;--accent-ink:#fff;--line:#d4d9d5;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:860px;margin:0 auto;padding:24px 16px 40px}\nh1{font-size:1.45rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:8px 0 14px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pic{background:#dfe3df;border-radius:12px;overflow:hidden;aspect-ratio:4/3;max-height:62vh;margin:0 auto}\n.pic img{width:100%;height:100%;object-fit:contain;display:block}\n.scale{display:grid;gap:5px}\n.scale button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:9px 0;font:inherit;font-weight:700;cursor:pointer;min-width:0}\n.scale button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}\n.scale.locked button{opacity:.35;cursor:not-allowed}\n.ends{display:flex;justify-content:space-between;gap:12px;font-size:.82rem;color:var(--muted);margin-top:3px}\n.ends span:last-child{text-align:right}\n.row{margin-top:14px}.row:first-child{margin-top:0}.row>b{display:block;font-weight:600;margin-bottom:6px}\ninput[type=range]{width:100%;accent-color:var(--accent);height:28px}\ninput[type=range].untouched::-webkit-slider-thumb{opacity:0}\ninput[type=range].untouched::-moz-range-thumb{opacity:0}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.q{margin-top:16px}.q:first-child{margin-top:0}.q>b{display:block;margin-bottom:4px}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:120px}\n.hint{font-size:.85rem;color:var(--muted);margin-top:8px;min-height:1.2em}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:860px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs: Study 3 image sets of Meidenbauer, Stenfors, Bratman, Gross, Schertz, Choe &amp; Berman (2020), OSF ehtk9 (from the SUN database and non-copyrighted web images), used with credit to the authors and removed on request.</footer>\n<script>\n(function(){\n  var N=30, CONDS=['Nat','Urb','Anim'], MOODS=['happy','sad','inspired','angry'], MINMS=window.__MINMS!=null?window.__MINMS:7000;\n  var app=document.getElementById('app'), Q={}, files={}, cond=null, order=[], done={}, ans={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var x=a[k];a[k]=a[j];a[j]=x;}return a;}\n  function load(k){try{return JSON.parse(localStorage.getItem('mei2020s4:'+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem('mei2020s4:'+k,JSON.stringify(v));}catch(e){}}\n  function setFiles(c){\n    cond=c;var list=Object.keys(files).filter(function(n){return n.indexOf(c+'__')===0;}).sort(), s=load('order');\n    if(s&&s.cond===c&&Array.isArray(s.order)&&s.order.length===list.length&&list.every(function(f){return s.order.indexOf(f)>=0;}))order=s.order;\n    else{order=shuffle(list);save('order',{cond:c,order:order});}\n  }\n  function key(f){return f.replace('__','/').replace(/\\.jpg$/,'');}\n  function radios(n){return (Q[n].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');}\n  function btns(name,n){var b='';for(var v=1;v<=n;v++)b+='<button type=\"button\" data-n=\"'+esc(name)+'\" data-v=\"'+v+'\">'+v+'</button>';return '<div class=\"scale\" style=\"grid-template-columns:repeat('+n+',1fr)\">'+b+'</div>';}\n  function intro(){\n    var counts=CONDS.map(function(c){return Object.keys(files).filter(function(n){return n.indexOf(c+'__')===0;}).length;});\n    if(counts.some(function(n){return n!==N;})){app.innerHTML='<h1>Photographs missing</h1><p>Folder “scenes” should hold 30 photographs per set; found '+esc(CONDS.map(function(c,i){return c+': '+counts[i];}).join(', '))+'.</p>';return;}\n    app.innerHTML='<h1>Pictures and how you feel</h1><p>First you answer a few questions about how you feel right now. Then you see 30 photographs, one at a time; each stays on screen for at least 7 seconds before you can say how much you like it. Afterwards you answer the questions about how you feel once more. About 10 minutes.</p>'+\n      '<div class=\"card\"><div class=\"q\"><b>'+esc(Q.age.title)+'</b><input type=\"number\" id=\"age\" min=\"18\" max=\"99\" inputmode=\"numeric\"></div><div class=\"q\"><b>'+esc(Q.gender.title)+'</b>'+radios('gender')+'</div></div>'+\n      '<div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var av=document.getElementById('age').value, age=Number(av);if(!av||!(age>=18&&age<=99))return err('Please enter your age (18–99).');\n      var g=app.querySelector('input[name=gender]:checked');if(!g)return err('Please answer: Gender.');\n      var c=load('cond');if(CONDS.indexOf(c)<0)c=CONDS[Math.floor(Math.random()*CONDS.length)];save('cond',c);setFiles(c);\n      var b=this;b.disabled=true;\n      Promise.all([SPSite.answer('consent',true),SPSite.answer('age',age),SPSite.answer('gender',g.value),SPSite.answer('condition',c)]).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}ans.consent=true;next();});\n    };\n  }\n  function next(){\n    window.scrollTo(0,0);\n    if(!ans.stai_t1||!ans.mood_t1)return mood(1);\n    var left=order.filter(function(f){return !done[f];});\n    if(left.length)return trial(left[0],N-left.length);\n    if(!ans.stai_t2||!ans.mood_t2)return mood(2);\n    finish();\n  }\n  function mood(t){\n    var sq=Q['stai_t'+t], rows=shuffle(sq.rows||[]), moods=shuffle(MOODS), vals={}, vas={};\n    var head=t===1?'Before we start':'Now that you have seen the pictures';\n    app.innerHTML='<h1>'+esc(head)+'</h1><p>Read each statement and choose the answer that best describes how you feel <b>right now, at this moment</b>.</p>'+\n      '<div class=\"card\">'+rows.map(function(r){return '<div class=\"row\"><b>'+esc(r.text)+'</b>'+btns(r.value,4)+'<div class=\"ends\"><span>Not at all</span><span>Very much</span></div></div>';}).join('')+'</div>'+\n      '<div class=\"card\"><p style=\"margin:0 0 6px\">Place the slider on each line to show how you feel right now.</p>'+moods.map(function(m){return '<div class=\"row\"><b>How '+m+' do you feel right now?</b><input type=\"range\" min=\"1\" max=\"100\" step=\"1\" value=\"50\" class=\"untouched\" data-m=\"'+m+'\" aria-label=\"'+m+'\"><div class=\"ends\"><span>Not at all '+m+'</span><span>Extremely '+m+'</span></div></div>';}).join('')+'</div>'+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"nx\">Continue</button></div><div class=\"err\"></div>';\n    app.querySelectorAll('.scale button').forEach(function(x){x.onclick=function(){vals[x.getAttribute('data-n')]=Number(x.getAttribute('data-v'));x.parentNode.querySelectorAll('button').forEach(function(y){y.classList.toggle('on',y===x);});err('');};});\n    app.querySelectorAll('input[type=range]').forEach(function(r){function tt(){vas[r.dataset.m]=Number(r.value);r.classList.remove('untouched');err('');}r.addEventListener('input',tt);r.addEventListener('pointerdown',tt);r.addEventListener('change',tt);r.addEventListener('keydown',tt);});\n    document.getElementById('nx').onclick=function(){\n      if((sq.rows||[]).some(function(r){return vals[r.value]==null;}))return err('Please answer all six statements.');\n      app.querySelectorAll('input[type=range]').forEach(function(r){if(!r.classList.contains('untouched'))vas[r.dataset.m]=Number(r.value);});\n      if(MOODS.some(function(m){return vas[m]==null;}))return err('Please place the slider on all four lines.');\n      var bt=this;bt.disabled=true;var mv={};MOODS.forEach(function(m){mv[m]=vas[m];});var sv={};(sq.rows||[]).forEach(function(r){sv[r.value]=vals[r.value];});\n      Promise.all([SPSite.answer('stai_t'+t,sv),SPSite.answer('mood_t'+t,mv)]).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){bt.disabled=false;return err(bad.error);}ans['stai_t'+t]=true;ans['mood_t'+t]=true;next();});\n    };\n  }\n  function trial(f,n){\n    var d=(Q.preference.dimensions||[])[0]||{}, busy=false, open=false;\n    var nf=order[order.indexOf(f)+1];if(nf&&files[nf]){var im=new Image();im.src=files[nf].url;}\n    app.innerHTML='<p>Photograph '+(n+1)+' of '+N+'</p><div class=\"progress\"><i style=\"width:'+(100*n/N)+'%\"></i></div>'+\n      '<div class=\"pic\"><img src=\"'+esc(files[f].url)+'\" alt=\"Photograph\"></div>'+\n      '<div class=\"card\"><b>'+esc(d.label)+'</b><div style=\"margin-top:8px\">'+btns('p',7).replace('class=\"scale\"','class=\"scale locked\" id=\"sc\"')+'</div><div class=\"ends\"><span>1 = '+esc(d.left)+'</span><span>7 = '+esc(d.right)+'</span></div><div class=\"hint\" id=\"hint\">Take a moment to look at the photograph…</div><div class=\"err\"></div></div>';\n    setTimeout(function(){var s=document.getElementById('sc');if(!s)return;open=true;s.classList.remove('locked');var h=document.getElementById('hint');if(h)h.textContent='';},MINMS);\n    app.querySelectorAll('#sc button').forEach(function(x){x.onclick=function(){\n      if(!open||busy)return;busy=true;x.classList.add('on');var v={};v[d.id]=Number(x.getAttribute('data-v'));\n      SPSite.answer('preference',v,{key:key(f),shown:[f]}).then(function(r){if(!ok(r)){busy=false;x.classList.remove('on');return err(r.error);}done[f]=true;next();});\n    };});\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){if(m.some(function(x){return ['consent','age','gender','condition'].indexOf(x)>=0;}))intro();else{m.forEach(function(x){delete ans[x];});next();}},1800);}else{var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','age','gender','condition','stai_t1','mood_t1','preference','stai_t2','mood_t2'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('scenes')||[]).forEach(function(f){files[f.name]=f;});\n    var a=(ctx&&ctx.answers)||{};\n    if(a.consent===true&&CONDS.indexOf(a.condition)>=0){\n      setFiles(a.condition);['stai_t1','mood_t1','stai_t2','mood_t2'].forEach(function(k){if(a[k]!=null)ans[k]=true;});\n      var p=a.preference;(p&&Array.isArray(p.trials)?p.trials:[]).forEach(function(x){if(x&&x.key!=null&&x.value!=null){var f=String(x.key).replace('/','__')+'.jpg';done[f]=true;}});\n      next();\n    }else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T23:04:11.727Z",
+   "mediaFolders": [
+    "scenes"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T23:04:11.727Z"
+  },
+  "description": "Does nature lift mood more than other pictures people like just as much? Each participant is assigned at random to one of three image sets of 30 very highly liked photographs: natural scenes, city scenes or animals, matched on preference in the authors' validation study. Mood is measured before and after viewing with a 6-item STAI (calm, relaxed, content; upset, tense, worried) and four 1–100 scales (happy, sad, inspired, angry). Each photograph stays on screen at least 7 s and is rated from strongly dislike (1) to strongly like (7). Rebuilt from Study 4 of Meidenbauer, Stenfors, Bratman, Gross, Schertz, Choe and Berman (2020), Journal of Environmental Psychology, with the authors' image sets from OSF ehtk9; the mood induction stories are not included.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals06__60be9920-c82f-4983-a4d3-d46c57a2721f.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals06__60be9920-c82f-4983-a4d3-d46c57a2721f.jpg",
+   "name": "Anim__animals06.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals06__60be9920-c82f-4983-a4d3-d46c57a2721f.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 249806,
+   "uploaded_bytes": 249806,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals09__d03f193c-5236-475c-82af-1fd86e630b64.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals09__d03f193c-5236-475c-82af-1fd86e630b64.jpg",
+   "name": "Anim__animals09.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals09__d03f193c-5236-475c-82af-1fd86e630b64.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 88310,
+   "uploaded_bytes": 88310,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals10__2820bd45-0f58-4f92-a77b-c1eb2167fc37.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals10__2820bd45-0f58-4f92-a77b-c1eb2167fc37.jpg",
+   "name": "Anim__animals10.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals10__2820bd45-0f58-4f92-a77b-c1eb2167fc37.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 158085,
+   "uploaded_bytes": 158085,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals13__18236466-f569-4f6f-831c-7fb755854050.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals13__18236466-f569-4f6f-831c-7fb755854050.jpg",
+   "name": "Anim__animals13.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals13__18236466-f569-4f6f-831c-7fb755854050.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 191291,
+   "uploaded_bytes": 191291,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals15__9f0bc0e1-800b-4b5f-a8f4-b3214682dcdc.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals15__9f0bc0e1-800b-4b5f-a8f4-b3214682dcdc.jpg",
+   "name": "Anim__animals15.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals15__9f0bc0e1-800b-4b5f-a8f4-b3214682dcdc.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 207133,
+   "uploaded_bytes": 207133,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals16__34128eb7-d4cc-406d-82b5-c597890bce43.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals16__34128eb7-d4cc-406d-82b5-c597890bce43.jpg",
+   "name": "Anim__animals16.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals16__34128eb7-d4cc-406d-82b5-c597890bce43.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 173266,
+   "uploaded_bytes": 173266,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals17__c51ed32b-0e94-494b-a8b8-df9eba1d9d16.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals17__c51ed32b-0e94-494b-a8b8-df9eba1d9d16.jpg",
+   "name": "Anim__animals17.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals17__c51ed32b-0e94-494b-a8b8-df9eba1d9d16.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 143193,
+   "uploaded_bytes": 143193,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals19__c0b5da0c-e661-4b22-8c5f-51b6a53b6aa1.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals19__c0b5da0c-e661-4b22-8c5f-51b6a53b6aa1.jpg",
+   "name": "Anim__animals19.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals19__c0b5da0c-e661-4b22-8c5f-51b6a53b6aa1.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 210365,
+   "uploaded_bytes": 210365,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals21__d481a31b-ba7b-483b-8907-e0d6696528af.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals21__d481a31b-ba7b-483b-8907-e0d6696528af.jpg",
+   "name": "Anim__animals21.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals21__d481a31b-ba7b-483b-8907-e0d6696528af.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 162467,
+   "uploaded_bytes": 162467,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals22__44ecc0b1-9f62-481a-8fb2-cd6aa28d53d8.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals22__44ecc0b1-9f62-481a-8fb2-cd6aa28d53d8.jpg",
+   "name": "Anim__animals22.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals22__44ecc0b1-9f62-481a-8fb2-cd6aa28d53d8.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 126781,
+   "uploaded_bytes": 126781,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals23__1a762463-5ced-410b-b368-f8519eba0395.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals23__1a762463-5ced-410b-b368-f8519eba0395.jpg",
+   "name": "Anim__animals23.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals23__1a762463-5ced-410b-b368-f8519eba0395.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 129334,
+   "uploaded_bytes": 129334,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals29__98e1beb5-ab0c-49f9-ad91-f156e81fb8e9.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals29__98e1beb5-ab0c-49f9-ad91-f156e81fb8e9.jpg",
+   "name": "Anim__animals29.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals29__98e1beb5-ab0c-49f9-ad91-f156e81fb8e9.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 127201,
+   "uploaded_bytes": 127201,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals30__dbc94687-0244-4ecf-9fbd-e1c2e496b029.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals30__dbc94687-0244-4ecf-9fbd-e1c2e496b029.jpg",
+   "name": "Anim__animals30.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals30__dbc94687-0244-4ecf-9fbd-e1c2e496b029.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 235706,
+   "uploaded_bytes": 235706,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals31__1f0b78e8-27ed-487a-8944-f57413b66547.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals31__1f0b78e8-27ed-487a-8944-f57413b66547.jpg",
+   "name": "Anim__animals31.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals31__1f0b78e8-27ed-487a-8944-f57413b66547.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 239830,
+   "uploaded_bytes": 239830,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals33__cc0ea537-9ade-4a10-b7e7-b9efd7deab32.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals33__cc0ea537-9ade-4a10-b7e7-b9efd7deab32.jpg",
+   "name": "Anim__animals33.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals33__cc0ea537-9ade-4a10-b7e7-b9efd7deab32.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 153069,
+   "uploaded_bytes": 153069,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals36__decacef0-d903-48d0-b64c-34d61e88b06f.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals36__decacef0-d903-48d0-b64c-34d61e88b06f.jpg",
+   "name": "Anim__animals36.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals36__decacef0-d903-48d0-b64c-34d61e88b06f.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 125871,
+   "uploaded_bytes": 125871,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals41__aafea3ae-0c41-4f05-9b9c-8bf8299d58c7.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals41__aafea3ae-0c41-4f05-9b9c-8bf8299d58c7.jpg",
+   "name": "Anim__animals41.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals41__aafea3ae-0c41-4f05-9b9c-8bf8299d58c7.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 56375,
+   "uploaded_bytes": 56375,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals43__c0abbc7a-e639-47b1-ba08-91e29a537263.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals43__c0abbc7a-e639-47b1-ba08-91e29a537263.jpg",
+   "name": "Anim__animals43.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals43__c0abbc7a-e639-47b1-ba08-91e29a537263.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 118433,
+   "uploaded_bytes": 118433,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals45__66956870-0092-4fe9-ba2a-65b56848118b.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals45__66956870-0092-4fe9-ba2a-65b56848118b.jpg",
+   "name": "Anim__animals45.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals45__66956870-0092-4fe9-ba2a-65b56848118b.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 149404,
+   "uploaded_bytes": 149404,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals53__3bbd46a9-36b4-4427-85c8-a75c8239ff15.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals53__3bbd46a9-36b4-4427-85c8-a75c8239ff15.jpg",
+   "name": "Anim__animals53.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals53__3bbd46a9-36b4-4427-85c8-a75c8239ff15.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 141630,
+   "uploaded_bytes": 141630,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals55__18504c98-7298-4ef0-ba90-5552352635bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals55__18504c98-7298-4ef0-ba90-5552352635bf.jpg",
+   "name": "Anim__animals55.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals55__18504c98-7298-4ef0-ba90-5552352635bf.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 128441,
+   "uploaded_bytes": 128441,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals56__3dd67fa9-24c2-46a9-9c56-be0a69fb338c.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals56__3dd67fa9-24c2-46a9-9c56-be0a69fb338c.jpg",
+   "name": "Anim__animals56.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals56__3dd67fa9-24c2-46a9-9c56-be0a69fb338c.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 262760,
+   "uploaded_bytes": 262760,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals57__9bf39181-9943-4276-b5d5-086a158819bc.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals57__9bf39181-9943-4276-b5d5-086a158819bc.jpg",
+   "name": "Anim__animals57.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals57__9bf39181-9943-4276-b5d5-086a158819bc.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 117603,
+   "uploaded_bytes": 117603,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals58__42edc4e7-dcc8-4bd5-bf69-e8d0e015e298.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals58__42edc4e7-dcc8-4bd5-bf69-e8d0e015e298.jpg",
+   "name": "Anim__animals58.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals58__42edc4e7-dcc8-4bd5-bf69-e8d0e015e298.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 76456,
+   "uploaded_bytes": 76456,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals60__fe62e351-6772-4e9c-9e5d-3719f5ad14c2.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals60__fe62e351-6772-4e9c-9e5d-3719f5ad14c2.jpg",
+   "name": "Anim__animals60.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals60__fe62e351-6772-4e9c-9e5d-3719f5ad14c2.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 90971,
+   "uploaded_bytes": 90971,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals61__b4805fc6-e289-46f9-92f3-5248f2014e1b.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals61__b4805fc6-e289-46f9-92f3-5248f2014e1b.jpg",
+   "name": "Anim__animals61.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals61__b4805fc6-e289-46f9-92f3-5248f2014e1b.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 172984,
+   "uploaded_bytes": 172984,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals62__871e08e6-549f-4c0f-a584-47e355330592.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals62__871e08e6-549f-4c0f-a584-47e355330592.jpg",
+   "name": "Anim__animals62.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals62__871e08e6-549f-4c0f-a584-47e355330592.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 103887,
+   "uploaded_bytes": 103887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals64__9e5756a1-e873-453e-9299-9a5667126a72.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals64__9e5756a1-e873-453e-9299-9a5667126a72.jpg",
+   "name": "Anim__animals64.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals64__9e5756a1-e873-453e-9299-9a5667126a72.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 203343,
+   "uploaded_bytes": 203343,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals67__9124667f-7e1e-4602-a9f5-1485d45343dd.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals67__9124667f-7e1e-4602-a9f5-1485d45343dd.jpg",
+   "name": "Anim__animals67.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals67__9124667f-7e1e-4602-a9f5-1485d45343dd.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 131161,
+   "uploaded_bytes": 131161,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Anim__animals69__645748b6-b08d-438f-9398-10354c5670d5.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Anim__animals69__645748b6-b08d-438f-9398-10354c5670d5.jpg",
+   "name": "Anim__animals69.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Anim__animals69__645748b6-b08d-438f-9398-10354c5670d5.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 150160,
+   "uploaded_bytes": 150160,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature02__2312691a-7b80-431e-bd81-6706cbfd5707.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature02__2312691a-7b80-431e-bd81-6706cbfd5707.jpg",
+   "name": "Nat__vhp_nature02.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature02__2312691a-7b80-431e-bd81-6706cbfd5707.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 206765,
+   "uploaded_bytes": 206765,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature03__24fddd4e-f56c-489b-a338-40861c5f2ada.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature03__24fddd4e-f56c-489b-a338-40861c5f2ada.jpg",
+   "name": "Nat__vhp_nature03.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature03__24fddd4e-f56c-489b-a338-40861c5f2ada.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 181641,
+   "uploaded_bytes": 181641,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature07__1729ec5b-58dc-4f75-adcd-403dbbd4d19b.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature07__1729ec5b-58dc-4f75-adcd-403dbbd4d19b.jpg",
+   "name": "Nat__vhp_nature07.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature07__1729ec5b-58dc-4f75-adcd-403dbbd4d19b.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 210708,
+   "uploaded_bytes": 210708,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature11__22e7cd0a-db79-497d-afcb-3b689cdf5913.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature11__22e7cd0a-db79-497d-afcb-3b689cdf5913.jpg",
+   "name": "Nat__vhp_nature11.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature11__22e7cd0a-db79-497d-afcb-3b689cdf5913.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 191880,
+   "uploaded_bytes": 191880,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature12__5ce706e8-242b-4a11-9937-ae92711272e9.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature12__5ce706e8-242b-4a11-9937-ae92711272e9.jpg",
+   "name": "Nat__vhp_nature12.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature12__5ce706e8-242b-4a11-9937-ae92711272e9.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 75321,
+   "uploaded_bytes": 75321,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature16__d917c290-3747-4e0a-b552-957f93bad67a.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature16__d917c290-3747-4e0a-b552-957f93bad67a.jpg",
+   "name": "Nat__vhp_nature16.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature16__d917c290-3747-4e0a-b552-957f93bad67a.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 207168,
+   "uploaded_bytes": 207168,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature17__3a766dfb-fd1b-47d9-b99b-1f49e681373b.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature17__3a766dfb-fd1b-47d9-b99b-1f49e681373b.jpg",
+   "name": "Nat__vhp_nature17.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature17__3a766dfb-fd1b-47d9-b99b-1f49e681373b.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 216371,
+   "uploaded_bytes": 216371,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature18__cd7021e9-31d1-4c96-a897-642772664c5e.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature18__cd7021e9-31d1-4c96-a897-642772664c5e.jpg",
+   "name": "Nat__vhp_nature18.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature18__cd7021e9-31d1-4c96-a897-642772664c5e.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 167693,
+   "uploaded_bytes": 167693,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature20__3f2c493f-6b37-4333-af62-b506217c0823.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature20__3f2c493f-6b37-4333-af62-b506217c0823.jpg",
+   "name": "Nat__vhp_nature20.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature20__3f2c493f-6b37-4333-af62-b506217c0823.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 133731,
+   "uploaded_bytes": 133731,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature21__88f12edf-c479-410a-af06-58697a9d25bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature21__88f12edf-c479-410a-af06-58697a9d25bf.jpg",
+   "name": "Nat__vhp_nature21.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature21__88f12edf-c479-410a-af06-58697a9d25bf.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 175714,
+   "uploaded_bytes": 175714,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature30__4f87b169-3a79-4070-bdb6-e02812c65e26.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature30__4f87b169-3a79-4070-bdb6-e02812c65e26.jpg",
+   "name": "Nat__vhp_nature30.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature30__4f87b169-3a79-4070-bdb6-e02812c65e26.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 115750,
+   "uploaded_bytes": 115750,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature36__749e5c48-35f7-451f-958f-cf22e551162e.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature36__749e5c48-35f7-451f-958f-cf22e551162e.jpg",
+   "name": "Nat__vhp_nature36.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature36__749e5c48-35f7-451f-958f-cf22e551162e.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 115998,
+   "uploaded_bytes": 115998,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature38__a7ee5ca5-de96-4b69-96a5-07ce39f5adde.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature38__a7ee5ca5-de96-4b69-96a5-07ce39f5adde.jpg",
+   "name": "Nat__vhp_nature38.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature38__a7ee5ca5-de96-4b69-96a5-07ce39f5adde.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 231891,
+   "uploaded_bytes": 231891,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature43__35749069-c61d-4421-8c16-27a41f1b9e29.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature43__35749069-c61d-4421-8c16-27a41f1b9e29.jpg",
+   "name": "Nat__vhp_nature43.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature43__35749069-c61d-4421-8c16-27a41f1b9e29.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 167226,
+   "uploaded_bytes": 167226,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature44__028a4dbb-7b88-489c-a74b-1ff5774d582a.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature44__028a4dbb-7b88-489c-a74b-1ff5774d582a.jpg",
+   "name": "Nat__vhp_nature44.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature44__028a4dbb-7b88-489c-a74b-1ff5774d582a.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 181780,
+   "uploaded_bytes": 181780,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature48__e638bcd0-de62-48c4-9bbd-5c3cf09becdd.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature48__e638bcd0-de62-48c4-9bbd-5c3cf09becdd.jpg",
+   "name": "Nat__vhp_nature48.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature48__e638bcd0-de62-48c4-9bbd-5c3cf09becdd.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 294820,
+   "uploaded_bytes": 294820,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature50__c551cb3a-95cd-4d23-bb81-c72c794af0ff.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature50__c551cb3a-95cd-4d23-bb81-c72c794af0ff.jpg",
+   "name": "Nat__vhp_nature50.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature50__c551cb3a-95cd-4d23-bb81-c72c794af0ff.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 103932,
+   "uploaded_bytes": 103932,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature52__2f72e8e2-36e7-462d-a707-65be3f1cac02.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature52__2f72e8e2-36e7-462d-a707-65be3f1cac02.jpg",
+   "name": "Nat__vhp_nature52.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature52__2f72e8e2-36e7-462d-a707-65be3f1cac02.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 95524,
+   "uploaded_bytes": 95524,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature54__14872bdf-7133-43c3-a187-d80d0952d24e.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature54__14872bdf-7133-43c3-a187-d80d0952d24e.jpg",
+   "name": "Nat__vhp_nature54.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature54__14872bdf-7133-43c3-a187-d80d0952d24e.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 225507,
+   "uploaded_bytes": 225507,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature58__fb677e68-4e08-4ebc-b73d-29191bbec7d7.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature58__fb677e68-4e08-4ebc-b73d-29191bbec7d7.jpg",
+   "name": "Nat__vhp_nature58.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature58__fb677e68-4e08-4ebc-b73d-29191bbec7d7.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 166572,
+   "uploaded_bytes": 166572,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature59__ed977680-fad7-4979-bc04-e5db42b5852d.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature59__ed977680-fad7-4979-bc04-e5db42b5852d.jpg",
+   "name": "Nat__vhp_nature59.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature59__ed977680-fad7-4979-bc04-e5db42b5852d.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 282141,
+   "uploaded_bytes": 282141,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature61__527fda12-38b9-4cd5-8e27-171fb1be8c2d.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature61__527fda12-38b9-4cd5-8e27-171fb1be8c2d.jpg",
+   "name": "Nat__vhp_nature61.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature61__527fda12-38b9-4cd5-8e27-171fb1be8c2d.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 126374,
+   "uploaded_bytes": 126374,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature64__8324ad67-4e5d-4aa8-a527-f665017d24b2.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature64__8324ad67-4e5d-4aa8-a527-f665017d24b2.jpg",
+   "name": "Nat__vhp_nature64.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature64__8324ad67-4e5d-4aa8-a527-f665017d24b2.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 179600,
+   "uploaded_bytes": 179600,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature66__5d2679b8-4ba9-45fb-b49e-52454affecea.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature66__5d2679b8-4ba9-45fb-b49e-52454affecea.jpg",
+   "name": "Nat__vhp_nature66.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature66__5d2679b8-4ba9-45fb-b49e-52454affecea.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 117887,
+   "uploaded_bytes": 117887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature67__f875f902-8120-423d-9fd7-6515f87992a9.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature67__f875f902-8120-423d-9fd7-6515f87992a9.jpg",
+   "name": "Nat__vhp_nature67.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature67__f875f902-8120-423d-9fd7-6515f87992a9.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 105662,
+   "uploaded_bytes": 105662,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature68__68f93c30-3f9f-4e05-8b2e-47a9f332e599.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature68__68f93c30-3f9f-4e05-8b2e-47a9f332e599.jpg",
+   "name": "Nat__vhp_nature68.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature68__68f93c30-3f9f-4e05-8b2e-47a9f332e599.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 204113,
+   "uploaded_bytes": 204113,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature69__c21fb731-c44d-4c00-aa91-015d6a0c2c84.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature69__c21fb731-c44d-4c00-aa91-015d6a0c2c84.jpg",
+   "name": "Nat__vhp_nature69.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature69__c21fb731-c44d-4c00-aa91-015d6a0c2c84.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 327865,
+   "uploaded_bytes": 327865,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature71__834c66a2-fdc8-4a3a-827c-2a9a05048422.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature71__834c66a2-fdc8-4a3a-827c-2a9a05048422.jpg",
+   "name": "Nat__vhp_nature71.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature71__834c66a2-fdc8-4a3a-827c-2a9a05048422.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 280865,
+   "uploaded_bytes": 280865,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature72__77709c8a-76df-4d92-9493-d23307a1b96d.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature72__77709c8a-76df-4d92-9493-d23307a1b96d.jpg",
+   "name": "Nat__vhp_nature72.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature72__77709c8a-76df-4d92-9493-d23307a1b96d.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 127027,
+   "uploaded_bytes": 127027,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature75__982164d6-c068-4a37-847f-b681ebc88f45.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature75__982164d6-c068-4a37-847f-b681ebc88f45.jpg",
+   "name": "Nat__vhp_nature75.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Nat__vhp_nature75__982164d6-c068-4a37-847f-b681ebc88f45.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 212774,
+   "uploaded_bytes": 212774,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban01__b0670eb1-7f2f-4d07-8d1d-a86708bbf4b5.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban01__b0670eb1-7f2f-4d07-8d1d-a86708bbf4b5.jpg",
+   "name": "Urb__vhp_urban01.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban01__b0670eb1-7f2f-4d07-8d1d-a86708bbf4b5.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 179507,
+   "uploaded_bytes": 179507,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban02__1fabfa42-3055-4314-878f-f5989a386576.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban02__1fabfa42-3055-4314-878f-f5989a386576.jpg",
+   "name": "Urb__vhp_urban02.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban02__1fabfa42-3055-4314-878f-f5989a386576.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 243216,
+   "uploaded_bytes": 243216,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban04__3cf66153-3d66-46c3-9b19-ce82118d5305.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban04__3cf66153-3d66-46c3-9b19-ce82118d5305.jpg",
+   "name": "Urb__vhp_urban04.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban04__3cf66153-3d66-46c3-9b19-ce82118d5305.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 203381,
+   "uploaded_bytes": 203381,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban05__b227a360-0870-425e-807e-4480423d57c7.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban05__b227a360-0870-425e-807e-4480423d57c7.jpg",
+   "name": "Urb__vhp_urban05.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban05__b227a360-0870-425e-807e-4480423d57c7.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 282944,
+   "uploaded_bytes": 282944,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban06__e9f0be60-fe6d-476f-9dcd-1c1d16ac125c.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban06__e9f0be60-fe6d-476f-9dcd-1c1d16ac125c.jpg",
+   "name": "Urb__vhp_urban06.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban06__e9f0be60-fe6d-476f-9dcd-1c1d16ac125c.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 286537,
+   "uploaded_bytes": 286537,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban14__58b92c31-b075-4fd3-a3c9-4152b07e7189.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban14__58b92c31-b075-4fd3-a3c9-4152b07e7189.jpg",
+   "name": "Urb__vhp_urban14.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban14__58b92c31-b075-4fd3-a3c9-4152b07e7189.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 217702,
+   "uploaded_bytes": 217702,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban16__d60d8892-315f-4237-ad47-ea17d21a656d.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban16__d60d8892-315f-4237-ad47-ea17d21a656d.jpg",
+   "name": "Urb__vhp_urban16.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban16__d60d8892-315f-4237-ad47-ea17d21a656d.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 195495,
+   "uploaded_bytes": 195495,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban17__5d1f1f74-0da3-48f1-b397-f2eae9158eab.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban17__5d1f1f74-0da3-48f1-b397-f2eae9158eab.jpg",
+   "name": "Urb__vhp_urban17.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban17__5d1f1f74-0da3-48f1-b397-f2eae9158eab.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 209063,
+   "uploaded_bytes": 209063,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban19__78a94eb7-d3cd-420e-a6c6-81fdc2e2c6be.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban19__78a94eb7-d3cd-420e-a6c6-81fdc2e2c6be.jpg",
+   "name": "Urb__vhp_urban19.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban19__78a94eb7-d3cd-420e-a6c6-81fdc2e2c6be.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 142710,
+   "uploaded_bytes": 142710,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban20__9f73dac3-931a-4ccb-926a-c404edbac9a8.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban20__9f73dac3-931a-4ccb-926a-c404edbac9a8.jpg",
+   "name": "Urb__vhp_urban20.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban20__9f73dac3-931a-4ccb-926a-c404edbac9a8.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 126434,
+   "uploaded_bytes": 126434,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban21__e346f504-1d33-4053-8cc7-b77d14f5558a.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban21__e346f504-1d33-4053-8cc7-b77d14f5558a.jpg",
+   "name": "Urb__vhp_urban21.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban21__e346f504-1d33-4053-8cc7-b77d14f5558a.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 255449,
+   "uploaded_bytes": 255449,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban23__0f90f710-650a-40b3-8d7d-78e7de765e99.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban23__0f90f710-650a-40b3-8d7d-78e7de765e99.jpg",
+   "name": "Urb__vhp_urban23.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban23__0f90f710-650a-40b3-8d7d-78e7de765e99.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 216428,
+   "uploaded_bytes": 216428,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban27__fe20864a-4aed-4b04-900a-d16e34463842.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban27__fe20864a-4aed-4b04-900a-d16e34463842.jpg",
+   "name": "Urb__vhp_urban27.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban27__fe20864a-4aed-4b04-900a-d16e34463842.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 168460,
+   "uploaded_bytes": 168460,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban28__9c059783-1fc1-4f86-a8cd-5c550e55b31d.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban28__9c059783-1fc1-4f86-a8cd-5c550e55b31d.jpg",
+   "name": "Urb__vhp_urban28.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban28__9c059783-1fc1-4f86-a8cd-5c550e55b31d.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 329871,
+   "uploaded_bytes": 329871,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban33__6042447d-7095-4b43-a851-1845b5896b74.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban33__6042447d-7095-4b43-a851-1845b5896b74.jpg",
+   "name": "Urb__vhp_urban33.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban33__6042447d-7095-4b43-a851-1845b5896b74.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 208707,
+   "uploaded_bytes": 208707,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban34__9c06ea8d-c5a0-4a04-b27c-c92fcea511d0.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban34__9c06ea8d-c5a0-4a04-b27c-c92fcea511d0.jpg",
+   "name": "Urb__vhp_urban34.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban34__9c06ea8d-c5a0-4a04-b27c-c92fcea511d0.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 204624,
+   "uploaded_bytes": 204624,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban35__70b7d8b5-30cb-428e-b13d-f0518d1ba45b.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban35__70b7d8b5-30cb-428e-b13d-f0518d1ba45b.jpg",
+   "name": "Urb__vhp_urban35.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban35__70b7d8b5-30cb-428e-b13d-f0518d1ba45b.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 217524,
+   "uploaded_bytes": 217524,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban37__4bc7d7b5-9d09-4867-a3f4-cbab3d0a4a91.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban37__4bc7d7b5-9d09-4867-a3f4-cbab3d0a4a91.jpg",
+   "name": "Urb__vhp_urban37.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban37__4bc7d7b5-9d09-4867-a3f4-cbab3d0a4a91.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 170341,
+   "uploaded_bytes": 170341,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban38__26e8e3d5-0b01-43a7-95fb-39f8d6fab62e.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban38__26e8e3d5-0b01-43a7-95fb-39f8d6fab62e.jpg",
+   "name": "Urb__vhp_urban38.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban38__26e8e3d5-0b01-43a7-95fb-39f8d6fab62e.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 192990,
+   "uploaded_bytes": 192990,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban39__78601002-2fdc-4d5e-8968-b93f3a632416.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban39__78601002-2fdc-4d5e-8968-b93f3a632416.jpg",
+   "name": "Urb__vhp_urban39.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban39__78601002-2fdc-4d5e-8968-b93f3a632416.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 253883,
+   "uploaded_bytes": 253883,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban44__5c18a304-805e-4fe7-b349-24cf5f0677e5.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban44__5c18a304-805e-4fe7-b349-24cf5f0677e5.jpg",
+   "name": "Urb__vhp_urban44.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban44__5c18a304-805e-4fe7-b349-24cf5f0677e5.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 113473,
+   "uploaded_bytes": 113473,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban49__97ee9e2a-04d2-47ec-8e93-21f737c5a1b9.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban49__97ee9e2a-04d2-47ec-8e93-21f737c5a1b9.jpg",
+   "name": "Urb__vhp_urban49.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban49__97ee9e2a-04d2-47ec-8e93-21f737c5a1b9.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 213410,
+   "uploaded_bytes": 213410,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban52__e04dd1a2-42b5-4774-9541-4c277323a25d.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban52__e04dd1a2-42b5-4774-9541-4c277323a25d.jpg",
+   "name": "Urb__vhp_urban52.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban52__e04dd1a2-42b5-4774-9541-4c277323a25d.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 238525,
+   "uploaded_bytes": 238525,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban54__f9ef55de-8a58-4c67-8c06-cb0b333b6d73.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban54__f9ef55de-8a58-4c67-8c06-cb0b333b6d73.jpg",
+   "name": "Urb__vhp_urban54.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban54__f9ef55de-8a58-4c67-8c06-cb0b333b6d73.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 216976,
+   "uploaded_bytes": 216976,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban55__1cf7ab88-9898-40ee-91a1-08731f65b2aa.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban55__1cf7ab88-9898-40ee-91a1-08731f65b2aa.jpg",
+   "name": "Urb__vhp_urban55.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban55__1cf7ab88-9898-40ee-91a1-08731f65b2aa.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 170025,
+   "uploaded_bytes": 170025,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban61__9b0b7a4d-9eac-4c29-a0d7-027788f79030.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban61__9b0b7a4d-9eac-4c29-a0d7-027788f79030.jpg",
+   "name": "Urb__vhp_urban61.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban61__9b0b7a4d-9eac-4c29-a0d7-027788f79030.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 233870,
+   "uploaded_bytes": 233870,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban62__a0ce1371-7fe5-42d8-a8a2-454afae624e9.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban62__a0ce1371-7fe5-42d8-a8a2-454afae624e9.jpg",
+   "name": "Urb__vhp_urban62.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban62__a0ce1371-7fe5-42d8-a8a2-454afae624e9.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 127307,
+   "uploaded_bytes": 127307,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban63__e5fe55bc-395d-446f-8617-285d59c4b828.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban63__e5fe55bc-395d-446f-8617-285d59c4b828.jpg",
+   "name": "Urb__vhp_urban63.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban63__e5fe55bc-395d-446f-8617-285d59c4b828.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 256537,
+   "uploaded_bytes": 256537,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban70__f8924f5b-744e-4c64-a617-92350a922b61.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban70__f8924f5b-744e-4c64-a617-92350a922b61.jpg",
+   "name": "Urb__vhp_urban70.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban70__f8924f5b-744e-4c64-a617-92350a922b61.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 126587,
+   "uploaded_bytes": 126587,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban71__dc88b2c0-35b3-4949-8915-e1d456e8e4e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban71__dc88b2c0-35b3-4949-8915-e1d456e8e4e6.jpg",
+   "name": "Urb__vhp_urban71.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2020-meidenbauer-equally/scenes/Urb__vhp_urban71__dc88b2c0-35b3-4949-8915-e1d456e8e4e6.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 145269,
+   "uploaded_bytes": 145269,
+   "image_compressed": false
+  }
+ ],
+ "paper": null
+}

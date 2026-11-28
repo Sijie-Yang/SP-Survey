@@ -1,0 +1,469 @@
+{
+ "id": "2018-van-greenery",
+ "name": "Greenery in University Spaces",
+ "description": "Design-variant experiment from van den Bogerd, Dijkstra, Seidell & Maas (2018, PLOS ONE). 722 Dutch students each saw one randomly assigned version of four university spaces (lecture hall, classroom, study area, outdoor space). Each version was the same photo, digitally edited by an architect to add a colourful poster, a nature poster, a green wall, interior plants, seating, colourful artefacts or greenery. Students rated preference (the setting is pleasant / attractive / I would like to be educated in, study in or stay in this setting) on a 0–4 agree scale. For the outdoor space they also rated perceived restoration likelihood (come to rest and renewed energy after 20 minutes; regaining concentration after an exam week). Rooms with a nature poster, green wall or plants, and outdoor spaces with greenery, scored higher than the standard and colourful designs. People who called themselves nature lovers rated everything higher. The template ships with the ten design photos printed in the paper's Figs 1–2 (CC BY, Burton Hamfelt Architects): all four outdoor designs, and two designs each for the lecture hall (colourful poster, green wall), the classroom (standard, green wall plus plants) and the study area (nature poster, green wall). Each space has its own media folder, so you can add your own design variants. The page records which design each person saw (assigned_designs), and every rating is tagged with its photo. Analysis as in the paper: compare designs within each space (the paper used multilevel regression with students nested in universities); split by the 1–10 \"nature lover\" item (8 or higher = strong connectedness). Differences from the original study: (1) only the 10 designs shown in the paper's figures are included; the paper had 4–5 designs per indoor space (14 indoor designs in total), so 8 indoor designs are missing; (2) panel letters were cropped from the figure photos; (3) the questionnaire's extra items (focus and creative thinking for indoor spaces; socializing and physical activity outdoors) are kept, as in the original questionnaire, though the paper did not analyse them; (4) the long sections on lifestyle and the student's current campus are left out; (5) an \"Other / prefer not to say\" gender option is added.",
+ "author": "van den Bogerd, Dijkstra, Seidell & Maas",
+ "year": "2018",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "greenery",
+  "biophilic design",
+  "campus",
+  "restoration",
+  "design variants",
+  "source:paper",
+  "modality:indoor",
+  "modality:scene_photo",
+  "task:multi_rating",
+  "task:questionnaire",
+  "concept:greenery",
+  "concept:restoration",
+  "concept:preference",
+  "concept:pleasantness",
+  "participants:students",
+  "sample:100to1000",
+  "country:Netherlands",
+  "city:Amsterdam"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1371/journal.pone.0192429",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-26T16:11:53.063+00:00",
+ "updatedAt": "2026-11-26T16:12:38.663+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "background",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "What is your gender?",
+      "choices": [
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "max": 99,
+      "min": 15,
+      "name": "age",
+      "type": "text",
+      "title": "What is your age? (years)",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "country_of_birth",
+      "type": "text",
+      "title": "What is your country of birth?"
+     },
+     {
+      "name": "country_of_birth_mother",
+      "type": "text",
+      "title": "What is your mother's country of birth?"
+     },
+     {
+      "name": "country_of_birth_father",
+      "type": "text",
+      "title": "What is your father's country of birth?"
+     },
+     {
+      "name": "university",
+      "type": "text",
+      "title": "At which university do you study?"
+     },
+     {
+      "name": "study_programme",
+      "type": "text",
+      "title": "Which study programme do you follow?"
+     },
+     {
+      "name": "education_level",
+      "type": "radiogroup",
+      "title": "How would you describe your programme?",
+      "choices": [
+       {
+        "text": "Bachelor programme",
+        "value": "bachelor"
+       },
+       {
+        "text": "Master programme",
+        "value": "master"
+       },
+       {
+        "text": "Pre-master / transition programme",
+        "value": "premaster"
+       },
+       {
+        "text": "Other",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "spaces",
+    "elements": [
+     {
+      "name": "pleasant",
+      "type": "imagerating",
+      "title": "The setting is pleasant",
+      "choices": [],
+      "rateMax": 4,
+      "rateMin": 0,
+      "imageCount": 1,
+      "isRequired": true,
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "attractive",
+      "type": "imagerating",
+      "title": "The setting is attractive",
+      "choices": [],
+      "rateMax": 4,
+      "rateMin": 0,
+      "imageCount": 1,
+      "isRequired": true,
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "would_like",
+      "type": "imagerating",
+      "title": "I would like to be educated in / study in / stay in this setting",
+      "choices": [],
+      "rateMax": 4,
+      "rateMin": 0,
+      "imageCount": 1,
+      "isRequired": true,
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "focus",
+      "type": "imagerating",
+      "title": "This setting stimulates me to keep my focus on my study materials (indoor spaces)",
+      "choices": [],
+      "rateMax": 4,
+      "rateMin": 0,
+      "imageCount": 1,
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "creative",
+      "type": "imagerating",
+      "title": "This setting stimulates my creative thinking (indoor spaces)",
+      "choices": [],
+      "rateMax": 4,
+      "rateMin": 0,
+      "imageCount": 1,
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "come_to_rest",
+      "type": "imagerating",
+      "title": "If I would stay in this setting for 20 minutes I would feel that I had come to rest (outdoor space)",
+      "choices": [],
+      "rateMax": 4,
+      "rateMin": 0,
+      "imageCount": 1,
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "renewed_energy",
+      "type": "imagerating",
+      "title": "If I would stay in this setting for 20 minutes I would feel that I have renewed energy (outdoor space)",
+      "choices": [],
+      "rateMax": 4,
+      "rateMin": 0,
+      "imageCount": 1,
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "regain_concentration",
+      "type": "imagerating",
+      "title": "If, at the end of a week of exams and intense study, I am mentally exhausted and unable to concentrate, then I could regain my concentration in this setting (outdoor space)",
+      "choices": [],
+      "rateMax": 4,
+      "rateMin": 0,
+      "imageCount": 1,
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "socializing",
+      "type": "imagerating",
+      "title": "I would use this setting for socializing (outdoor space)",
+      "choices": [],
+      "rateMax": 4,
+      "rateMin": 0,
+      "imageCount": 1,
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "physical_activity",
+      "type": "imagerating",
+      "title": "I would use this setting for physical activity (outdoor space)",
+      "choices": [],
+      "rateMax": 4,
+      "rateMin": 0,
+      "imageCount": 1,
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "nature",
+    "elements": [
+     {
+      "name": "nature_lover",
+      "type": "rating",
+      "title": "To what extent are you a nature lover?",
+      "rateMax": 10,
+      "rateMin": 1,
+      "isRequired": true,
+      "maxRateDescription": "You love nature",
+      "minRateDescription": "You dislike nature"
+     },
+     {
+      "name": "assigned_designs",
+      "type": "custom",
+      "title": "Set by the page: the design (file name) shown for each space, e.g. { lecturehall: 'lecturehall_green_wall.jpg', ... }"
+     }
+    ]
+   }
+  ],
+  "title": "Greenery in University Spaces",
+  "locale": "en",
+  "spSite": {
+   "id": "site-fdc224c9f0e08367",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Greenery in University Spaces</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Greenery in University Spaces\",\n    \"description\": \"Students see one randomly assigned design of each of four university spaces (lecture hall, classroom, study area, outdoor space), digitally edited with or without greenery, and rate preference and, for the outdoor space, perceived restoration likelihood. Rebuilt from van den Bogerd, Dijkstra, Seidell & Maas (2018).\",\n    \"locale\": \"en\",\n    \"mediaFolders\": [\"lecturehall\", \"classroom\", \"studyarea\", \"outdoor\"],\n    \"pages\": [\n      { \"name\": \"background\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"I agree to take part. My answers are recorded anonymously for research.\", \"isRequired\": true, \"labelTrue\": \"I agree\", \"labelFalse\": \"I do not agree\" },\n        { \"type\": \"radiogroup\", \"name\": \"gender\", \"title\": \"What is your gender?\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"male\", \"text\": \"Male\" }, { \"value\": \"female\", \"text\": \"Female\" }, { \"value\": \"other\", \"text\": \"Other / prefer not to say\" } ] },\n        { \"type\": \"text\", \"inputType\": \"number\", \"name\": \"age\", \"title\": \"What is your age? (years)\", \"min\": 15, \"max\": 99, \"isRequired\": true },\n        { \"type\": \"text\", \"name\": \"country_of_birth\", \"title\": \"What is your country of birth?\" },\n        { \"type\": \"text\", \"name\": \"country_of_birth_mother\", \"title\": \"What is your mother's country of birth?\" },\n        { \"type\": \"text\", \"name\": \"country_of_birth_father\", \"title\": \"What is your father's country of birth?\" },\n        { \"type\": \"text\", \"name\": \"university\", \"title\": \"At which university do you study?\" },\n        { \"type\": \"text\", \"name\": \"study_programme\", \"title\": \"Which study programme do you follow?\" },\n        { \"type\": \"radiogroup\", \"name\": \"education_level\", \"title\": \"How would you describe your programme?\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"bachelor\", \"text\": \"Bachelor programme\" }, { \"value\": \"master\", \"text\": \"Master programme\" }, { \"value\": \"premaster\", \"text\": \"Pre-master / transition programme\" }, { \"value\": \"other\", \"text\": \"Other\" } ] }\n      ]},\n      { \"name\": \"spaces\", \"elements\": [\n        { \"type\": \"imagerating\", \"name\": \"pleasant\", \"title\": \"The setting is pleasant\", \"imageCount\": 1, \"rateMin\": 0, \"rateMax\": 4, \"minRateDescription\": \"Strongly disagree\", \"maxRateDescription\": \"Strongly agree\", \"isRequired\": true },\n        { \"type\": \"imagerating\", \"name\": \"attractive\", \"title\": \"The setting is attractive\", \"imageCount\": 1, \"rateMin\": 0, \"rateMax\": 4, \"minRateDescription\": \"Strongly disagree\", \"maxRateDescription\": \"Strongly agree\", \"isRequired\": true },\n        { \"type\": \"imagerating\", \"name\": \"would_like\", \"title\": \"I would like to be educated in / study in / stay in this setting\", \"imageCount\": 1, \"rateMin\": 0, \"rateMax\": 4, \"minRateDescription\": \"Strongly disagree\", \"maxRateDescription\": \"Strongly agree\", \"isRequired\": true },\n        { \"type\": \"imagerating\", \"name\": \"focus\", \"title\": \"This setting stimulates me to keep my focus on my study materials (indoor spaces)\", \"imageCount\": 1, \"rateMin\": 0, \"rateMax\": 4, \"minRateDescription\": \"Strongly disagree\", \"maxRateDescription\": \"Strongly agree\" },\n        { \"type\": \"imagerating\", \"name\": \"creative\", \"title\": \"This setting stimulates my creative thinking (indoor spaces)\", \"imageCount\": 1, \"rateMin\": 0, \"rateMax\": 4, \"minRateDescription\": \"Strongly disagree\", \"maxRateDescription\": \"Strongly agree\" },\n        { \"type\": \"imagerating\", \"name\": \"come_to_rest\", \"title\": \"If I would stay in this setting for 20 minutes I would feel that I had come to rest (outdoor space)\", \"imageCount\": 1, \"rateMin\": 0, \"rateMax\": 4, \"minRateDescription\": \"Strongly disagree\", \"maxRateDescription\": \"Strongly agree\" },\n        { \"type\": \"imagerating\", \"name\": \"renewed_energy\", \"title\": \"If I would stay in this setting for 20 minutes I would feel that I have renewed energy (outdoor space)\", \"imageCount\": 1, \"rateMin\": 0, \"rateMax\": 4, \"minRateDescription\": \"Strongly disagree\", \"maxRateDescription\": \"Strongly agree\" },\n        { \"type\": \"imagerating\", \"name\": \"regain_concentration\", \"title\": \"If, at the end of a week of exams and intense study, I am mentally exhausted and unable to concentrate, then I could regain my concentration in this setting (outdoor space)\", \"imageCount\": 1, \"rateMin\": 0, \"rateMax\": 4, \"minRateDescription\": \"Strongly disagree\", \"maxRateDescription\": \"Strongly agree\" },\n        { \"type\": \"imagerating\", \"name\": \"socializing\", \"title\": \"I would use this setting for socializing (outdoor space)\", \"imageCount\": 1, \"rateMin\": 0, \"rateMax\": 4, \"minRateDescription\": \"Strongly disagree\", \"maxRateDescription\": \"Strongly agree\" },\n        { \"type\": \"imagerating\", \"name\": \"physical_activity\", \"title\": \"I would use this setting for physical activity (outdoor space)\", \"imageCount\": 1, \"rateMin\": 0, \"rateMax\": 4, \"minRateDescription\": \"Strongly disagree\", \"maxRateDescription\": \"Strongly agree\" }\n      ]},\n      { \"name\": \"nature\", \"elements\": [\n        { \"type\": \"rating\", \"name\": \"nature_lover\", \"title\": \"To what extent are you a nature lover?\", \"rateMin\": 1, \"rateMax\": 10, \"minRateDescription\": \"You dislike nature\", \"maxRateDescription\": \"You love nature\", \"isRequired\": true },\n        { \"type\": \"custom\", \"name\": \"assigned_designs\", \"title\": \"Set by the page: the design (file name) shown for each space, e.g. { lecturehall: 'lecturehall_green_wall.jpg', ... }\" }\n      ]}\n    ]\n  }\n}\n</script>\n<style>\n:root{--bg:#f3f6f1;--card:#fff;--ink:#1c241b;--muted:#596656;--accent:#3f7d3a;--accent-ink:#fff;--line:#d9e2d5;--on:#e1efdc}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:860px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.45rem;margin:0 0 8px}h2{font-size:1rem;margin:0 0 6px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:13px 20px;font:inherit;font-weight:700;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.photo{width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;display:block;background:#e6ebe3}\n.q{margin-top:16px}.q>b{display:block;margin-bottom:6px}\n.lk{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}\n.lk button{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:9px;padding:8px 2px;font:inherit;font-size:.78rem;line-height:1.2;cursor:pointer;min-height:44px}\n.lk button.on{border-color:var(--accent);background:var(--on);font-weight:700}\n.scale10{display:grid;grid-template-columns:repeat(10,1fr);gap:4px}\n.scale10 button{appearance:none;border:1px solid var(--line);background:#fff;border-radius:8px;padding:10px 0;font:inherit;font-weight:700;cursor:pointer}\n.scale10 button.on{border-color:var(--accent);background:var(--on)}\n.ends{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted);margin-top:4px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput[type=number],input[type=text]{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:8px;width:100%;max-width:360px}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:860px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs: Burton Hamfelt Architects, from van den Bogerd et al. (2018), PLOS ONE 13(2): e0192429, Figs 1–2, CC BY (panel letters cropped).</footer>\n<script>\n(function(){\n  var SPACES=[\n    {folder:'lecturehall',label:'Lecture hall',like:'I would like to be educated in this setting',items:['pleasant','attractive','would_like','focus','creative']},\n    {folder:'classroom',label:'Classroom',like:'I would like to be educated in this setting',items:['pleasant','attractive','would_like','focus','creative']},\n    {folder:'studyarea',label:'Study area',like:'I would like to study in this setting',items:['pleasant','attractive','would_like','focus','creative']},\n    {folder:'outdoor',label:'University outdoor space',like:'I would like to stay in this setting',items:['pleasant','attractive','would_like','come_to_rest','renewed_energy','regain_concentration','socializing','physical_activity']}\n  ];\n  var LK=['Strongly disagree','Disagree','Neutral','Agree','Strongly agree'];\n  var app=document.getElementById('app'), Q={}, plan={}, files={}, done={}, s=0;\n  function esc(x){return String(x==null?'':x).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function store(k,v){try{localStorage.setItem('unigreen2018:'+k,JSON.stringify(v));}catch(e){}}\n  function load(k){try{return JSON.parse(localStorage.getItem('unigreen2018:'+k));}catch(e){return null;}}\n  function short(t){return String(t).replace(/ \\((indoor spaces|outdoor space)\\)$/,'');}\n  function setup(){\n    var saved=load('plan')||{};\n    SPACES.forEach(function(sp){\n      var list=SPSite.getMedia(sp.folder)||[], by={};list.forEach(function(f){by[f.name]=f;});\n      if(!list.length)return;\n      var f=by[saved[sp.folder]]||list[Math.floor(Math.random()*list.length)]; // one random design per space\n      plan[sp.folder]=f.name;files[sp.folder]=f;\n    });\n    store('plan',plan);\n  }\n  function radios(n){return (Q[n].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');}\n  function background(){\n    if(!Object.keys(files).length){app.innerHTML='<h1>No photos yet</h1><p>The researcher has not added photos to the folders lecturehall, classroom, studyarea and outdoor.</p>';return;}\n    var txt=['country_of_birth','country_of_birth_mother','country_of_birth_father','university','study_programme'];\n    app.innerHTML='<h1>Your ideal university environment</h1><p>You will see photos of four university spaces and say what you think of them. It takes about 10 minutes. First, a few questions about you.</p>'+\n      '<div class=\"card\"><label class=\"opt\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label>'+\n      '<div class=\"q\"><b>'+esc(Q.gender.title)+'</b>'+radios('gender')+'</div>'+\n      '<div class=\"q\"><b>'+esc(Q.age.title)+'</b><input type=\"number\" id=\"age\" min=\"15\" max=\"99\" inputmode=\"numeric\"></div>'+\n      txt.map(function(n){return '<div class=\"q\"><b>'+esc(Q[n].title)+'</b><input type=\"text\" id=\"'+n+'\" maxlength=\"80\"></div>';}).join('')+\n      '<div class=\"q\"><b>'+esc(Q.education_level.title)+'</b>'+radios('education_level')+'</div>'+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var g=(app.querySelector('input[name=gender]:checked')||{}).value; if(!g)return err('Please answer: '+Q.gender.title);\n      var age=document.getElementById('age').value; if(age===''||Number(age)<15||Number(age)>99)return err('Please enter your age.');\n      var lv=(app.querySelector('input[name=education_level]:checked')||{}).value; if(!lv)return err('Please answer: '+Q.education_level.title);\n      var calls=[SPSite.answer('consent',true),SPSite.answer('gender',g),SPSite.answer('age',Number(age)),SPSite.answer('education_level',lv),SPSite.answer('assigned_designs',plan)];\n      txt.forEach(function(n){var v=document.getElementById(n).value.trim();if(v)calls.push(SPSite.answer(n,v));});\n      var b=this;b.disabled=true;\n      Promise.all(calls).then(function(rs){var bad=rs.filter(function(x){return x&&x.ok===false;})[0];if(bad){b.disabled=false;return err(bad.error);}intro();});\n    };\n  }\n  function intro(){\n    app.innerHTML='<h1>Four university spaces</h1><div class=\"card\"><p style=\"color:var(--ink)\">The following questions are about your assessment of photos of four university spaces. You are not asked to assess the quality of the photo, but the setting depicted in the photo.</p><button class=\"btn\" id=\"go\">Start</button></div>';\n    document.getElementById('go').onclick=function(){s=0;space();};\n  }\n  function space(){\n    while(s<SPACES.length&&(done[SPACES[s].folder]||!files[SPACES[s].folder]))s++;\n    if(s>=SPACES.length)return nature();\n    var sp=SPACES[s], f=files[sp.folder], pick={};\n    var h='<p>'+esc(sp.label)+' · '+(s+1)+' of '+SPACES.length+'</p><div class=\"progress\"><i style=\"width:'+(100*s/SPACES.length)+'%\"></i></div>'+\n      '<img class=\"photo\" src=\"'+esc(f.url)+'\" alt=\"'+esc(sp.label)+'\"><h1 style=\"font-size:1.1rem;margin-top:14px\">What do you think of the setting depicted in the photo?</h1><p>For each statement, choose the answer that best represents your assessment of the setting.</p><div class=\"card\">';\n    sp.items.forEach(function(n){var t=n==='would_like'?sp.like:short(Q[n].title);\n      h+='<div class=\"q\"><b>'+esc(t)+'</b><div class=\"lk\">'+LK.map(function(l,v){return '<button type=\"button\" data-n=\"'+n+'\" data-v=\"'+v+'\">'+esc(l)+'</button>';}).join('')+'</div></div>';});\n    h+='<div style=\"margin-top:18px\"><button class=\"btn\" id=\"nx\">Next</button></div><div class=\"err\"></div></div>';\n    app.innerHTML=h;window.scrollTo(0,0);\n    app.querySelectorAll('.lk button').forEach(function(b){b.onclick=function(){var n=b.getAttribute('data-n');pick[n]=Number(b.getAttribute('data-v'));app.querySelectorAll('.lk button[data-n=\"'+n+'\"]').forEach(function(x){x.classList.toggle('on',x===b);});err('');};});\n    document.getElementById('nx').onclick=function(){\n      if(sp.items.some(function(n){return pick[n]==null;}))return err('Please answer all statements.');\n      var b=this;b.disabled=true;\n      Promise.all(sp.items.map(function(n){return SPSite.answer(n,pick[n],{key:sp.folder,shown:[f.name]});})).then(function(rs){\n        var bad=rs.filter(function(x){return x&&x.ok===false;})[0];if(bad){b.disabled=false;return err(bad.error);}\n        done[sp.folder]=true;s++;space();});\n    };\n  }\n  function nature(){\n    var q=Q.nature_lover,v=null,btn='';for(var k=1;k<=10;k++)btn+='<button type=\"button\" data-v=\"'+k+'\">'+k+'</button>';\n    app.innerHTML='<h1>One last question</h1><div class=\"card\"><div class=\"q\" style=\"margin-top:0\"><b>'+esc(q.title)+'</b><div class=\"scale10\">'+btn+'</div><div class=\"ends\"><span>1 · '+esc(q.minLabel)+'</span><span>10 · '+esc(q.maxLabel)+'</span></div></div>'+\n      '<div style=\"margin-top:18px\"><button class=\"btn\" id=\"fin\">Finish</button></div><div class=\"err\"></div></div>';\n    app.querySelectorAll('.scale10 button').forEach(function(b){b.onclick=function(){v=Number(b.getAttribute('data-v'));app.querySelectorAll('.scale10 button').forEach(function(x){x.classList.toggle('on',x===b);});};});\n    document.getElementById('fin').onclick=function(){\n      if(v==null)return err('Please choose a number from 1 to 10.');\n      var b=this;b.disabled=true;\n      SPSite.answer('nature_lover',v).then(function(r){if(r&&r.ok===false){b.disabled=false;return err(r.error);}\n        app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"st\">Submitting…</p><div class=\"err\"></div></div>';\n        SPSite.complete().then(function(c){if(c&&c.ok===false){err(c.error||'Some answers are missing.');var m=c.missing||[];setTimeout(function(){if(m.some(function(x){return ['consent','gender','age','education_level'].indexOf(x)>=0;}))background();else{done={};s=0;space();}},1500);}else{var st=document.getElementById('st');if(st)st.textContent='Your answers are saved.';}});\n      });\n    };\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','gender','age','country_of_birth','country_of_birth_mother','country_of_birth_father','university','study_programme','education_level','pleasant','attractive','would_like','focus','creative','come_to_rest','renewed_energy','regain_concentration','socializing','physical_activity','nature_lover','assigned_designs'].forEach(function(n){Q[n]=SPSite.getQuestion(n);});\n    setup();\n    var a=(ctx&&ctx.answers)||{}, p=a.pleasant;\n    (p&&Array.isArray(p.trials)?p.trials:[]).forEach(function(x){if(x&&x.key)done[x.key]=true;});\n    if(a.consent===true&&a.age!=null&&a.education_level){s=0;space();}else background();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-26T16:11:24.743Z",
+   "mediaFolders": [
+    "lecturehall",
+    "classroom",
+    "studyarea",
+    "outdoor"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-26T16:11:24.743Z"
+  },
+  "description": "Students see one randomly assigned design of each of four university spaces (lecture hall, classroom, study area, outdoor space), digitally edited with or without greenery, and rate preference and, for the outdoor space, perceived restoration likelihood. Rebuilt from van den Bogerd, Dijkstra, Seidell & Maas (2018).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2018-van-greenery/classroom/classroom_green_wall_plants__a21d445f-ada7-4f46-9cde-991d19a3eb63.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-van-greenery/classroom/classroom_green_wall_plants__a21d445f-ada7-4f46-9cde-991d19a3eb63.jpg",
+   "name": "classroom_green_wall_plants.jpg",
+   "type": "image",
+   "folder": "classroom",
+   "media_id": "templates/2018-van-greenery/classroom/classroom_green_wall_plants__a21d445f-ada7-4f46-9cde-991d19a3eb63.jpg",
+   "logicalFolder": "classroom",
+   "original_bytes": 180327,
+   "uploaded_bytes": 180327,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-van-greenery/classroom/classroom_standard__e4a17bc7-8eb1-4dbe-aa18-945b81a8faee.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-van-greenery/classroom/classroom_standard__e4a17bc7-8eb1-4dbe-aa18-945b81a8faee.jpg",
+   "name": "classroom_standard.jpg",
+   "type": "image",
+   "folder": "classroom",
+   "media_id": "templates/2018-van-greenery/classroom/classroom_standard__e4a17bc7-8eb1-4dbe-aa18-945b81a8faee.jpg",
+   "logicalFolder": "classroom",
+   "original_bytes": 129896,
+   "uploaded_bytes": 129896,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-van-greenery/lecturehall/lecturehall_colorful_poster__7e928087-3634-4888-88fd-6c4116b886d5.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-van-greenery/lecturehall/lecturehall_colorful_poster__7e928087-3634-4888-88fd-6c4116b886d5.jpg",
+   "name": "lecturehall_colorful_poster.jpg",
+   "type": "image",
+   "folder": "lecturehall",
+   "media_id": "templates/2018-van-greenery/lecturehall/lecturehall_colorful_poster__7e928087-3634-4888-88fd-6c4116b886d5.jpg",
+   "logicalFolder": "lecturehall",
+   "original_bytes": 137875,
+   "uploaded_bytes": 137875,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-van-greenery/lecturehall/lecturehall_green_wall__4277d257-48f4-4121-a724-5ea8bd3359c4.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-van-greenery/lecturehall/lecturehall_green_wall__4277d257-48f4-4121-a724-5ea8bd3359c4.jpg",
+   "name": "lecturehall_green_wall.jpg",
+   "type": "image",
+   "folder": "lecturehall",
+   "media_id": "templates/2018-van-greenery/lecturehall/lecturehall_green_wall__4277d257-48f4-4121-a724-5ea8bd3359c4.jpg",
+   "logicalFolder": "lecturehall",
+   "original_bytes": 157771,
+   "uploaded_bytes": 157771,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-van-greenery/outdoor/outdoor_seating_colorful_artifacts__5c4532bd-a2da-474d-8917-45e11d9a1bae.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-van-greenery/outdoor/outdoor_seating_colorful_artifacts__5c4532bd-a2da-474d-8917-45e11d9a1bae.jpg",
+   "name": "outdoor_seating_colorful_artifacts.jpg",
+   "type": "image",
+   "folder": "outdoor",
+   "media_id": "templates/2018-van-greenery/outdoor/outdoor_seating_colorful_artifacts__5c4532bd-a2da-474d-8917-45e11d9a1bae.jpg",
+   "logicalFolder": "outdoor",
+   "original_bytes": 168169,
+   "uploaded_bytes": 168169,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-van-greenery/outdoor/outdoor_seating_extensive_greenery__2cd9077d-08ab-42a3-814e-0cc70d2b7c63.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-van-greenery/outdoor/outdoor_seating_extensive_greenery__2cd9077d-08ab-42a3-814e-0cc70d2b7c63.jpg",
+   "name": "outdoor_seating_extensive_greenery.jpg",
+   "type": "image",
+   "folder": "outdoor",
+   "media_id": "templates/2018-van-greenery/outdoor/outdoor_seating_extensive_greenery__2cd9077d-08ab-42a3-814e-0cc70d2b7c63.jpg",
+   "logicalFolder": "outdoor",
+   "original_bytes": 266838,
+   "uploaded_bytes": 266838,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-van-greenery/outdoor/outdoor_seating_green_elements__e88d8c90-2d12-47f3-bfd1-d9a3a262532c.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-van-greenery/outdoor/outdoor_seating_green_elements__e88d8c90-2d12-47f3-bfd1-d9a3a262532c.jpg",
+   "name": "outdoor_seating_green_elements.jpg",
+   "type": "image",
+   "folder": "outdoor",
+   "media_id": "templates/2018-van-greenery/outdoor/outdoor_seating_green_elements__e88d8c90-2d12-47f3-bfd1-d9a3a262532c.jpg",
+   "logicalFolder": "outdoor",
+   "original_bytes": 226370,
+   "uploaded_bytes": 226370,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-van-greenery/outdoor/outdoor_standard__0b45c5b0-41a2-4b89-8bc9-49a323c82930.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-van-greenery/outdoor/outdoor_standard__0b45c5b0-41a2-4b89-8bc9-49a323c82930.jpg",
+   "name": "outdoor_standard.jpg",
+   "type": "image",
+   "folder": "outdoor",
+   "media_id": "templates/2018-van-greenery/outdoor/outdoor_standard__0b45c5b0-41a2-4b89-8bc9-49a323c82930.jpg",
+   "logicalFolder": "outdoor",
+   "original_bytes": 166407,
+   "uploaded_bytes": 166407,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-van-greenery/studyarea/studyarea_green_wall__79f8a1ca-c808-47bd-b99c-05c4faabbfd3.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-van-greenery/studyarea/studyarea_green_wall__79f8a1ca-c808-47bd-b99c-05c4faabbfd3.jpg",
+   "name": "studyarea_green_wall.jpg",
+   "type": "image",
+   "folder": "studyarea",
+   "media_id": "templates/2018-van-greenery/studyarea/studyarea_green_wall__79f8a1ca-c808-47bd-b99c-05c4faabbfd3.jpg",
+   "logicalFolder": "studyarea",
+   "original_bytes": 238798,
+   "uploaded_bytes": 238798,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-van-greenery/studyarea/studyarea_nature_poster__353779d2-376a-4c8b-b7fc-fdd016e55377.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-van-greenery/studyarea/studyarea_nature_poster__353779d2-376a-4c8b-b7fc-fdd016e55377.jpg",
+   "name": "studyarea_nature_poster.jpg",
+   "type": "image",
+   "folder": "studyarea",
+   "media_id": "templates/2018-van-greenery/studyarea/studyarea_nature_poster__353779d2-376a-4c8b-b7fc-fdd016e55377.jpg",
+   "logicalFolder": "studyarea",
+   "original_bytes": 243306,
+   "uploaded_bytes": 243306,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Greenery in the university environment: Students’ preferences and perceived restoration likelihood",
+  "authors": [
+   "van den Bogerd N",
+   "Dijkstra SC",
+   "Seidell JC",
+   "Maas J"
+  ],
+  "year": 2018,
+  "venue": "PLOS ONE",
+  "doi": "10.1371/journal.pone.0192429",
+  "url": "https://doi.org/10.1371/journal.pone.0192429"
+ }
+}

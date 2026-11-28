@@ -1,0 +1,491 @@
+{
+ "id": "2026-dou-colour",
+ "name": "Colour, Shape and Area in Interior Space (SAM ratings)",
+ "description": "Faithful replication with the paper's own stimuli: the 24 room renderings from Figure 2 of Dou, Zhang, Zhang, Kang, Fan, Xie, Sun & Li (2026), Behavioral Sciences 16(8): 1364 (CC BY 4.0). The same 4.0 × 2.0 × 6.0 m room varies colour combination (contrasting red–green and yellow–purple vs similar red–orange and blue–purple), shape of the colour fields (angular: triangles, rectangles vs curved: circles, waves) and the proportion of surfaces coloured (25, 50, 100 %). Each room is shown for 10 seconds in three blocks of eight, followed by self-paced ratings of pleasure, arousal and dominance (Self-Assessment Manikin dimensions) and liking, all 1–9. Room ids in the data encode the design (e.g. r-g-sh-100), and the paper's cell means are embedded in the page. The paper found curved shapes buffered the displeasure of angular high-contrast rooms, and larger coloured areas raised arousal. Differences from the original study: (1) online still images instead of an immersive VR headset, and no EEG; (2) random order per participant instead of a Latin square; (3) SAM dimensions are asked in words with labelled 1–9 scales instead of the manikin pictures; (4) a self-report colour-vision question replaces the Ishihara test; (5) the renderings are crops of the published figure (542×238 px, soft).",
+ "author": "Dou, Zhang, Zhang, Kang, Fan, Xie, Sun & Li",
+ "year": "2026",
+ "category": "Academic Research",
+ "tags": [
+  "faithful-replication",
+  "official",
+  "paper",
+  "interior",
+  "colour",
+  "curvature",
+  "SAM",
+  "neuro-architecture",
+  "source:paper",
+  "modality:rendered",
+  "modality:indoor",
+  "task:multi_rating",
+  "concept:color",
+  "concept:emotion",
+  "concept:likability",
+  "concept:complexity",
+  "participants:students",
+  "sample:lt100",
+  "country:China",
+  "city:Shenyang"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/bs16081364",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T05:11:25.011+00:00",
+ "updatedAt": "2026-11-27T05:11:38.075+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     },
+     {
+      "max": 99,
+      "min": 16,
+      "name": "age",
+      "type": "text",
+      "title": "Age",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "colour_vision",
+      "type": "radiogroup",
+      "title": "Do you have any known colour-vision deficiency (colour blindness)?",
+      "choices": [
+       {
+        "text": "No",
+        "value": "no"
+       },
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "Not sure",
+        "value": "unsure"
+       }
+      ],
+      "isRequired": true,
+      "description": "The paper screened participants with the Ishihara test."
+     }
+    ]
+   },
+   {
+    "name": "rooms",
+    "elements": [
+     {
+      "name": "pleasure",
+      "type": "rating",
+      "title": "How do you feel in this room?",
+      "rateMax": 9,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Self-Assessment Manikin dimension (Bradley & Lang 1994), 1–9; keyed by room id <colours>-<shape>-<area>: colours r-g and y-p = contrasting, r-o and b-p = similar; shapes sh and sq = angular, c and l = curved; area 25 / 50 / 100 % of the surfaces coloured.",
+      "maxRateDescription": "Happy",
+      "minRateDescription": "Unhappy"
+     },
+     {
+      "name": "arousal",
+      "type": "rating",
+      "title": "How calm or excited do you feel in this room?",
+      "rateMax": 9,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Self-Assessment Manikin dimension (Bradley & Lang 1994), 1–9; keyed by room id <colours>-<shape>-<area>: colours r-g and y-p = contrasting, r-o and b-p = similar; shapes sh and sq = angular, c and l = curved; area 25 / 50 / 100 % of the surfaces coloured.",
+      "maxRateDescription": "Excited",
+      "minRateDescription": "Calm"
+     },
+     {
+      "name": "dominance",
+      "type": "rating",
+      "title": "How much do you feel in control in this room?",
+      "rateMax": 9,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Self-Assessment Manikin dimension (Bradley & Lang 1994), 1–9; keyed by room id <colours>-<shape>-<area>: colours r-g and y-p = contrasting, r-o and b-p = similar; shapes sh and sq = angular, c and l = curved; area 25 / 50 / 100 % of the surfaces coloured.",
+      "maxRateDescription": "In control",
+      "minRateDescription": "Controlled, overwhelmed"
+     },
+     {
+      "name": "liking",
+      "type": "rating",
+      "title": "How much do you like this room?",
+      "rateMax": 9,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Liking scale, 1–9; keyed by room id.",
+      "maxRateDescription": "Like very much",
+      "minRateDescription": "Dislike very much"
+     }
+    ]
+   }
+  ],
+  "title": "Colour, Shape and Area in Interior Space",
+  "locale": "en",
+  "spSite": {
+   "id": "site-1aeea9f8a21c408c",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Colour in Interior Space</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Colour, Shape and Area in Interior Space\",\n  \"description\": \"Participants view 24 rendered rooms that vary colour combination (contrasting vs similar), shape of the colour fields (angular vs curved) and the proportion of surfaces coloured (25, 50, 100 %), 10 seconds each in three blocks of eight, and rate pleasure, arousal, dominance (SAM) and liking on 1–9 scales. Rebuilt from Dou et al. (2026), Behavioral Sciences 16(8): 1364, with the paper's 24 renderings (Figure 2, CC BY 4.0).\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"rooms\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     },\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"min\": 16,\n      \"max\": 99\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"colour_vision\",\n      \"title\": \"Do you have any known colour-vision deficiency (colour blindness)?\",\n      \"description\": \"The paper screened participants with the Ishihara test.\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       },\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"unsure\",\n        \"text\": \"Not sure\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"rooms\",\n    \"elements\": [\n     {\n      \"type\": \"rating\",\n      \"name\": \"pleasure\",\n      \"title\": \"How do you feel in this room?\",\n      \"description\": \"Self-Assessment Manikin dimension (Bradley & Lang 1994), 1–9; keyed by room id <colours>-<shape>-<area>: colours r-g and y-p = contrasting, r-o and b-p = similar; shapes sh and sq = angular, c and l = curved; area 25 / 50 / 100 % of the surfaces coloured.\",\n      \"rateMin\": 1,\n      \"rateMax\": 9,\n      \"minRateDescription\": \"Unhappy\",\n      \"maxRateDescription\": \"Happy\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"arousal\",\n      \"title\": \"How calm or excited do you feel in this room?\",\n      \"description\": \"Self-Assessment Manikin dimension (Bradley & Lang 1994), 1–9; keyed by room id <colours>-<shape>-<area>: colours r-g and y-p = contrasting, r-o and b-p = similar; shapes sh and sq = angular, c and l = curved; area 25 / 50 / 100 % of the surfaces coloured.\",\n      \"rateMin\": 1,\n      \"rateMax\": 9,\n      \"minRateDescription\": \"Calm\",\n      \"maxRateDescription\": \"Excited\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"dominance\",\n      \"title\": \"How much do you feel in control in this room?\",\n      \"description\": \"Self-Assessment Manikin dimension (Bradley & Lang 1994), 1–9; keyed by room id <colours>-<shape>-<area>: colours r-g and y-p = contrasting, r-o and b-p = similar; shapes sh and sq = angular, c and l = curved; area 25 / 50 / 100 % of the surfaces coloured.\",\n      \"rateMin\": 1,\n      \"rateMax\": 9,\n      \"minRateDescription\": \"Controlled, overwhelmed\",\n      \"maxRateDescription\": \"In control\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"liking\",\n      \"title\": \"How much do you like this room?\",\n      \"description\": \"Liking scale, 1–9; keyed by room id.\",\n      \"rateMin\": 1,\n      \"rateMax\": 9,\n      \"minRateDescription\": \"Dislike very much\",\n      \"maxRateDescription\": \"Like very much\",\n      \"isRequired\": true\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"rooms-original\">{\"source\": \"Dou et al. (2026) Behav. Sci. 16(8):1364, Table 1 (mean \\u00b1 SD, 1\\u20139, N = 61)\", \"cells\": {\"contrast_angular\": {\"25\": [4.96, 4.52, 5.67, 4.61], \"50\": [4.43, 5.02, 4.98, 4.16], \"100\": [3.9, 5.62, 4.03, 3.69]}, \"contrast_curved\": {\"25\": [5.58, 4.57, 5.73, 5.14], \"50\": [5.86, 4.56, 5.76, 5.6], \"100\": [5.37, 5.43, 4.48, 5.15]}, \"similar_angular\": {\"25\": [5.74, 4.39, 5.93, 5.62], \"50\": [4.83, 5.1, 4.9, 4.48], \"100\": [5.12, 5.37, 4.33, 4.96]}, \"similar_curved\": {\"25\": [5.46, 4.39, 5.95, 5.34], \"50\": [5.42, 5.25, 5.4, 5.35], \"100\": [4.74, 6.31, 4.08, 4.53]}}, \"order\": [\"pleasure\", \"arousal\", \"dominance\", \"liking\"], \"coding\": {\"contrast\": [\"r-g\", \"y-p\"], \"similar\": [\"r-o\", \"b-p\"], \"angular\": [\"sh\", \"sq\"], \"curved\": [\"c\", \"l\"]}}</script>\n<style>\n:root{--bg:#f3f6f2;--card:#fff;--ink:#1f2a22;--muted:#5f6d63;--accent:#2f7d4f;--line:#dce5dd;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:900px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.45rem;margin:0 0 8px}h2{font-size:1.1rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.view{background:#000;border-radius:12px;overflow:hidden;aspect-ratio:542/238;display:flex;align-items:center;justify-content:center}\n.view img{width:100%;height:100%;object-fit:contain;display:block}\n.thumb{max-width:520px;margin:0 auto}\n.timer{height:4px;background:var(--line);border-radius:2px;overflow:hidden;margin-top:8px}.timer>i{display:block;height:100%;background:var(--accent);width:0}\n.big{font-size:2.4rem;font-weight:700;text-align:center;margin:18px 0;color:var(--ink)}\n.item{padding:12px 0;border-top:1px solid var(--line)}.item:first-child{border-top:0}\n.item .t{margin-bottom:8px}\n.scale{display:grid;gap:6px}\n.scale button{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:8px;padding:9px 0;font:inherit;font-weight:600;cursor:pointer}\n.scale button.on{background:var(--accent);border-color:var(--accent);color:#fff}\n.item.miss .t{color:var(--warn)}\n.anch{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin:4px 0 6px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.f{margin-top:16px}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:110px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:900px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Renderings: Dou, Zhang, Zhang, Kang, Fan, Xie, Sun &amp; Li (2026), Behavioral Sciences 16(8): 1364, Figure 2, CC BY 4.0.</footer>\n<script>\n(function(){\n  var F=window.__VIEWMS, VIEW_MS=F||10000, BLOCK=8, KEY='interior-colour:state';\n  var ITEMS=['pleasure','arousal','dominance','liking'];\n  var app=document.getElementById('app'), Q={}, files=[], st=null, tm=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var x=a[k];a[k]=a[j];a[j]=x;}return a;}\n  function id(n){return n.replace(/\\.[^.]+$/,'');}\n  function byId(i){for(var k=0;k<files.length;k++)if(id(files[k].name)===i)return files[k];return null;}\n  function radio(n){var q=Q[n];return '<div class=\"f\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function intro(){\n    app.innerHTML='<h1>Colour in a room</h1><p>You will see '+st.order.length+' pictures of the same room painted in different ways, in three blocks of eight. Each picture stays on screen for 10 seconds. Imagine you are standing in the room. After each picture, rate how you feel and how much you like the room. Please use a large screen. About 15 minutes.</p>'+\n      '<div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div class=\"f\"><b>'+esc(Q.age.title)+'</b><br><input type=\"number\" id=\"age\" min=\"16\" max=\"99\"></div>'+radio('gender')+radio('colour_vision')+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var age=Number(document.getElementById('age').value);if(!(age>=16&&age<=99))return err('Please enter your age.');\n      var g=function(n){var x=app.querySelector('input[name='+n+']:checked');return x?x.value:null;};\n      var v={gender:g('gender'),colour_vision:g('colour_vision')};for(var n in v)if(!v[n])return err('Please answer: '+Q[n].title);\n      var b=this;b.disabled=true;\n      Promise.all([SPSite.answer('consent',true),SPSite.answer('age',age),SPSite.answer('gender',v.gender),SPSite.answer('colour_vision',v.colour_vision)]).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}st.step='ready';st.k=0;save();route();});\n    };\n  }\n  function ready(){\n    var blk=Math.floor(st.k/BLOCK)+1,nb=Math.ceil(st.order.length/BLOCK);\n    app.innerHTML='<h2>Block '+blk+' of '+nb+'</h2><div class=\"card\"><p>'+(st.k?'Take a short break if you like. ':'')+'Each room is shown for 10 seconds, then you rate it.</p><button class=\"btn\" id=\"go\">Start block '+blk+'</button></div>';\n    document.getElementById('go').onclick=function(){st.step='view';save();route();};\n  }\n  function view(){\n    var f=byId(st.order[st.k]);if(!f){st.k++;save();return route();}\n    app.innerHTML='<p>Room '+(st.k+1)+' of '+st.order.length+'</p><div class=\"view\"><img alt=\"Rendered room\" src=\"'+esc(f.url)+'\"></div><div class=\"timer\"><i id=\"tb\"></i></div>';\n    var tb=document.getElementById('tb');tb.style.transition='width '+(VIEW_MS/1000)+'s linear';requestAnimationFrame(function(){requestAnimationFrame(function(){tb.style.width='100%';});});\n    tm=setTimeout(function(){st.step='rate';save();route();},VIEW_MS);\n  }\n  function rate(){\n    var f=byId(st.order[st.k]),vals={};\n    app.innerHTML='<h2>Room '+(st.k+1)+' of '+st.order.length+'</h2><p>Think of the room you just saw.</p><div class=\"card\">'+\n      ITEMS.map(function(k){var q=Q[k],b='';for(var v=1;v<=9;v++)b+='<button type=\"button\" data-v=\"'+v+'\" aria-label=\"'+v+'\">'+v+'</button>';\n        return '<div class=\"item\" data-k=\"'+k+'\"><div class=\"t\">'+esc(q.title)+'</div><div class=\"scale\" style=\"grid-template-columns:repeat(9,1fr)\">'+b+'</div><div class=\"anch\"><span>1 = '+esc(q.minRateDescription)+'</span><span>9 = '+esc(q.maxRateDescription)+'</span></div></div>';}).join('')+\n      '<div style=\"margin-top:12px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div></div>';\n    window.scrollTo(0,0);\n    app.querySelectorAll('.item').forEach(function(it){it.querySelectorAll('button').forEach(function(b){b.onclick=function(){vals[it.dataset.k]=Number(b.dataset.v);it.classList.remove('miss');it.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);});};});});\n    document.getElementById('go').onclick=function(){\n      var miss=ITEMS.filter(function(k){return vals[k]==null;});\n      if(miss.length){miss.forEach(function(k){app.querySelector('.item[data-k=\"'+k+'\"]').classList.add('miss');});return err('Please answer every question ('+miss.length+' missing, marked).');}\n      var b=this;b.disabled=true;var key=st.order[st.k];\n      Promise.all(ITEMS.map(function(k){return SPSite.answer(k,vals[k],{key:key,shown:[f.name]});})).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}\n        st.k++;st.step=st.k>=st.order.length?'done':(st.k%BLOCK===0?'ready':'view');save();route();});\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){var m=r.missing||[];if(m.length&&m.every(function(x){return ITEMS.indexOf(x)>=0;})){st.step='ready';st.k=0;}else st.step='intro';save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  function route(){clearTimeout(tm);var s=st.step;if(s==='ready')return ready();if(s==='view')return view();if(s==='rate')return rate();if(s==='done')return finish();intro();}\n  SPSite.onReady(function(ctx){\n    ['consent','age','gender','colour_vision'].concat(ITEMS).forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    files=(SPSite.getMedia('rooms')||[]).filter(function(f){return /\\.(jpe?g|png|webp)$/i.test(f.name);});\n    if(!files.length){app.innerHTML='<h1>Pictures missing</h1><p>Upload the room renderings to the media folder \"rooms\".</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    if(!st||!st.order||st.order.length!==files.length||st.order.some(function(i){return !byId(i);}))st={step:'intro',order:shuffle(files.map(function(f){return id(f.name);})),k:0};\n    var a=(ctx&&ctx.answers)||{};if(a.consent!==true){st.step='intro';st.k=0;}\n    if(st.step==='view')st.step='ready';\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T05:10:50.202Z",
+   "mediaFolders": [
+    "rooms"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T05:10:50.202Z"
+  },
+  "description": "Participants view 24 rendered rooms that vary colour combination (contrasting vs similar), shape of the colour fields (angular vs curved) and the proportion of surfaces coloured (25, 50, 100 %), 10 seconds each in three blocks of eight, and rate pleasure, arousal, dominance (SAM) and liking on 1–9 scales. Rebuilt from Dou et al. (2026), Behavioral Sciences 16(8): 1364, with the paper's 24 renderings (Figure 2, CC BY 4.0).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2026-dou-colour/rooms/b-p-c-100__b29d07e1-7a07-4969-95f7-20f0b04457a4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/b-p-c-100__b29d07e1-7a07-4969-95f7-20f0b04457a4.jpg",
+   "name": "b-p-c-100.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/b-p-c-100__b29d07e1-7a07-4969-95f7-20f0b04457a4.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 29198,
+   "uploaded_bytes": 29198,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/b-p-c-25__1ba5424d-c876-421c-852f-56a3c4f4ae39.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/b-p-c-25__1ba5424d-c876-421c-852f-56a3c4f4ae39.jpg",
+   "name": "b-p-c-25.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/b-p-c-25__1ba5424d-c876-421c-852f-56a3c4f4ae39.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 20299,
+   "uploaded_bytes": 20299,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/b-p-c-50__c2acf481-13cc-4b79-8b64-6c4f68a6a0f9.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/b-p-c-50__c2acf481-13cc-4b79-8b64-6c4f68a6a0f9.jpg",
+   "name": "b-p-c-50.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/b-p-c-50__c2acf481-13cc-4b79-8b64-6c4f68a6a0f9.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 22061,
+   "uploaded_bytes": 22061,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/b-p-sq-100__36036ae8-3d27-447e-8992-316fd30f35d4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/b-p-sq-100__36036ae8-3d27-447e-8992-316fd30f35d4.jpg",
+   "name": "b-p-sq-100.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/b-p-sq-100__36036ae8-3d27-447e-8992-316fd30f35d4.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 12620,
+   "uploaded_bytes": 12620,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/b-p-sq-25__95a9c138-5488-423c-bcad-d55c17d555fb.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/b-p-sq-25__95a9c138-5488-423c-bcad-d55c17d555fb.jpg",
+   "name": "b-p-sq-25.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/b-p-sq-25__95a9c138-5488-423c-bcad-d55c17d555fb.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 20152,
+   "uploaded_bytes": 20152,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/b-p-sq-50__6e891145-a9a9-4923-adb0-46561b291689.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/b-p-sq-50__6e891145-a9a9-4923-adb0-46561b291689.jpg",
+   "name": "b-p-sq-50.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/b-p-sq-50__6e891145-a9a9-4923-adb0-46561b291689.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 15051,
+   "uploaded_bytes": 15051,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/r-g-sh-100__38f4b9d3-1f5a-4c8c-b865-8499c2b2bf2c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/r-g-sh-100__38f4b9d3-1f5a-4c8c-b865-8499c2b2bf2c.jpg",
+   "name": "r-g-sh-100.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/r-g-sh-100__38f4b9d3-1f5a-4c8c-b865-8499c2b2bf2c.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 20069,
+   "uploaded_bytes": 20069,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/r-g-sh-25__4c07b1ef-85f7-4d5d-a4f2-1de83ce346db.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/r-g-sh-25__4c07b1ef-85f7-4d5d-a4f2-1de83ce346db.jpg",
+   "name": "r-g-sh-25.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/r-g-sh-25__4c07b1ef-85f7-4d5d-a4f2-1de83ce346db.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 19124,
+   "uploaded_bytes": 19124,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/r-g-sh-50__3f9fbd24-3b94-49c3-b167-798046ae38f5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/r-g-sh-50__3f9fbd24-3b94-49c3-b167-798046ae38f5.jpg",
+   "name": "r-g-sh-50.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/r-g-sh-50__3f9fbd24-3b94-49c3-b167-798046ae38f5.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 19964,
+   "uploaded_bytes": 19964,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/r-g-sq-100__d600c625-c29c-448c-8078-c60f29401b35.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/r-g-sq-100__d600c625-c29c-448c-8078-c60f29401b35.jpg",
+   "name": "r-g-sq-100.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/r-g-sq-100__d600c625-c29c-448c-8078-c60f29401b35.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 15260,
+   "uploaded_bytes": 15260,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/r-g-sq-25__6aefc341-21fb-4dd8-a53a-9891f7d398d1.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/r-g-sq-25__6aefc341-21fb-4dd8-a53a-9891f7d398d1.jpg",
+   "name": "r-g-sq-25.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/r-g-sq-25__6aefc341-21fb-4dd8-a53a-9891f7d398d1.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 21254,
+   "uploaded_bytes": 21254,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/r-g-sq-50__c07ceb0a-327d-411b-878d-cefb214cb9ea.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/r-g-sq-50__c07ceb0a-327d-411b-878d-cefb214cb9ea.jpg",
+   "name": "r-g-sq-50.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/r-g-sq-50__c07ceb0a-327d-411b-878d-cefb214cb9ea.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 16208,
+   "uploaded_bytes": 16208,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/r-o-l-100__46985520-9d08-4e96-8c95-1d7197cf1145.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/r-o-l-100__46985520-9d08-4e96-8c95-1d7197cf1145.jpg",
+   "name": "r-o-l-100.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/r-o-l-100__46985520-9d08-4e96-8c95-1d7197cf1145.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 13218,
+   "uploaded_bytes": 13218,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/r-o-l-25__3f1e05dc-5749-491e-bce4-94fd43ee4bb5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/r-o-l-25__3f1e05dc-5749-491e-bce4-94fd43ee4bb5.jpg",
+   "name": "r-o-l-25.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/r-o-l-25__3f1e05dc-5749-491e-bce4-94fd43ee4bb5.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 16721,
+   "uploaded_bytes": 16721,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/r-o-l-50__6cf5d9eb-baa0-4600-9824-0de91ddd8dd9.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/r-o-l-50__6cf5d9eb-baa0-4600-9824-0de91ddd8dd9.jpg",
+   "name": "r-o-l-50.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/r-o-l-50__6cf5d9eb-baa0-4600-9824-0de91ddd8dd9.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 16278,
+   "uploaded_bytes": 16278,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/r-o-sh-100__15a055e8-40ae-4938-8843-f018a973cb17.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/r-o-sh-100__15a055e8-40ae-4938-8843-f018a973cb17.jpg",
+   "name": "r-o-sh-100.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/r-o-sh-100__15a055e8-40ae-4938-8843-f018a973cb17.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 16842,
+   "uploaded_bytes": 16842,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/r-o-sh-25__bf664710-abd7-4b95-a508-88dd506fd2b5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/r-o-sh-25__bf664710-abd7-4b95-a508-88dd506fd2b5.jpg",
+   "name": "r-o-sh-25.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/r-o-sh-25__bf664710-abd7-4b95-a508-88dd506fd2b5.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 17956,
+   "uploaded_bytes": 17956,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/r-o-sh-50__a2263644-7850-42b8-bb90-35fce4be855f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/r-o-sh-50__a2263644-7850-42b8-bb90-35fce4be855f.jpg",
+   "name": "r-o-sh-50.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/r-o-sh-50__a2263644-7850-42b8-bb90-35fce4be855f.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 17269,
+   "uploaded_bytes": 17269,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/y-p-c-100__9bf6b4ec-94ea-484a-9627-9f91cbd488c1.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/y-p-c-100__9bf6b4ec-94ea-484a-9627-9f91cbd488c1.jpg",
+   "name": "y-p-c-100.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/y-p-c-100__9bf6b4ec-94ea-484a-9627-9f91cbd488c1.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 29483,
+   "uploaded_bytes": 29483,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/y-p-c-25__bbde1b62-3ae1-49e4-9d13-3be795825786.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/y-p-c-25__bbde1b62-3ae1-49e4-9d13-3be795825786.jpg",
+   "name": "y-p-c-25.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/y-p-c-25__bbde1b62-3ae1-49e4-9d13-3be795825786.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 18560,
+   "uploaded_bytes": 18560,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/y-p-c-50__e0e23335-39f8-4e37-9f97-697781cf1cd6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/y-p-c-50__e0e23335-39f8-4e37-9f97-697781cf1cd6.jpg",
+   "name": "y-p-c-50.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/y-p-c-50__e0e23335-39f8-4e37-9f97-697781cf1cd6.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 22129,
+   "uploaded_bytes": 22129,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/y-p-l-100__a3f5fcae-846c-4afa-9b94-549f97bf36ef.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/y-p-l-100__a3f5fcae-846c-4afa-9b94-549f97bf36ef.jpg",
+   "name": "y-p-l-100.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/y-p-l-100__a3f5fcae-846c-4afa-9b94-549f97bf36ef.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 16421,
+   "uploaded_bytes": 16421,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/y-p-l-25__691d1779-bba0-413f-b7c1-6cf394169ce1.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/y-p-l-25__691d1779-bba0-413f-b7c1-6cf394169ce1.jpg",
+   "name": "y-p-l-25.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/y-p-l-25__691d1779-bba0-413f-b7c1-6cf394169ce1.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 16482,
+   "uploaded_bytes": 16482,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-dou-colour/rooms/y-p-l-50__d76906da-3f3d-4c24-8254-58e1e0927582.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-dou-colour/rooms/y-p-l-50__d76906da-3f3d-4c24-8254-58e1e0927582.jpg",
+   "name": "y-p-l-50.jpg",
+   "type": "image",
+   "folder": "rooms",
+   "media_id": "templates/2026-dou-colour/rooms/y-p-l-50__d76906da-3f3d-4c24-8254-58e1e0927582.jpg",
+   "logicalFolder": "rooms",
+   "original_bytes": 17858,
+   "uploaded_bytes": 17858,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Morphological Buffering in Neuro-Architecture: Interactive Effects of Color, Shape, and Area Proportion on Affective Processing",
+  "authors": [
+   "Xiaoxiao Dou",
+   "Yan Zhang",
+   "Yannan Zhang",
+   "Mengyao Kang",
+   "Qiangqiang Fan",
+   "Xiaona Xie",
+   "Yufan Sun",
+   "Mengyao Li"
+  ],
+  "year": 2026,
+  "venue": "Behavioral Sciences",
+  "doi": "10.3390/bs16081364",
+  "url": "https://doi.org/10.3390/bs16081364"
+ }
+}

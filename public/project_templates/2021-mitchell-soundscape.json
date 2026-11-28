@@ -1,0 +1,304 @@
+{
+ "id": "2021-mitchell-soundscape",
+ "name": "Soundscape Survey on Site (ISO 12913)",
+ "description": "On-site soundscape questionnaire following ISO/TS 12913-2 Method A, as used by Mitchell et al. (2021, JASA) in 13 public spaces in London and Venice (N = 1,136 questionnaires). People stopped in an urban open space listen for a moment, note the sound sources they hear, rate how much they hear four types of sound (traffic noise, other noise, human sounds, natural sounds; 1 = not at all to 5 = dominates completely) and rate eight perceived affective qualities (pleasant, chaotic, vibrant, uneventful, calm, annoying, eventful, monotonous; 1 = strongly disagree to 5 = strongly agree). The page projects the eight answers onto ISOPleasant and ISOEventful (ISO/TS 12913-3) and shows the participant where the place sits on the soundscape circumplex. The researcher gives each location a code. Analysis as in the paper: per-location means of ISOPleasant / ISOEventful and source dominance; the paper modelled them with linear multilevel models (location as random effect). Differences from the original study: (1) only the questionnaire parts the paper reports (sound source dominance and the eight PAQs, plus the open sound-source note) are included; the full SSID protocol has more items (e.g. overall quality, loudness, demographics) and binaural recordings, which are not part of this template; (2) the PAQ instruction wording follows ISO/TS 12913-2 Method A as summarised in the paper; (3) the ISO coordinates and the paper's exclusion flag (same non-neutral answer to all eight words) are computed on the page and stored as iso_coordinates; the paper computed them afterwards; (4) no sound recordings or listening test.",
+ "author": "Mitchell, Oberman, Aletta, Kachlicka, Lionello, Erfanian & Kang",
+ "year": "2021",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "soundscape",
+  "ISO 12913",
+  "in-situ",
+  "circumplex",
+  "source:paper",
+  "modality:in_situ",
+  "task:multi_rating",
+  "task:questionnaire",
+  "concept:pleasantness",
+  "concept:quietness",
+  "concept:liveliness",
+  "concept:monotony",
+  "sample:gt1000",
+  "country:UK",
+  "country:Italy",
+  "city:London",
+  "city:Venice"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1121/10.0008928",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-26T15:41:34.502+00:00",
+ "updatedAt": "2026-11-26T15:41:56.675+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers, the location code and the time are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     },
+     {
+      "name": "location",
+      "type": "text",
+      "title": "Location code (given by the researcher)",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "sources",
+    "elements": [
+     {
+      "name": "sound_sources_noted",
+      "type": "comment",
+      "title": "Please note any sound sources you can identify in this sound environment."
+     },
+     {
+      "name": "traffic_noise",
+      "type": "rating",
+      "title": "Traffic noise (e.g., cars, buses, trains, airplanes)",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Not at all",
+       "A little",
+       "Moderately",
+       "A lot",
+       "Dominates completely"
+      ]
+     },
+     {
+      "name": "other_noise",
+      "type": "rating",
+      "title": "Other noise (e.g., sirens, construction, industry, loading of goods)",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Not at all",
+       "A little",
+       "Moderately",
+       "A lot",
+       "Dominates completely"
+      ]
+     },
+     {
+      "name": "human_sounds",
+      "type": "rating",
+      "title": "Sounds from human beings (e.g., conversation, laughter, children at play, footsteps)",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Not at all",
+       "A little",
+       "Moderately",
+       "A lot",
+       "Dominates completely"
+      ]
+     },
+     {
+      "name": "natural_sounds",
+      "type": "rating",
+      "title": "Natural sounds (e.g., singing birds, flowing water, wind in vegetation)",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Not at all",
+       "A little",
+       "Moderately",
+       "A lot",
+       "Dominates completely"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "paq",
+    "elements": [
+     {
+      "name": "pleasant",
+      "type": "rating",
+      "title": "pleasant",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Strongly disagree",
+       "Disagree",
+       "Neither agree nor disagree",
+       "Agree",
+       "Strongly agree"
+      ]
+     },
+     {
+      "name": "chaotic",
+      "type": "rating",
+      "title": "chaotic",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Strongly disagree",
+       "Disagree",
+       "Neither agree nor disagree",
+       "Agree",
+       "Strongly agree"
+      ]
+     },
+     {
+      "name": "vibrant",
+      "type": "rating",
+      "title": "vibrant",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Strongly disagree",
+       "Disagree",
+       "Neither agree nor disagree",
+       "Agree",
+       "Strongly agree"
+      ]
+     },
+     {
+      "name": "uneventful",
+      "type": "rating",
+      "title": "uneventful",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Strongly disagree",
+       "Disagree",
+       "Neither agree nor disagree",
+       "Agree",
+       "Strongly agree"
+      ]
+     },
+     {
+      "name": "calm",
+      "type": "rating",
+      "title": "calm",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Strongly disagree",
+       "Disagree",
+       "Neither agree nor disagree",
+       "Agree",
+       "Strongly agree"
+      ]
+     },
+     {
+      "name": "annoying",
+      "type": "rating",
+      "title": "annoying",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Strongly disagree",
+       "Disagree",
+       "Neither agree nor disagree",
+       "Agree",
+       "Strongly agree"
+      ]
+     },
+     {
+      "name": "eventful",
+      "type": "rating",
+      "title": "eventful",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Strongly disagree",
+       "Disagree",
+       "Neither agree nor disagree",
+       "Agree",
+       "Strongly agree"
+      ]
+     },
+     {
+      "name": "monotonous",
+      "type": "rating",
+      "title": "monotonous",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Strongly disagree",
+       "Disagree",
+       "Neither agree nor disagree",
+       "Agree",
+       "Strongly agree"
+      ]
+     },
+     {
+      "name": "iso_coordinates",
+      "type": "custom",
+      "title": "Computed by the page: { iso_pleasant, iso_eventful (ISO/TS 12913-3 projection, -1 to 1), same_answer_all_paq (true = all eight words got the same non-neutral answer; the paper excluded these), at (ISO time) }"
+     }
+    ]
+   }
+  ],
+  "title": "Soundscape Survey on Site (ISO 12913)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-3dc9ed6a59e4434a",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Soundscape Survey on Site (ISO 12913)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Soundscape Survey on Site (ISO 12913)\",\n    \"description\": \"Stand in an urban open space, listen for a moment, then rate how much you hear four types of sound and how well eight words (pleasant, chaotic, vibrant, uneventful, calm, annoying, eventful, monotonous) describe the sound environment. The page projects the eight answers onto the ISO 12913-3 pleasantness / eventfulness plane. Rebuilt from Mitchell, Oberman, Aletta, Kachlicka, Lionello, Erfanian & Kang (2021).\",\n    \"locale\": \"en\",\n    \"pages\": [\n      { \"name\": \"start\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"I agree to take part. My answers, the location code and the time are recorded anonymously for research.\", \"isRequired\": true, \"labelTrue\": \"I agree\", \"labelFalse\": \"I do not agree\" },\n        { \"type\": \"text\", \"name\": \"location\", \"title\": \"Location code (given by the researcher)\", \"isRequired\": true }\n      ]},\n      { \"name\": \"sources\", \"elements\": [\n        { \"type\": \"comment\", \"name\": \"sound_sources_noted\", \"title\": \"Please note any sound sources you can identify in this sound environment.\" },\n        { \"type\": \"rating\", \"name\": \"traffic_noise\", \"title\": \"Traffic noise (e.g., cars, buses, trains, airplanes)\", \"rateMin\": 1, \"rateMax\": 5, \"rateLabels\": [\"Not at all\", \"A little\", \"Moderately\", \"A lot\", \"Dominates completely\"], \"isRequired\": true },\n        { \"type\": \"rating\", \"name\": \"other_noise\", \"title\": \"Other noise (e.g., sirens, construction, industry, loading of goods)\", \"rateMin\": 1, \"rateMax\": 5, \"rateLabels\": [\"Not at all\", \"A little\", \"Moderately\", \"A lot\", \"Dominates completely\"], \"isRequired\": true },\n        { \"type\": \"rating\", \"name\": \"human_sounds\", \"title\": \"Sounds from human beings (e.g., conversation, laughter, children at play, footsteps)\", \"rateMin\": 1, \"rateMax\": 5, \"rateLabels\": [\"Not at all\", \"A little\", \"Moderately\", \"A lot\", \"Dominates completely\"], \"isRequired\": true },\n        { \"type\": \"rating\", \"name\": \"natural_sounds\", \"title\": \"Natural sounds (e.g., singing birds, flowing water, wind in vegetation)\", \"rateMin\": 1, \"rateMax\": 5, \"rateLabels\": [\"Not at all\", \"A little\", \"Moderately\", \"A lot\", \"Dominates completely\"], \"isRequired\": true }\n      ]},\n      { \"name\": \"paq\", \"elements\": [\n        { \"type\": \"rating\", \"name\": \"pleasant\", \"title\": \"pleasant\", \"rateMin\": 1, \"rateMax\": 5, \"rateLabels\": [\"Strongly disagree\", \"Disagree\", \"Neither agree nor disagree\", \"Agree\", \"Strongly agree\"], \"isRequired\": true },\n        { \"type\": \"rating\", \"name\": \"chaotic\", \"title\": \"chaotic\", \"rateMin\": 1, \"rateMax\": 5, \"rateLabels\": [\"Strongly disagree\", \"Disagree\", \"Neither agree nor disagree\", \"Agree\", \"Strongly agree\"], \"isRequired\": true },\n        { \"type\": \"rating\", \"name\": \"vibrant\", \"title\": \"vibrant\", \"rateMin\": 1, \"rateMax\": 5, \"rateLabels\": [\"Strongly disagree\", \"Disagree\", \"Neither agree nor disagree\", \"Agree\", \"Strongly agree\"], \"isRequired\": true },\n        { \"type\": \"rating\", \"name\": \"uneventful\", \"title\": \"uneventful\", \"rateMin\": 1, \"rateMax\": 5, \"rateLabels\": [\"Strongly disagree\", \"Disagree\", \"Neither agree nor disagree\", \"Agree\", \"Strongly agree\"], \"isRequired\": true },\n        { \"type\": \"rating\", \"name\": \"calm\", \"title\": \"calm\", \"rateMin\": 1, \"rateMax\": 5, \"rateLabels\": [\"Strongly disagree\", \"Disagree\", \"Neither agree nor disagree\", \"Agree\", \"Strongly agree\"], \"isRequired\": true },\n        { \"type\": \"rating\", \"name\": \"annoying\", \"title\": \"annoying\", \"rateMin\": 1, \"rateMax\": 5, \"rateLabels\": [\"Strongly disagree\", \"Disagree\", \"Neither agree nor disagree\", \"Agree\", \"Strongly agree\"], \"isRequired\": true },\n        { \"type\": \"rating\", \"name\": \"eventful\", \"title\": \"eventful\", \"rateMin\": 1, \"rateMax\": 5, \"rateLabels\": [\"Strongly disagree\", \"Disagree\", \"Neither agree nor disagree\", \"Agree\", \"Strongly agree\"], \"isRequired\": true },\n        { \"type\": \"rating\", \"name\": \"monotonous\", \"title\": \"monotonous\", \"rateMin\": 1, \"rateMax\": 5, \"rateLabels\": [\"Strongly disagree\", \"Disagree\", \"Neither agree nor disagree\", \"Agree\", \"Strongly agree\"], \"isRequired\": true },\n        { \"type\": \"custom\", \"name\": \"iso_coordinates\", \"title\": \"Computed by the page: { iso_pleasant, iso_eventful (ISO/TS 12913-3 projection, -1 to 1), same_answer_all_paq (true = all eight words got the same non-neutral answer; the paper excluded these), at (ISO time) }\" }\n      ]}\n    ]\n  }\n}\n</script>\n<style>\n:root{--bg:#f6f4ef;--card:#fff;--ink:#1d232b;--muted:#5d6672;--accent:#1f6f6b;--accent-ink:#fff;--line:#dcd8cf;--on:#d9efec}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:640px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.45rem;margin:0 0 8px}h2{font-size:1rem;margin:0 0 6px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:12px;padding:14px 20px;font:inherit;font-weight:700;cursor:pointer;background:var(--accent);color:var(--accent-ink);width:100%}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer}\ninput[type=text],textarea{font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);width:100%}\ntextarea{min-height:76px;resize:vertical}\n.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}\n.scale button{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:9px;padding:8px 2px;font:inherit;font-size:.74rem;line-height:1.2;cursor:pointer;min-height:48px}\n.scale button.on{border-color:var(--accent);background:var(--on);font-weight:700}\n.word{font-size:1.15rem;font-weight:700}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.step{font-size:.82rem;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}\nsvg{display:block;width:100%;max-width:360px;margin:8px auto 0}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<script>\n(function(){\n  var SOURCES=['traffic_noise','other_noise','human_sounds','natural_sounds'];\n  var PAQ=['pleasant','chaotic','vibrant','uneventful','calm','annoying','eventful','monotonous'];\n  var app=document.getElementById('app'), Q={}, A={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function save(list,b){b.disabled=true;return Promise.all(list).then(function(rs){var bad=rs.filter(function(x){return x&&x.ok===false;})[0];if(bad){b.disabled=false;err(bad.error);return false;}return true;});}\n  function scale(n,big){var q=Q[n];return '<div class=\"q\"><h2'+(big?' class=\"word\"':'')+'>'+esc(q.title)+'</h2><div class=\"scale\">'+(q.rateValues||[]).map(function(v){return '<button type=\"button\" data-n=\"'+n+'\" data-v=\"'+v.value+'\"'+(A[n]===v.value?' class=\"on\"':'')+'>'+esc(v.text)+'</button>';}).join('')+'</div></div>';}\n  function wire(){app.querySelectorAll('.scale button').forEach(function(b){b.onclick=function(){var n=b.getAttribute('data-n');A[n]=Number(b.getAttribute('data-v'));app.querySelectorAll('.scale button[data-n=\"'+n+'\"]').forEach(function(x){x.classList.toggle('on',x===b);});err('');};});}\n  function start(){\n    app.innerHTML='<div class=\"step\">Step 1 of 3</div><h1>How does this place sound?</h1><p>Stay where you are. Take a moment to listen to the sounds around you, then answer a few short questions. It takes about three minutes.</p>'+\n      '<div class=\"card\"><label class=\"opt\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label>'+\n      '<div class=\"q\"><h2>'+esc(Q.location.title)+'</h2><input type=\"text\" id=\"loc\" maxlength=\"40\" placeholder=\"e.g. L03\"></div>'+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var l=document.getElementById('loc').value.trim();if(!l)return err('Please enter the location code.');\n      save([SPSite.answer('consent',true),SPSite.answer('location',l)],this).then(function(ok){if(ok)sources();});\n    };\n  }\n  function sources(){\n    var h='<div class=\"step\">Step 2 of 3</div><h1>What do you hear?</h1><div class=\"card\"><div class=\"q\" style=\"margin-top:0\"><h2>'+esc(Q.sound_sources_noted.title)+'</h2><textarea id=\"noted\" maxlength=\"600\"></textarea></div>'+\n      '<p style=\"margin-top:18px\"><b style=\"color:var(--ink)\">To what extent do you presently hear the following four types of sounds?</b></p>';\n    SOURCES.forEach(function(n){h+=scale(n);});\n    h+='<div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div></div>';\n    app.innerHTML=h;window.scrollTo(0,0);wire();\n    document.getElementById('go').onclick=function(){\n      if(SOURCES.some(function(n){return A[n]==null;}))return err('Please answer all four sound types.');\n      var t=document.getElementById('noted').value.trim(), l=SOURCES.map(function(n){return SPSite.answer(n,A[n]);});\n      if(t)l.push(SPSite.answer('sound_sources_noted',t));\n      save(l,this).then(function(ok){if(ok)paq();});\n    };\n  }\n  function iso(a){var c=Math.SQRT1_2, d=4+Math.sqrt(32);\n    var p=((a.pleasant-a.annoying)+c*(a.calm-a.chaotic)+c*(a.vibrant-a.monotonous))/d;\n    var e=((a.eventful-a.uneventful)+c*(a.chaotic-a.calm)+c*(a.vibrant-a.monotonous))/d;\n    return {iso_pleasant:Math.round(p*1000)/1000, iso_eventful:Math.round(e*1000)/1000};}\n  function paq(){\n    var h='<div class=\"step\">Step 3 of 3</div><h1>How would you describe it?</h1><p>To what extent do you agree or disagree that the present surrounding sound environment is…</p><div class=\"card\">';\n    PAQ.forEach(function(n,i){h+=scale(n,true);});\n    h+='<div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">Finish</button></div><div class=\"err\"></div></div>';\n    app.innerHTML=h;window.scrollTo(0,0);wire();\n    document.getElementById('go').onclick=function(){\n      var miss=PAQ.filter(function(n){return A[n]==null;});\n      if(miss.length)return err('Please answer all eight words ('+miss.join(', ')+').');\n      var r=iso(A), first=A[PAQ[0]];\n      r.same_answer_all_paq=first!==3&&PAQ.every(function(n){return A[n]===first;});\n      r.at=new Date().toISOString();\n      var b=this;\n      save(PAQ.map(function(n){return SPSite.answer(n,A[n]);}).concat([SPSite.answer('iso_coordinates',r)]),b).then(function(ok){if(ok)done(r);});\n    };\n  }\n  function label(r){var p=r.iso_pleasant,e=r.iso_eventful;if(Math.abs(p)<0.1&&Math.abs(e)<0.1)return 'neutral';\n    if(Math.abs(e)<0.1)return p>0?'pleasant':'annoying';if(Math.abs(p)<0.1)return e>0?'eventful':'uneventful';\n    return p>0?(e>0?'vibrant':'calm'):(e>0?'chaotic':'monotonous');}\n  function plot(r){var s=300,m=40,c=s/2,k=(s-2*m)/2,x=c+r.iso_pleasant*k,y=c-r.iso_eventful*k;\n    return '<svg viewBox=\"0 0 '+s+' '+s+'\" role=\"img\" aria-label=\"Your answer on the soundscape plane\"><rect x=\"'+m+'\" y=\"'+m+'\" width=\"'+(s-2*m)+'\" height=\"'+(s-2*m)+'\" fill=\"#fff\" stroke=\"#dcd8cf\"/>'+\n      '<line x1=\"'+m+'\" y1=\"'+c+'\" x2=\"'+(s-m)+'\" y2=\"'+c+'\" stroke=\"#bdb7aa\"/><line x1=\"'+c+'\" y1=\"'+m+'\" x2=\"'+c+'\" y2=\"'+(s-m)+'\" stroke=\"#bdb7aa\"/>'+\n      '<g font-size=\"11\" fill=\"#5d6672\" text-anchor=\"middle\"><text x=\"'+c+'\" y=\"'+(m-8)+'\">eventful</text><text x=\"'+c+'\" y=\"'+(s-m+18)+'\">uneventful</text>'+\n      '<text x=\"'+(s-m-4)+'\" y=\"'+(c-6)+'\" text-anchor=\"end\">pleasant</text><text x=\"'+(m+4)+'\" y=\"'+(c-6)+'\" text-anchor=\"start\">annoying</text>'+\n      '<text x=\"'+(s-m-8)+'\" y=\"'+(m+16)+'\" text-anchor=\"end\">vibrant</text><text x=\"'+(m+8)+'\" y=\"'+(m+16)+'\" text-anchor=\"start\">chaotic</text>'+\n      '<text x=\"'+(s-m-8)+'\" y=\"'+(s-m-8)+'\" text-anchor=\"end\">calm</text><text x=\"'+(m+8)+'\" y=\"'+(s-m-8)+'\" text-anchor=\"start\">monotonous</text></g>'+\n      '<circle cx=\"'+x.toFixed(1)+'\" cy=\"'+y.toFixed(1)+'\" r=\"8\" fill=\"#1f6f6b\" stroke=\"#fff\" stroke-width=\"2\"/></svg>';}\n  function done(r){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Your answers place this sound environment here: mostly <b style=\"color:var(--ink)\">'+label(r)+'</b>.</p>'+plot(r)+\n      '<p style=\"margin-top:10px;font-size:.85rem\">Right = more pleasant, up = more eventful (ISO 12913-3).</p><p id=\"st\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(res){var st=document.getElementById('st');if(res&&res.ok===false){if(st)st.textContent='';err(res.error||'Some answers are missing.');setTimeout(function(){if((res.missing||[]).some(function(m){return m==='consent'||m==='location';}))start();else if((res.missing||[]).some(function(m){return SOURCES.indexOf(m)>=0;}))sources();else paq();},1500);}else if(st)st.textContent='Your answers are saved.';});\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','location','sound_sources_noted','iso_coordinates'].concat(SOURCES,PAQ).forEach(function(n){Q[n]=SPSite.getQuestion(n);});\n    var a=(ctx&&ctx.answers)||{};\n    SOURCES.concat(PAQ).forEach(function(n){if(typeof a[n]==='number')A[n]=a[n];});\n    if(a.iso_coordinates&&a.consent===true)return done(a.iso_coordinates);\n    if(a.consent===true&&a.location){if(SOURCES.every(function(n){return A[n]!=null;}))paq();else sources();}else start();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-26T15:41:15.319Z"
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-26T15:41:15.319Z"
+  },
+  "description": "Stand in an urban open space, listen for a moment, then rate how much you hear four types of sound and how well eight words (pleasant, chaotic, vibrant, uneventful, calm, annoying, eventful, monotonous) describe the sound environment. The page projects the eight answers onto the ISO 12913-3 pleasantness / eventfulness plane. Rebuilt from Mitchell, Oberman, Aletta, Kachlicka, Lionello, Erfanian & Kang (2021).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [],
+ "paper": {
+  "title": "Investigating urban soundscapes of the COVID-19 lockdown: A predictive soundscape modeling approach",
+  "authors": [
+   "Mitchell A",
+   "Oberman T",
+   "Aletta F",
+   "Kachlicka M",
+   "Lionello M",
+   "Erfanian M",
+   "Kang J"
+  ],
+  "year": 2021,
+  "venue": "The Journal of the Acoustical Society of America",
+  "doi": "10.1121/10.0008928",
+  "url": "https://doi.org/10.1121/10.0008928"
+ }
+}

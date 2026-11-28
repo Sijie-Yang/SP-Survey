@@ -1,0 +1,1225 @@
+{
+ "id": "2025-larkin-us",
+ "name": "US Built Environment Quality: Street Comparisons with Strength Slider",
+ "description": "Method replication: same task, scales and design as the paper; the images are not the paper's stimuli (70 new Google Street View views from nine US metropolitan areas, one per Census division).\n\nLarkin et al. (2025, Environmental Science & Technology) collected 72,516 Amazon Mechanical Turk surveys to train nationwide models of five built environment quality characteristics. Each survey (SI Appendix 2) has a consent form, six opt-in questions about the participant (age, gender, education, Hispanic origin, race, COVID-19 limits on going out) and six side-by-side Google Street View comparisons: which street is more safe for walking, more safe from violence or crime, has more cars (quality-assurance check), is more relaxing, is more beautiful, has a higher quality of nature. Participants pick a side with a slider and move it farther the more strongly they feel; equal is not allowed. This template keeps the questions, answer options, order and slider instructions word for word.\n\nData: each comparison is stored as the chosen image (pairwise choice, ranked with TrueSkill on Results) and, in slider_scores, the signed slider position (-50 left … +50 right) with the left and right image names, which is the image score the paper analysed (right image = response, left = minus response).\n\nDifferences from the original study: (1) images: the paper drew 49,440 GSV images sampled by Census division, urbanicity, road type and straight/side viewing angle, and paired them with set sampling probabilities (SI Appendix 3); here 70 views (forward, backward or side) from grids around Boston, Philadelphia, Columbus, Kansas City, Atlanta, Nashville, Dallas, Denver and Portland OR, trails and heavily blurred views removed, paired at random; (2) the consent text is shortened (no payment, contact or IRB lines); (3) \"Other (specify)\" for gender and race is a separate optional text box; (4) the slider range -50 to +50 follows the paper's model output range, the paper does not state the survey slider's units; (5) the COVID-19 item is kept as in the 2021–2022 survey, remove it if not relevant.\n\nStreet images: Google Street View (© Google).",
+ "author": "Larkin et al.",
+ "year": "2025",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "street view",
+  "pairwise comparison",
+  "safety",
+  "beauty",
+  "nature",
+  "walkability",
+  "United States",
+  "source:paper",
+  "modality:street_view",
+  "task:pairwise",
+  "concept:safety",
+  "concept:beauty",
+  "concept:greenery",
+  "concept:walkability",
+  "concept:restoration",
+  "participants:crowd",
+  "sample:gt1000",
+  "country:United States",
+  "city:Boston",
+  "city:Philadelphia",
+  "city:Columbus",
+  "city:Kansas City",
+  "city:Atlanta",
+  "city:Nashville",
+  "city:Dallas",
+  "city:Denver",
+  "city:Portland"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1021/acs.est.5c00966",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-26T23:52:01.25+00:00",
+ "updatedAt": "2026-11-26T23:52:18.157+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I have read the information above and agree to take part. I am 18 years of age or older.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "age",
+      "type": "radiogroup",
+      "title": "What is your age?",
+      "choices": [
+       {
+        "text": "18-29",
+        "value": "18-29"
+       },
+       {
+        "text": "30-39",
+        "value": "30-39"
+       },
+       {
+        "text": "40-49",
+        "value": "40-49"
+       },
+       {
+        "text": "50-59",
+        "value": "50-59"
+       },
+       {
+        "text": "60-69",
+        "value": "60-69"
+       },
+       {
+        "text": "70+",
+        "value": "70+"
+       }
+      ]
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "To which gender identity do you most identify?",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other (specify)",
+        "value": "other"
+       }
+      ]
+     },
+     {
+      "name": "gender_other",
+      "type": "text",
+      "title": "Gender identity (other, specify)"
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "What is your highest degree or level of school you have completed?",
+      "choices": [
+       {
+        "text": "Some high school or less",
+        "value": "some_high_school"
+       },
+       {
+        "text": "High school diploma or equivalent (e.g. GED)",
+        "value": "high_school"
+       },
+       {
+        "text": "Some college credit, no degree",
+        "value": "some_college"
+       },
+       {
+        "text": "Bachelor’s degree or equivalent",
+        "value": "bachelor"
+       },
+       {
+        "text": "Master’s, professional, or doctorate program",
+        "value": "graduate"
+       }
+      ]
+     },
+     {
+      "name": "hispanic",
+      "type": "radiogroup",
+      "title": "Are you of Hispanic/Latino/Spanish origin?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ]
+     },
+     {
+      "name": "race",
+      "type": "radiogroup",
+      "title": "How would you best describe yourself?",
+      "choices": [
+       {
+        "text": "White",
+        "value": "white"
+       },
+       {
+        "text": "Black or African American",
+        "value": "black"
+       },
+       {
+        "text": "American Indian or Alaska Native",
+        "value": "aian"
+       },
+       {
+        "text": "Asian",
+        "value": "asian"
+       },
+       {
+        "text": "Native Hawaiian or Pacific Islander",
+        "value": "nhpi"
+       },
+       {
+        "text": "Other (specify)",
+        "value": "other"
+       }
+      ]
+     },
+     {
+      "name": "race_other",
+      "type": "text",
+      "title": "How would you best describe yourself? (other, specify)"
+     },
+     {
+      "name": "covid_limit",
+      "type": "radiogroup",
+      "title": "I usually limit going outside only to essential trips because of the COVID-19 pandemic",
+      "choices": [
+       {
+        "text": "Strongly Agree",
+        "value": "strongly_agree"
+       },
+       {
+        "text": "Agree",
+        "value": "agree"
+       },
+       {
+        "text": "Neutral",
+        "value": "neutral"
+       },
+       {
+        "text": "Disagree",
+        "value": "disagree"
+       },
+       {
+        "text": "Strongly Disagree",
+        "value": "strongly_disagree"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "comparisons",
+    "elements": [
+     {
+      "name": "safe_walking",
+      "type": "imagepicker",
+      "title": "Which street is more safe for walking?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "mediaFolders": [
+       "streets"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "safe_crime",
+      "type": "imagepicker",
+      "title": "Which street is more safe from violence or crime?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "mediaFolders": [
+       "streets"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "more_cars",
+      "type": "imagepicker",
+      "title": "Which street has more cars?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "description": "Quality-assurance comparison (attention check): in the original study, surveys with an incorrect answer here were discarded.",
+      "mediaFolders": [
+       "streets"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "relaxing",
+      "type": "imagepicker",
+      "title": "Which street is more relaxing?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "mediaFolders": [
+       "streets"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "beautiful",
+      "type": "imagepicker",
+      "title": "Which street is more beautiful?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "mediaFolders": [
+       "streets"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "nature_quality",
+      "type": "imagepicker",
+      "title": "Which street has a higher quality of nature?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "mediaFolders": [
+       "streets"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "slider_scores",
+      "type": "custom",
+      "title": "Slider position for each comparison (-50 = left street much more, +50 = right street much more; 0 not allowed), with the left and right image names",
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Perceptions of the Built Environment: US Street Comparisons",
+  "locale": "en",
+  "spSite": {
+   "id": "site-b3abb640c4a3a67c",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Perceptions of the Built Environment: US Street Comparisons</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Perceptions of the Built Environment: US Street Comparisons\",\n    \"description\": \"Six side-by-side street-view comparisons (safe for walking, safe from crime, more cars as an attention check, relaxing, beautiful, quality of nature). Pick a side with a slider and move it farther the more strongly you feel. Method replication of Larkin et al. (2025, Environ. Sci. Technol.).\",\n    \"locale\": \"en\",\n    \"pages\": [\n      { \"name\": \"intro\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"I have read the information above and agree to take part. I am 18 years of age or older.\", \"isRequired\": true, \"labelTrue\": \"I agree\", \"labelFalse\": \"I do not agree\" }\n      ]},\n      { \"name\": \"about_you\", \"elements\": [\n        { \"type\": \"radiogroup\", \"name\": \"age\", \"title\": \"What is your age?\", \"choices\": [\n          { \"value\": \"18-29\", \"text\": \"18-29\" }, { \"value\": \"30-39\", \"text\": \"30-39\" }, { \"value\": \"40-49\", \"text\": \"40-49\" }, { \"value\": \"50-59\", \"text\": \"50-59\" }, { \"value\": \"60-69\", \"text\": \"60-69\" }, { \"value\": \"70+\", \"text\": \"70+\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"gender\", \"title\": \"To which gender identity do you most identify?\", \"choices\": [\n          { \"value\": \"female\", \"text\": \"Female\" }, { \"value\": \"male\", \"text\": \"Male\" }, { \"value\": \"other\", \"text\": \"Other (specify)\" } ] },\n        { \"type\": \"text\", \"name\": \"gender_other\", \"title\": \"Gender identity (other, specify)\" },\n        { \"type\": \"radiogroup\", \"name\": \"education\", \"title\": \"What is your highest degree or level of school you have completed?\", \"choices\": [\n          { \"value\": \"some_high_school\", \"text\": \"Some high school or less\" }, { \"value\": \"high_school\", \"text\": \"High school diploma or equivalent (e.g. GED)\" }, { \"value\": \"some_college\", \"text\": \"Some college credit, no degree\" }, { \"value\": \"bachelor\", \"text\": \"Bachelor’s degree or equivalent\" }, { \"value\": \"graduate\", \"text\": \"Master’s, professional, or doctorate program\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"hispanic\", \"title\": \"Are you of Hispanic/Latino/Spanish origin?\", \"choices\": [\n          { \"value\": \"yes\", \"text\": \"Yes\" }, { \"value\": \"no\", \"text\": \"No\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"race\", \"title\": \"How would you best describe yourself?\", \"choices\": [\n          { \"value\": \"white\", \"text\": \"White\" }, { \"value\": \"black\", \"text\": \"Black or African American\" }, { \"value\": \"aian\", \"text\": \"American Indian or Alaska Native\" }, { \"value\": \"asian\", \"text\": \"Asian\" }, { \"value\": \"nhpi\", \"text\": \"Native Hawaiian or Pacific Islander\" }, { \"value\": \"other\", \"text\": \"Other (specify)\" } ] },\n        { \"type\": \"text\", \"name\": \"race_other\", \"title\": \"How would you best describe yourself? (other, specify)\" },\n        { \"type\": \"radiogroup\", \"name\": \"covid_limit\", \"title\": \"I usually limit going outside only to essential trips because of the COVID-19 pandemic\", \"choices\": [\n          { \"value\": \"strongly_agree\", \"text\": \"Strongly Agree\" }, { \"value\": \"agree\", \"text\": \"Agree\" }, { \"value\": \"neutral\", \"text\": \"Neutral\" }, { \"value\": \"disagree\", \"text\": \"Disagree\" }, { \"value\": \"strongly_disagree\", \"text\": \"Strongly Disagree\" } ] }\n      ]},\n      { \"name\": \"comparisons\", \"elements\": [\n        { \"type\": \"imagepicker\", \"name\": \"safe_walking\", \"title\": \"Which street is more safe for walking?\", \"imageCount\": 2, \"isRequired\": true, \"choices\": [], \"imageFit\": \"cover\", \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"mediaFolders\": [\"streets\"] },\n        { \"type\": \"imagepicker\", \"name\": \"safe_crime\", \"title\": \"Which street is more safe from violence or crime?\", \"imageCount\": 2, \"isRequired\": true, \"choices\": [], \"imageFit\": \"cover\", \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"mediaFolders\": [\"streets\"] },\n        { \"type\": \"imagepicker\", \"name\": \"more_cars\", \"title\": \"Which street has more cars?\", \"description\": \"Quality-assurance comparison (attention check): in the original study, surveys with an incorrect answer here were discarded.\", \"imageCount\": 2, \"isRequired\": true, \"choices\": [], \"imageFit\": \"cover\", \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"mediaFolders\": [\"streets\"] },\n        { \"type\": \"imagepicker\", \"name\": \"relaxing\", \"title\": \"Which street is more relaxing?\", \"imageCount\": 2, \"isRequired\": true, \"choices\": [], \"imageFit\": \"cover\", \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"mediaFolders\": [\"streets\"] },\n        { \"type\": \"imagepicker\", \"name\": \"beautiful\", \"title\": \"Which street is more beautiful?\", \"imageCount\": 2, \"isRequired\": true, \"choices\": [], \"imageFit\": \"cover\", \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"mediaFolders\": [\"streets\"] },\n        { \"type\": \"imagepicker\", \"name\": \"nature_quality\", \"title\": \"Which street has a higher quality of nature?\", \"imageCount\": 2, \"isRequired\": true, \"choices\": [], \"imageFit\": \"cover\", \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"mediaFolders\": [\"streets\"] },\n        { \"type\": \"custom\", \"name\": \"slider_scores\", \"title\": \"Slider position for each comparison (-50 = left street much more, +50 = right street much more; 0 not allowed), with the left and right image names\", \"isRequired\": true }\n      ]}\n    ]\n  }\n}\n</script>\n<style>\n:root{--bg:#f4f6f8;--card:#fff;--ink:#1d2329;--muted:#5a6470;--accent:#2f6fb0;--accent-ink:#fff;--line:#d9dee4;--head:#3b82c4}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:24px 16px 40px}\nh1{font-size:1.45rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.bar{background:var(--head);color:#fff;font-weight:600;font-size:.9rem;padding:6px 12px;border-radius:8px 8px 0 0;margin:-18px -18px 14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:8px 0 14px}.progress>i{display:block;height:100%;background:var(--accent)}\n.scale{display:grid;grid-template-columns:1fr 2fr 1fr;gap:10px;align-items:center;margin:6px 0 14px;font-size:.9rem;color:var(--muted)}\n.scale .r{text-align:right}\ninput[type=range]{width:100%;accent-color:var(--accent);height:28px}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}\n.pair figure{margin:0;aspect-ratio:1/1;border-radius:10px;overflow:hidden;background:#000;border:3px solid transparent;transition:border-color .15s}\n.pair figure.on{border-color:var(--accent)}\n.pair img{width:100%;height:100%;object-fit:cover;display:block}\n.val{text-align:center;font-weight:600;min-height:1.5em;margin-top:6px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.txt{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:16px}.q>b{display:block;margin-bottom:2px}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.scale{grid-template-columns:1fr 1fr}.scale input{grid-column:1/3;grid-row:2}.pair{gap:8px}h1{font-size:1.25rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Google Street View (© Google), 2016–2026, nine US metropolitan areas (one per Census division). Survey from Larkin et al. (2025), Environmental Science &amp; Technology, SI Appendix 2.</footer>\n<script>\n(function(){\n  var app=document.getElementById('app'),Q={},idx=0,scores={};\n  var COMP=['safe_walking','safe_crime','more_cars','relaxing','beautiful','nature_quality'];\n  var PHRASE={safe_walking:'more safe for walking',safe_crime:'more safe from violence or crime',more_cars:'has more cars',relaxing:'more relaxing',beautiful:'more beautiful',nature_quality:'has a higher quality of nature'};\n  var ABOUT=['age','gender','education','hispanic','race','covid_limit'];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function chk(r){if(r&&r.ok===false)throw new Error(r.error||'Not saved');return r;}\n  function intro(){\n    app.innerHTML='<h1>Perceptions of the Built Environment</h1>'+\n      '<div class=\"card\"><p>You are being asked to take part in a research study. The purpose of this research study is to gather participant perceptions of various environments using images from Google street view. Study activities include answering multiple choice questions about yourself and ranking images from Google street view. You must be 18 years of age or older to participate. Your participation in this study is anonymous. While participation in this study is voluntary, all questions must be answered to be included in study results.</p>'+\n      '<p>'+esc(Q.consent.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(Q.consent.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(chk).then(about).catch(function(e){err(e.message);});};\n  }\n  function radios(q){return '<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+q.name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function other(n){return '<input class=\"txt\" id=\"'+n+'\" placeholder=\"Please specify\" aria-label=\"'+esc(Q[n].title)+'\" hidden>';}\n  function about(){\n    var h='<h1>About you</h1><div class=\"card\">';\n    ABOUT.forEach(function(n){h+=radios(Q[n]);if(n==='gender')h+=other('gender_other');if(n==='race')h+=other('race_other');});\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"next\">Continue to the image comparisons</button></div><div class=\"err\"></div></div>';\n    ABOUT.forEach(function(n){app.querySelectorAll('input[name='+n+']').forEach(function(r){r.onchange=function(){\n      var o=document.getElementById(n+'_other');if(o)o.hidden=r.value!=='other';\n      SPSite.answer(n,r.value).then(chk).catch(function(e){err(e.message);});};});});\n    ['gender_other','race_other'].forEach(function(n){var o=document.getElementById(n);o.onchange=function(){SPSite.answer(n,o.value.trim()||null).then(chk).catch(function(e){err(e.message);});};});\n    document.getElementById('next').onclick=function(){idx=0;comp();};\n    window.scrollTo(0,0);\n  }\n  function imgs(q){var ch=(q.choices||[]).filter(function(c){return !c.tie;});return ch.map(function(c,k){return {value:c.value,url:c.imageUrl||(q.media[k]&&q.media[k].url)||'',name:(q.media&&q.media[k]&&q.media[k].name)||c.value};});}\n  function comp(){\n    if(idx>=COMP.length)return finish();\n    var n=COMP[idx],q=Q[n],im=imgs(q),ph=PHRASE[n],prev=scores[n]?scores[n].score:0;\n    app.innerHTML='<div class=\"card\"><div class=\"bar\">Image Comparisons</div>'+\n      '<h1>'+(idx+1)+'. '+esc(q.title)+'</h1>'+\n      '<p>Move the slider left or right to make your choice. Move the slider farther if you feel more strongly about your choice. You cannot rank the images as equal.</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*idx/COMP.length)+'%\"></i></div>'+\n      '<div class=\"scale\"><span>left street is '+esc(ph)+'</span><input type=\"range\" id=\"sl\" min=\"-50\" max=\"50\" step=\"1\" value=\"'+prev+'\" aria-label=\"'+esc(q.title)+' Left is negative, right is positive.\"><span class=\"r\">right street is '+esc(ph)+'</span></div>'+\n      '<div class=\"pair\">'+im.map(function(m,k){return '<figure id=\"f'+k+'\"><img src=\"'+esc(m.url)+'\" alt=\"'+(k?'Right':'Left')+' street view\"></figure>';}).join('')+'</div>'+\n      '<div class=\"val\" id=\"val\"></div>'+\n      '<div class=\"row\">'+(idx>0?'<button class=\"btn ghost\" id=\"back\">Back</button>':'')+'<button class=\"btn\" id=\"next\">Next</button></div><div class=\"err\"></div></div>';\n    var sl=document.getElementById('sl'),nx=document.getElementById('next');\n    function show(){var v=+sl.value;document.getElementById('f0').className=v<0?'on':'';document.getElementById('f1').className=v>0?'on':'';\n      document.getElementById('val').textContent=v===0?'Move the slider to choose a street':(v<0?'Left':'Right')+' street, strength '+Math.abs(v)+' of 50';nx.disabled=v===0;}\n    sl.oninput=show;show();\n    nx.onclick=function(){var v=+sl.value;if(!v)return;nx.disabled=true;\n      scores[n]={score:v,left:im[0].name,right:im[1].name};\n      SPSite.answer(n,v<0?im[0].value:im[1].value).then(chk)\n        .then(function(){return SPSite.answer('slider_scores',scores).then(chk);})\n        .then(function(){idx+=1;comp();}).catch(function(e){nx.disabled=false;err(e.message);});};\n    var b=document.getElementById('back');if(b)b.onclick=function(){idx-=1;comp();};\n    window.scrollTo(0,0);\n  }\n  function finish(){\n    app.innerHTML='<div class=\"card\"><h1>Thank you</h1><p>That was the last comparison.</p><div class=\"row\"><button class=\"btn\" id=\"fin\">Submit</button></div><div class=\"err\"></div></div>';\n    document.getElementById('fin').onclick=function(){var btn=this;btn.disabled=true;err('Submitting…');\n      SPSite.complete().then(function(r){if(r&&r.ok===false){btn.disabled=false;var m=r.missing||[];err(r.error||('Please answer: '+m.join(', ')));\n        if(m.indexOf('consent')>=0)intro();else{var k=COMP.findIndex(function(c){return m.indexOf(c)>=0;});if(k>=0){idx=k;comp();}}}});};\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','gender_other','race_other','slider_scores'].concat(ABOUT,COMP).forEach(function(n){Q[n]=SPSite.getQuestion(n);});\n    var a=(ctx&&ctx.answers)||{};\n    if(a.slider_scores&&typeof a.slider_scores==='object')scores=a.slider_scores;\n    if(a.consent===true){idx=COMP.filter(function(c){return scores[c];}).length;if(idx>0)comp();else about();}else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-26T23:51:14.962Z",
+   "mediaFolders": [
+    "streets"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-26T23:51:14.962Z"
+  },
+  "description": "Six side-by-side street-view comparisons (safe for walking, safe from crime, more cars as an attention check, relaxing, beautiful, quality of nature). Pick a side with a slider and move it farther the more strongly you feel. Method replication of Larkin et al. (2025, Environ. Sci. Technol.).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2025-larkin-us/streets/enc_01__79e92314-fee1-499b-a978-e6d0ff47f9ea.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/enc_01__79e92314-fee1-499b-a978-e6d0ff47f9ea.jpg",
+   "name": "enc_01.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/enc_01__79e92314-fee1-499b-a978-e6d0ff47f9ea.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 98521,
+   "uploaded_bytes": 98521,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/enc_02__bab051db-bf77-4c5c-857b-ca9f7260ea58.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/enc_02__bab051db-bf77-4c5c-857b-ca9f7260ea58.jpg",
+   "name": "enc_02.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/enc_02__bab051db-bf77-4c5c-857b-ca9f7260ea58.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 92780,
+   "uploaded_bytes": 92780,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/enc_03__49d279c9-5ed2-4963-9791-36b864e2f788.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/enc_03__49d279c9-5ed2-4963-9791-36b864e2f788.jpg",
+   "name": "enc_03.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/enc_03__49d279c9-5ed2-4963-9791-36b864e2f788.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 99818,
+   "uploaded_bytes": 99818,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/enc_04__390a8c0d-7573-469b-9cf9-b19c15de18ec.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/enc_04__390a8c0d-7573-469b-9cf9-b19c15de18ec.jpg",
+   "name": "enc_04.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/enc_04__390a8c0d-7573-469b-9cf9-b19c15de18ec.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 131241,
+   "uploaded_bytes": 131241,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/enc_05__4ca3d760-2dd0-4712-b981-28cbe75303cd.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/enc_05__4ca3d760-2dd0-4712-b981-28cbe75303cd.jpg",
+   "name": "enc_05.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/enc_05__4ca3d760-2dd0-4712-b981-28cbe75303cd.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 119031,
+   "uploaded_bytes": 119031,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/enc_06__f5e017b7-467c-4f9d-9ed5-c217cefb0144.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/enc_06__f5e017b7-467c-4f9d-9ed5-c217cefb0144.jpg",
+   "name": "enc_06.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/enc_06__f5e017b7-467c-4f9d-9ed5-c217cefb0144.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 109541,
+   "uploaded_bytes": 109541,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/enc_07__4b84179e-ee98-412e-b3d8-b42cf0fdd0dd.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/enc_07__4b84179e-ee98-412e-b3d8-b42cf0fdd0dd.jpg",
+   "name": "enc_07.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/enc_07__4b84179e-ee98-412e-b3d8-b42cf0fdd0dd.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 69531,
+   "uploaded_bytes": 69531,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/enc_08__72b8a028-e01c-4c15-8e89-cd769b9d9ff1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/enc_08__72b8a028-e01c-4c15-8e89-cd769b9d9ff1.jpg",
+   "name": "enc_08.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/enc_08__72b8a028-e01c-4c15-8e89-cd769b9d9ff1.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 168214,
+   "uploaded_bytes": 168214,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/esc_01__7ac093ce-270d-402a-b7d1-bf1bbdd2229b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/esc_01__7ac093ce-270d-402a-b7d1-bf1bbdd2229b.jpg",
+   "name": "esc_01.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/esc_01__7ac093ce-270d-402a-b7d1-bf1bbdd2229b.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 111797,
+   "uploaded_bytes": 111797,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/esc_02__64365549-353d-4c59-8eb0-b0b113513ce3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/esc_02__64365549-353d-4c59-8eb0-b0b113513ce3.jpg",
+   "name": "esc_02.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/esc_02__64365549-353d-4c59-8eb0-b0b113513ce3.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 116890,
+   "uploaded_bytes": 116890,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/esc_03__0b9e8c99-c4b0-47f4-a048-6b6be0161f5a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/esc_03__0b9e8c99-c4b0-47f4-a048-6b6be0161f5a.jpg",
+   "name": "esc_03.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/esc_03__0b9e8c99-c4b0-47f4-a048-6b6be0161f5a.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 143913,
+   "uploaded_bytes": 143913,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/esc_04__f680d78f-a926-4191-8479-9e3d3f5b9d23.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/esc_04__f680d78f-a926-4191-8479-9e3d3f5b9d23.jpg",
+   "name": "esc_04.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/esc_04__f680d78f-a926-4191-8479-9e3d3f5b9d23.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 172851,
+   "uploaded_bytes": 172851,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/esc_05__f16d1943-1b6a-4994-8668-9b0d200509e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/esc_05__f16d1943-1b6a-4994-8668-9b0d200509e6.jpg",
+   "name": "esc_05.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/esc_05__f16d1943-1b6a-4994-8668-9b0d200509e6.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 184346,
+   "uploaded_bytes": 184346,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/esc_06__8c51a670-c00d-4717-bd1a-1f421e382f26.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/esc_06__8c51a670-c00d-4717-bd1a-1f421e382f26.jpg",
+   "name": "esc_06.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/esc_06__8c51a670-c00d-4717-bd1a-1f421e382f26.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 116071,
+   "uploaded_bytes": 116071,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/esc_08__614a5331-0e9b-45c6-989d-d377e44ff8d1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/esc_08__614a5331-0e9b-45c6-989d-d377e44ff8d1.jpg",
+   "name": "esc_08.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/esc_08__614a5331-0e9b-45c6-989d-d377e44ff8d1.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 158607,
+   "uploaded_bytes": 158607,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/esc_09__3bb2ace9-f71c-43b8-8adc-301380704910.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/esc_09__3bb2ace9-f71c-43b8-8adc-301380704910.jpg",
+   "name": "esc_09.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/esc_09__3bb2ace9-f71c-43b8-8adc-301380704910.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 128672,
+   "uploaded_bytes": 128672,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/ma_01__8dce0537-8a38-4f63-8dee-5b18132c33ee.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/ma_01__8dce0537-8a38-4f63-8dee-5b18132c33ee.jpg",
+   "name": "ma_01.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/ma_01__8dce0537-8a38-4f63-8dee-5b18132c33ee.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 106683,
+   "uploaded_bytes": 106683,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/ma_02__16653aab-3b3d-49ef-9038-dd5b5fa10ec3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/ma_02__16653aab-3b3d-49ef-9038-dd5b5fa10ec3.jpg",
+   "name": "ma_02.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/ma_02__16653aab-3b3d-49ef-9038-dd5b5fa10ec3.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 169933,
+   "uploaded_bytes": 169933,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/ma_03__19c6a122-7e47-40e5-ab7a-3e296cbea3bd.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/ma_03__19c6a122-7e47-40e5-ab7a-3e296cbea3bd.jpg",
+   "name": "ma_03.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/ma_03__19c6a122-7e47-40e5-ab7a-3e296cbea3bd.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 165741,
+   "uploaded_bytes": 165741,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/ma_04__1ec62001-d425-4f6f-b966-bed6652e9df1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/ma_04__1ec62001-d425-4f6f-b966-bed6652e9df1.jpg",
+   "name": "ma_04.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/ma_04__1ec62001-d425-4f6f-b966-bed6652e9df1.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 112968,
+   "uploaded_bytes": 112968,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/ma_06__74be898a-d73d-4727-82d9-e6cc7e2b79d6.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/ma_06__74be898a-d73d-4727-82d9-e6cc7e2b79d6.jpg",
+   "name": "ma_06.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/ma_06__74be898a-d73d-4727-82d9-e6cc7e2b79d6.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 140588,
+   "uploaded_bytes": 140588,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/ma_08__ac6600e0-2708-4f52-ae01-66ab2af04d15.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/ma_08__ac6600e0-2708-4f52-ae01-66ab2af04d15.jpg",
+   "name": "ma_08.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/ma_08__ac6600e0-2708-4f52-ae01-66ab2af04d15.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 169693,
+   "uploaded_bytes": 169693,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/ma_09__a8a26a09-340f-4f6c-83ec-4bd63912021e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/ma_09__a8a26a09-340f-4f6c-83ec-4bd63912021e.jpg",
+   "name": "ma_09.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/ma_09__a8a26a09-340f-4f6c-83ec-4bd63912021e.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 74915,
+   "uploaded_bytes": 74915,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/mtn_01__9bedce83-7080-49b1-b270-67779306cfd3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/mtn_01__9bedce83-7080-49b1-b270-67779306cfd3.jpg",
+   "name": "mtn_01.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/mtn_01__9bedce83-7080-49b1-b270-67779306cfd3.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 121781,
+   "uploaded_bytes": 121781,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/mtn_02__2b2b78fe-3b9e-49e1-81d9-7cb1a70df0be.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/mtn_02__2b2b78fe-3b9e-49e1-81d9-7cb1a70df0be.jpg",
+   "name": "mtn_02.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/mtn_02__2b2b78fe-3b9e-49e1-81d9-7cb1a70df0be.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 108106,
+   "uploaded_bytes": 108106,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/mtn_03__d58ba594-e9fd-4d59-ac57-35cf118e9167.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/mtn_03__d58ba594-e9fd-4d59-ac57-35cf118e9167.jpg",
+   "name": "mtn_03.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/mtn_03__d58ba594-e9fd-4d59-ac57-35cf118e9167.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 129524,
+   "uploaded_bytes": 129524,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/mtn_04__8e34069d-e94d-4a0c-b1b1-850fdef45721.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/mtn_04__8e34069d-e94d-4a0c-b1b1-850fdef45721.jpg",
+   "name": "mtn_04.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/mtn_04__8e34069d-e94d-4a0c-b1b1-850fdef45721.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 118657,
+   "uploaded_bytes": 118657,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/mtn_05__58eb713e-ce6c-4498-a6d3-ed1376aa7bd3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/mtn_05__58eb713e-ce6c-4498-a6d3-ed1376aa7bd3.jpg",
+   "name": "mtn_05.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/mtn_05__58eb713e-ce6c-4498-a6d3-ed1376aa7bd3.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 99011,
+   "uploaded_bytes": 99011,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/mtn_06__eeba97ae-6441-4e7e-a057-e4e9d6217b2a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/mtn_06__eeba97ae-6441-4e7e-a057-e4e9d6217b2a.jpg",
+   "name": "mtn_06.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/mtn_06__eeba97ae-6441-4e7e-a057-e4e9d6217b2a.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 88972,
+   "uploaded_bytes": 88972,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/mtn_07__6f6eef41-ea0f-42e8-9529-b71ab48cdbf9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/mtn_07__6f6eef41-ea0f-42e8-9529-b71ab48cdbf9.jpg",
+   "name": "mtn_07.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/mtn_07__6f6eef41-ea0f-42e8-9529-b71ab48cdbf9.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 90029,
+   "uploaded_bytes": 90029,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/mtn_08__aeba9534-dd9d-41b6-ab7b-67fbc097879a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/mtn_08__aeba9534-dd9d-41b6-ab7b-67fbc097879a.jpg",
+   "name": "mtn_08.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/mtn_08__aeba9534-dd9d-41b6-ab7b-67fbc097879a.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 162988,
+   "uploaded_bytes": 162988,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/mtn_09__dbf3d292-a9fa-4416-b51f-bb4e2033c169.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/mtn_09__dbf3d292-a9fa-4416-b51f-bb4e2033c169.jpg",
+   "name": "mtn_09.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/mtn_09__dbf3d292-a9fa-4416-b51f-bb4e2033c169.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 114670,
+   "uploaded_bytes": 114670,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/ne_01__0aaebf98-f09d-4d62-9b09-f8267ef3ff7a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/ne_01__0aaebf98-f09d-4d62-9b09-f8267ef3ff7a.jpg",
+   "name": "ne_01.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/ne_01__0aaebf98-f09d-4d62-9b09-f8267ef3ff7a.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 149609,
+   "uploaded_bytes": 149609,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/ne_02__b7e4eed8-32a3-49f4-a087-7d2880606a4f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/ne_02__b7e4eed8-32a3-49f4-a087-7d2880606a4f.jpg",
+   "name": "ne_02.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/ne_02__b7e4eed8-32a3-49f4-a087-7d2880606a4f.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 138533,
+   "uploaded_bytes": 138533,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/ne_03__94092258-312e-4f6a-9bd0-3e40dd87088d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/ne_03__94092258-312e-4f6a-9bd0-3e40dd87088d.jpg",
+   "name": "ne_03.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/ne_03__94092258-312e-4f6a-9bd0-3e40dd87088d.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 88123,
+   "uploaded_bytes": 88123,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/ne_04__f6ae0834-9dc0-4b8e-89f5-6fffe36aea4c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/ne_04__f6ae0834-9dc0-4b8e-89f5-6fffe36aea4c.jpg",
+   "name": "ne_04.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/ne_04__f6ae0834-9dc0-4b8e-89f5-6fffe36aea4c.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 188389,
+   "uploaded_bytes": 188389,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/ne_07__3a4cb065-4ede-4b9f-8996-4c545612a430.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/ne_07__3a4cb065-4ede-4b9f-8996-4c545612a430.jpg",
+   "name": "ne_07.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/ne_07__3a4cb065-4ede-4b9f-8996-4c545612a430.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 119299,
+   "uploaded_bytes": 119299,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/ne_08__f4354dcf-e02f-45a2-8cbc-88ed34957d78.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/ne_08__f4354dcf-e02f-45a2-8cbc-88ed34957d78.jpg",
+   "name": "ne_08.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/ne_08__f4354dcf-e02f-45a2-8cbc-88ed34957d78.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 95077,
+   "uploaded_bytes": 95077,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/ne_09__d7c4efa6-bb6b-46df-a6cb-9e742a259eeb.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/ne_09__d7c4efa6-bb6b-46df-a6cb-9e742a259eeb.jpg",
+   "name": "ne_09.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/ne_09__d7c4efa6-bb6b-46df-a6cb-9e742a259eeb.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 105109,
+   "uploaded_bytes": 105109,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/pac_01__d424042d-9d48-45cc-a541-a0ebe57079ae.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/pac_01__d424042d-9d48-45cc-a541-a0ebe57079ae.jpg",
+   "name": "pac_01.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/pac_01__d424042d-9d48-45cc-a541-a0ebe57079ae.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 114580,
+   "uploaded_bytes": 114580,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/pac_03__58e2b20c-83b4-403d-ba66-db0b01ca0fa8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/pac_03__58e2b20c-83b4-403d-ba66-db0b01ca0fa8.jpg",
+   "name": "pac_03.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/pac_03__58e2b20c-83b4-403d-ba66-db0b01ca0fa8.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 134300,
+   "uploaded_bytes": 134300,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/pac_04__662ce303-ef01-4a39-9db4-fa0648fc2c5b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/pac_04__662ce303-ef01-4a39-9db4-fa0648fc2c5b.jpg",
+   "name": "pac_04.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/pac_04__662ce303-ef01-4a39-9db4-fa0648fc2c5b.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 146502,
+   "uploaded_bytes": 146502,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/pac_05__c51ba9a7-c7b7-479d-891e-2b133ce05e4f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/pac_05__c51ba9a7-c7b7-479d-891e-2b133ce05e4f.jpg",
+   "name": "pac_05.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/pac_05__c51ba9a7-c7b7-479d-891e-2b133ce05e4f.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 180993,
+   "uploaded_bytes": 180993,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/pac_06__859b2ef0-3497-487d-84fd-2dd7943ce46a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/pac_06__859b2ef0-3497-487d-84fd-2dd7943ce46a.jpg",
+   "name": "pac_06.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/pac_06__859b2ef0-3497-487d-84fd-2dd7943ce46a.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 127571,
+   "uploaded_bytes": 127571,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/pac_07__f825d9c2-c43f-4df9-ad45-e620e93dfa14.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/pac_07__f825d9c2-c43f-4df9-ad45-e620e93dfa14.jpg",
+   "name": "pac_07.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/pac_07__f825d9c2-c43f-4df9-ad45-e620e93dfa14.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 125871,
+   "uploaded_bytes": 125871,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/pac_08__1dd3699d-7da0-436c-bd45-7cf04210225d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/pac_08__1dd3699d-7da0-436c-bd45-7cf04210225d.jpg",
+   "name": "pac_08.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/pac_08__1dd3699d-7da0-436c-bd45-7cf04210225d.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 119008,
+   "uploaded_bytes": 119008,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/pac_09__99505c34-5806-4a6c-8a1f-dea2227166f4.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/pac_09__99505c34-5806-4a6c-8a1f-dea2227166f4.jpg",
+   "name": "pac_09.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/pac_09__99505c34-5806-4a6c-8a1f-dea2227166f4.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 156768,
+   "uploaded_bytes": 156768,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/sa_01__c648bdc5-f05b-491e-a74a-fc447c568c28.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/sa_01__c648bdc5-f05b-491e-a74a-fc447c568c28.jpg",
+   "name": "sa_01.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/sa_01__c648bdc5-f05b-491e-a74a-fc447c568c28.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 167732,
+   "uploaded_bytes": 167732,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/sa_02__243bf596-9544-4758-a313-8ae37f35e378.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/sa_02__243bf596-9544-4758-a313-8ae37f35e378.jpg",
+   "name": "sa_02.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/sa_02__243bf596-9544-4758-a313-8ae37f35e378.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 115053,
+   "uploaded_bytes": 115053,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/sa_03__30e6ad5b-c2fe-4ef5-8962-a5cb4b38aa95.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/sa_03__30e6ad5b-c2fe-4ef5-8962-a5cb4b38aa95.jpg",
+   "name": "sa_03.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/sa_03__30e6ad5b-c2fe-4ef5-8962-a5cb4b38aa95.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 111503,
+   "uploaded_bytes": 111503,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/sa_04__9fcdc425-f8d6-4e06-871e-2c373fcf573c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/sa_04__9fcdc425-f8d6-4e06-871e-2c373fcf573c.jpg",
+   "name": "sa_04.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/sa_04__9fcdc425-f8d6-4e06-871e-2c373fcf573c.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 131838,
+   "uploaded_bytes": 131838,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/sa_05__ae4913cd-f216-4a57-81b7-ba8d642f88c9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/sa_05__ae4913cd-f216-4a57-81b7-ba8d642f88c9.jpg",
+   "name": "sa_05.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/sa_05__ae4913cd-f216-4a57-81b7-ba8d642f88c9.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 105097,
+   "uploaded_bytes": 105097,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/sa_06__478ec912-931c-48e9-af48-a19aced09a4c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/sa_06__478ec912-931c-48e9-af48-a19aced09a4c.jpg",
+   "name": "sa_06.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/sa_06__478ec912-931c-48e9-af48-a19aced09a4c.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 114257,
+   "uploaded_bytes": 114257,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/sa_08__0381b35c-efd6-4c3c-bf16-32e05a05bcf5.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/sa_08__0381b35c-efd6-4c3c-bf16-32e05a05bcf5.jpg",
+   "name": "sa_08.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/sa_08__0381b35c-efd6-4c3c-bf16-32e05a05bcf5.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 193429,
+   "uploaded_bytes": 193429,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/wnc_01__9641663a-9bcb-4aaf-9c7e-ae48f6a4cbe0.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/wnc_01__9641663a-9bcb-4aaf-9c7e-ae48f6a4cbe0.jpg",
+   "name": "wnc_01.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/wnc_01__9641663a-9bcb-4aaf-9c7e-ae48f6a4cbe0.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 96163,
+   "uploaded_bytes": 96163,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/wnc_03__a9e15cbe-36f9-4a19-b308-504a2ab0c1c7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/wnc_03__a9e15cbe-36f9-4a19-b308-504a2ab0c1c7.jpg",
+   "name": "wnc_03.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/wnc_03__a9e15cbe-36f9-4a19-b308-504a2ab0c1c7.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 65669,
+   "uploaded_bytes": 65669,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/wnc_04__8a661f9c-ffa4-4653-ac4c-9d9e2e44e419.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/wnc_04__8a661f9c-ffa4-4653-ac4c-9d9e2e44e419.jpg",
+   "name": "wnc_04.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/wnc_04__8a661f9c-ffa4-4653-ac4c-9d9e2e44e419.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 204119,
+   "uploaded_bytes": 204119,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/wnc_05__53c52d7f-a363-4da4-91a1-8fce51bf5595.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/wnc_05__53c52d7f-a363-4da4-91a1-8fce51bf5595.jpg",
+   "name": "wnc_05.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/wnc_05__53c52d7f-a363-4da4-91a1-8fce51bf5595.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 85433,
+   "uploaded_bytes": 85433,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/wnc_06__96d03e05-e758-40da-8497-60ba5d1a9605.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/wnc_06__96d03e05-e758-40da-8497-60ba5d1a9605.jpg",
+   "name": "wnc_06.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/wnc_06__96d03e05-e758-40da-8497-60ba5d1a9605.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 130068,
+   "uploaded_bytes": 130068,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/wnc_07__44c753fa-e945-4b21-b5d3-b5c70710d83a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/wnc_07__44c753fa-e945-4b21-b5d3-b5c70710d83a.jpg",
+   "name": "wnc_07.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/wnc_07__44c753fa-e945-4b21-b5d3-b5c70710d83a.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 76340,
+   "uploaded_bytes": 76340,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/wnc_08__6e1ef09d-5b9c-4e68-a719-39a1653b732b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/wnc_08__6e1ef09d-5b9c-4e68-a719-39a1653b732b.jpg",
+   "name": "wnc_08.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/wnc_08__6e1ef09d-5b9c-4e68-a719-39a1653b732b.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 84530,
+   "uploaded_bytes": 84530,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/wnc_09__8918cffe-28cb-40a4-90c9-c274635125d1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/wnc_09__8918cffe-28cb-40a4-90c9-c274635125d1.jpg",
+   "name": "wnc_09.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/wnc_09__8918cffe-28cb-40a4-90c9-c274635125d1.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 85315,
+   "uploaded_bytes": 85315,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/wsc_01__8d6cf428-81dc-4502-a2c0-84396033c827.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/wsc_01__8d6cf428-81dc-4502-a2c0-84396033c827.jpg",
+   "name": "wsc_01.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/wsc_01__8d6cf428-81dc-4502-a2c0-84396033c827.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 83053,
+   "uploaded_bytes": 83053,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/wsc_02__b05d61d1-42e8-419a-82b9-1a4be4f4b609.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/wsc_02__b05d61d1-42e8-419a-82b9-1a4be4f4b609.jpg",
+   "name": "wsc_02.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/wsc_02__b05d61d1-42e8-419a-82b9-1a4be4f4b609.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 80505,
+   "uploaded_bytes": 80505,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/wsc_04__256e44c3-dc73-4523-8f56-c9716773930d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/wsc_04__256e44c3-dc73-4523-8f56-c9716773930d.jpg",
+   "name": "wsc_04.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/wsc_04__256e44c3-dc73-4523-8f56-c9716773930d.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 84524,
+   "uploaded_bytes": 84524,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/wsc_05__2063dd9d-921f-4945-85e1-861b8cfdd364.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/wsc_05__2063dd9d-921f-4945-85e1-861b8cfdd364.jpg",
+   "name": "wsc_05.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/wsc_05__2063dd9d-921f-4945-85e1-861b8cfdd364.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 92819,
+   "uploaded_bytes": 92819,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/wsc_06__2bd400dc-a714-48ea-ad53-d157b39a0b07.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/wsc_06__2bd400dc-a714-48ea-ad53-d157b39a0b07.jpg",
+   "name": "wsc_06.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/wsc_06__2bd400dc-a714-48ea-ad53-d157b39a0b07.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 108566,
+   "uploaded_bytes": 108566,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/wsc_07__e2352478-7762-4f54-8b25-eaf1a2e58bc3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/wsc_07__e2352478-7762-4f54-8b25-eaf1a2e58bc3.jpg",
+   "name": "wsc_07.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/wsc_07__e2352478-7762-4f54-8b25-eaf1a2e58bc3.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 94774,
+   "uploaded_bytes": 94774,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/wsc_08__2082c457-c576-412a-8287-92dc7f1a6ac9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/wsc_08__2082c457-c576-412a-8287-92dc7f1a6ac9.jpg",
+   "name": "wsc_08.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/wsc_08__2082c457-c576-412a-8287-92dc7f1a6ac9.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 155136,
+   "uploaded_bytes": 155136,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-larkin-us/streets/wsc_09__9601034d-88a7-473e-bc5b-f4297825d188.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-larkin-us/streets/wsc_09__9601034d-88a7-473e-bc5b-f4297825d188.jpg",
+   "name": "wsc_09.jpg",
+   "type": "image",
+   "folder": "streets",
+   "media_id": "templates/2025-larkin-us/streets/wsc_09__9601034d-88a7-473e-bc5b-f4297825d188.jpg",
+   "logicalFolder": "streets",
+   "original_bytes": 108027,
+   "uploaded_bytes": 108027,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Developing Nationwide Estimates of Built Environment Quality Characteristics Using Street-View Imagery and Computer Vision",
+  "authors": [
+   "Larkin A.",
+   "Huang T.",
+   "Chen L.",
+   "Lin P.-I.D.",
+   "Hart J.E.",
+   "Zhang W.",
+   "Coull B.A.",
+   "Yi L.",
+   "Suel E.",
+   "Hankey S.",
+   "James P.",
+   "Hystad P."
+  ],
+  "year": 2025,
+  "venue": "Environmental Science and Technology",
+  "doi": "10.1021/acs.est.5c00966",
+  "url": "https://doi.org/10.1021/acs.est.5c00966"
+ }
+}

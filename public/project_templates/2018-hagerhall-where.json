@@ -1,0 +1,355 @@
+{
+ "id": "2018-hagerhall-where",
+ "name": "Where Would You Rather Live? Nine Landscapes in Pairs",
+ "description": "Faithful replication with the paper's own stimuli: Hägerhäll et al. (2018, Frontiers in Psychology 9: 822) tested the long-held claim that people everywhere prefer semi-open landscapes. They rendered one neutral landscape in nine versions, crossing relief (low, medium, high) with vegetation density (sparse, medium, dense), and showed all 36 pairs to 140 people in five indigenous, mostly rural communities (Jahai, Lokono, Makalero, Makasae, Wayuu) and two Swedish student groups, asking each time where they would rather live. Indigenous groups preferred flatter, densely vegetated landscapes; Swedish students preferred the middle picture (medium relief, medium vegetation), as savanna and prospect-refuge theories predict. Half or more of Lokono, Makasae and Jahai participants also preferred the landscape most like the one they grew up in, against under 10% of the Swedish students. This template uses the nine pictures from the paper's Figure 1 (CC BY 4.0) in folder \"landscapes\": all 36 pairs with the question \"Choose the picture that shows where you would rather live\", then a pick of the landscape most like where the participant grew up, plus age, gender, birthplace and current residence as in the paper. Choices are stored per pair, ready for win counts or a Bradley–Terry model with relief and vegetation as factors.\n\nDifferences from the original study: (1) pairs appear on screen in a new random order with random left/right sides for each participant, instead of laminated A4 sheets in one fixed random order shown by a researcher; (2) the question is the English version of the paper's instruction, not the wording tailored to each language; (3) the pictures are cropped from the published figure (about 330 × 280 px) rather than the original renders; (4) the landscape-you-grew-up-in task shows all nine pictures on one screen in random order.",
+ "author": "Hägerhäll, Ode Sang, Englund, Ahlner, Rybka, Huber & Burenhult",
+ "year": "2018",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "landscape-preference",
+  "openness",
+  "cross-cultural",
+  "pairwise",
+  "rendered",
+  "source:paper",
+  "modality:rendered",
+  "task:pairwise",
+  "concept:preference",
+  "concept:openness",
+  "concept:greenery",
+  "concept:naturalness",
+  "participants:residents",
+  "participants:students",
+  "sample:100to1000",
+  "country:Sweden",
+  "country:Malaysia",
+  "country:Suriname",
+  "country:East Timor",
+  "country:Colombia"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3389/fpsyg.2018.00822",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T09:02:32.33+00:00",
+ "updatedAt": "2026-11-27T09:03:01.547+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "max": 99,
+      "min": 15,
+      "name": "age",
+      "type": "text",
+      "title": "Age",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "birthplace",
+      "type": "text",
+      "title": "Where were you born? (place and country)",
+      "isRequired": true
+     },
+     {
+      "name": "residence",
+      "type": "text",
+      "title": "Where do you live now? (place and country)",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "pairs",
+    "elements": [
+     {
+      "name": "dwell_choice",
+      "type": "radiogroup",
+      "title": "Choose the picture that shows where you would rather live.",
+      "choices": [
+       {
+        "text": "Sparse vegetation, low relief",
+        "value": "veg-sparse_topo-low"
+       },
+       {
+        "text": "Sparse vegetation, medium relief",
+        "value": "veg-sparse_topo-medium"
+       },
+       {
+        "text": "Sparse vegetation, high relief",
+        "value": "veg-sparse_topo-high"
+       },
+       {
+        "text": "Medium vegetation, low relief",
+        "value": "veg-medium_topo-low"
+       },
+       {
+        "text": "Medium vegetation, medium relief",
+        "value": "veg-medium_topo-medium"
+       },
+       {
+        "text": "Medium vegetation, high relief",
+        "value": "veg-medium_topo-high"
+       },
+       {
+        "text": "Dense vegetation, low relief",
+        "value": "veg-dense_topo-low"
+       },
+       {
+        "text": "Dense vegetation, medium relief",
+        "value": "veg-dense_topo-medium"
+       },
+       {
+        "text": "Dense vegetation, high relief",
+        "value": "veg-dense_topo-high"
+       }
+      ],
+      "isRequired": true,
+      "description": "36 pairs (every pair of the nine landscapes once), random order and random left/right. Value = the chosen landscape; keyed by the pair (both ids, sorted, joined by |); shown = [left, right]. Count wins per landscape or fit a Bradley-Terry model with relief and vegetation as factors."
+     },
+     {
+      "name": "grew_up",
+      "type": "radiogroup",
+      "title": "Which landscape is most like the landscape you grew up in?",
+      "choices": [
+       {
+        "text": "Sparse vegetation, low relief",
+        "value": "veg-sparse_topo-low"
+       },
+       {
+        "text": "Sparse vegetation, medium relief",
+        "value": "veg-sparse_topo-medium"
+       },
+       {
+        "text": "Sparse vegetation, high relief",
+        "value": "veg-sparse_topo-high"
+       },
+       {
+        "text": "Medium vegetation, low relief",
+        "value": "veg-medium_topo-low"
+       },
+       {
+        "text": "Medium vegetation, medium relief",
+        "value": "veg-medium_topo-medium"
+       },
+       {
+        "text": "Medium vegetation, high relief",
+        "value": "veg-medium_topo-high"
+       },
+       {
+        "text": "Dense vegetation, low relief",
+        "value": "veg-dense_topo-low"
+       },
+       {
+        "text": "Dense vegetation, medium relief",
+        "value": "veg-dense_topo-medium"
+       },
+       {
+        "text": "Dense vegetation, high relief",
+        "value": "veg-dense_topo-high"
+       }
+      ],
+      "isRequired": true,
+      "description": "All nine shown together in random order; shown lists them in screen order (row by row)."
+     }
+    ]
+   }
+  ],
+  "title": "Where Would You Rather Live? Nine Landscapes in Pairs",
+  "locale": "en",
+  "spSite": {
+   "id": "site-b99c086f91bcfd8d",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Where Would You Rather Live?</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Where Would You Rather Live? Nine Landscapes in Pairs\",\n  \"description\": \"Participants see all 36 pairs of nine rendered landscapes that vary in relief (low, medium, high) and vegetation density (sparse, medium, dense) and choose where they would rather live, then pick the landscape most like the one they grew up in. Rebuilt from Hägerhäll, Ode Sang, Englund, Ahlner, Rybka, Huber & Burenhult (2018), Frontiers in Psychology 9: 822, with the nine images from the paper's Figure 1 (CC BY 4.0).\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"landscapes\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"min\": 15,\n      \"max\": 99\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"birthplace\",\n      \"title\": \"Where were you born? (place and country)\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"residence\",\n      \"title\": \"Where do you live now? (place and country)\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"pairs\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"dwell_choice\",\n      \"title\": \"Choose the picture that shows where you would rather live.\",\n      \"description\": \"36 pairs (every pair of the nine landscapes once), random order and random left/right. Value = the chosen landscape; keyed by the pair (both ids, sorted, joined by |); shown = [left, right]. Count wins per landscape or fit a Bradley-Terry model with relief and vegetation as factors.\",\n      \"choices\": [\n       {\n        \"value\": \"veg-sparse_topo-low\",\n        \"text\": \"Sparse vegetation, low relief\"\n       },\n       {\n        \"value\": \"veg-sparse_topo-medium\",\n        \"text\": \"Sparse vegetation, medium relief\"\n       },\n       {\n        \"value\": \"veg-sparse_topo-high\",\n        \"text\": \"Sparse vegetation, high relief\"\n       },\n       {\n        \"value\": \"veg-medium_topo-low\",\n        \"text\": \"Medium vegetation, low relief\"\n       },\n       {\n        \"value\": \"veg-medium_topo-medium\",\n        \"text\": \"Medium vegetation, medium relief\"\n       },\n       {\n        \"value\": \"veg-medium_topo-high\",\n        \"text\": \"Medium vegetation, high relief\"\n       },\n       {\n        \"value\": \"veg-dense_topo-low\",\n        \"text\": \"Dense vegetation, low relief\"\n       },\n       {\n        \"value\": \"veg-dense_topo-medium\",\n        \"text\": \"Dense vegetation, medium relief\"\n       },\n       {\n        \"value\": \"veg-dense_topo-high\",\n        \"text\": \"Dense vegetation, high relief\"\n       }\n      ],\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"grew_up\",\n      \"title\": \"Which landscape is most like the landscape you grew up in?\",\n      \"description\": \"All nine shown together in random order; shown lists them in screen order (row by row).\",\n      \"choices\": [\n       {\n        \"value\": \"veg-sparse_topo-low\",\n        \"text\": \"Sparse vegetation, low relief\"\n       },\n       {\n        \"value\": \"veg-sparse_topo-medium\",\n        \"text\": \"Sparse vegetation, medium relief\"\n       },\n       {\n        \"value\": \"veg-sparse_topo-high\",\n        \"text\": \"Sparse vegetation, high relief\"\n       },\n       {\n        \"value\": \"veg-medium_topo-low\",\n        \"text\": \"Medium vegetation, low relief\"\n       },\n       {\n        \"value\": \"veg-medium_topo-medium\",\n        \"text\": \"Medium vegetation, medium relief\"\n       },\n       {\n        \"value\": \"veg-medium_topo-high\",\n        \"text\": \"Medium vegetation, high relief\"\n       },\n       {\n        \"value\": \"veg-dense_topo-low\",\n        \"text\": \"Dense vegetation, low relief\"\n       },\n       {\n        \"value\": \"veg-dense_topo-medium\",\n        \"text\": \"Dense vegetation, medium relief\"\n       },\n       {\n        \"value\": \"veg-dense_topo-high\",\n        \"text\": \"Dense vegetation, high relief\"\n       }\n      ],\n      \"isRequired\": true\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"semiopen-original\">{\"source\": \"Hägerhäll et al. (2018) Frontiers in Psychology 9: 822\", \"n\": 140, \"groups\": \"Jahai (Malaysia), Lokono (Suriname), Makalero and Makasae (East Timor), Wayuu (Colombia), two Swedish student samples\", \"result\": \"The five indigenous, mostly rural groups preferred flatter landscapes with dense vegetation (no relief x vegetation interaction); both Swedish student samples preferred medium relief with medium vegetation (significant interaction), strongest among landscape architecture students. 50-60% of Lokono, Makasae and Jahai preferred the landscape they grew up in, under 10% of Swedish students.\", \"percent_preferring_home_landscape\": {\"Lokono\": 60.0, \"Makasae\": 53.3, \"Jahai\": 52.9, \"Makalero\": 17.6, \"Wayuu\": 15.0, \"SLU\": 9.5, \"Lund\": 9.1}}</script>\n<style>\n:root{--bg:#f2f5f4;--card:#fff;--ink:#1c2422;--muted:#5b6662;--accent:#2d6a5a;--line:#d8e0dd;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:960px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.45rem;margin:0 0 8px}h2{font-size:1.1rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.prog{font-size:.85rem;color:var(--muted);margin-bottom:8px}\n.q{font-weight:700;font-size:1.08rem;margin:4px 0 12px;color:var(--ink)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:780px}\n.pick{appearance:none;border:3px solid transparent;border-radius:12px;padding:0;background:#fff;cursor:pointer;overflow:hidden;display:block;width:100%}\n.pick:hover,.pick:focus-visible{border-color:var(--accent);outline:none}\n.pick img{display:block;width:100%;height:auto;aspect-ratio:328/274;object-fit:cover}\n.grid9{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}\n.grid9 .pick.sel{border-color:var(--accent)}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.f{margin-top:16px}\ninput[type=number],input[type=text]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px}\ninput[type=number]{width:110px}input[type=text]{width:100%;max-width:420px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:960px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n@media (max-width:560px){.pair{gap:8px}.grid9{gap:6px}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Images: Hägerhäll, Ode Sang, Englund, Ahlner, Rybka, Huber &amp; Burenhult (2018), Frontiers in Psychology 9: 822, Figure 1 (CC BY 4.0), cropped into nine pictures.</footer>\n<script>\n(function(){\n  var KEY='semi-open:state', TEST=window.__VIEWMS, ITI=TEST?20:400;\n  var app=document.getElementById('app'), Q={}, files={}, ids=[], st=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function send(list,b,next){if(b)b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}next();});}\n  function intro(){\n    app.innerHTML='<h1>Where would you rather live?</h1><p>You will see 36 pairs of landscape pictures. For each pair, choose the picture that shows where you would rather live. At the end you pick the landscape that is most like the one you grew up in. It takes about 5 to 10 minutes.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');send([SPSite.answer('consent',true)],this,function(){st.step='about';save();route();});};\n  }\n  function radios(q){return '<div class=\"f\"><b>'+esc(Q[q].title)+'</b>'+(Q[q].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+q+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function about(){\n    app.innerHTML='<h2>About you</h2><div class=\"card\"><div class=\"f\" style=\"margin-top:0\"><b>'+esc(Q.age.title)+'</b><br><input type=\"number\" id=\"age\" min=\"15\" max=\"99\"></div>'+radios('gender')+'<div class=\"f\"><b>'+esc(Q.birthplace.title)+'</b><br><input type=\"text\" id=\"bp\"></div><div class=\"f\"><b>'+esc(Q.residence.title)+'</b><br><input type=\"text\" id=\"rs\"></div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var age=Number(document.getElementById('age').value);if(!(age>=15&&age<=99))return err('Please enter your age.');\n      var g=app.querySelector('input[name=gender]:checked');if(!g)return err('Please answer: '+Q.gender.title);\n      var bp=document.getElementById('bp').value.trim(),rs=document.getElementById('rs').value.trim();\n      if(!bp)return err('Please answer: '+Q.birthplace.title);if(!rs)return err('Please answer: '+Q.residence.title);\n      send([SPSite.answer('age',age),SPSite.answer('gender',g.value),SPSite.answer('birthplace',bp),SPSite.answer('residence',rs)],this,function(){st.step='pairs';st.k=0;save();route();});\n    };\n  }\n  function pair(){\n    var p=st.pairs[st.k], a=p[0], b=p[1], pk=[a,b].slice().sort().join('|');\n    app.innerHTML='<div class=\"prog\">Pair '+(st.k+1)+' / '+st.pairs.length+'</div><div class=\"q\">'+esc(Q.dwell_choice.title)+'</div><div class=\"pair\"><button class=\"pick\" data-v=\"'+a+'\"><img alt=\"Landscape A\"></button><button class=\"pick\" data-v=\"'+b+'\"><img alt=\"Landscape B\"></button></div><div class=\"err\"></div>';\n    var bs=app.querySelectorAll('.pick'), busy=false;\n    bs[0].firstChild.src=files[a].url;bs[1].firstChild.src=files[b].url;\n    if(st.pairs[st.k+1])st.pairs[st.k+1].forEach(function(x){new Image().src=files[x].url;});\n    Array.prototype.forEach.call(bs,function(btn){btn.onclick=function(){if(busy)return;busy=true;\n      SPSite.answer('dwell_choice',btn.dataset.v,{key:pk,shown:[files[a].name,files[b].name]}).then(function(r){if(!ok(r)){busy=false;return err(r.error);}\n        st.k++;if(st.k>=st.pairs.length)st.step='grew';save();app.innerHTML='';setTimeout(route,ITI);});};});\n  }\n  function grew(){\n    var order=st.grid, sel=null;\n    app.innerHTML='<h2>Last question</h2><div class=\"q\">'+esc(Q.grew_up.title)+'</div><div class=\"grid9\">'+order.map(function(id){return '<button class=\"pick\" data-v=\"'+id+'\"><img alt=\"Landscape\" src=\"'+esc(files[id].url)+'\"></button>';}).join('')+'</div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\" disabled>Continue</button></div><div class=\"err\"></div>';\n    var go=document.getElementById('go');\n    Array.prototype.forEach.call(app.querySelectorAll('.pick'),function(btn){btn.onclick=function(){sel=btn.dataset.v;Array.prototype.forEach.call(app.querySelectorAll('.pick'),function(x){x.classList.toggle('sel',x===btn);});go.disabled=false;};});\n    go.onclick=function(){if(!sel)return;send([SPSite.answer('grew_up',sel,{key:'grew_up',shown:order.map(function(id){return files[id].name;})})],go,function(){st.step='done';save();route();});};\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st.step='intro';save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  function route(){var s=st.step;window.scrollTo(0,0);if(s==='about')return about();if(s==='pairs')return pair();if(s==='grew')return grew();if(s==='done')return finish();intro();}\n  SPSite.onReady(function(ctx){\n    ['consent','age','gender','birthplace','residence','dwell_choice','grew_up'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('landscapes')||[]).forEach(function(f){if(/\\.(png|jpe?g|webp)$/i.test(f.name)){var k=f.name.replace(/\\.[^.]+$/,'');files[k]=f;ids.push(k);}});\n    var need=(Q.dwell_choice.choices||[]).map(function(c){return c.value;});\n    if(need.length!==9||!need.every(function(v){return files[v];})){app.innerHTML='<h1>Pictures missing</h1><p>Upload the nine landscape pictures (veg-…_topo-….jpg) to the media folder \"landscapes\".</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    var valid=st&&st.pairs&&st.pairs.length===36&&st.grid&&st.grid.length===9;\n    if(!valid){\n      var ps=[];for(var i=0;i<9;i++)for(var j=i+1;j<9;j++)ps.push(Math.random()<0.5?[need[i],need[j]]:[need[j],need[i]]);\n      st={step:'intro',pairs:shuffle(ps),grid:shuffle(need),k:0};\n    }\n    var a=(ctx&&ctx.answers)||{};if(a.consent!==true){st.step='intro';st.k=0;}\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T06:56:58.742Z",
+   "mediaFolders": [
+    "landscapes"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T06:56:58.742Z"
+  },
+  "description": "Participants see all 36 pairs of nine rendered landscapes that vary in relief (low, medium, high) and vegetation density (sparse, medium, dense) and choose where they would rather live, then pick the landscape most like the one they grew up in. Rebuilt from Hägerhäll, Ode Sang, Englund, Ahlner, Rybka, Huber & Burenhult (2018), Frontiers in Psychology 9: 822, with the nine images from the paper's Figure 1 (CC BY 4.0).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2018-hagerhall-where/landscapes/veg-dense_topo-high__7df140e6-665a-4084-9921-4df2ec356e6f.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-hagerhall-where/landscapes/veg-dense_topo-high__7df140e6-665a-4084-9921-4df2ec356e6f.jpg",
+   "name": "veg-dense_topo-high.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2018-hagerhall-where/landscapes/veg-dense_topo-high__7df140e6-665a-4084-9921-4df2ec356e6f.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 29235,
+   "uploaded_bytes": 29235,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-hagerhall-where/landscapes/veg-dense_topo-low__eadd7edd-756b-463d-8eae-22cdfc5a4846.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-hagerhall-where/landscapes/veg-dense_topo-low__eadd7edd-756b-463d-8eae-22cdfc5a4846.jpg",
+   "name": "veg-dense_topo-low.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2018-hagerhall-where/landscapes/veg-dense_topo-low__eadd7edd-756b-463d-8eae-22cdfc5a4846.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 22821,
+   "uploaded_bytes": 22821,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-hagerhall-where/landscapes/veg-dense_topo-medium__8c0212ef-411b-4f74-8e42-2f8cdaea629c.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-hagerhall-where/landscapes/veg-dense_topo-medium__8c0212ef-411b-4f74-8e42-2f8cdaea629c.jpg",
+   "name": "veg-dense_topo-medium.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2018-hagerhall-where/landscapes/veg-dense_topo-medium__8c0212ef-411b-4f74-8e42-2f8cdaea629c.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 24778,
+   "uploaded_bytes": 24778,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-hagerhall-where/landscapes/veg-medium_topo-high__2d87e57f-06d0-4250-8e7c-dd74fe980aa6.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-hagerhall-where/landscapes/veg-medium_topo-high__2d87e57f-06d0-4250-8e7c-dd74fe980aa6.jpg",
+   "name": "veg-medium_topo-high.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2018-hagerhall-where/landscapes/veg-medium_topo-high__2d87e57f-06d0-4250-8e7c-dd74fe980aa6.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 24955,
+   "uploaded_bytes": 24955,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-hagerhall-where/landscapes/veg-medium_topo-low__c5f7f334-4bba-4d8c-a055-29b81052b8bb.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-hagerhall-where/landscapes/veg-medium_topo-low__c5f7f334-4bba-4d8c-a055-29b81052b8bb.jpg",
+   "name": "veg-medium_topo-low.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2018-hagerhall-where/landscapes/veg-medium_topo-low__c5f7f334-4bba-4d8c-a055-29b81052b8bb.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 20431,
+   "uploaded_bytes": 20431,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-hagerhall-where/landscapes/veg-medium_topo-medium__8f50365f-44cf-49d3-970f-cb701f659e65.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-hagerhall-where/landscapes/veg-medium_topo-medium__8f50365f-44cf-49d3-970f-cb701f659e65.jpg",
+   "name": "veg-medium_topo-medium.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2018-hagerhall-where/landscapes/veg-medium_topo-medium__8f50365f-44cf-49d3-970f-cb701f659e65.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 20785,
+   "uploaded_bytes": 20785,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-hagerhall-where/landscapes/veg-sparse_topo-high__7fd93e36-9c1d-4e75-bb84-d214a3465db7.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-hagerhall-where/landscapes/veg-sparse_topo-high__7fd93e36-9c1d-4e75-bb84-d214a3465db7.jpg",
+   "name": "veg-sparse_topo-high.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2018-hagerhall-where/landscapes/veg-sparse_topo-high__7fd93e36-9c1d-4e75-bb84-d214a3465db7.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 21460,
+   "uploaded_bytes": 21460,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-hagerhall-where/landscapes/veg-sparse_topo-low__f060e905-55ee-4c95-aef4-8dd4d4c14ba6.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-hagerhall-where/landscapes/veg-sparse_topo-low__f060e905-55ee-4c95-aef4-8dd4d4c14ba6.jpg",
+   "name": "veg-sparse_topo-low.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2018-hagerhall-where/landscapes/veg-sparse_topo-low__f060e905-55ee-4c95-aef4-8dd4d4c14ba6.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 18917,
+   "uploaded_bytes": 18917,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-hagerhall-where/landscapes/veg-sparse_topo-medium__e7e3a4bb-c55b-4f0e-af73-eaa2b9959296.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-hagerhall-where/landscapes/veg-sparse_topo-medium__e7e3a4bb-c55b-4f0e-af73-eaa2b9959296.jpg",
+   "name": "veg-sparse_topo-medium.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2018-hagerhall-where/landscapes/veg-sparse_topo-medium__e7e3a4bb-c55b-4f0e-af73-eaa2b9959296.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 18248,
+   "uploaded_bytes": 18248,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Do Humans Really Prefer Semi-open Natural Landscapes? A Cross-Cultural Reappraisal",
+  "authors": [
+   "Caroline M. Hägerhäll",
+   "Åsa Ode Sang",
+   "Jan-Eric Englund",
+   "Felix Ahlner",
+   "Konrad Rybka",
+   "Juliette Huber",
+   "Niclas Burenhult"
+  ],
+  "year": 2018,
+  "venue": "Frontiers in Psychology",
+  "doi": "10.3389/fpsyg.2018.00822",
+  "url": "https://doi.org/10.3389/fpsyg.2018.00822"
+ }
+}

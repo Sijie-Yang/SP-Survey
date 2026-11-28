@@ -259,7 +259,7 @@ const registerAgentProjectApi = (app, {
 
   const listTemplateDir = async (dir, source) => {
     if (!dir || !await fs.pathExists(dir)) return [];
-    const files = (await fs.readdir(dir)).filter((file) => file.endsWith('.json') && file !== 'index.json');
+    const files = (await fs.readdir(dir)).filter((file) => file.endsWith('.json') && !['index.json', 'catalog.json'].includes(file));
     const templates = [];
     for (const file of files) {
       try {

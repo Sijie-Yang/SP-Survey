@@ -1,0 +1,353 @@
+{
+ "id": "2022-monteroparejo-rural",
+ "name": "Rural Buildings and Vegetation Screening - Visual Integration Rating",
+ "description": "Faithful replication with the original photographs: two isolated rural buildings in the Ambroz Valley, Spain, a residential house and an agricultural shed, each shown as the real photograph and five Photoshop versions that change the vegetation screening in front of the building (0-40% or 40-80% of the silhouette, dispersed or aligned trees) and, in two versions, the building colour. Participants give their age group, size of their place of residence and gender (the paper's Table 3 categories), are assigned at random to the residential or the agricultural set, as the paper used two separate groups, and see that set's six photographs one at a time in random order. For each they answer the paper's two questions: On a scale from 1 (Very bad) to 5 (Very good), how would you rate the integration of the building into the scene? and From the following list, what would you change to improve the integration of the building into the environment? (scale of the building, colours of the building, construction materials, vegetation around the building, nothing; one answer). Rebuilt from Montero-Parejo, García-Moruno, Hernández-Blanco & Garrido-Velarde (2022), Visual Impact Assessment in Rural Areas: The Role of Vegetation Screening in the Sustainable Integration of Isolated Buildings, Land 11(9): 1450, with the photographs cropped from its Figures 3 and 4 and the questions from Section 2.4.3 (CC BY 4.0). Image ids: res_A-res_F (Figure 3, residential, B = real case) and agr_A-agr_F (Figure 4, agricultural, A = real case); answers are in integration and change, keyed by image id, and the assigned set is in group; each image's screening class, colour class, screening impact (ScrI), colour impact (CI), aggregate impact (AI) and measured vegetation share are stored in the page's original-study block. Analysis as in the paper: mean integration rating per image, repeated-measures ANOVAs within each set (images A-D for screening alone; residential E, F, A, B and agricultural A, D, E, F for screening plus colour) with Bonferroni post hoc tests and Cohen's d, chi-squared tests on the change answers, and a logarithmic regression of rating on vegetation share; the paper (1046 respondents through a project website: 559 residential, 487 agricultural) found ratings fell as the aggregate impact rose, no difference between images in the same screening class whether trees were dispersed or aligned, and that a building with sharp lines and a discordant colour needs about 40% vegetation screening to be accepted. Differences from the original study: (1) each paper group saw 22 photographs, the six test images plus 16 images for other variables that the paper does not print; here only the six test images are shown; (2) the paper does not say how respondents were split between the two surveys; here the page assigns each participant at random; (3) the instruction text and the wording of the background questions are ours, with the paper's categories; anyone can take part; (4) the photographs are the figure copies (about 870 px wide).",
+ "author": "Montero-Parejo, García-Moruno, Hernández-Blanco & Garrido-Velarde",
+ "year": "2022",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "rural landscape",
+  "visual impact",
+  "vegetation screening",
+  "building integration",
+  "rating",
+  "source:paper",
+  "modality:scene_photo",
+  "task:rating",
+  "task:questionnaire",
+  "concept:aesthetics",
+  "concept:greenery",
+  "concept:building_facade",
+  "concept:color",
+  "participants:crowd",
+  "sample:gt1000",
+  "country:Spain"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/land11091450",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T00:02:46.992+00:00",
+ "updatedAt": "2026-11-28T00:02:58.89+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "name": "age",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "25 or under",
+        "value": "25_or_under"
+       },
+       {
+        "text": "26-55",
+        "value": "26_55"
+       },
+       {
+        "text": "Over 55",
+        "value": "over_55"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "residence",
+      "type": "radiogroup",
+      "title": "How many inhabitants does the place where you live have?",
+      "choices": [
+       {
+        "text": "Fewer than 10,000",
+        "value": "under_10000"
+       },
+       {
+        "text": "10,000 to 500,000",
+        "value": "10000_500000"
+       },
+       {
+        "text": "More than 500,000",
+        "value": "over_500000"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "group",
+      "type": "radiogroup",
+      "title": "Photo set (assigned at random by the page)",
+      "choices": [
+       {
+        "text": "Residential building",
+        "value": "residential"
+       },
+       {
+        "text": "Agricultural building",
+        "value": "agricultural"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "photos",
+    "elements": [
+     {
+      "name": "integration",
+      "type": "rating",
+      "title": "On a scale from 1 (Very bad) to 5 (Very good), how would you rate the integration of the building into the scene?",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Keyed by image id.",
+      "maxRateDescription": "Very good",
+      "minRateDescription": "Very bad"
+     },
+     {
+      "name": "change",
+      "type": "radiogroup",
+      "title": "From the following list, what would you change to improve the integration of the building into the environment?",
+      "choices": [
+       "Scale of the building",
+       "Colours of the building",
+       "Construction materials",
+       "Vegetation around the building",
+       "Nothing"
+      ],
+      "isRequired": true,
+      "description": "One answer. Keyed by image id."
+     }
+    ]
+   }
+  ],
+  "title": "Rural Buildings and Vegetation Screening",
+  "locale": "en",
+  "spSite": {
+   "id": "site-d32c61030868d019",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Rural Buildings and Vegetation</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Rural Buildings and Vegetation Screening\",\n  \"description\": \"Faithful replication with the original photographs: two isolated rural buildings in the Ambroz Valley, Spain, a residential house and an agricultural shed, each shown as the real photograph and five Photoshop versions that change the vegetation screening in front of the building (0-40% or 40-80% of the silhouette, dispersed or aligned trees) and, in two versions, the building colour. Participants give their age group, size of their place of residence and gender (the paper's Table 3 categories), are assigned at random to the residential or the agricultural set, as the paper used two separate groups, and see that set's six photographs one at a time in random order. For each they answer the paper's two questions: On a scale from 1 (Very bad) to 5 (Very good), how would you rate the integration of the building into the scene? and From the following list, what would you change to improve the integration of the building into the environment? (scale of the building, colours of the building, construction materials, vegetation around the building, nothing; one answer). Rebuilt from Montero-Parejo, García-Moruno, Hernández-Blanco & Garrido-Velarde (2022), Visual Impact Assessment in Rural Areas: The Role of Vegetation Screening in the Sustainable Integration of Isolated Buildings, Land 11(9): 1450, with the photographs cropped from its Figures 3 and 4 and the questions from Section 2.4.3 (CC BY 4.0). Image ids: res_A-res_F (Figure 3, residential, B = real case) and agr_A-agr_F (Figure 4, agricultural, A = real case); answers are in integration and change, keyed by image id, and the assigned set is in group; each image's screening class, colour class, screening impact (ScrI), colour impact (CI), aggregate impact (AI) and measured vegetation share are stored in the page's original-study block. Analysis as in the paper: mean integration rating per image, repeated-measures ANOVAs within each set (images A-D for screening alone; residential E, F, A, B and agricultural A, D, E, F for screening plus colour) with Bonferroni post hoc tests and Cohen's d, chi-squared tests on the change answers, and a logarithmic regression of rating on vegetation share; the paper (1046 respondents through a project website: 559 residential, 487 agricultural) found ratings fell as the aggregate impact rose, no difference between images in the same screening class whether trees were dispersed or aligned, and that a building with sharp lines and a discordant colour needs about 40% vegetation screening to be accepted. Differences from the original study: (1) each paper group saw 22 photographs, the six test images plus 16 images for other variables that the paper does not print; here only the six test images are shown; (2) the paper does not say how respondents were split between the two surveys; here the page assigns each participant at random; (3) the instruction text and the wording of the background questions are ours, with the paper's categories; anyone can take part; (4) the photographs are the figure copies (about 870 px wide).\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"buildings\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"25_or_under\",\n        \"text\": \"25 or under\"\n       },\n       {\n        \"value\": \"26_55\",\n        \"text\": \"26-55\"\n       },\n       {\n        \"value\": \"over_55\",\n        \"text\": \"Over 55\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"residence\",\n      \"title\": \"How many inhabitants does the place where you live have?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"under_10000\",\n        \"text\": \"Fewer than 10,000\"\n       },\n       {\n        \"value\": \"10000_500000\",\n        \"text\": \"10,000 to 500,000\"\n       },\n       {\n        \"value\": \"over_500000\",\n        \"text\": \"More than 500,000\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"group\",\n      \"title\": \"Photo set (assigned at random by the page)\",\n      \"choices\": [\n       {\n        \"value\": \"residential\",\n        \"text\": \"Residential building\"\n       },\n       {\n        \"value\": \"agricultural\",\n        \"text\": \"Agricultural building\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"photos\",\n    \"elements\": [\n     {\n      \"type\": \"rating\",\n      \"name\": \"integration\",\n      \"title\": \"On a scale from 1 (Very bad) to 5 (Very good), how would you rate the integration of the building into the scene?\",\n      \"isRequired\": true,\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Very bad\",\n      \"maxRateDescription\": \"Very good\",\n      \"description\": \"Keyed by image id.\"\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"change\",\n      \"title\": \"From the following list, what would you change to improve the integration of the building into the environment?\",\n      \"isRequired\": true,\n      \"choices\": [\n       \"Scale of the building\",\n       \"Colours of the building\",\n       \"Construction materials\",\n       \"Vegetation around the building\",\n       \"Nothing\"\n      ],\n      \"description\": \"One answer. Keyed by image id.\"\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"rural-original\">{\"source\": \"Montero-Parejo, García-Moruno, Hernández-Blanco & Garrido-Velarde (2022) Land 11: 1450\", \"n\": {\"residential\": 559, \"agricultural\": 487}, \"sets\": {\"residential\": [\"res_A\", \"res_B\", \"res_C\", \"res_D\", \"res_E\", \"res_F\"], \"agricultural\": [\"agr_A\", \"agr_B\", \"agr_C\", \"agr_D\", \"agr_E\", \"agr_F\"]}, \"images\": {\"res_A\": {\"group\": \"residential\", \"screening\": \"Scr1 (0-40%, medium sharpness)\", \"colour\": \"C1 (+)\", \"ScrI\": 4, \"CI\": 2, \"AI\": 6, \"veg_pct\": 0}, \"res_B\": {\"group\": \"residential\", \"real\": true, \"screening\": \"Scr2 (40-80%, medium sharpness)\", \"colour\": \"C1 (+)\", \"ScrI\": 1, \"CI\": 2, \"AI\": 3, \"veg_pct\": 59.83}, \"res_C\": {\"group\": \"residential\", \"screening\": \"Scr2 (40-80%, medium sharpness), aligned\", \"colour\": \"C1 (+)\", \"ScrI\": 1, \"CI\": 2, \"AI\": 3, \"veg_pct\": 51.58}, \"res_D\": {\"group\": \"residential\", \"screening\": \"Scr2 (40-80%, medium sharpness)\", \"colour\": \"C1 (+)\", \"ScrI\": 1, \"CI\": 2, \"AI\": 3, \"veg_pct\": 79.95}, \"res_E\": {\"group\": \"residential\", \"screening\": \"Scr1 (0-40%, high sharpness)\", \"colour\": \"C2 (-)\", \"ScrI\": 5, \"CI\": 4, \"AI\": 9, \"veg_pct\": 0}, \"res_F\": {\"group\": \"residential\", \"screening\": \"Scr2 (40-80%, high sharpness)\", \"colour\": \"C2 (-)\", \"ScrI\": 2, \"CI\": 4, \"AI\": 6, \"veg_pct\": 59.83}, \"agr_A\": {\"group\": \"agricultural\", \"real\": true, \"screening\": \"Scr1 (0-40%, high sharpness)\", \"colour\": \"C1 (-)\", \"ScrI\": 5, \"CI\": 5, \"AI\": 10, \"veg_pct\": 0}, \"agr_B\": {\"group\": \"agricultural\", \"screening\": \"Scr1 (0-40%, high sharpness)\", \"colour\": \"C1 (-)\", \"ScrI\": 5, \"CI\": 5, \"AI\": 10, \"veg_pct\": 29.1}, \"agr_C\": {\"group\": \"agricultural\", \"screening\": \"Scr2 (40-80%, high sharpness), aligned\", \"colour\": \"C1 (-)\", \"ScrI\": 2, \"CI\": 5, \"AI\": 7, \"veg_pct\": 71.3}, \"agr_D\": {\"group\": \"agricultural\", \"screening\": \"Scr2 (40-80%, high sharpness)\", \"colour\": \"C1 (-)\", \"ScrI\": 2, \"CI\": 5, \"AI\": 7, \"veg_pct\": 72.2}, \"agr_E\": {\"group\": \"agricultural\", \"screening\": \"Scr1 (0-40%, high sharpness)\", \"colour\": \"C2 (+)\", \"ScrI\": 5, \"CI\": 2, \"AI\": 7, \"veg_pct\": 0}, \"agr_F\": {\"group\": \"agricultural\", \"screening\": \"Scr2 (40-80%, high sharpness)\", \"colour\": \"C2 (+)\", \"ScrI\": 2, \"CI\": 2, \"AI\": 4, \"veg_pct\": 72.2}}}</script>\n<style>\n:root{--bg:#f3f1ee;--card:#fff;--ink:#21201c;--muted:#5f5b53;--accent:#4f6b2c;--line:#ddd8d0;--warn:#b3261e;--sel:#e6eedb}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:900px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.5rem;margin:0 0 8px}h2{font-size:1.08rem;margin:0 0 4px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:13px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.prog{font-size:.88rem;color:var(--muted);margin-bottom:8px}\n.prompt{font-size:.92rem;color:var(--muted);margin:6px 0 0;text-align:center}\n.scene{position:sticky;top:0;z-index:3;background:var(--bg);padding-bottom:6px}\n.scene img{max-width:100%;max-height:52vh;width:auto;height:auto;display:block;margin:0 auto;border-radius:10px}\n@media (max-height:700px),(max-width:600px){.scene{position:static}}\n.it{padding:10px 0;border-top:1px solid var(--line)}\n.it .st{font-weight:600;margin-bottom:6px;font-size:.96rem}\n.it .o{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}\n.it label{display:flex;justify-content:center;align-items:center;text-align:center;gap:4px;border:1px solid var(--line);border-radius:8px;padding:7px 4px;cursor:pointer;font-size:.84rem;line-height:1.25}\n.it label:has(input:checked){background:var(--sel);border-color:var(--accent)}\n.it label input{display:none}.it .an{display:flex;justify-content:space-between;font-size:.74rem;color:var(--muted);margin-top:3px}@media (max-width:480px){.it .o{gap:3px}.it label{padding:9px 0;font-size:.86rem}}\n.it .an{display:flex;justify-content:space-between;font-size:.74rem;color:var(--muted);margin-top:3px}\n.it.miss .o,.q.miss{outline:2px solid var(--warn);outline-offset:2px;border-radius:8px}\n.q{margin-top:16px}.q:first-child{margin-top:0}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput[type=text]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%;max-width:420px;margin-top:6px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:900px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n.ch label{justify-content:flex-start;text-align:left;padding:9px 12px;font-size:.9rem}\n.ch .o{grid-template-columns:1fr}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs and questions: Montero-Parejo, García-Moruno, Hernández-Blanco &amp; Garrido-Velarde (2022), Land 11(9): 1450, Figures 3–4 and Section 2.4.3 (doi:10.3390/land11091450, CC BY 4.0).</footer>\n<script>\n(function(){\n  var KEY='rural-screening:state';\n  var ORIG=JSON.parse(document.getElementById('rural-original').textContent), SETS=ORIG.sets;\n  var ALL=SETS.residential.concat(SETS.agricultural);\n  var app=document.getElementById('app'), Q={}, files={}, st=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function send(list,b,next){if(b)b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}next();});}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function fresh(){var g=Math.random()<0.5?'residential':'agricultural';return {step:'intro',group:g,order:shuffle(SETS[g]),k:0};}\n  function chs(q){return (q.choices||[]).map(function(c){return typeof c==='string'?{value:c,text:c}:c;});}\n  function radios(n){return '<div class=\"q\" data-q=\"'+n+'\"><b>'+esc(Q[n].title)+'</b>'+chs(Q[n]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function intro(){\n    app.innerHTML='<h1>Buildings in the rural landscape</h1><p>You will see 6 photographs of a building in a rural valley, one at a time. For each photograph, rate how well the building is integrated into the scene and say what you would change to improve its integration. It takes about 3 minutes.</p>'+\n     '<div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      send([SPSite.answer('consent',true)],this,function(){st.step='about';save();route();});};\n  }\n  function about(){\n    app.innerHTML='<h2>About you</h2><div class=\"card\">'+radios('age')+'<div style=\"margin-top:16px\"></div>'+radios('residence')+'<div style=\"margin-top:16px\"></div>'+radios('gender')+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){var v={};\n      for(var n of ['age','residence','gender']){var x=app.querySelector('input[name='+n+']:checked');if(!x)return err('Please answer: '+Q[n].title);v[n]=x.value;}\n      send([SPSite.answer('age',v.age),SPSite.answer('residence',v.residence),SPSite.answer('gender',v.gender),SPSite.answer('group',st.group)],this,function(){st.step='photo';st.k=0;save();route();});};\n  }\n  function photo(){\n    if(st.k>=st.order.length){st.step='done';save();return route();}\n    var id=st.order[st.k],f=files[id],q=Q.integration,c=Q.change;\n    app.innerHTML='<div class=\"prog\">Photograph '+(st.k+1)+' of '+st.order.length+'</div><div class=\"scene\"><img alt=\"Photograph of a building in a rural landscape\" src=\"'+esc(f.url)+'\"></div>'+\n      '<div class=\"card\"><div class=\"it\" data-n=\"r\" style=\"border-top:0;padding-top:0\"><div class=\"st\">'+esc(q.title)+'</div><div class=\"o\">'+[1,2,3,4,5].map(function(v){return '<label><input type=\"radio\" name=\"r\" value=\"'+v+'\">'+v+'</label>';}).join('')+'</div><div class=\"an\"><span>1 '+esc(q.minRateDescription||'Very bad')+'</span><span>5 '+esc(q.maxRateDescription||'Very good')+'</span></div></div>'+\n      '<div class=\"it ch\" data-n=\"c\"><div class=\"st\">'+esc(c.title)+'</div><div class=\"o\">'+chs(c).map(function(o){return '<label><input type=\"radio\" name=\"c\" value=\"'+esc(o.value)+'\">'+esc(o.text)+'</label>';}).join('')+'</div></div></div>'+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">'+(st.k<st.order.length-1?'Next photograph':'Finish')+'</button></div><div class=\"err\"></div>';\n    document.getElementById('go').onclick=function(){\n      var r=app.querySelector('input[name=r]:checked'),x=app.querySelector('input[name=c]:checked');\n      if(!r)app.querySelector('[data-n=r]').classList.add('miss');if(!x)app.querySelector('[data-n=c]').classList.add('miss');\n      if(!r||!x)return err('Please answer both questions.');\n      send([SPSite.answer('integration',Number(r.value),{key:id,shown:[f.name]}),SPSite.answer('change',x.value,{key:id,shown:[f.name]})],this,function(){st.k++;save();route();});};\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st.step='intro';save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  app.addEventListener('change',function(e){var r=e.target.closest&&e.target.closest('.it');if(r){r.classList.remove('miss');if(!app.querySelector('.it.miss'))err('');}});\n  function route(){var s=st.step;window.scrollTo(0,0);if(s==='about')return about();if(s==='photo')return photo();if(s==='done')return finish();intro();}\n  SPSite.onReady(function(ctx){\n    ['consent','age','residence','gender','group','integration','change'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{name:n};});\n    (SPSite.getMedia('buildings')||[]).forEach(function(f){files[f.name.replace(/\\.[^.]+$/,'')]=f;});\n    var need=ALL.filter(function(k){return !files[k];});\n    if(need.length){app.innerHTML='<h1>Images missing</h1><p>Upload '+esc(need.join(', '))+' (.jpg) to the media folder \"buildings\".</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    var a=(ctx&&ctx.answers)||{};\n    if(!(st&&st.order&&st.group)||a.consent!==true)st=fresh();\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T00:02:14.349Z",
+   "mediaFolders": [
+    "buildings"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T00:02:14.349Z"
+  },
+  "description": "Faithful replication with the original photographs: two isolated rural buildings in the Ambroz Valley, Spain, a residential house and an agricultural shed, each shown as the real photograph and five Photoshop versions that change the vegetation screening in front of the building (0-40% or 40-80% of the silhouette, dispersed or aligned trees) and, in two versions, the building colour. Participants give their age group, size of their place of residence and gender (the paper's Table 3 categories), are assigned at random to the residential or the agricultural set, as the paper used two separate groups, and see that set's six photographs one at a time in random order. For each they answer the paper's two questions: On a scale from 1 (Very bad) to 5 (Very good), how would you rate the integration of the building into the scene? and From the following list, what would you change to improve the integration of the building into the environment? (scale of the building, colours of the building, construction materials, vegetation around the building, nothing; one answer). Rebuilt from Montero-Parejo, García-Moruno, Hernández-Blanco & Garrido-Velarde (2022), Visual Impact Assessment in Rural Areas: The Role of Vegetation Screening in the Sustainable Integration of Isolated Buildings, Land 11(9): 1450, with the photographs cropped from its Figures 3 and 4 and the questions from Section 2.4.3 (CC BY 4.0). Image ids: res_A-res_F (Figure 3, residential, B = real case) and agr_A-agr_F (Figure 4, agricultural, A = real case); answers are in integration and change, keyed by image id, and the assigned set is in group; each image's screening class, colour class, screening impact (ScrI), colour impact (CI), aggregate impact (AI) and measured vegetation share are stored in the page's original-study block. Analysis as in the paper: mean integration rating per image, repeated-measures ANOVAs within each set (images A-D for screening alone; residential E, F, A, B and agricultural A, D, E, F for screening plus colour) with Bonferroni post hoc tests and Cohen's d, chi-squared tests on the change answers, and a logarithmic regression of rating on vegetation share; the paper (1046 respondents through a project website: 559 residential, 487 agricultural) found ratings fell as the aggregate impact rose, no difference between images in the same screening class whether trees were dispersed or aligned, and that a building with sharp lines and a discordant colour needs about 40% vegetation screening to be accepted. Differences from the original study: (1) each paper group saw 22 photographs, the six test images plus 16 images for other variables that the paper does not print; here only the six test images are shown; (2) the paper does not say how respondents were split between the two surveys; here the page assigns each participant at random; (3) the instruction text and the wording of the background questions are ours, with the paper's categories; anyone can take part; (4) the photographs are the figure copies (about 870 px wide).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2022-monteroparejo-rural/buildings/agr_A__c8fb0f47-02a1-4d2c-86dc-7d4ccc3b38a3.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-monteroparejo-rural/buildings/agr_A__c8fb0f47-02a1-4d2c-86dc-7d4ccc3b38a3.jpg",
+   "name": "agr_A.jpg",
+   "type": "image",
+   "folder": "buildings",
+   "media_id": "templates/2022-monteroparejo-rural/buildings/agr_A__c8fb0f47-02a1-4d2c-86dc-7d4ccc3b38a3.jpg",
+   "logicalFolder": "buildings",
+   "original_bytes": 99041,
+   "uploaded_bytes": 99041,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-monteroparejo-rural/buildings/agr_B__1a8ae39a-d207-48d0-bdad-f9c6f0c25776.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-monteroparejo-rural/buildings/agr_B__1a8ae39a-d207-48d0-bdad-f9c6f0c25776.jpg",
+   "name": "agr_B.jpg",
+   "type": "image",
+   "folder": "buildings",
+   "media_id": "templates/2022-monteroparejo-rural/buildings/agr_B__1a8ae39a-d207-48d0-bdad-f9c6f0c25776.jpg",
+   "logicalFolder": "buildings",
+   "original_bytes": 100600,
+   "uploaded_bytes": 100600,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-monteroparejo-rural/buildings/agr_C__877b724f-f9f8-4847-b4fb-2638ef29944d.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-monteroparejo-rural/buildings/agr_C__877b724f-f9f8-4847-b4fb-2638ef29944d.jpg",
+   "name": "agr_C.jpg",
+   "type": "image",
+   "folder": "buildings",
+   "media_id": "templates/2022-monteroparejo-rural/buildings/agr_C__877b724f-f9f8-4847-b4fb-2638ef29944d.jpg",
+   "logicalFolder": "buildings",
+   "original_bytes": 102546,
+   "uploaded_bytes": 102546,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-monteroparejo-rural/buildings/agr_D__d9ed8316-48e1-4906-a088-21a9befe5300.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-monteroparejo-rural/buildings/agr_D__d9ed8316-48e1-4906-a088-21a9befe5300.jpg",
+   "name": "agr_D.jpg",
+   "type": "image",
+   "folder": "buildings",
+   "media_id": "templates/2022-monteroparejo-rural/buildings/agr_D__d9ed8316-48e1-4906-a088-21a9befe5300.jpg",
+   "logicalFolder": "buildings",
+   "original_bytes": 101410,
+   "uploaded_bytes": 101410,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-monteroparejo-rural/buildings/agr_E__7dfc7eec-dddb-465b-a7b4-593e78cc4b85.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-monteroparejo-rural/buildings/agr_E__7dfc7eec-dddb-465b-a7b4-593e78cc4b85.jpg",
+   "name": "agr_E.jpg",
+   "type": "image",
+   "folder": "buildings",
+   "media_id": "templates/2022-monteroparejo-rural/buildings/agr_E__7dfc7eec-dddb-465b-a7b4-593e78cc4b85.jpg",
+   "logicalFolder": "buildings",
+   "original_bytes": 106489,
+   "uploaded_bytes": 106489,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-monteroparejo-rural/buildings/agr_F__ddf14c55-eee3-406f-b9f4-ce9e51037aae.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-monteroparejo-rural/buildings/agr_F__ddf14c55-eee3-406f-b9f4-ce9e51037aae.jpg",
+   "name": "agr_F.jpg",
+   "type": "image",
+   "folder": "buildings",
+   "media_id": "templates/2022-monteroparejo-rural/buildings/agr_F__ddf14c55-eee3-406f-b9f4-ce9e51037aae.jpg",
+   "logicalFolder": "buildings",
+   "original_bytes": 134872,
+   "uploaded_bytes": 134872,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-monteroparejo-rural/buildings/res_A__ed45dc94-8214-4bba-be3b-719ae62af94d.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-monteroparejo-rural/buildings/res_A__ed45dc94-8214-4bba-be3b-719ae62af94d.jpg",
+   "name": "res_A.jpg",
+   "type": "image",
+   "folder": "buildings",
+   "media_id": "templates/2022-monteroparejo-rural/buildings/res_A__ed45dc94-8214-4bba-be3b-719ae62af94d.jpg",
+   "logicalFolder": "buildings",
+   "original_bytes": 79364,
+   "uploaded_bytes": 79364,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-monteroparejo-rural/buildings/res_B__8c8ccfe2-134e-4011-8df0-843717fa6fb8.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-monteroparejo-rural/buildings/res_B__8c8ccfe2-134e-4011-8df0-843717fa6fb8.jpg",
+   "name": "res_B.jpg",
+   "type": "image",
+   "folder": "buildings",
+   "media_id": "templates/2022-monteroparejo-rural/buildings/res_B__8c8ccfe2-134e-4011-8df0-843717fa6fb8.jpg",
+   "logicalFolder": "buildings",
+   "original_bytes": 82357,
+   "uploaded_bytes": 82357,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-monteroparejo-rural/buildings/res_C__ad31b36d-3b30-405b-9b4b-fdefd1746588.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-monteroparejo-rural/buildings/res_C__ad31b36d-3b30-405b-9b4b-fdefd1746588.jpg",
+   "name": "res_C.jpg",
+   "type": "image",
+   "folder": "buildings",
+   "media_id": "templates/2022-monteroparejo-rural/buildings/res_C__ad31b36d-3b30-405b-9b4b-fdefd1746588.jpg",
+   "logicalFolder": "buildings",
+   "original_bytes": 79327,
+   "uploaded_bytes": 79327,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-monteroparejo-rural/buildings/res_D__88c3d10c-425a-4f94-b7f3-b09804f5b658.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-monteroparejo-rural/buildings/res_D__88c3d10c-425a-4f94-b7f3-b09804f5b658.jpg",
+   "name": "res_D.jpg",
+   "type": "image",
+   "folder": "buildings",
+   "media_id": "templates/2022-monteroparejo-rural/buildings/res_D__88c3d10c-425a-4f94-b7f3-b09804f5b658.jpg",
+   "logicalFolder": "buildings",
+   "original_bytes": 82343,
+   "uploaded_bytes": 82343,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-monteroparejo-rural/buildings/res_E__3c606123-aaaa-4cd5-81e0-d5bd5c1d8069.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-monteroparejo-rural/buildings/res_E__3c606123-aaaa-4cd5-81e0-d5bd5c1d8069.jpg",
+   "name": "res_E.jpg",
+   "type": "image",
+   "folder": "buildings",
+   "media_id": "templates/2022-monteroparejo-rural/buildings/res_E__3c606123-aaaa-4cd5-81e0-d5bd5c1d8069.jpg",
+   "logicalFolder": "buildings",
+   "original_bytes": 78627,
+   "uploaded_bytes": 78627,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-monteroparejo-rural/buildings/res_F__559dcfce-9a9e-4c48-a699-0bf953fae3b9.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-monteroparejo-rural/buildings/res_F__559dcfce-9a9e-4c48-a699-0bf953fae3b9.jpg",
+   "name": "res_F.jpg",
+   "type": "image",
+   "folder": "buildings",
+   "media_id": "templates/2022-monteroparejo-rural/buildings/res_F__559dcfce-9a9e-4c48-a699-0bf953fae3b9.jpg",
+   "logicalFolder": "buildings",
+   "original_bytes": 85215,
+   "uploaded_bytes": 85215,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Visual Impact Assessment in Rural Areas: The Role of Vegetation Screening in the Sustainable Integration of Isolated Buildings",
+  "authors": [
+   "Montero-Parejo, M.J.",
+   "García-Moruno, L.",
+   "Hernández-Blanco, J.",
+   "Garrido-Velarde, J."
+  ],
+  "year": 2022,
+  "venue": "Land",
+  "doi": "10.3390/land11091450",
+  "url": "https://doi.org/10.3390/land11091450"
+ }
+}

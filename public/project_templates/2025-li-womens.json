@@ -1,0 +1,2309 @@
+{
+ "id": "2025-li-womens",
+ "name": "Women's Street Safety Perception in Dalian",
+ "description": "Method replication: same task, scales and design as the paper; the images are not the paper's stimuli (168 new Baidu street views, four directions at 42 points within about 500 m of the Xi'an Road / Changjiang Road junction in Shahekou District, Dalian, captured 2019–2023). Original study: Li, Wu, Xue & Jiang (2025), Buildings 15(18): 3310, doi:10.3390/buildings15183310. The authors sampled 146 points at 100 m intervals around Xi'an Road and took street views at 0°, 90°, 180° and 270° (584 images). 32 female volunteers, selected because they had no experience of harassment and had never visited the area, saw each photo for 20 s in randomised order and rated street safety from two perspectives, built-environment safety and behavioural-activity safety, on five levels (0–19, 20–39, 40–59, 60–79, 80–100). Each volunteer rated the first 50 photos; a random-forest model then predicted the rest. Age, education, income and occupation were recorded. Differences from the original study: (1) the points come from a grid within about 500 m of the junction, not 100-m points on the OpenStreetMap network; (2) each participant rates 50 photos drawn at random from the 168, and there is no human-machine model predicting further photos; (3) the 20 s viewing is enforced by unlocking the ratings after 20 s; (4) the two question wordings and their hints are ours, based on the paper's description of the two perspectives; (5) whether the participant has visited the area is asked rather than used to screen people out, and the separate 160-person on-site questionnaire is not included.",
+ "author": "Li, Wu, Xue & Jiang",
+ "year": "2025",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "street-view",
+  "baidu",
+  "safety",
+  "women",
+  "gender",
+  "Dalian",
+  "source:paper",
+  "modality:street_view",
+  "task:multi_rating",
+  "concept:safety",
+  "participants:residents",
+  "sample:lt100",
+  "country:China",
+  "city:Dalian"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/buildings15183310",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T14:28:30.727+00:00",
+ "updatedAt": "2026-11-27T14:28:48.159+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "18–25",
+        "value": "18-25"
+       },
+       {
+        "text": "26–30",
+        "value": "26-30"
+       },
+       {
+        "text": "31–40",
+        "value": "31-40"
+       },
+       {
+        "text": "41 or older",
+        "value": "41plus"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "Highest education",
+      "choices": [
+       {
+        "text": "Junior high school or below",
+        "value": "junior_high"
+       },
+       {
+        "text": "High school / vocational school",
+        "value": "high_school"
+       },
+       {
+        "text": "Bachelor's / associate degree",
+        "value": "bachelor"
+       },
+       {
+        "text": "Master's degree or above",
+        "value": "master_plus"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "income",
+      "type": "radiogroup",
+      "title": "Monthly income (CNY)",
+      "choices": [
+       {
+        "text": "Under 5,000",
+        "value": "lt5000"
+       },
+       {
+        "text": "5,000–7,500",
+        "value": "5000-7500"
+       },
+       {
+        "text": "7,500–10,000",
+        "value": "7500-10000"
+       },
+       {
+        "text": "Over 10,000",
+        "value": "gt10000"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "occupation",
+      "type": "radiogroup",
+      "title": "Occupation",
+      "choices": [
+       {
+        "text": "Student",
+        "value": "student"
+       },
+       {
+        "text": "Corporate employee",
+        "value": "corporate"
+       },
+       {
+        "text": "Civil servant / public institution staff",
+        "value": "public"
+       },
+       {
+        "text": "Freelancer",
+        "value": "freelancer"
+       },
+       {
+        "text": "Other",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "visited_area",
+      "type": "radiogroup",
+      "title": "Have you ever been to the Xi'an Road area in Dalian?",
+      "choices": [
+       {
+        "text": "No",
+        "value": "no"
+       },
+       {
+        "text": "Yes",
+        "value": "yes"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "photos",
+    "elements": [
+     {
+      "name": "photo_set",
+      "type": "custom",
+      "title": "The street photos shown to this participant, in order",
+      "isRequired": true
+     },
+     {
+      "name": "built_environment_safety",
+      "type": "rating",
+      "title": "How safe does the built environment of this street feel?",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateValues": [
+       {
+        "text": "0–19",
+        "value": 1
+       },
+       {
+        "text": "20–39",
+        "value": 2
+       },
+       {
+        "text": "40–59",
+        "value": 3
+       },
+       {
+        "text": "60–79",
+        "value": 4
+       },
+       {
+        "text": "80–100",
+        "value": 5
+       }
+      ],
+      "maxRateDescription": "Very safe (80–100)",
+      "minRateDescription": "Not safe at all (0–19)"
+     },
+     {
+      "name": "activity_safety",
+      "type": "rating",
+      "title": "How safe would it feel to spend time and do things on this street?",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateValues": [
+       {
+        "text": "0–19",
+        "value": 1
+       },
+       {
+        "text": "20–39",
+        "value": 2
+       },
+       {
+        "text": "40–59",
+        "value": 3
+       },
+       {
+        "text": "60–79",
+        "value": 4
+       },
+       {
+        "text": "80–100",
+        "value": 5
+       }
+      ],
+      "maxRateDescription": "Very safe (80–100)",
+      "minRateDescription": "Not safe at all (0–19)"
+     }
+    ]
+   }
+  ],
+  "title": "Women's Street Safety Perception in Dalian",
+  "locale": "en",
+  "spSite": {
+   "id": "site-32a2de61d0a8abe3",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Women's Street Safety Perception in Dalian</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Women's Street Safety Perception in Dalian\",\n  \"description\": \"Women look at 50 street photos from the Xi'an Road area of Dalian for 20 seconds each and rate built-environment safety and activity safety on five levels (0–19 … 80–100). Method replication of the female safety-perception rating in Li, Wu, Xue & Jiang (2025), Buildings.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"dalian\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"18-25\",\n        \"text\": \"18–25\"\n       },\n       {\n        \"value\": \"26-30\",\n        \"text\": \"26–30\"\n       },\n       {\n        \"value\": \"31-40\",\n        \"text\": \"31–40\"\n       },\n       {\n        \"value\": \"41plus\",\n        \"text\": \"41 or older\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"Highest education\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"junior_high\",\n        \"text\": \"Junior high school or below\"\n       },\n       {\n        \"value\": \"high_school\",\n        \"text\": \"High school / vocational school\"\n       },\n       {\n        \"value\": \"bachelor\",\n        \"text\": \"Bachelor's / associate degree\"\n       },\n       {\n        \"value\": \"master_plus\",\n        \"text\": \"Master's degree or above\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"income\",\n      \"title\": \"Monthly income (CNY)\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"lt5000\",\n        \"text\": \"Under 5,000\"\n       },\n       {\n        \"value\": \"5000-7500\",\n        \"text\": \"5,000–7,500\"\n       },\n       {\n        \"value\": \"7500-10000\",\n        \"text\": \"7,500–10,000\"\n       },\n       {\n        \"value\": \"gt10000\",\n        \"text\": \"Over 10,000\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"occupation\",\n      \"title\": \"Occupation\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"student\",\n        \"text\": \"Student\"\n       },\n       {\n        \"value\": \"corporate\",\n        \"text\": \"Corporate employee\"\n       },\n       {\n        \"value\": \"public\",\n        \"text\": \"Civil servant / public institution staff\"\n       },\n       {\n        \"value\": \"freelancer\",\n        \"text\": \"Freelancer\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"visited_area\",\n      \"title\": \"Have you ever been to the Xi'an Road area in Dalian?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       },\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"photos\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"photo_set\",\n      \"title\": \"The street photos shown to this participant, in order\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"built_environment_safety\",\n      \"title\": \"How safe does the built environment of this street feel?\",\n      \"isRequired\": true,\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"rateValues\": [\n       {\n        \"value\": 1,\n        \"text\": \"0–19\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"20–39\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"40–59\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"60–79\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"80–100\"\n       }\n      ],\n      \"minRateDescription\": \"Not safe at all (0–19)\",\n      \"maxRateDescription\": \"Very safe (80–100)\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"activity_safety\",\n      \"title\": \"How safe would it feel to spend time and do things on this street?\",\n      \"isRequired\": true,\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"rateValues\": [\n       {\n        \"value\": 1,\n        \"text\": \"0–19\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"20–39\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"40–59\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"60–79\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"80–100\"\n       }\n      ],\n      \"minRateDescription\": \"Not safe at all (0–19)\",\n      \"maxRateDescription\": \"Very safe (80–100)\"\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f5f3f6;--card:#fff;--ink:#211d24;--muted:#5d5763;--accent:#6b3f7a;--accent-ink:#fff;--line:#ddd7e1;--sel:#efe6f3}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:900px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}\n.photo{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:12px;background:#000}\n.meta{display:flex;justify-content:space-between;font-size:.88rem;color:var(--muted);margin-top:8px}\n.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:6px}.bar>i{display:block;height:100%;background:var(--accent)}\n.item{padding:11px 0;border-top:1px solid var(--line)}.item:first-child{border-top:0}\n.item>b{display:block;font-weight:600}.item>small{display:block;color:var(--muted);margin-bottom:6px}\n.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}\n.scale button{appearance:none;border:1px solid var(--line);background:var(--card);border-radius:9px;padding:9px 2px;font:inherit;font-size:.9rem;font-weight:600;cursor:pointer;color:var(--ink)}\n.scale button.on{border-color:var(--accent);background:var(--sel);box-shadow:0 0 0 2px var(--accent) inset}\n.ends{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:3px}\n.item.miss>b{color:#b3261e}\n.wait{color:var(--muted);font-size:.95rem;min-height:1.2em}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:900px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){h1{font-size:1.2rem}.scale{gap:3px}.scale button{font-size:.78rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: streets around Xi'an Road, Shahekou District, Dalian, Baidu street view (© Baidu). Task and scales from Li, Wu, Xue &amp; Jiang, “Assessing the Role of Safety Perception in the Relationship Between Street Environments and Women’s Stay Behavior, Using Multi-Source Big Data”, Buildings 15(18), 3310 (2025), doi:10.3390/buildings15183310.</footer>\n<script>\n(function(){\n  var ITEMS=[[\"built_environment_safety\", \"Think of the street form, spatial quality and street facilities.\"], [\"activity_safety\", \"Think of the shops, uses and activities you would find here.\"]],NAMES=ITEMS.map(function(x){return x[0];});\n  var N=50,VIEW=20,LBL=['0–19','20–39','40–59','60–79','80–100'];\n  var DEMO=[\"age_group\", \"education\", \"income\", \"occupation\", \"visited_area\"];\n  var app=document.getElementById('app'),plan=null,byName={},score={},ans={},idx=0,timer=null,tick=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function chk(r){if(r&&r.ok===false)throw new Error(r.error||'Not saved');return r;}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function done(v){return NAMES.every(function(n){return score[v]&&score[v][n]!=null;});}\n  function firstOpen(){for(var i=0;i<plan.length;i++)if(!done(plan[i]))return i;return plan.length;}\n  function stop(){clearTimeout(timer);clearInterval(tick);}\n  function intro(){\n    var c=SPSite.getQuestion('consent');\n    app.innerHTML='<h1>How safe would you feel on these streets?</h1><p>This study asks <b>women</b> how safe streets feel. You will see '+plan.length+' street photos from the Xi\\'an Road area of Dalian, one at a time. Look at each photo for 20 seconds, then rate two kinds of safety on a scale from 0 to 100: how safe the <b>built environment</b> feels, and how safe it would feel to <b>spend time and do things</b> there. First, a few questions about you. It takes about 20 minutes.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(chk).then(about).catch(function(e){err(e.message);});};\n  }\n  function about(){\n    stop();\n    app.innerHTML='<h1>About you</h1><div class=\"card\">'+DEMO.map(function(n){var q=SPSite.getQuestion(n);\n      return '<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"'+(ans[n]===c.value?' checked':'')+'> '+esc(c.text)+'</label>';}).join('')+'</div>';}).join('')+\n      '<div class=\"row\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    DEMO.forEach(function(n){app.querySelectorAll('input[name=\"'+n+'\"]').forEach(function(r){r.onchange=function(){err('');SPSite.answer(n,r.value).then(chk).then(function(){ans[n]=r.value;}).catch(function(e){err(e.message);});};});});\n    document.getElementById('go').onclick=function(){\n      if(DEMO.some(function(n){return !app.querySelector('input[name=\"'+n+'\"]:checked');}))return err('Please answer each question.');\n      idx=firstOpen();idx<plan.length?rate():finish();};\n    window.scrollTo(0,0);\n  }\n  function rate(){\n    stop();\n    var v=plan[idx],s=score[v]||{},seen=done(v);\n    var h='<img class=\"photo\" src=\"'+esc(byName[v].url)+'\" alt=\"Street photo\"><div class=\"meta\"><span>Photo '+(idx+1)+' of '+plan.length+'</span></div><div class=\"bar\"><i style=\"width:'+(100*idx/plan.length)+'%\"></i></div><div class=\"card\">';\n    ITEMS.forEach(function(it){var n=it[0],q=SPSite.getQuestion(n);h+='<div class=\"item\" data-n=\"'+n+'\"><b>'+esc(q.title)+'</b><small>'+esc(it[1])+'</small><div class=\"scale\">';\n      for(var k=1;k<=5;k++)h+='<button type=\"button\" data-n=\"'+n+'\" data-v=\"'+k+'\"'+(s[n]===k?' class=\"on\"':'')+(seen?'':' disabled')+'>'+LBL[k-1]+'</button>';\n      h+='</div><div class=\"ends\"><span>Not safe at all</span><span>Very safe</span></div></div>';});\n    app.innerHTML=h+'<p class=\"wait\" id=\"wait\"></p><div class=\"row\"><button class=\"btn\" id=\"go\"'+(seen?'':' disabled')+'>'+(idx+1<plan.length?'Next photo':'Continue')+'</button></div><div class=\"err\"></div></div>';\n    if(!seen){var left=VIEW,w=document.getElementById('wait');w.textContent='Look at the photo… '+left+' s';\n      tick=setInterval(function(){left--;if(left>0&&w)w.textContent='Look at the photo… '+left+' s';},1000);\n      timer=setTimeout(function(){clearInterval(tick);app.querySelectorAll('.scale button,#go').forEach(function(b){b.disabled=false;});if(w)w.textContent='';},VIEW*1000);}\n    app.querySelectorAll('.scale button').forEach(function(b){b.onclick=function(){var n=b.getAttribute('data-n'),k=Number(b.getAttribute('data-v'));\n      b.parentNode.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);});b.closest('.item').classList.remove('miss');err('');\n      SPSite.answer(n,k,{key:v,shown:[v]}).then(chk).then(function(){(score[v]=score[v]||{})[n]=k;}).catch(function(e){err(e.message);});};});\n    document.getElementById('go').onclick=function(){\n      var miss=NAMES.filter(function(n){return !app.querySelector('.item[data-n=\"'+n+'\"] button.on');});\n      app.querySelectorAll('.item').forEach(function(it){it.classList.toggle('miss',miss.indexOf(it.getAttribute('data-n'))>=0);});\n      if(miss.length)return err('Please answer both questions.');\n      idx++;if(idx<plan.length)rate();else{var o=firstOpen();if(o<plan.length){idx=o;rate();}else finish();}};\n    window.scrollTo(0,0);\n  }\n  function finish(){\n    stop();\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>You have rated all '+plan.length+' photos. Press Submit to send your answers.</p><div class=\"row\"><button class=\"btn\" id=\"fin\">Submit</button></div><div class=\"err\"></div></div>';\n    document.getElementById('fin').onclick=function(){var btn=this;btn.disabled=true;err('Submitting…');\n      SPSite.complete().then(function(r){if(r&&r.ok===false){btn.disabled=false;var m=r.missing||[];err(r.error||('Please answer: '+m.join(', ')));\n        if(m.indexOf('consent')>=0)intro();else if(DEMO.some(function(n){return m.indexOf(n)>=0;}))about();else{idx=firstOpen();if(idx>=plan.length)idx=0;rate();}}\n        else{btn.textContent='Submitted';err('');}});};\n    window.scrollTo(0,0);\n  }\n  SPSite.onReady(function(ctx){\n    var media=(SPSite.getMedia('dalian')||[]).filter(function(m){return m.type!=='video';});\n    if(!media.length){app.innerHTML='<h1>No street photos yet</h1><p>The researcher has not added photos to the folder “dalian”.</p>';return;}\n    media.forEach(function(m){byName[m.name]=m;});\n    var a=(ctx&&ctx.answers)||{},p=a.photo_set;\n    if(Array.isArray(p)&&p.length&&p.every(function(n){return byName[n];}))plan=p;\n    else{plan=shuffle(media.map(function(m){return m.name;})).slice(0,N);SPSite.answer('photo_set',plan).catch(function(){});}\n    NAMES.forEach(function(n){var x=a[n],t=x&&Array.isArray(x.trials)?x.trials:[];t.forEach(function(y){if(y&&y.key&&y.value!=null)(score[y.key]=score[y.key]||{})[n]=Number(y.value);});});\n    DEMO.forEach(function(n){if(a[n]!=null)ans[n]=String(a[n]);});\n    if(a.consent!==true)intro();\n    else if(DEMO.some(function(n){return ans[n]==null;}))about();\n    else{idx=firstOpen();idx<plan.length?rate():finish();}\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T14:27:33.600Z",
+   "mediaFolders": [
+    "dalian"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T14:27:33.600Z"
+  },
+  "description": "Women look at 50 street photos from the Xi'an Road area of Dalian for 20 seconds each and rate built-environment safety and activity safety on five levels (0–19 … 80–100). Method replication of the female safety-perception rating in Li, Wu, Xue & Jiang (2025), Buildings.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2025-li-womens/dalian/dl_001_0__3ebe2dd8-264e-46fd-9268-bed5d9b9ebf8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_001_0__3ebe2dd8-264e-46fd-9268-bed5d9b9ebf8.jpg",
+   "name": "dl_001_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_001_0__3ebe2dd8-264e-46fd-9268-bed5d9b9ebf8.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 100328,
+   "uploaded_bytes": 100328,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_001_180__9a9930dc-9234-4f18-9ef7-b5cffd3f45fe.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_001_180__9a9930dc-9234-4f18-9ef7-b5cffd3f45fe.jpg",
+   "name": "dl_001_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_001_180__9a9930dc-9234-4f18-9ef7-b5cffd3f45fe.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 98527,
+   "uploaded_bytes": 98527,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_001_270__64cdc714-f515-4074-8c55-ec6430878f1c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_001_270__64cdc714-f515-4074-8c55-ec6430878f1c.jpg",
+   "name": "dl_001_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_001_270__64cdc714-f515-4074-8c55-ec6430878f1c.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 92968,
+   "uploaded_bytes": 92968,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_001_90__81c86c1d-9c7b-4d04-81c0-4d21f95cebc1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_001_90__81c86c1d-9c7b-4d04-81c0-4d21f95cebc1.jpg",
+   "name": "dl_001_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_001_90__81c86c1d-9c7b-4d04-81c0-4d21f95cebc1.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 100080,
+   "uploaded_bytes": 100080,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_002_0__1a72d85b-0c14-4d01-9519-d950ec251376.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_002_0__1a72d85b-0c14-4d01-9519-d950ec251376.jpg",
+   "name": "dl_002_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_002_0__1a72d85b-0c14-4d01-9519-d950ec251376.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 61680,
+   "uploaded_bytes": 61680,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_002_180__2707328d-7902-466c-b06c-9c8d44227126.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_002_180__2707328d-7902-466c-b06c-9c8d44227126.jpg",
+   "name": "dl_002_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_002_180__2707328d-7902-466c-b06c-9c8d44227126.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 65856,
+   "uploaded_bytes": 65856,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_002_270__7729df33-0217-4f9b-97ca-4cb2e0852099.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_002_270__7729df33-0217-4f9b-97ca-4cb2e0852099.jpg",
+   "name": "dl_002_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_002_270__7729df33-0217-4f9b-97ca-4cb2e0852099.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 62130,
+   "uploaded_bytes": 62130,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_002_90__bc760a12-1d42-416c-b948-6438a25c62e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_002_90__bc760a12-1d42-416c-b948-6438a25c62e7.jpg",
+   "name": "dl_002_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_002_90__bc760a12-1d42-416c-b948-6438a25c62e7.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 91337,
+   "uploaded_bytes": 91337,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_003_0__ba1a9294-2c51-4c3b-84b8-5d8a4fd3989e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_003_0__ba1a9294-2c51-4c3b-84b8-5d8a4fd3989e.jpg",
+   "name": "dl_003_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_003_0__ba1a9294-2c51-4c3b-84b8-5d8a4fd3989e.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 88528,
+   "uploaded_bytes": 88528,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_003_180__bc907f41-8686-4c73-aacd-7da62ef551fe.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_003_180__bc907f41-8686-4c73-aacd-7da62ef551fe.jpg",
+   "name": "dl_003_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_003_180__bc907f41-8686-4c73-aacd-7da62ef551fe.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 101804,
+   "uploaded_bytes": 101804,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_003_270__4c0db2c3-0231-4f5d-aff5-3aa6a6415661.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_003_270__4c0db2c3-0231-4f5d-aff5-3aa6a6415661.jpg",
+   "name": "dl_003_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_003_270__4c0db2c3-0231-4f5d-aff5-3aa6a6415661.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 93785,
+   "uploaded_bytes": 93785,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_003_90__b8137110-259d-41bb-b91a-f85911cc6602.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_003_90__b8137110-259d-41bb-b91a-f85911cc6602.jpg",
+   "name": "dl_003_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_003_90__b8137110-259d-41bb-b91a-f85911cc6602.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 95972,
+   "uploaded_bytes": 95972,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_004_0__9c467388-86db-4649-b0d3-378b3bfefa97.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_004_0__9c467388-86db-4649-b0d3-378b3bfefa97.jpg",
+   "name": "dl_004_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_004_0__9c467388-86db-4649-b0d3-378b3bfefa97.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 139679,
+   "uploaded_bytes": 139679,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_004_180__b7e56c33-e5cf-4c0d-b545-bc7258493007.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_004_180__b7e56c33-e5cf-4c0d-b545-bc7258493007.jpg",
+   "name": "dl_004_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_004_180__b7e56c33-e5cf-4c0d-b545-bc7258493007.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 119030,
+   "uploaded_bytes": 119030,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_004_270__ba7f6b46-d842-40b2-8a7b-170c285646b9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_004_270__ba7f6b46-d842-40b2-8a7b-170c285646b9.jpg",
+   "name": "dl_004_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_004_270__ba7f6b46-d842-40b2-8a7b-170c285646b9.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 107617,
+   "uploaded_bytes": 107617,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_004_90__8ce58ffb-3b40-4b0f-86c2-fa2ccd7eb22e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_004_90__8ce58ffb-3b40-4b0f-86c2-fa2ccd7eb22e.jpg",
+   "name": "dl_004_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_004_90__8ce58ffb-3b40-4b0f-86c2-fa2ccd7eb22e.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 123070,
+   "uploaded_bytes": 123070,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_005_0__2bcb69bd-562e-4ecb-86b1-1e68d7257a87.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_005_0__2bcb69bd-562e-4ecb-86b1-1e68d7257a87.jpg",
+   "name": "dl_005_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_005_0__2bcb69bd-562e-4ecb-86b1-1e68d7257a87.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 120747,
+   "uploaded_bytes": 120747,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_005_180__7d1bc6f0-7cc1-40fd-8332-5e8f68b0aab0.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_005_180__7d1bc6f0-7cc1-40fd-8332-5e8f68b0aab0.jpg",
+   "name": "dl_005_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_005_180__7d1bc6f0-7cc1-40fd-8332-5e8f68b0aab0.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 144500,
+   "uploaded_bytes": 144500,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_005_270__485786d7-5d04-4735-a0f5-f10fcf7df724.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_005_270__485786d7-5d04-4735-a0f5-f10fcf7df724.jpg",
+   "name": "dl_005_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_005_270__485786d7-5d04-4735-a0f5-f10fcf7df724.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 144973,
+   "uploaded_bytes": 144973,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_005_90__031e85e8-9160-493e-bc70-47b0f9e1830a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_005_90__031e85e8-9160-493e-bc70-47b0f9e1830a.jpg",
+   "name": "dl_005_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_005_90__031e85e8-9160-493e-bc70-47b0f9e1830a.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 169984,
+   "uploaded_bytes": 169984,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_006_0__1ca70110-78be-480d-b005-ead8e053e8f8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_006_0__1ca70110-78be-480d-b005-ead8e053e8f8.jpg",
+   "name": "dl_006_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_006_0__1ca70110-78be-480d-b005-ead8e053e8f8.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 129909,
+   "uploaded_bytes": 129909,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_006_180__68eee726-354f-429a-8d45-4f763e7cbfde.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_006_180__68eee726-354f-429a-8d45-4f763e7cbfde.jpg",
+   "name": "dl_006_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_006_180__68eee726-354f-429a-8d45-4f763e7cbfde.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 125870,
+   "uploaded_bytes": 125870,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_006_270__ea8bc895-893d-4955-9459-cf1eb1750ae0.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_006_270__ea8bc895-893d-4955-9459-cf1eb1750ae0.jpg",
+   "name": "dl_006_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_006_270__ea8bc895-893d-4955-9459-cf1eb1750ae0.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 132829,
+   "uploaded_bytes": 132829,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_006_90__0c2d632f-bbaf-469b-ba5b-c7ee524a3e97.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_006_90__0c2d632f-bbaf-469b-ba5b-c7ee524a3e97.jpg",
+   "name": "dl_006_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_006_90__0c2d632f-bbaf-469b-ba5b-c7ee524a3e97.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 102503,
+   "uploaded_bytes": 102503,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_007_0__579bd5b0-3e77-41a6-b5da-8c4dea9c3c4e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_007_0__579bd5b0-3e77-41a6-b5da-8c4dea9c3c4e.jpg",
+   "name": "dl_007_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_007_0__579bd5b0-3e77-41a6-b5da-8c4dea9c3c4e.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 75890,
+   "uploaded_bytes": 75890,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_007_180__7165a5f5-3174-4172-9b40-71309dbafb4a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_007_180__7165a5f5-3174-4172-9b40-71309dbafb4a.jpg",
+   "name": "dl_007_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_007_180__7165a5f5-3174-4172-9b40-71309dbafb4a.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 113360,
+   "uploaded_bytes": 113360,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_007_270__8354aabb-0833-4386-a21b-47b3ad2d9a91.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_007_270__8354aabb-0833-4386-a21b-47b3ad2d9a91.jpg",
+   "name": "dl_007_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_007_270__8354aabb-0833-4386-a21b-47b3ad2d9a91.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 126920,
+   "uploaded_bytes": 126920,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_007_90__0ab338c4-09e9-45c3-89df-8fb9c76968ec.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_007_90__0ab338c4-09e9-45c3-89df-8fb9c76968ec.jpg",
+   "name": "dl_007_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_007_90__0ab338c4-09e9-45c3-89df-8fb9c76968ec.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 80413,
+   "uploaded_bytes": 80413,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_008_0__0d0c6f04-12c3-4cc9-8846-add38d19743f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_008_0__0d0c6f04-12c3-4cc9-8846-add38d19743f.jpg",
+   "name": "dl_008_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_008_0__0d0c6f04-12c3-4cc9-8846-add38d19743f.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 95634,
+   "uploaded_bytes": 95634,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_008_180__59bf9549-4619-46eb-9351-652b00ccebf8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_008_180__59bf9549-4619-46eb-9351-652b00ccebf8.jpg",
+   "name": "dl_008_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_008_180__59bf9549-4619-46eb-9351-652b00ccebf8.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 83647,
+   "uploaded_bytes": 83647,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_008_270__9de4fa37-64c5-4cba-bf3f-8c3ea2f422b0.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_008_270__9de4fa37-64c5-4cba-bf3f-8c3ea2f422b0.jpg",
+   "name": "dl_008_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_008_270__9de4fa37-64c5-4cba-bf3f-8c3ea2f422b0.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 82852,
+   "uploaded_bytes": 82852,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_008_90__927e8f54-8224-427e-8797-23ea020dd376.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_008_90__927e8f54-8224-427e-8797-23ea020dd376.jpg",
+   "name": "dl_008_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_008_90__927e8f54-8224-427e-8797-23ea020dd376.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 111609,
+   "uploaded_bytes": 111609,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_009_0__e6d00efd-1bea-4417-bee0-daa19b1dd43f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_009_0__e6d00efd-1bea-4417-bee0-daa19b1dd43f.jpg",
+   "name": "dl_009_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_009_0__e6d00efd-1bea-4417-bee0-daa19b1dd43f.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 95665,
+   "uploaded_bytes": 95665,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_009_180__d5259f35-8211-4333-92a0-9ddc2ad3bb4c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_009_180__d5259f35-8211-4333-92a0-9ddc2ad3bb4c.jpg",
+   "name": "dl_009_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_009_180__d5259f35-8211-4333-92a0-9ddc2ad3bb4c.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 96082,
+   "uploaded_bytes": 96082,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_009_270__06fa1e5b-9192-4035-ad83-a9245cd4963b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_009_270__06fa1e5b-9192-4035-ad83-a9245cd4963b.jpg",
+   "name": "dl_009_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_009_270__06fa1e5b-9192-4035-ad83-a9245cd4963b.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 100340,
+   "uploaded_bytes": 100340,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_009_90__b1458f20-debe-42ef-8708-785ed66bba10.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_009_90__b1458f20-debe-42ef-8708-785ed66bba10.jpg",
+   "name": "dl_009_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_009_90__b1458f20-debe-42ef-8708-785ed66bba10.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 97229,
+   "uploaded_bytes": 97229,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_010_0__fd0b75a2-9469-4751-b317-6a3840bf1c50.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_010_0__fd0b75a2-9469-4751-b317-6a3840bf1c50.jpg",
+   "name": "dl_010_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_010_0__fd0b75a2-9469-4751-b317-6a3840bf1c50.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 103240,
+   "uploaded_bytes": 103240,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_010_180__7a6bc354-4aa5-46a4-aed7-71ccb771ad22.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_010_180__7a6bc354-4aa5-46a4-aed7-71ccb771ad22.jpg",
+   "name": "dl_010_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_010_180__7a6bc354-4aa5-46a4-aed7-71ccb771ad22.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 111381,
+   "uploaded_bytes": 111381,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_010_270__ee7bbe25-385a-467a-b4fb-12a3402b9f2f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_010_270__ee7bbe25-385a-467a-b4fb-12a3402b9f2f.jpg",
+   "name": "dl_010_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_010_270__ee7bbe25-385a-467a-b4fb-12a3402b9f2f.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 115349,
+   "uploaded_bytes": 115349,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_010_90__f85667a2-2cf8-43ae-b501-669ee8a7731c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_010_90__f85667a2-2cf8-43ae-b501-669ee8a7731c.jpg",
+   "name": "dl_010_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_010_90__f85667a2-2cf8-43ae-b501-669ee8a7731c.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 111914,
+   "uploaded_bytes": 111914,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_011_0__64ff9d12-e5a9-4ea2-81f1-c5d92494acf2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_011_0__64ff9d12-e5a9-4ea2-81f1-c5d92494acf2.jpg",
+   "name": "dl_011_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_011_0__64ff9d12-e5a9-4ea2-81f1-c5d92494acf2.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 119294,
+   "uploaded_bytes": 119294,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_011_180__212199a2-9c42-486d-98e8-fb603da540ee.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_011_180__212199a2-9c42-486d-98e8-fb603da540ee.jpg",
+   "name": "dl_011_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_011_180__212199a2-9c42-486d-98e8-fb603da540ee.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 110589,
+   "uploaded_bytes": 110589,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_011_270__b2d42550-7123-4a55-b9e4-99cacdebf58d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_011_270__b2d42550-7123-4a55-b9e4-99cacdebf58d.jpg",
+   "name": "dl_011_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_011_270__b2d42550-7123-4a55-b9e4-99cacdebf58d.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 133691,
+   "uploaded_bytes": 133691,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_011_90__daeaca0a-fb88-47e2-8ee5-db96343de1d3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_011_90__daeaca0a-fb88-47e2-8ee5-db96343de1d3.jpg",
+   "name": "dl_011_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_011_90__daeaca0a-fb88-47e2-8ee5-db96343de1d3.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 97645,
+   "uploaded_bytes": 97645,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_012_0__73b0d040-00b0-466e-9db6-6fa7d0f8f5c3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_012_0__73b0d040-00b0-466e-9db6-6fa7d0f8f5c3.jpg",
+   "name": "dl_012_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_012_0__73b0d040-00b0-466e-9db6-6fa7d0f8f5c3.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 121246,
+   "uploaded_bytes": 121246,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_012_180__a77c6372-1b8b-4f3a-bdf4-659fac1bcb47.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_012_180__a77c6372-1b8b-4f3a-bdf4-659fac1bcb47.jpg",
+   "name": "dl_012_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_012_180__a77c6372-1b8b-4f3a-bdf4-659fac1bcb47.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 109023,
+   "uploaded_bytes": 109023,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_012_270__f298e513-aed7-43a0-a603-30e123db9687.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_012_270__f298e513-aed7-43a0-a603-30e123db9687.jpg",
+   "name": "dl_012_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_012_270__f298e513-aed7-43a0-a603-30e123db9687.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 116568,
+   "uploaded_bytes": 116568,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_012_90__90a0267b-7c3f-4b46-adaa-73a4d4286a3e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_012_90__90a0267b-7c3f-4b46-adaa-73a4d4286a3e.jpg",
+   "name": "dl_012_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_012_90__90a0267b-7c3f-4b46-adaa-73a4d4286a3e.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 96094,
+   "uploaded_bytes": 96094,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_013_0__a57f56dd-dc44-4c88-aec3-09e770711aae.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_013_0__a57f56dd-dc44-4c88-aec3-09e770711aae.jpg",
+   "name": "dl_013_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_013_0__a57f56dd-dc44-4c88-aec3-09e770711aae.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 104441,
+   "uploaded_bytes": 104441,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_013_180__8286fb45-a90d-46ad-af03-c0cddfc4e378.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_013_180__8286fb45-a90d-46ad-af03-c0cddfc4e378.jpg",
+   "name": "dl_013_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_013_180__8286fb45-a90d-46ad-af03-c0cddfc4e378.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 108766,
+   "uploaded_bytes": 108766,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_013_270__6ffdb112-ded7-45e0-a9a2-2640a0e7fe13.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_013_270__6ffdb112-ded7-45e0-a9a2-2640a0e7fe13.jpg",
+   "name": "dl_013_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_013_270__6ffdb112-ded7-45e0-a9a2-2640a0e7fe13.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 111733,
+   "uploaded_bytes": 111733,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_013_90__47ebdd23-26d7-467e-94ca-48953b8f81e5.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_013_90__47ebdd23-26d7-467e-94ca-48953b8f81e5.jpg",
+   "name": "dl_013_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_013_90__47ebdd23-26d7-467e-94ca-48953b8f81e5.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 94746,
+   "uploaded_bytes": 94746,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_014_0__3520eba6-84a4-45e7-85ac-5cd7391f07ea.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_014_0__3520eba6-84a4-45e7-85ac-5cd7391f07ea.jpg",
+   "name": "dl_014_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_014_0__3520eba6-84a4-45e7-85ac-5cd7391f07ea.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 131957,
+   "uploaded_bytes": 131957,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_014_180__1552e0f4-529d-42ec-9c66-1f932bb9d4b1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_014_180__1552e0f4-529d-42ec-9c66-1f932bb9d4b1.jpg",
+   "name": "dl_014_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_014_180__1552e0f4-529d-42ec-9c66-1f932bb9d4b1.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 100973,
+   "uploaded_bytes": 100973,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_014_270__17903895-6b97-4dc9-99dd-9a492ea0ecbc.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_014_270__17903895-6b97-4dc9-99dd-9a492ea0ecbc.jpg",
+   "name": "dl_014_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_014_270__17903895-6b97-4dc9-99dd-9a492ea0ecbc.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 138098,
+   "uploaded_bytes": 138098,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_014_90__ef6f491f-d1cf-4a14-82e2-5d7b5cc112ff.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_014_90__ef6f491f-d1cf-4a14-82e2-5d7b5cc112ff.jpg",
+   "name": "dl_014_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_014_90__ef6f491f-d1cf-4a14-82e2-5d7b5cc112ff.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 122373,
+   "uploaded_bytes": 122373,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_015_0__a57a1901-df60-497d-a8c5-1182703f40b0.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_015_0__a57a1901-df60-497d-a8c5-1182703f40b0.jpg",
+   "name": "dl_015_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_015_0__a57a1901-df60-497d-a8c5-1182703f40b0.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 173004,
+   "uploaded_bytes": 173004,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_015_180__b22061a1-b517-4740-a731-cdf8bbe19ee4.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_015_180__b22061a1-b517-4740-a731-cdf8bbe19ee4.jpg",
+   "name": "dl_015_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_015_180__b22061a1-b517-4740-a731-cdf8bbe19ee4.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 71899,
+   "uploaded_bytes": 71899,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_015_270__bb155e68-6948-4a3f-8483-93a0c6bce9f5.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_015_270__bb155e68-6948-4a3f-8483-93a0c6bce9f5.jpg",
+   "name": "dl_015_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_015_270__bb155e68-6948-4a3f-8483-93a0c6bce9f5.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 137082,
+   "uploaded_bytes": 137082,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_015_90__eb673669-fff5-4d21-970f-7baaf1be5b52.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_015_90__eb673669-fff5-4d21-970f-7baaf1be5b52.jpg",
+   "name": "dl_015_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_015_90__eb673669-fff5-4d21-970f-7baaf1be5b52.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 121440,
+   "uploaded_bytes": 121440,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_016_0__cad6d5db-f6f2-4da2-b0c1-960b9e065da1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_016_0__cad6d5db-f6f2-4da2-b0c1-960b9e065da1.jpg",
+   "name": "dl_016_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_016_0__cad6d5db-f6f2-4da2-b0c1-960b9e065da1.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 83041,
+   "uploaded_bytes": 83041,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_016_180__6047090a-e724-421f-a352-d86e97c5388c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_016_180__6047090a-e724-421f-a352-d86e97c5388c.jpg",
+   "name": "dl_016_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_016_180__6047090a-e724-421f-a352-d86e97c5388c.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 149226,
+   "uploaded_bytes": 149226,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_016_270__8bc84971-deaa-4c52-b3aa-ea68432a0ff2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_016_270__8bc84971-deaa-4c52-b3aa-ea68432a0ff2.jpg",
+   "name": "dl_016_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_016_270__8bc84971-deaa-4c52-b3aa-ea68432a0ff2.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 114789,
+   "uploaded_bytes": 114789,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_016_90__33a172d7-b877-4eba-80fb-fee9847abaf7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_016_90__33a172d7-b877-4eba-80fb-fee9847abaf7.jpg",
+   "name": "dl_016_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_016_90__33a172d7-b877-4eba-80fb-fee9847abaf7.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 145814,
+   "uploaded_bytes": 145814,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_017_0__3b05bc60-20a6-48b3-a51d-9510f0409263.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_017_0__3b05bc60-20a6-48b3-a51d-9510f0409263.jpg",
+   "name": "dl_017_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_017_0__3b05bc60-20a6-48b3-a51d-9510f0409263.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 94110,
+   "uploaded_bytes": 94110,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_017_180__9927a20a-d23d-4cf5-9599-e01d61d8fdf3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_017_180__9927a20a-d23d-4cf5-9599-e01d61d8fdf3.jpg",
+   "name": "dl_017_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_017_180__9927a20a-d23d-4cf5-9599-e01d61d8fdf3.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 125964,
+   "uploaded_bytes": 125964,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_017_270__20ffa3f8-c8e5-4caa-ad70-e4884ca7cae7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_017_270__20ffa3f8-c8e5-4caa-ad70-e4884ca7cae7.jpg",
+   "name": "dl_017_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_017_270__20ffa3f8-c8e5-4caa-ad70-e4884ca7cae7.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 98317,
+   "uploaded_bytes": 98317,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_017_90__6d86fbc7-1f4c-440e-bf50-3b6e92ba2eaf.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_017_90__6d86fbc7-1f4c-440e-bf50-3b6e92ba2eaf.jpg",
+   "name": "dl_017_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_017_90__6d86fbc7-1f4c-440e-bf50-3b6e92ba2eaf.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 113504,
+   "uploaded_bytes": 113504,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_018_0__0891b64c-1fc7-4923-8832-74887fc87aa6.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_018_0__0891b64c-1fc7-4923-8832-74887fc87aa6.jpg",
+   "name": "dl_018_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_018_0__0891b64c-1fc7-4923-8832-74887fc87aa6.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 110391,
+   "uploaded_bytes": 110391,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_018_180__9d4c0069-fab5-440b-97de-ed384537b2e9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_018_180__9d4c0069-fab5-440b-97de-ed384537b2e9.jpg",
+   "name": "dl_018_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_018_180__9d4c0069-fab5-440b-97de-ed384537b2e9.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 78096,
+   "uploaded_bytes": 78096,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_018_270__d06667c1-b347-4f5d-bb39-9c6d73f93c54.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_018_270__d06667c1-b347-4f5d-bb39-9c6d73f93c54.jpg",
+   "name": "dl_018_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_018_270__d06667c1-b347-4f5d-bb39-9c6d73f93c54.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 108937,
+   "uploaded_bytes": 108937,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_018_90__4936e9cf-31d9-42d9-989d-fb7adf1c3578.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_018_90__4936e9cf-31d9-42d9-989d-fb7adf1c3578.jpg",
+   "name": "dl_018_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_018_90__4936e9cf-31d9-42d9-989d-fb7adf1c3578.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 85060,
+   "uploaded_bytes": 85060,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_019_0__98db2e94-917e-4582-8453-6b19191e8466.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_019_0__98db2e94-917e-4582-8453-6b19191e8466.jpg",
+   "name": "dl_019_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_019_0__98db2e94-917e-4582-8453-6b19191e8466.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 116442,
+   "uploaded_bytes": 116442,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_019_180__ae16e7c6-71b4-4567-a5ce-6004f30ba5c5.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_019_180__ae16e7c6-71b4-4567-a5ce-6004f30ba5c5.jpg",
+   "name": "dl_019_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_019_180__ae16e7c6-71b4-4567-a5ce-6004f30ba5c5.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 64986,
+   "uploaded_bytes": 64986,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_019_270__0d5b17cd-df36-49a5-8d5b-2302de35fa76.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_019_270__0d5b17cd-df36-49a5-8d5b-2302de35fa76.jpg",
+   "name": "dl_019_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_019_270__0d5b17cd-df36-49a5-8d5b-2302de35fa76.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 111734,
+   "uploaded_bytes": 111734,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_019_90__105adffa-b541-45b0-97cc-fd1b4cb66844.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_019_90__105adffa-b541-45b0-97cc-fd1b4cb66844.jpg",
+   "name": "dl_019_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_019_90__105adffa-b541-45b0-97cc-fd1b4cb66844.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 96721,
+   "uploaded_bytes": 96721,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_020_0__754b3ffd-a022-47dd-b3f5-5de38ba4fbcc.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_020_0__754b3ffd-a022-47dd-b3f5-5de38ba4fbcc.jpg",
+   "name": "dl_020_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_020_0__754b3ffd-a022-47dd-b3f5-5de38ba4fbcc.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 91860,
+   "uploaded_bytes": 91860,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_020_180__dee0d978-3382-406d-8300-ff80ee361d61.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_020_180__dee0d978-3382-406d-8300-ff80ee361d61.jpg",
+   "name": "dl_020_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_020_180__dee0d978-3382-406d-8300-ff80ee361d61.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 116537,
+   "uploaded_bytes": 116537,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_020_270__72ea8cb2-a723-4a95-80d7-af1c8d9cd212.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_020_270__72ea8cb2-a723-4a95-80d7-af1c8d9cd212.jpg",
+   "name": "dl_020_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_020_270__72ea8cb2-a723-4a95-80d7-af1c8d9cd212.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 93958,
+   "uploaded_bytes": 93958,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_020_90__fbd2fa5c-43df-4ee0-95a0-a13be080c710.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_020_90__fbd2fa5c-43df-4ee0-95a0-a13be080c710.jpg",
+   "name": "dl_020_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_020_90__fbd2fa5c-43df-4ee0-95a0-a13be080c710.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 110392,
+   "uploaded_bytes": 110392,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_021_0__6dc13cea-27d9-40b7-95c5-8fc9ce43228d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_021_0__6dc13cea-27d9-40b7-95c5-8fc9ce43228d.jpg",
+   "name": "dl_021_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_021_0__6dc13cea-27d9-40b7-95c5-8fc9ce43228d.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 104632,
+   "uploaded_bytes": 104632,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_021_180__fc77e8c5-1023-43df-8589-837338454a5f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_021_180__fc77e8c5-1023-43df-8589-837338454a5f.jpg",
+   "name": "dl_021_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_021_180__fc77e8c5-1023-43df-8589-837338454a5f.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 78276,
+   "uploaded_bytes": 78276,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_021_270__0053e1d3-666e-4ffa-9e04-ffc89b6534ba.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_021_270__0053e1d3-666e-4ffa-9e04-ffc89b6534ba.jpg",
+   "name": "dl_021_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_021_270__0053e1d3-666e-4ffa-9e04-ffc89b6534ba.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 113041,
+   "uploaded_bytes": 113041,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_021_90__8c041966-15c3-42af-a0d9-cee519ef06a2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_021_90__8c041966-15c3-42af-a0d9-cee519ef06a2.jpg",
+   "name": "dl_021_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_021_90__8c041966-15c3-42af-a0d9-cee519ef06a2.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 99164,
+   "uploaded_bytes": 99164,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_022_0__56c20d60-b0f4-41c8-beb4-a7462b5df0b2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_022_0__56c20d60-b0f4-41c8-beb4-a7462b5df0b2.jpg",
+   "name": "dl_022_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_022_0__56c20d60-b0f4-41c8-beb4-a7462b5df0b2.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 92124,
+   "uploaded_bytes": 92124,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_022_180__8a43dcf6-a7bb-41e0-bf2c-c689f5e77176.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_022_180__8a43dcf6-a7bb-41e0-bf2c-c689f5e77176.jpg",
+   "name": "dl_022_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_022_180__8a43dcf6-a7bb-41e0-bf2c-c689f5e77176.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 102143,
+   "uploaded_bytes": 102143,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_022_270__749fb026-f13a-4bd1-b843-7689bf89ba9a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_022_270__749fb026-f13a-4bd1-b843-7689bf89ba9a.jpg",
+   "name": "dl_022_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_022_270__749fb026-f13a-4bd1-b843-7689bf89ba9a.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 118041,
+   "uploaded_bytes": 118041,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_022_90__c32d3b21-80fe-468c-9902-7e9317c668c2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_022_90__c32d3b21-80fe-468c-9902-7e9317c668c2.jpg",
+   "name": "dl_022_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_022_90__c32d3b21-80fe-468c-9902-7e9317c668c2.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 98654,
+   "uploaded_bytes": 98654,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_023_0__0ca901b9-d661-49d9-aabb-41a9d8c5e72f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_023_0__0ca901b9-d661-49d9-aabb-41a9d8c5e72f.jpg",
+   "name": "dl_023_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_023_0__0ca901b9-d661-49d9-aabb-41a9d8c5e72f.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 92066,
+   "uploaded_bytes": 92066,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_023_180__d15d1898-a734-4335-8db6-9c81ac0e5666.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_023_180__d15d1898-a734-4335-8db6-9c81ac0e5666.jpg",
+   "name": "dl_023_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_023_180__d15d1898-a734-4335-8db6-9c81ac0e5666.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 107579,
+   "uploaded_bytes": 107579,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_023_270__a136ed82-8a92-411f-b146-4fec0bf3505f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_023_270__a136ed82-8a92-411f-b146-4fec0bf3505f.jpg",
+   "name": "dl_023_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_023_270__a136ed82-8a92-411f-b146-4fec0bf3505f.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 102369,
+   "uploaded_bytes": 102369,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_023_90__35c8527d-d4e7-4113-9ae4-058d166efa93.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_023_90__35c8527d-d4e7-4113-9ae4-058d166efa93.jpg",
+   "name": "dl_023_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_023_90__35c8527d-d4e7-4113-9ae4-058d166efa93.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 101010,
+   "uploaded_bytes": 101010,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_024_0__3bd24835-7e6a-4bb6-8416-1a3230b1ab6d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_024_0__3bd24835-7e6a-4bb6-8416-1a3230b1ab6d.jpg",
+   "name": "dl_024_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_024_0__3bd24835-7e6a-4bb6-8416-1a3230b1ab6d.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 36700,
+   "uploaded_bytes": 36700,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_024_180__ab4bd0f1-e5dd-4e9b-a25e-3208e624e059.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_024_180__ab4bd0f1-e5dd-4e9b-a25e-3208e624e059.jpg",
+   "name": "dl_024_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_024_180__ab4bd0f1-e5dd-4e9b-a25e-3208e624e059.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 83648,
+   "uploaded_bytes": 83648,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_024_270__9cd6fa77-3b29-4565-a7bd-25e10b072ad6.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_024_270__9cd6fa77-3b29-4565-a7bd-25e10b072ad6.jpg",
+   "name": "dl_024_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_024_270__9cd6fa77-3b29-4565-a7bd-25e10b072ad6.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 56170,
+   "uploaded_bytes": 56170,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_024_90__41c16423-2fe3-4384-956e-3ccb14dc5e00.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_024_90__41c16423-2fe3-4384-956e-3ccb14dc5e00.jpg",
+   "name": "dl_024_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_024_90__41c16423-2fe3-4384-956e-3ccb14dc5e00.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 106033,
+   "uploaded_bytes": 106033,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_025_0__bed30cdb-1476-419c-afb8-744f81d4fd14.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_025_0__bed30cdb-1476-419c-afb8-744f81d4fd14.jpg",
+   "name": "dl_025_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_025_0__bed30cdb-1476-419c-afb8-744f81d4fd14.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 75962,
+   "uploaded_bytes": 75962,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_025_180__1deb7530-29c8-43da-95e5-b223b87bfd64.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_025_180__1deb7530-29c8-43da-95e5-b223b87bfd64.jpg",
+   "name": "dl_025_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_025_180__1deb7530-29c8-43da-95e5-b223b87bfd64.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 87587,
+   "uploaded_bytes": 87587,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_025_270__2a9e9631-47e5-413b-a827-be25fca03bf2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_025_270__2a9e9631-47e5-413b-a827-be25fca03bf2.jpg",
+   "name": "dl_025_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_025_270__2a9e9631-47e5-413b-a827-be25fca03bf2.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 83754,
+   "uploaded_bytes": 83754,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_025_90__0d337191-42c8-43ef-b7a8-6a983d9a1894.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_025_90__0d337191-42c8-43ef-b7a8-6a983d9a1894.jpg",
+   "name": "dl_025_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_025_90__0d337191-42c8-43ef-b7a8-6a983d9a1894.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 91635,
+   "uploaded_bytes": 91635,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_026_0__9882f42f-a4b2-49a2-95a2-2b9142e5e834.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_026_0__9882f42f-a4b2-49a2-95a2-2b9142e5e834.jpg",
+   "name": "dl_026_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_026_0__9882f42f-a4b2-49a2-95a2-2b9142e5e834.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 85989,
+   "uploaded_bytes": 85989,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_026_180__67d55da3-2072-484a-b5c0-7360de28bae7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_026_180__67d55da3-2072-484a-b5c0-7360de28bae7.jpg",
+   "name": "dl_026_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_026_180__67d55da3-2072-484a-b5c0-7360de28bae7.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 102190,
+   "uploaded_bytes": 102190,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_026_270__826b7c70-4f41-4f09-9d2e-451d85d2c1e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_026_270__826b7c70-4f41-4f09-9d2e-451d85d2c1e6.jpg",
+   "name": "dl_026_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_026_270__826b7c70-4f41-4f09-9d2e-451d85d2c1e6.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 89954,
+   "uploaded_bytes": 89954,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_026_90__82b54627-3e8c-4a57-abdc-5a40659c1a15.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_026_90__82b54627-3e8c-4a57-abdc-5a40659c1a15.jpg",
+   "name": "dl_026_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_026_90__82b54627-3e8c-4a57-abdc-5a40659c1a15.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 122108,
+   "uploaded_bytes": 122108,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_027_0__c17dd575-a495-44c4-9c48-c9a775fcd7b2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_027_0__c17dd575-a495-44c4-9c48-c9a775fcd7b2.jpg",
+   "name": "dl_027_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_027_0__c17dd575-a495-44c4-9c48-c9a775fcd7b2.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 96916,
+   "uploaded_bytes": 96916,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_027_180__a2e7e4f1-6ccb-419d-9483-2b2b8d6af8eb.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_027_180__a2e7e4f1-6ccb-419d-9483-2b2b8d6af8eb.jpg",
+   "name": "dl_027_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_027_180__a2e7e4f1-6ccb-419d-9483-2b2b8d6af8eb.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 123548,
+   "uploaded_bytes": 123548,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_027_270__ac814526-5e44-4c62-88a3-f3099d231472.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_027_270__ac814526-5e44-4c62-88a3-f3099d231472.jpg",
+   "name": "dl_027_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_027_270__ac814526-5e44-4c62-88a3-f3099d231472.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 112987,
+   "uploaded_bytes": 112987,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_027_90__d9d0d1ee-4cf5-40cf-ba74-e5962245a825.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_027_90__d9d0d1ee-4cf5-40cf-ba74-e5962245a825.jpg",
+   "name": "dl_027_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_027_90__d9d0d1ee-4cf5-40cf-ba74-e5962245a825.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 123887,
+   "uploaded_bytes": 123887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_028_0__4a5a5d65-d0b2-41b1-96b0-253d5eb079f7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_028_0__4a5a5d65-d0b2-41b1-96b0-253d5eb079f7.jpg",
+   "name": "dl_028_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_028_0__4a5a5d65-d0b2-41b1-96b0-253d5eb079f7.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 88518,
+   "uploaded_bytes": 88518,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_028_180__7e156e43-1a8c-410d-b9c2-7a2950116b57.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_028_180__7e156e43-1a8c-410d-b9c2-7a2950116b57.jpg",
+   "name": "dl_028_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_028_180__7e156e43-1a8c-410d-b9c2-7a2950116b57.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 85952,
+   "uploaded_bytes": 85952,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_028_270__d913699e-82e9-4ec5-b61c-139c7d285cb4.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_028_270__d913699e-82e9-4ec5-b61c-139c7d285cb4.jpg",
+   "name": "dl_028_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_028_270__d913699e-82e9-4ec5-b61c-139c7d285cb4.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 76941,
+   "uploaded_bytes": 76941,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_028_90__4a33debb-3405-4ad7-8f3c-7623351ac48b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_028_90__4a33debb-3405-4ad7-8f3c-7623351ac48b.jpg",
+   "name": "dl_028_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_028_90__4a33debb-3405-4ad7-8f3c-7623351ac48b.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 88054,
+   "uploaded_bytes": 88054,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_029_0__ddd2ef4d-4aca-4fb1-beb9-83bda12e7321.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_029_0__ddd2ef4d-4aca-4fb1-beb9-83bda12e7321.jpg",
+   "name": "dl_029_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_029_0__ddd2ef4d-4aca-4fb1-beb9-83bda12e7321.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 140209,
+   "uploaded_bytes": 140209,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_029_180__baec616e-d3d9-4729-b299-80c2b63aff52.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_029_180__baec616e-d3d9-4729-b299-80c2b63aff52.jpg",
+   "name": "dl_029_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_029_180__baec616e-d3d9-4729-b299-80c2b63aff52.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 119149,
+   "uploaded_bytes": 119149,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_029_270__7f6e13c0-137c-4aca-bd12-9846f2442100.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_029_270__7f6e13c0-137c-4aca-bd12-9846f2442100.jpg",
+   "name": "dl_029_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_029_270__7f6e13c0-137c-4aca-bd12-9846f2442100.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 99295,
+   "uploaded_bytes": 99295,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_029_90__7a85c359-13b4-4bb1-b631-6a511b62e6d5.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_029_90__7a85c359-13b4-4bb1-b631-6a511b62e6d5.jpg",
+   "name": "dl_029_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_029_90__7a85c359-13b4-4bb1-b631-6a511b62e6d5.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 111772,
+   "uploaded_bytes": 111772,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_030_0__061feab5-5d17-4cce-b256-7766ae9c3a2e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_030_0__061feab5-5d17-4cce-b256-7766ae9c3a2e.jpg",
+   "name": "dl_030_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_030_0__061feab5-5d17-4cce-b256-7766ae9c3a2e.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 86693,
+   "uploaded_bytes": 86693,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_030_180__9f7fde88-812b-4d5e-ba91-c2fb06abfaf2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_030_180__9f7fde88-812b-4d5e-ba91-c2fb06abfaf2.jpg",
+   "name": "dl_030_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_030_180__9f7fde88-812b-4d5e-ba91-c2fb06abfaf2.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 130762,
+   "uploaded_bytes": 130762,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_030_270__3e49dfac-34b3-4c86-bb54-14766395d4b1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_030_270__3e49dfac-34b3-4c86-bb54-14766395d4b1.jpg",
+   "name": "dl_030_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_030_270__3e49dfac-34b3-4c86-bb54-14766395d4b1.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 124068,
+   "uploaded_bytes": 124068,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_030_90__614d6f04-2e75-455d-9252-9019d246d87c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_030_90__614d6f04-2e75-455d-9252-9019d246d87c.jpg",
+   "name": "dl_030_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_030_90__614d6f04-2e75-455d-9252-9019d246d87c.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 111953,
+   "uploaded_bytes": 111953,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_031_0__3de0fc84-fa5e-49b2-a084-259fc4ea6d8a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_031_0__3de0fc84-fa5e-49b2-a084-259fc4ea6d8a.jpg",
+   "name": "dl_031_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_031_0__3de0fc84-fa5e-49b2-a084-259fc4ea6d8a.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 117616,
+   "uploaded_bytes": 117616,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_031_180__054bb85f-f335-4ef9-a806-94273509e1a0.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_031_180__054bb85f-f335-4ef9-a806-94273509e1a0.jpg",
+   "name": "dl_031_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_031_180__054bb85f-f335-4ef9-a806-94273509e1a0.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 85004,
+   "uploaded_bytes": 85004,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_031_270__85ce4727-d315-4c8b-8c15-82de996a4d3f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_031_270__85ce4727-d315-4c8b-8c15-82de996a4d3f.jpg",
+   "name": "dl_031_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_031_270__85ce4727-d315-4c8b-8c15-82de996a4d3f.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 133016,
+   "uploaded_bytes": 133016,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_031_90__2770e8c5-392f-4ac1-92c7-2bbab39e46d7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_031_90__2770e8c5-392f-4ac1-92c7-2bbab39e46d7.jpg",
+   "name": "dl_031_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_031_90__2770e8c5-392f-4ac1-92c7-2bbab39e46d7.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 101670,
+   "uploaded_bytes": 101670,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_032_0__9a43dd3a-dbc5-4ea3-b79a-e8bc0d4b47ce.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_032_0__9a43dd3a-dbc5-4ea3-b79a-e8bc0d4b47ce.jpg",
+   "name": "dl_032_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_032_0__9a43dd3a-dbc5-4ea3-b79a-e8bc0d4b47ce.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 115551,
+   "uploaded_bytes": 115551,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_032_180__1a9a27b3-5d6d-4b46-be26-c613b0220795.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_032_180__1a9a27b3-5d6d-4b46-be26-c613b0220795.jpg",
+   "name": "dl_032_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_032_180__1a9a27b3-5d6d-4b46-be26-c613b0220795.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 71622,
+   "uploaded_bytes": 71622,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_032_270__bae3a8a7-664d-489c-9bdf-cac5bf8359fa.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_032_270__bae3a8a7-664d-489c-9bdf-cac5bf8359fa.jpg",
+   "name": "dl_032_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_032_270__bae3a8a7-664d-489c-9bdf-cac5bf8359fa.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 75393,
+   "uploaded_bytes": 75393,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_032_90__6733aa1f-b67c-4ef7-b7b8-d5658e8f1dc3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_032_90__6733aa1f-b67c-4ef7-b7b8-d5658e8f1dc3.jpg",
+   "name": "dl_032_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_032_90__6733aa1f-b67c-4ef7-b7b8-d5658e8f1dc3.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 114501,
+   "uploaded_bytes": 114501,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_033_0__6cce7327-02af-4b58-ad05-9bd7b5607ade.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_033_0__6cce7327-02af-4b58-ad05-9bd7b5607ade.jpg",
+   "name": "dl_033_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_033_0__6cce7327-02af-4b58-ad05-9bd7b5607ade.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 138811,
+   "uploaded_bytes": 138811,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_033_180__170527c3-3d61-41f8-a4a9-d6991993c6a4.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_033_180__170527c3-3d61-41f8-a4a9-d6991993c6a4.jpg",
+   "name": "dl_033_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_033_180__170527c3-3d61-41f8-a4a9-d6991993c6a4.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 61584,
+   "uploaded_bytes": 61584,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_033_270__dd488e75-5dd3-4739-ae6b-ff017aed8ec1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_033_270__dd488e75-5dd3-4739-ae6b-ff017aed8ec1.jpg",
+   "name": "dl_033_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_033_270__dd488e75-5dd3-4739-ae6b-ff017aed8ec1.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 110793,
+   "uploaded_bytes": 110793,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_033_90__d2056b5d-66e3-4d14-aee3-d75dab3c869b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_033_90__d2056b5d-66e3-4d14-aee3-d75dab3c869b.jpg",
+   "name": "dl_033_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_033_90__d2056b5d-66e3-4d14-aee3-d75dab3c869b.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 103263,
+   "uploaded_bytes": 103263,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_034_0__3a62b05b-49e2-41bf-81de-89b647fcd67c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_034_0__3a62b05b-49e2-41bf-81de-89b647fcd67c.jpg",
+   "name": "dl_034_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_034_0__3a62b05b-49e2-41bf-81de-89b647fcd67c.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 70386,
+   "uploaded_bytes": 70386,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_034_180__9507cbc0-c817-486b-a381-63326802a2b0.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_034_180__9507cbc0-c817-486b-a381-63326802a2b0.jpg",
+   "name": "dl_034_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_034_180__9507cbc0-c817-486b-a381-63326802a2b0.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 96909,
+   "uploaded_bytes": 96909,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_034_270__167f4328-8be3-4ebd-b260-1ebd7eb3c8cc.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_034_270__167f4328-8be3-4ebd-b260-1ebd7eb3c8cc.jpg",
+   "name": "dl_034_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_034_270__167f4328-8be3-4ebd-b260-1ebd7eb3c8cc.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 93573,
+   "uploaded_bytes": 93573,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_034_90__27d4b3da-84a0-4308-8671-d11b57011a76.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_034_90__27d4b3da-84a0-4308-8671-d11b57011a76.jpg",
+   "name": "dl_034_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_034_90__27d4b3da-84a0-4308-8671-d11b57011a76.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 105850,
+   "uploaded_bytes": 105850,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_035_0__65595080-88a8-4bae-9e03-1c29fb59bedb.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_035_0__65595080-88a8-4bae-9e03-1c29fb59bedb.jpg",
+   "name": "dl_035_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_035_0__65595080-88a8-4bae-9e03-1c29fb59bedb.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 75774,
+   "uploaded_bytes": 75774,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_035_180__50243ae0-6b73-409d-b8bf-13ad1ab0c309.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_035_180__50243ae0-6b73-409d-b8bf-13ad1ab0c309.jpg",
+   "name": "dl_035_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_035_180__50243ae0-6b73-409d-b8bf-13ad1ab0c309.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 67304,
+   "uploaded_bytes": 67304,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_035_270__daeb33fe-2cfc-48b4-8676-203d8bb61d74.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_035_270__daeb33fe-2cfc-48b4-8676-203d8bb61d74.jpg",
+   "name": "dl_035_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_035_270__daeb33fe-2cfc-48b4-8676-203d8bb61d74.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 73640,
+   "uploaded_bytes": 73640,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_035_90__73500c59-27c2-4a04-bbf1-c11bce22e2e5.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_035_90__73500c59-27c2-4a04-bbf1-c11bce22e2e5.jpg",
+   "name": "dl_035_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_035_90__73500c59-27c2-4a04-bbf1-c11bce22e2e5.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 67682,
+   "uploaded_bytes": 67682,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_036_0__6ce9d160-4002-4ade-a52a-7cc49f59d4c1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_036_0__6ce9d160-4002-4ade-a52a-7cc49f59d4c1.jpg",
+   "name": "dl_036_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_036_0__6ce9d160-4002-4ade-a52a-7cc49f59d4c1.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 96883,
+   "uploaded_bytes": 96883,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_036_180__3400beda-5acd-4702-acd4-9a1c9712ba26.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_036_180__3400beda-5acd-4702-acd4-9a1c9712ba26.jpg",
+   "name": "dl_036_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_036_180__3400beda-5acd-4702-acd4-9a1c9712ba26.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 129226,
+   "uploaded_bytes": 129226,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_036_270__51b9f716-89ca-4e67-8a9f-cf735f0e9ffe.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_036_270__51b9f716-89ca-4e67-8a9f-cf735f0e9ffe.jpg",
+   "name": "dl_036_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_036_270__51b9f716-89ca-4e67-8a9f-cf735f0e9ffe.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 103364,
+   "uploaded_bytes": 103364,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_036_90__00ac448e-4827-4dd6-9351-361a14b36e17.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_036_90__00ac448e-4827-4dd6-9351-361a14b36e17.jpg",
+   "name": "dl_036_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_036_90__00ac448e-4827-4dd6-9351-361a14b36e17.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 120768,
+   "uploaded_bytes": 120768,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_037_0__7ebfc631-4563-46bf-be7e-19c16b8d1275.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_037_0__7ebfc631-4563-46bf-be7e-19c16b8d1275.jpg",
+   "name": "dl_037_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_037_0__7ebfc631-4563-46bf-be7e-19c16b8d1275.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 143365,
+   "uploaded_bytes": 143365,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_037_180__cf99f6e4-4519-45e5-a06c-3d75f0335b76.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_037_180__cf99f6e4-4519-45e5-a06c-3d75f0335b76.jpg",
+   "name": "dl_037_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_037_180__cf99f6e4-4519-45e5-a06c-3d75f0335b76.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 85919,
+   "uploaded_bytes": 85919,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_037_270__8e228290-5d1b-46dc-b7cc-7040fedcec45.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_037_270__8e228290-5d1b-46dc-b7cc-7040fedcec45.jpg",
+   "name": "dl_037_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_037_270__8e228290-5d1b-46dc-b7cc-7040fedcec45.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 113341,
+   "uploaded_bytes": 113341,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_037_90__5037c5a2-7cc9-4c39-b62f-5c58a4653ea1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_037_90__5037c5a2-7cc9-4c39-b62f-5c58a4653ea1.jpg",
+   "name": "dl_037_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_037_90__5037c5a2-7cc9-4c39-b62f-5c58a4653ea1.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 134237,
+   "uploaded_bytes": 134237,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_038_0__9602cbe3-65a5-40d5-ac88-3a32c0b803e2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_038_0__9602cbe3-65a5-40d5-ac88-3a32c0b803e2.jpg",
+   "name": "dl_038_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_038_0__9602cbe3-65a5-40d5-ac88-3a32c0b803e2.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 66358,
+   "uploaded_bytes": 66358,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_038_180__92b52b7e-bfbf-42f2-b933-2ed82402ce1d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_038_180__92b52b7e-bfbf-42f2-b933-2ed82402ce1d.jpg",
+   "name": "dl_038_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_038_180__92b52b7e-bfbf-42f2-b933-2ed82402ce1d.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 68885,
+   "uploaded_bytes": 68885,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_038_270__1d2ebad4-8594-4e3e-ac85-8ea0f8ae0635.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_038_270__1d2ebad4-8594-4e3e-ac85-8ea0f8ae0635.jpg",
+   "name": "dl_038_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_038_270__1d2ebad4-8594-4e3e-ac85-8ea0f8ae0635.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 69138,
+   "uploaded_bytes": 69138,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_038_90__162c97f6-6986-4f42-a080-d986099bcb60.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_038_90__162c97f6-6986-4f42-a080-d986099bcb60.jpg",
+   "name": "dl_038_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_038_90__162c97f6-6986-4f42-a080-d986099bcb60.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 69480,
+   "uploaded_bytes": 69480,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_039_0__619c1039-e395-4351-a3ad-52917e03daee.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_039_0__619c1039-e395-4351-a3ad-52917e03daee.jpg",
+   "name": "dl_039_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_039_0__619c1039-e395-4351-a3ad-52917e03daee.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 71116,
+   "uploaded_bytes": 71116,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_039_180__d1017419-39d9-4a80-8fd4-73e4197df5a7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_039_180__d1017419-39d9-4a80-8fd4-73e4197df5a7.jpg",
+   "name": "dl_039_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_039_180__d1017419-39d9-4a80-8fd4-73e4197df5a7.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 118741,
+   "uploaded_bytes": 118741,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_039_270__a813841d-1bf6-4ab0-a7a8-d2714a0c465a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_039_270__a813841d-1bf6-4ab0-a7a8-d2714a0c465a.jpg",
+   "name": "dl_039_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_039_270__a813841d-1bf6-4ab0-a7a8-d2714a0c465a.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 133889,
+   "uploaded_bytes": 133889,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_039_90__503d975c-4200-4be3-a9ab-5a0e334297bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_039_90__503d975c-4200-4be3-a9ab-5a0e334297bf.jpg",
+   "name": "dl_039_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_039_90__503d975c-4200-4be3-a9ab-5a0e334297bf.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 120953,
+   "uploaded_bytes": 120953,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_040_0__f79e7b9e-28ee-4b17-89cc-024b942e45b5.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_040_0__f79e7b9e-28ee-4b17-89cc-024b942e45b5.jpg",
+   "name": "dl_040_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_040_0__f79e7b9e-28ee-4b17-89cc-024b942e45b5.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 144327,
+   "uploaded_bytes": 144327,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_040_180__9faeac36-aa25-43cd-8534-1ba9cf8dcaff.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_040_180__9faeac36-aa25-43cd-8534-1ba9cf8dcaff.jpg",
+   "name": "dl_040_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_040_180__9faeac36-aa25-43cd-8534-1ba9cf8dcaff.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 124482,
+   "uploaded_bytes": 124482,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_040_270__be332aca-5416-4dc6-acf1-beb54a77e9c0.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_040_270__be332aca-5416-4dc6-acf1-beb54a77e9c0.jpg",
+   "name": "dl_040_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_040_270__be332aca-5416-4dc6-acf1-beb54a77e9c0.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 107315,
+   "uploaded_bytes": 107315,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_040_90__ec31a7e2-547c-4261-9bac-7fa2fa776a35.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_040_90__ec31a7e2-547c-4261-9bac-7fa2fa776a35.jpg",
+   "name": "dl_040_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_040_90__ec31a7e2-547c-4261-9bac-7fa2fa776a35.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 136798,
+   "uploaded_bytes": 136798,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_041_0__9581760d-78ec-4d0f-9b54-b0f857848261.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_041_0__9581760d-78ec-4d0f-9b54-b0f857848261.jpg",
+   "name": "dl_041_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_041_0__9581760d-78ec-4d0f-9b54-b0f857848261.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 81384,
+   "uploaded_bytes": 81384,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_041_180__ed48aea5-5ed0-4178-873e-9b96186b0b88.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_041_180__ed48aea5-5ed0-4178-873e-9b96186b0b88.jpg",
+   "name": "dl_041_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_041_180__ed48aea5-5ed0-4178-873e-9b96186b0b88.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 49355,
+   "uploaded_bytes": 49355,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_041_270__61274ed6-0653-4ee9-be97-ce5b63ec9b41.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_041_270__61274ed6-0653-4ee9-be97-ce5b63ec9b41.jpg",
+   "name": "dl_041_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_041_270__61274ed6-0653-4ee9-be97-ce5b63ec9b41.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 62977,
+   "uploaded_bytes": 62977,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_041_90__7af23878-94ee-4ae2-a37a-622ca95cb474.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_041_90__7af23878-94ee-4ae2-a37a-622ca95cb474.jpg",
+   "name": "dl_041_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_041_90__7af23878-94ee-4ae2-a37a-622ca95cb474.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 88600,
+   "uploaded_bytes": 88600,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_042_0__4e59dea8-4d8d-4b01-87ff-b1805c794465.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_042_0__4e59dea8-4d8d-4b01-87ff-b1805c794465.jpg",
+   "name": "dl_042_0.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_042_0__4e59dea8-4d8d-4b01-87ff-b1805c794465.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 97081,
+   "uploaded_bytes": 97081,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_042_180__d2714231-e1b4-415f-be4f-953763d7b502.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_042_180__d2714231-e1b4-415f-be4f-953763d7b502.jpg",
+   "name": "dl_042_180.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_042_180__d2714231-e1b4-415f-be4f-953763d7b502.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 89912,
+   "uploaded_bytes": 89912,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_042_270__7c703fa6-2fb9-4f54-a897-00e1adc26663.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_042_270__7c703fa6-2fb9-4f54-a897-00e1adc26663.jpg",
+   "name": "dl_042_270.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_042_270__7c703fa6-2fb9-4f54-a897-00e1adc26663.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 117940,
+   "uploaded_bytes": 117940,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-li-womens/dalian/dl_042_90__c7bc959d-1d50-4473-bfc3-0c2d3e26f87d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-li-womens/dalian/dl_042_90__c7bc959d-1d50-4473-bfc3-0c2d3e26f87d.jpg",
+   "name": "dl_042_90.jpg",
+   "type": "image",
+   "folder": "dalian",
+   "media_id": "templates/2025-li-womens/dalian/dl_042_90__c7bc959d-1d50-4473-bfc3-0c2d3e26f87d.jpg",
+   "logicalFolder": "dalian",
+   "original_bytes": 102984,
+   "uploaded_bytes": 102984,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Assessing the Role of Safety Perception in the Relationship Between Street Environments and Women’s Stay Behavior, Using Multi-Source Big Data",
+  "authors": [
+   "Li Y.",
+   "Wu L.",
+   "Xue Y.",
+   "Jiang H."
+  ],
+  "year": 2025,
+  "venue": "Buildings",
+  "doi": "10.3390/buildings15183310",
+  "url": "https://doi.org/10.3390/buildings15183310"
+ }
+}

@@ -1,0 +1,403 @@
+{
+ "id": "2025-xing-biophilic",
+ "name": "Biophilic Interiors and Stress Recovery",
+ "description": "An online stress-and-recovery experiment for building design. Xing et al. (2025, PLOS ONE) rendered a classroom, a corridor and a staircase at four levels of biophilic design: level 0 has no biophilic features; level 1 adds \"nature of the space\" (prospect and refuge, transparent walls, an open staircase); level 2 adds natural analogues (organic forms, nature-inspired artwork, green furniture); level 3 adds nature in the space (views of trees and sky, plants, green walls). Each of four rounds starts with a 20-second mental arithmetic test with unpleasant noise and a rigged comparison that always says the participant scored below average. Participants then rate eight mood words (1 = not at all, 5 = very much), view the three interiors of one level for 10 seconds each, rate the mood words again and say whether they liked the designs (−2 to +2). The mood words pair up into four theories: stress recovery (relaxed / irritable), attention restoration (attentive / fatigued), refuge and prospect (self-assured / frightened) and inspiration (inspired / downhearted). For each pair the paper computes mood change: (positive item + reversed negative item) after viewing minus the same sum after the stress test. 255 participants took part. Level 0 lowered mood and each added level raised it, with the largest gains for recovery and inspiration. The page records the change scores per level as biophilic_scores. Analysis as in the paper: a repeated-measures ANOVA of level (0–3) for each theory, with Bonferroni post-hoc tests. The template ships with the paper's 12 renderings (Fig 2, CC BY 4.0), cropped from the figure: classroom_level0.jpg … staircase_level3.jpg. Differences from the original study: (1) the paper does not report the order of the four levels; the template randomises it per participant; (2) the paper's arithmetic items are shown as completed equations (e.g. 373 + 386 = 759), and the template asks whether each equation is correct (about half are wrong); the paper does not say how answers were given; (3) the traffic and construction recordings are replaced by noise the page synthesises (a low rumble and hammering bursts), so no audio files are needed; (4) the images are the small figure versions (about 550 × 330 pixels), not the original renderings; (5) the paper asked about the living environment in and outside term time, and the template asks only about growing up and living now; (6) the page tells participants at the end that the comparison was not real; (7) the paper's survey ran in Qualtrics and Gorilla.",
+ "author": "Xing, Stevenson, Thomas, Hardy, Knight, Heym & Sumich",
+ "year": "2025",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "biophilic design",
+  "stress recovery",
+  "interior",
+  "PANAS",
+  "source:paper",
+  "modality:indoor",
+  "task:rating",
+  "task:multi_rating",
+  "task:questionnaire",
+  "task:custom_page",
+  "concept:restoration",
+  "concept:greenery",
+  "concept:likability",
+  "participants:crowd",
+  "participants:students",
+  "sample:100to1000"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1371/journal.pone.0317372",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-26T16:29:21.369+00:00",
+ "updatedAt": "2026-11-26T16:29:40.362+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. The study includes short timed arithmetic tasks with unpleasant background noise. I can stop at any time. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     },
+     {
+      "max": 110,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "Age (years)",
+      "inputType": "number"
+     },
+     {
+      "name": "sex",
+      "type": "radiogroup",
+      "title": "Biological sex",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Prefer not to say",
+        "value": "withheld"
+       }
+      ]
+     },
+     {
+      "name": "ethnicity",
+      "type": "radiogroup",
+      "title": "Ethnicity",
+      "choices": [
+       {
+        "text": "White",
+        "value": "white"
+       },
+       {
+        "text": "Black / African American",
+        "value": "black"
+       },
+       {
+        "text": "Asian",
+        "value": "asian"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ]
+     },
+     {
+      "name": "env_growing_up",
+      "type": "radiogroup",
+      "title": "The environment you grew up in",
+      "choices": [
+       {
+        "text": "Much more nature",
+        "value": "much_more_nature"
+       },
+       {
+        "text": "A little more nature",
+        "value": "little_more_nature"
+       },
+       {
+        "text": "Equal nature and urban",
+        "value": "equal"
+       },
+       {
+        "text": "A little more urban",
+        "value": "little_more_urban"
+       },
+       {
+        "text": "Much more urban",
+        "value": "much_more_urban"
+       }
+      ]
+     },
+     {
+      "name": "env_living_now",
+      "type": "radiogroup",
+      "title": "The environment you live in now",
+      "choices": [
+       {
+        "text": "Much more nature",
+        "value": "much_more_nature"
+       },
+       {
+        "text": "A little more nature",
+        "value": "little_more_nature"
+       },
+       {
+        "text": "Equal nature and urban",
+        "value": "equal"
+       },
+       {
+        "text": "A little more urban",
+        "value": "little_more_urban"
+       },
+       {
+        "text": "Much more urban",
+        "value": "much_more_urban"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "rounds",
+    "elements": [
+     {
+      "name": "liking",
+      "type": "imagerating",
+      "title": "Did you like these designs?",
+      "choices": [],
+      "rateMax": 2,
+      "rateMin": -2,
+      "imageCount": 3,
+      "isRequired": true,
+      "rateLabels": [
+       "Very negative",
+       "Negative",
+       "Neutral",
+       "Positive",
+       "Very positive"
+      ],
+      "description": "Asked once per round, after the three images of one biophilic level. key = level0 … level3; shown = the three images.",
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Very positive",
+      "minRateDescription": "Very negative",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "mood",
+      "type": "custom",
+      "title": "Recorded by the page for each round, keyed by biophilic level (level0 … level3): { round (1–4, order shown), post_stress: {relaxed, irritable, attentive, fatigued, self_assured, frightened, inspired, downhearted} (1 = not at all … 5 = very much, after the arithmetic test), post_exposure: {same eight items, after the 30 s image exposure}, maths: {attempted, correct, shown_average} }",
+      "isRequired": true
+     },
+     {
+      "name": "biophilic_scores",
+      "type": "custom",
+      "title": "Computed by the page as in the paper, per level: B_F = (positive item + reversed negative item) after exposure minus the same sum after the stress task, for recovery (relaxed/irritable), attention (attentive/fatigued), refuge (self-assured/frightened) and inspiration (inspired/downhearted). Higher = more positive mood change."
+     },
+     {
+      "name": "sound_check",
+      "type": "radiogroup",
+      "title": "Did you hear the background noise during the arithmetic tests?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No, I heard no sound (technical issue or no speakers / headphones)",
+        "value": "no_sound"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "title": "Biophilic Design and Stress Recovery",
+  "locale": "en",
+  "spSite": {
+   "id": "site-922aa09d0ae3fbf1",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Biophilic Design and Stress Recovery</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Biophilic Design and Stress Recovery\",\n    \"description\": \"Four short rounds. Each round starts with a 20-second mental arithmetic test with unpleasant background noise. You then rate your mood, look at three rendered building interiors for 30 seconds, rate your mood again, and say how much you liked the designs. Rebuilt from Xing et al. (2025), PLOS ONE.\",\n    \"locale\": \"en\",\n    \"mediaFolders\": [\"spaces\"],\n    \"pages\": [\n      { \"name\": \"start\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"I agree to take part. The study includes short timed arithmetic tasks with unpleasant background noise. I can stop at any time. My answers are recorded anonymously for research.\", \"isRequired\": true, \"labelTrue\": \"I agree\", \"labelFalse\": \"I do not agree\" },\n        { \"type\": \"number\", \"name\": \"age\", \"title\": \"Age (years)\", \"min\": 18, \"max\": 110 },\n        { \"type\": \"radiogroup\", \"name\": \"sex\", \"title\": \"Biological sex\", \"choices\": [\n          { \"value\": \"female\", \"text\": \"Female\" }, { \"value\": \"male\", \"text\": \"Male\" }, { \"value\": \"withheld\", \"text\": \"Prefer not to say\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"ethnicity\", \"title\": \"Ethnicity\", \"choices\": [\n          { \"value\": \"white\", \"text\": \"White\" }, { \"value\": \"black\", \"text\": \"Black / African American\" }, { \"value\": \"asian\", \"text\": \"Asian\" }, { \"value\": \"other\", \"text\": \"Other / prefer not to say\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"env_growing_up\", \"title\": \"The environment you grew up in\", \"choices\": [\n          { \"value\": \"much_more_nature\", \"text\": \"Much more nature\" }, { \"value\": \"little_more_nature\", \"text\": \"A little more nature\" }, { \"value\": \"equal\", \"text\": \"Equal nature and urban\" }, { \"value\": \"little_more_urban\", \"text\": \"A little more urban\" }, { \"value\": \"much_more_urban\", \"text\": \"Much more urban\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"env_living_now\", \"title\": \"The environment you live in now\", \"choices\": [\n          { \"value\": \"much_more_nature\", \"text\": \"Much more nature\" }, { \"value\": \"little_more_nature\", \"text\": \"A little more nature\" }, { \"value\": \"equal\", \"text\": \"Equal nature and urban\" }, { \"value\": \"little_more_urban\", \"text\": \"A little more urban\" }, { \"value\": \"much_more_urban\", \"text\": \"Much more urban\" } ] }\n      ]},\n      { \"name\": \"rounds\", \"elements\": [\n        { \"type\": \"imagerating\", \"name\": \"liking\", \"title\": \"Did you like these designs?\", \"description\": \"Asked once per round, after the three images of one biophilic level. key = level0 … level3; shown = the three images.\", \"imageCount\": 3, \"rateMin\": -2, \"rateMax\": 2, \"rateLabels\": [\"Very negative\", \"Negative\", \"Neutral\", \"Positive\", \"Very positive\"], \"minRateDescription\": \"Very negative\", \"maxRateDescription\": \"Very positive\", \"isRequired\": true },\n        { \"type\": \"custom\", \"name\": \"mood\", \"title\": \"Recorded by the page for each round, keyed by biophilic level (level0 … level3): { round (1–4, order shown), post_stress: {relaxed, irritable, attentive, fatigued, self_assured, frightened, inspired, downhearted} (1 = not at all … 5 = very much, after the arithmetic test), post_exposure: {same eight items, after the 30 s image exposure}, maths: {attempted, correct, shown_average} }\", \"isRequired\": true },\n        { \"type\": \"custom\", \"name\": \"biophilic_scores\", \"title\": \"Computed by the page as in the paper, per level: B_F = (positive item + reversed negative item) after exposure minus the same sum after the stress task, for recovery (relaxed/irritable), attention (attentive/fatigued), refuge (self-assured/frightened) and inspiration (inspired/downhearted). Higher = more positive mood change.\" },\n        { \"type\": \"radiogroup\", \"name\": \"sound_check\", \"title\": \"Did you hear the background noise during the arithmetic tests?\", \"choices\": [\n          { \"value\": \"yes\", \"text\": \"Yes\" }, { \"value\": \"no_sound\", \"text\": \"No, I heard no sound (technical issue or no speakers / headphones)\" } ] }\n      ]}\n    ]\n  }\n}\n</script>\n<style>\n:root{--bg:#f3f4f1;--card:#fff;--ink:#1b2320;--muted:#56625c;--accent:#2f6b4f;--accent-ink:#fff;--line:#d6ddd8;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:860px;margin:0 auto;padding:24px 16px 40px}\nh1{font-size:1.45rem;margin:0 0 8px}h2{font-size:1.15rem;margin:0 0 6px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:8px 0 14px}.progress>i{display:block;height:100%;background:var(--accent);transition:width .2s linear}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:120px}\n.q{margin-top:16px}.q>b{display:block;margin-bottom:4px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.eq{font-size:2.2rem;font-weight:700;text-align:center;margin:26px 0 18px;font-variant-numeric:tabular-nums;color:var(--ink)}\n.tf{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tf .btn{padding:16px;font-size:1.1rem}\n.timer{font-size:1.1rem;font-weight:700;color:var(--warn);text-align:right}\n.panas{width:100%;border-collapse:collapse;margin-top:8px}.panas td{padding:7px 4px;border-top:1px solid var(--line)}.panas td:first-child{font-weight:600;width:30%}\n.dots{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}\n.dots button{appearance:none;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:8px 0;font:inherit;font-weight:700;cursor:pointer;color:var(--ink)}\n.dots button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}\n.anchors{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted)}\n.stage{background:#222;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:200px}\n.stage img{width:100%;height:auto;display:block}\n.like{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px}\n.like button{appearance:none;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:12px 2px;font:inherit;cursor:pointer;color:var(--ink)}\n.like button b{display:block;font-size:1.1rem}.like button span{font-size:.78rem;color:var(--muted)}\n.like button:disabled{opacity:.4}\n@media (max-width:520px){.panas td:first-child{width:34%;font-size:.9rem}.like button span{font-size:.7rem}}\n.credit{max-width:860px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Renderings: Xing, Stevenson, Thomas, Hardy, Knight, Heym &amp; Sumich (2025), PLOS ONE 20(3): e0317372, Fig 2, Creative Commons Attribution License (CC BY 4.0). Background noise is synthesised by this page.</footer>\n<script>\n(function(){\n  var app=document.getElementById('app'), Q={}, files={}, st=null, keyH=null, audio=null, timers=[];\n  var LEVELS=['level0','level1','level2','level3'], SPACES=['classroom','corridor','staircase'];\n  var ITEMS=[['relaxed','Relaxed'],['irritable','Irritable'],['attentive','Attentive'],['fatigued','Fatigued'],['self_assured','Self-assured'],['frightened','Frightened'],['inspired','Inspired'],['downhearted','Downhearted']];\n  var CONSTRUCTS={recovery:['relaxed','irritable'],attention:['attentive','fatigued'],refuge:['self_assured','frightened'],inspiration:['inspired','downhearted']};\n  var START=['age','sex','ethnicity','env_growing_up','env_living_now'];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var x=a[k];a[k]=a[j];a[j]=x;}return a;}\n  function save(){try{localStorage.setItem('bio2025:state',JSON.stringify(st));}catch(e){}}\n  function clearTimers(){timers.forEach(clearTimeout);timers=[];if(keyH){document.removeEventListener('keydown',keyH);keyH=null;}}\n  function ok(r){return !(r&&r.ok===false);}\n\n  /* ---------- 240 equations: 60 each of + − × ÷, half shown with a wrong result ---------- */\n  function rnd(a,b){return a+Math.floor(Math.random()*(b-a+1));}\n  function makeEquations(){\n    var out=[];\n    for(var k=0;k<60;k++){var a=rnd(100,499),b=rnd(100,499);out.push([a+' + '+b,a+b]);}\n    for(k=0;k<60;k++){var a2=rnd(300,999),b2=rnd(100,a2-50);out.push([a2+' − '+b2,a2-b2]);}\n    for(k=0;k<60;k++){var a3=rnd(12,49),b3=rnd(3,9);out.push([a3+' × '+b3,a3*b3]);}\n    for(k=0;k<60;k++){var q=rnd(12,99),d=rnd(3,9);out.push([(q*d)+' ÷ '+d,q]);}\n    return shuffle(out).map(function(e,i){var wrong=Math.random()<0.5, delta=[1,2,10,-1,-2,-10][rnd(0,5)];return {text:e[0],shown:wrong?e[1]+delta:e[1],correct:!wrong};});\n  }\n\n  /* ---------- synthesised unpleasant noise: traffic-like rumble + construction hammering ---------- */\n  function startNoise(test){\n    try{\n      var C=window.AudioContext||window.webkitAudioContext;if(!C)return null;\n      var ctx=new C(), len=ctx.sampleRate*2, buf=ctx.createBuffer(1,len,ctx.sampleRate), d=buf.getChannelData(0), last=0;\n      for(var i=0;i<len;i++){var w=Math.random()*2-1;last=(last+0.02*w)/1.02;d[i]=last*3.5;}\n      var src=ctx.createBufferSource();src.buffer=buf;src.loop=true;\n      var lp=ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=600;\n      var g=ctx.createGain();g.gain.value=0.6;src.connect(lp);lp.connect(g);g.connect(ctx.destination);src.start();\n      var hammer=ctx.createGain();hammer.gain.value=0;hammer.connect(ctx.destination);\n      var osc=ctx.createOscillator();osc.type='square';osc.frequency.value=180;osc.connect(hammer);osc.start();\n      var t=ctx.currentTime+0.2, end=t+(test?2:21);\n      while(t<end){for(var h=0;h<5;h++){hammer.gain.setValueAtTime(0.18,t);hammer.gain.setValueAtTime(0,t+0.05);t+=0.13;}t+=0.5+Math.random()*0.9;}\n      if(test){setTimeout(function(){try{ctx.close();}catch(e){}},2300);}\n      return ctx;\n    }catch(e){return null;}\n  }\n  function stopNoise(){if(audio){try{audio.close();}catch(e){}audio=null;}}\n\n  function radios(n){return (Q[n].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');}\n\n  function intro(){\n    var missing=LEVELS.filter(function(l){return SPACES.some(function(s){return !files[s+'_'+l+'.jpg'];});});\n    if(missing.length){app.innerHTML='<h1>Images missing</h1><p>The folder “spaces” needs the 12 files classroom_level0.jpg … staircase_level3.jpg.</p>';return;}\n    app.innerHTML='<h1>Building interiors and how you feel</h1>'+\n      '<p>This study has four short rounds (about 8 minutes in total). In each round you first do a 20-second arithmetic test while unpleasant noise plays. Then you say how you feel, look at three pictures of building interiors for 30 seconds, say how you feel again, and rate the designs.</p>'+\n      '<div class=\"card\"><h2>Sound</h2><p>Please use speakers or headphones. Play the test sound and set your volume so it is clearly audible but comfortable.</p><button class=\"btn ghost\" id=\"snd\">Play test sound</button></div>'+\n      '<div class=\"card\"><h2>About you</h2>'+\n      '<div class=\"q\"><b>'+esc(Q.age.title)+'</b><input type=\"number\" id=\"age\" min=\"18\" max=\"110\"></div>'+\n      START.slice(1).map(function(n){return '<div class=\"q\"><b>'+esc(Q[n].title)+'</b>'+radios(n)+'</div>';}).join('')+\n      '</div><div class=\"card\"><label class=\"opt\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start round 1</button></div><div class=\"err\"></div></div>';\n    document.getElementById('snd').onclick=function(){startNoise(true);};\n    document.getElementById('go').onclick=function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var age=document.getElementById('age').value.trim();\n      if(age&&(Number(age)<18||Number(age)>110))return err('Please enter an age between 18 and 110, or leave it empty.');\n      var b=this;b.disabled=true;var calls=[SPSite.answer('consent',true)];\n      if(age)calls.push(SPSite.answer('age',Number(age)));\n      START.slice(1).forEach(function(n){var r=app.querySelector('input[name='+n+']:checked');if(r)calls.push(SPSite.answer(n,r.value));});\n      Promise.all(calls).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}st.consented=true;save();nextRound();});\n    };\n  }\n\n  function nextRound(){\n    clearTimers();stopNoise();\n    var r=st.order.findIndex(function(l){return !st.done[l];});\n    if(r<0)return finish();\n    st.cur={level:st.order[r],round:r+1};save();\n    app.innerHTML='<p>Round '+(r+1)+' of 4</p><div class=\"card\"><h2>Arithmetic test</h2><p>Decide as quickly as you can whether each equation is correct. You have 20 seconds. Your score will be compared with people who have already done the test.</p><p>Keys: <b>T</b> = correct, <b>F</b> = wrong.</p><button class=\"btn\" id=\"go\">Start the test</button></div>';\n    document.getElementById('go').onclick=maths;\n  }\n\n  function maths(){\n    var eqs=makeEquations(), n=0, attempted=0, correct=0, t0=Date.now(), DUR=20000;\n    audio=startNoise(false);\n    function show(){\n      var e=eqs[n%eqs.length];\n      app.innerHTML='<div style=\"display:flex;justify-content:space-between\"><span>Round '+st.cur.round+' of 4 · arithmetic</span><span class=\"timer\" id=\"tm\"></span></div><div class=\"progress\"><i id=\"pb\"></i></div>'+\n        '<div class=\"card\"><div class=\"eq\">'+esc(e.text)+' = '+e.shown+'</div><div class=\"tf\"><button class=\"btn\" data-a=\"1\">Correct (T)</button><button class=\"btn\" data-a=\"0\">Wrong (F)</button></div><p style=\"margin-top:12px\">Answered: '+attempted+'</p></div>';\n      app.querySelectorAll('.tf button').forEach(function(b){b.onclick=function(){ans(b.getAttribute('data-a')==='1');};});\n      tick();\n    }\n    function ans(said){if(Date.now()-t0>=DUR)return;var e=eqs[n%eqs.length];attempted++;if(said===e.correct)correct++;n++;show();}\n    function tick(){var left=Math.max(0,DUR-(Date.now()-t0)),tm=document.getElementById('tm'),pb=document.getElementById('pb');if(tm)tm.textContent=Math.ceil(left/1000)+' s';if(pb)pb.style.width=(100*(DUR-left)/DUR)+'%';}\n    keyH=function(e){var k=(e.key||'').toLowerCase();if(k==='t')ans(true);else if(k==='f')ans(false);};document.addEventListener('keydown',keyH);\n    var iv=setInterval(tick,200);timers.push(iv);\n    timers.push(setTimeout(function(){clearInterval(iv);clearTimers();stopNoise();\n      var avg=Math.max(correct+3,Math.round(correct*1.35)+2); // always better than the participant (social-evaluative stress, as in the paper)\n      st.cur.maths={attempted:attempted,correct:correct,shown_average:avg};save();\n      app.innerHTML='<p>Round '+st.cur.round+' of 4</p><div class=\"card\"><h2>Time is up</h2><p>You answered <b>'+correct+'</b> of '+attempted+' correctly.</p><p style=\"color:var(--warn)\"><b>People who did this test before you scored '+avg+' on average.</b> Your score is below average.</p><button class=\"btn\" id=\"go\">Continue</button></div>';\n      document.getElementById('go').onclick=function(){panas('post_stress');};\n    },DUR));\n    show();\n  }\n\n  function panas(stage){\n    clearTimers();\n    var vals={}, head=stage==='post_stress'?'How do you feel right now?':'And how do you feel right now, after looking at the interiors?';\n    app.innerHTML='<p>Round '+st.cur.round+' of 4</p><div class=\"card\"><h2>'+head+'</h2><p>1 = not at all, 5 = very much.</p><table class=\"panas\">'+\n      ITEMS.map(function(it){return '<tr><td>'+it[1]+'</td><td><div class=\"dots\" data-i=\"'+it[0]+'\">'+[1,2,3,4,5].map(function(v){return '<button data-v=\"'+v+'\">'+v+'</button>';}).join('')+'</div></td></tr>';}).join('')+\n      '</table><div class=\"anchors\" style=\"margin-left:30%\"><span>not at all</span><span>very much</span></div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    app.querySelectorAll('.dots').forEach(function(row){row.querySelectorAll('button').forEach(function(b){b.onclick=function(){vals[row.getAttribute('data-i')]=Number(b.getAttribute('data-v'));row.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);});};});});\n    document.getElementById('go').onclick=function(){\n      if(ITEMS.some(function(it){return vals[it[0]]==null;}))return err('Please answer all eight words.');\n      st.cur[stage]=vals;save();\n      if(stage==='post_stress')exposure();else liking();\n    };\n  }\n\n  function exposure(){\n    var l=st.cur.level, k=0, SHOW=10000;\n    function img(){\n      if(k>=SPACES.length)return panas('post_exposure');\n      var f=files[SPACES[k]+'_'+l+'.jpg'], t0=Date.now();\n      app.innerHTML='<p>Round '+st.cur.round+' of 4 · picture '+(k+1)+' of 3 · just look at the space</p><div class=\"progress\"><i id=\"pb\"></i></div><div class=\"stage\"><img src=\"'+esc(f.url)+'\" alt=\"Rendered building interior\"></div>';\n      var iv=setInterval(function(){var pb=document.getElementById('pb');if(pb)pb.style.width=Math.min(100,100*(Date.now()-t0)/SHOW)+'%';},200);timers.push(iv);\n      timers.push(setTimeout(function(){clearInterval(iv);k++;img();},SHOW));\n    }\n    img();\n  }\n\n  function liking(){\n    var l=st.cur.level, shown=SPACES.map(function(s){return s+'_'+l+'.jpg';}), labels=Q.liking.rateLabels||['Very negative','Negative','Neutral','Positive','Very positive'];\n    app.innerHTML='<p>Round '+st.cur.round+' of 4</p><div class=\"card\"><h2>'+esc(Q.liking.title)+'</h2><p>Think of the three interiors you just saw.</p><div style=\"display:grid;grid-template-columns:repeat(3,1fr);gap:6px\">'+\n      shown.map(function(n){return '<img src=\"'+esc(files[n].url)+'\" alt=\"\" style=\"width:100%;border-radius:6px\">';}).join('')+'</div><div class=\"like\">'+\n      [-2,-1,0,1,2].map(function(v,i){return '<button data-v=\"'+v+'\"><b>'+(v>0?'+':'')+v+'</b><span>'+esc(labels[i])+'</span></button>';}).join('')+'</div><div class=\"err\"></div></div>';\n    app.querySelectorAll('.like button').forEach(function(b){b.onclick=function(){\n      var bs=app.querySelectorAll('.like button');bs.forEach(function(x){x.disabled=true;});\n      var v=Number(b.getAttribute('data-v'));st.cur.liking=v;\n      st.mood[l]={round:st.cur.round,post_stress:st.cur.post_stress,post_exposure:st.cur.post_exposure,maths:st.cur.maths};\n      Promise.all([SPSite.answer('liking',v,{key:l,shown:shown}),SPSite.answer('mood',st.mood),SPSite.answer('biophilic_scores',scores())]).then(function(rs){\n        var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){bs.forEach(function(x){x.disabled=false;});return err(bad.error);}\n        st.done[l]=true;st.cur=null;save();\n        if(st.order.every(function(x){return st.done[x];}))finish();else breakScreen();\n      });\n    };});\n  }\n\n  function breakScreen(){\n    app.innerHTML='<div class=\"card\"><h2>Round complete</h2><p>Take a breath. The next round starts with another arithmetic test.</p><button class=\"btn\" id=\"go\">Next round</button></div>';\n    document.getElementById('go').onclick=nextRound;\n  }\n\n  function sumOf(m,pair){return m[pair[0]]+(6-m[pair[1]]);}\n  function scores(){\n    var out={};\n    Object.keys(st.mood).forEach(function(l){var m=st.mood[l];if(!m||!m.post_stress||!m.post_exposure)return;out[l]={};\n      Object.keys(CONSTRUCTS).forEach(function(c){out[l][c]=sumOf(m.post_exposure,CONSTRUCTS[c])-sumOf(m.post_stress,CONSTRUCTS[c]);});});\n    return out;\n  }\n\n  function finish(){\n    clearTimers();stopNoise();\n    app.innerHTML='<h1>Almost done</h1><div class=\"card\"><div class=\"q\"><b>'+esc(Q.sound_check.title)+'</b>'+radios('sound_check')+'</div>'+\n      '<p style=\"margin-top:14px\"><b>Please note:</b> the comparison with “people who did the test before you” was not real. Everyone was told they scored below average, to make the task a little stressful. Your actual scores are not judged.</p>'+\n      '<div style=\"margin-top:12px\"><button class=\"btn\" id=\"fin\">Submit</button></div><div class=\"err\"></div></div>';\n    document.getElementById('fin').onclick=function(){\n      var b=this;b.disabled=true;var r=app.querySelector('input[name=sound_check]:checked');\n      (r?SPSite.answer('sound_check',r.value):Promise.resolve()).then(function(){\n        app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"st\">Submitting…</p><div class=\"err\"></div></div>';\n        SPSite.complete().then(function(res){\n          if(!ok(res)){err(res.error||'Some answers are missing.');var m=res.missing||[];setTimeout(function(){if(m.indexOf('consent')>=0){st.consented=false;save();intro();}else{st.done={};st.mood={};save();nextRound();}},1800);}\n          else{try{localStorage.removeItem('bio2025:state');}catch(e){}var s=document.getElementById('st');if(s)s.textContent='Your answers are saved.';}\n        });\n      });\n    };\n  }\n\n  SPSite.onReady(function(ctx){\n    ['consent','liking','mood','biophilic_scores','sound_check'].concat(START).forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('spaces')||[]).forEach(function(f){files[f.name]=f;});\n    try{st=JSON.parse(localStorage.getItem('bio2025:state'));}catch(e){st=null;}\n    if(!st||!Array.isArray(st.order)||st.order.length!==4)st={order:shuffle(LEVELS),done:{},mood:{},consented:false,cur:null};\n    var a=(ctx&&ctx.answers)||{};\n    if(a.mood&&typeof a.mood==='object'){Object.keys(a.mood).forEach(function(l){if(LEVELS.indexOf(l)>=0){st.mood[l]=a.mood[l];st.done[l]=true;}});}\n    if(a.consent===true)st.consented=true;\n    st.cur=null;save(); // an interrupted round restarts from its arithmetic test\n    if(st.consented)nextRound();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-26T16:28:50.351Z",
+   "mediaFolders": [
+    "spaces"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-26T16:28:50.351Z"
+  },
+  "description": "Four short rounds. Each round starts with a 20-second mental arithmetic test with unpleasant background noise. You then rate your mood, look at three rendered building interiors for 30 seconds, rate your mood again, and say how much you liked the designs. Rebuilt from Xing et al. (2025), PLOS ONE.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2025-xing-biophilic/spaces/classroom_level0__57ce48ac-c26a-471b-9b55-5b9e03b67c7f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-xing-biophilic/spaces/classroom_level0__57ce48ac-c26a-471b-9b55-5b9e03b67c7f.jpg",
+   "name": "classroom_level0.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2025-xing-biophilic/spaces/classroom_level0__57ce48ac-c26a-471b-9b55-5b9e03b67c7f.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 29376,
+   "uploaded_bytes": 29376,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-xing-biophilic/spaces/classroom_level1__c7e90172-a1e1-4574-8c95-f03772c4e6ea.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-xing-biophilic/spaces/classroom_level1__c7e90172-a1e1-4574-8c95-f03772c4e6ea.jpg",
+   "name": "classroom_level1.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2025-xing-biophilic/spaces/classroom_level1__c7e90172-a1e1-4574-8c95-f03772c4e6ea.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 30216,
+   "uploaded_bytes": 30216,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-xing-biophilic/spaces/classroom_level2__fcf578a0-7459-4ff5-ab40-b86440a8e4e3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-xing-biophilic/spaces/classroom_level2__fcf578a0-7459-4ff5-ab40-b86440a8e4e3.jpg",
+   "name": "classroom_level2.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2025-xing-biophilic/spaces/classroom_level2__fcf578a0-7459-4ff5-ab40-b86440a8e4e3.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 36754,
+   "uploaded_bytes": 36754,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-xing-biophilic/spaces/classroom_level3__f3a9ac19-0b9e-44ec-8cd9-1ad66005ffd8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-xing-biophilic/spaces/classroom_level3__f3a9ac19-0b9e-44ec-8cd9-1ad66005ffd8.jpg",
+   "name": "classroom_level3.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2025-xing-biophilic/spaces/classroom_level3__f3a9ac19-0b9e-44ec-8cd9-1ad66005ffd8.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 41178,
+   "uploaded_bytes": 41178,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-xing-biophilic/spaces/corridor_level0__85ec63b5-ef9d-438d-8682-3203cbf31126.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-xing-biophilic/spaces/corridor_level0__85ec63b5-ef9d-438d-8682-3203cbf31126.jpg",
+   "name": "corridor_level0.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2025-xing-biophilic/spaces/corridor_level0__85ec63b5-ef9d-438d-8682-3203cbf31126.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 30834,
+   "uploaded_bytes": 30834,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-xing-biophilic/spaces/corridor_level1__5746ea47-e01f-4ed9-9501-7be6f1bfbff6.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-xing-biophilic/spaces/corridor_level1__5746ea47-e01f-4ed9-9501-7be6f1bfbff6.jpg",
+   "name": "corridor_level1.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2025-xing-biophilic/spaces/corridor_level1__5746ea47-e01f-4ed9-9501-7be6f1bfbff6.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 27552,
+   "uploaded_bytes": 27552,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-xing-biophilic/spaces/corridor_level2__e654c625-8734-4e20-8da3-9b0b398ad93f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-xing-biophilic/spaces/corridor_level2__e654c625-8734-4e20-8da3-9b0b398ad93f.jpg",
+   "name": "corridor_level2.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2025-xing-biophilic/spaces/corridor_level2__e654c625-8734-4e20-8da3-9b0b398ad93f.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 32378,
+   "uploaded_bytes": 32378,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-xing-biophilic/spaces/corridor_level3__e1b18339-4c8d-4bdf-9c98-caea6110c3e5.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-xing-biophilic/spaces/corridor_level3__e1b18339-4c8d-4bdf-9c98-caea6110c3e5.jpg",
+   "name": "corridor_level3.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2025-xing-biophilic/spaces/corridor_level3__e1b18339-4c8d-4bdf-9c98-caea6110c3e5.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 46888,
+   "uploaded_bytes": 46888,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-xing-biophilic/spaces/staircase_level0__d7b0c641-2019-4b1b-a3ee-4aa7b9ca2657.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-xing-biophilic/spaces/staircase_level0__d7b0c641-2019-4b1b-a3ee-4aa7b9ca2657.jpg",
+   "name": "staircase_level0.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2025-xing-biophilic/spaces/staircase_level0__d7b0c641-2019-4b1b-a3ee-4aa7b9ca2657.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 26160,
+   "uploaded_bytes": 26160,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-xing-biophilic/spaces/staircase_level1__2868ee4d-cabb-45fc-aa6d-b0d8cf19ed73.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-xing-biophilic/spaces/staircase_level1__2868ee4d-cabb-45fc-aa6d-b0d8cf19ed73.jpg",
+   "name": "staircase_level1.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2025-xing-biophilic/spaces/staircase_level1__2868ee4d-cabb-45fc-aa6d-b0d8cf19ed73.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 33518,
+   "uploaded_bytes": 33518,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-xing-biophilic/spaces/staircase_level2__1965c292-c892-4d32-aff9-06ca09943212.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-xing-biophilic/spaces/staircase_level2__1965c292-c892-4d32-aff9-06ca09943212.jpg",
+   "name": "staircase_level2.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2025-xing-biophilic/spaces/staircase_level2__1965c292-c892-4d32-aff9-06ca09943212.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 33712,
+   "uploaded_bytes": 33712,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-xing-biophilic/spaces/staircase_level3__8dc48856-8b2e-4290-afbc-3fa4b36fef54.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-xing-biophilic/spaces/staircase_level3__8dc48856-8b2e-4290-afbc-3fa4b36fef54.jpg",
+   "name": "staircase_level3.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2025-xing-biophilic/spaces/staircase_level3__8dc48856-8b2e-4290-afbc-3fa4b36fef54.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 46315,
+   "uploaded_bytes": 46315,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Exploring biophilic building designs to promote wellbeing and stimulate inspiration",
+  "authors": [
+   "Yangang Xing",
+   "Nikki Stevenson",
+   "Carolyn Thomas",
+   "Alex Hardy",
+   "Andrew Knight",
+   "Nadja Heym",
+   "Alex Sumich"
+  ],
+  "year": 2025,
+  "venue": "PLOS ONE",
+  "doi": "10.1371/journal.pone.0317372",
+  "url": "https://doi.org/10.1371/journal.pone.0317372"
+ }
+}

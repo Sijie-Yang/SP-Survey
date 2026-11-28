@@ -1,0 +1,735 @@
+{
+ "id": "2022-kawshalya-visual",
+ "name": "Visual Complexity, Safety and Preference of Streets",
+ "description": "Is a busier street scene safer or scarier? Kawshalya, Weerasinghe & Chandrasekara (2022, PLOS ONE) took 48 Google Street View images within 1 km of Colpetty Junction in Colombo, Sri Lanka, and measured their visual complexity in two ways: a Shannon Diversity Index (SDI) of ten scene components (building façade, vegetation, sidewalk and street furniture, road, advertisements, sky, vehicles, pedestrians, open space, water) and a box-counting fractal dimension. 78 respondents from design-related fields rated every image on a 1–7 scale for perceived safety, preference (comfort) and perceived complexity, imagining they stood at the spot looking along the street. Safety and preference followed an inverted U with SDI: medium-complexity streets were seen as safest and most preferred, and both very simple and very complex streets scored low. SDI and fractal dimension both correlated with perceived complexity. Analysis as in the paper: group images into low / medium / high levels of each component (present / absent for advertisements, pedestrians, open space and water), then Kruskal–Wallis and Mann–Whitney tests, plus the SDI–rating curve. The paper's data are open (S1 Data, XLSX): every respondent's 144 ratings and every image's component percentages, keyed SVI_1 … SVI_48. This template keys its images the same way (svi_01.jpg = SVI_1), so new ratings can be set beside the original ones image by image. This is a method replication: the paper did not publish its images. Differences from the original study: (1) the images are new Google Street View captures (2022, © Google) taken at the 40 points we could read from the paper's map (Fig 1); SVI_03 and SVI_04 share one map point and are shown as the forward and backward view; SVI_05, 10, 14, 27, 31, 32, 41 and 43 are missing (not on the map, or no Street View nearby); the viewing direction is the direction of travel, so views differ from the originals and the paper's component percentages do not apply to these images; (2) the anchors of the 1–7 scales are our wording; the paper gives none; (3) the image order is randomised per participant; the paper does not report its order; (4) the paper recruited design professionals and students by snowball sampling; the template adds an optional question on design background instead of restricting the sample; (5) the answer options for age, residence and street use follow the paper's data file, and the gender question adds \"Other / prefer not to say\".",
+ "author": "Kawshalya, Weerasinghe & Chandrasekara",
+ "year": "2022",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "visual complexity",
+  "Shannon diversity",
+  "Global South",
+  "open data",
+  "method replication",
+  "source:paper",
+  "modality:street_view",
+  "task:multi_rating",
+  "task:questionnaire",
+  "concept:complexity",
+  "concept:safety",
+  "concept:preference",
+  "concept:comfort",
+  "participants:experts",
+  "sample:lt100",
+  "country:Sri Lanka",
+  "city:Colombo"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1371/journal.pone.0272074",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-26T18:09:38.899+00:00",
+ "updatedAt": "2026-11-26T18:09:48.556+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     },
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "Less than 18 years",
+        "value": "under_18"
+       },
+       {
+        "text": "19–28 years",
+        "value": "19_28"
+       },
+       {
+        "text": "29–38 years",
+        "value": "29_38"
+       },
+       {
+        "text": "39–48 years",
+        "value": "39_48"
+       },
+       {
+        "text": "More than 48 years",
+        "value": "over_48"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "residence",
+      "type": "radiogroup",
+      "title": "Where do you live?",
+      "choices": [
+       {
+        "text": "In an urban area",
+        "value": "urban"
+       },
+       {
+        "text": "In a suburb",
+        "value": "suburb"
+       },
+       {
+        "text": "In a rural area",
+        "value": "rural"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "street_use",
+      "type": "radiogroup",
+      "title": "How often do you use urban streets?",
+      "choices": [
+       {
+        "text": "Always",
+        "value": "always"
+       },
+       {
+        "text": "Often",
+        "value": "often"
+       },
+       {
+        "text": "Sometimes",
+        "value": "sometimes"
+       },
+       {
+        "text": "Rarely",
+        "value": "rarely"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "design_background",
+      "type": "radiogroup",
+      "title": "Do you study or work in a design-related field (architecture, landscape architecture, urban planning, urban design)?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "ratings",
+    "elements": [
+     {
+      "name": "perceived_safety",
+      "type": "imagerating",
+      "title": "How safe would you feel here?",
+      "choices": [],
+      "rateMax": 7,
+      "rateMin": 1,
+      "imageCount": 1,
+      "isRequired": true,
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Very safe",
+      "minRateDescription": "Not safe at all",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "preference",
+      "type": "imagerating",
+      "title": "How much do you like this street scene?",
+      "choices": [],
+      "rateMax": 7,
+      "rateMin": 1,
+      "imageCount": 1,
+      "isRequired": true,
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Very much",
+      "minRateDescription": "Not at all",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "perceived_complexity",
+      "type": "imagerating",
+      "title": "How visually complex is this street scene?",
+      "choices": [],
+      "rateMax": 7,
+      "rateMin": 1,
+      "imageCount": 1,
+      "isRequired": true,
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Very complex",
+      "minRateDescription": "Very simple",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   }
+  ],
+  "title": "Visual Complexity, Safety and Preference of Streets",
+  "locale": "en",
+  "spSite": {
+   "id": "site-493f7177edf9c471",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Visual Complexity, Safety and Preference of Streets</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Visual Complexity, Safety and Preference of Streets\",\n    \"description\": \"Rate 40 street views from central Colombo (Sri Lanka) on perceived safety, preference and perceived complexity, each from 1 to 7. Method rebuilt from Kawshalya, Weerasinghe & Chandrasekara (2022), PLOS ONE.\",\n    \"locale\": \"en\",\n    \"mediaFolders\": [\"colombo\"],\n    \"pages\": [\n      { \"name\": \"about_you\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\", \"isRequired\": true, \"labelTrue\": \"I agree\", \"labelFalse\": \"I do not agree\" },\n        { \"type\": \"radiogroup\", \"name\": \"age_group\", \"title\": \"Age\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"under_18\", \"text\": \"Less than 18 years\" }, { \"value\": \"19_28\", \"text\": \"19–28 years\" }, { \"value\": \"29_38\", \"text\": \"29–38 years\" }, { \"value\": \"39_48\", \"text\": \"39–48 years\" }, { \"value\": \"over_48\", \"text\": \"More than 48 years\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"gender\", \"title\": \"Gender\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"male\", \"text\": \"Male\" }, { \"value\": \"female\", \"text\": \"Female\" }, { \"value\": \"other\", \"text\": \"Other / prefer not to say\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"residence\", \"title\": \"Where do you live?\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"urban\", \"text\": \"In an urban area\" }, { \"value\": \"suburb\", \"text\": \"In a suburb\" }, { \"value\": \"rural\", \"text\": \"In a rural area\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"street_use\", \"title\": \"How often do you use urban streets?\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"always\", \"text\": \"Always\" }, { \"value\": \"often\", \"text\": \"Often\" }, { \"value\": \"sometimes\", \"text\": \"Sometimes\" }, { \"value\": \"rarely\", \"text\": \"Rarely\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"design_background\", \"title\": \"Do you study or work in a design-related field (architecture, landscape architecture, urban planning, urban design)?\", \"choices\": [\n          { \"value\": \"yes\", \"text\": \"Yes\" }, { \"value\": \"no\", \"text\": \"No\" } ] }\n      ]},\n      { \"name\": \"ratings\", \"elements\": [\n        { \"type\": \"imagerating\", \"name\": \"perceived_safety\", \"title\": \"How safe would you feel here?\", \"imageCount\": 1, \"rateMin\": 1, \"rateMax\": 7, \"minRateDescription\": \"Not safe at all\", \"maxRateDescription\": \"Very safe\", \"isRequired\": true },\n        { \"type\": \"imagerating\", \"name\": \"preference\", \"title\": \"How much do you like this street scene?\", \"imageCount\": 1, \"rateMin\": 1, \"rateMax\": 7, \"minRateDescription\": \"Not at all\", \"maxRateDescription\": \"Very much\", \"isRequired\": true },\n        { \"type\": \"imagerating\", \"name\": \"perceived_complexity\", \"title\": \"How visually complex is this street scene?\", \"imageCount\": 1, \"rateMin\": 1, \"rateMax\": 7, \"minRateDescription\": \"Very simple\", \"maxRateDescription\": \"Very complex\", \"isRequired\": true }\n      ]}\n    ]\n  }\n}\n</script>\n<style>\n:root{--bg:#f4f3ef;--card:#fff;--ink:#1d1f22;--muted:#5b6068;--accent:#9a4b1f;--accent-ink:#fff;--line:#dcd8cf;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:860px;margin:0 auto;padding:24px 16px 40px}\nh1{font-size:1.45rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:8px 0 14px}.progress>i{display:block;height:100%;background:var(--accent)}\n.stage{background:#ddd;border-radius:12px;overflow:hidden;min-height:200px}.stage img{width:100%;height:auto;display:block}\n.row{margin-top:14px}.row b{display:block;margin-bottom:6px}\n.scale{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}\n.scale button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:10px 0;font:inherit;font-weight:700;cursor:pointer}\n.scale button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}\n.ends{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-top:3px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.q{margin-top:16px}.q>b{display:block;margin-bottom:4px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:860px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Google Street View (© Google), 2022, taken near the locations mapped in Fig 1 of Kawshalya, Weerasinghe &amp; Chandrasekara (2022), PLOS ONE 17(8): e0272074.</footer>\n<script>\n(function(){\n  var app=document.getElementById('app'), Q={}, files=[], done={}, i=0;\n  var ABOUT=['age_group','gender','residence','street_use','design_background'], DIMS=['perceived_safety','preference','perceived_complexity'];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var x=a[k];a[k]=a[j];a[j]=x;}return a;}\n  function key(f){return f.name.replace(/\\.[^.]+$/,'').replace(/^svi_/,'SVI_');}\n  function setup(){\n    var all=SPSite.getMedia('colombo')||[], by={};all.forEach(function(f){by[f.name]=f;});\n    var saved=null;try{saved=JSON.parse(localStorage.getItem('colombo2022:order'));}catch(e){}\n    if(saved&&saved.length===all.length&&saved.every(function(n){return by[n];}))files=saved.map(function(n){return by[n];});\n    else{files=shuffle(all);try{localStorage.setItem('colombo2022:order',JSON.stringify(files.map(function(f){return f.name;})));}catch(e){}}\n  }\n  function radios(n){return (Q[n].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');}\n  function intro(){\n    if(!files.length){app.innerHTML='<h1>No images yet</h1><p>Add street images to the folder “colombo”.</p>';return;}\n    app.innerHTML='<h1>How do these streets feel?</h1><p>You will see '+files.length+' street views from central Colombo. For each one, imagine you are standing at that spot and looking along the street, not specifically as a pedestrian or a driver. Rate how safe you would feel, how much you like the scene, and how visually complex it is, each from 1 to 7. About 15 minutes.</p>'+\n      '<div class=\"card\">'+ABOUT.map(function(n){return '<div class=\"q\"><b>'+esc(Q[n].title)+'</b>'+radios(n)+'</div>';}).join('')+'</div>'+\n      '<div class=\"card\"><label class=\"opt\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var vals={},miss=ABOUT.filter(function(n){var r=app.querySelector('input[name='+n+']:checked');if(r)vals[n]=r.value;return Q[n].required!==false&&n!=='design_background'&&!r;});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q[n].title;}).join('; '));\n      var b=this;b.disabled=true;var calls=[SPSite.answer('consent',true)];Object.keys(vals).forEach(function(n){calls.push(SPSite.answer(n,vals[n]));});\n      Promise.all(calls).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}i=0;trial();});\n    };\n  }\n  function trial(){\n    while(i<files.length&&done[files[i].name])i++;\n    if(i>=files.length)return finish();\n    var f=files[i], vals={};\n    app.innerHTML='<p>Street '+(i+1)+' of '+files.length+'</p><div class=\"progress\"><i style=\"width:'+(100*i/files.length)+'%\"></i></div><div class=\"stage\"><img src=\"'+esc(f.url)+'\" alt=\"Street view\"></div>'+\n      DIMS.map(function(d){var q=Q[d],b='';for(var v=1;v<=7;v++)b+='<button data-d=\"'+d+'\" data-v=\"'+v+'\">'+v+'</button>';return '<div class=\"row\"><b>'+esc(q.title)+'</b><div class=\"scale\">'+b+'</div><div class=\"ends\"><span>1 · '+esc(q.minLabel||q.minRateDescription)+'</span><span>7 · '+esc(q.maxLabel||q.maxRateDescription)+'</span></div></div>';}).join('')+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"nx\">Next</button></div><div class=\"err\"></div>';\n    app.querySelectorAll('.scale button').forEach(function(b){b.onclick=function(){err('');var d=b.getAttribute('data-d');vals[d]=Number(b.getAttribute('data-v'));app.querySelectorAll('.scale button[data-d='+d+']').forEach(function(x){x.classList.toggle('on',x===b);});};});\n    document.getElementById('nx').onclick=function(){\n      if(DIMS.some(function(d){return vals[d]==null;}))return err('Please give all three ratings.');\n      var b=this;b.disabled=true;\n      Promise.all(DIMS.map(function(d){return SPSite.answer(d,vals[d],{key:key(f),shown:[f.name]});})).then(function(rs){\n        var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}\n        done[f.name]=true;i++;window.scrollTo(0,0);trial();});\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"st\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){if(m.some(function(n){return DIMS.indexOf(n)<0;}))intro();else{done={};i=0;trial();}},1800);}else{var s=document.getElementById('st');if(s)s.textContent='Your ratings are saved.';}});\n  }\n  SPSite.onReady(function(ctx){\n    ['consent'].concat(ABOUT,DIMS).forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    setup();\n    var a=(ctx&&ctx.answers)||{}, cnt={};\n    DIMS.forEach(function(d){var p=a[d];(p&&Array.isArray(p.trials)?p.trials:[]).forEach(function(x){if(x&&x.key!=null&&x.value!=null)cnt[x.key]=(cnt[x.key]||0)+1;});});\n    files.forEach(function(f){if(cnt[key(f)]===DIMS.length)done[f.name]=true;});\n    if(a.consent===true)trial();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-26T18:08:58.757Z",
+   "mediaFolders": [
+    "colombo"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-26T18:08:58.757Z"
+  },
+  "description": "Rate 40 street views from central Colombo (Sri Lanka) on perceived safety, preference and perceived complexity, each from 1 to 7. Method rebuilt from Kawshalya, Weerasinghe & Chandrasekara (2022), PLOS ONE.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_01__e72b1598-ae4b-4d86-ad37-6a45895422d9.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_01__e72b1598-ae4b-4d86-ad37-6a45895422d9.jpg",
+   "name": "svi_01.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_01__e72b1598-ae4b-4d86-ad37-6a45895422d9.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 140104,
+   "uploaded_bytes": 140104,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_02__09409441-6e61-447d-b748-2b6838080be7.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_02__09409441-6e61-447d-b748-2b6838080be7.jpg",
+   "name": "svi_02.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_02__09409441-6e61-447d-b748-2b6838080be7.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 142688,
+   "uploaded_bytes": 142688,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_03__06fbed6a-81ea-403e-9a37-92fa347f1871.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_03__06fbed6a-81ea-403e-9a37-92fa347f1871.jpg",
+   "name": "svi_03.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_03__06fbed6a-81ea-403e-9a37-92fa347f1871.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 134413,
+   "uploaded_bytes": 134413,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_04__102256cb-21be-4abe-8cae-62a90fe797ad.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_04__102256cb-21be-4abe-8cae-62a90fe797ad.jpg",
+   "name": "svi_04.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_04__102256cb-21be-4abe-8cae-62a90fe797ad.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 132045,
+   "uploaded_bytes": 132045,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_06__69c591d8-a25a-4fda-aac8-125ccec84057.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_06__69c591d8-a25a-4fda-aac8-125ccec84057.jpg",
+   "name": "svi_06.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_06__69c591d8-a25a-4fda-aac8-125ccec84057.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 147675,
+   "uploaded_bytes": 147675,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_07__001f0ed7-aea4-4d1d-9a42-66f70f49e841.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_07__001f0ed7-aea4-4d1d-9a42-66f70f49e841.jpg",
+   "name": "svi_07.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_07__001f0ed7-aea4-4d1d-9a42-66f70f49e841.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 205288,
+   "uploaded_bytes": 205288,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_08__de6385f4-f81d-439f-9596-522e580ad858.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_08__de6385f4-f81d-439f-9596-522e580ad858.jpg",
+   "name": "svi_08.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_08__de6385f4-f81d-439f-9596-522e580ad858.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 150343,
+   "uploaded_bytes": 150343,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_09__72ec5499-0715-43f3-b1c9-96927db7caf6.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_09__72ec5499-0715-43f3-b1c9-96927db7caf6.jpg",
+   "name": "svi_09.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_09__72ec5499-0715-43f3-b1c9-96927db7caf6.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 146459,
+   "uploaded_bytes": 146459,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_11__8307150f-d81e-4162-863e-752a5f76a86b.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_11__8307150f-d81e-4162-863e-752a5f76a86b.jpg",
+   "name": "svi_11.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_11__8307150f-d81e-4162-863e-752a5f76a86b.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 145185,
+   "uploaded_bytes": 145185,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_12__eaa966c0-bf21-407f-9e1d-2f3b8a33bbd3.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_12__eaa966c0-bf21-407f-9e1d-2f3b8a33bbd3.jpg",
+   "name": "svi_12.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_12__eaa966c0-bf21-407f-9e1d-2f3b8a33bbd3.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 112052,
+   "uploaded_bytes": 112052,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_13__6d8abe3b-5c13-4c5e-b711-7ef6b4d99adc.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_13__6d8abe3b-5c13-4c5e-b711-7ef6b4d99adc.jpg",
+   "name": "svi_13.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_13__6d8abe3b-5c13-4c5e-b711-7ef6b4d99adc.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 123858,
+   "uploaded_bytes": 123858,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_15__8d48afd2-5cc4-44bf-aaf1-081e5c45000b.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_15__8d48afd2-5cc4-44bf-aaf1-081e5c45000b.jpg",
+   "name": "svi_15.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_15__8d48afd2-5cc4-44bf-aaf1-081e5c45000b.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 140746,
+   "uploaded_bytes": 140746,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_16__8901c011-e908-4a5d-bb5b-80cbfd48b014.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_16__8901c011-e908-4a5d-bb5b-80cbfd48b014.jpg",
+   "name": "svi_16.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_16__8901c011-e908-4a5d-bb5b-80cbfd48b014.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 122526,
+   "uploaded_bytes": 122526,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_17__64f7927e-b919-48f1-b0ad-d1390ea41071.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_17__64f7927e-b919-48f1-b0ad-d1390ea41071.jpg",
+   "name": "svi_17.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_17__64f7927e-b919-48f1-b0ad-d1390ea41071.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 128475,
+   "uploaded_bytes": 128475,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_18__ad5e4ae2-677d-40c8-9f6f-0a8afb9f10a3.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_18__ad5e4ae2-677d-40c8-9f6f-0a8afb9f10a3.jpg",
+   "name": "svi_18.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_18__ad5e4ae2-677d-40c8-9f6f-0a8afb9f10a3.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 144412,
+   "uploaded_bytes": 144412,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_19__b3750ffa-d94d-4237-8cc0-cdddaaa82bd7.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_19__b3750ffa-d94d-4237-8cc0-cdddaaa82bd7.jpg",
+   "name": "svi_19.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_19__b3750ffa-d94d-4237-8cc0-cdddaaa82bd7.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 212517,
+   "uploaded_bytes": 212517,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_20__fc1ea343-5802-4e28-98c0-cbb0c32e96ab.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_20__fc1ea343-5802-4e28-98c0-cbb0c32e96ab.jpg",
+   "name": "svi_20.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_20__fc1ea343-5802-4e28-98c0-cbb0c32e96ab.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 187644,
+   "uploaded_bytes": 187644,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_21__0946d377-43ff-4265-b209-bd5e9e5060b6.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_21__0946d377-43ff-4265-b209-bd5e9e5060b6.jpg",
+   "name": "svi_21.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_21__0946d377-43ff-4265-b209-bd5e9e5060b6.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 154634,
+   "uploaded_bytes": 154634,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_22__31a2b25a-8dac-43e4-8260-9046d3ca6ec5.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_22__31a2b25a-8dac-43e4-8260-9046d3ca6ec5.jpg",
+   "name": "svi_22.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_22__31a2b25a-8dac-43e4-8260-9046d3ca6ec5.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 161551,
+   "uploaded_bytes": 161551,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_23__8a6ec246-ed36-4ac8-9a2c-7e1c05e72eb6.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_23__8a6ec246-ed36-4ac8-9a2c-7e1c05e72eb6.jpg",
+   "name": "svi_23.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_23__8a6ec246-ed36-4ac8-9a2c-7e1c05e72eb6.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 139761,
+   "uploaded_bytes": 139761,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_24__347e374e-1ede-4d6c-9d27-a55f22b75edf.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_24__347e374e-1ede-4d6c-9d27-a55f22b75edf.jpg",
+   "name": "svi_24.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_24__347e374e-1ede-4d6c-9d27-a55f22b75edf.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 157465,
+   "uploaded_bytes": 157465,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_25__c23f5d33-378b-44b2-a064-566645c4b140.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_25__c23f5d33-378b-44b2-a064-566645c4b140.jpg",
+   "name": "svi_25.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_25__c23f5d33-378b-44b2-a064-566645c4b140.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 121337,
+   "uploaded_bytes": 121337,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_26__1076353f-39b8-4e64-b27a-89f7fc2a4972.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_26__1076353f-39b8-4e64-b27a-89f7fc2a4972.jpg",
+   "name": "svi_26.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_26__1076353f-39b8-4e64-b27a-89f7fc2a4972.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 141876,
+   "uploaded_bytes": 141876,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_28__e9e2d9ec-e6ce-4e6e-97df-8d9ee5fa52b8.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_28__e9e2d9ec-e6ce-4e6e-97df-8d9ee5fa52b8.jpg",
+   "name": "svi_28.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_28__e9e2d9ec-e6ce-4e6e-97df-8d9ee5fa52b8.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 128515,
+   "uploaded_bytes": 128515,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_29__9ef85115-88b6-426c-8e8b-cea052710578.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_29__9ef85115-88b6-426c-8e8b-cea052710578.jpg",
+   "name": "svi_29.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_29__9ef85115-88b6-426c-8e8b-cea052710578.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 110030,
+   "uploaded_bytes": 110030,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_30__78285b18-d52c-4913-bb7e-05ec6611aa0d.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_30__78285b18-d52c-4913-bb7e-05ec6611aa0d.jpg",
+   "name": "svi_30.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_30__78285b18-d52c-4913-bb7e-05ec6611aa0d.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 121802,
+   "uploaded_bytes": 121802,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_33__2ad78d18-30ee-4bd7-920a-ec5cb808909a.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_33__2ad78d18-30ee-4bd7-920a-ec5cb808909a.jpg",
+   "name": "svi_33.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_33__2ad78d18-30ee-4bd7-920a-ec5cb808909a.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 170077,
+   "uploaded_bytes": 170077,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_34__2d6767a4-505b-4ae2-93a1-d70103e68dc8.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_34__2d6767a4-505b-4ae2-93a1-d70103e68dc8.jpg",
+   "name": "svi_34.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_34__2d6767a4-505b-4ae2-93a1-d70103e68dc8.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 110807,
+   "uploaded_bytes": 110807,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_35__e1ec655e-d189-47fe-aa1d-f4ca773956cb.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_35__e1ec655e-d189-47fe-aa1d-f4ca773956cb.jpg",
+   "name": "svi_35.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_35__e1ec655e-d189-47fe-aa1d-f4ca773956cb.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 168841,
+   "uploaded_bytes": 168841,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_36__d8045422-e15d-48e9-85bb-209a67fe5da0.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_36__d8045422-e15d-48e9-85bb-209a67fe5da0.jpg",
+   "name": "svi_36.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_36__d8045422-e15d-48e9-85bb-209a67fe5da0.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 138097,
+   "uploaded_bytes": 138097,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_37__d34b9d2e-29db-4530-a0c6-69f2c0a0df93.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_37__d34b9d2e-29db-4530-a0c6-69f2c0a0df93.jpg",
+   "name": "svi_37.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_37__d34b9d2e-29db-4530-a0c6-69f2c0a0df93.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 99079,
+   "uploaded_bytes": 99079,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_38__d3119e6c-0b8a-4b55-9efd-f8ac46d34924.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_38__d3119e6c-0b8a-4b55-9efd-f8ac46d34924.jpg",
+   "name": "svi_38.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_38__d3119e6c-0b8a-4b55-9efd-f8ac46d34924.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 171999,
+   "uploaded_bytes": 171999,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_39__7b0b6a73-edf6-48ec-b9a2-9201cdc5ca55.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_39__7b0b6a73-edf6-48ec-b9a2-9201cdc5ca55.jpg",
+   "name": "svi_39.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_39__7b0b6a73-edf6-48ec-b9a2-9201cdc5ca55.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 159258,
+   "uploaded_bytes": 159258,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_40__5135fbe9-dcac-42b7-a513-e8aa51c31468.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_40__5135fbe9-dcac-42b7-a513-e8aa51c31468.jpg",
+   "name": "svi_40.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_40__5135fbe9-dcac-42b7-a513-e8aa51c31468.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 132806,
+   "uploaded_bytes": 132806,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_42__9d5d5b2c-5658-4ac3-a3c8-12a3cbb019c1.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_42__9d5d5b2c-5658-4ac3-a3c8-12a3cbb019c1.jpg",
+   "name": "svi_42.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_42__9d5d5b2c-5658-4ac3-a3c8-12a3cbb019c1.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 156191,
+   "uploaded_bytes": 156191,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_44__a787f3e9-12b3-49af-bc90-5c1c26a89dfd.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_44__a787f3e9-12b3-49af-bc90-5c1c26a89dfd.jpg",
+   "name": "svi_44.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_44__a787f3e9-12b3-49af-bc90-5c1c26a89dfd.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 117318,
+   "uploaded_bytes": 117318,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_45__9ebd7736-0da4-4930-b372-11f298c996a5.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_45__9ebd7736-0da4-4930-b372-11f298c996a5.jpg",
+   "name": "svi_45.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_45__9ebd7736-0da4-4930-b372-11f298c996a5.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 156776,
+   "uploaded_bytes": 156776,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_46__15e30222-bb54-4f6e-8cc5-76f1b1f26a25.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_46__15e30222-bb54-4f6e-8cc5-76f1b1f26a25.jpg",
+   "name": "svi_46.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_46__15e30222-bb54-4f6e-8cc5-76f1b1f26a25.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 153775,
+   "uploaded_bytes": 153775,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_47__ee0c44a0-7f51-4c6d-87f0-1a9040acbc01.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_47__ee0c44a0-7f51-4c6d-87f0-1a9040acbc01.jpg",
+   "name": "svi_47.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_47__ee0c44a0-7f51-4c6d-87f0-1a9040acbc01.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 128640,
+   "uploaded_bytes": 128640,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-kawshalya-visual/colombo/svi_48__8d0ebd34-f9ca-438e-b700-c59dd9829742.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-kawshalya-visual/colombo/svi_48__8d0ebd34-f9ca-438e-b700-c59dd9829742.jpg",
+   "name": "svi_48.jpg",
+   "type": "image",
+   "folder": "colombo",
+   "media_id": "templates/2022-kawshalya-visual/colombo/svi_48__8d0ebd34-f9ca-438e-b700-c59dd9829742.jpg",
+   "logicalFolder": "colombo",
+   "original_bytes": 160971,
+   "uploaded_bytes": 160971,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "The impact of visual complexity on perceived safety and comfort of the users: A study on urban streetscape of Sri Lanka",
+  "authors": [
+   "Kawshalya L.W.G.",
+   "Weerasinghe U.G.D.",
+   "Chandrasekara D.P."
+  ],
+  "year": 2022,
+  "venue": "PLoS ONE",
+  "doi": "10.1371/journal.pone.0272074",
+  "url": "https://doi.org/10.1371/journal.pone.0272074"
+ }
+}

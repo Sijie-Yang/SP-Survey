@@ -1,0 +1,952 @@
+{
+ "id": "2025-zhang-english",
+ "name": "English Heritage Gardens: SAM and Preference",
+ "description": "Faithful replication with the original scenes: participants first answer the paper's background questionnaire, then see 10 English heritage gardens and parks from the National Heritage List for England (Nymans, Saltram, Killerton, Tyntesfield, Attingham Park, Sissinghurst Castle, Scotney Castle, Prior Park and Lyme Park) in random order. Each scene is shown as the paper's three consecutive Google Street View frames from a clockwise spin (8 s each, 24 s in total, like the paper's 24 s clips); participants then rate it with the Self-Assessment Manikin for pleasure (valence) and arousal, 1-9, and give an aesthetic preference rating from 1 (Strongly Dislike) to 10 (Strongly Like). Rebuilt from Zhang, Han & Shen (2025), Real-Time Sensor-Based and Self-Reported Emotional Perceptions of Urban Green-Blue Spaces: Exploring Gender Differences with FER and SAM, Sensors 25(3): 748, with the scene frames from its Figure S2, the manikin pictures and SAM wording from its Questionnaire S3 and the background items from Questionnaire S1 (supplementary materials, CC BY 4.0; the frames are Google Street View imagery). Scene ids are the paper's labels C1-C19 (odd numbers; _1 to _3 = frames). Analysis as in the paper: mean valence, arousal and preference per scene by gender (t-tests) and their correlation with the scenes' visual variables (green view index, trees, grass, water, sky, buildings); the paper reports women felt more pleasant and preferred high-arousal scenes, while men preferred scenes with peak valence. Differences from the original study: (1) the paper's self-report group saw static GSV panoramas; here each scene is the three frames shown one after another; (2) the Japanese auxiliary scenes (used to break up the British ones) and the facial-expression-recognition experiment are not included; (3) the name item of the background questionnaire is left out; (4) the wording of the arousal anchors follows the paper's Questionnaire S3 but refers to 'this scene' rather than 'the panoramic video'.",
+ "author": "Zhang, Han & Shen",
+ "year": "2025",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "garden",
+  "green-blue-space",
+  "SAM",
+  "gender",
+  "source:paper",
+  "modality:scene_photo",
+  "task:multi_rating",
+  "concept:emotion",
+  "concept:preference",
+  "concept:greenery",
+  "concept:aesthetics",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:United Kingdom"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/s25030748",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T20:44:55.754+00:00",
+ "updatedAt": "2026-11-27T20:45:08.309+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "background",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Your Gender:",
+      "choices": [
+       {
+        "text": "Male",
+        "value": "Male"
+       },
+       {
+        "text": "Female",
+        "value": "Female"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Your Age Group:",
+      "choices": [
+       {
+        "text": "15 years and below",
+        "value": "15 years and below"
+       },
+       {
+        "text": "16-20 years",
+        "value": "16-20 years"
+       },
+       {
+        "text": "21-25 years",
+        "value": "21-25 years"
+       },
+       {
+        "text": "26-30 years",
+        "value": "26-30 years"
+       },
+       {
+        "text": "31-35 years",
+        "value": "31-35 years"
+       },
+       {
+        "text": "36-40 years",
+        "value": "36-40 years"
+       },
+       {
+        "text": "41-45 years",
+        "value": "41-45 years"
+       },
+       {
+        "text": "46-50 years",
+        "value": "46-50 years"
+       },
+       {
+        "text": "51-55 years",
+        "value": "51-55 years"
+       },
+       {
+        "text": "56-60 years",
+        "value": "56-60 years"
+       },
+       {
+        "text": "61-65 years",
+        "value": "61-65 years"
+       },
+       {
+        "text": "66-70 years",
+        "value": "66-70 years"
+       },
+       {
+        "text": "Above 70 years",
+        "value": "Above 70 years"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "Your Education Level:",
+      "choices": [
+       {
+        "text": "Junior High School and below",
+        "value": "Junior High School and below"
+       },
+       {
+        "text": "High School/Technical Secondary School",
+        "value": "High School/Technical Secondary School"
+       },
+       {
+        "text": "Associate Degree",
+        "value": "Associate Degree"
+       },
+       {
+        "text": "Bachelor's Degree",
+        "value": "Bachelor's Degree"
+       },
+       {
+        "text": "Postgraduate and above",
+        "value": "Postgraduate and above"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "design_background",
+      "type": "radiogroup",
+      "title": "Do you have a background in architecture, urban planning, landscape architecture, or related fields?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "Yes"
+       },
+       {
+        "text": "No",
+        "value": "No"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "marital_status",
+      "type": "radiogroup",
+      "title": "Your Marital Status:",
+      "choices": [
+       {
+        "text": "Single",
+        "value": "Single"
+       },
+       {
+        "text": "Married",
+        "value": "Married"
+       },
+       {
+        "text": "Divorced",
+        "value": "Divorced"
+       },
+       {
+        "text": "Widowed",
+        "value": "Widowed"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "been_uk",
+      "type": "radiogroup",
+      "title": "Have you been to the UK?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "Yes"
+       },
+       {
+        "text": "No",
+        "value": "No"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "knowledge_uk",
+      "rows": [
+       {
+        "text": "Perception of UK Garden Culture",
+        "value": "uk1"
+       },
+       {
+        "text": "Perception of UK Gardening Style",
+        "value": "uk2"
+       },
+       {
+        "text": "Perception of UK Horticulture",
+        "value": "uk3"
+       },
+       {
+        "text": "Perception of UK Architecture Style",
+        "value": "uk4"
+       },
+       {
+        "text": "Overall Country Impression of the UK",
+        "value": "uk5"
+       }
+      ],
+      "type": "matrix",
+      "title": "Please rate your level of knowledge in the following areas on a scale from 1 to 10, where 1 indicates \"Not at all knowledgeable\" and 10 indicates \"Extremely knowledgeable\":",
+      "columns": [
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       },
+       {
+        "text": "6",
+        "value": 6
+       },
+       {
+        "text": "7",
+        "value": 7
+       },
+       {
+        "text": "8",
+        "value": 8
+       },
+       {
+        "text": "9",
+        "value": 9
+       },
+       {
+        "text": "10",
+        "value": 10
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "been_japan",
+      "type": "radiogroup",
+      "title": "Have you been to Japan?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "Yes"
+       },
+       {
+        "text": "No",
+        "value": "No"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "knowledge_japan",
+      "rows": [
+       {
+        "text": "Perception of Japanese Garden Culture",
+        "value": "jp1"
+       },
+       {
+        "text": "Perception of Japanese Gardening Style",
+        "value": "jp2"
+       },
+       {
+        "text": "Perception of Japanese Horticulture",
+        "value": "jp3"
+       },
+       {
+        "text": "Perception of Japanese Architecture Style",
+        "value": "jp4"
+       },
+       {
+        "text": "Overall Country Impression of Japan",
+        "value": "jp5"
+       }
+      ],
+      "type": "matrix",
+      "title": "Please rate your level of knowledge in the following areas on a scale from 1 to 10, where 1 indicates \"Not at all knowledgeable\" and 10 indicates \"Extremely knowledgeable\":",
+      "columns": [
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       },
+       {
+        "text": "6",
+        "value": 6
+       },
+       {
+        "text": "7",
+        "value": 7
+       },
+       {
+        "text": "8",
+        "value": 8
+       },
+       {
+        "text": "9",
+        "value": 9
+       },
+       {
+        "text": "10",
+        "value": 10
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "scenes",
+    "elements": [
+     {
+      "name": "valence",
+      "type": "rating",
+      "title": "Please select the degree of pleasure you feel after watching this scene.",
+      "isRequired": true,
+      "rateValues": [
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       },
+       {
+        "text": "6",
+        "value": 6
+       },
+       {
+        "text": "7",
+        "value": 7
+       },
+       {
+        "text": "8",
+        "value": 8
+       },
+       {
+        "text": "9",
+        "value": 9
+       }
+      ],
+      "description": "SAM pleasure (Questionnaire S3): 1, 3, 5, 7, 9 = frown, unhappy, neutral, smiling, happy; 2, 4, 6, 8 = in between. Keyed by scene id.",
+      "maxRateDescription": "happy (smiling figure)",
+      "minRateDescription": "frown"
+     },
+     {
+      "name": "arousal",
+      "type": "rating",
+      "title": "Please rate the level of arousal you feel after watching this scene.",
+      "isRequired": true,
+      "rateValues": [
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       },
+       {
+        "text": "6",
+        "value": 6
+       },
+       {
+        "text": "7",
+        "value": 7
+       },
+       {
+        "text": "8",
+        "value": 8
+       },
+       {
+        "text": "9",
+        "value": 9
+       }
+      ],
+      "description": "SAM arousal (Questionnaire S3): 1, 3, 5, 7, 9 = sleepy, drowsy, neutral, excited, stimulated. Keyed by scene id.",
+      "maxRateDescription": "stimulated (eyes wide open)",
+      "minRateDescription": "sleepy (eyes closed)"
+     },
+     {
+      "name": "preference",
+      "type": "rating",
+      "title": "Please rate your level of preference for this landscape on a scale of 1 to 10, where 1 indicates \"Strongly Dislike\" and 10 indicates \"Strongly Like\".",
+      "isRequired": true,
+      "rateValues": [
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       },
+       {
+        "text": "6",
+        "value": 6
+       },
+       {
+        "text": "7",
+        "value": 7
+       },
+       {
+        "text": "8",
+        "value": 8
+       },
+       {
+        "text": "9",
+        "value": 9
+       },
+       {
+        "text": "10",
+        "value": 10
+       }
+      ],
+      "description": "Questionnaire S2. Keyed by scene id.",
+      "maxRateDescription": "Strongly Like",
+      "minRateDescription": "Strongly Dislike"
+     }
+    ]
+   }
+  ],
+  "title": "English Heritage Gardens: Self-Assessment Manikin and Preference",
+  "locale": "en",
+  "spSite": {
+   "id": "site-1a58d1be83ed7184",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>English Heritage Gardens</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"English Heritage Gardens: Self-Assessment Manikin and Preference\",\n  \"description\": \"Faithful replication with the original scenes: participants first answer the paper's background questionnaire, then see 10 English heritage gardens and parks from the National Heritage List for England (Nymans, Saltram, Killerton, Tyntesfield, Attingham Park, Sissinghurst Castle, Scotney Castle, Prior Park and Lyme Park) in random order. Each scene is shown as the paper's three consecutive Google Street View frames from a clockwise spin (8 s each, 24 s in total, like the paper's 24 s clips); participants then rate it with the Self-Assessment Manikin for pleasure (valence) and arousal, 1-9, and give an aesthetic preference rating from 1 (Strongly Dislike) to 10 (Strongly Like). Rebuilt from Zhang, Han & Shen (2025), Real-Time Sensor-Based and Self-Reported Emotional Perceptions of Urban Green-Blue Spaces: Exploring Gender Differences with FER and SAM, Sensors 25(3): 748, with the scene frames from its Figure S2, the manikin pictures and SAM wording from its Questionnaire S3 and the background items from Questionnaire S1 (supplementary materials, CC BY 4.0; the frames are Google Street View imagery). Scene ids are the paper's labels C1-C19 (odd numbers; _1 to _3 = frames). Analysis as in the paper: mean valence, arousal and preference per scene by gender (t-tests) and their correlation with the scenes' visual variables (green view index, trees, grass, water, sky, buildings); the paper reports women felt more pleasant and preferred high-arousal scenes, while men preferred scenes with peak valence. Differences from the original study: (1) the paper's self-report group saw static GSV panoramas; here each scene is the three frames shown one after another; (2) the Japanese auxiliary scenes (used to break up the British ones) and the facial-expression-recognition experiment are not included; (3) the name item of the background questionnaire is left out; (4) the wording of the arousal anchors follows the paper's Questionnaire S3 but refers to 'this scene' rather than 'the panoramic video'.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"gardens\",\n   \"sam\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"background\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Your Gender:\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"Male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"Female\",\n        \"text\": \"Female\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"Your Age Group:\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"15 years and below\",\n        \"text\": \"15 years and below\"\n       },\n       {\n        \"value\": \"16-20 years\",\n        \"text\": \"16-20 years\"\n       },\n       {\n        \"value\": \"21-25 years\",\n        \"text\": \"21-25 years\"\n       },\n       {\n        \"value\": \"26-30 years\",\n        \"text\": \"26-30 years\"\n       },\n       {\n        \"value\": \"31-35 years\",\n        \"text\": \"31-35 years\"\n       },\n       {\n        \"value\": \"36-40 years\",\n        \"text\": \"36-40 years\"\n       },\n       {\n        \"value\": \"41-45 years\",\n        \"text\": \"41-45 years\"\n       },\n       {\n        \"value\": \"46-50 years\",\n        \"text\": \"46-50 years\"\n       },\n       {\n        \"value\": \"51-55 years\",\n        \"text\": \"51-55 years\"\n       },\n       {\n        \"value\": \"56-60 years\",\n        \"text\": \"56-60 years\"\n       },\n       {\n        \"value\": \"61-65 years\",\n        \"text\": \"61-65 years\"\n       },\n       {\n        \"value\": \"66-70 years\",\n        \"text\": \"66-70 years\"\n       },\n       {\n        \"value\": \"Above 70 years\",\n        \"text\": \"Above 70 years\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"Your Education Level:\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"Junior High School and below\",\n        \"text\": \"Junior High School and below\"\n       },\n       {\n        \"value\": \"High School/Technical Secondary School\",\n        \"text\": \"High School/Technical Secondary School\"\n       },\n       {\n        \"value\": \"Associate Degree\",\n        \"text\": \"Associate Degree\"\n       },\n       {\n        \"value\": \"Bachelor's Degree\",\n        \"text\": \"Bachelor's Degree\"\n       },\n       {\n        \"value\": \"Postgraduate and above\",\n        \"text\": \"Postgraduate and above\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"design_background\",\n      \"title\": \"Do you have a background in architecture, urban planning, landscape architecture, or related fields?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"Yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"No\",\n        \"text\": \"No\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"marital_status\",\n      \"title\": \"Your Marital Status:\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"Single\",\n        \"text\": \"Single\"\n       },\n       {\n        \"value\": \"Married\",\n        \"text\": \"Married\"\n       },\n       {\n        \"value\": \"Divorced\",\n        \"text\": \"Divorced\"\n       },\n       {\n        \"value\": \"Widowed\",\n        \"text\": \"Widowed\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"been_uk\",\n      \"title\": \"Have you been to the UK?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"Yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"No\",\n        \"text\": \"No\"\n       }\n      ]\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"knowledge_uk\",\n      \"title\": \"Please rate your level of knowledge in the following areas on a scale from 1 to 10, where 1 indicates \\\"Not at all knowledgeable\\\" and 10 indicates \\\"Extremely knowledgeable\\\":\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"uk1\",\n        \"text\": \"Perception of UK Garden Culture\"\n       },\n       {\n        \"value\": \"uk2\",\n        \"text\": \"Perception of UK Gardening Style\"\n       },\n       {\n        \"value\": \"uk3\",\n        \"text\": \"Perception of UK Horticulture\"\n       },\n       {\n        \"value\": \"uk4\",\n        \"text\": \"Perception of UK Architecture Style\"\n       },\n       {\n        \"value\": \"uk5\",\n        \"text\": \"Overall Country Impression of the UK\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"6\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"7\"\n       },\n       {\n        \"value\": 8,\n        \"text\": \"8\"\n       },\n       {\n        \"value\": 9,\n        \"text\": \"9\"\n       },\n       {\n        \"value\": 10,\n        \"text\": \"10\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"been_japan\",\n      \"title\": \"Have you been to Japan?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"Yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"No\",\n        \"text\": \"No\"\n       }\n      ]\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"knowledge_japan\",\n      \"title\": \"Please rate your level of knowledge in the following areas on a scale from 1 to 10, where 1 indicates \\\"Not at all knowledgeable\\\" and 10 indicates \\\"Extremely knowledgeable\\\":\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"jp1\",\n        \"text\": \"Perception of Japanese Garden Culture\"\n       },\n       {\n        \"value\": \"jp2\",\n        \"text\": \"Perception of Japanese Gardening Style\"\n       },\n       {\n        \"value\": \"jp3\",\n        \"text\": \"Perception of Japanese Horticulture\"\n       },\n       {\n        \"value\": \"jp4\",\n        \"text\": \"Perception of Japanese Architecture Style\"\n       },\n       {\n        \"value\": \"jp5\",\n        \"text\": \"Overall Country Impression of Japan\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"6\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"7\"\n       },\n       {\n        \"value\": 8,\n        \"text\": \"8\"\n       },\n       {\n        \"value\": 9,\n        \"text\": \"9\"\n       },\n       {\n        \"value\": 10,\n        \"text\": \"10\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"scenes\",\n    \"elements\": [\n     {\n      \"type\": \"rating\",\n      \"name\": \"valence\",\n      \"title\": \"Please select the degree of pleasure you feel after watching this scene.\",\n      \"isRequired\": true,\n      \"rateValues\": [\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"6\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"7\"\n       },\n       {\n        \"value\": 8,\n        \"text\": \"8\"\n       },\n       {\n        \"value\": 9,\n        \"text\": \"9\"\n       }\n      ],\n      \"minRateDescription\": \"frown\",\n      \"maxRateDescription\": \"happy (smiling figure)\",\n      \"description\": \"SAM pleasure (Questionnaire S3): 1, 3, 5, 7, 9 = frown, unhappy, neutral, smiling, happy; 2, 4, 6, 8 = in between. Keyed by scene id.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"arousal\",\n      \"title\": \"Please rate the level of arousal you feel after watching this scene.\",\n      \"isRequired\": true,\n      \"rateValues\": [\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"6\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"7\"\n       },\n       {\n        \"value\": 8,\n        \"text\": \"8\"\n       },\n       {\n        \"value\": 9,\n        \"text\": \"9\"\n       }\n      ],\n      \"minRateDescription\": \"sleepy (eyes closed)\",\n      \"maxRateDescription\": \"stimulated (eyes wide open)\",\n      \"description\": \"SAM arousal (Questionnaire S3): 1, 3, 5, 7, 9 = sleepy, drowsy, neutral, excited, stimulated. Keyed by scene id.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"preference\",\n      \"title\": \"Please rate your level of preference for this landscape on a scale of 1 to 10, where 1 indicates \\\"Strongly Dislike\\\" and 10 indicates \\\"Strongly Like\\\".\",\n      \"isRequired\": true,\n      \"rateValues\": [\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"6\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"7\"\n       },\n       {\n        \"value\": 8,\n        \"text\": \"8\"\n       },\n       {\n        \"value\": 9,\n        \"text\": \"9\"\n       },\n       {\n        \"value\": 10,\n        \"text\": \"10\"\n       }\n      ],\n      \"minRateDescription\": \"Strongly Dislike\",\n      \"maxRateDescription\": \"Strongly Like\",\n      \"description\": \"Questionnaire S2. Keyed by scene id.\"\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"gardens-original\">{\"source\": \"Zhang, Han & Shen (2025) Sensors 25(3): 748\", \"n_self_report\": 108, \"participants\": \"108 adults (52 male, 56 female), 18-43, mean 31.0 (SD 8.2) for SAM + preference; separate FER lab experiment with 20 students\", \"scenes\": {\"C01\": \"Nymans\", \"C03\": \"Saltram\", \"C05\": \"Nymans\", \"C07\": \"Sissinghurst Castle\", \"C09\": \"Killerton\", \"C11\": \"Tyntesfield\", \"C13\": \"Attingham Park\", \"C15\": \"Scotney Castle\", \"C17\": \"Prior Park\", \"C19\": \"Lyme Park\"}, \"coordinates_from_FigS1\": {\"C01\": [51.05213393, -0.19812238], \"C03\": [50.3817863, -4.0831119], \"C05\": [51.04978602, -0.19644617], \"C07\": [51.115144, -4.0831119], \"C09\": [50.791415, -3.4584033], \"C11\": [51.44017524, -2.7116267], \"C13\": [52.6843599, -2.6671088], \"C15\": [51.0917382, 0.4105736], \"C17\": [51.369195, -2.3449978], \"C19\": [53.3375641, -2.0544509]}, \"results\": \"women: stronger pleasant emotions, preferred higher-arousal scenes; men: sharper responses, rated scenes with peak valence higher; no significant links between self-reported SAM/preference and visual variables; FER: grass relaxed women and aroused men, water calmed both\"}</script>\n<style>\n:root{--bg:#eef1ea;--card:#fff;--ink:#1e231b;--muted:#5a6354;--accent:#45663a;--line:#d6ddd0;--warn:#b3261e;--sel:#e3eedb}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:760px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.5rem;margin:0 0 8px}h2{font-size:1.15rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:13px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.prog{font-size:.88rem;color:var(--muted);margin-bottom:8px}\n.view{position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:5}\n.view img{width:min(96vw,1100px);max-height:92vh;object-fit:contain;display:block}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:7px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\nlabel.opt:has(input:checked){background:var(--sel);border-color:var(--accent)}\n.f{margin-top:18px}.f:first-child{margin-top:0}\n.grid{display:grid;gap:4px;margin-top:6px}\n.grid label{display:flex;flex-direction:column;align-items:center;border:1px solid var(--line);border-radius:8px;padding:3px 0;cursor:pointer;font-size:.8rem;color:var(--muted)}\n.grid label:has(input:checked){background:var(--sel);border-color:var(--accent);color:var(--ink)}\n.grid input{margin:0 0 1px}\n.ends{display:flex;justify-content:space-between;gap:8px;font-size:.76rem;color:var(--muted);margin-top:2px}\n.kr{padding:6px 0;border-top:1px solid var(--line)}.kr .q{font-size:.92rem}\n.miss{outline:2px solid var(--warn);outline-offset:3px;border-radius:8px}\n.sam{width:100%;max-width:544px;display:block;margin:6px auto 0}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:760px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Scene frames (Google Street View imagery) and manikin pictures: Zhang, Han &amp; Shen (2025), Sensors 25(3): 748, Figure S2 and Questionnaire S3 (doi:10.3390/s25030748, CC BY 4.0).</footer>\n<script>\n(function(){\n  var KEY='heritage-gardens:state', T={frame:window.__VIEWMS||8000};\n  var app=document.getElementById('app'), Q={}, files={}, st=null, sam={};\n  var BG=['gender','age_group','education','design_background','marital_status','been_uk','knowledge_uk','been_japan','knowledge_japan'];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function send(list,b,next){if(b)b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}next();});}\n  function val(name){var x=app.querySelector('input[name=\"'+name+'\"]:checked');return x?x.value:null;}\n  function grid(name,vals){return '<div class=\"grid\" data-n=\"'+name+'\" style=\"grid-template-columns:repeat('+vals.length+',1fr)\">'+vals.map(function(c){return '<label><input type=\"radio\" name=\"'+name+'\" value=\"'+c.value+'\">'+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function radios(q){return '<div class=\"f\" data-n=\"'+q+'\"><b>'+esc(Q[q].title)+'</b>'+(Q[q].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+q+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function matrix(q){return '<div class=\"f\"><b>'+esc(Q[q].title)+'</b>'+(Q[q].rows||[]).map(function(r){return '<div class=\"kr\"><div class=\"q\">'+esc(r.text)+'</div>'+grid(q+'__'+r.value,Q[q].columns||[])+'</div>';}).join('')+'</div>';}\n  function intro(){\n    app.innerHTML='<h1>Gardens and parks</h1><p>After a few background questions you will see 10 gardens and parks in England. Each one is shown as three views turning clockwise, 8 seconds each. After each garden, rate how pleasant and how aroused (calm or stimulated) you feel, using the little figures, and how much you like the landscape. It takes about 10 minutes.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');send([SPSite.answer('consent',true)],this,function(){st.step='bg';save();route();});};\n  }\n  function background(){\n    app.innerHTML='<h2>About you</h2><div class=\"card\">'+BG.map(function(q){return Q[q].type==='matrix'?matrix(q):radios(q);}).join('')+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var out=[],miss=0,first=null;app.querySelectorAll('.miss').forEach(function(e){e.classList.remove('miss');});\n      BG.forEach(function(q){\n        if(Q[q].type==='matrix'){var m={};(Q[q].rows||[]).forEach(function(r){var nm=q+'__'+r.value,x=val(nm);if(x==null){miss++;var el=app.querySelector('.grid[data-n=\"'+nm+'\"]');el.classList.add('miss');first=first||el;}else m[r.value]=Number(x);});out.push([q,m]);}\n        else{var x=val(q);if(x==null){miss++;var el=app.querySelector('.f[data-n=\"'+q+'\"]');el.classList.add('miss');first=first||el;}else out.push([q,x]);}\n      });\n      if(miss){first.scrollIntoView({block:'center'});return err('Please answer every question ('+miss+' missing).');}\n      send(out.map(function(p){return SPSite.answer(p[0],p[1]);}),this,function(){st.step='trial';st.phase='view';st.f=0;save();route();});\n    };\n  }\n  function trial(){\n    if(st.k>=st.order.length){st.step='done';save();return route();}\n    if(st.phase==='q')return ask();\n    var id=st.order[st.k],v=document.createElement('div');v.className='view';app.innerHTML='';app.appendChild(v);\n    var fr=files[id][st.f||0];v.innerHTML='<img alt=\"Garden view\" src=\"'+esc(fr.url)+'\">';\n    var nx=(st.f||0)+1<3?files[id][(st.f||0)+1]:(st.k+1<st.order.length?files[st.order[st.k+1]][0]:null);if(nx){var p=new Image();p.src=nx.url;}\n    setTimeout(function(){st.f=(st.f||0)+1;if(st.f>=3){st.phase='q';st.f=0;}save();route();},T.frame);\n  }\n  function ask(){\n    var id=st.order[st.k],shown=files[id].map(function(f){return f.name;});\n    function block(q,img,lo,hi){return '<div class=\"f\" data-n=\"'+q+'\"><b>'+esc(Q[q].title)+'</b>'+(img?'<img class=\"sam\" alt=\"\" src=\"'+esc(img.url)+'\">':'')+grid(q,Q[q].rateValues||[])+'<div class=\"ends\"><span>'+esc(lo)+'</span><span>'+esc(hi)+'</span></div></div>';}\n    app.innerHTML='<div class=\"prog\">Garden '+(st.k+1)+' of '+st.order.length+'</div><div class=\"card\">'+block('valence',sam.valence,'1 = frown','9 = happy')+block('arousal',sam.arousal,'1 = sleepy','9 = stimulated')+block('preference',null,'1 = Strongly Dislike','10 = Strongly Like')+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var a={},miss=0;['valence','arousal','preference'].forEach(function(q){var x=val(q),el=app.querySelector('.f[data-n=\"'+q+'\"]');el.classList.remove('miss');if(x==null){miss++;el.classList.add('miss');}else a[q]=Number(x);});\n      if(miss)return err('Please answer all three questions.');\n      send(['valence','arousal','preference'].map(function(q){return SPSite.answer(q,a[q],{key:id,shown:shown});}),this,function(){st.k++;st.phase='view';st.f=0;save();route();});\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st.step='intro';save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  app.addEventListener('change',function(e){var r=e.target.closest&&(e.target.closest('.grid.miss')||e.target.closest('.f.miss'));if(r)r.classList.remove('miss');});\n  function route(){var s=st.step;window.scrollTo(0,0);if(s==='bg')return background();if(s==='trial')return trial();if(s==='done')return finish();intro();}\n  SPSite.onReady(function(ctx){\n    ['consent','valence','arousal','preference'].concat(BG).forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('sam')||[]).forEach(function(f){sam[f.name.replace(/\\.[^.]+$/,'')]=f;});\n    (SPSite.getMedia('gardens')||[]).forEach(function(f){var m=f.name.match(/^(C\\d+)_(\\d)\\./);if(m){(files[m[1]]=files[m[1]]||[])[+m[2]-1]=f;}});\n    var ids=Object.keys(files).filter(function(k){return files[k][0]&&files[k][1]&&files[k][2];});\n    if(!ids.length||!sam.valence||!sam.arousal){app.innerHTML='<h1>Media missing</h1><p>Upload the garden frames (C01_1.jpg …) to \"gardens\" and valence.png / arousal.png to \"sam\".</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    var a=(ctx&&ctx.answers)||{};\n    var valid=st&&st.order&&st.order.every(function(x){return files[x];});\n    if(!valid||a.consent!==true)st={step:'intro',order:shuffle(ids),k:0,phase:'view',f:0};\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T20:44:27.840Z",
+   "mediaFolders": [
+    "gardens",
+    "sam"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T20:44:27.840Z"
+  },
+  "description": "Faithful replication with the original scenes: participants first answer the paper's background questionnaire, then see 10 English heritage gardens and parks from the National Heritage List for England (Nymans, Saltram, Killerton, Tyntesfield, Attingham Park, Sissinghurst Castle, Scotney Castle, Prior Park and Lyme Park) in random order. Each scene is shown as the paper's three consecutive Google Street View frames from a clockwise spin (8 s each, 24 s in total, like the paper's 24 s clips); participants then rate it with the Self-Assessment Manikin for pleasure (valence) and arousal, 1-9, and give an aesthetic preference rating from 1 (Strongly Dislike) to 10 (Strongly Like). Rebuilt from Zhang, Han & Shen (2025), Real-Time Sensor-Based and Self-Reported Emotional Perceptions of Urban Green-Blue Spaces: Exploring Gender Differences with FER and SAM, Sensors 25(3): 748, with the scene frames from its Figure S2, the manikin pictures and SAM wording from its Questionnaire S3 and the background items from Questionnaire S1 (supplementary materials, CC BY 4.0; the frames are Google Street View imagery). Scene ids are the paper's labels C1-C19 (odd numbers; _1 to _3 = frames). Analysis as in the paper: mean valence, arousal and preference per scene by gender (t-tests) and their correlation with the scenes' visual variables (green view index, trees, grass, water, sky, buildings); the paper reports women felt more pleasant and preferred high-arousal scenes, while men preferred scenes with peak valence. Differences from the original study: (1) the paper's self-report group saw static GSV panoramas; here each scene is the three frames shown one after another; (2) the Japanese auxiliary scenes (used to break up the British ones) and the facial-expression-recognition experiment are not included; (3) the name item of the background questionnaire is left out; (4) the wording of the arousal anchors follows the paper's Questionnaire S3 but refers to 'this scene' rather than 'the panoramic video'.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2025-zhang-english/gardens/C01_1__4b0c38e7-e7a4-4aac-b4b8-886f0ba61497.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C01_1__4b0c38e7-e7a4-4aac-b4b8-886f0ba61497.jpg",
+   "name": "C01_1.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C01_1__4b0c38e7-e7a4-4aac-b4b8-886f0ba61497.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 72805,
+   "uploaded_bytes": 72805,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C01_2__abdd2bbc-af85-42eb-914f-d40a091b3fb3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C01_2__abdd2bbc-af85-42eb-914f-d40a091b3fb3.jpg",
+   "name": "C01_2.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C01_2__abdd2bbc-af85-42eb-914f-d40a091b3fb3.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 71301,
+   "uploaded_bytes": 71301,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C01_3__92b79d55-9ef7-433c-ba2a-4867eac958d6.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C01_3__92b79d55-9ef7-433c-ba2a-4867eac958d6.jpg",
+   "name": "C01_3.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C01_3__92b79d55-9ef7-433c-ba2a-4867eac958d6.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 45658,
+   "uploaded_bytes": 45658,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C03_1__8d7a0d5d-f1bd-4263-bf56-d0b81ce3867a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C03_1__8d7a0d5d-f1bd-4263-bf56-d0b81ce3867a.jpg",
+   "name": "C03_1.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C03_1__8d7a0d5d-f1bd-4263-bf56-d0b81ce3867a.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 75633,
+   "uploaded_bytes": 75633,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C03_2__90b86db2-a62b-4030-8049-37c4fa7b17ca.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C03_2__90b86db2-a62b-4030-8049-37c4fa7b17ca.jpg",
+   "name": "C03_2.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C03_2__90b86db2-a62b-4030-8049-37c4fa7b17ca.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 90958,
+   "uploaded_bytes": 90958,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C03_3__83b06be1-a564-4377-9d2d-e2a80d574b9a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C03_3__83b06be1-a564-4377-9d2d-e2a80d574b9a.jpg",
+   "name": "C03_3.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C03_3__83b06be1-a564-4377-9d2d-e2a80d574b9a.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 77380,
+   "uploaded_bytes": 77380,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C05_1__a9f29c90-edbc-4950-a273-db702fc3dcdb.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C05_1__a9f29c90-edbc-4950-a273-db702fc3dcdb.jpg",
+   "name": "C05_1.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C05_1__a9f29c90-edbc-4950-a273-db702fc3dcdb.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 79565,
+   "uploaded_bytes": 79565,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C05_2__d7a34c56-5ea3-4392-9f3e-13b9c6b3036c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C05_2__d7a34c56-5ea3-4392-9f3e-13b9c6b3036c.jpg",
+   "name": "C05_2.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C05_2__d7a34c56-5ea3-4392-9f3e-13b9c6b3036c.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 95069,
+   "uploaded_bytes": 95069,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C05_3__b4326900-0f6e-46a8-8289-43ec5476ff5b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C05_3__b4326900-0f6e-46a8-8289-43ec5476ff5b.jpg",
+   "name": "C05_3.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C05_3__b4326900-0f6e-46a8-8289-43ec5476ff5b.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 91938,
+   "uploaded_bytes": 91938,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C07_1__dbeedbb4-5cdb-47a8-bdd9-65045fb3a871.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C07_1__dbeedbb4-5cdb-47a8-bdd9-65045fb3a871.jpg",
+   "name": "C07_1.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C07_1__dbeedbb4-5cdb-47a8-bdd9-65045fb3a871.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 82879,
+   "uploaded_bytes": 82879,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C07_2__45f0b48f-f4ce-4723-ae2f-0d452dba4893.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C07_2__45f0b48f-f4ce-4723-ae2f-0d452dba4893.jpg",
+   "name": "C07_2.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C07_2__45f0b48f-f4ce-4723-ae2f-0d452dba4893.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 83475,
+   "uploaded_bytes": 83475,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C07_3__eff31d0a-6c7e-4c3d-a807-47388d796d96.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C07_3__eff31d0a-6c7e-4c3d-a807-47388d796d96.jpg",
+   "name": "C07_3.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C07_3__eff31d0a-6c7e-4c3d-a807-47388d796d96.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 70023,
+   "uploaded_bytes": 70023,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C09_1__c95561c5-7985-4b9b-ac8d-7e9b6b0cb822.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C09_1__c95561c5-7985-4b9b-ac8d-7e9b6b0cb822.jpg",
+   "name": "C09_1.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C09_1__c95561c5-7985-4b9b-ac8d-7e9b6b0cb822.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 83429,
+   "uploaded_bytes": 83429,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C09_2__760a9997-56b8-4cae-a34b-5f3a95061d68.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C09_2__760a9997-56b8-4cae-a34b-5f3a95061d68.jpg",
+   "name": "C09_2.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C09_2__760a9997-56b8-4cae-a34b-5f3a95061d68.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 72165,
+   "uploaded_bytes": 72165,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C09_3__77eb0067-224c-439c-8184-3f6d5a4a2502.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C09_3__77eb0067-224c-439c-8184-3f6d5a4a2502.jpg",
+   "name": "C09_3.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C09_3__77eb0067-224c-439c-8184-3f6d5a4a2502.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 61779,
+   "uploaded_bytes": 61779,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C11_1__fd3c1bbb-fe58-47c7-857c-695fcf2248bd.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C11_1__fd3c1bbb-fe58-47c7-857c-695fcf2248bd.jpg",
+   "name": "C11_1.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C11_1__fd3c1bbb-fe58-47c7-857c-695fcf2248bd.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 57139,
+   "uploaded_bytes": 57139,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C11_2__2f274507-60b6-4634-bc47-f746b33a6692.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C11_2__2f274507-60b6-4634-bc47-f746b33a6692.jpg",
+   "name": "C11_2.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C11_2__2f274507-60b6-4634-bc47-f746b33a6692.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 61458,
+   "uploaded_bytes": 61458,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C11_3__40275598-c928-44ab-b973-0f393f5ded43.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C11_3__40275598-c928-44ab-b973-0f393f5ded43.jpg",
+   "name": "C11_3.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C11_3__40275598-c928-44ab-b973-0f393f5ded43.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 68006,
+   "uploaded_bytes": 68006,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C13_1__bb691bff-efa9-4a88-8291-5944eec5d605.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C13_1__bb691bff-efa9-4a88-8291-5944eec5d605.jpg",
+   "name": "C13_1.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C13_1__bb691bff-efa9-4a88-8291-5944eec5d605.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 66305,
+   "uploaded_bytes": 66305,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C13_2__07c8c138-d72f-4c11-8536-cc1f7a038012.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C13_2__07c8c138-d72f-4c11-8536-cc1f7a038012.jpg",
+   "name": "C13_2.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C13_2__07c8c138-d72f-4c11-8536-cc1f7a038012.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 68494,
+   "uploaded_bytes": 68494,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C13_3__c247fcc9-4911-4b1b-bc57-4b01b4863c68.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C13_3__c247fcc9-4911-4b1b-bc57-4b01b4863c68.jpg",
+   "name": "C13_3.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C13_3__c247fcc9-4911-4b1b-bc57-4b01b4863c68.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 63071,
+   "uploaded_bytes": 63071,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C15_1__e4ed9b9a-63c0-4947-a18e-0c1295aec71c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C15_1__e4ed9b9a-63c0-4947-a18e-0c1295aec71c.jpg",
+   "name": "C15_1.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C15_1__e4ed9b9a-63c0-4947-a18e-0c1295aec71c.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 69418,
+   "uploaded_bytes": 69418,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C15_2__89d1ea5d-6f80-4fb1-b9c3-838ebca5c717.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C15_2__89d1ea5d-6f80-4fb1-b9c3-838ebca5c717.jpg",
+   "name": "C15_2.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C15_2__89d1ea5d-6f80-4fb1-b9c3-838ebca5c717.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 75783,
+   "uploaded_bytes": 75783,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C15_3__86d7ae90-c8fd-4bc1-aaf6-a5f1e51f6a0b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C15_3__86d7ae90-c8fd-4bc1-aaf6-a5f1e51f6a0b.jpg",
+   "name": "C15_3.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C15_3__86d7ae90-c8fd-4bc1-aaf6-a5f1e51f6a0b.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 85331,
+   "uploaded_bytes": 85331,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C17_1__cf2ed789-2e3c-48e6-9713-8d358d30e3fe.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C17_1__cf2ed789-2e3c-48e6-9713-8d358d30e3fe.jpg",
+   "name": "C17_1.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C17_1__cf2ed789-2e3c-48e6-9713-8d358d30e3fe.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 58834,
+   "uploaded_bytes": 58834,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C17_2__45ce5524-b164-45be-96e2-154fbf96c7c2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C17_2__45ce5524-b164-45be-96e2-154fbf96c7c2.jpg",
+   "name": "C17_2.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C17_2__45ce5524-b164-45be-96e2-154fbf96c7c2.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 75966,
+   "uploaded_bytes": 75966,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C17_3__59d2ddd4-0fb4-4201-896c-91e681a0e9fa.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C17_3__59d2ddd4-0fb4-4201-896c-91e681a0e9fa.jpg",
+   "name": "C17_3.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C17_3__59d2ddd4-0fb4-4201-896c-91e681a0e9fa.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 62361,
+   "uploaded_bytes": 62361,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C19_1__624a4956-ecae-45f4-9fda-49dcecf4eaec.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C19_1__624a4956-ecae-45f4-9fda-49dcecf4eaec.jpg",
+   "name": "C19_1.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C19_1__624a4956-ecae-45f4-9fda-49dcecf4eaec.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 44832,
+   "uploaded_bytes": 44832,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C19_2__c0db201e-a926-439a-b48e-169d96bc89fc.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C19_2__c0db201e-a926-439a-b48e-169d96bc89fc.jpg",
+   "name": "C19_2.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C19_2__c0db201e-a926-439a-b48e-169d96bc89fc.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 48493,
+   "uploaded_bytes": 48493,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/gardens/C19_3__1b4947f8-962a-49ff-bf99-4d2abe27e1c7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/gardens/C19_3__1b4947f8-962a-49ff-bf99-4d2abe27e1c7.jpg",
+   "name": "C19_3.jpg",
+   "type": "image",
+   "folder": "gardens",
+   "media_id": "templates/2025-zhang-english/gardens/C19_3__1b4947f8-962a-49ff-bf99-4d2abe27e1c7.jpg",
+   "logicalFolder": "gardens",
+   "original_bytes": 46494,
+   "uploaded_bytes": 46494,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/sam/arousal__a796427c-2c5c-477d-bac4-bcdb8d2da835.png",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/sam/arousal__a796427c-2c5c-477d-bac4-bcdb8d2da835.png",
+   "name": "arousal.png",
+   "type": "image",
+   "folder": "sam",
+   "media_id": "templates/2025-zhang-english/sam/arousal__a796427c-2c5c-477d-bac4-bcdb8d2da835.png",
+   "logicalFolder": "sam",
+   "original_bytes": 40853,
+   "uploaded_bytes": 40853,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-zhang-english/sam/valence__fb8bfeaa-acc8-4b7a-a27f-96b8491fcdfa.png",
+   "url": "https://media.sp-survey.org/templates/2025-zhang-english/sam/valence__fb8bfeaa-acc8-4b7a-a27f-96b8491fcdfa.png",
+   "name": "valence.png",
+   "type": "image",
+   "folder": "sam",
+   "media_id": "templates/2025-zhang-english/sam/valence__fb8bfeaa-acc8-4b7a-a27f-96b8491fcdfa.png",
+   "logicalFolder": "sam",
+   "original_bytes": 34810,
+   "uploaded_bytes": 34810,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Real-Time Sensor-Based and Self-Reported Emotional Perceptions of Urban Green-Blue Spaces: Exploring Gender Differences with FER and SAM",
+  "authors": [
+   "Zhang X",
+   "Han H",
+   "Shen G"
+  ],
+  "year": 2025,
+  "venue": "Sensors",
+  "doi": "10.3390/s25030748",
+  "url": "https://doi.org/10.3390/s25030748"
+ }
+}

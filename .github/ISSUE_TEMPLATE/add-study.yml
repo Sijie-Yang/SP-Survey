@@ -1,0 +1,76 @@
+name: Add a study
+description: Send your perception survey so it becomes a template in the library
+title: "Add study: "
+labels: ["add-study"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. Published and unpublished studies are both welcome. We build the template from what you send and show you a preview before it is published. More detail: [contributions/README.md](https://github.com/Sijie-Yang/SP-Survey/blob/main/contributions/README.md).
+  - type: input
+    id: paper
+    attributes:
+      label: Paper or preprint
+      description: DOI or link. Write "not published" if there is none.
+    validations:
+      required: true
+  - type: input
+    id: authors
+    attributes:
+      label: Study by
+      description: Names and affiliation, as they should appear on the template.
+    validations:
+      required: true
+  - type: input
+    id: place
+    attributes:
+      label: Place
+      description: City, country or region of the study.
+  - type: dropdown
+    id: stimuli
+    attributes:
+      label: What participants saw
+      multiple: true
+      options:
+        - Street view
+        - Panorama or 360°
+        - Landscape, nature or other scene photos
+        - Rendered or simulated scenes
+        - Indoor
+        - Window view
+        - Video
+        - Sound
+        - Map
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: task
+    attributes:
+      label: What participants were asked
+      description: The task, the exact question wording and the answer scale. How many images each person saw and how they were chosen.
+    validations:
+      required: true
+  - type: dropdown
+    id: media
+    attributes:
+      label: Images, videos or sounds
+      description: Only share media you are allowed to share in public.
+      options:
+        - I attach them below (zip)
+        - They are public (I give the link below)
+        - They cannot be shared, build a method replication with new images
+    validations:
+      required: true
+  - type: textarea
+    id: files
+    attributes:
+      label: Survey files and links
+      description: Drag the questionnaire, a Qualtrics .qsf export, an SP-Survey project file or the survey page here, plus a zip of the images if you attach them, and paste any links (OSF, Zenodo, …).
+  - type: checkboxes
+    id: rights
+    attributes:
+      label: Confirmation
+      options:
+        - label: I have the right to share what I am sending.
+          required: true

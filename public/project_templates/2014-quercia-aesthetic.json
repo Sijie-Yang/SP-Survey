@@ -1,189 +1,992 @@
 {
-  "id": "2014-quercia-aesthetic",
-  "name": "UrbanGems",
-  "description": "Rebuilt from the published description of Quercia, O'Hare & Cramer (2014). Pairwise comparisons of London street scenes on beauty, quiet and happiness, analysed as the share of times each scene was chosen. Differences from the original study: (1) The original site let participants continue after the first round of 10 pairs; this template asks one round (4 + 3 + 3 pairs). (2) The short questionnaire wording is not in the paper. (3) Bundled images are photographs from the paper PDF (19 scenes), not the original full stimulus set.",
-  "author": "Quercia, O'Hare & Cramer",
-  "year": "2014",
-  "category": "Academic Research",
-  "tags": [
-    "official",
-    "paper"
-  ],
-  "isPinned": false,
-  "isApproved": true,
-  "showOnLanding": true,
-  "thumbnailUrl": null,
-  "website": "https://doi.org/10.1145/2531602.2531613",
-  "huggingfaceDataset": null,
-  "createdAt": "2026-10-02T00:00:00+00:00",
-  "imageDatasetConfig": {
-    "mediaFolderTags": {},
-    "mediaFolders": []
-  },
-  "preloadedImages": [],
-  "preloadedSource": null,
-  "preloadedAt": null,
-  "config": {
-    "title": "UrbanGems",
-    "description": "Click the place that better matches each question.",
-    "logoPosition": "right",
-    "autoGrowComment": true,
-    "progressBarType": "questions",
-    "showProgressBar": "aboveheader",
-    "showQuestionNumbers": "off",
-    "spAnalysisRecommendation": {
-      "citation": "Quercia et al. 2014",
-      "items": [
-        {
-          "questions": [
-            "beautiful",
-            "quiet",
-            "happy"
-          ],
-          "method": "choice_share"
-        },
-        {
-          "questions": [
-            "beautiful",
-            "quiet",
-            "happy"
-          ],
-          "method": "trueskill_pairwise",
-          "tieHandling": "exclude",
-          "scale": "0-10"
-        }
-      ]
-    },
-    "pages": [
-      {
-        "name": "page_beautiful",
-        "elements": [
-          {
-            "name": "beautiful",
-            "type": "imagepicker",
-            "title": "Which place is more beautiful?",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 2,
-            "trialCount": 4
-          }
-        ]
-      },
-      {
-        "name": "page_quiet",
-        "elements": [
-          {
-            "name": "quiet",
-            "type": "imagepicker",
-            "title": "Which place is more quiet?",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 2,
-            "trialCount": 3
-          }
-        ]
-      },
-      {
-        "name": "page_happy",
-        "elements": [
-          {
-            "name": "happy",
-            "type": "imagepicker",
-            "title": "Which place is more happy?",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 2,
-            "trialCount": 3
-          }
-        ]
-      },
-      {
-        "name": "page_about_you",
-        "elements": [
-          {
-            "name": "age_group",
-            "type": "radiogroup",
-            "title": "What is your age group? (wording not in paper)",
-            "choices": [
-              {
-                "value": "18_24",
-                "text": "18–24"
-              },
-              {
-                "value": "25_34",
-                "text": "25–34"
-              },
-              {
-                "value": "35_44",
-                "text": "35–44"
-              },
-              {
-                "value": "45_54",
-                "text": "45–54"
-              },
-              {
-                "value": "55_64",
-                "text": "55–64"
-              },
-              {
-                "value": "65_plus",
-                "text": "65+"
-              }
-            ],
-            "isRequired": false
-          },
-          {
-            "name": "gender",
-            "type": "radiogroup",
-            "title": "What is your gender? (wording not in paper)",
-            "choices": [
-              {
-                "value": "female",
-                "text": "Female"
-              },
-              {
-                "value": "male",
-                "text": "Male"
-              },
-              {
-                "value": "other",
-                "text": "Other"
-              },
-              {
-                "value": "prefer_not",
-                "text": "Prefer not to say"
-              }
-            ],
-            "isRequired": false
-          },
-          {
-            "name": "live_in_london",
-            "type": "radiogroup",
-            "title": "Do you live in London?",
-            "choices": [
-              {
-                "value": "yes",
-                "text": "Yes"
-              },
-              {
-                "value": "no",
-                "text": "No"
-              }
-            ],
-            "isRequired": false
-          }
-        ],
-        "title": "About you"
-      }
+ "id": "2014-quercia-aesthetic",
+ "name": "UrbanGems: Beautiful, Quiet, Happy? (London)",
+ "description": "Method replication: same task and questions as the paper; the images are not the paper's stimuli (new Google Street View views of London, © Google). Quercia, O'Hare & Cramer (2014, \"Aesthetic capital\", CSCW 2014, pp. 945–955) ran the UrbanGems crowdsourcing site, where over 3.3K people voted on which of two London street scenes looked more beautiful, more quiet or more happy. Votes became neighbourhood scores (\"aesthetic capital\"); image analysis found greenery was the cue most positively linked to all three qualities, while broad streets, fortress-like buildings and council houses went with ugly, noisy and unhappy.\n\nWhat participants do: after consent, one round of 10 London street pairs: 4 on \"Which place is more beautiful?\", 3 on \"more quiet\" and 3 on \"more happy\", drawn at random from 63 images. Then age, gender and whether they live in London.\n\nAnalysis as in the paper: score each image by how often it wins (the paper used the share of wins, corrected for opponents), then relate scores to visual features such as greenery, colour and texture.\n\nDifferences from the original study: (1) the images are 63 new Google Street View views (2016–2026) from random points in inner London, not the paper's scenes; (2) the original site let people keep voting after the first round; this template asks one round; (3) the background questions are not given in the paper. The earlier version of this template showed 19 photographs cropped from the paper PDF.",
+ "author": "Quercia, O'Hare & Cramer",
+ "year": "2014",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "beauty",
+  "quiet",
+  "happiness",
+  "london",
+  "source:paper",
+  "modality:street_view",
+  "task:pairwise",
+  "concept:beauty",
+  "concept:quietness",
+  "concept:happiness",
+  "participants:crowd",
+  "sample:gt1000",
+  "country:UK",
+  "city:London"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1145/2531602.2531613",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-10-02T00:00:00+00:00",
+ "updatedAt": "2026-11-27T05:37:52.074+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
     ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "beautiful",
+      "type": "imagepicker",
+      "title": "Which place is more beautiful?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 4,
+      "mediaFolders": [
+       "london"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_2",
+    "elements": [
+     {
+      "name": "quiet",
+      "type": "imagepicker",
+      "title": "Which place is more quiet?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 3,
+      "mediaFolders": [
+       "london"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_3",
+    "elements": [
+     {
+      "name": "happy",
+      "type": "imagepicker",
+      "title": "Which place is more happy?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 3,
+      "mediaFolders": [
+       "london"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "18–24",
+        "value": "18-24"
+       },
+       {
+        "text": "25–34",
+        "value": "25-34"
+       },
+       {
+        "text": "35–44",
+        "value": "35-44"
+       },
+       {
+        "text": "45–54",
+        "value": "45-54"
+       },
+       {
+        "text": "55–64",
+        "value": "55-64"
+       },
+       {
+        "text": "65+",
+        "value": "65+"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other",
+        "value": "other"
+       },
+       {
+        "text": "Prefer not to say",
+        "value": "prefer_not_to_say"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "live_in_london",
+      "type": "radiogroup",
+      "title": "Do you live in London?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "UrbanGems: Beautiful, Quiet, Happy? (London)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-b2d0dfddc43186cb",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>UrbanGems: Beautiful, Quiet, Happy? (London)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"UrbanGems: Beautiful, Quiet, Happy? (London)\",\n  \"description\": \"Pairs of London street views compared on beauty, quiet and happiness. Method replication of Quercia, O'Hare & Cramer (2014, CSCW), the UrbanGems crowdsourcing study.\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"beautiful\",\n      \"title\": \"Which place is more beautiful?\",\n      \"imageCount\": 2,\n      \"trialCount\": 4,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"london\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"imageFit\": \"cover\",\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_2\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"quiet\",\n      \"title\": \"Which place is more quiet?\",\n      \"imageCount\": 2,\n      \"trialCount\": 3,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"london\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"imageFit\": \"cover\",\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_3\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"happy\",\n      \"title\": \"Which place is more happy?\",\n      \"imageCount\": 2,\n      \"trialCount\": 3,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"london\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"imageFit\": \"cover\",\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"18-24\",\n        \"text\": \"18–24\"\n       },\n       {\n        \"value\": \"25-34\",\n        \"text\": \"25–34\"\n       },\n       {\n        \"value\": \"35-44\",\n        \"text\": \"35–44\"\n       },\n       {\n        \"value\": \"45-54\",\n        \"text\": \"45–54\"\n       },\n       {\n        \"value\": \"55-64\",\n        \"text\": \"55–64\"\n       },\n       {\n        \"value\": \"65+\",\n        \"text\": \"65+\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other\"\n       },\n       {\n        \"value\": \"prefer_not_to_say\",\n        \"text\": \"Prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"live_in_london\",\n      \"title\": \"Do you live in London?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#3d4e8a;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: London, Google Street View (© Google). Task from Quercia, O'Hare &amp; Cramer (2014), Aesthetic capital, Proc. CSCW 2014, 945–955, doi:10.1145/2531602.2531613.</footer>\n<script>\n(function(){\n  var C={\"before\": [], \"after\": [\"age_group\", \"gender\", \"live_in_london\"], \"tasks\": [\"beautiful\", \"quiet\", \"happy\"], \"minutes\": 3, \"alt\": \"Street view in London\", \"labels\": {}, \"pickOne\": null, \"heading\": \"Which London place is more beautiful?\", \"intro\": \"<p>You will see pairs of street views from London. For each pair, click the place you think is <b>more beautiful</b>, then <b>more quiet</b>, then <b>more happy</b>. One round has 10 pairs.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?'Pair ':'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(lab?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T05:35:54.299Z",
+   "mediaFolders": [
+    "london"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T05:35:54.299Z"
+  },
+  "description": "Pairs of London street views compared on beauty, quiet and happiness. Method replication of Quercia, O'Hare & Cramer (2014, CSCW), the UrbanGems crowdsourcing study.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_01__310710e4-2430-42ae-b773-6b0be0f58feb.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_01__310710e4-2430-42ae-b773-6b0be0f58feb.jpg",
+   "name": "london_01.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_01__310710e4-2430-42ae-b773-6b0be0f58feb.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 204360,
+   "uploaded_bytes": 204360,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_02__b29ee00d-4067-481a-9738-35660169cbc6.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_02__b29ee00d-4067-481a-9738-35660169cbc6.jpg",
+   "name": "london_02.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_02__b29ee00d-4067-481a-9738-35660169cbc6.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 151757,
+   "uploaded_bytes": 151757,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_03__db0ea6f1-94b7-4b67-8636-bfd53cdf7ece.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_03__db0ea6f1-94b7-4b67-8636-bfd53cdf7ece.jpg",
+   "name": "london_03.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_03__db0ea6f1-94b7-4b67-8636-bfd53cdf7ece.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 201390,
+   "uploaded_bytes": 201390,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_04__e2a6789c-0f30-4416-a774-b100ffbf5eaf.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_04__e2a6789c-0f30-4416-a774-b100ffbf5eaf.jpg",
+   "name": "london_04.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_04__e2a6789c-0f30-4416-a774-b100ffbf5eaf.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 168740,
+   "uploaded_bytes": 168740,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_05__e13e64aa-fd73-4311-96ab-bcf98e9bb3d9.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_05__e13e64aa-fd73-4311-96ab-bcf98e9bb3d9.jpg",
+   "name": "london_05.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_05__e13e64aa-fd73-4311-96ab-bcf98e9bb3d9.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 174937,
+   "uploaded_bytes": 174937,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_06__cf889efa-815d-420d-8ea2-fdff26d60de4.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_06__cf889efa-815d-420d-8ea2-fdff26d60de4.jpg",
+   "name": "london_06.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_06__cf889efa-815d-420d-8ea2-fdff26d60de4.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 202787,
+   "uploaded_bytes": 202787,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_07__f6bcc806-f3c0-4b63-a7d3-8159cbfca498.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_07__f6bcc806-f3c0-4b63-a7d3-8159cbfca498.jpg",
+   "name": "london_07.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_07__f6bcc806-f3c0-4b63-a7d3-8159cbfca498.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 185096,
+   "uploaded_bytes": 185096,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_08__2f07565a-af4a-47b6-ae42-edac1e07f2b7.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_08__2f07565a-af4a-47b6-ae42-edac1e07f2b7.jpg",
+   "name": "london_08.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_08__2f07565a-af4a-47b6-ae42-edac1e07f2b7.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 161153,
+   "uploaded_bytes": 161153,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_09__34e4babd-c14b-41c9-831e-67fda1938f44.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_09__34e4babd-c14b-41c9-831e-67fda1938f44.jpg",
+   "name": "london_09.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_09__34e4babd-c14b-41c9-831e-67fda1938f44.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 132144,
+   "uploaded_bytes": 132144,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_10__bfb5580c-42db-4514-8f37-6e3527523e60.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_10__bfb5580c-42db-4514-8f37-6e3527523e60.jpg",
+   "name": "london_10.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_10__bfb5580c-42db-4514-8f37-6e3527523e60.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 134308,
+   "uploaded_bytes": 134308,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_11__0a5c5d4f-e4f5-4b36-a607-068dcac03482.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_11__0a5c5d4f-e4f5-4b36-a607-068dcac03482.jpg",
+   "name": "london_11.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_11__0a5c5d4f-e4f5-4b36-a607-068dcac03482.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 190662,
+   "uploaded_bytes": 190662,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_12__d66e1448-2930-4ed0-86a0-8a2a83e3daf4.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_12__d66e1448-2930-4ed0-86a0-8a2a83e3daf4.jpg",
+   "name": "london_12.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_12__d66e1448-2930-4ed0-86a0-8a2a83e3daf4.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 159629,
+   "uploaded_bytes": 159629,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_13__258c0163-3322-4b32-b76f-14799080c5cf.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_13__258c0163-3322-4b32-b76f-14799080c5cf.jpg",
+   "name": "london_13.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_13__258c0163-3322-4b32-b76f-14799080c5cf.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 159203,
+   "uploaded_bytes": 159203,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_14__2071c063-f951-40ce-bfac-e3a3851e9524.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_14__2071c063-f951-40ce-bfac-e3a3851e9524.jpg",
+   "name": "london_14.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_14__2071c063-f951-40ce-bfac-e3a3851e9524.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 163086,
+   "uploaded_bytes": 163086,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_15__4baf83cb-f78d-4c0e-9f8b-e757533af6a3.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_15__4baf83cb-f78d-4c0e-9f8b-e757533af6a3.jpg",
+   "name": "london_15.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_15__4baf83cb-f78d-4c0e-9f8b-e757533af6a3.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 139230,
+   "uploaded_bytes": 139230,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_16__6889eff4-3654-4210-9c37-7da066bdeeeb.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_16__6889eff4-3654-4210-9c37-7da066bdeeeb.jpg",
+   "name": "london_16.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_16__6889eff4-3654-4210-9c37-7da066bdeeeb.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 118838,
+   "uploaded_bytes": 118838,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_17__33b0ffab-f29b-45de-b421-987117468703.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_17__33b0ffab-f29b-45de-b421-987117468703.jpg",
+   "name": "london_17.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_17__33b0ffab-f29b-45de-b421-987117468703.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 152098,
+   "uploaded_bytes": 152098,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_18__32ab9898-61c7-4cf3-a4bf-3db25470a14d.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_18__32ab9898-61c7-4cf3-a4bf-3db25470a14d.jpg",
+   "name": "london_18.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_18__32ab9898-61c7-4cf3-a4bf-3db25470a14d.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 158397,
+   "uploaded_bytes": 158397,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_19__dfcc1a9b-63a0-41c7-877c-318d9dd1d55f.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_19__dfcc1a9b-63a0-41c7-877c-318d9dd1d55f.jpg",
+   "name": "london_19.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_19__dfcc1a9b-63a0-41c7-877c-318d9dd1d55f.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 139021,
+   "uploaded_bytes": 139021,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_20__65689736-c778-4e2a-9387-8a9d9b16747c.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_20__65689736-c778-4e2a-9387-8a9d9b16747c.jpg",
+   "name": "london_20.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_20__65689736-c778-4e2a-9387-8a9d9b16747c.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 161618,
+   "uploaded_bytes": 161618,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_21__9049e042-6fbb-4ef5-8a6b-5201133b7f48.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_21__9049e042-6fbb-4ef5-8a6b-5201133b7f48.jpg",
+   "name": "london_21.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_21__9049e042-6fbb-4ef5-8a6b-5201133b7f48.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 163796,
+   "uploaded_bytes": 163796,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_22__575d67eb-7d2e-4678-9b18-026806c5f9d9.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_22__575d67eb-7d2e-4678-9b18-026806c5f9d9.jpg",
+   "name": "london_22.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_22__575d67eb-7d2e-4678-9b18-026806c5f9d9.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 213719,
+   "uploaded_bytes": 213719,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_23__3e235f18-7436-454d-bcb7-eabf7ab429b6.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_23__3e235f18-7436-454d-bcb7-eabf7ab429b6.jpg",
+   "name": "london_23.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_23__3e235f18-7436-454d-bcb7-eabf7ab429b6.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 179091,
+   "uploaded_bytes": 179091,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_24__5526aabf-b5f2-4e6d-bd35-fc54988e2aa5.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_24__5526aabf-b5f2-4e6d-bd35-fc54988e2aa5.jpg",
+   "name": "london_24.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_24__5526aabf-b5f2-4e6d-bd35-fc54988e2aa5.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 147826,
+   "uploaded_bytes": 147826,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_25__c48a0331-cbca-4671-9792-d8f18fcb462c.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_25__c48a0331-cbca-4671-9792-d8f18fcb462c.jpg",
+   "name": "london_25.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_25__c48a0331-cbca-4671-9792-d8f18fcb462c.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 194133,
+   "uploaded_bytes": 194133,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_26__1b5b8ab6-3861-454b-bfd2-73297e10bc82.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_26__1b5b8ab6-3861-454b-bfd2-73297e10bc82.jpg",
+   "name": "london_26.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_26__1b5b8ab6-3861-454b-bfd2-73297e10bc82.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 152699,
+   "uploaded_bytes": 152699,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_27__e79e3356-43de-441e-b367-af13ea2411ce.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_27__e79e3356-43de-441e-b367-af13ea2411ce.jpg",
+   "name": "london_27.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_27__e79e3356-43de-441e-b367-af13ea2411ce.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 143330,
+   "uploaded_bytes": 143330,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_28__de36def9-bad8-43ab-b5bb-3cc8fbd1cab1.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_28__de36def9-bad8-43ab-b5bb-3cc8fbd1cab1.jpg",
+   "name": "london_28.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_28__de36def9-bad8-43ab-b5bb-3cc8fbd1cab1.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 125629,
+   "uploaded_bytes": 125629,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_29__50b5e8af-c9c9-419d-a443-7eb4516db898.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_29__50b5e8af-c9c9-419d-a443-7eb4516db898.jpg",
+   "name": "london_29.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_29__50b5e8af-c9c9-419d-a443-7eb4516db898.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 154715,
+   "uploaded_bytes": 154715,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_30__ea6402eb-201a-4117-9e76-1a2be722fc83.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_30__ea6402eb-201a-4117-9e76-1a2be722fc83.jpg",
+   "name": "london_30.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_30__ea6402eb-201a-4117-9e76-1a2be722fc83.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 156440,
+   "uploaded_bytes": 156440,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_31__3e36ac9c-0470-40e0-bef9-e135ff402a6c.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_31__3e36ac9c-0470-40e0-bef9-e135ff402a6c.jpg",
+   "name": "london_31.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_31__3e36ac9c-0470-40e0-bef9-e135ff402a6c.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 145667,
+   "uploaded_bytes": 145667,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_32__3cefbf63-23c5-4b84-b45b-7d0acf8e4d7a.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_32__3cefbf63-23c5-4b84-b45b-7d0acf8e4d7a.jpg",
+   "name": "london_32.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_32__3cefbf63-23c5-4b84-b45b-7d0acf8e4d7a.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 150252,
+   "uploaded_bytes": 150252,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_33__b722a608-d940-48b7-983f-8d2247b52566.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_33__b722a608-d940-48b7-983f-8d2247b52566.jpg",
+   "name": "london_33.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_33__b722a608-d940-48b7-983f-8d2247b52566.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 149328,
+   "uploaded_bytes": 149328,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_34__0c2fc98e-5bc9-4dca-b84e-e9aba3203f32.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_34__0c2fc98e-5bc9-4dca-b84e-e9aba3203f32.jpg",
+   "name": "london_34.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_34__0c2fc98e-5bc9-4dca-b84e-e9aba3203f32.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 158196,
+   "uploaded_bytes": 158196,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_35__da52597d-24bf-4bac-8ed5-92a6c667eb7a.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_35__da52597d-24bf-4bac-8ed5-92a6c667eb7a.jpg",
+   "name": "london_35.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_35__da52597d-24bf-4bac-8ed5-92a6c667eb7a.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 170582,
+   "uploaded_bytes": 170582,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_36__983d70d4-9d55-4083-8852-cd37b3b3f61d.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_36__983d70d4-9d55-4083-8852-cd37b3b3f61d.jpg",
+   "name": "london_36.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_36__983d70d4-9d55-4083-8852-cd37b3b3f61d.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 149591,
+   "uploaded_bytes": 149591,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_37__1275df32-3cc3-4fbb-ad48-e1a28035934d.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_37__1275df32-3cc3-4fbb-ad48-e1a28035934d.jpg",
+   "name": "london_37.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_37__1275df32-3cc3-4fbb-ad48-e1a28035934d.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 215467,
+   "uploaded_bytes": 215467,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_38__008f55e7-7035-4e54-9510-94b9212d3175.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_38__008f55e7-7035-4e54-9510-94b9212d3175.jpg",
+   "name": "london_38.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_38__008f55e7-7035-4e54-9510-94b9212d3175.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 149889,
+   "uploaded_bytes": 149889,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_39__5192acfb-b9c6-4d3e-a16f-266c200b96f1.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_39__5192acfb-b9c6-4d3e-a16f-266c200b96f1.jpg",
+   "name": "london_39.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_39__5192acfb-b9c6-4d3e-a16f-266c200b96f1.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 199732,
+   "uploaded_bytes": 199732,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_40__04f3855c-25c3-4f1e-9875-0c9150a6869d.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_40__04f3855c-25c3-4f1e-9875-0c9150a6869d.jpg",
+   "name": "london_40.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_40__04f3855c-25c3-4f1e-9875-0c9150a6869d.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 180173,
+   "uploaded_bytes": 180173,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_41__1e4c8941-f416-4e5a-807e-6359e2f3c007.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_41__1e4c8941-f416-4e5a-807e-6359e2f3c007.jpg",
+   "name": "london_41.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_41__1e4c8941-f416-4e5a-807e-6359e2f3c007.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 158344,
+   "uploaded_bytes": 158344,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_42__590300bd-0b34-4c66-bfc7-3cd538200585.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_42__590300bd-0b34-4c66-bfc7-3cd538200585.jpg",
+   "name": "london_42.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_42__590300bd-0b34-4c66-bfc7-3cd538200585.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 118743,
+   "uploaded_bytes": 118743,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_43__7af93f63-30a6-434d-b13f-f94d9617ec55.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_43__7af93f63-30a6-434d-b13f-f94d9617ec55.jpg",
+   "name": "london_43.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_43__7af93f63-30a6-434d-b13f-f94d9617ec55.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 211675,
+   "uploaded_bytes": 211675,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_44__c9902c58-e946-47f1-ab0f-bf8f196ffe0e.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_44__c9902c58-e946-47f1-ab0f-bf8f196ffe0e.jpg",
+   "name": "london_44.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_44__c9902c58-e946-47f1-ab0f-bf8f196ffe0e.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 172931,
+   "uploaded_bytes": 172931,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_45__b3b41220-926f-453b-a4c1-88f7a8d1d6c0.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_45__b3b41220-926f-453b-a4c1-88f7a8d1d6c0.jpg",
+   "name": "london_45.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_45__b3b41220-926f-453b-a4c1-88f7a8d1d6c0.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 136058,
+   "uploaded_bytes": 136058,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_46__e905ecb7-6a4b-495c-b843-0a0ec70eb30f.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_46__e905ecb7-6a4b-495c-b843-0a0ec70eb30f.jpg",
+   "name": "london_46.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_46__e905ecb7-6a4b-495c-b843-0a0ec70eb30f.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 160489,
+   "uploaded_bytes": 160489,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_47__9815e7da-3659-4af5-a044-226c602f71e9.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_47__9815e7da-3659-4af5-a044-226c602f71e9.jpg",
+   "name": "london_47.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_47__9815e7da-3659-4af5-a044-226c602f71e9.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 140159,
+   "uploaded_bytes": 140159,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_48__d1fd9582-4813-45b3-b14e-01e1fb7134fe.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_48__d1fd9582-4813-45b3-b14e-01e1fb7134fe.jpg",
+   "name": "london_48.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_48__d1fd9582-4813-45b3-b14e-01e1fb7134fe.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 129392,
+   "uploaded_bytes": 129392,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_49__1b4615da-107a-4fba-8883-01dfd4c37979.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_49__1b4615da-107a-4fba-8883-01dfd4c37979.jpg",
+   "name": "london_49.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_49__1b4615da-107a-4fba-8883-01dfd4c37979.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 141246,
+   "uploaded_bytes": 141246,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_50__41469f7e-abd5-4224-aa46-1c527ad0708e.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_50__41469f7e-abd5-4224-aa46-1c527ad0708e.jpg",
+   "name": "london_50.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_50__41469f7e-abd5-4224-aa46-1c527ad0708e.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 187040,
+   "uploaded_bytes": 187040,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_51__99ed16f3-f1e8-4123-b959-53c206e20904.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_51__99ed16f3-f1e8-4123-b959-53c206e20904.jpg",
+   "name": "london_51.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_51__99ed16f3-f1e8-4123-b959-53c206e20904.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 129581,
+   "uploaded_bytes": 129581,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_52__c9affb46-8f55-4d7d-8ccf-4b3f58b16a5b.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_52__c9affb46-8f55-4d7d-8ccf-4b3f58b16a5b.jpg",
+   "name": "london_52.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_52__c9affb46-8f55-4d7d-8ccf-4b3f58b16a5b.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 162450,
+   "uploaded_bytes": 162450,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_53__406e3f30-6146-44dc-960d-8c0e62fb3c4f.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_53__406e3f30-6146-44dc-960d-8c0e62fb3c4f.jpg",
+   "name": "london_53.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_53__406e3f30-6146-44dc-960d-8c0e62fb3c4f.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 162566,
+   "uploaded_bytes": 162566,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_54__24d2a1c6-d1b1-4be8-80d8-b8ceccab5642.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_54__24d2a1c6-d1b1-4be8-80d8-b8ceccab5642.jpg",
+   "name": "london_54.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_54__24d2a1c6-d1b1-4be8-80d8-b8ceccab5642.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 168254,
+   "uploaded_bytes": 168254,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_55__153e3a6f-a4da-4f06-baa9-858e282ce1cf.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_55__153e3a6f-a4da-4f06-baa9-858e282ce1cf.jpg",
+   "name": "london_55.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_55__153e3a6f-a4da-4f06-baa9-858e282ce1cf.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 157276,
+   "uploaded_bytes": 157276,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_56__7be7aaea-ba5b-4162-8d86-50139ee1eb16.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_56__7be7aaea-ba5b-4162-8d86-50139ee1eb16.jpg",
+   "name": "london_56.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_56__7be7aaea-ba5b-4162-8d86-50139ee1eb16.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 190658,
+   "uploaded_bytes": 190658,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_57__13576bd5-ccd3-4e51-8183-40cc409258af.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_57__13576bd5-ccd3-4e51-8183-40cc409258af.jpg",
+   "name": "london_57.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_57__13576bd5-ccd3-4e51-8183-40cc409258af.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 154059,
+   "uploaded_bytes": 154059,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_58__4379ff18-ac0e-4d87-bf42-f1f2c11394d5.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_58__4379ff18-ac0e-4d87-bf42-f1f2c11394d5.jpg",
+   "name": "london_58.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_58__4379ff18-ac0e-4d87-bf42-f1f2c11394d5.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 175487,
+   "uploaded_bytes": 175487,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_59__dcf32939-2baf-4959-9eff-4bb1dbce04b0.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_59__dcf32939-2baf-4959-9eff-4bb1dbce04b0.jpg",
+   "name": "london_59.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_59__dcf32939-2baf-4959-9eff-4bb1dbce04b0.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 228585,
+   "uploaded_bytes": 228585,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_60__e5a29034-1125-4f90-bfa2-51900207f272.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_60__e5a29034-1125-4f90-bfa2-51900207f272.jpg",
+   "name": "london_60.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_60__e5a29034-1125-4f90-bfa2-51900207f272.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 144181,
+   "uploaded_bytes": 144181,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_61__39b5a7c1-97cf-4fd5-811f-374bb072b15e.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_61__39b5a7c1-97cf-4fd5-811f-374bb072b15e.jpg",
+   "name": "london_61.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_61__39b5a7c1-97cf-4fd5-811f-374bb072b15e.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 165580,
+   "uploaded_bytes": 165580,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_62__542dd246-dbbb-4a9b-a6b3-a77994c5ad52.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_62__542dd246-dbbb-4a9b-a6b3-a77994c5ad52.jpg",
+   "name": "london_62.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_62__542dd246-dbbb-4a9b-a6b3-a77994c5ad52.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 207852,
+   "uploaded_bytes": 207852,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2014-quercia-aesthetic/london/london_63__36fc32a0-13d0-45e5-a9fc-65d9eeaac126.jpg",
+   "url": "https://media.sp-survey.org/templates/2014-quercia-aesthetic/london/london_63__36fc32a0-13d0-45e5-a9fc-65d9eeaac126.jpg",
+   "name": "london_63.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2014-quercia-aesthetic/london/london_63__36fc32a0-13d0-45e5-a9fc-65d9eeaac126.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 174145,
+   "uploaded_bytes": 174145,
+   "image_compressed": false
   }
+ ],
+ "paper": {
+  "title": "Aesthetic capital",
+  "authors": [
+   "Quercia D.",
+   "O'Hare N.K.",
+   "Cramer H."
+  ],
+  "year": 2014,
+  "venue": "Proceedings of the 17th ACM conference on Computer supported cooperative work & social computing",
+  "doi": "10.1145/2531602.2531613",
+  "url": "https://doi.org/10.1145/2531602.2531613"
+ }
 }

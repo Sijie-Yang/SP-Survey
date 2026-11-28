@@ -1,0 +1,50 @@
+# Archives the media (images, video, audio) of every template as release assets.
+# The template files themselves live in public/project_templates/; their media
+# stay online at media.sp-survey.org and are copied here once a month so that
+# the library survives on GitHub. Assets: media-part-N.zip, each holding
+# <template id>/media/<folder>/<file>.
+name: Template media archive
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '40 3 2 * *' # the 2nd of each month, after the monthly template sync
+
+permissions:
+  contents: write
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Download the media of every template
+        run: node scripts/sync-templates.mjs --media-only
+      - name: Pack into parts of at most 1.5 GB
+        working-directory: public/project_templates
+        run: |
+          mkdir -p "$RUNNER_TEMP/parts"
+          part=1; size=0; : > list.txt
+          for dir in */media; do
+            bytes=$(du -sb "$dir" | cut -f1)
+            if [ "$size" -gt 0 ] && [ $((size + bytes)) -gt 1500000000 ]; then
+              zip -q -0 -r "$RUNNER_TEMP/parts/media-part-$part.zip" -@ < list.txt
+              part=$((part + 1)); size=0; : > list.txt
+            fi
+            echo "$dir" >> list.txt; size=$((size + bytes))
+          done
+          [ -s list.txt ] && zip -q -0 -r "$RUNNER_TEMP/parts/media-part-$part.zip" -@ < list.txt
+          ls -lh "$RUNNER_TEMP/parts"
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="templates-$(date -u +%Y-%m)"
+          count=$(ls public/project_templates/*/media -d | wc -l)
+          notes="Media files of $count templates, as of $(date -u +%Y-%m-%d). Unzip every part into public/project_templates/. The templates themselves are in the repository."
+          gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --title "Template media $(date -u +%Y-%m)" --notes "$notes" --latest=false
+          gh release upload "$tag" "$RUNNER_TEMP"/parts/*.zip --clobber

@@ -1,0 +1,681 @@
+{
+ "id": "2022-mundher-historic",
+ "name": "Historic Street Scenes: Visual Quality Rating and Element Tap (Baghdad)",
+ "description": "Faithful replication with the original photographs: 32 photographs of Al-Rasheed Street, a historic street in Baghdad, Iraq, taken with a mobile camera about 50 m apart along the street from Hafiz Al-Qadhi Square to Al-Maydan Square. Participants answer the paper's seven demographic questions with its answer categories from Table 1 (gender, marital status, age group, educational level, living area, monthly income in Iraqi dinars, and how often they visited Al-Rashid Street during the previous year), then see the 32 photographs one at a time in random order, as in the paper. For each photograph they rate its visual quality on the paper's 5-point Likert scale from -2 (highly bad scene) to +2 (highly nice scene), and then tap the element inside the photograph that has an impact on their visual quality assessment, as in the paper's second subsection. Rebuilt from Mundher, Al-Sharaa, Al-Helli, Gao & Abu Bakar (2022), Visual Quality Assessment of Historical Street Scenes: A Case Study of the First \"Real\" Street Established in Baghdad, Heritage 5(4): 3680-3704, with the photographs from its Appendix A and the method from Section 2.3 (CC BY 4.0). Image ids: V01-V32 as coded in the paper; ratings are in quality and tap positions in element (x and y as fractions of the photograph's width and height from the top left), both keyed by image id; the paper's mean rating for each photograph is stored in the page's original-study block. Analysis as in the paper: mean visual quality per photograph, split into positive and negative scenes; a heatmap of tap density on each photograph to find the elements behind the ratings; and Mann-Whitney U tests of the ratings across demographic groups. The paper (225 completed responses from Baghdad, recruited on social media) found only 7 photographs rated positive (best V06, +0.48, and V07, +0.42) and 25 negative (worst V18, -1.29, and V12, -1.24); modern facade materials, security concrete walls and degraded facades lowered visual quality, while historical religious buildings, urban greenery and unique historical buildings raised it, and women and men rated the scenes differently. Differences from the original study: (1) the paper ran the survey on Qualtrics with a click heatmap question; here the tap is recorded as one point per photograph, from which a heatmap can be drawn; (2) the paper added two dummy photographs at the beginning and the end whose answers were discarded; they are not printed and are left out here; (3) the question wording, the labels of the three middle scale points and the instruction text are ours, because the paper describes them without printing them; the demographic questions use the paper's categories and, for the last one, its wording; (4) the paper limited participation to Baghdad; here anyone can take part; (5) the photographs are the appendix copies (about 455 x 256 px).",
+ "author": "Mundher et al.",
+ "year": "2022",
+ "category": "Academic Research",
+ "tags": [
+  "faithful-replication",
+  "official",
+  "paper",
+  "heritage",
+  "street",
+  "visual-quality",
+  "rating",
+  "click-heatmap",
+  "Baghdad",
+  "source:paper",
+  "modality:scene_photo",
+  "task:rating",
+  "task:map_annotation",
+  "concept:aesthetics",
+  "concept:building_facade",
+  "concept:place",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:Iraq",
+  "city:Baghdad"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/heritage5040192",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T00:25:35.18+00:00",
+ "updatedAt": "2026-11-28T00:26:29.139+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Female",
+        "value": "female"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "marital",
+      "type": "radiogroup",
+      "title": "Marital status",
+      "choices": [
+       {
+        "text": "Single",
+        "value": "single"
+       },
+       {
+        "text": "Married",
+        "value": "married"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "age",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "18-27",
+        "value": "18_27"
+       },
+       {
+        "text": "28-37",
+        "value": "28_37"
+       },
+       {
+        "text": "38-47",
+        "value": "38_47"
+       },
+       {
+        "text": "48-57",
+        "value": "48_57"
+       },
+       {
+        "text": "58-70",
+        "value": "58_70"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "Educational level",
+      "choices": [
+       {
+        "text": "High school",
+        "value": "high_school"
+       },
+       {
+        "text": "Undergraduate / Bachelor's degree",
+        "value": "bachelor"
+       },
+       {
+        "text": "Postgraduate / Master's or Ph.D. degree",
+        "value": "postgraduate"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "living",
+      "type": "radiogroup",
+      "title": "Living area",
+      "choices": [
+       {
+        "text": "Semi-urban area",
+        "value": "semi_urban"
+       },
+       {
+        "text": "Historical urban area",
+        "value": "historical_urban"
+       },
+       {
+        "text": "Modern urban area",
+        "value": "modern_urban"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "income",
+      "type": "radiogroup",
+      "title": "Monthly income (IQD)",
+      "choices": [
+       {
+        "text": "0-499,000",
+        "value": "0_499k"
+       },
+       {
+        "text": "500,000-999,000",
+        "value": "500k_999k"
+       },
+       {
+        "text": "1,000,000-1,499,000",
+        "value": "1m_1499k"
+       },
+       {
+        "text": "1,500,000-1,999,000",
+        "value": "1500k_1999k"
+       },
+       {
+        "text": "2,000,000 and above",
+        "value": "2m_above"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "visits",
+      "type": "radiogroup",
+      "title": "How often did you visit Al-Rashid Street during the previous year?",
+      "choices": [
+       {
+        "text": "Did not visit",
+        "value": "none"
+       },
+       {
+        "text": "1-2 times",
+        "value": "1_2"
+       },
+       {
+        "text": "3 times or more",
+        "value": "3_more"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "photos",
+    "elements": [
+     {
+      "name": "quality",
+      "type": "radiogroup",
+      "title": "How would you rate the visual quality of this scene?",
+      "choices": [
+       {
+        "text": "-2 Highly bad scene",
+        "value": -2
+       },
+       {
+        "text": "-1 Bad scene",
+        "value": -1
+       },
+       {
+        "text": "0 Neutral",
+        "value": 0
+       },
+       {
+        "text": "+1 Nice scene",
+        "value": 1
+       },
+       {
+        "text": "+2 Highly nice scene",
+        "value": 2
+       }
+      ],
+      "isRequired": true,
+      "description": "5-point Likert scale from -2 (highly bad scene) to +2 (highly nice scene), stored as a number. Keyed by image id.",
+      "maxRateDescription": "Highly nice scene",
+      "minRateDescription": "Highly bad scene"
+     },
+     {
+      "name": "element",
+      "type": "text",
+      "title": "Tap the element in the photograph that has an impact on your visual quality assessment.",
+      "isRequired": true,
+      "description": "Tap position as {x, y}, fractions of the photograph's width and height from the top left. Keyed by image id."
+     }
+    ]
+   }
+  ],
+  "title": "Historic Street Scenes",
+  "locale": "en",
+  "spSite": {
+   "id": "site-cc9a59642ea72278",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Historic Street Scenes</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Historic Street Scenes\",\n  \"description\": \"Faithful replication with the original photographs: 32 photographs of Al-Rasheed Street, a historic street in Baghdad, Iraq, taken with a mobile camera about 50 m apart along the street from Hafiz Al-Qadhi Square to Al-Maydan Square. Participants answer the paper's seven demographic questions with its answer categories from Table 1 (gender, marital status, age group, educational level, living area, monthly income in Iraqi dinars, and how often they visited Al-Rashid Street during the previous year), then see the 32 photographs one at a time in random order, as in the paper. For each photograph they rate its visual quality on the paper's 5-point Likert scale from -2 (highly bad scene) to +2 (highly nice scene), and then tap the element inside the photograph that has an impact on their visual quality assessment, as in the paper's second subsection. Rebuilt from Mundher, Al-Sharaa, Al-Helli, Gao & Abu Bakar (2022), Visual Quality Assessment of Historical Street Scenes: A Case Study of the First \\\"Real\\\" Street Established in Baghdad, Heritage 5(4): 3680-3704, with the photographs from its Appendix A and the method from Section 2.3 (CC BY 4.0). Image ids: V01-V32 as coded in the paper; ratings are in quality and tap positions in element (x and y as fractions of the photograph's width and height from the top left), both keyed by image id; the paper's mean rating for each photograph is stored in the page's original-study block. Analysis as in the paper: mean visual quality per photograph, split into positive and negative scenes; a heatmap of tap density on each photograph to find the elements behind the ratings; and Mann-Whitney U tests of the ratings across demographic groups. The paper (225 completed responses from Baghdad, recruited on social media) found only 7 photographs rated positive (best V06, +0.48, and V07, +0.42) and 25 negative (worst V18, -1.29, and V12, -1.24); modern facade materials, security concrete walls and degraded facades lowered visual quality, while historical religious buildings, urban greenery and unique historical buildings raised it, and women and men rated the scenes differently. Differences from the original study: (1) the paper ran the survey on Qualtrics with a click heatmap question; here the tap is recorded as one point per photograph, from which a heatmap can be drawn; (2) the paper added two dummy photographs at the beginning and the end whose answers were discarded; they are not printed and are left out here; (3) the question wording, the labels of the three middle scale points and the instruction text are ours, because the paper describes them without printing them; the demographic questions use the paper's categories and, for the last one, its wording; (4) the paper limited participation to Baghdad; here anyone can take part; (5) the photographs are the appendix copies (about 455 x 256 px).\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"photos\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"marital\",\n      \"title\": \"Marital status\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"single\",\n        \"text\": \"Single\"\n       },\n       {\n        \"value\": \"married\",\n        \"text\": \"Married\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"18_27\",\n        \"text\": \"18-27\"\n       },\n       {\n        \"value\": \"28_37\",\n        \"text\": \"28-37\"\n       },\n       {\n        \"value\": \"38_47\",\n        \"text\": \"38-47\"\n       },\n       {\n        \"value\": \"48_57\",\n        \"text\": \"48-57\"\n       },\n       {\n        \"value\": \"58_70\",\n        \"text\": \"58-70\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"Educational level\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"high_school\",\n        \"text\": \"High school\"\n       },\n       {\n        \"value\": \"bachelor\",\n        \"text\": \"Undergraduate / Bachelor's degree\"\n       },\n       {\n        \"value\": \"postgraduate\",\n        \"text\": \"Postgraduate / Master's or Ph.D. degree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"living\",\n      \"title\": \"Living area\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"semi_urban\",\n        \"text\": \"Semi-urban area\"\n       },\n       {\n        \"value\": \"historical_urban\",\n        \"text\": \"Historical urban area\"\n       },\n       {\n        \"value\": \"modern_urban\",\n        \"text\": \"Modern urban area\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"income\",\n      \"title\": \"Monthly income (IQD)\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"0_499k\",\n        \"text\": \"0-499,000\"\n       },\n       {\n        \"value\": \"500k_999k\",\n        \"text\": \"500,000-999,000\"\n       },\n       {\n        \"value\": \"1m_1499k\",\n        \"text\": \"1,000,000-1,499,000\"\n       },\n       {\n        \"value\": \"1500k_1999k\",\n        \"text\": \"1,500,000-1,999,000\"\n       },\n       {\n        \"value\": \"2m_above\",\n        \"text\": \"2,000,000 and above\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"visits\",\n      \"title\": \"How often did you visit Al-Rashid Street during the previous year?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"none\",\n        \"text\": \"Did not visit\"\n       },\n       {\n        \"value\": \"1_2\",\n        \"text\": \"1-2 times\"\n       },\n       {\n        \"value\": \"3_more\",\n        \"text\": \"3 times or more\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"photos\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"quality\",\n      \"title\": \"How would you rate the visual quality of this scene?\",\n      \"isRequired\": true,\n      \"description\": \"5-point Likert scale from -2 (highly bad scene) to +2 (highly nice scene), stored as a number. Keyed by image id.\",\n      \"choices\": [\n       {\n        \"value\": -2,\n        \"text\": \"-2 Highly bad scene\"\n       },\n       {\n        \"value\": -1,\n        \"text\": \"-1 Bad scene\"\n       },\n       {\n        \"value\": 0,\n        \"text\": \"0 Neutral\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"+1 Nice scene\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"+2 Highly nice scene\"\n       }\n      ],\n      \"minRateDescription\": \"Highly bad scene\",\n      \"maxRateDescription\": \"Highly nice scene\"\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"element\",\n      \"title\": \"Tap the element in the photograph that has an impact on your visual quality assessment.\",\n      \"isRequired\": true,\n      \"description\": \"Tap position as {x, y}, fractions of the photograph's width and height from the top left. Keyed by image id.\"\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"bg-original\">{\"source\": \"Mundher, Al-Sharaa, Al-Helli, Gao & Abu Bakar (2022) Heritage 5(4): 3680-3704\", \"n\": 225, \"images\": [\"V01\", \"V02\", \"V03\", \"V04\", \"V05\", \"V06\", \"V07\", \"V08\", \"V09\", \"V10\", \"V11\", \"V12\", \"V13\", \"V14\", \"V15\", \"V16\", \"V17\", \"V18\", \"V19\", \"V20\", \"V21\", \"V22\", \"V23\", \"V24\", \"V25\", \"V26\", \"V27\", \"V28\", \"V29\", \"V30\", \"V31\", \"V32\"], \"meanQuality\": {\"V18\": -1.29, \"V12\": -1.24, \"V02\": -0.94, \"V14\": -0.93, \"V15\": -0.91, \"V32\": -0.9, \"V19\": -0.83, \"V31\": -0.81, \"V20\": -0.8, \"V01\": -0.75, \"V16\": -0.74, \"V17\": -0.71, \"V30\": -0.7, \"V13\": -0.69, \"V23\": -0.6, \"V10\": -0.6, \"V24\": -0.57, \"V29\": -0.52, \"V27\": -0.51, \"V21\": -0.51, \"V22\": -0.51, \"V09\": -0.32, \"V28\": -0.28, \"V11\": -0.26, \"V04\": -0.18, \"V25\": 0.1, \"V03\": 0.18, \"V26\": 0.2, \"V08\": 0.22, \"V05\": 0.31, \"V07\": 0.42, \"V06\": 0.48}}</script>\n<style>\n:root{--bg:#f3f1ee;--card:#fff;--ink:#21201c;--muted:#5f5b53;--accent:#4f6b2c;--line:#ddd8d0;--warn:#b3261e;--sel:#e6eedb}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:900px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.5rem;margin:0 0 8px}h2{font-size:1.08rem;margin:0 0 4px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:13px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.prog{font-size:.88rem;color:var(--muted);margin-bottom:8px}\n.prompt{font-size:.92rem;color:var(--muted);margin:6px 0 0;text-align:center}\n.scene{position:sticky;top:0;z-index:3;background:var(--bg);padding-bottom:6px}\n.scene img{max-width:100%;max-height:52vh;width:auto;height:auto;display:block;margin:0 auto;border-radius:10px}\n@media (max-height:700px),(max-width:600px){.scene{position:static}}\n.it{padding:10px 0;border-top:1px solid var(--line)}\n.it .st{font-weight:600;margin-bottom:6px;font-size:.96rem}\n.it .o{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}\n.it label{display:flex;justify-content:center;align-items:center;text-align:center;gap:4px;border:1px solid var(--line);border-radius:8px;padding:7px 4px;cursor:pointer;font-size:.84rem;line-height:1.25}\n.it label:has(input:checked){background:var(--sel);border-color:var(--accent)}\n.it label input{display:none}.it .an{display:flex;justify-content:space-between;font-size:.74rem;color:var(--muted);margin-top:3px}@media (max-width:480px){.it .o{gap:3px}.it label{padding:9px 0;font-size:.86rem}}\n.it .an{display:flex;justify-content:space-between;font-size:.74rem;color:var(--muted);margin-top:3px}\n.it.miss .o,.q.miss{outline:2px solid var(--warn);outline-offset:2px;border-radius:8px}\n.q{margin-top:16px}.q:first-child{margin-top:0}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput[type=text]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%;max-width:420px;margin-top:6px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:900px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n.ch label{justify-content:flex-start;text-align:left;padding:9px 12px;font-size:.9rem}\n.ch .o{grid-template-columns:1fr}\n.pic{position:relative;width:fit-content;max-width:100%;margin:0 auto}.pic img{display:block;max-width:100%;max-height:55vh;border-radius:10px;cursor:crosshair}\n.dot{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border:3px solid #fff;border-radius:50%;background:rgba(214,40,40,.85);box-shadow:0 0 0 2px rgba(0,0,0,.35);pointer-events:none}\n.dot[hidden]{display:none}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs and tasks: Mundher, Al-Sharaa, Al-Helli, Gao &amp; Abu Bakar (2022), Heritage 5(4): 3680–3704, Appendix A and Section 2.3 (doi:10.3390/heritage5040192, CC BY 4.0).</footer>\n<script>\n(function(){\n  var KEY='baghdad-street:state';\n  var ORIG=JSON.parse(document.getElementById('bg-original').textContent), ALL=ORIG.images;\n  var app=document.getElementById('app'), Q={}, files={}, st=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function send(list,b,next){if(b)b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}next();});}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function fresh(){return {step:'intro',order:shuffle(ALL),k:0};}\n  function chs(q){return (q.choices||[]).map(function(c){return typeof c==='string'?{value:c,text:c}:c;});}\n  function radios(n){return '<div class=\"q\" data-q=\"'+n+'\"><b>'+esc(Q[n].title)+'</b>'+chs(Q[n]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function intro(){\n    app.innerHTML='<h1>Historic street scenes</h1><p>You will see 32 photographs of a historic street, one at a time. For each photograph, rate its visual quality from −2 (highly bad scene) to +2 (highly nice scene), then tap the element in the photograph that has an impact on your rating. It takes about 6 minutes.</p>'+\n     '<div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      send([SPSite.answer('consent',true)],this,function(){st.step='about';save();route();});};\n  }\n  var BG=['gender','marital','age','education','living','income','visits'];\n  function about(){\n    app.innerHTML='<h2>About you</h2><div class=\"card\">'+BG.map(radios).join('<div style=\"margin-top:16px\"></div>')+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){var list=[];\n      for(var k=0;k<BG.length;k++){var n=BG[k],x=app.querySelector('input[name='+n+']:checked');if(!x){var el=app.querySelector('[data-q='+n+']');el.classList.add('miss');el.scrollIntoView({block:'center'});return err('Please answer: '+Q[n].title);}list.push(SPSite.answer(n,x.value));}\n      send(list,this,function(){st.step='photo';st.k=0;save();route();});};\n  }\n  function photo(){\n    if(st.k>=st.order.length){st.step='done';save();return route();}\n    var id=st.order[st.k],f=files[id],q=Q.quality,c=Q.element,pt=null,V=[-2,-1,0,1,2];\n    app.innerHTML='<div class=\"prog\">Photograph '+(st.k+1)+' of '+st.order.length+'</div><div class=\"pic\"><img alt=\"Photograph of a historic street\" id=\"pic\" src=\"'+esc(f.url)+'\"><span class=\"dot\" hidden></span></div>'+\n      '<div class=\"card\"><div class=\"it\" data-n=\"r\" style=\"border-top:0;padding-top:0\"><div class=\"st\">'+esc(q.title)+'</div><div class=\"o\">'+V.map(function(v){return '<label><input type=\"radio\" name=\"r\" value=\"'+v+'\">'+(v>0?'+':'')+(v<0?'−'+(-v):v)+'</label>';}).join('')+'</div><div class=\"an\"><span>−2 '+esc(q.minRateDescription||'Highly bad scene')+'</span><span>+2 '+esc(q.maxRateDescription||'Highly nice scene')+'</span></div></div>'+\n      '<div class=\"it\" data-n=\"c\"><div class=\"st\">'+esc(c.title)+'</div><p id=\"ptx\" style=\"margin:0;font-size:.9rem\">Tap the photograph above.</p></div></div>'+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">'+(st.k<st.order.length-1?'Next photograph':'Finish')+'</button></div><div class=\"err\"></div>';\n    var img=document.getElementById('pic'),dot=app.querySelector('.dot');\n    img.onclick=function(e){var b=img.getBoundingClientRect();pt={x:+((e.clientX-b.left)/b.width).toFixed(4),y:+((e.clientY-b.top)/b.height).toFixed(4)};\n      dot.hidden=false;dot.style.left=(pt.x*100)+'%';dot.style.top=(pt.y*100)+'%';document.getElementById('ptx').textContent='Marked. Tap again to move it.';\n      app.querySelector('[data-n=c]').classList.remove('miss');if(!app.querySelector('.miss'))err('');};\n    document.getElementById('go').onclick=function(){\n      var r=app.querySelector('input[name=r]:checked');\n      if(!r)app.querySelector('[data-n=r]').classList.add('miss');if(!pt)app.querySelector('[data-n=c]').classList.add('miss');\n      if(!r||!pt)return err(!r?'Please rate the photograph.':'Please tap the element in the photograph.');\n      send([SPSite.answer('quality',Number(r.value),{key:id,shown:[f.name]}),SPSite.answer('element',pt,{key:id,shown:[f.name]})],this,function(){st.k++;save();route();});};\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st.step='intro';save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  app.addEventListener('change',function(e){var r=e.target.closest&&(e.target.closest('.it')||e.target.closest('.q'));if(r){r.classList.remove('miss');if(!app.querySelector('.miss'))err('');}});\n  function route(){var s=st.step;window.scrollTo(0,0);if(s==='about')return about();if(s==='photo')return photo();if(s==='done')return finish();intro();}\n  SPSite.onReady(function(ctx){\n    ['consent','quality','element'].concat(BG).forEach(function(n){Q[n]=SPSite.getQuestion(n)||{name:n};});\n    (SPSite.getMedia('photos')||[]).forEach(function(f){files[f.name.replace(/\\.[^.]+$/,'')]=f;});\n    var need=ALL.filter(function(k){return !files[k];});\n    if(need.length){app.innerHTML='<h1>Images missing</h1><p>Upload '+esc(need.join(', '))+' (.jpg) to the media folder \"photos\".</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    var a=(ctx&&ctx.answers)||{};\n    if(!(st&&st.order)||a.consent!==true)st=fresh();\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T00:25:58.299Z",
+   "mediaFolders": [
+    "photos"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T00:25:58.299Z"
+  },
+  "description": "Faithful replication with the original photographs: 32 photographs of Al-Rasheed Street, a historic street in Baghdad, Iraq, taken with a mobile camera about 50 m apart along the street from Hafiz Al-Qadhi Square to Al-Maydan Square. Participants answer the paper's seven demographic questions with its answer categories from Table 1 (gender, marital status, age group, educational level, living area, monthly income in Iraqi dinars, and how often they visited Al-Rashid Street during the previous year), then see the 32 photographs one at a time in random order, as in the paper. For each photograph they rate its visual quality on the paper's 5-point Likert scale from -2 (highly bad scene) to +2 (highly nice scene), and then tap the element inside the photograph that has an impact on their visual quality assessment, as in the paper's second subsection. Rebuilt from Mundher, Al-Sharaa, Al-Helli, Gao & Abu Bakar (2022), Visual Quality Assessment of Historical Street Scenes: A Case Study of the First \"Real\" Street Established in Baghdad, Heritage 5(4): 3680-3704, with the photographs from its Appendix A and the method from Section 2.3 (CC BY 4.0). Image ids: V01-V32 as coded in the paper; ratings are in quality and tap positions in element (x and y as fractions of the photograph's width and height from the top left), both keyed by image id; the paper's mean rating for each photograph is stored in the page's original-study block. Analysis as in the paper: mean visual quality per photograph, split into positive and negative scenes; a heatmap of tap density on each photograph to find the elements behind the ratings; and Mann-Whitney U tests of the ratings across demographic groups. The paper (225 completed responses from Baghdad, recruited on social media) found only 7 photographs rated positive (best V06, +0.48, and V07, +0.42) and 25 negative (worst V18, -1.29, and V12, -1.24); modern facade materials, security concrete walls and degraded facades lowered visual quality, while historical religious buildings, urban greenery and unique historical buildings raised it, and women and men rated the scenes differently. Differences from the original study: (1) the paper ran the survey on Qualtrics with a click heatmap question; here the tap is recorded as one point per photograph, from which a heatmap can be drawn; (2) the paper added two dummy photographs at the beginning and the end whose answers were discarded; they are not printed and are left out here; (3) the question wording, the labels of the three middle scale points and the instruction text are ours, because the paper describes them without printing them; the demographic questions use the paper's categories and, for the last one, its wording; (4) the paper limited participation to Baghdad; here anyone can take part; (5) the photographs are the appendix copies (about 455 x 256 px).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2022-mundher-historic/photos/V01__074d555b-e546-4a4c-88d2-53b3d8e665e3.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V01__074d555b-e546-4a4c-88d2-53b3d8e665e3.jpg",
+   "name": "V01.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V01__074d555b-e546-4a4c-88d2-53b3d8e665e3.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 41050,
+   "uploaded_bytes": 41050,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V02__5a2360eb-06f3-4bc0-9f01-7f988a7a93ca.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V02__5a2360eb-06f3-4bc0-9f01-7f988a7a93ca.jpg",
+   "name": "V02.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V02__5a2360eb-06f3-4bc0-9f01-7f988a7a93ca.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 42888,
+   "uploaded_bytes": 42888,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V03__4fa202c3-d550-4e58-9008-b2788414045d.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V03__4fa202c3-d550-4e58-9008-b2788414045d.jpg",
+   "name": "V03.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V03__4fa202c3-d550-4e58-9008-b2788414045d.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 48436,
+   "uploaded_bytes": 48436,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V04__5265e887-482b-47a8-adcf-65a04544aec5.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V04__5265e887-482b-47a8-adcf-65a04544aec5.jpg",
+   "name": "V04.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V04__5265e887-482b-47a8-adcf-65a04544aec5.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 48745,
+   "uploaded_bytes": 48745,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V05__c3b31bbc-50e5-4e34-b945-6ce948dad17c.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V05__c3b31bbc-50e5-4e34-b945-6ce948dad17c.jpg",
+   "name": "V05.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V05__c3b31bbc-50e5-4e34-b945-6ce948dad17c.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 47886,
+   "uploaded_bytes": 47886,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V06__d3cf853a-0871-4cbc-a93e-9a03644acd99.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V06__d3cf853a-0871-4cbc-a93e-9a03644acd99.jpg",
+   "name": "V06.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V06__d3cf853a-0871-4cbc-a93e-9a03644acd99.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 48875,
+   "uploaded_bytes": 48875,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V07__5358ee50-f10b-4d62-822d-3d01755b5c37.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V07__5358ee50-f10b-4d62-822d-3d01755b5c37.jpg",
+   "name": "V07.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V07__5358ee50-f10b-4d62-822d-3d01755b5c37.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 50404,
+   "uploaded_bytes": 50404,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V08__bbc03779-7271-4412-9a65-d050d48ae4fb.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V08__bbc03779-7271-4412-9a65-d050d48ae4fb.jpg",
+   "name": "V08.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V08__bbc03779-7271-4412-9a65-d050d48ae4fb.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 45730,
+   "uploaded_bytes": 45730,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V09__812f5537-6a56-478c-82d4-cb1a051b5b49.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V09__812f5537-6a56-478c-82d4-cb1a051b5b49.jpg",
+   "name": "V09.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V09__812f5537-6a56-478c-82d4-cb1a051b5b49.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 44342,
+   "uploaded_bytes": 44342,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V10__2da4bae0-f08c-4e4c-91a4-9564cba62f1d.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V10__2da4bae0-f08c-4e4c-91a4-9564cba62f1d.jpg",
+   "name": "V10.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V10__2da4bae0-f08c-4e4c-91a4-9564cba62f1d.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 49670,
+   "uploaded_bytes": 49670,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V11__fdd840ca-32eb-4e86-bb9b-1b94b72f10e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V11__fdd840ca-32eb-4e86-bb9b-1b94b72f10e6.jpg",
+   "name": "V11.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V11__fdd840ca-32eb-4e86-bb9b-1b94b72f10e6.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 50474,
+   "uploaded_bytes": 50474,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V12__3573039c-0249-41f4-bf2d-3b390129127d.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V12__3573039c-0249-41f4-bf2d-3b390129127d.jpg",
+   "name": "V12.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V12__3573039c-0249-41f4-bf2d-3b390129127d.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 49942,
+   "uploaded_bytes": 49942,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V13__7d8068ef-32bf-41cc-b5ba-fe9bc3523a78.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V13__7d8068ef-32bf-41cc-b5ba-fe9bc3523a78.jpg",
+   "name": "V13.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V13__7d8068ef-32bf-41cc-b5ba-fe9bc3523a78.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 46610,
+   "uploaded_bytes": 46610,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V14__25c876e0-c2ff-45c6-8be3-21788c9d714f.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V14__25c876e0-c2ff-45c6-8be3-21788c9d714f.jpg",
+   "name": "V14.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V14__25c876e0-c2ff-45c6-8be3-21788c9d714f.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 45897,
+   "uploaded_bytes": 45897,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V15__7384431a-dc98-4cc4-b994-5a1f1253111e.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V15__7384431a-dc98-4cc4-b994-5a1f1253111e.jpg",
+   "name": "V15.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V15__7384431a-dc98-4cc4-b994-5a1f1253111e.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 46171,
+   "uploaded_bytes": 46171,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V16__e931e3c4-fa95-44cb-afd3-d769f2b06774.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V16__e931e3c4-fa95-44cb-afd3-d769f2b06774.jpg",
+   "name": "V16.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V16__e931e3c4-fa95-44cb-afd3-d769f2b06774.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 48426,
+   "uploaded_bytes": 48426,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V17__21b291ef-e4aa-49dd-bd0d-1c590ef7d937.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V17__21b291ef-e4aa-49dd-bd0d-1c590ef7d937.jpg",
+   "name": "V17.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V17__21b291ef-e4aa-49dd-bd0d-1c590ef7d937.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 46998,
+   "uploaded_bytes": 46998,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V18__48fe3af6-0c04-46a1-86db-49d858377f24.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V18__48fe3af6-0c04-46a1-86db-49d858377f24.jpg",
+   "name": "V18.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V18__48fe3af6-0c04-46a1-86db-49d858377f24.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 49557,
+   "uploaded_bytes": 49557,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V19__061bcab9-b5b7-4bf8-89d1-01e84456d6ad.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V19__061bcab9-b5b7-4bf8-89d1-01e84456d6ad.jpg",
+   "name": "V19.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V19__061bcab9-b5b7-4bf8-89d1-01e84456d6ad.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 45217,
+   "uploaded_bytes": 45217,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V20__65f71f47-5540-4b47-acf8-4f677f903c4a.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V20__65f71f47-5540-4b47-acf8-4f677f903c4a.jpg",
+   "name": "V20.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V20__65f71f47-5540-4b47-acf8-4f677f903c4a.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 44431,
+   "uploaded_bytes": 44431,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V21__259012c7-1f7b-4792-99cd-e9242504ba48.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V21__259012c7-1f7b-4792-99cd-e9242504ba48.jpg",
+   "name": "V21.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V21__259012c7-1f7b-4792-99cd-e9242504ba48.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 49463,
+   "uploaded_bytes": 49463,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V22__d610f97b-4a90-460a-b72b-3338c2892585.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V22__d610f97b-4a90-460a-b72b-3338c2892585.jpg",
+   "name": "V22.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V22__d610f97b-4a90-460a-b72b-3338c2892585.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 45951,
+   "uploaded_bytes": 45951,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V23__5204762e-b8bd-42ba-8971-64eb5e4208d7.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V23__5204762e-b8bd-42ba-8971-64eb5e4208d7.jpg",
+   "name": "V23.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V23__5204762e-b8bd-42ba-8971-64eb5e4208d7.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 45222,
+   "uploaded_bytes": 45222,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V24__88264da9-2797-4c12-860f-bd355c9a31a7.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V24__88264da9-2797-4c12-860f-bd355c9a31a7.jpg",
+   "name": "V24.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V24__88264da9-2797-4c12-860f-bd355c9a31a7.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 46784,
+   "uploaded_bytes": 46784,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V25__9af7954d-e9a2-480b-a73a-338708f06d1c.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V25__9af7954d-e9a2-480b-a73a-338708f06d1c.jpg",
+   "name": "V25.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V25__9af7954d-e9a2-480b-a73a-338708f06d1c.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 49965,
+   "uploaded_bytes": 49965,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V26__0672c575-4e6e-4aad-99a1-7f8caea8a395.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V26__0672c575-4e6e-4aad-99a1-7f8caea8a395.jpg",
+   "name": "V26.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V26__0672c575-4e6e-4aad-99a1-7f8caea8a395.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 44001,
+   "uploaded_bytes": 44001,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V27__5f88018c-aeb1-447c-b6ed-b53187805f9a.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V27__5f88018c-aeb1-447c-b6ed-b53187805f9a.jpg",
+   "name": "V27.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V27__5f88018c-aeb1-447c-b6ed-b53187805f9a.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 44382,
+   "uploaded_bytes": 44382,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V28__33d64347-313c-4c82-9226-e651300feda0.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V28__33d64347-313c-4c82-9226-e651300feda0.jpg",
+   "name": "V28.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V28__33d64347-313c-4c82-9226-e651300feda0.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 44406,
+   "uploaded_bytes": 44406,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V29__ba5d6068-30d0-451f-8241-8c028388ec8b.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V29__ba5d6068-30d0-451f-8241-8c028388ec8b.jpg",
+   "name": "V29.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V29__ba5d6068-30d0-451f-8241-8c028388ec8b.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 45517,
+   "uploaded_bytes": 45517,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V30__291d6773-a426-4ab3-a7a2-3dae403eba19.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V30__291d6773-a426-4ab3-a7a2-3dae403eba19.jpg",
+   "name": "V30.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V30__291d6773-a426-4ab3-a7a2-3dae403eba19.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 46826,
+   "uploaded_bytes": 46826,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V31__293e809a-1d3f-4ece-af1a-414d660464ab.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V31__293e809a-1d3f-4ece-af1a-414d660464ab.jpg",
+   "name": "V31.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V31__293e809a-1d3f-4ece-af1a-414d660464ab.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 45247,
+   "uploaded_bytes": 45247,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-mundher-historic/photos/V32__b26d0237-a179-4ce6-80da-0071e0944dad.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-mundher-historic/photos/V32__b26d0237-a179-4ce6-80da-0071e0944dad.jpg",
+   "name": "V32.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2022-mundher-historic/photos/V32__b26d0237-a179-4ce6-80da-0071e0944dad.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 41833,
+   "uploaded_bytes": 41833,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Visual Quality Assessment of Historical Street Scenes: A Case Study of the First “Real” Street Established in Baghdad",
+  "authors": [
+   "Mundher, R.",
+   "Al-Sharaa, A.",
+   "Al-Helli, M.",
+   "Gao, H.",
+   "Abu Bakar, S."
+  ],
+  "year": 2022,
+  "venue": "Heritage",
+  "doi": "10.3390/heritage5040192",
+  "url": "https://doi.org/10.3390/heritage5040192"
+ }
+}

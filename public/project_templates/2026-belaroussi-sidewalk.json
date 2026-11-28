@@ -1,0 +1,346 @@
+{
+ "id": "2026-belaroussi-sidewalk",
+ "name": "Sidewalk Audit: Walking Needs and Well-being (Santa Cruz de Tenerife)",
+ "description": "Method replication: same task, statements and design as the paper; the images are not the paper's stimuli (new Google Street View views of the same three streets, © Google). Belaroussi & Salingaros (2026, AI 7:110) asked whether ChatGPT and Gemini can stand in for people when auditing a sidewalk. 68 people (mostly researchers and staff, none living in the area) saw three sidewalks in Santa Cruz de Tenerife: Calle San Martín (residential), Calle Serís (commercial) and Calle Méndez Núñez (by the City Hall). For each photo they first imagined walking on the sidewalk and rated four walking-need statements on a 5-point agreement scale (pleasurability, comfort, safety from traffic, accessibility) and gave an overall pedestrian-friendly score out of 10; then they imagined standing there and rated two well-being statements (place: a pleasure to wait here; distance: the distant view draws me on). No definitions were given. The LLMs got the same seven items 10 times each. Analysis as in the paper: per statement and sidewalk, the median and interquartile range of human answers, then the median difference and intraclass correlation against any AI ratings you collect with the same wording. Differences from the original study: (1) the photos are Google Street View views (2026) taken on the same three streets, chosen to match the paper's descriptions (yellow curb line on San Martín, palms and parked scooters on Imeldo Serís, the old building wall and bike lane on Méndez Núñez); the paper used the authors' smartphone photos, available only on request; (2) the order of the three sidewalks is randomised per participant; (3) the friendliness score uses buttons 1–10; (4) the question \"Have you ever lived in Santa Cruz de Tenerife?\" is added because the paper only recruited people who had not.",
+ "author": "Belaroussi & Salingaros",
+ "year": "2026",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "sidewalk",
+  "walkability",
+  "llm-vs-human",
+  "tenerife",
+  "spain",
+  "source:paper",
+  "modality:street_view",
+  "task:multi_rating",
+  "task:rating",
+  "concept:walkability",
+  "concept:aesthetics",
+  "concept:comfort",
+  "concept:safety",
+  "concept:accessibility",
+  "concept:place",
+  "participants:experts",
+  "sample:lt100",
+  "country:Spain",
+  "city:Santa Cruz de Tenerife"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/ai7030110",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-26T23:40:34.47+00:00",
+ "updatedAt": "2026-11-26T23:40:41.9+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "This opinion survey may be published in a research paper; by completing it, I voluntarily consent to the processing and publication of my anonymous answers.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "walking",
+    "elements": [
+     {
+      "name": "walking_needs",
+      "rows": [
+       {
+        "text": "The environment along the route is beautiful and attractive",
+        "value": "pleasurability"
+       },
+       {
+        "text": "The route feels planned for me as a pedestrian",
+        "value": "comfort"
+       },
+       {
+        "text": "I do not worry about the traffic when I walk along this route",
+        "value": "safety"
+       },
+       {
+        "text": "It is a practical path to walk",
+        "value": "accessibility"
+       }
+      ],
+      "type": "imagematrix",
+      "title": "Imagine you are a person walking on this sidewalk. How much do you agree?",
+      "choices": [],
+      "columns": [
+       {
+        "text": "Strongly disagree",
+        "value": "1"
+       },
+       {
+        "text": "Disagree",
+        "value": "2"
+       },
+       {
+        "text": "Neutral",
+        "value": "3"
+       },
+       {
+        "text": "Agree",
+        "value": "4"
+       },
+       {
+        "text": "Strongly agree",
+        "value": "5"
+       }
+      ],
+      "imageCount": 1,
+      "imageLinks": [],
+      "isRequired": true,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "friendliness",
+      "type": "imagerating",
+      "title": "Give an overall pedestrian-friendly score for this street, out of 10.",
+      "choices": [],
+      "rateMax": 10,
+      "rateMin": 1,
+      "imageCount": 1,
+      "isRequired": true,
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "10 = very friendly",
+      "minRateDescription": "1 = not at all friendly",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "standing",
+    "elements": [
+     {
+      "name": "wellbeing",
+      "rows": [
+       {
+        "text": "Visual information makes it a pleasure to have to wait here for someone",
+        "value": "place"
+       },
+       {
+        "text": "The distant view is interesting and draws me to walk in that direction",
+        "value": "distance"
+       }
+      ],
+      "type": "imagematrix",
+      "title": "Now, imagine you are standing there on the street. How much do you agree?",
+      "choices": [],
+      "columns": [
+       {
+        "text": "Strongly disagree",
+        "value": "1"
+       },
+       {
+        "text": "Disagree",
+        "value": "2"
+       },
+       {
+        "text": "Neutral",
+        "value": "3"
+       },
+       {
+        "text": "Agree",
+        "value": "4"
+       },
+       {
+        "text": "Strongly agree",
+        "value": "5"
+       }
+      ],
+      "imageCount": 1,
+      "imageLinks": [],
+      "isRequired": true,
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "occupation",
+      "type": "radiogroup",
+      "title": "Occupation",
+      "choices": [
+       {
+        "text": "Researcher or professor",
+        "value": "researcher"
+       },
+       {
+        "text": "Student",
+        "value": "student"
+       },
+       {
+        "text": "Administrative staff",
+        "value": "staff"
+       },
+       {
+        "text": "Retired or not working",
+        "value": "retired"
+       },
+       {
+        "text": "Other",
+        "value": "other"
+       }
+      ]
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Prefer not to say",
+        "value": "na"
+       }
+      ]
+     },
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "Under 20",
+        "value": "lt20"
+       },
+       {
+        "text": "20–40",
+        "value": "20-40"
+       },
+       {
+        "text": "40–60",
+        "value": "40-60"
+       },
+       {
+        "text": "Over 60",
+        "value": "60+"
+       }
+      ]
+     },
+     {
+      "name": "lived_there",
+      "type": "radiogroup",
+      "title": "Have you ever lived in Santa Cruz de Tenerife?",
+      "choices": [
+       {
+        "text": "No",
+        "value": "no"
+       },
+       {
+        "text": "Yes",
+        "value": "yes"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "title": "Sidewalk Audit: Walking Needs and Well-being (Santa Cruz de Tenerife)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-84e4e157e12d0c53",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Sidewalk Audit: Walking Needs and Well-being (Santa Cruz de Tenerife)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Sidewalk Audit: Walking Needs and Well-being (Santa Cruz de Tenerife)\",\n  \"description\": \"Three sidewalks in Santa Cruz de Tenerife, one at a time: rate four walking-need statements and two well-being statements (1–5 agreement) and give an overall pedestrian-friendly score out of 10. Method replication of the human baseline in Belaroussi & Salingaros (2026, AI), which compared people with ChatGPT and Gemini.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"sidewalks\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"This opinion survey may be published in a research paper; by completing it, I voluntarily consent to the processing and publication of my anonymous answers.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"walking\",\n    \"elements\": [\n     {\n      \"type\": \"imagematrix\",\n      \"name\": \"walking_needs\",\n      \"title\": \"Imagine you are a person walking on this sidewalk. How much do you agree?\",\n      \"imageCount\": 1,\n      \"isRequired\": true,\n      \"choices\": [],\n      \"rows\": [\n       {\n        \"value\": \"pleasurability\",\n        \"text\": \"The environment along the route is beautiful and attractive\"\n       },\n       {\n        \"value\": \"comfort\",\n        \"text\": \"The route feels planned for me as a pedestrian\"\n       },\n       {\n        \"value\": \"safety\",\n        \"text\": \"I do not worry about the traffic when I walk along this route\"\n       },\n       {\n        \"value\": \"accessibility\",\n        \"text\": \"It is a practical path to walk\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": \"1\",\n        \"text\": \"Strongly disagree\"\n       },\n       {\n        \"value\": \"2\",\n        \"text\": \"Disagree\"\n       },\n       {\n        \"value\": \"3\",\n        \"text\": \"Neutral\"\n       },\n       {\n        \"value\": \"4\",\n        \"text\": \"Agree\"\n       },\n       {\n        \"value\": \"5\",\n        \"text\": \"Strongly agree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"imagerating\",\n      \"name\": \"friendliness\",\n      \"title\": \"Give an overall pedestrian-friendly score for this street, out of 10.\",\n      \"imageCount\": 1,\n      \"isRequired\": true,\n      \"choices\": [],\n      \"rateMin\": 1,\n      \"rateMax\": 10,\n      \"minRateDescription\": \"1 = not at all friendly\",\n      \"maxRateDescription\": \"10 = very friendly\"\n     }\n    ]\n   },\n   {\n    \"name\": \"standing\",\n    \"elements\": [\n     {\n      \"type\": \"imagematrix\",\n      \"name\": \"wellbeing\",\n      \"title\": \"Now, imagine you are standing there on the street. How much do you agree?\",\n      \"imageCount\": 1,\n      \"isRequired\": true,\n      \"choices\": [],\n      \"rows\": [\n       {\n        \"value\": \"place\",\n        \"text\": \"Visual information makes it a pleasure to have to wait here for someone\"\n       },\n       {\n        \"value\": \"distance\",\n        \"text\": \"The distant view is interesting and draws me to walk in that direction\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": \"1\",\n        \"text\": \"Strongly disagree\"\n       },\n       {\n        \"value\": \"2\",\n        \"text\": \"Disagree\"\n       },\n       {\n        \"value\": \"3\",\n        \"text\": \"Neutral\"\n       },\n       {\n        \"value\": \"4\",\n        \"text\": \"Agree\"\n       },\n       {\n        \"value\": \"5\",\n        \"text\": \"Strongly agree\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"occupation\",\n      \"title\": \"Occupation\",\n      \"choices\": [\n       {\n        \"value\": \"researcher\",\n        \"text\": \"Researcher or professor\"\n       },\n       {\n        \"value\": \"student\",\n        \"text\": \"Student\"\n       },\n       {\n        \"value\": \"staff\",\n        \"text\": \"Administrative staff\"\n       },\n       {\n        \"value\": \"retired\",\n        \"text\": \"Retired or not working\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"na\",\n        \"text\": \"Prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"Age\",\n      \"choices\": [\n       {\n        \"value\": \"lt20\",\n        \"text\": \"Under 20\"\n       },\n       {\n        \"value\": \"20-40\",\n        \"text\": \"20–40\"\n       },\n       {\n        \"value\": \"40-60\",\n        \"text\": \"40–60\"\n       },\n       {\n        \"value\": \"60+\",\n        \"text\": \"Over 60\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"lived_there\",\n      \"title\": \"Have you ever lived in Santa Cruz de Tenerife?\",\n      \"choices\": [\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       },\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f5f5f2;--card:#fff;--ink:#1d2125;--muted:#5d646b;--accent:#2f5d50;--line:#dde1e3;--sel:#e3efe9}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:1100px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.45rem;margin:0 0 8px}h2{font-size:1.05rem;margin:0 0 6px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.defs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.defs div{background:var(--sel);border-radius:10px;padding:10px 12px;font-size:.93rem}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:8px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pano{overflow-x:auto;border-radius:12px;background:#000;-webkit-overflow-scrolling:touch}\n.pano img{display:block;width:100%;height:auto;min-width:720px}\n.hint{font-size:.82rem;color:var(--muted);margin:4px 0 0;display:none}\n.sd{margin-top:10px}.sd .r{display:grid;grid-template-columns:150px 1fr 150px;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}\n.sd .l{text-align:right;font-size:.92rem}.sd .rt{font-size:.92rem}\n.opts{display:flex;justify-content:space-between;gap:6px}\n.opts label{flex:1;text-align:center;border:1px solid var(--line);border-radius:8px;padding:7px 0;cursor:pointer;font-weight:600}\n.opts input{position:absolute;opacity:0;pointer-events:none}\n.opts label:has(input:checked){background:var(--accent);color:#fff;border-color:var(--accent)}\n.opts label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:1100px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:700px){.defs{grid-template-columns:1fr}.sd .r{grid-template-columns:1fr 1fr;row-gap:6px}.sd .l{text-align:left;order:1}.sd .rt{text-align:right;order:2}.sd .opts{order:3;grid-column:1/3}.hint{display:block}.pano img{width:auto;height:260px;min-width:0}}\n\n.scene img{display:block;width:100%;max-height:62vh;object-fit:cover;border-radius:12px;background:#000}\ntable.lk{width:100%;border-collapse:collapse;margin-top:8px}table.lk th{font-size:.8rem;font-weight:600;color:var(--muted);padding:4px;text-align:center}\ntable.lk td{padding:8px 4px;border-top:1px solid var(--line);text-align:center}table.lk td.st{text-align:left;font-size:.95rem;width:46%}\ntable.lk input{width:20px;height:20px;accent-color:var(--accent)}\n.scale10{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin-top:6px}\n.scale10 label{text-align:center;border:1px solid var(--line);border-radius:6px;padding:7px 0;cursor:pointer;font-weight:600}\n.scale10 input{position:absolute;opacity:0;pointer-events:none}\n.scale10 label:has(input:checked){background:var(--accent);color:#fff;border-color:var(--accent)}\n.scale10 label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}\n.ends{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:3px}\n@media (max-width:700px){table.lk,table.lk tbody,table.lk tr,table.lk td{display:block;width:100%}table.lk thead{display:none}table.lk td.st{width:100%;font-weight:600;border-top:1px solid var(--line)}\n table.lk td.o{display:inline-block;vertical-align:top;width:20%;border:0;font-size:.72rem;color:var(--muted)}table.lk td.o::after{content:attr(data-l);display:block}.scale10{grid-template-columns:repeat(5,1fr)}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Calle San Martín, Calle Imeldo Serís and Calle Méndez Núñez, Santa Cruz de Tenerife, Google Street View 2026 (© Google). Statements from Belaroussi &amp; Salingaros (2026), AI 7(3): 110.</footer>\n<script>\n(function(){\n  var app=document.getElementById('app'),Q={},scenes=[],idx=0,part=0,ans={};\n  var ABOUT=['occupation','gender','age_group','lived_there'];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function intro(){\n    app.innerHTML='<h1>Auditing sidewalks</h1><p>In this study, we are focused on auditing urban environments through selected scenes. The scenes are photos taken on different streets. The participation is anonymous, and the whole survey will take you about 4 minutes.</p>'+\n      '<p>You will be shown three images of areas of a city and will then be asked questions related to the quality and walkability of the sidewalk.</p>'+\n      '<div class=\"card\"><p>'+esc(Q.consent.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(Q.consent.labelTrue)+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);idx=0;part=0;scene();});};\n  }\n  function matrix(q,cur){\n    var h='<table class=\"lk\"><thead><tr><th></th>'+q.columns.map(function(c){return '<th>'+esc(c.text)+'</th>';}).join('')+'</tr></thead><tbody>';\n    q.rows.forEach(function(r){h+='<tr><td class=\"st\">'+esc(r.text)+'</td>'+q.columns.map(function(c){return '<td class=\"o\" data-l=\"'+esc(c.text)+'\"><input type=\"radio\" aria-label=\"'+esc(r.text+': '+c.text)+'\" name=\"'+q.name+'__'+r.value+'\" value=\"'+esc(c.value)+'\"'+(cur[r.value]===c.value?' checked':'')+'></td>';}).join('')+'</tr>';});\n    return h+'</tbody></table>';\n  }\n  function scene(){\n    if(idx>=scenes.length)return about();\n    var m=scenes[idx],a=ans[m.name]||(ans[m.name]={walking_needs:{},wellbeing:{},friendliness:null});\n    var h='<h1>Scene '+(idx+1)+' of '+scenes.length+'</h1><div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*(idx*2+part)/(scenes.length*2))+'%\"></i></div>'+\n      '<div class=\"scene\"><img src=\"'+esc(m.url)+'\" alt=\"Street scene '+(idx+1)+' in Santa Cruz de Tenerife\"></div><div class=\"card\">';\n    if(part===0){\n      h+='<b>'+esc(Q.walking_needs.title)+'</b>'+matrix(Q.walking_needs,a.walking_needs)+\n        '<div class=\"q\"><b>'+esc(Q.friendliness.title)+'</b><div class=\"scale10\" role=\"radiogroup\" aria-label=\"Pedestrian-friendly score\">';\n      for(var s=1;s<=10;s++)h+='<label><input type=\"radio\" name=\"fr\" value=\"'+s+'\"'+(a.friendliness===s?' checked':'')+'>'+s+'</label>';\n      h+='</div><div class=\"ends\"><span>'+esc(Q.friendliness.minLabel)+'</span><span>'+esc(Q.friendliness.maxLabel)+'</span></div></div>';\n    } else h+='<b>'+esc(Q.wellbeing.title)+'</b>'+matrix(Q.wellbeing,a.wellbeing);\n    h+='<div class=\"row\">'+((idx>0||part>0)?'<button class=\"btn ghost\" id=\"back\">Back</button>':'')+'<button class=\"btn\" id=\"next\">Next</button></div><div class=\"err\"></div></div>';\n    app.innerHTML=h;\n    app.querySelectorAll('input[type=radio]').forEach(function(r){r.onchange=function(){\n      if(r.name==='fr')a.friendliness=Number(r.value);else{var p=r.name.split('__');a[p[0]][p[1]]=r.value;}err('');};});\n    var back=document.getElementById('back');if(back)back.onclick=function(){if(part===1)part=0;else{idx-=1;part=1;}scene();};\n    document.getElementById('next').onclick=function(){\n      var btn=this,opt={key:m.name,shown:[m.name]},jobs;\n      if(part===0){\n        if(Q.walking_needs.rows.some(function(r){return !a.walking_needs[r.value];})||a.friendliness==null)return err('Please answer every statement and give a score.');\n        jobs=[['walking_needs',a.walking_needs],['friendliness',a.friendliness]];\n      } else {\n        if(Q.wellbeing.rows.some(function(r){return !a.wellbeing[r.value];}))return err('Please answer both statements.');\n        jobs=[['wellbeing',a.wellbeing]];\n      }\n      btn.disabled=true;\n      jobs.reduce(function(p,j){return p.then(function(){return SPSite.answer(j[0],j[1],opt).then(function(r){if(r&&r.ok===false)throw new Error(r.error);});});},Promise.resolve())\n        .then(function(){if(part===0)part=1;else{part=0;idx+=1;}scene();})\n        .catch(function(e){btn.disabled=false;err(e.message);});\n    };\n    window.scrollTo(0,0);\n  }\n  function about(){\n    app.innerHTML='<h1>About you</h1><p>Optional, used only to describe the sample.</p><div class=\"card\">'+ABOUT.map(function(n){var q=Q[n];return '<div class=\"q\"><b>'+esc(q.title)+'</b>'+q.choices.map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}).join('')+\n      '<div class=\"row\"><button class=\"btn\" id=\"finish\">Finish</button></div><div class=\"err\"></div></div>';\n    ABOUT.forEach(function(n){app.querySelectorAll('input[name='+n+']').forEach(function(r){r.onchange=function(){SPSite.answer(n,r.value).then(function(x){if(x&&x.ok===false)err(x.error);});};});});\n    document.getElementById('finish').onclick=function(){var btn=this;btn.disabled=true;err('Submitting…');\n      SPSite.complete().then(function(r){if(r&&r.ok===false){btn.disabled=false;err(r.error||('Please answer: '+(r.missing||[]).join(', ')));if((r.missing||[]).indexOf('consent')>=0)intro();}});};\n  }\n  SPSite.onReady(function(ctx){\n    (SPSite.getQuestions?SPSite.getQuestions():ctx.questions).forEach(function(q){Q[q.name]=q;});\n    scenes=shuffle((SPSite.getMedia('sidewalks')||[]).filter(function(m){return m.type!=='video'&&m.type!=='audio';}));\n    if(!scenes.length){app.innerHTML='<h1>No scenes yet</h1><p>The media folder “sidewalks” is empty. Upload the three sidewalk photos to it.</p>';return;}\n    var a=(ctx&&ctx.answers)||{};\n    if(a.consent===true){\n      var done={};((a.wellbeing&&a.wellbeing.trials)||[]).forEach(function(t){if(t.key)done[t.key]=true;});\n      scenes.sort(function(x,y){return (done[y.name]?1:0)-(done[x.name]?1:0);});\n      idx=scenes.filter(function(s){return done[s.name];}).length;part=0;scene();\n    } else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-26T23:40:10.185Z",
+   "mediaFolders": [
+    "sidewalks"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-26T23:40:10.185Z"
+  },
+  "description": "Three sidewalks in Santa Cruz de Tenerife, one at a time: rate four walking-need statements and two well-being statements (1–5 agreement) and give an overall pedestrian-friendly score out of 10. Method replication of the human baseline in Belaroussi & Salingaros (2026, AI), which compared people with ChatGPT and Gemini.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2026-belaroussi-sidewalk/sidewalks/sidewalk1_calle_san_martin__937f7a2d-e96a-495f-bacb-79fe69cfde97.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-belaroussi-sidewalk/sidewalks/sidewalk1_calle_san_martin__937f7a2d-e96a-495f-bacb-79fe69cfde97.jpg",
+   "name": "sidewalk1_calle_san_martin.jpg",
+   "type": "image",
+   "folder": "sidewalks",
+   "media_id": "templates/2026-belaroussi-sidewalk/sidewalks/sidewalk1_calle_san_martin__937f7a2d-e96a-495f-bacb-79fe69cfde97.jpg",
+   "logicalFolder": "sidewalks",
+   "original_bytes": 160483,
+   "uploaded_bytes": 160483,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-belaroussi-sidewalk/sidewalks/sidewalk2_calle_imeldo_seris__9832a9a2-129f-481f-a160-4a531a2e3dd3.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-belaroussi-sidewalk/sidewalks/sidewalk2_calle_imeldo_seris__9832a9a2-129f-481f-a160-4a531a2e3dd3.jpg",
+   "name": "sidewalk2_calle_imeldo_seris.jpg",
+   "type": "image",
+   "folder": "sidewalks",
+   "media_id": "templates/2026-belaroussi-sidewalk/sidewalks/sidewalk2_calle_imeldo_seris__9832a9a2-129f-481f-a160-4a531a2e3dd3.jpg",
+   "logicalFolder": "sidewalks",
+   "original_bytes": 182240,
+   "uploaded_bytes": 182240,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-belaroussi-sidewalk/sidewalks/sidewalk3_calle_mendez_nunez__acc32c3d-56ac-4ecb-a4f2-1f9be3eab619.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-belaroussi-sidewalk/sidewalks/sidewalk3_calle_mendez_nunez__acc32c3d-56ac-4ecb-a4f2-1f9be3eab619.jpg",
+   "name": "sidewalk3_calle_mendez_nunez.jpg",
+   "type": "image",
+   "folder": "sidewalks",
+   "media_id": "templates/2026-belaroussi-sidewalk/sidewalks/sidewalk3_calle_mendez_nunez__acc32c3d-56ac-4ecb-a4f2-1f9be3eab619.jpg",
+   "logicalFolder": "sidewalks",
+   "original_bytes": 112805,
+   "uploaded_bytes": 112805,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Artificial Intelligence-Simulated Cognition of a Pedestrian Assessing a Built Environment",
+  "authors": [
+   "Belaroussi R.",
+   "Salingaros N.A."
+  ],
+  "year": 2026,
+  "venue": "AI (Switzerland)",
+  "doi": "10.3390/ai7030110",
+  "url": "https://doi.org/10.3390/ai7030110"
+ }
+}

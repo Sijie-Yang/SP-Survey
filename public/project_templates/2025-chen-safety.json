@@ -1,0 +1,1099 @@
+{
+ "id": "2025-chen-safety",
+ "name": "Safety Perception of Street Views (Wuhan) – three-level rating",
+ "description": "",
+ "author": "Chen & Tang",
+ "year": "2025",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "street view",
+  "safety",
+  "Wuhan",
+  "Baidu",
+  "source:paper",
+  "modality:street_view",
+  "task:rating",
+  "concept:safety",
+  "participants:experts",
+  "participants:residents",
+  "sample:lt100",
+  "country:China",
+  "city:Wuhan"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/su17177641",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T13:44:44.376+00:00",
+ "updatedAt": "2026-11-27T13:45:37.542+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about_you_first",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Prefer not to say",
+        "value": "na"
+       }
+      ]
+     },
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "18–25",
+        "value": "18-25"
+       },
+       {
+        "text": "26–39",
+        "value": "26-39"
+       },
+       {
+        "text": "40–60",
+        "value": "40-60"
+       },
+       {
+        "text": "Over 60",
+        "value": "60+"
+       }
+      ]
+     },
+     {
+      "name": "wuhan_residence",
+      "type": "radiogroup",
+      "title": "Have you lived in Wuhan for at least one year?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "gis_expertise",
+      "type": "radiogroup",
+      "title": "Do you have GIS or urban-study expertise?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "safety_level",
+      "type": "imagerating",
+      "title": "How safe does this street look?",
+      "choices": [],
+      "rateMax": 3,
+      "rateMin": 1,
+      "imageFit": "contain",
+      "imageCount": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Unsafe",
+       "Neutral",
+       "Safe"
+      ],
+      "trialCount": 40,
+      "mediaFolders": [
+       "wuhan"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   }
+  ],
+  "title": "Safety Perception of Street Views (Wuhan)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-3f7d3f548725f14e",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Safety Perception of Street Views (Wuhan)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Safety Perception of Street Views (Wuhan)\",\n  \"description\": \"Method replication: the images are new Baidu street views of the seven central districts of Wuhan (one of four directions at each point), not the paper's labelled images. Each street view is judged as unsafe, neutral or safe from the overall impression of walking there, one image at a time with no place names, as the ten annotators did in Chen & Tang (2025, Sustainability). The paper used these three-level labels to train a model that mapped safety across 43,232 street points. Annotators were told not to overreact to big roads, and that busy centres, quiet suburbs or more or less greenery are not by themselves safe or unsafe; this guidance is shown in the introduction. Differences from the original study: (1) 40 random views per participant; (2) the paper's annotators had GIS expertise or at least one year living in Wuhan, recorded here with two questions.\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you_first\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"na\",\n        \"text\": \"Prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"Age\",\n      \"choices\": [\n       {\n        \"value\": \"18-25\",\n        \"text\": \"18–25\"\n       },\n       {\n        \"value\": \"26-39\",\n        \"text\": \"26–39\"\n       },\n       {\n        \"value\": \"40-60\",\n        \"text\": \"40–60\"\n       },\n       {\n        \"value\": \"60+\",\n        \"text\": \"Over 60\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"wuhan_residence\",\n      \"title\": \"Have you lived in Wuhan for at least one year?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gis_expertise\",\n      \"title\": \"Do you have GIS or urban-study expertise?\",\n      \"choices\": [\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imagerating\",\n      \"name\": \"safety_level\",\n      \"title\": \"How safe does this street look?\",\n      \"imageCount\": 1,\n      \"trialCount\": 40,\n      \"rateMin\": 1,\n      \"rateMax\": 3,\n      \"rateLabels\": [\n       \"Unsafe\",\n       \"Neutral\",\n       \"Safe\"\n      ],\n      \"isRequired\": true,\n      \"imageFit\": \"contain\",\n      \"mediaFolders\": [\n       \"wuhan\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#7a3b3b;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.rng{accent-color:var(--accent)}.lks{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:6px;margin:6px 0 2px}.lk{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:9px 0;font:inherit;cursor:pointer}.lk[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}.q{margin-top:10px}.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}.scale.num{grid-template-columns:repeat(5,1fr)}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Wuhan, Baidu street view (© Baidu). Task from Chen &amp; Tang (2025), Sustainability 17, 7641, doi:10.3390/su17177641.</footer>\n<script>\n(function(){\n  var C={\"before\": [\"gender\", \"age_group\", \"wuhan_residence\", \"gis_expertise\"], \"after\": [], \"tasks\": [\"safety_level\"], \"minutes\": 8, \"alt\": \"Street view in Wuhan\", \"labels\": {\"safety_level\": [\"Unsafe\", \"Neutral\", \"Safe\"]}, \"buttons\": [], \"minSec\": {}, \"pickOne\": null, \"heading\": \"Does this street look safe?\", \"intro\": \"<p>You will see 40 street views from central Wuhan, one at a time. For each, imagine walking there and say whether the street looks <b>unsafe</b>, <b>neutral</b> or <b>safe</b>, from your overall impression.</p><p>Please don't overreact to large roads, and remember that a busy centre or a quiet suburb, or more or less greenery, is not by itself safe or unsafe.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?'Pair ':'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else if(q.kind==='sliders'||/slidergroup$/.test(q.type)){\n      h+='<img class=\"shot\" style=\"max-height:'+((q.dimensions||[]).length>4?'32vh;position:sticky;top:0;z-index:2':(q.dimensions||[]).length>2?'40vh':'56vh')+'\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">';\n      var BT=(C.buttons||[]).indexOf(n)>=0;\n      if(BT)(q.dimensions||[]).forEach(function(d){var b='';for(var v=d.min;v<=d.max;v+=(d.step||1))b+='<button type=\"button\" class=\"lk\" data-d=\"'+esc(d.id)+'\" data-val=\"'+v+'\">'+v+'</button>';\n        h+='<div class=\"q\"><b>'+esc(d.label)+'</b><div class=\"lks\" style=\"--n:'+Math.round((d.max-d.min)/(d.step||1)+1)+'\">'+b+'</div><p style=\"display:flex;justify-content:space-between;margin:0;font-size:.85rem\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      else (q.dimensions||[]).forEach(function(d){h+='<div class=\"q\"><b>'+esc(d.label)+': <span id=\"v_'+esc(d.id)+'\">–</span></b><input type=\"range\" class=\"rng\" data-d=\"'+esc(d.id)+'\" min=\"'+d.min+'\" max=\"'+d.max+'\" step=\"'+(d.step||1)+'\" value=\"'+Math.round((d.min+d.max)/2)+'\" style=\"width:100%\"><p style=\"display:flex;justify-content:space-between;margin:0\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      h+='<div class=\"row\"><button class=\"btn\" id=\"next\" disabled>Next</button></div><p style=\"font-size:.85rem\">'+(BT?'Answer every line to continue.':'Move the slider to give your answer.')+'</p>';\n      app.innerHTML=h+'<div class=\"err\"></div>';\n      var vals={},rs=app.querySelectorAll('.rng'),nx=document.getElementById('next');\n      var MS=(C.minSec||{})[n]||0,t0=Date.now(),okT=!MS;\n      function gate(){nx.disabled=!(okT&&Object.keys(vals).length>=(q.dimensions||[]).length);}\n      if(MS){var tm=document.createElement('p');tm.className='tmr';tm.style.fontWeight='600';nx.parentNode.parentNode.insertBefore(tm,nx.parentNode);\n        var iv=setInterval(function(){var left=Math.ceil(MS-(Date.now()-t0)/1000);if(!document.body.contains(tm)){clearInterval(iv);return;}\n          if(left>0)tm.textContent='Please keep looking: '+left+' s';else{tm.textContent='';okT=true;clearInterval(iv);gate();}},250);}\n      if(BT){var nd=(q.dimensions||[]).length;app.querySelectorAll('.lk').forEach(function(b){b.onclick=function(){var d=b.getAttribute('data-d');vals[d]=Number(b.getAttribute('data-val'));\n        app.querySelectorAll('.lk[data-d=\"'+d+'\"]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});gate();};});}\n      rs.forEach(function(r){r.oninput=function(){vals[r.getAttribute('data-d')]=Number(r.value);document.getElementById('v_'+r.getAttribute('data-d')).textContent=r.value;gate();};});\n      nx.onclick=function(){nx.disabled=true;SPSite.answer(n,vals,{trial:k}).then(function(r){if(r&&r.ok===false){err(r.error);nx.disabled=false;return;}(done[n]=done[n]||{})[k]=true;nextStep();});};\n      window.scrollTo(0,0);return;\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      var words=!!(lab&&lab.some(function(x){return isNaN(Number(x));}));\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale'+(words?'':' num')+'\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(words?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T13:43:11.948Z",
+   "mediaFolders": [
+    "wuhan"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T13:43:11.948Z"
+  },
+  "description": "Method replication: the images are new Baidu street views of the seven central districts of Wuhan (one of four directions at each point), not the paper's labelled images. Each street view is judged as unsafe, neutral or safe from the overall impression of walking there, one image at a time with no place names, as the ten annotators did in Chen & Tang (2025, Sustainability). The paper used these three-level labels to train a model that mapped safety across 43,232 street points. Annotators were told not to overreact to big roads, and that busy centres, quiet suburbs or more or less greenery are not by themselves safe or unsafe; this guidance is shown in the introduction. Differences from the original study: (1) 40 random views per participant; (2) the paper's annotators had GIS expertise or at least one year living in Wuhan, recorded here with two questions.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_001__ca4f8d30-6d93-4f13-898b-fd526eab2a22.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_001__ca4f8d30-6d93-4f13-898b-fd526eab2a22.jpg",
+   "name": "whs_001.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_001__ca4f8d30-6d93-4f13-898b-fd526eab2a22.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 130516,
+   "uploaded_bytes": 130516,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_002__2f5a437e-211b-4779-9daa-0b11bc4b0825.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_002__2f5a437e-211b-4779-9daa-0b11bc4b0825.jpg",
+   "name": "whs_002.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_002__2f5a437e-211b-4779-9daa-0b11bc4b0825.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 168062,
+   "uploaded_bytes": 168062,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_003__e4c19467-976d-4cb9-948b-5305e28677fd.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_003__e4c19467-976d-4cb9-948b-5305e28677fd.jpg",
+   "name": "whs_003.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_003__e4c19467-976d-4cb9-948b-5305e28677fd.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 110125,
+   "uploaded_bytes": 110125,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_004__c003ac77-0c59-4df5-8915-e961074dc8f0.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_004__c003ac77-0c59-4df5-8915-e961074dc8f0.jpg",
+   "name": "whs_004.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_004__c003ac77-0c59-4df5-8915-e961074dc8f0.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 221154,
+   "uploaded_bytes": 221154,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_005__a81891d4-f3b6-4d20-bd14-783bcaa2766e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_005__a81891d4-f3b6-4d20-bd14-783bcaa2766e.jpg",
+   "name": "whs_005.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_005__a81891d4-f3b6-4d20-bd14-783bcaa2766e.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 143154,
+   "uploaded_bytes": 143154,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_006__a1058034-4e86-4291-a99c-fc3eddc8d2ec.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_006__a1058034-4e86-4291-a99c-fc3eddc8d2ec.jpg",
+   "name": "whs_006.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_006__a1058034-4e86-4291-a99c-fc3eddc8d2ec.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 190402,
+   "uploaded_bytes": 190402,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_007__f164500d-8994-4579-be07-bf57e68f963f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_007__f164500d-8994-4579-be07-bf57e68f963f.jpg",
+   "name": "whs_007.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_007__f164500d-8994-4579-be07-bf57e68f963f.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 162791,
+   "uploaded_bytes": 162791,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_008__3125c9f4-3633-4bcf-95d6-9a0c0c6e767b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_008__3125c9f4-3633-4bcf-95d6-9a0c0c6e767b.jpg",
+   "name": "whs_008.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_008__3125c9f4-3633-4bcf-95d6-9a0c0c6e767b.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 144304,
+   "uploaded_bytes": 144304,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_009__131b487f-3ffe-4f7d-ad24-847aaed09319.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_009__131b487f-3ffe-4f7d-ad24-847aaed09319.jpg",
+   "name": "whs_009.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_009__131b487f-3ffe-4f7d-ad24-847aaed09319.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 100645,
+   "uploaded_bytes": 100645,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_011__647c814e-ffee-4072-a760-16c66ce927b8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_011__647c814e-ffee-4072-a760-16c66ce927b8.jpg",
+   "name": "whs_011.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_011__647c814e-ffee-4072-a760-16c66ce927b8.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 193993,
+   "uploaded_bytes": 193993,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_012__ec6d6600-8fcb-4645-8443-b980637136d4.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_012__ec6d6600-8fcb-4645-8443-b980637136d4.jpg",
+   "name": "whs_012.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_012__ec6d6600-8fcb-4645-8443-b980637136d4.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 125207,
+   "uploaded_bytes": 125207,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_013__8a033681-ed13-4bb4-8460-b5ef778982d9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_013__8a033681-ed13-4bb4-8460-b5ef778982d9.jpg",
+   "name": "whs_013.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_013__8a033681-ed13-4bb4-8460-b5ef778982d9.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 124575,
+   "uploaded_bytes": 124575,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_014__6b2573cd-b51a-41db-a62d-183269131066.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_014__6b2573cd-b51a-41db-a62d-183269131066.jpg",
+   "name": "whs_014.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_014__6b2573cd-b51a-41db-a62d-183269131066.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 138051,
+   "uploaded_bytes": 138051,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_015__d6311900-0c2b-4d46-8627-2f3965259df9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_015__d6311900-0c2b-4d46-8627-2f3965259df9.jpg",
+   "name": "whs_015.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_015__d6311900-0c2b-4d46-8627-2f3965259df9.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 187496,
+   "uploaded_bytes": 187496,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_016__82f5a5bf-df3f-408c-b655-07a1514f89bb.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_016__82f5a5bf-df3f-408c-b655-07a1514f89bb.jpg",
+   "name": "whs_016.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_016__82f5a5bf-df3f-408c-b655-07a1514f89bb.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 205841,
+   "uploaded_bytes": 205841,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_018__2d8ed632-540d-4dd1-9d7a-de163db9d0cd.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_018__2d8ed632-540d-4dd1-9d7a-de163db9d0cd.jpg",
+   "name": "whs_018.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_018__2d8ed632-540d-4dd1-9d7a-de163db9d0cd.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 129769,
+   "uploaded_bytes": 129769,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_019__4200e078-ca35-4aa0-a170-43d93396198b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_019__4200e078-ca35-4aa0-a170-43d93396198b.jpg",
+   "name": "whs_019.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_019__4200e078-ca35-4aa0-a170-43d93396198b.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 181989,
+   "uploaded_bytes": 181989,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_020__29df2608-162e-4f4a-b9c9-556a615861f1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_020__29df2608-162e-4f4a-b9c9-556a615861f1.jpg",
+   "name": "whs_020.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_020__29df2608-162e-4f4a-b9c9-556a615861f1.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 154695,
+   "uploaded_bytes": 154695,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_021__b935d318-6c3f-4d9d-ab90-7f5dbf18e2cc.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_021__b935d318-6c3f-4d9d-ab90-7f5dbf18e2cc.jpg",
+   "name": "whs_021.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_021__b935d318-6c3f-4d9d-ab90-7f5dbf18e2cc.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 118071,
+   "uploaded_bytes": 118071,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_022__6c78c12a-f153-4891-9797-ce285510e4fd.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_022__6c78c12a-f153-4891-9797-ce285510e4fd.jpg",
+   "name": "whs_022.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_022__6c78c12a-f153-4891-9797-ce285510e4fd.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 186094,
+   "uploaded_bytes": 186094,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_024__da34acda-9db3-4247-9398-778a24d4e735.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_024__da34acda-9db3-4247-9398-778a24d4e735.jpg",
+   "name": "whs_024.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_024__da34acda-9db3-4247-9398-778a24d4e735.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 134333,
+   "uploaded_bytes": 134333,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_025__b253304b-46a2-49da-8ccb-1e45fffcbf85.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_025__b253304b-46a2-49da-8ccb-1e45fffcbf85.jpg",
+   "name": "whs_025.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_025__b253304b-46a2-49da-8ccb-1e45fffcbf85.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 117337,
+   "uploaded_bytes": 117337,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_026__f11be446-f7cd-46a5-8948-c0229a1b1dca.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_026__f11be446-f7cd-46a5-8948-c0229a1b1dca.jpg",
+   "name": "whs_026.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_026__f11be446-f7cd-46a5-8948-c0229a1b1dca.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 134624,
+   "uploaded_bytes": 134624,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_027__a4795d7d-8b85-4b15-8fa9-bbfb209afaa5.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_027__a4795d7d-8b85-4b15-8fa9-bbfb209afaa5.jpg",
+   "name": "whs_027.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_027__a4795d7d-8b85-4b15-8fa9-bbfb209afaa5.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 148430,
+   "uploaded_bytes": 148430,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_028__85c3a06c-35ba-4d77-b461-8c1f68f06be9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_028__85c3a06c-35ba-4d77-b461-8c1f68f06be9.jpg",
+   "name": "whs_028.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_028__85c3a06c-35ba-4d77-b461-8c1f68f06be9.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 145408,
+   "uploaded_bytes": 145408,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_029__4ee3bdc4-335d-42f6-b29b-de3b3f9dadc7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_029__4ee3bdc4-335d-42f6-b29b-de3b3f9dadc7.jpg",
+   "name": "whs_029.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_029__4ee3bdc4-335d-42f6-b29b-de3b3f9dadc7.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 228145,
+   "uploaded_bytes": 228145,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_030__92e06d47-d453-4512-a781-ae64bf09db68.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_030__92e06d47-d453-4512-a781-ae64bf09db68.jpg",
+   "name": "whs_030.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_030__92e06d47-d453-4512-a781-ae64bf09db68.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 160039,
+   "uploaded_bytes": 160039,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_031__03142394-aea5-465a-be3a-600364c61a1d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_031__03142394-aea5-465a-be3a-600364c61a1d.jpg",
+   "name": "whs_031.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_031__03142394-aea5-465a-be3a-600364c61a1d.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 210056,
+   "uploaded_bytes": 210056,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_032__6f9efaec-2645-4466-9205-dd494afaaf5d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_032__6f9efaec-2645-4466-9205-dd494afaaf5d.jpg",
+   "name": "whs_032.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_032__6f9efaec-2645-4466-9205-dd494afaaf5d.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 212075,
+   "uploaded_bytes": 212075,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_033__48035409-4685-4232-b8ea-f3436b1df5de.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_033__48035409-4685-4232-b8ea-f3436b1df5de.jpg",
+   "name": "whs_033.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_033__48035409-4685-4232-b8ea-f3436b1df5de.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 118163,
+   "uploaded_bytes": 118163,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_034__a2f233ae-b685-4115-a7b3-6036b4309b69.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_034__a2f233ae-b685-4115-a7b3-6036b4309b69.jpg",
+   "name": "whs_034.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_034__a2f233ae-b685-4115-a7b3-6036b4309b69.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 98184,
+   "uploaded_bytes": 98184,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_035__b79b7e95-0f8e-4784-a56c-ac4c18ad0fc2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_035__b79b7e95-0f8e-4784-a56c-ac4c18ad0fc2.jpg",
+   "name": "whs_035.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_035__b79b7e95-0f8e-4784-a56c-ac4c18ad0fc2.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 157700,
+   "uploaded_bytes": 157700,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_036__94713fb1-d49b-4b7c-b663-77143a7f2961.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_036__94713fb1-d49b-4b7c-b663-77143a7f2961.jpg",
+   "name": "whs_036.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_036__94713fb1-d49b-4b7c-b663-77143a7f2961.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 181363,
+   "uploaded_bytes": 181363,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_037__7f192194-1f90-4a13-baee-cb7bb8739545.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_037__7f192194-1f90-4a13-baee-cb7bb8739545.jpg",
+   "name": "whs_037.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_037__7f192194-1f90-4a13-baee-cb7bb8739545.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 137657,
+   "uploaded_bytes": 137657,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_038__43d0edd5-e8fc-493f-984c-c90d18a035db.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_038__43d0edd5-e8fc-493f-984c-c90d18a035db.jpg",
+   "name": "whs_038.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_038__43d0edd5-e8fc-493f-984c-c90d18a035db.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 76305,
+   "uploaded_bytes": 76305,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_039__b6c34aea-a01a-4439-b341-5a763accaff2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_039__b6c34aea-a01a-4439-b341-5a763accaff2.jpg",
+   "name": "whs_039.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_039__b6c34aea-a01a-4439-b341-5a763accaff2.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 175177,
+   "uploaded_bytes": 175177,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_040__acc13353-8c88-415d-bf94-59b50b39419b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_040__acc13353-8c88-415d-bf94-59b50b39419b.jpg",
+   "name": "whs_040.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_040__acc13353-8c88-415d-bf94-59b50b39419b.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 223606,
+   "uploaded_bytes": 223606,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_041__65895beb-d1ff-4d84-9646-22a12e4bf5f1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_041__65895beb-d1ff-4d84-9646-22a12e4bf5f1.jpg",
+   "name": "whs_041.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_041__65895beb-d1ff-4d84-9646-22a12e4bf5f1.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 115138,
+   "uploaded_bytes": 115138,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_042__b6a79aaf-3f41-44bb-b292-3600e05cbf0a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_042__b6a79aaf-3f41-44bb-b292-3600e05cbf0a.jpg",
+   "name": "whs_042.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_042__b6a79aaf-3f41-44bb-b292-3600e05cbf0a.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 116672,
+   "uploaded_bytes": 116672,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_043__4ec5bfbb-20c3-471a-a89b-ccb38a62c185.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_043__4ec5bfbb-20c3-471a-a89b-ccb38a62c185.jpg",
+   "name": "whs_043.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_043__4ec5bfbb-20c3-471a-a89b-ccb38a62c185.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 91458,
+   "uploaded_bytes": 91458,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_044__b866424d-2ac4-47e5-8171-348a210806ba.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_044__b866424d-2ac4-47e5-8171-348a210806ba.jpg",
+   "name": "whs_044.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_044__b866424d-2ac4-47e5-8171-348a210806ba.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 185075,
+   "uploaded_bytes": 185075,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_045__0849dcd0-ca1f-4845-a8db-aa9e5da2b574.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_045__0849dcd0-ca1f-4845-a8db-aa9e5da2b574.jpg",
+   "name": "whs_045.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_045__0849dcd0-ca1f-4845-a8db-aa9e5da2b574.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 146625,
+   "uploaded_bytes": 146625,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_046__6e015ac9-2c70-4697-8fef-6168af9d9543.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_046__6e015ac9-2c70-4697-8fef-6168af9d9543.jpg",
+   "name": "whs_046.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_046__6e015ac9-2c70-4697-8fef-6168af9d9543.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 155257,
+   "uploaded_bytes": 155257,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_047__14aa32ed-175a-46b0-bcd7-2126a9bffaec.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_047__14aa32ed-175a-46b0-bcd7-2126a9bffaec.jpg",
+   "name": "whs_047.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_047__14aa32ed-175a-46b0-bcd7-2126a9bffaec.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 173803,
+   "uploaded_bytes": 173803,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_048__925da815-9c3c-4969-baa3-d5cbb1874836.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_048__925da815-9c3c-4969-baa3-d5cbb1874836.jpg",
+   "name": "whs_048.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_048__925da815-9c3c-4969-baa3-d5cbb1874836.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 155320,
+   "uploaded_bytes": 155320,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_049__e183d058-62ed-4f65-8ad8-95be3b29819c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_049__e183d058-62ed-4f65-8ad8-95be3b29819c.jpg",
+   "name": "whs_049.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_049__e183d058-62ed-4f65-8ad8-95be3b29819c.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 124143,
+   "uploaded_bytes": 124143,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_050__c9594ba4-f1bf-43bf-acd8-868195f0ff3b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_050__c9594ba4-f1bf-43bf-acd8-868195f0ff3b.jpg",
+   "name": "whs_050.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_050__c9594ba4-f1bf-43bf-acd8-868195f0ff3b.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 79860,
+   "uploaded_bytes": 79860,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_051__000e37ab-2279-4747-9cff-4a159123edf8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_051__000e37ab-2279-4747-9cff-4a159123edf8.jpg",
+   "name": "whs_051.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_051__000e37ab-2279-4747-9cff-4a159123edf8.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 102966,
+   "uploaded_bytes": 102966,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_053__76934892-6dd8-4429-868d-f282a8cdc53e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_053__76934892-6dd8-4429-868d-f282a8cdc53e.jpg",
+   "name": "whs_053.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_053__76934892-6dd8-4429-868d-f282a8cdc53e.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 217812,
+   "uploaded_bytes": 217812,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_054__601038b8-017b-4ca2-8f3e-4a8e2410e9a1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_054__601038b8-017b-4ca2-8f3e-4a8e2410e9a1.jpg",
+   "name": "whs_054.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_054__601038b8-017b-4ca2-8f3e-4a8e2410e9a1.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 120438,
+   "uploaded_bytes": 120438,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_055__a66e37e2-8e14-47f1-8ce6-b9da39c897d6.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_055__a66e37e2-8e14-47f1-8ce6-b9da39c897d6.jpg",
+   "name": "whs_055.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_055__a66e37e2-8e14-47f1-8ce6-b9da39c897d6.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 156299,
+   "uploaded_bytes": 156299,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_056__8aea4b61-5945-42d4-8ab7-60e9701e30a2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_056__8aea4b61-5945-42d4-8ab7-60e9701e30a2.jpg",
+   "name": "whs_056.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_056__8aea4b61-5945-42d4-8ab7-60e9701e30a2.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 138462,
+   "uploaded_bytes": 138462,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_057__12aaf731-d3a6-455d-94a6-379ceffaca61.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_057__12aaf731-d3a6-455d-94a6-379ceffaca61.jpg",
+   "name": "whs_057.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_057__12aaf731-d3a6-455d-94a6-379ceffaca61.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 140431,
+   "uploaded_bytes": 140431,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_058__74afc63b-9f1c-4cf4-a678-18d17cccdde4.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_058__74afc63b-9f1c-4cf4-a678-18d17cccdde4.jpg",
+   "name": "whs_058.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_058__74afc63b-9f1c-4cf4-a678-18d17cccdde4.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 100200,
+   "uploaded_bytes": 100200,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_059__115d14d7-2dc9-434c-af28-cdc8110883cb.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_059__115d14d7-2dc9-434c-af28-cdc8110883cb.jpg",
+   "name": "whs_059.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_059__115d14d7-2dc9-434c-af28-cdc8110883cb.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 101340,
+   "uploaded_bytes": 101340,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_060__4d943ca1-d3b4-4aed-b50a-185c2528d9ab.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_060__4d943ca1-d3b4-4aed-b50a-185c2528d9ab.jpg",
+   "name": "whs_060.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_060__4d943ca1-d3b4-4aed-b50a-185c2528d9ab.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 123006,
+   "uploaded_bytes": 123006,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_061__eb55bef7-74c3-45f4-b251-e9271aaf6fdd.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_061__eb55bef7-74c3-45f4-b251-e9271aaf6fdd.jpg",
+   "name": "whs_061.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_061__eb55bef7-74c3-45f4-b251-e9271aaf6fdd.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 125696,
+   "uploaded_bytes": 125696,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_062__b801854b-0e80-4f84-b8bb-c4f18a2c153d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_062__b801854b-0e80-4f84-b8bb-c4f18a2c153d.jpg",
+   "name": "whs_062.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_062__b801854b-0e80-4f84-b8bb-c4f18a2c153d.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 113023,
+   "uploaded_bytes": 113023,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_063__079c1118-1e01-4edd-8e13-4029f9b94bc2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_063__079c1118-1e01-4edd-8e13-4029f9b94bc2.jpg",
+   "name": "whs_063.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_063__079c1118-1e01-4edd-8e13-4029f9b94bc2.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 169687,
+   "uploaded_bytes": 169687,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_064__4a7f6285-5d62-41f4-93b8-6611c9653b8b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_064__4a7f6285-5d62-41f4-93b8-6611c9653b8b.jpg",
+   "name": "whs_064.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_064__4a7f6285-5d62-41f4-93b8-6611c9653b8b.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 157451,
+   "uploaded_bytes": 157451,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_065__1018ca35-e760-4f3c-b21d-d611abb7907c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_065__1018ca35-e760-4f3c-b21d-d611abb7907c.jpg",
+   "name": "whs_065.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_065__1018ca35-e760-4f3c-b21d-d611abb7907c.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 146323,
+   "uploaded_bytes": 146323,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_066__6c847253-4ab0-457d-8223-26ea9cde01bd.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_066__6c847253-4ab0-457d-8223-26ea9cde01bd.jpg",
+   "name": "whs_066.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_066__6c847253-4ab0-457d-8223-26ea9cde01bd.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 160924,
+   "uploaded_bytes": 160924,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_067__142e6944-c6ac-4c1c-af50-c80960f2a047.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_067__142e6944-c6ac-4c1c-af50-c80960f2a047.jpg",
+   "name": "whs_067.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_067__142e6944-c6ac-4c1c-af50-c80960f2a047.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 136118,
+   "uploaded_bytes": 136118,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_068__cbc00f54-05bb-49d3-8c93-941d22c96ca9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_068__cbc00f54-05bb-49d3-8c93-941d22c96ca9.jpg",
+   "name": "whs_068.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_068__cbc00f54-05bb-49d3-8c93-941d22c96ca9.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 145821,
+   "uploaded_bytes": 145821,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_069__f0245115-c64a-4ae0-b5ea-861202894d8d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_069__f0245115-c64a-4ae0-b5ea-861202894d8d.jpg",
+   "name": "whs_069.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_069__f0245115-c64a-4ae0-b5ea-861202894d8d.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 165219,
+   "uploaded_bytes": 165219,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_070__f8cf7ca2-d025-42fd-83a5-07b29db4ba1f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_070__f8cf7ca2-d025-42fd-83a5-07b29db4ba1f.jpg",
+   "name": "whs_070.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_070__f8cf7ca2-d025-42fd-83a5-07b29db4ba1f.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 149424,
+   "uploaded_bytes": 149424,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_071__c8f28826-daa6-4319-88e2-0eda29036e94.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_071__c8f28826-daa6-4319-88e2-0eda29036e94.jpg",
+   "name": "whs_071.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_071__c8f28826-daa6-4319-88e2-0eda29036e94.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 139939,
+   "uploaded_bytes": 139939,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_072__af70a653-ee49-4d50-841b-d177a5fc45c3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_072__af70a653-ee49-4d50-841b-d177a5fc45c3.jpg",
+   "name": "whs_072.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_072__af70a653-ee49-4d50-841b-d177a5fc45c3.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 125525,
+   "uploaded_bytes": 125525,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_073__e959edde-06b4-4b9e-a8b6-f54d42e6dd07.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_073__e959edde-06b4-4b9e-a8b6-f54d42e6dd07.jpg",
+   "name": "whs_073.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_073__e959edde-06b4-4b9e-a8b6-f54d42e6dd07.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 109038,
+   "uploaded_bytes": 109038,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_074__084071b8-4e67-4f57-a4b5-ae7735cb8e32.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_074__084071b8-4e67-4f57-a4b5-ae7735cb8e32.jpg",
+   "name": "whs_074.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_074__084071b8-4e67-4f57-a4b5-ae7735cb8e32.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 193755,
+   "uploaded_bytes": 193755,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_075__d7e4be77-deee-4cda-a5f3-08fb0297ef33.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_075__d7e4be77-deee-4cda-a5f3-08fb0297ef33.jpg",
+   "name": "whs_075.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_075__d7e4be77-deee-4cda-a5f3-08fb0297ef33.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 151363,
+   "uploaded_bytes": 151363,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_076__4a7a9e8a-022a-4588-82d6-88654f6fd848.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_076__4a7a9e8a-022a-4588-82d6-88654f6fd848.jpg",
+   "name": "whs_076.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_076__4a7a9e8a-022a-4588-82d6-88654f6fd848.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 202617,
+   "uploaded_bytes": 202617,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_078__23f3be15-e7ce-43d3-aebb-6d3e0ea29d6b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_078__23f3be15-e7ce-43d3-aebb-6d3e0ea29d6b.jpg",
+   "name": "whs_078.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_078__23f3be15-e7ce-43d3-aebb-6d3e0ea29d6b.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 155837,
+   "uploaded_bytes": 155837,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_079__eabd853c-be37-4a1d-a13e-1dd581e9118e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_079__eabd853c-be37-4a1d-a13e-1dd581e9118e.jpg",
+   "name": "whs_079.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_079__eabd853c-be37-4a1d-a13e-1dd581e9118e.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 177233,
+   "uploaded_bytes": 177233,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-chen-safety/wuhan/whs_080__ee536615-e9a4-4b21-a1c5-b59b648d90c1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-chen-safety/wuhan/whs_080__ee536615-e9a4-4b21-a1c5-b59b648d90c1.jpg",
+   "name": "whs_080.jpg",
+   "type": "image",
+   "folder": "wuhan",
+   "media_id": "templates/2025-chen-safety/wuhan/whs_080__ee536615-e9a4-4b21-a1c5-b59b648d90c1.jpg",
+   "logicalFolder": "wuhan",
+   "original_bytes": 192202,
+   "uploaded_bytes": 192202,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Assessing Urban Safety Perception Through Street View Imagery and Transfer Learning: A Case Study of Wuhan, China",
+  "authors": [
+   "Chen Y.",
+   "Tang Z.-R."
+  ],
+  "year": 2025,
+  "venue": "Sustainability (Switzerland)",
+  "doi": "10.3390/su17177641",
+  "url": "https://doi.org/10.3390/su17177641"
+ }
+}

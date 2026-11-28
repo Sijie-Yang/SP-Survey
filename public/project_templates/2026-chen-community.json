@@ -1,0 +1,374 @@
+{
+ "id": "2026-chen-community",
+ "name": "Community Park Scenes: Walking Intention and Feelings",
+ "description": "Faithful replication with the paper's own stimuli: Chen and Jiang (2026, Scientific Reports 16: 17659) asked which visual attributes of community parks make older adults want to walk there and feel better. From 200 photographs of parks in Xiamen, Nanchang and Yancheng they chose eight, two contrasting levels each of green-space accessibility (a path into the lawn or not), colour hue (warm vs cool flower fields), vegetation enclosure and artificiality (ornamental water and art). 52 adults aged 60–69 viewed each photo for 30 s between grey rest screens while skin conductance was recorded, then rated walking-intention items and positive and negative affect on a 4-point scale. Less enclosed spaces gave larger emotional benefits but lower walking intention, accessibility raised intention, artificiality lowered both, and cool hues beat warm ones. This template uses the authors' eight photographs from Zenodo (10.5281/zenodo.18772183, CC BY 4.0) in folder \"parks\" (gsa1/gsa2, hue1/hue2, enclosure1/enclosure2, artificial1/artificial2): a 60-s grey rest, then for each photo in random order 30 s of grey, 30 s of the photo full screen, and five 4-point items (appreciate the scenery, inclined to walk here, would visit often if near home, positive emotions, uncomfortable feelings), plus the two walking-habit items, age, gender and urban/rural background.\n\nDifferences from the original study: (1) no skin conductance or other physiological recording; (2) photo order is random for each participant instead of 12 counterbalanced sequences; (3) the before-photos control questionnaire uses two self-written items (\"Right now I feel positive emotions / uncomfortable\"); (4) the visit-frequency item is reworded in plain English from the paper's Table 3 (\"If the depicted location were proximal to my residence, it would exhibit elevated visitation frequency for ambulatory activities\"); (5) the two walking-habit items are asked once at the start, not with every photo; (6) open to any adult online, not only 60–69-year-olds tested at home; (7) photos are resized to 1600 px.",
+ "author": "Chen & Jiang",
+ "year": "2026",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "parks",
+  "older-adults",
+  "PANAS",
+  "behavioural-intention",
+  "enclosure",
+  "source:paper",
+  "modality:scene_photo",
+  "task:multi_rating",
+  "task:questionnaire",
+  "concept:emotion",
+  "concept:greenery",
+  "concept:enclosure",
+  "concept:color",
+  "concept:preference",
+  "concept:restoration",
+  "participants:residents",
+  "sample:lt100",
+  "country:China",
+  "city:Xiamen",
+  "city:Nanchang",
+  "city:Yancheng"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1038/s41598-026-48324-6",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T09:09:50.023+00:00",
+ "updatedAt": "2026-11-27T09:09:59.36+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "max": 110,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "Age",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "lived",
+      "type": "radiogroup",
+      "title": "Where have you lived?",
+      "choices": [
+       {
+        "text": "Both in a city and in the countryside",
+        "value": "both"
+       },
+       {
+        "text": "Only in cities or towns",
+        "value": "urban"
+       },
+       {
+        "text": "Only in the countryside",
+        "value": "rural"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "walk_enjoy",
+      "type": "rating",
+      "title": "I enjoy taking walks outdoors.",
+      "rateMax": 4,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Strongly disagree",
+       "Disagree",
+       "Agree",
+       "Strongly agree"
+      ],
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree"
+     },
+     {
+      "name": "walk_often",
+      "type": "rating",
+      "title": "I frequently engage in outdoor walking activities.",
+      "rateMax": 4,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Strongly disagree",
+       "Disagree",
+       "Agree",
+       "Strongly agree"
+      ],
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree"
+     }
+    ]
+   },
+   {
+    "name": "photos",
+    "elements": [
+     {
+      "name": "bi_appreciate",
+      "type": "rating",
+      "title": "I appreciate the scenery of this location.",
+      "rateMax": 4,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Strongly disagree",
+       "Disagree",
+       "Agree",
+       "Strongly agree"
+      ],
+      "description": "Keyed by photo (gsa1, gsa2, hue1, hue2, enclosure1, enclosure2, artificial1, artificial2); 1 = strongly disagree, 4 = strongly agree.",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree"
+     },
+     {
+      "name": "bi_walk_here",
+      "type": "rating",
+      "title": "I would be inclined to take walks in this area.",
+      "rateMax": 4,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Strongly disagree",
+       "Disagree",
+       "Agree",
+       "Strongly agree"
+      ],
+      "description": "Keyed by photo (gsa1, gsa2, hue1, hue2, enclosure1, enclosure2, artificial1, artificial2); 1 = strongly disagree, 4 = strongly agree.",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree"
+     },
+     {
+      "name": "bi_visit_if_near",
+      "type": "rating",
+      "title": "If this place were near my home, I would visit it often for walks.",
+      "rateMax": 4,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Strongly disagree",
+       "Disagree",
+       "Agree",
+       "Strongly agree"
+      ],
+      "description": "Keyed by photo (gsa1, gsa2, hue1, hue2, enclosure1, enclosure2, artificial1, artificial2); 1 = strongly disagree, 4 = strongly agree.",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree"
+     },
+     {
+      "name": "pa",
+      "type": "rating",
+      "title": "The scenery of this place evokes positive emotions.",
+      "rateMax": 4,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Strongly disagree",
+       "Disagree",
+       "Agree",
+       "Strongly agree"
+      ],
+      "description": "Positive affect (PANAS descriptors: enthusiastic, interested, active, strong, inspired, alert, determined, excited, proud, attentive). Keyed by photo (gsa1, gsa2, hue1, hue2, enclosure1, enclosure2, artificial1, artificial2); 1 = strongly disagree, 4 = strongly agree. Also key 'baseline' before the photos ('Right now I feel positive emotions').",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree"
+     },
+     {
+      "name": "na",
+      "type": "rating",
+      "title": "The landscape composition of this place induces uncomfortable feelings.",
+      "rateMax": 4,
+      "rateMin": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Strongly disagree",
+       "Disagree",
+       "Agree",
+       "Strongly agree"
+      ],
+      "description": "Negative affect (PANAS descriptors: scared, afraid, upset, distressed, jittery, nervous, ashamed, guilty, irritable, hostile). Keyed by photo (gsa1, gsa2, hue1, hue2, enclosure1, enclosure2, artificial1, artificial2); 1 = strongly disagree, 4 = strongly agree. Also key 'baseline' before the photos ('Right now I feel uncomfortable').",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree"
+     }
+    ]
+   }
+  ],
+  "title": "Community Park Scenes: Walking Intention and Feelings",
+  "locale": "en",
+  "spSite": {
+   "id": "site-fa7938c4e74583e0",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Community Park Scenes</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Community Park Scenes: Walking Intention and Feelings\",\n  \"description\": \"Participants view eight community-park photographs for 30 s each, with grey rest screens between them, and after each photo rate three walking-intention items and a positive and a negative affect item on a 4-point scale. Rebuilt from Chen & Jiang (2026), Scientific Reports 16: 17659, with the authors' eight photographs (Zenodo 10.5281/zenodo.18772183, CC BY 4.0): two each differing in green-space accessibility, colour hue, enclosure and artificiality.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"parks\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"min\": 18,\n      \"max\": 110\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"lived\",\n      \"title\": \"Where have you lived?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"both\",\n        \"text\": \"Both in a city and in the countryside\"\n       },\n       {\n        \"value\": \"urban\",\n        \"text\": \"Only in cities or towns\"\n       },\n       {\n        \"value\": \"rural\",\n        \"text\": \"Only in the countryside\"\n       }\n      ]\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"walk_enjoy\",\n      \"title\": \"I enjoy taking walks outdoors.\",\n      \"rateMin\": 1,\n      \"rateMax\": 4,\n      \"rateLabels\": [\n       \"Strongly disagree\",\n       \"Disagree\",\n       \"Agree\",\n       \"Strongly agree\"\n      ],\n      \"minRateDescription\": \"Strongly disagree\",\n      \"maxRateDescription\": \"Strongly agree\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"walk_often\",\n      \"title\": \"I frequently engage in outdoor walking activities.\",\n      \"rateMin\": 1,\n      \"rateMax\": 4,\n      \"rateLabels\": [\n       \"Strongly disagree\",\n       \"Disagree\",\n       \"Agree\",\n       \"Strongly agree\"\n      ],\n      \"minRateDescription\": \"Strongly disagree\",\n      \"maxRateDescription\": \"Strongly agree\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"photos\",\n    \"elements\": [\n     {\n      \"type\": \"rating\",\n      \"name\": \"bi_appreciate\",\n      \"title\": \"I appreciate the scenery of this location.\",\n      \"rateMin\": 1,\n      \"rateMax\": 4,\n      \"rateLabels\": [\n       \"Strongly disagree\",\n       \"Disagree\",\n       \"Agree\",\n       \"Strongly agree\"\n      ],\n      \"minRateDescription\": \"Strongly disagree\",\n      \"maxRateDescription\": \"Strongly agree\",\n      \"isRequired\": true,\n      \"description\": \"Keyed by photo (gsa1, gsa2, hue1, hue2, enclosure1, enclosure2, artificial1, artificial2); 1 = strongly disagree, 4 = strongly agree.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"bi_walk_here\",\n      \"title\": \"I would be inclined to take walks in this area.\",\n      \"rateMin\": 1,\n      \"rateMax\": 4,\n      \"rateLabels\": [\n       \"Strongly disagree\",\n       \"Disagree\",\n       \"Agree\",\n       \"Strongly agree\"\n      ],\n      \"minRateDescription\": \"Strongly disagree\",\n      \"maxRateDescription\": \"Strongly agree\",\n      \"isRequired\": true,\n      \"description\": \"Keyed by photo (gsa1, gsa2, hue1, hue2, enclosure1, enclosure2, artificial1, artificial2); 1 = strongly disagree, 4 = strongly agree.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"bi_visit_if_near\",\n      \"title\": \"If this place were near my home, I would visit it often for walks.\",\n      \"rateMin\": 1,\n      \"rateMax\": 4,\n      \"rateLabels\": [\n       \"Strongly disagree\",\n       \"Disagree\",\n       \"Agree\",\n       \"Strongly agree\"\n      ],\n      \"minRateDescription\": \"Strongly disagree\",\n      \"maxRateDescription\": \"Strongly agree\",\n      \"isRequired\": true,\n      \"description\": \"Keyed by photo (gsa1, gsa2, hue1, hue2, enclosure1, enclosure2, artificial1, artificial2); 1 = strongly disagree, 4 = strongly agree.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"pa\",\n      \"title\": \"The scenery of this place evokes positive emotions.\",\n      \"rateMin\": 1,\n      \"rateMax\": 4,\n      \"rateLabels\": [\n       \"Strongly disagree\",\n       \"Disagree\",\n       \"Agree\",\n       \"Strongly agree\"\n      ],\n      \"minRateDescription\": \"Strongly disagree\",\n      \"maxRateDescription\": \"Strongly agree\",\n      \"isRequired\": true,\n      \"description\": \"Positive affect (PANAS descriptors: enthusiastic, interested, active, strong, inspired, alert, determined, excited, proud, attentive). Keyed by photo (gsa1, gsa2, hue1, hue2, enclosure1, enclosure2, artificial1, artificial2); 1 = strongly disagree, 4 = strongly agree. Also key 'baseline' before the photos ('Right now I feel positive emotions').\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"na\",\n      \"title\": \"The landscape composition of this place induces uncomfortable feelings.\",\n      \"rateMin\": 1,\n      \"rateMax\": 4,\n      \"rateLabels\": [\n       \"Strongly disagree\",\n       \"Disagree\",\n       \"Agree\",\n       \"Strongly agree\"\n      ],\n      \"minRateDescription\": \"Strongly disagree\",\n      \"maxRateDescription\": \"Strongly agree\",\n      \"isRequired\": true,\n      \"description\": \"Negative affect (PANAS descriptors: scared, afraid, upset, distressed, jittery, nervous, ashamed, guilty, irritable, hostile). Keyed by photo (gsa1, gsa2, hue1, hue2, enclosure1, enclosure2, artificial1, artificial2); 1 = strongly disagree, 4 = strongly agree. Also key 'baseline' before the photos ('Right now I feel uncomfortable').\"\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"parks-original\">{\"source\": \"Chen & Jiang (2026) Scientific Reports 16: 17659\", \"n\": 52, \"participants\": \"adults aged 60-69 who had lived in both urban and rural areas, three Chinese cities\", \"photos\": {\"gsa1/gsa2\": \"green space accessibility low/high (path into the lawn)\", \"hue1/hue2\": \"warm/cool flower field\", \"enclosure1/enclosure2\": \"low/high vegetation enclosure\", \"artificial1/artificial2\": \"low/high artificiality (ornamental water and art)\"}, \"result\": \"Positive arousal ranked enclosure > hue > accessibility > artificiality; less enclosed spaces gave higher emotional benefits but lower walking intention; accessibility raised intention; artificiality lowered intention and emotional benefits; cool hues gave higher emotional benefits than warm.\"}</script>\n<style>\n:root{--bg:#f3f5f2;--card:#fff;--ink:#1d241f;--muted:#5b665e;--accent:#2f6a48;--line:#d8dfd9;--warn:#b3261e;--grey:#808080}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:900px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.5rem;margin:0 0 8px}h2{font-size:1.15rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:13px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.prog{font-size:.88rem;color:var(--muted);margin-bottom:8px}\n.view{position:fixed;inset:0;background:var(--grey);display:flex;align-items:center;justify-content:center;z-index:5}\n.view img{max-width:100vw;max-height:100vh;display:block}\n.view .t{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:#eee;font-size:.9rem}\n.item{padding:12px 0;border-top:1px solid var(--line)}.item:first-child{border-top:0}\n.item b{display:block;margin-bottom:4px}.hint{font-size:.85rem;color:var(--muted);margin-bottom:6px}\n.sc{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}\n.sc label{display:flex;flex-direction:column;align-items:center;gap:4px;border:1px solid var(--line);border-radius:10px;padding:8px 4px;cursor:pointer;font-size:.85rem;text-align:center}\n.sc input{margin:0}\n.thumb{width:100%;max-width:420px;border-radius:8px;display:block;margin-bottom:10px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.f{margin-top:16px}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:110px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:900px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs: Chen &amp; Jiang (2026), Scientific Reports 16: 17659, data and images on Zenodo (doi:10.5281/zenodo.18772183, CC BY 4.0).</footer>\n<script>\n(function(){\n  var KEY='park-scenes:state', TEST=window.__VIEWMS, T=TEST?{rest0:TEST,rest:TEST,view:TEST}:{rest0:60000,rest:30000,view:30000};\n  var app=document.getElementById('app'), Q={}, files={}, ids=[], st=null;\n  var SCALE=['Strongly disagree','Disagree','Agree','Strongly agree'];\n  var PER=['bi_appreciate','bi_walk_here','bi_visit_if_near','pa','na'];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function send(list,b,next){if(b)b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}next();});}\n  function scale(name,title,hint){return '<div class=\"item\"><b>'+esc(title)+'</b>'+(hint?'<div class=\"hint\">'+esc(hint)+'</div>':'')+'<div class=\"sc\">'+SCALE.map(function(s,i){return '<label><input type=\"radio\" name=\"'+name+'\" value=\"'+(i+1)+'\">'+(i+1)+'<span>'+s+'</span></label>';}).join('')+'</div></div>';}\n  function val(name){var x=app.querySelector('input[name='+name+']:checked');return x?Number(x.value):null;}\n  function intro(){\n    app.innerHTML='<h1>Community park scenes</h1><p>You will look at 8 photographs of community parks, one at a time. Each photo is shown for 30 seconds; please just look at it and imagine you are there. After each photo you answer five short questions. Between photos a plain grey screen is shown for 30 seconds so you can rest. It takes about 20 minutes.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');send([SPSite.answer('consent',true)],this,function(){st.step='about';save();route();});};\n  }\n  function radios(q){return '<div class=\"f\"><b>'+esc(Q[q].title)+'</b>'+(Q[q].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+q+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function about(){\n    app.innerHTML='<h2>About you</h2><div class=\"card\"><div class=\"f\" style=\"margin-top:0\"><b>'+esc(Q.age.title)+'</b><br><input type=\"number\" id=\"age\" min=\"18\" max=\"110\"></div>'+radios('gender')+radios('lived')+'<div class=\"f\">'+scale('walk_enjoy',Q.walk_enjoy.title)+scale('walk_often',Q.walk_often.title)+'</div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var age=Number(document.getElementById('age').value);if(!(age>=18&&age<=110))return err('Please enter your age.');\n      var g=app.querySelector('input[name=gender]:checked'),l=app.querySelector('input[name=lived]:checked');if(!g||!l)return err('Please answer every question.');\n      var a=val('walk_enjoy'),b=val('walk_often');if(a==null||b==null)return err('Please answer every question.');\n      send([SPSite.answer('age',age),SPSite.answer('gender',g.value),SPSite.answer('lived',l.value),SPSite.answer('walk_enjoy',a),SPSite.answer('walk_often',b)],this,function(){st.step='base';save();route();});\n    };\n  }\n  function base(){\n    app.innerHTML='<h2>Before the photos</h2><div class=\"card\"><p style=\"color:var(--ink)\">How do you feel right now?</p>'+scale('pa_b','Right now I feel positive emotions.',Q.pa.description_short)+scale('na_b','Right now I feel uncomfortable.',Q.na.description_short)+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){var a=val('pa_b'),b=val('na_b');if(a==null||b==null)return err('Please answer both questions.');\n      send([SPSite.answer('pa',a,{key:'baseline',shown:[]}),SPSite.answer('na',b,{key:'baseline',shown:[]})],this,function(){st.step='ready';save();route();});};\n  }\n  function ready(){\n    app.innerHTML='<h2>Ready</h2><div class=\"card\"><p style=\"color:var(--ink)\">The screen will now turn grey for one minute. Sit comfortably and relax. The first photo then appears by itself.</p><button class=\"btn\" id=\"go\">Begin</button></div>';\n    document.getElementById('go').onclick=function(){st.step='trial';st.k=0;st.phase='rest';save();route();};\n  }\n  function trial(){\n    var id=st.order[st.k],im=new Image();im.src=files[id].url;im.alt='Park photograph';\n    if(st.phase==='q')return questions();\n    var v=document.createElement('div');v.className='view';app.innerHTML='';app.appendChild(v);\n    var rest=st.k===0?T.rest0:T.rest;\n    v.innerHTML='<div class=\"t\">Rest · photo '+(st.k+1)+' of '+st.order.length+' comes next</div>';\n    setTimeout(function(){v.innerHTML='';v.appendChild(im);setTimeout(function(){st.phase='q';save();route();},T.view);},rest);\n  }\n  function questions(){\n    var id=st.order[st.k];\n    app.innerHTML='<div class=\"prog\">Photo '+(st.k+1)+' of '+st.order.length+'</div><div class=\"card\"><img class=\"thumb\" alt=\"The photo you just saw\" src=\"'+esc(files[id].url)+'\">'+PER.map(function(n){return scale('q_'+n,Q[n].title,Q[n].description_short);}).join('')+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var vals=PER.map(function(n){return val('q_'+n);});if(vals.some(function(x){return x==null;}))return err('Please answer all five questions.');\n      var sh=[files[id].name];\n      send(PER.map(function(n,i){return SPSite.answer(n,vals[i],{key:id,shown:sh});}),this,function(){st.k++;st.phase='rest';if(st.k>=st.order.length)st.step='done';save();route();});\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st.step='intro';save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  function route(){var s=st.step;window.scrollTo(0,0);if(s==='about')return about();if(s==='base')return base();if(s==='ready')return ready();if(s==='trial')return trial();if(s==='done')return finish();intro();}\n  SPSite.onReady(function(ctx){\n    ['consent','age','gender','lived','walk_enjoy','walk_often','bi_appreciate','bi_walk_here','bi_visit_if_near','pa','na'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    Q.pa.description_short='For example: enthusiastic, interested, active, strong, inspired, alert, determined, excited, proud, attentive.';\n    Q.na.description_short='For example: scared, afraid, upset, distressed, jittery, nervous, ashamed, guilty, irritable, hostile.';\n    (SPSite.getMedia('parks')||[]).forEach(function(f){if(/\\.(png|jpe?g|webp)$/i.test(f.name)){var k=f.name.replace(/\\.[^.]+$/,'');files[k]=f;ids.push(k);}});\n    if(ids.length<2){app.innerHTML='<h1>Photos missing</h1><p>Upload the eight park photographs to the media folder \"parks\".</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    var valid=st&&st.order&&st.order.length===ids.length&&st.order.every(function(x){return files[x];});\n    if(!valid)st={step:'intro',order:shuffle(ids),k:0,phase:'rest'};\n    var a=(ctx&&ctx.answers)||{};if(a.consent!==true){st.step='intro';st.k=0;st.phase='rest';}\n    if(st.step==='trial'&&st.phase!=='q')st.phase='rest';\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T09:09:21.133Z",
+   "mediaFolders": [
+    "parks"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T09:09:21.133Z"
+  },
+  "description": "Participants view eight community-park photographs for 30 s each, with grey rest screens between them, and after each photo rate three walking-intention items and a positive and a negative affect item on a 4-point scale. Rebuilt from Chen & Jiang (2026), Scientific Reports 16: 17659, with the authors' eight photographs (Zenodo 10.5281/zenodo.18772183, CC BY 4.0): two each differing in green-space accessibility, colour hue, enclosure and artificiality.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2026-chen-community/parks/artificial1__e9fce0c9-358c-4457-ba37-455cc5b63b1d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-chen-community/parks/artificial1__e9fce0c9-358c-4457-ba37-455cc5b63b1d.jpg",
+   "name": "artificial1.jpg",
+   "type": "image",
+   "folder": "parks",
+   "media_id": "templates/2026-chen-community/parks/artificial1__e9fce0c9-358c-4457-ba37-455cc5b63b1d.jpg",
+   "logicalFolder": "parks",
+   "original_bytes": 389516,
+   "uploaded_bytes": 389516,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-chen-community/parks/artificial2__66898b53-054f-4f96-b932-bfc04901d6b4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-chen-community/parks/artificial2__66898b53-054f-4f96-b932-bfc04901d6b4.jpg",
+   "name": "artificial2.jpg",
+   "type": "image",
+   "folder": "parks",
+   "media_id": "templates/2026-chen-community/parks/artificial2__66898b53-054f-4f96-b932-bfc04901d6b4.jpg",
+   "logicalFolder": "parks",
+   "original_bytes": 581821,
+   "uploaded_bytes": 581821,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-chen-community/parks/enclosure1__02b2d02e-502b-4e4c-bb59-82733fb4ccbd.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-chen-community/parks/enclosure1__02b2d02e-502b-4e4c-bb59-82733fb4ccbd.jpg",
+   "name": "enclosure1.jpg",
+   "type": "image",
+   "folder": "parks",
+   "media_id": "templates/2026-chen-community/parks/enclosure1__02b2d02e-502b-4e4c-bb59-82733fb4ccbd.jpg",
+   "logicalFolder": "parks",
+   "original_bytes": 425258,
+   "uploaded_bytes": 425258,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-chen-community/parks/enclosure2__7d000100-da4f-4ecd-b9fc-a578c18ea2de.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-chen-community/parks/enclosure2__7d000100-da4f-4ecd-b9fc-a578c18ea2de.jpg",
+   "name": "enclosure2.jpg",
+   "type": "image",
+   "folder": "parks",
+   "media_id": "templates/2026-chen-community/parks/enclosure2__7d000100-da4f-4ecd-b9fc-a578c18ea2de.jpg",
+   "logicalFolder": "parks",
+   "original_bytes": 698128,
+   "uploaded_bytes": 698128,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-chen-community/parks/gsa1__0c14eae6-19c5-4db6-bb17-65be5a09d44a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-chen-community/parks/gsa1__0c14eae6-19c5-4db6-bb17-65be5a09d44a.jpg",
+   "name": "gsa1.jpg",
+   "type": "image",
+   "folder": "parks",
+   "media_id": "templates/2026-chen-community/parks/gsa1__0c14eae6-19c5-4db6-bb17-65be5a09d44a.jpg",
+   "logicalFolder": "parks",
+   "original_bytes": 444327,
+   "uploaded_bytes": 444327,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-chen-community/parks/gsa2__f3851f16-c7a8-4367-935d-9081fdc8ffd4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-chen-community/parks/gsa2__f3851f16-c7a8-4367-935d-9081fdc8ffd4.jpg",
+   "name": "gsa2.jpg",
+   "type": "image",
+   "folder": "parks",
+   "media_id": "templates/2026-chen-community/parks/gsa2__f3851f16-c7a8-4367-935d-9081fdc8ffd4.jpg",
+   "logicalFolder": "parks",
+   "original_bytes": 641967,
+   "uploaded_bytes": 641967,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-chen-community/parks/hue1__cbe61a30-4317-4e82-a8ff-640ae39a6b6a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-chen-community/parks/hue1__cbe61a30-4317-4e82-a8ff-640ae39a6b6a.jpg",
+   "name": "hue1.jpg",
+   "type": "image",
+   "folder": "parks",
+   "media_id": "templates/2026-chen-community/parks/hue1__cbe61a30-4317-4e82-a8ff-640ae39a6b6a.jpg",
+   "logicalFolder": "parks",
+   "original_bytes": 538758,
+   "uploaded_bytes": 538758,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-chen-community/parks/hue2__e6faa72d-3a51-44bc-b447-57898b9849e5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-chen-community/parks/hue2__e6faa72d-3a51-44bc-b447-57898b9849e5.jpg",
+   "name": "hue2.jpg",
+   "type": "image",
+   "folder": "parks",
+   "media_id": "templates/2026-chen-community/parks/hue2__e6faa72d-3a51-44bc-b447-57898b9849e5.jpg",
+   "logicalFolder": "parks",
+   "original_bytes": 408010,
+   "uploaded_bytes": 408010,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "An evaluation of the impact of visual attributes of park landscape spaces on the emotional benefits and behavioral intention of younger older adults",
+  "authors": [
+   "Yuhui Chen",
+   "Mu Jiang"
+  ],
+  "year": 2026,
+  "venue": "Scientific Reports",
+  "doi": "10.1038/s41598-026-48324-6",
+  "url": "https://doi.org/10.1038/s41598-026-48324-6"
+ }
+}

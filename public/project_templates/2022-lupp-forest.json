@@ -1,0 +1,445 @@
+{
+ "id": "2022-lupp-forest",
+ "name": "Forest Visualisations Q-Sort (Munich)",
+ "description": "Faithful replication of the Forstenrieder Park picture interview in Lupp, Kantelberg, Fäth, Hirschbeck, Käsbauer, Ritter, Schisslbauer & Pauleit (2022), Forests 13:1584. Participants sort 16 hand-painted visualisations of winter forest stands near Munich, from even-aged spruce to mixed, layered stands with deadwood, using the paper's forced Q-sort: they choose the 4 pictures they like most and the 4 they like least, then the best of the liked and the worst of the least liked, and say briefly why. Scores: best +2, other liked +1, not chosen 0, other least liked −1, worst −2. Analysis: mean score per picture from −2 to +2 (paper: even-aged old spruce about −0.7, uneven-aged mixed stands with deadwood about +0.6), and the reasons coded by theme.\n\nPictures: the 16 paintings by Anna Ritter in the paper's Figure 3 (CC BY 4.0), numbered 1–16 in the figure's reading order, used with credit; the template is removed if the authors object.\n\nDifferences from the original study: (1) online instead of face-to-face interviews with visitors at forest entrances; (2) the pictures appear in random order on screen instead of as printed cards; (3) the paper does not list its demographic and forest-visit questions; the four questions here (gender, age, education, forest visits) were written for this template; (4) the paper's second picture survey (12 autumn photographs in Ebersberger Forst) and the Photovoice walks are not included.",
+ "author": "Lupp et al.",
+ "year": "2022",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "source:paper",
+  "modality:rendered",
+  "task:choose_from_set",
+  "task:open_ended",
+  "task:questionnaire",
+  "concept:preference",
+  "concept:naturalness",
+  "concept:aesthetics",
+  "concept:greenery",
+  "participants:residents",
+  "sample:100to1000",
+  "country:Germany",
+  "city:Munich"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/f13101584",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T21:47:21.705+00:00",
+ "updatedAt": "2026-11-27T21:47:37.435+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "intro": "This survey is about forests near cities. You will sort 16 paintings of forest stands: pick the 4 you like most and the 4 you like least, then the best and the worst, and say briefly why. It takes about 5 minutes and your answers are anonymous.",
+    "title": "How do you like these forests?",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "label": "I agree to take part in this survey and that my answers are used for research.",
+      "title": "Consent",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "qsort",
+    "title": "Sorting the pictures",
+    "elements": [
+     {
+      "kind": "q_sort",
+      "name": "forest_qsort",
+      "type": "custom",
+      "steps": {
+       "best": {
+        "why": "Why did you choose this one? (a few words)",
+        "text": "Of the 4 pictures you like most, which one is the best?",
+        "title": "Your favourite"
+       },
+       "liked": {
+        "text": "Here are 16 paintings of forests in winter, without snow. Tap the 4 forest pictures you like most.",
+        "title": "Pictures you like"
+       },
+       "worst": {
+        "why": "Why did you choose this one? (a few words)",
+        "text": "Of the 4 pictures you like least, which one is the worst?",
+        "title": "The one you like least"
+       },
+       "disliked": {
+        "text": "Now tap the 4 forest pictures you like least.",
+        "title": "Pictures you like less"
+       }
+      },
+      "title": "Forced Q-sort of 16 forest visualisations",
+      "isRequired": true,
+      "description": "16 hand-painted forest visualisations (paper Figure 3, numbered 1–16 in reading order of the figure; shown in random order). Forced Q-sort as in the paper: 4 most liked, 4 least liked, then the best of the liked and the worst of the least liked, each with a short reason. One answer: liked, disliked (picture numbers), best, worst, why_best, why_worst, scores (per picture: best +2, other liked +1, not chosen 0, other least liked −1, worst −2), display_order. Analysis in the paper: mean score per picture (−2 to +2), and the reasons for best and worst coded by theme."
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "title": "About you",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": 1
+       },
+       {
+        "text": "Male",
+        "value": 2
+       },
+       {
+        "text": "Diverse",
+        "value": 3
+       },
+       {
+        "text": "Prefer not to say",
+        "value": 4
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "age",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "Under 18",
+        "value": 1
+       },
+       {
+        "text": "18–25",
+        "value": 2
+       },
+       {
+        "text": "26–35",
+        "value": 3
+       },
+       {
+        "text": "36–45",
+        "value": 4
+       },
+       {
+        "text": "46–55",
+        "value": 5
+       },
+       {
+        "text": "56–65",
+        "value": 6
+       },
+       {
+        "text": "Over 65",
+        "value": 7
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "Highest level of education",
+      "choices": [
+       {
+        "text": "Secondary school",
+        "value": 1
+       },
+       {
+        "text": "Vocational training",
+        "value": 2
+       },
+       {
+        "text": "University degree",
+        "value": 3
+       },
+       {
+        "text": "Other",
+        "value": 4
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "forest_visits",
+      "type": "radiogroup",
+      "title": "How often do you visit forests?",
+      "choices": [
+       {
+        "text": "Daily",
+        "value": 1
+       },
+       {
+        "text": "Several times a week",
+        "value": 2
+       },
+       {
+        "text": "Several times a month",
+        "value": 3
+       },
+       {
+        "text": "A few times a year",
+        "value": 4
+       },
+       {
+        "text": "Rarely or never",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Forest Visualisations Q-Sort (Munich)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-d6d2c330c691e810",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Forest Pictures Q-Sort</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Forest Visualisations Q-Sort (Munich)\",\n  \"description\": \"Faithful replication of the Forstenrieder Park picture interview in Lupp et al. (2022), Forests 13:1584: participants sort 16 hand-painted visualisations of winter forest stands near Munich with a forced Q-sort (4 liked, 4 less liked, best and worst, with reasons), scored from −2 to +2.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"forests\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"title\": \"How do you like these forests?\",\n    \"intro\": \"This survey is about forests near cities. You will sort 16 paintings of forest stands: pick the 4 you like most and the 4 you like least, then the best and the worst, and say briefly why. It takes about 5 minutes and your answers are anonymous.\",\n    \"elements\": [\n     {\n      \"type\": \"boolean\",\n      \"name\": \"consent\",\n      \"title\": \"Consent\",\n      \"label\": \"I agree to take part in this survey and that my answers are used for research.\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"qsort\",\n    \"title\": \"Sorting the pictures\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"kind\": \"q_sort\",\n      \"name\": \"forest_qsort\",\n      \"isRequired\": true,\n      \"title\": \"Forced Q-sort of 16 forest visualisations\",\n      \"steps\": {\n       \"liked\": {\n        \"title\": \"Pictures you like\",\n        \"text\": \"Here are 16 paintings of forests in winter, without snow. Tap the 4 forest pictures you like most.\"\n       },\n       \"disliked\": {\n        \"title\": \"Pictures you like less\",\n        \"text\": \"Now tap the 4 forest pictures you like least.\"\n       },\n       \"best\": {\n        \"title\": \"Your favourite\",\n        \"text\": \"Of the 4 pictures you like most, which one is the best?\",\n        \"why\": \"Why did you choose this one? (a few words)\"\n       },\n       \"worst\": {\n        \"title\": \"The one you like least\",\n        \"text\": \"Of the 4 pictures you like least, which one is the worst?\",\n        \"why\": \"Why did you choose this one? (a few words)\"\n       }\n      },\n      \"description\": \"16 hand-painted forest visualisations (paper Figure 3, numbered 1–16 in reading order of the figure; shown in random order). Forced Q-sort as in the paper: 4 most liked, 4 least liked, then the best of the liked and the worst of the least liked, each with a short reason. One answer: liked, disliked (picture numbers), best, worst, why_best, why_worst, scores (per picture: best +2, other liked +1, not chosen 0, other least liked −1, worst −2), display_order. Analysis in the paper: mean score per picture (−2 to +2), and the reasons for best and worst coded by theme.\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"title\": \"About you\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Diverse\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Under 18\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"18–25\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"26–35\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"36–45\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"46–55\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"56–65\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"Over 65\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"Highest level of education\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Secondary school\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Vocational training\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"University degree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"forest_visits\",\n      \"title\": \"How often do you visit forests?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Daily\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Several times a week\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Several times a month\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"A few times a year\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Rarely or never\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#eef2ec;--card:#fff;--ink:#1c231d;--muted:#56614f;--accent:#2f6b3a;--line:#d2dccd;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:760px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.3rem;margin:0 0 10px}\np{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:20px}.q:first-child{margin-top:0}.q>b{display:block;margin-bottom:6px}.q.miss>b{color:var(--warn)}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer;background:var(--card)}\ninput[type=text],input[type=number],textarea{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%}\ninput[type=number]{max-width:160px}textarea{min-height:70px;resize:vertical}\n.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.t{color:var(--muted);font-size:.9rem}\n.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;flex:1;margin-left:12px;max-width:260px}.bar>i{display:block;height:100%;background:var(--accent)}\n.stim{display:block;width:100%;max-width:560px;margin:0 auto;border-radius:8px}\n.it{padding:10px 0;border-top:1px solid var(--line)}.it:first-child{border-top:0}.it.miss>.lab{color:var(--warn)}\n.lab{margin-bottom:4px}\n.ends{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-top:3px;max-width:520px}\n.seg{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:3px;max-width:520px}\n.seg label{display:block;cursor:pointer;position:relative}\n.seg input{position:absolute;opacity:0;pointer-events:none}\n.seg span{display:flex;align-items:center;justify-content:center;min-height:40px;border:1px solid var(--line);border-radius:8px;font-size:.9rem}\n.seg input:checked+span{background:var(--accent);border-color:var(--accent);color:#fff}\n.seg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}\n.kw{display:flex;flex-wrap:wrap;gap:6px}.kw label.opt{margin-top:0}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:760px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}\n.pick{display:block;cursor:pointer;border:2px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;position:relative}\n.pick input{position:absolute;opacity:0;pointer-events:none}\n.pick img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}\n.pick span{display:block;text-align:center;padding:6px;font-weight:600}\n.pick:has(input:checked){border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}\n.pick:has(input:checked) span{background:var(--accent);color:#fff}\n.pick:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}\n.miss .pair .pick{border-color:var(--warn)}\n.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}\n.grid .pick span{font-weight:500;font-size:.85rem;padding:4px}\n.cnt{font-weight:600;color:var(--accent)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Pictures: the 16 hand-painted forest visualisations by Anna Ritter printed in Lupp et al. (2022), Forests 13:1584, Figure 3, doi:10.3390/f13101584 (CC BY 4.0). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='qsort2022:';\n  var app=document.getElementById('app'),SPEC,Q={},files={},done={},ORDER=null,PRE=[],POST=[],QS=null,ST={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='visible';}}\n  function hideErr(){var e=app.querySelector('.err');if(e)e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function seven(name){var h='<div class=\"seg\" style=\"--n:10\" role=\"radiogroup\">';for(var v=0;v<=9;v++)h+='<label><input type=\"radio\" name=\"'+name+'\" value=\"'+v+'\"><span>'+v+'</span></label>';return h+'</div>';}\n  function scaleItem(name,it){return '<div class=\"it\" data-n=\"'+name+'\"><div class=\"lab\">'+esc(it.text)+'</div>'+seven(name)+'<div class=\"ends\"><span>0 = '+esc(it.low)+'</span><span>9 = '+esc(it.high)+'</span></div></div>';}\n  var STEPS=['liked','disliked','best','worst'];\n  function total(){return PRE.length+STEPS.length+POST.length;}\n  function top(i){return '<div class=\"top\"><span class=\"t\">Page '+(i+1)+' of '+total()+'</span><div class=\"bar\"><i style=\"width:'+(100*i/total())+'%\"></i></div></div>';}\n  function next(){window.scrollTo(0,0);\n    for(var k=0;k<PRE.length;k++)if(!done['p_'+PRE[k].name])return intro(k,PRE,0);\n    for(var j=0;j<STEPS.length;j++)if(!done['s_'+STEPS[j]])return step(j);\n    for(var m=0;m<POST.length;m++)if(!done['p_'+POST[m].name])return intro(m,POST,PRE.length+STEPS.length);\n    finish();}\n  function field(e){\n    var h='<div class=\"q\" data-q=\"'+e.name+'\"><b>'+esc(Q[e.name].title)+'</b>';\n    if(e.type==='boolean')h+='<label class=\"opt\"><input type=\"checkbox\" name=\"'+e.name+'\" value=\"1\"> '+esc(e.label)+'</label>';\n    else if(e.type==='radiogroup')h+=Q[e.name].choices.map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+e.name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');\n    else if(e.type==='text')h+='<input type=\"'+(e.inputType==='number'?'number':'text')+'\" name=\"'+e.name+'\"'+(e.inputType==='number'?' min=\"'+e.min+'\" max=\"'+e.max+'\" inputmode=\"numeric\"':' maxlength=\"80\"')+'>';\n    else if(e.kind==='scales')h+=e.items.map(function(it){return scaleItem(e.name+'__'+it.name,it);}).join('');\n    return h+'</div>';\n  }\n  function readField(e){\n    if(e.type==='boolean')return app.querySelector('input[name=\"'+e.name+'\"]').checked?true:undefined;\n    if(e.type==='radiogroup'){var x=app.querySelector('input[name=\"'+e.name+'\"]:checked');return x?Number(x.value):undefined;}\n    if(e.type==='text'){var t=app.querySelector('[name=\"'+e.name+'\"]').value.trim();if(e.inputType==='number'){var n=Number(t);return (t!==''&&n>=e.min&&n<=e.max&&Math.round(n)===n)?n:undefined;}return t||undefined;}\n    if(e.kind==='scales'){var v={},miss=0;e.items.forEach(function(it){var x=app.querySelector('input[name=\"'+e.name+'__'+it.name+'\"]:checked');if(x)v[it.name]=Number(x.value);else{miss++;app.querySelector('.it[data-n=\"'+e.name+'__'+it.name+'\"]').classList.add('miss');}});return miss?undefined:v;}\n  }\n  function intro(k,LIST,off){\n    var P=LIST[k],INTRO=P.elements;\n    app.innerHTML=top(off+k)+'<h1>'+esc(P.title)+'</h1><div class=\"card\">'+(P.intro?'<p style=\"color:var(--ink)\">'+esc(P.intro)+'</p>':'')+INTRO.map(field).join('')+'</div><div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div>';\n    app.onchange=function(ev){hideErr();var q=ev.target.closest('.q');if(q)q.classList.remove('miss');var it=ev.target.closest('.it');if(it)it.classList.remove('miss');};\n    document.getElementById('go').onclick=function(){\n      var l=[],bad=null;\n      INTRO.forEach(function(e){var v=readField(e);if(v===undefined){bad=bad||e;app.querySelector('.q[data-q=\"'+e.name+'\"]').classList.add('miss');}else l.push([e.name,v]);});\n      if(bad){err(bad.name==='consent'?'Please tick the box to agree before you start.':bad.inputType==='number'?'Please enter your age as a whole number from '+bad.min+' to '+bad.max+'.':bad.kind?'Please answer every row of: '+Q[bad.name].title:'Please answer: '+Q[bad.name].title);var m=app.querySelector('.q.miss');if(m)m.scrollIntoView({block:'center'});return;}\n      var b=this;b.disabled=true;\n      Promise.all(l.map(function(a){return SPSite.answer(a[0],a[1]);})).then(function(rs){var x=rs.filter(function(r){return !ok(r);})[0];if(x){b.disabled=false;return err(x.error);}done['p_'+P.name]=true;save('d',done);next();});\n    };\n  }\n  function num(f){return Number(f.replace(/\\D/g,''));}\n  function card(f,type,name){return '<label class=\"pick\"><input type=\"'+type+'\" name=\"'+name+'\" value=\"'+esc(f)+'\"><img alt=\"Picture '+num(f)+'\" src=\"'+esc(files[f].url)+'\"><span>Picture '+num(f)+'</span></label>';}\n  function step(j){\n    var id=STEPS[j],T=QS.steps[id],list,multi=(id==='liked'||id==='disliked');\n    if(id==='liked')list=ORDER;\n    else if(id==='disliked')list=ORDER.filter(function(f){return ST.liked.indexOf(f)<0;});\n    else if(id==='best')list=ST.liked;else list=ST.disliked;\n    app.innerHTML=top(PRE.length+j)+'<h1>'+esc(T.title)+'</h1><div class=\"card\"><p style=\"color:var(--ink)\">'+esc(T.text)+(multi?' <span class=\"cnt\" id=\"cnt\">0 of 4 chosen</span>':'')+'</p><div class=\"q\" data-q=\"pick\"><div class=\"grid\">'+list.map(function(f){return card(f,multi?'checkbox':'radio','pick');}).join('')+'</div></div>'+\n      (multi?'':'<div class=\"q\" data-q=\"why\"><b>'+esc(T.why)+'</b><textarea name=\"why\" maxlength=\"300\"></textarea></div>')+'</div><div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div>';\n    app.onchange=function(ev){hideErr();var q=ev.target.closest('.q');if(q)q.classList.remove('miss');\n      if(multi){var c=app.querySelectorAll('input[name=pick]:checked');if(c.length>4){ev.target.checked=false;err('You can choose only 4. Untick one first.');c=app.querySelectorAll('input[name=pick]:checked');}document.getElementById('cnt').textContent=c.length+' of 4 chosen';}};\n    app.oninput=function(ev){var q=ev.target.closest('.q');if(q)q.classList.remove('miss');hideErr();};\n    document.getElementById('go').onclick=function(){\n      var c=[].map.call(app.querySelectorAll('input[name=pick]:checked'),function(x){return x.value;});\n      if(multi&&c.length!==4){app.querySelector('.q[data-q=pick]').classList.add('miss');return err('Please choose exactly 4 pictures ('+c.length+' chosen).');}\n      if(!multi&&c.length!==1){app.querySelector('.q[data-q=pick]').classList.add('miss');return err('Please tap one picture.');}\n      if(!multi){var w=app.querySelector('[name=why]').value.trim();if(!w){app.querySelector('.q[data-q=why]').classList.add('miss');return err('Please write a few words about why.');}ST['why_'+id]=w;}\n      ST[id]=multi?c:c[0];save('st',ST);done['s_'+id]=true;\n      if(id==='disliked'||id==='liked'){['best','worst'].forEach(function(s){done['s_'+s]=false;});}\n      save('d',done);\n      if(j<STEPS.length-1)return next();\n      var sc={};ORDER.forEach(function(f){sc[f.replace(/\\.jpg$/,'')]=0;});\n      ST.liked.forEach(function(f){sc[f.replace(/\\.jpg$/,'')]=1;});ST.disliked.forEach(function(f){sc[f.replace(/\\.jpg$/,'')]=-1;});\n      sc[ST.best.replace(/\\.jpg$/,'')]=2;sc[ST.worst.replace(/\\.jpg$/,'')]=-2;\n      var v={liked:ST.liked.map(num),disliked:ST.disliked.map(num),best:num(ST.best),worst:num(ST.worst),why_best:ST.why_best,why_worst:ST.why_worst,scores:sc,display_order:ORDER.map(num)};\n      var b=this;b.disabled=true;\n      SPSite.answer('forest_qsort',v,{key:'qsort',shown:ORDER.slice()}).then(function(r){if(!ok(r)){b.disabled=false;return err(r.error);}done.qsort_saved=true;save('d',done);next();});\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>In the original study, 302 visitors to Forstenrieder Park in Munich sorted these 16 winter forest paintings in the same way. The even-aged old spruce stands were liked least (score about −0.7 on the −2 to +2 scale), and the uneven-aged, layered mixed stands of broadleaves and conifers with some deadwood were liked most (about +0.6). Many visitors said a mix of different stands along a walk is what makes a forest attractive, and that even the lowest-ranked pictures were not really bad.</p><p style=\"font-size:.82rem\">Lupp, G., Kantelberg, V., Fäth, J., Hirschbeck, T., Käsbauer, C., Ritter, A., Schisslbauer, J., &amp; Pauleit, S. (2022). Through the Eyes of Forest Visitors—Perception and Scenic Preferences of Munich’s Urban Proximate Woodlands. Forests 13:1584, doi:10.3390/f13101584.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){if(x==='forest_qsort')STEPS.forEach(function(s){done['s_'+s]=false;});else PRE.concat(POST).forEach(function(p){if(p.elements.some(function(e){return e.name===x;}))done['p_'+p.name]=false;});});save('d',done);next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    try{SPEC=JSON.parse(document.getElementById('sp-scheme').textContent).survey;}catch(e){SPEC={pages:[]};}\n    SPEC.pages.forEach(function(p){p.elements.forEach(function(e){var g=SPSite.getQuestion(e.name)||{};Q[e.name]={title:g.title||e.title,choices:(g.choices&&g.choices.length)?g.choices:e.choices};if(e.name==='forest_qsort')QS=e;});});\n    var ci=SPEC.pages.findIndex(function(p){return p.name==='qsort';});\n    PRE=SPEC.pages.slice(0,ci);POST=SPEC.pages.slice(ci+1);\n    (SPSite.getMedia('forests')||[]).forEach(function(f){files[f.name]=f;});\n    if(Object.keys(files).length<10){app.innerHTML='<h1>Pictures missing</h1><p>Media folder forests must hold the 16 forest pictures.</p>';return;}\n    var a=(ctx&&ctx.answers)||{};done=load('d')||{};ST=load('st')||{};\n    ORDER=load('order');\n    if(!ORDER||ORDER.length!==Object.keys(files).length||ORDER.some(function(f){return !files[f];})){ORDER=shuffle(Object.keys(files));save('order',ORDER);done={};ST={};}\n    PRE.concat(POST).forEach(function(p){done['p_'+p.name]=p.elements.every(function(e){return a[e.name]!=null;});});\n    if(a.forest_qsort!=null)STEPS.forEach(function(s){done['s_'+s]=true;});\n    else STEPS.forEach(function(s){if(!ST[s])done['s_'+s]=false;});\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T21:46:56.361Z",
+   "mediaFolders": [
+    "forests"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T21:46:56.361Z"
+  },
+  "description": "Faithful replication of the Forstenrieder Park picture interview in Lupp et al. (2022), Forests 13:1584: participants sort 16 hand-painted visualisations of winter forest stands near Munich with a forced Q-sort (4 liked, 4 less liked, best and worst, with reasons), scored from −2 to +2.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2022-lupp-forest/forests/painting_01__46d64f3d-a0df-4564-98e6-1aa41594b79a.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lupp-forest/forests/painting_01__46d64f3d-a0df-4564-98e6-1aa41594b79a.jpg",
+   "name": "painting_01.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lupp-forest/forests/painting_01__46d64f3d-a0df-4564-98e6-1aa41594b79a.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 30157,
+   "uploaded_bytes": 30157,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-lupp-forest/forests/painting_02__60c8f1ba-3637-418b-8c74-a431a69d0013.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lupp-forest/forests/painting_02__60c8f1ba-3637-418b-8c74-a431a69d0013.jpg",
+   "name": "painting_02.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lupp-forest/forests/painting_02__60c8f1ba-3637-418b-8c74-a431a69d0013.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 24727,
+   "uploaded_bytes": 24727,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-lupp-forest/forests/painting_03__29743072-68b7-4e78-82b8-7b91b8e6cf8c.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lupp-forest/forests/painting_03__29743072-68b7-4e78-82b8-7b91b8e6cf8c.jpg",
+   "name": "painting_03.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lupp-forest/forests/painting_03__29743072-68b7-4e78-82b8-7b91b8e6cf8c.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 28374,
+   "uploaded_bytes": 28374,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-lupp-forest/forests/painting_04__47cae5e6-4418-41bd-9127-6bdbf9cc5c33.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lupp-forest/forests/painting_04__47cae5e6-4418-41bd-9127-6bdbf9cc5c33.jpg",
+   "name": "painting_04.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lupp-forest/forests/painting_04__47cae5e6-4418-41bd-9127-6bdbf9cc5c33.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 22729,
+   "uploaded_bytes": 22729,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-lupp-forest/forests/painting_05__999a35bf-1a7e-4b29-94c5-0a4dff13536f.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lupp-forest/forests/painting_05__999a35bf-1a7e-4b29-94c5-0a4dff13536f.jpg",
+   "name": "painting_05.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lupp-forest/forests/painting_05__999a35bf-1a7e-4b29-94c5-0a4dff13536f.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 24015,
+   "uploaded_bytes": 24015,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-lupp-forest/forests/painting_06__6280db68-3366-4ebc-80a1-6cef000ba6ed.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lupp-forest/forests/painting_06__6280db68-3366-4ebc-80a1-6cef000ba6ed.jpg",
+   "name": "painting_06.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lupp-forest/forests/painting_06__6280db68-3366-4ebc-80a1-6cef000ba6ed.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 23361,
+   "uploaded_bytes": 23361,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-lupp-forest/forests/painting_07__dfe06c46-2292-4fbe-83d8-3966d41e24b8.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lupp-forest/forests/painting_07__dfe06c46-2292-4fbe-83d8-3966d41e24b8.jpg",
+   "name": "painting_07.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lupp-forest/forests/painting_07__dfe06c46-2292-4fbe-83d8-3966d41e24b8.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 27330,
+   "uploaded_bytes": 27330,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-lupp-forest/forests/painting_08__48e48f21-ea07-4f00-8997-cbcb919b341e.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lupp-forest/forests/painting_08__48e48f21-ea07-4f00-8997-cbcb919b341e.jpg",
+   "name": "painting_08.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lupp-forest/forests/painting_08__48e48f21-ea07-4f00-8997-cbcb919b341e.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 26355,
+   "uploaded_bytes": 26355,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-lupp-forest/forests/painting_09__b0c65e99-e3c7-475e-bfbc-d61ec47d7aa6.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lupp-forest/forests/painting_09__b0c65e99-e3c7-475e-bfbc-d61ec47d7aa6.jpg",
+   "name": "painting_09.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lupp-forest/forests/painting_09__b0c65e99-e3c7-475e-bfbc-d61ec47d7aa6.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 27859,
+   "uploaded_bytes": 27859,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-lupp-forest/forests/painting_10__1b3b58a8-7ab3-4bbe-963c-2abc5e9e11b9.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lupp-forest/forests/painting_10__1b3b58a8-7ab3-4bbe-963c-2abc5e9e11b9.jpg",
+   "name": "painting_10.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lupp-forest/forests/painting_10__1b3b58a8-7ab3-4bbe-963c-2abc5e9e11b9.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 29882,
+   "uploaded_bytes": 29882,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-lupp-forest/forests/painting_11__736171a7-92b0-4261-acd7-4ed35e850fd3.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lupp-forest/forests/painting_11__736171a7-92b0-4261-acd7-4ed35e850fd3.jpg",
+   "name": "painting_11.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lupp-forest/forests/painting_11__736171a7-92b0-4261-acd7-4ed35e850fd3.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 29826,
+   "uploaded_bytes": 29826,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-lupp-forest/forests/painting_12__a73c02a7-b944-48ec-895f-2779ee0e63b6.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lupp-forest/forests/painting_12__a73c02a7-b944-48ec-895f-2779ee0e63b6.jpg",
+   "name": "painting_12.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lupp-forest/forests/painting_12__a73c02a7-b944-48ec-895f-2779ee0e63b6.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 32377,
+   "uploaded_bytes": 32377,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-lupp-forest/forests/painting_13__4dc51200-cee4-4c6e-96cf-8ea5f62c6bd9.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lupp-forest/forests/painting_13__4dc51200-cee4-4c6e-96cf-8ea5f62c6bd9.jpg",
+   "name": "painting_13.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lupp-forest/forests/painting_13__4dc51200-cee4-4c6e-96cf-8ea5f62c6bd9.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 28882,
+   "uploaded_bytes": 28882,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-lupp-forest/forests/painting_14__6df1c19e-12be-4f79-830a-bbf08cef0d62.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lupp-forest/forests/painting_14__6df1c19e-12be-4f79-830a-bbf08cef0d62.jpg",
+   "name": "painting_14.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lupp-forest/forests/painting_14__6df1c19e-12be-4f79-830a-bbf08cef0d62.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 23986,
+   "uploaded_bytes": 23986,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-lupp-forest/forests/painting_15__4127e359-8af4-4af0-b7b9-b58f1210c3c8.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lupp-forest/forests/painting_15__4127e359-8af4-4af0-b7b9-b58f1210c3c8.jpg",
+   "name": "painting_15.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lupp-forest/forests/painting_15__4127e359-8af4-4af0-b7b9-b58f1210c3c8.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 26693,
+   "uploaded_bytes": 26693,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-lupp-forest/forests/painting_16__f5b7a5af-a161-49d2-8e33-e5c8b346a3b3.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-lupp-forest/forests/painting_16__f5b7a5af-a161-49d2-8e33-e5c8b346a3b3.jpg",
+   "name": "painting_16.jpg",
+   "type": "image",
+   "folder": "forests",
+   "media_id": "templates/2022-lupp-forest/forests/painting_16__f5b7a5af-a161-49d2-8e33-e5c8b346a3b3.jpg",
+   "logicalFolder": "forests",
+   "original_bytes": 30200,
+   "uploaded_bytes": 30200,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Through the Eyes of Forest Visitors—Perception and Scenic Preferences of Munich’s Urban Proximate Woodlands",
+  "authors": [
+   "Gerd Lupp",
+   "Valerie Kantelberg",
+   "Julia Fäth",
+   "Theresia Hirschbeck",
+   "Corinna Käsbauer",
+   "Anna Ritter",
+   "Julia Schisslbauer",
+   "Stephan Pauleit"
+  ],
+  "year": 2022,
+  "venue": "Forests",
+  "doi": "10.3390/f13101584",
+  "url": "https://doi.org/10.3390/f13101584"
+ }
+}

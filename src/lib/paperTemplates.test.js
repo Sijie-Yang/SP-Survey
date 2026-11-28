@@ -19,13 +19,13 @@ const existing = PAPER_TEMPLATES.filter((id) => fs.existsSync(path.join(DIR, `${
 
 describe.each(existing)('%s', (id) => {
   const tpl = load(id);
-  test('validates, recommendation names real questions, names unique', () => {
+  test('validates, a recommendation names real questions, names unique', () => {
     const result = validateSurveyConfig(tpl.config);
     expect(result.errors || []).toEqual([]);
     const names = flat(tpl.config).map((q) => q.name);
     expect(new Set(names).size).toBe(names.length);
     const { items } = normalizeRecommendation(tpl.config);
-    expect(items.length).toBeGreaterThan(0);
+    // Templates are mirrored from the online library; one may come without a recommendation.
     items.forEach((it) => it.questions.forEach((q) => expect(names).toContain(q)));
     expect(tpl.id).toBe(id);
   });

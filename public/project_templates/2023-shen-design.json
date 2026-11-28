@@ -1,0 +1,450 @@
+{
+ "id": "2023-shen-design",
+ "name": "Design Intensity in Urban Forests: Preference and Complexity",
+ "description": "Faithful replication of the viewing and rating task in Shen, Wang, Liu, Luo, Liu & Lan (2023), \"Landscape Design Intensity and Its Associated Complexity of Forest Landscapes in Relation to Preference and Eye Movements\", Forests 14(4):761, doi:10.3390/f14040761. The 24 photographs are the authors' own (some edited by photomontage), taken in parks in Fuzhou, China, and printed in Figure 1 of the open-access paper (CC BY 4.0). They are used with credit for research, and the template is taken down if the authors object.\n\nWhat participants do: for each of three settings (lawn, path, waterscape) the page randomly picks photo group A or B, giving 12 photos with slight, low, medium and high landscape design intensity. Part 1: each photo is shown for 10 s after a centre dot, in random order, with no task (free viewing). Part 2: each photo is shown again and rated for preference and perceived complexity on 7-point scales. The page ends with gender and age.\n\nImages: <setting><group>_<level>, e.g. pathA_3medium. Design intensity was judged by landscape architects from the amount of designed elements (sculptures, lamps, benches, pavilions, flower beds and so on).\n\nOriginal study: 76 people aged 20 to 58 (37 men, 39 women), lab session with eye tracking in September 2020. Analysis: Kruskal-Wallis tests of preference and complexity across design intensities within each setting; regression of preference on subjective complexity and fractal dimension; marginal effects of design intensity. Subjective complexity rose with design intensity and predicted preference; fractal dimension did not.\n\nDifferences from the original study: (1) No eye tracking; online on any screen instead of a lab monitor at 50 cm with a chin rest and calibration before each image. (2) The duration of the centre dot is not reported; 2 s is used. (3) The paper says participants were randomly assigned one group per setting but not how; here A or B is drawn independently for each setting. (4) The scale anchors are not reported; \"not at all / very much\" (preference) and \"very simple / very complex\" (complexity) were added, and photos are rated one at a time in a new random order. (5) The pictures come from the printed figure (about 480 × 355 pixels each).",
+ "author": "Shen, Wang, Liu, Luo, Liu & Lan",
+ "year": "2023",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "urban forest",
+  "landscape design",
+  "complexity",
+  "park",
+  "source:paper",
+  "modality:scene_photo",
+  "task:multi_rating",
+  "concept:preference",
+  "concept:complexity",
+  "participants:students",
+  "sample:lt100",
+  "country:China",
+  "city:Fuzhou"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/f14040761",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T11:27:04.308+00:00",
+ "updatedAt": "2026-11-27T11:27:12.389+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "photos",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I have read the information above and agree to take part.",
+      "labelTrue": "Yes",
+      "isRequired": true,
+      "labelFalse": "No"
+     },
+     {
+      "name": "ratings",
+      "type": "imageslidergroup",
+      "title": "Preference and perceived complexity per photo",
+      "choices": [],
+      "scaleMax": 7,
+      "scaleMin": 1,
+      "dimensions": [
+       {
+        "id": "preference",
+        "max": 7,
+        "min": 1,
+        "left": "not at all",
+        "step": 1,
+        "label": "How much do you like this scene?",
+        "right": "very much"
+       },
+       {
+        "id": "complexity",
+        "max": 7,
+        "min": 1,
+        "left": "very simple",
+        "step": 1,
+        "label": "How complex is this scene?",
+        "right": "very complex"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "description": "One row per photo (key = <setting><group>_<level>). Settings lawn, path, water; groups A and B; levels 1slight, 2low, 3medium, 4high landscape design intensity. For each setting the page randomly picks group A or B, so each participant sees 12 photos: first each one for 10 s (after a centre dot) in random order, then rates each on two 7-point scales. Analysis in the paper: Kruskal-Wallis tests of preference and complexity across design intensities within each setting, regression of preference on subjective complexity and fractal dimension, marginal effects of design intensity.",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "What is your gender?",
+      "choices": [
+       {
+        "text": "Male",
+        "value": 1
+       },
+       {
+        "text": "Female",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "max": 99,
+      "min": 16,
+      "name": "age",
+      "type": "text",
+      "title": "How old are you?",
+      "inputType": "number",
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Design Intensity in Urban Forests",
+  "locale": "en",
+  "spSite": {
+   "id": "site-93bba397af54de95",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Urban Park Scenes</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Design Intensity in Urban Forests\",\n  \"description\": \"Faithful replication of the rating task in Shen, Wang, Liu, Luo, Liu & Lan (2023), Forests 14(4):761, with the authors' 24 photographs of urban forest lawns, paths and waterscapes in Fuzhou, China, at four levels of landscape design intensity. Participants first view 12 photos for 10 seconds each, then rate how much they like each scene and how complex it is.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"photos\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"photos\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I have read the information above and agree to take part.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"Yes\",\n      \"labelFalse\": \"No\"\n     },\n     {\n      \"type\": \"imageslidergroup\",\n      \"name\": \"ratings\",\n      \"title\": \"Preference and perceived complexity per photo\",\n      \"isRequired\": true,\n      \"imageCount\": 1,\n      \"scaleMin\": 1,\n      \"scaleMax\": 7,\n      \"description\": \"One row per photo (key = <setting><group>_<level>). Settings lawn, path, water; groups A and B; levels 1slight, 2low, 3medium, 4high landscape design intensity. For each setting the page randomly picks group A or B, so each participant sees 12 photos: first each one for 10 s (after a centre dot) in random order, then rates each on two 7-point scales. Analysis in the paper: Kruskal-Wallis tests of preference and complexity across design intensities within each setting, regression of preference on subjective complexity and fractal dimension, marginal effects of design intensity.\",\n      \"dimensions\": [\n       {\n        \"id\": \"preference\",\n        \"label\": \"How much do you like this scene?\",\n        \"left\": \"not at all\",\n        \"right\": \"very much\",\n        \"min\": 1,\n        \"max\": 7,\n        \"step\": 1\n       },\n       {\n        \"id\": \"complexity\",\n        \"label\": \"How complex is this scene?\",\n        \"left\": \"very simple\",\n        \"right\": \"very complex\",\n        \"min\": 1,\n        \"max\": 7,\n        \"step\": 1\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"What is your gender?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Female\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"age\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"inputType\": \"number\",\n      \"min\": 16,\n      \"max\": 99\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#eef0f2;--card:#fff;--ink:#1b1e22;--muted:#5a616b;--accent:#2f5d62;--accent-ink:#fff;--line:#d5d9de;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:820px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 10px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q>b{display:block;margin-bottom:4px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:120px}\n.pic{background:#2a2d31;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;max-height:min(52vh,520px)}\n.pic img{max-width:100%;max-height:100%;object-fit:contain;display:block}\n.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}\n.t{color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}\n.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;flex:1;margin-left:12px;max-width:260px}.bar>i{display:block;height:100%;background:var(--accent)}\n.qq{font-weight:600;margin:12px 0 6px}\n.sc{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}\n.sc button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:11px 0;font:inherit;font-weight:700;cursor:pointer}\n.sc button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}\n.dot{width:10px;height:10px;border-radius:50%;background:#fff;display:block}\n.fix{background:#2a2d31;border-radius:12px;aspect-ratio:4/3;max-height:min(58vh,560px);display:flex;align-items:center;justify-content:center;color:#fff;font-size:3rem;font-weight:300}\n.ends{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted);margin-top:3px;gap:12px}.ends span:last-child{text-align:right}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:820px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs: Shen et al. (2023), Forests 14(4):761, doi:10.3390/f14040761 (CC BY 4.0). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='forestdesign2023:';\n  var app=document.getElementById('app'), Q={}, M={}, D=null, ans={}, done={}, order=[];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function saveAll(l,b,cb){Promise.all(l.map(function(a){return a[2]?SPSite.answer(a[0],a[1],a[2]):SPSite.answer(a[0],a[1]);})).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}cb();});}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function stem(n){return n.replace(/\\.[^.]+$/,'');}\n  function list(){return M.photos||[];}\n  function byName(n){var l=list();for(var i=0;i<l.length;i++)if(l[i].name===n)return l[i];}\n  function page(title,html,btn,cb){\n    app.innerHTML='<div class=\"card\">'+(title?'<h1>'+esc(title)+'</h1>':'')+html+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">'+esc(btn||'Continue')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=cb;\n  }\n  function radios(name){return (Q[name].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');}\n  function val(n){var x=app.querySelector('input[name='+n+']:checked');return x?Number(x.value):null;}\n  var SETTINGS=['lawn','path','water'], LEVELS=['1slight','2low','3medium','4high'], DM=[], viewed={}, rorder=[];\n  function intro(){\n    var miss=[];SETTINGS.forEach(function(s){['A','B'].forEach(function(g){LEVELS.forEach(function(l){if(!byName(s+g+'_'+l+'.jpg'))miss.push(s+g+'_'+l);});});});\n    if(miss.length){app.innerHTML='<h1>Pictures missing</h1><p>Media folder photos must hold the 24 photos; missing: '+esc(miss.join(', '))+'.</p>';return;}\n    page('Scenes from city parks','<p>In this study you will see 12 photographs of lawns, paths and ponds in urban parks. First you just look at each photo for 10 seconds. Afterwards you rate how much you like each scene and how complex it looks. It takes about 6 minutes.</p><p>Participation is voluntary and anonymous.</p><label class=\"opt\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label>','Start',function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var b=this;b.disabled=true;saveAll([['consent',true]],b,function(){ans.intro=true;next();});\n    });\n  }\n  function howto(){\n    page('Part 1: Look at the photos','<p style=\"color:var(--ink)\">Each photo is shown for 10 seconds. Please look at it freely, the way you would look at a place in real life. There is no task.</p><p style=\"color:var(--ink)\">Before each photo a dot appears in the centre of the screen; please look at the dot.</p>','Begin',function(){ans.howto=true;next();});\n  }\n  function next(){\n    window.scrollTo(0,0);\n    if(!ans.intro)return intro();\n    if(!ans.howto)return howto();\n    for(var i=0;i<order.length;i++){if(!viewed[order[i]])return view(i);}\n    if(!ans.howto2)return howto2();\n    for(var j=0;j<rorder.length;j++){if(!done[stem(rorder[j])])return rate(j);}\n    if(!ans.about)return about();\n    finish();\n  }\n  var timer=null;\n  function view(i){\n    var f=byName(order[i]), n=0;order.forEach(function(x){if(viewed[x])n++;});\n    var head='<div class=\"top\"><span class=\"t\">Photo '+(n+1)+' of '+order.length+'</span><div class=\"bar\"><i style=\"width:'+(100*n/order.length)+'%\"></i></div></div>';\n    var pre=new Image();pre.src=f.url;\n    app.innerHTML=head+'<div class=\"fix\"><span class=\"dot\"></span></div>';\n    clearTimeout(timer);\n    timer=setTimeout(function(){\n      app.innerHTML=head+'<div class=\"pic\"><img alt=\"Photograph of an urban park scene\" src=\"'+esc(f.url)+'\"></div>';\n      timer=setTimeout(function(){viewed[f.name]=true;save('viewed',viewed);next();},10000);\n    },2000);\n  }\n  function howto2(){\n    page('Part 2: Rate the photos','<p style=\"color:var(--ink)\">Now you will see the same 12 photos again. For each one, please rate on a scale from 1 to 7 how much you like the scene and how complex it looks.</p>','Continue',function(){ans.howto2=true;save('howto2',true);next();});\n  }\n  function scale(d){var b='';for(var v=d.min;v<=d.max;v++)b+='<button type=\"button\" data-d=\"'+d.id+'\" data-v=\"'+v+'\">'+v+'</button>';\n    return '<div class=\"qq\">'+esc(d.label)+'</div><div class=\"sc\">'+b+'</div><div class=\"ends\"><span>1 = '+esc(d.left)+'</span><span>7 = '+esc(d.right)+'</span></div>';}\n  function rate(j){\n    var f=byName(rorder[j]), k=stem(f.name), n=0, v={};rorder.forEach(function(x){if(done[stem(x)])n++;});\n    app.innerHTML='<div class=\"top\"><span class=\"t\">Rating '+(n+1)+' of '+rorder.length+'</span><div class=\"bar\"><i style=\"width:'+(100*n/rorder.length)+'%\"></i></div></div>'+\n      '<div class=\"pic\"><img alt=\"Photograph of an urban park scene\" src=\"'+esc(f.url)+'\"></div>'+DM.map(scale).join('')+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div>';\n    app.querySelectorAll('.sc button').forEach(function(x){x.onclick=function(){v[x.dataset.d]=Number(x.dataset.v);\n      app.querySelectorAll('.sc button[data-d=\"'+x.dataset.d+'\"]').forEach(function(y){y.classList.toggle('on',y===x);});err('');};});\n    document.getElementById('go').onclick=function(){\n      for(var i=0;i<DM.length;i++)if(!v[DM[i].id])return err('Please answer: '+DM[i].label);\n      var b=this;b.disabled=true;\n      SPSite.answer('ratings',v,{key:k,shown:[f.name]}).then(function(r){\n        if(!ok(r)){b.disabled=false;return err(r.error);}done[k]=true;next();});\n    };\n  }\n  function about(){\n    page('About you','<div class=\"q\"><b>'+esc(Q.gender.title)+'</b>'+radios('gender')+'</div><div class=\"q\"><b>'+esc(Q.age.title)+'</b><input type=\"number\" name=\"age\" min=\"16\" max=\"99\" inputmode=\"numeric\"></div>','Finish',function(){\n      var g=val('gender');if(!g)return err('Please answer: '+Q.gender.title);\n      var a=Number((app.querySelector('input[name=age]')||{}).value);if(!a||a<16||a>99)return err('Please enter your age in years.');\n      var b=this;b.disabled=true;saveAll([['gender',g],['age',a]],b,function(){ans.about=true;next();});\n    });\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>The photos showed park lawns, paths and ponds in Fuzhou, China, with slight, low, medium or high landscape design intensity, that is, more or fewer designed elements such as sculptures, lamps, benches, pavilions and flower beds. In the original study of 76 people, more design made scenes look more complex, and scenes that looked more complex were generally preferred.</p><p style=\"font-size:.82rem\">Photographs and task: Shen, Y., Wang, Q., Liu, H., Luo, J., Liu, Q., &amp; Lan, Y. (2023). Landscape design intensity and its associated complexity of forest landscapes in relation to preference and eye movements. Forests 14(4):761, doi:10.3390/f14040761. Used with credit and removed if the authors object.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){\n      if(x==='consent')ans.intro=false;else if(x==='ratings')done={};else ans.about=false;});next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','gender','age'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    var R=SPSite.getQuestion('ratings')||{};DM=(R.dimensions&&R.dimensions.length===2)?R.dimensions:[\n      {id:'preference',label:'How much do you like this scene?',left:'not at all',right:'very much',min:1,max:7},\n      {id:'complexity',label:'How complex is this scene?',left:'very simple',right:'very complex',min:1,max:7}];\n    M.photos=(SPSite.getMedia('photos')||[]).slice();\n    var a=(ctx&&ctx.answers)||{};\n    var g=load('groups');if(!g||g.length!==3)g=SETTINGS.map(function(){return Math.random()<0.5?'A':'B';});save('groups',g);\n    var names=[];SETTINGS.forEach(function(s,i){LEVELS.forEach(function(l){names.push(s+g[i]+'_'+l+'.jpg');});});\n    var o=load('order');if(!o||o.length!==12||o.some(function(x){return names.indexOf(x)<0;}))o=shuffle(names);order=o;save('order',order);\n    var ro=load('rorder');if(!ro||ro.length!==12||ro.some(function(x){return names.indexOf(x)<0;}))ro=shuffle(names);rorder=ro;save('rorder',rorder);\n    viewed=load('viewed')||{};\n    ((a.ratings&&a.ratings.trials)||[]).forEach(function(t){if(t.key)done[t.key]=true;});\n    if(a.consent===true){ans.intro=true;if(Object.keys(viewed).length||Object.keys(done).length)ans.howto=true;}\n    if(Object.keys(done).length){order.forEach(function(x){viewed[x]=true;});ans.howto2=true;}\n    if(load('howto2'))ans.howto2=true;\n    if(a.age!=null)ans.about=true;\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T11:26:43.136Z",
+   "mediaFolders": [
+    "photos"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T11:26:43.136Z"
+  },
+  "description": "Faithful replication of the rating task in Shen, Wang, Liu, Luo, Liu & Lan (2023), Forests 14(4):761, with the authors' 24 photographs of urban forest lawns, paths and waterscapes in Fuzhou, China, at four levels of landscape design intensity. Participants first view 12 photos for 10 seconds each, then rate how much they like each scene and how complex it is.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2023-shen-design/photos/lawnA_1slight__236a3465-ef58-4c35-9ee7-7e1a3a4fc833.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/lawnA_1slight__236a3465-ef58-4c35-9ee7-7e1a3a4fc833.jpg",
+   "name": "lawnA_1slight.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/lawnA_1slight__236a3465-ef58-4c35-9ee7-7e1a3a4fc833.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 46512,
+   "uploaded_bytes": 46512,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/lawnA_2low__8abde3d0-6a7f-48db-ab15-cdc793c4c685.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/lawnA_2low__8abde3d0-6a7f-48db-ab15-cdc793c4c685.jpg",
+   "name": "lawnA_2low.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/lawnA_2low__8abde3d0-6a7f-48db-ab15-cdc793c4c685.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 59892,
+   "uploaded_bytes": 59892,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/lawnA_3medium__0253bf90-f086-4894-abcc-1fbddccc8f3b.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/lawnA_3medium__0253bf90-f086-4894-abcc-1fbddccc8f3b.jpg",
+   "name": "lawnA_3medium.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/lawnA_3medium__0253bf90-f086-4894-abcc-1fbddccc8f3b.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 50923,
+   "uploaded_bytes": 50923,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/lawnA_4high__3148d4b9-1d1d-4b04-8dc0-c8491531522f.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/lawnA_4high__3148d4b9-1d1d-4b04-8dc0-c8491531522f.jpg",
+   "name": "lawnA_4high.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/lawnA_4high__3148d4b9-1d1d-4b04-8dc0-c8491531522f.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 47879,
+   "uploaded_bytes": 47879,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/lawnB_1slight__e948619b-dd55-4380-b241-f42952d81d2a.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/lawnB_1slight__e948619b-dd55-4380-b241-f42952d81d2a.jpg",
+   "name": "lawnB_1slight.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/lawnB_1slight__e948619b-dd55-4380-b241-f42952d81d2a.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 50114,
+   "uploaded_bytes": 50114,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/lawnB_2low__420ab453-117d-45a9-990c-9f6882fed462.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/lawnB_2low__420ab453-117d-45a9-990c-9f6882fed462.jpg",
+   "name": "lawnB_2low.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/lawnB_2low__420ab453-117d-45a9-990c-9f6882fed462.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 41947,
+   "uploaded_bytes": 41947,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/lawnB_3medium__7bce4da5-f577-4f9f-b117-b6e2eca6a35b.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/lawnB_3medium__7bce4da5-f577-4f9f-b117-b6e2eca6a35b.jpg",
+   "name": "lawnB_3medium.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/lawnB_3medium__7bce4da5-f577-4f9f-b117-b6e2eca6a35b.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 54535,
+   "uploaded_bytes": 54535,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/lawnB_4high__6cacb2e9-a47c-4ffb-81e2-2865482e236d.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/lawnB_4high__6cacb2e9-a47c-4ffb-81e2-2865482e236d.jpg",
+   "name": "lawnB_4high.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/lawnB_4high__6cacb2e9-a47c-4ffb-81e2-2865482e236d.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 51623,
+   "uploaded_bytes": 51623,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/pathA_1slight__75400ac3-15e0-4ba8-b339-01ca686f7e9e.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/pathA_1slight__75400ac3-15e0-4ba8-b339-01ca686f7e9e.jpg",
+   "name": "pathA_1slight.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/pathA_1slight__75400ac3-15e0-4ba8-b339-01ca686f7e9e.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 55911,
+   "uploaded_bytes": 55911,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/pathA_2low__a183025a-38c6-4dbb-97f8-11d5a1b3dcf5.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/pathA_2low__a183025a-38c6-4dbb-97f8-11d5a1b3dcf5.jpg",
+   "name": "pathA_2low.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/pathA_2low__a183025a-38c6-4dbb-97f8-11d5a1b3dcf5.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 52311,
+   "uploaded_bytes": 52311,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/pathA_3medium__d8da4243-0be5-4a1b-b09b-8dd4d79b3935.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/pathA_3medium__d8da4243-0be5-4a1b-b09b-8dd4d79b3935.jpg",
+   "name": "pathA_3medium.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/pathA_3medium__d8da4243-0be5-4a1b-b09b-8dd4d79b3935.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 67581,
+   "uploaded_bytes": 67581,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/pathA_4high__c9c6abb8-9f3b-4101-8ac0-04fcf10ddc0b.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/pathA_4high__c9c6abb8-9f3b-4101-8ac0-04fcf10ddc0b.jpg",
+   "name": "pathA_4high.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/pathA_4high__c9c6abb8-9f3b-4101-8ac0-04fcf10ddc0b.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 67010,
+   "uploaded_bytes": 67010,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/pathB_1slight__e40fb0fc-9a1f-4f40-8e7d-a9715fe16c87.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/pathB_1slight__e40fb0fc-9a1f-4f40-8e7d-a9715fe16c87.jpg",
+   "name": "pathB_1slight.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/pathB_1slight__e40fb0fc-9a1f-4f40-8e7d-a9715fe16c87.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 62965,
+   "uploaded_bytes": 62965,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/pathB_2low__342bb3de-3263-4aaa-9621-2d7f089aa679.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/pathB_2low__342bb3de-3263-4aaa-9621-2d7f089aa679.jpg",
+   "name": "pathB_2low.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/pathB_2low__342bb3de-3263-4aaa-9621-2d7f089aa679.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 68087,
+   "uploaded_bytes": 68087,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/pathB_3medium__0de97766-c19c-47c9-b335-88e9a89c4dde.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/pathB_3medium__0de97766-c19c-47c9-b335-88e9a89c4dde.jpg",
+   "name": "pathB_3medium.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/pathB_3medium__0de97766-c19c-47c9-b335-88e9a89c4dde.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 70173,
+   "uploaded_bytes": 70173,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/pathB_4high__50a6ebce-2d71-4cdb-b1d6-9660027a35d5.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/pathB_4high__50a6ebce-2d71-4cdb-b1d6-9660027a35d5.jpg",
+   "name": "pathB_4high.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/pathB_4high__50a6ebce-2d71-4cdb-b1d6-9660027a35d5.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 60298,
+   "uploaded_bytes": 60298,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/waterA_1slight__204ff4d2-6839-441a-a1e0-68230cac6475.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/waterA_1slight__204ff4d2-6839-441a-a1e0-68230cac6475.jpg",
+   "name": "waterA_1slight.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/waterA_1slight__204ff4d2-6839-441a-a1e0-68230cac6475.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 44003,
+   "uploaded_bytes": 44003,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/waterA_2low__ef27d3c2-4bb2-47b6-a8eb-4302b1b92b18.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/waterA_2low__ef27d3c2-4bb2-47b6-a8eb-4302b1b92b18.jpg",
+   "name": "waterA_2low.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/waterA_2low__ef27d3c2-4bb2-47b6-a8eb-4302b1b92b18.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 38749,
+   "uploaded_bytes": 38749,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/waterA_3medium__f598905a-d736-4532-bf59-62adc93eb468.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/waterA_3medium__f598905a-d736-4532-bf59-62adc93eb468.jpg",
+   "name": "waterA_3medium.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/waterA_3medium__f598905a-d736-4532-bf59-62adc93eb468.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 50156,
+   "uploaded_bytes": 50156,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/waterA_4high__6fba10d3-e87a-495e-8cbb-6c446faab328.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/waterA_4high__6fba10d3-e87a-495e-8cbb-6c446faab328.jpg",
+   "name": "waterA_4high.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/waterA_4high__6fba10d3-e87a-495e-8cbb-6c446faab328.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 46170,
+   "uploaded_bytes": 46170,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/waterB_1slight__203dc12e-2400-41b2-b476-3a0a811fa70b.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/waterB_1slight__203dc12e-2400-41b2-b476-3a0a811fa70b.jpg",
+   "name": "waterB_1slight.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/waterB_1slight__203dc12e-2400-41b2-b476-3a0a811fa70b.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 57547,
+   "uploaded_bytes": 57547,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/waterB_2low__8674289c-731a-45b3-98ca-59cb03e51f3a.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/waterB_2low__8674289c-731a-45b3-98ca-59cb03e51f3a.jpg",
+   "name": "waterB_2low.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/waterB_2low__8674289c-731a-45b3-98ca-59cb03e51f3a.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 47962,
+   "uploaded_bytes": 47962,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/waterB_3medium__f551f96a-31bd-4a67-96d5-6aa0fa961131.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/waterB_3medium__f551f96a-31bd-4a67-96d5-6aa0fa961131.jpg",
+   "name": "waterB_3medium.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/waterB_3medium__f551f96a-31bd-4a67-96d5-6aa0fa961131.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 26540,
+   "uploaded_bytes": 26540,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-shen-design/photos/waterB_4high__ba2b5204-bcf3-4a54-8650-8f1581b6d3e9.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-shen-design/photos/waterB_4high__ba2b5204-bcf3-4a54-8650-8f1581b6d3e9.jpg",
+   "name": "waterB_4high.jpg",
+   "type": "image",
+   "folder": "photos",
+   "media_id": "templates/2023-shen-design/photos/waterB_4high__ba2b5204-bcf3-4a54-8650-8f1581b6d3e9.jpg",
+   "logicalFolder": "photos",
+   "original_bytes": 36501,
+   "uploaded_bytes": 36501,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Landscape Design Intensity and Its Associated Complexity of Forest Landscapes in Relation to Preference and Eye Movements",
+  "authors": [
+   "Yuanping Shen",
+   "Qin Wang",
+   "Hongli Liu",
+   "Jianye Luo",
+   "Qunyue Liu",
+   "Yuxiang Lan"
+  ],
+  "year": 2023,
+  "venue": "Forests",
+  "doi": "10.3390/f14040761",
+  "url": "https://doi.org/10.3390/f14040761"
+ }
+}

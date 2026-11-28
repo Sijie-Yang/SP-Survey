@@ -1,0 +1,476 @@
+{
+ "id": "2022-urakami-flowers",
+ "name": "Flowers, nature and flower drawings: emotional ratings",
+ "description": "Faithful replication of the online survey in Urakami, Huss, Nagamine, Czamanski-Cohen & Zaccai (2022), \"The Emotional Experience of Flowers: Zoomed In, Zoomed Out and Painted\", Horticulturae 8(7):668 (253 adults from Europe, North America, Israel and Japan, spring 2020). After background questions, three statements on social distancing and a rating of their current mood, participants see 15 images one at a time in random order: 6 flower photos (dahlia, hydrangea, lisianthus, marguerite, cosmos, leopard plant), 6 nature scenes from Japan and Israel, and 3 drawings of flowers. For each they rate familiarity, liking and how the image makes them feel (unpleasant–pleasant, calm–excited, tired–awake) on 7-point scales, write free associations and pick one keyword (inspiring, annoying, boring, peaceful, pretty). The paper found flower photos liked more and felt more pleasant than nature scenes, nature scenes more exciting, and drawings less positive than photos. Images are the 15 survey images printed in the paper's Figure 1 (CC BY 4.0), used with credit; the template is removed if the authors object.\n\nDifferences from the original study: (1) the original SurveyMonkey questionnaire is no longer reachable, so question wording, scale end labels and the answer options for education and socio-economic status are reconstructed from the Methods section; (2) the images are cut from Figure 1 (about 410 px wide) and trimmed on the right to remove the panel letters; (3) a consent tick box is added and the free association is optional; (4) the drawings are named lotus, Ornithogalum and sunflowers as in the paper's caption.",
+ "author": "Urakami, Huss, Nagamine, Czamanski-Cohen & Zaccai",
+ "year": "2022",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "source:paper",
+  "modality:scene_photo",
+  "task:multi_rating",
+  "task:open_ended",
+  "task:choose_from_set",
+  "task:questionnaire",
+  "concept:emotion",
+  "concept:preference",
+  "concept:naturalness",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:Japan",
+  "country:Israel"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/horticulturae8070668",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T20:50:01.604+00:00",
+ "updatedAt": "2026-11-27T20:50:14.192+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "label": "I agree to take part in this anonymous survey.",
+      "title": "Consent",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": 1
+       },
+       {
+        "text": "Male",
+        "value": 2
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "max": 110,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "Age (years)",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "country",
+      "type": "text",
+      "title": "Country of residence",
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "Highest education",
+      "choices": [
+       {
+        "text": "Primary or secondary school",
+        "value": 1
+       },
+       {
+        "text": "Vocational training",
+        "value": 2
+       },
+       {
+        "text": "Bachelor's degree",
+        "value": 3
+       },
+       {
+        "text": "Master's degree",
+        "value": 4
+       },
+       {
+        "text": "Doctorate",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "ses",
+      "type": "radiogroup",
+      "title": "How would you describe your socio-economic status?",
+      "choices": [
+       {
+        "text": "Low",
+        "value": 1
+       },
+       {
+        "text": "Below average",
+        "value": 2
+       },
+       {
+        "text": "Average",
+        "value": 3
+       },
+       {
+        "text": "Above average",
+        "value": 4
+       },
+       {
+        "text": "High",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "kind": "scales",
+      "name": "social_distancing",
+      "type": "custom",
+      "items": [
+       {
+        "low": "strongly disagree",
+        "high": "strongly agree",
+        "name": "sd_1",
+        "text": "Social distancing is an important part of my daily life right now."
+       },
+       {
+        "low": "strongly disagree",
+        "high": "strongly agree",
+        "name": "sd_2",
+        "text": "I am satisfied with the social contacts I have in my daily life."
+       },
+       {
+        "low": "strongly disagree",
+        "high": "strongly agree",
+        "name": "sd_3",
+        "text": "I am satisfied with the amount of time I can spend outdoors."
+       }
+      ],
+      "title": "How much do you agree or disagree with the following statements?",
+      "isRequired": true,
+      "description": "Value: {sd_1, sd_2, sd_3: 1 strongly disagree .. 7 strongly agree}."
+     },
+     {
+      "kind": "scales",
+      "name": "current_affect",
+      "type": "custom",
+      "items": [
+       {
+        "low": "negative",
+        "high": "positive",
+        "name": "valence",
+        "text": "Negative or positive?"
+       },
+       {
+        "low": "calm",
+        "high": "excited",
+        "name": "excitement",
+        "text": "Calm or excited?"
+       },
+       {
+        "low": "tired",
+        "high": "awake",
+        "name": "awake",
+        "text": "Tired or awake?"
+       }
+      ],
+      "title": "How do you feel right now?",
+      "isRequired": true,
+      "description": "Value: {valence 1 negative..7 positive, excitement 1 calm..7 excited, awake 1 tired..7 awake}."
+     }
+    ]
+   },
+   {
+    "name": "images",
+    "elements": [
+     {
+      "name": "image_response",
+      "type": "custom",
+      "items": [
+       {
+        "low": "not familiar at all",
+        "high": "very familiar",
+        "name": "familiarity",
+        "text": "How familiar is this image to you?"
+       },
+       {
+        "low": "not at all",
+        "high": "very much",
+        "name": "liking",
+        "text": "How much do you like this image?"
+       },
+       {
+        "low": "unpleasant",
+        "high": "pleasant",
+        "name": "valence",
+        "text": "This image makes me feel: unpleasant or pleasant?"
+       },
+       {
+        "low": "calm",
+        "high": "excited",
+        "name": "excitement",
+        "text": "This image makes me feel: calm or excited?"
+       },
+       {
+        "low": "tired",
+        "high": "awake",
+        "name": "awake",
+        "text": "This image makes me feel: tired or awake?"
+       }
+      ],
+      "title": "Please look at the image and answer the questions below.",
+      "keywords": [
+       "Inspiring",
+       "Annoying",
+       "Boring",
+       "Peaceful",
+       "Pretty"
+      ],
+      "isRequired": true,
+      "association": "What associations or thoughts does this image bring to mind?",
+      "description": "15 images in a random order per participant (media folder images): 6 flower photos (flower_), 6 nature scenes (nature_), 3 drawings of flowers (art_). Trial key = image name. Value: {familiarity, liking, valence (unpleasant..pleasant), excitement (calm..excited), awake (tired..awake): 1..7; keyword: Inspiring|Annoying|Boring|Peaceful|Pretty; association: free text (optional); category; position}. Analysis in the paper: GLMMs of liking, valence, excitement and awake on image category (flowers vs nature, flower photos vs drawings), gender and region, with familiarity and age as covariates and participant as random factor; keyword frequencies; thematic analysis of the associations.",
+      "keywordTitle": "Which word describes this image best?"
+     }
+    ]
+   }
+  ],
+  "title": "The Emotional Experience of Flowers",
+  "locale": "en",
+  "spSite": {
+   "id": "site-8ec78b6fb4a9eccf",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Flowers and Emotions</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"The Emotional Experience of Flowers\",\n  \"description\": \"Faithful replication of Urakami, Huss, Nagamine, Czamanski-Cohen & Zaccai (2022), Horticulturae 8:668: background questions, three social-distancing statements and current mood, then 15 images (flower photos, nature scenes, drawings of flowers) in random order, each rated for familiarity, liking, pleasantness, excitement and wakefulness on 7-point scales, with a free association and a choice of one keyword.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"images\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"boolean\",\n      \"name\": \"consent\",\n      \"title\": \"Consent\",\n      \"label\": \"I agree to take part in this anonymous survey.\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"Age (years)\",\n      \"isRequired\": true,\n      \"min\": 18,\n      \"max\": 110\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"country\",\n      \"title\": \"Country of residence\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"Highest education\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Primary or secondary school\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Vocational training\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Bachelor's degree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Master's degree\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Doctorate\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"ses\",\n      \"title\": \"How would you describe your socio-economic status?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Low\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Below average\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Average\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Above average\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"High\"\n       }\n      ]\n     },\n     {\n      \"type\": \"custom\",\n      \"kind\": \"scales\",\n      \"name\": \"social_distancing\",\n      \"isRequired\": true,\n      \"title\": \"How much do you agree or disagree with the following statements?\",\n      \"items\": [\n       {\n        \"name\": \"sd_1\",\n        \"text\": \"Social distancing is an important part of my daily life right now.\",\n        \"low\": \"strongly disagree\",\n        \"high\": \"strongly agree\"\n       },\n       {\n        \"name\": \"sd_2\",\n        \"text\": \"I am satisfied with the social contacts I have in my daily life.\",\n        \"low\": \"strongly disagree\",\n        \"high\": \"strongly agree\"\n       },\n       {\n        \"name\": \"sd_3\",\n        \"text\": \"I am satisfied with the amount of time I can spend outdoors.\",\n        \"low\": \"strongly disagree\",\n        \"high\": \"strongly agree\"\n       }\n      ],\n      \"description\": \"Value: {sd_1, sd_2, sd_3: 1 strongly disagree .. 7 strongly agree}.\"\n     },\n     {\n      \"type\": \"custom\",\n      \"kind\": \"scales\",\n      \"name\": \"current_affect\",\n      \"isRequired\": true,\n      \"title\": \"How do you feel right now?\",\n      \"items\": [\n       {\n        \"name\": \"valence\",\n        \"text\": \"Negative or positive?\",\n        \"low\": \"negative\",\n        \"high\": \"positive\"\n       },\n       {\n        \"name\": \"excitement\",\n        \"text\": \"Calm or excited?\",\n        \"low\": \"calm\",\n        \"high\": \"excited\"\n       },\n       {\n        \"name\": \"awake\",\n        \"text\": \"Tired or awake?\",\n        \"low\": \"tired\",\n        \"high\": \"awake\"\n       }\n      ],\n      \"description\": \"Value: {valence 1 negative..7 positive, excitement 1 calm..7 excited, awake 1 tired..7 awake}.\"\n     }\n    ]\n   },\n   {\n    \"name\": \"images\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"image_response\",\n      \"isRequired\": true,\n      \"title\": \"Please look at the image and answer the questions below.\",\n      \"items\": [\n       {\n        \"name\": \"familiarity\",\n        \"text\": \"How familiar is this image to you?\",\n        \"low\": \"not familiar at all\",\n        \"high\": \"very familiar\"\n       },\n       {\n        \"name\": \"liking\",\n        \"text\": \"How much do you like this image?\",\n        \"low\": \"not at all\",\n        \"high\": \"very much\"\n       },\n       {\n        \"name\": \"valence\",\n        \"text\": \"This image makes me feel: unpleasant or pleasant?\",\n        \"low\": \"unpleasant\",\n        \"high\": \"pleasant\"\n       },\n       {\n        \"name\": \"excitement\",\n        \"text\": \"This image makes me feel: calm or excited?\",\n        \"low\": \"calm\",\n        \"high\": \"excited\"\n       },\n       {\n        \"name\": \"awake\",\n        \"text\": \"This image makes me feel: tired or awake?\",\n        \"low\": \"tired\",\n        \"high\": \"awake\"\n       }\n      ],\n      \"association\": \"What associations or thoughts does this image bring to mind?\",\n      \"keywordTitle\": \"Which word describes this image best?\",\n      \"keywords\": [\n       \"Inspiring\",\n       \"Annoying\",\n       \"Boring\",\n       \"Peaceful\",\n       \"Pretty\"\n      ],\n      \"description\": \"15 images in a random order per participant (media folder images): 6 flower photos (flower_), 6 nature scenes (nature_), 3 drawings of flowers (art_). Trial key = image name. Value: {familiarity, liking, valence (unpleasant..pleasant), excitement (calm..excited), awake (tired..awake): 1..7; keyword: Inspiring|Annoying|Boring|Peaceful|Pretty; association: free text (optional); category; position}. Analysis in the paper: GLMMs of liking, valence, excitement and awake on image category (flowers vs nature, flower photos vs drawings), gender and region, with familiarity and age as covariates and participant as random factor; keyword frequencies; thematic analysis of the associations.\"\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f1f4;--card:#fff;--ink:#251c22;--muted:#66585f;--accent:#8a2f5f;--line:#e2d4dc;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:760px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.3rem;margin:0 0 10px}\np{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:20px}.q:first-child{margin-top:0}.q>b{display:block;margin-bottom:6px}.q.miss>b{color:var(--warn)}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer;background:var(--card)}\ninput[type=text],input[type=number],textarea{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%}\ninput[type=number]{max-width:160px}textarea{min-height:70px;resize:vertical}\n.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.t{color:var(--muted);font-size:.9rem}\n.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;flex:1;margin-left:12px;max-width:260px}.bar>i{display:block;height:100%;background:var(--accent)}\n.stim{display:block;width:100%;max-width:560px;margin:0 auto;border-radius:8px}\n.it{padding:10px 0;border-top:1px solid var(--line)}.it:first-child{border-top:0}.it.miss>.lab{color:var(--warn)}\n.lab{margin-bottom:4px}\n.ends{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-top:3px;max-width:520px}\n.seg{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:3px;max-width:520px}\n.seg label{display:block;cursor:pointer;position:relative}\n.seg input{position:absolute;opacity:0;pointer-events:none}\n.seg span{display:flex;align-items:center;justify-content:center;min-height:40px;border:1px solid var(--line);border-radius:8px;font-size:.9rem}\n.seg input:checked+span{background:var(--accent);border-color:var(--accent);color:#fff}\n.seg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}\n.kw{display:flex;flex-wrap:wrap;gap:6px}.kw label.opt{margin-top:0}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:760px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Images: the 15 survey images printed in Urakami, Huss, Nagamine, Czamanski-Cohen &amp; Zaccai (2022), Horticulturae 8:668, Figure 1, doi:10.3390/horticulturae8070668 (CC BY 4.0), cropped to remove panel letters. Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='flowermood2022:';\n  var app=document.getElementById('app'),SPEC,Q={},files={},done={},ORDER=[],IMG,ITEMS=[],KW=[],INTRO=[];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='visible';}}\n  function hideErr(){var e=app.querySelector('.err');if(e)e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function seven(name){var h='<div class=\"seg\" style=\"--n:7\" role=\"radiogroup\">';for(var v=1;v<=7;v++)h+='<label><input type=\"radio\" name=\"'+name+'\" value=\"'+v+'\"><span>'+v+'</span></label>';return h+'</div>';}\n  function scaleItem(name,it){return '<div class=\"it\" data-n=\"'+name+'\"><div class=\"lab\">'+esc(it.text)+'</div>'+seven(name)+'<div class=\"ends\"><span>1 = '+esc(it.low)+'</span><span>7 = '+esc(it.high)+'</span></div></div>';}\n  function total(){return 1+ORDER.length;}\n  function top(i){return '<div class=\"top\"><span class=\"t\">Page '+(i+1)+' of '+total()+'</span><div class=\"bar\"><i style=\"width:'+(100*i/total())+'%\"></i></div></div>';}\n  function next(){window.scrollTo(0,0);\n    if(!done.intro)return intro();\n    for(var i=0;i<ORDER.length;i++)if(!done['i_'+ORDER[i]])return image(i);\n    finish();}\n  function field(e){\n    var h='<div class=\"q\" data-q=\"'+e.name+'\"><b>'+esc(Q[e.name].title)+'</b>';\n    if(e.type==='boolean')h+='<label class=\"opt\"><input type=\"checkbox\" name=\"'+e.name+'\" value=\"1\"> '+esc(e.label)+'</label>';\n    else if(e.type==='radiogroup')h+=Q[e.name].choices.map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+e.name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');\n    else if(e.type==='text')h+='<input type=\"'+(e.inputType==='number'?'number':'text')+'\" name=\"'+e.name+'\"'+(e.inputType==='number'?' min=\"'+e.min+'\" max=\"'+e.max+'\" inputmode=\"numeric\"':' maxlength=\"80\"')+'>';\n    else if(e.kind==='scales')h+=e.items.map(function(it){return scaleItem(e.name+'__'+it.name,it);}).join('');\n    return h+'</div>';\n  }\n  function readField(e){\n    if(e.type==='boolean')return app.querySelector('input[name=\"'+e.name+'\"]').checked?true:undefined;\n    if(e.type==='radiogroup'){var x=app.querySelector('input[name=\"'+e.name+'\"]:checked');return x?Number(x.value):undefined;}\n    if(e.type==='text'){var t=app.querySelector('[name=\"'+e.name+'\"]').value.trim();if(e.inputType==='number'){var n=Number(t);return (t!==''&&n>=e.min&&n<=e.max&&Math.round(n)===n)?n:undefined;}return t||undefined;}\n    if(e.kind==='scales'){var v={},miss=0;e.items.forEach(function(it){var x=app.querySelector('input[name=\"'+e.name+'__'+it.name+'\"]:checked');if(x)v[it.name]=Number(x.value);else{miss++;app.querySelector('.it[data-n=\"'+e.name+'__'+it.name+'\"]').classList.add('miss');}});return miss?undefined:v;}\n  }\n  function intro(){\n    app.innerHTML=top(0)+'<h1>Flowers, nature and your mood</h1><div class=\"card\"><p style=\"color:var(--ink)\">In this survey you will see 15 images of flowers, nature scenes and drawings of flowers, one at a time, and tell us how each one makes you feel. First, a few questions about you and how you feel right now. It takes about 15 minutes and your answers are anonymous.</p>'+INTRO.map(field).join('')+'</div><div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div>';\n    app.onchange=function(ev){hideErr();var q=ev.target.closest('.q');if(q)q.classList.remove('miss');var it=ev.target.closest('.it');if(it)it.classList.remove('miss');};\n    document.getElementById('go').onclick=function(){\n      var l=[],bad=null;\n      INTRO.forEach(function(e){var v=readField(e);if(v===undefined){bad=bad||e;app.querySelector('.q[data-q=\"'+e.name+'\"]').classList.add('miss');}else l.push([e.name,v]);});\n      if(bad){err(bad.name==='consent'?'Please tick the box to agree before you start.':bad.inputType==='number'?'Please enter your age as a whole number from '+bad.min+' to '+bad.max+'.':bad.kind?'Please answer every row of: '+Q[bad.name].title:'Please answer: '+Q[bad.name].title);var m=app.querySelector('.q.miss');if(m)m.scrollIntoView({block:'center'});return;}\n      var b=this;b.disabled=true;\n      Promise.all(l.map(function(a){return SPSite.answer(a[0],a[1]);})).then(function(rs){var x=rs.filter(function(r){return !ok(r);})[0];if(x){b.disabled=false;return err(x.error);}done.intro=true;save('d',done);next();});\n    };\n  }\n  function image(i){\n    var f=ORDER[i];\n    app.innerHTML=top(i+1)+'<div class=\"card\"><img class=\"stim\" alt=\"Image '+(i+1)+' of '+ORDER.length+'\" src=\"'+esc(files[f].url)+'\"><p style=\"margin-top:12px;color:var(--ink)\">'+esc(Q.image_response.title)+'</p>'+ITEMS.map(function(it){return scaleItem('s__'+it.name,it);}).join('')+\n      '<div class=\"q\" data-q=\"association\" style=\"margin-top:14px\"><b>'+esc(IMG.association)+' <span class=\"t\">(optional)</span></b><textarea name=\"association\" maxlength=\"1000\"></textarea></div>'+\n      '<div class=\"q\" data-q=\"keyword\"><b>'+esc(IMG.keywordTitle)+'</b><div class=\"kw\">'+KW.map(function(k){return '<label class=\"opt\"><input type=\"radio\" name=\"keyword\" value=\"'+esc(k)+'\"> '+esc(k)+'</label>';}).join('')+'</div></div></div>'+\n      '<div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">'+(i===ORDER.length-1?'Finish':'Next')+'</button></div><div class=\"err\"></div>';\n    app.onchange=function(ev){hideErr();var it=ev.target.closest('.it');if(it)it.classList.remove('miss');var q=ev.target.closest('.q');if(q)q.classList.remove('miss');};\n    document.getElementById('go').onclick=function(){\n      var v={},miss=null;\n      ITEMS.forEach(function(it){var x=app.querySelector('input[name=\"s__'+it.name+'\"]:checked');if(x)v[it.name]=Number(x.value);else{miss=miss||it;app.querySelector('.it[data-n=\"s__'+it.name+'\"]').classList.add('miss');}});\n      var k=app.querySelector('input[name=\"keyword\"]:checked');if(k)v.keyword=k.value;else{app.querySelector('.q[data-q=\"keyword\"]').classList.add('miss');miss=miss||{text:IMG.keywordTitle};}\n      if(miss){err('Please answer: '+miss.text);var m=app.querySelector('.miss');if(m)m.scrollIntoView({block:'center'});return;}\n      var t=app.querySelector('textarea[name=\"association\"]').value.trim();if(t)v.association=t;\n      v.category=f.split('_')[0];v.position=i+1;\n      var b=this;b.disabled=true;\n      SPSite.answer('image_response',v,{key:f.replace(/\\.jpg$/,''),shown:[f]}).then(function(r){if(!ok(r)){b.disabled=false;return err(r.error);}done['i_'+f]=true;save('d',done);next();});\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>In the original study, 253 adults from Europe, North America, Israel and Japan rated the same 15 images during the COVID-19 lockdowns of 2020. All three kinds of images raised positive feelings. Flower photos were liked more and felt more pleasant than nature scenes, while nature scenes were rated as more exciting. Drawings of flowers felt less positive than photos: people reacted more to the art than to the flower itself.</p><p style=\"font-size:.82rem\">Urakami, J., Huss, E., Nagamine, M., Czamanski-Cohen, J., &amp; Zaccai, M. (2022). The Emotional Experience of Flowers: Zoomed In, Zoomed Out and Painted. Horticulturae 8:668, doi:10.3390/horticulturae8070668.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){if(x==='image_response')ORDER.forEach(function(f){done['i_'+f]=false;});else done.intro=false;});save('d',done);next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    try{SPEC=JSON.parse(document.getElementById('sp-scheme').textContent).survey;}catch(e){SPEC={pages:[]};}\n    SPEC.pages.forEach(function(p){p.elements.forEach(function(e){var g=SPSite.getQuestion(e.name)||{};Q[e.name]={title:g.title||e.title,choices:(g.choices&&g.choices.length)?g.choices:e.choices};if(e.name==='image_response'){IMG=e;ITEMS=e.items;KW=e.keywords;}});});\n    INTRO=SPEC.pages[0].elements;\n    (SPSite.getMedia('images')||[]).forEach(function(f){files[f.name]=f;});\n    if(Object.keys(files).length<15){app.innerHTML='<h1>Images missing</h1><p>Media folder images must hold the 15 survey images.</p>';return;}\n    var a=(ctx&&ctx.answers)||{};done=load('d')||{};\n    ORDER=load('order');\n    if(!ORDER||ORDER.length!==Object.keys(files).length||ORDER.some(function(f){return !files[f];})){ORDER=shuffle(Object.keys(files));save('order',ORDER);}\n    done.intro=INTRO.every(function(e){return a[e.name]!=null;});\n    ORDER.forEach(function(f){done['i_'+f]=false;});\n    ((a.image_response&&a.image_response.trials)||[]).forEach(function(t){if(t.key)done['i_'+t.key+'.jpg']=true;});\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T20:49:39.645Z",
+   "mediaFolders": [
+    "images"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T20:49:39.645Z"
+  },
+  "description": "Faithful replication of Urakami, Huss, Nagamine, Czamanski-Cohen & Zaccai (2022), Horticulturae 8:668: background questions, three social-distancing statements and current mood, then 15 images (flower photos, nature scenes, drawings of flowers) in random order, each rated for familiarity, liking, pleasantness, excitement and wakefulness on 7-point scales, with a free association and a choice of one keyword.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2022-urakami-flowers/images/art_lotus__b980c46d-0154-4e4f-b165-605da1c88fe4.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-urakami-flowers/images/art_lotus__b980c46d-0154-4e4f-b165-605da1c88fe4.jpg",
+   "name": "art_lotus.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2022-urakami-flowers/images/art_lotus__b980c46d-0154-4e4f-b165-605da1c88fe4.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 29593,
+   "uploaded_bytes": 29593,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-urakami-flowers/images/art_ornithogalum__d4b3ec23-f5c1-47dc-b2d8-b684d88fce4a.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-urakami-flowers/images/art_ornithogalum__d4b3ec23-f5c1-47dc-b2d8-b684d88fce4a.jpg",
+   "name": "art_ornithogalum.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2022-urakami-flowers/images/art_ornithogalum__d4b3ec23-f5c1-47dc-b2d8-b684d88fce4a.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 37264,
+   "uploaded_bytes": 37264,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-urakami-flowers/images/art_sunflowers__dd9c84e0-de9c-4341-9fc3-f10d45e0b630.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-urakami-flowers/images/art_sunflowers__dd9c84e0-de9c-4341-9fc3-f10d45e0b630.jpg",
+   "name": "art_sunflowers.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2022-urakami-flowers/images/art_sunflowers__dd9c84e0-de9c-4341-9fc3-f10d45e0b630.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 36307,
+   "uploaded_bytes": 36307,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-urakami-flowers/images/flower_cosmos__63a138e7-b6eb-4d6f-ba28-47587a74ceff.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-urakami-flowers/images/flower_cosmos__63a138e7-b6eb-4d6f-ba28-47587a74ceff.jpg",
+   "name": "flower_cosmos.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2022-urakami-flowers/images/flower_cosmos__63a138e7-b6eb-4d6f-ba28-47587a74ceff.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 27620,
+   "uploaded_bytes": 27620,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-urakami-flowers/images/flower_dahlia__0d486451-2099-49dc-9158-c55c927ea2cb.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-urakami-flowers/images/flower_dahlia__0d486451-2099-49dc-9158-c55c927ea2cb.jpg",
+   "name": "flower_dahlia.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2022-urakami-flowers/images/flower_dahlia__0d486451-2099-49dc-9158-c55c927ea2cb.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 33639,
+   "uploaded_bytes": 33639,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-urakami-flowers/images/flower_hydrangea__497bc009-d5a6-454c-9486-d228c2bd0a95.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-urakami-flowers/images/flower_hydrangea__497bc009-d5a6-454c-9486-d228c2bd0a95.jpg",
+   "name": "flower_hydrangea.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2022-urakami-flowers/images/flower_hydrangea__497bc009-d5a6-454c-9486-d228c2bd0a95.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 36397,
+   "uploaded_bytes": 36397,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-urakami-flowers/images/flower_leopard_plant__9c2dd602-d186-4e4a-b1e1-c4b5c2b74b5f.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-urakami-flowers/images/flower_leopard_plant__9c2dd602-d186-4e4a-b1e1-c4b5c2b74b5f.jpg",
+   "name": "flower_leopard_plant.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2022-urakami-flowers/images/flower_leopard_plant__9c2dd602-d186-4e4a-b1e1-c4b5c2b74b5f.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 42874,
+   "uploaded_bytes": 42874,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-urakami-flowers/images/flower_lisianthus__9443d8ec-ed5c-4595-a3ad-ac83bf60218b.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-urakami-flowers/images/flower_lisianthus__9443d8ec-ed5c-4595-a3ad-ac83bf60218b.jpg",
+   "name": "flower_lisianthus.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2022-urakami-flowers/images/flower_lisianthus__9443d8ec-ed5c-4595-a3ad-ac83bf60218b.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 30998,
+   "uploaded_bytes": 30998,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-urakami-flowers/images/flower_marguerite__af2c4fdf-7503-4810-85bf-31cbb98529f8.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-urakami-flowers/images/flower_marguerite__af2c4fdf-7503-4810-85bf-31cbb98529f8.jpg",
+   "name": "flower_marguerite.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2022-urakami-flowers/images/flower_marguerite__af2c4fdf-7503-4810-85bf-31cbb98529f8.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 43784,
+   "uploaded_bytes": 43784,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-urakami-flowers/images/nature_hokkaido_yellow_flowers__6b395aa4-c266-4cb9-af25-7667860b2a89.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-urakami-flowers/images/nature_hokkaido_yellow_flowers__6b395aa4-c266-4cb9-af25-7667860b2a89.jpg",
+   "name": "nature_hokkaido_yellow_flowers.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2022-urakami-flowers/images/nature_hokkaido_yellow_flowers__6b395aa4-c266-4cb9-af25-7667860b2a89.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 31491,
+   "uploaded_bytes": 31491,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-urakami-flowers/images/nature_kamikochi_mountains__ece88879-d65b-4819-b27f-9c406dadff37.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-urakami-flowers/images/nature_kamikochi_mountains__ece88879-d65b-4819-b27f-9c406dadff37.jpg",
+   "name": "nature_kamikochi_mountains.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2022-urakami-flowers/images/nature_kamikochi_mountains__ece88879-d65b-4819-b27f-9c406dadff37.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 31259,
+   "uploaded_bytes": 31259,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-urakami-flowers/images/nature_kamikochi_woods__5b8960ab-4a40-434f-bed1-0b199e0cd185.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-urakami-flowers/images/nature_kamikochi_woods__5b8960ab-4a40-434f-bed1-0b199e0cd185.jpg",
+   "name": "nature_kamikochi_woods.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2022-urakami-flowers/images/nature_kamikochi_woods__5b8960ab-4a40-434f-bed1-0b199e0cd185.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 41496,
+   "uploaded_bytes": 41496,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-urakami-flowers/images/nature_kushiro_swamp__40cb215f-b6da-45dd-a909-3d8e51bad8b6.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-urakami-flowers/images/nature_kushiro_swamp__40cb215f-b6da-45dd-a909-3d8e51bad8b6.jpg",
+   "name": "nature_kushiro_swamp.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2022-urakami-flowers/images/nature_kushiro_swamp__40cb215f-b6da-45dd-a909-3d8e51bad8b6.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 25694,
+   "uploaded_bytes": 25694,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-urakami-flowers/images/nature_negev_red_flowers__23b3ef22-0c93-4182-970c-0a4a02b8aef1.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-urakami-flowers/images/nature_negev_red_flowers__23b3ef22-0c93-4182-970c-0a4a02b8aef1.jpg",
+   "name": "nature_negev_red_flowers.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2022-urakami-flowers/images/nature_negev_red_flowers__23b3ef22-0c93-4182-970c-0a4a02b8aef1.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 28426,
+   "uploaded_bytes": 28426,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-urakami-flowers/images/nature_negev_yellow_flowers__fefa1daa-0b47-4a25-9a71-e7dbf79883a8.jpg",
+   "url": "https://media.sp-survey.org/templates/2022-urakami-flowers/images/nature_negev_yellow_flowers__fefa1daa-0b47-4a25-9a71-e7dbf79883a8.jpg",
+   "name": "nature_negev_yellow_flowers.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2022-urakami-flowers/images/nature_negev_yellow_flowers__fefa1daa-0b47-4a25-9a71-e7dbf79883a8.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 26249,
+   "uploaded_bytes": 26249,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "The Emotional Experience of Flowers: Zoomed In, Zoomed Out and Painted",
+  "authors": [
+   "Jacqueline Urakami",
+   "Ephrat Huss",
+   "Mitsue Nagamine",
+   "Johanna Czamanski-Cohen",
+   "Michele Zaccai"
+  ],
+  "year": 2022,
+  "venue": "Horticulturae",
+  "doi": "10.3390/horticulturae8070668",
+  "url": "https://doi.org/10.3390/horticulturae8070668"
+ }
+}

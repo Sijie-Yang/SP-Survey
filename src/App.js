@@ -12,6 +12,7 @@ const SurveyApp = lazy(() => import('./SurveyApp'));
 const AdminApp = lazy(() => import('./AdminApp'));
 const SkillEditorPage = lazy(() => import('./pages/SkillEditorPage'));
 const SkillLibraryPage = lazy(() => import('./pages/SkillLibraryPage'));
+const TemplateLibraryPage = lazy(() => import('./pages/TemplateLibraryPage'));
 const IntegrationsPage = lazy(() => import('./pages/IntegrationsPage'));
 const StudioPage = lazy(() => import('./pages/StudioPage'));
 
@@ -24,6 +25,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/admin/integrations" element={<IntegrationsPage />} />
     <Route path="/studio" element={<StudioPage />} />
     <Route path="/studio/:projectId" element={<StudioPage />} />
+    <Route path="/templates" element={<TemplateLibraryPage />} />
     <Route path="/skills" element={<SkillLibraryPage />} />
     <Route path="/skill-editor" element={<SkillEditorPage />} />
     <Route path="/skill-editor/:id" element={<SkillEditorPage />} />

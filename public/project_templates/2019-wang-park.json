@@ -1,0 +1,823 @@
+{
+ "id": "2019-wang-park",
+ "name": "Park Walkway Features: Paired Photo Choices",
+ "description": "Faithful replication with the paper's own stimuli: participants see 28 pairs of Nanjing park walkway photos. In each pair the two photos are the same except for one digitally added or removed feature: ground cover plants, benches with backs and arms, colourful flowers, available seating, a diverse mix of plants, visual access to water, or canopy trees (four pairs per feature). They imagine walking in the park and tap the walkway they would prefer to use. The 28 pairs are those printed in Appendix Table A1 of Wang & Rodiek (2019), IJERPH 16(20): 3808 (CC BY 4.0), and the paper's per-pair and per-feature percentages are stored for comparison. Scoring: per feature, the share of its four pairs where the photo with the feature was chosen, tested against 50%. Differences from the original study: (1) online instead of printed side-by-side booklets handed out in six parks (on phones the two photos are stacked); (2) the paper recruited local residents aged 60 and over, and the template does not restrict age; (3) pair order and left/right sides are random per participant, instead of two booklet versions with fixed random sides; (4) photos are the small versions printed in the paper (about 310 px wide).",
+ "author": "Wang & Rodiek",
+ "year": "2019",
+ "category": "Academic Research",
+ "tags": [
+  "faithful-replication",
+  "official",
+  "paper",
+  "pairwise",
+  "older adults",
+  "park walkway",
+  "Nanjing",
+  "source:paper",
+  "modality:scene_photo",
+  "task:pairwise",
+  "task:custom_page",
+  "concept:greenery",
+  "concept:preference",
+  "participants:residents",
+  "sample:100to1000",
+  "country:China",
+  "city:Nanjing"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/ijerph16203808",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T10:05:48.556+00:00",
+ "updatedAt": "2026-11-27T10:05:57.263+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part in this study.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "pairs",
+    "elements": [
+     {
+      "name": "walkway_choice",
+      "type": "radiogroup",
+      "title": "Which walkway would you prefer to use?",
+      "choices": [
+       {
+        "text": "The photo with the feature",
+        "value": "hypothesized"
+       },
+       {
+        "text": "The photo without the feature",
+        "value": "other"
+       }
+      ],
+      "isRequired": true,
+      "description": "Keyed by pair id <feature><n> (n = 1-4, as in the paper's Appendix Table A1): groundcover (ground cover plants vs bare ground), bench (bench with back and arms vs without), flowers (colourful herbaceous flowers), seating (bench and paved pad present), diverse (diverse mix of plants, barrier-height shrubs added), view (visual access to water, screening shrubs removed), canopy (overhead canopy tree). Each pair is one photo digitally edited; value hypothesized = the photo with the feature was chosen, other = the photo without it."
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "max": 110,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "How old are you?",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "What is your gender?",
+      "choices": [
+       {
+        "text": "Woman",
+        "value": "woman"
+       },
+       {
+        "text": "Man",
+        "value": "man"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Park Walkway Features: Paired Photo Choices",
+  "locale": "en",
+  "spSite": {
+   "id": "site-ab085c8af692e492",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Park Walkway Choices</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Park Walkway Features: Paired Photo Choices\",\n  \"description\": \"Participants see 28 pairs of park walkway photos from Nanjing; the two photos in each pair are identical except for one digitally added or removed landscape feature (ground cover plants, benches with backs and arms, colourful flowers, available seating, diverse mix of plants, visual access to water, canopy trees; four pairs per feature). They imagine walking in the park and choose the walkway they would prefer to use. Rebuilt from Wang & Rodiek (2019), IJERPH 16(20): 3808, with the 28 photo pairs printed in its Appendix Table A1 (CC BY 4.0). Scoring: per participant and feature, the percentage of the four pairs where the photo with the feature was chosen (0, 25, 50, 75 or 100%); one-sample t-test against 50%, paired t-tests between features.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"walkways\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part in this study.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"pairs\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"walkway_choice\",\n      \"title\": \"Which walkway would you prefer to use?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"hypothesized\",\n        \"text\": \"The photo with the feature\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"The photo without the feature\"\n       }\n      ],\n      \"description\": \"Keyed by pair id <feature><n> (n = 1-4, as in the paper's Appendix Table A1): groundcover (ground cover plants vs bare ground), bench (bench with back and arms vs without), flowers (colourful herbaceous flowers), seating (bench and paved pad present), diverse (diverse mix of plants, barrier-height shrubs added), view (visual access to water, screening shrubs removed), canopy (overhead canopy tree). Each pair is one photo digitally edited; value hypothesized = the photo with the feature was chosen, other = the photo without it.\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"min\": 18,\n      \"max\": 110\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"What is your gender?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"woman\",\n        \"text\": \"Woman\"\n       },\n       {\n        \"value\": \"man\",\n        \"text\": \"Man\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"walkway-original\">{\"source\": \"Wang & Rodiek (2019) International Journal of Environmental Research and Public Health 16(20): 3808\", \"n\": 283, \"participants\": \"local residents aged 60+ (mean 70.9) in six Nanjing urban parks, printed side-by-side photo booklets, spring 2018\", \"pct_choosing_feature_by_feature\": {\"groundcover\": 90.37, \"bench\": 89.66, \"flowers\": 88.25, \"seating\": 81.89, \"diverse\": 71.82, \"view\": 68.99, \"canopy\": 67.4}, \"pct_choosing_feature_by_pair\": {\"groundcover1\": 86.93, \"groundcover2\": 93.99, \"groundcover3\": 92.58, \"groundcover4\": 87.99, \"bench1\": 89.75, \"bench2\": 90.11, \"bench3\": 88.69, \"bench4\": 90.11, \"flowers1\": 91.17, \"flowers2\": 89.75, \"flowers3\": 83.04, \"flowers4\": 89.05, \"seating1\": 87.99, \"seating2\": 74.2, \"seating3\": 78.09, \"seating4\": 87.28, \"diverse1\": 53.36, \"diverse2\": 83.04, \"diverse3\": 65.02, \"diverse4\": 85.87, \"view1\": 68.2, \"view2\": 60.07, \"view3\": 92.23, \"view4\": 55.48, \"canopy1\": 65.02, \"canopy2\": 69.26, \"canopy3\": 66.78, \"canopy4\": 68.55}, \"result\": \"All seven features were preferred above chance (p < 0.001); not significant for pairs diverse1 and view4.\"}</script>\n<style>\n:root{--bg:#f3f5ef;--card:#fff;--ink:#1f241b;--muted:#5d6656;--accent:#3f6b2a;--line:#dbe0d4;--warn:#b3261e;--sel:#e6f0df}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.55 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:900px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.55rem;margin:0 0 8px}h2{font-size:1.2rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:14px 22px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.prog{font-size:.9rem;color:var(--muted);margin-bottom:8px}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}\n.pick{appearance:none;border:0;padding:0;background:#111;border-radius:8px;cursor:pointer;outline:4px solid transparent;outline-offset:2px;padding:10px}\n.pick img{width:100%;display:block}\n.pick:hover,.pick:focus-visible{outline-color:var(--accent)}\n.pick:disabled{cursor:default;opacity:.7}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.f{margin-top:16px}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:110px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n@media (max-width:560px){.pair{grid-template-columns:1fr}.pick{padding:6px}}\n.credit{max-width:900px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs: Wang &amp; Rodiek (2019), International Journal of Environmental Research and Public Health 16(20): 3808, Appendix Table A1 (doi:10.3390/ijerph16203808, CC BY 4.0).</footer>\n<script>\n(function(){\n  var KEY='park-walkways:state';\n  var FEATURES=['groundcover','bench','flowers','seating','diverse','view','canopy'];\n  var app=document.getElementById('app'), Q={}, files={}, st=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function send(list,b,next){if(b)b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}next();});}\n  function val(name){var x=app.querySelector('input[name=\"'+name+'\"]:checked');return x?x.value:null;}\n  function intro(){\n    app.innerHTML='<h1>Park walkways</h1><p>You will see '+st.pairs.length+' pairs of photos of walkways in city parks in Nanjing. The two photos in each pair are the same except for one thing. Imagine you are going for a walk in the park, and tap the walkway you would prefer to use. It takes about 5 minutes.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');send([SPSite.answer('consent',true)],this,function(){st.step='pair';st.k=0;save();route();});};\n  }\n  function pair(){\n    var p=st.pairs[st.k],L=p.left==='feature'?[p.id+'_feature',p.id+'_base']:[p.id+'_base',p.id+'_feature'];\n    app.innerHTML='<div class=\"prog\">Pair '+(st.k+1)+' of '+st.pairs.length+'</div><div class=\"card\"><p style=\"color:var(--ink)\"><b>'+esc(Q.walkway_choice.title)+'</b></p><div class=\"pair\">'+L.map(function(n,i){return '<button type=\"button\" class=\"pick\" data-n=\"'+n+'\" aria-label=\"'+(i?'Right':'Left')+' walkway\"><img alt=\"Park walkway\" src=\"'+esc(files[n].url)+'\"></button>';}).join('')+'</div><div class=\"err\"></div></div>';\n    var sh=L.map(function(n){return files[n].name;});\n    app.querySelectorAll('.pick').forEach(function(b){b.onclick=function(){\n      var n=b.dataset.n,v=/_feature$/.test(n)?'hypothesized':'other';\n      app.querySelectorAll('.pick').forEach(function(x){x.disabled=true;});\n      send([SPSite.answer('walkway_choice',v,{key:p.id,shown:sh})],null,function(){st.k++;if(st.k>=st.pairs.length)st.step='about';save();route();});\n    };});\n  }\n  function about(){\n    app.innerHTML='<h2>About you</h2><div class=\"card\"><div class=\"f\" style=\"margin-top:0\"><b>'+esc(Q.age.title)+'</b><br><input type=\"number\" id=\"age\" min=\"18\" max=\"110\"></div><div class=\"f\"><b>'+esc(Q.gender.title)+'</b>'+Q.gender.choices.map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"gender\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Finish</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var age=Number(document.getElementById('age').value),g=val('gender');\n      if(!(age>=18&&age<=110))return err('Please enter your age.');if(!g)return err('Please choose an option.');\n      send([SPSite.answer('age',age),SPSite.answer('gender',g)],this,function(){st.step='done';save();route();});\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st.step='intro';save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  function route(){var s=st.step;window.scrollTo(0,0);if(s==='pair')return pair();if(s==='about')return about();if(s==='done')return finish();intro();}\n  SPSite.onReady(function(ctx){\n    ['consent','walkway_choice','age','gender'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('walkways')||[]).forEach(function(f){if(/\\.(png|jpe?g|webp)$/i.test(f.name))files[f.name.replace(/\\.[^.]+$/,'')]=f;});\n    var ids=[];FEATURES.forEach(function(f){for(var i=1;i<=4;i++){var id=f+i;if(files[id+'_base']&&files[id+'_feature'])ids.push(id);}});\n    if(ids.length<2){app.innerHTML='<h1>Photos missing</h1><p>Upload the photo pairs to the media folder \"walkways\".</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    var valid=st&&st.pairs&&st.pairs.length===ids.length&&st.pairs.every(function(p){return ids.indexOf(p.id)>=0;});\n    if(!valid){var sides=shuffle(ids.map(function(_,i){return i%2===0?'feature':'base';}));st={step:'intro',pairs:shuffle(ids).map(function(id,i){return {id:id,left:sides[i]};}),k:0};}\n    var a=(ctx&&ctx.answers)||{};if(a.consent!==true){st.step='intro';st.k=0;}\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T10:05:12.683Z",
+   "mediaFolders": [
+    "walkways"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T10:05:12.683Z"
+  },
+  "description": "Participants see 28 pairs of park walkway photos from Nanjing; the two photos in each pair are identical except for one digitally added or removed landscape feature (ground cover plants, benches with backs and arms, colourful flowers, available seating, diverse mix of plants, visual access to water, canopy trees; four pairs per feature). They imagine walking in the park and choose the walkway they would prefer to use. Rebuilt from Wang & Rodiek (2019), IJERPH 16(20): 3808, with the 28 photo pairs printed in its Appendix Table A1 (CC BY 4.0). Scoring: per participant and feature, the percentage of the four pairs where the photo with the feature was chosen (0, 25, 50, 75 or 100%); one-sample t-test against 50%, paired t-tests between features.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2019-wang-park/walkways/bench1_base__5a40a50b-00f4-4096-a2e7-e7384581a759.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/bench1_base__5a40a50b-00f4-4096-a2e7-e7384581a759.jpg",
+   "name": "bench1_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/bench1_base__5a40a50b-00f4-4096-a2e7-e7384581a759.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 34586,
+   "uploaded_bytes": 34586,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/bench1_feature__7655cd5d-a707-4985-9de3-c9d2f679ca4c.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/bench1_feature__7655cd5d-a707-4985-9de3-c9d2f679ca4c.jpg",
+   "name": "bench1_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/bench1_feature__7655cd5d-a707-4985-9de3-c9d2f679ca4c.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 34664,
+   "uploaded_bytes": 34664,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/bench2_base__953750a4-1b3d-4c13-9580-c28bfd1871bd.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/bench2_base__953750a4-1b3d-4c13-9580-c28bfd1871bd.jpg",
+   "name": "bench2_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/bench2_base__953750a4-1b3d-4c13-9580-c28bfd1871bd.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 31507,
+   "uploaded_bytes": 31507,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/bench2_feature__8471653a-5371-4f34-bc7a-18cdbea3532b.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/bench2_feature__8471653a-5371-4f34-bc7a-18cdbea3532b.jpg",
+   "name": "bench2_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/bench2_feature__8471653a-5371-4f34-bc7a-18cdbea3532b.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 31664,
+   "uploaded_bytes": 31664,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/bench3_base__3643aba4-e22c-4d1a-a3e1-3d25d569603e.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/bench3_base__3643aba4-e22c-4d1a-a3e1-3d25d569603e.jpg",
+   "name": "bench3_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/bench3_base__3643aba4-e22c-4d1a-a3e1-3d25d569603e.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 33012,
+   "uploaded_bytes": 33012,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/bench3_feature__9e81ab82-5247-435f-8b1b-3740c2be0ffc.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/bench3_feature__9e81ab82-5247-435f-8b1b-3740c2be0ffc.jpg",
+   "name": "bench3_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/bench3_feature__9e81ab82-5247-435f-8b1b-3740c2be0ffc.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 33181,
+   "uploaded_bytes": 33181,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/bench4_base__d91b3685-155a-41bf-abb7-93c524aa0fc0.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/bench4_base__d91b3685-155a-41bf-abb7-93c524aa0fc0.jpg",
+   "name": "bench4_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/bench4_base__d91b3685-155a-41bf-abb7-93c524aa0fc0.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 33505,
+   "uploaded_bytes": 33505,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/bench4_feature__6ce81254-f47d-4f97-89a7-623ac5746445.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/bench4_feature__6ce81254-f47d-4f97-89a7-623ac5746445.jpg",
+   "name": "bench4_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/bench4_feature__6ce81254-f47d-4f97-89a7-623ac5746445.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 33659,
+   "uploaded_bytes": 33659,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/canopy1_base__966ffeb4-451d-4d14-931b-059f0aab9fb6.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/canopy1_base__966ffeb4-451d-4d14-931b-059f0aab9fb6.jpg",
+   "name": "canopy1_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/canopy1_base__966ffeb4-451d-4d14-931b-059f0aab9fb6.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 18930,
+   "uploaded_bytes": 18930,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/canopy1_feature__19e1af43-cb8f-41cb-b9bd-7927e19c0f20.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/canopy1_feature__19e1af43-cb8f-41cb-b9bd-7927e19c0f20.jpg",
+   "name": "canopy1_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/canopy1_feature__19e1af43-cb8f-41cb-b9bd-7927e19c0f20.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 24443,
+   "uploaded_bytes": 24443,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/canopy2_base__fc80a3ff-c294-4869-af1e-58a68d07ee40.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/canopy2_base__fc80a3ff-c294-4869-af1e-58a68d07ee40.jpg",
+   "name": "canopy2_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/canopy2_base__fc80a3ff-c294-4869-af1e-58a68d07ee40.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 26664,
+   "uploaded_bytes": 26664,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/canopy2_feature__a78b7d21-2427-4dbb-a9d8-893e9738afe6.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/canopy2_feature__a78b7d21-2427-4dbb-a9d8-893e9738afe6.jpg",
+   "name": "canopy2_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/canopy2_feature__a78b7d21-2427-4dbb-a9d8-893e9738afe6.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 31777,
+   "uploaded_bytes": 31777,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/canopy3_base__0cc1439f-69c9-4be0-9bd4-f416f5607b1b.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/canopy3_base__0cc1439f-69c9-4be0-9bd4-f416f5607b1b.jpg",
+   "name": "canopy3_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/canopy3_base__0cc1439f-69c9-4be0-9bd4-f416f5607b1b.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 21724,
+   "uploaded_bytes": 21724,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/canopy3_feature__5d4141c1-403b-481a-b097-fdf3b418daa3.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/canopy3_feature__5d4141c1-403b-481a-b097-fdf3b418daa3.jpg",
+   "name": "canopy3_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/canopy3_feature__5d4141c1-403b-481a-b097-fdf3b418daa3.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 27451,
+   "uploaded_bytes": 27451,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/canopy4_base__161803c2-1704-40ad-838c-6a6e466b858b.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/canopy4_base__161803c2-1704-40ad-838c-6a6e466b858b.jpg",
+   "name": "canopy4_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/canopy4_base__161803c2-1704-40ad-838c-6a6e466b858b.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 15819,
+   "uploaded_bytes": 15819,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/canopy4_feature__9a59e6fe-65a6-4791-b816-f4814a1383ac.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/canopy4_feature__9a59e6fe-65a6-4791-b816-f4814a1383ac.jpg",
+   "name": "canopy4_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/canopy4_feature__9a59e6fe-65a6-4791-b816-f4814a1383ac.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 20606,
+   "uploaded_bytes": 20606,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/diverse1_base__aba6d27c-8b94-49e0-aad3-3247ac0db1e5.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/diverse1_base__aba6d27c-8b94-49e0-aad3-3247ac0db1e5.jpg",
+   "name": "diverse1_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/diverse1_base__aba6d27c-8b94-49e0-aad3-3247ac0db1e5.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 39010,
+   "uploaded_bytes": 39010,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/diverse1_feature__1a19a296-a1b5-465f-a0e1-2993d3e272f1.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/diverse1_feature__1a19a296-a1b5-465f-a0e1-2993d3e272f1.jpg",
+   "name": "diverse1_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/diverse1_feature__1a19a296-a1b5-465f-a0e1-2993d3e272f1.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 39372,
+   "uploaded_bytes": 39372,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/diverse2_base__6a0a32bf-383f-42d8-891b-71ca79e53086.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/diverse2_base__6a0a32bf-383f-42d8-891b-71ca79e53086.jpg",
+   "name": "diverse2_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/diverse2_base__6a0a32bf-383f-42d8-891b-71ca79e53086.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 25469,
+   "uploaded_bytes": 25469,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/diverse2_feature__677e708a-ed02-4fa3-8865-10e2936bb064.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/diverse2_feature__677e708a-ed02-4fa3-8865-10e2936bb064.jpg",
+   "name": "diverse2_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/diverse2_feature__677e708a-ed02-4fa3-8865-10e2936bb064.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 27388,
+   "uploaded_bytes": 27388,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/diverse3_base__8249e9a7-5ada-4b83-b6d2-a050fffd1e24.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/diverse3_base__8249e9a7-5ada-4b83-b6d2-a050fffd1e24.jpg",
+   "name": "diverse3_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/diverse3_base__8249e9a7-5ada-4b83-b6d2-a050fffd1e24.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 28615,
+   "uploaded_bytes": 28615,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/diverse3_feature__66e3ddd3-017c-477f-9f46-cde41a220e8a.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/diverse3_feature__66e3ddd3-017c-477f-9f46-cde41a220e8a.jpg",
+   "name": "diverse3_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/diverse3_feature__66e3ddd3-017c-477f-9f46-cde41a220e8a.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 29816,
+   "uploaded_bytes": 29816,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/diverse4_base__3c3eed89-aac2-4988-b169-6bc3959b6c91.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/diverse4_base__3c3eed89-aac2-4988-b169-6bc3959b6c91.jpg",
+   "name": "diverse4_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/diverse4_base__3c3eed89-aac2-4988-b169-6bc3959b6c91.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 38088,
+   "uploaded_bytes": 38088,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/diverse4_feature__33203766-c83f-46be-b9c3-34b4e3df692d.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/diverse4_feature__33203766-c83f-46be-b9c3-34b4e3df692d.jpg",
+   "name": "diverse4_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/diverse4_feature__33203766-c83f-46be-b9c3-34b4e3df692d.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 39333,
+   "uploaded_bytes": 39333,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/flowers1_base__4b6850fc-802f-4d39-bc4b-c269312f3c99.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/flowers1_base__4b6850fc-802f-4d39-bc4b-c269312f3c99.jpg",
+   "name": "flowers1_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/flowers1_base__4b6850fc-802f-4d39-bc4b-c269312f3c99.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 40886,
+   "uploaded_bytes": 40886,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/flowers1_feature__49d6931f-72e6-404f-9447-ba27230c4869.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/flowers1_feature__49d6931f-72e6-404f-9447-ba27230c4869.jpg",
+   "name": "flowers1_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/flowers1_feature__49d6931f-72e6-404f-9447-ba27230c4869.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 41413,
+   "uploaded_bytes": 41413,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/flowers2_base__a337370a-bc1a-437c-a85c-27c9f5063a46.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/flowers2_base__a337370a-bc1a-437c-a85c-27c9f5063a46.jpg",
+   "name": "flowers2_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/flowers2_base__a337370a-bc1a-437c-a85c-27c9f5063a46.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 25431,
+   "uploaded_bytes": 25431,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/flowers2_feature__e6a42e92-fd19-455f-9e57-0b988f64f273.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/flowers2_feature__e6a42e92-fd19-455f-9e57-0b988f64f273.jpg",
+   "name": "flowers2_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/flowers2_feature__e6a42e92-fd19-455f-9e57-0b988f64f273.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 25652,
+   "uploaded_bytes": 25652,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/flowers3_base__970ea0f5-34c4-4a5d-b2eb-0669540d48e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/flowers3_base__970ea0f5-34c4-4a5d-b2eb-0669540d48e7.jpg",
+   "name": "flowers3_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/flowers3_base__970ea0f5-34c4-4a5d-b2eb-0669540d48e7.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 30544,
+   "uploaded_bytes": 30544,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/flowers3_feature__074357b4-f344-4b75-a734-3a315bf951b0.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/flowers3_feature__074357b4-f344-4b75-a734-3a315bf951b0.jpg",
+   "name": "flowers3_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/flowers3_feature__074357b4-f344-4b75-a734-3a315bf951b0.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 31703,
+   "uploaded_bytes": 31703,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/flowers4_base__848e8524-e1c1-41d4-83ed-a58a37f3fdc9.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/flowers4_base__848e8524-e1c1-41d4-83ed-a58a37f3fdc9.jpg",
+   "name": "flowers4_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/flowers4_base__848e8524-e1c1-41d4-83ed-a58a37f3fdc9.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 32385,
+   "uploaded_bytes": 32385,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/flowers4_feature__763f2d57-9729-4036-b53f-838f811580bb.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/flowers4_feature__763f2d57-9729-4036-b53f-838f811580bb.jpg",
+   "name": "flowers4_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/flowers4_feature__763f2d57-9729-4036-b53f-838f811580bb.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 33047,
+   "uploaded_bytes": 33047,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/groundcover1_base__7ae776d3-1e14-42e9-8359-ff4a1dccb96a.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/groundcover1_base__7ae776d3-1e14-42e9-8359-ff4a1dccb96a.jpg",
+   "name": "groundcover1_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/groundcover1_base__7ae776d3-1e14-42e9-8359-ff4a1dccb96a.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 37257,
+   "uploaded_bytes": 37257,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/groundcover1_feature__5a880573-2a61-48c2-bf0c-2db2ba274245.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/groundcover1_feature__5a880573-2a61-48c2-bf0c-2db2ba274245.jpg",
+   "name": "groundcover1_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/groundcover1_feature__5a880573-2a61-48c2-bf0c-2db2ba274245.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 37319,
+   "uploaded_bytes": 37319,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/groundcover2_base__962ec7ad-2e6e-4fb1-a303-739badb85666.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/groundcover2_base__962ec7ad-2e6e-4fb1-a303-739badb85666.jpg",
+   "name": "groundcover2_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/groundcover2_base__962ec7ad-2e6e-4fb1-a303-739badb85666.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 38172,
+   "uploaded_bytes": 38172,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/groundcover2_feature__97de9d01-a72c-42b1-a560-c9fb55ad4f15.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/groundcover2_feature__97de9d01-a72c-42b1-a560-c9fb55ad4f15.jpg",
+   "name": "groundcover2_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/groundcover2_feature__97de9d01-a72c-42b1-a560-c9fb55ad4f15.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 38912,
+   "uploaded_bytes": 38912,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/groundcover3_base__cddf0a51-2f35-4eab-8d03-0ee53a9ac400.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/groundcover3_base__cddf0a51-2f35-4eab-8d03-0ee53a9ac400.jpg",
+   "name": "groundcover3_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/groundcover3_base__cddf0a51-2f35-4eab-8d03-0ee53a9ac400.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 28502,
+   "uploaded_bytes": 28502,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/groundcover3_feature__2f697f47-ed9e-4711-a974-dfe3613eca36.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/groundcover3_feature__2f697f47-ed9e-4711-a974-dfe3613eca36.jpg",
+   "name": "groundcover3_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/groundcover3_feature__2f697f47-ed9e-4711-a974-dfe3613eca36.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 27287,
+   "uploaded_bytes": 27287,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/groundcover4_base__a04409ff-f1cf-4ab7-9f34-12d728696c53.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/groundcover4_base__a04409ff-f1cf-4ab7-9f34-12d728696c53.jpg",
+   "name": "groundcover4_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/groundcover4_base__a04409ff-f1cf-4ab7-9f34-12d728696c53.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 36548,
+   "uploaded_bytes": 36548,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/groundcover4_feature__436ae92c-f7a7-4f5d-a354-d5a4629ac467.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/groundcover4_feature__436ae92c-f7a7-4f5d-a354-d5a4629ac467.jpg",
+   "name": "groundcover4_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/groundcover4_feature__436ae92c-f7a7-4f5d-a354-d5a4629ac467.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 36744,
+   "uploaded_bytes": 36744,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/seating1_base__a348a817-210a-4946-921f-6a4030767640.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/seating1_base__a348a817-210a-4946-921f-6a4030767640.jpg",
+   "name": "seating1_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/seating1_base__a348a817-210a-4946-921f-6a4030767640.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 28001,
+   "uploaded_bytes": 28001,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/seating1_feature__b37e3527-97b8-4ebe-86a8-13c077b45bf5.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/seating1_feature__b37e3527-97b8-4ebe-86a8-13c077b45bf5.jpg",
+   "name": "seating1_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/seating1_feature__b37e3527-97b8-4ebe-86a8-13c077b45bf5.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 28721,
+   "uploaded_bytes": 28721,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/seating2_base__1b959d2f-2a31-4e49-91bc-3afd38983550.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/seating2_base__1b959d2f-2a31-4e49-91bc-3afd38983550.jpg",
+   "name": "seating2_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/seating2_base__1b959d2f-2a31-4e49-91bc-3afd38983550.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 30938,
+   "uploaded_bytes": 30938,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/seating2_feature__0756ecf8-e120-4344-801c-bbac3078c1e4.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/seating2_feature__0756ecf8-e120-4344-801c-bbac3078c1e4.jpg",
+   "name": "seating2_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/seating2_feature__0756ecf8-e120-4344-801c-bbac3078c1e4.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 31339,
+   "uploaded_bytes": 31339,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/seating3_base__7c8ba591-6ed5-4f5d-b69a-893d72f94264.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/seating3_base__7c8ba591-6ed5-4f5d-b69a-893d72f94264.jpg",
+   "name": "seating3_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/seating3_base__7c8ba591-6ed5-4f5d-b69a-893d72f94264.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 33074,
+   "uploaded_bytes": 33074,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/seating3_feature__dddaed83-d5f1-43d8-830d-07eddce6fc09.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/seating3_feature__dddaed83-d5f1-43d8-830d-07eddce6fc09.jpg",
+   "name": "seating3_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/seating3_feature__dddaed83-d5f1-43d8-830d-07eddce6fc09.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 33313,
+   "uploaded_bytes": 33313,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/seating4_base__e08a6424-cc70-472e-8294-aa7ee4a1cfd5.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/seating4_base__e08a6424-cc70-472e-8294-aa7ee4a1cfd5.jpg",
+   "name": "seating4_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/seating4_base__e08a6424-cc70-472e-8294-aa7ee4a1cfd5.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 18481,
+   "uploaded_bytes": 18481,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/seating4_feature__a4c37250-ea7d-4e16-b037-54e1d0c7a1f8.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/seating4_feature__a4c37250-ea7d-4e16-b037-54e1d0c7a1f8.jpg",
+   "name": "seating4_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/seating4_feature__a4c37250-ea7d-4e16-b037-54e1d0c7a1f8.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 19185,
+   "uploaded_bytes": 19185,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/view1_base__babf3c5b-682e-468c-aefb-c05899bbb612.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/view1_base__babf3c5b-682e-468c-aefb-c05899bbb612.jpg",
+   "name": "view1_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/view1_base__babf3c5b-682e-468c-aefb-c05899bbb612.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 38299,
+   "uploaded_bytes": 38299,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/view1_feature__4b82e417-79ca-4461-94f8-238b57c55aff.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/view1_feature__4b82e417-79ca-4461-94f8-238b57c55aff.jpg",
+   "name": "view1_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/view1_feature__4b82e417-79ca-4461-94f8-238b57c55aff.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 38150,
+   "uploaded_bytes": 38150,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/view2_base__ec87a292-1e97-4ec3-a220-371ce1c0d8ba.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/view2_base__ec87a292-1e97-4ec3-a220-371ce1c0d8ba.jpg",
+   "name": "view2_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/view2_base__ec87a292-1e97-4ec3-a220-371ce1c0d8ba.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 37150,
+   "uploaded_bytes": 37150,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/view2_feature__6c531397-ecb3-4b4a-9731-4a8a2dbce9c5.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/view2_feature__6c531397-ecb3-4b4a-9731-4a8a2dbce9c5.jpg",
+   "name": "view2_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/view2_feature__6c531397-ecb3-4b4a-9731-4a8a2dbce9c5.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 35659,
+   "uploaded_bytes": 35659,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/view3_base__5db1b726-9503-421a-aec9-42a2490b3559.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/view3_base__5db1b726-9503-421a-aec9-42a2490b3559.jpg",
+   "name": "view3_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/view3_base__5db1b726-9503-421a-aec9-42a2490b3559.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 37357,
+   "uploaded_bytes": 37357,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/view3_feature__1dab8074-282a-4f97-915a-30b256a3f3a8.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/view3_feature__1dab8074-282a-4f97-915a-30b256a3f3a8.jpg",
+   "name": "view3_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/view3_feature__1dab8074-282a-4f97-915a-30b256a3f3a8.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 35474,
+   "uploaded_bytes": 35474,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/view4_base__7d456b97-3014-490a-98fc-3750d10feea6.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/view4_base__7d456b97-3014-490a-98fc-3750d10feea6.jpg",
+   "name": "view4_base.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/view4_base__7d456b97-3014-490a-98fc-3750d10feea6.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 39785,
+   "uploaded_bytes": 39785,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2019-wang-park/walkways/view4_feature__f2c7ee4e-3a59-4737-af29-2f0416020d02.jpg",
+   "url": "https://media.sp-survey.org/templates/2019-wang-park/walkways/view4_feature__f2c7ee4e-3a59-4737-af29-2f0416020d02.jpg",
+   "name": "view4_feature.jpg",
+   "type": "image",
+   "folder": "walkways",
+   "media_id": "templates/2019-wang-park/walkways/view4_feature__f2c7ee4e-3a59-4737-af29-2f0416020d02.jpg",
+   "logicalFolder": "walkways",
+   "original_bytes": 33546,
+   "uploaded_bytes": 33546,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Older Adults' Preference for Landscape Features Along Urban Park Walkways in Nanjing, China",
+  "authors": [
+   "Xinxin Wang",
+   "Susan Rodiek"
+  ],
+  "year": 2019,
+  "venue": "International Journal of Environmental Research and Public Health",
+  "doi": "10.3390/ijerph16203808",
+  "url": "https://doi.org/10.3390/ijerph16203808"
+ }
+}

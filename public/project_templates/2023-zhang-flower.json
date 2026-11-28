@@ -1,0 +1,456 @@
+{
+ "id": "2023-zhang-flower",
+ "name": "Flower Colour: Preference, Uplift and Relaxation",
+ "description": "Faithful replication of the online questionnaire in Zhang, L., Dempsey, N., & Cameron, R. W. F. (2023). Flowers – Sunshine for the soul! How does floral colour influence preference, feelings of relaxation and positive up-lift? Urban Forestry & Urban Greening 79:127795. https://doi.org/10.1016/j.ufug.2022.127795\n\nParticipants see the paper's eight photomontages of a meadow-style planting of 'daisy-like' flowers (Figure 1, labelled A–H: blue, purple, white, orange, red, pink, yellow, brown), which differ only in flower colour. They pick the plant community they like best, rank the eight from most to least uplifting and from most to least relaxing (rank 1 = 8 points down to 1; pictures left unranked score 1, as in the paper), say why after each, and answer the paper's profile questions (age band, gender, urban/suburban/rural, liking of plants and of flower gardens, gardening frequency, connection to nature).\n\nOriginal study: 670 UK adults online (SmartSurvey, August–November 2020). White compositions were liked best (26%), then blue (18%) and orange (16%); orange was most often named the most uplifting; age was the only demographic factor linked to colour preference, and people tended to find their own preferred colour the most relaxing.\n\nData: like_best = { choice, shown_order }; uplifting and relaxing = { ranking, scores (colour → 1–8), no_opinion, shown_order }; ranking[0] is the \"most uplifting/relaxing\" pick. Analyse with percentages of each colour chosen and chi-square / Fisher's exact tests against the profile variables, as in the paper.\n\nDifferences from the original study: (1) the paper's Appendix A questionnaire was not available to us, so all wording except the three quoted questions and \"Can you say why?\" is ours, and the answer options follow the paper's Table 1; (2) the paper asked separately for the most uplifting/relaxing composition and for a ranking; here the first picture in each ranking is that choice; (3) the Perceived Stress Scale questions are left out (add your own licensed copy if you need them), and nature relatedness is a single self-rating question rather than the paper's measure; (4) participants may tick \"I have no opinion\" for uplift and relaxation, since the paper reports fewer respondents for those questions.\n\nImages: Figure 1 of the open-access article (CC BY-NC-ND 4.0), cropped into the eight panels, shown with credit for non-commercial research; the template is removed if the authors object.",
+ "author": "Zhang, Dempsey & Cameron",
+ "year": "2023",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "flowers",
+  "colour",
+  "planting design",
+  "restoration",
+  "preference",
+  "source:paper",
+  "modality:scene_photo",
+  "task:choose_from_set",
+  "task:questionnaire",
+  "task:open_ended",
+  "concept:preference",
+  "concept:restoration",
+  "concept:emotion",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:United Kingdom",
+  "city:UK-wide"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1016/j.ufug.2022.127795",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T12:39:17.72+00:00",
+ "updatedAt": "2026-11-27T12:39:34.27+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I am 18 or older, live in the UK and agree to take part.",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "colours",
+    "elements": [
+     {
+      "name": "like_best",
+      "type": "custom",
+      "items": [
+       {
+        "id": "blue"
+       },
+       {
+        "id": "purple"
+       },
+       {
+        "id": "white"
+       },
+       {
+        "id": "orange"
+       },
+       {
+        "id": "red"
+       },
+       {
+        "id": "pink"
+       },
+       {
+        "id": "yellow"
+       },
+       {
+        "id": "brown"
+       }
+      ],
+      "title": "Which of these following plant communities do you like best?",
+      "isRequired": true,
+      "description": "Value { choice: colour, shown_order: [...] }. Colours: blue, purple, white, orange, red, pink, yellow, brown."
+     },
+     {
+      "name": "like_best_why",
+      "type": "comment",
+      "title": "Can you say why?",
+      "isRequired": false
+     },
+     {
+      "name": "uplifting",
+      "type": "custom",
+      "title": "Which plant community do you find the most uplifting? Rank them from most to least uplifting.",
+      "isRequired": true,
+      "description": "Value { ranking: [colours from rank 1 down], scores: { colour: 8 for rank 1 … ; colours left unranked get 1, as in the paper }, no_opinion: bool, shown_order: [...] }. Colours: blue, purple, white, orange, red, pink, yellow, brown. ranking[0] is the participant's 'most' choice."
+     },
+     {
+      "name": "uplifting_why",
+      "type": "comment",
+      "title": "Can you say why?",
+      "isRequired": false
+     },
+     {
+      "name": "relaxing",
+      "type": "custom",
+      "title": "Which plant community do you find the most relaxing? Rank them from most to least relaxing.",
+      "isRequired": true,
+      "description": "Value { ranking: [colours from rank 1 down], scores: { colour: 8 for rank 1 … ; colours left unranked get 1, as in the paper }, no_opinion: bool, shown_order: [...] }. Colours: blue, purple, white, orange, red, pink, yellow, brown. ranking[0] is the participant's 'most' choice."
+     },
+     {
+      "name": "relaxing_why",
+      "type": "comment",
+      "title": "Can you say why?",
+      "isRequired": false
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "name": "age",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "18–24",
+        "value": 1
+       },
+       {
+        "text": "25–34",
+        "value": 2
+       },
+       {
+        "text": "35–44",
+        "value": 3
+       },
+       {
+        "text": "45–54",
+        "value": 4
+       },
+       {
+        "text": "55–64",
+        "value": 5
+       },
+       {
+        "text": "65 +",
+        "value": 6
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Male",
+        "value": 1
+       },
+       {
+        "text": "Female",
+        "value": 2
+       },
+       {
+        "text": "Non-binary / third gender",
+        "value": 3
+       },
+       {
+        "text": "I prefer not to say",
+        "value": 4
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "living_environment",
+      "type": "radiogroup",
+      "title": "Where do you live?",
+      "choices": [
+       {
+        "text": "Urban",
+        "value": 1
+       },
+       {
+        "text": "Suburban",
+        "value": 2
+       },
+       {
+        "text": "Rural",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "like_plants",
+      "type": "radiogroup",
+      "title": "How much do you like plants?",
+      "choices": [
+       {
+        "text": "Like very much",
+        "value": 1
+       },
+       {
+        "text": "Like",
+        "value": 2
+       },
+       {
+        "text": "Neither like nor dislike",
+        "value": 3
+       },
+       {
+        "text": "Not very much",
+        "value": 4
+       },
+       {
+        "text": "Not at all",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "like_flower_gardens",
+      "type": "radiogroup",
+      "title": "How much do you like flower gardens?",
+      "choices": [
+       {
+        "text": "Like very much",
+        "value": 1
+       },
+       {
+        "text": "Like",
+        "value": 2
+       },
+       {
+        "text": "Neither like nor dislike",
+        "value": 3
+       },
+       {
+        "text": "Not very much",
+        "value": 4
+       },
+       {
+        "text": "Not at all",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "gardening_frequency",
+      "type": "radiogroup",
+      "title": "How often do you garden?",
+      "choices": [
+       {
+        "text": "Rarely / never",
+        "value": 1
+       },
+       {
+        "text": "2–3 times a month",
+        "value": 2
+       },
+       {
+        "text": "Once a week",
+        "value": 3
+       },
+       {
+        "text": "2–3 times a week",
+        "value": 4
+       },
+       {
+        "text": "Daily",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "nature_relatedness",
+      "type": "radiogroup",
+      "title": "How strongly do you feel connected to nature?",
+      "choices": [
+       {
+        "text": "Very low",
+        "value": 1
+       },
+       {
+        "text": "Low",
+        "value": 2
+       },
+       {
+        "text": "Moderate",
+        "value": 3
+       },
+       {
+        "text": "High",
+        "value": 4
+       },
+       {
+        "text": "Very high",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Flower Colour: Preference, Uplift and Relaxation",
+  "locale": "en",
+  "spSite": {
+   "id": "site-df147827b8ab44bd",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Flower Colour Survey</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Flower Colour: Preference, Uplift and Relaxation\",\n  \"description\": \"Faithful replication of the online flower-colour questionnaire in Zhang, Dempsey & Cameron (2023), Urban Forestry & Urban Greening 79:127795, with the paper's eight photomontages of 'daisy-like' flower communities (Figure 1: blue, purple, white, orange, red, pink, yellow, brown). Participants pick the composition they like best, rank the eight from most to least uplifting and from most to least relaxing, say why, and answer the paper's profile questions.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"flowers\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"boolean\",\n      \"name\": \"consent\",\n      \"title\": \"I am 18 or older, live in the UK and agree to take part.\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"colours\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"like_best\",\n      \"title\": \"Which of these following plant communities do you like best?\",\n      \"isRequired\": true,\n      \"description\": \"Value { choice: colour, shown_order: [...] }. Colours: blue, purple, white, orange, red, pink, yellow, brown.\",\n      \"items\": [\n       {\n        \"id\": \"blue\"\n       },\n       {\n        \"id\": \"purple\"\n       },\n       {\n        \"id\": \"white\"\n       },\n       {\n        \"id\": \"orange\"\n       },\n       {\n        \"id\": \"red\"\n       },\n       {\n        \"id\": \"pink\"\n       },\n       {\n        \"id\": \"yellow\"\n       },\n       {\n        \"id\": \"brown\"\n       }\n      ]\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"like_best_why\",\n      \"title\": \"Can you say why?\",\n      \"isRequired\": false\n     },\n     {\n      \"type\": \"custom\",\n      \"name\": \"uplifting\",\n      \"title\": \"Which plant community do you find the most uplifting? Rank them from most to least uplifting.\",\n      \"isRequired\": true,\n      \"description\": \"Value { ranking: [colours from rank 1 down], scores: { colour: 8 for rank 1 … ; colours left unranked get 1, as in the paper }, no_opinion: bool, shown_order: [...] }. Colours: blue, purple, white, orange, red, pink, yellow, brown. ranking[0] is the participant's 'most' choice.\"\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"uplifting_why\",\n      \"title\": \"Can you say why?\",\n      \"isRequired\": false\n     },\n     {\n      \"type\": \"custom\",\n      \"name\": \"relaxing\",\n      \"title\": \"Which plant community do you find the most relaxing? Rank them from most to least relaxing.\",\n      \"isRequired\": true,\n      \"description\": \"Value { ranking: [colours from rank 1 down], scores: { colour: 8 for rank 1 … ; colours left unranked get 1, as in the paper }, no_opinion: bool, shown_order: [...] }. Colours: blue, purple, white, orange, red, pink, yellow, brown. ranking[0] is the participant's 'most' choice.\"\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"relaxing_why\",\n      \"title\": \"Can you say why?\",\n      \"isRequired\": false\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"18–24\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"25–34\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"35–44\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"45–54\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"55–64\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"65 +\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Non-binary / third gender\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"I prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"living_environment\",\n      \"title\": \"Where do you live?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Urban\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Suburban\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Rural\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"like_plants\",\n      \"title\": \"How much do you like plants?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Like very much\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Like\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Neither like nor dislike\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Not very much\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Not at all\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"like_flower_gardens\",\n      \"title\": \"How much do you like flower gardens?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Like very much\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Like\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Neither like nor dislike\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Not very much\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Not at all\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gardening_frequency\",\n      \"title\": \"How often do you garden?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Rarely / never\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2–3 times a month\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Once a week\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"2–3 times a week\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Daily\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"nature_relatedness\",\n      \"title\": \"How strongly do you feel connected to nature?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Very low\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Low\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Moderate\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"High\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Very high\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f3f4ef;--card:#fff;--ink:#1d2119;--muted:#5c6356;--accent:#4a6b2f;--accent-ink:#fff;--line:#d8dbd2;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:860px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.3rem;margin:0 0 10px}\np{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.sec{background:transparent;color:var(--accent);border:1px solid var(--line)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q>b{display:block;margin-bottom:4px}.opt-note{font-weight:400;color:var(--muted);font-size:.85rem}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer;background:var(--card)}\ntextarea{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%;min-height:70px;background:#fff;color:var(--ink)}\n.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}\n.tile{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:none;cursor:pointer;overflow:hidden;display:block}\n.tile img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}\n.tile .lt{position:absolute;left:6px;top:6px;background:#fff;color:#000;font-weight:700;font-size:.85rem;padding:0 7px;border-radius:5px}\n.tile .rk{position:absolute;right:6px;top:6px;background:var(--accent);color:#fff;font-weight:700;min-width:28px;height:28px;border-radius:14px;display:flex;align-items:center;justify-content:center}\n.tile.sel{border-color:var(--accent)}\n.tile.sel img{opacity:.85}\n.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:860px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n@media (max-width:620px){.grid{grid-template-columns:repeat(2,1fr)}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Images: Zhang, Dempsey &amp; Cameron (2023), Urban Forestry &amp; Urban Greening 79:127795, doi:10.1016/j.ufug.2022.127795, Figure 1 (CC BY-NC-ND 4.0). Used with credit for non-commercial research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='flowercolour2023:', COLS=['blue','purple','white','orange','red','pink','yellow','brown'], LET='ABCDEFGH';\n  var app=document.getElementById('app'), Q={}, files={}, ans={}, SPEC=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='visible';}}\n  function hideErr(){var e=app.querySelector('.err');if(e)e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function q(n){return Q[n]||{};}\n  function shown(){return COLS.map(function(c){return files[c+'.jpg'].name;});}\n  function saveAll(l,b,cb){Promise.all(l.map(function(a){return SPSite.answer(a[0],a[1],a[2]);})).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}cb();});}\n  function page(html,btn,cb,extra){\n    app.innerHTML=html+'<div class=\"row\" style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">'+esc(btn||'Continue')+'</button>'+(extra||'')+'</div><div class=\"err\"></div>';\n    document.getElementById('go').onclick=cb;\n    app.onchange=hideErr;\n  }\n  function tiles(){return '<div class=\"grid\">'+COLS.map(function(c,i){return '<button type=\"button\" class=\"tile\" data-c=\"'+c+'\" aria-label=\"Plant community '+LET[i]+'\"><img alt=\"Plant community '+LET[i]+'\" src=\"'+esc(files[c+'.jpg'].url)+'\"><span class=\"lt\">'+LET[i]+'</span></button>';}).join('')+'</div>';}\n  function why(name){return '<div class=\"q\"><b>'+esc(q(name).title)+' <span class=\"opt-note\">(optional)</span></b><textarea name=\"'+name+'\"></textarea></div>';}\n  function whyVal(name){var t=app.querySelector('textarea[name='+name+']');var s=t?t.value.trim():'';return s?[[name,s]]:[];}\n  function next(){\n    window.scrollTo(0,0);\n    if(!ans.intro)return intro();\n    if(!ans.like)return like();\n    if(!ans.up)return rank('uplifting','uplifting','up');\n    if(!ans.rel)return rank('relaxing','relaxing','rel');\n    if(!ans.about)return about();\n    finish();\n  }\n  function intro(){\n    if(COLS.some(function(c){return !files[c+'.jpg'];})){app.innerHTML='<h1>Pictures missing</h1><p>Media folder flowers must hold blue.jpg, purple.jpg, white.jpg, orange.jpg, red.jpg, pink.jpg, yellow.jpg and brown.jpg.</p>';return;}\n    page('<h1>Flower colour and how it makes you feel</h1><p>This short survey asks which flower colours you prefer and which you find uplifting or relaxing. You will see eight pictures of the same kind of planting, a meadow of daisy-like flowers, which differ only in flower colour. It takes about 5 minutes. Your answers are anonymous and you can stop at any time.</p>'+\n      '<div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(q('consent').title)+'</label></div>','Start',function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var b=this;b.disabled=true;saveAll([['consent',true]],b,function(){ans.intro=true;save('a',ans);next();});\n    });\n  }\n  function like(){\n    var pick=null;\n    page('<div class=\"card\"><h1>'+esc(q('like_best').title)+'</h1><p>Tap one picture.</p>'+tiles()+why('like_best_why')+'</div>','Continue',function(){\n      if(!pick)return err('Please tap the plant community you like best.');\n      var b=this;b.disabled=true;\n      saveAll([['like_best',{choice:pick,shown_order:COLS.slice()},{shown:shown()}]].concat(whyVal('like_best_why')),b,function(){ans.like=true;save('a',ans);next();});\n    });\n    [].forEach.call(app.querySelectorAll('.tile'),function(t){t.onclick=function(){pick=t.dataset.c;hideErr();[].forEach.call(app.querySelectorAll('.tile'),function(x){x.classList.toggle('sel',x===t);});};});\n  }\n  function rank(name,word,flag){\n    var order=[];\n    function paint(){[].forEach.call(app.querySelectorAll('.tile'),function(t){var i=order.indexOf(t.dataset.c),r=t.querySelector('.rk');t.classList.toggle('sel',i>=0);if(i>=0){if(!r){r=document.createElement('span');r.className='rk';t.appendChild(r);}r.textContent=i+1;}else if(r)r.remove();});\n      document.getElementById('undo').disabled=!order.length;}\n    page('<div class=\"card\"><h1>'+esc(q(name).title)+'</h1><p>Tap the pictures in order, starting with the most '+word+' (1). You can stop before the end; any picture you leave out counts as least '+word+'.</p>'+tiles()+\n      '<label class=\"opt\"><input type=\"checkbox\" id=\"none\"> I have no opinion on this</label>'+why(name+'_why')+'</div>','Continue',function(){\n      var none=document.getElementById('none').checked;\n      if(!none&&!order.length)return err('Please tap at least the most '+word+' picture, or tick \"I have no opinion\".');\n      var sc=null;if(!none){sc={};COLS.forEach(function(c){var i=order.indexOf(c);sc[c]=i>=0?8-i:1;});}\n      var b=this;b.disabled=true;\n      saveAll([[name,{ranking:none?[]:order.slice(),scores:sc,no_opinion:none,shown_order:COLS.slice()},{shown:shown()}]].concat(whyVal(name+'_why')),b,function(){ans[flag]=true;save('a',ans);next();});\n    },'<button class=\"btn sec\" id=\"undo\" type=\"button\">Undo</button>');\n    [].forEach.call(app.querySelectorAll('.tile'),function(t){t.onclick=function(){hideErr();if(document.getElementById('none').checked)return;if(order.indexOf(t.dataset.c)<0){order.push(t.dataset.c);paint();}};});\n    document.getElementById('undo').onclick=function(){order.pop();paint();};\n    document.getElementById('none').addEventListener('change',function(){if(this.checked){order=[];paint();}});\n    paint();\n  }\n  function field(name){var d=q(name);return '<div class=\"q\"><b>'+esc(d.title)+'</b>'+(d.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function about(){\n    var ns=SPEC.pages.filter(function(p){return p.name==='about';})[0].elements.map(function(e){return e.name;});\n    page('<h1>About you</h1><div class=\"card\">'+ns.map(field).join('')+'</div>','Finish',function(){\n      var l=[];for(var i=0;i<ns.length;i++){var x=app.querySelector('input[name=\"'+ns[i]+'\"]:checked');if(!x)return err('Please answer: '+q(ns[i]).title);l.push([ns[i],Number(x.value)]);}\n      var b=this;b.disabled=true;saveAll(l,b,function(){ans.about=true;save('a',ans);next();});\n    });\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>The eight pictures showed the same kind of daisy-like planting in eight flower colours. In the original UK study with 670 adults, white compositions were liked best, followed by blue and orange; orange was most often chosen as the most uplifting colour. People also tended to find their own favourite colour the most relaxing.</p><p style=\"font-size:.82rem\">Images and questions: Zhang, L., Dempsey, N., &amp; Cameron, R. W. F. (2023). Flowers – Sunshine for the soul! How does floral colour influence preference, feelings of relaxation and positive up-lift? Urban Forestry &amp; Urban Greening 79:127795, doi:10.1016/j.ufug.2022.127795.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){\n      if(x==='consent')ans.intro=false;else if(x==='like_best')ans.like=false;else if(x==='uplifting')ans.up=false;else if(x==='relaxing')ans.rel=false;else ans.about=false;});save('a',ans);next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    try{SPEC=JSON.parse(document.getElementById('sp-scheme').textContent).survey;}catch(e){SPEC={pages:[]};}\n    SPEC.pages.forEach(function(p){p.elements.forEach(function(e){var g=SPSite.getQuestion(e.name)||{};Q[e.name]={type:e.type,title:g.title||e.title,isRequired:e.isRequired,choices:(g.choices&&g.choices.length)?g.choices:e.choices};});});\n    (SPSite.getMedia('flowers')||[]).forEach(function(f){files[f.name]=f;});\n    var a=(ctx&&ctx.answers)||{};ans=load('a')||{};\n    ans.intro=a.consent===true;ans.like=a.like_best!=null;ans.up=a.uplifting!=null;ans.rel=a.relaxing!=null;ans.about=a.nature_relatedness!=null;\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T12:38:48.550Z",
+   "mediaFolders": [
+    "flowers"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T12:38:48.550Z"
+  },
+  "description": "Faithful replication of the online flower-colour questionnaire in Zhang, Dempsey & Cameron (2023), Urban Forestry & Urban Greening 79:127795, with the paper's eight photomontages of 'daisy-like' flower communities (Figure 1: blue, purple, white, orange, red, pink, yellow, brown). Participants pick the composition they like best, rank the eight from most to least uplifting and from most to least relaxing, say why, and answer the paper's profile questions.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2023-zhang-flower/flowers/blue__19e1dece-71ad-48cd-b57f-67c1d6900e5d.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-zhang-flower/flowers/blue__19e1dece-71ad-48cd-b57f-67c1d6900e5d.jpg",
+   "name": "blue.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2023-zhang-flower/flowers/blue__19e1dece-71ad-48cd-b57f-67c1d6900e5d.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 83230,
+   "uploaded_bytes": 83230,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-zhang-flower/flowers/brown__e27f02f9-0062-42fe-a2b6-0df71efd3436.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-zhang-flower/flowers/brown__e27f02f9-0062-42fe-a2b6-0df71efd3436.jpg",
+   "name": "brown.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2023-zhang-flower/flowers/brown__e27f02f9-0062-42fe-a2b6-0df71efd3436.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 67398,
+   "uploaded_bytes": 67398,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-zhang-flower/flowers/orange__344f1c09-dbc6-493a-a985-84f820fdbfef.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-zhang-flower/flowers/orange__344f1c09-dbc6-493a-a985-84f820fdbfef.jpg",
+   "name": "orange.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2023-zhang-flower/flowers/orange__344f1c09-dbc6-493a-a985-84f820fdbfef.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 85692,
+   "uploaded_bytes": 85692,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-zhang-flower/flowers/pink__7918027b-5a35-4e09-b1bd-ff998ed35f72.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-zhang-flower/flowers/pink__7918027b-5a35-4e09-b1bd-ff998ed35f72.jpg",
+   "name": "pink.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2023-zhang-flower/flowers/pink__7918027b-5a35-4e09-b1bd-ff998ed35f72.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 83590,
+   "uploaded_bytes": 83590,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-zhang-flower/flowers/purple__42cde319-2618-43db-8cba-ee78734374ca.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-zhang-flower/flowers/purple__42cde319-2618-43db-8cba-ee78734374ca.jpg",
+   "name": "purple.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2023-zhang-flower/flowers/purple__42cde319-2618-43db-8cba-ee78734374ca.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 70377,
+   "uploaded_bytes": 70377,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-zhang-flower/flowers/red__460513fe-8493-40cf-9488-e1889e0c11cf.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-zhang-flower/flowers/red__460513fe-8493-40cf-9488-e1889e0c11cf.jpg",
+   "name": "red.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2023-zhang-flower/flowers/red__460513fe-8493-40cf-9488-e1889e0c11cf.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 82330,
+   "uploaded_bytes": 82330,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-zhang-flower/flowers/white__bc9924c7-8920-47a8-98f8-720ef91eb4fc.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-zhang-flower/flowers/white__bc9924c7-8920-47a8-98f8-720ef91eb4fc.jpg",
+   "name": "white.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2023-zhang-flower/flowers/white__bc9924c7-8920-47a8-98f8-720ef91eb4fc.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 89796,
+   "uploaded_bytes": 89796,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-zhang-flower/flowers/yellow__ac366b4d-93a9-4db4-84a6-6cb8137cde57.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-zhang-flower/flowers/yellow__ac366b4d-93a9-4db4-84a6-6cb8137cde57.jpg",
+   "name": "yellow.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2023-zhang-flower/flowers/yellow__ac366b4d-93a9-4db4-84a6-6cb8137cde57.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 84849,
+   "uploaded_bytes": 84849,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Flowers – Sunshine for the soul! How does floral colour influence preference, feelings of relaxation and positive up-lift?",
+  "authors": [
+   "Liwen Zhang",
+   "Nicola Dempsey",
+   "Ross W. F. Cameron"
+  ],
+  "year": 2023,
+  "venue": "Urban Forestry & Urban Greening",
+  "doi": "10.1016/j.ufug.2022.127795",
+  "url": "https://doi.org/10.1016/j.ufug.2022.127795"
+ }
+}

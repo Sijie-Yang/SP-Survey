@@ -1,0 +1,982 @@
+{
+ "id": "2026-wei-curved",
+ "name": "Curved and Angular Interiors Rating",
+ "description": "Faithful replication with the original images: 56 rendered interiors from a neuroarchitecture study of curved versus angular form. Seven abstract spatial scenarios (two thresholds A1-A2, two corridors B1-B2, three seating spaces C1-C3) are each rendered in eight versions: background geometry (angular / curved) x foreground figure geometry (angular / curved) x colour (orange figures on a white background / white figures on an orange background). Participants see all 56 images in random order, self-paced, and for each one rate seven qualities on a 1-5 scale (liking, beauty, curvature, angularity, fascination, coherence, hominess), tick the emotions they feel from eight words (interested, excited, uplifted, alert, stressed, irritable, confused, afraid), estimate how many minutes they would comfortably stay there (0-200), judge whether the space is more likely public or private, and click the cell of a 3 x 3 grid over the image where their eyes were drawn (optional). Age and gender are asked at the end. Rebuilt from Wei, Chuquichambi, Damiano, Bruce & Walther (2026), A design-integrated framework for neuroarchitectural research, Frontiers in Psychology 17: 1666480 (Phase 1 image survey), with the images cropped from its Figure 2 (CC BY 4.0). Image ids: scenario_colour_geometry, e.g. A1_W_ac = threshold 1, white background, angular background with a curved foreground figure (first letter background, second foreground, a = angular, c = curved; W = white background, O = orange background). Analysis as in the paper: compare the ratings across background geometry, foreground geometry and colour (within-participant factorial, e.g. mixed models with participant as random effect) and check agreement on the curvature and angularity ratings; the paper reports that the intended curved/angular distinctions were clearly perceived with high agreement between participants, and that foreground geometry influenced several evaluative ratings more than background geometry (foreground-sensitive preferences for curvature). Differences from the original study: (1) the paper names the rated qualities, the 1-5 scale, the 0-200 minute range, the public/private choice and the 3 x 3 grid but does not print the question wording or scale labels, so all question stems and anchors (1 = not at all, 5 = very much) are ours; (2) the emotion list is adapted from PANAS in the paper but not printed; the eight words are the ones found in the authors' shared data (OSF), their order is ours; (3) the age and gender questions are ours; (4) the images are the figure copies (about 300 px), not the full-size renders; (5) the paper's later phases (3D-printed prototype, full-scale installation, VR and biosensors) are not included.",
+ "author": "Wei, Chuquichambi, Damiano, Bruce & Walther",
+ "year": "2026",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "architecture",
+  "interior",
+  "curvature",
+  "neuroarchitecture",
+  "rendered",
+  "source:paper",
+  "modality:rendered",
+  "task:multi_rating",
+  "task:questionnaire",
+  "concept:preference",
+  "concept:beauty",
+  "concept:aesthetics",
+  "concept:emotion",
+  "concept:complexity",
+  "sample:lt100"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3389/fpsyg.2026.1666480",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T21:25:31.624+00:00",
+ "updatedAt": "2026-11-27T21:25:51.902+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "images",
+    "elements": [
+     {
+      "name": "ratings",
+      "rows": [
+       {
+        "text": "How much do you like this space?",
+        "value": "like"
+       },
+       {
+        "text": "How beautiful is this space?",
+        "value": "beauty"
+       },
+       {
+        "text": "How curvy is this space?",
+        "value": "curvy"
+       },
+       {
+        "text": "How angular is this space?",
+        "value": "angular"
+       },
+       {
+        "text": "How fascinating is this space?",
+        "value": "fascination"
+       },
+       {
+        "text": "How coherent (well organised, easy to make sense of) is this space?",
+        "value": "coherence"
+       },
+       {
+        "text": "How homey is this space (could it feel like home)?",
+        "value": "hominess"
+       }
+      ],
+      "type": "matrix",
+      "title": "Rate this space",
+      "columns": [
+       {
+        "text": "1",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "1 = not at all, 5 = very much. Keyed by image id."
+     },
+     {
+      "name": "emotions",
+      "type": "checkbox",
+      "title": "Which emotions do you feel looking at this space? Tick all that apply.",
+      "choices": [
+       {
+        "text": "Interested",
+        "value": "Interested"
+       },
+       {
+        "text": "Excited",
+        "value": "Excited"
+       },
+       {
+        "text": "Uplifted",
+        "value": "Uplifted"
+       },
+       {
+        "text": "Alert",
+        "value": "Alert"
+       },
+       {
+        "text": "Stressed",
+        "value": "Stressed"
+       },
+       {
+        "text": "Irritable",
+        "value": "Irritable"
+       },
+       {
+        "text": "Confused",
+        "value": "Confused"
+       },
+       {
+        "text": "Afraid",
+        "value": "Afraid"
+       }
+      ],
+      "isRequired": true,
+      "description": "Keyed by image id."
+     },
+     {
+      "max": 200,
+      "min": 0,
+      "name": "time",
+      "type": "text",
+      "title": "How many minutes could you comfortably stay in this space? (0-200)",
+      "inputType": "number",
+      "isRequired": true,
+      "description": "Minutes, keyed by image id."
+     },
+     {
+      "name": "privateness",
+      "type": "radiogroup",
+      "title": "Is this space more likely to be public or private?",
+      "choices": [
+       {
+        "text": "Public",
+        "value": "Public"
+       },
+       {
+        "text": "Private",
+        "value": "Private"
+       }
+      ],
+      "isRequired": true,
+      "description": "Keyed by image id."
+     },
+     {
+      "name": "grid",
+      "type": "radiogroup",
+      "title": "Where were your eyes drawn? Click a cell of the 3 x 3 grid on the image (optional).",
+      "choices": [
+       {
+        "text": "1",
+        "value": "1"
+       },
+       {
+        "text": "2",
+        "value": "2"
+       },
+       {
+        "text": "3",
+        "value": "3"
+       },
+       {
+        "text": "4",
+        "value": "4"
+       },
+       {
+        "text": "5",
+        "value": "5"
+       },
+       {
+        "text": "6",
+        "value": "6"
+       },
+       {
+        "text": "7",
+        "value": "7"
+       },
+       {
+        "text": "8",
+        "value": "8"
+       },
+       {
+        "text": "9",
+        "value": "9"
+       }
+      ],
+      "isRequired": false,
+      "description": "Cells numbered 1-9 left to right, top to bottom. Keyed by image id."
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "max": 110,
+      "min": 16,
+      "name": "age",
+      "type": "text",
+      "title": "How old are you?",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Curved and Angular Interiors Rating",
+  "locale": "en",
+  "spSite": {
+   "id": "site-6a4339533686334b",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Curved and Angular Interiors</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Curved and Angular Interiors Rating\",\n  \"description\": \"Faithful replication with the original images: 56 rendered interiors from a neuroarchitecture study of curved versus angular form. Seven abstract spatial scenarios (two thresholds A1-A2, two corridors B1-B2, three seating spaces C1-C3) are each rendered in eight versions: background geometry (angular / curved) x foreground figure geometry (angular / curved) x colour (orange figures on a white background / white figures on an orange background). Participants see all 56 images in random order, self-paced, and for each one rate seven qualities on a 1-5 scale (liking, beauty, curvature, angularity, fascination, coherence, hominess), tick the emotions they feel from eight words (interested, excited, uplifted, alert, stressed, irritable, confused, afraid), estimate how many minutes they would comfortably stay there (0-200), judge whether the space is more likely public or private, and click the cell of a 3 x 3 grid over the image where their eyes were drawn (optional). Age and gender are asked at the end. Rebuilt from Wei, Chuquichambi, Damiano, Bruce & Walther (2026), A design-integrated framework for neuroarchitectural research, Frontiers in Psychology 17: 1666480 (Phase 1 image survey), with the images cropped from its Figure 2 (CC BY 4.0). Image ids: scenario_colour_geometry, e.g. A1_W_ac = threshold 1, white background, angular background with a curved foreground figure (first letter background, second foreground, a = angular, c = curved; W = white background, O = orange background). Analysis as in the paper: compare the ratings across background geometry, foreground geometry and colour (within-participant factorial, e.g. mixed models with participant as random effect) and check agreement on the curvature and angularity ratings; the paper reports that the intended curved/angular distinctions were clearly perceived with high agreement between participants, and that foreground geometry influenced several evaluative ratings more than background geometry (foreground-sensitive preferences for curvature). Differences from the original study: (1) the paper names the rated qualities, the 1-5 scale, the 0-200 minute range, the public/private choice and the 3 x 3 grid but does not print the question wording or scale labels, so all question stems and anchors (1 = not at all, 5 = very much) are ours; (2) the emotion list is adapted from PANAS in the paper but not printed; the eight words are the ones found in the authors' shared data (OSF), their order is ours; (3) the age and gender questions are ours; (4) the images are the figure copies (about 300 px), not the full-size renders; (5) the paper's later phases (3D-printed prototype, full-scale installation, VR and biosensors) are not included.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"spaces\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"images\",\n    \"elements\": [\n     {\n      \"type\": \"matrix\",\n      \"name\": \"ratings\",\n      \"title\": \"Rate this space\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"like\",\n        \"text\": \"How much do you like this space?\"\n       },\n       {\n        \"value\": \"beauty\",\n        \"text\": \"How beautiful is this space?\"\n       },\n       {\n        \"value\": \"curvy\",\n        \"text\": \"How curvy is this space?\"\n       },\n       {\n        \"value\": \"angular\",\n        \"text\": \"How angular is this space?\"\n       },\n       {\n        \"value\": \"fascination\",\n        \"text\": \"How fascinating is this space?\"\n       },\n       {\n        \"value\": \"coherence\",\n        \"text\": \"How coherent (well organised, easy to make sense of) is this space?\"\n       },\n       {\n        \"value\": \"hominess\",\n        \"text\": \"How homey is this space (could it feel like home)?\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       }\n      ],\n      \"description\": \"1 = not at all, 5 = very much. Keyed by image id.\"\n     },\n     {\n      \"type\": \"checkbox\",\n      \"name\": \"emotions\",\n      \"title\": \"Which emotions do you feel looking at this space? Tick all that apply.\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"Interested\",\n        \"text\": \"Interested\"\n       },\n       {\n        \"value\": \"Excited\",\n        \"text\": \"Excited\"\n       },\n       {\n        \"value\": \"Uplifted\",\n        \"text\": \"Uplifted\"\n       },\n       {\n        \"value\": \"Alert\",\n        \"text\": \"Alert\"\n       },\n       {\n        \"value\": \"Stressed\",\n        \"text\": \"Stressed\"\n       },\n       {\n        \"value\": \"Irritable\",\n        \"text\": \"Irritable\"\n       },\n       {\n        \"value\": \"Confused\",\n        \"text\": \"Confused\"\n       },\n       {\n        \"value\": \"Afraid\",\n        \"text\": \"Afraid\"\n       }\n      ],\n      \"description\": \"Keyed by image id.\"\n     },\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"time\",\n      \"title\": \"How many minutes could you comfortably stay in this space? (0-200)\",\n      \"isRequired\": true,\n      \"min\": 0,\n      \"max\": 200,\n      \"description\": \"Minutes, keyed by image id.\"\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"privateness\",\n      \"title\": \"Is this space more likely to be public or private?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"Public\",\n        \"text\": \"Public\"\n       },\n       {\n        \"value\": \"Private\",\n        \"text\": \"Private\"\n       }\n      ],\n      \"description\": \"Keyed by image id.\"\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"grid\",\n      \"title\": \"Where were your eyes drawn? Click a cell of the 3 x 3 grid on the image (optional).\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": \"1\",\n        \"text\": \"1\"\n       },\n       {\n        \"value\": \"2\",\n        \"text\": \"2\"\n       },\n       {\n        \"value\": \"3\",\n        \"text\": \"3\"\n       },\n       {\n        \"value\": \"4\",\n        \"text\": \"4\"\n       },\n       {\n        \"value\": \"5\",\n        \"text\": \"5\"\n       },\n       {\n        \"value\": \"6\",\n        \"text\": \"6\"\n       },\n       {\n        \"value\": \"7\",\n        \"text\": \"7\"\n       },\n       {\n        \"value\": \"8\",\n        \"text\": \"8\"\n       },\n       {\n        \"value\": \"9\",\n        \"text\": \"9\"\n       }\n      ],\n      \"description\": \"Cells numbered 1-9 left to right, top to bottom. Keyed by image id.\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"min\": 16,\n      \"max\": 110\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"curved-interiors-original\">{\"source\": \"Wei, Chuquichambi, Damiano, Bruce & Walther (2026) Frontiers in Psychology 17: 1666480\", \"osf\": \"https://osf.io/b42dc\", \"n_osf_data\": 30, \"design\": \"within participants, 7 scenarios x background (angular/curved) x foreground (angular/curved) x colour (white/orange background) = 56 images, randomized order, Qualtrics\", \"results\": \"curved/angular distinctions perceptually salient with substantial inter-participant agreement; foreground geometry had stronger influence on several evaluative dimensions\"}</script>\n<style>\n:root{--bg:#f4f1ee;--card:#fff;--ink:#221d1a;--muted:#655c55;--accent:#c4501b;--line:#e1d9d2;--warn:#b3261e;--sel:#fbe7dc}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:760px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.5rem;margin:0 0 8px}h2{font-size:1.15rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:13px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.prog{font-size:.88rem;color:var(--muted);margin-bottom:8px}\n.bar{height:4px;background:var(--line);border-radius:2px;margin-bottom:12px}.bar i{display:block;height:100%;background:var(--accent);border-radius:2px}\n.pic{position:relative;width:min(100%,440px);aspect-ratio:1;margin:0 auto}\n.pic img{width:100%;height:100%;display:block;border-radius:8px;object-fit:cover}\n.grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr)}\n.grid button{background:transparent;border:1px solid rgba(255,255,255,.55);outline:1px solid rgba(0,0,0,.15);cursor:crosshair;padding:0;font:inherit;color:transparent}\n.grid button.on{background:rgba(196,80,27,.35);border:3px solid #fff;color:#fff;font-weight:700}\n.hint{text-align:center;font-size:.85rem;color:var(--muted);margin-top:6px}\n.qt{font-weight:600;margin:0 0 6px}\n.it{padding:8px 0;border-top:1px solid var(--line)}\n.it:first-of-type{border-top:0}\n.it .l{font-size:.95rem;margin-bottom:4px}\n.it .o{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}\n.it label{display:flex;flex-direction:column;align-items:center;border:1px solid var(--line);border-radius:8px;padding:3px 0;cursor:pointer;font-size:.85rem;color:var(--muted)}\n.it label:has(input:checked){background:var(--sel);border-color:var(--accent);color:var(--ink)}\n.it input{margin:0 0 1px}\n.an{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-top:2px}\n.miss{outline:2px solid var(--warn);outline-offset:3px;border-radius:8px}\n.chips{display:flex;flex-wrap:wrap;gap:6px}\n.chips label,.pp label{display:flex;gap:6px;align-items:center;padding:7px 12px;border:1px solid var(--line);border-radius:999px;cursor:pointer;font-size:.95rem}\n.chips label:has(input:checked),.pp label:has(input:checked){background:var(--sel);border-color:var(--accent)}\n.pp{display:flex;gap:8px}\n.sec{margin-top:16px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:110px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:760px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Images: Wei, Chuquichambi, Damiano, Bruce &amp; Walther (2026), Frontiers in Psychology 17: 1666480, Figure 2 (doi:10.3389/fpsyg.2026.1666480, CC BY 4.0).</footer>\n<script>\n(function(){\n  var KEY='curved-interiors:state';\n  var SC=['A1','A2','B1','B2','C1','C2','C3'],COL=['W','O'],GEO=['aa','ac','ca','cc'],IDS=[];\n  SC.forEach(function(s){COL.forEach(function(c){GEO.forEach(function(g){IDS.push(s+'_'+c+'_'+g);});});});\n  var app=document.getElementById('app'), Q={}, files={}, st=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function send(list,b,next){if(b)b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}next();});}\n  function val(name){var x=app.querySelector('input[name=\"'+name+'\"]:checked');return x?x.value:null;}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function fresh(){return {step:'intro',order:shuffle(IDS),k:0};}\n  function intro(){\n    app.innerHTML='<h1>Abstract interior spaces</h1><p>You will see '+IDS.length+' computer-rendered interior spaces, one at a time, in random order. For each space, imagine being inside it and answer a few short questions: seven ratings, the emotions you feel, how long you could comfortably stay, whether it seems public or private, and where your eyes were drawn. Many spaces look alike; that is intended. It takes about 40 minutes and your progress is kept if you reload the page.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');send([SPSite.answer('consent',true)],this,function(){st.step='trial';save();route();});};\n  }\n  function trial(){\n    if(st.k>=st.order.length){st.step='about';save();return route();}\n    var id=st.order[st.k],f=files[id],R=Q.ratings,cell=null,n=st.order.length;\n    var nx=st.order[st.k+1];if(nx){var p=new Image();p.src=files[nx].url;}\n    app.innerHTML='<div class=\"prog\">Space '+(st.k+1)+' of '+n+'</div><div class=\"bar\"><i style=\"width:'+Math.round(100*st.k/n)+'%\"></i></div>'+\n     '<div class=\"pic\"><img alt=\"Rendered interior space\" src=\"'+esc(f.url)+'\"><div class=\"grid\">'+[1,2,3,4,5,6,7,8,9].map(function(i){return '<button type=\"button\" data-c=\"'+i+'\" aria-label=\"Grid cell '+i+'\">'+i+'</button>';}).join('')+'</div></div>'+\n     '<div class=\"hint\">'+esc(Q.grid.title)+'</div>'+\n     '<div class=\"card\"><p class=\"qt\">'+esc(R.title)+' as if you were inside it (1 = not at all, 5 = very much)</p>'+\n     (R.rows||[]).map(function(r){var nm='r__'+r.value;return '<div class=\"it\" data-n=\"'+nm+'\"><div class=\"l\">'+esc(r.text)+'</div><div class=\"o\">'+(R.columns||[]).map(function(c){return '<label><input type=\"radio\" name=\"'+nm+'\" value=\"'+c.value+'\">'+c.value+'</label>';}).join('')+'</div></div>';}).join('')+\n     '<div class=\"sec\" id=\"s_emo\"><p class=\"qt\">'+esc(Q.emotions.title)+'</p><div class=\"chips\">'+(Q.emotions.choices||[]).map(function(c){return '<label><input type=\"checkbox\" name=\"emo\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div></div>'+\n     '<div class=\"sec\" id=\"s_time\"><p class=\"qt\">'+esc(Q.time.title)+'</p><input type=\"number\" id=\"time\" min=\"0\" max=\"200\" inputmode=\"numeric\"> minutes</div>'+\n     '<div class=\"sec\" id=\"s_pp\"><p class=\"qt\">'+esc(Q.privateness.title)+'</p><div class=\"pp\">'+(Q.privateness.choices||[]).map(function(c){return '<label><input type=\"radio\" name=\"pp\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div></div>'+\n     '<div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">'+(st.k+1<n?'Next space':'Continue')+'</button></div><div class=\"err\"></div></div>';\n    app.querySelectorAll('.grid button').forEach(function(b){b.onclick=function(){var c=b.getAttribute('data-c');cell=(cell===c)?null:c;app.querySelectorAll('.grid button').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-c')===cell);});};});\n    document.getElementById('go').onclick=function(){\n      var out={},first=null;app.querySelectorAll('.miss').forEach(function(e){e.classList.remove('miss');});\n      function miss(el){el.classList.add('miss');if(!first)first=el;}\n      (R.rows||[]).forEach(function(r){var nm='r__'+r.value,x=val(nm),el=app.querySelector('.it[data-n=\"'+nm+'\"] .o');if(x==null)miss(el);else out[r.value]=Number(x);});\n      var emo=[].slice.call(app.querySelectorAll('input[name=emo]:checked')).map(function(x){return x.value;});if(!emo.length)miss(document.querySelector('#s_emo .chips'));\n      var tv=document.getElementById('time').value,t=Number(tv);if(tv===''||!(t>=0&&t<=200))miss(document.getElementById('time'));\n      var pp=val('pp');if(!pp)miss(document.querySelector('#s_pp .pp'));\n      if(first){first.scrollIntoView({block:'center'});return err('Please answer the marked questions (the grid click is optional; minutes 0-200).');}\n      var m={key:id,shown:[f.name]},L=[SPSite.answer('ratings',out,m),SPSite.answer('emotions',emo,m),SPSite.answer('time',Math.round(t),m),SPSite.answer('privateness',pp,m)];\n      if(cell)L.push(SPSite.answer('grid',cell,m));\n      send(L,this,function(){st.k++;save();route();});\n    };\n  }\n  function about(){\n    app.innerHTML='<h2>About you</h2><div class=\"card\"><div><b>'+esc(Q.age.title)+'</b><br><input type=\"number\" id=\"age\" min=\"16\" max=\"110\"></div><div class=\"sec\"><b>'+esc(Q.gender.title)+'</b>'+(Q.gender.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"gender\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Finish</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){var age=Number(document.getElementById('age').value),g=val('gender');if(!(age>=16&&age<=110))return err('Please enter your age.');if(!g)return err('Please choose your gender.');\n      send([SPSite.answer('age',age),SPSite.answer('gender',g)],this,function(){st.step='done';save();route();});};\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st.step='intro';save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  app.addEventListener('change',function(e){var m=e.target.closest&&e.target.closest('.miss');if(m)m.classList.remove('miss');if(!app.querySelector('.miss'))err('');});\n  app.addEventListener('input',function(e){if(e.target.id==='time'){e.target.classList.remove('miss');if(!app.querySelector('.miss'))err('');}});\n  function route(){var s=st.step;window.scrollTo(0,0);if(s==='trial')return trial();if(s==='about')return about();if(s==='done')return finish();intro();}\n  SPSite.onReady(function(ctx){\n    ['consent','ratings','emotions','time','privateness','grid','age','gender'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('spaces')||[]).forEach(function(f){files[f.name.replace(/\\.[^.]+$/,'')]=f;});\n    var need=IDS.filter(function(k){return !files[k];});\n    if(need.length){app.innerHTML='<h1>Images missing</h1><p>Upload '+need.length+' images ('+esc(need.slice(0,4).join(', '))+'…, .jpg) to the media folder \"spaces\".</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    var a=(ctx&&ctx.answers)||{};\n    if(!(st&&st.order)||a.consent!==true)st=fresh();\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T21:24:58.602Z",
+   "mediaFolders": [
+    "spaces"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T21:24:58.602Z"
+  },
+  "description": "Faithful replication with the original images: 56 rendered interiors from a neuroarchitecture study of curved versus angular form. Seven abstract spatial scenarios (two thresholds A1-A2, two corridors B1-B2, three seating spaces C1-C3) are each rendered in eight versions: background geometry (angular / curved) x foreground figure geometry (angular / curved) x colour (orange figures on a white background / white figures on an orange background). Participants see all 56 images in random order, self-paced, and for each one rate seven qualities on a 1-5 scale (liking, beauty, curvature, angularity, fascination, coherence, hominess), tick the emotions they feel from eight words (interested, excited, uplifted, alert, stressed, irritable, confused, afraid), estimate how many minutes they would comfortably stay there (0-200), judge whether the space is more likely public or private, and click the cell of a 3 x 3 grid over the image where their eyes were drawn (optional). Age and gender are asked at the end. Rebuilt from Wei, Chuquichambi, Damiano, Bruce & Walther (2026), A design-integrated framework for neuroarchitectural research, Frontiers in Psychology 17: 1666480 (Phase 1 image survey), with the images cropped from its Figure 2 (CC BY 4.0). Image ids: scenario_colour_geometry, e.g. A1_W_ac = threshold 1, white background, angular background with a curved foreground figure (first letter background, second foreground, a = angular, c = curved; W = white background, O = orange background). Analysis as in the paper: compare the ratings across background geometry, foreground geometry and colour (within-participant factorial, e.g. mixed models with participant as random effect) and check agreement on the curvature and angularity ratings; the paper reports that the intended curved/angular distinctions were clearly perceived with high agreement between participants, and that foreground geometry influenced several evaluative ratings more than background geometry (foreground-sensitive preferences for curvature). Differences from the original study: (1) the paper names the rated qualities, the 1-5 scale, the 0-200 minute range, the public/private choice and the 3 x 3 grid but does not print the question wording or scale labels, so all question stems and anchors (1 = not at all, 5 = very much) are ours; (2) the emotion list is adapted from PANAS in the paper but not printed; the eight words are the ones found in the authors' shared data (OSF), their order is ours; (3) the age and gender questions are ours; (4) the images are the figure copies (about 300 px), not the full-size renders; (5) the paper's later phases (3D-printed prototype, full-scale installation, VR and biosensors) are not included.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2026-wei-curved/spaces/A1_O_aa__9a4c3f4a-4f69-4ca5-9627-4f244a76f705.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/A1_O_aa__9a4c3f4a-4f69-4ca5-9627-4f244a76f705.jpg",
+   "name": "A1_O_aa.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/A1_O_aa__9a4c3f4a-4f69-4ca5-9627-4f244a76f705.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 18066,
+   "uploaded_bytes": 18066,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/A1_O_ac__d160c43d-2c6f-4469-ba46-2060c66f24b5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/A1_O_ac__d160c43d-2c6f-4469-ba46-2060c66f24b5.jpg",
+   "name": "A1_O_ac.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/A1_O_ac__d160c43d-2c6f-4469-ba46-2060c66f24b5.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 18621,
+   "uploaded_bytes": 18621,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/A1_O_ca__0979f06c-08e6-4120-817b-0975b1cf92f0.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/A1_O_ca__0979f06c-08e6-4120-817b-0975b1cf92f0.jpg",
+   "name": "A1_O_ca.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/A1_O_ca__0979f06c-08e6-4120-817b-0975b1cf92f0.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 17416,
+   "uploaded_bytes": 17416,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/A1_O_cc__984f55b4-77f2-41c9-a342-cd5799e21606.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/A1_O_cc__984f55b4-77f2-41c9-a342-cd5799e21606.jpg",
+   "name": "A1_O_cc.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/A1_O_cc__984f55b4-77f2-41c9-a342-cd5799e21606.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 18731,
+   "uploaded_bytes": 18731,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/A1_W_aa__fcec5ef2-0cf5-4dc9-95e8-eb6cf539b5cf.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/A1_W_aa__fcec5ef2-0cf5-4dc9-95e8-eb6cf539b5cf.jpg",
+   "name": "A1_W_aa.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/A1_W_aa__fcec5ef2-0cf5-4dc9-95e8-eb6cf539b5cf.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 16699,
+   "uploaded_bytes": 16699,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/A1_W_ac__e12a9258-22e8-4a3d-a4ea-4a2488e0551c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/A1_W_ac__e12a9258-22e8-4a3d-a4ea-4a2488e0551c.jpg",
+   "name": "A1_W_ac.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/A1_W_ac__e12a9258-22e8-4a3d-a4ea-4a2488e0551c.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 18384,
+   "uploaded_bytes": 18384,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/A1_W_ca__6218b8d1-20df-40b9-9df8-024c9260326d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/A1_W_ca__6218b8d1-20df-40b9-9df8-024c9260326d.jpg",
+   "name": "A1_W_ca.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/A1_W_ca__6218b8d1-20df-40b9-9df8-024c9260326d.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 16074,
+   "uploaded_bytes": 16074,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/A1_W_cc__f0776b07-314d-4cf4-8e8b-b70b28673d96.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/A1_W_cc__f0776b07-314d-4cf4-8e8b-b70b28673d96.jpg",
+   "name": "A1_W_cc.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/A1_W_cc__f0776b07-314d-4cf4-8e8b-b70b28673d96.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 17317,
+   "uploaded_bytes": 17317,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/A2_O_aa__d68f3d1d-117c-4d22-ae36-2385d70840bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/A2_O_aa__d68f3d1d-117c-4d22-ae36-2385d70840bf.jpg",
+   "name": "A2_O_aa.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/A2_O_aa__d68f3d1d-117c-4d22-ae36-2385d70840bf.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 21466,
+   "uploaded_bytes": 21466,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/A2_O_ac__24b16143-977c-4223-b0c2-b7e2c5bba1aa.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/A2_O_ac__24b16143-977c-4223-b0c2-b7e2c5bba1aa.jpg",
+   "name": "A2_O_ac.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/A2_O_ac__24b16143-977c-4223-b0c2-b7e2c5bba1aa.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 21125,
+   "uploaded_bytes": 21125,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/A2_O_ca__3947c1b3-4d8d-4d6c-ba93-80daa2a4755c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/A2_O_ca__3947c1b3-4d8d-4d6c-ba93-80daa2a4755c.jpg",
+   "name": "A2_O_ca.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/A2_O_ca__3947c1b3-4d8d-4d6c-ba93-80daa2a4755c.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 21581,
+   "uploaded_bytes": 21581,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/A2_O_cc__35f6d96a-50f0-4a84-b3d8-a3b900fccef1.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/A2_O_cc__35f6d96a-50f0-4a84-b3d8-a3b900fccef1.jpg",
+   "name": "A2_O_cc.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/A2_O_cc__35f6d96a-50f0-4a84-b3d8-a3b900fccef1.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 21653,
+   "uploaded_bytes": 21653,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/A2_W_aa__6b71a2a8-2c8b-4bbd-8451-dae2cc23161d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/A2_W_aa__6b71a2a8-2c8b-4bbd-8451-dae2cc23161d.jpg",
+   "name": "A2_W_aa.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/A2_W_aa__6b71a2a8-2c8b-4bbd-8451-dae2cc23161d.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 19769,
+   "uploaded_bytes": 19769,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/A2_W_ac__ccedb1eb-7691-45b4-8cc3-655b1cb5c453.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/A2_W_ac__ccedb1eb-7691-45b4-8cc3-655b1cb5c453.jpg",
+   "name": "A2_W_ac.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/A2_W_ac__ccedb1eb-7691-45b4-8cc3-655b1cb5c453.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 20196,
+   "uploaded_bytes": 20196,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/A2_W_ca__72b1f4c8-85fa-4333-8d86-23eb2bb64d51.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/A2_W_ca__72b1f4c8-85fa-4333-8d86-23eb2bb64d51.jpg",
+   "name": "A2_W_ca.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/A2_W_ca__72b1f4c8-85fa-4333-8d86-23eb2bb64d51.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 19740,
+   "uploaded_bytes": 19740,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/A2_W_cc__74f1a50d-2718-4b36-90fd-eee7adb2bc52.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/A2_W_cc__74f1a50d-2718-4b36-90fd-eee7adb2bc52.jpg",
+   "name": "A2_W_cc.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/A2_W_cc__74f1a50d-2718-4b36-90fd-eee7adb2bc52.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 19737,
+   "uploaded_bytes": 19737,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/B1_O_aa__a9a92237-39e7-4ae4-b39f-ed342f7ac378.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/B1_O_aa__a9a92237-39e7-4ae4-b39f-ed342f7ac378.jpg",
+   "name": "B1_O_aa.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/B1_O_aa__a9a92237-39e7-4ae4-b39f-ed342f7ac378.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 14917,
+   "uploaded_bytes": 14917,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/B1_O_ac__4d3ff128-30e8-42d8-b922-2bf946786ed6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/B1_O_ac__4d3ff128-30e8-42d8-b922-2bf946786ed6.jpg",
+   "name": "B1_O_ac.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/B1_O_ac__4d3ff128-30e8-42d8-b922-2bf946786ed6.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 14941,
+   "uploaded_bytes": 14941,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/B1_O_ca__2fab06d6-7777-4716-9590-b43844d453ab.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/B1_O_ca__2fab06d6-7777-4716-9590-b43844d453ab.jpg",
+   "name": "B1_O_ca.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/B1_O_ca__2fab06d6-7777-4716-9590-b43844d453ab.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 15230,
+   "uploaded_bytes": 15230,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/B1_O_cc__5f16cffa-431e-41a9-af90-4b49f30e82ef.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/B1_O_cc__5f16cffa-431e-41a9-af90-4b49f30e82ef.jpg",
+   "name": "B1_O_cc.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/B1_O_cc__5f16cffa-431e-41a9-af90-4b49f30e82ef.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 15243,
+   "uploaded_bytes": 15243,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/B1_W_aa__26a607c6-a084-49cb-911e-bdb14b6f961d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/B1_W_aa__26a607c6-a084-49cb-911e-bdb14b6f961d.jpg",
+   "name": "B1_W_aa.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/B1_W_aa__26a607c6-a084-49cb-911e-bdb14b6f961d.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 13927,
+   "uploaded_bytes": 13927,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/B1_W_ac__14838695-31d5-4fc6-84cd-ddbeb8553893.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/B1_W_ac__14838695-31d5-4fc6-84cd-ddbeb8553893.jpg",
+   "name": "B1_W_ac.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/B1_W_ac__14838695-31d5-4fc6-84cd-ddbeb8553893.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 13610,
+   "uploaded_bytes": 13610,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/B1_W_ca__e0d52d17-ee4a-48a5-846d-de9d9c7fdffc.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/B1_W_ca__e0d52d17-ee4a-48a5-846d-de9d9c7fdffc.jpg",
+   "name": "B1_W_ca.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/B1_W_ca__e0d52d17-ee4a-48a5-846d-de9d9c7fdffc.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 14004,
+   "uploaded_bytes": 14004,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/B1_W_cc__e221ff37-7738-452e-92c3-17b5dc88c91b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/B1_W_cc__e221ff37-7738-452e-92c3-17b5dc88c91b.jpg",
+   "name": "B1_W_cc.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/B1_W_cc__e221ff37-7738-452e-92c3-17b5dc88c91b.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 14024,
+   "uploaded_bytes": 14024,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/B2_O_aa__7067ef4d-a7f9-492a-8f1f-0ac66caeb873.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/B2_O_aa__7067ef4d-a7f9-492a-8f1f-0ac66caeb873.jpg",
+   "name": "B2_O_aa.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/B2_O_aa__7067ef4d-a7f9-492a-8f1f-0ac66caeb873.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 15890,
+   "uploaded_bytes": 15890,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/B2_O_ac__95831471-30ee-465d-89f8-fd476f026f0b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/B2_O_ac__95831471-30ee-465d-89f8-fd476f026f0b.jpg",
+   "name": "B2_O_ac.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/B2_O_ac__95831471-30ee-465d-89f8-fd476f026f0b.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 15557,
+   "uploaded_bytes": 15557,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/B2_O_ca__781a1997-842e-47e1-bf2b-06452efc52b1.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/B2_O_ca__781a1997-842e-47e1-bf2b-06452efc52b1.jpg",
+   "name": "B2_O_ca.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/B2_O_ca__781a1997-842e-47e1-bf2b-06452efc52b1.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 15933,
+   "uploaded_bytes": 15933,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/B2_O_cc__05a05c39-96e5-4fff-a921-64cf46c9862d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/B2_O_cc__05a05c39-96e5-4fff-a921-64cf46c9862d.jpg",
+   "name": "B2_O_cc.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/B2_O_cc__05a05c39-96e5-4fff-a921-64cf46c9862d.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 15751,
+   "uploaded_bytes": 15751,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/B2_W_aa__8d61590a-a878-415c-aea6-2266f9712b33.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/B2_W_aa__8d61590a-a878-415c-aea6-2266f9712b33.jpg",
+   "name": "B2_W_aa.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/B2_W_aa__8d61590a-a878-415c-aea6-2266f9712b33.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 14884,
+   "uploaded_bytes": 14884,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/B2_W_ac__8b888b6d-7895-4e02-90c0-b547b094fadd.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/B2_W_ac__8b888b6d-7895-4e02-90c0-b547b094fadd.jpg",
+   "name": "B2_W_ac.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/B2_W_ac__8b888b6d-7895-4e02-90c0-b547b094fadd.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 14026,
+   "uploaded_bytes": 14026,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/B2_W_ca__7416b232-10db-4acd-8aff-b436e9c865a6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/B2_W_ca__7416b232-10db-4acd-8aff-b436e9c865a6.jpg",
+   "name": "B2_W_ca.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/B2_W_ca__7416b232-10db-4acd-8aff-b436e9c865a6.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 15242,
+   "uploaded_bytes": 15242,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/B2_W_cc__130fd3e9-f25e-4edb-9a3e-4ddff57d03ee.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/B2_W_cc__130fd3e9-f25e-4edb-9a3e-4ddff57d03ee.jpg",
+   "name": "B2_W_cc.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/B2_W_cc__130fd3e9-f25e-4edb-9a3e-4ddff57d03ee.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 14411,
+   "uploaded_bytes": 14411,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C1_O_aa__19f1322b-4a7b-40d6-bc44-b4ae919559f0.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C1_O_aa__19f1322b-4a7b-40d6-bc44-b4ae919559f0.jpg",
+   "name": "C1_O_aa.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C1_O_aa__19f1322b-4a7b-40d6-bc44-b4ae919559f0.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 19516,
+   "uploaded_bytes": 19516,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C1_O_ac__23f36279-2d34-4c2a-81f8-214a00dd1d5c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C1_O_ac__23f36279-2d34-4c2a-81f8-214a00dd1d5c.jpg",
+   "name": "C1_O_ac.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C1_O_ac__23f36279-2d34-4c2a-81f8-214a00dd1d5c.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 19171,
+   "uploaded_bytes": 19171,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C1_O_ca__2f441e43-a2ca-4956-8209-ff672737ceba.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C1_O_ca__2f441e43-a2ca-4956-8209-ff672737ceba.jpg",
+   "name": "C1_O_ca.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C1_O_ca__2f441e43-a2ca-4956-8209-ff672737ceba.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 19960,
+   "uploaded_bytes": 19960,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C1_O_cc__fcc56142-7e1d-4783-9e86-92e64bb8ef68.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C1_O_cc__fcc56142-7e1d-4783-9e86-92e64bb8ef68.jpg",
+   "name": "C1_O_cc.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C1_O_cc__fcc56142-7e1d-4783-9e86-92e64bb8ef68.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 19380,
+   "uploaded_bytes": 19380,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C1_W_aa__be5c5911-d07c-4204-812e-11b1eca16ce5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C1_W_aa__be5c5911-d07c-4204-812e-11b1eca16ce5.jpg",
+   "name": "C1_W_aa.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C1_W_aa__be5c5911-d07c-4204-812e-11b1eca16ce5.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 18571,
+   "uploaded_bytes": 18571,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C1_W_ac__01608c55-c31b-4b34-8162-9d40f14f39bd.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C1_W_ac__01608c55-c31b-4b34-8162-9d40f14f39bd.jpg",
+   "name": "C1_W_ac.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C1_W_ac__01608c55-c31b-4b34-8162-9d40f14f39bd.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 17838,
+   "uploaded_bytes": 17838,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C1_W_ca__d1ac0920-690e-4eb5-93c3-6e8ce2e05c07.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C1_W_ca__d1ac0920-690e-4eb5-93c3-6e8ce2e05c07.jpg",
+   "name": "C1_W_ca.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C1_W_ca__d1ac0920-690e-4eb5-93c3-6e8ce2e05c07.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 18324,
+   "uploaded_bytes": 18324,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C1_W_cc__43a07a13-1621-4814-b446-28f97d0bf581.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C1_W_cc__43a07a13-1621-4814-b446-28f97d0bf581.jpg",
+   "name": "C1_W_cc.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C1_W_cc__43a07a13-1621-4814-b446-28f97d0bf581.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 17481,
+   "uploaded_bytes": 17481,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C2_O_aa__c6fb89dc-8089-4516-895b-e295f0ed7adc.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C2_O_aa__c6fb89dc-8089-4516-895b-e295f0ed7adc.jpg",
+   "name": "C2_O_aa.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C2_O_aa__c6fb89dc-8089-4516-895b-e295f0ed7adc.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 21338,
+   "uploaded_bytes": 21338,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C2_O_ac__36a65d16-2ce7-4860-add1-0bac565658a0.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C2_O_ac__36a65d16-2ce7-4860-add1-0bac565658a0.jpg",
+   "name": "C2_O_ac.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C2_O_ac__36a65d16-2ce7-4860-add1-0bac565658a0.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 20704,
+   "uploaded_bytes": 20704,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C2_O_ca__dc6a3a4a-f380-4d9e-bedd-c188b360ac47.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C2_O_ca__dc6a3a4a-f380-4d9e-bedd-c188b360ac47.jpg",
+   "name": "C2_O_ca.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C2_O_ca__dc6a3a4a-f380-4d9e-bedd-c188b360ac47.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 20948,
+   "uploaded_bytes": 20948,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C2_O_cc__0516cd4f-e693-4fde-92c1-833114f2e8fc.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C2_O_cc__0516cd4f-e693-4fde-92c1-833114f2e8fc.jpg",
+   "name": "C2_O_cc.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C2_O_cc__0516cd4f-e693-4fde-92c1-833114f2e8fc.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 21051,
+   "uploaded_bytes": 21051,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C2_W_aa__b14a49b2-e88d-4869-a85a-0a9ddf6758d7.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C2_W_aa__b14a49b2-e88d-4869-a85a-0a9ddf6758d7.jpg",
+   "name": "C2_W_aa.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C2_W_aa__b14a49b2-e88d-4869-a85a-0a9ddf6758d7.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 19985,
+   "uploaded_bytes": 19985,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C2_W_ac__4552e753-4499-43f4-b1e1-7e4297f525cf.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C2_W_ac__4552e753-4499-43f4-b1e1-7e4297f525cf.jpg",
+   "name": "C2_W_ac.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C2_W_ac__4552e753-4499-43f4-b1e1-7e4297f525cf.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 19760,
+   "uploaded_bytes": 19760,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C2_W_ca__9945f253-4705-49ab-922a-71aa49079091.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C2_W_ca__9945f253-4705-49ab-922a-71aa49079091.jpg",
+   "name": "C2_W_ca.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C2_W_ca__9945f253-4705-49ab-922a-71aa49079091.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 19600,
+   "uploaded_bytes": 19600,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C2_W_cc__2aba4030-4c76-480a-8633-b46a9868ff44.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C2_W_cc__2aba4030-4c76-480a-8633-b46a9868ff44.jpg",
+   "name": "C2_W_cc.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C2_W_cc__2aba4030-4c76-480a-8633-b46a9868ff44.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 18713,
+   "uploaded_bytes": 18713,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C3_O_aa__2e273e81-8512-4d5c-82d2-219ac286903e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C3_O_aa__2e273e81-8512-4d5c-82d2-219ac286903e.jpg",
+   "name": "C3_O_aa.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C3_O_aa__2e273e81-8512-4d5c-82d2-219ac286903e.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 19534,
+   "uploaded_bytes": 19534,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C3_O_ac__03a0d2d8-a5b6-4b00-b2a2-124ef8e2e7f0.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C3_O_ac__03a0d2d8-a5b6-4b00-b2a2-124ef8e2e7f0.jpg",
+   "name": "C3_O_ac.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C3_O_ac__03a0d2d8-a5b6-4b00-b2a2-124ef8e2e7f0.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 17350,
+   "uploaded_bytes": 17350,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C3_O_ca__72b9eb84-e449-41ea-9e3b-27c51f82afa2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C3_O_ca__72b9eb84-e449-41ea-9e3b-27c51f82afa2.jpg",
+   "name": "C3_O_ca.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C3_O_ca__72b9eb84-e449-41ea-9e3b-27c51f82afa2.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 19473,
+   "uploaded_bytes": 19473,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C3_O_cc__1353f714-872a-4a64-acff-67b578d3edf7.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C3_O_cc__1353f714-872a-4a64-acff-67b578d3edf7.jpg",
+   "name": "C3_O_cc.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C3_O_cc__1353f714-872a-4a64-acff-67b578d3edf7.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 17335,
+   "uploaded_bytes": 17335,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C3_W_aa__a74913a8-f157-40b8-bdbb-854c44179322.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C3_W_aa__a74913a8-f157-40b8-bdbb-854c44179322.jpg",
+   "name": "C3_W_aa.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C3_W_aa__a74913a8-f157-40b8-bdbb-854c44179322.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 18473,
+   "uploaded_bytes": 18473,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C3_W_ac__1e6e1cc6-6585-4410-9e50-129861b83898.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C3_W_ac__1e6e1cc6-6585-4410-9e50-129861b83898.jpg",
+   "name": "C3_W_ac.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C3_W_ac__1e6e1cc6-6585-4410-9e50-129861b83898.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 16683,
+   "uploaded_bytes": 16683,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C3_W_ca__fa5d940e-55ba-4e11-b9e5-e8f7f1410d78.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C3_W_ca__fa5d940e-55ba-4e11-b9e5-e8f7f1410d78.jpg",
+   "name": "C3_W_ca.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C3_W_ca__fa5d940e-55ba-4e11-b9e5-e8f7f1410d78.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 18103,
+   "uploaded_bytes": 18103,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-wei-curved/spaces/C3_W_cc__64df878a-9b9e-4738-adbe-d5e043df3d38.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-wei-curved/spaces/C3_W_cc__64df878a-9b9e-4738-adbe-d5e043df3d38.jpg",
+   "name": "C3_W_cc.jpg",
+   "type": "image",
+   "folder": "spaces",
+   "media_id": "templates/2026-wei-curved/spaces/C3_W_cc__64df878a-9b9e-4738-adbe-d5e043df3d38.jpg",
+   "logicalFolder": "spaces",
+   "original_bytes": 16307,
+   "uploaded_bytes": 16307,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "A design-integrated framework for neuroarchitectural research.",
+  "authors": [
+   "Wei N",
+   "Chuquichambi EG",
+   "Damiano C",
+   "Bruce K",
+   "Walther DB"
+  ],
+  "year": 2026,
+  "venue": "Frontiers in Psychology",
+  "doi": "10.3389/fpsyg.2026.1666480",
+  "url": "https://doi.org/10.3389/fpsyg.2026.1666480"
+ }
+}

@@ -1,178 +1,1003 @@
 {
-  "id": "2017-liu-machine",
-  "name": "Facade Quality and Street-Wall Continuity",
-  "description": "Rebuilt from the published description of Liu, Silva, Wu & Wang (2017). Trained raters score Beijing street views for facade quality (1–4 rubric) and street-wall continuity; an optional on-site page records the same two judgements for a site passed in the link (?site=...). Differences from the original study: (1) In the paper both judgements were made on the same image; here the two questions draw their images independently. (2) The on-site page is shown only when the link contains ?site=...; it replaces the original paper forms. (3) Bundled images are photographs from the paper PDF (7 scenes), not the original full stimulus set.",
-  "author": "Liu, Silva, Wu & Wang",
-  "year": "2017",
-  "category": "Academic Research",
-  "tags": [
-    "official",
-    "paper"
-  ],
-  "isPinned": false,
-  "isApproved": true,
-  "showOnLanding": true,
-  "thumbnailUrl": null,
-  "website": "https://doi.org/10.1016/j.compenvurbsys.2017.06.003",
-  "huggingfaceDataset": null,
-  "createdAt": "2026-10-02T00:00:00+00:00",
-  "imageDatasetConfig": {
-    "mediaFolderTags": {},
-    "mediaFolders": []
-  },
-  "preloadedImages": [],
-  "preloadedSource": null,
-  "preloadedAt": null,
-  "config": {
-    "title": "Facade Quality and Street-Wall Continuity",
-    "description": "Rate each street view using the rubric shown with the question.",
-    "logoPosition": "right",
-    "autoGrowComment": true,
-    "progressBarType": "questions",
-    "showProgressBar": "aboveheader",
-    "showQuestionNumbers": "off",
-    "captureUrlParams": [
-      "site"
-    ],
-    "spAnalysisRecommendation": {
-      "citation": "Liu et al. 2017",
-      "items": [
-        {
-          "questions": [
-            "facade_quality"
-          ],
-          "method": "scalar_distribution"
-        },
-        {
-          "questions": [
-            "facade_quality"
-          ],
-          "method": "rater_agreement",
-          "raterQuestion": "rater_id"
-        },
-        {
-          "questions": [
-            "site_facade_quality"
-          ],
-          "method": "param_aggregation",
-          "param": "site"
-        }
-      ]
-    },
-    "pages": [
-      {
-        "name": "page_rater",
-        "elements": [
-          {
-            "name": "rater_id",
-            "type": "text",
-            "title": "Rater ID",
-            "isRequired": true
-          },
-          {
-            "name": "background",
-            "type": "radiogroup",
-            "title": "Professional background",
-            "choices": [
-              {
-                "value": "planning",
-                "text": "Urban planning / urban design"
-              },
-              {
-                "value": "architecture",
-                "text": "Architecture"
-              },
-              {
-                "value": "landscape",
-                "text": "Landscape architecture"
-              },
-              {
-                "value": "geography",
-                "text": "Geography / GIS"
-              },
-              {
-                "value": "other",
-                "text": "Other"
-              }
-            ],
-            "isRequired": true
-          }
-        ],
-        "title": "About you"
-      },
-      {
-        "name": "page_rating",
-        "elements": [
-          {
-            "name": "facade_quality",
-            "type": "imagerating",
-            "title": "Rate the construction and maintenance quality of the building facade.",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 1,
-            "trialCount": 20,
-            "rateMin": 1,
-            "rateMax": 4,
-            "rateLabels": [
-              "1 – Built with low-quality materials, in many cases bare cement and colour plate; low-level precision, sometimes unfinished; seriously deteriorated with a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons.",
-              "2 – Built with low quality, not very fine-textured materials; low-level industrial precision or craftsmanship; a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons.",
-              "3 – Built with lower quality, not very fine-textured materials; no high level of industrial precision or craftsmanship; may have a few obvious cracks, breakage, corrosion, dirt and stain or messy add-ons but generally a neat and clean look.",
-              "4 – Built with high quality, fine-textured materials; high industrial precision or fine craftsmanship (components and material pieces well aligned, small gaps); well maintained without obvious cracks, breakage, corrosion, dirt and stain or messy add-ons."
-            ],
-            "description": "4 – Built with high quality, fine-textured materials; high industrial precision or fine craftsmanship (components and material pieces well aligned, small gaps); well maintained without obvious cracks, breakage, corrosion, dirt and stain or messy add-ons. 3 – Built with lower quality, not very fine-textured materials; no high level of industrial precision or craftsmanship; may have a few obvious cracks, breakage, corrosion, dirt and stain or messy add-ons but generally a neat and clean look. 2 – Built with low quality, not very fine-textured materials; low-level industrial precision or craftsmanship; a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons. 1 – Built with low-quality materials, in many cases bare cement and colour plate; low-level precision, sometimes unfinished; seriously deteriorated with a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons."
-          },
-          {
-            "name": "street_wall_continuity",
-            "type": "imageboolean",
-            "title": "Is the street wall continuous?",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 1,
-            "trialCount": 20,
-            "labelTrue": "Continuous",
-            "labelFalse": "Discontinuous",
-            "description": "Continuous: Building facades progress through the image without any interruption, blockage or significant setback, at least at the eye height. Discontinuous: There is a wide gap between two adjacent buildings; there is a significant setback of a wide building; or there is a solid wall blocking the building from the street. If the wall is carefully designed and visually attractive, it can be considered continuous."
-          }
-        ],
-        "title": "Street views"
-      },
-      {
-        "name": "page_on_site",
-        "elements": [
-          {
-            "name": "site_facade_quality",
-            "type": "rating",
-            "title": "Rate the construction and maintenance quality of the building facade. (the street in front of you)",
-            "rateMin": 1,
-            "rateMax": 4,
-            "rateLabels": [
-              "1 – Built with low-quality materials, in many cases bare cement and colour plate; low-level precision, sometimes unfinished; seriously deteriorated with a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons.",
-              "2 – Built with low quality, not very fine-textured materials; low-level industrial precision or craftsmanship; a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons.",
-              "3 – Built with lower quality, not very fine-textured materials; no high level of industrial precision or craftsmanship; may have a few obvious cracks, breakage, corrosion, dirt and stain or messy add-ons but generally a neat and clean look.",
-              "4 – Built with high quality, fine-textured materials; high industrial precision or fine craftsmanship (components and material pieces well aligned, small gaps); well maintained without obvious cracks, breakage, corrosion, dirt and stain or messy add-ons."
-            ],
-            "description": "4 – Built with high quality, fine-textured materials; high industrial precision or fine craftsmanship (components and material pieces well aligned, small gaps); well maintained without obvious cracks, breakage, corrosion, dirt and stain or messy add-ons. 3 – Built with lower quality, not very fine-textured materials; no high level of industrial precision or craftsmanship; may have a few obvious cracks, breakage, corrosion, dirt and stain or messy add-ons but generally a neat and clean look. 2 – Built with low quality, not very fine-textured materials; low-level industrial precision or craftsmanship; a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons. 1 – Built with low-quality materials, in many cases bare cement and colour plate; low-level precision, sometimes unfinished; seriously deteriorated with a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons.",
-            "isRequired": true
-          },
-          {
-            "name": "site_street_wall_continuity",
-            "type": "boolean",
-            "title": "Is the street wall continuous? (the street in front of you)",
-            "labelTrue": "Continuous",
-            "labelFalse": "Discontinuous",
-            "description": "Continuous: Building facades progress through the image without any interruption, blockage or significant setback, at least at the eye height. Discontinuous: There is a wide gap between two adjacent buildings; there is a significant setback of a wide building; or there is a solid wall blocking the building from the street. If the wall is carefully designed and visually attractive, it can be considered continuous.",
-            "isRequired": true
-          }
-        ],
-        "visibleIf": "{url_site} notempty",
-        "title": "On-site validation"
-      }
+ "id": "2017-liu-machine",
+ "name": "Facade Quality and Street-Wall Continuity (Beijing)",
+ "description": "Method replication: the images are new Baidu street views of Beijing, not the paper's stimuli. Raters score 20 street views for the construction and maintenance quality of building facades (1–4 rubric) and judge for 20 more whether the street wall is continuous, using the rubrics of Liu, Silva, Wu & Wang (2017, CEUS). Differences from the original study: (1) the two judgements draw their images independently instead of using the same image; (2) the on-site survey of passers-by is not included.",
+ "author": "Liu, Silva, Wu & Wang",
+ "year": "2017",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "source:paper",
+  "modality:street_view",
+  "task:rating",
+  "concept:building_facade",
+  "concept:street_wall_continuity",
+  "participants:experts",
+  "country:China",
+  "city:Beijing"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1016/j.compenvurbsys.2017.06.003",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-10-02T00:00:00+00:00",
+ "updatedAt": "2026-11-27T06:32:44.345+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
     ]
+   },
+   {
+    "name": "about_you_first",
+    "elements": [
+     {
+      "name": "rater_id",
+      "type": "text",
+      "title": "Rater ID",
+      "isRequired": true
+     },
+     {
+      "name": "background",
+      "type": "radiogroup",
+      "title": "Professional background",
+      "choices": [
+       {
+        "text": "Urban planning / urban design",
+        "value": "planning"
+       },
+       {
+        "text": "Architecture",
+        "value": "architecture"
+       },
+       {
+        "text": "Landscape architecture",
+        "value": "landscape"
+       },
+       {
+        "text": "Geography / GIS",
+        "value": "geography"
+       },
+       {
+        "text": "Other",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "facade_quality",
+      "type": "imagerating",
+      "title": "Rate the construction and maintenance quality of the building facade.",
+      "choices": [],
+      "rateMax": 4,
+      "rateMin": 1,
+      "imageFit": "contain",
+      "imageCount": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "1 – Built with low-quality materials, in many cases bare cement and colour plate; low-level precision, sometimes unfinished; seriously deteriorated with a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons.",
+       "2 – Built with low quality, not very fine-textured materials; low-level industrial precision or craftsmanship; a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons.",
+       "3 – Built with lower quality, not very fine-textured materials; no high level of industrial precision or craftsmanship; may have a few obvious cracks, breakage, corrosion, dirt and stain or messy add-ons but generally a neat and clean look.",
+       "4 – Built with high quality, fine-textured materials; high industrial precision or fine craftsmanship (components and material pieces well aligned, small gaps); well maintained without obvious cracks, breakage, corrosion, dirt and stain or messy add-ons."
+      ],
+      "trialCount": 20,
+      "mediaFolders": [
+       "beijing"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_2",
+    "elements": [
+     {
+      "name": "street_wall_continuity",
+      "type": "imagerating",
+      "title": "Is the street wall continuous?",
+      "choices": [],
+      "rateMax": 1,
+      "rateMin": 0,
+      "imageFit": "contain",
+      "imageCount": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Discontinuous",
+       "Continuous"
+      ],
+      "trialCount": 20,
+      "description": "Continuous: Building facades progress through the image without any interruption, blockage or significant setback, at least at the eye height. Discontinuous: There is a wide gap between two adjacent buildings; there is a significant setback of a wide building; or there is a solid wall blocking the building from the street. If the wall is carefully designed and visually attractive, it can be considered continuous.",
+      "mediaFolders": [
+       "beijing"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   }
+  ],
+  "title": "Facade Quality and Street-Wall Continuity (Beijing)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-e3d3ae9bd2d4c2cf",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Facade Quality and Street-Wall Continuity (Beijing)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Facade Quality and Street-Wall Continuity (Beijing)\",\n  \"description\": \"Raters score Beijing street views for the construction and maintenance quality of building facades (1–4 rubric) and judge whether the street wall is continuous, using the rubrics of Liu, Silva, Wu & Wang (2017, CEUS). Method replication: the images are new Baidu street views of Beijing, not the paper's stimuli. Differences from the original study: (1) the two judgements draw their images independently instead of using the same image; (2) the on-site survey of passers-by is not included.\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you_first\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"name\": \"rater_id\",\n      \"title\": \"Rater ID\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"background\",\n      \"title\": \"Professional background\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"planning\",\n        \"text\": \"Urban planning / urban design\"\n       },\n       {\n        \"value\": \"architecture\",\n        \"text\": \"Architecture\"\n       },\n       {\n        \"value\": \"landscape\",\n        \"text\": \"Landscape architecture\"\n       },\n       {\n        \"value\": \"geography\",\n        \"text\": \"Geography / GIS\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imagerating\",\n      \"name\": \"facade_quality\",\n      \"title\": \"Rate the construction and maintenance quality of the building facade.\",\n      \"imageCount\": 1,\n      \"trialCount\": 20,\n      \"rateMin\": 1,\n      \"rateMax\": 4,\n      \"rateLabels\": [\n       \"1 – Built with low-quality materials, in many cases bare cement and colour plate; low-level precision, sometimes unfinished; seriously deteriorated with a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons.\",\n       \"2 – Built with low quality, not very fine-textured materials; low-level industrial precision or craftsmanship; a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons.\",\n       \"3 – Built with lower quality, not very fine-textured materials; no high level of industrial precision or craftsmanship; may have a few obvious cracks, breakage, corrosion, dirt and stain or messy add-ons but generally a neat and clean look.\",\n       \"4 – Built with high quality, fine-textured materials; high industrial precision or fine craftsmanship (components and material pieces well aligned, small gaps); well maintained without obvious cracks, breakage, corrosion, dirt and stain or messy add-ons.\"\n      ],\n      \"isRequired\": true,\n      \"imageFit\": \"contain\",\n      \"mediaFolders\": [\n       \"beijing\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"task_2\",\n    \"elements\": [\n     {\n      \"type\": \"imagerating\",\n      \"name\": \"street_wall_continuity\",\n      \"title\": \"Is the street wall continuous?\",\n      \"description\": \"Continuous: Building facades progress through the image without any interruption, blockage or significant setback, at least at the eye height. Discontinuous: There is a wide gap between two adjacent buildings; there is a significant setback of a wide building; or there is a solid wall blocking the building from the street. If the wall is carefully designed and visually attractive, it can be considered continuous.\",\n      \"imageCount\": 1,\n      \"trialCount\": 20,\n      \"rateMin\": 0,\n      \"rateMax\": 1,\n      \"rateLabels\": [\n       \"Discontinuous\",\n       \"Continuous\"\n      ],\n      \"isRequired\": true,\n      \"imageFit\": \"contain\",\n      \"mediaFolders\": [\n       \"beijing\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#7a4b2a;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.rng{accent-color:var(--accent)}.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}.scale.num{grid-template-columns:repeat(5,1fr)}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Beijing, Baidu street view (© Baidu). Rubrics from Liu, Silva, Wu &amp; Wang (2017), Computers, Environment and Urban Systems 65, doi:10.1016/j.compenvurbsys.2017.06.003.</footer>\n<script>\n(function(){\n  var C={\"before\": [\"rater_id\", \"background\"], \"after\": [], \"tasks\": [\"facade_quality\", \"street_wall_continuity\"], \"minutes\": 12, \"alt\": \"Street view in Beijing\", \"labels\": {\"facade_quality\": [\"1 – Built with low-quality materials, in many cases bare cement and colour plate; low-level precision, sometimes unfinished; seriously deteriorated with a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons.\", \"2 – Built with low quality, not very fine-textured materials; low-level industrial precision or craftsmanship; a lot of cracks, breakage, corrosion, dirt and stain or messy add-ons.\", \"3 – Built with lower quality, not very fine-textured materials; no high level of industrial precision or craftsmanship; may have a few obvious cracks, breakage, corrosion, dirt and stain or messy add-ons but generally a neat and clean look.\", \"4 – Built with high quality, fine-textured materials; high industrial precision or fine craftsmanship (components and material pieces well aligned, small gaps); well maintained without obvious cracks, breakage, corrosion, dirt and stain or messy add-ons.\"], \"street_wall_continuity\": [\"Discontinuous\", \"Continuous\"]}, \"pickOne\": null, \"heading\": \"Rate building facades and street walls in Beijing\", \"intro\": \"<p>You will see street views from Beijing. In part 1 you rate the <b>construction and maintenance quality of the building facade</b> with a 4-level rubric (20 images). In part 2 you judge whether the <b>street wall is continuous</b> (20 images). Read the rubric text on the buttons before you choose.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?'Pair ':'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else if(q.kind==='sliders'||/slidergroup$/.test(q.type)){\n      h+='<img class=\"shot\" style=\"max-height:'+((q.dimensions||[]).length>2?'40vh':'56vh')+'\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">';\n      (q.dimensions||[]).forEach(function(d){h+='<div class=\"q\"><b>'+esc(d.label)+': <span id=\"v_'+esc(d.id)+'\">–</span></b><input type=\"range\" class=\"rng\" data-d=\"'+esc(d.id)+'\" min=\"'+d.min+'\" max=\"'+d.max+'\" step=\"'+(d.step||1)+'\" value=\"'+Math.round((d.min+d.max)/2)+'\" style=\"width:100%\"><p style=\"display:flex;justify-content:space-between;margin:0\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      h+='<div class=\"row\"><button class=\"btn\" id=\"next\" disabled>Next</button></div><p style=\"font-size:.85rem\">Move the slider to give your answer.</p>';\n      app.innerHTML=h+'<div class=\"err\"></div>';\n      var vals={},rs=app.querySelectorAll('.rng'),nx=document.getElementById('next');\n      rs.forEach(function(r){r.oninput=function(){vals[r.getAttribute('data-d')]=Number(r.value);document.getElementById('v_'+r.getAttribute('data-d')).textContent=r.value;nx.disabled=Object.keys(vals).length<rs.length;};});\n      nx.onclick=function(){nx.disabled=true;SPSite.answer(n,vals,{trial:k}).then(function(r){if(r&&r.ok===false){err(r.error);nx.disabled=false;return;}(done[n]=done[n]||{})[k]=true;nextStep();});};\n      window.scrollTo(0,0);return;\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      var words=!!(lab&&lab.some(function(x){return isNaN(Number(x));}));\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale'+(words?'':' num')+'\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(words?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T06:29:17.624Z",
+   "mediaFolders": [
+    "beijing"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T06:29:17.624Z"
+  },
+  "description": "Raters score Beijing street views for the construction and maintenance quality of building facades (1–4 rubric) and judge whether the street wall is continuous, using the rubrics of Liu, Silva, Wu & Wang (2017, CEUS). Method replication: the images are new Baidu street views of Beijing, not the paper's stimuli. Differences from the original study: (1) the two judgements draw their images independently instead of using the same image; (2) the on-site survey of passers-by is not included.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_001__eb96cd47-bb4e-415a-baa4-b21c7f79d852.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_001__eb96cd47-bb4e-415a-baa4-b21c7f79d852.jpg",
+   "name": "bj_001.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_001__eb96cd47-bb4e-415a-baa4-b21c7f79d852.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 151286,
+   "uploaded_bytes": 151286,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_003__1ab8b7c6-5676-40ca-a6c6-a231ab0910d2.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_003__1ab8b7c6-5676-40ca-a6c6-a231ab0910d2.jpg",
+   "name": "bj_003.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_003__1ab8b7c6-5676-40ca-a6c6-a231ab0910d2.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 146403,
+   "uploaded_bytes": 146403,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_004__468f1a29-0300-4906-a221-4029f2681831.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_004__468f1a29-0300-4906-a221-4029f2681831.jpg",
+   "name": "bj_004.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_004__468f1a29-0300-4906-a221-4029f2681831.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 139265,
+   "uploaded_bytes": 139265,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_005__c382a197-5c1f-4159-8f6d-5ddbb128046f.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_005__c382a197-5c1f-4159-8f6d-5ddbb128046f.jpg",
+   "name": "bj_005.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_005__c382a197-5c1f-4159-8f6d-5ddbb128046f.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 178641,
+   "uploaded_bytes": 178641,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_007__d4f26ac8-b60a-4f22-9bd5-383d9657e58d.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_007__d4f26ac8-b60a-4f22-9bd5-383d9657e58d.jpg",
+   "name": "bj_007.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_007__d4f26ac8-b60a-4f22-9bd5-383d9657e58d.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 138841,
+   "uploaded_bytes": 138841,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_008__6a3a8b35-4146-45eb-8bf6-1d12b8a6b7c4.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_008__6a3a8b35-4146-45eb-8bf6-1d12b8a6b7c4.jpg",
+   "name": "bj_008.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_008__6a3a8b35-4146-45eb-8bf6-1d12b8a6b7c4.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 201787,
+   "uploaded_bytes": 201787,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_009__92462b8d-bada-41eb-8e17-b379e54f74b6.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_009__92462b8d-bada-41eb-8e17-b379e54f74b6.jpg",
+   "name": "bj_009.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_009__92462b8d-bada-41eb-8e17-b379e54f74b6.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 152224,
+   "uploaded_bytes": 152224,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_011__4847f6c9-0ce8-42fd-9599-9f0993f8f91a.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_011__4847f6c9-0ce8-42fd-9599-9f0993f8f91a.jpg",
+   "name": "bj_011.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_011__4847f6c9-0ce8-42fd-9599-9f0993f8f91a.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 93291,
+   "uploaded_bytes": 93291,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_012__c012d436-e92b-45cb-9d8e-7c761b4c225e.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_012__c012d436-e92b-45cb-9d8e-7c761b4c225e.jpg",
+   "name": "bj_012.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_012__c012d436-e92b-45cb-9d8e-7c761b4c225e.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 131580,
+   "uploaded_bytes": 131580,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_013__ebfc69ac-0b27-4a03-8028-47efa5afdc37.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_013__ebfc69ac-0b27-4a03-8028-47efa5afdc37.jpg",
+   "name": "bj_013.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_013__ebfc69ac-0b27-4a03-8028-47efa5afdc37.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 169213,
+   "uploaded_bytes": 169213,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_014__4e4facce-6ac9-4fef-82da-1894689876e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_014__4e4facce-6ac9-4fef-82da-1894689876e6.jpg",
+   "name": "bj_014.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_014__4e4facce-6ac9-4fef-82da-1894689876e6.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 143192,
+   "uploaded_bytes": 143192,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_015__15a40356-6824-4c69-b145-a5c1e2e44e19.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_015__15a40356-6824-4c69-b145-a5c1e2e44e19.jpg",
+   "name": "bj_015.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_015__15a40356-6824-4c69-b145-a5c1e2e44e19.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 109379,
+   "uploaded_bytes": 109379,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_016__2914de7b-6673-4c95-8612-98fcfb063bc9.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_016__2914de7b-6673-4c95-8612-98fcfb063bc9.jpg",
+   "name": "bj_016.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_016__2914de7b-6673-4c95-8612-98fcfb063bc9.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 145381,
+   "uploaded_bytes": 145381,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_018__36fa30a1-fcfe-4868-951c-ed0a80323abf.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_018__36fa30a1-fcfe-4868-951c-ed0a80323abf.jpg",
+   "name": "bj_018.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_018__36fa30a1-fcfe-4868-951c-ed0a80323abf.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 174090,
+   "uploaded_bytes": 174090,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_019__c91d9e62-9899-42e2-bc23-6be7b1b50692.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_019__c91d9e62-9899-42e2-bc23-6be7b1b50692.jpg",
+   "name": "bj_019.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_019__c91d9e62-9899-42e2-bc23-6be7b1b50692.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 179129,
+   "uploaded_bytes": 179129,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_020__e5dd4f0b-8efb-4514-8fbf-58af10276757.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_020__e5dd4f0b-8efb-4514-8fbf-58af10276757.jpg",
+   "name": "bj_020.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_020__e5dd4f0b-8efb-4514-8fbf-58af10276757.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 152184,
+   "uploaded_bytes": 152184,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_021__04b4fd67-4faf-4904-8ccf-94815b007c4d.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_021__04b4fd67-4faf-4904-8ccf-94815b007c4d.jpg",
+   "name": "bj_021.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_021__04b4fd67-4faf-4904-8ccf-94815b007c4d.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 111189,
+   "uploaded_bytes": 111189,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_022__45a8cd96-07b2-4870-a9ec-006f38c663d5.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_022__45a8cd96-07b2-4870-a9ec-006f38c663d5.jpg",
+   "name": "bj_022.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_022__45a8cd96-07b2-4870-a9ec-006f38c663d5.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 183817,
+   "uploaded_bytes": 183817,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_023__05c543ad-5a94-45fb-9cb2-44ca5edf3925.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_023__05c543ad-5a94-45fb-9cb2-44ca5edf3925.jpg",
+   "name": "bj_023.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_023__05c543ad-5a94-45fb-9cb2-44ca5edf3925.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 184567,
+   "uploaded_bytes": 184567,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_024__e34630c3-a297-4d86-8467-7527b0445ece.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_024__e34630c3-a297-4d86-8467-7527b0445ece.jpg",
+   "name": "bj_024.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_024__e34630c3-a297-4d86-8467-7527b0445ece.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 159871,
+   "uploaded_bytes": 159871,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_026__7c35ea0a-f833-49ce-bce0-7651e59edc59.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_026__7c35ea0a-f833-49ce-bce0-7651e59edc59.jpg",
+   "name": "bj_026.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_026__7c35ea0a-f833-49ce-bce0-7651e59edc59.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 140687,
+   "uploaded_bytes": 140687,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_027__5b3a5ef2-8a34-4903-8b83-cc37bb700f4e.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_027__5b3a5ef2-8a34-4903-8b83-cc37bb700f4e.jpg",
+   "name": "bj_027.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_027__5b3a5ef2-8a34-4903-8b83-cc37bb700f4e.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 125430,
+   "uploaded_bytes": 125430,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_028__2dd481ed-f71d-4fe4-9afc-d0ac85b79a1d.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_028__2dd481ed-f71d-4fe4-9afc-d0ac85b79a1d.jpg",
+   "name": "bj_028.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_028__2dd481ed-f71d-4fe4-9afc-d0ac85b79a1d.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 162771,
+   "uploaded_bytes": 162771,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_029__ad465c55-a417-4b4e-9f0a-19fe6e46fc7b.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_029__ad465c55-a417-4b4e-9f0a-19fe6e46fc7b.jpg",
+   "name": "bj_029.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_029__ad465c55-a417-4b4e-9f0a-19fe6e46fc7b.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 127561,
+   "uploaded_bytes": 127561,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_030__8eb45fda-b691-4119-86a7-332bffaada51.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_030__8eb45fda-b691-4119-86a7-332bffaada51.jpg",
+   "name": "bj_030.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_030__8eb45fda-b691-4119-86a7-332bffaada51.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 135326,
+   "uploaded_bytes": 135326,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_031__cdb04854-9c63-416a-a0cc-00cc550ea927.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_031__cdb04854-9c63-416a-a0cc-00cc550ea927.jpg",
+   "name": "bj_031.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_031__cdb04854-9c63-416a-a0cc-00cc550ea927.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 150462,
+   "uploaded_bytes": 150462,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_032__024329ce-b7ce-4bba-acc5-7c67bf367607.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_032__024329ce-b7ce-4bba-acc5-7c67bf367607.jpg",
+   "name": "bj_032.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_032__024329ce-b7ce-4bba-acc5-7c67bf367607.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 123653,
+   "uploaded_bytes": 123653,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_033__108d1a61-474b-42b1-97c1-17bcbe9df222.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_033__108d1a61-474b-42b1-97c1-17bcbe9df222.jpg",
+   "name": "bj_033.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_033__108d1a61-474b-42b1-97c1-17bcbe9df222.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 94519,
+   "uploaded_bytes": 94519,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_034__dd847a76-348b-4033-bcbf-1972c29ce8e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_034__dd847a76-348b-4033-bcbf-1972c29ce8e7.jpg",
+   "name": "bj_034.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_034__dd847a76-348b-4033-bcbf-1972c29ce8e7.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 86583,
+   "uploaded_bytes": 86583,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_035__29a0c4c9-06a5-4e30-ab9f-9b91fc516744.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_035__29a0c4c9-06a5-4e30-ab9f-9b91fc516744.jpg",
+   "name": "bj_035.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_035__29a0c4c9-06a5-4e30-ab9f-9b91fc516744.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 164232,
+   "uploaded_bytes": 164232,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_037__3f4be684-cfe9-493c-83b2-8c6b9b66af0f.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_037__3f4be684-cfe9-493c-83b2-8c6b9b66af0f.jpg",
+   "name": "bj_037.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_037__3f4be684-cfe9-493c-83b2-8c6b9b66af0f.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 150432,
+   "uploaded_bytes": 150432,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_038__d24a73e4-eb29-48c6-9513-57e50a5445e3.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_038__d24a73e4-eb29-48c6-9513-57e50a5445e3.jpg",
+   "name": "bj_038.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_038__d24a73e4-eb29-48c6-9513-57e50a5445e3.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 94781,
+   "uploaded_bytes": 94781,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_039__277f15e1-f641-4f75-9f4e-944107973603.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_039__277f15e1-f641-4f75-9f4e-944107973603.jpg",
+   "name": "bj_039.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_039__277f15e1-f641-4f75-9f4e-944107973603.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 98076,
+   "uploaded_bytes": 98076,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_040__1290f719-c535-4b88-985d-9046de2de173.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_040__1290f719-c535-4b88-985d-9046de2de173.jpg",
+   "name": "bj_040.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_040__1290f719-c535-4b88-985d-9046de2de173.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 122301,
+   "uploaded_bytes": 122301,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_041__4d89edcc-0dc8-488c-8248-d7cae2584a5b.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_041__4d89edcc-0dc8-488c-8248-d7cae2584a5b.jpg",
+   "name": "bj_041.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_041__4d89edcc-0dc8-488c-8248-d7cae2584a5b.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 162714,
+   "uploaded_bytes": 162714,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_042__c89b3b26-5ff4-4b2a-9b22-964c35eeee8c.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_042__c89b3b26-5ff4-4b2a-9b22-964c35eeee8c.jpg",
+   "name": "bj_042.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_042__c89b3b26-5ff4-4b2a-9b22-964c35eeee8c.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 106115,
+   "uploaded_bytes": 106115,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_043__983d12ed-9dfd-43a0-afff-1e2bd5371b40.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_043__983d12ed-9dfd-43a0-afff-1e2bd5371b40.jpg",
+   "name": "bj_043.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_043__983d12ed-9dfd-43a0-afff-1e2bd5371b40.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 80620,
+   "uploaded_bytes": 80620,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_044__f041dac8-636d-4337-96e3-f5632f8cc81b.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_044__f041dac8-636d-4337-96e3-f5632f8cc81b.jpg",
+   "name": "bj_044.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_044__f041dac8-636d-4337-96e3-f5632f8cc81b.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 213487,
+   "uploaded_bytes": 213487,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_045__a242b831-6f30-4e3f-91aa-297eeb3ba58c.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_045__a242b831-6f30-4e3f-91aa-297eeb3ba58c.jpg",
+   "name": "bj_045.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_045__a242b831-6f30-4e3f-91aa-297eeb3ba58c.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 123485,
+   "uploaded_bytes": 123485,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_047__cb874a53-1ac1-4e5b-a592-0117a5722ee7.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_047__cb874a53-1ac1-4e5b-a592-0117a5722ee7.jpg",
+   "name": "bj_047.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_047__cb874a53-1ac1-4e5b-a592-0117a5722ee7.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 142821,
+   "uploaded_bytes": 142821,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_048__86b4f0ff-7edd-4e9a-b076-f4c463cdc8d2.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_048__86b4f0ff-7edd-4e9a-b076-f4c463cdc8d2.jpg",
+   "name": "bj_048.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_048__86b4f0ff-7edd-4e9a-b076-f4c463cdc8d2.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 95469,
+   "uploaded_bytes": 95469,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_049__86049b01-f9c2-4398-be60-3b0d1791cc37.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_049__86049b01-f9c2-4398-be60-3b0d1791cc37.jpg",
+   "name": "bj_049.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_049__86049b01-f9c2-4398-be60-3b0d1791cc37.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 146833,
+   "uploaded_bytes": 146833,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_050__0d27d10b-c175-4998-b8ca-f799f01192d2.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_050__0d27d10b-c175-4998-b8ca-f799f01192d2.jpg",
+   "name": "bj_050.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_050__0d27d10b-c175-4998-b8ca-f799f01192d2.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 130480,
+   "uploaded_bytes": 130480,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_051__aa4198ad-250d-4bab-882b-c1b7747bcb06.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_051__aa4198ad-250d-4bab-882b-c1b7747bcb06.jpg",
+   "name": "bj_051.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_051__aa4198ad-250d-4bab-882b-c1b7747bcb06.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 160720,
+   "uploaded_bytes": 160720,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_053__95a4bc3f-d88e-4d7c-a635-519af60ba434.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_053__95a4bc3f-d88e-4d7c-a635-519af60ba434.jpg",
+   "name": "bj_053.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_053__95a4bc3f-d88e-4d7c-a635-519af60ba434.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 153022,
+   "uploaded_bytes": 153022,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_054__6aa07e59-0f34-4854-8157-73396ab47175.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_054__6aa07e59-0f34-4854-8157-73396ab47175.jpg",
+   "name": "bj_054.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_054__6aa07e59-0f34-4854-8157-73396ab47175.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 140341,
+   "uploaded_bytes": 140341,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_055__16b96c5b-5a24-4a81-9155-b94611f8cad6.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_055__16b96c5b-5a24-4a81-9155-b94611f8cad6.jpg",
+   "name": "bj_055.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_055__16b96c5b-5a24-4a81-9155-b94611f8cad6.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 146727,
+   "uploaded_bytes": 146727,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_056__cfc9478e-6af2-420d-923b-2d9de4ff01c0.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_056__cfc9478e-6af2-420d-923b-2d9de4ff01c0.jpg",
+   "name": "bj_056.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_056__cfc9478e-6af2-420d-923b-2d9de4ff01c0.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 158116,
+   "uploaded_bytes": 158116,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_057__e91ad552-fe8a-445e-b501-3febc24e8a8d.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_057__e91ad552-fe8a-445e-b501-3febc24e8a8d.jpg",
+   "name": "bj_057.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_057__e91ad552-fe8a-445e-b501-3febc24e8a8d.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 107360,
+   "uploaded_bytes": 107360,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_058__c82e91fa-be4f-40b9-ad4c-e2afa0e4e326.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_058__c82e91fa-be4f-40b9-ad4c-e2afa0e4e326.jpg",
+   "name": "bj_058.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_058__c82e91fa-be4f-40b9-ad4c-e2afa0e4e326.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 189214,
+   "uploaded_bytes": 189214,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_059__00fd5076-28ab-4364-983f-67bb6d860b1f.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_059__00fd5076-28ab-4364-983f-67bb6d860b1f.jpg",
+   "name": "bj_059.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_059__00fd5076-28ab-4364-983f-67bb6d860b1f.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 117370,
+   "uploaded_bytes": 117370,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_060__1708b9af-14b5-4aae-bd12-65e732d75969.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_060__1708b9af-14b5-4aae-bd12-65e732d75969.jpg",
+   "name": "bj_060.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_060__1708b9af-14b5-4aae-bd12-65e732d75969.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 108264,
+   "uploaded_bytes": 108264,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_061__05ca1628-41cc-49bb-a6eb-8d86aa6c5323.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_061__05ca1628-41cc-49bb-a6eb-8d86aa6c5323.jpg",
+   "name": "bj_061.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_061__05ca1628-41cc-49bb-a6eb-8d86aa6c5323.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 135778,
+   "uploaded_bytes": 135778,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_062__cb14fc60-bcd8-4ca5-a314-f17115300a70.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_062__cb14fc60-bcd8-4ca5-a314-f17115300a70.jpg",
+   "name": "bj_062.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_062__cb14fc60-bcd8-4ca5-a314-f17115300a70.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 118999,
+   "uploaded_bytes": 118999,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_063__1404ecdd-642e-4fe9-8489-e11c4671ec31.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_063__1404ecdd-642e-4fe9-8489-e11c4671ec31.jpg",
+   "name": "bj_063.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_063__1404ecdd-642e-4fe9-8489-e11c4671ec31.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 129761,
+   "uploaded_bytes": 129761,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_064__b2fcbde3-2dcc-47f3-ab4b-3a7e198a65ed.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_064__b2fcbde3-2dcc-47f3-ab4b-3a7e198a65ed.jpg",
+   "name": "bj_064.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_064__b2fcbde3-2dcc-47f3-ab4b-3a7e198a65ed.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 107678,
+   "uploaded_bytes": 107678,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_065__359a4bdb-48af-40bb-9bc9-e7b2100ea3d5.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_065__359a4bdb-48af-40bb-9bc9-e7b2100ea3d5.jpg",
+   "name": "bj_065.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_065__359a4bdb-48af-40bb-9bc9-e7b2100ea3d5.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 73283,
+   "uploaded_bytes": 73283,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_067__0565d21f-6dbb-4f9a-b8e8-8680fe8432b7.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_067__0565d21f-6dbb-4f9a-b8e8-8680fe8432b7.jpg",
+   "name": "bj_067.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_067__0565d21f-6dbb-4f9a-b8e8-8680fe8432b7.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 85646,
+   "uploaded_bytes": 85646,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_069__4b13454b-1cce-4181-8eb0-d1c6509f3d6b.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_069__4b13454b-1cce-4181-8eb0-d1c6509f3d6b.jpg",
+   "name": "bj_069.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_069__4b13454b-1cce-4181-8eb0-d1c6509f3d6b.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 120185,
+   "uploaded_bytes": 120185,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_070__7064b7bb-5cc4-432c-9ad6-8e2701052388.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_070__7064b7bb-5cc4-432c-9ad6-8e2701052388.jpg",
+   "name": "bj_070.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_070__7064b7bb-5cc4-432c-9ad6-8e2701052388.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 138708,
+   "uploaded_bytes": 138708,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_071__90780095-12d1-43eb-976d-eafc51c9c9c6.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_071__90780095-12d1-43eb-976d-eafc51c9c9c6.jpg",
+   "name": "bj_071.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_071__90780095-12d1-43eb-976d-eafc51c9c9c6.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 139971,
+   "uploaded_bytes": 139971,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_072__a1f983c6-fa5d-4c0c-a202-254df41b4891.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_072__a1f983c6-fa5d-4c0c-a202-254df41b4891.jpg",
+   "name": "bj_072.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_072__a1f983c6-fa5d-4c0c-a202-254df41b4891.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 232048,
+   "uploaded_bytes": 232048,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_074__614ef74d-721d-4b2c-9cab-738d9f56ad18.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_074__614ef74d-721d-4b2c-9cab-738d9f56ad18.jpg",
+   "name": "bj_074.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_074__614ef74d-721d-4b2c-9cab-738d9f56ad18.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 132992,
+   "uploaded_bytes": 132992,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_075__6376453c-e497-429e-a078-3536d69b8953.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_075__6376453c-e497-429e-a078-3536d69b8953.jpg",
+   "name": "bj_075.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_075__6376453c-e497-429e-a078-3536d69b8953.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 158945,
+   "uploaded_bytes": 158945,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_076__e0c49e68-48a7-4e2f-93f2-e535e3c047f8.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_076__e0c49e68-48a7-4e2f-93f2-e535e3c047f8.jpg",
+   "name": "bj_076.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_076__e0c49e68-48a7-4e2f-93f2-e535e3c047f8.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 145306,
+   "uploaded_bytes": 145306,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_078__34b87972-ec1b-4f9f-ae93-fc021fe14f75.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_078__34b87972-ec1b-4f9f-ae93-fc021fe14f75.jpg",
+   "name": "bj_078.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_078__34b87972-ec1b-4f9f-ae93-fc021fe14f75.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 104728,
+   "uploaded_bytes": 104728,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_079__7fab210a-b065-4bce-adf4-f5e83e671b74.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_079__7fab210a-b065-4bce-adf4-f5e83e671b74.jpg",
+   "name": "bj_079.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_079__7fab210a-b065-4bce-adf4-f5e83e671b74.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 126978,
+   "uploaded_bytes": 126978,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2017-liu-machine/beijing/bj_080__6b3b3339-dd91-40f0-8c06-6907a371774d.jpg",
+   "url": "https://media.sp-survey.org/templates/2017-liu-machine/beijing/bj_080__6b3b3339-dd91-40f0-8c06-6907a371774d.jpg",
+   "name": "bj_080.jpg",
+   "type": "image",
+   "folder": "beijing",
+   "media_id": "templates/2017-liu-machine/beijing/bj_080__6b3b3339-dd91-40f0-8c06-6907a371774d.jpg",
+   "logicalFolder": "beijing",
+   "original_bytes": 145911,
+   "uploaded_bytes": 145911,
+   "image_compressed": false
   }
+ ],
+ "paper": {
+  "title": "A machine learning-based method for the large-scale evaluation of the qualities of the urban environment",
+  "authors": [
+   "Liu L.",
+   "Silva E.A.",
+   "Wu C.",
+   "Wang H."
+  ],
+  "year": 2017,
+  "venue": "Computers, Environment and Urban Systems",
+  "doi": "10.1016/j.compenvurbsys.2017.06.003",
+  "url": "https://doi.org/10.1016/j.compenvurbsys.2017.06.003"
+ }
 }

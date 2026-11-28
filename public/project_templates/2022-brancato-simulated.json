@@ -1,0 +1,814 @@
+{
+ "id": "2022-brancato-simulated",
+ "name": "Simulated Nature and City Walks (15-min videos, mood and restoration)",
+ "description": "Faithful replication of Brancato, Van Hedger, Berman & Van Hedger (2022), \"Simulated nature walks improve psychological well-being along a natural to urban continuum\", Journal of Environmental Psychology 82, 101779. The four 15-minute walk videos are the authors' own stimuli from OSF xgkvn (posted without a licence; the authors cut them from YouTube walking videos, whose links are credited in the page). They are used with credit and this template will be taken down if the authors or the video owners object.\n\nWhat participants do: after consent they rate how happy, sad, calm, anxious and lonely they feel right now (0–100 sliders, not at all – extremely). They are randomly assigned to one of four simulated walks along a natural-to-urban continuum: a pine forest along the Metolius River (Oregon), a farmed wheat field, a tree-lined neighbourhood in Boston's Beacon Hill in the rain, or a bustling Midtown Manhattan / Times Square walk. The 15-minute video plays in the page with sound (pause allowed, no skipping); Continue appears only when it has ended. Then the five feelings again, PANAS (20 words, 1–5), perceived restorativeness of the video (9 items: being away, extent, fascination), Mental Bandwidth Scale (7 items: self-awareness, daydreaming, planning), Nature Relatedness Scale (21 items), TIPI (10 items, 1–7), UCLA Loneliness (8 items), age, gender, and a short description of what they saw and heard (attention check), followed by the original debriefing.\n\nWhat the original found (abstract; 202 online participants, 4 groups): the walks influenced affect and perceived restoration differently even within the same nominal category. The pine forest walk improved happiness relative to both urban walks, whereas the farmed field walk did not; the bustling city walk decreased calmness compared to all other walks, including the tree-lined neighbourhood; daydreaming and being away differed in a graded fashion, and the farmed field walk was less fascinating than all other walks.\n\nData: vas_pre and vas_post = { happy, sad, calm, anxious, lonely }; walk = { condition, watched_s, pauses, completed }; panas, prs, mbs, nrs, tipi, ucla = { item: score } with the original item order; age, gender, attn. Analysis as in the paper: post − pre change per feeling and the PRS/MBS subscales compared across the four walks (one-way ANOVA with post-hoc pairwise tests, FDR-corrected).\n\nDifferences from the original study: (1) the video plays inside the survey page (split into three 5-minute parts, re-encoded to about 0.5 Mbit/s at the original 720 × 480) instead of on a separate page that gave a completion code; the last second of each 901-second video is cut; (2) the State and Trait forms of the STAI used in the original are left out because the STAI is a copyrighted instrument; (3) the letter of information is shortened and the Worker ID / payment parts are removed; (4) gender options follow the original (Female, Male, Non-binary, Other, Prefer not to say).",
+ "author": "Brancato, Van Hedger, Berman & Van Hedger",
+ "year": "2022",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "video",
+  "virtual walk",
+  "restoration",
+  "mood",
+  "nature",
+  "urban",
+  "source:paper",
+  "modality:video",
+  "task:questionnaire",
+  "task:rating",
+  "concept:restoration",
+  "concept:emotion",
+  "concept:naturalness",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:United States",
+  "city:Boston",
+  "city:New York"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1016/j.jenvp.2022.101779",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T06:04:45.624+00:00",
+ "updatedAt": "2026-11-27T06:05:05.781+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "before",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I have read the information about this study and I agree to participate.",
+      "labelTrue": "Yes",
+      "isRequired": true,
+      "labelFalse": "No"
+     },
+     {
+      "name": "vas_pre",
+      "type": "custom",
+      "title": "Before we begin, please rate how you are feeling right now.",
+      "isRequired": true,
+      "description": "{ happy, sad, calm, anxious, lonely } on 0–100 sliders (0 = not at all, 100 = extremely); PRE_VAS_* in the open data."
+     }
+    ]
+   },
+   {
+    "name": "walk",
+    "elements": [
+     {
+      "name": "walk",
+      "type": "custom",
+      "title": "Assigned virtual walk",
+      "isRequired": true,
+      "description": "{ condition: 'forest' | 'field' | 'treelined' | 'city', watched_s, pauses, completed } — random assignment, as CONDIT in the open data (Pine Forest, Farm Field, Treelined Neighborhood, Bustling City). The 15-minute video plays in three 5-minute parts without seeking; Continue appears when it has ended."
+     }
+    ]
+   },
+   {
+    "name": "after",
+    "elements": [
+     {
+      "name": "vas_post",
+      "type": "custom",
+      "title": "Please rate how you are feeling right now.",
+      "isRequired": true,
+      "description": "Same five 0–100 sliders after the walk. Main outcome: post − pre change (HAPPY_DIFF … LONELY_DIFF) compared between the four walks (ANOVA / pairwise tests)."
+     },
+     {
+      "name": "panas",
+      "rows": [
+       {
+        "text": "Interested",
+        "value": "panas_01"
+       },
+       {
+        "text": "Distressed",
+        "value": "panas_02"
+       },
+       {
+        "text": "Excited",
+        "value": "panas_03"
+       },
+       {
+        "text": "Upset",
+        "value": "panas_04"
+       },
+       {
+        "text": "Strong",
+        "value": "panas_05"
+       },
+       {
+        "text": "Guilty",
+        "value": "panas_06"
+       },
+       {
+        "text": "Scared",
+        "value": "panas_07"
+       },
+       {
+        "text": "Hostile",
+        "value": "panas_08"
+       },
+       {
+        "text": "Enthusiastic",
+        "value": "panas_09"
+       },
+       {
+        "text": "Proud",
+        "value": "panas_10"
+       },
+       {
+        "text": "Irritable",
+        "value": "panas_11"
+       },
+       {
+        "text": "Alert",
+        "value": "panas_12"
+       },
+       {
+        "text": "Ashamed",
+        "value": "panas_13"
+       },
+       {
+        "text": "Inspired",
+        "value": "panas_14"
+       },
+       {
+        "text": "Nervous",
+        "value": "panas_15"
+       },
+       {
+        "text": "Determined",
+        "value": "panas_16"
+       },
+       {
+        "text": "Attentive",
+        "value": "panas_17"
+       },
+       {
+        "text": "Jittery",
+        "value": "panas_18"
+       },
+       {
+        "text": "Active",
+        "value": "panas_19"
+       },
+       {
+        "text": "Afraid",
+        "value": "panas_20"
+       }
+      ],
+      "type": "matrix",
+      "title": "Indicate to what extent you feel this way right now, that is, at the present moment.",
+      "columns": [
+       {
+        "text": "1 = very slightly or not at all",
+        "value": 1
+       },
+       {
+        "text": "2 = a little",
+        "value": 2
+       },
+       {
+        "text": "3 = moderately",
+        "value": 3
+       },
+       {
+        "text": "4 = quite a bit",
+        "value": 4
+       },
+       {
+        "text": "5 = extremely",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "PANAS, 20 words, 1–5. PANAS-P / PANAS-N sums as in the open data."
+     },
+     {
+      "name": "prs",
+      "rows": [
+       {
+        "text": "This video helped me get away from it all",
+        "value": "prs_01"
+       },
+       {
+        "text": "This video was an escape for me",
+        "value": "prs_02"
+       },
+       {
+        "text": "This video helped me get relief from unwanted demands on my attention",
+        "value": "prs_03"
+       },
+       {
+        "text": "This video sustained my interest",
+        "value": "prs_04"
+       },
+       {
+        "text": "This video had qualities that drew me further in",
+        "value": "prs_05"
+       },
+       {
+        "text": "Once I started this video, I easily got pulled in",
+        "value": "prs_06"
+       },
+       {
+        "text": "During this video, my attention was drawn to many interesting things",
+        "value": "prs_07"
+       },
+       {
+        "text": "This video had many fascinating qualities",
+        "value": "prs_08"
+       },
+       {
+        "text": "Watching this video was a captivating experience",
+        "value": "prs_09"
+       }
+      ],
+      "type": "matrix",
+      "title": "With respect to the video you just watched, please indicate how much you agree with the following statements.",
+      "columns": [
+       {
+        "text": "1 = very slightly or not at all",
+        "value": 1
+       },
+       {
+        "text": "2 = a little",
+        "value": 2
+       },
+       {
+        "text": "3 = moderately",
+        "value": 3
+       },
+       {
+        "text": "4 = quite a bit",
+        "value": 4
+       },
+       {
+        "text": "5 = extremely",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "Perceived restorativeness, 9 items, 1–5: being away = prs_01–03, extent = prs_04–06, fascination = prs_07–09 (PRS-Away, PRS-Extent, PRS-Fascination in the open data)."
+     },
+     {
+      "name": "mbs",
+      "rows": [
+       {
+        "text": "During this video, to what degree were you aware of the things going on around you?",
+        "value": "mbs_01"
+       },
+       {
+        "text": "During this video, to what degree were you able to take note of your thoughts and feelings?",
+        "value": "mbs_02"
+       },
+       {
+        "text": "During this video, to what degree were you lost in thought?",
+        "value": "mbs_03"
+       },
+       {
+        "text": "During this video, to what degree were you letting your mind wander?",
+        "value": "mbs_04"
+       },
+       {
+        "text": "During this video, to what degree were you thinking about the things you need to do?",
+        "value": "mbs_05"
+       },
+       {
+        "text": "During this video, to what degree were you making plans for the future?",
+        "value": "mbs_06"
+       },
+       {
+        "text": "During this video, to what degree were you reflecting on things that happened in the past?",
+        "value": "mbs_07"
+       }
+      ],
+      "type": "matrix",
+      "title": "This scale consists of short questions asking you to reflect on the video previously watched.",
+      "columns": [
+       {
+        "text": "1 = very slightly or not at all",
+        "value": 1
+       },
+       {
+        "text": "2 = a little",
+        "value": 2
+       },
+       {
+        "text": "3 = moderately",
+        "value": 3
+       },
+       {
+        "text": "4 = quite a bit",
+        "value": 4
+       },
+       {
+        "text": "5 = extremely",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "Mental Bandwidth Scale, 7 items, 1–5: self-awareness = mbs_01–02, daydreaming = mbs_03–04, planning = mbs_05–07 (as in the open data)."
+     },
+     {
+      "name": "nrs",
+      "rows": [
+       {
+        "text": "My connection to nature and the environment is a part of my spirituality",
+        "value": "nrs_01"
+       },
+       {
+        "text": "My relationship to nature is an important part of who I am",
+        "value": "nrs_02"
+       },
+       {
+        "text": "I feel connected to all living things and the earth",
+        "value": "nrs_03"
+       },
+       {
+        "text": "I am not separate from nature, but a part of nature",
+        "value": "nrs_04"
+       },
+       {
+        "text": "I always think about how my actions affect the environment",
+        "value": "nrs_05"
+       },
+       {
+        "text": "I am very aware of environmental issues",
+        "value": "nrs_06"
+       },
+       {
+        "text": "I think a lot about the suffering of animals",
+        "value": "nrs_07"
+       },
+       {
+        "text": "Even in the middle of the city, I notice nature around me",
+        "value": "nrs_08"
+       },
+       {
+        "text": "My feelings about nature do not affect how I live my life",
+        "value": "nrs_09"
+       },
+       {
+        "text": "Humans have the right to nature resources any way we want",
+        "value": "nrs_10"
+       },
+       {
+        "text": "Conservation is unnecessary because nature is strong enough to recover from any human impact",
+        "value": "nrs_11"
+       },
+       {
+        "text": "Animals, birds, and plants have fewer rights then humans",
+        "value": "nrs_12"
+       },
+       {
+        "text": "Some species are just meant to die out or become extinct",
+        "value": "nrs_13"
+       },
+       {
+        "text": "Nothing I do will change problems in other places on the planet",
+        "value": "nrs_14"
+       },
+       {
+        "text": "The state of nonhuman species is a indicator of the future for humans",
+        "value": "nrs_15"
+       },
+       {
+        "text": "The thought of being deep in the woods, away from civilization, is frightening",
+        "value": "nrs_16"
+       },
+       {
+        "text": "My ideal vacation would be a remote, wilderness area",
+        "value": "nrs_17"
+       },
+       {
+        "text": "I enjoy being outdoors, even in unpleasant weather",
+        "value": "nrs_18"
+       },
+       {
+        "text": "I don’t often go out in nature",
+        "value": "nrs_19"
+       },
+       {
+        "text": "I enjoy digging in the earth and getting dirt on my hands",
+        "value": "nrs_20"
+       },
+       {
+        "text": "I take notice of wildlife wherever I am",
+        "value": "nrs_21"
+       }
+      ],
+      "type": "matrix",
+      "title": "Please reflect on the statements and indicate your opinion.",
+      "columns": [
+       {
+        "text": "1 = very slightly or not at all",
+        "value": 1
+       },
+       {
+        "text": "2 = a little",
+        "value": 2
+       },
+       {
+        "text": "3 = moderately",
+        "value": 3
+       },
+       {
+        "text": "4 = quite a bit",
+        "value": 4
+       },
+       {
+        "text": "5 = extremely",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "Nature Relatedness Scale, 21 items, 1–5 (reverse-score items as in Nisbet et al. 2009)."
+     },
+     {
+      "name": "tipi",
+      "rows": [
+       {
+        "text": "Extraverted, enthusiastic",
+        "value": "tipi_01"
+       },
+       {
+        "text": "Critical, quarrelsome",
+        "value": "tipi_02"
+       },
+       {
+        "text": "Dependable, self-disciplined",
+        "value": "tipi_03"
+       },
+       {
+        "text": "Anxious, easily upset",
+        "value": "tipi_04"
+       },
+       {
+        "text": "Open to new experiences, complex",
+        "value": "tipi_05"
+       },
+       {
+        "text": "Reserved, quiet",
+        "value": "tipi_06"
+       },
+       {
+        "text": "Sympathetic, warm",
+        "value": "tipi_07"
+       },
+       {
+        "text": "Disorganized, careless",
+        "value": "tipi_08"
+       },
+       {
+        "text": "Calm, emotionally stable",
+        "value": "tipi_09"
+       },
+       {
+        "text": "Conventional, uncreative",
+        "value": "tipi_10"
+       }
+      ],
+      "type": "matrix",
+      "title": "Here are a number of personality traits that may or may not apply to you. I see myself as...",
+      "columns": [
+       {
+        "text": "1 = disagree strongly",
+        "value": 1
+       },
+       {
+        "text": "2 = disagree moderately",
+        "value": 2
+       },
+       {
+        "text": "3 = disagree a little",
+        "value": 3
+       },
+       {
+        "text": "4 = neither agree nor disagree",
+        "value": 4
+       },
+       {
+        "text": "5 = agree a little",
+        "value": 5
+       },
+       {
+        "text": "6 = agree moderately",
+        "value": 6
+       },
+       {
+        "text": "7 = agree strongly",
+        "value": 7
+       }
+      ],
+      "isRequired": true,
+      "description": "Ten-Item Personality Inventory, 1–7."
+     },
+     {
+      "name": "ucla",
+      "rows": [
+       {
+        "text": "I lack companionship",
+        "value": "ucla_01"
+       },
+       {
+        "text": "There is no one I can turn to",
+        "value": "ucla_02"
+       },
+       {
+        "text": "I am an outgoing person",
+        "value": "ucla_03"
+       },
+       {
+        "text": "I feel left out",
+        "value": "ucla_04"
+       },
+       {
+        "text": "I feel isolated from others",
+        "value": "ucla_05"
+       },
+       {
+        "text": "I can find companionship when I want it",
+        "value": "ucla_06"
+       },
+       {
+        "text": "I am unhappy being so withdrawn",
+        "value": "ucla_07"
+       },
+       {
+        "text": "People are around me but not with me",
+        "value": "ucla_08"
+       }
+      ],
+      "type": "matrix",
+      "title": "Indicate how much you agree with each statement.",
+      "columns": [
+       {
+        "text": "1 = very slightly or not at all",
+        "value": 1
+       },
+       {
+        "text": "2 = a little",
+        "value": 2
+       },
+       {
+        "text": "3 = moderately",
+        "value": 3
+       },
+       {
+        "text": "4 = quite a bit",
+        "value": 4
+       },
+       {
+        "text": "5 = extremely",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "UCLA Loneliness Scale (8 items), 1–5."
+     },
+     {
+      "max": 100,
+      "min": 16,
+      "name": "age",
+      "type": "text",
+      "title": "How old are you (in years)?",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Please select your gender identity from the options below",
+      "choices": [
+       {
+        "text": "Female",
+        "value": 1
+       },
+       {
+        "text": "Male",
+        "value": 2
+       },
+       {
+        "text": "Non-binary",
+        "value": 3
+       },
+       {
+        "text": "Other",
+        "value": 4
+       },
+       {
+        "text": "Prefer not to say",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "attn",
+      "type": "comment",
+      "title": "In a sentence or two, please describe what you saw and heard in the video at the beginning of the study.",
+      "isRequired": true,
+      "description": "Attention check (ATTN in the original; responses that did not describe the video were excluded)."
+     }
+    ]
+   }
+  ],
+  "title": "Simulated Walks: Forest, Field, Neighbourhood, City",
+  "locale": "en",
+  "spSite": {
+   "id": "site-0495e06dc7458c0b",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Simulated Walks: Forest, Field, Neighbourhood, City</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Simulated Walks: Forest, Field, Neighbourhood, City\",\n  \"description\": \"Rebuilt from Brancato, Van Hedger, Berman & Van Hedger (2022), Journal of Environmental Psychology 82:101779, with the authors' four 15-minute walk videos from OSF xgkvn. Each participant is randomly assigned to one walk (pine forest, farmed field, tree-lined neighbourhood or bustling city centre), rates five feelings on 0–100 sliders before and after, then answers PANAS, perceived restorativeness (9 items), mental bandwidth (7 items), Nature Relatedness (21 items), TIPI (10 items), UCLA Loneliness (8 items), age, gender and a short description of the video.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"walks\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"before\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I have read the information about this study and I agree to participate.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"Yes\",\n      \"labelFalse\": \"No\"\n     },\n     {\n      \"type\": \"custom\",\n      \"name\": \"vas_pre\",\n      \"title\": \"Before we begin, please rate how you are feeling right now.\",\n      \"description\": \"{ happy, sad, calm, anxious, lonely } on 0–100 sliders (0 = not at all, 100 = extremely); PRE_VAS_* in the open data.\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"walk\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"walk\",\n      \"title\": \"Assigned virtual walk\",\n      \"description\": \"{ condition: 'forest' | 'field' | 'treelined' | 'city', watched_s, pauses, completed } — random assignment, as CONDIT in the open data (Pine Forest, Farm Field, Treelined Neighborhood, Bustling City). The 15-minute video plays in three 5-minute parts without seeking; Continue appears when it has ended.\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"after\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"vas_post\",\n      \"title\": \"Please rate how you are feeling right now.\",\n      \"description\": \"Same five 0–100 sliders after the walk. Main outcome: post − pre change (HAPPY_DIFF … LONELY_DIFF) compared between the four walks (ANOVA / pairwise tests).\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"panas\",\n      \"title\": \"Indicate to what extent you feel this way right now, that is, at the present moment.\",\n      \"description\": \"PANAS, 20 words, 1–5. PANAS-P / PANAS-N sums as in the open data.\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"panas_01\",\n        \"text\": \"Interested\"\n       },\n       {\n        \"value\": \"panas_02\",\n        \"text\": \"Distressed\"\n       },\n       {\n        \"value\": \"panas_03\",\n        \"text\": \"Excited\"\n       },\n       {\n        \"value\": \"panas_04\",\n        \"text\": \"Upset\"\n       },\n       {\n        \"value\": \"panas_05\",\n        \"text\": \"Strong\"\n       },\n       {\n        \"value\": \"panas_06\",\n        \"text\": \"Guilty\"\n       },\n       {\n        \"value\": \"panas_07\",\n        \"text\": \"Scared\"\n       },\n       {\n        \"value\": \"panas_08\",\n        \"text\": \"Hostile\"\n       },\n       {\n        \"value\": \"panas_09\",\n        \"text\": \"Enthusiastic\"\n       },\n       {\n        \"value\": \"panas_10\",\n        \"text\": \"Proud\"\n       },\n       {\n        \"value\": \"panas_11\",\n        \"text\": \"Irritable\"\n       },\n       {\n        \"value\": \"panas_12\",\n        \"text\": \"Alert\"\n       },\n       {\n        \"value\": \"panas_13\",\n        \"text\": \"Ashamed\"\n       },\n       {\n        \"value\": \"panas_14\",\n        \"text\": \"Inspired\"\n       },\n       {\n        \"value\": \"panas_15\",\n        \"text\": \"Nervous\"\n       },\n       {\n        \"value\": \"panas_16\",\n        \"text\": \"Determined\"\n       },\n       {\n        \"value\": \"panas_17\",\n        \"text\": \"Attentive\"\n       },\n       {\n        \"value\": \"panas_18\",\n        \"text\": \"Jittery\"\n       },\n       {\n        \"value\": \"panas_19\",\n        \"text\": \"Active\"\n       },\n       {\n        \"value\": \"panas_20\",\n        \"text\": \"Afraid\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1 = very slightly or not at all\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 = a little\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 = moderately\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 = quite a bit\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5 = extremely\"\n       }\n      ]\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"prs\",\n      \"title\": \"With respect to the video you just watched, please indicate how much you agree with the following statements.\",\n      \"description\": \"Perceived restorativeness, 9 items, 1–5: being away = prs_01–03, extent = prs_04–06, fascination = prs_07–09 (PRS-Away, PRS-Extent, PRS-Fascination in the open data).\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"prs_01\",\n        \"text\": \"This video helped me get away from it all\"\n       },\n       {\n        \"value\": \"prs_02\",\n        \"text\": \"This video was an escape for me\"\n       },\n       {\n        \"value\": \"prs_03\",\n        \"text\": \"This video helped me get relief from unwanted demands on my attention\"\n       },\n       {\n        \"value\": \"prs_04\",\n        \"text\": \"This video sustained my interest\"\n       },\n       {\n        \"value\": \"prs_05\",\n        \"text\": \"This video had qualities that drew me further in\"\n       },\n       {\n        \"value\": \"prs_06\",\n        \"text\": \"Once I started this video, I easily got pulled in\"\n       },\n       {\n        \"value\": \"prs_07\",\n        \"text\": \"During this video, my attention was drawn to many interesting things\"\n       },\n       {\n        \"value\": \"prs_08\",\n        \"text\": \"This video had many fascinating qualities\"\n       },\n       {\n        \"value\": \"prs_09\",\n        \"text\": \"Watching this video was a captivating experience\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1 = very slightly or not at all\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 = a little\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 = moderately\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 = quite a bit\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5 = extremely\"\n       }\n      ]\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"mbs\",\n      \"title\": \"This scale consists of short questions asking you to reflect on the video previously watched.\",\n      \"description\": \"Mental Bandwidth Scale, 7 items, 1–5: self-awareness = mbs_01–02, daydreaming = mbs_03–04, planning = mbs_05–07 (as in the open data).\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"mbs_01\",\n        \"text\": \"During this video, to what degree were you aware of the things going on around you?\"\n       },\n       {\n        \"value\": \"mbs_02\",\n        \"text\": \"During this video, to what degree were you able to take note of your thoughts and feelings?\"\n       },\n       {\n        \"value\": \"mbs_03\",\n        \"text\": \"During this video, to what degree were you lost in thought?\"\n       },\n       {\n        \"value\": \"mbs_04\",\n        \"text\": \"During this video, to what degree were you letting your mind wander?\"\n       },\n       {\n        \"value\": \"mbs_05\",\n        \"text\": \"During this video, to what degree were you thinking about the things you need to do?\"\n       },\n       {\n        \"value\": \"mbs_06\",\n        \"text\": \"During this video, to what degree were you making plans for the future?\"\n       },\n       {\n        \"value\": \"mbs_07\",\n        \"text\": \"During this video, to what degree were you reflecting on things that happened in the past?\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1 = very slightly or not at all\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 = a little\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 = moderately\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 = quite a bit\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5 = extremely\"\n       }\n      ]\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"nrs\",\n      \"title\": \"Please reflect on the statements and indicate your opinion.\",\n      \"description\": \"Nature Relatedness Scale, 21 items, 1–5 (reverse-score items as in Nisbet et al. 2009).\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"nrs_01\",\n        \"text\": \"My connection to nature and the environment is a part of my spirituality\"\n       },\n       {\n        \"value\": \"nrs_02\",\n        \"text\": \"My relationship to nature is an important part of who I am\"\n       },\n       {\n        \"value\": \"nrs_03\",\n        \"text\": \"I feel connected to all living things and the earth\"\n       },\n       {\n        \"value\": \"nrs_04\",\n        \"text\": \"I am not separate from nature, but a part of nature\"\n       },\n       {\n        \"value\": \"nrs_05\",\n        \"text\": \"I always think about how my actions affect the environment\"\n       },\n       {\n        \"value\": \"nrs_06\",\n        \"text\": \"I am very aware of environmental issues\"\n       },\n       {\n        \"value\": \"nrs_07\",\n        \"text\": \"I think a lot about the suffering of animals\"\n       },\n       {\n        \"value\": \"nrs_08\",\n        \"text\": \"Even in the middle of the city, I notice nature around me\"\n       },\n       {\n        \"value\": \"nrs_09\",\n        \"text\": \"My feelings about nature do not affect how I live my life\"\n       },\n       {\n        \"value\": \"nrs_10\",\n        \"text\": \"Humans have the right to nature resources any way we want\"\n       },\n       {\n        \"value\": \"nrs_11\",\n        \"text\": \"Conservation is unnecessary because nature is strong enough to recover from any human impact\"\n       },\n       {\n        \"value\": \"nrs_12\",\n        \"text\": \"Animals, birds, and plants have fewer rights then humans\"\n       },\n       {\n        \"value\": \"nrs_13\",\n        \"text\": \"Some species are just meant to die out or become extinct\"\n       },\n       {\n        \"value\": \"nrs_14\",\n        \"text\": \"Nothing I do will change problems in other places on the planet\"\n       },\n       {\n        \"value\": \"nrs_15\",\n        \"text\": \"The state of nonhuman species is a indicator of the future for humans\"\n       },\n       {\n        \"value\": \"nrs_16\",\n        \"text\": \"The thought of being deep in the woods, away from civilization, is frightening\"\n       },\n       {\n        \"value\": \"nrs_17\",\n        \"text\": \"My ideal vacation would be a remote, wilderness area\"\n       },\n       {\n        \"value\": \"nrs_18\",\n        \"text\": \"I enjoy being outdoors, even in unpleasant weather\"\n       },\n       {\n        \"value\": \"nrs_19\",\n        \"text\": \"I don’t often go out in nature\"\n       },\n       {\n        \"value\": \"nrs_20\",\n        \"text\": \"I enjoy digging in the earth and getting dirt on my hands\"\n       },\n       {\n        \"value\": \"nrs_21\",\n        \"text\": \"I take notice of wildlife wherever I am\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1 = very slightly or not at all\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 = a little\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 = moderately\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 = quite a bit\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5 = extremely\"\n       }\n      ]\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"tipi\",\n      \"title\": \"Here are a number of personality traits that may or may not apply to you. I see myself as...\",\n      \"description\": \"Ten-Item Personality Inventory, 1–7.\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"tipi_01\",\n        \"text\": \"Extraverted, enthusiastic\"\n       },\n       {\n        \"value\": \"tipi_02\",\n        \"text\": \"Critical, quarrelsome\"\n       },\n       {\n        \"value\": \"tipi_03\",\n        \"text\": \"Dependable, self-disciplined\"\n       },\n       {\n        \"value\": \"tipi_04\",\n        \"text\": \"Anxious, easily upset\"\n       },\n       {\n        \"value\": \"tipi_05\",\n        \"text\": \"Open to new experiences, complex\"\n       },\n       {\n        \"value\": \"tipi_06\",\n        \"text\": \"Reserved, quiet\"\n       },\n       {\n        \"value\": \"tipi_07\",\n        \"text\": \"Sympathetic, warm\"\n       },\n       {\n        \"value\": \"tipi_08\",\n        \"text\": \"Disorganized, careless\"\n       },\n       {\n        \"value\": \"tipi_09\",\n        \"text\": \"Calm, emotionally stable\"\n       },\n       {\n        \"value\": \"tipi_10\",\n        \"text\": \"Conventional, uncreative\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1 = disagree strongly\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 = disagree moderately\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 = disagree a little\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 = neither agree nor disagree\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5 = agree a little\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"6 = agree moderately\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"7 = agree strongly\"\n       }\n      ]\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"ucla\",\n      \"title\": \"Indicate how much you agree with each statement.\",\n      \"description\": \"UCLA Loneliness Scale (8 items), 1–5.\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"ucla_01\",\n        \"text\": \"I lack companionship\"\n       },\n       {\n        \"value\": \"ucla_02\",\n        \"text\": \"There is no one I can turn to\"\n       },\n       {\n        \"value\": \"ucla_03\",\n        \"text\": \"I am an outgoing person\"\n       },\n       {\n        \"value\": \"ucla_04\",\n        \"text\": \"I feel left out\"\n       },\n       {\n        \"value\": \"ucla_05\",\n        \"text\": \"I feel isolated from others\"\n       },\n       {\n        \"value\": \"ucla_06\",\n        \"text\": \"I can find companionship when I want it\"\n       },\n       {\n        \"value\": \"ucla_07\",\n        \"text\": \"I am unhappy being so withdrawn\"\n       },\n       {\n        \"value\": \"ucla_08\",\n        \"text\": \"People are around me but not with me\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1 = very slightly or not at all\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2 = a little\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3 = moderately\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4 = quite a bit\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5 = extremely\"\n       }\n      ]\n     },\n     {\n      \"type\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"How old are you (in years)?\",\n      \"min\": 16,\n      \"max\": 100,\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Please select your gender identity from the options below\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Non-binary\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Other\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"attn\",\n      \"title\": \"In a sentence or two, please describe what you saw and heard in the video at the beginning of the study.\",\n      \"description\": \"Attention check (ATTN in the original; responses that did not describe the video were excluded).\",\n      \"isRequired\": true\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f3f4f1;--card:#fff;--ink:#1c201d;--muted:#5a625c;--accent:#3d6b4f;--accent-ink:#fff;--line:#d5dad5;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:820px;margin:0 auto;padding:24px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 10px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:16px}.q:first-child{margin-top:0}.q>b{display:block;margin-bottom:4px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:120px}\ntextarea{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;min-height:90px}\ninput[type=range]{width:100%;accent-color:var(--accent);height:30px}\ninput[type=range].untouched{accent-color:#a9b0aa}\n.ends{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted)}\n.vid{position:relative;background:#000;border-radius:12px;overflow:hidden;aspect-ratio:3/2}\n.vid video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:none}\n.vid video.on{display:block}\n.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:10px 0 6px}.bar>i{display:block;height:100%;background:var(--accent);width:0}\n.ctl{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.ctl .t{color:var(--muted);font-variant-numeric:tabular-nums}\n.item{padding:12px 0;border-top:1px solid var(--line)}.item:first-of-type{border-top:0}\n.item>b{display:block;font-weight:600;margin-bottom:6px}\n.sc{display:grid;gap:4px}\n.sc button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 0;font:inherit;font-weight:700;cursor:pointer;min-width:0}\n.sc button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}\n.legend{font-size:.85rem;color:var(--muted);margin:6px 0 0}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:820px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Videos: Brancato, Van Hedger, Berman &amp; Van Hedger (2022), OSF xgkvn. Full sources are listed on the last page.</footer>\n<script>\n(function(){\n  var BLOCKS=[[\"panas\", \"Indicate to what extent you feel this way right now, that is, at the present moment.\", [\"very slightly or not at all\", \"a little\", \"moderately\", \"quite a bit\", \"extremely\"]], [\"prs\", \"With respect to the video you just watched, please indicate how much you agree with the following statements.\", [\"very slightly or not at all\", \"a little\", \"moderately\", \"quite a bit\", \"extremely\"]], [\"mbs\", \"This scale consists of short questions asking you to reflect on the video previously watched.\", [\"very slightly or not at all\", \"a little\", \"moderately\", \"quite a bit\", \"extremely\"]], [\"nrs\", \"This scale consists of statements. Please reflect on the statements and indicate your opinion.\", [\"very slightly or not at all\", \"a little\", \"moderately\", \"quite a bit\", \"extremely\"]], [\"tipi\", \"Here are a number of personality traits that may or may not apply to you. Please select the number next to each statement that indicates the extent to which you agree or disagree with that statement. You should rate the extent to which the pair of traits applies to you, even if one characteristic applies more strongly than the other. I see myself as...\", [\"disagree strongly\", \"disagree moderately\", \"disagree a little\", \"neither agree nor disagree\", \"agree a little\", \"agree moderately\", \"agree strongly\"]], [\"ucla\", \"Indicate how much you agree with each statement.\", [\"very slightly or not at all\", \"a little\", \"moderately\", \"quite a bit\", \"extremely\"]]], WALKS=['forest','field','treelined','city'], VAS=[['happy','Happy'],['sad','Sad'],['calm','Calm'],['anxious','Anxious'],['lonely','Lonely']], SEGS=3;\n  var app=document.getElementById('app'), Q={}, files={}, cond=null, ans={}, step=0;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem('walks2022:'+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem('walks2022:'+k,JSON.stringify(v));}catch(e){}}\n  function saveAll(list,b,cb){Promise.all(list.map(function(a){return SPSite.answer(a[0],a[1]);})).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}cb();});}\n  function seg(s){return files[cond+'_'+s+'.mp4'];}\n  function next(){\n    window.scrollTo(0,0);\n    if(!ans.pre)return intro();\n    if(!ans.walk)return walkIntro();\n    if(!ans.post)return vas('vas_post','Please rate how you are feeling right now.');\n    for(var i=0;i<BLOCKS.length;i++)if(!ans[BLOCKS[i][0]])return block(i);\n    if(!ans.demo)return demo();\n    finish();\n  }\n  function vasHtml(){return VAS.map(function(v){return '<div class=\"q\"><b>'+v[1]+'</b><input type=\"range\" min=\"0\" max=\"100\" step=\"1\" value=\"50\" class=\"untouched\" data-k=\"'+v[0]+'\" aria-label=\"'+v[1]+'\"><div class=\"ends\"><span>Not at all</span><span>Extremely</span></div></div>';}).join('');}\n  function readVas(){var o={},miss=false;app.querySelectorAll('input[type=range]').forEach(function(r){if(r.classList.contains('untouched'))miss=true;else o[r.dataset.k]=Number(r.value);});return miss?null:o;}\n  function bindVas(){app.querySelectorAll('input[type=range]').forEach(function(r){['input','change','pointerdown','keydown'].forEach(function(ev){r.addEventListener(ev,function(){r.classList.remove('untouched');err('');});});});}\n  function intro(){\n    var miss=[];WALKS.forEach(function(w){for(var s=1;s<=SEGS;s++)if(!files[w+'_'+s+'.mp4'])miss.push(w+'_'+s+'.mp4');});\n    if(miss.length){app.innerHTML='<h1>Videos missing</h1><p>Folder “walks” must hold the 12 video parts (forest/field/treelined/city _1–_3.mp4); missing e.g. '+esc(miss[0])+'.</p>';return;}\n    app.innerHTML='<h1>Effects of virtual environments on well-being</h1><p>This study explores how a simulated walk in different environments affects how you feel. You will watch a 15-minute “virtual walk”, then answer questions about your mood, the video, your views of nature and yourself. About 30 minutes in total.</p><p>Please find a quiet place where you can have the sound on; headphones are optional. A fast internet connection helps the video play smoothly.</p>'+\n      '<div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label></div>'+\n      '<div class=\"card\"><b>'+esc(Q.vas_pre.title)+'</b>'+vasHtml()+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    bindVas();\n    document.getElementById('go').onclick=function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var v=readVas();if(!v)return err('Please move all five sliders.');\n      var b=this;b.disabled=true;saveAll([['consent',true],['vas_pre',v]],b,function(){ans.pre=true;next();});\n    };\n  }\n  function walkIntro(){\n    app.innerHTML='<h1>Your virtual walk</h1><p>You will now watch a video of a virtual, simulated walk. It lasts 15 minutes. Please turn the sound on, watch the whole video and do not switch to other tabs. You can pause if you need to.</p><button class=\"btn\" id=\"go\">Watch the walk</button>';\n    document.getElementById('go').onclick=player;\n  }\n  function fmt(s){s=Math.max(0,Math.floor(s));return Math.floor(s/60)+':'+('0'+s%60).slice(-2);}\n  function player(){\n    var MAX=window.__VIDMAX||0;\n    app.innerHTML='<div class=\"vid\"><video playsinline preload=\"auto\"></video><video playsinline preload=\"auto\"></video><div id=\"ov\" style=\"position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff\">Loading…</div></div><div class=\"bar\"><i></i></div><div class=\"ctl\"><button class=\"btn ghost\" id=\"pp\">Pause</button><span class=\"t\" id=\"tt\">0:00 / 15:00</span></div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"nx\" disabled>Continue</button></div><div class=\"err\"></div>';\n    var V=app.querySelectorAll('video'), cur=0, s=1, played=0, last=null, pauses=0, segLen=[0,0,0], done=false, ov=document.getElementById('ov');\n    function total(){return MAX?MAX*SEGS:900;}\n    V[0].src=seg(1).url;V[1].src=seg(2).url;V[0].classList.add('on');\n    function tick(){var v=V[cur];if(last!=null&&!v.paused){var d=v.currentTime-last;if(d>0&&d<2)played+=d;}last=v.currentTime;var el=(s-1)*(MAX||300)+Math.min(v.currentTime,MAX||300);document.getElementById('tt').textContent=fmt(el)+' / '+fmt(total());app.querySelector('.bar>i').style.width=(100*el/total())+'%';if(MAX&&v.currentTime>=MAX&&!v.paused){v.pause();endSeg();}}\n    function endSeg(){\n      if(s>=SEGS){done=true;document.getElementById('nx').disabled=false;document.getElementById('pp').disabled=true;ov.style.display='flex';ov.textContent='The walk has ended. Please continue.';return;}\n      var nxt=1-cur;V[cur].classList.remove('on');V[nxt].classList.add('on');s++;last=null;\n      V[nxt].play().catch(function(){ov.style.display='flex';ov.textContent='Tap to continue the video';});\n      var old=cur;cur=nxt;if(s<SEGS){V[old].src=seg(s+1).url;V[old].load();}\n    }\n    [0,1].forEach(function(i){var v=V[i];\n      v.addEventListener('timeupdate',function(){if(i===cur)tick();});\n      v.addEventListener('ended',function(){if(i===cur&&!MAX)endSeg();});\n      v.addEventListener('seeking',function(){if(i===cur&&last!=null&&Math.abs(v.currentTime-last)>1.5)v.currentTime=last;});\n      v.addEventListener('playing',function(){if(i===cur)ov.style.display='none';});\n      v.addEventListener('waiting',function(){if(i===cur){ov.style.display='flex';ov.textContent='Loading…';}});\n    });\n    ov.onclick=function(){if(!done)V[cur].play();};\n    document.getElementById('pp').onclick=function(){var v=V[cur];if(v.paused){v.play();this.textContent='Pause';}else{v.pause();pauses++;this.textContent='Play';}};\n    V[0].play().catch(function(){ov.textContent='Tap to start the video';});\n    document.getElementById('nx').onclick=function(){\n      if(!done)return;var b=this;b.disabled=true;\n      SPSite.answer('walk',{condition:cond,watched_s:Math.round(played),pauses:pauses,completed:true}).then(function(r){if(!ok(r)){b.disabled=false;return err(r.error);}ans.walk=true;next();});\n    };\n  }\n  function vas(name,title){\n    app.innerHTML='<h1>How are you feeling?</h1><div class=\"card\"><b>'+esc(title)+'</b>'+vasHtml()+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    bindVas();\n    document.getElementById('go').onclick=function(){var v=readVas();if(!v)return err('Please move all five sliders.');var b=this;b.disabled=true;saveAll([[name,v]],b,function(){ans.post=true;next();});};\n  }\n  function block(i){\n    var name=BLOCKS[i][0], q=Q[name], lab=BLOCKS[i][2], vals={};\n    app.innerHTML='<p>Part '+(i+1)+' of '+(BLOCKS.length+1)+'</p><div class=\"card\"><b>'+esc(BLOCKS[i][1])+'</b><p class=\"legend\">'+lab.map(function(t,k){return (k+1)+' = '+esc(t);}).join(' · ')+'</p>'+\n      (q.rows||[]).map(function(r){var b='';for(var v=1;v<=lab.length;v++)b+='<button type=\"button\" data-r=\"'+esc(r.value)+'\" data-v=\"'+v+'\" title=\"'+esc(lab[v-1])+'\">'+v+'</button>';return '<div class=\"item\"><b>'+esc(r.text)+'</b><div class=\"sc\" style=\"grid-template-columns:repeat('+lab.length+',1fr)\">'+b+'</div></div>';}).join('')+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    app.querySelectorAll('.sc button').forEach(function(x){x.onclick=function(){vals[x.dataset.r]=Number(x.dataset.v);x.parentNode.querySelectorAll('button').forEach(function(y){y.classList.toggle('on',y===x);});err('');};});\n    document.getElementById('go').onclick=function(){\n      var miss=(q.rows||[]).filter(function(r){return vals[r.value]==null;});if(miss.length)return err('Please answer every statement ('+miss.length+' left).');\n      var o={};(q.rows||[]).forEach(function(r){o[r.value]=vals[r.value];});var b=this;b.disabled=true;saveAll([[name,o]],b,function(){ans[name]=true;next();});\n    };\n  }\n  function demo(){\n    app.innerHTML='<p>Part '+(BLOCKS.length+1)+' of '+(BLOCKS.length+1)+'</p><div class=\"card\"><div class=\"q\"><b>'+esc(Q.age.title)+'</b><input type=\"number\" id=\"age\" min=\"16\" max=\"100\" inputmode=\"numeric\"></div><div class=\"q\"><b>'+esc(Q.gender.title)+'</b>'+(Q.gender.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"gender\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div><div class=\"q\"><b>'+esc(Q.attn.title)+'</b><textarea id=\"attn\"></textarea></div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Finish</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var av=document.getElementById('age').value,age=Number(av);if(!av||!(age>=16&&age<=100))return err('Please enter your age (16–100).');\n      var g=app.querySelector('input[name=gender]:checked');if(!g)return err('Please select your gender identity.');\n      var t=document.getElementById('attn').value.trim();if(t.length<5)return err('Please describe what you saw and heard in the video.');\n      var b=this;b.disabled=true;saveAll([['age',age],['gender',Number(g.value)],['attn',t]],b,function(){ans.demo=true;next();});\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you for your participation!</h1><div class=\"card\"><p>The purpose of this study was to explore how a simulated virtual walk in different environments influences mood and cognition. You were randomly assigned to one of four walks: a pine forest, a farmed field, a tree-lined neighbourhood or a bustling city centre. No forms of deception were used.</p><p style=\"font-size:.82rem\">Videos: the four simulated walks of Brancato, Van Hedger, Berman &amp; Van Hedger (2022), Journal of Environmental Psychology 82, 101779, OSF xgkvn, cut by the authors from YouTube walking videos (pine forest: youtube.com/watch?v=mlD9KngeV2E; farmed field: youtu.be/8O7pLW6IdhQ; Beacon Hill, Boston: youtube.com/watch?v=JB0A8Me8EKk; Midtown Manhattan: youtube.com/watch?v=u68EWmtKZw0). Used with credit and removed on request.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){if(x==='consent'||x==='vas_pre')ans.pre=false;else if(x==='vas_post')ans.post=false;else if(['age','gender','attn'].indexOf(x)>=0)ans.demo=false;else ans[x]=false;});next();},1800);}else{var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','vas_pre','walk','vas_post','age','gender','attn'].concat(BLOCKS.map(function(b){return b[0];})).forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('walks')||[]).forEach(function(f){files[f.name]=f;});\n    var a=(ctx&&ctx.answers)||{};\n    var c=(a.walk&&a.walk.condition)||load('cond');if(WALKS.indexOf(c)<0)c=WALKS[Math.floor(Math.random()*4)];cond=c;save('cond',cond);\n    if(a.consent===true&&a.vas_pre!=null){ans.pre=true;if(a.walk&&a.walk.completed)ans.walk=true;if(a.vas_post!=null)ans.post=true;BLOCKS.forEach(function(b){if(a[b[0]]!=null)ans[b[0]]=true;});if(a.age!=null&&a.gender!=null&&a.attn!=null)ans.demo=true;}\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T06:03:50.021Z",
+   "mediaFolders": [
+    "walks"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T06:03:50.021Z"
+  },
+  "description": "Rebuilt from Brancato, Van Hedger, Berman & Van Hedger (2022), Journal of Environmental Psychology 82:101779, with the authors' four 15-minute walk videos from OSF xgkvn. Each participant is randomly assigned to one walk (pine forest, farmed field, tree-lined neighbourhood or bustling city centre), rates five feelings on 0–100 sliders before and after, then answers PANAS, perceived restorativeness (9 items), mental bandwidth (7 items), Nature Relatedness (21 items), TIPI (10 items), UCLA Loneliness (8 items), age, gender and a short description of the video.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2022-brancato-simulated/walks/forest_1__139a2924-1c4c-472b-9567-9b6f3c15079c.mp4",
+   "url": "https://media.sp-survey.org/templates/2022-brancato-simulated/walks/forest_1__139a2924-1c4c-472b-9567-9b6f3c15079c.mp4",
+   "name": "forest_1.mp4",
+   "type": "video",
+   "folder": "walks",
+   "media_id": "templates/2022-brancato-simulated/walks/forest_1__139a2924-1c4c-472b-9567-9b6f3c15079c.mp4",
+   "logicalFolder": "walks",
+   "original_bytes": 21172969,
+   "uploaded_bytes": 21172969,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-brancato-simulated/walks/forest_2__2f89210b-d412-4705-a983-31409025ce9b.mp4",
+   "url": "https://media.sp-survey.org/templates/2022-brancato-simulated/walks/forest_2__2f89210b-d412-4705-a983-31409025ce9b.mp4",
+   "name": "forest_2.mp4",
+   "type": "video",
+   "folder": "walks",
+   "media_id": "templates/2022-brancato-simulated/walks/forest_2__2f89210b-d412-4705-a983-31409025ce9b.mp4",
+   "logicalFolder": "walks",
+   "original_bytes": 21288513,
+   "uploaded_bytes": 21288513,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-brancato-simulated/walks/forest_3__78347e57-da2d-45a5-9ed0-ce3354438409.mp4",
+   "url": "https://media.sp-survey.org/templates/2022-brancato-simulated/walks/forest_3__78347e57-da2d-45a5-9ed0-ce3354438409.mp4",
+   "name": "forest_3.mp4",
+   "type": "video",
+   "folder": "walks",
+   "media_id": "templates/2022-brancato-simulated/walks/forest_3__78347e57-da2d-45a5-9ed0-ce3354438409.mp4",
+   "logicalFolder": "walks",
+   "original_bytes": 21096950,
+   "uploaded_bytes": 21096950,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-brancato-simulated/walks/field_1__da79348c-76c9-4df1-ab6f-f9a81d6e4fb9.mp4",
+   "url": "https://media.sp-survey.org/templates/2022-brancato-simulated/walks/field_1__da79348c-76c9-4df1-ab6f-f9a81d6e4fb9.mp4",
+   "name": "field_1.mp4",
+   "type": "video",
+   "folder": "walks",
+   "media_id": "templates/2022-brancato-simulated/walks/field_1__da79348c-76c9-4df1-ab6f-f9a81d6e4fb9.mp4",
+   "logicalFolder": "walks",
+   "original_bytes": 21269180,
+   "uploaded_bytes": 21269180,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-brancato-simulated/walks/field_2__0917b6a1-3c44-4f3c-8bf3-6f86895a5e7a.mp4",
+   "url": "https://media.sp-survey.org/templates/2022-brancato-simulated/walks/field_2__0917b6a1-3c44-4f3c-8bf3-6f86895a5e7a.mp4",
+   "name": "field_2.mp4",
+   "type": "video",
+   "folder": "walks",
+   "media_id": "templates/2022-brancato-simulated/walks/field_2__0917b6a1-3c44-4f3c-8bf3-6f86895a5e7a.mp4",
+   "logicalFolder": "walks",
+   "original_bytes": 21080767,
+   "uploaded_bytes": 21080767,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-brancato-simulated/walks/field_3__ef56881f-0ee2-4209-8c32-c8f33b830b02.mp4",
+   "url": "https://media.sp-survey.org/templates/2022-brancato-simulated/walks/field_3__ef56881f-0ee2-4209-8c32-c8f33b830b02.mp4",
+   "name": "field_3.mp4",
+   "type": "video",
+   "folder": "walks",
+   "media_id": "templates/2022-brancato-simulated/walks/field_3__ef56881f-0ee2-4209-8c32-c8f33b830b02.mp4",
+   "logicalFolder": "walks",
+   "original_bytes": 21150072,
+   "uploaded_bytes": 21150072,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-brancato-simulated/walks/treelined_1__4a3638db-3440-45e9-8f1d-8d6bbaf3ce88.mp4",
+   "url": "https://media.sp-survey.org/templates/2022-brancato-simulated/walks/treelined_1__4a3638db-3440-45e9-8f1d-8d6bbaf3ce88.mp4",
+   "name": "treelined_1.mp4",
+   "type": "video",
+   "folder": "walks",
+   "media_id": "templates/2022-brancato-simulated/walks/treelined_1__4a3638db-3440-45e9-8f1d-8d6bbaf3ce88.mp4",
+   "logicalFolder": "walks",
+   "original_bytes": 21237738,
+   "uploaded_bytes": 21237738,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-brancato-simulated/walks/treelined_2__95e72ac0-30c5-45af-a5b0-a8953fe98932.mp4",
+   "url": "https://media.sp-survey.org/templates/2022-brancato-simulated/walks/treelined_2__95e72ac0-30c5-45af-a5b0-a8953fe98932.mp4",
+   "name": "treelined_2.mp4",
+   "type": "video",
+   "folder": "walks",
+   "media_id": "templates/2022-brancato-simulated/walks/treelined_2__95e72ac0-30c5-45af-a5b0-a8953fe98932.mp4",
+   "logicalFolder": "walks",
+   "original_bytes": 21250935,
+   "uploaded_bytes": 21250935,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-brancato-simulated/walks/treelined_3__6bde3d7b-1954-45f3-9439-4d9e8d32a1dd.mp4",
+   "url": "https://media.sp-survey.org/templates/2022-brancato-simulated/walks/treelined_3__6bde3d7b-1954-45f3-9439-4d9e8d32a1dd.mp4",
+   "name": "treelined_3.mp4",
+   "type": "video",
+   "folder": "walks",
+   "media_id": "templates/2022-brancato-simulated/walks/treelined_3__6bde3d7b-1954-45f3-9439-4d9e8d32a1dd.mp4",
+   "logicalFolder": "walks",
+   "original_bytes": 21223216,
+   "uploaded_bytes": 21223216,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-brancato-simulated/walks/city_1__dd4987ea-fa9e-43ee-92a3-3c4aa458605e.mp4",
+   "url": "https://media.sp-survey.org/templates/2022-brancato-simulated/walks/city_1__dd4987ea-fa9e-43ee-92a3-3c4aa458605e.mp4",
+   "name": "city_1.mp4",
+   "type": "video",
+   "folder": "walks",
+   "media_id": "templates/2022-brancato-simulated/walks/city_1__dd4987ea-fa9e-43ee-92a3-3c4aa458605e.mp4",
+   "logicalFolder": "walks",
+   "original_bytes": 21340043,
+   "uploaded_bytes": 21340043,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-brancato-simulated/walks/city_2__d54f542a-b444-4024-a997-3d84735bedbe.mp4",
+   "url": "https://media.sp-survey.org/templates/2022-brancato-simulated/walks/city_2__d54f542a-b444-4024-a997-3d84735bedbe.mp4",
+   "name": "city_2.mp4",
+   "type": "video",
+   "folder": "walks",
+   "media_id": "templates/2022-brancato-simulated/walks/city_2__d54f542a-b444-4024-a997-3d84735bedbe.mp4",
+   "logicalFolder": "walks",
+   "original_bytes": 21340374,
+   "uploaded_bytes": 21340374,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2022-brancato-simulated/walks/city_3__dc18e123-4a4b-4632-93b7-b124d8f59b05.mp4",
+   "url": "https://media.sp-survey.org/templates/2022-brancato-simulated/walks/city_3__dc18e123-4a4b-4632-93b7-b124d8f59b05.mp4",
+   "name": "city_3.mp4",
+   "type": "video",
+   "folder": "walks",
+   "media_id": "templates/2022-brancato-simulated/walks/city_3__dc18e123-4a4b-4632-93b7-b124d8f59b05.mp4",
+   "logicalFolder": "walks",
+   "original_bytes": 21325469,
+   "uploaded_bytes": 21325469,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Simulated nature walks improve psychological well-being along a natural to urban continuum",
+  "authors": [
+   "Giuliana Brancato",
+   "Kathryne Van Hedger",
+   "Marc G. Berman",
+   "Stephen Charles Van Hedger"
+  ],
+  "year": 2022,
+  "venue": "Journal of Environmental Psychology",
+  "doi": "10.1016/j.jenvp.2022.101779",
+  "url": "https://doi.org/10.1016/j.jenvp.2022.101779"
+ }
+}

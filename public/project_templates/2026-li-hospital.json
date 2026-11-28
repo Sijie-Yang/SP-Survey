@@ -1,0 +1,625 @@
+{
+ "id": "2026-li-hospital",
+ "name": "Hospital Landscapes - Visual Comfort Rating",
+ "description": "Faithful replication with the original photographs: 30 photographs of outdoor landscapes at three Chinese hospitals (Jinan, Hangzhou and Sanya), taken along the hospitals' paths at 1.70 m eye height and chosen as three representative images for each of ten landscape character groups, from broad views of green vegetation to enclosed views between buildings and views of vegetation with water. Participants answer the paper's eight background questions with its answer categories (gender, age group, education, occupation, urban or rural living area, whether they have ever visited a hospital, whether they have stayed in a hospital for more than 24 h, and whether they have a background in healthcare), then see the 30 photographs one at a time in random order with no two images of the same group in a row, as in the paper, and answer its question Does this scene enhance visual comfort and therapeutic relaxation within the hospital setting? on a 5-point Likert scale from 1 = strongly disagree to 5 = strongly agree. Rebuilt from Li, Yue, Mundher & Abdulghani (2026), Data-efficient image transformer for landscape character classification and visual comfort prediction in Chinese hospitals, Frontiers in Artificial Intelligence 9: 1733709, with the photographs from its Supplementary Table A and the question from Section 2.3 (CC BY 4.0). Image ids: A01-J03 as coded in Supplementary Table A (letter = landscape character group); answers are in comfort, keyed by image id; the group of each image is stored in the page's original-study block. Analysis as in the paper: mean visual comfort per image and per landscape character group (mean of its three images); the paper then used the group means as labels to train a vision transformer on 488 hospital images. The paper (252 online respondents) found every group above 3, the lowest scores for enclosed views between buildings (group E, 3.13) and views with a building behind the vegetation (group F, 3.25), and the highest for broad views of vegetation with a building (group C, 3.62) and vegetation with water (group J, 3.63). Differences from the original study: (1) the first five background questions are worded by us with the paper's answer categories from its Table 3; the last three use the paper's wording; (2) the paper recruited 252 members of the general public on an online survey platform it does not name; here anyone can take part; (3) the photographs are the supplement copies (about 500 x 280 px).",
+ "author": "Li, Yue, Mundher & Abdulghani",
+ "year": "2026",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "therapeutic landscape",
+  "hospital",
+  "visual comfort",
+  "landscape character",
+  "rating",
+  "source:paper",
+  "modality:scene_photo",
+  "task:rating",
+  "concept:comfort",
+  "concept:restoration",
+  "concept:greenery",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:China",
+  "city:Jinan",
+  "city:Hangzhou",
+  "city:Sanya"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3389/frai.2026.1733709",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T00:18:47.83+00:00",
+ "updatedAt": "2026-11-28T00:19:03.452+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Female",
+        "value": "female"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "age",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "18-29",
+        "value": "18_29"
+       },
+       {
+        "text": "30-39",
+        "value": "30_39"
+       },
+       {
+        "text": "40-49",
+        "value": "40_49"
+       },
+       {
+        "text": "50 and above",
+        "value": "50_above"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "Educational level",
+      "choices": [
+       {
+        "text": "High school",
+        "value": "high_school"
+       },
+       {
+        "text": "Undergraduate",
+        "value": "undergraduate"
+       },
+       {
+        "text": "Postgraduate",
+        "value": "postgraduate"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "occupation",
+      "type": "radiogroup",
+      "title": "Occupation",
+      "choices": [
+       {
+        "text": "Student",
+        "value": "student"
+       },
+       {
+        "text": "Employed",
+        "value": "employed"
+       },
+       {
+        "text": "Unemployed or retired",
+        "value": "unemployed_retired"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "living",
+      "type": "radiogroup",
+      "title": "Living area",
+      "choices": [
+       {
+        "text": "Urban area",
+        "value": "urban"
+       },
+       {
+        "text": "Rural area",
+        "value": "rural"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "visited",
+      "type": "radiogroup",
+      "title": "Have you ever visited a hospital?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "stayed",
+      "type": "radiogroup",
+      "title": "Have you ever stayed in a hospital for more than 24 h?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "healthcare",
+      "type": "radiogroup",
+      "title": "Do you have any background in healthcare?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "photos",
+    "elements": [
+     {
+      "name": "comfort",
+      "type": "rating",
+      "title": "Does this scene enhance visual comfort and therapeutic relaxation within the hospital setting?",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "5-point Likert scale. Keyed by image id.",
+      "maxRateDescription": "Strongly agree",
+      "minRateDescription": "Strongly disagree"
+     }
+    ]
+   }
+  ],
+  "title": "Hospital Landscapes",
+  "locale": "en",
+  "spSite": {
+   "id": "site-83090dd5a68671e7",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Hospital Landscapes</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Hospital Landscapes\",\n  \"description\": \"Faithful replication with the original photographs: 30 photographs of outdoor landscapes at three Chinese hospitals (Jinan, Hangzhou and Sanya), taken along the hospitals' paths at 1.70 m eye height and chosen as three representative images for each of ten landscape character groups, from broad views of green vegetation to enclosed views between buildings and views of vegetation with water. Participants answer the paper's eight background questions with its answer categories (gender, age group, education, occupation, urban or rural living area, whether they have ever visited a hospital, whether they have stayed in a hospital for more than 24 h, and whether they have a background in healthcare), then see the 30 photographs one at a time in random order with no two images of the same group in a row, as in the paper, and answer its question Does this scene enhance visual comfort and therapeutic relaxation within the hospital setting? on a 5-point Likert scale from 1 = strongly disagree to 5 = strongly agree. Rebuilt from Li, Yue, Mundher & Abdulghani (2026), Data-efficient image transformer for landscape character classification and visual comfort prediction in Chinese hospitals, Frontiers in Artificial Intelligence 9: 1733709, with the photographs from its Supplementary Table A and the question from Section 2.3 (CC BY 4.0). Image ids: A01-J03 as coded in Supplementary Table A (letter = landscape character group); answers are in comfort, keyed by image id; the group of each image is stored in the page's original-study block. Analysis as in the paper: mean visual comfort per image and per landscape character group (mean of its three images); the paper then used the group means as labels to train a vision transformer on 488 hospital images. The paper (252 online respondents) found every group above 3, the lowest scores for enclosed views between buildings (group E, 3.13) and views with a building behind the vegetation (group F, 3.25), and the highest for broad views of vegetation with a building (group C, 3.62) and vegetation with water (group J, 3.63). Differences from the original study: (1) the first five background questions are worded by us with the paper's answer categories from its Table 3; the last three use the paper's wording; (2) the paper recruited 252 members of the general public on an online survey platform it does not name; here anyone can take part; (3) the photographs are the supplement copies (about 500 x 280 px).\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"scenes\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"18_29\",\n        \"text\": \"18-29\"\n       },\n       {\n        \"value\": \"30_39\",\n        \"text\": \"30-39\"\n       },\n       {\n        \"value\": \"40_49\",\n        \"text\": \"40-49\"\n       },\n       {\n        \"value\": \"50_above\",\n        \"text\": \"50 and above\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"Educational level\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"high_school\",\n        \"text\": \"High school\"\n       },\n       {\n        \"value\": \"undergraduate\",\n        \"text\": \"Undergraduate\"\n       },\n       {\n        \"value\": \"postgraduate\",\n        \"text\": \"Postgraduate\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"occupation\",\n      \"title\": \"Occupation\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"student\",\n        \"text\": \"Student\"\n       },\n       {\n        \"value\": \"employed\",\n        \"text\": \"Employed\"\n       },\n       {\n        \"value\": \"unemployed_retired\",\n        \"text\": \"Unemployed or retired\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"living\",\n      \"title\": \"Living area\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"urban\",\n        \"text\": \"Urban area\"\n       },\n       {\n        \"value\": \"rural\",\n        \"text\": \"Rural area\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"visited\",\n      \"title\": \"Have you ever visited a hospital?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"stayed\",\n      \"title\": \"Have you ever stayed in a hospital for more than 24 h?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"healthcare\",\n      \"title\": \"Do you have any background in healthcare?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"photos\",\n    \"elements\": [\n     {\n      \"type\": \"rating\",\n      \"name\": \"comfort\",\n      \"title\": \"Does this scene enhance visual comfort and therapeutic relaxation within the hospital setting?\",\n      \"isRequired\": true,\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Strongly disagree\",\n      \"maxRateDescription\": \"Strongly agree\",\n      \"description\": \"5-point Likert scale. Keyed by image id.\"\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"hosp-original\">{\"source\": \"Li, Yue, Mundher & Abdulghani (2026) Front. Artif. Intell. 9: 1733709\", \"n\": 252, \"images\": [\"A01\", \"A02\", \"A03\", \"B01\", \"B02\", \"B03\", \"C01\", \"C02\", \"C03\", \"D01\", \"D02\", \"D03\", \"E01\", \"E02\", \"E03\", \"F01\", \"F02\", \"F03\", \"G01\", \"G02\", \"G03\", \"H01\", \"H02\", \"H03\", \"I01\", \"I02\", \"I03\", \"J01\", \"J02\", \"J03\"], \"groups\": {\"A01\": \"Broad view of green vegetation\", \"A02\": \"Broad view of green vegetation\", \"A03\": \"Broad view of green vegetation\", \"B01\": \"Crowded view of green vegetation\", \"B02\": \"Crowded view of green vegetation\", \"B03\": \"Crowded view of green vegetation\", \"C01\": \"Broad view of green vegetation with building\", \"C02\": \"Broad view of green vegetation with building\", \"C03\": \"Broad view of green vegetation with building\", \"D01\": \"Enclosed view of green vegetation with one-sided building\", \"D02\": \"Enclosed view of green vegetation with one-sided building\", \"D03\": \"Enclosed view of green vegetation with one-sided building\", \"E01\": \"Enclosed view of green vegetation with two-sided building\", \"E02\": \"Enclosed view of green vegetation with two-sided building\", \"E03\": \"Enclosed view of green vegetation with two-sided building\", \"F01\": \"Direct view of green vegetation with background building\", \"F02\": \"Direct view of green vegetation with background building\", \"F03\": \"Direct view of green vegetation with background building\", \"G01\": \"Direct view of green vegetation with infrastructure\", \"G02\": \"Direct view of green vegetation with infrastructure\", \"G03\": \"Direct view of green vegetation with infrastructure\", \"H01\": \"Crowded view of green vegetation with infrastructure\", \"H02\": \"Crowded view of green vegetation with infrastructure\", \"H03\": \"Crowded view of green vegetation with infrastructure\", \"I01\": \"Enclosed view of green vegetation with pathway\", \"I02\": \"Enclosed view of green vegetation with pathway\", \"I03\": \"Enclosed view of green vegetation with pathway\", \"J01\": \"Crowded view of green vegetation with water\", \"J02\": \"Crowded view of green vegetation with water\", \"J03\": \"Crowded view of green vegetation with water\"}}</script>\n<style>\n:root{--bg:#f3f1ee;--card:#fff;--ink:#21201c;--muted:#5f5b53;--accent:#4f6b2c;--line:#ddd8d0;--warn:#b3261e;--sel:#e6eedb}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:900px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.5rem;margin:0 0 8px}h2{font-size:1.08rem;margin:0 0 4px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:13px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.prog{font-size:.88rem;color:var(--muted);margin-bottom:8px}\n.prompt{font-size:.92rem;color:var(--muted);margin:6px 0 0;text-align:center}\n.scene{position:sticky;top:0;z-index:3;background:var(--bg);padding-bottom:6px}\n.scene img{max-width:100%;max-height:52vh;width:auto;height:auto;display:block;margin:0 auto;border-radius:10px}\n@media (max-height:700px),(max-width:600px){.scene{position:static}}\n.it{padding:10px 0;border-top:1px solid var(--line)}\n.it .st{font-weight:600;margin-bottom:6px;font-size:.96rem}\n.it .o{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}\n.it label{display:flex;justify-content:center;align-items:center;text-align:center;gap:4px;border:1px solid var(--line);border-radius:8px;padding:7px 4px;cursor:pointer;font-size:.84rem;line-height:1.25}\n.it label:has(input:checked){background:var(--sel);border-color:var(--accent)}\n.it label input{display:none}.it .an{display:flex;justify-content:space-between;font-size:.74rem;color:var(--muted);margin-top:3px}@media (max-width:480px){.it .o{gap:3px}.it label{padding:9px 0;font-size:.86rem}}\n.it .an{display:flex;justify-content:space-between;font-size:.74rem;color:var(--muted);margin-top:3px}\n.it.miss .o,.q.miss{outline:2px solid var(--warn);outline-offset:2px;border-radius:8px}\n.q{margin-top:16px}.q:first-child{margin-top:0}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput[type=text]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%;max-width:420px;margin-top:6px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:900px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n.ch label{justify-content:flex-start;text-align:left;padding:9px 12px;font-size:.9rem}\n.ch .o{grid-template-columns:1fr}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs and question: Li, Yue, Mundher &amp; Abdulghani (2026), Frontiers in Artificial Intelligence 9: 1733709, Supplementary Table A and Section 2.3 (doi:10.3389/frai.2026.1733709, CC BY 4.0).</footer>\n<script>\n(function(){\n  var KEY='hospital-landscape:state';\n  var ORIG=JSON.parse(document.getElementById('hosp-original').textContent), ALL=ORIG.images;\n  var app=document.getElementById('app'), Q={}, files={}, st=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function send(list,b,next){if(b)b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}next();});}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function spread(){for(var t=0;t<500;t++){var o=shuffle(ALL),good=true;for(var i=1;i<o.length;i++)if(o[i][0]===o[i-1][0]){good=false;break;}if(good)return o;}return shuffle(ALL);}\n  function fresh(){return {step:'intro',order:spread(),k:0};}\n  function chs(q){return (q.choices||[]).map(function(c){return typeof c==='string'?{value:c,text:c}:c;});}\n  function radios(n){return '<div class=\"q\" data-q=\"'+n+'\"><b>'+esc(Q[n].title)+'</b>'+chs(Q[n]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function intro(){\n    app.innerHTML='<h1>Buildings in the rural landscape</h1><p>You will see 30 photographs of outdoor spaces in hospitals, one at a time. For each photograph, say how much you agree that the scene enhances visual comfort and therapeutic relaxation within the hospital setting, from 1 (strongly disagree) to 5 (strongly agree). It takes about 5 minutes.</p>'+\n     '<div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      send([SPSite.answer('consent',true)],this,function(){st.step='about';save();route();});};\n  }\n  var BG=['gender','age','education','occupation','living','visited','stayed','healthcare'];\n  function about(){\n    app.innerHTML='<h2>About you</h2><div class=\"card\">'+BG.map(radios).join('<div style=\"margin-top:16px\"></div>')+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){var list=[];\n      for(var k=0;k<BG.length;k++){var n=BG[k],x=app.querySelector('input[name='+n+']:checked');if(!x){var el=app.querySelector('[data-q='+n+']');el.classList.add('miss');el.scrollIntoView({block:'center'});return err('Please answer: '+Q[n].title);}list.push(SPSite.answer(n,x.value));}\n      send(list,this,function(){st.step='photo';st.k=0;save();route();});};\n  }\n  function photo(){\n    if(st.k>=st.order.length){st.step='done';save();return route();}\n    var id=st.order[st.k],f=files[id],q=Q.comfort;\n    app.innerHTML='<div class=\"prog\">Photograph '+(st.k+1)+' of '+st.order.length+'</div><div class=\"scene\"><img alt=\"Photograph of an outdoor space in a hospital\" src=\"'+esc(f.url)+'\"></div>'+\n      '<div class=\"card\"><div class=\"it\" data-n=\"r\" style=\"border-top:0;padding-top:0\"><div class=\"st\">'+esc(q.title)+'</div><div class=\"o\">'+[1,2,3,4,5].map(function(v){return '<label><input type=\"radio\" name=\"r\" value=\"'+v+'\">'+v+'</label>';}).join('')+'</div><div class=\"an\"><span>1 '+esc(q.minRateDescription||'Very bad')+'</span><span>5 '+esc(q.maxRateDescription||'Very good')+'</span></div></div>'+'</div>'+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">'+(st.k<st.order.length-1?'Next photograph':'Finish')+'</button></div><div class=\"err\"></div>';\n    document.getElementById('go').onclick=function(){\n      var r=app.querySelector('input[name=r]:checked');\n      if(!r){app.querySelector('[data-n=r]').classList.add('miss');return err('Please choose an answer.');}\n      send([SPSite.answer('comfort',Number(r.value),{key:id,shown:[f.name]})],this,function(){st.k++;save();route();});};\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st.step='intro';save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  app.addEventListener('change',function(e){var r=e.target.closest&&(e.target.closest('.it')||e.target.closest('.q'));if(r){r.classList.remove('miss');if(!app.querySelector('.miss'))err('');}});\n  function route(){var s=st.step;window.scrollTo(0,0);if(s==='about')return about();if(s==='photo')return photo();if(s==='done')return finish();intro();}\n  SPSite.onReady(function(ctx){\n    ['consent','comfort'].concat(BG).forEach(function(n){Q[n]=SPSite.getQuestion(n)||{name:n};});\n    (SPSite.getMedia('scenes')||[]).forEach(function(f){files[f.name.replace(/\\.[^.]+$/,'')]=f;});\n    var need=ALL.filter(function(k){return !files[k];});\n    if(need.length){app.innerHTML='<h1>Images missing</h1><p>Upload '+esc(need.join(', '))+' (.jpg) to the media folder \"scenes\".</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    var a=(ctx&&ctx.answers)||{};\n    if(!(st&&st.order)||a.consent!==true)st=fresh();\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T00:18:18.895Z",
+   "mediaFolders": [
+    "scenes"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T00:18:18.895Z"
+  },
+  "description": "Faithful replication with the original photographs: 30 photographs of outdoor landscapes at three Chinese hospitals (Jinan, Hangzhou and Sanya), taken along the hospitals' paths at 1.70 m eye height and chosen as three representative images for each of ten landscape character groups, from broad views of green vegetation to enclosed views between buildings and views of vegetation with water. Participants answer the paper's eight background questions with its answer categories (gender, age group, education, occupation, urban or rural living area, whether they have ever visited a hospital, whether they have stayed in a hospital for more than 24 h, and whether they have a background in healthcare), then see the 30 photographs one at a time in random order with no two images of the same group in a row, as in the paper, and answer its question Does this scene enhance visual comfort and therapeutic relaxation within the hospital setting? on a 5-point Likert scale from 1 = strongly disagree to 5 = strongly agree. Rebuilt from Li, Yue, Mundher & Abdulghani (2026), Data-efficient image transformer for landscape character classification and visual comfort prediction in Chinese hospitals, Frontiers in Artificial Intelligence 9: 1733709, with the photographs from its Supplementary Table A and the question from Section 2.3 (CC BY 4.0). Image ids: A01-J03 as coded in Supplementary Table A (letter = landscape character group); answers are in comfort, keyed by image id; the group of each image is stored in the page's original-study block. Analysis as in the paper: mean visual comfort per image and per landscape character group (mean of its three images); the paper then used the group means as labels to train a vision transformer on 488 hospital images. The paper (252 online respondents) found every group above 3, the lowest scores for enclosed views between buildings (group E, 3.13) and views with a building behind the vegetation (group F, 3.25), and the highest for broad views of vegetation with a building (group C, 3.62) and vegetation with water (group J, 3.63). Differences from the original study: (1) the first five background questions are worded by us with the paper's answer categories from its Table 3; the last three use the paper's wording; (2) the paper recruited 252 members of the general public on an online survey platform it does not name; here anyone can take part; (3) the photographs are the supplement copies (about 500 x 280 px).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2026-li-hospital/scenes/A01__f5795503-f6ac-4cc0-8f20-2b4ab9bedc31.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/A01__f5795503-f6ac-4cc0-8f20-2b4ab9bedc31.jpg",
+   "name": "A01.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/A01__f5795503-f6ac-4cc0-8f20-2b4ab9bedc31.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 48328,
+   "uploaded_bytes": 48328,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/A02__940e560d-9887-4f1b-a195-ef4c0caa0f75.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/A02__940e560d-9887-4f1b-a195-ef4c0caa0f75.jpg",
+   "name": "A02.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/A02__940e560d-9887-4f1b-a195-ef4c0caa0f75.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 46985,
+   "uploaded_bytes": 46985,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/A03__a1188f14-a2b9-4b78-89df-352695fc4392.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/A03__a1188f14-a2b9-4b78-89df-352695fc4392.jpg",
+   "name": "A03.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/A03__a1188f14-a2b9-4b78-89df-352695fc4392.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 53115,
+   "uploaded_bytes": 53115,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/B01__4427852c-558c-4775-86bd-8fadf1a168b0.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/B01__4427852c-558c-4775-86bd-8fadf1a168b0.jpg",
+   "name": "B01.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/B01__4427852c-558c-4775-86bd-8fadf1a168b0.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 79073,
+   "uploaded_bytes": 79073,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/B02__97125806-7448-4a30-99b5-a856f0bc61b8.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/B02__97125806-7448-4a30-99b5-a856f0bc61b8.jpg",
+   "name": "B02.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/B02__97125806-7448-4a30-99b5-a856f0bc61b8.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 80033,
+   "uploaded_bytes": 80033,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/B03__aa17d35f-8eb2-4461-8f7b-b969904fdd02.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/B03__aa17d35f-8eb2-4461-8f7b-b969904fdd02.jpg",
+   "name": "B03.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/B03__aa17d35f-8eb2-4461-8f7b-b969904fdd02.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 80364,
+   "uploaded_bytes": 80364,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/C01__c1d1a21b-a1ff-435e-bd08-a5bb858e482f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/C01__c1d1a21b-a1ff-435e-bd08-a5bb858e482f.jpg",
+   "name": "C01.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/C01__c1d1a21b-a1ff-435e-bd08-a5bb858e482f.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 54269,
+   "uploaded_bytes": 54269,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/C02__a32fe76d-e2d8-4dbd-b3ac-3e4251b9a4e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/C02__a32fe76d-e2d8-4dbd-b3ac-3e4251b9a4e6.jpg",
+   "name": "C02.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/C02__a32fe76d-e2d8-4dbd-b3ac-3e4251b9a4e6.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 60134,
+   "uploaded_bytes": 60134,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/C03__457c0b05-a9f1-4026-8dde-15ee8b273ba4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/C03__457c0b05-a9f1-4026-8dde-15ee8b273ba4.jpg",
+   "name": "C03.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/C03__457c0b05-a9f1-4026-8dde-15ee8b273ba4.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 41020,
+   "uploaded_bytes": 41020,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/D01__ef6da049-3c28-428e-849b-a81c97c4723c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/D01__ef6da049-3c28-428e-849b-a81c97c4723c.jpg",
+   "name": "D01.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/D01__ef6da049-3c28-428e-849b-a81c97c4723c.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 53060,
+   "uploaded_bytes": 53060,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/D02__e0466ebf-1339-4051-a3da-35ac85a18490.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/D02__e0466ebf-1339-4051-a3da-35ac85a18490.jpg",
+   "name": "D02.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/D02__e0466ebf-1339-4051-a3da-35ac85a18490.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 49260,
+   "uploaded_bytes": 49260,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/D03__0caee5b5-be36-4d9e-a4bd-2389bc67e075.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/D03__0caee5b5-be36-4d9e-a4bd-2389bc67e075.jpg",
+   "name": "D03.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/D03__0caee5b5-be36-4d9e-a4bd-2389bc67e075.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 48005,
+   "uploaded_bytes": 48005,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/E01__749b981f-6c42-4442-a5d3-8c31aec45315.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/E01__749b981f-6c42-4442-a5d3-8c31aec45315.jpg",
+   "name": "E01.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/E01__749b981f-6c42-4442-a5d3-8c31aec45315.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 51134,
+   "uploaded_bytes": 51134,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/E02__402c7848-7c27-429c-959e-9ae0d7b43377.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/E02__402c7848-7c27-429c-959e-9ae0d7b43377.jpg",
+   "name": "E02.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/E02__402c7848-7c27-429c-959e-9ae0d7b43377.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 68812,
+   "uploaded_bytes": 68812,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/E03__f2e7d520-c44c-459b-b330-ea1fbb6813e4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/E03__f2e7d520-c44c-459b-b330-ea1fbb6813e4.jpg",
+   "name": "E03.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/E03__f2e7d520-c44c-459b-b330-ea1fbb6813e4.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 72400,
+   "uploaded_bytes": 72400,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/F01__0e698cd9-6dfa-4793-bfb5-594f9550479b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/F01__0e698cd9-6dfa-4793-bfb5-594f9550479b.jpg",
+   "name": "F01.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/F01__0e698cd9-6dfa-4793-bfb5-594f9550479b.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 66805,
+   "uploaded_bytes": 66805,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/F02__2ec2fcc2-abe9-4d43-b367-ff9e6d34d711.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/F02__2ec2fcc2-abe9-4d43-b367-ff9e6d34d711.jpg",
+   "name": "F02.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/F02__2ec2fcc2-abe9-4d43-b367-ff9e6d34d711.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 62917,
+   "uploaded_bytes": 62917,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/F03__5c866eec-bfee-453b-ad53-a5a86d59fabf.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/F03__5c866eec-bfee-453b-ad53-a5a86d59fabf.jpg",
+   "name": "F03.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/F03__5c866eec-bfee-453b-ad53-a5a86d59fabf.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 80982,
+   "uploaded_bytes": 80982,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/G01__a7d990f0-f113-4362-96d5-2a7d39521234.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/G01__a7d990f0-f113-4362-96d5-2a7d39521234.jpg",
+   "name": "G01.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/G01__a7d990f0-f113-4362-96d5-2a7d39521234.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 70784,
+   "uploaded_bytes": 70784,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/G02__93be1243-0ad3-407e-90c7-cac34def377b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/G02__93be1243-0ad3-407e-90c7-cac34def377b.jpg",
+   "name": "G02.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/G02__93be1243-0ad3-407e-90c7-cac34def377b.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 46780,
+   "uploaded_bytes": 46780,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/G03__969dd035-9fa6-4b37-9549-778d6671528a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/G03__969dd035-9fa6-4b37-9549-778d6671528a.jpg",
+   "name": "G03.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/G03__969dd035-9fa6-4b37-9549-778d6671528a.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 54722,
+   "uploaded_bytes": 54722,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/H01__32c68715-9408-4199-a0cf-b56aaae8f7fc.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/H01__32c68715-9408-4199-a0cf-b56aaae8f7fc.jpg",
+   "name": "H01.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/H01__32c68715-9408-4199-a0cf-b56aaae8f7fc.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 73673,
+   "uploaded_bytes": 73673,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/H02__ef1e65d0-e933-454a-b0c6-218eb0e3c2cc.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/H02__ef1e65d0-e933-454a-b0c6-218eb0e3c2cc.jpg",
+   "name": "H02.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/H02__ef1e65d0-e933-454a-b0c6-218eb0e3c2cc.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 74816,
+   "uploaded_bytes": 74816,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/H03__45e32f1a-fef2-4f88-befd-66ee594fc29e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/H03__45e32f1a-fef2-4f88-befd-66ee594fc29e.jpg",
+   "name": "H03.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/H03__45e32f1a-fef2-4f88-befd-66ee594fc29e.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 69851,
+   "uploaded_bytes": 69851,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/I01__212dd3bf-77aa-4364-a15a-2943f1dcb1d6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/I01__212dd3bf-77aa-4364-a15a-2943f1dcb1d6.jpg",
+   "name": "I01.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/I01__212dd3bf-77aa-4364-a15a-2943f1dcb1d6.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 74120,
+   "uploaded_bytes": 74120,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/I02__5f3a9bc5-5139-4616-899a-911f0116f99a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/I02__5f3a9bc5-5139-4616-899a-911f0116f99a.jpg",
+   "name": "I02.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/I02__5f3a9bc5-5139-4616-899a-911f0116f99a.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 74778,
+   "uploaded_bytes": 74778,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/I03__aef340e4-bc2a-474a-844b-6603ad573b18.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/I03__aef340e4-bc2a-474a-844b-6603ad573b18.jpg",
+   "name": "I03.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/I03__aef340e4-bc2a-474a-844b-6603ad573b18.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 76588,
+   "uploaded_bytes": 76588,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/J01__64a82be9-fca7-4ad8-8740-ab701a6dac0e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/J01__64a82be9-fca7-4ad8-8740-ab701a6dac0e.jpg",
+   "name": "J01.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/J01__64a82be9-fca7-4ad8-8740-ab701a6dac0e.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 68689,
+   "uploaded_bytes": 68689,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/J02__6fe4dfb5-46dc-4a77-9480-16cd3e511526.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/J02__6fe4dfb5-46dc-4a77-9480-16cd3e511526.jpg",
+   "name": "J02.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/J02__6fe4dfb5-46dc-4a77-9480-16cd3e511526.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 69819,
+   "uploaded_bytes": 69819,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-li-hospital/scenes/J03__637a56d6-944e-436c-a424-920368a15684.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-li-hospital/scenes/J03__637a56d6-944e-436c-a424-920368a15684.jpg",
+   "name": "J03.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-li-hospital/scenes/J03__637a56d6-944e-436c-a424-920368a15684.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 74434,
+   "uploaded_bytes": 74434,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Data-efficient image transformer for landscape character classification and visual comfort prediction in Chinese hospitals",
+  "authors": [
+   "Li, Y.",
+   "Yue, G.",
+   "Mundher, R.",
+   "Abdulghani, A.M."
+  ],
+  "year": 2026,
+  "venue": "Frontiers in Artificial Intelligence",
+  "doi": "10.3389/frai.2026.1733709",
+  "url": "https://doi.org/10.3389/frai.2026.1733709"
+ }
+}

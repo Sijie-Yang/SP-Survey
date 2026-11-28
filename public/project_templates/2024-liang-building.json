@@ -1,162 +1,1391 @@
 {
-  "id": "2024-liang-building",
-  "name": "Building Exterior Perception",
-  "description": "In this study, we integrate a traditional survey-based evaluation framework with machine learning techniques to analyse human perception of over 250,000 building images from Singapore, San Francisco, and Amsterdam.",
-  "author": "Liang et al.",
-  "year": "2024",
-  "category": "Academic Research",
-  "tags": [
-    "official"
-  ],
-  "isPinned": false,
-  "isApproved": true,
-  "showOnLanding": true,
-  "thumbnailUrl": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000032.jpg",
-  "website": "https://doi.org/10.1016/j.buildenv.2024.111875",
-  "huggingfaceDataset": "seshing/sp-survey-building-facades-examples",
-  "createdAt": "2026-05-20T02:18:47.285+00:00",
-  "config": {
-    "logo": "",
-    "pages": [
-      {
-        "name": "page1",
-        "title": "Survey Questions",
-        "elements": [
-          {
-            "name": "complex",
-            "type": "imagepicker",
-            "title": "Given the pairs of building facade below, which do you perceive as more complex?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "allowTie": true,
-            "tieLabel": "Equal"
-          },
-          {
-            "name": "original",
-            "type": "imagepicker",
-            "title": "Given the pairs of building facade below, which do you perceive as more original?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "allowTie": true,
-            "tieLabel": "Equal"
-          },
-          {
-            "name": "ordered",
-            "type": "imagepicker",
-            "title": "Given the pairs of building facade below, which do you perceive as more ordered?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "allowTie": true,
-            "tieLabel": "Equal"
-          },
-          {
-            "name": "pleasing",
-            "type": "imagepicker",
-            "title": "Given the pairs of building facade below, which do you perceive as more pleasing?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "allowTie": true,
-            "tieLabel": "Equal"
-          },
-          {
-            "name": "boring",
-            "type": "imagepicker",
-            "title": "Given the pairs of building facade below, which do you perceive as more boring?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "allowTie": true,
-            "tieLabel": "Equal"
-          },
-          {
-            "name": "stype",
-            "type": "imagerating",
-            "title": "How would you categorise the architectural style of this building facade?",
-            "imageFit": "cover",
-            "imageCount": 1,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "rateMin": 1,
-            "rateMax": 5,
-            "rateLabels": [
-              "Historical",
-              "Somewhat Historical",
-              "No Significant Style",
-              "Somewhat Modern",
-              "Modern"
-            ],
-            "minRateDescription": "Historical",
-            "maxRateDescription": "Modern"
-          }
-        ],
-        "description": ""
-      }
+ "id": "2024-liang-building",
+ "name": "Building Exterior Perception",
+ "description": "In this study, we integrate a traditional survey-based evaluation framework with machine learning techniques to analyse human perception of over 250,000 building images from Singapore, San Francisco, and Amsterdam.",
+ "author": "Liang et al.",
+ "year": "2024",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "source:paper",
+  "modality:street_view",
+  "task:pairwise",
+  "task:rating",
+  "concept:building_facade",
+  "concept:beauty",
+  "concept:preference",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:Singapore",
+  "country:USA",
+  "country:Netherlands",
+  "city:Singapore",
+  "city:San Francisco",
+  "city:Amsterdam"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000032.jpg",
+ "website": "https://doi.org/10.1016/j.buildenv.2024.111875",
+ "huggingfaceDataset": "seshing/sp-survey-building-facades-examples",
+ "createdAt": "2026-05-20T02:18:47.285+00:00",
+ "updatedAt": "2026-11-26T14:57:49.953+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "page1",
+    "title": "Survey Questions",
+    "elements": [
+     {
+      "name": "complex",
+      "type": "imagepicker",
+      "title": "Given the pairs of building facade below, which do you perceive as more complex?",
+      "allowTie": true,
+      "imageFit": "cover",
+      "tieLabel": "Equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "imageSource": "huggingface",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true
+     },
+     {
+      "name": "original",
+      "type": "imagepicker",
+      "title": "Given the pairs of building facade below, which do you perceive as more original?",
+      "allowTie": true,
+      "imageFit": "cover",
+      "tieLabel": "Equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "imageSource": "huggingface",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true
+     },
+     {
+      "name": "ordered",
+      "type": "imagepicker",
+      "title": "Given the pairs of building facade below, which do you perceive as more ordered?",
+      "allowTie": true,
+      "imageFit": "cover",
+      "tieLabel": "Equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "imageSource": "huggingface",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true
+     },
+     {
+      "name": "pleasing",
+      "type": "imagepicker",
+      "title": "Given the pairs of building facade below, which do you perceive as more pleasing?",
+      "allowTie": true,
+      "imageFit": "cover",
+      "tieLabel": "Equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "imageSource": "huggingface",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true
+     },
+     {
+      "name": "boring",
+      "type": "imagepicker",
+      "title": "Given the pairs of building facade below, which do you perceive as more boring?",
+      "allowTie": true,
+      "imageFit": "cover",
+      "tieLabel": "Equal",
+      "imageCount": 2,
+      "isRequired": true,
+      "imageSource": "huggingface",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true
+     },
+     {
+      "name": "stype",
+      "type": "imagerating",
+      "title": "How would you categorise the architectural style of this building facade?",
+      "rateMax": 5,
+      "rateMin": 1,
+      "imageFit": "cover",
+      "imageCount": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Historical",
+       "Somewhat Historical",
+       "No Significant Style",
+       "Somewhat Modern",
+       "Modern"
+      ],
+      "imageSource": "huggingface",
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Modern",
+      "minRateDescription": "Historical",
+      "randomImageSelection": true
+     }
     ],
-    "title": "Building Exterior Perception",
-    "images": [],
-    "settings": {
-      "autoGrowComment": true,
-      "progressBarType": "questions",
-      "showProgressBar": "aboveheader",
-      "showQuestionNumbers": "off",
-      "showPreviewBeforeComplete": "showAllQuestions"
+    "description": ""
+   }
+  ],
+  "title": "Building Exterior Perception",
+  "images": [],
+  "settings": {
+   "autoGrowComment": true,
+   "progressBarType": "questions",
+   "showProgressBar": "aboveheader",
+   "showQuestionNumbers": "off",
+   "showPreviewBeforeComplete": "showAllQuestions"
+  },
+  "description": "In this study, we integrate a traditional survey-based evaluation framework with machine learning techniques to analyse human perception of over 250,000 building images from Singapore, San Francisco, and Amsterdam.",
+  "logoPosition": "right",
+  "spAnalysisRecommendation": {
+   "items": [
+    {
+     "runs": 1,
+     "scale": "0-10",
+     "method": "trueskill_pairwise",
+     "questions": [
+      "complex",
+      "original",
+      "ordered",
+      "pleasing",
+      "boring"
+     ],
+     "tieHandling": "draw"
     },
-    "description": "In this study, we integrate a traditional survey-based evaluation framework with machine learning techniques to analyse human perception of over 250,000 building images from Singapore, San Francisco, and Amsterdam.",
-    "logoPosition": "right",
-    "spAnalysisRecommendation": {
-      "citation": "Liang et al. 2024",
-      "items": [
-        {
-          "questions": [
-            "complex",
-            "original",
-            "ordered",
-            "pleasing",
-            "boring"
-          ],
-          "method": "trueskill_pairwise",
-          "tieHandling": "draw",
-          "runs": 1,
-          "scale": "0-10"
-        },
-        {
-          "questions": [
-            "stype"
-          ],
-          "method": "scalar_distribution",
-          "labels": {
-            "stype": "Style (1 = historical … 5 = modern)"
-          }
-        }
-      ]
+    {
+     "labels": {
+      "stype": "Style (1 = historical … 5 = modern)"
+     },
+     "method": "scalar_distribution",
+     "questions": [
+      "stype"
+     ]
     }
+   ],
+   "citation": "Liang et al. 2024"
+  }
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2024-liang-building/image_000000.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000000.jpg",
+   "name": "image_000000.jpg",
+   "size": 38857,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000000.jpg",
+   "lastModified": "2026-05-20T02:17:57.751Z"
   },
-  "imageDatasetConfig": {
-    "mediaFolderTags": {},
-    "mediaFolders": []
+  {
+   "key": "templates/2024-liang-building/image_000001.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000001.jpg",
+   "name": "image_000001.jpg",
+   "size": 12883,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000001.jpg",
+   "lastModified": "2026-05-20T02:17:58.197Z"
   },
-  "preloadedImages": [],
-  "preloadedSource": null,
-  "preloadedAt": null
+  {
+   "key": "templates/2024-liang-building/image_000002.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000002.jpg",
+   "name": "image_000002.jpg",
+   "size": 15088,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000002.jpg",
+   "lastModified": "2026-05-20T02:17:58.560Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000003.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000003.jpg",
+   "name": "image_000003.jpg",
+   "size": 25484,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000003.jpg",
+   "lastModified": "2026-05-20T02:17:58.944Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000004.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000004.jpg",
+   "name": "image_000004.jpg",
+   "size": 30144,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000004.jpg",
+   "lastModified": "2026-05-20T02:17:59.346Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000005.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000005.jpg",
+   "name": "image_000005.jpg",
+   "size": 20449,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000005.jpg",
+   "lastModified": "2026-05-20T02:17:59.779Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000006.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000006.jpg",
+   "name": "image_000006.jpg",
+   "size": 40171,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000006.jpg",
+   "lastModified": "2026-05-20T02:18:00.376Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000007.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000007.jpg",
+   "name": "image_000007.jpg",
+   "size": 7050,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000007.jpg",
+   "lastModified": "2026-05-20T02:18:00.746Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000008.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000008.jpg",
+   "name": "image_000008.jpg",
+   "size": 31022,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000008.jpg",
+   "lastModified": "2026-05-20T02:18:01.093Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000009.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000009.jpg",
+   "name": "image_000009.jpg",
+   "size": 32778,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000009.jpg",
+   "lastModified": "2026-05-20T02:18:01.541Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000010.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000010.jpg",
+   "name": "image_000010.jpg",
+   "size": 45242,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000010.jpg",
+   "lastModified": "2026-05-20T02:18:01.898Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000011.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000011.jpg",
+   "name": "image_000011.jpg",
+   "size": 26751,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000011.jpg",
+   "lastModified": "2026-05-20T02:18:02.257Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000012.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000012.jpg",
+   "name": "image_000012.jpg",
+   "size": 34967,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000012.jpg",
+   "lastModified": "2026-05-20T02:18:02.682Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000013.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000013.jpg",
+   "name": "image_000013.jpg",
+   "size": 26946,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000013.jpg",
+   "lastModified": "2026-05-20T02:18:03.061Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000014.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000014.jpg",
+   "name": "image_000014.jpg",
+   "size": 21403,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000014.jpg",
+   "lastModified": "2026-05-20T02:18:03.677Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000015.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000015.jpg",
+   "name": "image_000015.jpg",
+   "size": 10343,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000015.jpg",
+   "lastModified": "2026-05-20T02:18:04.053Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000016.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000016.jpg",
+   "name": "image_000016.jpg",
+   "size": 46562,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000016.jpg",
+   "lastModified": "2026-05-20T02:18:04.411Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000017.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000017.jpg",
+   "name": "image_000017.jpg",
+   "size": 35470,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000017.jpg",
+   "lastModified": "2026-05-20T02:18:04.760Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000018.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000018.jpg",
+   "name": "image_000018.jpg",
+   "size": 42899,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000018.jpg",
+   "lastModified": "2026-05-20T02:18:05.103Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000019.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000019.jpg",
+   "name": "image_000019.jpg",
+   "size": 31361,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000019.jpg",
+   "lastModified": "2026-05-20T02:18:05.626Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000020.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000020.jpg",
+   "name": "image_000020.jpg",
+   "size": 39963,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000020.jpg",
+   "lastModified": "2026-05-20T02:18:05.990Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000021.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000021.jpg",
+   "name": "image_000021.jpg",
+   "size": 170178,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000021.jpg",
+   "lastModified": "2026-05-20T02:18:06.408Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000022.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000022.jpg",
+   "name": "image_000022.jpg",
+   "size": 31259,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000022.jpg",
+   "lastModified": "2026-05-20T02:18:06.814Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000023.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000023.jpg",
+   "name": "image_000023.jpg",
+   "size": 32795,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000023.jpg",
+   "lastModified": "2026-05-20T02:18:07.250Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000024.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000024.jpg",
+   "name": "image_000024.jpg",
+   "size": 19404,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000024.jpg",
+   "lastModified": "2026-05-20T02:18:07.701Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000025.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000025.jpg",
+   "name": "image_000025.jpg",
+   "size": 65646,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000025.jpg",
+   "lastModified": "2026-05-20T02:18:08.055Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000026.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000026.jpg",
+   "name": "image_000026.jpg",
+   "size": 13076,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000026.jpg",
+   "lastModified": "2026-05-20T02:18:08.431Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000027.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000027.jpg",
+   "name": "image_000027.jpg",
+   "size": 15254,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000027.jpg",
+   "lastModified": "2026-05-20T02:18:08.773Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000028.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000028.jpg",
+   "name": "image_000028.jpg",
+   "size": 34292,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000028.jpg",
+   "lastModified": "2026-05-20T02:18:09.227Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000029.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000029.jpg",
+   "name": "image_000029.jpg",
+   "size": 33422,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000029.jpg",
+   "lastModified": "2026-05-20T02:18:09.747Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000030.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000030.jpg",
+   "name": "image_000030.jpg",
+   "size": 15445,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000030.jpg",
+   "lastModified": "2026-05-20T02:18:10.142Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000031.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000031.jpg",
+   "name": "image_000031.jpg",
+   "size": 28001,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000031.jpg",
+   "lastModified": "2026-05-20T02:18:10.531Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000032.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000032.jpg",
+   "name": "image_000032.jpg",
+   "size": 41983,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000032.jpg",
+   "lastModified": "2026-05-20T02:18:10.909Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000033.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000033.jpg",
+   "name": "image_000033.jpg",
+   "size": 50945,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000033.jpg",
+   "lastModified": "2026-05-20T02:18:11.357Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000034.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000034.jpg",
+   "name": "image_000034.jpg",
+   "size": 28454,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000034.jpg",
+   "lastModified": "2026-05-20T02:18:11.856Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000035.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000035.jpg",
+   "name": "image_000035.jpg",
+   "size": 64510,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000035.jpg",
+   "lastModified": "2026-05-20T02:18:12.214Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000036.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000036.jpg",
+   "name": "image_000036.jpg",
+   "size": 49830,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000036.jpg",
+   "lastModified": "2026-05-20T02:18:12.631Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000037.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000037.jpg",
+   "name": "image_000037.jpg",
+   "size": 36015,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000037.jpg",
+   "lastModified": "2026-05-20T02:18:13.056Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000038.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000038.jpg",
+   "name": "image_000038.jpg",
+   "size": 35421,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000038.jpg",
+   "lastModified": "2026-05-20T02:18:13.418Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000039.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000039.jpg",
+   "name": "image_000039.jpg",
+   "size": 59737,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000039.jpg",
+   "lastModified": "2026-05-20T02:18:13.781Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000040.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000040.jpg",
+   "name": "image_000040.jpg",
+   "size": 36823,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000040.jpg",
+   "lastModified": "2026-05-20T02:18:14.128Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000041.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000041.jpg",
+   "name": "image_000041.jpg",
+   "size": 17653,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000041.jpg",
+   "lastModified": "2026-05-20T02:18:14.575Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000042.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000042.jpg",
+   "name": "image_000042.jpg",
+   "size": 16591,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000042.jpg",
+   "lastModified": "2026-05-20T02:18:15.025Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000043.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000043.jpg",
+   "name": "image_000043.jpg",
+   "size": 67626,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000043.jpg",
+   "lastModified": "2026-05-20T02:18:15.412Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000044.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000044.jpg",
+   "name": "image_000044.jpg",
+   "size": 46271,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000044.jpg",
+   "lastModified": "2026-05-20T02:18:15.873Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000045.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000045.jpg",
+   "name": "image_000045.jpg",
+   "size": 52265,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000045.jpg",
+   "lastModified": "2026-05-20T02:18:16.327Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000046.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000046.jpg",
+   "name": "image_000046.jpg",
+   "size": 16244,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000046.jpg",
+   "lastModified": "2026-05-20T02:18:16.704Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000047.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000047.jpg",
+   "name": "image_000047.jpg",
+   "size": 13583,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000047.jpg",
+   "lastModified": "2026-05-20T02:18:17.121Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000048.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000048.jpg",
+   "name": "image_000048.jpg",
+   "size": 25271,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000048.jpg",
+   "lastModified": "2026-05-20T02:18:17.531Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000049.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000049.jpg",
+   "name": "image_000049.jpg",
+   "size": 11400,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000049.jpg",
+   "lastModified": "2026-05-20T02:18:17.936Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000050.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000050.jpg",
+   "name": "image_000050.jpg",
+   "size": 16269,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000050.jpg",
+   "lastModified": "2026-05-20T02:18:18.299Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000051.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000051.jpg",
+   "name": "image_000051.jpg",
+   "size": 32996,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000051.jpg",
+   "lastModified": "2026-05-20T02:18:18.679Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000052.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000052.jpg",
+   "name": "image_000052.jpg",
+   "size": 17726,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000052.jpg",
+   "lastModified": "2026-05-20T02:18:19.025Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000053.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000053.jpg",
+   "name": "image_000053.jpg",
+   "size": 10987,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000053.jpg",
+   "lastModified": "2026-05-20T02:18:19.385Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000054.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000054.jpg",
+   "name": "image_000054.jpg",
+   "size": 38288,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000054.jpg",
+   "lastModified": "2026-05-20T02:18:19.781Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000055.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000055.jpg",
+   "name": "image_000055.jpg",
+   "size": 26647,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000055.jpg",
+   "lastModified": "2026-05-20T02:18:20.209Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000056.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000056.jpg",
+   "name": "image_000056.jpg",
+   "size": 30635,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000056.jpg",
+   "lastModified": "2026-05-20T02:18:20.552Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000057.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000057.jpg",
+   "name": "image_000057.jpg",
+   "size": 13083,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000057.jpg",
+   "lastModified": "2026-05-20T02:18:21.019Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000058.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000058.jpg",
+   "name": "image_000058.jpg",
+   "size": 31820,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000058.jpg",
+   "lastModified": "2026-05-20T02:18:21.408Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000059.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000059.jpg",
+   "name": "image_000059.jpg",
+   "size": 10938,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000059.jpg",
+   "lastModified": "2026-05-20T02:18:21.782Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000060.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000060.jpg",
+   "name": "image_000060.jpg",
+   "size": 32422,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000060.jpg",
+   "lastModified": "2026-05-20T02:18:22.191Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000061.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000061.jpg",
+   "name": "image_000061.jpg",
+   "size": 33630,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000061.jpg",
+   "lastModified": "2026-05-20T02:18:22.540Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000062.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000062.jpg",
+   "name": "image_000062.jpg",
+   "size": 56319,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000062.jpg",
+   "lastModified": "2026-05-20T02:18:22.893Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000063.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000063.jpg",
+   "name": "image_000063.jpg",
+   "size": 43297,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000063.jpg",
+   "lastModified": "2026-05-20T02:18:23.294Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000064.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000064.jpg",
+   "name": "image_000064.jpg",
+   "size": 20935,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000064.jpg",
+   "lastModified": "2026-05-20T02:18:23.686Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000065.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000065.jpg",
+   "name": "image_000065.jpg",
+   "size": 50734,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000065.jpg",
+   "lastModified": "2026-05-20T02:18:24.170Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000066.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000066.jpg",
+   "name": "image_000066.jpg",
+   "size": 50590,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000066.jpg",
+   "lastModified": "2026-05-20T02:18:24.573Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000067.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000067.jpg",
+   "name": "image_000067.jpg",
+   "size": 35762,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000067.jpg",
+   "lastModified": "2026-05-20T02:18:25.034Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000068.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000068.jpg",
+   "name": "image_000068.jpg",
+   "size": 42967,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000068.jpg",
+   "lastModified": "2026-05-20T02:18:25.492Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000069.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000069.jpg",
+   "name": "image_000069.jpg",
+   "size": 21632,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000069.jpg",
+   "lastModified": "2026-05-20T02:18:25.820Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000070.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000070.jpg",
+   "name": "image_000070.jpg",
+   "size": 25025,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000070.jpg",
+   "lastModified": "2026-05-20T02:18:26.153Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000071.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000071.jpg",
+   "name": "image_000071.jpg",
+   "size": 19677,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000071.jpg",
+   "lastModified": "2026-05-20T02:18:26.759Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000072.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000072.jpg",
+   "name": "image_000072.jpg",
+   "size": 12023,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000072.jpg",
+   "lastModified": "2026-05-20T02:18:27.127Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000073.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000073.jpg",
+   "name": "image_000073.jpg",
+   "size": 38019,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000073.jpg",
+   "lastModified": "2026-05-20T02:18:27.573Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000074.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000074.jpg",
+   "name": "image_000074.jpg",
+   "size": 34475,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000074.jpg",
+   "lastModified": "2026-05-20T02:18:27.993Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000075.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000075.jpg",
+   "name": "image_000075.jpg",
+   "size": 58686,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000075.jpg",
+   "lastModified": "2026-05-20T02:18:28.380Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000076.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000076.jpg",
+   "name": "image_000076.jpg",
+   "size": 43931,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000076.jpg",
+   "lastModified": "2026-05-20T02:18:28.770Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000077.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000077.jpg",
+   "name": "image_000077.jpg",
+   "size": 47138,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000077.jpg",
+   "lastModified": "2026-05-20T02:18:29.182Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000078.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000078.jpg",
+   "name": "image_000078.jpg",
+   "size": 57628,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000078.jpg",
+   "lastModified": "2026-05-20T02:18:29.621Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000079.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000079.jpg",
+   "name": "image_000079.jpg",
+   "size": 22227,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000079.jpg",
+   "lastModified": "2026-05-20T02:18:30.071Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000080.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000080.jpg",
+   "name": "image_000080.jpg",
+   "size": 20787,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000080.jpg",
+   "lastModified": "2026-05-20T02:18:30.474Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000081.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000081.jpg",
+   "name": "image_000081.jpg",
+   "size": 22113,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000081.jpg",
+   "lastModified": "2026-05-20T02:18:30.880Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000082.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000082.jpg",
+   "name": "image_000082.jpg",
+   "size": 35418,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000082.jpg",
+   "lastModified": "2026-05-20T02:18:31.300Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000083.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000083.jpg",
+   "name": "image_000083.jpg",
+   "size": 67584,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000083.jpg",
+   "lastModified": "2026-05-20T02:18:31.668Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000084.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000084.jpg",
+   "name": "image_000084.jpg",
+   "size": 14305,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000084.jpg",
+   "lastModified": "2026-05-20T02:18:32.067Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000085.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000085.jpg",
+   "name": "image_000085.jpg",
+   "size": 57700,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000085.jpg",
+   "lastModified": "2026-05-20T02:18:32.526Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000086.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000086.jpg",
+   "name": "image_000086.jpg",
+   "size": 44493,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000086.jpg",
+   "lastModified": "2026-05-20T02:18:32.876Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000087.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000087.jpg",
+   "name": "image_000087.jpg",
+   "size": 87008,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000087.jpg",
+   "lastModified": "2026-05-20T02:18:33.632Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000088.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000088.jpg",
+   "name": "image_000088.jpg",
+   "size": 38145,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000088.jpg",
+   "lastModified": "2026-05-20T02:18:34.087Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000089.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000089.jpg",
+   "name": "image_000089.jpg",
+   "size": 32749,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000089.jpg",
+   "lastModified": "2026-05-20T02:18:34.561Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000090.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000090.jpg",
+   "name": "image_000090.jpg",
+   "size": 68124,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000090.jpg",
+   "lastModified": "2026-05-20T02:18:34.990Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000091.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000091.jpg",
+   "name": "image_000091.jpg",
+   "size": 62045,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000091.jpg",
+   "lastModified": "2026-05-20T02:18:35.498Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000092.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000092.jpg",
+   "name": "image_000092.jpg",
+   "size": 35787,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000092.jpg",
+   "lastModified": "2026-05-20T02:18:35.870Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000093.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000093.jpg",
+   "name": "image_000093.jpg",
+   "size": 21901,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000093.jpg",
+   "lastModified": "2026-05-20T02:18:36.288Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000094.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000094.jpg",
+   "name": "image_000094.jpg",
+   "size": 13480,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000094.jpg",
+   "lastModified": "2026-05-20T02:18:36.685Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000095.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000095.jpg",
+   "name": "image_000095.jpg",
+   "size": 74739,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000095.jpg",
+   "lastModified": "2026-05-20T02:18:37.023Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000096.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000096.jpg",
+   "name": "image_000096.jpg",
+   "size": 24931,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000096.jpg",
+   "lastModified": "2026-05-20T02:18:37.424Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000097.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000097.jpg",
+   "name": "image_000097.jpg",
+   "size": 11311,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000097.jpg",
+   "lastModified": "2026-05-20T02:18:37.822Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000098.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000098.jpg",
+   "name": "image_000098.jpg",
+   "size": 6503,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000098.jpg",
+   "lastModified": "2026-05-20T02:18:38.241Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000099.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000099.jpg",
+   "name": "image_000099.jpg",
+   "size": 15066,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000099.jpg",
+   "lastModified": "2026-05-20T02:18:38.621Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000100.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000100.jpg",
+   "name": "image_000100.jpg",
+   "size": 35095,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000100.jpg",
+   "lastModified": "2026-05-20T02:18:39.300Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000101.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000101.jpg",
+   "name": "image_000101.jpg",
+   "size": 37880,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000101.jpg",
+   "lastModified": "2026-05-20T02:18:39.741Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000102.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000102.jpg",
+   "name": "image_000102.jpg",
+   "size": 65266,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000102.jpg",
+   "lastModified": "2026-05-20T02:18:40.117Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000103.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000103.jpg",
+   "name": "image_000103.jpg",
+   "size": 16214,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000103.jpg",
+   "lastModified": "2026-05-20T02:18:40.468Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000104.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000104.jpg",
+   "name": "image_000104.jpg",
+   "size": 6635,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000104.jpg",
+   "lastModified": "2026-05-20T02:18:40.855Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000105.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000105.jpg",
+   "name": "image_000105.jpg",
+   "size": 16602,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000105.jpg",
+   "lastModified": "2026-05-20T02:18:41.206Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000106.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000106.jpg",
+   "name": "image_000106.jpg",
+   "size": 26188,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000106.jpg",
+   "lastModified": "2026-05-20T02:18:41.599Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000107.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000107.jpg",
+   "name": "image_000107.jpg",
+   "size": 43275,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000107.jpg",
+   "lastModified": "2026-05-20T02:18:41.994Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000108.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000108.jpg",
+   "name": "image_000108.jpg",
+   "size": 11340,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000108.jpg",
+   "lastModified": "2026-05-20T02:18:42.624Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000109.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000109.jpg",
+   "name": "image_000109.jpg",
+   "size": 30318,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000109.jpg",
+   "lastModified": "2026-05-20T02:18:43.022Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000110.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000110.jpg",
+   "name": "image_000110.jpg",
+   "size": 34215,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000110.jpg",
+   "lastModified": "2026-05-20T02:18:43.404Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000111.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000111.jpg",
+   "name": "image_000111.jpg",
+   "size": 38434,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000111.jpg",
+   "lastModified": "2026-05-20T02:18:43.768Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000112.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000112.jpg",
+   "name": "image_000112.jpg",
+   "size": 12836,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000112.jpg",
+   "lastModified": "2026-05-20T02:18:44.181Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000113.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000113.jpg",
+   "name": "image_000113.jpg",
+   "size": 49450,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000113.jpg",
+   "lastModified": "2026-05-20T02:18:44.539Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000114.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000114.jpg",
+   "name": "image_000114.jpg",
+   "size": 25236,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000114.jpg",
+   "lastModified": "2026-05-20T02:18:44.914Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000115.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000115.jpg",
+   "name": "image_000115.jpg",
+   "size": 58919,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000115.jpg",
+   "lastModified": "2026-05-20T02:18:45.290Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000116.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000116.jpg",
+   "name": "image_000116.jpg",
+   "size": 21947,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000116.jpg",
+   "lastModified": "2026-05-20T02:18:45.661Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000117.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000117.jpg",
+   "name": "image_000117.jpg",
+   "size": 14161,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000117.jpg",
+   "lastModified": "2026-05-20T02:18:46.156Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000118.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000118.jpg",
+   "name": "image_000118.jpg",
+   "size": 9642,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000118.jpg",
+   "lastModified": "2026-05-20T02:18:46.658Z"
+  },
+  {
+   "key": "templates/2024-liang-building/image_000119.jpg",
+   "url": "https://pub-6c5a1831a6254dd88b26e2dc199bfd94.r2.dev/templates/2024-liang-building/image_000119.jpg",
+   "name": "image_000119.jpg",
+   "size": 38554,
+   "type": "image",
+   "folder": "",
+   "media_id": "templates/2024-liang-building/image_000119.jpg",
+   "lastModified": "2026-05-20T02:18:47.002Z"
+  }
+ ],
+ "paper": {
+  "title": "Evaluating human perception of building exteriors using street view imagery",
+  "authors": [
+   "Liang X.",
+   "Chang J.H.",
+   "Gao S.",
+   "Zhao T.",
+   "Biljecki F."
+  ],
+  "year": 2024,
+  "venue": "Building and Environment",
+  "doi": "10.1016/j.buildenv.2024.111875",
+  "url": "https://doi.org/10.1016/j.buildenv.2024.111875"
+ }
 }

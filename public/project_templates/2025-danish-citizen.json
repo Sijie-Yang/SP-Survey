@@ -1,304 +1,1206 @@
 {
-  "id": "2025-danish-citizen",
-  "name": "Percept (Citizen Science)",
-  "description": "Rebuilt from the published description of Danish, Labib, Ricker & Helbich (2025). Citizens rate Amsterdam street views from awful to great on walkability, bikeability, pleasantness, greenness and safety, each with the paper's category text. Differences from the original study: (1) The original app switched category at random every five images and offered swipe input; here each category is a block of 20 images with button input. (2) Bundled images are photographs from the paper PDF (10 scenes), not the original full stimulus set.",
-  "author": "Danish, Labib, Ricker & Helbich",
-  "year": "2025",
-  "category": "Academic Research",
-  "tags": [
-    "official",
-    "paper"
-  ],
-  "isPinned": false,
-  "isApproved": true,
-  "showOnLanding": true,
-  "thumbnailUrl": null,
-  "website": "https://doi.org/10.1016/j.compenvurbsys.2024.102207",
-  "huggingfaceDataset": null,
-  "createdAt": "2026-10-02T00:00:00+00:00",
-  "imageDatasetConfig": {
-    "mediaFolderTags": {},
-    "mediaFolders": []
-  },
-  "preloadedImages": [],
-  "preloadedSource": null,
-  "preloadedAt": null,
-  "config": {
-    "title": "percept",
-    "description": "Tell us a little about yourself, then rate street views.",
-    "logoPosition": "right",
-    "autoGrowComment": true,
-    "progressBarType": "questions",
-    "showProgressBar": "aboveheader",
-    "showQuestionNumbers": "off",
-    "spAnalysisRecommendation": {
-      "citation": "Danish et al. 2025",
-      "items": [
-        {
-          "questions": [
-            "walkability",
-            "bikeability",
-            "pleasantness",
-            "greenness",
-            "safety"
-          ],
-          "method": "scalar_distribution",
-          "groupBy": [
-            "gender",
-            "education"
-          ]
-        }
-      ]
-    },
-    "pages": [
-      {
-        "name": "page_about_you",
-        "elements": [
-          {
-            "name": "age",
-            "type": "text",
-            "title": "Age",
-            "isRequired": true,
-            "inputType": "number"
-          },
-          {
-            "name": "adult_confirm",
-            "type": "checkbox",
-            "title": "I confirm that I am 18 years or older.",
-            "choices": [
-              {
-                "value": "yes",
-                "text": "Yes"
-              }
-            ],
-            "isRequired": true
-          },
-          {
-            "name": "gender",
-            "type": "radiogroup",
-            "title": "Gender",
-            "choices": [
-              {
-                "value": "female",
-                "text": "Female"
-              },
-              {
-                "value": "male",
-                "text": "Male"
-              },
-              {
-                "value": "other",
-                "text": "Other"
-              },
-              {
-                "value": "prefer_not",
-                "text": "Prefer not to say"
-              }
-            ],
-            "isRequired": false
-          },
-          {
-            "name": "monthly_income",
-            "type": "text",
-            "title": "Estimated monthly income",
-            "isRequired": false
-          },
-          {
-            "name": "education",
-            "type": "radiogroup",
-            "title": "Level of education",
-            "choices": [
-              {
-                "value": "primary",
-                "text": "Primary"
-              },
-              {
-                "value": "secondary",
-                "text": "Secondary"
-              },
-              {
-                "value": "tertiary",
-                "text": "Tertiary"
-              },
-              {
-                "value": "postgraduate",
-                "text": "Postgraduate"
-              }
-            ],
-            "isRequired": false
-          },
-          {
-            "name": "postal_code",
-            "type": "text",
-            "title": "Home postal code",
-            "isRequired": false
-          },
-          {
-            "name": "country_of_residence",
-            "type": "text",
-            "title": "Country of residence",
-            "isRequired": false
-          },
-          {
-            "name": "data_consent",
-            "type": "checkbox",
-            "title": "I agree that my answers may be used for research.",
-            "choices": [
-              {
-                "value": "agree",
-                "text": "I agree"
-              }
-            ],
-            "isRequired": true
-          }
-        ],
-        "title": "About you"
-      },
-      {
-        "name": "page_walkability",
-        "elements": [
-          {
-            "name": "walkability",
-            "type": "imagerating",
-            "title": "Walkability: Does this place look like an easy and safe place for people to travel on foot or using a walking-equivalent mobility aid (e.g. wheelchair)? This might include factors such as the quality of sidewalks, pedestrian crossings, street connectivity, and access to public amenities.",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 1,
-            "trialCount": 20,
-            "rateMin": 1,
-            "rateMax": 5,
-            "rateLabels": [
-              "Awful",
-              "Bad",
-              "Neutral",
-              "Good",
-              "Great"
-            ],
-            "minRateDescription": "Awful",
-            "maxRateDescription": "Great"
-          }
-        ],
-        "title": "Walkability"
-      },
-      {
-        "name": "page_bikeability",
-        "elements": [
-          {
-            "name": "bikeability",
-            "type": "imagerating",
-            "title": "Bikeability: Does this place look accessible, attractive, safe and convenient for cycling as a mode of general-purpose transportation, or cycling-equivalent mobility aid (e.g. mobility scooter)? This might include factors such as cycle lanes, tracks, and parking, as well as the overall design of streets, junctions and any visible surroundings.",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 1,
-            "trialCount": 20,
-            "rateMin": 1,
-            "rateMax": 5,
-            "rateLabels": [
-              "Awful",
-              "Bad",
-              "Neutral",
-              "Good",
-              "Great"
-            ],
-            "minRateDescription": "Awful",
-            "maxRateDescription": "Great"
-          }
-        ],
-        "title": "Bikeability"
-      },
-      {
-        "name": "page_pleasantness",
-        "elements": [
-          {
-            "name": "pleasantness",
-            "type": "imagerating",
-            "title": "Pleasantness: Does this place look enjoyable or pleasing to the senses or emotions? This might include factors such as the aesthetics of the surroundings, the quality of the air and lighting, the soundscape, and the presence of other people or natural elements.",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 1,
-            "trialCount": 20,
-            "rateMin": 1,
-            "rateMax": 5,
-            "rateLabels": [
-              "Awful",
-              "Bad",
-              "Neutral",
-              "Good",
-              "Great"
-            ],
-            "minRateDescription": "Awful",
-            "maxRateDescription": "Great"
-          }
-        ],
-        "title": "Pleasantness"
-      },
-      {
-        "name": "page_greenness",
-        "elements": [
-          {
-            "name": "greenness",
-            "type": "imagerating",
-            "title": "Greenness: Rate the apparent amount of vegetation and greenery in a given environment. This encompasses the presence of trees, shrubs, plants, and other natural elements.",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 1,
-            "trialCount": 20,
-            "rateMin": 1,
-            "rateMax": 5,
-            "rateLabels": [
-              "Awful",
-              "Bad",
-              "Neutral",
-              "Good",
-              "Great"
-            ],
-            "minRateDescription": "Awful",
-            "maxRateDescription": "Great"
-          }
-        ],
-        "title": "Greenness"
-      },
-      {
-        "name": "page_safety",
-        "elements": [
-          {
-            "name": "safety",
-            "type": "imagerating",
-            "title": "Safety: Does this place look like you would feel protected from harm or danger, in terms of personal safety and security? Do you believe that it is likely that you would feel safe here at all times of day or night? This might include the presence of elements such as lighting, good maintenance, presence of other people and natural surveillance.",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 1,
-            "trialCount": 20,
-            "rateMin": 1,
-            "rateMax": 5,
-            "rateLabels": [
-              "Awful",
-              "Bad",
-              "Neutral",
-              "Good",
-              "Great"
-            ],
-            "minRateDescription": "Awful",
-            "maxRateDescription": "Great"
-          }
-        ],
-        "title": "Safety"
-      }
+ "id": "2025-danish-citizen",
+ "name": "Percept: Citizen Ratings of Amsterdam Street Views",
+ "description": "Method replication: same categories, category texts and Awful–Great scale as the paper; the images are not the paper's stimuli (new Google Street View views of Amsterdam, © Google). Danish, Labib, Ricker & Helbich (2025, Computers, Environment and Urban Systems 116:102207) built an open-source, smartphone-friendly toolkit that downloads, crops and filters open Mapillary street view images and runs a citizen-science perception survey. In Amsterdam, 331 people gave 22,637 ratings.\n\nWhat participants do: after consent, they give age (and confirm they are 18+), gender, income, education, postal code and country, as in the app. Then they rate Amsterdam street views from Awful to Great in five blocks of 10 images: walkability, bikeability, pleasantness, greenness and safety. Each block shows the toolkit's own explanation of the category. Images are drawn at random from 71.\n\nAnalysis: mean rating per image and category, agreement between raters, correlations between the five categories, and maps of image scores by location.\n\nDifferences from the original study: (1) the paper used open Mapillary images processed by its own pipeline; this template uses 71 Google Street View views (2016–2026) from random points in Amsterdam; (2) the original app switched category at random every five images, allowed swiping and let people rate as many images as they liked; here each category is a block of 10 images with buttons. The earlier version of this template showed 10 photographs cropped from the paper PDF.",
+ "author": "Danish, Labib, Ricker & Helbich",
+ "year": "2025",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "citizen-science",
+  "walkability",
+  "amsterdam",
+  "netherlands",
+  "source:paper",
+  "modality:street_view",
+  "task:multi_rating",
+  "concept:walkability",
+  "concept:cycling",
+  "concept:pleasantness",
+  "concept:greenery",
+  "concept:safety",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:Netherlands",
+  "city:Amsterdam"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1016/j.compenvurbsys.2024.102207",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-10-02T00:00:00+00:00",
+ "updatedAt": "2026-11-27T05:44:24.801+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
     ]
+   },
+   {
+    "name": "about_you_first",
+    "elements": [
+     {
+      "name": "age",
+      "type": "text",
+      "title": "Age",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "adult_confirm",
+      "type": "checkbox",
+      "title": "I confirm that I am 18 years or older.",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other",
+        "value": "other"
+       },
+       {
+        "text": "Prefer not to say",
+        "value": "prefer_not_to_say"
+       }
+      ],
+      "isRequired": false
+     },
+     {
+      "name": "monthly_income",
+      "type": "text",
+      "title": "Estimated monthly income",
+      "isRequired": false
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "Level of education",
+      "choices": [
+       {
+        "text": "Primary",
+        "value": "primary"
+       },
+       {
+        "text": "Secondary",
+        "value": "secondary"
+       },
+       {
+        "text": "Tertiary",
+        "value": "tertiary"
+       },
+       {
+        "text": "Postgraduate",
+        "value": "postgraduate"
+       }
+      ],
+      "isRequired": false
+     },
+     {
+      "name": "postal_code",
+      "type": "text",
+      "title": "Home postal code",
+      "isRequired": false
+     },
+     {
+      "name": "country_of_residence",
+      "type": "text",
+      "title": "Country of residence",
+      "isRequired": false
+     }
+    ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "walkability",
+      "type": "imagerating",
+      "title": "Walkability",
+      "choices": [],
+      "rateMax": 5,
+      "rateMin": 1,
+      "imageFit": "contain",
+      "imageCount": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Awful",
+       "Bad",
+       "Neutral",
+       "Good",
+       "Great"
+      ],
+      "trialCount": 10,
+      "description": "Does this place look like an easy and safe place for people to travel on foot or using a walking-equivalent mobility aid (e.g. wheelchair)? This might include factors such as the quality of sidewalks, pedestrian crossings, street connectivity, and access to public amenities.",
+      "mediaFolders": [
+       "amsterdam"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Great",
+      "minRateDescription": "Awful",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_2",
+    "elements": [
+     {
+      "name": "bikeability",
+      "type": "imagerating",
+      "title": "Bikeability",
+      "choices": [],
+      "rateMax": 5,
+      "rateMin": 1,
+      "imageFit": "contain",
+      "imageCount": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Awful",
+       "Bad",
+       "Neutral",
+       "Good",
+       "Great"
+      ],
+      "trialCount": 10,
+      "description": "Does this place look accessible, attractive, safe and convenient for cycling as a mode of general-purpose transportation, or cycling-equivalent mobility aid (e.g. mobility scooter)? This might include factors such as cycle lanes, tracks, and parking, as well as the overall design of streets, junctions and any visible surroundings.",
+      "mediaFolders": [
+       "amsterdam"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Great",
+      "minRateDescription": "Awful",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_3",
+    "elements": [
+     {
+      "name": "pleasantness",
+      "type": "imagerating",
+      "title": "Pleasantness",
+      "choices": [],
+      "rateMax": 5,
+      "rateMin": 1,
+      "imageFit": "contain",
+      "imageCount": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Awful",
+       "Bad",
+       "Neutral",
+       "Good",
+       "Great"
+      ],
+      "trialCount": 10,
+      "description": "Does this place look enjoyable or pleasing to the senses or emotions? This might include factors such as the aesthetics of the surroundings, the quality of the air and lighting, the soundscape, and the presence of other people or natural elements.",
+      "mediaFolders": [
+       "amsterdam"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Great",
+      "minRateDescription": "Awful",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_4",
+    "elements": [
+     {
+      "name": "greenness",
+      "type": "imagerating",
+      "title": "Greenness",
+      "choices": [],
+      "rateMax": 5,
+      "rateMin": 1,
+      "imageFit": "contain",
+      "imageCount": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Awful",
+       "Bad",
+       "Neutral",
+       "Good",
+       "Great"
+      ],
+      "trialCount": 10,
+      "description": "Rate the apparent amount of vegetation and greenery in a given environment. This encompasses the presence of trees, shrubs, plants, and other natural elements.",
+      "mediaFolders": [
+       "amsterdam"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Great",
+      "minRateDescription": "Awful",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_5",
+    "elements": [
+     {
+      "name": "safety",
+      "type": "imagerating",
+      "title": "Safety",
+      "choices": [],
+      "rateMax": 5,
+      "rateMin": 1,
+      "imageFit": "contain",
+      "imageCount": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Awful",
+       "Bad",
+       "Neutral",
+       "Good",
+       "Great"
+      ],
+      "trialCount": 10,
+      "description": "Does this place look like you would feel protected from harm or danger, in terms of personal safety and security? Do you believe that it is likely that you would feel safe here at all times of day or night? This might include the presence of elements such as lighting, good maintenance, presence of other people and natural surveillance.",
+      "mediaFolders": [
+       "amsterdam"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Great",
+      "minRateDescription": "Awful",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   }
+  ],
+  "title": "Percept: Citizen Ratings of Amsterdam Street Views",
+  "locale": "en",
+  "spSite": {
+   "id": "site-d667235e0ca243e8",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Percept: Citizen Ratings of Amsterdam Street Views</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Percept: Citizen Ratings of Amsterdam Street Views\",\n  \"description\": \"Amsterdam street views rated from Awful to Great on walkability, bikeability, pleasantness, greenness and safety, each with the toolkit's own category text. Method replication of the Percept citizen-science toolkit (Danish, Labib, Ricker & Helbich, 2025, CEUS).\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you_first\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"name\": \"age\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"inputType\": \"number\"\n     },\n     {\n      \"type\": \"checkbox\",\n      \"name\": \"adult_confirm\",\n      \"title\": \"I confirm that I am 18 years or older.\",\n      \"choices\": [\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       }\n      ],\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other\"\n       },\n       {\n        \"value\": \"prefer_not_to_say\",\n        \"text\": \"Prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"monthly_income\",\n      \"title\": \"Estimated monthly income\",\n      \"isRequired\": false\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"Level of education\",\n      \"isRequired\": false,\n      \"choices\": [\n       {\n        \"value\": \"primary\",\n        \"text\": \"Primary\"\n       },\n       {\n        \"value\": \"secondary\",\n        \"text\": \"Secondary\"\n       },\n       {\n        \"value\": \"tertiary\",\n        \"text\": \"Tertiary\"\n       },\n       {\n        \"value\": \"postgraduate\",\n        \"text\": \"Postgraduate\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"postal_code\",\n      \"title\": \"Home postal code\",\n      \"isRequired\": false\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"country_of_residence\",\n      \"title\": \"Country of residence\",\n      \"isRequired\": false\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imagerating\",\n      \"name\": \"walkability\",\n      \"title\": \"Walkability\",\n      \"description\": \"Does this place look like an easy and safe place for people to travel on foot or using a walking-equivalent mobility aid (e.g. wheelchair)? This might include factors such as the quality of sidewalks, pedestrian crossings, street connectivity, and access to public amenities.\",\n      \"imageCount\": 1,\n      \"trialCount\": 10,\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"rateLabels\": [\n       \"Awful\",\n       \"Bad\",\n       \"Neutral\",\n       \"Good\",\n       \"Great\"\n      ],\n      \"minRateDescription\": \"Awful\",\n      \"maxRateDescription\": \"Great\",\n      \"isRequired\": true,\n      \"imageFit\": \"contain\",\n      \"mediaFolders\": [\n       \"amsterdam\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"task_2\",\n    \"elements\": [\n     {\n      \"type\": \"imagerating\",\n      \"name\": \"bikeability\",\n      \"title\": \"Bikeability\",\n      \"description\": \"Does this place look accessible, attractive, safe and convenient for cycling as a mode of general-purpose transportation, or cycling-equivalent mobility aid (e.g. mobility scooter)? This might include factors such as cycle lanes, tracks, and parking, as well as the overall design of streets, junctions and any visible surroundings.\",\n      \"imageCount\": 1,\n      \"trialCount\": 10,\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"rateLabels\": [\n       \"Awful\",\n       \"Bad\",\n       \"Neutral\",\n       \"Good\",\n       \"Great\"\n      ],\n      \"minRateDescription\": \"Awful\",\n      \"maxRateDescription\": \"Great\",\n      \"isRequired\": true,\n      \"imageFit\": \"contain\",\n      \"mediaFolders\": [\n       \"amsterdam\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"task_3\",\n    \"elements\": [\n     {\n      \"type\": \"imagerating\",\n      \"name\": \"pleasantness\",\n      \"title\": \"Pleasantness\",\n      \"description\": \"Does this place look enjoyable or pleasing to the senses or emotions? This might include factors such as the aesthetics of the surroundings, the quality of the air and lighting, the soundscape, and the presence of other people or natural elements.\",\n      \"imageCount\": 1,\n      \"trialCount\": 10,\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"rateLabels\": [\n       \"Awful\",\n       \"Bad\",\n       \"Neutral\",\n       \"Good\",\n       \"Great\"\n      ],\n      \"minRateDescription\": \"Awful\",\n      \"maxRateDescription\": \"Great\",\n      \"isRequired\": true,\n      \"imageFit\": \"contain\",\n      \"mediaFolders\": [\n       \"amsterdam\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"task_4\",\n    \"elements\": [\n     {\n      \"type\": \"imagerating\",\n      \"name\": \"greenness\",\n      \"title\": \"Greenness\",\n      \"description\": \"Rate the apparent amount of vegetation and greenery in a given environment. This encompasses the presence of trees, shrubs, plants, and other natural elements.\",\n      \"imageCount\": 1,\n      \"trialCount\": 10,\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"rateLabels\": [\n       \"Awful\",\n       \"Bad\",\n       \"Neutral\",\n       \"Good\",\n       \"Great\"\n      ],\n      \"minRateDescription\": \"Awful\",\n      \"maxRateDescription\": \"Great\",\n      \"isRequired\": true,\n      \"imageFit\": \"contain\",\n      \"mediaFolders\": [\n       \"amsterdam\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"task_5\",\n    \"elements\": [\n     {\n      \"type\": \"imagerating\",\n      \"name\": \"safety\",\n      \"title\": \"Safety\",\n      \"description\": \"Does this place look like you would feel protected from harm or danger, in terms of personal safety and security? Do you believe that it is likely that you would feel safe here at all times of day or night? This might include the presence of elements such as lighting, good maintenance, presence of other people and natural surveillance.\",\n      \"imageCount\": 1,\n      \"trialCount\": 10,\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"rateLabels\": [\n       \"Awful\",\n       \"Bad\",\n       \"Neutral\",\n       \"Good\",\n       \"Great\"\n      ],\n      \"minRateDescription\": \"Awful\",\n      \"maxRateDescription\": \"Great\",\n      \"isRequired\": true,\n      \"imageFit\": \"contain\",\n      \"mediaFolders\": [\n       \"amsterdam\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#2f6f5e;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Amsterdam, Google Street View (© Google). Task and category texts from Danish, Labib, Ricker &amp; Helbich (2025), Computers, Environment and Urban Systems 116, 102207, doi:10.1016/j.compenvurbsys.2024.102207.</footer>\n<script>\n(function(){\n  var C={\"before\": [\"age\", \"adult_confirm\", \"gender\", \"monthly_income\", \"education\", \"postal_code\", \"country_of_residence\"], \"after\": [], \"tasks\": [\"walkability\", \"bikeability\", \"pleasantness\", \"greenness\", \"safety\"], \"minutes\": 10, \"alt\": \"Street view in Amsterdam\", \"labels\": {\"walkability\": [\"Awful\", \"Bad\", \"Neutral\", \"Good\", \"Great\"], \"bikeability\": [\"Awful\", \"Bad\", \"Neutral\", \"Good\", \"Great\"], \"pleasantness\": [\"Awful\", \"Bad\", \"Neutral\", \"Good\", \"Great\"], \"greenness\": [\"Awful\", \"Bad\", \"Neutral\", \"Good\", \"Great\"], \"safety\": [\"Awful\", \"Bad\", \"Neutral\", \"Good\", \"Great\"]}, \"pickOne\": null, \"heading\": \"Rate Amsterdam street views\", \"intro\": \"<p>You will rate street views from Amsterdam on five topics: walkability, bikeability, pleasantness, greenness and safety. Each topic has its own short explanation; read it, then rate each image from <b>Awful</b> to <b>Great</b>. 10 images per topic, 50 in total. First, a few questions about you.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?'Pair ':'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(lab?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T05:39:10.563Z",
+   "mediaFolders": [
+    "amsterdam"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T05:39:10.563Z"
+  },
+  "description": "Amsterdam street views rated from Awful to Great on walkability, bikeability, pleasantness, greenness and safety, each with the toolkit's own category text. Method replication of the Percept citizen-science toolkit (Danish, Labib, Ricker & Helbich, 2025, CEUS).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_01__528423e6-f90f-4446-bc44-f977448424e5.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_01__528423e6-f90f-4446-bc44-f977448424e5.jpg",
+   "name": "amsterdam_01.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_01__528423e6-f90f-4446-bc44-f977448424e5.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 168931,
+   "uploaded_bytes": 168931,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_02__1bc7c998-bbf2-4887-9ca9-5c3995aa4ddf.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_02__1bc7c998-bbf2-4887-9ca9-5c3995aa4ddf.jpg",
+   "name": "amsterdam_02.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_02__1bc7c998-bbf2-4887-9ca9-5c3995aa4ddf.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 216998,
+   "uploaded_bytes": 216998,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_03__3e373e65-adc9-40c6-afb9-2c6181e5c5d8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_03__3e373e65-adc9-40c6-afb9-2c6181e5c5d8.jpg",
+   "name": "amsterdam_03.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_03__3e373e65-adc9-40c6-afb9-2c6181e5c5d8.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 183466,
+   "uploaded_bytes": 183466,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_04__ddcdc5af-f0a6-4bfb-bba0-d3f391241556.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_04__ddcdc5af-f0a6-4bfb-bba0-d3f391241556.jpg",
+   "name": "amsterdam_04.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_04__ddcdc5af-f0a6-4bfb-bba0-d3f391241556.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 141714,
+   "uploaded_bytes": 141714,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_05__2a5c6d59-2fd2-4459-8392-8c5577840512.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_05__2a5c6d59-2fd2-4459-8392-8c5577840512.jpg",
+   "name": "amsterdam_05.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_05__2a5c6d59-2fd2-4459-8392-8c5577840512.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 205553,
+   "uploaded_bytes": 205553,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_06__ac7586d5-2033-4bfd-ac60-2c2e97a6e2b5.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_06__ac7586d5-2033-4bfd-ac60-2c2e97a6e2b5.jpg",
+   "name": "amsterdam_06.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_06__ac7586d5-2033-4bfd-ac60-2c2e97a6e2b5.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 232778,
+   "uploaded_bytes": 232778,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_07__9a2a1784-1089-46b8-a81b-86530ed47abd.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_07__9a2a1784-1089-46b8-a81b-86530ed47abd.jpg",
+   "name": "amsterdam_07.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_07__9a2a1784-1089-46b8-a81b-86530ed47abd.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 249345,
+   "uploaded_bytes": 249345,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_08__dbf87fa1-0db8-4a49-abbe-33aab88abe93.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_08__dbf87fa1-0db8-4a49-abbe-33aab88abe93.jpg",
+   "name": "amsterdam_08.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_08__dbf87fa1-0db8-4a49-abbe-33aab88abe93.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 163011,
+   "uploaded_bytes": 163011,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_09__3a616be6-504c-43c3-91e6-f6d1b311a68a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_09__3a616be6-504c-43c3-91e6-f6d1b311a68a.jpg",
+   "name": "amsterdam_09.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_09__3a616be6-504c-43c3-91e6-f6d1b311a68a.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 205434,
+   "uploaded_bytes": 205434,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_10__fa9bb22c-d827-4739-ba2b-5dd456253748.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_10__fa9bb22c-d827-4739-ba2b-5dd456253748.jpg",
+   "name": "amsterdam_10.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_10__fa9bb22c-d827-4739-ba2b-5dd456253748.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 183140,
+   "uploaded_bytes": 183140,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_11__07497f1b-2590-48cb-8b15-749c8abfcb91.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_11__07497f1b-2590-48cb-8b15-749c8abfcb91.jpg",
+   "name": "amsterdam_11.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_11__07497f1b-2590-48cb-8b15-749c8abfcb91.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 181760,
+   "uploaded_bytes": 181760,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_12__0c5ab3d5-2b07-42fb-9cb6-0df8063f71ac.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_12__0c5ab3d5-2b07-42fb-9cb6-0df8063f71ac.jpg",
+   "name": "amsterdam_12.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_12__0c5ab3d5-2b07-42fb-9cb6-0df8063f71ac.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 182087,
+   "uploaded_bytes": 182087,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_13__603b28eb-6b02-41ba-87c7-f5d337dded52.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_13__603b28eb-6b02-41ba-87c7-f5d337dded52.jpg",
+   "name": "amsterdam_13.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_13__603b28eb-6b02-41ba-87c7-f5d337dded52.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 178089,
+   "uploaded_bytes": 178089,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_14__19b0163a-b6fe-4b32-a743-16b4a2954679.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_14__19b0163a-b6fe-4b32-a743-16b4a2954679.jpg",
+   "name": "amsterdam_14.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_14__19b0163a-b6fe-4b32-a743-16b4a2954679.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 185718,
+   "uploaded_bytes": 185718,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_15__cabd6a99-2694-4e46-b11b-49398ec9d8b1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_15__cabd6a99-2694-4e46-b11b-49398ec9d8b1.jpg",
+   "name": "amsterdam_15.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_15__cabd6a99-2694-4e46-b11b-49398ec9d8b1.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 189155,
+   "uploaded_bytes": 189155,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_16__76ecbbd9-e040-468c-b5fc-0e8e6f844a01.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_16__76ecbbd9-e040-468c-b5fc-0e8e6f844a01.jpg",
+   "name": "amsterdam_16.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_16__76ecbbd9-e040-468c-b5fc-0e8e6f844a01.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 166419,
+   "uploaded_bytes": 166419,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_17__4f1c64cc-71cf-437f-90de-28adb93b7c96.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_17__4f1c64cc-71cf-437f-90de-28adb93b7c96.jpg",
+   "name": "amsterdam_17.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_17__4f1c64cc-71cf-437f-90de-28adb93b7c96.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 134428,
+   "uploaded_bytes": 134428,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_18__bcf733ae-2c48-4a0f-966c-9d231c1bdb74.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_18__bcf733ae-2c48-4a0f-966c-9d231c1bdb74.jpg",
+   "name": "amsterdam_18.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_18__bcf733ae-2c48-4a0f-966c-9d231c1bdb74.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 195852,
+   "uploaded_bytes": 195852,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_19__a839186f-5715-4bc9-a681-308a01fec22c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_19__a839186f-5715-4bc9-a681-308a01fec22c.jpg",
+   "name": "amsterdam_19.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_19__a839186f-5715-4bc9-a681-308a01fec22c.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 202675,
+   "uploaded_bytes": 202675,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_20__eb0a5e61-b4c4-4eb5-80ff-316d84a8c34c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_20__eb0a5e61-b4c4-4eb5-80ff-316d84a8c34c.jpg",
+   "name": "amsterdam_20.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_20__eb0a5e61-b4c4-4eb5-80ff-316d84a8c34c.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 190677,
+   "uploaded_bytes": 190677,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_21__81ac5439-0ef2-40d5-b6af-4c48d3450e7c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_21__81ac5439-0ef2-40d5-b6af-4c48d3450e7c.jpg",
+   "name": "amsterdam_21.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_21__81ac5439-0ef2-40d5-b6af-4c48d3450e7c.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 170609,
+   "uploaded_bytes": 170609,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_22__d7975e22-8d72-428e-8640-6cec623845df.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_22__d7975e22-8d72-428e-8640-6cec623845df.jpg",
+   "name": "amsterdam_22.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_22__d7975e22-8d72-428e-8640-6cec623845df.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 198843,
+   "uploaded_bytes": 198843,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_23__307677df-df81-4c17-b0ee-289e986efde0.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_23__307677df-df81-4c17-b0ee-289e986efde0.jpg",
+   "name": "amsterdam_23.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_23__307677df-df81-4c17-b0ee-289e986efde0.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 150115,
+   "uploaded_bytes": 150115,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_24__be581b82-6bb0-4e69-8d7e-c2471565dc8f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_24__be581b82-6bb0-4e69-8d7e-c2471565dc8f.jpg",
+   "name": "amsterdam_24.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_24__be581b82-6bb0-4e69-8d7e-c2471565dc8f.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 145921,
+   "uploaded_bytes": 145921,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_25__83cf8ee0-bd33-4f1a-917d-ece5d5002453.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_25__83cf8ee0-bd33-4f1a-917d-ece5d5002453.jpg",
+   "name": "amsterdam_25.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_25__83cf8ee0-bd33-4f1a-917d-ece5d5002453.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 171010,
+   "uploaded_bytes": 171010,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_26__1712ac68-fbf2-4779-9644-0fce58ea2abb.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_26__1712ac68-fbf2-4779-9644-0fce58ea2abb.jpg",
+   "name": "amsterdam_26.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_26__1712ac68-fbf2-4779-9644-0fce58ea2abb.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 199315,
+   "uploaded_bytes": 199315,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_27__eb7ef3c9-f2b0-4aa1-b3de-4da56624f298.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_27__eb7ef3c9-f2b0-4aa1-b3de-4da56624f298.jpg",
+   "name": "amsterdam_27.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_27__eb7ef3c9-f2b0-4aa1-b3de-4da56624f298.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 145837,
+   "uploaded_bytes": 145837,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_28__1cf97ee1-df8a-4ccd-b737-56c47a3ad810.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_28__1cf97ee1-df8a-4ccd-b737-56c47a3ad810.jpg",
+   "name": "amsterdam_28.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_28__1cf97ee1-df8a-4ccd-b737-56c47a3ad810.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 158973,
+   "uploaded_bytes": 158973,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_29__33f659f2-d5ba-415c-990a-d0eb3a3b129d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_29__33f659f2-d5ba-415c-990a-d0eb3a3b129d.jpg",
+   "name": "amsterdam_29.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_29__33f659f2-d5ba-415c-990a-d0eb3a3b129d.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 178702,
+   "uploaded_bytes": 178702,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_30__1a61d572-f509-45dd-89d4-034b77c75f42.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_30__1a61d572-f509-45dd-89d4-034b77c75f42.jpg",
+   "name": "amsterdam_30.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_30__1a61d572-f509-45dd-89d4-034b77c75f42.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 192761,
+   "uploaded_bytes": 192761,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_31__33f8bf8a-7495-44ca-afd1-e5034e17d727.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_31__33f8bf8a-7495-44ca-afd1-e5034e17d727.jpg",
+   "name": "amsterdam_31.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_31__33f8bf8a-7495-44ca-afd1-e5034e17d727.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 161347,
+   "uploaded_bytes": 161347,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_32__12376fd1-49ce-4b28-8dae-066bc8686cd2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_32__12376fd1-49ce-4b28-8dae-066bc8686cd2.jpg",
+   "name": "amsterdam_32.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_32__12376fd1-49ce-4b28-8dae-066bc8686cd2.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 170387,
+   "uploaded_bytes": 170387,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_33__3109fe6e-f020-4103-a617-7d20a6f9714c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_33__3109fe6e-f020-4103-a617-7d20a6f9714c.jpg",
+   "name": "amsterdam_33.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_33__3109fe6e-f020-4103-a617-7d20a6f9714c.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 219138,
+   "uploaded_bytes": 219138,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_34__883b7d88-46a8-499c-9b2b-514c68e5bfdb.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_34__883b7d88-46a8-499c-9b2b-514c68e5bfdb.jpg",
+   "name": "amsterdam_34.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_34__883b7d88-46a8-499c-9b2b-514c68e5bfdb.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 188216,
+   "uploaded_bytes": 188216,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_35__5354b7c8-8157-45b7-964c-f3f409077fed.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_35__5354b7c8-8157-45b7-964c-f3f409077fed.jpg",
+   "name": "amsterdam_35.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_35__5354b7c8-8157-45b7-964c-f3f409077fed.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 212323,
+   "uploaded_bytes": 212323,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_36__f9491781-d0ad-4d7b-a13c-744a0c566c73.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_36__f9491781-d0ad-4d7b-a13c-744a0c566c73.jpg",
+   "name": "amsterdam_36.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_36__f9491781-d0ad-4d7b-a13c-744a0c566c73.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 145716,
+   "uploaded_bytes": 145716,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_37__3db89b06-d25c-4e74-8b92-0c5c261c1ceb.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_37__3db89b06-d25c-4e74-8b92-0c5c261c1ceb.jpg",
+   "name": "amsterdam_37.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_37__3db89b06-d25c-4e74-8b92-0c5c261c1ceb.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 200613,
+   "uploaded_bytes": 200613,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_38__ede7d1b0-4439-4e44-9996-734daf89316b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_38__ede7d1b0-4439-4e44-9996-734daf89316b.jpg",
+   "name": "amsterdam_38.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_38__ede7d1b0-4439-4e44-9996-734daf89316b.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 146157,
+   "uploaded_bytes": 146157,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_39__0dca8e52-3f9c-4c3c-bfc2-6c7f552a2b5a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_39__0dca8e52-3f9c-4c3c-bfc2-6c7f552a2b5a.jpg",
+   "name": "amsterdam_39.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_39__0dca8e52-3f9c-4c3c-bfc2-6c7f552a2b5a.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 201732,
+   "uploaded_bytes": 201732,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_40__92eeba76-aa5c-4d7d-aca4-eb58f8aa15fb.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_40__92eeba76-aa5c-4d7d-aca4-eb58f8aa15fb.jpg",
+   "name": "amsterdam_40.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_40__92eeba76-aa5c-4d7d-aca4-eb58f8aa15fb.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 158032,
+   "uploaded_bytes": 158032,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_41__28ba38c6-4f9f-4bb7-aaf3-596c4a25b618.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_41__28ba38c6-4f9f-4bb7-aaf3-596c4a25b618.jpg",
+   "name": "amsterdam_41.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_41__28ba38c6-4f9f-4bb7-aaf3-596c4a25b618.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 178564,
+   "uploaded_bytes": 178564,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_42__f5b1bd0d-47c5-4bbe-bae8-c8f1dd017d23.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_42__f5b1bd0d-47c5-4bbe-bae8-c8f1dd017d23.jpg",
+   "name": "amsterdam_42.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_42__f5b1bd0d-47c5-4bbe-bae8-c8f1dd017d23.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 177445,
+   "uploaded_bytes": 177445,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_43__29232f85-9e77-45ab-a92b-21bf75be4d51.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_43__29232f85-9e77-45ab-a92b-21bf75be4d51.jpg",
+   "name": "amsterdam_43.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_43__29232f85-9e77-45ab-a92b-21bf75be4d51.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 140814,
+   "uploaded_bytes": 140814,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_44__81a4b17d-285b-474b-a3ef-1365cfc33e77.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_44__81a4b17d-285b-474b-a3ef-1365cfc33e77.jpg",
+   "name": "amsterdam_44.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_44__81a4b17d-285b-474b-a3ef-1365cfc33e77.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 167937,
+   "uploaded_bytes": 167937,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_45__4520d705-f28c-4c89-ac6c-aef17a32af80.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_45__4520d705-f28c-4c89-ac6c-aef17a32af80.jpg",
+   "name": "amsterdam_45.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_45__4520d705-f28c-4c89-ac6c-aef17a32af80.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 150356,
+   "uploaded_bytes": 150356,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_46__87068f68-19c5-42c0-8430-a5570e5577a4.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_46__87068f68-19c5-42c0-8430-a5570e5577a4.jpg",
+   "name": "amsterdam_46.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_46__87068f68-19c5-42c0-8430-a5570e5577a4.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 187238,
+   "uploaded_bytes": 187238,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_47__71f6e64e-6afe-4acc-9bbe-9476d370c04a.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_47__71f6e64e-6afe-4acc-9bbe-9476d370c04a.jpg",
+   "name": "amsterdam_47.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_47__71f6e64e-6afe-4acc-9bbe-9476d370c04a.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 174524,
+   "uploaded_bytes": 174524,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_48__05de3412-beee-4c8b-a8ac-cbd9731669b4.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_48__05de3412-beee-4c8b-a8ac-cbd9731669b4.jpg",
+   "name": "amsterdam_48.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_48__05de3412-beee-4c8b-a8ac-cbd9731669b4.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 176126,
+   "uploaded_bytes": 176126,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_49__ac940239-de1f-4f4c-9171-9a6ecc5438df.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_49__ac940239-de1f-4f4c-9171-9a6ecc5438df.jpg",
+   "name": "amsterdam_49.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_49__ac940239-de1f-4f4c-9171-9a6ecc5438df.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 215046,
+   "uploaded_bytes": 215046,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_50__567b3cc8-0b1a-4f69-ad75-a36840187b5f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_50__567b3cc8-0b1a-4f69-ad75-a36840187b5f.jpg",
+   "name": "amsterdam_50.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_50__567b3cc8-0b1a-4f69-ad75-a36840187b5f.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 180833,
+   "uploaded_bytes": 180833,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_51__d16d87e8-e9a7-4c2c-b421-2d4a6af72020.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_51__d16d87e8-e9a7-4c2c-b421-2d4a6af72020.jpg",
+   "name": "amsterdam_51.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_51__d16d87e8-e9a7-4c2c-b421-2d4a6af72020.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 190548,
+   "uploaded_bytes": 190548,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_52__956c2939-f214-4066-bcaa-666813a92f21.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_52__956c2939-f214-4066-bcaa-666813a92f21.jpg",
+   "name": "amsterdam_52.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_52__956c2939-f214-4066-bcaa-666813a92f21.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 176107,
+   "uploaded_bytes": 176107,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_53__f3afb6f4-6690-4c59-b615-24ada4105e3c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_53__f3afb6f4-6690-4c59-b615-24ada4105e3c.jpg",
+   "name": "amsterdam_53.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_53__f3afb6f4-6690-4c59-b615-24ada4105e3c.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 136836,
+   "uploaded_bytes": 136836,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_54__657aae49-52c4-4f0a-85d4-d61262f065c0.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_54__657aae49-52c4-4f0a-85d4-d61262f065c0.jpg",
+   "name": "amsterdam_54.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_54__657aae49-52c4-4f0a-85d4-d61262f065c0.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 224574,
+   "uploaded_bytes": 224574,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_55__3a07878f-d0d9-4afb-82de-d17e8bae9961.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_55__3a07878f-d0d9-4afb-82de-d17e8bae9961.jpg",
+   "name": "amsterdam_55.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_55__3a07878f-d0d9-4afb-82de-d17e8bae9961.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 190624,
+   "uploaded_bytes": 190624,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_56__0290c333-1757-4161-8a93-48537ea2834d.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_56__0290c333-1757-4161-8a93-48537ea2834d.jpg",
+   "name": "amsterdam_56.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_56__0290c333-1757-4161-8a93-48537ea2834d.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 218804,
+   "uploaded_bytes": 218804,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_57__b4372daa-eed1-4d29-9f31-9e9d3ae54efd.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_57__b4372daa-eed1-4d29-9f31-9e9d3ae54efd.jpg",
+   "name": "amsterdam_57.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_57__b4372daa-eed1-4d29-9f31-9e9d3ae54efd.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 174431,
+   "uploaded_bytes": 174431,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_58__bfdd585d-b178-438d-b59b-4f336c739025.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_58__bfdd585d-b178-438d-b59b-4f336c739025.jpg",
+   "name": "amsterdam_58.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_58__bfdd585d-b178-438d-b59b-4f336c739025.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 181975,
+   "uploaded_bytes": 181975,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_59__1983c0a6-be83-42b4-880a-e1b8e5946c8b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_59__1983c0a6-be83-42b4-880a-e1b8e5946c8b.jpg",
+   "name": "amsterdam_59.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_59__1983c0a6-be83-42b4-880a-e1b8e5946c8b.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 192472,
+   "uploaded_bytes": 192472,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_60__7219ae49-6c60-4b4a-97ce-0267cf0669c2.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_60__7219ae49-6c60-4b4a-97ce-0267cf0669c2.jpg",
+   "name": "amsterdam_60.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_60__7219ae49-6c60-4b4a-97ce-0267cf0669c2.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 145361,
+   "uploaded_bytes": 145361,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_61__7886ba8e-d8e6-4d44-8fd3-d59a639a6765.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_61__7886ba8e-d8e6-4d44-8fd3-d59a639a6765.jpg",
+   "name": "amsterdam_61.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_61__7886ba8e-d8e6-4d44-8fd3-d59a639a6765.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 211713,
+   "uploaded_bytes": 211713,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_62__cf9c7ee0-6cba-4c4c-87a4-01dfee1235a1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_62__cf9c7ee0-6cba-4c4c-87a4-01dfee1235a1.jpg",
+   "name": "amsterdam_62.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_62__cf9c7ee0-6cba-4c4c-87a4-01dfee1235a1.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 171658,
+   "uploaded_bytes": 171658,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_63__916df381-4815-4377-a1b3-8c765bbd2f25.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_63__916df381-4815-4377-a1b3-8c765bbd2f25.jpg",
+   "name": "amsterdam_63.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_63__916df381-4815-4377-a1b3-8c765bbd2f25.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 109132,
+   "uploaded_bytes": 109132,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_64__72cc4971-fdf0-4d6d-bd38-ac3ad10a27a9.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_64__72cc4971-fdf0-4d6d-bd38-ac3ad10a27a9.jpg",
+   "name": "amsterdam_64.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_64__72cc4971-fdf0-4d6d-bd38-ac3ad10a27a9.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 185092,
+   "uploaded_bytes": 185092,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_65__52a6172a-1eb6-4059-b753-5cb08575997b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_65__52a6172a-1eb6-4059-b753-5cb08575997b.jpg",
+   "name": "amsterdam_65.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_65__52a6172a-1eb6-4059-b753-5cb08575997b.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 175010,
+   "uploaded_bytes": 175010,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_66__01c47916-c8b2-4dc7-ad68-c80ecf277836.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_66__01c47916-c8b2-4dc7-ad68-c80ecf277836.jpg",
+   "name": "amsterdam_66.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_66__01c47916-c8b2-4dc7-ad68-c80ecf277836.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 157801,
+   "uploaded_bytes": 157801,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_67__8da78aeb-741b-4c24-96e1-36eb4ee26ee1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_67__8da78aeb-741b-4c24-96e1-36eb4ee26ee1.jpg",
+   "name": "amsterdam_67.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_67__8da78aeb-741b-4c24-96e1-36eb4ee26ee1.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 162473,
+   "uploaded_bytes": 162473,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_68__c6ed3a41-517b-42df-895e-8809d770b3e8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_68__c6ed3a41-517b-42df-895e-8809d770b3e8.jpg",
+   "name": "amsterdam_68.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_68__c6ed3a41-517b-42df-895e-8809d770b3e8.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 185483,
+   "uploaded_bytes": 185483,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_69__74de34af-0624-4b34-9f9f-8b61188e7c8c.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_69__74de34af-0624-4b34-9f9f-8b61188e7c8c.jpg",
+   "name": "amsterdam_69.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_69__74de34af-0624-4b34-9f9f-8b61188e7c8c.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 158043,
+   "uploaded_bytes": 158043,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_70__be01e27a-4b96-4280-ac71-2ef7d2e4f79f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_70__be01e27a-4b96-4280-ac71-2ef7d2e4f79f.jpg",
+   "name": "amsterdam_70.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_70__be01e27a-4b96-4280-ac71-2ef7d2e4f79f.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 175883,
+   "uploaded_bytes": 175883,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-danish-citizen/amsterdam/amsterdam_71__da7c83da-470c-4748-b5c1-546b33a57f87.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-danish-citizen/amsterdam/amsterdam_71__da7c83da-470c-4748-b5c1-546b33a57f87.jpg",
+   "name": "amsterdam_71.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2025-danish-citizen/amsterdam/amsterdam_71__da7c83da-470c-4748-b5c1-546b33a57f87.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 199863,
+   "uploaded_bytes": 199863,
+   "image_compressed": false
   }
+ ],
+ "paper": {
+  "title": "A citizen science toolkit to collect human perceptions of urban environments using open street view images",
+  "authors": [
+   "Danish M.",
+   "Labib S.M.",
+   "Ricker B.",
+   "Helbich M."
+  ],
+  "year": 2025,
+  "venue": "Computers, Environment and Urban Systems",
+  "doi": "10.1016/j.compenvurbsys.2024.102207",
+  "url": "https://doi.org/10.1016/j.compenvurbsys.2024.102207"
+ }
 }

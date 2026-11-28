@@ -1,0 +1,443 @@
+{
+ "id": "2018-paudyal-forest",
+ "name": "Forest Scenic Beauty and Recreation Satisfaction (rating)",
+ "description": "Faithful replication of Paudyal, Stein, Ober, Swisher, Jokela & Adams (2018), Forests 9:241. Participants list, in order of importance, the three main activities they do on forest visits. They then see 12 photographs of Ocala National Forest (Florida, USA). The forest there is managed with prescribed burning and cutting as habitat for the endangered red-cockaded woodpecker. For each photo they rate scenic beauty (1 = not at all scenic … 10 = very scenic) and expected recreation satisfaction (1 = not at all satisfied … 10 = very satisfied). In the paper, an expert panel later marked six pictures as good or poor woodpecker habitat. These are tagged in the data so habitat index scores can be compared across activity groups. In the original study (209 on-site visitors), the mixed pine–hardwood stand scored highest (8.2) and a recently cut stand lowest (3.1).\n\nDifferences from the original study: (1) online instead of a laminated photobook shown to visitors on site. (2) Pictures are shown in the order of Supplementary Figure S1, one fixed order for everyone; the paper used one fixed random order, which it does not list. (3) Pictures come from the supplement figure at about 470 px width, so they are smaller than the 10.5 × 7.25 inch prints. (4) Activities are typed as free text; the original also asked an open list. (5) The demographic answer options (gender, education, employment) were written for this template. Race, ethnicity and income are left out.\n\nPhotographs: Paudyal et al. (2018), Figure S1 (CC BY 4.0). Used with credit for research; the template is removed if the authors object.",
+ "author": "Paudyal, Stein, Ober, Swisher, Jokela & Adams",
+ "year": "2018",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "source:paper",
+  "modality:scene_photo",
+  "task:multi_rating",
+  "task:questionnaire",
+  "task:open_ended",
+  "concept:aesthetics",
+  "concept:preference",
+  "concept:naturalness",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:United States",
+  "city:Ocala National Forest"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/f9050241",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T19:06:52.745+00:00",
+ "updatedAt": "2026-11-27T19:06:59.441+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I am 18 or older and agree to take part in this anonymous survey.",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "activities",
+    "title": "Your recreation",
+    "elements": [
+     {
+      "name": "activity_1",
+      "type": "text",
+      "title": "Most important activity",
+      "isRequired": true
+     },
+     {
+      "name": "activity_2",
+      "type": "text",
+      "title": "Second activity",
+      "isRequired": false
+     },
+     {
+      "name": "activity_3",
+      "type": "text",
+      "title": "Third activity",
+      "isRequired": false
+     }
+    ]
+   },
+   {
+    "name": "pictures",
+    "title": "Forest pictures",
+    "elements": [
+     {
+      "name": "forest_rating",
+      "type": "custom",
+      "items": [
+       {
+        "low": "Not at all scenic",
+        "high": "Very scenic",
+        "name": "scenic_beauty",
+        "scale": [
+         1,
+         10
+        ]
+       },
+       {
+        "low": "Not at all satisfied",
+        "high": "Very satisfied",
+        "name": "recreation_satisfaction",
+        "scale": [
+         1,
+         10
+        ]
+       }
+      ],
+      "title": "If you had to recreate on a forest site where the surrounding view looked like this picture, how would you rate it?",
+      "trials": [
+       {
+        "id": "picture_01",
+        "file": "picture_01.jpg"
+       },
+       {
+        "id": "picture_02",
+        "file": "picture_02.jpg",
+        "habitat": "poor"
+       },
+       {
+        "id": "picture_03",
+        "file": "picture_03.jpg"
+       },
+       {
+        "id": "picture_04",
+        "file": "picture_04.jpg"
+       },
+       {
+        "id": "picture_05",
+        "file": "picture_05.jpg",
+        "habitat": "poor"
+       },
+       {
+        "id": "picture_06",
+        "file": "picture_06.jpg",
+        "habitat": "good"
+       },
+       {
+        "id": "picture_07",
+        "file": "picture_07.jpg"
+       },
+       {
+        "id": "picture_08",
+        "file": "picture_08.jpg",
+        "habitat": "poor"
+       },
+       {
+        "id": "picture_09",
+        "file": "picture_09.jpg",
+        "habitat": "good"
+       },
+       {
+        "id": "picture_10",
+        "file": "picture_10.jpg"
+       },
+       {
+        "id": "picture_11",
+        "file": "picture_11.jpg",
+        "habitat": "good"
+       },
+       {
+        "id": "picture_12",
+        "file": "picture_12.jpg"
+       }
+      ],
+      "isRequired": true,
+      "description": "12 photographs of Ocala National Forest, one per screen, in the same fixed order for everyone (Figure S1 order). Value per picture: {scenic_beauty: 1 (not at all scenic) … 10 (very scenic), recreation_satisfaction: 1 (not at all satisfied) … 10 (very satisfied)}. Trial key = picture id. The paper analysed six pictures chosen afterwards by an expert panel: good red-cockaded woodpecker habitat = picture_06, picture_09, picture_11; poor habitat = picture_02, picture_05, picture_08 (trial field habitat). Index scores = mean of the three pictures per habitat; compare across primary activity groups."
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "title": "About you",
+    "elements": [
+     {
+      "max": 110,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "Age (years)",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Male",
+        "value": 1
+       },
+       {
+        "text": "Female",
+        "value": 2
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "Highest level of education",
+      "choices": [
+       {
+        "text": "High school or below",
+        "value": 1
+       },
+       {
+        "text": "Some college / technical school",
+        "value": 2
+       },
+       {
+        "text": "College degree",
+        "value": 3
+       },
+       {
+        "text": "Graduate degree",
+        "value": 4
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "employment",
+      "type": "radiogroup",
+      "title": "Employment status",
+      "choices": [
+       {
+        "text": "Employed full-time",
+        "value": 1
+       },
+       {
+        "text": "Employed part-time",
+        "value": 2
+       },
+       {
+        "text": "Self-employed",
+        "value": 3
+       },
+       {
+        "text": "Student",
+        "value": 4
+       },
+       {
+        "text": "Retired",
+        "value": 5
+       },
+       {
+        "text": "Other",
+        "value": 6
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Forest Scenic Beauty and Recreation Satisfaction",
+  "locale": "en",
+  "spSite": {
+   "id": "site-05e55f31f3860351",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Forest Scenic Beauty</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Forest Scenic Beauty and Recreation Satisfaction\",\n  \"description\": \"Faithful replication of Paudyal, Stein, Ober, Swisher, Jokela & Adams (2018), Forests 9:241: rate 12 photographs of Ocala National Forest (USA) on scenic beauty and expected recreation satisfaction (1–10), after listing your three main recreation activities.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"forest\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"boolean\",\n      \"name\": \"consent\",\n      \"title\": \"I am 18 or older and agree to take part in this anonymous survey.\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"activities\",\n    \"title\": \"Your recreation\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"name\": \"activity_1\",\n      \"title\": \"Most important activity\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"activity_2\",\n      \"title\": \"Second activity\",\n      \"isRequired\": false\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"activity_3\",\n      \"title\": \"Third activity\",\n      \"isRequired\": false\n     }\n    ]\n   },\n   {\n    \"name\": \"pictures\",\n    \"title\": \"Forest pictures\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"forest_rating\",\n      \"isRequired\": true,\n      \"title\": \"If you had to recreate on a forest site where the surrounding view looked like this picture, how would you rate it?\",\n      \"description\": \"12 photographs of Ocala National Forest, one per screen, in the same fixed order for everyone (Figure S1 order). Value per picture: {scenic_beauty: 1 (not at all scenic) … 10 (very scenic), recreation_satisfaction: 1 (not at all satisfied) … 10 (very satisfied)}. Trial key = picture id. The paper analysed six pictures chosen afterwards by an expert panel: good red-cockaded woodpecker habitat = picture_06, picture_09, picture_11; poor habitat = picture_02, picture_05, picture_08 (trial field habitat). Index scores = mean of the three pictures per habitat; compare across primary activity groups.\",\n      \"items\": [\n       {\n        \"name\": \"scenic_beauty\",\n        \"scale\": [\n         1,\n         10\n        ],\n        \"low\": \"Not at all scenic\",\n        \"high\": \"Very scenic\"\n       },\n       {\n        \"name\": \"recreation_satisfaction\",\n        \"scale\": [\n         1,\n         10\n        ],\n        \"low\": \"Not at all satisfied\",\n        \"high\": \"Very satisfied\"\n       }\n      ],\n      \"trials\": [\n       {\n        \"id\": \"picture_01\",\n        \"file\": \"picture_01.jpg\"\n       },\n       {\n        \"id\": \"picture_02\",\n        \"file\": \"picture_02.jpg\",\n        \"habitat\": \"poor\"\n       },\n       {\n        \"id\": \"picture_03\",\n        \"file\": \"picture_03.jpg\"\n       },\n       {\n        \"id\": \"picture_04\",\n        \"file\": \"picture_04.jpg\"\n       },\n       {\n        \"id\": \"picture_05\",\n        \"file\": \"picture_05.jpg\",\n        \"habitat\": \"poor\"\n       },\n       {\n        \"id\": \"picture_06\",\n        \"file\": \"picture_06.jpg\",\n        \"habitat\": \"good\"\n       },\n       {\n        \"id\": \"picture_07\",\n        \"file\": \"picture_07.jpg\"\n       },\n       {\n        \"id\": \"picture_08\",\n        \"file\": \"picture_08.jpg\",\n        \"habitat\": \"poor\"\n       },\n       {\n        \"id\": \"picture_09\",\n        \"file\": \"picture_09.jpg\",\n        \"habitat\": \"good\"\n       },\n       {\n        \"id\": \"picture_10\",\n        \"file\": \"picture_10.jpg\"\n       },\n       {\n        \"id\": \"picture_11\",\n        \"file\": \"picture_11.jpg\",\n        \"habitat\": \"good\"\n       },\n       {\n        \"id\": \"picture_12\",\n        \"file\": \"picture_12.jpg\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"title\": \"About you\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"Age (years)\",\n      \"isRequired\": true,\n      \"min\": 18,\n      \"max\": 110\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"Highest level of education\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"High school or below\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Some college / technical school\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"College degree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Graduate degree\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"employment\",\n      \"title\": \"Employment status\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Employed full-time\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Employed part-time\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Self-employed\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Student\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Retired\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Other\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#eef1ea;--card:#fff;--ink:#1f241d;--muted:#5a6356;--accent:#3d6b2f;--line:#d3dacd;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:760px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.3rem;margin:0 0 10px}\np{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q:first-child{margin-top:0}.q>b{display:block;margin-bottom:6px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer;background:var(--card)}\ninput[type=number],input[type=text]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%;max-width:360px}\n.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}\n.t{color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}\n.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;flex:1;margin-left:12px;max-width:260px}.bar>i{display:block;height:100%;background:var(--accent)}\n.pic{background:#e1e6dc;border-radius:12px;overflow:hidden;display:flex;justify-content:center}.pic img{width:100%;max-width:720px;max-height:min(48vh,480px);object-fit:contain;display:block}\n.seg{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:3px}\n.seg label{display:block;cursor:pointer;position:relative}\n.seg input{position:absolute;opacity:0;pointer-events:none}\n.seg span{display:flex;align-items:center;justify-content:center;min-height:42px;border:1px solid var(--line);border-radius:8px;font-weight:600;font-size:.9rem}\n.seg input:checked+span{background:var(--accent);border-color:var(--accent);color:#fff}\n.seg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}\n.ends{display:flex;justify-content:space-between;gap:12px;font-size:.78rem;color:var(--muted);margin-top:4px}\n.on{font-weight:400;color:var(--muted)}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:760px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n@media (max-width:420px){.seg{gap:2px}.seg span{font-size:.8rem;min-height:40px}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Photographs: Paudyal, Stein, Ober, Swisher, Jokela &amp; Adams (2018), Forests 9:241, Supplementary Figure S1, doi:10.3390/f9050241 (CC BY 4.0; Ocala National Forest, Florida). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='ocala2018:';\n  var app=document.getElementById('app'), Q={}, files={}, done={}, SPEC=null, TR=[], ITEMS=[], ACT=['activity_1','activity_2','activity_3'], ABOUT=['age','gender','education','employment'];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='visible';}}\n  function hideErr(){var e=app.querySelector('.err');if(e)e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function q(n){return Q[n]||{};}\n  function page(html,btn,cb){\n    app.innerHTML=html+'<div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">'+esc(btn||'Continue')+'</button></div><div class=\"err\"></div>';\n    document.getElementById('go').onclick=cb;app.onchange=hideErr;app.oninput=hideErr;\n  }\n  function saveAll(l,b,cb){Promise.all(l.map(function(a){return SPSite.answer(a[0],a[1]);})).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}cb();});}\n  function next(){\n    window.scrollTo(0,0);\n    if(!done.intro)return intro();\n    if(!done.act)return activities();\n    for(var k=0;k<TR.length;k++)if(!done[TR[k].id])return picture(TR[k],k);\n    if(!done.about)return about();\n    finish();\n  }\n  function intro(){\n    if(TR.some(function(t){return !files[t.file];})){app.innerHTML='<h1>Pictures missing</h1><p>Media folder forest must hold picture_01.jpg … picture_12.jpg.</p>';return;}\n    page('<h1>Forest scenery and outdoor recreation</h1><p>This short survey is about how people who enjoy the outdoors see different forest sites. You will first name the activities you do most when you visit a forest, then look at 12 photographs of forest sites and rate each one on two scales.</p><p>It takes about 10 minutes. Your answers are anonymous.</p>'+\n      '<div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(q('consent').title)+'</label></div>','Start',function(){\n      if(!document.getElementById('ok').checked)return err('Please confirm to continue.');\n      var b=this;b.disabled=true;saveAll([['consent',true]],b,function(){done.intro=true;save('d',done);next();});\n    });\n  }\n  function activities(){\n    var h=ACT.map(function(n,i){var d=q(n);return '<div class=\"q\"><b>'+(i+1)+'. '+esc(d.title)+(i?' <span class=\"on\">(optional)</span>':'')+'</b><input type=\"text\" name=\"'+n+'\" maxlength=\"120\" placeholder=\"e.g. hiking, camping, hunting, canoeing\"></div>';}).join('');\n    page('<h1>Your recreation</h1><div class=\"card\"><p style=\"color:var(--ink)\">Please list, in order of importance, the three major activities you take part in when you visit a forest or natural area.</p>'+h+'</div>','Continue',function(){\n      var l=[];for(var i=0;i<ACT.length;i++){var v=app.querySelector('input[name=\"'+ACT[i]+'\"]').value.trim();if(!v){if(i===0)return err('Please name at least your most important activity.');continue;}l.push([ACT[i],v]);}\n      var b=this;b.disabled=true;saveAll(l,b,function(){done.act=true;save('d',done);next();});\n    });\n  }\n  function scale(it){\n    var t=it.name==='scenic_beauty'?'Scenic beauty':'Recreation satisfaction';\n    return '<div class=\"q\"><b>'+t+'</b><div class=\"seg\" role=\"radiogroup\" aria-label=\"'+t+'\">'+[1,2,3,4,5,6,7,8,9,10].map(function(v){return '<label><input type=\"radio\" name=\"'+it.name+'\" value=\"'+v+'\"><span>'+v+'</span></label>';}).join('')+'</div><div class=\"ends\"><span>1 = '+esc(it.low)+'</span><span style=\"text-align:right\">10 = '+esc(it.high)+'</span></div></div>';\n  }\n  function picture(t,k){\n    var f=files[t.file];\n    page('<div class=\"top\"><span class=\"t\">Picture '+(k+1)+' of '+TR.length+'</span><div class=\"bar\"><i style=\"width:'+(100*k/TR.length)+'%\"></i></div></div><div class=\"card\"><div class=\"pic\"><img alt=\"Forest site, picture '+(k+1)+'\" src=\"'+esc(f.url)+'\"></div><p style=\"margin-top:12px;color:var(--ink)\">'+esc(q('forest_rating').title)+'</p>'+ITEMS.map(scale).join('')+'</div>','Continue',function(){\n      var v={};for(var i=0;i<ITEMS.length;i++){var x=app.querySelector('input[name=\"'+ITEMS[i].name+'\"]:checked');if(!x)return err('Please rate both scenic beauty and recreation satisfaction.');v[ITEMS[i].name]=Number(x.value);}\n      var b=this;b.disabled=true;\n      SPSite.answer('forest_rating',v,{key:t.id,shown:[f.name]}).then(function(r){if(!ok(r)){b.disabled=false;return err(r.error);}done[t.id]=true;save('d',done);next();});\n    });\n  }\n  function about(){\n    var h=ABOUT.map(function(n){var d=q(n);var s='<div class=\"q\"><b>'+esc(d.title)+'</b>';\n      if(d.type==='text')s+='<input type=\"number\" name=\"'+n+'\" min=\"18\" max=\"110\" inputmode=\"numeric\">';\n      else s+=d.choices.map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+c.value+'\"> '+esc(c.text)+'</label>';}).join('');\n      return s+'</div>';}).join('');\n    page('<h1>About you</h1><div class=\"card\">'+h+'</div>','Finish',function(){\n      var l=[];for(var i=0;i<ABOUT.length;i++){var n=ABOUT[i],d=q(n),v;\n        if(d.type==='text'){var s=app.querySelector('input[name=\"'+n+'\"]').value.trim();v=Number(s);if(s===''||!(v>=18&&v<=110)||v%1)return err('Please enter your age in years (18 or older).');}\n        else{var x=app.querySelector('input[name=\"'+n+'\"]:checked');if(!x)return err('Please answer: '+d.title);v=Number(x.value);}\n        l.push([n,v]);}\n      var b=this;b.disabled=true;saveAll(l,b,function(){done.about=true;save('d',done);next();});\n    });\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>The photographs showed forest sites in Ocala National Forest, Florida, managed in part as habitat for the endangered red-cockaded woodpecker, with different tree sizes, densities and ground cover at various times after prescribed burning or cutting. In the original study, 209 visitors were asked on site. A mixed pine–hardwood stand (picture 8 here) received the highest ratings for scenic beauty (8.2 of 10) and recreation satisfaction, and a recently regenerated, cut-over stand (picture 5) the lowest (3.1). Sites that experts judged to be good woodpecker habitat were rated higher on both scales than poor habitat by all activity groups. Hunters rated the poor-habitat sites highest of all groups, while campers and canoeists/kayakers gave the lowest ratings.</p><p style=\"font-size:.82rem\">Paudyal, R., Stein, T. V., Ober, H. K., Swisher, M. E., Jokela, E. J., &amp; Adams, D. C. (2018). Recreationists’ Perceptions of Scenic Beauty and Satisfaction at a Public Forest Managed for Endangered Wildlife. Forests 9:241, doi:10.3390/f9050241.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){if(x==='consent')done.intro=false;else if(x==='forest_rating')TR.forEach(function(t){done[t.id]=false;});else if(/^activity/.test(x))done.act=false;else done.about=false;});save('d',done);next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    try{SPEC=JSON.parse(document.getElementById('sp-scheme').textContent).survey;}catch(e){SPEC={pages:[]};}\n    SPEC.pages.forEach(function(p){p.elements.forEach(function(e){var g=SPSite.getQuestion(e.name)||{};Q[e.name]={type:e.type,title:g.title||e.title,choices:(g.choices&&g.choices.length)?g.choices:e.choices};if(e.name==='forest_rating'){TR=e.trials;ITEMS=e.items;}});});\n    (SPSite.getMedia('forest')||[]).forEach(function(f){files[f.name]=f;});\n    var a=(ctx&&ctx.answers)||{};done=load('d')||{};\n    done.intro=a.consent===true;\n    done.act=a.activity_1!=null;\n    TR.forEach(function(t){done[t.id]=false;});\n    ((a.forest_rating&&a.forest_rating.trials)||[]).forEach(function(t){if(t.key)done[t.key]=true;});\n    done.about=ABOUT.every(function(n){return a[n]!=null;});\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T19:06:27.582Z",
+   "mediaFolders": [
+    "forest"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T19:06:27.582Z"
+  },
+  "description": "Faithful replication of Paudyal, Stein, Ober, Swisher, Jokela & Adams (2018), Forests 9:241: rate 12 photographs of Ocala National Forest (USA) on scenic beauty and expected recreation satisfaction (1–10), after listing your three main recreation activities.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2018-paudyal-forest/forest/picture_01__20254ac8-9300-4497-800e-01b1ea2d42ff.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-paudyal-forest/forest/picture_01__20254ac8-9300-4497-800e-01b1ea2d42ff.jpg",
+   "name": "picture_01.jpg",
+   "type": "image",
+   "folder": "forest",
+   "media_id": "templates/2018-paudyal-forest/forest/picture_01__20254ac8-9300-4497-800e-01b1ea2d42ff.jpg",
+   "logicalFolder": "forest",
+   "original_bytes": 111089,
+   "uploaded_bytes": 111089,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-paudyal-forest/forest/picture_02__3f765111-4852-41b0-a399-ec4880d6367c.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-paudyal-forest/forest/picture_02__3f765111-4852-41b0-a399-ec4880d6367c.jpg",
+   "name": "picture_02.jpg",
+   "type": "image",
+   "folder": "forest",
+   "media_id": "templates/2018-paudyal-forest/forest/picture_02__3f765111-4852-41b0-a399-ec4880d6367c.jpg",
+   "logicalFolder": "forest",
+   "original_bytes": 108891,
+   "uploaded_bytes": 108891,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-paudyal-forest/forest/picture_03__86714582-7569-4106-95a7-3c3fede117ca.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-paudyal-forest/forest/picture_03__86714582-7569-4106-95a7-3c3fede117ca.jpg",
+   "name": "picture_03.jpg",
+   "type": "image",
+   "folder": "forest",
+   "media_id": "templates/2018-paudyal-forest/forest/picture_03__86714582-7569-4106-95a7-3c3fede117ca.jpg",
+   "logicalFolder": "forest",
+   "original_bytes": 115499,
+   "uploaded_bytes": 115499,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-paudyal-forest/forest/picture_04__2c04872d-a3bc-4232-8539-4c1a3f6ccaa0.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-paudyal-forest/forest/picture_04__2c04872d-a3bc-4232-8539-4c1a3f6ccaa0.jpg",
+   "name": "picture_04.jpg",
+   "type": "image",
+   "folder": "forest",
+   "media_id": "templates/2018-paudyal-forest/forest/picture_04__2c04872d-a3bc-4232-8539-4c1a3f6ccaa0.jpg",
+   "logicalFolder": "forest",
+   "original_bytes": 106805,
+   "uploaded_bytes": 106805,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-paudyal-forest/forest/picture_05__89f4f54b-10ab-4b5f-a763-1fd386042e3e.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-paudyal-forest/forest/picture_05__89f4f54b-10ab-4b5f-a763-1fd386042e3e.jpg",
+   "name": "picture_05.jpg",
+   "type": "image",
+   "folder": "forest",
+   "media_id": "templates/2018-paudyal-forest/forest/picture_05__89f4f54b-10ab-4b5f-a763-1fd386042e3e.jpg",
+   "logicalFolder": "forest",
+   "original_bytes": 78566,
+   "uploaded_bytes": 78566,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-paudyal-forest/forest/picture_06__8389ec5f-a990-4a97-bfd6-f77c90b421fe.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-paudyal-forest/forest/picture_06__8389ec5f-a990-4a97-bfd6-f77c90b421fe.jpg",
+   "name": "picture_06.jpg",
+   "type": "image",
+   "folder": "forest",
+   "media_id": "templates/2018-paudyal-forest/forest/picture_06__8389ec5f-a990-4a97-bfd6-f77c90b421fe.jpg",
+   "logicalFolder": "forest",
+   "original_bytes": 111585,
+   "uploaded_bytes": 111585,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-paudyal-forest/forest/picture_07__1fb77155-1021-4a3b-b74d-3ca8cd3e229a.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-paudyal-forest/forest/picture_07__1fb77155-1021-4a3b-b74d-3ca8cd3e229a.jpg",
+   "name": "picture_07.jpg",
+   "type": "image",
+   "folder": "forest",
+   "media_id": "templates/2018-paudyal-forest/forest/picture_07__1fb77155-1021-4a3b-b74d-3ca8cd3e229a.jpg",
+   "logicalFolder": "forest",
+   "original_bytes": 108602,
+   "uploaded_bytes": 108602,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-paudyal-forest/forest/picture_08__7b168349-3449-42ab-8527-36ad3aa639b5.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-paudyal-forest/forest/picture_08__7b168349-3449-42ab-8527-36ad3aa639b5.jpg",
+   "name": "picture_08.jpg",
+   "type": "image",
+   "folder": "forest",
+   "media_id": "templates/2018-paudyal-forest/forest/picture_08__7b168349-3449-42ab-8527-36ad3aa639b5.jpg",
+   "logicalFolder": "forest",
+   "original_bytes": 104521,
+   "uploaded_bytes": 104521,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-paudyal-forest/forest/picture_09__295a95d0-c7d5-42c5-bb5b-dbae60a3c6aa.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-paudyal-forest/forest/picture_09__295a95d0-c7d5-42c5-bb5b-dbae60a3c6aa.jpg",
+   "name": "picture_09.jpg",
+   "type": "image",
+   "folder": "forest",
+   "media_id": "templates/2018-paudyal-forest/forest/picture_09__295a95d0-c7d5-42c5-bb5b-dbae60a3c6aa.jpg",
+   "logicalFolder": "forest",
+   "original_bytes": 109399,
+   "uploaded_bytes": 109399,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-paudyal-forest/forest/picture_10__8f210ee3-d33a-4022-a7ad-ac7bc89a0702.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-paudyal-forest/forest/picture_10__8f210ee3-d33a-4022-a7ad-ac7bc89a0702.jpg",
+   "name": "picture_10.jpg",
+   "type": "image",
+   "folder": "forest",
+   "media_id": "templates/2018-paudyal-forest/forest/picture_10__8f210ee3-d33a-4022-a7ad-ac7bc89a0702.jpg",
+   "logicalFolder": "forest",
+   "original_bytes": 106134,
+   "uploaded_bytes": 106134,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-paudyal-forest/forest/picture_11__065051ea-c639-4338-a2d9-0b56042d75d4.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-paudyal-forest/forest/picture_11__065051ea-c639-4338-a2d9-0b56042d75d4.jpg",
+   "name": "picture_11.jpg",
+   "type": "image",
+   "folder": "forest",
+   "media_id": "templates/2018-paudyal-forest/forest/picture_11__065051ea-c639-4338-a2d9-0b56042d75d4.jpg",
+   "logicalFolder": "forest",
+   "original_bytes": 105173,
+   "uploaded_bytes": 105173,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2018-paudyal-forest/forest/picture_12__0bca1483-30c4-4c30-b514-4e1322691f6f.jpg",
+   "url": "https://media.sp-survey.org/templates/2018-paudyal-forest/forest/picture_12__0bca1483-30c4-4c30-b514-4e1322691f6f.jpg",
+   "name": "picture_12.jpg",
+   "type": "image",
+   "folder": "forest",
+   "media_id": "templates/2018-paudyal-forest/forest/picture_12__0bca1483-30c4-4c30-b514-4e1322691f6f.jpg",
+   "logicalFolder": "forest",
+   "original_bytes": 113371,
+   "uploaded_bytes": 113371,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Recreationists’ Perceptions of Scenic Beauty and Satisfaction at a Public Forest Managed for Endangered Wildlife",
+  "authors": [
+   "Ramesh Paudyal",
+   "Taylor V. Stein",
+   "Holly K. Ober",
+   "Marilyn E. Swisher",
+   "Eric J. Jokela",
+   "Damian C. Adams"
+  ],
+  "year": 2018,
+  "venue": "Forests",
+  "doi": "10.3390/f9050241",
+  "url": "https://doi.org/10.3390/f9050241"
+ }
+}

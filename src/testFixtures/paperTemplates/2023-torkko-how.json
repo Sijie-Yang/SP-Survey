@@ -1,0 +1,108 @@
+{
+ "id": "2023-torkko-how",
+ "name": "Perceived Greenery In Situ",
+ "config": {
+  "title": "Perceived Greenery",
+  "description": "This short survey asks how much greenery you can see around you.",
+  "logoPosition": "right",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "aboveheader",
+  "showQuestionNumbers": "off",
+  "captureUrlParams": [
+   "site"
+  ],
+  "spAnalysisRecommendation": {
+   "citation": "Torkko et al. 2023",
+   "items": [
+    {
+     "questions": [
+      "greenery_in_situ"
+     ],
+     "method": "param_aggregation",
+     "param": "site"
+    },
+    {
+     "questions": [
+      "greenery_online"
+     ],
+     "method": "slider_dimensions"
+    }
+   ]
+  },
+  "pages": [
+   {
+    "name": "page_consent",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "checkbox",
+      "title": "I agree to take part in this study and for my answers to be used for research.",
+      "choices": [
+       {
+        "value": "agree",
+        "text": "I agree"
+       }
+      ],
+      "isRequired": true
+     }
+    ],
+    "title": "Consent"
+   },
+   {
+    "name": "page_in_situ",
+    "elements": [
+     {
+      "name": "greenery_in_situ",
+      "type": "slidergroup",
+      "title": "Please evaluate the amount of greenery visible in your surrounding scenery, from 0 (no visible greenery) to 100 (only greenery is visible). Concentrate on natural greenery, i.e., exclude green-coloured cars, buildings, and other artificial objects.",
+      "dimensions": [
+       {
+        "id": "greenery",
+        "label": "Visible greenery",
+        "left": "0 – no visible greenery",
+        "right": "100 – only greenery is visible"
+       }
+      ],
+      "scaleMin": 0,
+      "scaleMax": 100,
+      "scaleStep": 1,
+      "isRequired": true
+     }
+    ],
+    "visibleIf": "{url_site} notempty",
+    "title": "Your surroundings"
+   },
+   {
+    "name": "page_online",
+    "elements": [
+     {
+      "name": "greenery_online",
+      "type": "imageslidergroup",
+      "title": "Please evaluate the amount of greenery visible in this image, from 0 (no visible greenery) to 100 (only greenery is visible). Concentrate on natural greenery, i.e., exclude green-coloured cars, buildings, and other artificial objects.",
+      "imageFit": "cover",
+      "imageSource": "huggingface",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "isRequired": true,
+      "imageCount": 1,
+      "trialCount": 10,
+      "dimensions": [
+       {
+        "id": "greenery",
+        "label": "Visible greenery",
+        "left": "0 – no visible greenery",
+        "right": "100 – only greenery is visible"
+       }
+      ],
+      "scaleMin": 0,
+      "scaleMax": 100,
+      "scaleStep": 1
+     }
+    ],
+    "visibleIf": "{url_site} empty",
+    "title": "Online version (not in original study)"
+   }
+  ]
+ }
+}

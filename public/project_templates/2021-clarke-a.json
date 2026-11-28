@@ -1,0 +1,750 @@
+{
+ "id": "2021-clarke-a",
+ "name": "A Change of Scenery: Nature Images, Delay Discounting and Food Desirability",
+ "description": "Faithful replication of Clarke, Higgs, Holley, Jones, Marty & Hardman (2021), \"A Change of Scenery: Does Exposure to Images of Nature Affect Delay Discounting and Food Desirability?\", Frontiers in Psychology 12:782056 (preregistered, OSF jsmk9). Uses the authors' own six natural and six urban scene images from the article's supplementary material (CC BY 4.0).\n\nWhat participants do: under a \"memory and choices\" cover story they are randomly assigned to view six natural or six urban scenes, each for 30 s (no skipping), then rate their mood (PANAS, 20 words), answer three memory questions, and complete, in counterbalanced order, (a) the 5-trial adjusting delay discounting task of Koffarnus & Bickel (2014): £5 now or £10 after a delay that starts at 3 weeks and adjusts with each choice, giving ED50 and the discount rate k; and (b) desirability ratings of eight foods (strawberries, raspberries, cucumber, carrots; chocolate-covered doughnut, chocolate buttons, sweets, crisps) on a 0–100 slider. Then age, gender, ethnicity, education, employment, height, weight, eating-disorder history and a guess about the study's aims.\n\nAnalysis as in the paper: t-test of k (nature vs urban), MANOVA on healthy and unhealthy food desirability, mediation of nature → healthy food desirability via k, exploratory MANOVA on PANAS positive and negative affect. The paper found no effect of nature images on delay discounting or food desirability (N = 109).\n\nDifferences from the original study: (1) The food photos come from Wikimedia Commons (CC0, public domain and CC BY-SA, credited on the end page) because the original food-pics database images cannot be redistributed. (2) The paper does not publish its three memory questions; the template asks how many pictures were shown and whether any showed people or water. (3) The DEBQ restraint subscale is left out because it is a published, copyrighted instrument; add it under your own licence if you need the restraint moderation analysis. (4) Height and weight are optional, and demographic answer options are our own. (5) A short debriefing is shown at the end.\n\nSource and credit: scene images and design come from the authors' article and OSF project and are used with credit; the template is taken down if the authors object.",
+ "author": "Clarke, Higgs, Holley, Jones, Marty & Hardman",
+ "year": "2021",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "restoration",
+  "delay-discounting",
+  "food",
+  "source:paper",
+  "modality:scene_photo",
+  "task:questionnaire",
+  "task:rating",
+  "task:custom_page",
+  "concept:restoration",
+  "concept:naturalness",
+  "concept:emotion",
+  "participants:crowd",
+  "participants:students",
+  "sample:100to1000",
+  "country:United Kingdom"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3389/fpsyg.2021.782056",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T09:13:04.484+00:00",
+ "updatedAt": "2026-11-27T09:13:15.328+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "view",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I have read the information above and agree to take part.",
+      "labelTrue": "Yes",
+      "isRequired": true,
+      "labelFalse": "No"
+     },
+     {
+      "name": "images",
+      "type": "custom",
+      "title": "Image viewing",
+      "isRequired": true,
+      "description": "{ condition: 'nature' | 'urban', files, seconds_each: 30 } — random assignment; six images shown one at a time for 30 s each (no skipping), with the instruction to study them carefully for a later memory test (cover story)."
+     },
+     {
+      "name": "panas",
+      "rows": [
+       {
+        "text": "Active",
+        "value": "01"
+       },
+       {
+        "text": "Distressed",
+        "value": "02"
+       },
+       {
+        "text": "Interested",
+        "value": "03"
+       },
+       {
+        "text": "Excited",
+        "value": "04"
+       },
+       {
+        "text": "Upset",
+        "value": "05"
+       },
+       {
+        "text": "Strong",
+        "value": "06"
+       },
+       {
+        "text": "Guilty",
+        "value": "07"
+       },
+       {
+        "text": "Scared",
+        "value": "08"
+       },
+       {
+        "text": "Hostile",
+        "value": "09"
+       },
+       {
+        "text": "Inspired",
+        "value": "10"
+       },
+       {
+        "text": "Proud",
+        "value": "11"
+       },
+       {
+        "text": "Irritable",
+        "value": "12"
+       },
+       {
+        "text": "Enthusiastic",
+        "value": "13"
+       },
+       {
+        "text": "Ashamed",
+        "value": "14"
+       },
+       {
+        "text": "Alert",
+        "value": "15"
+       },
+       {
+        "text": "Nervous",
+        "value": "16"
+       },
+       {
+        "text": "Determined",
+        "value": "17"
+       },
+       {
+        "text": "Attentive",
+        "value": "18"
+       },
+       {
+        "text": "Jittery",
+        "value": "19"
+       },
+       {
+        "text": "Afraid",
+        "value": "20"
+       }
+      ],
+      "type": "matrix",
+      "title": "This scale consists of a number of words that describe different feelings and emotions. Indicate to what extent you feel this way right now, that is, at the present moment.",
+      "columns": [
+       {
+        "text": "Very slightly or not at all",
+        "value": 1
+       },
+       {
+        "text": "A little",
+        "value": 2
+       },
+       {
+        "text": "Moderately",
+        "value": 3
+       },
+       {
+        "text": "Quite a bit",
+        "value": 4
+       },
+       {
+        "text": "Extremely",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "PANAS, 20 words, 1–5. Positive affect = 01 03 04 06 10 11 13 15 17 18; negative affect = 02 05 07 08 09 12 14 16 19 20. Exploratory MANOVA (nature vs urban)."
+     },
+     {
+      "name": "mem_count",
+      "type": "radiogroup",
+      "title": "How many pictures did you see?",
+      "choices": [
+       {
+        "text": "4",
+        "value": 1
+       },
+       {
+        "text": "5",
+        "value": 2
+       },
+       {
+        "text": "6",
+        "value": 3
+       },
+       {
+        "text": "7",
+        "value": 4
+       },
+       {
+        "text": "8",
+        "value": 5
+       }
+      ],
+      "isRequired": true,
+      "description": "Memory question (cover story and attention check); correct = 6."
+     },
+     {
+      "name": "mem_people",
+      "type": "radiogroup",
+      "title": "Did any of the pictures show people?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": 1
+       },
+       {
+        "text": "No",
+        "value": 2
+       },
+       {
+        "text": "Not sure",
+        "value": 3
+       }
+      ],
+      "isRequired": true,
+      "description": "Memory question; in the original image sets only urban pictures show people."
+     },
+     {
+      "name": "mem_water",
+      "type": "radiogroup",
+      "title": "Did any of the pictures show water (a river, a lake or the sea)?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": 1
+       },
+       {
+        "text": "No",
+        "value": 2
+       },
+       {
+        "text": "Not sure",
+        "value": 3
+       }
+      ],
+      "isRequired": true,
+      "description": "Memory question; four of the six nature pictures show water, no urban picture does."
+     }
+    ]
+   },
+   {
+    "name": "tasks",
+    "elements": [
+     {
+      "name": "delay_discounting",
+      "type": "custom",
+      "title": "Money choices",
+      "isRequired": true,
+      "description": "{ order: 'dd_first' | 'food_first', trials: [{ index, delay, choice: 'now' | 'later', rt }], ed50_days, k, log10_k } — 5-trial adjusting delay task (Koffarnus & Bickel 2014): £5 now vs £10 after a delay; first delay 3 weeks (index 16 of 31), then ±8, ±4, ±2, ±1 indexes (later choice → longer delay). ED50 and k = 1/ED50 from the task's Table 1. Main test: t-test of k (or log k) nature vs urban; mediation of nature → healthy food desirability via k (PROCESS model 4)."
+     },
+     {
+      "name": "food",
+      "type": "imageslidergroup",
+      "title": "How much do you want to eat this food right now?",
+      "choices": [],
+      "scaleMax": 100,
+      "scaleMin": 0,
+      "dimensions": [
+       {
+        "id": "want",
+        "max": 100,
+        "min": 0,
+        "left": "Not at all",
+        "step": 1,
+        "label": "How much do you want to eat this food right now?",
+        "right": "Very much"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "description": "Eight food photos in random order, one per screen, 0–100 visual analogue scale (Not at all … Very much). key = file name: FV_* fruit and vegetables (healthy), ED_* energy-dense foods. Healthy and unhealthy desirability = mean of each four; MANOVA nature vs urban. The delay task and this task come in counterbalanced order.",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "max": 100,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "What is your age (in years)?",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "What is your gender?",
+      "choices": [
+       {
+        "text": "Female",
+        "value": 1
+       },
+       {
+        "text": "Male",
+        "value": 2
+       },
+       {
+        "text": "Non-binary / other",
+        "value": 3
+       },
+       {
+        "text": "Prefer not to say",
+        "value": 4
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "ethnicity",
+      "type": "radiogroup",
+      "title": "What is your ethnic group?",
+      "choices": [
+       {
+        "text": "White",
+        "value": 1
+       },
+       {
+        "text": "Mixed or multiple ethnic groups",
+        "value": 2
+       },
+       {
+        "text": "Asian or Asian British",
+        "value": 3
+       },
+       {
+        "text": "Black, African, Caribbean or Black British",
+        "value": 4
+       },
+       {
+        "text": "Other ethnic group",
+        "value": 5
+       },
+       {
+        "text": "Prefer not to say",
+        "value": 6
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "What is your highest level of education?",
+      "choices": [
+       {
+        "text": "GCSE or equivalent",
+        "value": 1
+       },
+       {
+        "text": "A-level or equivalent",
+        "value": 2
+       },
+       {
+        "text": "Undergraduate degree",
+        "value": 3
+       },
+       {
+        "text": "Postgraduate degree",
+        "value": 4
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "employment",
+      "type": "radiogroup",
+      "title": "What is your current employment status?",
+      "choices": [
+       {
+        "text": "Student",
+        "value": 1
+       },
+       {
+        "text": "Employed full-time",
+        "value": 2
+       },
+       {
+        "text": "Employed part-time",
+        "value": 3
+       },
+       {
+        "text": "Self-employed",
+        "value": 4
+       },
+       {
+        "text": "Unemployed",
+        "value": 5
+       },
+       {
+        "text": "Retired",
+        "value": 6
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": 7
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "max": 250,
+      "min": 100,
+      "name": "height_cm",
+      "type": "text",
+      "title": "What is your height (cm)?",
+      "inputType": "number",
+      "description": "Optional. BMI = weight / (height/100)^2."
+     },
+     {
+      "max": 300,
+      "min": 30,
+      "name": "weight_kg",
+      "type": "text",
+      "title": "What is your weight (kg)?",
+      "inputType": "number",
+      "description": "Optional."
+     },
+     {
+      "name": "eating_disorder",
+      "type": "radiogroup",
+      "title": "Do you currently have, or have you ever had, a diagnosed eating disorder?",
+      "choices": [
+       {
+        "text": "No",
+        "value": 1
+       },
+       {
+        "text": "Yes, currently",
+        "value": 2
+       },
+       {
+        "text": "Yes, in the past",
+        "value": 3
+       },
+       {
+        "text": "Prefer not to say",
+        "value": 4
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "aims",
+      "type": "comment",
+      "title": "What do you think the aims of this study were?",
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "A Change of Scenery: Nature Images, Delay Discounting and Food Desirability",
+  "locale": "en",
+  "spSite": {
+   "id": "site-939174af2418201b",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>A Change of Scenery: Nature Images and Choices</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"A Change of Scenery: Nature Images, Delay Discounting and Food Desirability\",\n  \"description\": \"Faithful replication of Clarke, Higgs, Holley, Jones, Marty & Hardman (2021), Frontiers in Psychology 12:782056, with the authors' twelve scene images from the article's supplementary material (CC BY 4.0). Participants are randomly assigned to view six natural or six urban scenes for 30 s each, then rate their mood (PANAS), answer three memory questions, make five money choices (£5 now vs £10 later) and rate how much they want to eat eight foods, then give demographics.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"nature\",\n   \"urban\",\n   \"food\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"view\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I have read the information above and agree to take part.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"Yes\",\n      \"labelFalse\": \"No\"\n     },\n     {\n      \"type\": \"custom\",\n      \"name\": \"images\",\n      \"title\": \"Image viewing\",\n      \"isRequired\": true,\n      \"description\": \"{ condition: 'nature' | 'urban', files, seconds_each: 30 } — random assignment; six images shown one at a time for 30 s each (no skipping), with the instruction to study them carefully for a later memory test (cover story).\"\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"panas\",\n      \"title\": \"This scale consists of a number of words that describe different feelings and emotions. Indicate to what extent you feel this way right now, that is, at the present moment.\",\n      \"isRequired\": true,\n      \"description\": \"PANAS, 20 words, 1–5. Positive affect = 01 03 04 06 10 11 13 15 17 18; negative affect = 02 05 07 08 09 12 14 16 19 20. Exploratory MANOVA (nature vs urban).\",\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"Very slightly or not at all\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"A little\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Moderately\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Quite a bit\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Extremely\"\n       }\n      ],\n      \"rows\": [\n       {\n        \"value\": \"01\",\n        \"text\": \"Active\"\n       },\n       {\n        \"value\": \"02\",\n        \"text\": \"Distressed\"\n       },\n       {\n        \"value\": \"03\",\n        \"text\": \"Interested\"\n       },\n       {\n        \"value\": \"04\",\n        \"text\": \"Excited\"\n       },\n       {\n        \"value\": \"05\",\n        \"text\": \"Upset\"\n       },\n       {\n        \"value\": \"06\",\n        \"text\": \"Strong\"\n       },\n       {\n        \"value\": \"07\",\n        \"text\": \"Guilty\"\n       },\n       {\n        \"value\": \"08\",\n        \"text\": \"Scared\"\n       },\n       {\n        \"value\": \"09\",\n        \"text\": \"Hostile\"\n       },\n       {\n        \"value\": \"10\",\n        \"text\": \"Inspired\"\n       },\n       {\n        \"value\": \"11\",\n        \"text\": \"Proud\"\n       },\n       {\n        \"value\": \"12\",\n        \"text\": \"Irritable\"\n       },\n       {\n        \"value\": \"13\",\n        \"text\": \"Enthusiastic\"\n       },\n       {\n        \"value\": \"14\",\n        \"text\": \"Ashamed\"\n       },\n       {\n        \"value\": \"15\",\n        \"text\": \"Alert\"\n       },\n       {\n        \"value\": \"16\",\n        \"text\": \"Nervous\"\n       },\n       {\n        \"value\": \"17\",\n        \"text\": \"Determined\"\n       },\n       {\n        \"value\": \"18\",\n        \"text\": \"Attentive\"\n       },\n       {\n        \"value\": \"19\",\n        \"text\": \"Jittery\"\n       },\n       {\n        \"value\": \"20\",\n        \"text\": \"Afraid\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mem_count\",\n      \"title\": \"How many pictures did you see?\",\n      \"isRequired\": true,\n      \"description\": \"Memory question (cover story and attention check); correct = 6.\",\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"5\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"6\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"7\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"8\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mem_people\",\n      \"title\": \"Did any of the pictures show people?\",\n      \"isRequired\": true,\n      \"description\": \"Memory question; in the original image sets only urban pictures show people.\",\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"No\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Not sure\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"mem_water\",\n      \"title\": \"Did any of the pictures show water (a river, a lake or the sea)?\",\n      \"isRequired\": true,\n      \"description\": \"Memory question; four of the six nature pictures show water, no urban picture does.\",\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"No\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Not sure\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"tasks\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"delay_discounting\",\n      \"title\": \"Money choices\",\n      \"isRequired\": true,\n      \"description\": \"{ order: 'dd_first' | 'food_first', trials: [{ index, delay, choice: 'now' | 'later', rt }], ed50_days, k, log10_k } — 5-trial adjusting delay task (Koffarnus & Bickel 2014): £5 now vs £10 after a delay; first delay 3 weeks (index 16 of 31), then ±8, ±4, ±2, ±1 indexes (later choice → longer delay). ED50 and k = 1/ED50 from the task's Table 1. Main test: t-test of k (or log k) nature vs urban; mediation of nature → healthy food desirability via k (PROCESS model 4).\"\n     },\n     {\n      \"type\": \"imageslidergroup\",\n      \"name\": \"food\",\n      \"title\": \"How much do you want to eat this food right now?\",\n      \"isRequired\": true,\n      \"imageCount\": 1,\n      \"scaleMin\": 0,\n      \"scaleMax\": 100,\n      \"description\": \"Eight food photos in random order, one per screen, 0–100 visual analogue scale (Not at all … Very much). key = file name: FV_* fruit and vegetables (healthy), ED_* energy-dense foods. Healthy and unhealthy desirability = mean of each four; MANOVA nature vs urban. The delay task and this task come in counterbalanced order.\",\n      \"dimensions\": [\n       {\n        \"id\": \"want\",\n        \"label\": \"How much do you want to eat this food right now?\",\n        \"left\": \"Not at all\",\n        \"right\": \"Very much\",\n        \"min\": 0,\n        \"max\": 100,\n        \"step\": 1\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"What is your age (in years)?\",\n      \"isRequired\": true,\n      \"min\": 18,\n      \"max\": 100\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"What is your gender?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Non-binary / other\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"ethnicity\",\n      \"title\": \"What is your ethnic group?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"White\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Mixed or multiple ethnic groups\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Asian or Asian British\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Black, African, Caribbean or Black British\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Other ethnic group\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"What is your highest level of education?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"GCSE or equivalent\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"A-level or equivalent\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Undergraduate degree\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Postgraduate degree\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"employment\",\n      \"title\": \"What is your current employment status?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Student\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Employed full-time\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Employed part-time\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Self-employed\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Unemployed\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Retired\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"number\",\n      \"name\": \"height_cm\",\n      \"title\": \"What is your height (cm)?\",\n      \"description\": \"Optional. BMI = weight / (height/100)^2.\",\n      \"min\": 100,\n      \"max\": 250\n     },\n     {\n      \"type\": \"number\",\n      \"name\": \"weight_kg\",\n      \"title\": \"What is your weight (kg)?\",\n      \"description\": \"Optional.\",\n      \"min\": 30,\n      \"max\": 300\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"eating_disorder\",\n      \"title\": \"Do you currently have, or have you ever had, a diagnosed eating disorder?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"No\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Yes, currently\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Yes, in the past\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"aims\",\n      \"title\": \"What do you think the aims of this study were?\",\n      \"isRequired\": true\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f3f4f1;--card:#fff;--ink:#1e221d;--muted:#5a625b;--accent:#2f5f86;--accent-ink:#fff;--line:#d5dad4;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:860px;margin:0 auto;padding:24px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 10px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q>b{display:block;margin-bottom:4px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:120px}\ntextarea{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;min-height:80px}\n.pic{background:#111;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;height:min(70vh,560px)}\n.pic img{max-width:100%;max-height:100%;object-fit:contain;display:block}\n.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:10px 0 6px}.bar>i{display:block;height:100%;background:var(--accent);width:0}\n.t{color:var(--muted);font-variant-numeric:tabular-nums;font-size:.9rem}\n.item{padding:12px 0;border-top:1px solid var(--line)}.item:first-of-type{border-top:0}\n.item>b{display:block;font-weight:600;margin-bottom:6px}\n.sc{display:grid;gap:4px}\n.sc button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 0;font:inherit;font-weight:700;cursor:pointer;min-width:0}\n.sc button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}\n.legend{font-size:.85rem;color:var(--muted);margin:6px 0 0}\n.choice{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}\n.choice button{appearance:none;border:2px solid var(--accent);background:var(--card);color:var(--ink);border-radius:12px;padding:22px 10px;font:inherit;font-size:1.1rem;font-weight:700;cursor:pointer}\n.choice button:hover{background:#eaf1f7}\n.food{background:#fff;border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center;height:min(46vh,380px);overflow:hidden}\n.food img{max-width:100%;max-height:100%;object-fit:contain}\ninput[type=range]{width:100%;margin-top:16px;accent-color:var(--accent)}\ninput[type=range].untouched{accent-color:#d5dad4}input[type=range].untouched::-webkit-slider-thumb{opacity:0}\ninput[type=range].untouched::-moz-range-thumb{opacity:0}\n.ends{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted)}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:860px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Scene images: Clarke et al. (2021), Frontiers in Psychology, supplementary material (CC BY 4.0). Food photos: Wikimedia Commons (see the end page). Used with credit; removed if the authors object.</footer>\n<script>\n(function(){\n  var BLOCKS={\"panas\": {\"title\": \"This scale consists of a number of words that describe different feelings and emotions. Indicate to what extent you feel this way right now, that is, at the present moment.\", \"labels\": [\"Very slightly or not at all\", \"A little\", \"Moderately\", \"Quite a bit\", \"Extremely\"], \"rows\": [{\"value\": \"01\", \"text\": \"Active\"}, {\"value\": \"02\", \"text\": \"Distressed\"}, {\"value\": \"03\", \"text\": \"Interested\"}, {\"value\": \"04\", \"text\": \"Excited\"}, {\"value\": \"05\", \"text\": \"Upset\"}, {\"value\": \"06\", \"text\": \"Strong\"}, {\"value\": \"07\", \"text\": \"Guilty\"}, {\"value\": \"08\", \"text\": \"Scared\"}, {\"value\": \"09\", \"text\": \"Hostile\"}, {\"value\": \"10\", \"text\": \"Inspired\"}, {\"value\": \"11\", \"text\": \"Proud\"}, {\"value\": \"12\", \"text\": \"Irritable\"}, {\"value\": \"13\", \"text\": \"Enthusiastic\"}, {\"value\": \"14\", \"text\": \"Ashamed\"}, {\"value\": \"15\", \"text\": \"Alert\"}, {\"value\": \"16\", \"text\": \"Nervous\"}, {\"value\": \"17\", \"text\": \"Determined\"}, {\"value\": \"18\", \"text\": \"Attentive\"}, {\"value\": \"19\", \"text\": \"Jittery\"}, {\"value\": \"20\", \"text\": \"Afraid\"}]}}, KEY='clarke2021:', SEC=30*(window.__SPEED||1);\n  var DEL=['1 hour','2 hours','3 hours','4 hours','6 hours','9 hours','12 hours','1 day','1½ days','2 days','3 days','4 days','1 week','1½ weeks','2 weeks','3 weeks','1 month','2 months','3 months','4 months','6 months','8 months','1 year','2 years','3 years','4 years','5 years','8 years','12 years','18 years','25 years'];\n  var ED={1:[0.04167,0.05893],3:[0.1021,0.1444],5:[0.2041,0.3062],7:[0.4330,0.7071],9:[1.225,1.732],11:[2.450,3.464],13:[5.292,8.573],15:[12.12,17.15],17:[25.28,43.05],19:[74.56,105.4],21:[149.1,210.9],23:[298.2,516.5],25:[894.7,1265],27:[1633,2310],29:[3579,5368],31:[7748,9131]};\n  var app=document.getElementById('app'), Q={}, M={}, cond=null, order=null, ans={}, CTX={};\n  var FLOW=['intro','viewIntro','images','panas','memory','task1','task2','about'];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function saveAll(list,b,cb){Promise.all(list.map(function(a){return a[2]?SPSite.answer(a[0],a[1],a[2]):SPSite.answer(a[0],a[1]);})).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}cb();});}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function step(){var n=0;for(var i=0;i<FLOW.length;i++)if(ans[FLOW[i]])n++;return n;}\n  function head(){return '<p style=\"font-size:.85rem\">Part '+(step()+1)+' of '+FLOW.length+'</p>';}\n  function tasks(){return order==='dd_first'?['dd','food']:['food','dd'];}\n  function next(){\n    window.scrollTo(0,0);\n    for(var i=0;i<FLOW.length;i++){var s=FLOW[i];if(ans[s])continue;\n      if(s==='intro')return intro();if(s==='viewIntro')return viewIntro();if(s==='images')return slides();\n      if(s==='panas')return block('panas');if(s==='memory')return memory();\n      if(s==='task1'||s==='task2'){var t=tasks()[s==='task1'?0:1];return t==='dd'?dd(s):food(s);}\n      if(s==='about')return about();}\n    finish();\n  }\n  function page(title,html,btn,cb){\n    app.innerHTML=head()+'<div class=\"card\">'+(title?'<h1>'+esc(title)+'</h1>':'')+html+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">'+esc(btn||'Continue')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=cb;\n  }\n  function radios(name){return (Q[name].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');}\n  function val(n){var x=app.querySelector('input[name='+n+']:checked');return x?Number(x.value):null;}\n  function intro(){\n    var miss=['nature','urban','food'].filter(function(c){return !(M[c]||[]).length;});\n    if(miss.length){app.innerHTML='<h1>Images missing</h1><p>The media folders nature, urban and food must hold the study images; empty: '+esc(miss.join(', '))+'.</p>';return;}\n    page('Memory and choices','<p>This study is about measuring memory and choices. You will look at a short series of pictures, answer some questions about how you feel and about the pictures, make some choices about money and food, and answer a few questions about yourself. It takes about 10–15 minutes.</p><p>Taking part is voluntary and you can stop at any time. Your answers are anonymous. You must be 18 or over to take part.</p><label class=\"opt\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label>','Start',function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var b=this;b.disabled=true;saveAll([['consent',true]],b,function(){ans.intro=true;next();});\n    });\n  }\n  function viewIntro(){\n    page('Pictures','<p style=\"color:var(--ink)\">You will now see six pictures, one after another. Each picture is shown for 30 seconds and the next one appears by itself.</p><p style=\"color:var(--ink)\">Please study the pictures carefully, because you will take part in a memory test afterwards.</p>','Begin',function(){ans.viewIntro=true;next();});\n  }\n  function slides(){\n    var L=M[cond], k=0, iv=null;\n    L.forEach(function(f){var im=new Image();im.src=f.url;});\n    app.innerHTML='<div class=\"pic\"><img id=\"im\" alt=\"Study picture\"></div><div class=\"bar\"><i></i></div><div class=\"t\" id=\"ct\"></div><div class=\"err\"></div>';\n    var im=document.getElementById('im'), bar=app.querySelector('.bar>i');\n    function show(){\n      im.src=L[k].url;document.getElementById('ct').textContent='Picture '+(k+1)+' of '+L.length;var t0=Date.now();\n      clearInterval(iv);iv=setInterval(function(){var e=(Date.now()-t0)/1000;bar.style.width=Math.min(100,100*e/SEC)+'%';\n        if(e>=SEC){clearInterval(iv);k++;if(k<L.length)return show();\n          saveAll([['images',{condition:cond,files:L.map(function(f){return f.name;}),seconds_each:30},{shown:L.map(function(f){return f.name;})}]],null,function(){ans.images=true;next();});}},100);\n    }\n    show();\n  }\n  function block(name){\n    var B=BLOCKS[name], lab=B.labels, vals={}, n=lab.length;\n    var leg=lab.map(function(t,k){return (k+1)+' = '+esc(t);}).join(' · ');\n    app.innerHTML=head()+'<div class=\"card\"><b>'+esc(B.title)+'</b><p class=\"legend\">'+leg+'</p>'+\n      B.rows.map(function(r){var b='';for(var v=1;v<=n;v++)b+='<button type=\"button\" data-r=\"'+esc(r.value)+'\" data-v=\"'+v+'\" title=\"'+esc(lab[v-1])+'\">'+v+'</button>';return '<div class=\"item\"><b>'+esc(r.text)+'</b><div class=\"sc\" style=\"grid-template-columns:repeat('+n+',1fr)\">'+b+'</div></div>';}).join('')+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    app.querySelectorAll('.sc button').forEach(function(x){x.onclick=function(){vals[x.dataset.r]=Number(x.dataset.v);x.parentNode.querySelectorAll('button').forEach(function(y){y.classList.toggle('on',y===x);});err('');};});\n    document.getElementById('go').onclick=function(){\n      var miss=B.rows.filter(function(r){return vals[r.value]==null;});if(miss.length)return err('Please answer every word ('+miss.length+' left).');\n      var o={};B.rows.forEach(function(r){o[r.value]=vals[r.value];});\n      var b=this;b.disabled=true;saveAll([[name,o]],b,function(){ans[name]=true;next();});\n    };\n  }\n  function memory(){\n    var N=['mem_count','mem_people','mem_water'];\n    page('Memory test',N.map(function(n){return '<div class=\"q\"><b>'+esc(Q[n].title)+'</b>'+radios(n)+'</div>';}).join(''),'Continue',function(){\n      var list=[];for(var i=0;i<N.length;i++){var v=val(N[i]);if(!v)return err('Please answer all three questions.');list.push([N[i],v]);}\n      var b=this;b.disabled=true;saveAll(list,b,function(){ans.memory=true;next();});\n    });\n  }\n  function dd(slot){\n    var idx=16, step=8, trials=[];\n    function trial(){\n      var t0=Date.now();\n      app.innerHTML=head()+'<div class=\"card\"><p>Choice '+(trials.length+1)+' of 5. Imagine these are real amounts of money. Which would you prefer?</p><div class=\"choice\"><button id=\"now\">£5 now</button><button id=\"later\">£10 in '+esc(DEL[idx-1])+'</button></div><div class=\"err\"></div></div>';\n      function pick(c){\n        trials.push({index:idx,delay:DEL[idx-1],choice:c,rt:Date.now()-t0});\n        if(trials.length<5){idx+=c==='later'?step:-step;step=step/2;return trial();}\n        var ed=ED[idx][c==='now'?0:1], k=1/ed;\n        app.querySelectorAll('.choice button').forEach(function(b){b.disabled=true;});\n        saveAll([['delay_discounting',{order:order,trials:trials,ed50_days:ed,k:Number(k.toPrecision(4)),log10_k:Number(Math.log10(k).toFixed(4))}]],null,function(){ans[slot]=true;next();});\n      }\n      document.getElementById('now').onclick=function(){pick('now');};\n      document.getElementById('later').onclick=function(){pick('later');};\n    }\n    page('Money choices','<p style=\"color:var(--ink)\">You will now make five choices between two amounts of money: a smaller amount now or a larger amount later. There are no right or wrong answers; please choose what you would really prefer.</p>','Begin',trial);\n  }\n  function food(slot){\n    var done={};((CTX.food&&CTX.food.trials)||[]).forEach(function(t){done[t.key]=true;});\n    var list=load('foodorder');var names=M.food.map(function(f){return f.name;});\n    if(!list||list.length!==names.length||list.some(function(n){return names.indexOf(n)<0;}))list=shuffle(names);save('foodorder',list);\n    var byName={};M.food.forEach(function(f){byName[f.name]=f;});\n    function trial(){\n      var rest=list.filter(function(n){return !done[n.replace(/\\.[^.]+$/,'')];});\n      if(!rest.length){ans[slot]=true;return next();}\n      var f=byName[rest[0]], key=f.name.replace(/\\.[^.]+$/,''), touched=false;\n      app.innerHTML=head()+'<div class=\"card\"><p class=\"t\">Food '+(list.length-rest.length+1)+' of '+list.length+'</p><div class=\"food\"><img src=\"'+esc(f.url)+'\" alt=\"Food\"></div><b style=\"display:block;margin-top:12px\">How much do you want to eat this food right now?</b><input type=\"range\" min=\"0\" max=\"100\" step=\"1\" value=\"50\" class=\"untouched\" id=\"sl\" aria-label=\"How much do you want to eat this food right now?\"><div class=\"ends\"><span>Not at all</span><span>Very much</span></div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\" disabled>Next</button></div><div class=\"err\"></div></div>';\n      var sl=document.getElementById('sl'), go=document.getElementById('go');\n      function touch(){touched=true;sl.classList.remove('untouched');go.disabled=false;}\n      sl.addEventListener('input',touch);sl.addEventListener('pointerdown',touch);sl.addEventListener('change',touch);\n      go.onclick=function(){if(!touched)return;go.disabled=true;saveAll([['food',{want:Number(sl.value)},{key:key,shown:[f.name]}]],go,function(){done[key]=true;trial();});};\n    }\n    page('Food ratings','<p style=\"color:var(--ink)\">You will now see pictures of eight foods, one at a time. For each one, move the slider to show how much you want to eat that food right now.</p>','Begin',trial);\n  }\n  function about(){\n    page('About you',\n      '<div class=\"q\"><b>'+esc(Q.age.title)+'</b><input type=\"number\" id=\"age\" min=\"18\" max=\"100\" inputmode=\"numeric\"></div>'+\n      ['gender','ethnicity','education','employment'].map(function(n){return '<div class=\"q\"><b>'+esc(Q[n].title)+'</b>'+radios(n)+'</div>';}).join('')+\n      '<div class=\"q\"><b>'+esc(Q.height_cm.title)+' <span class=\"t\">(optional)</span></b><input type=\"number\" id=\"hc\" min=\"100\" max=\"250\" inputmode=\"decimal\"></div>'+\n      '<div class=\"q\"><b>'+esc(Q.weight_kg.title)+' <span class=\"t\">(optional)</span></b><input type=\"number\" id=\"wk\" min=\"30\" max=\"300\" inputmode=\"decimal\"></div>'+\n      '<div class=\"q\"><b>'+esc(Q.eating_disorder.title)+'</b>'+radios('eating_disorder')+'</div>'+\n      '<div class=\"q\"><b>'+esc(Q.aims.title)+'</b><textarea id=\"aims\"></textarea></div>','Finish',function(){\n      var av=document.getElementById('age').value,age=Number(av);if(!av||!(age>=18&&age<=100))return err('Please enter your age (18 or over).');\n      var list=[['age',age]];\n      var N=['gender','ethnicity','education','employment','eating_disorder'];for(var i=0;i<N.length;i++){var v=val(N[i]);if(!v)return err('Please answer: '+Q[N[i]].title);list.push([N[i],v]);}\n      var h=document.getElementById('hc').value,w=document.getElementById('wk').value;\n      if(h){h=Number(h);if(!(h>=100&&h<=250))return err('Please enter your height in centimetres (100–250) or leave it empty.');list.push(['height_cm',h]);}\n      if(w){w=Number(w);if(!(w>=30&&w<=300))return err('Please enter your weight in kilograms (30–300) or leave it empty.');list.push(['weight_kg',w]);}\n      var a=document.getElementById('aims').value.trim();if(!a)return err('Please write a short guess about the aims of the study.');list.push(['aims',a]);\n      var b=this;b.disabled=true;saveAll(list,b,function(){ans.about=true;next();});\n    });\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you for taking part!</h1><div class=\"card\"><p>This study was not really about memory. It tested whether looking at pictures of nature, compared with pictures of cities, makes people more willing to wait for larger rewards later and more interested in healthy foods. You saw either nature or city pictures, chosen at random.</p><p style=\"font-size:.82rem\">Scene images: Clarke, Higgs, Holley, Jones, Marty &amp; Hardman (2021), Frontiers in Psychology 12:782056, doi:10.3389/fpsyg.2021.782056, supplementary material (CC BY 4.0). Food photos from Wikimedia Commons: “Garden strawberry (Fragaria × ananassa) single2” (CC BY-SA 4.0), “Raspberries (40971)” (CC BY-SA 4.0), “Cucumber from Denmark” (CC0), “Vegetable-Carrot-Bundle-wStalks” (public domain), “Chocolate-glazed doughnut (1236451)” (CC0), “Cadbury-Buttons” (CC BY-SA 3.0), “Haribo Matador Mix Bowl Straight” (CC BY-SA 3.0), “Potato-Chips” (public domain). Used with credit and removed if the authors object.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){\n      if(x==='consent')ans.intro=false;else if(x==='images'){ans.images=false;ans.viewIntro=false;}else if(x.indexOf('mem_')===0)ans.memory=false;\n      else if(x==='delay_discounting'||x==='food'){ans[tasks()[0]===(x==='food'?'food':'dd')?'task1':'task2']=false;}else if(x==='panas')ans.panas=false;else ans.about=false;});next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','mem_count','mem_people','mem_water','age','gender','ethnicity','education','employment','height_cm','weight_kg','eating_disorder','aims'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    ['nature','urban','food'].forEach(function(c){M[c]=(SPSite.getMedia(c)||[]).slice().sort(function(a,b){return a.name<b.name?-1:a.name>b.name?1:0;});});\n    var a=CTX=(ctx&&ctx.answers)||{};\n    var ai=a.images&&(a.images.condition?a.images:(a.images.trials&&a.images.trials[0]&&a.images.trials[0].value));\n    var c=(ai&&ai.condition)||load('cond');if(c!=='nature'&&c!=='urban')c=Math.random()<0.5?'nature':'urban';cond=c;save('cond',cond);\n    var o=(a.delay_discounting&&a.delay_discounting.order)||load('order');if(o!=='dd_first'&&o!=='food_first')o=Math.random()<0.5?'dd_first':'food_first';order=o;save('order',order);\n    if(a.consent===true){ans.intro=true;\n      if(a.images!=null){ans.viewIntro=true;ans.images=true;}\n      if(a.panas!=null)ans.panas=true;\n      if(a.mem_count!=null&&a.mem_people!=null&&a.mem_water!=null)ans.memory=true;\n      var fdone=((a.food&&a.food.trials)||[]).length>=M.food.length&&M.food.length>0;\n      var T=tasks();T.forEach(function(t,i){if((t==='dd'&&a.delay_discounting!=null)||(t==='food'&&fdone))ans['task'+(i+1)]=true;});\n      if(a.age!=null&&a.aims!=null)ans.about=true;}\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T09:12:38.486Z",
+   "mediaFolders": [
+    "nature",
+    "urban",
+    "food"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T09:12:38.486Z"
+  },
+  "description": "Faithful replication of Clarke, Higgs, Holley, Jones, Marty & Hardman (2021), Frontiers in Psychology 12:782056, with the authors' twelve scene images from the article's supplementary material (CC BY 4.0). Participants are randomly assigned to view six natural or six urban scenes for 30 s each, then rate their mood (PANAS), answer three memory questions, make five money choices (£5 now vs £10 later) and rate how much they want to eat eight foods, then give demographics.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2021-clarke-a/food/ED_chocolate_buttons__355f3fcc-7bed-4c34-8421-cda1cea20906.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/food/ED_chocolate_buttons__355f3fcc-7bed-4c34-8421-cda1cea20906.jpg",
+   "name": "ED_chocolate_buttons.jpg",
+   "type": "image",
+   "folder": "food",
+   "media_id": "templates/2021-clarke-a/food/ED_chocolate_buttons__355f3fcc-7bed-4c34-8421-cda1cea20906.jpg",
+   "logicalFolder": "food",
+   "original_bytes": 76722,
+   "uploaded_bytes": 76722,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-clarke-a/food/ED_crisps__547c5ef8-eea3-4b12-a805-585827cd685c.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/food/ED_crisps__547c5ef8-eea3-4b12-a805-585827cd685c.jpg",
+   "name": "ED_crisps.jpg",
+   "type": "image",
+   "folder": "food",
+   "media_id": "templates/2021-clarke-a/food/ED_crisps__547c5ef8-eea3-4b12-a805-585827cd685c.jpg",
+   "logicalFolder": "food",
+   "original_bytes": 124562,
+   "uploaded_bytes": 124562,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-clarke-a/food/ED_doughnut__9d0de26c-66d3-4b94-8f43-1c1d591ddfe9.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/food/ED_doughnut__9d0de26c-66d3-4b94-8f43-1c1d591ddfe9.jpg",
+   "name": "ED_doughnut.jpg",
+   "type": "image",
+   "folder": "food",
+   "media_id": "templates/2021-clarke-a/food/ED_doughnut__9d0de26c-66d3-4b94-8f43-1c1d591ddfe9.jpg",
+   "logicalFolder": "food",
+   "original_bytes": 165022,
+   "uploaded_bytes": 165022,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-clarke-a/food/ED_sweets__eaeb26b8-4e8f-4ae8-85a3-bb8cd8d40655.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/food/ED_sweets__eaeb26b8-4e8f-4ae8-85a3-bb8cd8d40655.jpg",
+   "name": "ED_sweets.jpg",
+   "type": "image",
+   "folder": "food",
+   "media_id": "templates/2021-clarke-a/food/ED_sweets__eaeb26b8-4e8f-4ae8-85a3-bb8cd8d40655.jpg",
+   "logicalFolder": "food",
+   "original_bytes": 122574,
+   "uploaded_bytes": 122574,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-clarke-a/food/FV_carrots__9840ef4f-1ab3-453b-94a8-b2077b67b012.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/food/FV_carrots__9840ef4f-1ab3-453b-94a8-b2077b67b012.jpg",
+   "name": "FV_carrots.jpg",
+   "type": "image",
+   "folder": "food",
+   "media_id": "templates/2021-clarke-a/food/FV_carrots__9840ef4f-1ab3-453b-94a8-b2077b67b012.jpg",
+   "logicalFolder": "food",
+   "original_bytes": 106297,
+   "uploaded_bytes": 106297,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-clarke-a/food/FV_cucumber__5bbd3e87-b268-4d53-9d60-f68f456fc311.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/food/FV_cucumber__5bbd3e87-b268-4d53-9d60-f68f456fc311.jpg",
+   "name": "FV_cucumber.jpg",
+   "type": "image",
+   "folder": "food",
+   "media_id": "templates/2021-clarke-a/food/FV_cucumber__5bbd3e87-b268-4d53-9d60-f68f456fc311.jpg",
+   "logicalFolder": "food",
+   "original_bytes": 45968,
+   "uploaded_bytes": 45968,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-clarke-a/food/FV_raspberries__43c6f7a5-cec4-42fa-a52b-757f9eb33e85.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/food/FV_raspberries__43c6f7a5-cec4-42fa-a52b-757f9eb33e85.jpg",
+   "name": "FV_raspberries.jpg",
+   "type": "image",
+   "folder": "food",
+   "media_id": "templates/2021-clarke-a/food/FV_raspberries__43c6f7a5-cec4-42fa-a52b-757f9eb33e85.jpg",
+   "logicalFolder": "food",
+   "original_bytes": 79551,
+   "uploaded_bytes": 79551,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-clarke-a/food/FV_strawberries__0c149bc5-fed5-42d1-ae99-50c07bf4fa6a.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/food/FV_strawberries__0c149bc5-fed5-42d1-ae99-50c07bf4fa6a.jpg",
+   "name": "FV_strawberries.jpg",
+   "type": "image",
+   "folder": "food",
+   "media_id": "templates/2021-clarke-a/food/FV_strawberries__0c149bc5-fed5-42d1-ae99-50c07bf4fa6a.jpg",
+   "logicalFolder": "food",
+   "original_bytes": 89846,
+   "uploaded_bytes": 89846,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-clarke-a/nature/NAT_01__b3be85d0-401e-465c-b97b-90c59fff1dae.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/nature/NAT_01__b3be85d0-401e-465c-b97b-90c59fff1dae.jpg",
+   "name": "NAT_01.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2021-clarke-a/nature/NAT_01__b3be85d0-401e-465c-b97b-90c59fff1dae.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 184559,
+   "uploaded_bytes": 184559,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-clarke-a/nature/NAT_02__7d58d661-6606-461e-8e3a-bf3f35e528a8.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/nature/NAT_02__7d58d661-6606-461e-8e3a-bf3f35e528a8.jpg",
+   "name": "NAT_02.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2021-clarke-a/nature/NAT_02__7d58d661-6606-461e-8e3a-bf3f35e528a8.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 196157,
+   "uploaded_bytes": 196157,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-clarke-a/nature/NAT_03__c676370b-7f25-4218-9219-f530f5e3d587.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/nature/NAT_03__c676370b-7f25-4218-9219-f530f5e3d587.jpg",
+   "name": "NAT_03.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2021-clarke-a/nature/NAT_03__c676370b-7f25-4218-9219-f530f5e3d587.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 313579,
+   "uploaded_bytes": 313579,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-clarke-a/nature/NAT_04__daa926fa-9235-4657-9a9c-bac70eee9436.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/nature/NAT_04__daa926fa-9235-4657-9a9c-bac70eee9436.jpg",
+   "name": "NAT_04.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2021-clarke-a/nature/NAT_04__daa926fa-9235-4657-9a9c-bac70eee9436.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 185787,
+   "uploaded_bytes": 185787,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-clarke-a/nature/NAT_05__3a7426ec-571e-4594-ac9f-42aacaa2364e.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/nature/NAT_05__3a7426ec-571e-4594-ac9f-42aacaa2364e.jpg",
+   "name": "NAT_05.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2021-clarke-a/nature/NAT_05__3a7426ec-571e-4594-ac9f-42aacaa2364e.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 229877,
+   "uploaded_bytes": 229877,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-clarke-a/nature/NAT_06__48760ad1-29da-461f-914c-5862a78f39d5.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/nature/NAT_06__48760ad1-29da-461f-914c-5862a78f39d5.jpg",
+   "name": "NAT_06.jpg",
+   "type": "image",
+   "folder": "nature",
+   "media_id": "templates/2021-clarke-a/nature/NAT_06__48760ad1-29da-461f-914c-5862a78f39d5.jpg",
+   "logicalFolder": "nature",
+   "original_bytes": 231147,
+   "uploaded_bytes": 231147,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-clarke-a/urban/URB_01__8bf696ad-20fd-45b9-abf8-e3e185a55dbf.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/urban/URB_01__8bf696ad-20fd-45b9-abf8-e3e185a55dbf.jpg",
+   "name": "URB_01.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2021-clarke-a/urban/URB_01__8bf696ad-20fd-45b9-abf8-e3e185a55dbf.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 216099,
+   "uploaded_bytes": 216099,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-clarke-a/urban/URB_02__610d0fae-e1b0-4613-bb13-8859f48f6ac7.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/urban/URB_02__610d0fae-e1b0-4613-bb13-8859f48f6ac7.jpg",
+   "name": "URB_02.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2021-clarke-a/urban/URB_02__610d0fae-e1b0-4613-bb13-8859f48f6ac7.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 255441,
+   "uploaded_bytes": 255441,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-clarke-a/urban/URB_03__7765f501-ffed-49a9-a7cc-9d92575fe39d.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/urban/URB_03__7765f501-ffed-49a9-a7cc-9d92575fe39d.jpg",
+   "name": "URB_03.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2021-clarke-a/urban/URB_03__7765f501-ffed-49a9-a7cc-9d92575fe39d.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 148763,
+   "uploaded_bytes": 148763,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-clarke-a/urban/URB_04__32c5ff55-db01-49b9-b960-8090932e7fb6.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/urban/URB_04__32c5ff55-db01-49b9-b960-8090932e7fb6.jpg",
+   "name": "URB_04.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2021-clarke-a/urban/URB_04__32c5ff55-db01-49b9-b960-8090932e7fb6.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 250504,
+   "uploaded_bytes": 250504,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-clarke-a/urban/URB_05__4d1bb960-9c01-4c33-994d-933dd19cfe96.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/urban/URB_05__4d1bb960-9c01-4c33-994d-933dd19cfe96.jpg",
+   "name": "URB_05.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2021-clarke-a/urban/URB_05__4d1bb960-9c01-4c33-994d-933dd19cfe96.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 204931,
+   "uploaded_bytes": 204931,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-clarke-a/urban/URB_06__72026eb6-727f-48f9-bf67-c8a766a183d3.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-clarke-a/urban/URB_06__72026eb6-727f-48f9-bf67-c8a766a183d3.jpg",
+   "name": "URB_06.jpg",
+   "type": "image",
+   "folder": "urban",
+   "media_id": "templates/2021-clarke-a/urban/URB_06__72026eb6-727f-48f9-bf67-c8a766a183d3.jpg",
+   "logicalFolder": "urban",
+   "original_bytes": 141980,
+   "uploaded_bytes": 141980,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "A Change of Scenery: Does Exposure to Images of Nature Affect Delay Discounting and Food Desirability?",
+  "authors": [
+   "Katie Clarke",
+   "Suzanne Higgs",
+   "Clare Elizabeth Holley",
+   "Andrew Jones",
+   "Lucile Marty",
+   "Charlotte Alice Hardman"
+  ],
+  "year": 2021,
+  "venue": "Frontiers in Psychology",
+  "doi": "10.3389/fpsyg.2021.782056",
+  "url": "https://doi.org/10.3389/fpsyg.2021.782056"
+ }
+}

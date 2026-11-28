@@ -1,0 +1,589 @@
+{
+ "id": "2023-lam-soundscape",
+ "name": "Soundscape Listening Test (SATP)",
+ "description": "Headphone listening test of the Soundscape Attributes Translation Project (SATP), Stage 2. Participants hear the 27 standard 30-second binaural recordings of London streets, squares, parks and canals in random order and, after hearing each recording at least once (replays allowed), rate the eight ISO/TS 12913-2 perceived affective qualities (pleasant, chaotic, vibrant, uneventful, calm, annoying, eventful, monotonous) on 0–100 sliders from strongly disagree to strongly agree, starting at 50. ISOPleasant and ISOEventful follow ISO/TS 12913-3. The recordings and 17,000+ ratings in 19 languages are open on Zenodo (CC BY 4.0, doi.org/10.5281/zenodo.6914433), so a new sample or language can be compared recording by recording. Protocol as described in Lam et al. (2023), Applied Acoustics 214: 109675 (Standard Malay, Singapore vs Malaysia) and the SATP dataset README. Faithful replication: the original SATP recordings. Differences from the original study: (1) online instead of a lab with calibrated headphones (open-circuit-voltage calibration is not possible in a browser); participants set their volume once with an 8-second level-check clip (the first 8 s of recording E11b) and report what they listen with; (2) English attribute words only (the SATP protocol is run in each target language; translate the eight words for another language); (3) recordings are served as 192 kbps MP3 converted from the 24-bit WAV files with levels unchanged.",
+ "author": "Lam, Chieng, Ooi, Ong, Watcharasupat, Hong & Gan",
+ "year": "2023",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "soundscape",
+  "ISO 12913",
+  "audio",
+  "cross-cultural",
+  "source:paper",
+  "modality:audio",
+  "task:multi_rating",
+  "concept:quietness",
+  "concept:comfort",
+  "concept:preference",
+  "participants:lab",
+  "participants:students",
+  "sample:100to1000",
+  "country:United Kingdom",
+  "country:Singapore",
+  "country:Malaysia",
+  "city:London"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1016/j.apacoust.2023.109675",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-26T23:25:31.977+00:00",
+ "updatedAt": "2026-11-27T05:59:53.015+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "max": 99,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "Age (years)",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "headphones",
+      "type": "radiogroup",
+      "title": "What are you listening with?",
+      "choices": [
+       {
+        "text": "Over-ear headphones (open-back)",
+        "value": "open_back"
+       },
+       {
+        "text": "Over-ear headphones (closed-back)",
+        "value": "closed_back"
+       },
+       {
+        "text": "Earbuds / in-ear headphones",
+        "value": "earbuds"
+       },
+       {
+        "text": "Loudspeakers",
+        "value": "speakers"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "recordings",
+    "elements": [
+     {
+      "name": "paq",
+      "type": "mediaslidergroup",
+      "title": "To what extent do you agree or disagree that the present surrounding sound environment is…",
+      "choices": [],
+      "scaleMax": 100,
+      "scaleMin": 0,
+      "mediaType": "audio",
+      "dimensions": [
+       {
+        "id": "pleasant",
+        "max": 100,
+        "min": 0,
+        "left": "Strongly disagree",
+        "step": 1,
+        "label": "Pleasant",
+        "right": "Strongly agree"
+       },
+       {
+        "id": "chaotic",
+        "max": 100,
+        "min": 0,
+        "left": "Strongly disagree",
+        "step": 1,
+        "label": "Chaotic",
+        "right": "Strongly agree"
+       },
+       {
+        "id": "vibrant",
+        "max": 100,
+        "min": 0,
+        "left": "Strongly disagree",
+        "step": 1,
+        "label": "Vibrant",
+        "right": "Strongly agree"
+       },
+       {
+        "id": "uneventful",
+        "max": 100,
+        "min": 0,
+        "left": "Strongly disagree",
+        "step": 1,
+        "label": "Uneventful",
+        "right": "Strongly agree"
+       },
+       {
+        "id": "calm",
+        "max": 100,
+        "min": 0,
+        "left": "Strongly disagree",
+        "step": 1,
+        "label": "Calm",
+        "right": "Strongly agree"
+       },
+       {
+        "id": "annoying",
+        "max": 100,
+        "min": 0,
+        "left": "Strongly disagree",
+        "step": 1,
+        "label": "Annoying",
+        "right": "Strongly agree"
+       },
+       {
+        "id": "eventful",
+        "max": 100,
+        "min": 0,
+        "left": "Strongly disagree",
+        "step": 1,
+        "label": "Eventful",
+        "right": "Strongly agree"
+       },
+       {
+        "id": "monotonous",
+        "max": 100,
+        "min": 0,
+        "left": "Strongly disagree",
+        "step": 1,
+        "label": "Monotonous",
+        "right": "Strongly agree"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "mediaSlots": [],
+      "description": "One record per recording: key = SATP recording code (e.g. CG01, matching the Recording column of the SATP dataset on Zenodo); shown = the audio file. 0 = strongly disagree, 100 = strongly agree; every slider starts at 50. ISOPleasant and ISOEventful follow ISO/TS 12913-3 from the eight values.",
+      "mediaPresentation": "stack",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   }
+  ],
+  "title": "Soundscape Listening Test (SATP)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-654af2dc42b8dbc8",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Soundscape Listening Test (SATP)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Soundscape Listening Test (SATP)\",\n    \"description\": \"Headphone listening test with the 27 binaural 30-second recordings of London public spaces from the Soundscape Attributes Translation Project (SATP), in random order. After hearing a recording at least once (replays allowed), the participant rates the eight ISO/TS 12913-2 perceived affective qualities on sliders from 0 (strongly disagree) to 100 (strongly agree), each starting at 50, as in the SATP Stage 2 protocol. Ratings can be joined to the open SATP dataset (17,000+ ratings in 19 languages) by recording code.\",\n    \"locale\": \"en\",\n    \"mediaFolders\": [\"recordings\", \"level\"],\n    \"pages\": [\n      { \"name\": \"about_you\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\", \"isRequired\": true, \"labelTrue\": \"I agree\", \"labelFalse\": \"I do not agree\" },\n        { \"type\": \"radiogroup\", \"name\": \"gender\", \"title\": \"Gender\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"female\", \"text\": \"Female\" }, { \"value\": \"male\", \"text\": \"Male\" }, { \"value\": \"other\", \"text\": \"Other / prefer not to say\" } ] },\n        { \"type\": \"number\", \"name\": \"age\", \"title\": \"Age (years)\", \"min\": 18, \"max\": 99, \"isRequired\": true },\n        { \"type\": \"radiogroup\", \"name\": \"headphones\", \"title\": \"What are you listening with?\", \"isRequired\": true, \"choices\": [\n          { \"value\": \"open_back\", \"text\": \"Over-ear headphones (open-back)\" }, { \"value\": \"closed_back\", \"text\": \"Over-ear headphones (closed-back)\" }, { \"value\": \"earbuds\", \"text\": \"Earbuds / in-ear headphones\" }, { \"value\": \"speakers\", \"text\": \"Loudspeakers\" } ] }\n      ]},\n      { \"name\": \"recordings\", \"elements\": [\n        { \"type\": \"mediaslidergroup\", \"name\": \"paq\", \"title\": \"To what extent do you agree or disagree that the present surrounding sound environment is…\", \"description\": \"One record per recording: key = SATP recording code (e.g. CG01, matching the Recording column of the SATP dataset on Zenodo); shown = the audio file. 0 = strongly disagree, 100 = strongly agree; every slider starts at 50. ISOPleasant and ISOEventful follow ISO/TS 12913-3 from the eight values.\", \"mediaType\": \"audio\", \"imageCount\": 1, \"scaleMin\": 0, \"scaleMax\": 100, \"isRequired\": true, \"dimensions\": [\n          { \"id\": \"pleasant\", \"label\": \"Pleasant\", \"left\": \"Strongly disagree\", \"right\": \"Strongly agree\", \"min\": 0, \"max\": 100, \"step\": 1 },\n          { \"id\": \"chaotic\", \"label\": \"Chaotic\", \"left\": \"Strongly disagree\", \"right\": \"Strongly agree\", \"min\": 0, \"max\": 100, \"step\": 1 },\n          { \"id\": \"vibrant\", \"label\": \"Vibrant\", \"left\": \"Strongly disagree\", \"right\": \"Strongly agree\", \"min\": 0, \"max\": 100, \"step\": 1 },\n          { \"id\": \"uneventful\", \"label\": \"Uneventful\", \"left\": \"Strongly disagree\", \"right\": \"Strongly agree\", \"min\": 0, \"max\": 100, \"step\": 1 },\n          { \"id\": \"calm\", \"label\": \"Calm\", \"left\": \"Strongly disagree\", \"right\": \"Strongly agree\", \"min\": 0, \"max\": 100, \"step\": 1 },\n          { \"id\": \"annoying\", \"label\": \"Annoying\", \"left\": \"Strongly disagree\", \"right\": \"Strongly agree\", \"min\": 0, \"max\": 100, \"step\": 1 },\n          { \"id\": \"eventful\", \"label\": \"Eventful\", \"left\": \"Strongly disagree\", \"right\": \"Strongly agree\", \"min\": 0, \"max\": 100, \"step\": 1 },\n          { \"id\": \"monotonous\", \"label\": \"Monotonous\", \"left\": \"Strongly disagree\", \"right\": \"Strongly agree\", \"min\": 0, \"max\": 100, \"step\": 1 }\n        ] }\n      ]}\n    ]\n  }\n}\n</script>\n<style>\n:root{--bg:#eff1f4;--card:#fff;--ink:#1a1e24;--muted:#58606b;--accent:#4b4f9c;--accent-ink:#fff;--line:#d6dae0;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:720px;margin:0 auto;padding:24px 16px 40px}\nh1{font-size:1.45rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:8px 0 14px}.progress>i{display:block;height:100%;background:var(--accent)}\n.player{display:flex;align-items:center;gap:14px;flex-wrap:wrap}\n.bar{flex:1;min-width:160px;height:8px;background:var(--line);border-radius:4px;overflow:hidden}.bar>i{display:block;height:100%;width:0;background:var(--accent)}\n.hint{font-size:.9rem;color:var(--muted)}\n.dim{margin-top:14px}.dim b{display:block;font-weight:600}\n.dim input[type=range]{width:100%;margin:6px 0 0;accent-color:var(--accent)}\n.ends{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted)}\n.locked{opacity:.35;pointer-events:none;filter:grayscale(1)}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.q{margin-top:16px}.q>b{display:block;margin-bottom:4px}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:120px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:720px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Recordings: Soundscape Attributes Translation Project (SATP) dataset, Oberman, Mitchell, Aletta, Almagro Pastor, Jambrošić &amp; Kang et al., Zenodo, doi.org/10.5281/zenodo.6914433, CC BY 4.0 (binaural WAV converted to 192 kbps MP3; levels unchanged). The level-check clip is the first 8 s of recording E11b.</footer>\n<script>\n(function(){\n  var app=document.getElementById('app'), Q={}, files={}, ids=[], order=[], done={}, i=0, au=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var x=a[k];a[k]=a[j];a[j]=x;}return a;}\n  function stop(){if(au){try{au.pause();}catch(e){}au=null;}}\n  function setup(){\n    var saved=null;try{saved=JSON.parse(localStorage.getItem('satp:order'));}catch(e){}\n    if(Array.isArray(saved)&&saved.length===ids.length&&saved.every(function(u){return ids.indexOf(u)>=0;}))order=saved;\n    else{order=shuffle(ids);try{localStorage.setItem('satp:order',JSON.stringify(order));}catch(e){}}\n  }\n  function radios(n){return (Q[n].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');}\n  function intro(){\n    if(!ids.length){app.innerHTML='<h1>Recordings missing</h1><p>The media folder “recordings” has no audio files.</p>';return;}\n    var lv=files.level['level_check.mp3'];\n    app.innerHTML='<h1>How does this place sound?</h1><p>You will hear '+ids.length+' recordings of 30 seconds, made in streets, squares, parks and canals in London. After each one, you say how much you agree that the sound environment is pleasant, chaotic, vibrant, uneventful, calm, annoying, eventful and monotonous. About 25 minutes. Please use headphones in a quiet room.</p>'+\n      '<div class=\"card\"><b>Set your volume first</b><p style=\"margin-top:6px\">Play this short clip of a busy road and set your volume so that it sounds as loud as standing next to traffic would, without being uncomfortable. Then do not change the volume until the end.</p><div class=\"player\"><button class=\"btn ghost\" id=\"lv\">Play level check</button></div></div>'+\n      '<div class=\"card\"><div class=\"q\" style=\"margin-top:0\"><b>'+esc(Q.gender.title)+'</b>'+radios('gender')+'</div><div class=\"q\"><b>'+esc(Q.age.title||'Age')+'</b><input type=\"number\" id=\"age\" min=\"18\" max=\"99\" inputmode=\"numeric\"></div><div class=\"q\"><b>'+esc(Q.headphones.title)+'</b>'+radios('headphones')+'</div></div>'+\n      '<div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('lv').onclick=function(){stop();if(!lv)return;au=new Audio(lv.url);au.play().catch(function(){});};\n    document.getElementById('go').onclick=function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var g=app.querySelector('input[name=gender]:checked');if(!g)return err('Please answer: '+Q.gender.title);\n      var av=document.getElementById('age').value, age=Number(av);if(!av||!(age>=18&&age<=99))return err('Please enter your age (18–99).');\n      var h=app.querySelector('input[name=headphones]:checked');if(!h)return err('Please answer: '+Q.headphones.title);\n      var b=this;b.disabled=true;stop();\n      Promise.all([SPSite.answer('consent',true),SPSite.answer('gender',g.value),SPSite.answer('age',age),SPSite.answer('headphones',h.value)]).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}i=0;trial();});\n    };\n  }\n  function trial(){\n    stop();\n    while(i<order.length&&done[order[i]])i++;\n    if(i>=order.length)return finish();\n    var id=order[i], f=files.recordings[id+'.mp3'], n=Object.keys(done).length, heard=false, plays=0, vals={};\n    var dims=Q.paq.dimensions||[];\n    var h=dims.map(function(d){vals[d.id]=50;return '<div class=\"dim\"><b>'+esc(d.label)+'</b><input type=\"range\" min=\"0\" max=\"100\" step=\"1\" value=\"50\" data-id=\"'+esc(d.id)+'\" aria-label=\"'+esc(d.label)+'\"><div class=\"ends\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></div></div>';}).join('');\n    app.innerHTML='<p>Recording '+(n+1)+' of '+order.length+'</p><div class=\"progress\"><i style=\"width:'+(100*n/order.length)+'%\"></i></div>'+\n      '<div class=\"card\" style=\"margin-top:0\"><div class=\"player\"><button class=\"btn\" id=\"play\">Play</button><div class=\"bar\"><i id=\"pb\"></i></div></div><p class=\"hint\" id=\"ph\" style=\"margin:10px 0 0\">Listen to the whole recording. The questions open when it ends; you can play it again.</p></div>'+\n      '<div class=\"card locked\" id=\"qs\"><p style=\"margin:0;color:var(--ink)\"><b>'+esc(Q.paq.title)+'</b></p>'+h+'</div>'+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"nx\" disabled>Next recording</button></div><div class=\"err\"></div>';\n    var play=document.getElementById('play'), pb=document.getElementById('pb');\n    play.onclick=function(){\n      if(au&&!au.paused){au.pause();play.textContent='Play';return;}\n      stop();au=new Audio(f.url);plays++;\n      au.ontimeupdate=function(){if(au&&au.duration)pb.style.width=(100*au.currentTime/au.duration)+'%';};\n      au.onended=function(){pb.style.width='100%';play.textContent='Play again';heard=true;document.getElementById('qs').classList.remove('locked');document.getElementById('nx').disabled=false;document.getElementById('ph').textContent='You can play it again while you answer.';};\n      au.play().then(function(){play.textContent='Pause';}).catch(function(){err('The browser blocked playback. Please press Play again.');});\n    };\n    var nf=files.recordings[order[i+1]+'.mp3'];if(nf){var pre=new Audio();pre.preload='auto';pre.src=nf.url;}\n    app.querySelectorAll('input[type=range]').forEach(function(x){x.oninput=function(){vals[x.dataset.id]=Number(x.value);};});\n    document.getElementById('nx').onclick=function(){\n      if(!heard)return err('Please listen to the whole recording first.');\n      var bt=this;bt.disabled=true;stop();\n      var v={};dims.forEach(function(d){v[d.id]=vals[d.id];});\n      SPSite.answer('paq',v,{key:id,shown:[f.name]}).then(function(r){if(!ok(r)){bt.disabled=false;return err(r.error);}done[id]=true;i++;window.scrollTo(0,0);trial();});\n    };\n  }\n  function finish(){\n    stop();\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){if(m.some(function(x){return x!=='paq';}))intro();else{done={};i=0;trial();}},1800);}else{var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','gender','age','headphones','paq'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    files={recordings:{},level:{}};\n    (SPSite.getMedia('recordings')||[]).forEach(function(f){files.recordings[f.name]=f;});\n    (SPSite.getMedia('level')||[]).forEach(function(f){files.level[f.name]=f;});\n    ids=Object.keys(files.recordings).filter(function(n){return /\\.mp3$/i.test(n);}).map(function(n){return n.replace(/\\.mp3$/i,'');}).sort();\n    setup();\n    var a=(ctx&&ctx.answers)||{}, p=a.paq;\n    (p&&Array.isArray(p.trials)?p.trials:[]).forEach(function(x){if(x&&x.key!=null&&x.value!=null)done[x.key]=true;});\n    if(a.consent===true)trial();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-26T23:24:55.515Z",
+   "mediaFolders": [
+    "recordings",
+    "level"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-26T23:24:55.515Z"
+  },
+  "description": "Headphone listening test with the 27 binaural 30-second recordings of London public spaces from the Soundscape Attributes Translation Project (SATP), in random order. After hearing a recording at least once (replays allowed), the participant rates the eight ISO/TS 12913-2 perceived affective qualities on sliders from 0 (strongly disagree) to 100 (strongly agree), each starting at 50, as in the SATP Stage 2 protocol. Ratings can be joined to the open SATP dataset (17,000+ ratings in 19 languages) by recording code.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2023-lam-soundscape/level/level_check__02a089d2-add0-4d56-9bb5-7d72c39d261c.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/level/level_check__02a089d2-add0-4d56-9bb5-7d72c39d261c.mp3",
+   "name": "level_check.mp3",
+   "type": "audio",
+   "folder": "level",
+   "media_id": "templates/2023-lam-soundscape/level/level_check__02a089d2-add0-4d56-9bb5-7d72c39d261c.mp3",
+   "logicalFolder": "level",
+   "original_bytes": 193581,
+   "uploaded_bytes": 193581,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/CG01__8c85f873-4022-4d13-b0d6-a3a166aadce7.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/CG01__8c85f873-4022-4d13-b0d6-a3a166aadce7.mp3",
+   "name": "CG01.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/CG01__8c85f873-4022-4d13-b0d6-a3a166aadce7.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721197,
+   "uploaded_bytes": 721197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/CG04__2a88574a-ae3d-4253-8d5a-b12fa8cf8a67.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/CG04__2a88574a-ae3d-4253-8d5a-b12fa8cf8a67.mp3",
+   "name": "CG04.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/CG04__2a88574a-ae3d-4253-8d5a-b12fa8cf8a67.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721773,
+   "uploaded_bytes": 721773,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/CG07__8eb5da14-8a81-4b1e-baec-eeae63f15bf9.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/CG07__8eb5da14-8a81-4b1e-baec-eeae63f15bf9.mp3",
+   "name": "CG07.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/CG07__8eb5da14-8a81-4b1e-baec-eeae63f15bf9.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721197,
+   "uploaded_bytes": 721197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/CT301__7a80a1e3-6279-440c-a023-783f654ad905.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/CT301__7a80a1e3-6279-440c-a023-783f654ad905.mp3",
+   "name": "CT301.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/CT301__7a80a1e3-6279-440c-a023-783f654ad905.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721197,
+   "uploaded_bytes": 721197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/E01b__a9b78e80-01fa-4f69-b5b8-bc931f0c6684.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/E01b__a9b78e80-01fa-4f69-b5b8-bc931f0c6684.mp3",
+   "name": "E01b.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/E01b__a9b78e80-01fa-4f69-b5b8-bc931f0c6684.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721773,
+   "uploaded_bytes": 721773,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/E02__99f1e2bc-021a-40af-b22a-6a483eb15bc0.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/E02__99f1e2bc-021a-40af-b22a-6a483eb15bc0.mp3",
+   "name": "E02.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/E02__99f1e2bc-021a-40af-b22a-6a483eb15bc0.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721197,
+   "uploaded_bytes": 721197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/E05__8ac27e0f-b1c3-4ee4-9e5b-485d8d10aaf1.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/E05__8ac27e0f-b1c3-4ee4-9e5b-485d8d10aaf1.mp3",
+   "name": "E05.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/E05__8ac27e0f-b1c3-4ee4-9e5b-485d8d10aaf1.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721197,
+   "uploaded_bytes": 721197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/E09__956e1de4-f388-46cf-b6cd-b03ef662ff83.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/E09__956e1de4-f388-46cf-b6cd-b03ef662ff83.mp3",
+   "name": "E09.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/E09__956e1de4-f388-46cf-b6cd-b03ef662ff83.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721773,
+   "uploaded_bytes": 721773,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/E10__9de8733d-16d7-45b4-be19-30487571b5c2.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/E10__9de8733d-16d7-45b4-be19-30487571b5c2.mp3",
+   "name": "E10.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/E10__9de8733d-16d7-45b4-be19-30487571b5c2.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721773,
+   "uploaded_bytes": 721773,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/E11b__e47d3dca-2cc8-4197-b53d-9818dfbc2162.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/E11b__e47d3dca-2cc8-4197-b53d-9818dfbc2162.mp3",
+   "name": "E11b.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/E11b__e47d3dca-2cc8-4197-b53d-9818dfbc2162.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721197,
+   "uploaded_bytes": 721197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/E12b__996483dc-fc90-42c8-a7a2-a2c7d934c843.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/E12b__996483dc-fc90-42c8-a7a2-a2c7d934c843.mp3",
+   "name": "E12b.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/E12b__996483dc-fc90-42c8-a7a2-a2c7d934c843.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721197,
+   "uploaded_bytes": 721197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/HR01__4e17025f-90f0-4939-8d5b-2b24a281ebd5.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/HR01__4e17025f-90f0-4939-8d5b-2b24a281ebd5.mp3",
+   "name": "HR01.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/HR01__4e17025f-90f0-4939-8d5b-2b24a281ebd5.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721197,
+   "uploaded_bytes": 721197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/KT01__f6fb3359-53d2-47c2-b3bc-3dd6bf82ec6f.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/KT01__f6fb3359-53d2-47c2-b3bc-3dd6bf82ec6f.mp3",
+   "name": "KT01.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/KT01__f6fb3359-53d2-47c2-b3bc-3dd6bf82ec6f.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721197,
+   "uploaded_bytes": 721197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/LS06__abc2341c-3221-4860-9b86-aa8b9b04fd70.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/LS06__abc2341c-3221-4860-9b86-aa8b9b04fd70.mp3",
+   "name": "LS06.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/LS06__abc2341c-3221-4860-9b86-aa8b9b04fd70.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721197,
+   "uploaded_bytes": 721197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/N1__9e0845ac-0c92-4d9f-9bcf-64d96f46810e.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/N1__9e0845ac-0c92-4d9f-9bcf-64d96f46810e.mp3",
+   "name": "N1.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/N1__9e0845ac-0c92-4d9f-9bcf-64d96f46810e.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721197,
+   "uploaded_bytes": 721197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/OS01c__5e8d0224-c920-4471-9f72-6592d16715aa.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/OS01c__5e8d0224-c920-4471-9f72-6592d16715aa.mp3",
+   "name": "OS01c.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/OS01c__5e8d0224-c920-4471-9f72-6592d16715aa.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721773,
+   "uploaded_bytes": 721773,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/OS01d__c8199234-f28b-467b-8cbc-10a2629f98f8.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/OS01d__c8199234-f28b-467b-8cbc-10a2629f98f8.mp3",
+   "name": "OS01d.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/OS01d__c8199234-f28b-467b-8cbc-10a2629f98f8.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 722349,
+   "uploaded_bytes": 722349,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/RPJ01__025e2b31-e5b7-4c7b-94dd-edbca51a582d.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/RPJ01__025e2b31-e5b7-4c7b-94dd-edbca51a582d.mp3",
+   "name": "RPJ01.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/RPJ01__025e2b31-e5b7-4c7b-94dd-edbca51a582d.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721197,
+   "uploaded_bytes": 721197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/VP01b__5d908384-4401-405b-aa47-788ea04e6f78.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/VP01b__5d908384-4401-405b-aa47-788ea04e6f78.mp3",
+   "name": "VP01b.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/VP01b__5d908384-4401-405b-aa47-788ea04e6f78.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721773,
+   "uploaded_bytes": 721773,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/W01__302a0091-5ef3-4ddf-9011-62a1fd433869.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/W01__302a0091-5ef3-4ddf-9011-62a1fd433869.mp3",
+   "name": "W01.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/W01__302a0091-5ef3-4ddf-9011-62a1fd433869.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721197,
+   "uploaded_bytes": 721197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/W06__fbb29019-f90c-41d9-880c-e00ca4401496.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/W06__fbb29019-f90c-41d9-880c-e00ca4401496.mp3",
+   "name": "W06.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/W06__fbb29019-f90c-41d9-880c-e00ca4401496.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721197,
+   "uploaded_bytes": 721197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/W09__5b05e3f7-3608-4a7f-96b0-9888d4c51afe.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/W09__5b05e3f7-3608-4a7f-96b0-9888d4c51afe.mp3",
+   "name": "W09.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/W09__5b05e3f7-3608-4a7f-96b0-9888d4c51afe.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721197,
+   "uploaded_bytes": 721197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/W11a__314b19ba-e1a6-4b01-bb98-ac544d82144b.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/W11a__314b19ba-e1a6-4b01-bb98-ac544d82144b.mp3",
+   "name": "W11a.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/W11a__314b19ba-e1a6-4b01-bb98-ac544d82144b.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721197,
+   "uploaded_bytes": 721197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/W15__a78f4af2-c46b-4931-bf20-3ccd3f9593c2.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/W15__a78f4af2-c46b-4931-bf20-3ccd3f9593c2.mp3",
+   "name": "W15.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/W15__a78f4af2-c46b-4931-bf20-3ccd3f9593c2.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721773,
+   "uploaded_bytes": 721773,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/W16__aa22647b-63be-444a-a562-40205f614b0f.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/W16__aa22647b-63be-444a-a562-40205f614b0f.mp3",
+   "name": "W16.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/W16__aa22647b-63be-444a-a562-40205f614b0f.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721197,
+   "uploaded_bytes": 721197,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/W22__3f2f2acc-1281-4929-b271-a5a548fc744a.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/W22__3f2f2acc-1281-4929-b271-a5a548fc744a.mp3",
+   "name": "W22.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/W22__3f2f2acc-1281-4929-b271-a5a548fc744a.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721773,
+   "uploaded_bytes": 721773,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-lam-soundscape/recordings/W23a__4156be48-d7de-4ae9-93d8-e387f84fe884.mp3",
+   "url": "https://media.sp-survey.org/templates/2023-lam-soundscape/recordings/W23a__4156be48-d7de-4ae9-93d8-e387f84fe884.mp3",
+   "name": "W23a.mp3",
+   "type": "audio",
+   "folder": "recordings",
+   "media_id": "templates/2023-lam-soundscape/recordings/W23a__4156be48-d7de-4ae9-93d8-e387f84fe884.mp3",
+   "logicalFolder": "recordings",
+   "original_bytes": 721197,
+   "uploaded_bytes": 721197,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Crossing the linguistic causeway: Ethnonational differences on soundscape attributes in Bahasa Melayu",
+  "authors": [
+   "Bhan Lam",
+   "Julia Chieng",
+   "Kenneth Ooi",
+   "Zhen-Ting Ong",
+   "Karn N. Watcharasupat",
+   "Joo Young Hong",
+   "Woon-Seng Gan"
+  ],
+  "year": 2023,
+  "venue": "Applied Acoustics",
+  "doi": "10.1016/j.apacoust.2023.109675",
+  "url": "https://doi.org/10.1016/j.apacoust.2023.109675"
+ }
+}

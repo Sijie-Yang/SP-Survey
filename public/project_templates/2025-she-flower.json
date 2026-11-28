@@ -1,0 +1,840 @@
+{
+ "id": "2025-she-flower",
+ "name": "Flower Colour Preference",
+ "description": "Faithful replication of the online survey in She, Wu, Pi, Huang & Bao (2025), Horticulturae 11:54. Participants see 29 pictures of the same Zephyranthes 'Lily Pies' flower bed: the original pink photograph, 15 other single colours (blue, turquoise, green, white, red, orange, purple, yellow and deep variants) and 13 mixes of two light colours. Each picture is rated from 1 (strongly dislike) to 6 (strongly like). Before the pictures they answer the paper's questions on sex, age, residential area, household income, personal income sources, education and how often they visit small parks, large parks and nature. Each trial records whether the picture is a single colour or a two-colour mix and which colours. Analysis: mean flower colour rating per picture; preference against the CIELAB L*, a*, b* values of each colour (paper Table A2) with a generalized additive model; age, income, nature experience and mood as drivers (paper: blue, deep blue, turquoise and white liked most; white with blue the best mix).\n\nPictures: the 29 samples printed in the paper's Figure 2 (CC BY 4.0). The original photograph was taken by the authors and the other colours were made by hand by changing only the flower colour with Photoshop colour curves (no generative tools). Used with credit; the template is removed if the authors object.\n\nDifferences from the original study: (1) the paper measured mood with the 40-item Profile of Mood States short form (POMS); this copyrighted questionnaire is left out, so the mood analysis cannot be repeated without adding a licensed mood measure; (2) the paper ran on the Wenjuanxing platform in China; the questions here are in English and the income bands are in Chinese yuan as in the paper; (3) occupation (more than 18 categories, not listed in the paper) is not asked; (4) pictures are cropped from the published figure without the colour scales printed beside them.",
+ "author": "She et al.",
+ "year": "2025",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "source:paper",
+  "modality:scene_photo",
+  "task:rating",
+  "task:questionnaire",
+  "concept:preference",
+  "concept:aesthetics",
+  "concept:emotion",
+  "concept:greenery",
+  "participants:crowd",
+  "sample:100to1000",
+  "country:China"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/horticulturae11010054",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T21:57:18.406+00:00",
+ "updatedAt": "2026-11-27T21:57:34.173+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "about",
+    "intro": "In this survey you will see 29 pictures of the same flower bed in different flower colours, one at a time, and say how much you like each. First, a few questions about you. It takes about 8 minutes and your answers are anonymous.",
+    "title": "Flower colours",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "label": "I agree to take part in this survey and that my answers are used for research.",
+      "title": "Consent",
+      "isRequired": true
+     },
+     {
+      "name": "sex",
+      "type": "radiogroup",
+      "title": "Sex",
+      "choices": [
+       {
+        "text": "Female",
+        "value": 1
+       },
+       {
+        "text": "Male",
+        "value": 2
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "age",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "18–24",
+        "value": 1
+       },
+       {
+        "text": "25–34",
+        "value": 2
+       },
+       {
+        "text": "35–44",
+        "value": 3
+       },
+       {
+        "text": "45–54",
+        "value": 4
+       },
+       {
+        "text": "55–64",
+        "value": 5
+       },
+       {
+        "text": "65 or older",
+        "value": 6
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "residential_area",
+      "type": "radiogroup",
+      "title": "Where do you live?",
+      "choices": [
+       {
+        "text": "Urban area",
+        "value": 1
+       },
+       {
+        "text": "Suburb",
+        "value": 2
+       },
+       {
+        "text": "Village",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "household_income",
+      "type": "radiogroup",
+      "title": "Annual household income (CNY)",
+      "choices": [
+       {
+        "text": "36,000 and below",
+        "value": 1
+       },
+       {
+        "text": "36,000–60,000",
+        "value": 2
+       },
+       {
+        "text": "60,000–96,000",
+        "value": 3
+       },
+       {
+        "text": "96,000–144,000",
+        "value": 4
+       },
+       {
+        "text": "144,000–240,000",
+        "value": 5
+       },
+       {
+        "text": "240,000–600,000",
+        "value": 6
+       },
+       {
+        "text": "600,000–1,440,000",
+        "value": 7
+       },
+       {
+        "text": "1,440,000 and above",
+        "value": 8
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "income_sources",
+      "type": "checkbox",
+      "title": "Sources of personal income (choose all that apply)",
+      "choices": [
+       {
+        "text": "Salary",
+        "value": 1
+       },
+       {
+        "text": "Self-employment, entrepreneurship or own business",
+        "value": 2
+       },
+       {
+        "text": "Investment or stock income",
+        "value": 3
+       },
+       {
+        "text": "Rental income",
+        "value": 4
+       },
+       {
+        "text": "Pension or social welfare",
+        "value": 5
+       },
+       {
+        "text": "Income from other household members",
+        "value": 6
+       },
+       {
+        "text": "None of these",
+        "value": 7
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "Education",
+      "choices": [
+       {
+        "text": "Primary school and below",
+        "value": 1
+       },
+       {
+        "text": "Junior high school",
+        "value": 2
+       },
+       {
+        "text": "High school or technical secondary school",
+        "value": 3
+       },
+       {
+        "text": "Undergraduate or junior college",
+        "value": 4
+       },
+       {
+        "text": "Postgraduate and above",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "small_park_visits",
+      "type": "radiogroup",
+      "title": "How often do you visit small parks (community parks, neighbourhood green spaces, pocket parks)?",
+      "choices": [
+       {
+        "text": "Every day",
+        "value": 1
+       },
+       {
+        "text": "2–3 times a week",
+        "value": 2
+       },
+       {
+        "text": "Once a week",
+        "value": 3
+       },
+       {
+        "text": "1–3 times a month",
+        "value": 4
+       },
+       {
+        "text": "Seldom or never",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "large_park_visits",
+      "type": "radiogroup",
+      "title": "How often do you visit large parks (comprehensive, forest or countryside parks)?",
+      "choices": [
+       {
+        "text": "Every day",
+        "value": 1
+       },
+       {
+        "text": "2–3 times a week",
+        "value": 2
+       },
+       {
+        "text": "Once a week",
+        "value": 3
+       },
+       {
+        "text": "1–3 times a month",
+        "value": 4
+       },
+       {
+        "text": "Seldom or never",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "nature_visits",
+      "type": "radiogroup",
+      "title": "How often do you visit nature (scenic spots, nature reserves, national parks)?",
+      "choices": [
+       {
+        "text": "Every day",
+        "value": 1
+       },
+       {
+        "text": "2–3 times a week",
+        "value": 2
+       },
+       {
+        "text": "Once a week",
+        "value": 3
+       },
+       {
+        "text": "1–3 times a month",
+        "value": 4
+       },
+       {
+        "text": "Seldom or never",
+        "value": 5
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "pictures",
+    "title": "Pictures",
+    "elements": [
+     {
+      "kind": "image_rating",
+      "meta": {
+       "single_red": {
+        "type": "single colour",
+        "colour": "red"
+       },
+       "single_blue": {
+        "type": "single colour",
+        "colour": "blue"
+       },
+       "single_green": {
+        "type": "single colour",
+        "colour": "green"
+       },
+       "single_white": {
+        "type": "single colour",
+        "colour": "white"
+       },
+       "single_orange": {
+        "type": "single colour",
+        "colour": "orange"
+       },
+       "single_purple": {
+        "type": "single colour",
+        "colour": "purple"
+       },
+       "single_yellow": {
+        "type": "single colour",
+        "colour": "yellow"
+       },
+       "mixed_pink_blue": {
+        "type": "two colours",
+        "colour": "pink & blue"
+       },
+       "mixed_red_white": {
+        "type": "two colours",
+        "colour": "red & white"
+       },
+       "single_deep_red": {
+        "type": "single colour",
+        "colour": "deep red"
+       },
+       "mixed_blue_white": {
+        "type": "two colours",
+        "colour": "blue & white"
+       },
+       "mixed_orange_red": {
+        "type": "two colours",
+        "colour": "orange & red"
+       },
+       "mixed_pink_white": {
+        "type": "two colours",
+        "colour": "pink & white"
+       },
+       "mixed_yellow_red": {
+        "type": "two colours",
+        "colour": "yellow & red"
+       },
+       "single_deep_blue": {
+        "type": "single colour",
+        "colour": "deep blue"
+       },
+       "single_deep_pink": {
+        "type": "single colour",
+        "colour": "deep pink"
+       },
+       "single_turquoise": {
+        "type": "single colour",
+        "colour": "turquoise"
+       },
+       "mixed_purple_blue": {
+        "type": "two colours",
+        "colour": "purple & blue"
+       },
+       "mixed_purple_pink": {
+        "type": "two colours",
+        "colour": "purple & pink"
+       },
+       "single_deep_green": {
+        "type": "single colour",
+        "colour": "deep green"
+       },
+       "mixed_green_yellow": {
+        "type": "two colours",
+        "colour": "green & yellow"
+       },
+       "mixed_orange_white": {
+        "type": "two colours",
+        "colour": "orange & white"
+       },
+       "mixed_purple_white": {
+        "type": "two colours",
+        "colour": "purple & white"
+       },
+       "mixed_yellow_white": {
+        "type": "two colours",
+        "colour": "yellow & white"
+       },
+       "single_deep_orange": {
+        "type": "single colour",
+        "colour": "deep orange"
+       },
+       "single_deep_purple": {
+        "type": "single colour",
+        "colour": "deep purple"
+       },
+       "mixed_yellow_orange": {
+        "type": "two colours",
+        "colour": "yellow & orange"
+       },
+       "single_deep_turquoise": {
+        "type": "single colour",
+        "colour": "deep turquoise"
+       },
+       "single_pink_unmodified": {
+        "type": "single colour",
+        "colour": "pink (original photo)"
+       }
+      },
+      "name": "flower_colour",
+      "type": "custom",
+      "items": [
+       {
+        "low": "strongly dislike",
+        "high": "strongly like",
+        "name": "preference",
+        "text": "How much do you like the colour of these flowers?"
+       }
+      ],
+      "title": "Rate this picture from 1 to 6.",
+      "isRequired": true,
+      "description": "29 pictures (paper Figure 2): 16 single-colour flowers (the original pink photo of Zephyranthes 'Lily Pies' and 15 colours made by changing only the flower colour with Photoshop colour curves) and 13 mixes of two light colours; each on its own page in random order. One trial per picture (key = file name), values preference (1 = strongly dislike, 6 = strongly like), picture, flower_type (single colour / two colours), colour, position. Analysis in the paper: mean flower colour rating (FCR) per picture; GAM of preference against CIELAB L*, a*, b* of each colour (paper Table A2); random forest and piecewise SEM with age, income, personal income sources, nature experience and mood (POMS total mood disturbance)."
+     }
+    ]
+   }
+  ],
+  "title": "Flower Colour Preference",
+  "locale": "en",
+  "spSite": {
+   "id": "site-3e2765ec8f8b5e6a",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Flower Colour Preference</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Flower Colour Preference\",\n  \"description\": \"Faithful replication of She, Wu, Pi, Huang & Bao (2025), Horticulturae 11:54: 29 pictures of the same Zephyranthes flower bed in 16 single colours and 13 two-colour mixes, each rated from 1 (strongly dislike) to 6 (strongly like), with the paper's demographic, income and nature-experience questions.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"flowers\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"about\",\n    \"title\": \"Flower colours\",\n    \"intro\": \"In this survey you will see 29 pictures of the same flower bed in different flower colours, one at a time, and say how much you like each. First, a few questions about you. It takes about 8 minutes and your answers are anonymous.\",\n    \"elements\": [\n     {\n      \"type\": \"boolean\",\n      \"name\": \"consent\",\n      \"title\": \"Consent\",\n      \"label\": \"I agree to take part in this survey and that my answers are used for research.\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"sex\",\n      \"title\": \"Sex\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Male\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"18–24\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"25–34\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"35–44\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"45–54\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"55–64\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"65 or older\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"residential_area\",\n      \"title\": \"Where do you live?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Urban area\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Suburb\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Village\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"household_income\",\n      \"title\": \"Annual household income (CNY)\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"36,000 and below\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"36,000–60,000\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"60,000–96,000\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"96,000–144,000\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"144,000–240,000\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"240,000–600,000\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"600,000–1,440,000\"\n       },\n       {\n        \"value\": 8,\n        \"text\": \"1,440,000 and above\"\n       }\n      ]\n     },\n     {\n      \"type\": \"checkbox\",\n      \"name\": \"income_sources\",\n      \"title\": \"Sources of personal income (choose all that apply)\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Salary\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Self-employment, entrepreneurship or own business\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Investment or stock income\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Rental income\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Pension or social welfare\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Income from other household members\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"None of these\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"Education\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Primary school and below\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Junior high school\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"High school or technical secondary school\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"Undergraduate or junior college\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Postgraduate and above\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"small_park_visits\",\n      \"title\": \"How often do you visit small parks (community parks, neighbourhood green spaces, pocket parks)?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Every day\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2–3 times a week\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Once a week\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"1–3 times a month\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Seldom or never\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"large_park_visits\",\n      \"title\": \"How often do you visit large parks (comprehensive, forest or countryside parks)?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Every day\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2–3 times a week\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Once a week\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"1–3 times a month\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Seldom or never\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"nature_visits\",\n      \"title\": \"How often do you visit nature (scenic spots, nature reserves, national parks)?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Every day\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2–3 times a week\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Once a week\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"1–3 times a month\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"Seldom or never\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"pictures\",\n    \"title\": \"Pictures\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"kind\": \"image_rating\",\n      \"name\": \"flower_colour\",\n      \"isRequired\": true,\n      \"title\": \"Rate this picture from 1 to 6.\",\n      \"items\": [\n       {\n        \"name\": \"preference\",\n        \"text\": \"How much do you like the colour of these flowers?\",\n        \"low\": \"strongly dislike\",\n        \"high\": \"strongly like\"\n       }\n      ],\n      \"meta\": {\n       \"mixed_blue_white\": {\n        \"type\": \"two colours\",\n        \"colour\": \"blue & white\"\n       },\n       \"mixed_green_yellow\": {\n        \"type\": \"two colours\",\n        \"colour\": \"green & yellow\"\n       },\n       \"mixed_orange_red\": {\n        \"type\": \"two colours\",\n        \"colour\": \"orange & red\"\n       },\n       \"mixed_orange_white\": {\n        \"type\": \"two colours\",\n        \"colour\": \"orange & white\"\n       },\n       \"mixed_pink_blue\": {\n        \"type\": \"two colours\",\n        \"colour\": \"pink & blue\"\n       },\n       \"mixed_pink_white\": {\n        \"type\": \"two colours\",\n        \"colour\": \"pink & white\"\n       },\n       \"mixed_purple_blue\": {\n        \"type\": \"two colours\",\n        \"colour\": \"purple & blue\"\n       },\n       \"mixed_purple_pink\": {\n        \"type\": \"two colours\",\n        \"colour\": \"purple & pink\"\n       },\n       \"mixed_purple_white\": {\n        \"type\": \"two colours\",\n        \"colour\": \"purple & white\"\n       },\n       \"mixed_red_white\": {\n        \"type\": \"two colours\",\n        \"colour\": \"red & white\"\n       },\n       \"mixed_yellow_orange\": {\n        \"type\": \"two colours\",\n        \"colour\": \"yellow & orange\"\n       },\n       \"mixed_yellow_red\": {\n        \"type\": \"two colours\",\n        \"colour\": \"yellow & red\"\n       },\n       \"mixed_yellow_white\": {\n        \"type\": \"two colours\",\n        \"colour\": \"yellow & white\"\n       },\n       \"single_blue\": {\n        \"type\": \"single colour\",\n        \"colour\": \"blue\"\n       },\n       \"single_deep_blue\": {\n        \"type\": \"single colour\",\n        \"colour\": \"deep blue\"\n       },\n       \"single_deep_green\": {\n        \"type\": \"single colour\",\n        \"colour\": \"deep green\"\n       },\n       \"single_deep_orange\": {\n        \"type\": \"single colour\",\n        \"colour\": \"deep orange\"\n       },\n       \"single_deep_pink\": {\n        \"type\": \"single colour\",\n        \"colour\": \"deep pink\"\n       },\n       \"single_deep_purple\": {\n        \"type\": \"single colour\",\n        \"colour\": \"deep purple\"\n       },\n       \"single_deep_red\": {\n        \"type\": \"single colour\",\n        \"colour\": \"deep red\"\n       },\n       \"single_deep_turquoise\": {\n        \"type\": \"single colour\",\n        \"colour\": \"deep turquoise\"\n       },\n       \"single_green\": {\n        \"type\": \"single colour\",\n        \"colour\": \"green\"\n       },\n       \"single_orange\": {\n        \"type\": \"single colour\",\n        \"colour\": \"orange\"\n       },\n       \"single_pink_unmodified\": {\n        \"type\": \"single colour\",\n        \"colour\": \"pink (original photo)\"\n       },\n       \"single_purple\": {\n        \"type\": \"single colour\",\n        \"colour\": \"purple\"\n       },\n       \"single_red\": {\n        \"type\": \"single colour\",\n        \"colour\": \"red\"\n       },\n       \"single_turquoise\": {\n        \"type\": \"single colour\",\n        \"colour\": \"turquoise\"\n       },\n       \"single_white\": {\n        \"type\": \"single colour\",\n        \"colour\": \"white\"\n       },\n       \"single_yellow\": {\n        \"type\": \"single colour\",\n        \"colour\": \"yellow\"\n       }\n      },\n      \"description\": \"29 pictures (paper Figure 2): 16 single-colour flowers (the original pink photo of Zephyranthes 'Lily Pies' and 15 colours made by changing only the flower colour with Photoshop colour curves) and 13 mixes of two light colours; each on its own page in random order. One trial per picture (key = file name), values preference (1 = strongly dislike, 6 = strongly like), picture, flower_type (single colour / two colours), colour, position. Analysis in the paper: mean flower colour rating (FCR) per picture; GAM of preference against CIELAB L*, a*, b* of each colour (paper Table A2); random forest and piecewise SEM with age, income, personal income sources, nature experience and mood (POMS total mood disturbance).\"\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#eef2ec;--card:#fff;--ink:#1c231d;--muted:#56614f;--accent:#2f6b3a;--line:#d2dccd;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:760px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.3rem;margin:0 0 10px}\np{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:20px}.q:first-child{margin-top:0}.q>b{display:block;margin-bottom:6px}.q.miss>b{color:var(--warn)}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer;background:var(--card)}\ninput[type=text],input[type=number],textarea{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%}\ninput[type=number]{max-width:160px}textarea{min-height:70px;resize:vertical}\n.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.t{color:var(--muted);font-size:.9rem}\n.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;flex:1;margin-left:12px;max-width:260px}.bar>i{display:block;height:100%;background:var(--accent)}\n.stim{display:block;width:auto;max-width:100%;max-height:68vh;margin:0 auto;border-radius:8px}\n.it{padding:10px 0;border-top:1px solid var(--line)}.it:first-child{border-top:0}.it.miss>.lab{color:var(--warn)}\n.lab{margin-bottom:4px}\n.ends{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-top:3px;max-width:520px}\n.seg{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:3px;max-width:520px}\n.seg label{display:block;cursor:pointer;position:relative}\n.seg input{position:absolute;opacity:0;pointer-events:none}\n.seg span{display:flex;align-items:center;justify-content:center;min-height:40px;border:1px solid var(--line);border-radius:8px;font-size:.9rem}\n.seg input:checked+span{background:var(--accent);border-color:var(--accent);color:#fff}\n.seg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}\n.kw{display:flex;flex-wrap:wrap;gap:6px}.kw label.opt{margin-top:0}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:760px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Pictures: the 29 flower-colour samples printed in She et al. (2025), Horticulturae 11:54, Figure 2, doi:10.3390/horticulturae11010054 (CC BY 4.0; photograph of Zephyranthes ‘Lily Pies’ by the authors, colours changed by hand with Photoshop colour curves). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var KEY='flower2025:';\n  var app=document.getElementById('app'),SPEC,Q={},files={},done={},ORDER=[],META={},CAPS=[],CAPHEAD='',IMG,ITEMS=[],PRE=[];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e){e.textContent=m||'';e.style.visibility='visible';}}\n  function hideErr(){var e=app.querySelector('.err');if(e)e.style.visibility='hidden';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function seven(name){var h='<div class=\"seg\" style=\"--n:6\" role=\"radiogroup\">';for(var v=1;v<=6;v++)h+='<label><input type=\"radio\" name=\"'+name+'\" value=\"'+v+'\"><span>'+v+'</span></label>';return h+'</div>';}\n  function scaleItem(name,it){return '<div class=\"it\" data-n=\"'+name+'\"><div class=\"lab\">'+esc(it.text)+'</div>'+seven(name)+'<div class=\"ends\"><span>1 = '+esc(it.low)+'</span><span>6 = '+esc(it.high)+'</span></div></div>';}\n  function total(){return PRE.length+ORDER.length;}\n  function top(i){return '<div class=\"top\"><span class=\"t\">Page '+(i+1)+' of '+total()+'</span><div class=\"bar\"><i style=\"width:'+(100*i/total())+'%\"></i></div></div>';}\n  function next(){window.scrollTo(0,0);\n    for(var k=0;k<PRE.length;k++)if(!done['p_'+PRE[k].name])return intro(k);\n    for(var i=0;i<ORDER.length;i++)if(!done['i_'+ORDER[i]])return image(i);\n    finish();}\n  function field(e){\n    var h='<div class=\"q\" data-q=\"'+e.name+'\"><b>'+esc(Q[e.name].title)+'</b>';\n    if(e.type==='boolean')h+='<label class=\"opt\"><input type=\"checkbox\" name=\"'+e.name+'\" value=\"1\"> '+esc(e.label)+'</label>';\n    else if(e.type==='checkbox')h+=Q[e.name].choices.map(function(c){return '<label class=\"opt\"><input type=\"checkbox\" name=\"'+e.name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');\n    else if(e.type==='radiogroup')h+=Q[e.name].choices.map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+e.name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');\n    else if(e.type==='text')h+='<input type=\"'+(e.inputType==='number'?'number':'text')+'\" name=\"'+e.name+'\"'+(e.inputType==='number'?' min=\"'+e.min+'\" max=\"'+e.max+'\" inputmode=\"numeric\"':' maxlength=\"80\"')+'>';\n    else if(e.kind==='scales')h+=e.items.map(function(it){return scaleItem(e.name+'__'+it.name,it);}).join('');\n    return h+'</div>';\n  }\n  function readField(e){\n    if(e.type==='boolean')return app.querySelector('input[name=\"'+e.name+'\"]').checked?true:undefined;\n    if(e.type==='checkbox'){var xs=[].map.call(app.querySelectorAll('input[name=\"'+e.name+'\"]:checked'),function(x){return Number(x.value);});return xs.length?xs:undefined;}\n    if(e.type==='radiogroup'){var x=app.querySelector('input[name=\"'+e.name+'\"]:checked');return x?Number(x.value):undefined;}\n    if(e.type==='text'){var t=app.querySelector('[name=\"'+e.name+'\"]').value.trim();if(e.inputType==='number'){var n=Number(t);return (t!==''&&n>=e.min&&n<=e.max&&Math.round(n)===n)?n:undefined;}return t||undefined;}\n    if(e.kind==='scales'){var v={},miss=0;e.items.forEach(function(it){var x=app.querySelector('input[name=\"'+e.name+'__'+it.name+'\"]:checked');if(x)v[it.name]=Number(x.value);else{miss++;app.querySelector('.it[data-n=\"'+e.name+'__'+it.name+'\"]').classList.add('miss');}});return miss?undefined:v;}\n  }\n  function intro(k){\n    var P=PRE[k],INTRO=P.elements;\n    app.innerHTML=top(k)+'<h1>'+esc(P.title)+'</h1><div class=\"card\">'+(P.intro?'<p style=\"color:var(--ink)\">'+esc(P.intro)+'</p>':'')+INTRO.map(field).join('')+'</div><div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div>';\n    app.onchange=function(ev){hideErr();var q=ev.target.closest('.q');if(q)q.classList.remove('miss');var it=ev.target.closest('.it');if(it)it.classList.remove('miss');};\n    document.getElementById('go').onclick=function(){\n      var l=[],bad=null;\n      INTRO.forEach(function(e){var v=readField(e);if(v===undefined){bad=bad||e;app.querySelector('.q[data-q=\"'+e.name+'\"]').classList.add('miss');}else l.push([e.name,v]);});\n      if(bad){err(bad.name==='consent'?'Please tick the box to agree before you start.':bad.inputType==='number'?'Please enter your age as a whole number from '+bad.min+' to '+bad.max+'.':bad.kind?'Please answer every row of: '+Q[bad.name].title:'Please answer: '+Q[bad.name].title);var m=app.querySelector('.q.miss');if(m)m.scrollIntoView({block:'center'});return;}\n      var b=this;b.disabled=true;\n      Promise.all(l.map(function(a){return SPSite.answer(a[0],a[1]);})).then(function(rs){var x=rs.filter(function(r){return !ok(r);})[0];if(x){b.disabled=false;return err(x.error);}done['p_'+P.name]=true;save('d',done);next();});\n    };\n  }\n  function preview(){\n    app.innerHTML=top(PRE.length)+'<h1>Quick look at all pictures</h1><div class=\"card\"><p style=\"color:var(--ink)\">First you will see all '+ORDER.length+' pictures, 3 seconds each, so you get a feel for the range. You do not need to answer anything yet.</p><div id=\"pv\"></div><p id=\"pvn\" style=\"text-align:center\"></p></div><div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">Start the quick look</button></div><div class=\"err\"></div>';\n    ORDER.forEach(function(f){var im=new Image();im.src=files[f].url;});\n    document.getElementById('go').onclick=function(){var b=this;b.disabled=true;var k=0,pv=document.getElementById('pv'),n=document.getElementById('pvn');\n      (function step(){if(k>=ORDER.length){done.preview=true;save('d',done);return next();}\n        pv.innerHTML='<img class=\"stim\" alt=\"Picture '+(k+1)+'\" src=\"'+esc(files[ORDER[k]].url)+'\">';n.textContent=(k+1)+' / '+ORDER.length;k++;setTimeout(step,window.SBE_FAST?20:3000);})();};\n  }\n  function image(i){\n    var f=ORDER[i];\n    app.innerHTML=top(PRE.length+i)+'<div class=\"card\"><img class=\"stim\" alt=\"Image '+(i+1)+' of '+ORDER.length+'\" src=\"'+esc(files[f].url)+'\"><p style=\"margin-top:12px;color:var(--ink)\">'+esc(Q.flower_colour.title)+'</p>'+ITEMS.map(function(it){return scaleItem('s__'+it.name,it);}).join('')+(CAPHEAD?'<p style=\"margin-top:14px;color:var(--ink)\">'+esc(CAPHEAD)+'</p>':'')+CAPS.map(function(c){return '<div class=\"q\" data-q=\"c__'+c.name+'\"><b>'+esc(c.text)+'</b><input type=\"text\" maxlength=\"120\" name=\"c__'+c.name+'\" placeholder=\"'+esc(c.placeholder)+'\"></div>';}).join('')+'</div>'+\n      '<div style=\"margin-top:18px\"><button class=\"btn\" id=\"go\">'+(i===ORDER.length-1?'Finish':'Next')+'</button></div><div class=\"err\"></div>';\n    app.onchange=function(ev){hideErr();var it=ev.target.closest('.it');if(it)it.classList.remove('miss');var q=ev.target.closest('.q');if(q)q.classList.remove('miss');};\n    document.getElementById('go').onclick=function(){\n      var v={},miss=null;\n      ITEMS.forEach(function(it){var x=app.querySelector('input[name=\"s__'+it.name+'\"]:checked');if(x)v[it.name]=Number(x.value);else{miss=miss||it;app.querySelector('.it[data-n=\"s__'+it.name+'\"]').classList.add('miss');}});\n      CAPS.forEach(function(c){var t=app.querySelector('[name=\"c__'+c.name+'\"]').value.trim();if(t)v[c.name]=t;else{miss=miss||c;app.querySelector('.q[data-q=\"c__'+c.name+'\"]').classList.add('miss');}});\n      app.oninput=function(ev){var q=ev.target.closest('.q');if(q)q.classList.remove('miss');hideErr();};\n      if(miss){err('Please rate this picture.');var m=app.querySelector('.miss');if(m)m.scrollIntoView({block:'center'});return;}\n      var m=META[f.replace(/\\.jpg$/,'')]||{};v.picture=f.replace(/\\.jpg$/,'');v.flower_type=m.type;v.colour=m.colour;v.position=i+1;\n      var b=this;b.disabled=true;\n      SPSite.answer('flower_colour',v,{key:f.replace(/\\.jpg$/,''),shown:[f]}).then(function(r){if(!ok(r)){b.disabled=false;return err(r.error);}done['i_'+f]=true;save('d',done);next();});\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>In the original online survey in China (2023), 354 adults rated these 29 flower pictures. Blue, deep blue, turquoise and white flowers were liked most, and deep orange, deep pink, deep purple, orange, deep green and the original pink least. Among two-colour mixes, white with blue was liked most, and orange with red and yellow with red least; mixes with white generally did well. Age, income, nature experience and current mood all shaped these preferences.</p><p style=\"font-size:.82rem\">She, J., Wu, R., Pi, B., Huang, J., &amp; Bao, Z. (2025). Emotional State as a Key Driver of Public Preferences for Flower Color. Horticulturae 11:54, doi:10.3390/horticulturae11010054.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){if(x==='flower_colour')ORDER.forEach(function(f){done['i_'+f]=false;});else PRE.forEach(function(p){if(p.elements.some(function(e){return e.name===x;}))done['p_'+p.name]=false;});});save('d',done);next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    try{SPEC=JSON.parse(document.getElementById('sp-scheme').textContent).survey;}catch(e){SPEC={pages:[]};}\n    SPEC.pages.forEach(function(p){p.elements.forEach(function(e){var g=SPSite.getQuestion(e.name)||{};Q[e.name]={title:g.title||e.title,choices:(g.choices&&g.choices.length)?g.choices:e.choices};if(e.name==='flower_colour'){IMG=e;ITEMS=e.items;META=e.meta||{};CAPS=e.captions||[];CAPHEAD=e.captionTitle||'';}});});\n    PRE=SPEC.pages.filter(function(p){return p.name!=='pictures';});\n    (SPSite.getMedia('flowers')||[]).forEach(function(f){files[f.name]=f;});\n    if(Object.keys(files).length<29){app.innerHTML='<h1>Pictures missing</h1><p>Media folder flowers must hold the 29 flower pictures.</p>';return;}\n    var a=(ctx&&ctx.answers)||{};done=load('d')||{};\n    ORDER=load('order');\n    if(!ORDER||ORDER.length!==Object.keys(files).length||ORDER.some(function(f){return !files[f];})){ORDER=shuffle(Object.keys(files));save('order',ORDER);}\n    PRE.forEach(function(p){done['p_'+p.name]=p.elements.every(function(e){return a[e.name]!=null;});});\n    ORDER.forEach(function(f){done['i_'+f]=false;});done.preview=!!(load('d')||{}).preview||!!(a.flower_colour&&a.flower_colour.trials&&a.flower_colour.trials.length);\n    ((a.flower_colour&&a.flower_colour.trials)||[]).forEach(function(t){if(t.key)done['i_'+t.key+'.jpg']=true;});\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T21:56:47.395Z",
+   "mediaFolders": [
+    "flowers"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T21:56:47.395Z"
+  },
+  "description": "Faithful replication of She, Wu, Pi, Huang & Bao (2025), Horticulturae 11:54: 29 pictures of the same Zephyranthes flower bed in 16 single colours and 13 two-colour mixes, each rated from 1 (strongly dislike) to 6 (strongly like), with the paper's demographic, income and nature-experience questions.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2025-she-flower/flowers/mixed_blue_white__578ba12d-fe26-4be6-8d03-6c371044b580.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/mixed_blue_white__578ba12d-fe26-4be6-8d03-6c371044b580.jpg",
+   "name": "mixed_blue_white.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/mixed_blue_white__578ba12d-fe26-4be6-8d03-6c371044b580.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 271575,
+   "uploaded_bytes": 271575,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/mixed_green_yellow__4135acec-cc1a-4bf5-85e0-93298eb07fa4.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/mixed_green_yellow__4135acec-cc1a-4bf5-85e0-93298eb07fa4.jpg",
+   "name": "mixed_green_yellow.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/mixed_green_yellow__4135acec-cc1a-4bf5-85e0-93298eb07fa4.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 88171,
+   "uploaded_bytes": 88171,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/mixed_orange_red__c61a5bf1-21f3-4699-a2c9-24d04287aef8.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/mixed_orange_red__c61a5bf1-21f3-4699-a2c9-24d04287aef8.jpg",
+   "name": "mixed_orange_red.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/mixed_orange_red__c61a5bf1-21f3-4699-a2c9-24d04287aef8.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 84023,
+   "uploaded_bytes": 84023,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/mixed_orange_white__380a67e0-034d-47cb-bb0e-e63922141e81.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/mixed_orange_white__380a67e0-034d-47cb-bb0e-e63922141e81.jpg",
+   "name": "mixed_orange_white.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/mixed_orange_white__380a67e0-034d-47cb-bb0e-e63922141e81.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 82204,
+   "uploaded_bytes": 82204,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/mixed_pink_blue__aca39231-33aa-41c6-94eb-d2630544da70.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/mixed_pink_blue__aca39231-33aa-41c6-94eb-d2630544da70.jpg",
+   "name": "mixed_pink_blue.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/mixed_pink_blue__aca39231-33aa-41c6-94eb-d2630544da70.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 85148,
+   "uploaded_bytes": 85148,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/mixed_pink_white__7f85e7d6-9c1d-4ff7-9011-214b83c8b06f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/mixed_pink_white__7f85e7d6-9c1d-4ff7-9011-214b83c8b06f.jpg",
+   "name": "mixed_pink_white.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/mixed_pink_white__7f85e7d6-9c1d-4ff7-9011-214b83c8b06f.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 86303,
+   "uploaded_bytes": 86303,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/mixed_purple_blue__9d7100e5-300c-48fa-8708-ed175d89f6f3.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/mixed_purple_blue__9d7100e5-300c-48fa-8708-ed175d89f6f3.jpg",
+   "name": "mixed_purple_blue.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/mixed_purple_blue__9d7100e5-300c-48fa-8708-ed175d89f6f3.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 85224,
+   "uploaded_bytes": 85224,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/mixed_purple_pink__f0673a7f-bc7b-402d-8c19-aaf2e2be71c4.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/mixed_purple_pink__f0673a7f-bc7b-402d-8c19-aaf2e2be71c4.jpg",
+   "name": "mixed_purple_pink.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/mixed_purple_pink__f0673a7f-bc7b-402d-8c19-aaf2e2be71c4.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 88029,
+   "uploaded_bytes": 88029,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/mixed_purple_white__c94e87bc-400b-49d6-a17d-a531d5e07dae.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/mixed_purple_white__c94e87bc-400b-49d6-a17d-a531d5e07dae.jpg",
+   "name": "mixed_purple_white.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/mixed_purple_white__c94e87bc-400b-49d6-a17d-a531d5e07dae.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 83338,
+   "uploaded_bytes": 83338,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/mixed_red_white__ccf731a3-b85a-46fa-a739-81aacc642fc7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/mixed_red_white__ccf731a3-b85a-46fa-a739-81aacc642fc7.jpg",
+   "name": "mixed_red_white.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/mixed_red_white__ccf731a3-b85a-46fa-a739-81aacc642fc7.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 84072,
+   "uploaded_bytes": 84072,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/mixed_yellow_orange__1e5ff739-0710-48b4-b02a-9fb9e04c3d0b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/mixed_yellow_orange__1e5ff739-0710-48b4-b02a-9fb9e04c3d0b.jpg",
+   "name": "mixed_yellow_orange.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/mixed_yellow_orange__1e5ff739-0710-48b4-b02a-9fb9e04c3d0b.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 86510,
+   "uploaded_bytes": 86510,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/mixed_yellow_red__87682c97-5e69-4e92-b3fe-5f9146f9d9a7.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/mixed_yellow_red__87682c97-5e69-4e92-b3fe-5f9146f9d9a7.jpg",
+   "name": "mixed_yellow_red.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/mixed_yellow_red__87682c97-5e69-4e92-b3fe-5f9146f9d9a7.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 87015,
+   "uploaded_bytes": 87015,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/mixed_yellow_white__fd0f565a-03c5-4e26-8b61-1b0cce281b71.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/mixed_yellow_white__fd0f565a-03c5-4e26-8b61-1b0cce281b71.jpg",
+   "name": "mixed_yellow_white.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/mixed_yellow_white__fd0f565a-03c5-4e26-8b61-1b0cce281b71.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 85003,
+   "uploaded_bytes": 85003,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/single_blue__6b14b4a8-7c30-4906-aaba-f1ee20527e3f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/single_blue__6b14b4a8-7c30-4906-aaba-f1ee20527e3f.jpg",
+   "name": "single_blue.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/single_blue__6b14b4a8-7c30-4906-aaba-f1ee20527e3f.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 73400,
+   "uploaded_bytes": 73400,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/single_deep_blue__dafcdc71-fc58-40d7-9da3-6da2260a45b1.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/single_deep_blue__dafcdc71-fc58-40d7-9da3-6da2260a45b1.jpg",
+   "name": "single_deep_blue.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/single_deep_blue__dafcdc71-fc58-40d7-9da3-6da2260a45b1.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 75333,
+   "uploaded_bytes": 75333,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/single_deep_green__b818f781-9c92-4648-92aa-47f87572014e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/single_deep_green__b818f781-9c92-4648-92aa-47f87572014e.jpg",
+   "name": "single_deep_green.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/single_deep_green__b818f781-9c92-4648-92aa-47f87572014e.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 67065,
+   "uploaded_bytes": 67065,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/single_deep_orange__dc395c3c-36c7-48f3-947c-f26762b4966f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/single_deep_orange__dc395c3c-36c7-48f3-947c-f26762b4966f.jpg",
+   "name": "single_deep_orange.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/single_deep_orange__dc395c3c-36c7-48f3-947c-f26762b4966f.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 72808,
+   "uploaded_bytes": 72808,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/single_deep_pink__763bbd8c-1a19-491f-b2b2-ce59909c3f1e.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/single_deep_pink__763bbd8c-1a19-491f-b2b2-ce59909c3f1e.jpg",
+   "name": "single_deep_pink.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/single_deep_pink__763bbd8c-1a19-491f-b2b2-ce59909c3f1e.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 71678,
+   "uploaded_bytes": 71678,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/single_deep_purple__b5605e09-41e9-48f0-a5e9-6f320cc3d9ee.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/single_deep_purple__b5605e09-41e9-48f0-a5e9-6f320cc3d9ee.jpg",
+   "name": "single_deep_purple.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/single_deep_purple__b5605e09-41e9-48f0-a5e9-6f320cc3d9ee.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 71203,
+   "uploaded_bytes": 71203,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/single_deep_red__cbe26502-6e9c-4bcc-9057-85668709ae44.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/single_deep_red__cbe26502-6e9c-4bcc-9057-85668709ae44.jpg",
+   "name": "single_deep_red.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/single_deep_red__cbe26502-6e9c-4bcc-9057-85668709ae44.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 68964,
+   "uploaded_bytes": 68964,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/single_deep_turquoise__03fa1298-8c5e-41a9-a389-be3ba0455c07.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/single_deep_turquoise__03fa1298-8c5e-41a9-a389-be3ba0455c07.jpg",
+   "name": "single_deep_turquoise.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/single_deep_turquoise__03fa1298-8c5e-41a9-a389-be3ba0455c07.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 72576,
+   "uploaded_bytes": 72576,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/single_green__fc60ced5-1718-41d1-9829-e34bb275cc2b.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/single_green__fc60ced5-1718-41d1-9829-e34bb275cc2b.jpg",
+   "name": "single_green.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/single_green__fc60ced5-1718-41d1-9829-e34bb275cc2b.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 69847,
+   "uploaded_bytes": 69847,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/single_orange__2b8386cc-a1ca-45a6-9798-556336dd0d34.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/single_orange__2b8386cc-a1ca-45a6-9798-556336dd0d34.jpg",
+   "name": "single_orange.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/single_orange__2b8386cc-a1ca-45a6-9798-556336dd0d34.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 69672,
+   "uploaded_bytes": 69672,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/single_pink_unmodified__aeb87a3f-3ed7-4466-91db-5dee70905775.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/single_pink_unmodified__aeb87a3f-3ed7-4466-91db-5dee70905775.jpg",
+   "name": "single_pink_unmodified.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/single_pink_unmodified__aeb87a3f-3ed7-4466-91db-5dee70905775.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 73621,
+   "uploaded_bytes": 73621,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/single_purple__2f2375db-e194-421c-a28b-3237e49bfaf5.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/single_purple__2f2375db-e194-421c-a28b-3237e49bfaf5.jpg",
+   "name": "single_purple.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/single_purple__2f2375db-e194-421c-a28b-3237e49bfaf5.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 71235,
+   "uploaded_bytes": 71235,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/single_red__99f1c2ae-1241-430e-afc7-778a9cab1789.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/single_red__99f1c2ae-1241-430e-afc7-778a9cab1789.jpg",
+   "name": "single_red.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/single_red__99f1c2ae-1241-430e-afc7-778a9cab1789.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 71843,
+   "uploaded_bytes": 71843,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/single_turquoise__05464c53-72ab-4eb1-abf8-c2721bdd067f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/single_turquoise__05464c53-72ab-4eb1-abf8-c2721bdd067f.jpg",
+   "name": "single_turquoise.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/single_turquoise__05464c53-72ab-4eb1-abf8-c2721bdd067f.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 70084,
+   "uploaded_bytes": 70084,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/single_white__e879eb51-519a-4675-ba1d-6b0ea367cb8f.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/single_white__e879eb51-519a-4675-ba1d-6b0ea367cb8f.jpg",
+   "name": "single_white.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/single_white__e879eb51-519a-4675-ba1d-6b0ea367cb8f.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 68907,
+   "uploaded_bytes": 68907,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2025-she-flower/flowers/single_yellow__63dc7238-9fbf-4f80-ba3f-a3acff7b1e72.jpg",
+   "url": "https://media.sp-survey.org/templates/2025-she-flower/flowers/single_yellow__63dc7238-9fbf-4f80-ba3f-a3acff7b1e72.jpg",
+   "name": "single_yellow.jpg",
+   "type": "image",
+   "folder": "flowers",
+   "media_id": "templates/2025-she-flower/flowers/single_yellow__63dc7238-9fbf-4f80-ba3f-a3acff7b1e72.jpg",
+   "logicalFolder": "flowers",
+   "original_bytes": 75985,
+   "uploaded_bytes": 75985,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Emotional State as a Key Driver of Public Preferences for Flower Color",
+  "authors": [
+   "Juan She",
+   "Renwu Wu",
+   "Bingling Pi",
+   "Jie Huang",
+   "Zhiyi Bao"
+  ],
+  "year": 2025,
+  "venue": "Horticulturae",
+  "doi": "10.3390/horticulturae11010054",
+  "url": "https://doi.org/10.3390/horticulturae11010054"
+ }
+}

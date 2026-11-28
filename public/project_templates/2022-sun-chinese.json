@@ -1,0 +1,372 @@
+{
+ "id": "2022-sun-chinese",
+ "name": "Chinese Garden Rain Soundscape: Video With vs Without Sound (SD rating)",
+ "description": "Faithful replication with the paper's own stimuli: Sun & Dong (2022), \"Impact of the Classic Chinese Garden Soundscape With Focus on Physiological and Psychological Effects, Tested Through Eye-Tracking, and Subjective Evaluation\", Frontiers in Psychology 13: 902630. Participants watch the same one-minute video of rain falling on banana (Musa basjoo) leaves and the pond at Tingyuxuan (\"Listening to the Sound of Rain Hall\") in the Humble Administrator's Garden, Suzhou, twice: once with sound and once muted, in random order. After each viewing they rate the scene on the paper's 17 semantic-differential pairs (like–dislike, comfortable–uncomfortable, familiar–unfamiliar, happy–sad, relieved–unrelieved, calm–agitated, natural–artificial, monotonous–varied, light–dark, tidy–messy, warm–cold, static–active, relax–tense, classic–modern, harmonious–discordant, pleasant–unenjoyable, unique–ordinary) from −2 to +2. Answers are keyed \"with_sound\" / \"muted\" for a paired comparison; the page also records the order and whether the participant has visited the garden. Original result (24 students, Jiaxing; never visited the garden): with sound the scene felt significantly more familiar, calmer, more varied, brighter, warmer, less static and more pleasant (Hedges' g 0.46–0.76), and eye tracking showed more attention on the banana leaves. Video: the paper's Supplementary Video 1 (CC BY 4.0). Differences from the original study: (1) online on the participant's own screen and speakers or headphones, instead of a 22-inch monitor and speakers in an acoustic laboratory with the rain sound set to about 50 dB; the recording's sound level was raised by 20 dB so it is audible at normal device volume, and participants set a natural-sounding level themselves; (2) the video is cut to its first 60 s (the supplied file is 73 s); (3) no eye tracking and no physiological measures; (4) eyes-closed rest before each video is omitted; (5) age, gender and the garden-visit question are asked on the page instead of being screening criteria.",
+ "author": "Sun & Dong",
+ "year": "2022",
+ "category": "Academic Research",
+ "tags": [
+  "faithful-replication",
+  "official",
+  "paper",
+  "soundscape",
+  "chinese-garden",
+  "audio-visual",
+  "semantic-differential",
+  "source:paper",
+  "modality:video",
+  "modality:audio",
+  "task:multi_rating",
+  "concept:soundscape",
+  "concept:emotion",
+  "concept:pleasantness",
+  "concept:naturalness",
+  "participants:students",
+  "sample:lt100",
+  "country:China",
+  "city:Suzhou"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3389/fpsyg.2022.902630",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T06:17:30.891+00:00",
+ "updatedAt": "2026-11-27T06:17:50.017+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part, I can play sound (speakers or headphones), and I understand my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "max": 99,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "Age",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "visited",
+      "type": "radiogroup",
+      "title": "Have you ever visited the Humble Administrator's Garden (Zhuozhengyuan) in Suzhou?",
+      "choices": [
+       {
+        "text": "No",
+        "value": "no"
+       },
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "Not sure",
+        "value": "unsure"
+       }
+      ],
+      "isRequired": true,
+      "description": "The original study included only people who had never visited the garden; filter out 'yes' to match it."
+     }
+    ]
+   },
+   {
+    "name": "videos",
+    "elements": [
+     {
+      "name": "order",
+      "type": "radiogroup",
+      "title": "Order of the two viewings (set at random by the page)",
+      "choices": [
+       {
+        "text": "With sound first, then muted",
+        "value": "sound_first"
+       },
+       {
+        "text": "Muted first, then with sound",
+        "value": "muted_first"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "sd_01_like",
+      "type": "rating",
+      "title": "Like — dislike",
+      "rateMax": 2,
+      "rateMin": -2,
+      "isRequired": true,
+      "description": "Semantic differential pair 1 of 17, −2 = very like, 0 = neither, +2 = very dislike. Keyed 'with_sound' / 'muted'.",
+      "maxRateDescription": "Very dislike",
+      "minRateDescription": "Very like"
+     },
+     {
+      "name": "sd_02_comfortable",
+      "type": "rating",
+      "title": "Comfortable — uncomfortable",
+      "rateMax": 2,
+      "rateMin": -2,
+      "isRequired": true,
+      "description": "Semantic differential pair 2 of 17, −2 = very comfortable, 0 = neither, +2 = very uncomfortable. Keyed 'with_sound' / 'muted'.",
+      "maxRateDescription": "Very uncomfortable",
+      "minRateDescription": "Very comfortable"
+     },
+     {
+      "name": "sd_03_familiar",
+      "type": "rating",
+      "title": "Familiar — unfamiliar",
+      "rateMax": 2,
+      "rateMin": -2,
+      "isRequired": true,
+      "description": "Semantic differential pair 3 of 17, −2 = very familiar, 0 = neither, +2 = very unfamiliar. Keyed 'with_sound' / 'muted'.",
+      "maxRateDescription": "Very unfamiliar",
+      "minRateDescription": "Very familiar"
+     },
+     {
+      "name": "sd_04_happy",
+      "type": "rating",
+      "title": "Happy — sad",
+      "rateMax": 2,
+      "rateMin": -2,
+      "isRequired": true,
+      "description": "Semantic differential pair 4 of 17, −2 = very happy, 0 = neither, +2 = very sad. Keyed 'with_sound' / 'muted'.",
+      "maxRateDescription": "Very sad",
+      "minRateDescription": "Very happy"
+     },
+     {
+      "name": "sd_05_relieved",
+      "type": "rating",
+      "title": "Relieved — unrelieved",
+      "rateMax": 2,
+      "rateMin": -2,
+      "isRequired": true,
+      "description": "Semantic differential pair 5 of 17, −2 = very relieved, 0 = neither, +2 = very unrelieved. Keyed 'with_sound' / 'muted'.",
+      "maxRateDescription": "Very unrelieved",
+      "minRateDescription": "Very relieved"
+     },
+     {
+      "name": "sd_06_calm",
+      "type": "rating",
+      "title": "Calm — agitated",
+      "rateMax": 2,
+      "rateMin": -2,
+      "isRequired": true,
+      "description": "Semantic differential pair 6 of 17, −2 = very calm, 0 = neither, +2 = very agitated. Keyed 'with_sound' / 'muted'.",
+      "maxRateDescription": "Very agitated",
+      "minRateDescription": "Very calm"
+     },
+     {
+      "name": "sd_07_natural",
+      "type": "rating",
+      "title": "Natural — artificial",
+      "rateMax": 2,
+      "rateMin": -2,
+      "isRequired": true,
+      "description": "Semantic differential pair 7 of 17, −2 = very natural, 0 = neither, +2 = very artificial. Keyed 'with_sound' / 'muted'.",
+      "maxRateDescription": "Very artificial",
+      "minRateDescription": "Very natural"
+     },
+     {
+      "name": "sd_08_monotonous",
+      "type": "rating",
+      "title": "Monotonous — varied",
+      "rateMax": 2,
+      "rateMin": -2,
+      "isRequired": true,
+      "description": "Semantic differential pair 8 of 17, −2 = very monotonous, 0 = neither, +2 = very varied. Keyed 'with_sound' / 'muted'.",
+      "maxRateDescription": "Very varied",
+      "minRateDescription": "Very monotonous"
+     },
+     {
+      "name": "sd_09_light",
+      "type": "rating",
+      "title": "Light — dark",
+      "rateMax": 2,
+      "rateMin": -2,
+      "isRequired": true,
+      "description": "Semantic differential pair 9 of 17, −2 = very light, 0 = neither, +2 = very dark. Keyed 'with_sound' / 'muted'.",
+      "maxRateDescription": "Very dark",
+      "minRateDescription": "Very light"
+     },
+     {
+      "name": "sd_10_tidy",
+      "type": "rating",
+      "title": "Tidy — messy",
+      "rateMax": 2,
+      "rateMin": -2,
+      "isRequired": true,
+      "description": "Semantic differential pair 10 of 17, −2 = very tidy, 0 = neither, +2 = very messy. Keyed 'with_sound' / 'muted'.",
+      "maxRateDescription": "Very messy",
+      "minRateDescription": "Very tidy"
+     },
+     {
+      "name": "sd_11_warm",
+      "type": "rating",
+      "title": "Warm — cold",
+      "rateMax": 2,
+      "rateMin": -2,
+      "isRequired": true,
+      "description": "Semantic differential pair 11 of 17, −2 = very warm, 0 = neither, +2 = very cold. Keyed 'with_sound' / 'muted'.",
+      "maxRateDescription": "Very cold",
+      "minRateDescription": "Very warm"
+     },
+     {
+      "name": "sd_12_static",
+      "type": "rating",
+      "title": "Static — active",
+      "rateMax": 2,
+      "rateMin": -2,
+      "isRequired": true,
+      "description": "Semantic differential pair 12 of 17, −2 = very static, 0 = neither, +2 = very active. Keyed 'with_sound' / 'muted'.",
+      "maxRateDescription": "Very active",
+      "minRateDescription": "Very static"
+     },
+     {
+      "name": "sd_13_relax",
+      "type": "rating",
+      "title": "Relax — tense",
+      "rateMax": 2,
+      "rateMin": -2,
+      "isRequired": true,
+      "description": "Semantic differential pair 13 of 17, −2 = very relax, 0 = neither, +2 = very tense. Keyed 'with_sound' / 'muted'.",
+      "maxRateDescription": "Very tense",
+      "minRateDescription": "Very relax"
+     },
+     {
+      "name": "sd_14_classic",
+      "type": "rating",
+      "title": "Classic — modern",
+      "rateMax": 2,
+      "rateMin": -2,
+      "isRequired": true,
+      "description": "Semantic differential pair 14 of 17, −2 = very classic, 0 = neither, +2 = very modern. Keyed 'with_sound' / 'muted'.",
+      "maxRateDescription": "Very modern",
+      "minRateDescription": "Very classic"
+     },
+     {
+      "name": "sd_15_harmonious",
+      "type": "rating",
+      "title": "Harmonious — discordant",
+      "rateMax": 2,
+      "rateMin": -2,
+      "isRequired": true,
+      "description": "Semantic differential pair 15 of 17, −2 = very harmonious, 0 = neither, +2 = very discordant. Keyed 'with_sound' / 'muted'.",
+      "maxRateDescription": "Very discordant",
+      "minRateDescription": "Very harmonious"
+     },
+     {
+      "name": "sd_16_pleasant",
+      "type": "rating",
+      "title": "Pleasant — unenjoyable",
+      "rateMax": 2,
+      "rateMin": -2,
+      "isRequired": true,
+      "description": "Semantic differential pair 16 of 17, −2 = very pleasant, 0 = neither, +2 = very unenjoyable. Keyed 'with_sound' / 'muted'.",
+      "maxRateDescription": "Very unenjoyable",
+      "minRateDescription": "Very pleasant"
+     },
+     {
+      "name": "sd_17_unique",
+      "type": "rating",
+      "title": "Unique — ordinary",
+      "rateMax": 2,
+      "rateMin": -2,
+      "isRequired": true,
+      "description": "Semantic differential pair 17 of 17, −2 = very unique, 0 = neither, +2 = very ordinary. Keyed 'with_sound' / 'muted'.",
+      "maxRateDescription": "Very ordinary",
+      "minRateDescription": "Very unique"
+     }
+    ]
+   }
+  ],
+  "title": "Listening to the Rain: Chinese Garden Soundscape",
+  "locale": "en",
+  "spSite": {
+   "id": "site-bbeb57347d1a6460",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Listening to the Rain</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Listening to the Rain: Chinese Garden Soundscape\",\n  \"description\": \"Participants watch the same one-minute video of rain falling on banana (Musa basjoo) leaves at Tingyuxuan ('Listening to the Sound of Rain Hall'), Humble Administrator's Garden, Suzhou, once with sound and once muted, in random order, and rate each viewing on 17 semantic-differential adjective pairs (−2 to +2). Rebuilt from Sun & Dong (2022), Frontiers in Psychology 13: 902630, with the paper's own Supplementary Video 1 (CC BY 4.0).\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"video\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part, I can play sound (speakers or headphones), and I understand my answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"min\": 18,\n      \"max\": 99\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"visited\",\n      \"title\": \"Have you ever visited the Humble Administrator's Garden (Zhuozhengyuan) in Suzhou?\",\n      \"description\": \"The original study included only people who had never visited the garden; filter out 'yes' to match it.\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       },\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"unsure\",\n        \"text\": \"Not sure\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"videos\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"order\",\n      \"title\": \"Order of the two viewings (set at random by the page)\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"sound_first\",\n        \"text\": \"With sound first, then muted\"\n       },\n       {\n        \"value\": \"muted_first\",\n        \"text\": \"Muted first, then with sound\"\n       }\n      ]\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_01_like\",\n      \"title\": \"Like — dislike\",\n      \"description\": \"Semantic differential pair 1 of 17, −2 = very like, 0 = neither, +2 = very dislike. Keyed 'with_sound' / 'muted'.\",\n      \"rateMin\": -2,\n      \"rateMax\": 2,\n      \"minRateDescription\": \"Very like\",\n      \"maxRateDescription\": \"Very dislike\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_02_comfortable\",\n      \"title\": \"Comfortable — uncomfortable\",\n      \"description\": \"Semantic differential pair 2 of 17, −2 = very comfortable, 0 = neither, +2 = very uncomfortable. Keyed 'with_sound' / 'muted'.\",\n      \"rateMin\": -2,\n      \"rateMax\": 2,\n      \"minRateDescription\": \"Very comfortable\",\n      \"maxRateDescription\": \"Very uncomfortable\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_03_familiar\",\n      \"title\": \"Familiar — unfamiliar\",\n      \"description\": \"Semantic differential pair 3 of 17, −2 = very familiar, 0 = neither, +2 = very unfamiliar. Keyed 'with_sound' / 'muted'.\",\n      \"rateMin\": -2,\n      \"rateMax\": 2,\n      \"minRateDescription\": \"Very familiar\",\n      \"maxRateDescription\": \"Very unfamiliar\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_04_happy\",\n      \"title\": \"Happy — sad\",\n      \"description\": \"Semantic differential pair 4 of 17, −2 = very happy, 0 = neither, +2 = very sad. Keyed 'with_sound' / 'muted'.\",\n      \"rateMin\": -2,\n      \"rateMax\": 2,\n      \"minRateDescription\": \"Very happy\",\n      \"maxRateDescription\": \"Very sad\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_05_relieved\",\n      \"title\": \"Relieved — unrelieved\",\n      \"description\": \"Semantic differential pair 5 of 17, −2 = very relieved, 0 = neither, +2 = very unrelieved. Keyed 'with_sound' / 'muted'.\",\n      \"rateMin\": -2,\n      \"rateMax\": 2,\n      \"minRateDescription\": \"Very relieved\",\n      \"maxRateDescription\": \"Very unrelieved\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_06_calm\",\n      \"title\": \"Calm — agitated\",\n      \"description\": \"Semantic differential pair 6 of 17, −2 = very calm, 0 = neither, +2 = very agitated. Keyed 'with_sound' / 'muted'.\",\n      \"rateMin\": -2,\n      \"rateMax\": 2,\n      \"minRateDescription\": \"Very calm\",\n      \"maxRateDescription\": \"Very agitated\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_07_natural\",\n      \"title\": \"Natural — artificial\",\n      \"description\": \"Semantic differential pair 7 of 17, −2 = very natural, 0 = neither, +2 = very artificial. Keyed 'with_sound' / 'muted'.\",\n      \"rateMin\": -2,\n      \"rateMax\": 2,\n      \"minRateDescription\": \"Very natural\",\n      \"maxRateDescription\": \"Very artificial\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_08_monotonous\",\n      \"title\": \"Monotonous — varied\",\n      \"description\": \"Semantic differential pair 8 of 17, −2 = very monotonous, 0 = neither, +2 = very varied. Keyed 'with_sound' / 'muted'.\",\n      \"rateMin\": -2,\n      \"rateMax\": 2,\n      \"minRateDescription\": \"Very monotonous\",\n      \"maxRateDescription\": \"Very varied\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_09_light\",\n      \"title\": \"Light — dark\",\n      \"description\": \"Semantic differential pair 9 of 17, −2 = very light, 0 = neither, +2 = very dark. Keyed 'with_sound' / 'muted'.\",\n      \"rateMin\": -2,\n      \"rateMax\": 2,\n      \"minRateDescription\": \"Very light\",\n      \"maxRateDescription\": \"Very dark\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_10_tidy\",\n      \"title\": \"Tidy — messy\",\n      \"description\": \"Semantic differential pair 10 of 17, −2 = very tidy, 0 = neither, +2 = very messy. Keyed 'with_sound' / 'muted'.\",\n      \"rateMin\": -2,\n      \"rateMax\": 2,\n      \"minRateDescription\": \"Very tidy\",\n      \"maxRateDescription\": \"Very messy\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_11_warm\",\n      \"title\": \"Warm — cold\",\n      \"description\": \"Semantic differential pair 11 of 17, −2 = very warm, 0 = neither, +2 = very cold. Keyed 'with_sound' / 'muted'.\",\n      \"rateMin\": -2,\n      \"rateMax\": 2,\n      \"minRateDescription\": \"Very warm\",\n      \"maxRateDescription\": \"Very cold\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_12_static\",\n      \"title\": \"Static — active\",\n      \"description\": \"Semantic differential pair 12 of 17, −2 = very static, 0 = neither, +2 = very active. Keyed 'with_sound' / 'muted'.\",\n      \"rateMin\": -2,\n      \"rateMax\": 2,\n      \"minRateDescription\": \"Very static\",\n      \"maxRateDescription\": \"Very active\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_13_relax\",\n      \"title\": \"Relax — tense\",\n      \"description\": \"Semantic differential pair 13 of 17, −2 = very relax, 0 = neither, +2 = very tense. Keyed 'with_sound' / 'muted'.\",\n      \"rateMin\": -2,\n      \"rateMax\": 2,\n      \"minRateDescription\": \"Very relax\",\n      \"maxRateDescription\": \"Very tense\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_14_classic\",\n      \"title\": \"Classic — modern\",\n      \"description\": \"Semantic differential pair 14 of 17, −2 = very classic, 0 = neither, +2 = very modern. Keyed 'with_sound' / 'muted'.\",\n      \"rateMin\": -2,\n      \"rateMax\": 2,\n      \"minRateDescription\": \"Very classic\",\n      \"maxRateDescription\": \"Very modern\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_15_harmonious\",\n      \"title\": \"Harmonious — discordant\",\n      \"description\": \"Semantic differential pair 15 of 17, −2 = very harmonious, 0 = neither, +2 = very discordant. Keyed 'with_sound' / 'muted'.\",\n      \"rateMin\": -2,\n      \"rateMax\": 2,\n      \"minRateDescription\": \"Very harmonious\",\n      \"maxRateDescription\": \"Very discordant\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_16_pleasant\",\n      \"title\": \"Pleasant — unenjoyable\",\n      \"description\": \"Semantic differential pair 16 of 17, −2 = very pleasant, 0 = neither, +2 = very unenjoyable. Keyed 'with_sound' / 'muted'.\",\n      \"rateMin\": -2,\n      \"rateMax\": 2,\n      \"minRateDescription\": \"Very pleasant\",\n      \"maxRateDescription\": \"Very unenjoyable\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"sd_17_unique\",\n      \"title\": \"Unique — ordinary\",\n      \"description\": \"Semantic differential pair 17 of 17, −2 = very unique, 0 = neither, +2 = very ordinary. Keyed 'with_sound' / 'muted'.\",\n      \"rateMin\": -2,\n      \"rateMax\": 2,\n      \"minRateDescription\": \"Very unique\",\n      \"maxRateDescription\": \"Very ordinary\",\n      \"isRequired\": true\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"rain-original\">{\"source\": \"Sun & Dong (2022) Front Psychol 13:902630, Table 2\", \"n\": 24, \"sample\": \"students, Jiaxing University, never visited the garden\", \"result\": \"With sound, the scene was rated significantly more familiar (g = 0.65), calmer (0.57), more varied (0.60), brighter (0.46), warmer (0.67), less static (0.50) and more pleasant (0.76) than the same video muted; the banana leaves also drew more visual attention with sound.\"}</script>\n<style>\n:root{--bg:#f2f4f2;--card:#fff;--ink:#1e2622;--muted:#5d6862;--accent:#3c6656;--line:#d9e1dc;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:860px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.45rem;margin:0 0 8px}h2{font-size:1.1rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.vid{position:relative;background:#000;border-radius:12px;overflow:hidden}.vid video{width:100%;display:block}\n.vid .cover{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);color:#fff;flex-direction:column;gap:10px;text-align:center;padding:12px}\n.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:10px}.bar>i{display:block;height:100%;width:0;background:var(--accent)}\n.tag{display:inline-block;padding:2px 10px;border-radius:999px;background:#e5eee9;color:var(--accent);font-weight:600;font-size:.85rem;margin-bottom:8px}\n.sd{display:grid;grid-template-columns:7.5em 1fr 7.5em;gap:8px;align-items:center;padding:7px 0;border-top:1px solid var(--line)}.sd:first-of-type{border-top:0}\n.sd .l{text-align:right}.sd.miss .l,.sd.miss .r{color:var(--warn);font-weight:600}\n.sd .scale{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}\n.sd .scale button{appearance:none;border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 0;font:inherit;font-size:.85rem;cursor:pointer;color:var(--ink)}\n.sd .scale button.on{background:var(--accent);border-color:var(--accent);color:#fff}\n.hdr{display:grid;grid-template-columns:7.5em 1fr 7.5em;gap:8px;font-size:.75rem;color:var(--muted)}.hdr .scale{display:grid;grid-template-columns:repeat(5,1fr);text-align:center}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.f{margin-top:16px}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:110px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:860px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n@media(max-width:560px){.sd,.hdr{grid-template-columns:5.2em 1fr 5.2em;font-size:.85rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Video: Sun &amp; Dong (2022), Frontiers in Psychology 13:902630, Supplementary Video 1 (CC BY 4.0); first 60 s, sound level raised for online playback.</footer>\n<script>\n(function(){\n  var KEY='tingyuxuan-rain:state', VIEW=window.__VIEWMS||0;\n  var app=document.getElementById('app'), Q={}, SD=[], vfile=null, st=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function send(list,b,next){if(b)b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}next();});}\n  function intro(){\n    app.innerHTML='<h1>Rain in a Chinese garden</h1><p>You will watch the same one-minute video of a classical Chinese garden in the rain twice: once with sound and once without. After each viewing you describe how the scene felt using 17 pairs of opposite words. Please sit somewhere quiet; speakers or headphones are needed. It takes about 6 minutes.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');send([SPSite.answer('consent',true)],this,function(){st.step='about';save();route();});};\n  }\n  function radios(q){return '<div class=\"f\"><b>'+esc(Q[q].title)+'</b>'+(Q[q].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+q+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function about(){\n    app.innerHTML='<h2>About you</h2><div class=\"card\"><div class=\"f\" style=\"margin-top:0\"><b>'+esc(Q.age.title)+'</b><br><input type=\"number\" id=\"age\" min=\"18\" max=\"99\"></div>'+radios('gender')+radios('visited')+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var age=Number(document.getElementById('age').value);if(!(age>=18&&age<=99))return err('Please enter your age (18 or older).');\n      var g=app.querySelector('input[name=gender]:checked');if(!g)return err('Please answer: '+Q.gender.title);\n      var v=app.querySelector('input[name=visited]:checked');if(!v)return err('Please say whether you have visited the garden.');\n      send([SPSite.answer('age',age),SPSite.answer('gender',g.value),SPSite.answer('visited',v.value),SPSite.answer('order',st.order[0]==='with_sound'?'sound_first':'muted_first')],this,function(){st.step='watch';st.k=0;save();route();});\n    };\n  }\n  function watch(){\n    var cond=st.order[st.k], sound=cond==='with_sound';\n    app.innerHTML='<span class=\"tag\">Viewing '+(st.k+1)+' of 2 · '+(sound?'with sound':'without sound')+'</span><p>'+(sound?'Turn your sound on and set it so the rain sounds like real, light rain in a quiet room.':'This time the video plays without sound.')+' Press play and watch the whole minute.</p><div class=\"vid\"><video id=\"v\" playsinline preload=\"auto\" '+(sound?'':'muted')+' src=\"'+esc(vfile.url)+'\"></video><div class=\"cover\" id=\"cv\"><button class=\"btn\" id=\"pl\">▶ Play (1 minute)</button></div></div><div class=\"bar\"><i id=\"bar\"></i></div><div class=\"err\"></div>';\n    var v=document.getElementById('v'),bar=document.getElementById('bar'),cv=document.getElementById('cv'),done=false;\n    v.muted=!sound;\n    function fin(){if(done)return;done=true;v.pause();st.step='rate';save();route();}\n    v.addEventListener('timeupdate',function(){var d=Math.min(v.duration||60,60);bar.style.width=Math.min(100,v.currentTime/d*100)+'%';if(v.currentTime>=60)fin();});\n    v.addEventListener('ended',fin);\n    v.addEventListener('pause',function(){if(!done){cv.style.display='flex';document.getElementById('pl').textContent='▶ Continue playing';}});\n    document.getElementById('pl').onclick=function(){cv.style.display='none';var p=v.play();if(p&&p.catch)p.catch(function(){cv.style.display='flex';err('The video could not start. Please press play again.');});if(VIEW)setTimeout(fin,VIEW);};\n  }\n  function rate(){\n    var cond=st.order[st.k], vals={};\n    app.innerHTML='<span class=\"tag\">Viewing '+(st.k+1)+' of 2 · '+(cond==='with_sound'?'with sound':'without sound')+'</span><h2>How did the scene you just watched feel?</h2><p>For each pair, choose the box closer to the word that fits better; the middle box means neither.</p><div class=\"card\"><div class=\"hdr\"><span></span><div class=\"scale\"><span>very</span><span>a little</span><span>neither</span><span>a little</span><span>very</span></div><span></span></div>'+SD.map(function(n){return '<div class=\"sd\" data-k=\"'+n+'\"><span class=\"l\">'+esc(Q[n].title.split(' — ')[0])+'</span><div class=\"scale\">'+[-2,-1,0,1,2].map(function(x){return '<button type=\"button\" data-v=\"'+x+'\" aria-label=\"'+x+'\">'+(x>0?'+'+x:x)+'</button>';}).join('')+'</div><span class=\"r\">'+esc(Q[n].title.split(' — ')[1]||'')+'</span></div>';}).join('')+'<div style=\"margin-top:14px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    app.querySelectorAll('.sd').forEach(function(r){r.querySelectorAll('button').forEach(function(b){b.onclick=function(){vals[r.dataset.k]=Number(b.dataset.v);r.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);});r.classList.remove('miss');};});});\n    document.getElementById('go').onclick=function(){\n      var m=SD.filter(function(n){return vals[n]==null;});\n      if(m.length){m.forEach(function(n){app.querySelector('.sd[data-k=\"'+n+'\"]').classList.add('miss');});return err('Please answer every pair ('+m.length+' missing, marked in red).');}\n      send(SD.map(function(n){return SPSite.answer(n,vals[n],{key:cond,shown:[vfile.name]});}),this,function(){st.k++;st.step=st.k>=2?'done':'watch';save();route();});\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st.step='intro';save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  function route(){var s=st.step;window.scrollTo(0,0);if(s==='about')return about();if(s==='watch')return watch();if(s==='rate')return rate();if(s==='done')return finish();intro();}\n  SPSite.onReady(function(ctx){\n    var sc=JSON.parse(document.getElementById('sp-scheme').textContent).survey;\n    sc.pages.forEach(function(p){p.elements.forEach(function(e){if(/^sd_/.test(e.name))SD.push(e.name);});});\n    ['consent','age','gender','visited','order'].concat(SD).forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('video')||[]).forEach(function(f){if(!vfile&&/\\.(mp4|webm|mov)$/i.test(f.name))vfile=f;});\n    if(!vfile){app.innerHTML='<h1>Video missing</h1><p>Upload the garden video to the media folder \"video\".</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    if(!(st&&st.order))st={step:'intro',k:0,order:Math.random()<0.5?['with_sound','muted']:['muted','with_sound']};\n    var a=(ctx&&ctx.answers)||{};if(a.consent!==true){st.step='intro';st.k=0;}\n    if(st.step==='rate')st.step='watch';\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T06:17:05.106Z",
+   "mediaFolders": [
+    "video"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T06:17:05.106Z"
+  },
+  "description": "Participants watch the same one-minute video of rain falling on banana (Musa basjoo) leaves at Tingyuxuan ('Listening to the Sound of Rain Hall'), Humble Administrator's Garden, Suzhou, once with sound and once muted, in random order, and rate each viewing on 17 semantic-differential adjective pairs (−2 to +2). Rebuilt from Sun & Dong (2022), Frontiers in Psychology 13: 902630, with the paper's own Supplementary Video 1 (CC BY 4.0).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2022-sun-chinese/video/tingyuxuan__77974473-c7d5-46ab-9f9f-116f73a2555f.mp4",
+   "url": "https://media.sp-survey.org/templates/2022-sun-chinese/video/tingyuxuan__77974473-c7d5-46ab-9f9f-116f73a2555f.mp4",
+   "name": "tingyuxuan.mp4",
+   "type": "video",
+   "folder": "video",
+   "media_id": "templates/2022-sun-chinese/video/tingyuxuan__77974473-c7d5-46ab-9f9f-116f73a2555f.mp4",
+   "logicalFolder": "video",
+   "original_bytes": 12835731,
+   "uploaded_bytes": 12835731,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Impact of the Classic Chinese Garden Soundscape With Focus on Physiological and Psychological Effects, Tested Through Eye-Tracking, and Subjective Evaluation",
+  "authors": [
+   "Minkai Sun",
+   "Lu Dong"
+  ],
+  "year": 2022,
+  "venue": "Frontiers in Psychology",
+  "doi": "10.3389/fpsyg.2022.902630",
+  "url": "https://doi.org/10.3389/fpsyg.2022.902630"
+ }
+}

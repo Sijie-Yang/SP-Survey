@@ -1,0 +1,264 @@
+{
+ "id": "2024-kim-erosion",
+ "name": "Erosion Control Dam Exteriors",
+ "description": "Faithful replication of the viewing task and semantic differential ratings in Kim, Y.-R., Kim, B.-S., Kim, C., Lee, S. I., Cho, W.-S., Kweon, H., Song, C., & Seo, J. I. (2024). Evaluation of landscape created by erosion control dam using physiological and psychological indicators. PLOS ONE, 19, e0309804. https://doi.org/10.1371/journal.pone.0309804\n\nWhat participants do: participants see three pictures of the same mountain stream with an erosion control dam faced in exposed concrete, attached stone or attached wood (the authors kept everything else identical in Photoshop). The three pictures come in random order. Before each picture a grey screen is shown for one minute, then the picture for one minute. After each picture participants rate their impression on six adjective pairs on a 7-point scale from -3 to +3: natural–artificial, clean–dirty, friendly–unfriendly, calm–dynamic, peaceful–unpeaceful and relaxed–anxious. Then age, sex and whether they have professional training in erosion control or landscape design.\n\nOriginal finding (34 Korean university students, lab): participants felt the concrete-exposed and stone-attached dams as artificial and the wood-attached dam as natural; responses to all three exteriors were positive overall. Heart rate was lower when viewing the wood-attached dam than the concrete one, and vigour rose and total mood disturbance fell for the wood dam.\n\nStimuli: the three panels of Figure 2 of the article (CC BY 4.0), used with credit to the authors. This template is removed if the authors object.\n\nDifferences from the original study: (1) Online instead of a lab with a 4K display at 1.4 m; heart rate and heart rate variability are not measured. (2) The Korean brief Profile of Mood States (K-POMS-B, 30 items) is left out because it is a copyrighted instrument. (3) The 5-minute rest after each questionnaire is dropped; the 1-minute grey screen before each picture is kept. (4) The pictures are cut from the published figure (about 1030 × 540 px each), and the panel letters a/b/c are covered with neighbouring foliage. (5) English wording; instructions paraphrased. A question on professional training is added because the paper recruited students without it.",
+ "author": "Kim, Kim, Kim, Lee, Cho, Kweon, Song & Seo",
+ "year": "2024",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "landscape",
+  "infrastructure",
+  "semantic differential",
+  "materials",
+  "source:paper",
+  "modality:scene_photo",
+  "task:multi_rating",
+  "concept:naturalness",
+  "concept:restoration",
+  "concept:preference",
+  "participants:students",
+  "participants:lab",
+  "sample:lt100",
+  "country:South Korea"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1371/journal.pone.0309804",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T10:17:34.317+00:00",
+ "updatedAt": "2026-11-27T10:17:47.72+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "viewing",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I have read the information above and agree to take part.",
+      "labelTrue": "Yes",
+      "isRequired": true,
+      "labelFalse": "No"
+     },
+     {
+      "name": "impressions",
+      "type": "imageslidergroup",
+      "title": "Impression of the erosion control dam",
+      "choices": [],
+      "scaleMax": 3,
+      "scaleMin": -3,
+      "dimensions": [
+       {
+        "id": "natural",
+        "max": 3,
+        "min": -3,
+        "left": "artificial",
+        "step": 1,
+        "label": "natural – artificial",
+        "right": "natural"
+       },
+       {
+        "id": "clean",
+        "max": 3,
+        "min": -3,
+        "left": "dirty",
+        "step": 1,
+        "label": "clean – dirty",
+        "right": "clean"
+       },
+       {
+        "id": "friendly",
+        "max": 3,
+        "min": -3,
+        "left": "unfriendly",
+        "step": 1,
+        "label": "friendly – unfriendly",
+        "right": "friendly"
+       },
+       {
+        "id": "calm",
+        "max": 3,
+        "min": -3,
+        "left": "dynamic",
+        "step": 1,
+        "label": "calm – dynamic",
+        "right": "calm"
+       },
+       {
+        "id": "peaceful",
+        "max": 3,
+        "min": -3,
+        "left": "unpeaceful",
+        "step": 1,
+        "label": "peaceful – unpeaceful",
+        "right": "peaceful"
+       },
+       {
+        "id": "relaxed",
+        "max": 3,
+        "min": -3,
+        "left": "anxious",
+        "step": 1,
+        "label": "relaxed – anxious",
+        "right": "relaxed"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "description": "One row per image (key = ECD_concrete | ECD_stone | ECD_wood: concrete-exposed, stone-attached, wood-attached exterior; the rest of the scene was kept identical in Photoshop by the authors). Each image follows 1 min of a grey screen and is shown for 1 min; the three images come in random order. Semantic differential, six adjective pairs on a 7-point scale from -3 (negative adjective) to +3 (positive adjective): natural–artificial, clean–dirty, friendly–unfriendly, calm–dynamic, peaceful–unpeaceful, relaxed–anxious. Analysis in the paper: Friedman test across the three exteriors per pair, Bonferroni-corrected.",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "viewing_order",
+      "type": "custom",
+      "title": "Viewing order",
+      "description": "{ order: [image keys in the order shown], grey_s, view_s } — the presentation order of the three images and the timings used."
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "max": 100,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "How old are you?",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "sex",
+      "type": "radiogroup",
+      "title": "What is your sex?",
+      "choices": [
+       {
+        "text": "Female",
+        "value": 1
+       },
+       {
+        "text": "Male",
+        "value": 2
+       },
+       {
+        "text": "Prefer not to say",
+        "value": 3
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "expertise",
+      "type": "radiogroup",
+      "title": "Have you studied or worked in erosion control, civil engineering or landscape design?",
+      "choices": [
+       {
+        "text": "No",
+        "value": 1
+       },
+       {
+        "text": "Yes",
+        "value": 2
+       }
+      ],
+      "isRequired": true,
+      "description": "The original participants were students without professional education about erosion control dams."
+     }
+    ]
+   }
+  ],
+  "title": "Erosion Control Dam Exteriors",
+  "locale": "en",
+  "spSite": {
+   "id": "site-3ac860f9f958515f",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Erosion Control Dams</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Erosion Control Dam Exteriors\",\n  \"description\": \"Faithful replication of the viewing task and semantic differential ratings in Kim et al. (2024), PLOS ONE 19(9):e0309804, with the authors' own images. Participants view the same mountain stream with an erosion control dam faced in exposed concrete, attached stone or attached wood, each for one minute after a minute of grey screen, and rate their impression on six adjective pairs.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"ecd\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"viewing\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I have read the information above and agree to take part.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"Yes\",\n      \"labelFalse\": \"No\"\n     },\n     {\n      \"type\": \"imageslidergroup\",\n      \"name\": \"impressions\",\n      \"title\": \"Impression of the erosion control dam\",\n      \"isRequired\": true,\n      \"imageCount\": 1,\n      \"scaleMin\": -3,\n      \"scaleMax\": 3,\n      \"description\": \"One row per image (key = ECD_concrete | ECD_stone | ECD_wood: concrete-exposed, stone-attached, wood-attached exterior; the rest of the scene was kept identical in Photoshop by the authors). Each image follows 1 min of a grey screen and is shown for 1 min; the three images come in random order. Semantic differential, six adjective pairs on a 7-point scale from -3 (negative adjective) to +3 (positive adjective): natural–artificial, clean–dirty, friendly–unfriendly, calm–dynamic, peaceful–unpeaceful, relaxed–anxious. Analysis in the paper: Friedman test across the three exteriors per pair, Bonferroni-corrected.\",\n      \"dimensions\": [\n       {\n        \"id\": \"natural\",\n        \"label\": \"natural – artificial\",\n        \"left\": \"artificial\",\n        \"right\": \"natural\",\n        \"min\": -3,\n        \"max\": 3,\n        \"step\": 1\n       },\n       {\n        \"id\": \"clean\",\n        \"label\": \"clean – dirty\",\n        \"left\": \"dirty\",\n        \"right\": \"clean\",\n        \"min\": -3,\n        \"max\": 3,\n        \"step\": 1\n       },\n       {\n        \"id\": \"friendly\",\n        \"label\": \"friendly – unfriendly\",\n        \"left\": \"unfriendly\",\n        \"right\": \"friendly\",\n        \"min\": -3,\n        \"max\": 3,\n        \"step\": 1\n       },\n       {\n        \"id\": \"calm\",\n        \"label\": \"calm – dynamic\",\n        \"left\": \"dynamic\",\n        \"right\": \"calm\",\n        \"min\": -3,\n        \"max\": 3,\n        \"step\": 1\n       },\n       {\n        \"id\": \"peaceful\",\n        \"label\": \"peaceful – unpeaceful\",\n        \"left\": \"unpeaceful\",\n        \"right\": \"peaceful\",\n        \"min\": -3,\n        \"max\": 3,\n        \"step\": 1\n       },\n       {\n        \"id\": \"relaxed\",\n        \"label\": \"relaxed – anxious\",\n        \"left\": \"anxious\",\n        \"right\": \"relaxed\",\n        \"min\": -3,\n        \"max\": 3,\n        \"step\": 1\n       }\n      ]\n     },\n     {\n      \"type\": \"custom\",\n      \"name\": \"viewing_order\",\n      \"title\": \"Viewing order\",\n      \"description\": \"{ order: [image keys in the order shown], grey_s, view_s } — the presentation order of the three images and the timings used.\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"min\": 18,\n      \"max\": 100\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"sex\",\n      \"title\": \"What is your sex?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"Prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"expertise\",\n      \"title\": \"Have you studied or worked in erosion control, civil engineering or landscape design?\",\n      \"isRequired\": true,\n      \"description\": \"The original participants were students without professional education about erosion control dams.\",\n      \"choices\": [\n       {\n        \"value\": 1,\n        \"text\": \"No\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Yes\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f1f3ef;--card:#fff;--ink:#1c201b;--muted:#596156;--accent:#3d6b45;--accent-ink:#fff;--line:#d5dbd2;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:900px;margin:0 auto;padding:24px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 10px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.q{margin-top:18px}.q>b{display:block;margin-bottom:4px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:120px}\n.stage{border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;height:min(72vh,620px);background:#808080;color:#e9e9e9}\n.stage img{max-width:100%;max-height:100%;object-fit:contain;display:block}\n.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:10px 0 6px}.bar>i{display:block;height:100%;background:var(--accent);width:0}\n.t{color:var(--muted);font-variant-numeric:tabular-nums;font-size:.9rem}\n.item{padding:12px 0;border-top:1px solid var(--line)}.item:first-of-type{border-top:0}\n.row{display:grid;grid-template-columns:7.5em 1fr 7.5em;gap:8px;align-items:center}\n.row span{font-weight:600}.row span:last-child{text-align:left}.row span:first-child{text-align:right}\n.sc{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}\n.sc button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:7px;padding:8px 0;font:inherit;font-size:.88rem;font-weight:700;cursor:pointer;min-width:0}\n.sc button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}\n@media (max-width:560px){.row{grid-template-columns:1fr 1fr}.row .sc{grid-column:1/3;grid-row:2}.row span:first-child{text-align:left}.row span:last-child{text-align:right}}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:900px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Images: Kim et al. (2024), PLOS ONE, Figure 2 (CC BY 4.0). Used with credit for research; removed if the authors object.</footer>\n<script>\n(function(){\n  var DIMS=[{\"id\": \"natural\", \"label\": \"natural – artificial\", \"left\": \"artificial\", \"right\": \"natural\", \"min\": -3, \"max\": 3, \"step\": 1}, {\"id\": \"clean\", \"label\": \"clean – dirty\", \"left\": \"dirty\", \"right\": \"clean\", \"min\": -3, \"max\": 3, \"step\": 1}, {\"id\": \"friendly\", \"label\": \"friendly – unfriendly\", \"left\": \"unfriendly\", \"right\": \"friendly\", \"min\": -3, \"max\": 3, \"step\": 1}, {\"id\": \"calm\", \"label\": \"calm – dynamic\", \"left\": \"dynamic\", \"right\": \"calm\", \"min\": -3, \"max\": 3, \"step\": 1}, {\"id\": \"peaceful\", \"label\": \"peaceful – unpeaceful\", \"left\": \"unpeaceful\", \"right\": \"peaceful\", \"min\": -3, \"max\": 3, \"step\": 1}, {\"id\": \"relaxed\", \"label\": \"relaxed – anxious\", \"left\": \"anxious\", \"right\": \"relaxed\", \"min\": -3, \"max\": 3, \"step\": 1}], KEY='ecd2024:', SP=(window.__SPEED||1), GREY=60*SP, VIEW=60*SP;\n  var app=document.getElementById('app'), Q={}, M={}, ans={}, done={}, order=[];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function load(k){try{return JSON.parse(localStorage.getItem(KEY+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v));}catch(e){}}\n  function saveAll(l,b,cb){Promise.all(l.map(function(a){return a[2]?SPSite.answer(a[0],a[1],a[2]):SPSite.answer(a[0],a[1]);})).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}cb();});}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function next(){\n    window.scrollTo(0,0);\n    if(!ans.intro)return intro();\n    if(!ans.howto)return howto();\n    for(var i=0;i<order.length;i++){if(!done[order[i]])return grey(i);}\n    if(!ans.order)return saveAll([['viewing_order',{order:order,grey_s:60,view_s:60}]],null,function(){ans.order=true;next();});\n    if(!ans.about)return about();\n    finish();\n  }\n  function page(title,html,btn,cb){\n    app.innerHTML='<div class=\"card\">'+(title?'<h1>'+esc(title)+'</h1>':'')+html+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">'+esc(btn||'Continue')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=cb;\n  }\n  function radios(name){return (Q[name].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');}\n  function val(n){var x=app.querySelector('input[name='+n+']:checked');return x?Number(x.value):null;}\n  function intro(){\n    var miss=['ECD_concrete','ECD_stone','ECD_wood'].filter(function(k){return !M[k];});\n    if(miss.length){app.innerHTML='<h1>Pictures missing</h1><p>The media folder \"ecd\" must hold the three study images; missing: '+esc(miss.join(', '))+'.</p>';return;}\n    page('How do you see this mountain stream?','<p>Erosion control dams are low walls built across mountain streams to hold back sediment and protect villages downstream. In this study you will see three pictures of the same stream with a dam. Each picture is shown for one minute after one minute of a plain grey screen, and after each picture you describe your impression with six pairs of words. It takes about 8 minutes.</p><p>Please sit comfortably, use a computer or tablet if you can, and keep looking at the screen while the grey screen and the pictures are shown.</p><p>Participation is voluntary and anonymous, and you can stop at any time.</p><label class=\"opt\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label>','Start',function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var b=this;b.disabled=true;saveAll([['consent',true]],b,function(){ans.intro=true;next();});\n    });\n  }\n  function howto(){page('','<p style=\"color:var(--ink)\">First you will see a grey screen for one minute. Just relax and look at it. Then a picture appears for one minute. Look at it calmly. The questions follow automatically.</p>','Begin',function(){ans.howto=true;next();});}\n  function timer(sec,label,cb,html){\n    var t0=Date.now();\n    app.innerHTML='<div class=\"stage\">'+(html||'')+'</div><div class=\"bar\"><i></i></div><div class=\"t\">'+esc(label)+'</div>';\n    var bar=app.querySelector('.bar>i'),iv=setInterval(function(){var e=(Date.now()-t0)/1000;bar.style.width=Math.min(100,100*e/sec)+'%';if(e>=sec){clearInterval(iv);cb();}},100);\n  }\n  function grey(i){timer(GREY,'Picture '+(i+1)+' of 3: rest, the picture follows in a moment',function(){view(i);},'');}\n  function view(i){var k=order[i];timer(VIEW,'Picture '+(i+1)+' of 3',function(){rate(i);},'<img alt=\"Mountain stream with an erosion control dam\" src=\"'+esc(M[k].url)+'\">');}\n  function rate(i){\n    window.scrollTo(0,0);\n    var k=order[i], vals={};\n    app.innerHTML='<div class=\"card\"><p class=\"t\">Picture '+(i+1)+' of 3</p><p style=\"color:var(--ink)\">How did the scene with the dam you just saw feel to you? For each pair of words, choose the point that fits your impression.</p>'+\n      DIMS.map(function(d){var b='';for(var v=d.min;v<=d.max;v++)b+='<button type=\"button\" data-d=\"'+d.id+'\" data-v=\"'+v+'\">'+(v>0?'+'+v:v)+'</button>';\n        return '<div class=\"item\"><div class=\"row\"><span>'+esc(d.left)+'</span><div class=\"sc\">'+b+'</div><span>'+esc(d.right)+'</span></div></div>';}).join('')+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div></div>';\n    app.querySelectorAll('.sc button').forEach(function(x){x.onclick=function(){vals[x.dataset.d]=Number(x.dataset.v);x.parentNode.querySelectorAll('button').forEach(function(y){y.classList.toggle('on',y===x);});err('');};});\n    document.getElementById('go').onclick=function(){\n      var miss=DIMS.filter(function(d){return vals[d.id]==null;});if(miss.length)return err('Please answer every pair ('+miss.length+' left).');\n      var o={};DIMS.forEach(function(d){o[d.id]=vals[d.id];});var b=this;b.disabled=true;\n      saveAll([['impressions',o,{key:k,shown:[M[k].name]}]],b,function(){done[k]=true;next();});\n    };\n  }\n  function about(){\n    page('About you','<div class=\"q\"><b>'+esc(Q.age.title)+'</b><input type=\"number\" id=\"age\" min=\"18\" max=\"100\" inputmode=\"numeric\"></div>'+\n      ['sex','expertise'].map(function(n){return '<div class=\"q\"><b>'+esc(Q[n].title)+'</b>'+radios(n)+'</div>';}).join(''),'Finish',function(){\n      var av=document.getElementById('age').value,age=Number(av);if(!av||!(age>=18&&age<=100))return err('Please enter your age (18 or over).');\n      var l=[['age',age]];var N=['sex','expertise'];for(var i=0;i<N.length;i++){var v=val(N[i]);if(!v)return err('Please answer: '+Q[N[i]].title);l.push([N[i],v]);}\n      var b=this;b.disabled=true;saveAll(l,b,function(){ans.about=true;next();});\n    });\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p>The three pictures showed the same stream and dam with different facings: exposed concrete, attached stone and attached wood. In the original study with Korean students, the wood-faced dam was felt to be the most natural, and responses to all three were positive overall.</p><p style=\"font-size:.82rem\">Images and task: Kim, Kim, Kim, Lee, Cho, Kweon, Song &amp; Seo (2024), PLOS ONE, doi:10.1371/journal.pone.0309804 (CC BY 4.0). Used with credit and removed if the authors object.</p><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var m=r.missing||[];setTimeout(function(){m.forEach(function(x){\n      if(x==='consent')ans.intro=false;else if(x==='impressions')done={};else if(x==='viewing_order')ans.order=false;else ans.about=false;});next();},1800);}\n      else{var s=document.getElementById('fin');if(s)s.textContent='Your answers have been saved. You can close this window now.';}});\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','age','sex','expertise'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('ecd')||[]).forEach(function(f){M[f.name.replace(/\\.[^.]+$/,'')]=f;});\n    var a=(ctx&&ctx.answers)||{};\n    var o=load('order');if(!o||o.length!==3)o=shuffle(['ECD_concrete','ECD_stone','ECD_wood']);order=o;save('order',order);\n    ((a.impressions&&a.impressions.trials)||[]).forEach(function(t){if(t.key)done[t.key]=true;});\n    if(a.consent===true){ans.intro=true;if(Object.keys(done).length)ans.howto=true;}\n    if(a.viewing_order!=null)ans.order=true;\n    if(a.age!=null&&a.expertise!=null)ans.about=true;\n    next();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T10:17:10.980Z",
+   "mediaFolders": [
+    "ecd"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T10:17:10.980Z"
+  },
+  "description": "Faithful replication of the viewing task and semantic differential ratings in Kim et al. (2024), PLOS ONE 19(9):e0309804, with the authors' own images. Participants view the same mountain stream with an erosion control dam faced in exposed concrete, attached stone or attached wood, each for one minute after a minute of grey screen, and rate their impression on six adjective pairs.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2024-kim-erosion/ecd/ECD_concrete__40b157b3-3bb0-41e6-ba02-e991ca3bd9c4.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-kim-erosion/ecd/ECD_concrete__40b157b3-3bb0-41e6-ba02-e991ca3bd9c4.jpg",
+   "name": "ECD_concrete.jpg",
+   "type": "image",
+   "folder": "ecd",
+   "media_id": "templates/2024-kim-erosion/ecd/ECD_concrete__40b157b3-3bb0-41e6-ba02-e991ca3bd9c4.jpg",
+   "logicalFolder": "ecd",
+   "original_bytes": 221446,
+   "uploaded_bytes": 221446,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-kim-erosion/ecd/ECD_stone__fba4b7f8-4732-47dd-8128-17289b2471b0.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-kim-erosion/ecd/ECD_stone__fba4b7f8-4732-47dd-8128-17289b2471b0.jpg",
+   "name": "ECD_stone.jpg",
+   "type": "image",
+   "folder": "ecd",
+   "media_id": "templates/2024-kim-erosion/ecd/ECD_stone__fba4b7f8-4732-47dd-8128-17289b2471b0.jpg",
+   "logicalFolder": "ecd",
+   "original_bytes": 218171,
+   "uploaded_bytes": 218171,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-kim-erosion/ecd/ECD_wood__055d9d28-485f-485c-b4e5-cce57622f1e1.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-kim-erosion/ecd/ECD_wood__055d9d28-485f-485c-b4e5-cce57622f1e1.jpg",
+   "name": "ECD_wood.jpg",
+   "type": "image",
+   "folder": "ecd",
+   "media_id": "templates/2024-kim-erosion/ecd/ECD_wood__055d9d28-485f-485c-b4e5-cce57622f1e1.jpg",
+   "logicalFolder": "ecd",
+   "original_bytes": 216643,
+   "uploaded_bytes": 216643,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Evaluation of landscape created by erosion control dam using physiological and psychological indicators",
+  "authors": [
+   "Yong-Rae Kim",
+   "Beom-Su Kim",
+   "Choyun Kim",
+   "Sang In Lee",
+   "Won-Shin Cho",
+   "Hyeongkeun Kweon",
+   "Chorong Song",
+   "Jung Il Seo"
+  ],
+  "year": 2024,
+  "venue": "PLOS ONE",
+  "doi": "10.1371/journal.pone.0309804",
+  "url": "https://doi.org/10.1371/journal.pone.0309804"
+ }
+}

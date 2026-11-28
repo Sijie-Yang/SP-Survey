@@ -1,0 +1,574 @@
+{
+ "id": "2026-zhao-peony",
+ "name": "Peony Gardens and Stress Recovery (360° scenes)",
+ "description": "Faithful replication with the paper's own stimuli: the 24 panoramic photographs from Figure 2 of Zhao, Ma, Zhang, Hu & Zhang (2026), Frontiers in Psychology 17: 1935645 (CC BY 4.0), six scenes each for a mountainous, terraced and flatland peony garden and a windowless indoor office (control). After a stress task, each participant is randomly assigned to one setting and views its six 360° scenes for one minute each in random order (6 minutes, as in the paper; drag to look around), then completes the Perceived Restorativeness Scale on the paper's −2 to +2 scale. Stress is rated 0–10 at baseline, after the task and after viewing. The paper found all three peony gardens more restorative than the office, with the mountainous garden highest. Differences from the original study: (1) online with flat 360° images instead of a VR headset, and no heart-rate or EEG recording; (2) the 6-minute Trier Social Stress Test is replaced by its 3-minute serial-subtraction part (count back from 1022 in steps of 13, restart on error); (3) the licensed STAI-S and POMS are replaced by a single 0–10 stress rating; (4) the paper's 23-item PRS is not printed, so the 16-item English wording from Frontiers in Public Health 10:801453 (Table 5) is used; (5) the photographs are small crops of the published figure (561×280 px).",
+ "author": "Zhao, Ma, Zhang, Hu & Zhang",
+ "year": "2026",
+ "category": "Academic Research",
+ "tags": [
+  "faithful-replication",
+  "official",
+  "paper",
+  "restoration",
+  "stress recovery",
+  "PRS",
+  "panorama",
+  "garden",
+  "source:paper",
+  "modality:panorama",
+  "modality:scene_photo",
+  "task:rating",
+  "task:questionnaire",
+  "task:custom_page",
+  "concept:restoration",
+  "concept:greenery",
+  "concept:emotion",
+  "participants:students",
+  "sample:100to1000",
+  "country:China",
+  "city:Xi'an"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3389/fpsyg.2026.1935645",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T04:57:28.393+00:00",
+ "updatedAt": "2026-11-27T04:57:40.494+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. The study includes a short, mildly stressful arithmetic task; I can stop at any time. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     },
+     {
+      "max": 99,
+      "min": 16,
+      "name": "age",
+      "type": "text",
+      "title": "Age",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "environment",
+      "type": "radiogroup",
+      "title": "Assigned setting (set by the page)",
+      "choices": [
+       {
+        "text": "Mountainous peony garden (MPG)",
+        "value": "mpg"
+       },
+       {
+        "text": "Terraced peony garden (TPG)",
+        "value": "tpg"
+       },
+       {
+        "text": "Flatland peony garden (FPG)",
+        "value": "fpg"
+       },
+       {
+        "text": "Indoor office, control (IE)",
+        "value": "ie"
+       }
+      ],
+      "isRequired": true,
+      "description": "Random assignment to one of the paper's four groups; the participant sees its six scenes (files <group>_1 … <group>_6) in random order."
+     }
+    ]
+   },
+   {
+    "name": "stress",
+    "elements": [
+     {
+      "name": "stress_level",
+      "type": "rating",
+      "title": "How stressed do you feel right now?",
+      "rateMax": 10,
+      "rateMin": 0,
+      "isRequired": true,
+      "description": "Asked three times, keyed baseline / after_task / after_viewing.",
+      "maxRateDescription": "Extremely stressed",
+      "minRateDescription": "Not at all stressed"
+     },
+     {
+      "name": "task_correct",
+      "type": "text",
+      "title": "Serial subtraction: correct steps in 3 minutes (recorded by the page)",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "task_errors",
+      "type": "text",
+      "title": "Serial subtraction: errors (recorded by the page)",
+      "inputType": "number",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "restoration",
+    "elements": [
+     {
+      "name": "prs",
+      "rows": [
+       {
+        "text": "It is an escape experience.",
+        "value": "ba1"
+       },
+       {
+        "text": "It gives me a good break from day-to-day routine.",
+        "value": "ba2"
+       },
+       {
+        "text": "The setting has fascinating qualities.",
+        "value": "fa1"
+       },
+       {
+        "text": "My attention is drawn to many interesting things.",
+        "value": "fa2"
+       },
+       {
+        "text": "I would like to get to know this place better.",
+        "value": "fa3"
+       },
+       {
+        "text": "There is much to explore and discover here.",
+        "value": "fa4"
+       },
+       {
+        "text": "I would like to spend more time looking at the surroundings.",
+        "value": "fa5"
+       },
+       {
+        "text": "There is too much going on.",
+        "value": "co1"
+       },
+       {
+        "text": "It is a confusing place.",
+        "value": "co2"
+       },
+       {
+        "text": "There is a great deal of distraction.",
+        "value": "co3"
+       },
+       {
+        "text": "It is chaotic here.",
+        "value": "co4"
+       },
+       {
+        "text": "I can do things I like here.",
+        "value": "cp1"
+       },
+       {
+        "text": "I have a sense that I belong here.",
+        "value": "cp2"
+       },
+       {
+        "text": "I have a sense of oneness with this setting.",
+        "value": "cp3"
+       },
+       {
+        "text": "Being here suits my personality.",
+        "value": "cp4"
+       },
+       {
+        "text": "I could find ways to enjoy myself in a place like this.",
+        "value": "cp5"
+       }
+      ],
+      "type": "matrix",
+      "title": "Thinking of the place you just saw, how much do you agree with each statement?",
+      "columns": [
+       {
+        "text": "−2",
+        "value": -2
+       },
+       {
+        "text": "−1",
+        "value": -1
+       },
+       {
+        "text": "0",
+        "value": 0
+       },
+       {
+        "text": "+1",
+        "value": 1
+       },
+       {
+        "text": "+2",
+        "value": 2
+       }
+      ],
+      "isRequired": true,
+      "description": "Perceived Restorativeness Scale, 16 items: being away ba1–ba2, fascination fa1–fa5, coherence co1–co4, compatibility cp1–cp5; scale −2 (strongly disagree) to +2 (strongly agree), as in the paper. The paper used a 23-item version that it does not print; this English wording is the 16-item version listed in Frontiers in Public Health 10:801453 (Table 5). Coherence items are negatively worded: reverse them (multiply by −1) before scoring. Overall PRS = mean of the four subscale means."
+     }
+    ]
+   }
+  ],
+  "title": "Peony Gardens and Stress Recovery",
+  "locale": "en",
+  "spSite": {
+   "id": "site-05e34aecccc7d50a",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Peony Gardens and Stress Recovery</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Peony Gardens and Stress Recovery\",\n  \"description\": \"After a short stress task (serial subtraction), each participant is randomly assigned to one of four settings (mountainous, terraced or flatland peony garden, or an indoor office) and views its six 360° scenes for one minute each, then rates stress again and completes the Perceived Restorativeness Scale. Rebuilt from Zhao, Ma, Zhang, Hu & Zhang (2026), Frontiers in Psychology 17: 1935645, with the paper's 24 panoramic photographs (Figure 2, CC BY 4.0).\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"scenes\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. The study includes a short, mildly stressful arithmetic task; I can stop at any time. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     },\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"min\": 16,\n      \"max\": 99\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"environment\",\n      \"title\": \"Assigned setting (set by the page)\",\n      \"description\": \"Random assignment to one of the paper's four groups; the participant sees its six scenes (files <group>_1 … <group>_6) in random order.\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"mpg\",\n        \"text\": \"Mountainous peony garden (MPG)\"\n       },\n       {\n        \"value\": \"tpg\",\n        \"text\": \"Terraced peony garden (TPG)\"\n       },\n       {\n        \"value\": \"fpg\",\n        \"text\": \"Flatland peony garden (FPG)\"\n       },\n       {\n        \"value\": \"ie\",\n        \"text\": \"Indoor office, control (IE)\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"stress\",\n    \"elements\": [\n     {\n      \"type\": \"rating\",\n      \"name\": \"stress_level\",\n      \"title\": \"How stressed do you feel right now?\",\n      \"description\": \"Asked three times, keyed baseline / after_task / after_viewing.\",\n      \"rateMin\": 0,\n      \"rateMax\": 10,\n      \"minRateDescription\": \"Not at all stressed\",\n      \"maxRateDescription\": \"Extremely stressed\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"task_correct\",\n      \"title\": \"Serial subtraction: correct steps in 3 minutes (recorded by the page)\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"task_errors\",\n      \"title\": \"Serial subtraction: errors (recorded by the page)\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"restoration\",\n    \"elements\": [\n     {\n      \"type\": \"matrix\",\n      \"name\": \"prs\",\n      \"title\": \"Thinking of the place you just saw, how much do you agree with each statement?\",\n      \"description\": \"Perceived Restorativeness Scale, 16 items: being away ba1–ba2, fascination fa1–fa5, coherence co1–co4, compatibility cp1–cp5; scale −2 (strongly disagree) to +2 (strongly agree), as in the paper. The paper used a 23-item version that it does not print; this English wording is the 16-item version listed in Frontiers in Public Health 10:801453 (Table 5). Coherence items are negatively worded: reverse them (multiply by −1) before scoring. Overall PRS = mean of the four subscale means.\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"ba1\",\n        \"text\": \"It is an escape experience.\"\n       },\n       {\n        \"value\": \"ba2\",\n        \"text\": \"It gives me a good break from day-to-day routine.\"\n       },\n       {\n        \"value\": \"fa1\",\n        \"text\": \"The setting has fascinating qualities.\"\n       },\n       {\n        \"value\": \"fa2\",\n        \"text\": \"My attention is drawn to many interesting things.\"\n       },\n       {\n        \"value\": \"fa3\",\n        \"text\": \"I would like to get to know this place better.\"\n       },\n       {\n        \"value\": \"fa4\",\n        \"text\": \"There is much to explore and discover here.\"\n       },\n       {\n        \"value\": \"fa5\",\n        \"text\": \"I would like to spend more time looking at the surroundings.\"\n       },\n       {\n        \"value\": \"co1\",\n        \"text\": \"There is too much going on.\"\n       },\n       {\n        \"value\": \"co2\",\n        \"text\": \"It is a confusing place.\"\n       },\n       {\n        \"value\": \"co3\",\n        \"text\": \"There is a great deal of distraction.\"\n       },\n       {\n        \"value\": \"co4\",\n        \"text\": \"It is chaotic here.\"\n       },\n       {\n        \"value\": \"cp1\",\n        \"text\": \"I can do things I like here.\"\n       },\n       {\n        \"value\": \"cp2\",\n        \"text\": \"I have a sense that I belong here.\"\n       },\n       {\n        \"value\": \"cp3\",\n        \"text\": \"I have a sense of oneness with this setting.\"\n       },\n       {\n        \"value\": \"cp4\",\n        \"text\": \"Being here suits my personality.\"\n       },\n       {\n        \"value\": \"cp5\",\n        \"text\": \"I could find ways to enjoy myself in a place like this.\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": -2,\n        \"text\": \"−2\"\n       },\n       {\n        \"value\": -1,\n        \"text\": \"−1\"\n       },\n       {\n        \"value\": 0,\n        \"text\": \"0\"\n       },\n       {\n        \"value\": 1,\n        \"text\": \"+1\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"+2\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"peony-original\">{\"source\": \"Zhao et al. (2026) Front. Psychol. 17:1935645\", \"n_per_group\": 56, \"prs_overall_mean_sd\": {\"mpg\": [5.86, 1.81], \"tpg\": [4.05, 2.64], \"fpg\": [4.13, 2.43], \"ie\": [3.24, 1.32]}, \"note\": \"Paper: all three peony gardens more restorative than the office (p<0.001); MPG highest on being away and fascination.\"}</script>\n<style>\n:root{--bg:#f6f3f4;--card:#fff;--ink:#271f23;--muted:#6a5f64;--accent:#a23b62;--line:#e6dde1;--warn:#b3261e}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:960px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.45rem;margin:0 0 8px}h2{font-size:1.1rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.pano{height:min(56vh,460px);border-radius:12px;background-color:#000;background-repeat:repeat-x;background-size:auto 100%;cursor:grab;touch-action:pan-y;user-select:none}\n.timer{height:4px;background:var(--line);border-radius:2px;overflow:hidden;margin-top:8px}.timer>i{display:block;height:100%;background:var(--accent);width:0}\n.item{padding:12px 0;border-top:1px solid var(--line)}.item:first-child{border-top:0}\n.item .t{margin-bottom:8px}\n.scale{display:grid;gap:6px}\n.scale button{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:8px;padding:9px 0;font:inherit;font-weight:600;cursor:pointer}\n.scale button.on{background:var(--accent);border-color:var(--accent);color:#fff}\n.item.miss .t{color:var(--warn)}\n.anch{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin:4px 0 2px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.f{margin-top:16px}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:130px}\n.big{font-size:2.2rem;font-weight:700;text-align:center;margin:10px 0}\n.fb{text-align:center;min-height:1.4em;font-weight:600}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:960px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">360° photographs: Zhao, Ma, Zhang, Hu &amp; Zhang (2026), Frontiers in Psychology 17: 1935645, Figure 2, CC BY 4.0.</footer>\n<script>\n(function(){\n  var F=window.__VIEWMS, VIEW_MS=F||60000, TASK_MS=F?F*3:180000, KEY='peony:state', ENVS=['mpg','tpg','fpg','ie'];\n  var app=document.getElementById('app'), Q={}, files=[], st=null, tm=null, raf=null;\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var x=a[k];a[k]=a[j];a[j]=x;}return a;}\n  function scenes(env){return files.filter(function(f){return f.name.indexOf(env+'_')===0;});}\n  function byName(n){for(var i=0;i<files.length;i++)if(files[i].name===n)return files[i];return null;}\n  function radio(n){var q=Q[n];return '<div class=\"f\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function scaleHtml(k,label,vals,lo,hi){return '<div class=\"item\" data-k=\"'+esc(k)+'\"><div class=\"t\">'+esc(label)+'</div><div class=\"scale\" style=\"grid-template-columns:repeat('+vals.length+',1fr)\">'+vals.map(function(v){return '<button type=\"button\" data-v=\"'+v.v+'\">'+esc(v.t)+'</button>';}).join('')+'</div><div class=\"anch\"><span>'+esc(lo)+'</span><span>'+esc(hi)+'</span></div></div>';}\n  function bind(vals){app.querySelectorAll('.item').forEach(function(it){it.querySelectorAll('button').forEach(function(b){b.onclick=function(){vals[it.dataset.k]=Number(b.dataset.v);it.classList.remove('miss');it.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);});};});});}\n  function intro(){\n    app.innerHTML='<h1>Gardens and stress recovery</h1><p>First you will do a short, timed arithmetic task that many people find a little stressful. Then you will look around one place in 360° photographs for six minutes, and answer some questions about it. Please use a large screen in a quiet place. About 15 minutes.</p>'+\n      '<div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div class=\"f\"><b>'+esc(Q.age.title)+'</b><br><input type=\"number\" id=\"age\" min=\"16\" max=\"99\"></div>'+radio('gender')+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var age=Number(document.getElementById('age').value);if(!(age>=16&&age<=99))return err('Please enter your age.');\n      var g=app.querySelector('input[name=gender]:checked');if(!g)return err('Please answer: '+Q.gender.title);\n      var b=this;b.disabled=true;\n      Promise.all([SPSite.answer('consent',true),SPSite.answer('age',age),SPSite.answer('gender',g.value),SPSite.answer('environment',st.env,{shown:st.order})]).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}st.step='stress';st.when='baseline';save();route();});\n    };\n  }\n  function stress(){\n    var q=Q.stress_level,vals={},v=[];for(var i=0;i<=10;i++)v.push({v:i,t:String(i)});\n    var lead={baseline:'Before we start:',after_task:'The task is over.',after_viewing:'The viewing is over.'}[st.when];\n    app.innerHTML='<h2>'+esc(lead)+'</h2><div class=\"card\">'+scaleHtml('stress_level',q.title,v,'0 = '+q.minRateDescription,'10 = '+q.maxRateDescription)+'<div style=\"margin-top:12px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div></div>';\n    bind(vals);\n    document.getElementById('go').onclick=function(){if(vals.stress_level==null){app.querySelector('.item').classList.add('miss');return err('Please choose a number.');}\n      var b=this;b.disabled=true;SPSite.answer('stress_level',vals.stress_level,{key:st.when}).then(function(r){if(!ok(r)){b.disabled=false;return err(r.error);}\n        st.step={baseline:'taskintro',after_task:'viewintro',after_viewing:'prs'}[st.when];save();route();});};\n  }\n  function taskintro(){\n    app.innerHTML='<h2>Arithmetic task</h2><div class=\"card\"><p>Count backwards from <b>1022</b> in steps of <b>13</b> (1022, 1009, 996, …) as fast and accurately as you can, typing each number and pressing Enter. If you make a mistake you must start again from 1022. You have 3 minutes. Please do not use a calculator or paper.</p><button class=\"btn\" id=\"go\">Start the task</button></div>';\n    document.getElementById('go').onclick=function(){st.step='task';save();route();};\n  }\n  function task(){\n    var cur=1022,correct=0,errors=0,end=Date.now()+TASK_MS;\n    app.innerHTML='<h2>Count back from 1022 in steps of 13</h2><div class=\"card\"><div class=\"big\" id=\"cd\"></div><p style=\"text-align:center\">Last number: <b id=\"last\">1022</b></p><div style=\"text-align:center\"><input type=\"number\" id=\"ans\" autocomplete=\"off\" inputmode=\"numeric\"></div><p class=\"fb\" id=\"fb\"></p></div>';\n    var inp=document.getElementById('ans'),fb=document.getElementById('fb');inp.focus();\n    inp.onkeydown=function(e){if(e.key!=='Enter')return;var v=Number(inp.value);inp.value='';\n      if(v===cur-13){cur=v;correct++;fb.style.color='var(--ink)';fb.textContent='Correct';}else{errors++;cur=1022;fb.style.color='var(--warn)';fb.textContent='Wrong. Start again from 1022.';}\n      document.getElementById('last').textContent=cur;};\n    function tick(){var s=Math.max(0,Math.ceil((end-Date.now())/1000));document.getElementById('cd').textContent=Math.floor(s/60)+':'+('0'+(s%60)).slice(-2);\n      if(s<=0){clearInterval(tm);inp.disabled=true;Promise.all([SPSite.answer('task_correct',correct),SPSite.answer('task_errors',errors)]).then(function(){st.step='stress';st.when='after_task';save();route();});}}\n    tick();tm=setInterval(tick,F?10:250);\n  }\n  function viewintro(){\n    app.innerHTML='<h2>Look around</h2><div class=\"card\"><p>You will now see six 360° views of one place, one minute each. Drag the picture left or right to look around. Relax and imagine you are there.</p><button class=\"btn\" id=\"go\">Start viewing</button></div>';\n    document.getElementById('go').onclick=function(){st.step='view';st.k=0;save();route();};\n  }\n  function view(){\n    if(st.k>=st.order.length){st.step='stress';st.when='after_viewing';save();return route();}\n    var f=byName(st.order[st.k]);if(!f){st.k++;save();return view();}\n    app.innerHTML='<p>View '+(st.k+1)+' of '+st.order.length+' · drag to look around</p><div class=\"pano\" id=\"pano\" role=\"img\" aria-label=\"360° photograph\"></div><div class=\"timer\"><i id=\"tb\"></i></div>';\n    var p=document.getElementById('pano'),x=0,drag=null,last=performance.now();p.style.backgroundImage='url(\"'+f.url.replace(/\"/g,'%22')+'\")';\n    p.onpointerdown=function(e){drag=e.clientX;p.setPointerCapture(e.pointerId);p.style.cursor='grabbing';};\n    p.onpointermove=function(e){if(drag==null)return;x+=e.clientX-drag;drag=e.clientX;p.style.backgroundPosition=x+'px 0';};\n    p.onpointerup=p.onpointercancel=function(){drag=null;p.style.cursor='grab';};\n    cancelAnimationFrame(raf);(function spin(t){if(drag==null){x-=(t-last)*0.012;p.style.backgroundPosition=x+'px 0';}last=t;raf=requestAnimationFrame(spin);})(last);\n    var tb=document.getElementById('tb');tb.style.transition='width '+(VIEW_MS/1000)+'s linear';requestAnimationFrame(function(){requestAnimationFrame(function(){tb.style.width='100%';});});\n    tm=setTimeout(function(){st.k++;save();route();},VIEW_MS);\n  }\n  function prs(){\n    var q=Q.prs,vals={},rows=q.rows||[],cols=(q.columns||[]).map(function(c){return {v:c.value,t:c.text};});\n    app.innerHTML='<h2>'+esc(q.title)+'</h2><div class=\"card\">'+rows.map(function(r){return scaleHtml(r.value,r.text,cols,'−2 = strongly disagree','+2 = strongly agree');}).join('')+'<div style=\"margin-top:12px\"><button class=\"btn\" id=\"go\">Finish</button></div><div class=\"err\"></div></div>';\n    window.scrollTo(0,0);bind(vals);\n    document.getElementById('go').onclick=function(){var miss=rows.filter(function(r){return vals[r.value]==null;});\n      miss.forEach(function(r){app.querySelector('.item[data-k=\"'+r.value+'\"]').classList.add('miss');});if(miss.length)return err('Please answer every statement ('+miss.length+' missing, marked).');\n      var b=this;b.disabled=true;SPSite.answer('prs',vals,{shown:st.order}).then(function(r){if(!ok(r)){b.disabled=false;return err(r.error);}st.step='done';save();route();});};\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st.step='intro';save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  function route(){clearTimeout(tm);clearInterval(tm);cancelAnimationFrame(raf);var s=st.step;\n    if(s==='stress')return stress();if(s==='taskintro')return taskintro();if(s==='task')return task();if(s==='viewintro')return viewintro();if(s==='view')return view();if(s==='prs')return prs();if(s==='done')return finish();intro();}\n  SPSite.onReady(function(ctx){\n    ['consent','age','gender','environment','stress_level','task_correct','task_errors','prs'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    files=(SPSite.getMedia('scenes')||[]).filter(function(f){return /\\.(jpe?g|png|webp)$/i.test(f.name);});\n    var avail=ENVS.filter(function(e){return scenes(e).length;});\n    if(!avail.length){app.innerHTML='<h1>Photos missing</h1><p>Upload the 360° photographs to the media folder \"scenes\" (mpg_1 … mpg_6, tpg_…, fpg_…, ie_…).</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    if(!st||avail.indexOf(st.env)<0||!st.order||st.order.some(function(n){return !byName(n);})){var env=avail[Math.floor(Math.random()*avail.length)];st={step:'intro',env:env,order:shuffle(scenes(env).map(function(f){return f.name;}))};}\n    var a=(ctx&&ctx.answers)||{};if(a.consent!==true)st.step='intro';\n    if(st.step==='task')st.step='taskintro';\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T04:56:59.855Z",
+   "mediaFolders": [
+    "scenes"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T04:56:59.855Z"
+  },
+  "description": "After a short stress task (serial subtraction), each participant is randomly assigned to one of four settings (mountainous, terraced or flatland peony garden, or an indoor office) and views its six 360° scenes for one minute each, then rates stress again and completes the Perceived Restorativeness Scale. Rebuilt from Zhao, Ma, Zhang, Hu & Zhang (2026), Frontiers in Psychology 17: 1935645, with the paper's 24 panoramic photographs (Figure 2, CC BY 4.0).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2026-zhao-peony/scenes/fpg_1__bdee4c9c-76e0-4b45-804a-6e47774596dc.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/fpg_1__bdee4c9c-76e0-4b45-804a-6e47774596dc.jpg",
+   "name": "fpg_1.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/fpg_1__bdee4c9c-76e0-4b45-804a-6e47774596dc.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 34231,
+   "uploaded_bytes": 34231,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/fpg_2__aac805fa-0fd0-4cc0-96d5-1d6181314415.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/fpg_2__aac805fa-0fd0-4cc0-96d5-1d6181314415.jpg",
+   "name": "fpg_2.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/fpg_2__aac805fa-0fd0-4cc0-96d5-1d6181314415.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 36617,
+   "uploaded_bytes": 36617,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/fpg_3__6ba1a289-124d-42b5-9b30-1b31194a2856.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/fpg_3__6ba1a289-124d-42b5-9b30-1b31194a2856.jpg",
+   "name": "fpg_3.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/fpg_3__6ba1a289-124d-42b5-9b30-1b31194a2856.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 38535,
+   "uploaded_bytes": 38535,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/fpg_4__dc0f0cc0-69df-4c5e-a7ac-e2ad4a84a6b6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/fpg_4__dc0f0cc0-69df-4c5e-a7ac-e2ad4a84a6b6.jpg",
+   "name": "fpg_4.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/fpg_4__dc0f0cc0-69df-4c5e-a7ac-e2ad4a84a6b6.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 33514,
+   "uploaded_bytes": 33514,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/fpg_5__d6f558e5-e4d9-467a-8d32-1ab1c99258a4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/fpg_5__d6f558e5-e4d9-467a-8d32-1ab1c99258a4.jpg",
+   "name": "fpg_5.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/fpg_5__d6f558e5-e4d9-467a-8d32-1ab1c99258a4.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 43194,
+   "uploaded_bytes": 43194,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/fpg_6__a0ea908b-1c1c-47b7-b8a9-3dc1f813bb72.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/fpg_6__a0ea908b-1c1c-47b7-b8a9-3dc1f813bb72.jpg",
+   "name": "fpg_6.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/fpg_6__a0ea908b-1c1c-47b7-b8a9-3dc1f813bb72.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 37745,
+   "uploaded_bytes": 37745,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/ie_1__86abc8cc-41e0-4a4c-8bed-b88b370b0ad9.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/ie_1__86abc8cc-41e0-4a4c-8bed-b88b370b0ad9.jpg",
+   "name": "ie_1.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/ie_1__86abc8cc-41e0-4a4c-8bed-b88b370b0ad9.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 41877,
+   "uploaded_bytes": 41877,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/ie_2__09fcf9f5-2500-4429-bc97-58d4b84476bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/ie_2__09fcf9f5-2500-4429-bc97-58d4b84476bf.jpg",
+   "name": "ie_2.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/ie_2__09fcf9f5-2500-4429-bc97-58d4b84476bf.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 43718,
+   "uploaded_bytes": 43718,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/ie_3__16962850-3abe-4f66-9434-de938b817e4b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/ie_3__16962850-3abe-4f66-9434-de938b817e4b.jpg",
+   "name": "ie_3.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/ie_3__16962850-3abe-4f66-9434-de938b817e4b.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 43192,
+   "uploaded_bytes": 43192,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/ie_4__2bc77e0f-6e8c-4f7b-a95f-e3ecf458950b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/ie_4__2bc77e0f-6e8c-4f7b-a95f-e3ecf458950b.jpg",
+   "name": "ie_4.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/ie_4__2bc77e0f-6e8c-4f7b-a95f-e3ecf458950b.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 42135,
+   "uploaded_bytes": 42135,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/ie_5__1efd89ba-21bd-477c-a9c3-341a257a450a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/ie_5__1efd89ba-21bd-477c-a9c3-341a257a450a.jpg",
+   "name": "ie_5.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/ie_5__1efd89ba-21bd-477c-a9c3-341a257a450a.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 43886,
+   "uploaded_bytes": 43886,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/ie_6__7d9fda13-f254-4b05-b7e2-8765abe65134.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/ie_6__7d9fda13-f254-4b05-b7e2-8765abe65134.jpg",
+   "name": "ie_6.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/ie_6__7d9fda13-f254-4b05-b7e2-8765abe65134.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 43905,
+   "uploaded_bytes": 43905,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/mpg_1__c35ffb7c-10d7-4795-abda-7128e4d21212.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/mpg_1__c35ffb7c-10d7-4795-abda-7128e4d21212.jpg",
+   "name": "mpg_1.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/mpg_1__c35ffb7c-10d7-4795-abda-7128e4d21212.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 30300,
+   "uploaded_bytes": 30300,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/mpg_2__57ff96e9-4a63-4e2e-927d-806dcbe9f117.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/mpg_2__57ff96e9-4a63-4e2e-927d-806dcbe9f117.jpg",
+   "name": "mpg_2.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/mpg_2__57ff96e9-4a63-4e2e-927d-806dcbe9f117.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 33397,
+   "uploaded_bytes": 33397,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/mpg_3__feb0c117-6307-4238-b92e-9fdb418c8ed6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/mpg_3__feb0c117-6307-4238-b92e-9fdb418c8ed6.jpg",
+   "name": "mpg_3.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/mpg_3__feb0c117-6307-4238-b92e-9fdb418c8ed6.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 35481,
+   "uploaded_bytes": 35481,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/mpg_4__0dfd07ab-3ebf-4429-adcd-7e628951c87f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/mpg_4__0dfd07ab-3ebf-4429-adcd-7e628951c87f.jpg",
+   "name": "mpg_4.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/mpg_4__0dfd07ab-3ebf-4429-adcd-7e628951c87f.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 30238,
+   "uploaded_bytes": 30238,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/mpg_5__5216027f-4046-4195-852a-13539abbbb06.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/mpg_5__5216027f-4046-4195-852a-13539abbbb06.jpg",
+   "name": "mpg_5.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/mpg_5__5216027f-4046-4195-852a-13539abbbb06.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 36361,
+   "uploaded_bytes": 36361,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/mpg_6__bb8a50b1-43fd-4393-b668-71b4c7eecb2a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/mpg_6__bb8a50b1-43fd-4393-b668-71b4c7eecb2a.jpg",
+   "name": "mpg_6.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/mpg_6__bb8a50b1-43fd-4393-b668-71b4c7eecb2a.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 31621,
+   "uploaded_bytes": 31621,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/tpg_1__0fea23ce-ad5f-4d24-abcf-cf533032e970.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/tpg_1__0fea23ce-ad5f-4d24-abcf-cf533032e970.jpg",
+   "name": "tpg_1.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/tpg_1__0fea23ce-ad5f-4d24-abcf-cf533032e970.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 35935,
+   "uploaded_bytes": 35935,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/tpg_2__84dae82e-fce3-49e0-8d85-55609c463f55.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/tpg_2__84dae82e-fce3-49e0-8d85-55609c463f55.jpg",
+   "name": "tpg_2.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/tpg_2__84dae82e-fce3-49e0-8d85-55609c463f55.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 34841,
+   "uploaded_bytes": 34841,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/tpg_3__16d52b71-8c7d-4aa5-9775-b2e60abd3653.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/tpg_3__16d52b71-8c7d-4aa5-9775-b2e60abd3653.jpg",
+   "name": "tpg_3.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/tpg_3__16d52b71-8c7d-4aa5-9775-b2e60abd3653.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 33870,
+   "uploaded_bytes": 33870,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/tpg_4__aec15550-b6de-493f-8019-251c4c1659d2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/tpg_4__aec15550-b6de-493f-8019-251c4c1659d2.jpg",
+   "name": "tpg_4.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/tpg_4__aec15550-b6de-493f-8019-251c4c1659d2.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 26255,
+   "uploaded_bytes": 26255,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/tpg_5__7c50d000-7df9-47d5-873b-7060bdeee836.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/tpg_5__7c50d000-7df9-47d5-873b-7060bdeee836.jpg",
+   "name": "tpg_5.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/tpg_5__7c50d000-7df9-47d5-873b-7060bdeee836.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 33443,
+   "uploaded_bytes": 33443,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhao-peony/scenes/tpg_6__4755f6fd-29ee-41ef-92c7-11d2e943eb03.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhao-peony/scenes/tpg_6__4755f6fd-29ee-41ef-92c7-11d2e943eb03.jpg",
+   "name": "tpg_6.jpg",
+   "type": "image",
+   "folder": "scenes",
+   "media_id": "templates/2026-zhao-peony/scenes/tpg_6__4755f6fd-29ee-41ef-92c7-11d2e943eb03.jpg",
+   "logicalFolder": "scenes",
+   "original_bytes": 34936,
+   "uploaded_bytes": 34936,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Stress recovery and restorative effects of viewing different types of peony garden landscapes: a preliminary experiment",
+  "authors": [
+   "Renlin Zhao",
+   "Yun Ma",
+   "Wenzhong Zhang",
+   "Xingzhe Hu",
+   "Xinping Zhang"
+  ],
+  "year": 2026,
+  "venue": "Frontiers in Psychology",
+  "doi": "10.3389/fpsyg.2026.1935645",
+  "url": "https://doi.org/10.3389/fpsyg.2026.1935645"
+ }
+}

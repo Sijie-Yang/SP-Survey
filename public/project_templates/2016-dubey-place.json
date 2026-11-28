@@ -1,266 +1,2720 @@
 {
-  "id": "2016-dubey-place",
-  "name": "Place Pulse 2.0 - Urban Perception (6 Dimensions)",
-  "description": "Pairwise comparison survey measuring six perceptual dimensions of street scenes: safety, liveliness, beauty, wealth, depressingness, and boringness. Replicates the crowdsourcing methodology of the Place Pulse 2.0 dataset (1.17M comparisons, 56 cities). Bundled images are photographs from the paper PDF (62 scenes), not the original full stimulus set.",
-  "author": "Dubey et al.",
-  "year": "2016",
-  "category": "Academic Research",
-  "tags": [
-    "reference",
-    "ai-generated",
-    "official"
+ "id": "2016-dubey-place",
+ "name": "Place Pulse 2.0: Six Urban Perceptions (16 cities)",
+ "description": "Method replication: same six questions and pairwise design as the paper; the images are not the paper's stimuli (new Google Street View views of 16 cities, © Google). Dubey, Naik, Parikh, Raskar & Hidalgo (2016, \"Deep Learning the City\", ECCV 2016, LNCS) introduced the Place Pulse 2.0 dataset: 110,988 images from 56 cities and 1.17 million pairwise comparisons from 81,630 online volunteers on six attributes (safe, lively, boring, wealthy, depressing, beautiful). A Siamese-like convolutional network trained with joint classification and ranking losses predicted the human pairwise judgements.\n\nWhat participants do: after consent, 5 pairs for each of six questions: which place looks safer, livelier, more beautiful, wealthier, more depressing, more boring. Images are drawn at random from 190 views of 16 cities on six continents (New York, Boston, Toronto, Mexico City, São Paulo, Santiago, London, Paris, Amsterdam, Stockholm, Linz, Salzburg, Bucharest, Johannesburg, Tokyo, Sydney). Then age, gender and where they grew up.\n\nAnalysis as in the paper: per-image scores for each attribute from pairwise wins (the paper's Q-score / TrueSkill), compared across cities, and used as labels for a pairwise ranking model.\n\nDifferences from the original study: (1) the images are new Google Street View views (2016–2026) of 16 of the 56 cities, 10–14 per city; (2) the original website allowed unlimited votes; this template asks 5 pairs per attribute. The earlier version of this template showed 62 photographs cropped from the paper PDF.",
+ "author": "Dubey, Naik, Parikh, Raskar & Hidalgo",
+ "year": "2016",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "place-pulse",
+  "global",
+  "pairwise",
+  "source:paper",
+  "modality:street_view",
+  "task:pairwise",
+  "concept:safety",
+  "concept:liveliness",
+  "concept:beauty",
+  "concept:wealth",
+  "concept:depressing",
+  "concept:boring",
+  "participants:crowd",
+  "sample:gt1000",
+  "country:USA",
+  "country:Canada",
+  "country:Mexico",
+  "country:Brazil",
+  "country:Chile",
+  "country:UK",
+  "country:France",
+  "country:Netherlands",
+  "country:Sweden",
+  "country:Austria",
+  "country:Romania",
+  "country:South Africa",
+  "country:Japan",
+  "country:Australia",
+  "city:New York",
+  "city:Boston",
+  "city:Toronto",
+  "city:Mexico City",
+  "city:São Paulo",
+  "city:Santiago",
+  "city:London",
+  "city:Paris",
+  "city:Amsterdam",
+  "city:Stockholm",
+  "city:Linz",
+  "city:Salzburg",
+  "city:Bucharest",
+  "city:Johannesburg",
+  "city:Tokyo",
+  "city:Sydney"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1007/978-3-319-46448-0_12",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-05-04T00:00:00+00:00",
+ "updatedAt": "2026-11-27T05:44:39.121+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "safe",
+      "type": "imagepicker",
+      "title": "Which place looks safer?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 5,
+      "mediaFolders": [
+       "nyc",
+       "boston",
+       "london",
+       "amsterdam",
+       "stockholm",
+       "santiago",
+       "linz",
+       "salzburg",
+       "paris",
+       "tokyo",
+       "sydney",
+       "saopaulo",
+       "johannesburg",
+       "mexicocity",
+       "toronto",
+       "bucharest"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_2",
+    "elements": [
+     {
+      "name": "lively",
+      "type": "imagepicker",
+      "title": "Which place looks livelier?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 5,
+      "mediaFolders": [
+       "nyc",
+       "boston",
+       "london",
+       "amsterdam",
+       "stockholm",
+       "santiago",
+       "linz",
+       "salzburg",
+       "paris",
+       "tokyo",
+       "sydney",
+       "saopaulo",
+       "johannesburg",
+       "mexicocity",
+       "toronto",
+       "bucharest"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_3",
+    "elements": [
+     {
+      "name": "beautiful",
+      "type": "imagepicker",
+      "title": "Which place looks more beautiful?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 5,
+      "mediaFolders": [
+       "nyc",
+       "boston",
+       "london",
+       "amsterdam",
+       "stockholm",
+       "santiago",
+       "linz",
+       "salzburg",
+       "paris",
+       "tokyo",
+       "sydney",
+       "saopaulo",
+       "johannesburg",
+       "mexicocity",
+       "toronto",
+       "bucharest"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_4",
+    "elements": [
+     {
+      "name": "wealthy",
+      "type": "imagepicker",
+      "title": "Which place looks wealthier?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 5,
+      "mediaFolders": [
+       "nyc",
+       "boston",
+       "london",
+       "amsterdam",
+       "stockholm",
+       "santiago",
+       "linz",
+       "salzburg",
+       "paris",
+       "tokyo",
+       "sydney",
+       "saopaulo",
+       "johannesburg",
+       "mexicocity",
+       "toronto",
+       "bucharest"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_5",
+    "elements": [
+     {
+      "name": "depressing",
+      "type": "imagepicker",
+      "title": "Which place looks more depressing?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 5,
+      "mediaFolders": [
+       "nyc",
+       "boston",
+       "london",
+       "amsterdam",
+       "stockholm",
+       "santiago",
+       "linz",
+       "salzburg",
+       "paris",
+       "tokyo",
+       "sydney",
+       "saopaulo",
+       "johannesburg",
+       "mexicocity",
+       "toronto",
+       "bucharest"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_6",
+    "elements": [
+     {
+      "name": "boring",
+      "type": "imagepicker",
+      "title": "Which place looks more boring?",
+      "choices": [],
+      "imageFit": "cover",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 5,
+      "mediaFolders": [
+       "nyc",
+       "boston",
+       "london",
+       "amsterdam",
+       "stockholm",
+       "santiago",
+       "linz",
+       "salzburg",
+       "paris",
+       "tokyo",
+       "sydney",
+       "saopaulo",
+       "johannesburg",
+       "mexicocity",
+       "toronto",
+       "bucharest"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "18–24",
+        "value": "18-24"
+       },
+       {
+        "text": "25–34",
+        "value": "25-34"
+       },
+       {
+        "text": "35–44",
+        "value": "35-44"
+       },
+       {
+        "text": "45–54",
+        "value": "45-54"
+       },
+       {
+        "text": "55–64",
+        "value": "55-64"
+       },
+       {
+        "text": "65+",
+        "value": "65+"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other",
+        "value": "other"
+       },
+       {
+        "text": "Prefer not to say",
+        "value": "prefer_not_to_say"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "residence_type",
+      "type": "radiogroup",
+      "title": "Which best describes where you grew up?",
+      "choices": [
+       {
+        "text": "Urban (city centre)",
+        "value": "urban_(city_centre)"
+       },
+       {
+        "text": "Suburban",
+        "value": "suburban"
+       },
+       {
+        "text": "Rural",
+        "value": "rural"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
   ],
-  "isPinned": false,
-  "isApproved": true,
-  "showOnLanding": true,
-  "thumbnailUrl": null,
-  "website": "https://arxiv.org/abs/1608.01769",
-  "huggingfaceDataset": null,
-  "createdAt": "2026-05-04T00:00:00+00:00",
-  "config": {
-    "pages": [
-      {
-        "name": "page_safe",
-        "title": "Safety Perception",
-        "elements": [
-          {
-            "name": "safe",
-            "type": "imagepicker",
-            "title": "Which place looks safer?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          }
-        ],
-        "description": "Look at the two street scenes below and choose the one that looks SAFER."
-      },
-      {
-        "name": "page_lively",
-        "title": "Liveliness Perception",
-        "elements": [
-          {
-            "name": "lively",
-            "type": "imagepicker",
-            "title": "Which place looks livelier?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          }
-        ],
-        "description": "Look at the two street scenes below and choose the one that looks more LIVELY."
-      },
-      {
-        "name": "page_beautiful",
-        "title": "Beauty Perception",
-        "elements": [
-          {
-            "name": "beautiful",
-            "type": "imagepicker",
-            "title": "Which place looks more beautiful?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          }
-        ],
-        "description": "Look at the two street scenes below and choose the one that looks more BEAUTIFUL."
-      },
-      {
-        "name": "page_wealthy",
-        "title": "Wealth Perception",
-        "elements": [
-          {
-            "name": "wealthy",
-            "type": "imagepicker",
-            "title": "Which place looks wealthier?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          }
-        ],
-        "description": "Look at the two street scenes below and choose the one that looks more WEALTHY."
-      },
-      {
-        "name": "page_depressing",
-        "title": "Depressingness Perception",
-        "elements": [
-          {
-            "name": "depressing",
-            "type": "imagepicker",
-            "title": "Which place looks more depressing?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          }
-        ],
-        "description": "Look at the two street scenes below and choose the one that looks more DEPRESSING."
-      },
-      {
-        "name": "page_boring",
-        "title": "Boringness Perception",
-        "elements": [
-          {
-            "name": "boring",
-            "type": "imagepicker",
-            "title": "Which place looks more boring?",
-            "imageFit": "cover",
-            "imageCount": 2,
-            "isRequired": true,
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true
-          }
-        ],
-        "description": "Look at the two street scenes below and choose the one that looks more BORING."
-      },
-      {
-        "name": "page_demographics",
-        "title": "Background Information (Optional)",
-        "elements": [
-          {
-            "name": "age_group",
-            "type": "dropdown",
-            "title": "Age group",
-            "choices": [
-              {
-                "text": "Under 18",
-                "value": "under_18"
-              },
-              {
-                "text": "18–24",
-                "value": "18_24"
-              },
-              {
-                "text": "25–34",
-                "value": "25_34"
-              },
-              {
-                "text": "35–44",
-                "value": "35_44"
-              },
-              {
-                "text": "45–54",
-                "value": "45_54"
-              },
-              {
-                "text": "55–64",
-                "value": "55_64"
-              },
-              {
-                "text": "65 or older",
-                "value": "65_plus"
-              }
-            ],
-            "isRequired": false
-          },
-          {
-            "name": "gender",
-            "type": "dropdown",
-            "title": "Gender",
-            "choices": [
-              {
-                "text": "Male",
-                "value": "male"
-              },
-              {
-                "text": "Female",
-                "value": "female"
-              },
-              {
-                "text": "Non-binary / third gender",
-                "value": "non_binary"
-              },
-              {
-                "text": "Prefer not to say",
-                "value": "prefer_not"
-              }
-            ],
-            "isRequired": false
-          },
-          {
-            "name": "residence_type",
-            "type": "dropdown",
-            "title": "Which best describes where you grew up?",
-            "choices": [
-              {
-                "text": "Urban (city centre)",
-                "value": "urban"
-              },
-              {
-                "text": "Suburban",
-                "value": "suburban"
-              },
-              {
-                "text": "Rural",
-                "value": "rural"
-              }
-            ],
-            "isRequired": false
-          }
-        ],
-        "description": "A few brief questions about yourself."
-      }
-    ],
-    "title": "Place Pulse 2.0 – Urban Perception Survey",
-    "description": "For each pair of street images, choose the one that looks more [safe / lively / beautiful / wealthy / depressing / boring]. Based on: Dubey, A., Naik, N., Parikh, D., Raskar, R., & Hidalgo, C. A. (2016). Deep learning the city: Quantifying urban perception at a global scale. ECCV 2016.",
-    "logoPosition": "right",
-    "autoGrowComment": true,
-    "progressBarType": "questions",
-    "showProgressBar": "aboveheader",
-    "showQuestionNumbers": "off",
-    "showPreviewBeforeComplete": "showAllQuestions",
-    "spAnalysisRecommendation": {
-      "citation": "Dubey et al. 2016; Salesses et al. 2013",
-      "items": [
-        {
-          "questions": [
-            "safe",
-            "lively",
-            "boring",
-            "wealthy",
-            "depressing",
-            "beautiful"
-          ],
-          "method": "qscore_pairwise",
-          "minPerImage": 4,
-          "scale": "0-10"
-        },
-        {
-          "questions": [
-            "safe",
-            "lively",
-            "boring",
-            "wealthy",
-            "depressing",
-            "beautiful"
-          ],
-          "method": "trueskill_pairwise",
-          "tieHandling": "exclude",
-          "runs": 1,
-          "scale": "0-10"
-        }
-      ]
-    }
+  "title": "Place Pulse 2.0: Six Urban Perceptions (Global Street Pairs)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-c987102996ca8f85",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Place Pulse 2.0: Six Urban Perceptions (Global Street Pairs)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Place Pulse 2.0: Six Urban Perceptions (Global Street Pairs)\",\n  \"description\": \"Pairs of street views from 16 cities on six continents, compared on six perceptions: safer, livelier, more beautiful, wealthier, more depressing, more boring. Method replication of the Place Pulse 2.0 crowdsourcing task in Dubey, Naik, Parikh, Raskar & Hidalgo (2016, ECCV).\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"safe\",\n      \"title\": \"Which place looks safer?\",\n      \"imageCount\": 2,\n      \"trialCount\": 5,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"nyc\",\n       \"boston\",\n       \"london\",\n       \"amsterdam\",\n       \"stockholm\",\n       \"santiago\",\n       \"linz\",\n       \"salzburg\",\n       \"paris\",\n       \"tokyo\",\n       \"sydney\",\n       \"saopaulo\",\n       \"johannesburg\",\n       \"mexicocity\",\n       \"toronto\",\n       \"bucharest\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"imageFit\": \"cover\",\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_2\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"lively\",\n      \"title\": \"Which place looks livelier?\",\n      \"imageCount\": 2,\n      \"trialCount\": 5,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"nyc\",\n       \"boston\",\n       \"london\",\n       \"amsterdam\",\n       \"stockholm\",\n       \"santiago\",\n       \"linz\",\n       \"salzburg\",\n       \"paris\",\n       \"tokyo\",\n       \"sydney\",\n       \"saopaulo\",\n       \"johannesburg\",\n       \"mexicocity\",\n       \"toronto\",\n       \"bucharest\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"imageFit\": \"cover\",\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_3\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"beautiful\",\n      \"title\": \"Which place looks more beautiful?\",\n      \"imageCount\": 2,\n      \"trialCount\": 5,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"nyc\",\n       \"boston\",\n       \"london\",\n       \"amsterdam\",\n       \"stockholm\",\n       \"santiago\",\n       \"linz\",\n       \"salzburg\",\n       \"paris\",\n       \"tokyo\",\n       \"sydney\",\n       \"saopaulo\",\n       \"johannesburg\",\n       \"mexicocity\",\n       \"toronto\",\n       \"bucharest\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"imageFit\": \"cover\",\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_4\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"wealthy\",\n      \"title\": \"Which place looks wealthier?\",\n      \"imageCount\": 2,\n      \"trialCount\": 5,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"nyc\",\n       \"boston\",\n       \"london\",\n       \"amsterdam\",\n       \"stockholm\",\n       \"santiago\",\n       \"linz\",\n       \"salzburg\",\n       \"paris\",\n       \"tokyo\",\n       \"sydney\",\n       \"saopaulo\",\n       \"johannesburg\",\n       \"mexicocity\",\n       \"toronto\",\n       \"bucharest\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"imageFit\": \"cover\",\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_5\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"depressing\",\n      \"title\": \"Which place looks more depressing?\",\n      \"imageCount\": 2,\n      \"trialCount\": 5,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"nyc\",\n       \"boston\",\n       \"london\",\n       \"amsterdam\",\n       \"stockholm\",\n       \"santiago\",\n       \"linz\",\n       \"salzburg\",\n       \"paris\",\n       \"tokyo\",\n       \"sydney\",\n       \"saopaulo\",\n       \"johannesburg\",\n       \"mexicocity\",\n       \"toronto\",\n       \"bucharest\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"imageFit\": \"cover\",\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_6\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"boring\",\n      \"title\": \"Which place looks more boring?\",\n      \"imageCount\": 2,\n      \"trialCount\": 5,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"nyc\",\n       \"boston\",\n       \"london\",\n       \"amsterdam\",\n       \"stockholm\",\n       \"santiago\",\n       \"linz\",\n       \"salzburg\",\n       \"paris\",\n       \"tokyo\",\n       \"sydney\",\n       \"saopaulo\",\n       \"johannesburg\",\n       \"mexicocity\",\n       \"toronto\",\n       \"bucharest\"\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"imageFit\": \"cover\",\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"Age\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"18-24\",\n        \"text\": \"18–24\"\n       },\n       {\n        \"value\": \"25-34\",\n        \"text\": \"25–34\"\n       },\n       {\n        \"value\": \"35-44\",\n        \"text\": \"35–44\"\n       },\n       {\n        \"value\": \"45-54\",\n        \"text\": \"45–54\"\n       },\n       {\n        \"value\": \"55-64\",\n        \"text\": \"55–64\"\n       },\n       {\n        \"value\": \"65+\",\n        \"text\": \"65+\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other\"\n       },\n       {\n        \"value\": \"prefer_not_to_say\",\n        \"text\": \"Prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"residence_type\",\n      \"title\": \"Which best describes where you grew up?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"urban_(city_centre)\",\n        \"text\": \"Urban (city centre)\"\n       },\n       {\n        \"value\": \"suburban\",\n        \"text\": \"Suburban\"\n       },\n       {\n        \"value\": \"rural\",\n        \"text\": \"Rural\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#5b3d7a;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: 16 cities, Google Street View (© Google). Task from Dubey, Naik, Parikh, Raskar &amp; Hidalgo (2016), Deep Learning the City, ECCV 2016, LNCS 9905, doi:10.1007/978-3-319-46448-0_12.</footer>\n<script>\n(function(){\n  var C={\"before\": [], \"after\": [\"age_group\", \"gender\", \"residence_type\"], \"tasks\": [\"safe\", \"lively\", \"beautiful\", \"wealthy\", \"depressing\", \"boring\"], \"minutes\": 6, \"alt\": \"Street view\", \"labels\": {}, \"pickOne\": null, \"heading\": \"Compare places around the world\", \"intro\": \"<p>You will see pairs of street views from cities around the world. Each part asks a different question: which place looks <b>safer</b>, <b>livelier</b>, <b>more beautiful</b>, <b>wealthier</b>, <b>more depressing</b> or <b>more boring</b>. Click the place that fits better. 5 pairs per question, 30 in total.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?'Pair ':'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(lab?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T05:40:55.639Z",
+   "mediaFolders": [
+    "amsterdam",
+    "boston",
+    "bucharest",
+    "johannesburg",
+    "linz",
+    "london",
+    "mexicocity",
+    "nyc",
+    "paris",
+    "salzburg",
+    "santiago",
+    "saopaulo",
+    "stockholm",
+    "sydney",
+    "tokyo",
+    "toronto"
+   ]
   },
-  "imageDatasetConfig": {
-    "mediaFolderTags": {},
-    "mediaFolders": []
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T05:40:55.639Z"
   },
-  "preloadedImages": [],
-  "preloadedSource": null,
-  "preloadedAt": null
+  "description": "Pairs of street views from 16 cities on six continents, compared on six perceptions: safer, livelier, more beautiful, wealthier, more depressing, more boring. Method replication of the Place Pulse 2.0 crowdsourcing task in Dubey, Naik, Parikh, Raskar & Hidalgo (2016, ECCV).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2016-dubey-place/amsterdam/amsterdam_01__9e0f0b09-74fa-42ea-8d2c-6da9493c2abc.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/amsterdam/amsterdam_01__9e0f0b09-74fa-42ea-8d2c-6da9493c2abc.jpg",
+   "name": "amsterdam_01.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2016-dubey-place/amsterdam/amsterdam_01__9e0f0b09-74fa-42ea-8d2c-6da9493c2abc.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 140266,
+   "uploaded_bytes": 140266,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/amsterdam/amsterdam_02__150a897b-51e1-412c-96eb-26a4daa92961.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/amsterdam/amsterdam_02__150a897b-51e1-412c-96eb-26a4daa92961.jpg",
+   "name": "amsterdam_02.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2016-dubey-place/amsterdam/amsterdam_02__150a897b-51e1-412c-96eb-26a4daa92961.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 180154,
+   "uploaded_bytes": 180154,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/amsterdam/amsterdam_03__ce74e29b-46fc-432d-a1f3-c4237254b0df.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/amsterdam/amsterdam_03__ce74e29b-46fc-432d-a1f3-c4237254b0df.jpg",
+   "name": "amsterdam_03.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2016-dubey-place/amsterdam/amsterdam_03__ce74e29b-46fc-432d-a1f3-c4237254b0df.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 151816,
+   "uploaded_bytes": 151816,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/amsterdam/amsterdam_04__8ed1d2de-3bcb-480a-8e14-91dfce143261.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/amsterdam/amsterdam_04__8ed1d2de-3bcb-480a-8e14-91dfce143261.jpg",
+   "name": "amsterdam_04.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2016-dubey-place/amsterdam/amsterdam_04__8ed1d2de-3bcb-480a-8e14-91dfce143261.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 116873,
+   "uploaded_bytes": 116873,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/amsterdam/amsterdam_05__5718c16f-08d3-4d07-b653-203f331baffc.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/amsterdam/amsterdam_05__5718c16f-08d3-4d07-b653-203f331baffc.jpg",
+   "name": "amsterdam_05.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2016-dubey-place/amsterdam/amsterdam_05__5718c16f-08d3-4d07-b653-203f331baffc.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 168636,
+   "uploaded_bytes": 168636,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/amsterdam/amsterdam_06__ef3f66a6-90fa-44ed-85f7-c937f993b5fe.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/amsterdam/amsterdam_06__ef3f66a6-90fa-44ed-85f7-c937f993b5fe.jpg",
+   "name": "amsterdam_06.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2016-dubey-place/amsterdam/amsterdam_06__ef3f66a6-90fa-44ed-85f7-c937f993b5fe.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 191971,
+   "uploaded_bytes": 191971,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/amsterdam/amsterdam_07__205bf966-39ac-4542-9df8-f5f155a1b896.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/amsterdam/amsterdam_07__205bf966-39ac-4542-9df8-f5f155a1b896.jpg",
+   "name": "amsterdam_07.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2016-dubey-place/amsterdam/amsterdam_07__205bf966-39ac-4542-9df8-f5f155a1b896.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 201490,
+   "uploaded_bytes": 201490,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/amsterdam/amsterdam_08__4d0ed5f5-fc8b-44d2-b7fa-49dc6b3b69ca.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/amsterdam/amsterdam_08__4d0ed5f5-fc8b-44d2-b7fa-49dc6b3b69ca.jpg",
+   "name": "amsterdam_08.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2016-dubey-place/amsterdam/amsterdam_08__4d0ed5f5-fc8b-44d2-b7fa-49dc6b3b69ca.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 134737,
+   "uploaded_bytes": 134737,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/amsterdam/amsterdam_09__c8bc92b2-71eb-4bfb-8502-8c7644337c9c.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/amsterdam/amsterdam_09__c8bc92b2-71eb-4bfb-8502-8c7644337c9c.jpg",
+   "name": "amsterdam_09.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2016-dubey-place/amsterdam/amsterdam_09__c8bc92b2-71eb-4bfb-8502-8c7644337c9c.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 170558,
+   "uploaded_bytes": 170558,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/amsterdam/amsterdam_10__6ea7e73f-b82f-416c-b1fb-18551d52ca73.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/amsterdam/amsterdam_10__6ea7e73f-b82f-416c-b1fb-18551d52ca73.jpg",
+   "name": "amsterdam_10.jpg",
+   "type": "image",
+   "folder": "amsterdam",
+   "media_id": "templates/2016-dubey-place/amsterdam/amsterdam_10__6ea7e73f-b82f-416c-b1fb-18551d52ca73.jpg",
+   "logicalFolder": "amsterdam",
+   "original_bytes": 151824,
+   "uploaded_bytes": 151824,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/boston/boston_01__18a36a91-98e1-45df-889c-1cd538195561.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/boston/boston_01__18a36a91-98e1-45df-889c-1cd538195561.jpg",
+   "name": "boston_01.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2016-dubey-place/boston/boston_01__18a36a91-98e1-45df-889c-1cd538195561.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 158670,
+   "uploaded_bytes": 158670,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/boston/boston_02__b131614d-1c18-4db9-ba7b-3c85187c2713.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/boston/boston_02__b131614d-1c18-4db9-ba7b-3c85187c2713.jpg",
+   "name": "boston_02.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2016-dubey-place/boston/boston_02__b131614d-1c18-4db9-ba7b-3c85187c2713.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 140704,
+   "uploaded_bytes": 140704,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/boston/boston_03__ad9bf83f-3321-4f59-b4f1-1d410314f788.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/boston/boston_03__ad9bf83f-3321-4f59-b4f1-1d410314f788.jpg",
+   "name": "boston_03.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2016-dubey-place/boston/boston_03__ad9bf83f-3321-4f59-b4f1-1d410314f788.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 140406,
+   "uploaded_bytes": 140406,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/boston/boston_04__cc0227cc-62d1-407b-accf-29dd62f857a2.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/boston/boston_04__cc0227cc-62d1-407b-accf-29dd62f857a2.jpg",
+   "name": "boston_04.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2016-dubey-place/boston/boston_04__cc0227cc-62d1-407b-accf-29dd62f857a2.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 118311,
+   "uploaded_bytes": 118311,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/boston/boston_05__5d732809-1d8d-42bb-80ec-c8225032da55.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/boston/boston_05__5d732809-1d8d-42bb-80ec-c8225032da55.jpg",
+   "name": "boston_05.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2016-dubey-place/boston/boston_05__5d732809-1d8d-42bb-80ec-c8225032da55.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 161215,
+   "uploaded_bytes": 161215,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/boston/boston_06__25dd763d-7881-411d-adb2-46d619af5f94.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/boston/boston_06__25dd763d-7881-411d-adb2-46d619af5f94.jpg",
+   "name": "boston_06.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2016-dubey-place/boston/boston_06__25dd763d-7881-411d-adb2-46d619af5f94.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 95234,
+   "uploaded_bytes": 95234,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/boston/boston_07__225e923e-d8f7-456e-8645-bdb2b4c128f9.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/boston/boston_07__225e923e-d8f7-456e-8645-bdb2b4c128f9.jpg",
+   "name": "boston_07.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2016-dubey-place/boston/boston_07__225e923e-d8f7-456e-8645-bdb2b4c128f9.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 89548,
+   "uploaded_bytes": 89548,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/boston/boston_08__b9abc738-976c-457e-bf9e-2789f3b3a668.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/boston/boston_08__b9abc738-976c-457e-bf9e-2789f3b3a668.jpg",
+   "name": "boston_08.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2016-dubey-place/boston/boston_08__b9abc738-976c-457e-bf9e-2789f3b3a668.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 149465,
+   "uploaded_bytes": 149465,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/boston/boston_09__9084bbc8-2101-4053-9f6c-bbc59a6aa2d1.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/boston/boston_09__9084bbc8-2101-4053-9f6c-bbc59a6aa2d1.jpg",
+   "name": "boston_09.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2016-dubey-place/boston/boston_09__9084bbc8-2101-4053-9f6c-bbc59a6aa2d1.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 105614,
+   "uploaded_bytes": 105614,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/boston/boston_10__1731170c-2076-411a-ad64-e3f9e3bdc7b5.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/boston/boston_10__1731170c-2076-411a-ad64-e3f9e3bdc7b5.jpg",
+   "name": "boston_10.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2016-dubey-place/boston/boston_10__1731170c-2076-411a-ad64-e3f9e3bdc7b5.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 151252,
+   "uploaded_bytes": 151252,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/bucharest/bucharest_01__8cae41df-5509-4a76-9eb2-2869c76544e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/bucharest/bucharest_01__8cae41df-5509-4a76-9eb2-2869c76544e7.jpg",
+   "name": "bucharest_01.jpg",
+   "type": "image",
+   "folder": "bucharest",
+   "media_id": "templates/2016-dubey-place/bucharest/bucharest_01__8cae41df-5509-4a76-9eb2-2869c76544e7.jpg",
+   "logicalFolder": "bucharest",
+   "original_bytes": 139564,
+   "uploaded_bytes": 139564,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/bucharest/bucharest_02__b9448471-69a2-4e51-98d8-0cebf420b026.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/bucharest/bucharest_02__b9448471-69a2-4e51-98d8-0cebf420b026.jpg",
+   "name": "bucharest_02.jpg",
+   "type": "image",
+   "folder": "bucharest",
+   "media_id": "templates/2016-dubey-place/bucharest/bucharest_02__b9448471-69a2-4e51-98d8-0cebf420b026.jpg",
+   "logicalFolder": "bucharest",
+   "original_bytes": 177382,
+   "uploaded_bytes": 177382,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/bucharest/bucharest_03__2a54ce70-aae8-4567-b357-fb048412be44.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/bucharest/bucharest_03__2a54ce70-aae8-4567-b357-fb048412be44.jpg",
+   "name": "bucharest_03.jpg",
+   "type": "image",
+   "folder": "bucharest",
+   "media_id": "templates/2016-dubey-place/bucharest/bucharest_03__2a54ce70-aae8-4567-b357-fb048412be44.jpg",
+   "logicalFolder": "bucharest",
+   "original_bytes": 129360,
+   "uploaded_bytes": 129360,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/bucharest/bucharest_04__a2713868-09c9-44c6-927d-50bb40432006.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/bucharest/bucharest_04__a2713868-09c9-44c6-927d-50bb40432006.jpg",
+   "name": "bucharest_04.jpg",
+   "type": "image",
+   "folder": "bucharest",
+   "media_id": "templates/2016-dubey-place/bucharest/bucharest_04__a2713868-09c9-44c6-927d-50bb40432006.jpg",
+   "logicalFolder": "bucharest",
+   "original_bytes": 137153,
+   "uploaded_bytes": 137153,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/bucharest/bucharest_05__1130efc0-2022-4bdf-a994-6fb5a7fc7ff5.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/bucharest/bucharest_05__1130efc0-2022-4bdf-a994-6fb5a7fc7ff5.jpg",
+   "name": "bucharest_05.jpg",
+   "type": "image",
+   "folder": "bucharest",
+   "media_id": "templates/2016-dubey-place/bucharest/bucharest_05__1130efc0-2022-4bdf-a994-6fb5a7fc7ff5.jpg",
+   "logicalFolder": "bucharest",
+   "original_bytes": 172123,
+   "uploaded_bytes": 172123,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/bucharest/bucharest_06__e8a0d812-d7ee-4741-9f7e-eb7cf845aae5.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/bucharest/bucharest_06__e8a0d812-d7ee-4741-9f7e-eb7cf845aae5.jpg",
+   "name": "bucharest_06.jpg",
+   "type": "image",
+   "folder": "bucharest",
+   "media_id": "templates/2016-dubey-place/bucharest/bucharest_06__e8a0d812-d7ee-4741-9f7e-eb7cf845aae5.jpg",
+   "logicalFolder": "bucharest",
+   "original_bytes": 170027,
+   "uploaded_bytes": 170027,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/bucharest/bucharest_07__bafaed1c-eb89-4b58-99ed-d72f80f45576.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/bucharest/bucharest_07__bafaed1c-eb89-4b58-99ed-d72f80f45576.jpg",
+   "name": "bucharest_07.jpg",
+   "type": "image",
+   "folder": "bucharest",
+   "media_id": "templates/2016-dubey-place/bucharest/bucharest_07__bafaed1c-eb89-4b58-99ed-d72f80f45576.jpg",
+   "logicalFolder": "bucharest",
+   "original_bytes": 191102,
+   "uploaded_bytes": 191102,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/bucharest/bucharest_08__c494dc45-81d5-4b82-90fe-2877276df54b.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/bucharest/bucharest_08__c494dc45-81d5-4b82-90fe-2877276df54b.jpg",
+   "name": "bucharest_08.jpg",
+   "type": "image",
+   "folder": "bucharest",
+   "media_id": "templates/2016-dubey-place/bucharest/bucharest_08__c494dc45-81d5-4b82-90fe-2877276df54b.jpg",
+   "logicalFolder": "bucharest",
+   "original_bytes": 126178,
+   "uploaded_bytes": 126178,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/bucharest/bucharest_09__25a5e44b-96b3-464b-91e1-54c5bfabbb85.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/bucharest/bucharest_09__25a5e44b-96b3-464b-91e1-54c5bfabbb85.jpg",
+   "name": "bucharest_09.jpg",
+   "type": "image",
+   "folder": "bucharest",
+   "media_id": "templates/2016-dubey-place/bucharest/bucharest_09__25a5e44b-96b3-464b-91e1-54c5bfabbb85.jpg",
+   "logicalFolder": "bucharest",
+   "original_bytes": 118344,
+   "uploaded_bytes": 118344,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/bucharest/bucharest_10__3b92026d-42d4-447e-b5d5-c30b61168b96.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/bucharest/bucharest_10__3b92026d-42d4-447e-b5d5-c30b61168b96.jpg",
+   "name": "bucharest_10.jpg",
+   "type": "image",
+   "folder": "bucharest",
+   "media_id": "templates/2016-dubey-place/bucharest/bucharest_10__3b92026d-42d4-447e-b5d5-c30b61168b96.jpg",
+   "logicalFolder": "bucharest",
+   "original_bytes": 104549,
+   "uploaded_bytes": 104549,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/bucharest/bucharest_11__8bd168ca-976c-4dc7-a627-48766f97be7d.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/bucharest/bucharest_11__8bd168ca-976c-4dc7-a627-48766f97be7d.jpg",
+   "name": "bucharest_11.jpg",
+   "type": "image",
+   "folder": "bucharest",
+   "media_id": "templates/2016-dubey-place/bucharest/bucharest_11__8bd168ca-976c-4dc7-a627-48766f97be7d.jpg",
+   "logicalFolder": "bucharest",
+   "original_bytes": 110081,
+   "uploaded_bytes": 110081,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/bucharest/bucharest_12__d9dff9a6-7e5c-4a12-a559-a9b4631734be.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/bucharest/bucharest_12__d9dff9a6-7e5c-4a12-a559-a9b4631734be.jpg",
+   "name": "bucharest_12.jpg",
+   "type": "image",
+   "folder": "bucharest",
+   "media_id": "templates/2016-dubey-place/bucharest/bucharest_12__d9dff9a6-7e5c-4a12-a559-a9b4631734be.jpg",
+   "logicalFolder": "bucharest",
+   "original_bytes": 112880,
+   "uploaded_bytes": 112880,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/bucharest/bucharest_13__a392266b-7330-4cc7-9de6-609a025129b6.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/bucharest/bucharest_13__a392266b-7330-4cc7-9de6-609a025129b6.jpg",
+   "name": "bucharest_13.jpg",
+   "type": "image",
+   "folder": "bucharest",
+   "media_id": "templates/2016-dubey-place/bucharest/bucharest_13__a392266b-7330-4cc7-9de6-609a025129b6.jpg",
+   "logicalFolder": "bucharest",
+   "original_bytes": 99108,
+   "uploaded_bytes": 99108,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/bucharest/bucharest_14__dab0f5dc-e4b6-419c-8989-2dcfd8c418e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/bucharest/bucharest_14__dab0f5dc-e4b6-419c-8989-2dcfd8c418e7.jpg",
+   "name": "bucharest_14.jpg",
+   "type": "image",
+   "folder": "bucharest",
+   "media_id": "templates/2016-dubey-place/bucharest/bucharest_14__dab0f5dc-e4b6-419c-8989-2dcfd8c418e7.jpg",
+   "logicalFolder": "bucharest",
+   "original_bytes": 95648,
+   "uploaded_bytes": 95648,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/johannesburg/johannesburg_01__d9fcc308-a408-47a3-b3e2-6790ec0076cc.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/johannesburg/johannesburg_01__d9fcc308-a408-47a3-b3e2-6790ec0076cc.jpg",
+   "name": "johannesburg_01.jpg",
+   "type": "image",
+   "folder": "johannesburg",
+   "media_id": "templates/2016-dubey-place/johannesburg/johannesburg_01__d9fcc308-a408-47a3-b3e2-6790ec0076cc.jpg",
+   "logicalFolder": "johannesburg",
+   "original_bytes": 144734,
+   "uploaded_bytes": 144734,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/johannesburg/johannesburg_02__894b0f0f-8c43-41bf-8efe-d792caaa3790.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/johannesburg/johannesburg_02__894b0f0f-8c43-41bf-8efe-d792caaa3790.jpg",
+   "name": "johannesburg_02.jpg",
+   "type": "image",
+   "folder": "johannesburg",
+   "media_id": "templates/2016-dubey-place/johannesburg/johannesburg_02__894b0f0f-8c43-41bf-8efe-d792caaa3790.jpg",
+   "logicalFolder": "johannesburg",
+   "original_bytes": 118476,
+   "uploaded_bytes": 118476,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/johannesburg/johannesburg_03__66280f16-f48f-4433-a833-13c2c4dd9bc9.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/johannesburg/johannesburg_03__66280f16-f48f-4433-a833-13c2c4dd9bc9.jpg",
+   "name": "johannesburg_03.jpg",
+   "type": "image",
+   "folder": "johannesburg",
+   "media_id": "templates/2016-dubey-place/johannesburg/johannesburg_03__66280f16-f48f-4433-a833-13c2c4dd9bc9.jpg",
+   "logicalFolder": "johannesburg",
+   "original_bytes": 119512,
+   "uploaded_bytes": 119512,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/johannesburg/johannesburg_04__483aecae-56ac-46df-a177-86a4c843826f.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/johannesburg/johannesburg_04__483aecae-56ac-46df-a177-86a4c843826f.jpg",
+   "name": "johannesburg_04.jpg",
+   "type": "image",
+   "folder": "johannesburg",
+   "media_id": "templates/2016-dubey-place/johannesburg/johannesburg_04__483aecae-56ac-46df-a177-86a4c843826f.jpg",
+   "logicalFolder": "johannesburg",
+   "original_bytes": 124689,
+   "uploaded_bytes": 124689,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/johannesburg/johannesburg_05__ea9441e5-19e8-4022-9264-31d9cf09a1ff.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/johannesburg/johannesburg_05__ea9441e5-19e8-4022-9264-31d9cf09a1ff.jpg",
+   "name": "johannesburg_05.jpg",
+   "type": "image",
+   "folder": "johannesburg",
+   "media_id": "templates/2016-dubey-place/johannesburg/johannesburg_05__ea9441e5-19e8-4022-9264-31d9cf09a1ff.jpg",
+   "logicalFolder": "johannesburg",
+   "original_bytes": 158557,
+   "uploaded_bytes": 158557,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/johannesburg/johannesburg_06__8fe39ede-1805-4df9-8f11-17ef0b6c3641.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/johannesburg/johannesburg_06__8fe39ede-1805-4df9-8f11-17ef0b6c3641.jpg",
+   "name": "johannesburg_06.jpg",
+   "type": "image",
+   "folder": "johannesburg",
+   "media_id": "templates/2016-dubey-place/johannesburg/johannesburg_06__8fe39ede-1805-4df9-8f11-17ef0b6c3641.jpg",
+   "logicalFolder": "johannesburg",
+   "original_bytes": 141205,
+   "uploaded_bytes": 141205,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/johannesburg/johannesburg_07__7173c560-c9ea-4a2e-93b7-2419e770c8c1.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/johannesburg/johannesburg_07__7173c560-c9ea-4a2e-93b7-2419e770c8c1.jpg",
+   "name": "johannesburg_07.jpg",
+   "type": "image",
+   "folder": "johannesburg",
+   "media_id": "templates/2016-dubey-place/johannesburg/johannesburg_07__7173c560-c9ea-4a2e-93b7-2419e770c8c1.jpg",
+   "logicalFolder": "johannesburg",
+   "original_bytes": 89622,
+   "uploaded_bytes": 89622,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/johannesburg/johannesburg_08__bcba9818-fb6f-467e-8d36-bd3e50d79fa8.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/johannesburg/johannesburg_08__bcba9818-fb6f-467e-8d36-bd3e50d79fa8.jpg",
+   "name": "johannesburg_08.jpg",
+   "type": "image",
+   "folder": "johannesburg",
+   "media_id": "templates/2016-dubey-place/johannesburg/johannesburg_08__bcba9818-fb6f-467e-8d36-bd3e50d79fa8.jpg",
+   "logicalFolder": "johannesburg",
+   "original_bytes": 101364,
+   "uploaded_bytes": 101364,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/johannesburg/johannesburg_09__cb8a95e8-435d-446d-952f-ae41d5439631.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/johannesburg/johannesburg_09__cb8a95e8-435d-446d-952f-ae41d5439631.jpg",
+   "name": "johannesburg_09.jpg",
+   "type": "image",
+   "folder": "johannesburg",
+   "media_id": "templates/2016-dubey-place/johannesburg/johannesburg_09__cb8a95e8-435d-446d-952f-ae41d5439631.jpg",
+   "logicalFolder": "johannesburg",
+   "original_bytes": 125447,
+   "uploaded_bytes": 125447,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/johannesburg/johannesburg_10__c600bfbb-037e-4d6e-b18b-282adb6dea66.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/johannesburg/johannesburg_10__c600bfbb-037e-4d6e-b18b-282adb6dea66.jpg",
+   "name": "johannesburg_10.jpg",
+   "type": "image",
+   "folder": "johannesburg",
+   "media_id": "templates/2016-dubey-place/johannesburg/johannesburg_10__c600bfbb-037e-4d6e-b18b-282adb6dea66.jpg",
+   "logicalFolder": "johannesburg",
+   "original_bytes": 109956,
+   "uploaded_bytes": 109956,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/johannesburg/johannesburg_11__d0c69d6b-7b7a-482b-8ccc-3a4a3363d6bc.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/johannesburg/johannesburg_11__d0c69d6b-7b7a-482b-8ccc-3a4a3363d6bc.jpg",
+   "name": "johannesburg_11.jpg",
+   "type": "image",
+   "folder": "johannesburg",
+   "media_id": "templates/2016-dubey-place/johannesburg/johannesburg_11__d0c69d6b-7b7a-482b-8ccc-3a4a3363d6bc.jpg",
+   "logicalFolder": "johannesburg",
+   "original_bytes": 149090,
+   "uploaded_bytes": 149090,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/johannesburg/johannesburg_12__7a770db2-ce4c-42df-b273-093ee4fd6bd5.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/johannesburg/johannesburg_12__7a770db2-ce4c-42df-b273-093ee4fd6bd5.jpg",
+   "name": "johannesburg_12.jpg",
+   "type": "image",
+   "folder": "johannesburg",
+   "media_id": "templates/2016-dubey-place/johannesburg/johannesburg_12__7a770db2-ce4c-42df-b273-093ee4fd6bd5.jpg",
+   "logicalFolder": "johannesburg",
+   "original_bytes": 117691,
+   "uploaded_bytes": 117691,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/johannesburg/johannesburg_13__6171a4cd-5db7-47d7-902e-1e141b04b4aa.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/johannesburg/johannesburg_13__6171a4cd-5db7-47d7-902e-1e141b04b4aa.jpg",
+   "name": "johannesburg_13.jpg",
+   "type": "image",
+   "folder": "johannesburg",
+   "media_id": "templates/2016-dubey-place/johannesburg/johannesburg_13__6171a4cd-5db7-47d7-902e-1e141b04b4aa.jpg",
+   "logicalFolder": "johannesburg",
+   "original_bytes": 127952,
+   "uploaded_bytes": 127952,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/johannesburg/johannesburg_14__88843827-f6cc-4de5-8422-80d31898b773.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/johannesburg/johannesburg_14__88843827-f6cc-4de5-8422-80d31898b773.jpg",
+   "name": "johannesburg_14.jpg",
+   "type": "image",
+   "folder": "johannesburg",
+   "media_id": "templates/2016-dubey-place/johannesburg/johannesburg_14__88843827-f6cc-4de5-8422-80d31898b773.jpg",
+   "logicalFolder": "johannesburg",
+   "original_bytes": 57421,
+   "uploaded_bytes": 57421,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/linz/linz_01__cffe61d8-b23f-4acf-a101-821c3de6b2cf.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/linz/linz_01__cffe61d8-b23f-4acf-a101-821c3de6b2cf.jpg",
+   "name": "linz_01.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2016-dubey-place/linz/linz_01__cffe61d8-b23f-4acf-a101-821c3de6b2cf.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 137481,
+   "uploaded_bytes": 137481,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/linz/linz_02__9a3f0242-75bd-46f9-90c6-84f8d5fbb257.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/linz/linz_02__9a3f0242-75bd-46f9-90c6-84f8d5fbb257.jpg",
+   "name": "linz_02.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2016-dubey-place/linz/linz_02__9a3f0242-75bd-46f9-90c6-84f8d5fbb257.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 132362,
+   "uploaded_bytes": 132362,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/linz/linz_03__237410ef-9364-4fe0-b02f-940a790c83a7.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/linz/linz_03__237410ef-9364-4fe0-b02f-940a790c83a7.jpg",
+   "name": "linz_03.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2016-dubey-place/linz/linz_03__237410ef-9364-4fe0-b02f-940a790c83a7.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 128687,
+   "uploaded_bytes": 128687,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/linz/linz_04__db906624-6323-4f78-87ea-d1e872a4c2a5.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/linz/linz_04__db906624-6323-4f78-87ea-d1e872a4c2a5.jpg",
+   "name": "linz_04.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2016-dubey-place/linz/linz_04__db906624-6323-4f78-87ea-d1e872a4c2a5.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 129557,
+   "uploaded_bytes": 129557,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/linz/linz_05__5cf4c27d-e1ea-49f3-8b83-11ee2894aa88.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/linz/linz_05__5cf4c27d-e1ea-49f3-8b83-11ee2894aa88.jpg",
+   "name": "linz_05.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2016-dubey-place/linz/linz_05__5cf4c27d-e1ea-49f3-8b83-11ee2894aa88.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 78323,
+   "uploaded_bytes": 78323,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/linz/linz_06__eaf8c77f-046e-4729-a794-f2077cf0711e.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/linz/linz_06__eaf8c77f-046e-4729-a794-f2077cf0711e.jpg",
+   "name": "linz_06.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2016-dubey-place/linz/linz_06__eaf8c77f-046e-4729-a794-f2077cf0711e.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 123283,
+   "uploaded_bytes": 123283,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/linz/linz_07__75ad5fe7-d8b7-4d38-a639-f63afe633a85.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/linz/linz_07__75ad5fe7-d8b7-4d38-a639-f63afe633a85.jpg",
+   "name": "linz_07.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2016-dubey-place/linz/linz_07__75ad5fe7-d8b7-4d38-a639-f63afe633a85.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 122821,
+   "uploaded_bytes": 122821,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/linz/linz_08__8d5d58aa-c199-4460-8cf5-5a245ed7b951.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/linz/linz_08__8d5d58aa-c199-4460-8cf5-5a245ed7b951.jpg",
+   "name": "linz_08.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2016-dubey-place/linz/linz_08__8d5d58aa-c199-4460-8cf5-5a245ed7b951.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 93615,
+   "uploaded_bytes": 93615,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/linz/linz_09__0b3f060e-0e63-4b9d-b649-e34c4c720536.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/linz/linz_09__0b3f060e-0e63-4b9d-b649-e34c4c720536.jpg",
+   "name": "linz_09.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2016-dubey-place/linz/linz_09__0b3f060e-0e63-4b9d-b649-e34c4c720536.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 114938,
+   "uploaded_bytes": 114938,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/linz/linz_10__026259a3-12d8-45d6-967d-b41c8e5acb26.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/linz/linz_10__026259a3-12d8-45d6-967d-b41c8e5acb26.jpg",
+   "name": "linz_10.jpg",
+   "type": "image",
+   "folder": "linz",
+   "media_id": "templates/2016-dubey-place/linz/linz_10__026259a3-12d8-45d6-967d-b41c8e5acb26.jpg",
+   "logicalFolder": "linz",
+   "original_bytes": 134527,
+   "uploaded_bytes": 134527,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/london/london_01__99913308-a6bc-488f-b973-17c148443fd6.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/london/london_01__99913308-a6bc-488f-b973-17c148443fd6.jpg",
+   "name": "london_01.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2016-dubey-place/london/london_01__99913308-a6bc-488f-b973-17c148443fd6.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 168298,
+   "uploaded_bytes": 168298,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/london/london_02__230c4cb7-694a-4de6-9f27-f84e039bc82e.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/london/london_02__230c4cb7-694a-4de6-9f27-f84e039bc82e.jpg",
+   "name": "london_02.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2016-dubey-place/london/london_02__230c4cb7-694a-4de6-9f27-f84e039bc82e.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 124790,
+   "uploaded_bytes": 124790,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/london/london_03__25beeea3-de43-49ef-a345-b363624d6e3c.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/london/london_03__25beeea3-de43-49ef-a345-b363624d6e3c.jpg",
+   "name": "london_03.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2016-dubey-place/london/london_03__25beeea3-de43-49ef-a345-b363624d6e3c.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 165862,
+   "uploaded_bytes": 165862,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/london/london_04__045b8930-edf9-4b1a-935d-edf83ed0b141.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/london/london_04__045b8930-edf9-4b1a-935d-edf83ed0b141.jpg",
+   "name": "london_04.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2016-dubey-place/london/london_04__045b8930-edf9-4b1a-935d-edf83ed0b141.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 139705,
+   "uploaded_bytes": 139705,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/london/london_05__c4f81f7e-1aac-494c-b4c0-ed6317ab40c4.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/london/london_05__c4f81f7e-1aac-494c-b4c0-ed6317ab40c4.jpg",
+   "name": "london_05.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2016-dubey-place/london/london_05__c4f81f7e-1aac-494c-b4c0-ed6317ab40c4.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 144708,
+   "uploaded_bytes": 144708,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/london/london_06__4a399dfd-a600-4dc7-8219-8edc94cc2994.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/london/london_06__4a399dfd-a600-4dc7-8219-8edc94cc2994.jpg",
+   "name": "london_06.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2016-dubey-place/london/london_06__4a399dfd-a600-4dc7-8219-8edc94cc2994.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 165494,
+   "uploaded_bytes": 165494,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/london/london_07__5a56cc69-43b8-4565-a055-7f9d2ce2b1c9.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/london/london_07__5a56cc69-43b8-4565-a055-7f9d2ce2b1c9.jpg",
+   "name": "london_07.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2016-dubey-place/london/london_07__5a56cc69-43b8-4565-a055-7f9d2ce2b1c9.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 153651,
+   "uploaded_bytes": 153651,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/london/london_08__24daa4ab-f716-4ac2-8879-a73fc30fb159.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/london/london_08__24daa4ab-f716-4ac2-8879-a73fc30fb159.jpg",
+   "name": "london_08.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2016-dubey-place/london/london_08__24daa4ab-f716-4ac2-8879-a73fc30fb159.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 133699,
+   "uploaded_bytes": 133699,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/london/london_09__5e7d2ac3-9a73-4124-b293-f8d6937d2308.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/london/london_09__5e7d2ac3-9a73-4124-b293-f8d6937d2308.jpg",
+   "name": "london_09.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2016-dubey-place/london/london_09__5e7d2ac3-9a73-4124-b293-f8d6937d2308.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 109095,
+   "uploaded_bytes": 109095,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/london/london_10__08cab0bd-bc11-40f2-b4c1-ba478fccb7a5.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/london/london_10__08cab0bd-bc11-40f2-b4c1-ba478fccb7a5.jpg",
+   "name": "london_10.jpg",
+   "type": "image",
+   "folder": "london",
+   "media_id": "templates/2016-dubey-place/london/london_10__08cab0bd-bc11-40f2-b4c1-ba478fccb7a5.jpg",
+   "logicalFolder": "london",
+   "original_bytes": 111399,
+   "uploaded_bytes": 111399,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/mexicocity/mexicocity_01__bee25681-bd1d-4646-b706-5df820a23af0.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/mexicocity/mexicocity_01__bee25681-bd1d-4646-b706-5df820a23af0.jpg",
+   "name": "mexicocity_01.jpg",
+   "type": "image",
+   "folder": "mexicocity",
+   "media_id": "templates/2016-dubey-place/mexicocity/mexicocity_01__bee25681-bd1d-4646-b706-5df820a23af0.jpg",
+   "logicalFolder": "mexicocity",
+   "original_bytes": 117299,
+   "uploaded_bytes": 117299,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/mexicocity/mexicocity_02__d31b019f-a9d4-4364-9de0-70afd5e60d30.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/mexicocity/mexicocity_02__d31b019f-a9d4-4364-9de0-70afd5e60d30.jpg",
+   "name": "mexicocity_02.jpg",
+   "type": "image",
+   "folder": "mexicocity",
+   "media_id": "templates/2016-dubey-place/mexicocity/mexicocity_02__d31b019f-a9d4-4364-9de0-70afd5e60d30.jpg",
+   "logicalFolder": "mexicocity",
+   "original_bytes": 136957,
+   "uploaded_bytes": 136957,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/mexicocity/mexicocity_03__5241076f-a9fb-44c4-8bde-1a7eca78d0fd.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/mexicocity/mexicocity_03__5241076f-a9fb-44c4-8bde-1a7eca78d0fd.jpg",
+   "name": "mexicocity_03.jpg",
+   "type": "image",
+   "folder": "mexicocity",
+   "media_id": "templates/2016-dubey-place/mexicocity/mexicocity_03__5241076f-a9fb-44c4-8bde-1a7eca78d0fd.jpg",
+   "logicalFolder": "mexicocity",
+   "original_bytes": 140603,
+   "uploaded_bytes": 140603,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/mexicocity/mexicocity_04__e65be9fd-7f1f-4920-a4a0-7d08e02cfd8a.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/mexicocity/mexicocity_04__e65be9fd-7f1f-4920-a4a0-7d08e02cfd8a.jpg",
+   "name": "mexicocity_04.jpg",
+   "type": "image",
+   "folder": "mexicocity",
+   "media_id": "templates/2016-dubey-place/mexicocity/mexicocity_04__e65be9fd-7f1f-4920-a4a0-7d08e02cfd8a.jpg",
+   "logicalFolder": "mexicocity",
+   "original_bytes": 137286,
+   "uploaded_bytes": 137286,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/mexicocity/mexicocity_05__6c8b29d8-5f66-4afc-bf2b-04bd7b6725e0.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/mexicocity/mexicocity_05__6c8b29d8-5f66-4afc-bf2b-04bd7b6725e0.jpg",
+   "name": "mexicocity_05.jpg",
+   "type": "image",
+   "folder": "mexicocity",
+   "media_id": "templates/2016-dubey-place/mexicocity/mexicocity_05__6c8b29d8-5f66-4afc-bf2b-04bd7b6725e0.jpg",
+   "logicalFolder": "mexicocity",
+   "original_bytes": 130301,
+   "uploaded_bytes": 130301,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/mexicocity/mexicocity_06__a4be550f-a6f0-4d9d-adf9-3b50e303376b.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/mexicocity/mexicocity_06__a4be550f-a6f0-4d9d-adf9-3b50e303376b.jpg",
+   "name": "mexicocity_06.jpg",
+   "type": "image",
+   "folder": "mexicocity",
+   "media_id": "templates/2016-dubey-place/mexicocity/mexicocity_06__a4be550f-a6f0-4d9d-adf9-3b50e303376b.jpg",
+   "logicalFolder": "mexicocity",
+   "original_bytes": 116998,
+   "uploaded_bytes": 116998,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/mexicocity/mexicocity_07__b6724c64-eee7-49ad-b496-52a47a450da9.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/mexicocity/mexicocity_07__b6724c64-eee7-49ad-b496-52a47a450da9.jpg",
+   "name": "mexicocity_07.jpg",
+   "type": "image",
+   "folder": "mexicocity",
+   "media_id": "templates/2016-dubey-place/mexicocity/mexicocity_07__b6724c64-eee7-49ad-b496-52a47a450da9.jpg",
+   "logicalFolder": "mexicocity",
+   "original_bytes": 139251,
+   "uploaded_bytes": 139251,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/mexicocity/mexicocity_08__dd761544-6211-4abe-8886-e32d1645e345.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/mexicocity/mexicocity_08__dd761544-6211-4abe-8886-e32d1645e345.jpg",
+   "name": "mexicocity_08.jpg",
+   "type": "image",
+   "folder": "mexicocity",
+   "media_id": "templates/2016-dubey-place/mexicocity/mexicocity_08__dd761544-6211-4abe-8886-e32d1645e345.jpg",
+   "logicalFolder": "mexicocity",
+   "original_bytes": 151859,
+   "uploaded_bytes": 151859,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/mexicocity/mexicocity_09__fac7bc8c-0642-45a4-9ef1-9f45df7d6902.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/mexicocity/mexicocity_09__fac7bc8c-0642-45a4-9ef1-9f45df7d6902.jpg",
+   "name": "mexicocity_09.jpg",
+   "type": "image",
+   "folder": "mexicocity",
+   "media_id": "templates/2016-dubey-place/mexicocity/mexicocity_09__fac7bc8c-0642-45a4-9ef1-9f45df7d6902.jpg",
+   "logicalFolder": "mexicocity",
+   "original_bytes": 124951,
+   "uploaded_bytes": 124951,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/mexicocity/mexicocity_10__67a036a0-0ae7-49ad-8b74-f1c463482049.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/mexicocity/mexicocity_10__67a036a0-0ae7-49ad-8b74-f1c463482049.jpg",
+   "name": "mexicocity_10.jpg",
+   "type": "image",
+   "folder": "mexicocity",
+   "media_id": "templates/2016-dubey-place/mexicocity/mexicocity_10__67a036a0-0ae7-49ad-8b74-f1c463482049.jpg",
+   "logicalFolder": "mexicocity",
+   "original_bytes": 145018,
+   "uploaded_bytes": 145018,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/mexicocity/mexicocity_11__1c3fc9e2-42dd-49b5-917c-085d2d6dc2bb.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/mexicocity/mexicocity_11__1c3fc9e2-42dd-49b5-917c-085d2d6dc2bb.jpg",
+   "name": "mexicocity_11.jpg",
+   "type": "image",
+   "folder": "mexicocity",
+   "media_id": "templates/2016-dubey-place/mexicocity/mexicocity_11__1c3fc9e2-42dd-49b5-917c-085d2d6dc2bb.jpg",
+   "logicalFolder": "mexicocity",
+   "original_bytes": 138378,
+   "uploaded_bytes": 138378,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/mexicocity/mexicocity_12__2134ea61-a3bd-4666-95c5-9c36b2515a3a.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/mexicocity/mexicocity_12__2134ea61-a3bd-4666-95c5-9c36b2515a3a.jpg",
+   "name": "mexicocity_12.jpg",
+   "type": "image",
+   "folder": "mexicocity",
+   "media_id": "templates/2016-dubey-place/mexicocity/mexicocity_12__2134ea61-a3bd-4666-95c5-9c36b2515a3a.jpg",
+   "logicalFolder": "mexicocity",
+   "original_bytes": 94890,
+   "uploaded_bytes": 94890,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/mexicocity/mexicocity_13__e211e5e9-5970-410b-b1fc-fce13655430d.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/mexicocity/mexicocity_13__e211e5e9-5970-410b-b1fc-fce13655430d.jpg",
+   "name": "mexicocity_13.jpg",
+   "type": "image",
+   "folder": "mexicocity",
+   "media_id": "templates/2016-dubey-place/mexicocity/mexicocity_13__e211e5e9-5970-410b-b1fc-fce13655430d.jpg",
+   "logicalFolder": "mexicocity",
+   "original_bytes": 162060,
+   "uploaded_bytes": 162060,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/nyc/nyc_01__b0b1c724-bb77-4377-8a70-81266db5ef7d.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/nyc/nyc_01__b0b1c724-bb77-4377-8a70-81266db5ef7d.jpg",
+   "name": "nyc_01.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2016-dubey-place/nyc/nyc_01__b0b1c724-bb77-4377-8a70-81266db5ef7d.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 114155,
+   "uploaded_bytes": 114155,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/nyc/nyc_02__d0dcee01-2b49-48dd-b9ee-e0858b925a3c.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/nyc/nyc_02__d0dcee01-2b49-48dd-b9ee-e0858b925a3c.jpg",
+   "name": "nyc_02.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2016-dubey-place/nyc/nyc_02__d0dcee01-2b49-48dd-b9ee-e0858b925a3c.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 106618,
+   "uploaded_bytes": 106618,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/nyc/nyc_03__fac203e4-30bf-4bbc-8732-c03efdbdd61e.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/nyc/nyc_03__fac203e4-30bf-4bbc-8732-c03efdbdd61e.jpg",
+   "name": "nyc_03.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2016-dubey-place/nyc/nyc_03__fac203e4-30bf-4bbc-8732-c03efdbdd61e.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 135196,
+   "uploaded_bytes": 135196,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/nyc/nyc_04__2776a50e-6eec-4dba-aeaf-3dd7dfaebc5d.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/nyc/nyc_04__2776a50e-6eec-4dba-aeaf-3dd7dfaebc5d.jpg",
+   "name": "nyc_04.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2016-dubey-place/nyc/nyc_04__2776a50e-6eec-4dba-aeaf-3dd7dfaebc5d.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 141384,
+   "uploaded_bytes": 141384,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/nyc/nyc_05__2e0e077f-f812-4ccb-868c-afb8283c0f72.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/nyc/nyc_05__2e0e077f-f812-4ccb-868c-afb8283c0f72.jpg",
+   "name": "nyc_05.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2016-dubey-place/nyc/nyc_05__2e0e077f-f812-4ccb-868c-afb8283c0f72.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 90298,
+   "uploaded_bytes": 90298,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/nyc/nyc_06__0b3f0df2-b5fb-4137-841f-b236e03125bc.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/nyc/nyc_06__0b3f0df2-b5fb-4137-841f-b236e03125bc.jpg",
+   "name": "nyc_06.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2016-dubey-place/nyc/nyc_06__0b3f0df2-b5fb-4137-841f-b236e03125bc.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 142089,
+   "uploaded_bytes": 142089,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/nyc/nyc_07__824780d7-7bdb-4a7b-b4b9-7385d14d9907.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/nyc/nyc_07__824780d7-7bdb-4a7b-b4b9-7385d14d9907.jpg",
+   "name": "nyc_07.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2016-dubey-place/nyc/nyc_07__824780d7-7bdb-4a7b-b4b9-7385d14d9907.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 139023,
+   "uploaded_bytes": 139023,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/nyc/nyc_08__2681d1b8-0759-4251-82c1-36827d01908f.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/nyc/nyc_08__2681d1b8-0759-4251-82c1-36827d01908f.jpg",
+   "name": "nyc_08.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2016-dubey-place/nyc/nyc_08__2681d1b8-0759-4251-82c1-36827d01908f.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 108752,
+   "uploaded_bytes": 108752,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/nyc/nyc_09__1aa171d2-76eb-47eb-beb4-eaba1af1d18e.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/nyc/nyc_09__1aa171d2-76eb-47eb-beb4-eaba1af1d18e.jpg",
+   "name": "nyc_09.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2016-dubey-place/nyc/nyc_09__1aa171d2-76eb-47eb-beb4-eaba1af1d18e.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 143105,
+   "uploaded_bytes": 143105,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/nyc/nyc_10__311ac96c-72e6-4398-ad2d-eb6710299856.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/nyc/nyc_10__311ac96c-72e6-4398-ad2d-eb6710299856.jpg",
+   "name": "nyc_10.jpg",
+   "type": "image",
+   "folder": "nyc",
+   "media_id": "templates/2016-dubey-place/nyc/nyc_10__311ac96c-72e6-4398-ad2d-eb6710299856.jpg",
+   "logicalFolder": "nyc",
+   "original_bytes": 118691,
+   "uploaded_bytes": 118691,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/paris/paris_01__5ae0658c-26a6-4992-bc9c-9710ee2cca40.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/paris/paris_01__5ae0658c-26a6-4992-bc9c-9710ee2cca40.jpg",
+   "name": "paris_01.jpg",
+   "type": "image",
+   "folder": "paris",
+   "media_id": "templates/2016-dubey-place/paris/paris_01__5ae0658c-26a6-4992-bc9c-9710ee2cca40.jpg",
+   "logicalFolder": "paris",
+   "original_bytes": 133480,
+   "uploaded_bytes": 133480,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/paris/paris_02__186a13ca-576f-466b-b8f0-d562d3f70599.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/paris/paris_02__186a13ca-576f-466b-b8f0-d562d3f70599.jpg",
+   "name": "paris_02.jpg",
+   "type": "image",
+   "folder": "paris",
+   "media_id": "templates/2016-dubey-place/paris/paris_02__186a13ca-576f-466b-b8f0-d562d3f70599.jpg",
+   "logicalFolder": "paris",
+   "original_bytes": 130225,
+   "uploaded_bytes": 130225,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/paris/paris_03__068b9fb2-b172-404b-b082-ab5a0df1685c.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/paris/paris_03__068b9fb2-b172-404b-b082-ab5a0df1685c.jpg",
+   "name": "paris_03.jpg",
+   "type": "image",
+   "folder": "paris",
+   "media_id": "templates/2016-dubey-place/paris/paris_03__068b9fb2-b172-404b-b082-ab5a0df1685c.jpg",
+   "logicalFolder": "paris",
+   "original_bytes": 147002,
+   "uploaded_bytes": 147002,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/paris/paris_04__f3281a52-25d0-42d4-88cc-5846b4329fec.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/paris/paris_04__f3281a52-25d0-42d4-88cc-5846b4329fec.jpg",
+   "name": "paris_04.jpg",
+   "type": "image",
+   "folder": "paris",
+   "media_id": "templates/2016-dubey-place/paris/paris_04__f3281a52-25d0-42d4-88cc-5846b4329fec.jpg",
+   "logicalFolder": "paris",
+   "original_bytes": 135162,
+   "uploaded_bytes": 135162,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/paris/paris_05__224b05a9-ad4b-491a-a07c-fc94a0110bc7.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/paris/paris_05__224b05a9-ad4b-491a-a07c-fc94a0110bc7.jpg",
+   "name": "paris_05.jpg",
+   "type": "image",
+   "folder": "paris",
+   "media_id": "templates/2016-dubey-place/paris/paris_05__224b05a9-ad4b-491a-a07c-fc94a0110bc7.jpg",
+   "logicalFolder": "paris",
+   "original_bytes": 114309,
+   "uploaded_bytes": 114309,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/paris/paris_06__964cfebd-ca71-4124-b127-ea5cb3d8f75c.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/paris/paris_06__964cfebd-ca71-4124-b127-ea5cb3d8f75c.jpg",
+   "name": "paris_06.jpg",
+   "type": "image",
+   "folder": "paris",
+   "media_id": "templates/2016-dubey-place/paris/paris_06__964cfebd-ca71-4124-b127-ea5cb3d8f75c.jpg",
+   "logicalFolder": "paris",
+   "original_bytes": 128701,
+   "uploaded_bytes": 128701,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/paris/paris_07__38802d89-f564-44d5-97e2-c392dc1b6c2c.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/paris/paris_07__38802d89-f564-44d5-97e2-c392dc1b6c2c.jpg",
+   "name": "paris_07.jpg",
+   "type": "image",
+   "folder": "paris",
+   "media_id": "templates/2016-dubey-place/paris/paris_07__38802d89-f564-44d5-97e2-c392dc1b6c2c.jpg",
+   "logicalFolder": "paris",
+   "original_bytes": 128730,
+   "uploaded_bytes": 128730,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/paris/paris_08__945b4065-3fee-4726-8eb1-ae82c6f35b3a.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/paris/paris_08__945b4065-3fee-4726-8eb1-ae82c6f35b3a.jpg",
+   "name": "paris_08.jpg",
+   "type": "image",
+   "folder": "paris",
+   "media_id": "templates/2016-dubey-place/paris/paris_08__945b4065-3fee-4726-8eb1-ae82c6f35b3a.jpg",
+   "logicalFolder": "paris",
+   "original_bytes": 144109,
+   "uploaded_bytes": 144109,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/paris/paris_09__499bb36b-504d-4e73-aeff-4741d7a8516d.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/paris/paris_09__499bb36b-504d-4e73-aeff-4741d7a8516d.jpg",
+   "name": "paris_09.jpg",
+   "type": "image",
+   "folder": "paris",
+   "media_id": "templates/2016-dubey-place/paris/paris_09__499bb36b-504d-4e73-aeff-4741d7a8516d.jpg",
+   "logicalFolder": "paris",
+   "original_bytes": 165754,
+   "uploaded_bytes": 165754,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/paris/paris_10__72dd27d5-3e87-45b5-b3f7-f2e54d9b2e68.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/paris/paris_10__72dd27d5-3e87-45b5-b3f7-f2e54d9b2e68.jpg",
+   "name": "paris_10.jpg",
+   "type": "image",
+   "folder": "paris",
+   "media_id": "templates/2016-dubey-place/paris/paris_10__72dd27d5-3e87-45b5-b3f7-f2e54d9b2e68.jpg",
+   "logicalFolder": "paris",
+   "original_bytes": 151638,
+   "uploaded_bytes": 151638,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/paris/paris_11__1e90e781-aa26-41f8-868b-2c8c8e57f184.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/paris/paris_11__1e90e781-aa26-41f8-868b-2c8c8e57f184.jpg",
+   "name": "paris_11.jpg",
+   "type": "image",
+   "folder": "paris",
+   "media_id": "templates/2016-dubey-place/paris/paris_11__1e90e781-aa26-41f8-868b-2c8c8e57f184.jpg",
+   "logicalFolder": "paris",
+   "original_bytes": 142828,
+   "uploaded_bytes": 142828,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/paris/paris_12__c3370c5a-d004-48dd-b026-61b7f12c6204.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/paris/paris_12__c3370c5a-d004-48dd-b026-61b7f12c6204.jpg",
+   "name": "paris_12.jpg",
+   "type": "image",
+   "folder": "paris",
+   "media_id": "templates/2016-dubey-place/paris/paris_12__c3370c5a-d004-48dd-b026-61b7f12c6204.jpg",
+   "logicalFolder": "paris",
+   "original_bytes": 118663,
+   "uploaded_bytes": 118663,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/paris/paris_13__87edf004-513c-486f-b439-1843042413bd.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/paris/paris_13__87edf004-513c-486f-b439-1843042413bd.jpg",
+   "name": "paris_13.jpg",
+   "type": "image",
+   "folder": "paris",
+   "media_id": "templates/2016-dubey-place/paris/paris_13__87edf004-513c-486f-b439-1843042413bd.jpg",
+   "logicalFolder": "paris",
+   "original_bytes": 109454,
+   "uploaded_bytes": 109454,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/paris/paris_14__15308ed1-5ff0-461c-85cc-242edb9c38e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/paris/paris_14__15308ed1-5ff0-461c-85cc-242edb9c38e7.jpg",
+   "name": "paris_14.jpg",
+   "type": "image",
+   "folder": "paris",
+   "media_id": "templates/2016-dubey-place/paris/paris_14__15308ed1-5ff0-461c-85cc-242edb9c38e7.jpg",
+   "logicalFolder": "paris",
+   "original_bytes": 147669,
+   "uploaded_bytes": 147669,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/salzburg/salzburg_01__9783392a-3486-4192-a210-b484fd4e6002.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/salzburg/salzburg_01__9783392a-3486-4192-a210-b484fd4e6002.jpg",
+   "name": "salzburg_01.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2016-dubey-place/salzburg/salzburg_01__9783392a-3486-4192-a210-b484fd4e6002.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 133493,
+   "uploaded_bytes": 133493,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/salzburg/salzburg_02__5a6667ab-9223-4b5a-ab37-1d6d8359e036.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/salzburg/salzburg_02__5a6667ab-9223-4b5a-ab37-1d6d8359e036.jpg",
+   "name": "salzburg_02.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2016-dubey-place/salzburg/salzburg_02__5a6667ab-9223-4b5a-ab37-1d6d8359e036.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 111663,
+   "uploaded_bytes": 111663,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/salzburg/salzburg_03__f039c19b-c129-4a9d-9562-28b2e7912103.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/salzburg/salzburg_03__f039c19b-c129-4a9d-9562-28b2e7912103.jpg",
+   "name": "salzburg_03.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2016-dubey-place/salzburg/salzburg_03__f039c19b-c129-4a9d-9562-28b2e7912103.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 136944,
+   "uploaded_bytes": 136944,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/salzburg/salzburg_04__d9fee212-7001-4768-8bf8-d892fd3644f9.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/salzburg/salzburg_04__d9fee212-7001-4768-8bf8-d892fd3644f9.jpg",
+   "name": "salzburg_04.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2016-dubey-place/salzburg/salzburg_04__d9fee212-7001-4768-8bf8-d892fd3644f9.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 117567,
+   "uploaded_bytes": 117567,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/salzburg/salzburg_05__63c4c5b7-5293-4289-9a5c-e4d02c5de81f.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/salzburg/salzburg_05__63c4c5b7-5293-4289-9a5c-e4d02c5de81f.jpg",
+   "name": "salzburg_05.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2016-dubey-place/salzburg/salzburg_05__63c4c5b7-5293-4289-9a5c-e4d02c5de81f.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 114486,
+   "uploaded_bytes": 114486,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/salzburg/salzburg_06__cf5def46-3760-4a1c-a187-b584495fad6c.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/salzburg/salzburg_06__cf5def46-3760-4a1c-a187-b584495fad6c.jpg",
+   "name": "salzburg_06.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2016-dubey-place/salzburg/salzburg_06__cf5def46-3760-4a1c-a187-b584495fad6c.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 131150,
+   "uploaded_bytes": 131150,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/salzburg/salzburg_07__ece95876-f354-48f7-8949-30e939710d42.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/salzburg/salzburg_07__ece95876-f354-48f7-8949-30e939710d42.jpg",
+   "name": "salzburg_07.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2016-dubey-place/salzburg/salzburg_07__ece95876-f354-48f7-8949-30e939710d42.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 162662,
+   "uploaded_bytes": 162662,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/salzburg/salzburg_08__c5323085-2f14-4af2-83ec-77aa25ab2f8b.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/salzburg/salzburg_08__c5323085-2f14-4af2-83ec-77aa25ab2f8b.jpg",
+   "name": "salzburg_08.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2016-dubey-place/salzburg/salzburg_08__c5323085-2f14-4af2-83ec-77aa25ab2f8b.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 138474,
+   "uploaded_bytes": 138474,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/salzburg/salzburg_09__71ce6c34-77eb-4a83-8c2a-3b4f5c5c90f2.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/salzburg/salzburg_09__71ce6c34-77eb-4a83-8c2a-3b4f5c5c90f2.jpg",
+   "name": "salzburg_09.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2016-dubey-place/salzburg/salzburg_09__71ce6c34-77eb-4a83-8c2a-3b4f5c5c90f2.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 139202,
+   "uploaded_bytes": 139202,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/salzburg/salzburg_10__d8399d4d-c6fe-4ab8-8aff-2cd0a8c66c59.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/salzburg/salzburg_10__d8399d4d-c6fe-4ab8-8aff-2cd0a8c66c59.jpg",
+   "name": "salzburg_10.jpg",
+   "type": "image",
+   "folder": "salzburg",
+   "media_id": "templates/2016-dubey-place/salzburg/salzburg_10__d8399d4d-c6fe-4ab8-8aff-2cd0a8c66c59.jpg",
+   "logicalFolder": "salzburg",
+   "original_bytes": 148628,
+   "uploaded_bytes": 148628,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/santiago/santiago_01__19360e92-72a6-4fc0-b848-ec1e71e44a71.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/santiago/santiago_01__19360e92-72a6-4fc0-b848-ec1e71e44a71.jpg",
+   "name": "santiago_01.jpg",
+   "type": "image",
+   "folder": "santiago",
+   "media_id": "templates/2016-dubey-place/santiago/santiago_01__19360e92-72a6-4fc0-b848-ec1e71e44a71.jpg",
+   "logicalFolder": "santiago",
+   "original_bytes": 105256,
+   "uploaded_bytes": 105256,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/santiago/santiago_02__21706ad8-35c3-4095-b67c-9d53a7c138af.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/santiago/santiago_02__21706ad8-35c3-4095-b67c-9d53a7c138af.jpg",
+   "name": "santiago_02.jpg",
+   "type": "image",
+   "folder": "santiago",
+   "media_id": "templates/2016-dubey-place/santiago/santiago_02__21706ad8-35c3-4095-b67c-9d53a7c138af.jpg",
+   "logicalFolder": "santiago",
+   "original_bytes": 152807,
+   "uploaded_bytes": 152807,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/santiago/santiago_03__55a71b80-b330-4219-96f6-c3c8494c1393.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/santiago/santiago_03__55a71b80-b330-4219-96f6-c3c8494c1393.jpg",
+   "name": "santiago_03.jpg",
+   "type": "image",
+   "folder": "santiago",
+   "media_id": "templates/2016-dubey-place/santiago/santiago_03__55a71b80-b330-4219-96f6-c3c8494c1393.jpg",
+   "logicalFolder": "santiago",
+   "original_bytes": 167969,
+   "uploaded_bytes": 167969,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/santiago/santiago_04__de6be342-937a-4211-84c7-3fb0f44a6d55.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/santiago/santiago_04__de6be342-937a-4211-84c7-3fb0f44a6d55.jpg",
+   "name": "santiago_04.jpg",
+   "type": "image",
+   "folder": "santiago",
+   "media_id": "templates/2016-dubey-place/santiago/santiago_04__de6be342-937a-4211-84c7-3fb0f44a6d55.jpg",
+   "logicalFolder": "santiago",
+   "original_bytes": 124253,
+   "uploaded_bytes": 124253,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/santiago/santiago_05__ead8ed7f-aebf-495f-b1c6-9537b12fb3cb.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/santiago/santiago_05__ead8ed7f-aebf-495f-b1c6-9537b12fb3cb.jpg",
+   "name": "santiago_05.jpg",
+   "type": "image",
+   "folder": "santiago",
+   "media_id": "templates/2016-dubey-place/santiago/santiago_05__ead8ed7f-aebf-495f-b1c6-9537b12fb3cb.jpg",
+   "logicalFolder": "santiago",
+   "original_bytes": 87969,
+   "uploaded_bytes": 87969,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/santiago/santiago_06__8486bca3-20d2-4050-8e32-86bb30061275.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/santiago/santiago_06__8486bca3-20d2-4050-8e32-86bb30061275.jpg",
+   "name": "santiago_06.jpg",
+   "type": "image",
+   "folder": "santiago",
+   "media_id": "templates/2016-dubey-place/santiago/santiago_06__8486bca3-20d2-4050-8e32-86bb30061275.jpg",
+   "logicalFolder": "santiago",
+   "original_bytes": 99479,
+   "uploaded_bytes": 99479,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/santiago/santiago_07__cf026355-18c9-4bd2-950c-dc36da483b05.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/santiago/santiago_07__cf026355-18c9-4bd2-950c-dc36da483b05.jpg",
+   "name": "santiago_07.jpg",
+   "type": "image",
+   "folder": "santiago",
+   "media_id": "templates/2016-dubey-place/santiago/santiago_07__cf026355-18c9-4bd2-950c-dc36da483b05.jpg",
+   "logicalFolder": "santiago",
+   "original_bytes": 136900,
+   "uploaded_bytes": 136900,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/santiago/santiago_08__cd4ab2ba-cd01-4524-9098-2eb3b348d217.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/santiago/santiago_08__cd4ab2ba-cd01-4524-9098-2eb3b348d217.jpg",
+   "name": "santiago_08.jpg",
+   "type": "image",
+   "folder": "santiago",
+   "media_id": "templates/2016-dubey-place/santiago/santiago_08__cd4ab2ba-cd01-4524-9098-2eb3b348d217.jpg",
+   "logicalFolder": "santiago",
+   "original_bytes": 116894,
+   "uploaded_bytes": 116894,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/santiago/santiago_09__0534bfda-bb84-4606-a6f0-003bea572951.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/santiago/santiago_09__0534bfda-bb84-4606-a6f0-003bea572951.jpg",
+   "name": "santiago_09.jpg",
+   "type": "image",
+   "folder": "santiago",
+   "media_id": "templates/2016-dubey-place/santiago/santiago_09__0534bfda-bb84-4606-a6f0-003bea572951.jpg",
+   "logicalFolder": "santiago",
+   "original_bytes": 105999,
+   "uploaded_bytes": 105999,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/santiago/santiago_10__c5f1d96c-3b3d-461a-9237-a81dba275839.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/santiago/santiago_10__c5f1d96c-3b3d-461a-9237-a81dba275839.jpg",
+   "name": "santiago_10.jpg",
+   "type": "image",
+   "folder": "santiago",
+   "media_id": "templates/2016-dubey-place/santiago/santiago_10__c5f1d96c-3b3d-461a-9237-a81dba275839.jpg",
+   "logicalFolder": "santiago",
+   "original_bytes": 114577,
+   "uploaded_bytes": 114577,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/saopaulo/saopaulo_01__3970d11e-7114-421a-bf70-a97460376605.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/saopaulo/saopaulo_01__3970d11e-7114-421a-bf70-a97460376605.jpg",
+   "name": "saopaulo_01.jpg",
+   "type": "image",
+   "folder": "saopaulo",
+   "media_id": "templates/2016-dubey-place/saopaulo/saopaulo_01__3970d11e-7114-421a-bf70-a97460376605.jpg",
+   "logicalFolder": "saopaulo",
+   "original_bytes": 133269,
+   "uploaded_bytes": 133269,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/saopaulo/saopaulo_02__ff57a2e5-930c-4ffe-bf3e-9a3c59f290f1.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/saopaulo/saopaulo_02__ff57a2e5-930c-4ffe-bf3e-9a3c59f290f1.jpg",
+   "name": "saopaulo_02.jpg",
+   "type": "image",
+   "folder": "saopaulo",
+   "media_id": "templates/2016-dubey-place/saopaulo/saopaulo_02__ff57a2e5-930c-4ffe-bf3e-9a3c59f290f1.jpg",
+   "logicalFolder": "saopaulo",
+   "original_bytes": 152785,
+   "uploaded_bytes": 152785,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/saopaulo/saopaulo_03__cd3e2510-4dd6-4415-b854-b02c94734e53.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/saopaulo/saopaulo_03__cd3e2510-4dd6-4415-b854-b02c94734e53.jpg",
+   "name": "saopaulo_03.jpg",
+   "type": "image",
+   "folder": "saopaulo",
+   "media_id": "templates/2016-dubey-place/saopaulo/saopaulo_03__cd3e2510-4dd6-4415-b854-b02c94734e53.jpg",
+   "logicalFolder": "saopaulo",
+   "original_bytes": 178023,
+   "uploaded_bytes": 178023,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/saopaulo/saopaulo_04__60d7f068-5b7a-4472-a88d-3f23905f9c6e.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/saopaulo/saopaulo_04__60d7f068-5b7a-4472-a88d-3f23905f9c6e.jpg",
+   "name": "saopaulo_04.jpg",
+   "type": "image",
+   "folder": "saopaulo",
+   "media_id": "templates/2016-dubey-place/saopaulo/saopaulo_04__60d7f068-5b7a-4472-a88d-3f23905f9c6e.jpg",
+   "logicalFolder": "saopaulo",
+   "original_bytes": 114449,
+   "uploaded_bytes": 114449,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/saopaulo/saopaulo_05__cedcd448-8ff8-4a0c-8034-0053a85aaf2f.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/saopaulo/saopaulo_05__cedcd448-8ff8-4a0c-8034-0053a85aaf2f.jpg",
+   "name": "saopaulo_05.jpg",
+   "type": "image",
+   "folder": "saopaulo",
+   "media_id": "templates/2016-dubey-place/saopaulo/saopaulo_05__cedcd448-8ff8-4a0c-8034-0053a85aaf2f.jpg",
+   "logicalFolder": "saopaulo",
+   "original_bytes": 105984,
+   "uploaded_bytes": 105984,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/saopaulo/saopaulo_06__82fcc104-46c6-4154-81f5-ad40bb3c282f.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/saopaulo/saopaulo_06__82fcc104-46c6-4154-81f5-ad40bb3c282f.jpg",
+   "name": "saopaulo_06.jpg",
+   "type": "image",
+   "folder": "saopaulo",
+   "media_id": "templates/2016-dubey-place/saopaulo/saopaulo_06__82fcc104-46c6-4154-81f5-ad40bb3c282f.jpg",
+   "logicalFolder": "saopaulo",
+   "original_bytes": 94504,
+   "uploaded_bytes": 94504,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/saopaulo/saopaulo_07__da0dc7ac-4158-4476-849e-ceae376948bc.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/saopaulo/saopaulo_07__da0dc7ac-4158-4476-849e-ceae376948bc.jpg",
+   "name": "saopaulo_07.jpg",
+   "type": "image",
+   "folder": "saopaulo",
+   "media_id": "templates/2016-dubey-place/saopaulo/saopaulo_07__da0dc7ac-4158-4476-849e-ceae376948bc.jpg",
+   "logicalFolder": "saopaulo",
+   "original_bytes": 135100,
+   "uploaded_bytes": 135100,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/saopaulo/saopaulo_08__d655017f-1f81-43dd-b475-4ca65f251397.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/saopaulo/saopaulo_08__d655017f-1f81-43dd-b475-4ca65f251397.jpg",
+   "name": "saopaulo_08.jpg",
+   "type": "image",
+   "folder": "saopaulo",
+   "media_id": "templates/2016-dubey-place/saopaulo/saopaulo_08__d655017f-1f81-43dd-b475-4ca65f251397.jpg",
+   "logicalFolder": "saopaulo",
+   "original_bytes": 171856,
+   "uploaded_bytes": 171856,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/saopaulo/saopaulo_09__4f466002-82d4-449e-b000-43b2e47e9351.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/saopaulo/saopaulo_09__4f466002-82d4-449e-b000-43b2e47e9351.jpg",
+   "name": "saopaulo_09.jpg",
+   "type": "image",
+   "folder": "saopaulo",
+   "media_id": "templates/2016-dubey-place/saopaulo/saopaulo_09__4f466002-82d4-449e-b000-43b2e47e9351.jpg",
+   "logicalFolder": "saopaulo",
+   "original_bytes": 129766,
+   "uploaded_bytes": 129766,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/saopaulo/saopaulo_10__4ae89202-c627-4805-b4a3-ab1b58585d4d.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/saopaulo/saopaulo_10__4ae89202-c627-4805-b4a3-ab1b58585d4d.jpg",
+   "name": "saopaulo_10.jpg",
+   "type": "image",
+   "folder": "saopaulo",
+   "media_id": "templates/2016-dubey-place/saopaulo/saopaulo_10__4ae89202-c627-4805-b4a3-ab1b58585d4d.jpg",
+   "logicalFolder": "saopaulo",
+   "original_bytes": 125779,
+   "uploaded_bytes": 125779,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/saopaulo/saopaulo_11__0c545ff1-c38b-46d6-b1bb-82dc421f6348.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/saopaulo/saopaulo_11__0c545ff1-c38b-46d6-b1bb-82dc421f6348.jpg",
+   "name": "saopaulo_11.jpg",
+   "type": "image",
+   "folder": "saopaulo",
+   "media_id": "templates/2016-dubey-place/saopaulo/saopaulo_11__0c545ff1-c38b-46d6-b1bb-82dc421f6348.jpg",
+   "logicalFolder": "saopaulo",
+   "original_bytes": 131289,
+   "uploaded_bytes": 131289,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/saopaulo/saopaulo_12__9f4be71d-8295-49df-aae3-3c27ac98187b.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/saopaulo/saopaulo_12__9f4be71d-8295-49df-aae3-3c27ac98187b.jpg",
+   "name": "saopaulo_12.jpg",
+   "type": "image",
+   "folder": "saopaulo",
+   "media_id": "templates/2016-dubey-place/saopaulo/saopaulo_12__9f4be71d-8295-49df-aae3-3c27ac98187b.jpg",
+   "logicalFolder": "saopaulo",
+   "original_bytes": 147927,
+   "uploaded_bytes": 147927,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/saopaulo/saopaulo_13__52c638b6-f652-4770-8e0a-4dede2572870.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/saopaulo/saopaulo_13__52c638b6-f652-4770-8e0a-4dede2572870.jpg",
+   "name": "saopaulo_13.jpg",
+   "type": "image",
+   "folder": "saopaulo",
+   "media_id": "templates/2016-dubey-place/saopaulo/saopaulo_13__52c638b6-f652-4770-8e0a-4dede2572870.jpg",
+   "logicalFolder": "saopaulo",
+   "original_bytes": 113066,
+   "uploaded_bytes": 113066,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/saopaulo/saopaulo_14__da528240-7eb7-4a18-92af-3bad0e6788d7.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/saopaulo/saopaulo_14__da528240-7eb7-4a18-92af-3bad0e6788d7.jpg",
+   "name": "saopaulo_14.jpg",
+   "type": "image",
+   "folder": "saopaulo",
+   "media_id": "templates/2016-dubey-place/saopaulo/saopaulo_14__da528240-7eb7-4a18-92af-3bad0e6788d7.jpg",
+   "logicalFolder": "saopaulo",
+   "original_bytes": 115360,
+   "uploaded_bytes": 115360,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/stockholm/stockholm_01__e3044ef3-f7b8-4935-939f-fd2cbcf2fe39.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/stockholm/stockholm_01__e3044ef3-f7b8-4935-939f-fd2cbcf2fe39.jpg",
+   "name": "stockholm_01.jpg",
+   "type": "image",
+   "folder": "stockholm",
+   "media_id": "templates/2016-dubey-place/stockholm/stockholm_01__e3044ef3-f7b8-4935-939f-fd2cbcf2fe39.jpg",
+   "logicalFolder": "stockholm",
+   "original_bytes": 174470,
+   "uploaded_bytes": 174470,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/stockholm/stockholm_02__4ab69f7d-0e79-4333-b073-f8964e0f3224.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/stockholm/stockholm_02__4ab69f7d-0e79-4333-b073-f8964e0f3224.jpg",
+   "name": "stockholm_02.jpg",
+   "type": "image",
+   "folder": "stockholm",
+   "media_id": "templates/2016-dubey-place/stockholm/stockholm_02__4ab69f7d-0e79-4333-b073-f8964e0f3224.jpg",
+   "logicalFolder": "stockholm",
+   "original_bytes": 154271,
+   "uploaded_bytes": 154271,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/stockholm/stockholm_03__de51b27c-97d0-47b6-8731-42d5087a2fcd.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/stockholm/stockholm_03__de51b27c-97d0-47b6-8731-42d5087a2fcd.jpg",
+   "name": "stockholm_03.jpg",
+   "type": "image",
+   "folder": "stockholm",
+   "media_id": "templates/2016-dubey-place/stockholm/stockholm_03__de51b27c-97d0-47b6-8731-42d5087a2fcd.jpg",
+   "logicalFolder": "stockholm",
+   "original_bytes": 103867,
+   "uploaded_bytes": 103867,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/stockholm/stockholm_04__5c538f39-52e5-4d00-b762-882a9cebad65.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/stockholm/stockholm_04__5c538f39-52e5-4d00-b762-882a9cebad65.jpg",
+   "name": "stockholm_04.jpg",
+   "type": "image",
+   "folder": "stockholm",
+   "media_id": "templates/2016-dubey-place/stockholm/stockholm_04__5c538f39-52e5-4d00-b762-882a9cebad65.jpg",
+   "logicalFolder": "stockholm",
+   "original_bytes": 105648,
+   "uploaded_bytes": 105648,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/stockholm/stockholm_05__8bd8d3f2-1581-4da8-b029-be27feadcf24.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/stockholm/stockholm_05__8bd8d3f2-1581-4da8-b029-be27feadcf24.jpg",
+   "name": "stockholm_05.jpg",
+   "type": "image",
+   "folder": "stockholm",
+   "media_id": "templates/2016-dubey-place/stockholm/stockholm_05__8bd8d3f2-1581-4da8-b029-be27feadcf24.jpg",
+   "logicalFolder": "stockholm",
+   "original_bytes": 141072,
+   "uploaded_bytes": 141072,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/stockholm/stockholm_06__6a79249f-98e8-4b7d-ac27-b1684a6b77e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/stockholm/stockholm_06__6a79249f-98e8-4b7d-ac27-b1684a6b77e7.jpg",
+   "name": "stockholm_06.jpg",
+   "type": "image",
+   "folder": "stockholm",
+   "media_id": "templates/2016-dubey-place/stockholm/stockholm_06__6a79249f-98e8-4b7d-ac27-b1684a6b77e7.jpg",
+   "logicalFolder": "stockholm",
+   "original_bytes": 105893,
+   "uploaded_bytes": 105893,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/stockholm/stockholm_07__54278131-bfc2-4892-b80c-3b60b7691dec.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/stockholm/stockholm_07__54278131-bfc2-4892-b80c-3b60b7691dec.jpg",
+   "name": "stockholm_07.jpg",
+   "type": "image",
+   "folder": "stockholm",
+   "media_id": "templates/2016-dubey-place/stockholm/stockholm_07__54278131-bfc2-4892-b80c-3b60b7691dec.jpg",
+   "logicalFolder": "stockholm",
+   "original_bytes": 114975,
+   "uploaded_bytes": 114975,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/stockholm/stockholm_08__42bb5fe7-2ace-464e-8ab0-6e10981312c9.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/stockholm/stockholm_08__42bb5fe7-2ace-464e-8ab0-6e10981312c9.jpg",
+   "name": "stockholm_08.jpg",
+   "type": "image",
+   "folder": "stockholm",
+   "media_id": "templates/2016-dubey-place/stockholm/stockholm_08__42bb5fe7-2ace-464e-8ab0-6e10981312c9.jpg",
+   "logicalFolder": "stockholm",
+   "original_bytes": 123434,
+   "uploaded_bytes": 123434,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/stockholm/stockholm_09__f2ce6ade-ab4f-42f2-964a-d1f0741ee445.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/stockholm/stockholm_09__f2ce6ade-ab4f-42f2-964a-d1f0741ee445.jpg",
+   "name": "stockholm_09.jpg",
+   "type": "image",
+   "folder": "stockholm",
+   "media_id": "templates/2016-dubey-place/stockholm/stockholm_09__f2ce6ade-ab4f-42f2-964a-d1f0741ee445.jpg",
+   "logicalFolder": "stockholm",
+   "original_bytes": 112010,
+   "uploaded_bytes": 112010,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/stockholm/stockholm_10__04980544-e252-4222-9306-cc75ff9d3ebb.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/stockholm/stockholm_10__04980544-e252-4222-9306-cc75ff9d3ebb.jpg",
+   "name": "stockholm_10.jpg",
+   "type": "image",
+   "folder": "stockholm",
+   "media_id": "templates/2016-dubey-place/stockholm/stockholm_10__04980544-e252-4222-9306-cc75ff9d3ebb.jpg",
+   "logicalFolder": "stockholm",
+   "original_bytes": 138221,
+   "uploaded_bytes": 138221,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/sydney/sydney_01__773eed2b-6950-47b4-9c63-13cad5d1e23a.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/sydney/sydney_01__773eed2b-6950-47b4-9c63-13cad5d1e23a.jpg",
+   "name": "sydney_01.jpg",
+   "type": "image",
+   "folder": "sydney",
+   "media_id": "templates/2016-dubey-place/sydney/sydney_01__773eed2b-6950-47b4-9c63-13cad5d1e23a.jpg",
+   "logicalFolder": "sydney",
+   "original_bytes": 123822,
+   "uploaded_bytes": 123822,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/sydney/sydney_02__d9d89dea-07ca-478a-9510-d2d0cf2d3845.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/sydney/sydney_02__d9d89dea-07ca-478a-9510-d2d0cf2d3845.jpg",
+   "name": "sydney_02.jpg",
+   "type": "image",
+   "folder": "sydney",
+   "media_id": "templates/2016-dubey-place/sydney/sydney_02__d9d89dea-07ca-478a-9510-d2d0cf2d3845.jpg",
+   "logicalFolder": "sydney",
+   "original_bytes": 143921,
+   "uploaded_bytes": 143921,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/sydney/sydney_03__f86c2836-44f5-410c-a960-f6cb24601a75.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/sydney/sydney_03__f86c2836-44f5-410c-a960-f6cb24601a75.jpg",
+   "name": "sydney_03.jpg",
+   "type": "image",
+   "folder": "sydney",
+   "media_id": "templates/2016-dubey-place/sydney/sydney_03__f86c2836-44f5-410c-a960-f6cb24601a75.jpg",
+   "logicalFolder": "sydney",
+   "original_bytes": 122456,
+   "uploaded_bytes": 122456,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/sydney/sydney_04__0f3bf25d-8197-4704-9bd1-cffc6cca0518.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/sydney/sydney_04__0f3bf25d-8197-4704-9bd1-cffc6cca0518.jpg",
+   "name": "sydney_04.jpg",
+   "type": "image",
+   "folder": "sydney",
+   "media_id": "templates/2016-dubey-place/sydney/sydney_04__0f3bf25d-8197-4704-9bd1-cffc6cca0518.jpg",
+   "logicalFolder": "sydney",
+   "original_bytes": 126761,
+   "uploaded_bytes": 126761,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/sydney/sydney_05__6b952e3b-81b7-47e0-9cc5-71174ff64bd6.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/sydney/sydney_05__6b952e3b-81b7-47e0-9cc5-71174ff64bd6.jpg",
+   "name": "sydney_05.jpg",
+   "type": "image",
+   "folder": "sydney",
+   "media_id": "templates/2016-dubey-place/sydney/sydney_05__6b952e3b-81b7-47e0-9cc5-71174ff64bd6.jpg",
+   "logicalFolder": "sydney",
+   "original_bytes": 108875,
+   "uploaded_bytes": 108875,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/sydney/sydney_06__3a5fbc4d-293b-4314-bf0d-c663cd968b5a.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/sydney/sydney_06__3a5fbc4d-293b-4314-bf0d-c663cd968b5a.jpg",
+   "name": "sydney_06.jpg",
+   "type": "image",
+   "folder": "sydney",
+   "media_id": "templates/2016-dubey-place/sydney/sydney_06__3a5fbc4d-293b-4314-bf0d-c663cd968b5a.jpg",
+   "logicalFolder": "sydney",
+   "original_bytes": 96926,
+   "uploaded_bytes": 96926,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/sydney/sydney_07__1c7cb20a-b334-4733-8d1f-7779c9635a63.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/sydney/sydney_07__1c7cb20a-b334-4733-8d1f-7779c9635a63.jpg",
+   "name": "sydney_07.jpg",
+   "type": "image",
+   "folder": "sydney",
+   "media_id": "templates/2016-dubey-place/sydney/sydney_07__1c7cb20a-b334-4733-8d1f-7779c9635a63.jpg",
+   "logicalFolder": "sydney",
+   "original_bytes": 117793,
+   "uploaded_bytes": 117793,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/sydney/sydney_08__d5da0f3a-aae1-4e6f-a402-00e604d57575.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/sydney/sydney_08__d5da0f3a-aae1-4e6f-a402-00e604d57575.jpg",
+   "name": "sydney_08.jpg",
+   "type": "image",
+   "folder": "sydney",
+   "media_id": "templates/2016-dubey-place/sydney/sydney_08__d5da0f3a-aae1-4e6f-a402-00e604d57575.jpg",
+   "logicalFolder": "sydney",
+   "original_bytes": 149750,
+   "uploaded_bytes": 149750,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/sydney/sydney_09__ce9d5fd2-7816-4569-95fb-1b575bf82949.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/sydney/sydney_09__ce9d5fd2-7816-4569-95fb-1b575bf82949.jpg",
+   "name": "sydney_09.jpg",
+   "type": "image",
+   "folder": "sydney",
+   "media_id": "templates/2016-dubey-place/sydney/sydney_09__ce9d5fd2-7816-4569-95fb-1b575bf82949.jpg",
+   "logicalFolder": "sydney",
+   "original_bytes": 114943,
+   "uploaded_bytes": 114943,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/sydney/sydney_10__1fe96173-2abf-45f6-9efe-b88bd10536c2.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/sydney/sydney_10__1fe96173-2abf-45f6-9efe-b88bd10536c2.jpg",
+   "name": "sydney_10.jpg",
+   "type": "image",
+   "folder": "sydney",
+   "media_id": "templates/2016-dubey-place/sydney/sydney_10__1fe96173-2abf-45f6-9efe-b88bd10536c2.jpg",
+   "logicalFolder": "sydney",
+   "original_bytes": 163150,
+   "uploaded_bytes": 163150,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/sydney/sydney_11__a0a779da-2811-4f86-82a6-24f18a06b133.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/sydney/sydney_11__a0a779da-2811-4f86-82a6-24f18a06b133.jpg",
+   "name": "sydney_11.jpg",
+   "type": "image",
+   "folder": "sydney",
+   "media_id": "templates/2016-dubey-place/sydney/sydney_11__a0a779da-2811-4f86-82a6-24f18a06b133.jpg",
+   "logicalFolder": "sydney",
+   "original_bytes": 113828,
+   "uploaded_bytes": 113828,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/sydney/sydney_12__90f4b34e-002a-4d22-934b-b2406daa5001.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/sydney/sydney_12__90f4b34e-002a-4d22-934b-b2406daa5001.jpg",
+   "name": "sydney_12.jpg",
+   "type": "image",
+   "folder": "sydney",
+   "media_id": "templates/2016-dubey-place/sydney/sydney_12__90f4b34e-002a-4d22-934b-b2406daa5001.jpg",
+   "logicalFolder": "sydney",
+   "original_bytes": 114705,
+   "uploaded_bytes": 114705,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/sydney/sydney_13__aac5e01e-f857-4f9b-a6fa-35487fe87b10.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/sydney/sydney_13__aac5e01e-f857-4f9b-a6fa-35487fe87b10.jpg",
+   "name": "sydney_13.jpg",
+   "type": "image",
+   "folder": "sydney",
+   "media_id": "templates/2016-dubey-place/sydney/sydney_13__aac5e01e-f857-4f9b-a6fa-35487fe87b10.jpg",
+   "logicalFolder": "sydney",
+   "original_bytes": 128416,
+   "uploaded_bytes": 128416,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/sydney/sydney_14__64238c10-44cc-4080-bcd1-99a3b0e26a8e.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/sydney/sydney_14__64238c10-44cc-4080-bcd1-99a3b0e26a8e.jpg",
+   "name": "sydney_14.jpg",
+   "type": "image",
+   "folder": "sydney",
+   "media_id": "templates/2016-dubey-place/sydney/sydney_14__64238c10-44cc-4080-bcd1-99a3b0e26a8e.jpg",
+   "logicalFolder": "sydney",
+   "original_bytes": 73434,
+   "uploaded_bytes": 73434,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/tokyo/tokyo_01__b04e7021-08a5-4472-8baa-3457f58a6acf.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/tokyo/tokyo_01__b04e7021-08a5-4472-8baa-3457f58a6acf.jpg",
+   "name": "tokyo_01.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2016-dubey-place/tokyo/tokyo_01__b04e7021-08a5-4472-8baa-3457f58a6acf.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 135517,
+   "uploaded_bytes": 135517,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/tokyo/tokyo_02__4fb2d2cb-2ff2-406d-ad25-061f6711c610.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/tokyo/tokyo_02__4fb2d2cb-2ff2-406d-ad25-061f6711c610.jpg",
+   "name": "tokyo_02.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2016-dubey-place/tokyo/tokyo_02__4fb2d2cb-2ff2-406d-ad25-061f6711c610.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 129602,
+   "uploaded_bytes": 129602,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/tokyo/tokyo_03__b71b44a1-6b05-42b9-a0c0-8376ea04a2ab.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/tokyo/tokyo_03__b71b44a1-6b05-42b9-a0c0-8376ea04a2ab.jpg",
+   "name": "tokyo_03.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2016-dubey-place/tokyo/tokyo_03__b71b44a1-6b05-42b9-a0c0-8376ea04a2ab.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 157767,
+   "uploaded_bytes": 157767,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/tokyo/tokyo_04__79b437a1-df11-473a-a53d-eb9436f4ce89.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/tokyo/tokyo_04__79b437a1-df11-473a-a53d-eb9436f4ce89.jpg",
+   "name": "tokyo_04.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2016-dubey-place/tokyo/tokyo_04__79b437a1-df11-473a-a53d-eb9436f4ce89.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 151536,
+   "uploaded_bytes": 151536,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/tokyo/tokyo_05__1a298c5e-a744-4d8d-93dc-31a9ffcf2f24.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/tokyo/tokyo_05__1a298c5e-a744-4d8d-93dc-31a9ffcf2f24.jpg",
+   "name": "tokyo_05.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2016-dubey-place/tokyo/tokyo_05__1a298c5e-a744-4d8d-93dc-31a9ffcf2f24.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 142664,
+   "uploaded_bytes": 142664,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/tokyo/tokyo_06__60e0a51d-7947-4d6f-ac2f-feffccc8228c.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/tokyo/tokyo_06__60e0a51d-7947-4d6f-ac2f-feffccc8228c.jpg",
+   "name": "tokyo_06.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2016-dubey-place/tokyo/tokyo_06__60e0a51d-7947-4d6f-ac2f-feffccc8228c.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 168307,
+   "uploaded_bytes": 168307,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/tokyo/tokyo_07__76cb3a09-336e-4760-91b9-09c085bd2092.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/tokyo/tokyo_07__76cb3a09-336e-4760-91b9-09c085bd2092.jpg",
+   "name": "tokyo_07.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2016-dubey-place/tokyo/tokyo_07__76cb3a09-336e-4760-91b9-09c085bd2092.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 156914,
+   "uploaded_bytes": 156914,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/tokyo/tokyo_08__de35552a-ccca-472e-8b2f-47cae14386d5.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/tokyo/tokyo_08__de35552a-ccca-472e-8b2f-47cae14386d5.jpg",
+   "name": "tokyo_08.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2016-dubey-place/tokyo/tokyo_08__de35552a-ccca-472e-8b2f-47cae14386d5.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 126753,
+   "uploaded_bytes": 126753,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/tokyo/tokyo_09__6eb54528-3617-4e61-8d6f-b473065ad59b.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/tokyo/tokyo_09__6eb54528-3617-4e61-8d6f-b473065ad59b.jpg",
+   "name": "tokyo_09.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2016-dubey-place/tokyo/tokyo_09__6eb54528-3617-4e61-8d6f-b473065ad59b.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 134640,
+   "uploaded_bytes": 134640,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/tokyo/tokyo_10__5f1ecfa5-9883-48c1-bf84-f336d9160524.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/tokyo/tokyo_10__5f1ecfa5-9883-48c1-bf84-f336d9160524.jpg",
+   "name": "tokyo_10.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2016-dubey-place/tokyo/tokyo_10__5f1ecfa5-9883-48c1-bf84-f336d9160524.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 95666,
+   "uploaded_bytes": 95666,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/tokyo/tokyo_11__d465fbe0-a7fc-4b9a-8e0a-f0d9f8a3ba48.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/tokyo/tokyo_11__d465fbe0-a7fc-4b9a-8e0a-f0d9f8a3ba48.jpg",
+   "name": "tokyo_11.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2016-dubey-place/tokyo/tokyo_11__d465fbe0-a7fc-4b9a-8e0a-f0d9f8a3ba48.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 99880,
+   "uploaded_bytes": 99880,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/tokyo/tokyo_12__aaaa25ea-1a91-4e67-b5e0-f166650c1536.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/tokyo/tokyo_12__aaaa25ea-1a91-4e67-b5e0-f166650c1536.jpg",
+   "name": "tokyo_12.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2016-dubey-place/tokyo/tokyo_12__aaaa25ea-1a91-4e67-b5e0-f166650c1536.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 130128,
+   "uploaded_bytes": 130128,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/tokyo/tokyo_13__e292d1c1-6337-4aec-8fac-bb2a345710e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/tokyo/tokyo_13__e292d1c1-6337-4aec-8fac-bb2a345710e6.jpg",
+   "name": "tokyo_13.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2016-dubey-place/tokyo/tokyo_13__e292d1c1-6337-4aec-8fac-bb2a345710e6.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 147752,
+   "uploaded_bytes": 147752,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/tokyo/tokyo_14__4830a9db-68f4-4097-83ac-d3947c3fcdf7.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/tokyo/tokyo_14__4830a9db-68f4-4097-83ac-d3947c3fcdf7.jpg",
+   "name": "tokyo_14.jpg",
+   "type": "image",
+   "folder": "tokyo",
+   "media_id": "templates/2016-dubey-place/tokyo/tokyo_14__4830a9db-68f4-4097-83ac-d3947c3fcdf7.jpg",
+   "logicalFolder": "tokyo",
+   "original_bytes": 139967,
+   "uploaded_bytes": 139967,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/toronto/toronto_01__b98f6ca7-1846-47aa-bb80-b4e80d8e0d01.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/toronto/toronto_01__b98f6ca7-1846-47aa-bb80-b4e80d8e0d01.jpg",
+   "name": "toronto_01.jpg",
+   "type": "image",
+   "folder": "toronto",
+   "media_id": "templates/2016-dubey-place/toronto/toronto_01__b98f6ca7-1846-47aa-bb80-b4e80d8e0d01.jpg",
+   "logicalFolder": "toronto",
+   "original_bytes": 94671,
+   "uploaded_bytes": 94671,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/toronto/toronto_02__d091f5d5-8f8c-4fcd-a8fa-366ecead2a1b.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/toronto/toronto_02__d091f5d5-8f8c-4fcd-a8fa-366ecead2a1b.jpg",
+   "name": "toronto_02.jpg",
+   "type": "image",
+   "folder": "toronto",
+   "media_id": "templates/2016-dubey-place/toronto/toronto_02__d091f5d5-8f8c-4fcd-a8fa-366ecead2a1b.jpg",
+   "logicalFolder": "toronto",
+   "original_bytes": 114240,
+   "uploaded_bytes": 114240,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/toronto/toronto_03__5d6a8ac3-2a95-46aa-820d-5313667d549d.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/toronto/toronto_03__5d6a8ac3-2a95-46aa-820d-5313667d549d.jpg",
+   "name": "toronto_03.jpg",
+   "type": "image",
+   "folder": "toronto",
+   "media_id": "templates/2016-dubey-place/toronto/toronto_03__5d6a8ac3-2a95-46aa-820d-5313667d549d.jpg",
+   "logicalFolder": "toronto",
+   "original_bytes": 186325,
+   "uploaded_bytes": 186325,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/toronto/toronto_04__074e396b-cfa2-46e3-af10-65f271c27759.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/toronto/toronto_04__074e396b-cfa2-46e3-af10-65f271c27759.jpg",
+   "name": "toronto_04.jpg",
+   "type": "image",
+   "folder": "toronto",
+   "media_id": "templates/2016-dubey-place/toronto/toronto_04__074e396b-cfa2-46e3-af10-65f271c27759.jpg",
+   "logicalFolder": "toronto",
+   "original_bytes": 124588,
+   "uploaded_bytes": 124588,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/toronto/toronto_05__0383a029-2cfc-480a-b6f0-d623f44080f3.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/toronto/toronto_05__0383a029-2cfc-480a-b6f0-d623f44080f3.jpg",
+   "name": "toronto_05.jpg",
+   "type": "image",
+   "folder": "toronto",
+   "media_id": "templates/2016-dubey-place/toronto/toronto_05__0383a029-2cfc-480a-b6f0-d623f44080f3.jpg",
+   "logicalFolder": "toronto",
+   "original_bytes": 141757,
+   "uploaded_bytes": 141757,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/toronto/toronto_06__468e220b-88b8-4ffb-b3d1-92eb88263d1d.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/toronto/toronto_06__468e220b-88b8-4ffb-b3d1-92eb88263d1d.jpg",
+   "name": "toronto_06.jpg",
+   "type": "image",
+   "folder": "toronto",
+   "media_id": "templates/2016-dubey-place/toronto/toronto_06__468e220b-88b8-4ffb-b3d1-92eb88263d1d.jpg",
+   "logicalFolder": "toronto",
+   "original_bytes": 148578,
+   "uploaded_bytes": 148578,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/toronto/toronto_07__49638927-a0fd-4742-a46c-143989ac0e9f.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/toronto/toronto_07__49638927-a0fd-4742-a46c-143989ac0e9f.jpg",
+   "name": "toronto_07.jpg",
+   "type": "image",
+   "folder": "toronto",
+   "media_id": "templates/2016-dubey-place/toronto/toronto_07__49638927-a0fd-4742-a46c-143989ac0e9f.jpg",
+   "logicalFolder": "toronto",
+   "original_bytes": 124980,
+   "uploaded_bytes": 124980,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/toronto/toronto_08__e2b31a5f-cc85-4137-898d-a1852c6fc6e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/toronto/toronto_08__e2b31a5f-cc85-4137-898d-a1852c6fc6e6.jpg",
+   "name": "toronto_08.jpg",
+   "type": "image",
+   "folder": "toronto",
+   "media_id": "templates/2016-dubey-place/toronto/toronto_08__e2b31a5f-cc85-4137-898d-a1852c6fc6e6.jpg",
+   "logicalFolder": "toronto",
+   "original_bytes": 146265,
+   "uploaded_bytes": 146265,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/toronto/toronto_09__fe1d774a-96cf-47a0-a3d6-d142531afa72.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/toronto/toronto_09__fe1d774a-96cf-47a0-a3d6-d142531afa72.jpg",
+   "name": "toronto_09.jpg",
+   "type": "image",
+   "folder": "toronto",
+   "media_id": "templates/2016-dubey-place/toronto/toronto_09__fe1d774a-96cf-47a0-a3d6-d142531afa72.jpg",
+   "logicalFolder": "toronto",
+   "original_bytes": 194753,
+   "uploaded_bytes": 194753,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/toronto/toronto_10__f91c80e8-c589-4d0e-9e80-e53d84433079.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/toronto/toronto_10__f91c80e8-c589-4d0e-9e80-e53d84433079.jpg",
+   "name": "toronto_10.jpg",
+   "type": "image",
+   "folder": "toronto",
+   "media_id": "templates/2016-dubey-place/toronto/toronto_10__f91c80e8-c589-4d0e-9e80-e53d84433079.jpg",
+   "logicalFolder": "toronto",
+   "original_bytes": 91031,
+   "uploaded_bytes": 91031,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/toronto/toronto_11__d7a1f526-38fc-4ff0-b4ea-2d1fbc2fe88c.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/toronto/toronto_11__d7a1f526-38fc-4ff0-b4ea-2d1fbc2fe88c.jpg",
+   "name": "toronto_11.jpg",
+   "type": "image",
+   "folder": "toronto",
+   "media_id": "templates/2016-dubey-place/toronto/toronto_11__d7a1f526-38fc-4ff0-b4ea-2d1fbc2fe88c.jpg",
+   "logicalFolder": "toronto",
+   "original_bytes": 97641,
+   "uploaded_bytes": 97641,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/toronto/toronto_12__d0701ccf-1585-4cb7-9f05-81914aab456b.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/toronto/toronto_12__d0701ccf-1585-4cb7-9f05-81914aab456b.jpg",
+   "name": "toronto_12.jpg",
+   "type": "image",
+   "folder": "toronto",
+   "media_id": "templates/2016-dubey-place/toronto/toronto_12__d0701ccf-1585-4cb7-9f05-81914aab456b.jpg",
+   "logicalFolder": "toronto",
+   "original_bytes": 111224,
+   "uploaded_bytes": 111224,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-dubey-place/toronto/toronto_13__bc5dcc45-2635-4cd7-9a59-24638f15dddb.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-dubey-place/toronto/toronto_13__bc5dcc45-2635-4cd7-9a59-24638f15dddb.jpg",
+   "name": "toronto_13.jpg",
+   "type": "image",
+   "folder": "toronto",
+   "media_id": "templates/2016-dubey-place/toronto/toronto_13__bc5dcc45-2635-4cd7-9a59-24638f15dddb.jpg",
+   "logicalFolder": "toronto",
+   "original_bytes": 177826,
+   "uploaded_bytes": 177826,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Deep Learning the City: Quantifying Urban Perception at a Global Scale",
+  "authors": [
+   "Dubey A.",
+   "Naik N.",
+   "Parikh D.",
+   "Raskar R.",
+   "Hidalgo C.A."
+  ],
+  "year": 2016,
+  "venue": "Lecture Notes in Computer Science",
+  "doi": "10.1007/978-3-319-46448-0_12",
+  "url": "https://doi.org/10.1007/978-3-319-46448-0_12"
+ }
 }

@@ -1,112 +1,1002 @@
 {
-  "id": "2021-kruse-places",
-  "name": "Places for Play",
-  "description": "Rebuilt from the published description of Kruse, Kang, Liu, Zhang & Gao (2021). Participants rate how playable Boston street views are for children on a five-point scale. Playability is intentionally not defined, as in the paper. Differences from the original study: (1) Bundled images are photographs from the paper PDF (4 scenes), not the original full stimulus set.",
-  "author": "Kruse, Kang, Liu, Zhang & Gao",
-  "year": "2021",
-  "category": "Academic Research",
-  "tags": [
-    "official",
-    "paper"
-  ],
-  "isPinned": false,
-  "isApproved": true,
-  "showOnLanding": true,
-  "thumbnailUrl": null,
-  "website": "https://doi.org/10.1016/j.compenvurbsys.2021.101693",
-  "huggingfaceDataset": null,
-  "createdAt": "2026-10-02T00:00:00+00:00",
-  "imageDatasetConfig": {
-    "mediaFolderTags": {},
-    "mediaFolders": []
-  },
-  "preloadedImages": [],
-  "preloadedSource": null,
-  "preloadedAt": null,
-  "config": {
-    "title": "Places for Play",
-    "description": "Look at each street view and choose the category that best describes it.",
-    "logoPosition": "right",
-    "autoGrowComment": true,
-    "progressBarType": "questions",
-    "showProgressBar": "aboveheader",
-    "showQuestionNumbers": "off",
-    "spAnalysisRecommendation": {
-      "citation": "Kruse et al. 2021",
-      "items": [
-        {
-          "questions": [
-            "playability"
-          ],
-          "method": "scalar_distribution",
-          "minPerImage": 9
-        }
-      ]
-    },
-    "pages": [
-      {
-        "name": "page_rating",
-        "elements": [
-          {
-            "name": "playability",
-            "type": "imagerating",
-            "title": "Choose the category that most accurately describes how playable the scene in the image is for children.",
-            "imageFit": "cover",
-            "imageSource": "huggingface",
-            "imageSelectionMode": "huggingface_random",
-            "randomImageSelection": true,
-            "isRequired": true,
-            "imageCount": 1,
-            "trialCount": 20,
-            "rateMin": 1,
-            "rateMax": 5,
-            "rateLabels": [
-              "Very unplayable",
-              "Unplayable",
-              "Neither playable nor unplayable",
-              "Playable",
-              "Very playable"
-            ],
-            "minRateDescription": "Very unplayable",
-            "maxRateDescription": "Very playable"
-          }
-        ]
-      },
-      {
-        "name": "page_check",
-        "elements": [
-          {
-            "name": "attention_check",
-            "type": "radiogroup",
-            "title": "To show that you are reading carefully, please select \"Agree\" for this question.",
-            "choices": [
-              {
-                "value": "strongly_disagree",
-                "text": "Strongly disagree"
-              },
-              {
-                "value": "disagree",
-                "text": "Disagree"
-              },
-              {
-                "value": "neutral",
-                "text": "Neutral"
-              },
-              {
-                "value": "agree",
-                "text": "Agree"
-              },
-              {
-                "value": "strongly_agree",
-                "text": "Strongly agree"
-              }
-            ],
-            "isRequired": true,
-            "isAttentionCheck": true,
-            "expectedAnswer": "agree"
-          }
-        ]
-      }
+ "id": "2021-kruse-places",
+ "name": "Places for Play: Playability of Street Views (Boston)",
+ "description": "Method replication: same task and rating scale as the paper; the images are not the paper's stimuli (new Google Street View views of Boston, © Google). Kruse, Kang, Liu, Zhang & Gao (2021, Computers, Environment and Urban Systems 90:101693) asked Amazon Mechanical Turk workers to classify street view images by how playable the place is for children, then trained a deep-learning model on the labels to map neighbourhood playability in Boston, Seattle and San Francisco. Regressions found that higher traffic speeds and crime rates go with lower playability, higher perceived beauty with higher playability, and that a lively place is not necessarily playable.\n\nWhat participants do: after consent, they see 20 Boston street views one at a time, drawn at random from 65, and for each choose one of five categories: very unplayable, unplayable, neither playable nor unplayable, playable, very playable. As in the paper, \"playable\" is not defined. An attention check, age, gender and whether they look after children follow.\n\nAnalysis as in the paper: mean playability per image (the paper aggregated worker labels per image), then image scores related to street features such as traffic, greenery and perceived beauty.\n\nDifferences from the original study: (1) the images are 65 new Google Street View views (2017–2026) from random points across Boston, not the paper's labelled image set; (2) the paper covered three cities, this template only Boston; (3) the question on looking after children is an addition. The earlier version of this template showed 4 photographs cropped from the paper PDF.",
+ "author": "Kruse, Kang, Liu, Zhang & Gao",
+ "year": "2021",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "playability",
+  "children",
+  "boston",
+  "source:paper",
+  "modality:street_view",
+  "task:rating",
+  "concept:playability",
+  "participants:crowd",
+  "country:USA",
+  "city:Boston"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1016/j.compenvurbsys.2021.101693",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-10-02T00:00:00+00:00",
+ "updatedAt": "2026-11-27T05:28:48.34+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
     ]
+   },
+   {
+    "name": "ratings",
+    "elements": [
+     {
+      "name": "playability",
+      "type": "imagerating",
+      "title": "How playable is this place for children?",
+      "choices": [],
+      "rateMax": 5,
+      "rateMin": 1,
+      "imageFit": "contain",
+      "imageCount": 1,
+      "isRequired": true,
+      "rateLabels": [
+       "Very unplayable",
+       "Unplayable",
+       "Neither playable nor unplayable",
+       "Playable",
+       "Very playable"
+      ],
+      "trialCount": 20,
+      "description": "Choose the category that most accurately describes how playable the scene in the image is for children.",
+      "mediaFolders": [
+       "boston"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "maxRateDescription": "Very playable",
+      "minRateDescription": "Very unplayable",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "check",
+    "elements": [
+     {
+      "name": "attention_check",
+      "type": "radiogroup",
+      "title": "To show that you are reading carefully, please select \"Agree\" for this question.",
+      "choices": [
+       {
+        "text": "Strongly disagree",
+        "value": "strongly_disagree"
+       },
+       {
+        "text": "Disagree",
+        "value": "disagree"
+       },
+       {
+        "text": "Neutral",
+        "value": "neutral"
+       },
+       {
+        "text": "Agree",
+        "value": "agree"
+       },
+       {
+        "text": "Strongly agree",
+        "value": "strongly_agree"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "18–24",
+        "value": "18-24"
+       },
+       {
+        "text": "25–34",
+        "value": "25-34"
+       },
+       {
+        "text": "35–54",
+        "value": "35-54"
+       },
+       {
+        "text": "55 or older",
+        "value": "55plus"
+       }
+      ]
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ]
+     },
+     {
+      "name": "children",
+      "type": "radiogroup",
+      "title": "Do you have children, or look after children regularly?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "title": "Places for Play: How Playable Is This Street? (Boston)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-024419329ef56b86",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Places for Play: How Playable Is This Street? (Boston)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Places for Play: How Playable Is This Street? (Boston)\",\n    \"description\": \"Twenty Boston street views, one at a time: choose the category that best describes how playable the place is for children, from very unplayable to very playable. Method replication of Kruse, Kang, Liu, Zhang & Gao (2021, CEUS).\",\n    \"locale\": \"en\",\n    \"pages\": [\n      { \"name\": \"intro\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"I agree to take part. My answers are recorded anonymously for research.\", \"isRequired\": true, \"labelTrue\": \"I agree\", \"labelFalse\": \"I do not agree\" }\n      ]},\n      { \"name\": \"ratings\", \"elements\": [\n        { \"type\": \"imagerating\", \"name\": \"playability\", \"title\": \"How playable is this place for children?\",\n          \"description\": \"Choose the category that most accurately describes how playable the scene in the image is for children.\",\n          \"imageCount\": 1, \"trialCount\": 20, \"rateMin\": 1, \"rateMax\": 5,\n          \"rateLabels\": [\"Very unplayable\", \"Unplayable\", \"Neither playable nor unplayable\", \"Playable\", \"Very playable\"],\n          \"minRateDescription\": \"Very unplayable\", \"maxRateDescription\": \"Very playable\",\n          \"imageFit\": \"contain\", \"isRequired\": true,\n          \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"mediaFolders\": [\"boston\"] }\n      ]},\n      { \"name\": \"check\", \"elements\": [\n        { \"type\": \"radiogroup\", \"name\": \"attention_check\", \"title\": \"To show that you are reading carefully, please select \\\"Agree\\\" for this question.\", \"isRequired\": true,\n          \"choices\": [ { \"value\": \"strongly_disagree\", \"text\": \"Strongly disagree\" }, { \"value\": \"disagree\", \"text\": \"Disagree\" }, { \"value\": \"neutral\", \"text\": \"Neutral\" }, { \"value\": \"agree\", \"text\": \"Agree\" }, { \"value\": \"strongly_agree\", \"text\": \"Strongly agree\" } ] }\n      ]},\n      { \"name\": \"about_you\", \"elements\": [\n        { \"type\": \"radiogroup\", \"name\": \"age_group\", \"title\": \"Age\", \"choices\": [\n          { \"value\": \"18-24\", \"text\": \"18–24\" }, { \"value\": \"25-34\", \"text\": \"25–34\" }, { \"value\": \"35-54\", \"text\": \"35–54\" }, { \"value\": \"55plus\", \"text\": \"55 or older\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"gender\", \"title\": \"Gender\", \"choices\": [\n          { \"value\": \"female\", \"text\": \"Female\" }, { \"value\": \"male\", \"text\": \"Male\" }, { \"value\": \"other\", \"text\": \"Other / prefer not to say\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"children\", \"title\": \"Do you have children, or look after children regularly?\", \"choices\": [\n          { \"value\": \"yes\", \"text\": \"Yes\" }, { \"value\": \"no\", \"text\": \"No\" } ] }\n      ]}\n    ]\n  }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#2f6f5e;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:900px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.opt5{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt5:hover,.btn.opt5:focus-visible{border-color:var(--accent);background:#eef5f2}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:900px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px}\n@media (max-width:620px){.scale{grid-template-columns:1fr}.btn.opt5{padding:11px 10px}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Boston, Google Street View 2017–2026 (© Google). Task and wording from Kruse, Kang, Liu, Zhang &amp; Gao (2021), Computers, Environment and Urban Systems 90, 101693, doi:10.1016/j.compenvurbsys.2021.101693.</footer>\n<script>\n(function(){\n  var app=document.getElementById('app'),Q,i=0,done={},ABOUT=['attention_check','age_group','gender','children'];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function url(k){var t=Q.trials&&Q.trials[k];var md=(t&&t.media)||Q.media||[];return (md[0]&&md[0].url)||'';}\n  function firstOpen(){for(var k=0;k<Q.trialCount;k++){if(!done[k])return k;}return Q.trialCount;}\n  function intro(){\n    var c=SPSite.getQuestion('consent');\n    app.innerHTML='<h1>How playable is this street for children?</h1>'+\n      '<p>You will see '+Q.trialCount+' street views from Boston, one at a time. For each one, choose the category that best describes how playable the place is for children. There is no definition of “playable” to learn: use your own judgement. There are no right or wrong answers. It takes about 5 minutes.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);i=firstOpen();show();});};\n  }\n  function show(){\n    if(i>=Q.trialCount)return about();\n    var labels=(Q.rateLabels&&Q.rateLabels.length===5)?Q.rateLabels:['Very unplayable','Unplayable','Neither playable nor unplayable','Playable','Very playable'],btns='';\n    for(var v=1;v<=5;v++)btns+='<button class=\"btn opt5\" data-v=\"'+v+'\">'+esc(labels[v-1]||v)+'</button>';\n    app.innerHTML='<h1>'+esc(Q.title)+'</h1><p>Image '+(i+1)+' of '+Q.trialCount+'</p><div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/Q.trialCount)+'%\"></i></div>'+\n      '<img class=\"shot\" src=\"'+esc(url(i))+'\" alt=\"Street view in Boston\">'+\n      '<p style=\"margin-top:10px\">'+esc(Q.description)+'</p><div class=\"scale\">'+btns+'</div><div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){var k=i;bs.forEach(function(x){x.disabled=true;});\n      SPSite.answer('playability',Number(b.getAttribute('data-v')),{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        done[k]=true;i=k+1;show();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    var h='<h1>Almost done</h1><div class=\"card\">';\n    ABOUT.forEach(function(n){var q=SPSite.getQuestion(n);h+='<div style=\"margin-top:12px\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';});\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"finish\">Finish</button></div><div class=\"err\"></div></div>';\n    ABOUT.forEach(function(n){app.querySelectorAll('input[name='+n+']').forEach(function(r){r.onchange=function(){SPSite.answer(n,r.value).then(function(x){if(x&&x.ok===false)err(x.error);});};});});\n    document.getElementById('finish').onclick=function(){var btn=this;btn.disabled=true;err('Submitting…');\n      SPSite.complete().then(function(r){if(r&&r.ok===false){btn.disabled=false;var m=r.missing||[];err(r.error||('Please answer: '+m.join(', ')));if(m.indexOf('consent')>=0)intro();else if(m.indexOf('playability')>=0){i=firstOpen();show();}}});};\n    window.scrollTo(0,0);\n  }\n  SPSite.onReady(function(ctx){\n    Q=SPSite.getQuestion('playability');\n    var a=(ctx&&ctx.answers)||{},p=a.playability,list=p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);\n    list.forEach(function(t,k){var v=t&&typeof t==='object'?t.value:t;if(v!=null&&v!=='')done[k]=true;});\n    if(a.consent===true){i=firstOpen();show();}else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T05:28:00.959Z",
+   "mediaFolders": [
+    "boston"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T05:28:00.959Z"
+  },
+  "description": "Twenty Boston street views, one at a time: choose the category that best describes how playable the place is for children, from very unplayable to very playable. Method replication of Kruse, Kang, Liu, Zhang & Gao (2021, CEUS).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2021-kruse-places/boston/boston_01__ca8fae8c-8179-480c-942a-d02a29326063.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_01__ca8fae8c-8179-480c-942a-d02a29326063.jpg",
+   "name": "boston_01.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_01__ca8fae8c-8179-480c-942a-d02a29326063.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 191395,
+   "uploaded_bytes": 191395,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_02__fe5c926b-941b-4b30-8068-09f296ba0242.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_02__fe5c926b-941b-4b30-8068-09f296ba0242.jpg",
+   "name": "boston_02.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_02__fe5c926b-941b-4b30-8068-09f296ba0242.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 169226,
+   "uploaded_bytes": 169226,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_03__0f8ea50a-fe67-41e3-945b-451ae7e20a1a.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_03__0f8ea50a-fe67-41e3-945b-451ae7e20a1a.jpg",
+   "name": "boston_03.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_03__0f8ea50a-fe67-41e3-945b-451ae7e20a1a.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 171324,
+   "uploaded_bytes": 171324,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_04__2985445b-d934-4f61-9b08-c437ebd1a05c.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_04__2985445b-d934-4f61-9b08-c437ebd1a05c.jpg",
+   "name": "boston_04.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_04__2985445b-d934-4f61-9b08-c437ebd1a05c.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 142463,
+   "uploaded_bytes": 142463,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_05__5a0174b8-e73c-4659-a27c-73e49dc572c3.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_05__5a0174b8-e73c-4659-a27c-73e49dc572c3.jpg",
+   "name": "boston_05.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_05__5a0174b8-e73c-4659-a27c-73e49dc572c3.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 195926,
+   "uploaded_bytes": 195926,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_06__69bae12a-a84f-43e4-84df-0bb1da4701fc.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_06__69bae12a-a84f-43e4-84df-0bb1da4701fc.jpg",
+   "name": "boston_06.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_06__69bae12a-a84f-43e4-84df-0bb1da4701fc.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 116152,
+   "uploaded_bytes": 116152,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_07__8a49bc7d-3e15-4953-85cd-d54de406e9b3.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_07__8a49bc7d-3e15-4953-85cd-d54de406e9b3.jpg",
+   "name": "boston_07.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_07__8a49bc7d-3e15-4953-85cd-d54de406e9b3.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 108840,
+   "uploaded_bytes": 108840,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_08__0555d8ec-aa8c-4eb4-a7f1-486de6058b7c.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_08__0555d8ec-aa8c-4eb4-a7f1-486de6058b7c.jpg",
+   "name": "boston_08.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_08__0555d8ec-aa8c-4eb4-a7f1-486de6058b7c.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 183161,
+   "uploaded_bytes": 183161,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_09__110fb8af-bde5-4dfb-a6c5-0244e25969da.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_09__110fb8af-bde5-4dfb-a6c5-0244e25969da.jpg",
+   "name": "boston_09.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_09__110fb8af-bde5-4dfb-a6c5-0244e25969da.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 127598,
+   "uploaded_bytes": 127598,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_10__67fcd45d-40c6-42d4-84ae-ea9d3003dae1.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_10__67fcd45d-40c6-42d4-84ae-ea9d3003dae1.jpg",
+   "name": "boston_10.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_10__67fcd45d-40c6-42d4-84ae-ea9d3003dae1.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 182816,
+   "uploaded_bytes": 182816,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_11__1e22bd7d-65c0-4af6-8884-648a3f590e0e.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_11__1e22bd7d-65c0-4af6-8884-648a3f590e0e.jpg",
+   "name": "boston_11.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_11__1e22bd7d-65c0-4af6-8884-648a3f590e0e.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 201202,
+   "uploaded_bytes": 201202,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_12__fffa65cd-fc41-48f9-a7e9-7b91085506e9.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_12__fffa65cd-fc41-48f9-a7e9-7b91085506e9.jpg",
+   "name": "boston_12.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_12__fffa65cd-fc41-48f9-a7e9-7b91085506e9.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 159717,
+   "uploaded_bytes": 159717,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_13__d027949e-016c-4779-a344-5d827e2c49a0.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_13__d027949e-016c-4779-a344-5d827e2c49a0.jpg",
+   "name": "boston_13.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_13__d027949e-016c-4779-a344-5d827e2c49a0.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 166230,
+   "uploaded_bytes": 166230,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_14__18b449f7-1832-404e-b6c8-43f5c62218e3.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_14__18b449f7-1832-404e-b6c8-43f5c62218e3.jpg",
+   "name": "boston_14.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_14__18b449f7-1832-404e-b6c8-43f5c62218e3.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 132561,
+   "uploaded_bytes": 132561,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_15__8d7c4b0a-fd47-4453-9577-987a594d0b64.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_15__8d7c4b0a-fd47-4453-9577-987a594d0b64.jpg",
+   "name": "boston_15.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_15__8d7c4b0a-fd47-4453-9577-987a594d0b64.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 153995,
+   "uploaded_bytes": 153995,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_16__d7271a43-470e-4c9e-bbe4-e67860733f0b.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_16__d7271a43-470e-4c9e-bbe4-e67860733f0b.jpg",
+   "name": "boston_16.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_16__d7271a43-470e-4c9e-bbe4-e67860733f0b.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 138150,
+   "uploaded_bytes": 138150,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_17__fa5eb7ae-fd03-42ce-b8f1-90aeaf64cd26.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_17__fa5eb7ae-fd03-42ce-b8f1-90aeaf64cd26.jpg",
+   "name": "boston_17.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_17__fa5eb7ae-fd03-42ce-b8f1-90aeaf64cd26.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 247076,
+   "uploaded_bytes": 247076,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_18__83bd785f-b2e6-4df5-8f9e-2f03074d3e76.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_18__83bd785f-b2e6-4df5-8f9e-2f03074d3e76.jpg",
+   "name": "boston_18.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_18__83bd785f-b2e6-4df5-8f9e-2f03074d3e76.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 131423,
+   "uploaded_bytes": 131423,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_19__9aec10b5-9e55-4150-a8de-a4ea373fbd31.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_19__9aec10b5-9e55-4150-a8de-a4ea373fbd31.jpg",
+   "name": "boston_19.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_19__9aec10b5-9e55-4150-a8de-a4ea373fbd31.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 101159,
+   "uploaded_bytes": 101159,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_20__03213397-5782-4eb7-8ff3-04c3db49ed6d.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_20__03213397-5782-4eb7-8ff3-04c3db49ed6d.jpg",
+   "name": "boston_20.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_20__03213397-5782-4eb7-8ff3-04c3db49ed6d.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 140390,
+   "uploaded_bytes": 140390,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_21__d3e202c9-b83e-4659-960d-dd87a8aff949.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_21__d3e202c9-b83e-4659-960d-dd87a8aff949.jpg",
+   "name": "boston_21.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_21__d3e202c9-b83e-4659-960d-dd87a8aff949.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 148404,
+   "uploaded_bytes": 148404,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_22__d70cdd83-d474-4a65-889f-b397d48cb3bc.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_22__d70cdd83-d474-4a65-889f-b397d48cb3bc.jpg",
+   "name": "boston_22.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_22__d70cdd83-d474-4a65-889f-b397d48cb3bc.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 133231,
+   "uploaded_bytes": 133231,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_23__61b104b7-22ae-44d3-afb9-ebe44b30ca78.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_23__61b104b7-22ae-44d3-afb9-ebe44b30ca78.jpg",
+   "name": "boston_23.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_23__61b104b7-22ae-44d3-afb9-ebe44b30ca78.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 183245,
+   "uploaded_bytes": 183245,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_24__93b4c7f5-8d17-4b8b-8caf-5e0ce96d4454.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_24__93b4c7f5-8d17-4b8b-8caf-5e0ce96d4454.jpg",
+   "name": "boston_24.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_24__93b4c7f5-8d17-4b8b-8caf-5e0ce96d4454.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 153604,
+   "uploaded_bytes": 153604,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_25__a5f8750f-dea3-487b-9e5d-0e5fe8b8fc4f.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_25__a5f8750f-dea3-487b-9e5d-0e5fe8b8fc4f.jpg",
+   "name": "boston_25.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_25__a5f8750f-dea3-487b-9e5d-0e5fe8b8fc4f.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 156965,
+   "uploaded_bytes": 156965,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_26__173e5f97-78e5-4a52-a123-5de2ceda24e4.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_26__173e5f97-78e5-4a52-a123-5de2ceda24e4.jpg",
+   "name": "boston_26.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_26__173e5f97-78e5-4a52-a123-5de2ceda24e4.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 169030,
+   "uploaded_bytes": 169030,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_27__def3604a-946b-43b1-bf49-c24b084576d8.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_27__def3604a-946b-43b1-bf49-c24b084576d8.jpg",
+   "name": "boston_27.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_27__def3604a-946b-43b1-bf49-c24b084576d8.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 168822,
+   "uploaded_bytes": 168822,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_28__06b22f92-362a-4ba9-88fa-75bdbf0cf3f9.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_28__06b22f92-362a-4ba9-88fa-75bdbf0cf3f9.jpg",
+   "name": "boston_28.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_28__06b22f92-362a-4ba9-88fa-75bdbf0cf3f9.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 183602,
+   "uploaded_bytes": 183602,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_29__01831e97-5b6f-4ec4-870e-92184ce5ea1e.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_29__01831e97-5b6f-4ec4-870e-92184ce5ea1e.jpg",
+   "name": "boston_29.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_29__01831e97-5b6f-4ec4-870e-92184ce5ea1e.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 207609,
+   "uploaded_bytes": 207609,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_30__2d793345-b068-4140-b2d7-6a2a571484f0.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_30__2d793345-b068-4140-b2d7-6a2a571484f0.jpg",
+   "name": "boston_30.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_30__2d793345-b068-4140-b2d7-6a2a571484f0.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 182710,
+   "uploaded_bytes": 182710,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_31__e42fe1c2-3396-4eb7-8d7e-68808a2e9cc2.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_31__e42fe1c2-3396-4eb7-8d7e-68808a2e9cc2.jpg",
+   "name": "boston_31.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_31__e42fe1c2-3396-4eb7-8d7e-68808a2e9cc2.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 166500,
+   "uploaded_bytes": 166500,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_32__e08775b8-d26a-4e09-ae52-bd9251c2087d.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_32__e08775b8-d26a-4e09-ae52-bd9251c2087d.jpg",
+   "name": "boston_32.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_32__e08775b8-d26a-4e09-ae52-bd9251c2087d.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 113366,
+   "uploaded_bytes": 113366,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_33__fbb932f4-7cf6-4f72-b720-688b5d489bb5.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_33__fbb932f4-7cf6-4f72-b720-688b5d489bb5.jpg",
+   "name": "boston_33.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_33__fbb932f4-7cf6-4f72-b720-688b5d489bb5.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 170262,
+   "uploaded_bytes": 170262,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_34__a116f76b-5ff6-4259-99fb-7e5767c467ad.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_34__a116f76b-5ff6-4259-99fb-7e5767c467ad.jpg",
+   "name": "boston_34.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_34__a116f76b-5ff6-4259-99fb-7e5767c467ad.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 134953,
+   "uploaded_bytes": 134953,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_35__9e583c9c-807a-428b-b796-028959a3178e.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_35__9e583c9c-807a-428b-b796-028959a3178e.jpg",
+   "name": "boston_35.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_35__9e583c9c-807a-428b-b796-028959a3178e.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 201806,
+   "uploaded_bytes": 201806,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_36__19ead43f-c943-4f3e-8f60-77dce14bd9fa.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_36__19ead43f-c943-4f3e-8f60-77dce14bd9fa.jpg",
+   "name": "boston_36.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_36__19ead43f-c943-4f3e-8f60-77dce14bd9fa.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 175139,
+   "uploaded_bytes": 175139,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_37__d90af0f1-7843-44f6-b59d-f10e585803d7.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_37__d90af0f1-7843-44f6-b59d-f10e585803d7.jpg",
+   "name": "boston_37.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_37__d90af0f1-7843-44f6-b59d-f10e585803d7.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 145980,
+   "uploaded_bytes": 145980,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_38__186a1012-be8c-4d96-a43c-e24632177d80.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_38__186a1012-be8c-4d96-a43c-e24632177d80.jpg",
+   "name": "boston_38.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_38__186a1012-be8c-4d96-a43c-e24632177d80.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 163972,
+   "uploaded_bytes": 163972,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_39__46a01e95-92f3-4634-98a7-d5c1a695a34d.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_39__46a01e95-92f3-4634-98a7-d5c1a695a34d.jpg",
+   "name": "boston_39.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_39__46a01e95-92f3-4634-98a7-d5c1a695a34d.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 196510,
+   "uploaded_bytes": 196510,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_40__5a422300-2ecd-4422-b6a2-4ed2a58060ef.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_40__5a422300-2ecd-4422-b6a2-4ed2a58060ef.jpg",
+   "name": "boston_40.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_40__5a422300-2ecd-4422-b6a2-4ed2a58060ef.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 117686,
+   "uploaded_bytes": 117686,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_41__dab3ad1c-15f7-428a-99bf-aed258ce7a15.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_41__dab3ad1c-15f7-428a-99bf-aed258ce7a15.jpg",
+   "name": "boston_41.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_41__dab3ad1c-15f7-428a-99bf-aed258ce7a15.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 162656,
+   "uploaded_bytes": 162656,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_42__a49cfc35-964e-493e-90dc-868a00d3f0e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_42__a49cfc35-964e-493e-90dc-868a00d3f0e7.jpg",
+   "name": "boston_42.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_42__a49cfc35-964e-493e-90dc-868a00d3f0e7.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 161722,
+   "uploaded_bytes": 161722,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_43__29727ec5-e261-46b1-95b4-2e6b00f8ab2a.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_43__29727ec5-e261-46b1-95b4-2e6b00f8ab2a.jpg",
+   "name": "boston_43.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_43__29727ec5-e261-46b1-95b4-2e6b00f8ab2a.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 175868,
+   "uploaded_bytes": 175868,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_44__c2969674-c2f6-49d8-b672-58b63382fefc.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_44__c2969674-c2f6-49d8-b672-58b63382fefc.jpg",
+   "name": "boston_44.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_44__c2969674-c2f6-49d8-b672-58b63382fefc.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 125087,
+   "uploaded_bytes": 125087,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_45__ac1e4276-0c80-4dfe-89e1-30094d5d9278.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_45__ac1e4276-0c80-4dfe-89e1-30094d5d9278.jpg",
+   "name": "boston_45.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_45__ac1e4276-0c80-4dfe-89e1-30094d5d9278.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 204699,
+   "uploaded_bytes": 204699,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_46__83d625aa-bbb1-4b7d-8d23-d1d93f29475e.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_46__83d625aa-bbb1-4b7d-8d23-d1d93f29475e.jpg",
+   "name": "boston_46.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_46__83d625aa-bbb1-4b7d-8d23-d1d93f29475e.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 178090,
+   "uploaded_bytes": 178090,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_47__7d8ede87-84dd-49f0-86b0-dea5ac335564.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_47__7d8ede87-84dd-49f0-86b0-dea5ac335564.jpg",
+   "name": "boston_47.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_47__7d8ede87-84dd-49f0-86b0-dea5ac335564.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 193207,
+   "uploaded_bytes": 193207,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_48__d0bd0b70-47fa-41b1-a511-b4d46243d252.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_48__d0bd0b70-47fa-41b1-a511-b4d46243d252.jpg",
+   "name": "boston_48.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_48__d0bd0b70-47fa-41b1-a511-b4d46243d252.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 171047,
+   "uploaded_bytes": 171047,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_49__f98f9891-e43c-49c4-b3d2-d391a7ae534a.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_49__f98f9891-e43c-49c4-b3d2-d391a7ae534a.jpg",
+   "name": "boston_49.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_49__f98f9891-e43c-49c4-b3d2-d391a7ae534a.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 165187,
+   "uploaded_bytes": 165187,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_50__d56df00c-0eef-4b26-8c00-8ba6dd8de929.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_50__d56df00c-0eef-4b26-8c00-8ba6dd8de929.jpg",
+   "name": "boston_50.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_50__d56df00c-0eef-4b26-8c00-8ba6dd8de929.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 111317,
+   "uploaded_bytes": 111317,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_51__90d8f44f-f468-4477-be73-d58e404746cc.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_51__90d8f44f-f468-4477-be73-d58e404746cc.jpg",
+   "name": "boston_51.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_51__90d8f44f-f468-4477-be73-d58e404746cc.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 205008,
+   "uploaded_bytes": 205008,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_52__8e39bd57-cffe-4b91-8b3e-9659e23cc004.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_52__8e39bd57-cffe-4b91-8b3e-9659e23cc004.jpg",
+   "name": "boston_52.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_52__8e39bd57-cffe-4b91-8b3e-9659e23cc004.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 149614,
+   "uploaded_bytes": 149614,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_53__863d04d0-e0a7-4c79-bf9d-5c989142dc18.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_53__863d04d0-e0a7-4c79-bf9d-5c989142dc18.jpg",
+   "name": "boston_53.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_53__863d04d0-e0a7-4c79-bf9d-5c989142dc18.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 99860,
+   "uploaded_bytes": 99860,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_54__706bf729-555f-446c-a60e-9a197467cd76.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_54__706bf729-555f-446c-a60e-9a197467cd76.jpg",
+   "name": "boston_54.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_54__706bf729-555f-446c-a60e-9a197467cd76.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 189342,
+   "uploaded_bytes": 189342,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_55__6c46a627-19e4-43cc-b616-0c4c941d7389.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_55__6c46a627-19e4-43cc-b616-0c4c941d7389.jpg",
+   "name": "boston_55.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_55__6c46a627-19e4-43cc-b616-0c4c941d7389.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 172703,
+   "uploaded_bytes": 172703,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_56__c63102e0-e89f-4b5d-8bb4-20f0c9f11960.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_56__c63102e0-e89f-4b5d-8bb4-20f0c9f11960.jpg",
+   "name": "boston_56.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_56__c63102e0-e89f-4b5d-8bb4-20f0c9f11960.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 147309,
+   "uploaded_bytes": 147309,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_57__4621681c-1077-446e-96e5-f1923ac8c025.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_57__4621681c-1077-446e-96e5-f1923ac8c025.jpg",
+   "name": "boston_57.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_57__4621681c-1077-446e-96e5-f1923ac8c025.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 180810,
+   "uploaded_bytes": 180810,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_58__eb72888a-a3f4-45f2-bb2f-458c1379843c.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_58__eb72888a-a3f4-45f2-bb2f-458c1379843c.jpg",
+   "name": "boston_58.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_58__eb72888a-a3f4-45f2-bb2f-458c1379843c.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 215009,
+   "uploaded_bytes": 215009,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_59__ed2f9d39-0eb8-4be2-99a6-9350cb8f471a.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_59__ed2f9d39-0eb8-4be2-99a6-9350cb8f471a.jpg",
+   "name": "boston_59.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_59__ed2f9d39-0eb8-4be2-99a6-9350cb8f471a.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 120276,
+   "uploaded_bytes": 120276,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_60__9d8f1260-ad6c-46eb-ad31-36ad6f4b10d9.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_60__9d8f1260-ad6c-46eb-ad31-36ad6f4b10d9.jpg",
+   "name": "boston_60.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_60__9d8f1260-ad6c-46eb-ad31-36ad6f4b10d9.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 130697,
+   "uploaded_bytes": 130697,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_61__36cc1be4-ff7d-4b1e-aaf0-812a05f51091.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_61__36cc1be4-ff7d-4b1e-aaf0-812a05f51091.jpg",
+   "name": "boston_61.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_61__36cc1be4-ff7d-4b1e-aaf0-812a05f51091.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 164259,
+   "uploaded_bytes": 164259,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_62__70b54155-3f85-4caa-b52e-00f5f8742035.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_62__70b54155-3f85-4caa-b52e-00f5f8742035.jpg",
+   "name": "boston_62.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_62__70b54155-3f85-4caa-b52e-00f5f8742035.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 189986,
+   "uploaded_bytes": 189986,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_63__f6e12533-d10a-4d85-a80d-4b946df7f07b.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_63__f6e12533-d10a-4d85-a80d-4b946df7f07b.jpg",
+   "name": "boston_63.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_63__f6e12533-d10a-4d85-a80d-4b946df7f07b.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 164728,
+   "uploaded_bytes": 164728,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_64__a2db8386-6ca7-478e-82b1-882d298199b9.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_64__a2db8386-6ca7-478e-82b1-882d298199b9.jpg",
+   "name": "boston_64.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_64__a2db8386-6ca7-478e-82b1-882d298199b9.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 160172,
+   "uploaded_bytes": 160172,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2021-kruse-places/boston/boston_65__eae925be-35c0-467f-977d-1be9c1173674.jpg",
+   "url": "https://media.sp-survey.org/templates/2021-kruse-places/boston/boston_65__eae925be-35c0-467f-977d-1be9c1173674.jpg",
+   "name": "boston_65.jpg",
+   "type": "image",
+   "folder": "boston",
+   "media_id": "templates/2021-kruse-places/boston/boston_65__eae925be-35c0-467f-977d-1be9c1173674.jpg",
+   "logicalFolder": "boston",
+   "original_bytes": 142609,
+   "uploaded_bytes": 142609,
+   "image_compressed": false
   }
+ ],
+ "paper": {
+  "title": "Places for play: Understanding human perception of playability in cities using street view images and deep learning",
+  "authors": [
+   "Kruse J.",
+   "Kang Y.",
+   "Liu Y.-N.",
+   "Zhang F.",
+   "Gao S."
+  ],
+  "year": 2021,
+  "venue": "Computers, Environment and Urban Systems",
+  "doi": "10.1016/j.compenvurbsys.2021.101693",
+  "url": "https://doi.org/10.1016/j.compenvurbsys.2021.101693"
+ }
 }

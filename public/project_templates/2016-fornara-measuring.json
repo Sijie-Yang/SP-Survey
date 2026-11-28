@@ -1,0 +1,457 @@
+{
+ "id": "2016-fornara-measuring",
+ "name": "Measuring Landscape Identity: European and Mediterranean IAT",
+ "description": "Faithful replication with the paper's own stimuli: two Landscape Identity Implicit Association Tests (LI-IAT) pair the words Self (I, Me, Mine, Myself) and Other (It, Other, Their, Them) with the paper's four European vs four Not-European landscape photos and four Mediterranean vs four Not-Mediterranean photos (Figures 1–4, CC BY 4.0), in the classic seven-block layout (20, 20, 20+40, 20, 20+40 trials), sorted with the E and I keys or two on-screen buttons. Then the two eight-figure self-categorisation items (overlap of me with Europe and with the Mediterranean, A–H) and a 1–5 pleasantness rating of all 16 landscapes. The page stores every trial and computes each D score (Greenwald, Nosek & Banaji 2003, built-in error penalty). Analysis as in the paper: one-sample t-tests of D against 0, correlation of D with the matching identity item, regression with gender and pleasantness differences as controls. Original study: 174 residents of Rome and Cagliari; both D scores positive (0.74 and 0.75).\n\nDifferences from the original study: (1) runs online in a browser with keyboard or touch buttons instead of on a 13-inch lab laptop; (2) the order of the two IATs and, separately for each IAT, which combined pairing comes first are randomised per participant (the paper counterbalanced the combined-block order and does not state the IAT order); (3) the red X error feedback, 250 ms gap between trials and instruction wording are mine (the paper does not print them); (4) Figure 5 prints the Europe wording for both items, so the Mediterranean item uses the same sentence with \"the Mediterranean\"; the circle figures are redrawn; (5) trials over 10 s are dropped and the share of responses under 300 ms is flagged for exclusion, following Greenwald et al. (2003); (6) a residence question is added, and the education categories follow the sample description plus \"Other\".",
+ "author": "Fornara, Dentale, Troffa & Piras",
+ "year": "2016",
+ "category": "Academic Research",
+ "tags": [
+  "faithful-replication",
+  "official",
+  "paper",
+  "iat",
+  "landscape",
+  "place-identity",
+  "implicit-association",
+  "reaction-time",
+  "source:paper",
+  "modality:scene_photo",
+  "task:custom_page",
+  "task:rating",
+  "task:questionnaire",
+  "concept:preference",
+  "concept:naturalness",
+  "participants:residents",
+  "sample:100to1000",
+  "country:Italy",
+  "city:Rome",
+  "city:Cagliari"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3389/fpsyg.2016.01259",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T11:17:06.14+00:00",
+ "updatedAt": "2026-11-27T11:17:18.034+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I am 18 or older and agree to take part in this study.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "iat",
+    "elements": [
+     {
+      "name": "iat_eu_trials",
+      "type": "custom",
+      "title": "European landscape IAT: trial record",
+      "isRequired": true,
+      "description": "Whole European IAT (7 blocks: 1 Self vs Other 20, 2 European vs Not European 20, 3+4 first combined 20+40, 5 reversed Self/Other 20, 6+7 second combined 20+40). trials = [block, category S/O/A/N, stimulus word or image id, rt_ms to the correct response, error 0/1]. compatible_blocks = the combined blocks where Self shared a key with European landscapes. d_detail holds D for practice and test blocks and the share of responses under 300 ms."
+     },
+     {
+      "max": 2,
+      "min": -2,
+      "name": "iat_eu_d",
+      "type": "text",
+      "title": "European landscape IAT D score",
+      "inputType": "number",
+      "isRequired": false,
+      "description": "Computed by the page: Greenwald, Nosek & Banaji (2003) D with built-in error penalty (latency to the correct response), trials over 10 s dropped, mean of practice (blocks 3 vs 6) and test (4 vs 7) D. Positive = Self is associated more with European than with Not European landscapes."
+     },
+     {
+      "name": "iat_med_trials",
+      "type": "custom",
+      "title": "Mediterranean landscape IAT: trial record",
+      "isRequired": true,
+      "description": "Whole Mediterranean IAT (7 blocks: 1 Self vs Other 20, 2 Mediterranean vs Not Mediterranean 20, 3+4 first combined 20+40, 5 reversed Self/Other 20, 6+7 second combined 20+40). trials = [block, category S/O/A/N, stimulus word or image id, rt_ms to the correct response, error 0/1]. compatible_blocks = the combined blocks where Self shared a key with Mediterranean landscapes. d_detail holds D for practice and test blocks and the share of responses under 300 ms."
+     },
+     {
+      "max": 2,
+      "min": -2,
+      "name": "iat_med_d",
+      "type": "text",
+      "title": "Mediterranean landscape IAT D score",
+      "inputType": "number",
+      "isRequired": false,
+      "description": "Computed by the page: Greenwald, Nosek & Banaji (2003) D with built-in error penalty (latency to the correct response), trials over 10 s dropped, mean of practice (blocks 3 vs 6) and test (4 vs 7) D. Positive = Self is associated more with Mediterranean than with Not Mediterranean landscapes."
+     }
+    ]
+   },
+   {
+    "name": "identity",
+    "elements": [
+     {
+      "name": "identity_eu",
+      "type": "rating",
+      "title": "Overlap between me and Europe",
+      "rateMax": 8,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Eight-figure self-categorisation item (Figure 5 of the paper); 1 = A … 8 = H.",
+      "maxRateDescription": "H: circles fully overlapped",
+      "minRateDescription": "A: circles apart"
+     },
+     {
+      "name": "identity_med",
+      "type": "rating",
+      "title": "Overlap between me and the Mediterranean",
+      "rateMax": 8,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Eight-figure self-categorisation item (Figure 5 of the paper); 1 = A … 8 = H.",
+      "maxRateDescription": "H: circles fully overlapped",
+      "minRateDescription": "A: circles apart"
+     }
+    ]
+   },
+   {
+    "name": "pleasantness",
+    "elements": [
+     {
+      "name": "pleasantness",
+      "type": "rating",
+      "title": "How pleasant is this landscape?",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Keyed by image: eu_1–4 European, noteu_1–4 Not European, med_1–4 Mediterranean, notmed_1–4 Not Mediterranean. The paper sums each set of four and uses European minus Not European and Mediterranean minus Not Mediterranean.",
+      "maxRateDescription": "Pleasant",
+      "minRateDescription": "Unpleasant"
+     }
+    ]
+   },
+   {
+    "name": "about",
+    "elements": [
+     {
+      "max": 110,
+      "min": 18,
+      "name": "age",
+      "type": "text",
+      "title": "How old are you?",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Woman",
+        "value": "woman"
+       },
+       {
+        "text": "Man",
+        "value": "man"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "Highest level of education",
+      "choices": [
+       {
+        "text": "Junior high school",
+        "value": "junior_high"
+       },
+       {
+        "text": "Senior high school",
+        "value": "senior_high"
+       },
+       {
+        "text": "University degree",
+        "value": "degree"
+       },
+       {
+        "text": "Other",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "residence",
+      "type": "radiogroup",
+      "title": "Where do you live?",
+      "choices": [
+       {
+        "text": "A European country on the Mediterranean (e.g. Italy, Spain, Greece)",
+        "value": "eu_mediterranean"
+       },
+       {
+        "text": "Another European country",
+        "value": "eu_other"
+       },
+       {
+        "text": "A non-European country on the Mediterranean",
+        "value": "med_non_eu"
+       },
+       {
+        "text": "Elsewhere",
+        "value": "elsewhere"
+       }
+      ],
+      "isRequired": true,
+      "description": "Added for online samples; the original sample all lived in Rome or Cagliari, Italy."
+     }
+    ]
+   }
+  ],
+  "title": "Landscape Identity IAT: European and Mediterranean Landscapes",
+  "locale": "en",
+  "spSite": {
+   "id": "site-548bb37151fedb79",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Landscape Identity IAT</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Landscape Identity IAT: European and Mediterranean Landscapes\",\n  \"description\": \"Faithful replication with the paper's own stimuli: two Landscape Identity Implicit Association Tests (LI-IAT) pair the words Self (I, Me, Mine, Myself) and Other (It, Other, Their, Them) with four European vs four Not-European landscape photos and with four Mediterranean vs four Not-Mediterranean photos, in the classic seven-block layout (20, 20, 20+40, 20, 20+40 trials). Then two eight-figure items on how much the self overlaps with Europe and with the Mediterranean, and a 1–5 pleasantness rating of all 16 landscapes. Rebuilt from Fornara, Dentale, Troffa & Piras (2016), Frontiers in Psychology 7: 1259, with the photos of its Figures 1–4 (CC BY 4.0). Analysis: one-sample t-tests of each D score against 0, correlations of D with the matching identity item, pleasantness differences (European minus Not European, Mediterranean minus Not Mediterranean) as controls in a regression.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"landscapes\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I am 18 or older and agree to take part in this study.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"iat\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"iat_eu_trials\",\n      \"title\": \"European landscape IAT: trial record\",\n      \"isRequired\": true,\n      \"description\": \"Whole European IAT (7 blocks: 1 Self vs Other 20, 2 European vs Not European 20, 3+4 first combined 20+40, 5 reversed Self/Other 20, 6+7 second combined 20+40). trials = [block, category S/O/A/N, stimulus word or image id, rt_ms to the correct response, error 0/1]. compatible_blocks = the combined blocks where Self shared a key with European landscapes. d_detail holds D for practice and test blocks and the share of responses under 300 ms.\"\n     },\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"iat_eu_d\",\n      \"title\": \"European landscape IAT D score\",\n      \"isRequired\": false,\n      \"min\": -2,\n      \"max\": 2,\n      \"description\": \"Computed by the page: Greenwald, Nosek & Banaji (2003) D with built-in error penalty (latency to the correct response), trials over 10 s dropped, mean of practice (blocks 3 vs 6) and test (4 vs 7) D. Positive = Self is associated more with European than with Not European landscapes.\"\n     },\n     {\n      \"type\": \"custom\",\n      \"name\": \"iat_med_trials\",\n      \"title\": \"Mediterranean landscape IAT: trial record\",\n      \"isRequired\": true,\n      \"description\": \"Whole Mediterranean IAT (7 blocks: 1 Self vs Other 20, 2 Mediterranean vs Not Mediterranean 20, 3+4 first combined 20+40, 5 reversed Self/Other 20, 6+7 second combined 20+40). trials = [block, category S/O/A/N, stimulus word or image id, rt_ms to the correct response, error 0/1]. compatible_blocks = the combined blocks where Self shared a key with Mediterranean landscapes. d_detail holds D for practice and test blocks and the share of responses under 300 ms.\"\n     },\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"iat_med_d\",\n      \"title\": \"Mediterranean landscape IAT D score\",\n      \"isRequired\": false,\n      \"min\": -2,\n      \"max\": 2,\n      \"description\": \"Computed by the page: Greenwald, Nosek & Banaji (2003) D with built-in error penalty (latency to the correct response), trials over 10 s dropped, mean of practice (blocks 3 vs 6) and test (4 vs 7) D. Positive = Self is associated more with Mediterranean than with Not Mediterranean landscapes.\"\n     }\n    ]\n   },\n   {\n    \"name\": \"identity\",\n    \"elements\": [\n     {\n      \"type\": \"rating\",\n      \"name\": \"identity_eu\",\n      \"title\": \"Overlap between me and Europe\",\n      \"rateMin\": 1,\n      \"rateMax\": 8,\n      \"minRateDescription\": \"A: circles apart\",\n      \"maxRateDescription\": \"H: circles fully overlapped\",\n      \"isRequired\": true,\n      \"description\": \"Eight-figure self-categorisation item (Figure 5 of the paper); 1 = A … 8 = H.\"\n     },\n     {\n      \"type\": \"rating\",\n      \"name\": \"identity_med\",\n      \"title\": \"Overlap between me and the Mediterranean\",\n      \"rateMin\": 1,\n      \"rateMax\": 8,\n      \"minRateDescription\": \"A: circles apart\",\n      \"maxRateDescription\": \"H: circles fully overlapped\",\n      \"isRequired\": true,\n      \"description\": \"Eight-figure self-categorisation item (Figure 5 of the paper); 1 = A … 8 = H.\"\n     }\n    ]\n   },\n   {\n    \"name\": \"pleasantness\",\n    \"elements\": [\n     {\n      \"type\": \"rating\",\n      \"name\": \"pleasantness\",\n      \"title\": \"How pleasant is this landscape?\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Unpleasant\",\n      \"maxRateDescription\": \"Pleasant\",\n      \"isRequired\": true,\n      \"description\": \"Keyed by image: eu_1–4 European, noteu_1–4 Not European, med_1–4 Mediterranean, notmed_1–4 Not Mediterranean. The paper sums each set of four and uses European minus Not European and Mediterranean minus Not Mediterranean.\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about\",\n    \"elements\": [\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"min\": 18,\n      \"max\": 110\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"woman\",\n        \"text\": \"Woman\"\n       },\n       {\n        \"value\": \"man\",\n        \"text\": \"Man\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"Highest level of education\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"junior_high\",\n        \"text\": \"Junior high school\"\n       },\n       {\n        \"value\": \"senior_high\",\n        \"text\": \"Senior high school\"\n       },\n       {\n        \"value\": \"degree\",\n        \"text\": \"University degree\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"residence\",\n      \"title\": \"Where do you live?\",\n      \"isRequired\": true,\n      \"description\": \"Added for online samples; the original sample all lived in Rome or Cagliari, Italy.\",\n      \"choices\": [\n       {\n        \"value\": \"eu_mediterranean\",\n        \"text\": \"A European country on the Mediterranean (e.g. Italy, Spain, Greece)\"\n       },\n       {\n        \"value\": \"eu_other\",\n        \"text\": \"Another European country\"\n       },\n       {\n        \"value\": \"med_non_eu\",\n        \"text\": \"A non-European country on the Mediterranean\"\n       },\n       {\n        \"value\": \"elsewhere\",\n        \"text\": \"Elsewhere\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"liiat-original\">{\"source\": \"Fornara, Dentale, Troffa & Piras (2016) Frontiers in Psychology 7: 1259\", \"n\": 174, \"participants\": \"Residents of Rome and Cagliari, Italy; 56% women, mean age 32.94 (SD 9.57); IATs on a 13-inch laptop\", \"result\": \"Both D scores were positive (European IAT M = 0.74, SD 0.38; Mediterranean IAT M = 0.75, SD 0.44; Cohen's d 1.95 and 1.70), so the self was associated more with European and Mediterranean landscapes. Split-half reliability 0.70 and 0.76. Explicit identity: Europe M = 4.70, Mediterranean M = 6.10 (1–8). D correlated with explicit identity (Mediterranean r = 0.37; European r = 0.15, p = 0.06), not with pleasantness. Men scored higher than women on Mediterranean identity and Mediterranean pleasantness.\"}</script>\n<style>\n:root{--bg:#f3f4f6;--card:#fff;--ink:#1e2228;--muted:#5d6470;--accent:#1f5fa8;--line:#dadde3;--warn:#c62828;--sel:#e4eefa}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:780px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.5rem;margin:0 0 8px}h2{font-size:1.15rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:13px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.prog{font-size:.88rem;color:var(--muted);margin-bottom:8px}\n.iat{position:fixed;inset:0;background:#fff;display:flex;flex-direction:column;z-index:5;user-select:none;-webkit-user-select:none}\n.lab{display:flex;justify-content:space-between;padding:14px 18px;font-weight:700;font-size:1.05rem;gap:12px}\n.lab div{max-width:45%}.lab .r{text-align:right}\n.lab .or{display:block;font-weight:400;color:var(--muted);font-size:.85rem}\n.lab .a{color:#1b7a3a}.lab .t{color:#1f5fa8}\n.stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;min-height:0}\n.stage img{max-width:min(92vw,520px);max-height:52vh;display:block}\n.word{font-size:2.4rem;font-weight:700;color:#1f5fa8}\n.x{position:absolute;bottom:8%;color:var(--warn);font-size:3.2rem;font-weight:700;visibility:hidden}\n.x.on{visibility:visible}\n.keys{display:flex;gap:10px;padding:12px}\n.keys button{flex:1;appearance:none;border:1px solid var(--line);background:#f5f7fa;border-radius:12px;padding:18px 0;font:inherit;font-weight:700;cursor:pointer;touch-action:manipulation}\n.ins{max-width:640px;margin:0 auto;padding:24px 18px;text-align:center}\n.ins p{color:var(--ink)}\n.ios{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}\n.ios label{display:flex;flex-direction:column;align-items:center;border:1px solid var(--line);border-radius:10px;padding:6px 2px;cursor:pointer;font-weight:700}\n.ios label:has(input:checked){background:var(--sel);border-color:var(--accent)}\n.ios svg{width:100%;max-width:120px;height:auto}\n.ios input{margin:2px 0 0}\n.thumb{width:100%;max-width:440px;border-radius:8px;display:block;margin:0 auto 10px}\n.row{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}\n.row label{display:flex;flex-direction:column;align-items:center;border:1px solid var(--line);border-radius:8px;padding:6px 0;cursor:pointer}\n.row label:has(input:checked){background:var(--sel);border-color:var(--accent)}\n.ends{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-top:3px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.f{margin-top:16px}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:110px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:780px;margin:0 auto;padding:0 16px 24px;font-size:.78rem;color:var(--muted)}\n@media (max-width:520px){.ios{grid-template-columns:repeat(2,1fr)}.word{font-size:2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Landscape photographs and identity items: Fornara, Dentale, Troffa &amp; Piras (2016), Frontiers in Psychology 7: 1259, Figures 1–5 (doi:10.3389/fpsyg.2016.01259, CC BY 4.0).</footer>\n<script>\n(function(){\n  var KEY='landscape-iat:state', ITI=window.__VIEWMS?Math.min(window.__VIEWMS,250):250;\n  function AUTO(){return window.__IAT_AUTO||null;}\n  var app=document.getElementById('app'), Q={}, files={}, ids=[], st=null;\n  var SELF=['I','Me','Mine','Myself'], OTHER=['It','Other','Their','Them'];\n  var IAT={eu:{pos:'European',neg:'Not European',pre:['eu','noteu'],place:'Europe'},med:{pos:'Mediterranean',neg:'Not Mediterranean',pre:['med','notmed'],place:'the Mediterranean'}};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function send(list,b,next){if(b)b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}next();});}\n  function val(name){var x=app.querySelector('input[name=\"'+name+'\"]:checked');return x?x.value:null;}\n  function radios(q){return '<div class=\"f\"><b>'+esc(Q[q].title)+'</b>'+(Q[q].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+q+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function imgsOf(p){return ids.filter(function(id){return id.indexOf(p+'_')===0;}).sort();}\n\n  // ---------- IAT ----------\n  // categories: S self, O other, A positive landscape (European / Mediterranean), N negative landscape\n  // blocks (Greenwald et al., 1998): 1 target 20, 2 attribute 20, 3+4 combined 20+40, 5 reversed target 20, 6+7 reversed combined 20+40\n  function plan(cfg,compatFirst){\n    var sL=compatFirst; // in block 1, is Self on the left?\n    function side(cat,b){if(cat==='A')return 'L';if(cat==='N')return 'R';var selfL=(b<5)?sL:!sL;return (cat==='S')===selfL?'L':'R';}\n    var B=[{n:20,t:1,a:0},{n:20,t:0,a:1},{n:20,t:1,a:1},{n:40,t:1,a:1},{n:20,t:1,a:0},{n:20,t:1,a:1},{n:40,t:1,a:1}];\n    return B.map(function(b,i){\n      var bi=i+1,cats=[],L=[],R=[];\n      if(b.t){var s=side('S',bi);(s==='L'?L:R).push(['t','Self']);(s==='L'?R:L).push(['t','Other']);}\n      if(b.a){L.unshift(['a',cfg.pos]);R.unshift(['a',cfg.neg]);}\n      // put target label first when both shown\n      if(b.t&&b.a){L.reverse();R.reverse();}\n      var selfLeft=side('S',bi)==='L', compat=b.t&&b.a?(selfLeft):null; // compatible = Self shares side with positive landscape (left)\n      return {b:bi,n:b.n,t:b.t,a:b.a,L:L,R:R,selfLeft:selfLeft,compat:compat};\n    });\n  }\n  function seq(blk,pre){\n    var words=[],im=[];\n    function wordsCycle(){return shuffle(SELF.map(function(w){return {c:'S',s:w};}).concat(OTHER.map(function(w){return {c:'O',s:w};})));}\n    function imCycle(){return shuffle(imgsOf(pre[0]).map(function(id){return {c:'A',s:id};}).concat(imgsOf(pre[1]).map(function(id){return {c:'N',s:id};})));}\n    var out=[];\n    for(var i=0;i<blk.n;i++){\n      var useWord=blk.t&&blk.a?(i%2===0):!!blk.t;\n      if(useWord){if(!words.length)words=wordsCycle();out.push(words.pop());}else{if(!im.length)im=imCycle();out.push(im.pop());}\n    }\n    return out;\n  }\n  function correctSide(blk,c){if(c==='A')return 'L';if(c==='N')return 'R';var self=c==='S';return self===blk.selfLeft?'L':'R';}\n  function labHtml(arr,cls){return arr.map(function(x,i){return (i?'<span class=\"or\">or</span>':'')+'<span class=\"'+x[0]+'\">'+esc(x[1])+'</span>';}).join('');}\n  function instr(blk,cfg){\n    var parts=[];\n    function lr(a){return a.map(function(x){return x[1];}).join(' or ');}\n    return 'Press <b>E</b> (or tap the left button) for <b>'+esc(lr(blk.L))+'</b>.<br>Press <b>I</b> (or tap the right button) for <b>'+esc(lr(blk.R))+'</b>.';\n  }\n  function runIAT(which,done){\n    var cfg=IAT[which],blocks=plan(cfg,st.compat[which]),log=[],bi=0,v=document.createElement('div');v.className='iat';app.innerHTML='';app.appendChild(v);\n    var onKey=null;\n    function setKey(f){onKey=f;}\n    function kd(e){var k=(e.key||'').toLowerCase();if(!onKey)return;if(k==='e'){e.preventDefault();onKey('L');}else if(k==='i'){e.preventDefault();onKey('R');}else if(k===' '){e.preventDefault();onKey('SP');}}\n    document.addEventListener('keydown',kd);\n    function head(blk){return '<div class=\"lab\"><div class=\"l\">'+labHtml(blk.L)+'</div><div class=\"r\">'+labHtml(blk.R)+'</div></div>';}\n    function intro(){\n      if(bi>=blocks.length){document.removeEventListener('keydown',kd);return finishIAT();}\n      var blk=blocks[bi];\n      v.innerHTML=head(blk)+'<div class=\"stage\"><div class=\"ins\"><p class=\"prog\">Part '+(st.iats.indexOf(which)+1)+' of 2 · round '+(bi+1)+' of 7</p><p>'+instr(blk,cfg)+'</p><p>Go as fast as you can while making few mistakes. If you make a mistake a red <b style=\"color:var(--warn)\">X</b> appears: press the other key to go on.</p><button class=\"btn\" id=\"bgo\">Start round</button><p style=\"font-size:.85rem;margin-top:10px\">or press the space bar</p></div></div>';\n      var go=function(){setKey(null);trials(blk);};\n      document.getElementById('bgo').onclick=go;setKey(function(s){if(s==='SP')go();});\n      if(AUTO())setTimeout(go,5);\n    }\n    function trials(blk){\n      var list=seq(blk,cfg.pre),k=0;\n      v.innerHTML=head(blk)+'<div class=\"stage\" id=\"stg\"></div><div class=\"keys\"><button type=\"button\" id=\"kl\">E · left</button><button type=\"button\" id=\"kr\">I · right</button></div>';\n      var stg=document.getElementById('stg');\n      document.getElementById('kl').onpointerdown=function(e){e.preventDefault();if(onKey)onKey('L');};\n      document.getElementById('kr').onpointerdown=function(e){e.preventDefault();if(onKey)onKey('R');};\n      function next(){\n        if(k>=list.length){bi++;return intro();}\n        var it=list[k],want=correctSide(blk,it.c),t0,errd=0;\n        stg.innerHTML=(it.c==='S'||it.c==='O')?'<div class=\"word\">'+esc(it.s)+'</div>':'<img alt=\"Landscape\" src=\"'+esc(files[it.s].url)+'\">';\n        var x=document.createElement('div');x.className='x';x.textContent='X';stg.appendChild(x);\n        t0=performance.now();\n        setKey(function(s){if(s==='SP')return;\n          if(s!==want){errd=1;x.className='x on';return;}\n          var rt=Math.round(performance.now()-t0);setKey(null);\n          log.push([blk.b,it.c,it.s,rt,errd]);k++;stg.innerHTML='';setTimeout(next,ITI);});\n        var au=AUTO();if(au)setTimeout(function(){if(au.err&&Math.random()<au.err&&onKey)onKey(want==='L'?'R':'L');if(onKey)onKey(want);},au.rt?au.rt(blk,it):5);\n      }\n      next();\n    }\n    function finishIAT(){\n      var d=dScore(log,blocks);\n      v.innerHTML='<div class=\"stage\"><div class=\"ins\"><p>Saving…</p><div class=\"err\"></div></div></div>';\n      var rec={order:st.iats.indexOf(which)+1,compatible_first:st.compat[which],self_left_in_block1:st.compat[which],\n        fields:['block','category','stimulus','rt_ms','error'],categories:{S:'Self word',O:'Other word',A:cfg.pos+' landscape',N:cfg.neg+' landscape'},\n        compatible_blocks:blocks.filter(function(b){return b.compat===true;}).map(function(b){return b.b;}),trials:log,d_detail:d};\n      var list=[SPSite.answer('iat_'+which+'_trials',rec)];\n      if(d.D!=null)list.push(SPSite.answer('iat_'+which+'_d',d.D));\n      Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){err(bad.error);return;}done();});\n    }\n    intro();\n  }\n  // Greenwald, Nosek & Banaji (2003) D with built-in error penalty (latency to the correct response)\n  function dScore(log,blocks){\n    var cb=blocks.filter(function(b){return b.compat===true;}).map(function(b){return b.b;}),ib=blocks.filter(function(b){return b.compat===false;}).map(function(b){return b.b;});\n    var all=log.filter(function(t){return cb.indexOf(t[0])>=0||ib.indexOf(t[0])>=0;}),fast=all.filter(function(t){return t[3]<300;}).length/Math.max(1,all.length);\n    function rts(b){return log.filter(function(t){return t[0]===b&&t[3]<=10000;}).map(function(t){return t[3];});}\n    function m(a){return a.reduce(function(s,x){return s+x;},0)/a.length;}\n    function sd(a){var mu=m(a);return Math.sqrt(a.reduce(function(s,x){return s+(x-mu)*(x-mu);},0)/(a.length-1));}\n    function part(c,i){var a=rts(c),b=rts(i);if(a.length<2||b.length<2)return null;var s=sd(a.concat(b));return s>0?(m(b)-m(a))/s:null;}\n    // cb/ib are [practice, test] in block order\n    var dp=part(cb[0],ib[0]),dt=part(cb[1],ib[1]),D=(dp!=null&&dt!=null)?Math.round((dp+dt)/2*1000)/1000:null;\n    return {D:D,D_practice:dp==null?null:Math.round(dp*1000)/1000,D_test:dt==null?null:Math.round(dt*1000)/1000,share_under_300ms:Math.round(fast*1000)/1000,exclude_suggested:fast>0.1};\n  }\n\n  // ---------- pages ----------\n  function intro(){\n    app.innerHTML='<h1>Landscapes and you</h1><p>This study has three parts. First, two quick sorting tasks: words and landscape photos appear one at a time in the middle of the screen and you sort them to the left or right as fast as you can (keys <b>E</b> and <b>I</b> on a keyboard, or the two buttons on a touch screen). Then two short questions about how close you feel to Europe and to the Mediterranean, and finally you rate how pleasant each of the 16 landscapes is. It takes about 15 minutes. A computer with a keyboard works best.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');send([SPSite.answer('consent',true)],this,function(){st.step='iat';st.i=0;save();route();});};\n  }\n  function iat(){\n    if(st.i>=st.iats.length){st.step='identity';save();return route();}\n    runIAT(st.iats[st.i],function(){st.i++;save();route();});\n  }\n  function circles(i){ // 8 Inclusion-of-Other-in-the-Self style figures, A (apart) to H (overlapped)\n    var r=22,d=[60,47,43,38,28,16,7,0][i],cx1=60-d/2,cx2=60+d/2;\n    return '<svg viewBox=\"0 0 120 64\" aria-hidden=\"true\"><defs><clipPath id=\"c'+i+'\"><circle cx=\"'+cx1+'\" cy=\"38\" r=\"'+r+'\"/></clipPath></defs><circle cx=\"'+cx2+'\" cy=\"38\" r=\"'+r+'\" fill=\"#7a7a7a\" clip-path=\"url(#c'+i+')\"/><circle cx=\"'+cx1+'\" cy=\"38\" r=\"'+r+'\" fill=\"none\" stroke=\"#222\"/><circle cx=\"'+cx2+'\" cy=\"38\" r=\"'+r+'\" fill=\"none\" stroke=\"#222\"/></svg>';\n  }\n  function identity(){\n    var order=st.idOrder,h='';\n    order.forEach(function(w){var q='identity_'+w,place=IAT[w].place;\n      h+='<div class=\"card\"><p style=\"color:var(--ink)\">Please focus on <b>'+esc(place)+'</b>. The first circle represents your identity and the second circle represents '+esc(place)+'. Flag the square that better describes the level of overlap between you and '+esc(place)+'.</p><div class=\"ends\" style=\"font-weight:700;color:var(--ink);margin-bottom:6px\"><span>ME = left circle</span><span>'+esc(place.replace(/^the /,'').toUpperCase())+' = right circle</span></div><div class=\"ios\">';\n      for(var i=0;i<8;i++)h+='<label>'+circles(i)+'<span>'+'ABCDEFGH'[i]+'</span><input type=\"radio\" name=\"'+q+'\" value=\"'+(i+1)+'\"></label>';\n      h+='</div></div>';});\n    app.innerHTML='<h2>You and these places</h2>'+h+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div>';\n    document.getElementById('go').onclick=function(){\n      var a=val('identity_eu'),b=val('identity_med');if(!a||!b)return err('Please choose one figure in each question.');\n      send([SPSite.answer('identity_eu',Number(a)),SPSite.answer('identity_med',Number(b))],this,function(){st.step='pleasant';st.k=0;save();route();});\n    };\n  }\n  function pleasant(){\n    if(st.k>=st.rate.length){st.step='about';save();return route();}\n    var id=st.rate[st.k],h='<div class=\"row\">';for(var i=1;i<=5;i++)h+='<label><input type=\"radio\" name=\"q_pl\" value=\"'+i+'\">'+i+'</label>';h+='</div><div class=\"ends\"><span>Unpleasant</span><span>Pleasant</span></div>';\n    app.innerHTML='<div class=\"prog\">Landscape '+(st.k+1)+' of '+st.rate.length+'</div><div class=\"card\"><img class=\"thumb\" alt=\"Landscape\" src=\"'+esc(files[id].url)+'\"><b>'+esc(Q.pleasantness.title)+'</b><div style=\"margin-top:8px\">'+h+'</div><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Next</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var p=val('q_pl');if(p==null)return err('Please choose a number.');\n      send([SPSite.answer('pleasantness',Number(p),{key:id,shown:[files[id].name]})],this,function(){st.k++;save();route();});\n    };\n  }\n  function about(){\n    app.innerHTML='<h2>About you</h2><div class=\"card\"><div class=\"f\" style=\"margin-top:0\"><b>'+esc(Q.age.title)+'</b><br><input type=\"number\" id=\"age\" min=\"18\" max=\"110\"></div>'+radios('gender')+radios('education')+radios('residence')+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Finish</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var age=Number(document.getElementById('age').value),g=val('gender'),e=val('education'),r=val('residence');\n      if(!(age>=18&&age<=110))return err('Please enter your age.');if(!g||!e||!r)return err('Please answer every question.');\n      send([SPSite.answer('age',age),SPSite.answer('gender',g),SPSite.answer('education',e),SPSite.answer('residence',r)],this,function(){st.step='done';save();route();});\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st.step='intro';save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  function route(){var s=st.step;window.scrollTo(0,0);if(s==='iat')return iat();if(s==='identity')return identity();if(s==='pleasant')return pleasant();if(s==='about')return about();if(s==='done')return finish();intro();}\n  SPSite.onReady(function(ctx){\n    ['consent','identity_eu','identity_med','pleasantness','age','gender','education','residence'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('landscapes')||[]).forEach(function(f){if(/\\.(png|jpe?g|webp)$/i.test(f.name)){var k=f.name.replace(/\\.[^.]+$/,'');files[k]=f;ids.push(k);}});\n    var need=['eu','noteu','med','notmed'].every(function(p){return imgsOf(p).length>0;});\n    if(!need){app.innerHTML='<h1>Photos missing</h1><p>Upload the landscape photographs to the media folder \"landscapes\", named eu_*, noteu_*, med_*, notmed_*.</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    var valid=st&&st.rate&&st.rate.length===ids.length&&st.rate.every(function(x){return files[x];});\n    if(!valid)st={step:'intro',iats:shuffle(['eu','med']),compat:{eu:Math.random()<.5,med:Math.random()<.5},idOrder:shuffle(['eu','med']),rate:shuffle(ids),i:0,k:0};\n    var a=(ctx&&ctx.answers)||{};if(a.consent!==true){st.step='intro';st.i=0;st.k=0;}\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T11:16:37.380Z",
+   "mediaFolders": [
+    "landscapes"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T11:16:37.380Z"
+  },
+  "description": "Faithful replication with the paper's own stimuli: two Landscape Identity Implicit Association Tests (LI-IAT) pair the words Self (I, Me, Mine, Myself) and Other (It, Other, Their, Them) with four European vs four Not-European landscape photos and with four Mediterranean vs four Not-Mediterranean photos, in the classic seven-block layout (20, 20, 20+40, 20, 20+40 trials). Then two eight-figure items on how much the self overlaps with Europe and with the Mediterranean, and a 1–5 pleasantness rating of all 16 landscapes. Rebuilt from Fornara, Dentale, Troffa & Piras (2016), Frontiers in Psychology 7: 1259, with the photos of its Figures 1–4 (CC BY 4.0). Analysis: one-sample t-tests of each D score against 0, correlations of D with the matching identity item, pleasantness differences (European minus Not European, Mediterranean minus Not Mediterranean) as controls in a regression.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2016-fornara-measuring/landscapes/eu_1__a79ef6ec-a07e-469b-93f4-1d7d1b0d7d58.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-fornara-measuring/landscapes/eu_1__a79ef6ec-a07e-469b-93f4-1d7d1b0d7d58.jpg",
+   "name": "eu_1.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2016-fornara-measuring/landscapes/eu_1__a79ef6ec-a07e-469b-93f4-1d7d1b0d7d58.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 139893,
+   "uploaded_bytes": 139893,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-fornara-measuring/landscapes/eu_2__b95ba1ae-909b-4f7f-b9fb-00e87071d9b3.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-fornara-measuring/landscapes/eu_2__b95ba1ae-909b-4f7f-b9fb-00e87071d9b3.jpg",
+   "name": "eu_2.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2016-fornara-measuring/landscapes/eu_2__b95ba1ae-909b-4f7f-b9fb-00e87071d9b3.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 167858,
+   "uploaded_bytes": 167858,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-fornara-measuring/landscapes/eu_3__5491b022-9c4e-4b7e-9b8f-5793a5fd6e34.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-fornara-measuring/landscapes/eu_3__5491b022-9c4e-4b7e-9b8f-5793a5fd6e34.jpg",
+   "name": "eu_3.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2016-fornara-measuring/landscapes/eu_3__5491b022-9c4e-4b7e-9b8f-5793a5fd6e34.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 231598,
+   "uploaded_bytes": 231598,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-fornara-measuring/landscapes/eu_4__3779f4c4-3994-4115-87a5-b8ea21dd23a0.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-fornara-measuring/landscapes/eu_4__3779f4c4-3994-4115-87a5-b8ea21dd23a0.jpg",
+   "name": "eu_4.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2016-fornara-measuring/landscapes/eu_4__3779f4c4-3994-4115-87a5-b8ea21dd23a0.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 204266,
+   "uploaded_bytes": 204266,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-fornara-measuring/landscapes/med_1__65b3dc8f-08e5-4f96-b293-d9bde5d00346.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-fornara-measuring/landscapes/med_1__65b3dc8f-08e5-4f96-b293-d9bde5d00346.jpg",
+   "name": "med_1.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2016-fornara-measuring/landscapes/med_1__65b3dc8f-08e5-4f96-b293-d9bde5d00346.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 200395,
+   "uploaded_bytes": 200395,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-fornara-measuring/landscapes/med_2__011add77-a520-481e-8806-bfb260112c13.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-fornara-measuring/landscapes/med_2__011add77-a520-481e-8806-bfb260112c13.jpg",
+   "name": "med_2.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2016-fornara-measuring/landscapes/med_2__011add77-a520-481e-8806-bfb260112c13.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 179303,
+   "uploaded_bytes": 179303,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-fornara-measuring/landscapes/med_3__23c2a340-72d4-44c0-b432-32039cbfd0d1.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-fornara-measuring/landscapes/med_3__23c2a340-72d4-44c0-b432-32039cbfd0d1.jpg",
+   "name": "med_3.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2016-fornara-measuring/landscapes/med_3__23c2a340-72d4-44c0-b432-32039cbfd0d1.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 154605,
+   "uploaded_bytes": 154605,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-fornara-measuring/landscapes/med_4__f36f15b9-8c95-4d76-baf9-ca66c190581d.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-fornara-measuring/landscapes/med_4__f36f15b9-8c95-4d76-baf9-ca66c190581d.jpg",
+   "name": "med_4.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2016-fornara-measuring/landscapes/med_4__f36f15b9-8c95-4d76-baf9-ca66c190581d.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 220589,
+   "uploaded_bytes": 220589,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-fornara-measuring/landscapes/noteu_1__5de40d07-e53a-4cd2-82a8-8e6213e3fa72.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-fornara-measuring/landscapes/noteu_1__5de40d07-e53a-4cd2-82a8-8e6213e3fa72.jpg",
+   "name": "noteu_1.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2016-fornara-measuring/landscapes/noteu_1__5de40d07-e53a-4cd2-82a8-8e6213e3fa72.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 94841,
+   "uploaded_bytes": 94841,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-fornara-measuring/landscapes/noteu_2__e73b2ff9-eb0d-4c59-8596-7fac36cd87f9.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-fornara-measuring/landscapes/noteu_2__e73b2ff9-eb0d-4c59-8596-7fac36cd87f9.jpg",
+   "name": "noteu_2.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2016-fornara-measuring/landscapes/noteu_2__e73b2ff9-eb0d-4c59-8596-7fac36cd87f9.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 126715,
+   "uploaded_bytes": 126715,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-fornara-measuring/landscapes/noteu_3__1130774b-58e8-4235-9c8d-bcd4c2305bc1.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-fornara-measuring/landscapes/noteu_3__1130774b-58e8-4235-9c8d-bcd4c2305bc1.jpg",
+   "name": "noteu_3.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2016-fornara-measuring/landscapes/noteu_3__1130774b-58e8-4235-9c8d-bcd4c2305bc1.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 126980,
+   "uploaded_bytes": 126980,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-fornara-measuring/landscapes/noteu_4__edb73e56-1e9f-41a8-b53b-d20e2f942036.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-fornara-measuring/landscapes/noteu_4__edb73e56-1e9f-41a8-b53b-d20e2f942036.jpg",
+   "name": "noteu_4.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2016-fornara-measuring/landscapes/noteu_4__edb73e56-1e9f-41a8-b53b-d20e2f942036.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 133278,
+   "uploaded_bytes": 133278,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-fornara-measuring/landscapes/notmed_1__02a4d3de-3cd7-46f1-a17f-31f09a1f3b84.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-fornara-measuring/landscapes/notmed_1__02a4d3de-3cd7-46f1-a17f-31f09a1f3b84.jpg",
+   "name": "notmed_1.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2016-fornara-measuring/landscapes/notmed_1__02a4d3de-3cd7-46f1-a17f-31f09a1f3b84.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 108539,
+   "uploaded_bytes": 108539,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-fornara-measuring/landscapes/notmed_2__7b95add9-5239-45dd-b28c-5f0311d0738e.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-fornara-measuring/landscapes/notmed_2__7b95add9-5239-45dd-b28c-5f0311d0738e.jpg",
+   "name": "notmed_2.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2016-fornara-measuring/landscapes/notmed_2__7b95add9-5239-45dd-b28c-5f0311d0738e.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 186732,
+   "uploaded_bytes": 186732,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-fornara-measuring/landscapes/notmed_3__5225865c-12db-4a7d-b63c-6bd2a8e14403.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-fornara-measuring/landscapes/notmed_3__5225865c-12db-4a7d-b63c-6bd2a8e14403.jpg",
+   "name": "notmed_3.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2016-fornara-measuring/landscapes/notmed_3__5225865c-12db-4a7d-b63c-6bd2a8e14403.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 187521,
+   "uploaded_bytes": 187521,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2016-fornara-measuring/landscapes/notmed_4__8160e55d-1fcf-4cb1-9640-f62160544d0d.jpg",
+   "url": "https://media.sp-survey.org/templates/2016-fornara-measuring/landscapes/notmed_4__8160e55d-1fcf-4cb1-9640-f62160544d0d.jpg",
+   "name": "notmed_4.jpg",
+   "type": "image",
+   "folder": "landscapes",
+   "media_id": "templates/2016-fornara-measuring/landscapes/notmed_4__8160e55d-1fcf-4cb1-9640-f62160544d0d.jpg",
+   "logicalFolder": "landscapes",
+   "original_bytes": 222098,
+   "uploaded_bytes": 222098,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Measuring Implicit European and Mediterranean Landscape Identity: A Tool Proposal",
+  "authors": [
+   "Ferdinando Fornara",
+   "Francesco Dentale",
+   "Renato Troffa",
+   "Simona Piras"
+  ],
+  "year": 2016,
+  "venue": "Frontiers in Psychology",
+  "doi": "10.3389/fpsyg.2016.01259",
+  "url": "https://doi.org/10.3389/fpsyg.2016.01259"
+ }
+}

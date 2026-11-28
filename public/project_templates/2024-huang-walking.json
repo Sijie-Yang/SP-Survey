@@ -1,0 +1,1267 @@
+{
+ "id": "2024-huang-walking",
+ "name": "Walking Preference: Street Segments and Intersections (Tokyo)",
+ "description": "Method replication: same task, scales and design as the paper; the images are not the paper's stimuli (88 new Google Street View views of Setagaya Ward, Tokyo, 2016–2026: 58 street segments and 30 intersections).\n\nHuang, Oki, Muto & Ogawa (2024, ISPRS IJGI) ran an online pairwise image survey with about 18,000 respondents living in Japan (over 120,000 responses, 10 per pair) to train models of walking preference across Setagaya Ward, then related eye-level streetscape factors to the scores with XGBoost and SHAP. On a phone-style screen participants saw one street view above the other and answered \"Which street segment is preferable for walking?\" or \"Which street intersection is preferable for walking?\" on a five-point scale: Upper image is much better than Bottom image / Upper image is somewhat better than Bottom image / Both are the same / Bottom image is somewhat better than Upper image / Bottom image is much better than Upper image.\n\nThis template keeps the two questions, the upper/bottom layout and the five levels. Each answer is stored twice: as a pairwise choice with tie (upper, bottom or \"Both are the same\", ranked with TrueSkill on Results) and, in comparison_levels, as the signed level (+2 … -2) with the upper and bottom image names.\n\nDifferences from the original study: (1) images: the paper used front-view GSV images at 30 m intervals along the road network (1,000 segment and 200 intersection images, each paired with others ten times); here 58 segment views from a grid over the ward and 30 intersection views (panoramas where three or more street directions meet, viewed at or just before the junction), paired at random; (2) each participant does 10 segment pairs then 4 intersection pairs (the paper had no fixed number, 6.6 responses per respondent on average); (3) English wording (the original interface was Japanese; the English labels are the paper's translation); (4) optional age and gender questions added to describe the sample (the paper balanced age and gender through the survey company).\n\nStreet images: Google Street View (© Google).",
+ "author": "Huang, Oki, Muto & Ogawa",
+ "year": "2024",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "street view",
+  "pairwise comparison",
+  "walkability",
+  "intersections",
+  "Tokyo",
+  "Japan",
+  "source:paper",
+  "modality:street_view",
+  "task:pairwise",
+  "concept:walkability",
+  "concept:preference",
+  "participants:crowd",
+  "sample:gt1000",
+  "country:Japan",
+  "city:Tokyo"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/ijgi13040131",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T00:03:38.872+00:00",
+ "updatedAt": "2026-11-27T00:03:45.046+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "segments",
+    "elements": [
+     {
+      "name": "segment_pref",
+      "type": "imagepicker",
+      "title": "Which street segment is preferable for walking?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "cover",
+      "tieLabel": "Both are the same",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 10,
+      "mediaFolders": [
+       "segments"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "intersections",
+    "elements": [
+     {
+      "name": "intersection_pref",
+      "type": "imagepicker",
+      "title": "Which street intersection is preferable for walking?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "cover",
+      "tieLabel": "Both are the same",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 4,
+      "mediaFolders": [
+       "intersections"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "levels",
+    "elements": [
+     {
+      "name": "comparison_levels",
+      "type": "custom",
+      "title": "Five-point comparison level for every pair: +2 upper image much better, +1 upper somewhat better, 0 both the same, -1 bottom somewhat better, -2 bottom much better; with the upper and bottom image names",
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "Age",
+      "choices": [
+       {
+        "text": "Under 20",
+        "value": "under20"
+       },
+       {
+        "text": "20–29",
+        "value": "20s"
+       },
+       {
+        "text": "30–39",
+        "value": "30s"
+       },
+       {
+        "text": "40–49",
+        "value": "40s"
+       },
+       {
+        "text": "50–59",
+        "value": "50s"
+       },
+       {
+        "text": "60 or older",
+        "value": "60plus"
+       }
+      ]
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "title": "Which Street Is Preferable for Walking? (Setagaya, Tokyo)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-41d64037e75ed429",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Which Street Is Preferable for Walking? (Setagaya, Tokyo)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n  \"format\": \"sp-scheme-package\",\n  \"spScheme\": \"2.0\",\n  \"survey\": {\n    \"title\": \"Which Street Is Preferable for Walking? (Setagaya, Tokyo)\",\n    \"description\": \"Pairs of eye-level street views from Setagaya Ward, Tokyo, one above the other: say which street segment, then which intersection, is preferable for walking on a five-point scale. Method replication of Huang, Oki, Muto & Ogawa (2024, IJGI).\",\n    \"locale\": \"en\",\n    \"pages\": [\n      { \"name\": \"intro\", \"elements\": [\n        { \"type\": \"consent\", \"name\": \"consent\", \"title\": \"I agree to take part. My answers are recorded anonymously for research.\", \"isRequired\": true, \"labelTrue\": \"I agree\", \"labelFalse\": \"I do not agree\" }\n      ]},\n      { \"name\": \"segments\", \"elements\": [\n        { \"type\": \"imagepicker\", \"name\": \"segment_pref\", \"title\": \"Which street segment is preferable for walking?\", \"imageCount\": 2, \"trialCount\": 10, \"allowTie\": true, \"tieLabel\": \"Both are the same\", \"isRequired\": true, \"choices\": [], \"imageFit\": \"cover\", \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"mediaFolders\": [\"segments\"] }\n      ]},\n      { \"name\": \"intersections\", \"elements\": [\n        { \"type\": \"imagepicker\", \"name\": \"intersection_pref\", \"title\": \"Which street intersection is preferable for walking?\", \"imageCount\": 2, \"trialCount\": 4, \"allowTie\": true, \"tieLabel\": \"Both are the same\", \"isRequired\": true, \"choices\": [], \"imageFit\": \"cover\", \"imageSelectionMode\": \"huggingface_random\", \"randomImageSelection\": true, \"excludePreviouslyUsedImages\": true, \"mediaFolders\": [\"intersections\"] }\n      ]},\n      { \"name\": \"levels\", \"elements\": [\n        { \"type\": \"custom\", \"name\": \"comparison_levels\", \"title\": \"Five-point comparison level for every pair: +2 upper image much better, +1 upper somewhat better, 0 both the same, -1 bottom somewhat better, -2 bottom much better; with the upper and bottom image names\", \"isRequired\": true }\n      ]},\n      { \"name\": \"about_you\", \"elements\": [\n        { \"type\": \"radiogroup\", \"name\": \"age_group\", \"title\": \"Age\", \"choices\": [\n          { \"value\": \"under20\", \"text\": \"Under 20\" }, { \"value\": \"20s\", \"text\": \"20–29\" }, { \"value\": \"30s\", \"text\": \"30–39\" }, { \"value\": \"40s\", \"text\": \"40–49\" }, { \"value\": \"50s\", \"text\": \"50–59\" }, { \"value\": \"60plus\", \"text\": \"60 or older\" } ] },\n        { \"type\": \"radiogroup\", \"name\": \"gender\", \"title\": \"Gender\", \"choices\": [\n          { \"value\": \"female\", \"text\": \"Female\" }, { \"value\": \"male\", \"text\": \"Male\" }, { \"value\": \"other\", \"text\": \"Other / prefer not to say\" } ] }\n      ]}\n    ]\n  }\n}\n</script>\n<style>\n:root{--bg:#f5f5f2;--card:#fff;--ink:#1f2326;--muted:#5d646b;--accent:#22705a;--accent-ink:#fff;--line:#dcdfe2}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:720px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.35rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.cmp{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:12px;align-items:stretch}\n.imgs{display:grid;grid-template-rows:auto auto;gap:8px}\n.imgs figure{margin:0;position:relative;border-radius:10px;overflow:hidden;background:#000;aspect-ratio:16/10}\n.imgs img{width:100%;height:100%;object-fit:cover;display:block}\n.imgs figcaption{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:1px 8px;font-size:.85rem}\n.scale{display:flex;flex-direction:column;gap:6px;justify-content:center}\n.scale .end{font-size:.8rem;color:var(--muted);text-align:center}\n.lv{appearance:none;border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 8px;font:inherit;font-size:.88rem;line-height:1.25;cursor:pointer;color:var(--ink);text-align:center}\n.lv:hover,.lv:focus-visible{border-color:var(--accent);outline:none}\n.lv.on{background:var(--accent);color:#fff;border-color:var(--accent)}\n.lv b{display:block;font-size:1.1rem}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:2px}\n.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:720px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.cmp{grid-template-columns:minmax(0,1fr) 96px;gap:8px}.lv{font-size:.74rem;padding:8px 4px}h1{font-size:1.15rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Setagaya Ward, Tokyo, Google Street View 2016–2026 (© Google). Task from Huang, Oki, Muto &amp; Ogawa (2024), ISPRS Int. J. Geo-Inf. 13(4):131.</footer>\n<script>\n(function(){\n  var app=document.getElementById('app'),Q={},levels={},steps=[],pos=0;\n  var LV=[{v:2,t:'Upper image is much better than Bottom image',n:'2'},{v:1,t:'Upper image is somewhat better than Bottom image',n:'1'},{v:0,t:'Both are the same',n:'0'},{v:-1,t:'Bottom image is somewhat better than Upper image',n:'1'},{v:-2,t:'Bottom image is much better than Upper image',n:'2'}];\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function chk(r){if(r&&r.ok===false)throw new Error(r.error||'Not saved');return r;}\n  function trialOf(q,k){var t=q.trials&&q.trials[k];var ch=((t&&t.choices)||q.choices||[]),md=(t&&t.media)||q.media||[];\n    var im=ch.filter(function(c){return !c.tie;}).map(function(c,i){return {value:c.value,url:c.imageUrl||(md[i]&&md[i].url)||'',name:(md[i]&&md[i].name)||c.value};});\n    var tie=ch.filter(function(c){return c.tie;})[0];return {im:im,tie:tie};}\n  function intro(){\n    app.innerHTML='<h1>Which street is preferable for walking?</h1>'+\n      '<p>You will see '+steps.length+' pairs of street views from Setagaya Ward in Tokyo, one image above the other: first '+Q.segment_pref.trialCount+' street segments, then '+Q.intersection_pref.trialCount+' street intersections. For each pair, choose how much better the upper or the bottom image is for walking. It takes about 3 minutes.</p>'+\n      '<div class=\"card\"><p>'+esc(Q.consent.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(Q.consent.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(chk).then(function(){pos=firstOpen();show();}).catch(function(e){err(e.message);});};\n  }\n  function key(s){return s.q+'#'+s.k;}\n  function firstOpen(){for(var i=0;i<steps.length;i++){if(!levels[key(steps[i])])return i;}return steps.length;}\n  function show(){\n    if(pos>=steps.length)return about();\n    var s=steps[pos],q=Q[s.q],tr=trialOf(q,s.k),cur=levels[key(s)];\n    var html='<h1>'+esc(q.title)+'</h1><p>Pair '+(pos+1)+' of '+steps.length+'</p><div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*pos/steps.length)+'%\"></i></div>'+\n      '<div class=\"cmp\"><div class=\"imgs\">'+tr.im.map(function(m,i){return '<figure><img src=\"'+esc(m.url)+'\" alt=\"'+(i?'Bottom':'Upper')+' street view\"><figcaption>'+(i?'Bottom':'Upper')+'</figcaption></figure>';}).join('')+'</div>'+\n      '<div class=\"scale\" role=\"group\" aria-label=\"'+esc(q.title)+'\"><div class=\"end\">Upper picture</div>'+\n      LV.map(function(l){return '<button class=\"lv'+(cur&&cur.level===l.v?' on':'')+'\" data-v=\"'+l.v+'\" aria-label=\"'+esc(l.t)+'\" title=\"'+esc(l.t)+'\"><b>'+l.n+'</b>'+esc(l.v>0?(l.v>1?'Upper much better':'Upper somewhat better'):l.v<0?(l.v<-1?'Bottom much better':'Bottom somewhat better'):'Same')+'</button>';}).join('')+\n      '<div class=\"end\">Bottom picture</div></div></div>'+\n      (pos>0?'<div class=\"row\"><button class=\"btn ghost\" id=\"back\">Back</button></div>':'')+'<div class=\"err\"></div>';\n    app.innerHTML=html;\n    app.querySelectorAll('.lv').forEach(function(b){b.onclick=function(){\n      var v=+b.getAttribute('data-v');app.querySelectorAll('.lv').forEach(function(x){x.disabled=true;});\n      var pick=v>0?tr.im[0].value:v<0?tr.im[1].value:(tr.tie?tr.tie.value:null);\n      levels[key(s)]={question:s.q,trial:s.k,level:v,upper:tr.im[0].name,bottom:tr.im[1].name};\n      SPSite.answer(s.q,pick,{trial:s.k}).then(chk).then(function(){return SPSite.answer('comparison_levels',levels).then(chk);})\n        .then(function(){pos+=1;show();}).catch(function(e){app.querySelectorAll('.lv').forEach(function(x){x.disabled=false;});err(e.message);});};});\n    var bk=document.getElementById('back');if(bk)bk.onclick=function(){pos-=1;show();};\n    window.scrollTo(0,0);\n  }\n  function radios(q){return '<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+q.name+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div>';}\n  function about(){\n    app.innerHTML='<h1>About you</h1><p>Optional, used only to describe the sample.</p><div class=\"card\">'+radios(Q.age_group)+radios(Q.gender)+\n      '<div class=\"row\"><button class=\"btn\" id=\"finish\">Finish</button></div><div class=\"err\"></div></div>';\n    ['age_group','gender'].forEach(function(n){app.querySelectorAll('input[name='+n+']').forEach(function(r){r.onchange=function(){SPSite.answer(n,r.value).then(chk).catch(function(e){err(e.message);});};});});\n    document.getElementById('finish').onclick=function(){var btn=this;btn.disabled=true;err('Submitting…');\n      SPSite.complete().then(function(r){if(r&&r.ok===false){btn.disabled=false;var m=r.missing||[];err(r.error||('Please answer: '+m.join(', ')));\n        if(m.indexOf('consent')>=0)intro();else if(m.length){pos=firstOpen();if(pos<steps.length)show();}}});};\n    window.scrollTo(0,0);\n  }\n  SPSite.onReady(function(ctx){\n    ['consent','segment_pref','intersection_pref','comparison_levels','age_group','gender'].forEach(function(n){Q[n]=SPSite.getQuestion(n);});\n    ['segment_pref','intersection_pref'].forEach(function(n){for(var k=0;k<(Q[n].trialCount||1);k++)steps.push({q:n,k:k});});\n    var a=(ctx&&ctx.answers)||{};if(a.comparison_levels&&typeof a.comparison_levels==='object')levels=a.comparison_levels;\n    if(a.consent===true){pos=firstOpen();show();}else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T00:02:56.735Z",
+   "mediaFolders": [
+    "intersections",
+    "segments"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T00:02:56.735Z"
+  },
+  "description": "Pairs of eye-level street views from Setagaya Ward, Tokyo, one above the other: say which street segment, then which intersection, is preferable for walking on a five-point scale. Method replication of Huang, Oki, Muto & Ogawa (2024, IJGI).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2024-huang-walking/intersections/int_01__59cfbe19-1bd3-4f40-8b66-69737c9ebba4.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_01__59cfbe19-1bd3-4f40-8b66-69737c9ebba4.jpg",
+   "name": "int_01.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_01__59cfbe19-1bd3-4f40-8b66-69737c9ebba4.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 93323,
+   "uploaded_bytes": 93323,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_02__f887bbf1-13cc-4b67-abe4-c1c34aac9be0.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_02__f887bbf1-13cc-4b67-abe4-c1c34aac9be0.jpg",
+   "name": "int_02.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_02__f887bbf1-13cc-4b67-abe4-c1c34aac9be0.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 109324,
+   "uploaded_bytes": 109324,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_03__7cbdddae-5dd4-44c1-8dda-ab583b0d6c6a.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_03__7cbdddae-5dd4-44c1-8dda-ab583b0d6c6a.jpg",
+   "name": "int_03.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_03__7cbdddae-5dd4-44c1-8dda-ab583b0d6c6a.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 94423,
+   "uploaded_bytes": 94423,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_04__8ec2e74e-dccb-4818-9b26-5f2221e87e74.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_04__8ec2e74e-dccb-4818-9b26-5f2221e87e74.jpg",
+   "name": "int_04.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_04__8ec2e74e-dccb-4818-9b26-5f2221e87e74.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 109605,
+   "uploaded_bytes": 109605,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_05__d98d3336-d369-45d4-8896-6796a29e13c1.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_05__d98d3336-d369-45d4-8896-6796a29e13c1.jpg",
+   "name": "int_05.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_05__d98d3336-d369-45d4-8896-6796a29e13c1.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 91227,
+   "uploaded_bytes": 91227,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_06__111a1128-e68f-4ff2-b78c-4a60bb4626c4.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_06__111a1128-e68f-4ff2-b78c-4a60bb4626c4.jpg",
+   "name": "int_06.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_06__111a1128-e68f-4ff2-b78c-4a60bb4626c4.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 99890,
+   "uploaded_bytes": 99890,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_07__346e1873-b454-400a-ac4e-e9cb85b9be90.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_07__346e1873-b454-400a-ac4e-e9cb85b9be90.jpg",
+   "name": "int_07.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_07__346e1873-b454-400a-ac4e-e9cb85b9be90.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 122053,
+   "uploaded_bytes": 122053,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_08__6f3742f3-0545-4d26-a7e0-8adb0b44db5f.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_08__6f3742f3-0545-4d26-a7e0-8adb0b44db5f.jpg",
+   "name": "int_08.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_08__6f3742f3-0545-4d26-a7e0-8adb0b44db5f.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 110223,
+   "uploaded_bytes": 110223,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_09__9789d6ef-0f2b-4b0a-a2d4-248acd9705ec.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_09__9789d6ef-0f2b-4b0a-a2d4-248acd9705ec.jpg",
+   "name": "int_09.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_09__9789d6ef-0f2b-4b0a-a2d4-248acd9705ec.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 114293,
+   "uploaded_bytes": 114293,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_10__0570a416-9ca8-43ee-850f-ada008a955c4.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_10__0570a416-9ca8-43ee-850f-ada008a955c4.jpg",
+   "name": "int_10.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_10__0570a416-9ca8-43ee-850f-ada008a955c4.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 85670,
+   "uploaded_bytes": 85670,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_11__4c3c3618-40ff-45da-b051-e8aea24ca3da.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_11__4c3c3618-40ff-45da-b051-e8aea24ca3da.jpg",
+   "name": "int_11.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_11__4c3c3618-40ff-45da-b051-e8aea24ca3da.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 111655,
+   "uploaded_bytes": 111655,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_12__8ad9d15a-7db8-4c38-9c20-cb3839441261.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_12__8ad9d15a-7db8-4c38-9c20-cb3839441261.jpg",
+   "name": "int_12.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_12__8ad9d15a-7db8-4c38-9c20-cb3839441261.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 108213,
+   "uploaded_bytes": 108213,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_13__8c39f633-79ea-4f66-bd6b-be57e1d3ebd7.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_13__8c39f633-79ea-4f66-bd6b-be57e1d3ebd7.jpg",
+   "name": "int_13.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_13__8c39f633-79ea-4f66-bd6b-be57e1d3ebd7.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 111400,
+   "uploaded_bytes": 111400,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_14__daebcd4c-1c89-4b64-b016-bfc6d63c8761.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_14__daebcd4c-1c89-4b64-b016-bfc6d63c8761.jpg",
+   "name": "int_14.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_14__daebcd4c-1c89-4b64-b016-bfc6d63c8761.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 116002,
+   "uploaded_bytes": 116002,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_15__d4bce993-0d39-451a-a12c-b05dc1c163db.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_15__d4bce993-0d39-451a-a12c-b05dc1c163db.jpg",
+   "name": "int_15.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_15__d4bce993-0d39-451a-a12c-b05dc1c163db.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 99942,
+   "uploaded_bytes": 99942,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_16__2340afcf-bf86-41ab-a54c-bdb881955f81.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_16__2340afcf-bf86-41ab-a54c-bdb881955f81.jpg",
+   "name": "int_16.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_16__2340afcf-bf86-41ab-a54c-bdb881955f81.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 102641,
+   "uploaded_bytes": 102641,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_17__1390be0f-5680-4b7b-b548-ec358b7ba9f8.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_17__1390be0f-5680-4b7b-b548-ec358b7ba9f8.jpg",
+   "name": "int_17.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_17__1390be0f-5680-4b7b-b548-ec358b7ba9f8.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 98157,
+   "uploaded_bytes": 98157,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_18__4315e538-7ea6-4a02-810b-00d4b53de2c1.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_18__4315e538-7ea6-4a02-810b-00d4b53de2c1.jpg",
+   "name": "int_18.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_18__4315e538-7ea6-4a02-810b-00d4b53de2c1.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 108889,
+   "uploaded_bytes": 108889,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_19__8e239cdb-8ffb-447c-974e-ec502bedf10b.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_19__8e239cdb-8ffb-447c-974e-ec502bedf10b.jpg",
+   "name": "int_19.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_19__8e239cdb-8ffb-447c-974e-ec502bedf10b.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 111880,
+   "uploaded_bytes": 111880,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_20__352ece14-194f-461a-aaa9-ab3b09f67edf.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_20__352ece14-194f-461a-aaa9-ab3b09f67edf.jpg",
+   "name": "int_20.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_20__352ece14-194f-461a-aaa9-ab3b09f67edf.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 121568,
+   "uploaded_bytes": 121568,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_21__2262ef9a-b711-4540-9c8d-a07708a9c033.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_21__2262ef9a-b711-4540-9c8d-a07708a9c033.jpg",
+   "name": "int_21.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_21__2262ef9a-b711-4540-9c8d-a07708a9c033.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 114486,
+   "uploaded_bytes": 114486,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_22__0c1c95b2-a23e-433b-ba70-5cd8805a4a1b.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_22__0c1c95b2-a23e-433b-ba70-5cd8805a4a1b.jpg",
+   "name": "int_22.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_22__0c1c95b2-a23e-433b-ba70-5cd8805a4a1b.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 125098,
+   "uploaded_bytes": 125098,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_23__3068db19-a3ec-4bfb-b2d9-e2908d285360.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_23__3068db19-a3ec-4bfb-b2d9-e2908d285360.jpg",
+   "name": "int_23.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_23__3068db19-a3ec-4bfb-b2d9-e2908d285360.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 120033,
+   "uploaded_bytes": 120033,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_24__c024351d-9b7d-4d72-b5c7-edbb473a9d79.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_24__c024351d-9b7d-4d72-b5c7-edbb473a9d79.jpg",
+   "name": "int_24.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_24__c024351d-9b7d-4d72-b5c7-edbb473a9d79.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 114147,
+   "uploaded_bytes": 114147,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_25__5ab28bb5-746c-4aff-a5f4-b6e7b0a12058.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_25__5ab28bb5-746c-4aff-a5f4-b6e7b0a12058.jpg",
+   "name": "int_25.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_25__5ab28bb5-746c-4aff-a5f4-b6e7b0a12058.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 110836,
+   "uploaded_bytes": 110836,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_26__1dd4ed2e-eb10-47b0-8768-98e199027d29.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_26__1dd4ed2e-eb10-47b0-8768-98e199027d29.jpg",
+   "name": "int_26.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_26__1dd4ed2e-eb10-47b0-8768-98e199027d29.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 131470,
+   "uploaded_bytes": 131470,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_27__cbaaec41-1f5a-4ee1-822a-7bae89ccf232.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_27__cbaaec41-1f5a-4ee1-822a-7bae89ccf232.jpg",
+   "name": "int_27.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_27__cbaaec41-1f5a-4ee1-822a-7bae89ccf232.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 116216,
+   "uploaded_bytes": 116216,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_28__6d95a886-167f-4b5c-aeb4-e28213e01a46.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_28__6d95a886-167f-4b5c-aeb4-e28213e01a46.jpg",
+   "name": "int_28.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_28__6d95a886-167f-4b5c-aeb4-e28213e01a46.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 109185,
+   "uploaded_bytes": 109185,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_29__f91039cc-f217-4db6-b287-c0d5bd1a57d3.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_29__f91039cc-f217-4db6-b287-c0d5bd1a57d3.jpg",
+   "name": "int_29.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_29__f91039cc-f217-4db6-b287-c0d5bd1a57d3.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 129198,
+   "uploaded_bytes": 129198,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/intersections/int_30__001318d0-b462-44c8-b1bf-31cc45806e21.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/intersections/int_30__001318d0-b462-44c8-b1bf-31cc45806e21.jpg",
+   "name": "int_30.jpg",
+   "type": "image",
+   "folder": "intersections",
+   "media_id": "templates/2024-huang-walking/intersections/int_30__001318d0-b462-44c8-b1bf-31cc45806e21.jpg",
+   "logicalFolder": "intersections",
+   "original_bytes": 113203,
+   "uploaded_bytes": 113203,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_01__e061f680-9f47-4fd7-a833-2892de2dfbd5.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_01__e061f680-9f47-4fd7-a833-2892de2dfbd5.jpg",
+   "name": "seg_01.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_01__e061f680-9f47-4fd7-a833-2892de2dfbd5.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 108771,
+   "uploaded_bytes": 108771,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_02__854290a8-e2c1-4104-93cc-7e6716c232ce.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_02__854290a8-e2c1-4104-93cc-7e6716c232ce.jpg",
+   "name": "seg_02.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_02__854290a8-e2c1-4104-93cc-7e6716c232ce.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 94731,
+   "uploaded_bytes": 94731,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_03__5c0094c5-d1ef-4124-b7c7-2d682b135498.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_03__5c0094c5-d1ef-4124-b7c7-2d682b135498.jpg",
+   "name": "seg_03.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_03__5c0094c5-d1ef-4124-b7c7-2d682b135498.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 127094,
+   "uploaded_bytes": 127094,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_04__02caded6-7dae-4114-8035-489685b7af93.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_04__02caded6-7dae-4114-8035-489685b7af93.jpg",
+   "name": "seg_04.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_04__02caded6-7dae-4114-8035-489685b7af93.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 107742,
+   "uploaded_bytes": 107742,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_05__3030014a-2278-4406-9fda-7916b20d7877.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_05__3030014a-2278-4406-9fda-7916b20d7877.jpg",
+   "name": "seg_05.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_05__3030014a-2278-4406-9fda-7916b20d7877.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 95075,
+   "uploaded_bytes": 95075,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_06__34c49691-d442-4ee7-b845-55e909ef947f.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_06__34c49691-d442-4ee7-b845-55e909ef947f.jpg",
+   "name": "seg_06.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_06__34c49691-d442-4ee7-b845-55e909ef947f.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 123187,
+   "uploaded_bytes": 123187,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_07__1355527b-6789-4c1d-b427-abca4552e842.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_07__1355527b-6789-4c1d-b427-abca4552e842.jpg",
+   "name": "seg_07.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_07__1355527b-6789-4c1d-b427-abca4552e842.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 105777,
+   "uploaded_bytes": 105777,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_08__0307c9bf-c856-414c-bb12-fb63083a3988.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_08__0307c9bf-c856-414c-bb12-fb63083a3988.jpg",
+   "name": "seg_08.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_08__0307c9bf-c856-414c-bb12-fb63083a3988.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 122833,
+   "uploaded_bytes": 122833,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_09__279b0950-d4ec-4011-bb2f-2ca9a8ef67e2.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_09__279b0950-d4ec-4011-bb2f-2ca9a8ef67e2.jpg",
+   "name": "seg_09.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_09__279b0950-d4ec-4011-bb2f-2ca9a8ef67e2.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 97208,
+   "uploaded_bytes": 97208,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_10__580b9337-acbe-4cf4-980e-9a4d06b8071d.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_10__580b9337-acbe-4cf4-980e-9a4d06b8071d.jpg",
+   "name": "seg_10.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_10__580b9337-acbe-4cf4-980e-9a4d06b8071d.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 112644,
+   "uploaded_bytes": 112644,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_11__8277068a-dedd-4e97-b9d7-d5fd79deed34.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_11__8277068a-dedd-4e97-b9d7-d5fd79deed34.jpg",
+   "name": "seg_11.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_11__8277068a-dedd-4e97-b9d7-d5fd79deed34.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 100913,
+   "uploaded_bytes": 100913,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_12__ae51c562-dd57-4335-a3a7-0a2c825abc1f.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_12__ae51c562-dd57-4335-a3a7-0a2c825abc1f.jpg",
+   "name": "seg_12.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_12__ae51c562-dd57-4335-a3a7-0a2c825abc1f.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 84547,
+   "uploaded_bytes": 84547,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_13__0b32d1a3-ed6a-40d4-a551-8aaae9d172ca.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_13__0b32d1a3-ed6a-40d4-a551-8aaae9d172ca.jpg",
+   "name": "seg_13.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_13__0b32d1a3-ed6a-40d4-a551-8aaae9d172ca.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 116540,
+   "uploaded_bytes": 116540,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_14__08547bfe-3560-4b15-b560-600755ac50d3.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_14__08547bfe-3560-4b15-b560-600755ac50d3.jpg",
+   "name": "seg_14.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_14__08547bfe-3560-4b15-b560-600755ac50d3.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 98983,
+   "uploaded_bytes": 98983,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_15__b9114a5f-ecf1-4fe7-a067-05802bbc3654.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_15__b9114a5f-ecf1-4fe7-a067-05802bbc3654.jpg",
+   "name": "seg_15.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_15__b9114a5f-ecf1-4fe7-a067-05802bbc3654.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 118044,
+   "uploaded_bytes": 118044,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_16__dd471777-df51-4b3a-bcd0-c79588f155f7.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_16__dd471777-df51-4b3a-bcd0-c79588f155f7.jpg",
+   "name": "seg_16.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_16__dd471777-df51-4b3a-bcd0-c79588f155f7.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 123121,
+   "uploaded_bytes": 123121,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_17__e9009366-a162-465c-a41b-bc1ff2e677bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_17__e9009366-a162-465c-a41b-bc1ff2e677bf.jpg",
+   "name": "seg_17.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_17__e9009366-a162-465c-a41b-bc1ff2e677bf.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 115185,
+   "uploaded_bytes": 115185,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_18__e2b1a650-20e5-4c96-9d1b-dd7ab60cd6fd.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_18__e2b1a650-20e5-4c96-9d1b-dd7ab60cd6fd.jpg",
+   "name": "seg_18.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_18__e2b1a650-20e5-4c96-9d1b-dd7ab60cd6fd.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 116314,
+   "uploaded_bytes": 116314,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_19__b804f1dc-89e5-4e51-8c4c-6087685bd03a.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_19__b804f1dc-89e5-4e51-8c4c-6087685bd03a.jpg",
+   "name": "seg_19.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_19__b804f1dc-89e5-4e51-8c4c-6087685bd03a.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 121621,
+   "uploaded_bytes": 121621,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_20__381ee750-f6b1-4cb2-8e1b-54eac44a24ac.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_20__381ee750-f6b1-4cb2-8e1b-54eac44a24ac.jpg",
+   "name": "seg_20.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_20__381ee750-f6b1-4cb2-8e1b-54eac44a24ac.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 93412,
+   "uploaded_bytes": 93412,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_21__fdaa1f42-979d-49c2-af4a-899976e92caa.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_21__fdaa1f42-979d-49c2-af4a-899976e92caa.jpg",
+   "name": "seg_21.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_21__fdaa1f42-979d-49c2-af4a-899976e92caa.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 112302,
+   "uploaded_bytes": 112302,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_22__62df00e8-f78f-4a40-b6b2-e3a79c101d34.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_22__62df00e8-f78f-4a40-b6b2-e3a79c101d34.jpg",
+   "name": "seg_22.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_22__62df00e8-f78f-4a40-b6b2-e3a79c101d34.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 91431,
+   "uploaded_bytes": 91431,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_23__0fe490fb-865c-4748-a916-7fd103b51dea.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_23__0fe490fb-865c-4748-a916-7fd103b51dea.jpg",
+   "name": "seg_23.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_23__0fe490fb-865c-4748-a916-7fd103b51dea.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 113069,
+   "uploaded_bytes": 113069,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_24__83b4e32a-9892-4cf3-a551-09c24809501c.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_24__83b4e32a-9892-4cf3-a551-09c24809501c.jpg",
+   "name": "seg_24.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_24__83b4e32a-9892-4cf3-a551-09c24809501c.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 124266,
+   "uploaded_bytes": 124266,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_25__3a448978-c527-4d67-8910-19ac2ca5227a.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_25__3a448978-c527-4d67-8910-19ac2ca5227a.jpg",
+   "name": "seg_25.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_25__3a448978-c527-4d67-8910-19ac2ca5227a.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 88685,
+   "uploaded_bytes": 88685,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_26__817abfdc-6786-4621-a775-bf4dd73db07d.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_26__817abfdc-6786-4621-a775-bf4dd73db07d.jpg",
+   "name": "seg_26.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_26__817abfdc-6786-4621-a775-bf4dd73db07d.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 89863,
+   "uploaded_bytes": 89863,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_27__44585fdc-b682-4e0d-9058-498a9c50e9bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_27__44585fdc-b682-4e0d-9058-498a9c50e9bf.jpg",
+   "name": "seg_27.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_27__44585fdc-b682-4e0d-9058-498a9c50e9bf.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 94716,
+   "uploaded_bytes": 94716,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_28__f1d2c70f-683e-4a34-89c6-0761d8006c3f.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_28__f1d2c70f-683e-4a34-89c6-0761d8006c3f.jpg",
+   "name": "seg_28.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_28__f1d2c70f-683e-4a34-89c6-0761d8006c3f.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 108191,
+   "uploaded_bytes": 108191,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_29__3fcb82f8-18bd-4132-9a42-d16f8fe45428.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_29__3fcb82f8-18bd-4132-9a42-d16f8fe45428.jpg",
+   "name": "seg_29.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_29__3fcb82f8-18bd-4132-9a42-d16f8fe45428.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 111341,
+   "uploaded_bytes": 111341,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_30__197135b0-4f27-4c36-8cde-af8e6393b57b.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_30__197135b0-4f27-4c36-8cde-af8e6393b57b.jpg",
+   "name": "seg_30.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_30__197135b0-4f27-4c36-8cde-af8e6393b57b.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 119619,
+   "uploaded_bytes": 119619,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_31__6af1f44b-464d-4d46-9574-68b598377857.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_31__6af1f44b-464d-4d46-9574-68b598377857.jpg",
+   "name": "seg_31.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_31__6af1f44b-464d-4d46-9574-68b598377857.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 131795,
+   "uploaded_bytes": 131795,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_32__83852941-61b9-411f-9fd0-1a0a8acb6a2a.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_32__83852941-61b9-411f-9fd0-1a0a8acb6a2a.jpg",
+   "name": "seg_32.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_32__83852941-61b9-411f-9fd0-1a0a8acb6a2a.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 121734,
+   "uploaded_bytes": 121734,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_33__b7c3566f-56af-4ee4-92ba-227904302ec6.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_33__b7c3566f-56af-4ee4-92ba-227904302ec6.jpg",
+   "name": "seg_33.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_33__b7c3566f-56af-4ee4-92ba-227904302ec6.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 118865,
+   "uploaded_bytes": 118865,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_34__15677e00-31e2-4f79-89b7-5661ea940520.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_34__15677e00-31e2-4f79-89b7-5661ea940520.jpg",
+   "name": "seg_34.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_34__15677e00-31e2-4f79-89b7-5661ea940520.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 125097,
+   "uploaded_bytes": 125097,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_35__465c6191-e409-427d-8fdb-2f2d54ef881e.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_35__465c6191-e409-427d-8fdb-2f2d54ef881e.jpg",
+   "name": "seg_35.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_35__465c6191-e409-427d-8fdb-2f2d54ef881e.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 125053,
+   "uploaded_bytes": 125053,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_36__6df862f4-f3d9-424c-9ed2-b2664a7ffa04.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_36__6df862f4-f3d9-424c-9ed2-b2664a7ffa04.jpg",
+   "name": "seg_36.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_36__6df862f4-f3d9-424c-9ed2-b2664a7ffa04.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 97296,
+   "uploaded_bytes": 97296,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_37__d52eda71-078e-4523-89af-24b341a0c104.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_37__d52eda71-078e-4523-89af-24b341a0c104.jpg",
+   "name": "seg_37.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_37__d52eda71-078e-4523-89af-24b341a0c104.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 109895,
+   "uploaded_bytes": 109895,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_39__03e52b20-646f-45d3-84c0-b106acd98ee2.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_39__03e52b20-646f-45d3-84c0-b106acd98ee2.jpg",
+   "name": "seg_39.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_39__03e52b20-646f-45d3-84c0-b106acd98ee2.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 114664,
+   "uploaded_bytes": 114664,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_40__b3b6f1ab-b73c-49de-a670-dc890123d582.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_40__b3b6f1ab-b73c-49de-a670-dc890123d582.jpg",
+   "name": "seg_40.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_40__b3b6f1ab-b73c-49de-a670-dc890123d582.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 103749,
+   "uploaded_bytes": 103749,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_41__e416daf0-c8e1-481b-b813-f4fc9f773706.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_41__e416daf0-c8e1-481b-b813-f4fc9f773706.jpg",
+   "name": "seg_41.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_41__e416daf0-c8e1-481b-b813-f4fc9f773706.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 102784,
+   "uploaded_bytes": 102784,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_42__3875af41-5abf-4dca-9df8-bdfb171387df.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_42__3875af41-5abf-4dca-9df8-bdfb171387df.jpg",
+   "name": "seg_42.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_42__3875af41-5abf-4dca-9df8-bdfb171387df.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 114790,
+   "uploaded_bytes": 114790,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_43__7a0204d4-68b0-4121-a194-236f3d21b563.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_43__7a0204d4-68b0-4121-a194-236f3d21b563.jpg",
+   "name": "seg_43.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_43__7a0204d4-68b0-4121-a194-236f3d21b563.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 118742,
+   "uploaded_bytes": 118742,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_44__79c77d54-5e00-48af-8ed9-fe6214e83b10.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_44__79c77d54-5e00-48af-8ed9-fe6214e83b10.jpg",
+   "name": "seg_44.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_44__79c77d54-5e00-48af-8ed9-fe6214e83b10.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 60801,
+   "uploaded_bytes": 60801,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_45__659e777c-9197-47f9-8c0e-d51a0f0fa313.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_45__659e777c-9197-47f9-8c0e-d51a0f0fa313.jpg",
+   "name": "seg_45.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_45__659e777c-9197-47f9-8c0e-d51a0f0fa313.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 125279,
+   "uploaded_bytes": 125279,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_46__207df408-b7a2-4c95-845e-30b4622ca4a7.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_46__207df408-b7a2-4c95-845e-30b4622ca4a7.jpg",
+   "name": "seg_46.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_46__207df408-b7a2-4c95-845e-30b4622ca4a7.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 97465,
+   "uploaded_bytes": 97465,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_47__d6aed2bc-b8c3-441c-9ade-955475049588.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_47__d6aed2bc-b8c3-441c-9ade-955475049588.jpg",
+   "name": "seg_47.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_47__d6aed2bc-b8c3-441c-9ade-955475049588.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 115188,
+   "uploaded_bytes": 115188,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_48__c81a25e8-b897-4735-aaea-059aac4d635b.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_48__c81a25e8-b897-4735-aaea-059aac4d635b.jpg",
+   "name": "seg_48.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_48__c81a25e8-b897-4735-aaea-059aac4d635b.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 109120,
+   "uploaded_bytes": 109120,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_49__360ca700-2218-4fd1-89f1-f52112a3b43e.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_49__360ca700-2218-4fd1-89f1-f52112a3b43e.jpg",
+   "name": "seg_49.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_49__360ca700-2218-4fd1-89f1-f52112a3b43e.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 152372,
+   "uploaded_bytes": 152372,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_50__36285ee5-1c92-4b67-aa9d-c36d1d3506f2.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_50__36285ee5-1c92-4b67-aa9d-c36d1d3506f2.jpg",
+   "name": "seg_50.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_50__36285ee5-1c92-4b67-aa9d-c36d1d3506f2.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 84740,
+   "uploaded_bytes": 84740,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_51__1a0baa36-6f09-46e3-a91d-34695610fa8e.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_51__1a0baa36-6f09-46e3-a91d-34695610fa8e.jpg",
+   "name": "seg_51.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_51__1a0baa36-6f09-46e3-a91d-34695610fa8e.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 97494,
+   "uploaded_bytes": 97494,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_52__22f11549-66c8-4994-9b98-fb2442b47fff.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_52__22f11549-66c8-4994-9b98-fb2442b47fff.jpg",
+   "name": "seg_52.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_52__22f11549-66c8-4994-9b98-fb2442b47fff.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 115707,
+   "uploaded_bytes": 115707,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_54__f9cc8a68-b2fb-488f-9bc9-3df063609d45.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_54__f9cc8a68-b2fb-488f-9bc9-3df063609d45.jpg",
+   "name": "seg_54.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_54__f9cc8a68-b2fb-488f-9bc9-3df063609d45.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 113346,
+   "uploaded_bytes": 113346,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_55__1b545c7d-4d3c-45d4-8125-83f5a5278602.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_55__1b545c7d-4d3c-45d4-8125-83f5a5278602.jpg",
+   "name": "seg_55.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_55__1b545c7d-4d3c-45d4-8125-83f5a5278602.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 93698,
+   "uploaded_bytes": 93698,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_56__70419cea-f1d1-4d81-ac20-13e797119538.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_56__70419cea-f1d1-4d81-ac20-13e797119538.jpg",
+   "name": "seg_56.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_56__70419cea-f1d1-4d81-ac20-13e797119538.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 123936,
+   "uploaded_bytes": 123936,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_57__3a3816c2-2949-49e6-bd1e-3689e2fd4a0a.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_57__3a3816c2-2949-49e6-bd1e-3689e2fd4a0a.jpg",
+   "name": "seg_57.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_57__3a3816c2-2949-49e6-bd1e-3689e2fd4a0a.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 106575,
+   "uploaded_bytes": 106575,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_58__ef1cc40b-6b9b-4574-8ef8-acba5d179b0b.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_58__ef1cc40b-6b9b-4574-8ef8-acba5d179b0b.jpg",
+   "name": "seg_58.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_58__ef1cc40b-6b9b-4574-8ef8-acba5d179b0b.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 123828,
+   "uploaded_bytes": 123828,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_59__a4d68d32-ac29-4848-9c61-c5a0a62cb901.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_59__a4d68d32-ac29-4848-9c61-c5a0a62cb901.jpg",
+   "name": "seg_59.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_59__a4d68d32-ac29-4848-9c61-c5a0a62cb901.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 103573,
+   "uploaded_bytes": 103573,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-huang-walking/segments/seg_60__7fde90f4-25e3-4e19-b1bb-ff9df72c3f1a.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-huang-walking/segments/seg_60__7fde90f4-25e3-4e19-b1bb-ff9df72c3f1a.jpg",
+   "name": "seg_60.jpg",
+   "type": "image",
+   "folder": "segments",
+   "media_id": "templates/2024-huang-walking/segments/seg_60__7fde90f4-25e3-4e19-b1bb-ff9df72c3f1a.jpg",
+   "logicalFolder": "segments",
+   "original_bytes": 141257,
+   "uploaded_bytes": 141257,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Unveiling the Non-Linear Influence of Eye-Level Streetscape Factors on Walking Preference: Evidence from Tokyo",
+  "authors": [
+   "Huang L.",
+   "Oki T.",
+   "Muto S.",
+   "Ogawa Y."
+  ],
+  "year": 2024,
+  "venue": "ISPRS International Journal of Geo-Information",
+  "doi": "10.3390/ijgi13040131",
+  "url": "https://doi.org/10.3390/ijgi13040131"
+ }
+}

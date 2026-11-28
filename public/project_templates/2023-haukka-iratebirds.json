@@ -1,0 +1,547 @@
+{
+ "id": "2023-haukka-iratebirds",
+ "name": "iratebirds - Rate the Appearance of Birds (1-10 Hearts)",
+ "description": "Method replication: the iratebirds citizen-science task for measuring how attractive people find different bird species. Participants see bird photographs one at a time in random order and answer \"Please rate the appearance of this bird!\" on a scale of 1 to 10 hearts. After 10 birds they answer the paper's background survey (Table 1: five 1-5 items on identifying common and rare birds, joy in seeing birds, paying attention to birds and time outdoors; three yes/no items on birding and environmental memberships and a nature-based profession; country, birth year and gender), and can then keep rating as many of the remaining birds as they like. The original app showed one of the five best user-rated Macaulay Library photos per species, which cannot be redistributed; this template uses one openly licensed Wikimedia Commons photo for each of 29 well-known species, from House Sparrow and Feral Pigeon to Mandarin Duck, Shoebill and Snowy Owl, each credited under the photo. The published iratebirds score for each species (raw mean and model-corrected) is stored in the page, so new ratings can be compared with the 408,207 original ratings from 6,212 people. Differences from the original study: (1) 29 species with one Wikimedia photo each instead of about 11,000 species with up to five Macaulay Library photos each; (2) English only instead of 20 languages; (3) answers to the background survey are required here, while in the app it was optional; (4) the photos were resized to at most 1200 px.",
+ "author": "Haukka, Lehikoinen, Mammola, Morris & Santangeli",
+ "year": "2023",
+ "category": "Academic Research",
+ "tags": [
+  "method-replication",
+  "official",
+  "paper",
+  "birds",
+  "aesthetics",
+  "biodiversity",
+  "citizen science",
+  "rating",
+  "source:paper",
+  "modality:scene_photo",
+  "task:rating",
+  "task:questionnaire",
+  "concept:preference",
+  "concept:naturalness",
+  "participants:crowd",
+  "sample:gt1000",
+  "country:Global"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1038/s41597-023-02169-0",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T15:29:46.468+00:00",
+ "updatedAt": "2026-11-27T15:30:03.963+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "start",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree that my anonymous answers are used for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "rate",
+    "elements": [
+     {
+      "name": "bird_rating",
+      "type": "rating",
+      "title": "Please rate the appearance of this bird!",
+      "rateMax": 10,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Keyed by species file name (scientific name with underscores). At least 10 birds per participant, up to all of them. The published iratebirds attractiveness for each species is in the page's birds-original block.",
+      "maxRateDescription": "High",
+      "minRateDescription": "Low"
+     }
+    ]
+   },
+   {
+    "name": "background",
+    "elements": [
+     {
+      "name": "bird_attitudes",
+      "type": "rating",
+      "title": "Questions on knowledge and relationship to birds",
+      "rateMax": 5,
+      "rateMin": 1,
+      "isRequired": true,
+      "description": "Keyed: identify_common, identify_rare, birds_joy, attention_birds, time_outdoors (wording in the page, from the paper's Table 1).",
+      "maxRateDescription": "Every time / all the time / very often",
+      "minRateDescription": "Never"
+     },
+     {
+      "name": "bird_assoc_member",
+      "type": "radiogroup",
+      "title": "Do you belong to any local, national, or global birdwatching or ornithological associations (e.g., my local birding group, BirdLife, etc.)?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "env_org_member",
+      "type": "radiogroup",
+      "title": "Are you a member of any local, national, or global, environmental or nature organisations that are not specifically focused on birdwatching or birds (e.g., Trust for Nature)?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "env_nature_professional",
+      "type": "radiogroup",
+      "title": "Do you work in an environmental-/nature-based profession (e.g., biologist, nature tour-guide, natural resource manager, etc.)?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "home_country",
+      "type": "text",
+      "title": "In which country do you currently live?",
+      "isRequired": true
+     },
+     {
+      "max": 2015,
+      "min": 1900,
+      "name": "birth_year",
+      "type": "text",
+      "title": "In which year were you born?",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "text",
+      "title": "What is your gender?",
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Rate the Birds: Visual Aesthetic Attractiveness of Bird Species",
+  "locale": "en",
+  "spSite": {
+   "id": "site-2cd3cd5a1cb60c48",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Rate the Birds</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Rate the Birds: Visual Aesthetic Attractiveness of Bird Species\",\n  \"description\": \"Participants rate photographs of bird species, one at a time in random order, on how much they like each bird's appearance (1-10 hearts). After 10 birds they answer the iratebirds background survey (bird identification skills, joy and attention to birds, time outdoors, memberships, profession, country, birth year, gender), then may keep rating. Method replication of Haukka, Lehikoinen, Mammola, Morris & Santangeli (2023), Scientific Data 10: 297; the original Macaulay Library photos cannot be redistributed, so this template uses one openly licensed Wikimedia Commons photo per species (credited in the page). Analysis: mean rating per species; compare with the published iratebirds score for each species (stored in the page).\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"birds\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"start\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree that my anonymous answers are used for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"rate\",\n    \"elements\": [\n     {\n      \"type\": \"rating\",\n      \"name\": \"bird_rating\",\n      \"title\": \"Please rate the appearance of this bird!\",\n      \"rateMin\": 1,\n      \"rateMax\": 10,\n      \"minRateDescription\": \"Low\",\n      \"maxRateDescription\": \"High\",\n      \"isRequired\": true,\n      \"description\": \"Keyed by species file name (scientific name with underscores). At least 10 birds per participant, up to all of them. The published iratebirds attractiveness for each species is in the page's birds-original block.\"\n     }\n    ]\n   },\n   {\n    \"name\": \"background\",\n    \"elements\": [\n     {\n      \"type\": \"rating\",\n      \"name\": \"bird_attitudes\",\n      \"title\": \"Questions on knowledge and relationship to birds\",\n      \"rateMin\": 1,\n      \"rateMax\": 5,\n      \"minRateDescription\": \"Never\",\n      \"maxRateDescription\": \"Every time / all the time / very often\",\n      \"isRequired\": true,\n      \"description\": \"Keyed: identify_common, identify_rare, birds_joy, attention_birds, time_outdoors (wording in the page, from the paper's Table 1).\"\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"bird_assoc_member\",\n      \"title\": \"Do you belong to any local, national, or global birdwatching or ornithological associations (e.g., my local birding group, BirdLife, etc.)?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"env_org_member\",\n      \"title\": \"Are you a member of any local, national, or global, environmental or nature organisations that are not specifically focused on birdwatching or birds (e.g., Trust for Nature)?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"env_nature_professional\",\n      \"title\": \"Do you work in an environmental-/nature-based profession (e.g., biologist, nature tour-guide, natural resource manager, etc.)?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"home_country\",\n      \"title\": \"In which country do you currently live?\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"text\",\n      \"inputType\": \"number\",\n      \"name\": \"birth_year\",\n      \"title\": \"In which year were you born?\",\n      \"isRequired\": true,\n      \"min\": 1900,\n      \"max\": 2015\n     },\n     {\n      \"type\": \"text\",\n      \"name\": \"gender\",\n      \"title\": \"What is your gender?\",\n      \"isRequired\": true\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<script type=\"application/json\" id=\"birds-original\">{\"source\": \"Haukka, Lehikoinen, Mammola, Morris & Santangeli (2023) Scientific Data 10: 297\", \"n\": 6212, \"ratings\": 408207, \"participants\": \"members of the public reached via social media, birding associations and press, iratebirds.app in 20 languages, August 2020 - April 2021; 2,785 answered the background survey\", \"result\": \"11,319 bird species and subspecies rated (36 ratings each on average). Scores per species below are from the authors' Figshare file iratebirds_final_predictions_average_fullmodel_subsetmodel_151122.csv (10.6084/m9.figshare.20170082): raw mean rating and full-model predicted attractiveness.\", \"speciesScores\": {\"Acridotheres_tristis\": {\"common_name\": \"Common Myna\", \"iratebirds_raw_mean\": 5.92, \"iratebirds_full_model\": 5.93, \"ratings\": 37}, \"Anas_platyrhynchos\": {\"common_name\": \"Mallard\", \"iratebirds_raw_mean\": 5.81, \"iratebirds_full_model\": 5.77, \"ratings\": 43}, \"Ara_macao\": {\"common_name\": \"Scarlet Macaw\", \"iratebirds_raw_mean\": 7.24, \"iratebirds_full_model\": 7.23, \"ratings\": 42}, \"Ardea_cinerea\": {\"common_name\": \"Gray Heron\", \"iratebirds_raw_mean\": 6.11, \"iratebirds_full_model\": 5.97, \"ratings\": 4}, \"Balaeniceps_rex\": {\"common_name\": \"Shoebill\", \"iratebirds_raw_mean\": 5.73, \"iratebirds_full_model\": 5.82, \"ratings\": 47}, \"Bubo_scandiacus\": {\"common_name\": \"Snowy Owl\", \"iratebirds_raw_mean\": 8.68, \"iratebirds_full_model\": 8.03, \"ratings\": 51}, \"Cardinalis_cardinalis\": {\"common_name\": \"Northern Cardinal\", \"iratebirds_raw_mean\": 7.15, \"iratebirds_full_model\": 7.01, \"ratings\": 50}, \"Cathartes_aura\": {\"common_name\": \"Turkey Vulture\", \"iratebirds_raw_mean\": 4.78, \"iratebirds_full_model\": 4.87, \"ratings\": 22}, \"Chroicocephalus_ridibundus\": {\"common_name\": \"Black-headed Gull\", \"iratebirds_raw_mean\": 5.54, \"iratebirds_full_model\": 5.54, \"ratings\": 36}, \"Chrysolophus_pictus\": {\"common_name\": \"Golden Pheasant\", \"iratebirds_raw_mean\": 6.98, \"iratebirds_full_model\": 6.67, \"ratings\": 60}, \"Cygnus_olor\": {\"common_name\": \"Mute Swan\", \"iratebirds_raw_mean\": 6.95, \"iratebirds_full_model\": 6.58, \"ratings\": 40}, \"Fratercula_arctica\": {\"common_name\": \"Atlantic Puffin\", \"iratebirds_raw_mean\": 7.6, \"iratebirds_full_model\": 7.23, \"ratings\": 33}, \"Haliaeetus_leucocephalus\": {\"common_name\": \"Bald Eagle\", \"iratebirds_raw_mean\": 7.47, \"iratebirds_full_model\": 7.19, \"ratings\": 43}, \"Leptoptilos_crumenifer\": {\"common_name\": \"Marabou Stork\", \"iratebirds_raw_mean\": 4.06, \"iratebirds_full_model\": 4.62, \"ratings\": 18}, \"Pavo_cristatus\": {\"common_name\": \"Indian Peafowl\", \"iratebirds_raw_mean\": 7.97, \"iratebirds_full_model\": 7.22, \"ratings\": 10}, \"Phoenicopterus_roseus\": {\"common_name\": \"Greater Flamingo\", \"iratebirds_raw_mean\": 6.23, \"iratebirds_full_model\": 6.29, \"ratings\": 44}, \"Trichoglossus_moluccanus\": {\"common_name\": \"Rainbow Lorikeet\", \"iratebirds_raw_mean\": 7.1, \"iratebirds_full_model\": 7.1, \"ratings\": 29}, \"Aix_galericulata\": {\"common_name\": \"Mandarin Duck\", \"iratebirds_raw_mean\": 8.04, \"iratebirds_full_model\": 7.57, \"ratings\": 53}, \"Alcedo_atthis\": {\"common_name\": \"Common Kingfisher\", \"iratebirds_raw_mean\": 7.86, \"iratebirds_full_model\": 7.66, \"ratings\": 35}, \"Columba_livia\": {\"common_name\": \"Rock Pigeon (Feral Pigeon)\", \"iratebirds_raw_mean\": 3.8, \"iratebirds_full_model\": 4.55, \"ratings\": 38}, \"Corvus_corone\": {\"common_name\": \"Carrion Crow\", \"iratebirds_raw_mean\": 5.62, \"iratebirds_full_model\": 5.74, \"ratings\": 37}, \"Cyanistes_caeruleus\": {\"common_name\": \"Eurasian Blue Tit\", \"iratebirds_raw_mean\": 7.34, \"iratebirds_full_model\": 7.11, \"ratings\": 41}, \"Erithacus_rubecula\": {\"common_name\": \"European Robin\", \"iratebirds_raw_mean\": 6.65, \"iratebirds_full_model\": 6.53, \"ratings\": 38}, \"Merops_apiaster\": {\"common_name\": \"European Bee-eater\", \"iratebirds_raw_mean\": 7.65, \"iratebirds_full_model\": 7.46, \"ratings\": 45}, \"Parus_major\": {\"common_name\": \"Great Tit\", \"iratebirds_raw_mean\": 7.21, \"iratebirds_full_model\": 6.81, \"ratings\": 37}, \"Passer_domesticus\": {\"common_name\": \"House Sparrow\", \"iratebirds_raw_mean\": 5.89, \"iratebirds_full_model\": 5.74, \"ratings\": 39}, \"Pica_pica\": {\"common_name\": \"Eurasian Magpie\", \"iratebirds_raw_mean\": 5.14, \"iratebirds_full_model\": 5.38, \"ratings\": 44}, \"Sturnus_vulgaris\": {\"common_name\": \"European Starling\", \"iratebirds_raw_mean\": 5.45, \"iratebirds_full_model\": 5.52, \"ratings\": 38}, \"Upupa_epops\": {\"common_name\": \"Eurasian Hoopoe\", \"iratebirds_raw_mean\": 8.27, \"iratebirds_full_model\": 7.99, \"ratings\": 44}}}</script>\n<script type=\"application/json\" id=\"photo-credits\">{\"Acridotheres_tristis\": {\"artist\": \"Charles J. Sharp\", \"lic\": \"CC BY-SA 4.0\", \"file\": \"File:Common myna (Acridotheres tristis) Upolu.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:Common_myna_(Acridotheres_tristis)_Upolu.jpg\"}, \"Anas_platyrhynchos\": {\"artist\": \"Commonists\", \"lic\": \"CC BY-SA 4.0\", \"file\": \"File:Anas platyrhynchos (Male) on the ground.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:Anas_platyrhynchos_(Male)_on_the_ground.jpg\"}, \"Ara_macao\": {\"artist\": \"Charles J. Sharp\", \"lic\": \"CC BY-SA 4.0\", \"file\": \"File:Scarlet macaw (Ara macao cyanopterus) Copan.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:Scarlet_macaw_(Ara_macao_cyanopterus)_Copan.jpg\"}, \"Ardea_cinerea\": {\"artist\": \"A.Savin\", \"lic\": \"CC BY-SA 3.0\", \"file\": \"File:Baden-Baden 10-2015 img14 Hector Berlioz Park Grey heron.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:Baden-Baden_10-2015_img14_Hector_Berlioz_Park_Grey_heron.jpg\"}, \"Balaeniceps_rex\": {\"artist\": \"Olaf Oliviero Riemer\", \"lic\": \"CC BY-SA 3.0\", \"file\": \"File:Balaeniceps rex (Schuhschnabel - Shoebill) - Weltvogelpark Walsrode 2011.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:Balaeniceps_rex_(Schuhschnabel_-_Shoebill)_-_Weltvogelpark_Walsrode_2011.jpg\"}, \"Bubo_scandiacus\": {\"artist\": \"Diego Delso\", \"lic\": \"CC BY-SA 4.0\", \"file\": \"File:Búho nival (Bubo scandiacus), Arcos de la Frontera, Cádiz, España, 2015-12-08, DD 03.JPG\", \"page\": \"https://commons.wikimedia.org/wiki/File:B%C3%BAho_nival_(Bubo_scandiacus),_Arcos_de_la_Frontera,_C%C3%A1diz,_Espa%C3%B1a,_2015-12-08,_DD_03.JPG\"}, \"Cardinalis_cardinalis\": {\"artist\": \"Paul Danese\", \"lic\": \"CC BY-SA 4.0\", \"file\": \"File:20231221 northern cardinal casa PD104379.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:20231221_northern_cardinal_casa_PD104379.jpg\"}, \"Cathartes_aura\": {\"artist\": \"Charles J. Sharp\", \"lic\": \"CC BY-SA 4.0\", \"file\": \"File:Turkey vulture (Cathartes aura) in flight.JPG\", \"page\": \"https://commons.wikimedia.org/wiki/File:Turkey_vulture_(Cathartes_aura)_in_flight.JPG\"}, \"Chroicocephalus_ridibundus\": {\"artist\": \"ArildV\", \"lic\": \"CC BY-SA 3.0\", \"file\": \"File:Chroicocephalus ridibundus 2012a.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:Chroicocephalus_ridibundus_2012a.jpg\"}, \"Chrysolophus_pictus\": {\"artist\": \"Carlos Valenzuela\", \"lic\": \"CC BY-SA 4.0\", \"file\": \"File:Chrysolophus pictusMx2018p2.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:Chrysolophus_pictusMx2018p2.jpg\"}, \"Cygnus_olor\": {\"artist\": \"Giles Laurent\", \"lic\": \"CC BY-SA 4.0\", \"file\": \"File:093 Wild Mute swan at Lake Geneva during sunset Photo by Giles Laurent.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:093_Wild_Mute_swan_at_Lake_Geneva_during_sunset_Photo_by_Giles_Laurent.jpg\"}, \"Fratercula_arctica\": {\"artist\": \"Richard Bartz\", \"lic\": \"CC BY-SA 3.0\", \"file\": \"File:Papageitaucher Fratercula arctica.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:Papageitaucher_Fratercula_arctica.jpg\"}, \"Haliaeetus_leucocephalus\": {\"artist\": \"Paul Danese\", \"lic\": \"CC BY-SA 4.0\", \"file\": \"File:20241018 bald eagle hockanum river linear trail PD209061.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:20241018_bald_eagle_hockanum_river_linear_trail_PD209061.jpg\"}, \"Leptoptilos_crumenifer\": {\"artist\": \"Ermell\", \"lic\": \"CC BY-SA 4.0\", \"file\": \"File:Kölner Zoo Leptoptilos crumeniferus-20110912-RM-112908.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:K%C3%B6lner_Zoo_Leptoptilos_crumeniferus-20110912-RM-112908.jpg\"}, \"Pavo_cristatus\": {\"artist\": \"Giles Laurent\", \"lic\": \"CC BY-SA 4.0\", \"file\": \"File:023 Indian peafowl in Jim Corbett National Park Photo by Giles Laurent.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:023_Indian_peafowl_in_Jim_Corbett_National_Park_Photo_by_Giles_Laurent.jpg\"}, \"Phoenicopterus_roseus\": {\"artist\": \"Giles Laurent\", \"lic\": \"CC BY-SA 4.0\", \"file\": \"File:010 Greater flamingos male and female in the Camargue during mating season Photo by Giles Laurent.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:010_Greater_flamingos_male_and_female_in_the_Camargue_during_mating_season_Photo_by_Giles_Laurent.jpg\"}, \"Trichoglossus_moluccanus\": {\"artist\": \"Calistemon\", \"lic\": \"CC BY-SA 4.0\", \"file\": \"File:Rainbow lorikeet (Trichoglossus moluccanus) sitting in a hole in a dead tree along the Swan River, October 2023 02.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:Rainbow_lorikeet_(Trichoglossus_moluccanus)_sitting_in_a_hole_in_a_dead_tree_along_the_Swan_River,_October_2023_02.jpg\"}, \"Aix_galericulata\": {\"artist\": \"Diliff\", \"lic\": \"CC BY 3.0\", \"file\": \"File:Aix galericulata (Male), Richmond Park, UK - May 2013.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:Aix_galericulata_(Male),_Richmond_Park,_UK_-_May_2013.jpg\"}, \"Alcedo_atthis\": {\"artist\": \"Alexis Lours\", \"lic\": \"CC BY 4.0\", \"file\": \"File:Common Kingfisher 2025 09 28 03.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:Common_Kingfisher_2025_09_28_03.jpg\"}, \"Columba_livia\": {\"artist\": \"Satdeep Gill\", \"lic\": \"CC BY-SA 4.0\", \"file\": \"File:Common pigeon at Waterlow Park, London 01.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:Common_pigeon_at_Waterlow_Park,_London_01.jpg\"}, \"Corvus_corone\": {\"artist\": \"Alexis Lours\", \"lic\": \"CC BY 4.0\", \"file\": \"File:Carrion crow (Corvus corone) head.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:Carrion_crow_(Corvus_corone)_head.jpg\"}, \"Cyanistes_caeruleus\": {\"artist\": \"Kora27\", \"lic\": \"CC BY-SA 4.0\", \"file\": \"File:Blaumeise (Cyanistes caeruleus) am Schwanenteich in Waldenburg.2H1A9484WI.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:Blaumeise_(Cyanistes_caeruleus)_am_Schwanenteich_in_Waldenburg.2H1A9484WI.jpg\"}, \"Erithacus_rubecula\": {\"artist\": \"Francis C. Franklin\", \"lic\": \"CC BY-SA 3.0\", \"file\": \"File:Erithacus rubecula with cocked head.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:Erithacus_rubecula_with_cocked_head.jpg\"}, \"Merops_apiaster\": {\"artist\": \"Pierre Dalous\", \"lic\": \"CC BY-SA 3.0\", \"file\": \"File:Merops apiaster 04.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:Merops_apiaster_04.jpg\"}, \"Parus_major\": {\"artist\": \"Charles J. Sharp\", \"lic\": \"CC BY-SA 4.0\", \"file\": \"File:Great tit (Parus major) male.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:Great_tit_(Parus_major)_male.jpg\"}, \"Passer_domesticus\": {\"artist\": \"Rhododendrites\", \"lic\": \"CC BY-SA 4.0\", \"file\": \"File:House sparrow male in Prospect Park (53532).jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:House_sparrow_male_in_Prospect_Park_(53532).jpg\"}, \"Pica_pica\": {\"artist\": \"Alexis Lours\", \"lic\": \"CC BY 4.0\", \"file\": \"File:Eurasian magpie 2024 03 03 02.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:Eurasian_magpie_2024_03_03_02.jpg\"}, \"Sturnus_vulgaris\": {\"artist\": \"Rhododendrites\", \"lic\": \"CC BY-SA 4.0\", \"file\": \"File:European starling in CP (33849).jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:European_starling_in_CP_(33849).jpg\"}, \"Upupa_epops\": {\"artist\": \"Giles Laurent\", \"lic\": \"CC BY-SA 4.0\", \"file\": \"File:008 Eurasian hoopoe eating in Keoladeo National Park Photo by Giles Laurent.jpg\", \"page\": \"https://commons.wikimedia.org/wiki/File:008_Eurasian_hoopoe_eating_in_Keoladeo_National_Park_Photo_by_Giles_Laurent.jpg\"}}</script>\n<style>\n:root{--bg:#f4f1ee;--card:#fff;--ink:#231d1a;--muted:#6a5f58;--accent:#c2414b;--line:#e3dbd5;--warn:#b3261e;--sel:#fbe9ea}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:760px;margin:0 auto;padding:22px 16px 40px}\nh1{font-size:1.5rem;margin:0 0 8px}h2{font-size:1.15rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:13px 20px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}\n.btn.sec{background:#fff;color:var(--ink);border:1px solid var(--line)}\n.btn:disabled{opacity:.35;cursor:not-allowed}\n.prog{font-size:.88rem;color:var(--muted);margin-bottom:8px}\n.photo{border-radius:12px;overflow:hidden;background:#222;aspect-ratio:3/2;display:flex;align-items:center;justify-content:center}\n.photo img{width:100%;height:100%;object-fit:contain;display:block}\n.cr{font-size:.72rem;color:var(--muted);margin-top:4px;min-height:1em}\n.hearts{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin-top:12px}\n.hearts button{appearance:none;border:0;background:none;cursor:pointer;padding:2px 0;display:flex;flex-direction:column;align-items:center;font:inherit;font-size:.75rem;color:var(--muted)}\n.hearts svg{width:100%;max-width:38px;height:auto}\n.hearts svg path{fill:#e6dcd7;transition:fill .08s}\n.hearts button.on svg path{fill:var(--accent)}\n.ends{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted);margin-top:2px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\n.f{margin-top:18px}.f:first-child{margin-top:0}\n.row5{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:6px}\n.row5 label{display:flex;flex-direction:column;align-items:center;border:1px solid var(--line);border-radius:8px;padding:6px 0;cursor:pointer;font-size:.85rem}\n.row5 label:has(input:checked){background:var(--sel);border-color:var(--accent)}\n.e5{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:2px}\ninput[type=text],input[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:100%;max-width:320px}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:760px;margin:0 auto;padding:0 16px 24px;font-size:.76rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Method: Haukka, Lehikoinen, Mammola, Morris &amp; Santangeli (2023), Scientific Data 10: 297 (doi:10.1038/s41597-023-02169-0). Photographs: Wikimedia Commons, each credited under the photo with its author and licence.</footer>\n<script>\n(function(){\n  var KEY='rate-the-birds:state', MIN=10;\n  var HEART='<svg viewBox=\"0 0 24 22\" aria-hidden=\"true\"><path d=\"M12 21.6 10.3 20C4.1 14.4 0 10.7 0 6.3 0 2.7 2.8 0 6.3 0c2 0 3.9.9 5.2 2.4h1C13.8.9 15.7 0 17.7 0 21.2 0 24 2.7 24 6.3c0 4.4-4.1 8.1-10.3 13.7z\"/></svg>';\n  var L5=[['identify_common','Are you able to identify the common birds found in your local area?','Never','Every time'],['identify_rare','Are you able to identify the rare birds found in your local area?','Never','Every time'],['birds_joy','Is seeing birds an experience you find exciting and/or joyful?','Never','Every time'],['attention_birds','Do you pay attention to birds wherever you go?','Never','All the time'],['time_outdoors','Do you often spend time engaging with nature outdoors?','Never','Very often']];\n  var YN=['bird_assoc_member','env_org_member','env_nature_professional'];\n  var app=document.getElementById('app'), Q={}, files={}, ids=[], st=null, CR={};\n  try{CR=JSON.parse(document.getElementById('photo-credits').textContent);}catch(e){}\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}\n  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}\n  function send(list,b,next){if(b)b.disabled=true;Promise.all(list).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){if(b)b.disabled=false;return err(bad.error);}next();});}\n  function val(name){var x=app.querySelector('input[name=\"'+name+'\"]:checked');return x?x.value:null;}\n  function intro(){\n    app.innerHTML='<h1>Rate the birds</h1><p>You will see photographs of birds from around the world, one at a time. Rate how much you like the look of each bird, from 1 heart (low) to 10 hearts (high). After '+MIN+' birds you will answer a few short questions about yourself and birds; after that you can keep rating as many more birds as you like, up to '+st.order.length+'.</p><div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');send([SPSite.answer('consent',true)],this,function(){st.step='rate';st.k=0;save();route();});};\n  }\n  function rate(){\n    var id=st.order[st.k],n=st.order.length,c=CR[id]||{},nx=st.order[st.k+1];\n    var more=st.surveyed?'<div style=\"margin-top:14px;text-align:right\"><button class=\"btn sec\" id=\"stop\">I’m done, finish</button></div>':'';\n    app.innerHTML='<div class=\"prog\">Bird '+(st.k+1)+(st.surveyed?' of up to '+n:' of '+MIN+' before a few questions')+'</div><div class=\"card\" style=\"margin-top:0\"><div class=\"photo\"><img alt=\"Bird photograph\" src=\"'+esc(files[id].url)+'\"></div><div class=\"cr\">'+(c.artist?'Photo: '+esc(c.artist)+', '+esc(c.lic)+', Wikimedia Commons':'')+'</div><b style=\"display:block;margin-top:10px\">'+esc(Q.bird_rating.title)+'</b><div class=\"hearts\">'+[1,2,3,4,5,6,7,8,9,10].map(function(v){return '<button type=\"button\" data-v=\"'+v+'\" aria-label=\"'+v+' hearts\">'+HEART+v+'</button>';}).join('')+'</div><div class=\"ends\"><span>1 = low</span><span>10 = high</span></div><div class=\"err\"></div></div>'+more;\n    if(nx){var pre=new Image();pre.src=files[nx].url;}\n    var bs=[].slice.call(app.querySelectorAll('.hearts button')),busy=false;\n    bs.forEach(function(b){\n      b.onmouseenter=function(){var v=+b.dataset.v;bs.forEach(function(x){x.classList.toggle('on',+x.dataset.v<=v);});};\n      b.onclick=function(){if(busy)return;busy=true;var v=+b.dataset.v;bs.forEach(function(x){x.classList.toggle('on',+x.dataset.v<=v);});\n        SPSite.answer('bird_rating',v,{key:id,shown:[files[id].name]}).then(function(r){\n          if(!ok(r)){busy=false;return err(r.error);}\n          st.k++;if(!st.surveyed&&st.k>=MIN)st.step='survey';else if(st.k>=n)st.step='done';save();setTimeout(route,150);});};\n    });\n    app.querySelector('.hearts').onmouseleave=function(){bs.forEach(function(x){x.classList.remove('on');});};\n    var s=document.getElementById('stop');if(s)s.onclick=function(){st.step='done';save();route();};\n  }\n  function survey(){\n    var h='<div class=\"f\"><b>'+esc(Q.bird_attitudes.title)+'</b></div>'+L5.map(function(q){return '<div class=\"f\"><div>'+esc(q[1])+'</div><div class=\"row5\">'+[1,2,3,4,5].map(function(v){return '<label><input type=\"radio\" name=\"'+q[0]+'\" value=\"'+v+'\">'+v+'</label>';}).join('')+'</div><div class=\"e5\"><span>'+esc(q[2])+'</span><span>'+esc(q[3])+'</span></div></div>';}).join('');\n    h+=YN.map(function(q){return '<div class=\"f\"><b>'+esc(Q[q].title)+'</b><div style=\"display:flex;gap:8px\"><label class=\"opt\" style=\"flex:1\"><input type=\"radio\" name=\"'+q+'\" value=\"yes\"> Yes</label><label class=\"opt\" style=\"flex:1\"><input type=\"radio\" name=\"'+q+'\" value=\"no\"> No</label></div></div>';}).join('');\n    h+='<div class=\"f\"><b>'+esc(Q.home_country.title)+'</b><br><input type=\"text\" id=\"country\" maxlength=\"60\"></div><div class=\"f\"><b>'+esc(Q.birth_year.title)+'</b><br><input type=\"number\" id=\"year\" min=\"1900\" max=\"2015\" style=\"max-width:140px\"></div><div class=\"f\"><b>'+esc(Q.gender.title)+'</b><br><input type=\"text\" id=\"gender\" maxlength=\"40\"></div>';\n    app.innerHTML='<h2>A few questions</h2><p>Thanks for rating '+MIN+' birds. Please tell us a little about yourself.</p><div class=\"card\">'+h+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      var a=L5.map(function(q){return val(q[0]);}),y=YN.map(val),c=document.getElementById('country').value.trim(),yr=Number(document.getElementById('year').value),g=document.getElementById('gender').value.trim();\n      if(a.some(function(x){return !x;})||y.some(function(x){return !x;})||!c||!g)return err('Please answer every question.');\n      if(!(yr>=1900&&yr<=2015))return err('Please enter your year of birth.');\n      var L=L5.map(function(q,i){return SPSite.answer('bird_attitudes',Number(a[i]),{key:q[0]});}).concat(YN.map(function(q,i){return SPSite.answer(q,y[i]);}),[SPSite.answer('home_country',c),SPSite.answer('birth_year',yr),SPSite.answer('gender',g)]);\n      send(L,this,function(){st.surveyed=true;st.step='more';save();route();});\n    };\n  }\n  function more(){\n    app.innerHTML='<h2>Thank you!</h2><div class=\"card\"><p style=\"color:var(--ink)\">Your answers are recorded. Would you like to rate more birds? There are '+(st.order.length-st.k)+' more. You can stop at any time.</p><div style=\"display:flex;gap:8px;flex-wrap:wrap\"><button class=\"btn\" id=\"go\">Rate more birds</button><button class=\"btn sec\" id=\"fin\">Finish now</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){st.step=st.k>=st.order.length?'done':'rate';save();route();};\n    document.getElementById('fin').onclick=function(){st.step='done';save();route();};\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');setTimeout(function(){st.step='intro';save();route();},1800);}\n      else{try{localStorage.removeItem(KEY);}catch(e){}var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved. You rated '+st.k+' birds.';}});\n  }\n  function route(){var s=st.step;window.scrollTo(0,0);if(s==='rate')return rate();if(s==='survey')return survey();if(s==='more')return more();if(s==='done')return finish();intro();}\n  SPSite.onReady(function(ctx){\n    ['consent','bird_rating','bird_attitudes','bird_assoc_member','env_org_member','env_nature_professional','home_country','birth_year','gender'].forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('birds')||[]).forEach(function(f){if(/\\.(png|jpe?g|webp)$/i.test(f.name)){var k=f.name.replace(/\\.[^.]+$/,'');files[k]=f;ids.push(k);}});\n    if(ids.length<MIN){app.innerHTML='<h1>Photos missing</h1><p>Upload at least '+MIN+' bird photographs to the media folder \"birds\".</p>';return;}\n    try{st=JSON.parse(localStorage.getItem(KEY));}catch(e){st=null;}\n    var valid=st&&st.order&&st.order.length===ids.length&&st.order.every(function(x){return files[x];});\n    if(!valid)st={step:'intro',order:shuffle(ids),k:0,surveyed:false};\n    var a=(ctx&&ctx.answers)||{};if(a.consent!==true){st.step='intro';st.k=0;st.surveyed=false;}\n    save();route();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T15:29:18.307Z",
+   "mediaFolders": [
+    "birds"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T15:29:18.307Z"
+  },
+  "description": "Participants rate photographs of bird species, one at a time in random order, on how much they like each bird's appearance (1-10 hearts). After 10 birds they answer the iratebirds background survey (bird identification skills, joy and attention to birds, time outdoors, memberships, profession, country, birth year, gender), then may keep rating. Method replication of Haukka, Lehikoinen, Mammola, Morris & Santangeli (2023), Scientific Data 10: 297; the original Macaulay Library photos cannot be redistributed, so this template uses one openly licensed Wikimedia Commons photo per species (credited in the page). Analysis: mean rating per species; compare with the published iratebirds score for each species (stored in the page).",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Acridotheres_tristis__f2a30eed-1316-4ea5-bfd8-e952aef514bd.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Acridotheres_tristis__f2a30eed-1316-4ea5-bfd8-e952aef514bd.jpg",
+   "name": "Acridotheres_tristis.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Acridotheres_tristis__f2a30eed-1316-4ea5-bfd8-e952aef514bd.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 154742,
+   "uploaded_bytes": 154742,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Aix_galericulata__76d8cb83-7c2f-4e70-a427-66303a143f86.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Aix_galericulata__76d8cb83-7c2f-4e70-a427-66303a143f86.jpg",
+   "name": "Aix_galericulata.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Aix_galericulata__76d8cb83-7c2f-4e70-a427-66303a143f86.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 161552,
+   "uploaded_bytes": 161552,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Alcedo_atthis__c4205031-fc4c-458d-b14d-7714bc895264.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Alcedo_atthis__c4205031-fc4c-458d-b14d-7714bc895264.jpg",
+   "name": "Alcedo_atthis.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Alcedo_atthis__c4205031-fc4c-458d-b14d-7714bc895264.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 100548,
+   "uploaded_bytes": 100548,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Anas_platyrhynchos__c04f4eb8-9beb-40cf-bb24-b34078ebfd6e.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Anas_platyrhynchos__c04f4eb8-9beb-40cf-bb24-b34078ebfd6e.jpg",
+   "name": "Anas_platyrhynchos.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Anas_platyrhynchos__c04f4eb8-9beb-40cf-bb24-b34078ebfd6e.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 257856,
+   "uploaded_bytes": 257856,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Ara_macao__1f56cf12-0011-4f98-8149-de30e5c95cad.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Ara_macao__1f56cf12-0011-4f98-8149-de30e5c95cad.jpg",
+   "name": "Ara_macao.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Ara_macao__1f56cf12-0011-4f98-8149-de30e5c95cad.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 281185,
+   "uploaded_bytes": 281185,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Ardea_cinerea__2524a43d-1710-4789-a865-aff5fbc48625.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Ardea_cinerea__2524a43d-1710-4789-a865-aff5fbc48625.jpg",
+   "name": "Ardea_cinerea.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Ardea_cinerea__2524a43d-1710-4789-a865-aff5fbc48625.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 436203,
+   "uploaded_bytes": 436203,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Balaeniceps_rex__5c1f470c-0ba4-4558-bd2b-099eeb18c300.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Balaeniceps_rex__5c1f470c-0ba4-4558-bd2b-099eeb18c300.jpg",
+   "name": "Balaeniceps_rex.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Balaeniceps_rex__5c1f470c-0ba4-4558-bd2b-099eeb18c300.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 166462,
+   "uploaded_bytes": 166462,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Bubo_scandiacus__29d327bf-4c84-4b6d-bd91-9c8d2c79f283.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Bubo_scandiacus__29d327bf-4c84-4b6d-bd91-9c8d2c79f283.jpg",
+   "name": "Bubo_scandiacus.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Bubo_scandiacus__29d327bf-4c84-4b6d-bd91-9c8d2c79f283.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 124850,
+   "uploaded_bytes": 124850,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Cardinalis_cardinalis__300f9eee-7a68-4e6b-92f1-f6dfffb7689d.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Cardinalis_cardinalis__300f9eee-7a68-4e6b-92f1-f6dfffb7689d.jpg",
+   "name": "Cardinalis_cardinalis.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Cardinalis_cardinalis__300f9eee-7a68-4e6b-92f1-f6dfffb7689d.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 100978,
+   "uploaded_bytes": 100978,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Cathartes_aura__7f540358-229f-4a74-afb8-eb01174ccb8c.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Cathartes_aura__7f540358-229f-4a74-afb8-eb01174ccb8c.jpg",
+   "name": "Cathartes_aura.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Cathartes_aura__7f540358-229f-4a74-afb8-eb01174ccb8c.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 47713,
+   "uploaded_bytes": 47713,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Chroicocephalus_ridibundus__f05bd925-4c63-410a-be2d-98862f5e50e9.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Chroicocephalus_ridibundus__f05bd925-4c63-410a-be2d-98862f5e50e9.jpg",
+   "name": "Chroicocephalus_ridibundus.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Chroicocephalus_ridibundus__f05bd925-4c63-410a-be2d-98862f5e50e9.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 76787,
+   "uploaded_bytes": 76787,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Chrysolophus_pictus__a44aacfa-1663-452b-98dc-4a995596220f.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Chrysolophus_pictus__a44aacfa-1663-452b-98dc-4a995596220f.jpg",
+   "name": "Chrysolophus_pictus.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Chrysolophus_pictus__a44aacfa-1663-452b-98dc-4a995596220f.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 164975,
+   "uploaded_bytes": 164975,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Columba_livia__4b221e2c-ae18-43de-b193-a4da08208da0.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Columba_livia__4b221e2c-ae18-43de-b193-a4da08208da0.jpg",
+   "name": "Columba_livia.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Columba_livia__4b221e2c-ae18-43de-b193-a4da08208da0.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 143026,
+   "uploaded_bytes": 143026,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Corvus_corone__3039cf3b-59c3-4a66-8ab2-d5c0654f79fd.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Corvus_corone__3039cf3b-59c3-4a66-8ab2-d5c0654f79fd.jpg",
+   "name": "Corvus_corone.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Corvus_corone__3039cf3b-59c3-4a66-8ab2-d5c0654f79fd.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 142533,
+   "uploaded_bytes": 142533,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Cyanistes_caeruleus__f36e1502-2ebd-4d94-b1fe-e9dd68990d1d.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Cyanistes_caeruleus__f36e1502-2ebd-4d94-b1fe-e9dd68990d1d.jpg",
+   "name": "Cyanistes_caeruleus.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Cyanistes_caeruleus__f36e1502-2ebd-4d94-b1fe-e9dd68990d1d.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 223310,
+   "uploaded_bytes": 223310,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Cygnus_olor__2f560dc5-8698-4ea7-a473-9e26f3642455.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Cygnus_olor__2f560dc5-8698-4ea7-a473-9e26f3642455.jpg",
+   "name": "Cygnus_olor.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Cygnus_olor__2f560dc5-8698-4ea7-a473-9e26f3642455.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 97205,
+   "uploaded_bytes": 97205,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Erithacus_rubecula__2816d106-f311-405c-a310-ef91ccb12c38.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Erithacus_rubecula__2816d106-f311-405c-a310-ef91ccb12c38.jpg",
+   "name": "Erithacus_rubecula.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Erithacus_rubecula__2816d106-f311-405c-a310-ef91ccb12c38.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 169541,
+   "uploaded_bytes": 169541,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Fratercula_arctica__7199246e-7eb3-4852-9d89-577aea70229f.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Fratercula_arctica__7199246e-7eb3-4852-9d89-577aea70229f.jpg",
+   "name": "Fratercula_arctica.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Fratercula_arctica__7199246e-7eb3-4852-9d89-577aea70229f.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 178596,
+   "uploaded_bytes": 178596,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Haliaeetus_leucocephalus__2346d3e8-e4ba-4373-8023-ed541cecda11.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Haliaeetus_leucocephalus__2346d3e8-e4ba-4373-8023-ed541cecda11.jpg",
+   "name": "Haliaeetus_leucocephalus.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Haliaeetus_leucocephalus__2346d3e8-e4ba-4373-8023-ed541cecda11.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 55428,
+   "uploaded_bytes": 55428,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Leptoptilos_crumenifer__94fa32d3-a0c5-407d-acf9-9b54b16249e0.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Leptoptilos_crumenifer__94fa32d3-a0c5-407d-acf9-9b54b16249e0.jpg",
+   "name": "Leptoptilos_crumenifer.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Leptoptilos_crumenifer__94fa32d3-a0c5-407d-acf9-9b54b16249e0.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 311911,
+   "uploaded_bytes": 311911,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Merops_apiaster__f1c48919-3cff-482e-a8db-071fadcfffd7.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Merops_apiaster__f1c48919-3cff-482e-a8db-071fadcfffd7.jpg",
+   "name": "Merops_apiaster.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Merops_apiaster__f1c48919-3cff-482e-a8db-071fadcfffd7.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 87367,
+   "uploaded_bytes": 87367,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Parus_major__68aa0219-8664-4d95-bfa1-91c31334c3a4.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Parus_major__68aa0219-8664-4d95-bfa1-91c31334c3a4.jpg",
+   "name": "Parus_major.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Parus_major__68aa0219-8664-4d95-bfa1-91c31334c3a4.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 141802,
+   "uploaded_bytes": 141802,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Passer_domesticus__0bab1727-54fa-4add-af17-a090742da6d8.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Passer_domesticus__0bab1727-54fa-4add-af17-a090742da6d8.jpg",
+   "name": "Passer_domesticus.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Passer_domesticus__0bab1727-54fa-4add-af17-a090742da6d8.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 125410,
+   "uploaded_bytes": 125410,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Pavo_cristatus__d9c4448c-07e5-4f0a-8f10-a49f624b1475.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Pavo_cristatus__d9c4448c-07e5-4f0a-8f10-a49f624b1475.jpg",
+   "name": "Pavo_cristatus.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Pavo_cristatus__d9c4448c-07e5-4f0a-8f10-a49f624b1475.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 351195,
+   "uploaded_bytes": 351195,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Phoenicopterus_roseus__117bda3b-4af3-499d-903f-2228bfcd7722.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Phoenicopterus_roseus__117bda3b-4af3-499d-903f-2228bfcd7722.jpg",
+   "name": "Phoenicopterus_roseus.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Phoenicopterus_roseus__117bda3b-4af3-499d-903f-2228bfcd7722.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 145219,
+   "uploaded_bytes": 145219,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Pica_pica__1b7ff0f4-9a49-484e-b219-2b8b68b526e5.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Pica_pica__1b7ff0f4-9a49-484e-b219-2b8b68b526e5.jpg",
+   "name": "Pica_pica.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Pica_pica__1b7ff0f4-9a49-484e-b219-2b8b68b526e5.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 143783,
+   "uploaded_bytes": 143783,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Sturnus_vulgaris__49cb1888-1d35-4254-ad39-4101d5d1829f.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Sturnus_vulgaris__49cb1888-1d35-4254-ad39-4101d5d1829f.jpg",
+   "name": "Sturnus_vulgaris.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Sturnus_vulgaris__49cb1888-1d35-4254-ad39-4101d5d1829f.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 176507,
+   "uploaded_bytes": 176507,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Trichoglossus_moluccanus__70635491-40ad-4b36-880c-3b3d3e86d39d.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Trichoglossus_moluccanus__70635491-40ad-4b36-880c-3b3d3e86d39d.jpg",
+   "name": "Trichoglossus_moluccanus.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Trichoglossus_moluccanus__70635491-40ad-4b36-880c-3b3d3e86d39d.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 201105,
+   "uploaded_bytes": 201105,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-haukka-iratebirds/birds/Upupa_epops__69f57e26-eb8b-430b-8d81-e0c2bf4344b0.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-haukka-iratebirds/birds/Upupa_epops__69f57e26-eb8b-430b-8d81-e0c2bf4344b0.jpg",
+   "name": "Upupa_epops.jpg",
+   "type": "image",
+   "folder": "birds",
+   "media_id": "templates/2023-haukka-iratebirds/birds/Upupa_epops__69f57e26-eb8b-430b-8d81-e0c2bf4344b0.jpg",
+   "logicalFolder": "birds",
+   "original_bytes": 107587,
+   "uploaded_bytes": 107587,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "The iratebirds Citizen Science Project: a Dataset on Birds’ Visual Aesthetic Attractiveness to Humans",
+  "authors": [
+   "Anna Haukka",
+   "Aleksi Lehikoinen",
+   "Stefano Mammola",
+   "William Morris",
+   "Andrea Santangeli"
+  ],
+  "year": 2023,
+  "venue": "Scientific Data",
+  "doi": "10.1038/s41597-023-02169-0",
+  "url": "https://doi.org/10.1038/s41597-023-02169-0"
+ }
+}

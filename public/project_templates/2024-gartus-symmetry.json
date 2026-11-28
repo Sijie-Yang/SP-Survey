@@ -1,0 +1,2598 @@
+{
+ "id": "2024-gartus-symmetry",
+ "name": "Symmetry and Beauty in City Photos (rating + keep/delete)",
+ "description": "Faithful replication of Study 1 (urban photography) of Gartus, Valuch, Hakala, Peltoketo, Pelowski & Leder, \"Symmetry Suits Cities, but Not Nature or Food: Image Beauty Effects Across Urban, Nature, and Food Photography\" (manuscript submitted for publication; data and stimuli on OSF tvqeg, DOI 10.17605/OSF.IO/TVQEG, CC BY 4.0). The 160 stimuli are the authors' own Study 1 images from that OSF project, used with credit to the authors.\n\nWhat participants do: after demographics (age, gender, country, education, student, full-time work), each participant is randomly given one of the two original stimulus sets: 80 city photos, 40 cropped symmetrically around the scene's axis (CenterCrop) and 40 shifted crops (ShiftedLeft / ShiftedRight); each of the 80 scenes appears in only one version per set. They do two tasks on the same 80 photos, in random order of tasks (counterbalanced, as in the original): (1) rate how beautiful each photo is, 1 = not beautiful to 7 = very beautiful; (2) decide for each photo whether to keep or delete it, as if it were in their own photo collection (buttons, swipe or arrow keys). Response times are recorded from image onset. A post-task questionnaire follows: familiarity with the places (1–7) and an open question on its influence, an open question on what drove keep decisions and high ratings, how much 15 factors were considered when judging beauty (1–7), importance of image beauty and of the depicted object's beauty for keeping photos of 7 genres, photo-taking frequency for 7 genres, amateur / professional photography, and camera equipment.\n\nWhat the original found: the manuscript's title gives the result, symmetry raises the beauty of urban photos but not of nature or food photos. In the open Study 1 data (80 participants), symmetric crops got a mean beauty rating of 4.09 vs 3.96 for shifted crops and were kept 57.0% vs 53.4% of the time.\n\nData: design = { stimulus_set, task_order }; beauty = { beauty } per image, rating_rt = { rt_ms }, swipe = { choice: keep | delete, rt_ms }, all keyed by the image file name without .jpg (same as trial_img on OSF). Symmetry condition and source scene can be read from the key. Analysis as in the original: mixed models with participant and source image as random effects, comparing symmetric vs nonsymmetric versions for rating and keep probability.\n\nDifferences from the original study: (1) the 25-item Visual Aesthetic Sensitivity Test (VAST) used in the original is left out because its items are a copyrighted test; (2) task instructions and the swipe screen are written for this template (the OSF files give the variables, not the exact instructions); (3) the anchors of the beauty-importance and object-importance scales (1 = not important at all, 7 = very important) and the factor labels of the appreciation matrix are written out from the variable names; (4) images are recompressed JPEGs at the original 1200 × 900 px; (5) open answers for 'other' country / education and field of study / profession are not asked; (6) English wording; the original sample was mostly from Austria and Germany. Only Study 1 (urban) is rebuilt; Studies 2–4 (nature, food, mixed genres) use other image sets on the same OSF project.",
+ "author": "Gartus, Valuch, Hakala, Peltoketo, Pelowski & Leder",
+ "year": "2024",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "faithful-replication",
+  "symmetry",
+  "beauty",
+  "urban photography",
+  "keep or delete",
+  "image aesthetics",
+  "source:paper",
+  "modality:scene_photo",
+  "task:rating",
+  "task:questionnaire",
+  "concept:beauty",
+  "concept:aesthetics",
+  "concept:preference",
+  "participants:crowd",
+  "sample:lt100",
+  "country:Austria",
+  "city:Vienna",
+  "city:Salzburg",
+  "city:Linz"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.17605/OSF.IO/TVQEG",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-27T05:12:35.511+00:00",
+ "updatedAt": "2026-11-27T05:13:56.79+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "about_you",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     },
+     {
+      "max": 99,
+      "min": 16,
+      "name": "age",
+      "type": "text",
+      "title": "Age (years)",
+      "inputType": "number",
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Diverse",
+        "value": "diverse"
+       },
+       {
+        "text": "Prefer not to say",
+        "value": "none"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "country",
+      "type": "radiogroup",
+      "title": "Country of residence",
+      "choices": [
+       {
+        "text": "Austria",
+        "value": "AT"
+       },
+       {
+        "text": "Germany",
+        "value": "DE"
+       },
+       {
+        "text": "Switzerland",
+        "value": "CH"
+       },
+       {
+        "text": "Other",
+        "value": "OT"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "Highest completed level of education",
+      "choices": [
+       {
+        "text": "Compulsory school",
+        "value": "hauptschule"
+       },
+       {
+        "text": "Apprenticeship",
+        "value": "lehre"
+       },
+       {
+        "text": "High school (Matura / Abitur)",
+        "value": "matura"
+       },
+       {
+        "text": "Bachelor",
+        "value": "bachelor"
+       },
+       {
+        "text": "Master",
+        "value": "master"
+       },
+       {
+        "text": "PhD",
+        "value": "doktorat"
+       },
+       {
+        "text": "Other",
+        "value": "sonstiges"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "student",
+      "type": "radiogroup",
+      "title": "Are you currently a university student?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "work",
+      "type": "radiogroup",
+      "title": "Are you working full-time?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "tasks",
+    "elements": [
+     {
+      "name": "design",
+      "type": "custom",
+      "title": "Assigned condition",
+      "isRequired": true,
+      "description": "{ stimulus_set: 'set_1' | 'set_2', task_order: 'ratingfirst' | 'swipingfirst' }, drawn at random per participant, as in the original data."
+     },
+     {
+      "name": "beauty",
+      "type": "imageslidergroup",
+      "title": "How beautiful do you find this image?",
+      "choices": [],
+      "scaleMax": 7,
+      "scaleMin": 1,
+      "dimensions": [
+       {
+        "id": "beauty",
+        "max": 7,
+        "min": 1,
+        "left": "Not beautiful",
+        "step": 1,
+        "label": "Beauty",
+        "right": "Very beautiful"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "description": "Rating task: 80 images in random order, 1 = not beautiful … 7 = very beautiful; the next image appears on click. key = image file name without .jpg (same as trial_img on OSF tvqeg). Symmetry condition = CenterCrop (symmetric) vs ShiftedLeft/ShiftedRight (nonsymmetric) in the key; the source scene = the part before the first _Center/_Shifted.",
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     },
+     {
+      "name": "rating_rt",
+      "type": "custom",
+      "title": "Rating response time",
+      "isRequired": true,
+      "description": "{ rt_ms } per image, from image onset to the click on the rating button; same keys as beauty."
+     },
+     {
+      "name": "swipe",
+      "type": "custom",
+      "title": "Keep or delete this image?",
+      "isRequired": true,
+      "description": "Swiping task on the same 80 images in a new random order: { choice: 'keep' | 'delete', rt_ms } per image (rt from image onset). Same keys as beauty. The original analysis compares the share of 'keep' and the beauty ratings between symmetric and nonsymmetric versions (mixed models with participant and source image as random effects)."
+     }
+    ]
+   },
+   {
+    "name": "after",
+    "elements": [
+     {
+      "name": "familiarity",
+      "type": "rating",
+      "title": "How familiar were the depicted places to you?",
+      "rateMax": 7,
+      "rateMin": 1,
+      "isRequired": true,
+      "maxRateDescription": "Very familiar / I know the places partly very well",
+      "minRateDescription": "Not familiar at all / I do not know these places"
+     },
+     {
+      "name": "familiarity_open",
+      "type": "comment",
+      "title": "If you were familiar with individual locations: To what extent did this familiarity influence your judgments of the images?"
+     },
+     {
+      "name": "criteria",
+      "type": "comment",
+      "title": "Please briefly describe the aspects that determined/influenced your decision to “keep” an image or give it a high rating.",
+      "isRequired": true
+     },
+     {
+      "name": "appreciation",
+      "rows": [
+       {
+        "text": "Visual appeal",
+        "value": "visualappeal"
+       },
+       {
+        "text": "Colour and contrast",
+        "value": "colorcontrast"
+       },
+       {
+        "text": "Visual novelty",
+        "value": "visualnovelty"
+       },
+       {
+        "text": "Composition",
+        "value": "composition"
+       },
+       {
+        "text": "Style",
+        "value": "style"
+       },
+       {
+        "text": "Content",
+        "value": "content"
+       },
+       {
+        "text": "Technical quality",
+        "value": "technicalquality"
+       },
+       {
+        "text": "Assumed cost",
+        "value": "assumedcost"
+       },
+       {
+        "text": "Has a deeper meaning",
+        "value": "hasdeepermeaning"
+       },
+       {
+        "text": "Security and comfort",
+        "value": "securitycomfort"
+       },
+       {
+        "text": "Challenge",
+        "value": "challenge"
+       },
+       {
+        "text": "Nostalgia",
+        "value": "nostalgia"
+       },
+       {
+        "text": "Values and beliefs",
+        "value": "valuesbeliefs"
+       },
+       {
+        "text": "Emotion",
+        "value": "emotion"
+       },
+       {
+        "text": "Expert opinions",
+        "value": "expertopinions"
+       }
+      ],
+      "type": "matrix",
+      "title": "How much did you consider each of the following factors when judging image beauty?",
+      "columns": [
+       {
+        "text": "1 Not at all",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       },
+       {
+        "text": "6",
+        "value": 6
+       },
+       {
+        "text": "7 A lot",
+        "value": 7
+       }
+      ],
+      "isRequired": true,
+      "description": "1 = not at all … 7 = a lot. Factor labels are written out from the variable names in the open data (appreciation_*)."
+     },
+     {
+      "name": "beauty_importance",
+      "rows": [
+       {
+        "text": "Faces",
+        "value": "faces"
+       },
+       {
+        "text": "Selfies",
+        "value": "selfies"
+       },
+       {
+        "text": "Groups",
+        "value": "groups"
+       },
+       {
+        "text": "Food",
+        "value": "food"
+       },
+       {
+        "text": "Landscapes",
+        "value": "landscapes"
+       },
+       {
+        "text": "Urban",
+        "value": "urban"
+       },
+       {
+        "text": "Holiday",
+        "value": "holiday"
+       }
+      ],
+      "type": "matrix",
+      "title": "How important is the beauty of the image when you think about whether you would keep an image in your ‘image collection’?",
+      "columns": [
+       {
+        "text": "1 Not important at all",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       },
+       {
+        "text": "6",
+        "value": 6
+       },
+       {
+        "text": "7 Very important",
+        "value": 7
+       }
+      ],
+      "isRequired": true,
+      "description": "1 = not important at all … 7 = very important (anchor wording assumed; the open data give only the 1–7 range)."
+     },
+     {
+      "name": "object_importance",
+      "rows": [
+       {
+        "text": "Faces",
+        "value": "faces"
+       },
+       {
+        "text": "Selfies",
+        "value": "selfies"
+       },
+       {
+        "text": "Groups",
+        "value": "groups"
+       },
+       {
+        "text": "Food",
+        "value": "food"
+       },
+       {
+        "text": "Landscapes",
+        "value": "landscapes"
+       },
+       {
+        "text": "Urban",
+        "value": "urban"
+       },
+       {
+        "text": "Holiday",
+        "value": "holiday"
+       }
+      ],
+      "type": "matrix",
+      "title": "In comparison: How important is the beauty of the scene or object depicted when you think about whether you would keep an image in your ‘image collection’?",
+      "columns": [
+       {
+        "text": "1 Not important at all",
+        "value": 1
+       },
+       {
+        "text": "2",
+        "value": 2
+       },
+       {
+        "text": "3",
+        "value": 3
+       },
+       {
+        "text": "4",
+        "value": 4
+       },
+       {
+        "text": "5",
+        "value": 5
+       },
+       {
+        "text": "6",
+        "value": 6
+       },
+       {
+        "text": "7 Very important",
+        "value": 7
+       }
+      ],
+      "isRequired": true,
+      "description": "Same scale as beauty_importance."
+     },
+     {
+      "name": "photofreq",
+      "rows": [
+       {
+        "text": "Faces",
+        "value": "faces"
+       },
+       {
+        "text": "Selfies",
+        "value": "selfies"
+       },
+       {
+        "text": "Groups",
+        "value": "groups"
+       },
+       {
+        "text": "Food",
+        "value": "food"
+       },
+       {
+        "text": "Landscapes",
+        "value": "landscapes"
+       },
+       {
+        "text": "Urban",
+        "value": "urban"
+       },
+       {
+        "text": "Holiday",
+        "value": "holiday"
+       }
+      ],
+      "type": "matrix",
+      "title": "How often do you take photos yourself (whether with a smartphone or your own camera) of the various categories?",
+      "columns": [
+       {
+        "text": "Never",
+        "value": 1
+       },
+       {
+        "text": "Very rarely",
+        "value": 2
+       },
+       {
+        "text": "A few times per year",
+        "value": 3
+       },
+       {
+        "text": "About once per month",
+        "value": 4
+       },
+       {
+        "text": "About once per week",
+        "value": 5
+       },
+       {
+        "text": "Several times a week",
+        "value": 6
+       },
+       {
+        "text": "Daily or almost daily",
+        "value": 7
+       }
+      ],
+      "isRequired": true,
+      "description": "1 = never … 7 = daily or almost daily."
+     },
+     {
+      "name": "photo_amateur",
+      "type": "radiogroup",
+      "title": "Would you describe yourself as a hobby or amateur photographer?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "photo_professional",
+      "type": "radiogroup",
+      "title": "Do you have anything to do with photography on a regular basis professionally?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "photo_professional_open",
+      "type": "comment",
+      "title": "If yes: how are you related to photography professionally?"
+     },
+     {
+      "name": "photo_devices",
+      "type": "checkbox",
+      "title": "What equipment or cameras do you use for photography?",
+      "choices": [
+       {
+        "text": "Smartphone",
+        "value": "smartphone"
+       },
+       {
+        "text": "Action camera",
+        "value": "actioncam"
+       },
+       {
+        "text": "Compact camera",
+        "value": "compact"
+       },
+       {
+        "text": "DSLR / system camera",
+        "value": "dslr"
+       },
+       {
+        "text": "Analogue camera",
+        "value": "analog"
+       },
+       {
+        "text": "Instant camera",
+        "value": "instantcam"
+       },
+       {
+        "text": "None",
+        "value": "none"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   }
+  ],
+  "title": "Image Beauty and Symmetry in City Photos",
+  "locale": "en",
+  "spSite": {
+   "id": "site-419840040743ece6",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Image Beauty and Symmetry in City Photos</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Image Beauty and Symmetry in City Photos\",\n  \"description\": \"Faithful rebuild of Study 1 (urban photography) of Gartus, Valuch, Hakala, Peltoketo, Pelowski & Leder, 'Symmetry Suits Cities, but Not Nature or Food' (manuscript submitted; data and stimuli OSF tvqeg). 160 city photos = 80 scenes, each cropped symmetrically (CenterCrop) or shifted (ShiftedLeft / ShiftedRight). Each participant gets one of two stimulus sets (80 images, each scene in only one version, 40 symmetric + 40 nonsymmetric) and does two tasks on the same 80 images in counterbalanced order: a beauty rating (1–7) and a keep / delete 'swiping' decision. Then a post-task questionnaire.\",\n  \"locale\": \"en\",\n  \"mediaFolders\": [\n   \"images\"\n  ],\n  \"pages\": [\n   {\n    \"name\": \"about_you\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. Participation is voluntary and my answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     },\n     {\n      \"type\": \"number\",\n      \"name\": \"age\",\n      \"title\": \"Age (years)\",\n      \"min\": 16,\n      \"max\": 99,\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"diverse\",\n        \"text\": \"Diverse\"\n       },\n       {\n        \"value\": \"none\",\n        \"text\": \"Prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"country\",\n      \"title\": \"Country of residence\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"AT\",\n        \"text\": \"Austria\"\n       },\n       {\n        \"value\": \"DE\",\n        \"text\": \"Germany\"\n       },\n       {\n        \"value\": \"CH\",\n        \"text\": \"Switzerland\"\n       },\n       {\n        \"value\": \"OT\",\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"Highest completed level of education\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"hauptschule\",\n        \"text\": \"Compulsory school\"\n       },\n       {\n        \"value\": \"lehre\",\n        \"text\": \"Apprenticeship\"\n       },\n       {\n        \"value\": \"matura\",\n        \"text\": \"High school (Matura / Abitur)\"\n       },\n       {\n        \"value\": \"bachelor\",\n        \"text\": \"Bachelor\"\n       },\n       {\n        \"value\": \"master\",\n        \"text\": \"Master\"\n       },\n       {\n        \"value\": \"doktorat\",\n        \"text\": \"PhD\"\n       },\n       {\n        \"value\": \"sonstiges\",\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"student\",\n      \"title\": \"Are you currently a university student?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"work\",\n      \"title\": \"Are you working full-time?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"tasks\",\n    \"elements\": [\n     {\n      \"type\": \"custom\",\n      \"name\": \"design\",\n      \"title\": \"Assigned condition\",\n      \"description\": \"{ stimulus_set: 'set_1' | 'set_2', task_order: 'ratingfirst' | 'swipingfirst' }, drawn at random per participant, as in the original data.\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"imageslidergroup\",\n      \"name\": \"beauty\",\n      \"title\": \"How beautiful do you find this image?\",\n      \"description\": \"Rating task: 80 images in random order, 1 = not beautiful … 7 = very beautiful; the next image appears on click. key = image file name without .jpg (same as trial_img on OSF tvqeg). Symmetry condition = CenterCrop (symmetric) vs ShiftedLeft/ShiftedRight (nonsymmetric) in the key; the source scene = the part before the first _Center/_Shifted.\",\n      \"imageCount\": 1,\n      \"scaleMin\": 1,\n      \"scaleMax\": 7,\n      \"isRequired\": true,\n      \"dimensions\": [\n       {\n        \"id\": \"beauty\",\n        \"label\": \"Beauty\",\n        \"left\": \"Not beautiful\",\n        \"right\": \"Very beautiful\",\n        \"min\": 1,\n        \"max\": 7,\n        \"step\": 1\n       }\n      ]\n     },\n     {\n      \"type\": \"custom\",\n      \"name\": \"rating_rt\",\n      \"title\": \"Rating response time\",\n      \"description\": \"{ rt_ms } per image, from image onset to the click on the rating button; same keys as beauty.\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"custom\",\n      \"name\": \"swipe\",\n      \"title\": \"Keep or delete this image?\",\n      \"description\": \"Swiping task on the same 80 images in a new random order: { choice: 'keep' | 'delete', rt_ms } per image (rt from image onset). Same keys as beauty. The original analysis compares the share of 'keep' and the beauty ratings between symmetric and nonsymmetric versions (mixed models with participant and source image as random effects).\",\n      \"isRequired\": true\n     }\n    ]\n   },\n   {\n    \"name\": \"after\",\n    \"elements\": [\n     {\n      \"type\": \"rating\",\n      \"name\": \"familiarity\",\n      \"title\": \"How familiar were the depicted places to you?\",\n      \"rateMin\": 1,\n      \"rateMax\": 7,\n      \"minRateDescription\": \"Not familiar at all / I do not know these places\",\n      \"maxRateDescription\": \"Very familiar / I know the places partly very well\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"familiarity_open\",\n      \"title\": \"If you were familiar with individual locations: To what extent did this familiarity influence your judgments of the images?\"\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"criteria\",\n      \"title\": \"Please briefly describe the aspects that determined/influenced your decision to “keep” an image or give it a high rating.\",\n      \"isRequired\": true\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"appreciation\",\n      \"title\": \"How much did you consider each of the following factors when judging image beauty?\",\n      \"description\": \"1 = not at all … 7 = a lot. Factor labels are written out from the variable names in the open data (appreciation_*).\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"visualappeal\",\n        \"text\": \"Visual appeal\"\n       },\n       {\n        \"value\": \"colorcontrast\",\n        \"text\": \"Colour and contrast\"\n       },\n       {\n        \"value\": \"visualnovelty\",\n        \"text\": \"Visual novelty\"\n       },\n       {\n        \"value\": \"composition\",\n        \"text\": \"Composition\"\n       },\n       {\n        \"value\": \"style\",\n        \"text\": \"Style\"\n       },\n       {\n        \"value\": \"content\",\n        \"text\": \"Content\"\n       },\n       {\n        \"value\": \"technicalquality\",\n        \"text\": \"Technical quality\"\n       },\n       {\n        \"value\": \"assumedcost\",\n        \"text\": \"Assumed cost\"\n       },\n       {\n        \"value\": \"hasdeepermeaning\",\n        \"text\": \"Has a deeper meaning\"\n       },\n       {\n        \"value\": \"securitycomfort\",\n        \"text\": \"Security and comfort\"\n       },\n       {\n        \"value\": \"challenge\",\n        \"text\": \"Challenge\"\n       },\n       {\n        \"value\": \"nostalgia\",\n        \"text\": \"Nostalgia\"\n       },\n       {\n        \"value\": \"valuesbeliefs\",\n        \"text\": \"Values and beliefs\"\n       },\n       {\n        \"value\": \"emotion\",\n        \"text\": \"Emotion\"\n       },\n       {\n        \"value\": \"expertopinions\",\n        \"text\": \"Expert opinions\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1 Not at all\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"6\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"7 A lot\"\n       }\n      ]\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"beauty_importance\",\n      \"title\": \"How important is the beauty of the image when you think about whether you would keep an image in your ‘image collection’?\",\n      \"description\": \"1 = not important at all … 7 = very important (anchor wording assumed; the open data give only the 1–7 range).\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"faces\",\n        \"text\": \"Faces\"\n       },\n       {\n        \"value\": \"selfies\",\n        \"text\": \"Selfies\"\n       },\n       {\n        \"value\": \"groups\",\n        \"text\": \"Groups\"\n       },\n       {\n        \"value\": \"food\",\n        \"text\": \"Food\"\n       },\n       {\n        \"value\": \"landscapes\",\n        \"text\": \"Landscapes\"\n       },\n       {\n        \"value\": \"urban\",\n        \"text\": \"Urban\"\n       },\n       {\n        \"value\": \"holiday\",\n        \"text\": \"Holiday\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1 Not important at all\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"6\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"7 Very important\"\n       }\n      ]\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"object_importance\",\n      \"title\": \"In comparison: How important is the beauty of the scene or object depicted when you think about whether you would keep an image in your ‘image collection’?\",\n      \"description\": \"Same scale as beauty_importance.\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"faces\",\n        \"text\": \"Faces\"\n       },\n       {\n        \"value\": \"selfies\",\n        \"text\": \"Selfies\"\n       },\n       {\n        \"value\": \"groups\",\n        \"text\": \"Groups\"\n       },\n       {\n        \"value\": \"food\",\n        \"text\": \"Food\"\n       },\n       {\n        \"value\": \"landscapes\",\n        \"text\": \"Landscapes\"\n       },\n       {\n        \"value\": \"urban\",\n        \"text\": \"Urban\"\n       },\n       {\n        \"value\": \"holiday\",\n        \"text\": \"Holiday\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"1 Not important at all\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"2\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"3\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"4\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"5\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"6\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"7 Very important\"\n       }\n      ]\n     },\n     {\n      \"type\": \"matrix\",\n      \"name\": \"photofreq\",\n      \"title\": \"How often do you take photos yourself (whether with a smartphone or your own camera) of the various categories?\",\n      \"description\": \"1 = never … 7 = daily or almost daily.\",\n      \"isRequired\": true,\n      \"rows\": [\n       {\n        \"value\": \"faces\",\n        \"text\": \"Faces\"\n       },\n       {\n        \"value\": \"selfies\",\n        \"text\": \"Selfies\"\n       },\n       {\n        \"value\": \"groups\",\n        \"text\": \"Groups\"\n       },\n       {\n        \"value\": \"food\",\n        \"text\": \"Food\"\n       },\n       {\n        \"value\": \"landscapes\",\n        \"text\": \"Landscapes\"\n       },\n       {\n        \"value\": \"urban\",\n        \"text\": \"Urban\"\n       },\n       {\n        \"value\": \"holiday\",\n        \"text\": \"Holiday\"\n       }\n      ],\n      \"columns\": [\n       {\n        \"value\": 1,\n        \"text\": \"Never\"\n       },\n       {\n        \"value\": 2,\n        \"text\": \"Very rarely\"\n       },\n       {\n        \"value\": 3,\n        \"text\": \"A few times per year\"\n       },\n       {\n        \"value\": 4,\n        \"text\": \"About once per month\"\n       },\n       {\n        \"value\": 5,\n        \"text\": \"About once per week\"\n       },\n       {\n        \"value\": 6,\n        \"text\": \"Several times a week\"\n       },\n       {\n        \"value\": 7,\n        \"text\": \"Daily or almost daily\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"photo_amateur\",\n      \"title\": \"Would you describe yourself as a hobby or amateur photographer?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"photo_professional\",\n      \"title\": \"Do you have anything to do with photography on a regular basis professionally?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     },\n     {\n      \"type\": \"comment\",\n      \"name\": \"photo_professional_open\",\n      \"title\": \"If yes: how are you related to photography professionally?\"\n     },\n     {\n      \"type\": \"checkbox\",\n      \"name\": \"photo_devices\",\n      \"title\": \"What equipment or cameras do you use for photography?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"smartphone\",\n        \"text\": \"Smartphone\"\n       },\n       {\n        \"value\": \"actioncam\",\n        \"text\": \"Action camera\"\n       },\n       {\n        \"value\": \"compact\",\n        \"text\": \"Compact camera\"\n       },\n       {\n        \"value\": \"dslr\",\n        \"text\": \"DSLR / system camera\"\n       },\n       {\n        \"value\": \"analog\",\n        \"text\": \"Analogue camera\"\n       },\n       {\n        \"value\": \"instantcam\",\n        \"text\": \"Instant camera\"\n       },\n       {\n        \"value\": \"none\",\n        \"text\": \"None\"\n       }\n      ]\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f2f2f0;--card:#fff;--ink:#1d1f21;--muted:#5b6066;--accent:#30577d;--accent-ink:#fff;--line:#d6d8da;--warn:#b3261e;--keep:#2f7a4a;--del:#9b3b33}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:860px;margin:0 auto;padding:24px 16px 40px}\nh1{font-size:1.45rem;margin:0 0 8px}p{margin:0 0 12px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn:disabled{opacity:.4;cursor:not-allowed}\n.top{display:flex;justify-content:space-between;color:var(--muted);font-size:.9rem}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pic{background:#dfe1e3;border-radius:12px;overflow:hidden;aspect-ratio:4/3;max-height:58vh;margin:0 auto;touch-action:pan-y;user-select:none}\n.pic img{width:100%;height:100%;object-fit:contain;display:block;transition:transform .18s,opacity .18s;-webkit-user-drag:none}\n.q{margin-top:18px}.q:first-child{margin-top:0}.q>b{display:block;margin-bottom:6px}\n.scale{display:grid;gap:5px}\n.scale button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:10px 0;font:inherit;font-weight:700;cursor:pointer;min-width:0}\n.scale button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}\n.ends{display:flex;justify-content:space-between;gap:10px;font-size:.82rem;color:var(--muted);margin-top:3px}.ends span:last-child{text-align:right}\n.choice{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}\n.choice button{appearance:none;border:0;border-radius:12px;padding:14px 0;font:inherit;font-size:1.05rem;font-weight:700;cursor:pointer;color:#fff}\n.choice .del{background:var(--del)}.choice .keep{background:var(--keep)}\n.hint{font-size:.82rem;color:var(--muted);text-align:center;margin-top:8px}\nlabel.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput[type=number]{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:120px}\ntextarea{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;min-height:80px}\n.row{margin-top:14px;padding-top:10px;border-top:1px solid var(--line)}.row:first-of-type{border-top:0;padding-top:0}\n.row .scale{grid-template-columns:repeat(7,1fr)}\n.err{color:var(--warn);margin-top:8px;min-height:1.2em}\n.credit{max-width:860px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Images: stimuli of Study 1 (urban) from Gartus, Valuch, Hakala, Peltoketo, Pelowski &amp; Leder, “Symmetry Suits Cities, but Not Nature or Food” (manuscript submitted), OSF tvqeg, DOI 10.17605/OSF.IO/TVQEG; some source photos are from unsplash.com and pixabay.com. Used with credit to the authors and removed on request.</footer>\n<script>\n(function(){\n  var SETS={\"set_2\":[\"061124125124_ShiftedRight_Resized_1.jpg\",\"070306122745_CenterCrop_Resized_1.jpg\",\"070316142202_CenterCrop_Resized_1.jpg\",\"070812143126_ShiftedRight_Resized_1.jpg\",\"080420143847_CenterCrop_Resized_1.jpg\",\"081228155135_CenterCrop_Resized_1.jpg\",\"090314143934_ShiftedRight_Resized_1.jpg\",\"090319140659_ShiftedRight_Resized_1.jpg\",\"090320174613_CenterCrop_Resized_1.jpg\",\"090511075107_ShiftedLeft_Resized_1.jpg\",\"090516190404_CenterCrop_Resized_1.jpg\",\"090701144739_CenterCrop_Resized_1.jpg\",\"090724133215_ShiftedRight_Resized_1.jpg\",\"091119105646_ShiftedLeft_Resized_1.jpg\",\"100223162906_ShiftedRight_Resized_1.jpg\",\"100704160524_ShiftedLeft_Resized_1.jpg\",\"110206141401_CenterCrop_Resized_1.jpg\",\"110814124540_ShiftedRight_Resized_1.jpg\",\"110911180024_CenterCrop_Resized_1.jpg\",\"190324144906_ShiftedRight_Resized_1.jpg\",\"anelale-najera-YIzMbA6CS7E-unsplash_CenterCrop_Resized_1.jpg\",\"anna-hunko-G5BCG3zA5jo-unsplash_ShiftedRight_Resized_1.jpg\",\"architecture-3928892_1920_CenterCrop_Resized_1.jpg\",\"austria-3753978_1920_CenterCrop_Resized_1.jpg\",\"austria-4715481_1920_CenterCrop_Resized_1.jpg\",\"building-427930_1920_ShiftedRight_Resized_1.jpg\",\"castle-1023455_1920_CenterCrop_Resized_1.jpg\",\"castle-gate-3688190_1920_ShiftedLeft_Resized_1.jpg\",\"charles-square-434569_1920_CenterCrop_Resized_1.jpg\",\"dimitry-anikin-4f4PDpPEtcU-unsplash_ShiftedLeft_Resized_1.jpg\",\"dimitry-anikin-xwEW9RP8arc-unsplash_CenterCrop_Resized_1.jpg\",\"donau-city-towers-2741010_1920_ShiftedLeft_Resized_1.jpg\",\"hallstatt-2351262_1920_ShiftedLeft_Resized_1.jpg\",\"innsbruck-4761198_1920_ShiftedLeft_Resized_1.jpg\",\"jakominiplatz-2791423_1920_CenterCrop_Resized_1.jpg\",\"linz-4817579_1920_CenterCrop_Resized_1.jpg\",\"linz-5038984_1920_ShiftedRight_Resized_1.jpg\",\"lucie-morel-mE6ARTHTmPM-unsplash_ShiftedRight_Resized_1.jpg\",\"martin-fahlander-Q4VhMnJh7zQ-unsplash_CenterCrop_Resized_1.jpg\",\"naturehistorical-museum-2539597_1920_CenterCrop_Resized_1.jpg\",\"opera-2536178_1920_ShiftedLeft_Resized_1.jpg\",\"road-3117232_1920_ShiftedLeft_Resized_1.jpg\",\"rodrigo-curi-zHKrYCRAjIM-unsplash_ShiftedLeft_Resized_1.jpg\",\"salzburg-842215_1920_CenterCrop_Resized_1.jpg\",\"sargis-chilingaryan-QZMallPYvfM-unsplash(1)_CenterCrop_Resized_1.jpg\",\"st-stephans-cathedral-2811997_1280_CenterCrop_Resized_1.jpg\",\"staatsoper-4913064_1920_ShiftedLeft_Resized_1.jpg\",\"temple-of-theseus-85294_1920_CenterCrop_Resized_1.jpg\",\"vienna-108204_1920_CenterCrop_Resized_1.jpg\",\"vienna-108206_1920_ShiftedRight_Resized_1.jpg\",\"vienna-1382728_1920_CenterCrop_Resized_1.jpg\",\"vienna-1382736_1920_CenterCrop_Resized_1.jpg\",\"vienna-1526971_1920_ShiftedRight_Resized_1.jpg\",\"vienna-1529327_1920_ShiftedRight_Resized_1.jpg\",\"vienna-178467_1920_CenterCrop_Resized_1.jpg\",\"vienna-187924_1920_ShiftedRight_Resized_1.jpg\",\"vienna-228943_1920_ShiftedLeft_Resized_1.jpg\",\"vienna-2377346_1920_CenterCrop_Resized_1.jpg\",\"vienna-2506897_1920_CenterCrop_Resized_1.jpg\",\"vienna-2506903_1920_ShiftedLeft_Resized_1.jpg\",\"vienna-2539604_1920_CenterCrop_Resized_1.jpg\",\"vienna-2681753_1920_CenterCrop_Resized_1.jpg\",\"vienna-3203348_1920_ShiftedRight_Resized_1.jpg\",\"vienna-3559883_1920_CenterCrop_Resized_1.jpg\",\"vienna-363186_1920_ShiftedLeft_Resized_1.jpg\",\"vienna-3756166_1920_ShiftedRight_Resized_1.jpg\",\"vienna-3817679_1920_CenterCrop_Resized_1.jpg\",\"vienna-430031_1920_ShiftedLeft_Resized_1.jpg\",\"vienna-4646145_1920_ShiftedLeft_Resized_1.jpg\",\"vienna-4646146_1920_CenterCrop_Resized_1.jpg\",\"vienna-4648905_1920_CenterCrop_Resized_1.jpg\",\"vienna-4991937_1920_CenterCrop_Resized_1.jpg\",\"vienna-5419044_1920_ShiftedRight_Resized_1.jpg\",\"vienna-5893440_1920_ShiftedLeft_Resized_1.jpg\",\"vienna-6018414_1920_ShiftedLeft_Resized_1.jpg\",\"vienna-843828_1920_ShiftedRight_Resized_1.jpg\",\"vienna-89386_1920_CenterCrop_Resized_1.jpg\",\"vienna-city-hall-944804_CenterCrop_Resized_1.jpg\",\"vienna-hofburg-2536175_1920_ShiftedLeft_Resized_1.jpg\",\"zhang-xiaoyu-nSlTrUHXFH4-unsplash_CenterCrop_Resized_1.jpg\"],\"set_1\":[\"061124125124_CenterCrop_Resized_1.jpg\",\"070306122745_ShiftedRight_Resized_1.jpg\",\"070316142202_ShiftedRight_Resized_1.jpg\",\"070812143126_CenterCrop_Resized_1.jpg\",\"080420143847_ShiftedLeft_Resized_1.jpg\",\"081228155135_ShiftedRight_Resized_1.jpg\",\"090314143934_CenterCrop_Resized_1.jpg\",\"090319140659_CenterCrop_Resized_1.jpg\",\"090320174613_ShiftedRight_Resized_1.jpg\",\"090511075107_CenterCrop_Resized_1.jpg\",\"090516190404_ShiftedRight_Resized_1.jpg\",\"090701144739_ShiftedRight_Resized_1.jpg\",\"090724133215_CenterCrop_Resized_1.jpg\",\"091119105646_CenterCrop_Resized_1.jpg\",\"100223162906_CenterCrop_Resized_1.jpg\",\"100704160524_CenterCrop_Resized_1.jpg\",\"110206141401_ShiftedRight_Resized_1.jpg\",\"110814124540_CenterCrop_Resized_1.jpg\",\"110911180024_ShiftedLeft_Resized_1.jpg\",\"190324144906_CenterCrop_Resized_1.jpg\",\"anelale-najera-YIzMbA6CS7E-unsplash_ShiftedRight_Resized_1.jpg\",\"anna-hunko-G5BCG3zA5jo-unsplash_CenterCrop_Resized_1.jpg\",\"architecture-3928892_1920_ShiftedLeft_Resized_1.jpg\",\"austria-3753978_1920_ShiftedRight_Resized_1.jpg\",\"austria-4715481_1920_ShiftedRight_Resized_1.jpg\",\"building-427930_1920_CenterCrop_Resized_1.jpg\",\"castle-1023455_1920_ShiftedRight_Resized_1.jpg\",\"castle-gate-3688190_1920_CenterCrop_Resized_1.jpg\",\"charles-square-434569_1920_ShiftedRight_Resized_1.jpg\",\"dimitry-anikin-4f4PDpPEtcU-unsplash_CenterCrop_Resized_1.jpg\",\"dimitry-anikin-xwEW9RP8arc-unsplash_ShiftedLeft_Resized_1.jpg\",\"donau-city-towers-2741010_1920_CenterCrop_Resized_1.jpg\",\"hallstatt-2351262_1920_CenterCrop_Resized_1.jpg\",\"innsbruck-4761198_1920_CenterCrop_Resized_1.jpg\",\"jakominiplatz-2791423_1920_ShiftedLeft_Resized_1.jpg\",\"linz-4817579_1920_ShiftedLeft_Resized_1.jpg\",\"linz-5038984_1920_CenterCrop_Resized_1.jpg\",\"lucie-morel-mE6ARTHTmPM-unsplash_CenterCrop_Resized_1.jpg\",\"martin-fahlander-Q4VhMnJh7zQ-unsplash_ShiftedRight_Resized_1.jpg\",\"naturehistorical-museum-2539597_1920_ShiftedRight_Resized_1.jpg\",\"opera-2536178_1920_CenterCrop_Resized_1.jpg\",\"road-3117232_1920_CenterCrop_Resized_1.jpg\",\"rodrigo-curi-zHKrYCRAjIM-unsplash_CenterCrop_Resized_1.jpg\",\"salzburg-842215_1920_ShiftedLeft_Resized_1.jpg\",\"sargis-chilingaryan-QZMallPYvfM-unsplash(1)_ShiftedLeft_Resized_1.jpg\",\"st-stephans-cathedral-2811997_1280_ShiftedLeft_Resized_1.jpg\",\"staatsoper-4913064_1920_CenterCrop_Resized_1.jpg\",\"temple-of-theseus-85294_1920_ShiftedLeft_Resized_1.jpg\",\"vienna-108204_1920_ShiftedLeft_Resized_1.jpg\",\"vienna-108206_1920_CenterCrop_Resized_1.jpg\",\"vienna-1382728_1920_ShiftedLeft_Resized_1.jpg\",\"vienna-1382736_1920_ShiftedRight_Resized_1.jpg\",\"vienna-1526971_1920_CenterCrop_Resized_1.jpg\",\"vienna-1529327_1920_CenterCrop_Resized_1.jpg\",\"vienna-178467_1920_ShiftedLeft_Resized_1.jpg\",\"vienna-187924_1920_CenterCrop_Resized_1.jpg\",\"vienna-228943_1920_CenterCrop_Resized_1.jpg\",\"vienna-2377346_1920_ShiftedRight_Resized_1.jpg\",\"vienna-2506897_1920_ShiftedLeft_Resized_1.jpg\",\"vienna-2506903_1920_CenterCrop_Resized_1.jpg\",\"vienna-2539604_1920_ShiftedLeft_Resized_1.jpg\",\"vienna-2681753_1920_ShiftedLeft_Resized_1.jpg\",\"vienna-3203348_1920_CenterCrop_Resized_1.jpg\",\"vienna-3559883_1920_ShiftedLeft_Resized_1.jpg\",\"vienna-363186_1920_CenterCrop_Resized_1.jpg\",\"vienna-3756166_1920_CenterCrop_Resized_1.jpg\",\"vienna-3817679_1920_ShiftedRight_Resized_1.jpg\",\"vienna-430031_1920_CenterCrop_Resized_1.jpg\",\"vienna-4646145_1920_CenterCrop_Resized_1.jpg\",\"vienna-4646146_1920_ShiftedLeft_Resized_1.jpg\",\"vienna-4648905_1920_ShiftedRight_Resized_1.jpg\",\"vienna-4991937_1920_ShiftedRight_Resized_1.jpg\",\"vienna-5419044_1920_CenterCrop_Resized_1.jpg\",\"vienna-5893440_1920_CenterCrop_Resized_1.jpg\",\"vienna-6018414_1920_CenterCrop_Resized_1.jpg\",\"vienna-843828_1920_CenterCrop_Resized_1.jpg\",\"vienna-89386_1920_ShiftedLeft_Resized_1.jpg\",\"vienna-city-hall-944804_ShiftedRight_Resized_1.jpg\",\"vienna-hofburg-2536175_1920_CenterCrop_Resized_1.jpg\",\"zhang-xiaoyu-nSlTrUHXFH4-unsplash_ShiftedLeft_Resized_1.jpg\"]};\n  var INFO=['consent','age','gender','country','education','student','work'], POST=['familiarity','criteria','appreciation','beauty_importance','object_importance','photofreq','photo_amateur','photo_professional','photo_devices'];\n  var app=document.getElementById('app'), Q={}, files={}, design=null, rOrder=[], sOrder=[], doneR={}, doneS={}, ans={}, introSeen={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function ok(r){return !(r&&r.ok===false);}\n  function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var x=a[k];a[k]=a[j];a[j]=x;}return a;}\n  function load(k){try{return JSON.parse(localStorage.getItem('gartus1:'+k));}catch(e){return null;}}\n  function save(k,v){try{localStorage.setItem('gartus1:'+k,JSON.stringify(v));}catch(e){}}\n  function key(f){return f.replace(/\\.[a-z]+$/i,'');}\n  function fileOf(k){return SETS.set_1.concat(SETS.set_2).filter(function(f){return key(f)===String(k);})[0];}\n  function validOrder(o,set){return Array.isArray(o)&&o.length===set.length&&o.every(function(f){return set.indexOf(f)>=0;});}\n  function orders(){\n    var set=SETS[design.stimulus_set], o=load('orders');\n    if(o&&o.set===design.stimulus_set&&validOrder(o.r,set)&&validOrder(o.s,set)){rOrder=o.r;sOrder=o.s;return;}\n    rOrder=shuffle(set);sOrder=shuffle(set);save('orders',{set:design.stimulus_set,r:rOrder,s:sOrder});\n  }\n  function radios(n){return (Q[n].choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"radio\" name=\"'+n+'\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('');}\n  function btns(n,min,max,extra){var b='';for(var v=min;v<=max;v++)b+='<button type=\"button\" '+(extra||'')+' data-v=\"'+v+'\">'+v+'</button>';return '<div class=\"scale\" style=\"grid-template-columns:repeat('+(max-min+1)+',1fr)\">'+b+'</div>';}\n  function picked(n){var x=app.querySelector('input[name='+n+']:checked');return x?x.value:null;}\n  function saveAll(list,b,done){Promise.all(list.map(function(a){return SPSite.answer(a[0],a[1]);})).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){b.disabled=false;return err(bad.error);}done();});}\n  function intro(){\n    var missing=SETS.set_1.concat(SETS.set_2).filter(function(f){return !files[f];});\n    if(missing.length){app.innerHTML='<h1>Images missing</h1><p>Folder “images” must contain the 160 study images from OSF tvqeg (study1_images); '+missing.length+' are missing, e.g. '+esc(missing[0])+'.</p>';return;}\n    app.innerHTML='<h1>Photos of cities: how beautiful are they?</h1><p>You will see 80 photos of city scenes, one at a time, in two short tasks. In one task you rate how beautiful each photo is. In the other you decide whether you would keep or delete it, as if it were in your own photo collection. Afterwards there are a few questions about you and about photography. About 15 minutes.</p>'+\n      '<div class=\"card\"><div class=\"q\"><b>'+esc(Q.age.title)+'</b><input type=\"number\" id=\"age\" min=\"16\" max=\"99\" inputmode=\"numeric\"></div>'+\n      ['gender','country','education','student','work'].map(function(n){return '<div class=\"q\"><b>'+esc(Q[n].title)+'</b>'+radios(n)+'</div>';}).join('')+'</div>'+\n      '<div class=\"card\"><label class=\"opt\" style=\"margin-top:0\"><input type=\"checkbox\" id=\"ok\"> '+esc(Q.consent.title)+'</label><div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start</button></div><div class=\"err\"></div></div>';\n    document.getElementById('go').onclick=function(){\n      if(!document.getElementById('ok').checked)return err('Consent is needed to continue.');\n      var av=document.getElementById('age').value, age=Number(av);if(!av||!(age>=16&&age<=99))return err('Please enter your age (16–99).');\n      var list=[['consent',true],['age',age]];\n      for(var i=0,ns=['gender','country','education','student','work'];i<ns.length;i++){var v=picked(ns[i]);if(v==null)return err('Please answer: '+Q[ns[i]].title);list.push([ns[i],v]);}\n      list.push(['design',design]);\n      var b=this;b.disabled=true;saveAll(list,b,function(){ans.info=true;next();});\n    };\n  }\n  function tasks(){return design.task_order==='ratingfirst'?['rating','swiping']:['swiping','rating'];}\n  function next(){\n    window.scrollTo(0,0);\n    var t=tasks();\n    for(var k=0;k<2;k++){\n      var o=t[k]==='rating'?rOrder:sOrder, d=t[k]==='rating'?doneR:doneS, n=o.filter(function(f){return d[f];}).length;\n      if(n<o.length){\n        if(n===0&&!introSeen[t[k]])return taskIntro(t[k],k);\n        for(var i=0;i<o.length;i++)if(!d[o[i]])return t[k]==='rating'?rate(o[i],i,o.length):swipe(o[i],i,o.length);\n      }\n    }\n    if(!ans.post)return post();\n    finish();\n  }\n  function taskIntro(t,k){\n    var txt=t==='rating'?'<h1>Task '+(k+1)+' of 2: How beautiful?</h1><p>You will see 80 photos one at a time. For each photo, click how beautiful you find it, from 1 = not beautiful to 7 = very beautiful. The next photo appears right away. Go by your first impression.</p>'\n      :'<h1>Task '+(k+1)+' of 2: Keep or delete?</h1><p>Imagine these 80 photos are in your own photo collection, for example on your phone. For each photo, decide whether you would keep it or delete it. Click “Keep” or “Delete”, swipe the photo right (keep) or left (delete), or use the → / ← keys. Go by your first impression.</p>';\n    app.innerHTML=txt+'<div style=\"margin-top:16px\"><button class=\"btn\" id=\"go\">Start task '+(k+1)+'</button></div>';\n    document.getElementById('go').onclick=function(){introSeen[t]=true;next();};\n  }\n  function head(f,i,n,label){\n    var o=(label==='Rating'?rOrder:sOrder)[i+1];if(o&&files[o]){var im=new Image();im.src=files[o].url;}\n    return '<div class=\"top\"><span>'+label+' task</span><span>Photo '+(i+1)+' of '+n+'</span></div><div class=\"progress\"><i style=\"width:'+(100*i/n)+'%\"></i></div><div class=\"pic\"><img id=\"img\" src=\"'+esc(files[f].url)+'\" alt=\"City photo\" draggable=\"false\"></div>';\n  }\n  function onset(cb){var im=document.getElementById('img'), t0=null;function st(){if(t0==null)t0=performance.now();}if(im.complete&&im.naturalWidth)st();else{im.onload=st;im.onerror=st;}return function(){return t0==null?null:Math.round(performance.now()-t0);};}\n  function rate(f,i,n){\n    app.innerHTML=head(f,i,n,'Rating')+'<div class=\"card\"><b>How beautiful do you find this image?</b><div class=\"q\" style=\"margin-top:10px\">'+btns('beauty',1,7)+'<div class=\"ends\"><span>1 Not beautiful</span><span>7 Very beautiful</span></div></div><div class=\"err\"></div></div>';\n    var rt=onset(), busy=false;\n    app.querySelectorAll('.scale button').forEach(function(x){x.onclick=function(){\n      var ms=rt();if(busy)return;if(ms==null)return err('The photo is still loading.');busy=true;x.classList.add('on');\n      Promise.all([SPSite.answer('beauty',{beauty:Number(x.dataset.v)},{key:key(f),shown:[f]}),SPSite.answer('rating_rt',{rt_ms:ms},{key:key(f),shown:[f]})]).then(function(rs){var bad=rs.filter(function(r){return !ok(r);})[0];if(bad){busy=false;x.classList.remove('on');return err(bad.error);}doneR[f]=true;next();});\n    };});\n  }\n  function swipe(f,i,n){\n    app.innerHTML=head(f,i,n,'Keep or delete')+'<div class=\"choice\"><button type=\"button\" class=\"del\" data-c=\"delete\">← Delete</button><button type=\"button\" class=\"keep\" data-c=\"keep\">Keep →</button></div><div class=\"hint\">Swipe the photo, click a button, or press ← / →.</div><div class=\"err\"></div>';\n    var rt=onset(), busy=false, im=document.getElementById('img');\n    function go(c){\n      var ms=rt();if(busy)return;if(ms==null)return err('The photo is still loading.');busy=true;\n      im.style.transform='translateX('+(c==='keep'?'40%':'-40%')+') rotate('+(c==='keep'?6:-6)+'deg)';im.style.opacity='0';\n      SPSite.answer('swipe',{choice:c,rt_ms:ms},{key:key(f),shown:[f]}).then(function(r){if(!ok(r)){busy=false;im.style.transform='';im.style.opacity='';return err(r.error);}doneS[f]=true;setTimeout(next,120);});\n    }\n    app.querySelectorAll('.choice button').forEach(function(x){x.onclick=function(){go(x.dataset.c);};});\n    document.onkeydown=function(e){if(!document.getElementById('img')||!app.querySelector('.choice'))return;if(e.key==='ArrowRight'){e.preventDefault();go('keep');}else if(e.key==='ArrowLeft'){e.preventDefault();go('delete');}};\n    var x0=null,pic=app.querySelector('.pic');\n    pic.addEventListener('pointerdown',function(e){x0=e.clientX;});\n    pic.addEventListener('pointermove',function(e){if(x0!=null&&!busy){var dx=e.clientX-x0;im.style.transform='translateX('+dx+'px) rotate('+(dx/30)+'deg)';}});\n    function up(e){if(x0==null)return;var dx=e.clientX-x0;x0=null;if(Math.abs(dx)>80)go(dx>0?'keep':'delete');else if(!busy)im.style.transform='';}\n    pic.addEventListener('pointerup',up);pic.addEventListener('pointercancel',function(){x0=null;if(!busy)im.style.transform='';});\n  }\n  function matrix(n,cols,lo,hi){\n    var q=Q[n];return '<div class=\"card\"><b>'+esc(q.title)+'</b>'+(q.rows||[]).map(function(r){return '<div class=\"row\" style=\"margin-top:12px\"><b style=\"font-weight:600\">'+esc(r.text)+'</b>'+btns(n,1,7,'data-m=\"'+n+'\" data-row=\"'+esc(r.value)+'\"')+'<div class=\"ends\"><span>'+esc(lo)+'</span><span>'+esc(hi)+'</span></div></div>';}).join('')+'</div>';\n  }\n  function post(){\n    document.onkeydown=null;\n    var m={appreciation:{},beauty_importance:{},object_importance:{},photofreq:{}}, fam=null;\n    app.innerHTML='<h1>A few last questions</h1>'+\n      '<div class=\"card\"><div class=\"q\"><b>'+esc(Q.familiarity.title)+'</b>'+btns('familiarity',1,7,'data-f=\"1\"')+'<div class=\"ends\"><span>1 Not familiar at all / I do not know these places</span><span>7 Very familiar / I know the places partly very well</span></div></div>'+\n      '<div class=\"q\"><b>'+esc(Q.familiarity_open.title)+'</b><textarea id=\"famo\"></textarea></div><div class=\"q\"><b>'+esc(Q.criteria.title)+'</b><textarea id=\"crit\"></textarea></div></div>'+\n      matrix('appreciation',7,'1 Not at all','7 A lot')+matrix('beauty_importance',7,'1 Not important at all','7 Very important')+matrix('object_importance',7,'1 Not important at all','7 Very important')+matrix('photofreq',7,'1 Never','7 Daily or almost daily')+\n      '<div class=\"card\"><p style=\"margin:0\">Photo frequency: 1 never, 2 very rarely, 3 a few times per year, 4 about once per month, 5 about once per week, 6 several times a week, 7 daily or almost daily.</p></div>'+\n      '<div class=\"card\"><div class=\"q\"><b>'+esc(Q.photo_amateur.title)+'</b>'+radios('photo_amateur')+'</div><div class=\"q\"><b>'+esc(Q.photo_professional.title)+'</b>'+radios('photo_professional')+'</div><div class=\"q\" id=\"profq\" style=\"display:none\"><b>'+esc(Q.photo_professional_open.title)+'</b><textarea id=\"profo\"></textarea></div>'+\n      '<div class=\"q\"><b>'+esc(Q.photo_devices.title)+'</b>'+(Q.photo_devices.choices||[]).map(function(c){return '<label class=\"opt\"><input type=\"checkbox\" name=\"dev\" value=\"'+esc(c.value)+'\"> '+esc(c.text)+'</label>';}).join('')+'</div></div>'+\n      '<div style=\"margin-top:16px\"><button class=\"btn\" id=\"nx\">Finish</button></div><div class=\"err\"></div>';\n    app.querySelectorAll('.scale button').forEach(function(x){x.onclick=function(){if(x.dataset.f)fam=Number(x.dataset.v);else m[x.dataset.m][x.dataset.row]=Number(x.dataset.v);x.parentNode.querySelectorAll('button').forEach(function(y){y.classList.toggle('on',y===x);});err('');};});\n    app.querySelectorAll('input[name=photo_professional]').forEach(function(r){r.onchange=function(){document.getElementById('profq').style.display=r.value==='yes'&&r.checked?'':'none';};});\n    app.querySelectorAll('input[name=dev]').forEach(function(c){c.onchange=function(){if(c.checked&&c.value==='none')app.querySelectorAll('input[name=dev]').forEach(function(o){if(o!==c)o.checked=false;});else if(c.checked)app.querySelector('input[name=dev][value=none]').checked=false;};});\n    document.getElementById('nx').onclick=function(){\n      if(fam==null)return err('Please rate how familiar the places were.');\n      var crit=document.getElementById('crit').value.trim();if(!crit)return err('Please describe what influenced your decisions.');\n      for(var n in m){if((Q[n].rows||[]).some(function(r){return m[n][r.value]==null;}))return err('Please answer every row of: '+Q[n].title);}\n      var am=picked('photo_amateur'), pr=picked('photo_professional');if(!am||!pr)return err('Please answer both photography questions.');\n      var dev=[].map.call(app.querySelectorAll('input[name=dev]:checked'),function(c){return c.value;});if(!dev.length)return err('Please select your equipment (or “None”).');\n      var list=[['familiarity',fam],['criteria',crit],['appreciation',m.appreciation],['beauty_importance',m.beauty_importance],['object_importance',m.object_importance],['photofreq',m.photofreq],['photo_amateur',am],['photo_professional',pr],['photo_devices',dev]];\n      var fo=document.getElementById('famo').value.trim(), po=document.getElementById('profo').value.trim();\n      if(fo)list.push(['familiarity_open',fo]);if(po&&pr==='yes')list.push(['photo_professional_open',po]);\n      var b=this;b.disabled=true;saveAll(list,b,function(){ans.post=true;next();});\n    };\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you!</h1><div class=\"card\"><p id=\"fin\">Submitting…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(!ok(r)){err(r.error||'Some answers are missing.');var mm=r.missing||[];setTimeout(function(){if(mm.some(function(x){return INFO.indexOf(x)>=0||x==='design';})){ans.info=false;intro();}else{if(mm.some(function(x){return POST.indexOf(x)>=0;}))ans.post=false;next();}},1800);}else{var s=document.getElementById('fin');if(s)s.textContent='Your answers are saved.';}});\n  }\n  SPSite.onReady(function(ctx){\n    INFO.concat(['design','beauty','swipe','familiarity_open','photo_professional_open']).concat(POST).forEach(function(n){Q[n]=SPSite.getQuestion(n)||{};});\n    (SPSite.getMedia('images')||[]).forEach(function(f){files[f.name]=f;});\n    var a=(ctx&&ctx.answers)||{};\n    var d=a.design&&a.design.stimulus_set?a.design:load('design');\n    if(!d||!SETS[d.stimulus_set]||['ratingfirst','swipingfirst'].indexOf(d.task_order)<0){d={stimulus_set:Math.random()<.5?'set_1':'set_2',task_order:Math.random()<.5?'ratingfirst':'swipingfirst'};}\n    design={stimulus_set:d.stimulus_set,task_order:d.task_order};save('design',design);orders();\n    function mark(q,set){var p=a[q];(p&&Array.isArray(p.trials)?p.trials:[]).forEach(function(x){if(x&&x.key!=null&&x.value!=null){var f=fileOf(x.key);if(f)set[f]=true;}});}\n    if(a.consent===true&&a.age!=null&&a.design){\n      ans.info=true;if(POST.every(function(n){return a[n]!=null;}))ans.post=true;\n      mark('beauty',doneR);mark('swipe',doneS);introSeen.rating=introSeen.swiping=true;\n      next();\n    }else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-27T05:11:14.524Z",
+   "mediaFolders": [
+    "images"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-27T05:11:14.524Z"
+  },
+  "description": "Faithful rebuild of Study 1 (urban photography) of Gartus, Valuch, Hakala, Peltoketo, Pelowski & Leder, 'Symmetry Suits Cities, but Not Nature or Food' (manuscript submitted; data and stimuli OSF tvqeg). 160 city photos = 80 scenes, each cropped symmetrically (CenterCrop) or shifted (ShiftedLeft / ShiftedRight). Each participant gets one of two stimulus sets (80 images, each scene in only one version, 40 symmetric + 40 nonsymmetric) and does two tasks on the same 80 images in counterbalanced order: a beauty rating (1–7) and a keep / delete 'swiping' decision. Then a post-task questionnaire.",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2024-gartus-symmetry/images/061124125124_CenterCrop_Resized_1__f617e5ff-cfa2-4e86-abd0-fc34345a01eb.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/061124125124_CenterCrop_Resized_1__f617e5ff-cfa2-4e86-abd0-fc34345a01eb.jpg",
+   "name": "061124125124_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/061124125124_CenterCrop_Resized_1__f617e5ff-cfa2-4e86-abd0-fc34345a01eb.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 216065,
+   "uploaded_bytes": 216065,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/070306122745_ShiftedRight_Resized_1__1dc58c87-6dcd-43a4-8fd4-80385f1b63f4.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/070306122745_ShiftedRight_Resized_1__1dc58c87-6dcd-43a4-8fd4-80385f1b63f4.jpg",
+   "name": "070306122745_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/070306122745_ShiftedRight_Resized_1__1dc58c87-6dcd-43a4-8fd4-80385f1b63f4.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 132310,
+   "uploaded_bytes": 132310,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/070316142202_ShiftedRight_Resized_1__059fcc4c-d068-4f60-be3f-d11e38b58d24.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/070316142202_ShiftedRight_Resized_1__059fcc4c-d068-4f60-be3f-d11e38b58d24.jpg",
+   "name": "070316142202_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/070316142202_ShiftedRight_Resized_1__059fcc4c-d068-4f60-be3f-d11e38b58d24.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 241533,
+   "uploaded_bytes": 241533,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/070812143126_CenterCrop_Resized_1__34891806-3530-48e1-93ed-b41aaaac8f18.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/070812143126_CenterCrop_Resized_1__34891806-3530-48e1-93ed-b41aaaac8f18.jpg",
+   "name": "070812143126_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/070812143126_CenterCrop_Resized_1__34891806-3530-48e1-93ed-b41aaaac8f18.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 158700,
+   "uploaded_bytes": 158700,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/080420143847_ShiftedLeft_Resized_1__0ef5bf9c-670d-4675-afb2-f25f761a3fb3.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/080420143847_ShiftedLeft_Resized_1__0ef5bf9c-670d-4675-afb2-f25f761a3fb3.jpg",
+   "name": "080420143847_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/080420143847_ShiftedLeft_Resized_1__0ef5bf9c-670d-4675-afb2-f25f761a3fb3.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 166224,
+   "uploaded_bytes": 166224,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/081228155135_ShiftedRight_Resized_1__843e34a6-a518-49e3-8298-5453560a9350.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/081228155135_ShiftedRight_Resized_1__843e34a6-a518-49e3-8298-5453560a9350.jpg",
+   "name": "081228155135_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/081228155135_ShiftedRight_Resized_1__843e34a6-a518-49e3-8298-5453560a9350.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 175737,
+   "uploaded_bytes": 175737,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/090314143934_CenterCrop_Resized_1__02f83bf0-f160-4375-966d-7669e6f22456.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/090314143934_CenterCrop_Resized_1__02f83bf0-f160-4375-966d-7669e6f22456.jpg",
+   "name": "090314143934_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/090314143934_CenterCrop_Resized_1__02f83bf0-f160-4375-966d-7669e6f22456.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 167976,
+   "uploaded_bytes": 167976,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/090319140659_CenterCrop_Resized_1__7c3f7e26-669b-4b15-b2aa-271a218a19b7.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/090319140659_CenterCrop_Resized_1__7c3f7e26-669b-4b15-b2aa-271a218a19b7.jpg",
+   "name": "090319140659_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/090319140659_CenterCrop_Resized_1__7c3f7e26-669b-4b15-b2aa-271a218a19b7.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 132592,
+   "uploaded_bytes": 132592,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/090320174613_ShiftedRight_Resized_1__1cd967fa-8608-4088-967f-56eb88439a40.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/090320174613_ShiftedRight_Resized_1__1cd967fa-8608-4088-967f-56eb88439a40.jpg",
+   "name": "090320174613_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/090320174613_ShiftedRight_Resized_1__1cd967fa-8608-4088-967f-56eb88439a40.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 155470,
+   "uploaded_bytes": 155470,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/090511075107_CenterCrop_Resized_1__5c40d0d8-20f1-438f-815b-04dd5f214770.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/090511075107_CenterCrop_Resized_1__5c40d0d8-20f1-438f-815b-04dd5f214770.jpg",
+   "name": "090511075107_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/090511075107_CenterCrop_Resized_1__5c40d0d8-20f1-438f-815b-04dd5f214770.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 208626,
+   "uploaded_bytes": 208626,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/090516190404_ShiftedRight_Resized_1__45b5fba3-a9dd-4708-81cd-a8039656d2ee.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/090516190404_ShiftedRight_Resized_1__45b5fba3-a9dd-4708-81cd-a8039656d2ee.jpg",
+   "name": "090516190404_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/090516190404_ShiftedRight_Resized_1__45b5fba3-a9dd-4708-81cd-a8039656d2ee.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 131514,
+   "uploaded_bytes": 131514,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/090701144739_ShiftedRight_Resized_1__7b5109e5-1e24-4826-8c1d-3b16e378f17c.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/090701144739_ShiftedRight_Resized_1__7b5109e5-1e24-4826-8c1d-3b16e378f17c.jpg",
+   "name": "090701144739_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/090701144739_ShiftedRight_Resized_1__7b5109e5-1e24-4826-8c1d-3b16e378f17c.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 183106,
+   "uploaded_bytes": 183106,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/090724133215_CenterCrop_Resized_1__994b6498-3196-408e-9317-749deb0fda3c.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/090724133215_CenterCrop_Resized_1__994b6498-3196-408e-9317-749deb0fda3c.jpg",
+   "name": "090724133215_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/090724133215_CenterCrop_Resized_1__994b6498-3196-408e-9317-749deb0fda3c.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 199977,
+   "uploaded_bytes": 199977,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/091119105646_CenterCrop_Resized_1__455e5b1b-5cf4-4908-9858-489de9b8d27d.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/091119105646_CenterCrop_Resized_1__455e5b1b-5cf4-4908-9858-489de9b8d27d.jpg",
+   "name": "091119105646_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/091119105646_CenterCrop_Resized_1__455e5b1b-5cf4-4908-9858-489de9b8d27d.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 107972,
+   "uploaded_bytes": 107972,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/100223162906_CenterCrop_Resized_1__4fb8ef94-b18a-489e-94d3-ec1daac06ca7.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/100223162906_CenterCrop_Resized_1__4fb8ef94-b18a-489e-94d3-ec1daac06ca7.jpg",
+   "name": "100223162906_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/100223162906_CenterCrop_Resized_1__4fb8ef94-b18a-489e-94d3-ec1daac06ca7.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 248566,
+   "uploaded_bytes": 248566,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/100704160524_CenterCrop_Resized_1__10f708c3-3ac9-4abd-b6a5-c13b9753b538.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/100704160524_CenterCrop_Resized_1__10f708c3-3ac9-4abd-b6a5-c13b9753b538.jpg",
+   "name": "100704160524_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/100704160524_CenterCrop_Resized_1__10f708c3-3ac9-4abd-b6a5-c13b9753b538.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 143472,
+   "uploaded_bytes": 143472,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/110206141401_ShiftedRight_Resized_1__791b6e23-9948-4a6b-95cf-b78e7d1abc74.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/110206141401_ShiftedRight_Resized_1__791b6e23-9948-4a6b-95cf-b78e7d1abc74.jpg",
+   "name": "110206141401_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/110206141401_ShiftedRight_Resized_1__791b6e23-9948-4a6b-95cf-b78e7d1abc74.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 250907,
+   "uploaded_bytes": 250907,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/110814124540_CenterCrop_Resized_1__8c47d137-d2a8-4cc2-9dd1-be08f4743189.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/110814124540_CenterCrop_Resized_1__8c47d137-d2a8-4cc2-9dd1-be08f4743189.jpg",
+   "name": "110814124540_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/110814124540_CenterCrop_Resized_1__8c47d137-d2a8-4cc2-9dd1-be08f4743189.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 144209,
+   "uploaded_bytes": 144209,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/110911180024_ShiftedLeft_Resized_1__67d4fa50-0426-4d50-a16c-dbfb2dbe19e7.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/110911180024_ShiftedLeft_Resized_1__67d4fa50-0426-4d50-a16c-dbfb2dbe19e7.jpg",
+   "name": "110911180024_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/110911180024_ShiftedLeft_Resized_1__67d4fa50-0426-4d50-a16c-dbfb2dbe19e7.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 167414,
+   "uploaded_bytes": 167414,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/190324144906_CenterCrop_Resized_1__10c441c6-c80c-4e33-920a-babb0c2c8050.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/190324144906_CenterCrop_Resized_1__10c441c6-c80c-4e33-920a-babb0c2c8050.jpg",
+   "name": "190324144906_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/190324144906_CenterCrop_Resized_1__10c441c6-c80c-4e33-920a-babb0c2c8050.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 166607,
+   "uploaded_bytes": 166607,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/anelale-najera-YIzMbA6CS7E-unsplash_ShiftedRight_Resized_1__a0367c37-3ba1-4224-9731-47efeb71c234.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/anelale-najera-YIzMbA6CS7E-unsplash_ShiftedRight_Resized_1__a0367c37-3ba1-4224-9731-47efeb71c234.jpg",
+   "name": "anelale-najera-YIzMbA6CS7E-unsplash_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/anelale-najera-YIzMbA6CS7E-unsplash_ShiftedRight_Resized_1__a0367c37-3ba1-4224-9731-47efeb71c234.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 236028,
+   "uploaded_bytes": 236028,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/anna-hunko-G5BCG3zA5jo-unsplash_CenterCrop_Resized_1__bb9e0350-f0f5-4236-bc6c-b23a4a3238c8.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/anna-hunko-G5BCG3zA5jo-unsplash_CenterCrop_Resized_1__bb9e0350-f0f5-4236-bc6c-b23a4a3238c8.jpg",
+   "name": "anna-hunko-G5BCG3zA5jo-unsplash_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/anna-hunko-G5BCG3zA5jo-unsplash_CenterCrop_Resized_1__bb9e0350-f0f5-4236-bc6c-b23a4a3238c8.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 173940,
+   "uploaded_bytes": 173940,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/architecture-3928892_1920_ShiftedLeft_Resized_1__2357da08-b410-496c-9280-682fdf966cc7.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/architecture-3928892_1920_ShiftedLeft_Resized_1__2357da08-b410-496c-9280-682fdf966cc7.jpg",
+   "name": "architecture-3928892_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/architecture-3928892_1920_ShiftedLeft_Resized_1__2357da08-b410-496c-9280-682fdf966cc7.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 202842,
+   "uploaded_bytes": 202842,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/austria-3753978_1920_ShiftedRight_Resized_1__bb41a965-0b43-4f93-b77f-294e41162b31.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/austria-3753978_1920_ShiftedRight_Resized_1__bb41a965-0b43-4f93-b77f-294e41162b31.jpg",
+   "name": "austria-3753978_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/austria-3753978_1920_ShiftedRight_Resized_1__bb41a965-0b43-4f93-b77f-294e41162b31.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 291746,
+   "uploaded_bytes": 291746,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/austria-4715481_1920_ShiftedRight_Resized_1__a219c53d-a929-4965-ab4e-3b4572c88b09.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/austria-4715481_1920_ShiftedRight_Resized_1__a219c53d-a929-4965-ab4e-3b4572c88b09.jpg",
+   "name": "austria-4715481_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/austria-4715481_1920_ShiftedRight_Resized_1__a219c53d-a929-4965-ab4e-3b4572c88b09.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 221676,
+   "uploaded_bytes": 221676,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/building-427930_1920_CenterCrop_Resized_1__a932b000-3538-4248-bad5-1c13426702a5.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/building-427930_1920_CenterCrop_Resized_1__a932b000-3538-4248-bad5-1c13426702a5.jpg",
+   "name": "building-427930_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/building-427930_1920_CenterCrop_Resized_1__a932b000-3538-4248-bad5-1c13426702a5.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 314182,
+   "uploaded_bytes": 314182,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/castle-1023455_1920_ShiftedRight_Resized_1__8722c459-a2f7-43d5-89f5-79d26f928b8c.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/castle-1023455_1920_ShiftedRight_Resized_1__8722c459-a2f7-43d5-89f5-79d26f928b8c.jpg",
+   "name": "castle-1023455_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/castle-1023455_1920_ShiftedRight_Resized_1__8722c459-a2f7-43d5-89f5-79d26f928b8c.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 169242,
+   "uploaded_bytes": 169242,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/castle-gate-3688190_1920_CenterCrop_Resized_1__6d16c2c0-24f7-494e-8973-4ae03fb56598.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/castle-gate-3688190_1920_CenterCrop_Resized_1__6d16c2c0-24f7-494e-8973-4ae03fb56598.jpg",
+   "name": "castle-gate-3688190_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/castle-gate-3688190_1920_CenterCrop_Resized_1__6d16c2c0-24f7-494e-8973-4ae03fb56598.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 167803,
+   "uploaded_bytes": 167803,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/charles-square-434569_1920_ShiftedRight_Resized_1__76f90298-957f-4543-a323-0ceb6946c16b.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/charles-square-434569_1920_ShiftedRight_Resized_1__76f90298-957f-4543-a323-0ceb6946c16b.jpg",
+   "name": "charles-square-434569_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/charles-square-434569_1920_ShiftedRight_Resized_1__76f90298-957f-4543-a323-0ceb6946c16b.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 208660,
+   "uploaded_bytes": 208660,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/dimitry-anikin-4f4PDpPEtcU-unsplash_CenterCrop_Resized_1__cacbc27b-11a1-47d9-9f98-f0907c867948.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/dimitry-anikin-4f4PDpPEtcU-unsplash_CenterCrop_Resized_1__cacbc27b-11a1-47d9-9f98-f0907c867948.jpg",
+   "name": "dimitry-anikin-4f4PDpPEtcU-unsplash_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/dimitry-anikin-4f4PDpPEtcU-unsplash_CenterCrop_Resized_1__cacbc27b-11a1-47d9-9f98-f0907c867948.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 146890,
+   "uploaded_bytes": 146890,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/dimitry-anikin-xwEW9RP8arc-unsplash_ShiftedLeft_Resized_1__7572a76a-d3a8-42fd-88df-f8f7520941a0.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/dimitry-anikin-xwEW9RP8arc-unsplash_ShiftedLeft_Resized_1__7572a76a-d3a8-42fd-88df-f8f7520941a0.jpg",
+   "name": "dimitry-anikin-xwEW9RP8arc-unsplash_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/dimitry-anikin-xwEW9RP8arc-unsplash_ShiftedLeft_Resized_1__7572a76a-d3a8-42fd-88df-f8f7520941a0.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 190277,
+   "uploaded_bytes": 190277,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/donau-city-towers-2741010_1920_CenterCrop_Resized_1__d63b6e4d-a8e5-4045-8b2d-8638a80c75bc.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/donau-city-towers-2741010_1920_CenterCrop_Resized_1__d63b6e4d-a8e5-4045-8b2d-8638a80c75bc.jpg",
+   "name": "donau-city-towers-2741010_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/donau-city-towers-2741010_1920_CenterCrop_Resized_1__d63b6e4d-a8e5-4045-8b2d-8638a80c75bc.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 143177,
+   "uploaded_bytes": 143177,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/hallstatt-2351262_1920_CenterCrop_Resized_1__b487306d-ce13-43ff-81cf-474c77b7537c.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/hallstatt-2351262_1920_CenterCrop_Resized_1__b487306d-ce13-43ff-81cf-474c77b7537c.jpg",
+   "name": "hallstatt-2351262_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/hallstatt-2351262_1920_CenterCrop_Resized_1__b487306d-ce13-43ff-81cf-474c77b7537c.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 237285,
+   "uploaded_bytes": 237285,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/innsbruck-4761198_1920_CenterCrop_Resized_1__7cc4f4c4-6d28-4927-8777-9d60b92b7a74.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/innsbruck-4761198_1920_CenterCrop_Resized_1__7cc4f4c4-6d28-4927-8777-9d60b92b7a74.jpg",
+   "name": "innsbruck-4761198_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/innsbruck-4761198_1920_CenterCrop_Resized_1__7cc4f4c4-6d28-4927-8777-9d60b92b7a74.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 267798,
+   "uploaded_bytes": 267798,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/jakominiplatz-2791423_1920_ShiftedLeft_Resized_1__351ea3fe-c31e-4eb1-b535-1518fa00a1a4.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/jakominiplatz-2791423_1920_ShiftedLeft_Resized_1__351ea3fe-c31e-4eb1-b535-1518fa00a1a4.jpg",
+   "name": "jakominiplatz-2791423_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/jakominiplatz-2791423_1920_ShiftedLeft_Resized_1__351ea3fe-c31e-4eb1-b535-1518fa00a1a4.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 284936,
+   "uploaded_bytes": 284936,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/linz-4817579_1920_ShiftedLeft_Resized_1__19614508-cb45-4d5e-8927-7a484033ab14.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/linz-4817579_1920_ShiftedLeft_Resized_1__19614508-cb45-4d5e-8927-7a484033ab14.jpg",
+   "name": "linz-4817579_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/linz-4817579_1920_ShiftedLeft_Resized_1__19614508-cb45-4d5e-8927-7a484033ab14.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 189729,
+   "uploaded_bytes": 189729,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/linz-5038984_1920_CenterCrop_Resized_1__944c7af3-c040-4bbc-9f82-bae4a94098e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/linz-5038984_1920_CenterCrop_Resized_1__944c7af3-c040-4bbc-9f82-bae4a94098e6.jpg",
+   "name": "linz-5038984_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/linz-5038984_1920_CenterCrop_Resized_1__944c7af3-c040-4bbc-9f82-bae4a94098e6.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 216389,
+   "uploaded_bytes": 216389,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/lucie-morel-mE6ARTHTmPM-unsplash_CenterCrop_Resized_1__12b7ab5c-0888-4955-bcae-c94139f356be.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/lucie-morel-mE6ARTHTmPM-unsplash_CenterCrop_Resized_1__12b7ab5c-0888-4955-bcae-c94139f356be.jpg",
+   "name": "lucie-morel-mE6ARTHTmPM-unsplash_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/lucie-morel-mE6ARTHTmPM-unsplash_CenterCrop_Resized_1__12b7ab5c-0888-4955-bcae-c94139f356be.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 183349,
+   "uploaded_bytes": 183349,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/martin-fahlander-Q4VhMnJh7zQ-unsplash_ShiftedRight_Resized_1__c7fe0ec9-a826-4d89-8bf4-f6b59abece86.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/martin-fahlander-Q4VhMnJh7zQ-unsplash_ShiftedRight_Resized_1__c7fe0ec9-a826-4d89-8bf4-f6b59abece86.jpg",
+   "name": "martin-fahlander-Q4VhMnJh7zQ-unsplash_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/martin-fahlander-Q4VhMnJh7zQ-unsplash_ShiftedRight_Resized_1__c7fe0ec9-a826-4d89-8bf4-f6b59abece86.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 227166,
+   "uploaded_bytes": 227166,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/naturehistorical-museum-2539597_1920_ShiftedRight_Resized_1__18adbddd-1169-4501-b4c1-95960c98095b.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/naturehistorical-museum-2539597_1920_ShiftedRight_Resized_1__18adbddd-1169-4501-b4c1-95960c98095b.jpg",
+   "name": "naturehistorical-museum-2539597_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/naturehistorical-museum-2539597_1920_ShiftedRight_Resized_1__18adbddd-1169-4501-b4c1-95960c98095b.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 221480,
+   "uploaded_bytes": 221480,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/opera-2536178_1920_CenterCrop_Resized_1__5cb5dfd2-7caa-4fa0-b644-aaaf444e8513.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/opera-2536178_1920_CenterCrop_Resized_1__5cb5dfd2-7caa-4fa0-b644-aaaf444e8513.jpg",
+   "name": "opera-2536178_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/opera-2536178_1920_CenterCrop_Resized_1__5cb5dfd2-7caa-4fa0-b644-aaaf444e8513.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 273890,
+   "uploaded_bytes": 273890,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/road-3117232_1920_CenterCrop_Resized_1__d8f2db87-1b59-46f1-8b92-0f0601a61928.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/road-3117232_1920_CenterCrop_Resized_1__d8f2db87-1b59-46f1-8b92-0f0601a61928.jpg",
+   "name": "road-3117232_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/road-3117232_1920_CenterCrop_Resized_1__d8f2db87-1b59-46f1-8b92-0f0601a61928.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 183273,
+   "uploaded_bytes": 183273,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/rodrigo-curi-zHKrYCRAjIM-unsplash_CenterCrop_Resized_1__6d5d0f77-5018-4d62-8f2a-96944d597f8c.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/rodrigo-curi-zHKrYCRAjIM-unsplash_CenterCrop_Resized_1__6d5d0f77-5018-4d62-8f2a-96944d597f8c.jpg",
+   "name": "rodrigo-curi-zHKrYCRAjIM-unsplash_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/rodrigo-curi-zHKrYCRAjIM-unsplash_CenterCrop_Resized_1__6d5d0f77-5018-4d62-8f2a-96944d597f8c.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 163710,
+   "uploaded_bytes": 163710,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/salzburg-842215_1920_ShiftedLeft_Resized_1__61bbf413-2a18-4bff-b281-22da1153a81a.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/salzburg-842215_1920_ShiftedLeft_Resized_1__61bbf413-2a18-4bff-b281-22da1153a81a.jpg",
+   "name": "salzburg-842215_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/salzburg-842215_1920_ShiftedLeft_Resized_1__61bbf413-2a18-4bff-b281-22da1153a81a.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 277598,
+   "uploaded_bytes": 277598,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/sargis-chilingaryan-QZMallPYvfM-unsplash_1__ShiftedLeft_Resized_1__0941e9dc-da0a-46ae-b0d4-09698a29911d.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/sargis-chilingaryan-QZMallPYvfM-unsplash_1__ShiftedLeft_Resized_1__0941e9dc-da0a-46ae-b0d4-09698a29911d.jpg",
+   "name": "sargis-chilingaryan-QZMallPYvfM-unsplash(1)_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/sargis-chilingaryan-QZMallPYvfM-unsplash_1__ShiftedLeft_Resized_1__0941e9dc-da0a-46ae-b0d4-09698a29911d.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 164321,
+   "uploaded_bytes": 164321,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/st-stephans-cathedral-2811997_1280_ShiftedLeft_Resized_1__7e764ee3-76c3-42d6-9544-6534a51fe55b.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/st-stephans-cathedral-2811997_1280_ShiftedLeft_Resized_1__7e764ee3-76c3-42d6-9544-6534a51fe55b.jpg",
+   "name": "st-stephans-cathedral-2811997_1280_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/st-stephans-cathedral-2811997_1280_ShiftedLeft_Resized_1__7e764ee3-76c3-42d6-9544-6534a51fe55b.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 185603,
+   "uploaded_bytes": 185603,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/staatsoper-4913064_1920_CenterCrop_Resized_1__0e094d6b-ba00-4eef-bce8-6cfd292c8ed9.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/staatsoper-4913064_1920_CenterCrop_Resized_1__0e094d6b-ba00-4eef-bce8-6cfd292c8ed9.jpg",
+   "name": "staatsoper-4913064_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/staatsoper-4913064_1920_CenterCrop_Resized_1__0e094d6b-ba00-4eef-bce8-6cfd292c8ed9.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 255604,
+   "uploaded_bytes": 255604,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/temple-of-theseus-85294_1920_ShiftedLeft_Resized_1__7df28f4c-9577-4dd1-bd35-a270cb555596.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/temple-of-theseus-85294_1920_ShiftedLeft_Resized_1__7df28f4c-9577-4dd1-bd35-a270cb555596.jpg",
+   "name": "temple-of-theseus-85294_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/temple-of-theseus-85294_1920_ShiftedLeft_Resized_1__7df28f4c-9577-4dd1-bd35-a270cb555596.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 151777,
+   "uploaded_bytes": 151777,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-108204_1920_ShiftedLeft_Resized_1__e07b40d8-3a0f-4525-959a-d08cd5c78720.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-108204_1920_ShiftedLeft_Resized_1__e07b40d8-3a0f-4525-959a-d08cd5c78720.jpg",
+   "name": "vienna-108204_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-108204_1920_ShiftedLeft_Resized_1__e07b40d8-3a0f-4525-959a-d08cd5c78720.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 257699,
+   "uploaded_bytes": 257699,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-108206_1920_CenterCrop_Resized_1__6c2b2c54-5fea-4a5d-ac06-cf133fb09fb4.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-108206_1920_CenterCrop_Resized_1__6c2b2c54-5fea-4a5d-ac06-cf133fb09fb4.jpg",
+   "name": "vienna-108206_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-108206_1920_CenterCrop_Resized_1__6c2b2c54-5fea-4a5d-ac06-cf133fb09fb4.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 337634,
+   "uploaded_bytes": 337634,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-1382728_1920_ShiftedLeft_Resized_1__1f495fb8-28c6-40c7-914c-f70c44dec1b5.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-1382728_1920_ShiftedLeft_Resized_1__1f495fb8-28c6-40c7-914c-f70c44dec1b5.jpg",
+   "name": "vienna-1382728_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-1382728_1920_ShiftedLeft_Resized_1__1f495fb8-28c6-40c7-914c-f70c44dec1b5.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 191455,
+   "uploaded_bytes": 191455,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-1382736_1920_ShiftedRight_Resized_1__45167da1-91a3-4dc5-82d3-567bee22e45d.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-1382736_1920_ShiftedRight_Resized_1__45167da1-91a3-4dc5-82d3-567bee22e45d.jpg",
+   "name": "vienna-1382736_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-1382736_1920_ShiftedRight_Resized_1__45167da1-91a3-4dc5-82d3-567bee22e45d.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 145334,
+   "uploaded_bytes": 145334,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-1526971_1920_CenterCrop_Resized_1__43bee2ee-faf0-4513-865d-3cfa85bdefff.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-1526971_1920_CenterCrop_Resized_1__43bee2ee-faf0-4513-865d-3cfa85bdefff.jpg",
+   "name": "vienna-1526971_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-1526971_1920_CenterCrop_Resized_1__43bee2ee-faf0-4513-865d-3cfa85bdefff.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 267310,
+   "uploaded_bytes": 267310,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-1529327_1920_CenterCrop_Resized_1__75bbdf81-8b56-4330-9909-d0bca57c8a0b.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-1529327_1920_CenterCrop_Resized_1__75bbdf81-8b56-4330-9909-d0bca57c8a0b.jpg",
+   "name": "vienna-1529327_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-1529327_1920_CenterCrop_Resized_1__75bbdf81-8b56-4330-9909-d0bca57c8a0b.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 231326,
+   "uploaded_bytes": 231326,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-178467_1920_ShiftedLeft_Resized_1__9aaa3dd9-63f9-4672-b45a-a3af8872dad7.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-178467_1920_ShiftedLeft_Resized_1__9aaa3dd9-63f9-4672-b45a-a3af8872dad7.jpg",
+   "name": "vienna-178467_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-178467_1920_ShiftedLeft_Resized_1__9aaa3dd9-63f9-4672-b45a-a3af8872dad7.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 164617,
+   "uploaded_bytes": 164617,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-187924_1920_CenterCrop_Resized_1__759ce929-7f4b-42d1-82c5-490dce34dd2d.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-187924_1920_CenterCrop_Resized_1__759ce929-7f4b-42d1-82c5-490dce34dd2d.jpg",
+   "name": "vienna-187924_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-187924_1920_CenterCrop_Resized_1__759ce929-7f4b-42d1-82c5-490dce34dd2d.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 198956,
+   "uploaded_bytes": 198956,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-228943_1920_CenterCrop_Resized_1__72f4ae2b-4a52-4462-9201-69f4d8019de3.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-228943_1920_CenterCrop_Resized_1__72f4ae2b-4a52-4462-9201-69f4d8019de3.jpg",
+   "name": "vienna-228943_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-228943_1920_CenterCrop_Resized_1__72f4ae2b-4a52-4462-9201-69f4d8019de3.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 186645,
+   "uploaded_bytes": 186645,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-2377346_1920_ShiftedRight_Resized_1__cf2f28f3-bc89-4650-9922-02949d21ae71.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-2377346_1920_ShiftedRight_Resized_1__cf2f28f3-bc89-4650-9922-02949d21ae71.jpg",
+   "name": "vienna-2377346_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-2377346_1920_ShiftedRight_Resized_1__cf2f28f3-bc89-4650-9922-02949d21ae71.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 182187,
+   "uploaded_bytes": 182187,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-2506897_1920_ShiftedLeft_Resized_1__5a313391-8df7-4616-8315-e2415e192284.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-2506897_1920_ShiftedLeft_Resized_1__5a313391-8df7-4616-8315-e2415e192284.jpg",
+   "name": "vienna-2506897_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-2506897_1920_ShiftedLeft_Resized_1__5a313391-8df7-4616-8315-e2415e192284.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 153213,
+   "uploaded_bytes": 153213,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-2506903_1920_CenterCrop_Resized_1__8736ec16-9cb8-4fae-9903-8601b3f8a7a8.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-2506903_1920_CenterCrop_Resized_1__8736ec16-9cb8-4fae-9903-8601b3f8a7a8.jpg",
+   "name": "vienna-2506903_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-2506903_1920_CenterCrop_Resized_1__8736ec16-9cb8-4fae-9903-8601b3f8a7a8.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 203217,
+   "uploaded_bytes": 203217,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-2539604_1920_ShiftedLeft_Resized_1__4828551f-5c52-45d1-8c03-4da00169d6c1.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-2539604_1920_ShiftedLeft_Resized_1__4828551f-5c52-45d1-8c03-4da00169d6c1.jpg",
+   "name": "vienna-2539604_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-2539604_1920_ShiftedLeft_Resized_1__4828551f-5c52-45d1-8c03-4da00169d6c1.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 230047,
+   "uploaded_bytes": 230047,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-2681753_1920_ShiftedLeft_Resized_1__93ecf45e-2107-48ac-bcd0-6d6d3c117df9.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-2681753_1920_ShiftedLeft_Resized_1__93ecf45e-2107-48ac-bcd0-6d6d3c117df9.jpg",
+   "name": "vienna-2681753_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-2681753_1920_ShiftedLeft_Resized_1__93ecf45e-2107-48ac-bcd0-6d6d3c117df9.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 186343,
+   "uploaded_bytes": 186343,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-3203348_1920_CenterCrop_Resized_1__3ffdeb29-e764-4ee1-9e9c-8c86e6014dde.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-3203348_1920_CenterCrop_Resized_1__3ffdeb29-e764-4ee1-9e9c-8c86e6014dde.jpg",
+   "name": "vienna-3203348_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-3203348_1920_CenterCrop_Resized_1__3ffdeb29-e764-4ee1-9e9c-8c86e6014dde.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 208472,
+   "uploaded_bytes": 208472,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-3559883_1920_ShiftedLeft_Resized_1__22f64477-1e2a-4880-817e-f4afdcf62818.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-3559883_1920_ShiftedLeft_Resized_1__22f64477-1e2a-4880-817e-f4afdcf62818.jpg",
+   "name": "vienna-3559883_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-3559883_1920_ShiftedLeft_Resized_1__22f64477-1e2a-4880-817e-f4afdcf62818.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 259513,
+   "uploaded_bytes": 259513,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-363186_1920_CenterCrop_Resized_1__713a906b-af5c-4ffd-a98f-39a6e0e1e058.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-363186_1920_CenterCrop_Resized_1__713a906b-af5c-4ffd-a98f-39a6e0e1e058.jpg",
+   "name": "vienna-363186_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-363186_1920_CenterCrop_Resized_1__713a906b-af5c-4ffd-a98f-39a6e0e1e058.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 268506,
+   "uploaded_bytes": 268506,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-3756166_1920_CenterCrop_Resized_1__ab7799a9-0242-4885-9fb1-12ff729f12a7.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-3756166_1920_CenterCrop_Resized_1__ab7799a9-0242-4885-9fb1-12ff729f12a7.jpg",
+   "name": "vienna-3756166_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-3756166_1920_CenterCrop_Resized_1__ab7799a9-0242-4885-9fb1-12ff729f12a7.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 228754,
+   "uploaded_bytes": 228754,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-3817679_1920_ShiftedRight_Resized_1__eaceb631-7eef-4eeb-ab09-ec98064b3734.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-3817679_1920_ShiftedRight_Resized_1__eaceb631-7eef-4eeb-ab09-ec98064b3734.jpg",
+   "name": "vienna-3817679_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-3817679_1920_ShiftedRight_Resized_1__eaceb631-7eef-4eeb-ab09-ec98064b3734.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 195831,
+   "uploaded_bytes": 195831,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-430031_1920_CenterCrop_Resized_1__e4d00f4e-74fa-4e29-a71d-964c973ef340.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-430031_1920_CenterCrop_Resized_1__e4d00f4e-74fa-4e29-a71d-964c973ef340.jpg",
+   "name": "vienna-430031_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-430031_1920_CenterCrop_Resized_1__e4d00f4e-74fa-4e29-a71d-964c973ef340.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 98590,
+   "uploaded_bytes": 98590,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-4646145_1920_CenterCrop_Resized_1__51163c0d-4045-492e-bc68-ced37db48d4b.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-4646145_1920_CenterCrop_Resized_1__51163c0d-4045-492e-bc68-ced37db48d4b.jpg",
+   "name": "vienna-4646145_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-4646145_1920_CenterCrop_Resized_1__51163c0d-4045-492e-bc68-ced37db48d4b.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 189897,
+   "uploaded_bytes": 189897,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-4646146_1920_ShiftedLeft_Resized_1__60e89c3a-ab03-4e32-b2d0-e6f09d9104b3.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-4646146_1920_ShiftedLeft_Resized_1__60e89c3a-ab03-4e32-b2d0-e6f09d9104b3.jpg",
+   "name": "vienna-4646146_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-4646146_1920_ShiftedLeft_Resized_1__60e89c3a-ab03-4e32-b2d0-e6f09d9104b3.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 246729,
+   "uploaded_bytes": 246729,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-4648905_1920_ShiftedRight_Resized_1__b26c5479-0948-406f-aa22-f6aeb8c0a26a.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-4648905_1920_ShiftedRight_Resized_1__b26c5479-0948-406f-aa22-f6aeb8c0a26a.jpg",
+   "name": "vienna-4648905_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-4648905_1920_ShiftedRight_Resized_1__b26c5479-0948-406f-aa22-f6aeb8c0a26a.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 232220,
+   "uploaded_bytes": 232220,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-4991937_1920_ShiftedRight_Resized_1__a9d4879a-4832-4321-9017-3147e69c31af.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-4991937_1920_ShiftedRight_Resized_1__a9d4879a-4832-4321-9017-3147e69c31af.jpg",
+   "name": "vienna-4991937_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-4991937_1920_ShiftedRight_Resized_1__a9d4879a-4832-4321-9017-3147e69c31af.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 214114,
+   "uploaded_bytes": 214114,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-5419044_1920_CenterCrop_Resized_1__b8cbf143-9184-4c56-99fc-d891e7f7c765.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-5419044_1920_CenterCrop_Resized_1__b8cbf143-9184-4c56-99fc-d891e7f7c765.jpg",
+   "name": "vienna-5419044_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-5419044_1920_CenterCrop_Resized_1__b8cbf143-9184-4c56-99fc-d891e7f7c765.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 163809,
+   "uploaded_bytes": 163809,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-5893440_1920_CenterCrop_Resized_1__3539fc9e-1e3d-485a-8abd-776b77c90bb6.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-5893440_1920_CenterCrop_Resized_1__3539fc9e-1e3d-485a-8abd-776b77c90bb6.jpg",
+   "name": "vienna-5893440_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-5893440_1920_CenterCrop_Resized_1__3539fc9e-1e3d-485a-8abd-776b77c90bb6.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 239396,
+   "uploaded_bytes": 239396,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-6018414_1920_CenterCrop_Resized_1__ea5512ef-662a-4c6e-8756-f3989f417c99.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-6018414_1920_CenterCrop_Resized_1__ea5512ef-662a-4c6e-8756-f3989f417c99.jpg",
+   "name": "vienna-6018414_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-6018414_1920_CenterCrop_Resized_1__ea5512ef-662a-4c6e-8756-f3989f417c99.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 133665,
+   "uploaded_bytes": 133665,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-843828_1920_CenterCrop_Resized_1__3a2578e2-db4e-4dc4-ac0b-8c60f51575bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-843828_1920_CenterCrop_Resized_1__3a2578e2-db4e-4dc4-ac0b-8c60f51575bf.jpg",
+   "name": "vienna-843828_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-843828_1920_CenterCrop_Resized_1__3a2578e2-db4e-4dc4-ac0b-8c60f51575bf.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 169016,
+   "uploaded_bytes": 169016,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-89386_1920_ShiftedLeft_Resized_1__d7dfc080-aeb9-44cf-afed-61864ab1e0fa.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-89386_1920_ShiftedLeft_Resized_1__d7dfc080-aeb9-44cf-afed-61864ab1e0fa.jpg",
+   "name": "vienna-89386_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-89386_1920_ShiftedLeft_Resized_1__d7dfc080-aeb9-44cf-afed-61864ab1e0fa.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 202465,
+   "uploaded_bytes": 202465,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-city-hall-944804_ShiftedRight_Resized_1__a295aaa5-ba64-4af7-b8db-76c69c201fff.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-city-hall-944804_ShiftedRight_Resized_1__a295aaa5-ba64-4af7-b8db-76c69c201fff.jpg",
+   "name": "vienna-city-hall-944804_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-city-hall-944804_ShiftedRight_Resized_1__a295aaa5-ba64-4af7-b8db-76c69c201fff.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 221360,
+   "uploaded_bytes": 221360,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-hofburg-2536175_1920_CenterCrop_Resized_1__ddd9ed90-e9d3-4d96-97f4-d8bd65cf6f0c.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-hofburg-2536175_1920_CenterCrop_Resized_1__ddd9ed90-e9d3-4d96-97f4-d8bd65cf6f0c.jpg",
+   "name": "vienna-hofburg-2536175_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-hofburg-2536175_1920_CenterCrop_Resized_1__ddd9ed90-e9d3-4d96-97f4-d8bd65cf6f0c.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 253000,
+   "uploaded_bytes": 253000,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/zhang-xiaoyu-nSlTrUHXFH4-unsplash_ShiftedLeft_Resized_1__b3672475-5427-4bf7-a789-e7635329170b.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/zhang-xiaoyu-nSlTrUHXFH4-unsplash_ShiftedLeft_Resized_1__b3672475-5427-4bf7-a789-e7635329170b.jpg",
+   "name": "zhang-xiaoyu-nSlTrUHXFH4-unsplash_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/zhang-xiaoyu-nSlTrUHXFH4-unsplash_ShiftedLeft_Resized_1__b3672475-5427-4bf7-a789-e7635329170b.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 230670,
+   "uploaded_bytes": 230670,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/061124125124_ShiftedRight_Resized_1__a90f10e2-f45b-4678-b784-4310c2bd4400.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/061124125124_ShiftedRight_Resized_1__a90f10e2-f45b-4678-b784-4310c2bd4400.jpg",
+   "name": "061124125124_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/061124125124_ShiftedRight_Resized_1__a90f10e2-f45b-4678-b784-4310c2bd4400.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 210948,
+   "uploaded_bytes": 210948,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/070306122745_CenterCrop_Resized_1__4cc88ddb-dcbc-4e01-a46a-5c8f8381e9ee.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/070306122745_CenterCrop_Resized_1__4cc88ddb-dcbc-4e01-a46a-5c8f8381e9ee.jpg",
+   "name": "070306122745_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/070306122745_CenterCrop_Resized_1__4cc88ddb-dcbc-4e01-a46a-5c8f8381e9ee.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 127893,
+   "uploaded_bytes": 127893,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/070316142202_CenterCrop_Resized_1__0409f534-b637-4247-9e1a-e0489869c3e5.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/070316142202_CenterCrop_Resized_1__0409f534-b637-4247-9e1a-e0489869c3e5.jpg",
+   "name": "070316142202_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/070316142202_CenterCrop_Resized_1__0409f534-b637-4247-9e1a-e0489869c3e5.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 226309,
+   "uploaded_bytes": 226309,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/070812143126_ShiftedRight_Resized_1__1724c747-5aba-4328-9d45-25382dff6ca7.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/070812143126_ShiftedRight_Resized_1__1724c747-5aba-4328-9d45-25382dff6ca7.jpg",
+   "name": "070812143126_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/070812143126_ShiftedRight_Resized_1__1724c747-5aba-4328-9d45-25382dff6ca7.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 152010,
+   "uploaded_bytes": 152010,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/080420143847_CenterCrop_Resized_1__ddde1b5a-7725-491c-8b0c-40e58c94fe3a.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/080420143847_CenterCrop_Resized_1__ddde1b5a-7725-491c-8b0c-40e58c94fe3a.jpg",
+   "name": "080420143847_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/080420143847_CenterCrop_Resized_1__ddde1b5a-7725-491c-8b0c-40e58c94fe3a.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 171097,
+   "uploaded_bytes": 171097,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/081228155135_CenterCrop_Resized_1__b208ed03-dc6f-42ed-b167-ccbf6d46c408.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/081228155135_CenterCrop_Resized_1__b208ed03-dc6f-42ed-b167-ccbf6d46c408.jpg",
+   "name": "081228155135_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/081228155135_CenterCrop_Resized_1__b208ed03-dc6f-42ed-b167-ccbf6d46c408.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 166843,
+   "uploaded_bytes": 166843,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/090314143934_ShiftedRight_Resized_1__692e777c-06a0-4a26-a7fe-656f80be33f8.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/090314143934_ShiftedRight_Resized_1__692e777c-06a0-4a26-a7fe-656f80be33f8.jpg",
+   "name": "090314143934_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/090314143934_ShiftedRight_Resized_1__692e777c-06a0-4a26-a7fe-656f80be33f8.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 162048,
+   "uploaded_bytes": 162048,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/090319140659_ShiftedRight_Resized_1__627b9646-fc2e-4fbe-a37e-de3d779c6980.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/090319140659_ShiftedRight_Resized_1__627b9646-fc2e-4fbe-a37e-de3d779c6980.jpg",
+   "name": "090319140659_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/090319140659_ShiftedRight_Resized_1__627b9646-fc2e-4fbe-a37e-de3d779c6980.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 144811,
+   "uploaded_bytes": 144811,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/090320174613_CenterCrop_Resized_1__698eba21-057c-414b-922d-6b2a3cd26d7c.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/090320174613_CenterCrop_Resized_1__698eba21-057c-414b-922d-6b2a3cd26d7c.jpg",
+   "name": "090320174613_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/090320174613_CenterCrop_Resized_1__698eba21-057c-414b-922d-6b2a3cd26d7c.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 157402,
+   "uploaded_bytes": 157402,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/090511075107_ShiftedLeft_Resized_1__9a90ede3-012e-4e3b-8179-d48dee52346d.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/090511075107_ShiftedLeft_Resized_1__9a90ede3-012e-4e3b-8179-d48dee52346d.jpg",
+   "name": "090511075107_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/090511075107_ShiftedLeft_Resized_1__9a90ede3-012e-4e3b-8179-d48dee52346d.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 205626,
+   "uploaded_bytes": 205626,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/090516190404_CenterCrop_Resized_1__a519f090-532f-4c95-bec5-353680b882f1.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/090516190404_CenterCrop_Resized_1__a519f090-532f-4c95-bec5-353680b882f1.jpg",
+   "name": "090516190404_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/090516190404_CenterCrop_Resized_1__a519f090-532f-4c95-bec5-353680b882f1.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 122004,
+   "uploaded_bytes": 122004,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/090701144739_CenterCrop_Resized_1__7ec2134b-0d56-49fb-b227-553ceb4ad519.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/090701144739_CenterCrop_Resized_1__7ec2134b-0d56-49fb-b227-553ceb4ad519.jpg",
+   "name": "090701144739_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/090701144739_CenterCrop_Resized_1__7ec2134b-0d56-49fb-b227-553ceb4ad519.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 183310,
+   "uploaded_bytes": 183310,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/090724133215_ShiftedRight_Resized_1__2fde868d-8281-4b53-8d1d-fe5e6d8d14e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/090724133215_ShiftedRight_Resized_1__2fde868d-8281-4b53-8d1d-fe5e6d8d14e6.jpg",
+   "name": "090724133215_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/090724133215_ShiftedRight_Resized_1__2fde868d-8281-4b53-8d1d-fe5e6d8d14e6.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 200211,
+   "uploaded_bytes": 200211,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/091119105646_ShiftedLeft_Resized_1__7ffd941b-2591-48a9-be4c-0183d0817b48.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/091119105646_ShiftedLeft_Resized_1__7ffd941b-2591-48a9-be4c-0183d0817b48.jpg",
+   "name": "091119105646_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/091119105646_ShiftedLeft_Resized_1__7ffd941b-2591-48a9-be4c-0183d0817b48.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 132112,
+   "uploaded_bytes": 132112,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/100223162906_ShiftedRight_Resized_1__a106b523-148f-40c1-8669-bdb1f80027af.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/100223162906_ShiftedRight_Resized_1__a106b523-148f-40c1-8669-bdb1f80027af.jpg",
+   "name": "100223162906_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/100223162906_ShiftedRight_Resized_1__a106b523-148f-40c1-8669-bdb1f80027af.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 241217,
+   "uploaded_bytes": 241217,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/100704160524_ShiftedLeft_Resized_1__68993f7d-e5f1-48e2-98e4-80329c581961.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/100704160524_ShiftedLeft_Resized_1__68993f7d-e5f1-48e2-98e4-80329c581961.jpg",
+   "name": "100704160524_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/100704160524_ShiftedLeft_Resized_1__68993f7d-e5f1-48e2-98e4-80329c581961.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 132871,
+   "uploaded_bytes": 132871,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/110206141401_CenterCrop_Resized_1__b0067c59-3a71-4095-81d3-63ff80ee7b8e.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/110206141401_CenterCrop_Resized_1__b0067c59-3a71-4095-81d3-63ff80ee7b8e.jpg",
+   "name": "110206141401_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/110206141401_CenterCrop_Resized_1__b0067c59-3a71-4095-81d3-63ff80ee7b8e.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 246084,
+   "uploaded_bytes": 246084,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/110814124540_ShiftedRight_Resized_1__425d1805-a32c-4e30-a20a-19cd6467fbfb.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/110814124540_ShiftedRight_Resized_1__425d1805-a32c-4e30-a20a-19cd6467fbfb.jpg",
+   "name": "110814124540_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/110814124540_ShiftedRight_Resized_1__425d1805-a32c-4e30-a20a-19cd6467fbfb.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 134925,
+   "uploaded_bytes": 134925,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/110911180024_CenterCrop_Resized_1__6ec2a317-e5c1-4f8b-be66-7e16ae71629b.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/110911180024_CenterCrop_Resized_1__6ec2a317-e5c1-4f8b-be66-7e16ae71629b.jpg",
+   "name": "110911180024_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/110911180024_CenterCrop_Resized_1__6ec2a317-e5c1-4f8b-be66-7e16ae71629b.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 166057,
+   "uploaded_bytes": 166057,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/190324144906_ShiftedRight_Resized_1__37502838-cc3c-400b-9468-c76241f9c23b.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/190324144906_ShiftedRight_Resized_1__37502838-cc3c-400b-9468-c76241f9c23b.jpg",
+   "name": "190324144906_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/190324144906_ShiftedRight_Resized_1__37502838-cc3c-400b-9468-c76241f9c23b.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 176330,
+   "uploaded_bytes": 176330,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/anelale-najera-YIzMbA6CS7E-unsplash_CenterCrop_Resized_1__6e34a124-4169-4099-8585-12dfc41d032e.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/anelale-najera-YIzMbA6CS7E-unsplash_CenterCrop_Resized_1__6e34a124-4169-4099-8585-12dfc41d032e.jpg",
+   "name": "anelale-najera-YIzMbA6CS7E-unsplash_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/anelale-najera-YIzMbA6CS7E-unsplash_CenterCrop_Resized_1__6e34a124-4169-4099-8585-12dfc41d032e.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 237553,
+   "uploaded_bytes": 237553,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/anna-hunko-G5BCG3zA5jo-unsplash_ShiftedRight_Resized_1__36e6008d-2c01-4fca-a684-0777ea5fcfdf.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/anna-hunko-G5BCG3zA5jo-unsplash_ShiftedRight_Resized_1__36e6008d-2c01-4fca-a684-0777ea5fcfdf.jpg",
+   "name": "anna-hunko-G5BCG3zA5jo-unsplash_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/anna-hunko-G5BCG3zA5jo-unsplash_ShiftedRight_Resized_1__36e6008d-2c01-4fca-a684-0777ea5fcfdf.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 171209,
+   "uploaded_bytes": 171209,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/architecture-3928892_1920_CenterCrop_Resized_1__f8940cee-e5e0-47e0-b57d-d5a567e890b3.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/architecture-3928892_1920_CenterCrop_Resized_1__f8940cee-e5e0-47e0-b57d-d5a567e890b3.jpg",
+   "name": "architecture-3928892_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/architecture-3928892_1920_CenterCrop_Resized_1__f8940cee-e5e0-47e0-b57d-d5a567e890b3.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 186819,
+   "uploaded_bytes": 186819,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/austria-3753978_1920_CenterCrop_Resized_1__ffd4a906-8dce-4793-8a9b-b68567078c4b.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/austria-3753978_1920_CenterCrop_Resized_1__ffd4a906-8dce-4793-8a9b-b68567078c4b.jpg",
+   "name": "austria-3753978_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/austria-3753978_1920_CenterCrop_Resized_1__ffd4a906-8dce-4793-8a9b-b68567078c4b.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 282877,
+   "uploaded_bytes": 282877,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/austria-4715481_1920_CenterCrop_Resized_1__ac692323-3811-4ebd-ba92-3a914d3fb607.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/austria-4715481_1920_CenterCrop_Resized_1__ac692323-3811-4ebd-ba92-3a914d3fb607.jpg",
+   "name": "austria-4715481_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/austria-4715481_1920_CenterCrop_Resized_1__ac692323-3811-4ebd-ba92-3a914d3fb607.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 230518,
+   "uploaded_bytes": 230518,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/building-427930_1920_ShiftedRight_Resized_1__8a0ca2d2-24a3-4ab8-a663-8b4c0db143cb.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/building-427930_1920_ShiftedRight_Resized_1__8a0ca2d2-24a3-4ab8-a663-8b4c0db143cb.jpg",
+   "name": "building-427930_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/building-427930_1920_ShiftedRight_Resized_1__8a0ca2d2-24a3-4ab8-a663-8b4c0db143cb.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 325861,
+   "uploaded_bytes": 325861,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/castle-1023455_1920_CenterCrop_Resized_1__669e8927-7642-41f9-a113-52dc10daf3c2.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/castle-1023455_1920_CenterCrop_Resized_1__669e8927-7642-41f9-a113-52dc10daf3c2.jpg",
+   "name": "castle-1023455_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/castle-1023455_1920_CenterCrop_Resized_1__669e8927-7642-41f9-a113-52dc10daf3c2.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 172161,
+   "uploaded_bytes": 172161,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/castle-gate-3688190_1920_ShiftedLeft_Resized_1__aa4e67df-ed7d-4a4c-ab1a-c94c344da6ba.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/castle-gate-3688190_1920_ShiftedLeft_Resized_1__aa4e67df-ed7d-4a4c-ab1a-c94c344da6ba.jpg",
+   "name": "castle-gate-3688190_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/castle-gate-3688190_1920_ShiftedLeft_Resized_1__aa4e67df-ed7d-4a4c-ab1a-c94c344da6ba.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 164023,
+   "uploaded_bytes": 164023,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/charles-square-434569_1920_CenterCrop_Resized_1__e005c544-baed-4336-9e0d-36743dfc60dd.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/charles-square-434569_1920_CenterCrop_Resized_1__e005c544-baed-4336-9e0d-36743dfc60dd.jpg",
+   "name": "charles-square-434569_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/charles-square-434569_1920_CenterCrop_Resized_1__e005c544-baed-4336-9e0d-36743dfc60dd.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 197327,
+   "uploaded_bytes": 197327,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/dimitry-anikin-4f4PDpPEtcU-unsplash_ShiftedLeft_Resized_1__98d0ad79-10c0-4fba-b2f2-a051293b288c.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/dimitry-anikin-4f4PDpPEtcU-unsplash_ShiftedLeft_Resized_1__98d0ad79-10c0-4fba-b2f2-a051293b288c.jpg",
+   "name": "dimitry-anikin-4f4PDpPEtcU-unsplash_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/dimitry-anikin-4f4PDpPEtcU-unsplash_ShiftedLeft_Resized_1__98d0ad79-10c0-4fba-b2f2-a051293b288c.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 145820,
+   "uploaded_bytes": 145820,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/dimitry-anikin-xwEW9RP8arc-unsplash_CenterCrop_Resized_1__870f075a-ea50-438c-bf24-1c78ba75d544.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/dimitry-anikin-xwEW9RP8arc-unsplash_CenterCrop_Resized_1__870f075a-ea50-438c-bf24-1c78ba75d544.jpg",
+   "name": "dimitry-anikin-xwEW9RP8arc-unsplash_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/dimitry-anikin-xwEW9RP8arc-unsplash_CenterCrop_Resized_1__870f075a-ea50-438c-bf24-1c78ba75d544.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 192361,
+   "uploaded_bytes": 192361,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/donau-city-towers-2741010_1920_ShiftedLeft_Resized_1__9309eb0a-091f-4c35-88f9-e31dd621fb59.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/donau-city-towers-2741010_1920_ShiftedLeft_Resized_1__9309eb0a-091f-4c35-88f9-e31dd621fb59.jpg",
+   "name": "donau-city-towers-2741010_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/donau-city-towers-2741010_1920_ShiftedLeft_Resized_1__9309eb0a-091f-4c35-88f9-e31dd621fb59.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 139221,
+   "uploaded_bytes": 139221,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/hallstatt-2351262_1920_ShiftedLeft_Resized_1__b0484a6b-3493-46e7-8ec8-8f3f22a598df.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/hallstatt-2351262_1920_ShiftedLeft_Resized_1__b0484a6b-3493-46e7-8ec8-8f3f22a598df.jpg",
+   "name": "hallstatt-2351262_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/hallstatt-2351262_1920_ShiftedLeft_Resized_1__b0484a6b-3493-46e7-8ec8-8f3f22a598df.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 217602,
+   "uploaded_bytes": 217602,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/innsbruck-4761198_1920_ShiftedLeft_Resized_1__12886659-4f88-4e69-bfbd-504e93b8a045.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/innsbruck-4761198_1920_ShiftedLeft_Resized_1__12886659-4f88-4e69-bfbd-504e93b8a045.jpg",
+   "name": "innsbruck-4761198_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/innsbruck-4761198_1920_ShiftedLeft_Resized_1__12886659-4f88-4e69-bfbd-504e93b8a045.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 260586,
+   "uploaded_bytes": 260586,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/jakominiplatz-2791423_1920_CenterCrop_Resized_1__be7f962b-334e-42b7-a2ea-9d8d3043e9ba.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/jakominiplatz-2791423_1920_CenterCrop_Resized_1__be7f962b-334e-42b7-a2ea-9d8d3043e9ba.jpg",
+   "name": "jakominiplatz-2791423_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/jakominiplatz-2791423_1920_CenterCrop_Resized_1__be7f962b-334e-42b7-a2ea-9d8d3043e9ba.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 291313,
+   "uploaded_bytes": 291313,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/linz-4817579_1920_CenterCrop_Resized_1__a5b0f769-ccbf-4711-ad44-055b87d151ef.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/linz-4817579_1920_CenterCrop_Resized_1__a5b0f769-ccbf-4711-ad44-055b87d151ef.jpg",
+   "name": "linz-4817579_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/linz-4817579_1920_CenterCrop_Resized_1__a5b0f769-ccbf-4711-ad44-055b87d151ef.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 192361,
+   "uploaded_bytes": 192361,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/linz-5038984_1920_ShiftedRight_Resized_1__0d94b3cd-35b6-48ec-ae30-1abbe56ff211.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/linz-5038984_1920_ShiftedRight_Resized_1__0d94b3cd-35b6-48ec-ae30-1abbe56ff211.jpg",
+   "name": "linz-5038984_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/linz-5038984_1920_ShiftedRight_Resized_1__0d94b3cd-35b6-48ec-ae30-1abbe56ff211.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 215761,
+   "uploaded_bytes": 215761,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/lucie-morel-mE6ARTHTmPM-unsplash_ShiftedRight_Resized_1__78073d08-de7f-4cf4-a4ba-2090b1eb4b89.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/lucie-morel-mE6ARTHTmPM-unsplash_ShiftedRight_Resized_1__78073d08-de7f-4cf4-a4ba-2090b1eb4b89.jpg",
+   "name": "lucie-morel-mE6ARTHTmPM-unsplash_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/lucie-morel-mE6ARTHTmPM-unsplash_ShiftedRight_Resized_1__78073d08-de7f-4cf4-a4ba-2090b1eb4b89.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 182655,
+   "uploaded_bytes": 182655,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/martin-fahlander-Q4VhMnJh7zQ-unsplash_CenterCrop_Resized_1__7128a654-d083-428e-aaea-20615db90f1e.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/martin-fahlander-Q4VhMnJh7zQ-unsplash_CenterCrop_Resized_1__7128a654-d083-428e-aaea-20615db90f1e.jpg",
+   "name": "martin-fahlander-Q4VhMnJh7zQ-unsplash_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/martin-fahlander-Q4VhMnJh7zQ-unsplash_CenterCrop_Resized_1__7128a654-d083-428e-aaea-20615db90f1e.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 225944,
+   "uploaded_bytes": 225944,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/naturehistorical-museum-2539597_1920_CenterCrop_Resized_1__e2d1ba0e-e3c4-4394-a1f7-7723da870943.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/naturehistorical-museum-2539597_1920_CenterCrop_Resized_1__e2d1ba0e-e3c4-4394-a1f7-7723da870943.jpg",
+   "name": "naturehistorical-museum-2539597_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/naturehistorical-museum-2539597_1920_CenterCrop_Resized_1__e2d1ba0e-e3c4-4394-a1f7-7723da870943.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 225953,
+   "uploaded_bytes": 225953,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/opera-2536178_1920_ShiftedLeft_Resized_1__63e16303-3b8c-4f6b-9d9b-e2b9b320ee36.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/opera-2536178_1920_ShiftedLeft_Resized_1__63e16303-3b8c-4f6b-9d9b-e2b9b320ee36.jpg",
+   "name": "opera-2536178_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/opera-2536178_1920_ShiftedLeft_Resized_1__63e16303-3b8c-4f6b-9d9b-e2b9b320ee36.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 262584,
+   "uploaded_bytes": 262584,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/road-3117232_1920_ShiftedLeft_Resized_1__62203600-76dc-41fc-bed7-9948ac8caf8a.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/road-3117232_1920_ShiftedLeft_Resized_1__62203600-76dc-41fc-bed7-9948ac8caf8a.jpg",
+   "name": "road-3117232_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/road-3117232_1920_ShiftedLeft_Resized_1__62203600-76dc-41fc-bed7-9948ac8caf8a.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 181353,
+   "uploaded_bytes": 181353,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/rodrigo-curi-zHKrYCRAjIM-unsplash_ShiftedLeft_Resized_1__5c70b3dd-4493-46d1-8c06-28fc14dc7048.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/rodrigo-curi-zHKrYCRAjIM-unsplash_ShiftedLeft_Resized_1__5c70b3dd-4493-46d1-8c06-28fc14dc7048.jpg",
+   "name": "rodrigo-curi-zHKrYCRAjIM-unsplash_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/rodrigo-curi-zHKrYCRAjIM-unsplash_ShiftedLeft_Resized_1__5c70b3dd-4493-46d1-8c06-28fc14dc7048.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 169847,
+   "uploaded_bytes": 169847,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/salzburg-842215_1920_CenterCrop_Resized_1__569687a4-367b-41e7-8edd-3d41b6f1a4cd.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/salzburg-842215_1920_CenterCrop_Resized_1__569687a4-367b-41e7-8edd-3d41b6f1a4cd.jpg",
+   "name": "salzburg-842215_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/salzburg-842215_1920_CenterCrop_Resized_1__569687a4-367b-41e7-8edd-3d41b6f1a4cd.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 291017,
+   "uploaded_bytes": 291017,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/sargis-chilingaryan-QZMallPYvfM-unsplash_1__CenterCrop_Resized_1__7bdb28ee-cc4d-4bfb-8ad2-d2b23bcc8808.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/sargis-chilingaryan-QZMallPYvfM-unsplash_1__CenterCrop_Resized_1__7bdb28ee-cc4d-4bfb-8ad2-d2b23bcc8808.jpg",
+   "name": "sargis-chilingaryan-QZMallPYvfM-unsplash(1)_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/sargis-chilingaryan-QZMallPYvfM-unsplash_1__CenterCrop_Resized_1__7bdb28ee-cc4d-4bfb-8ad2-d2b23bcc8808.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 161461,
+   "uploaded_bytes": 161461,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/st-stephans-cathedral-2811997_1280_CenterCrop_Resized_1__5be61097-0d29-414e-a7c7-689cff24b727.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/st-stephans-cathedral-2811997_1280_CenterCrop_Resized_1__5be61097-0d29-414e-a7c7-689cff24b727.jpg",
+   "name": "st-stephans-cathedral-2811997_1280_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/st-stephans-cathedral-2811997_1280_CenterCrop_Resized_1__5be61097-0d29-414e-a7c7-689cff24b727.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 184611,
+   "uploaded_bytes": 184611,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/staatsoper-4913064_1920_ShiftedLeft_Resized_1__71afb596-beb0-469f-b8b8-dd69daf8efb3.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/staatsoper-4913064_1920_ShiftedLeft_Resized_1__71afb596-beb0-469f-b8b8-dd69daf8efb3.jpg",
+   "name": "staatsoper-4913064_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/staatsoper-4913064_1920_ShiftedLeft_Resized_1__71afb596-beb0-469f-b8b8-dd69daf8efb3.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 247415,
+   "uploaded_bytes": 247415,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/temple-of-theseus-85294_1920_CenterCrop_Resized_1__3a25ce13-1422-4b18-9ba7-f17c7cb06b16.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/temple-of-theseus-85294_1920_CenterCrop_Resized_1__3a25ce13-1422-4b18-9ba7-f17c7cb06b16.jpg",
+   "name": "temple-of-theseus-85294_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/temple-of-theseus-85294_1920_CenterCrop_Resized_1__3a25ce13-1422-4b18-9ba7-f17c7cb06b16.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 149974,
+   "uploaded_bytes": 149974,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-108204_1920_CenterCrop_Resized_1__088be450-4050-4bfc-adac-af5501969209.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-108204_1920_CenterCrop_Resized_1__088be450-4050-4bfc-adac-af5501969209.jpg",
+   "name": "vienna-108204_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-108204_1920_CenterCrop_Resized_1__088be450-4050-4bfc-adac-af5501969209.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 258675,
+   "uploaded_bytes": 258675,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-108206_1920_ShiftedRight_Resized_1__49931ae9-4e3e-431b-9eb3-1a21dd0f7604.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-108206_1920_ShiftedRight_Resized_1__49931ae9-4e3e-431b-9eb3-1a21dd0f7604.jpg",
+   "name": "vienna-108206_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-108206_1920_ShiftedRight_Resized_1__49931ae9-4e3e-431b-9eb3-1a21dd0f7604.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 338565,
+   "uploaded_bytes": 338565,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-1382728_1920_CenterCrop_Resized_1__37f93c06-626b-452d-a674-fb80300b176f.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-1382728_1920_CenterCrop_Resized_1__37f93c06-626b-452d-a674-fb80300b176f.jpg",
+   "name": "vienna-1382728_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-1382728_1920_CenterCrop_Resized_1__37f93c06-626b-452d-a674-fb80300b176f.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 198254,
+   "uploaded_bytes": 198254,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-1382736_1920_CenterCrop_Resized_1__337d5cde-897e-4dc6-9ed7-90ce8f24922b.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-1382736_1920_CenterCrop_Resized_1__337d5cde-897e-4dc6-9ed7-90ce8f24922b.jpg",
+   "name": "vienna-1382736_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-1382736_1920_CenterCrop_Resized_1__337d5cde-897e-4dc6-9ed7-90ce8f24922b.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 144653,
+   "uploaded_bytes": 144653,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-1526971_1920_ShiftedRight_Resized_1__a26dc73d-0d71-4f64-8b36-c756f3cef7d0.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-1526971_1920_ShiftedRight_Resized_1__a26dc73d-0d71-4f64-8b36-c756f3cef7d0.jpg",
+   "name": "vienna-1526971_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-1526971_1920_ShiftedRight_Resized_1__a26dc73d-0d71-4f64-8b36-c756f3cef7d0.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 266418,
+   "uploaded_bytes": 266418,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-1529327_1920_ShiftedRight_Resized_1__7fa5780a-0a7e-4df5-8748-27e5fe0ae9a2.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-1529327_1920_ShiftedRight_Resized_1__7fa5780a-0a7e-4df5-8748-27e5fe0ae9a2.jpg",
+   "name": "vienna-1529327_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-1529327_1920_ShiftedRight_Resized_1__7fa5780a-0a7e-4df5-8748-27e5fe0ae9a2.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 230471,
+   "uploaded_bytes": 230471,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-178467_1920_CenterCrop_Resized_1__ef6386a5-ecb0-4c3c-8a6c-77ed27c3bf95.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-178467_1920_CenterCrop_Resized_1__ef6386a5-ecb0-4c3c-8a6c-77ed27c3bf95.jpg",
+   "name": "vienna-178467_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-178467_1920_CenterCrop_Resized_1__ef6386a5-ecb0-4c3c-8a6c-77ed27c3bf95.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 162639,
+   "uploaded_bytes": 162639,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-187924_1920_ShiftedRight_Resized_1__074ce8d2-048b-48d3-bede-8a82c3a0911b.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-187924_1920_ShiftedRight_Resized_1__074ce8d2-048b-48d3-bede-8a82c3a0911b.jpg",
+   "name": "vienna-187924_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-187924_1920_ShiftedRight_Resized_1__074ce8d2-048b-48d3-bede-8a82c3a0911b.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 195969,
+   "uploaded_bytes": 195969,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-228943_1920_ShiftedLeft_Resized_1__eaedf7b1-1938-4abd-ba9a-edd051b246ce.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-228943_1920_ShiftedLeft_Resized_1__eaedf7b1-1938-4abd-ba9a-edd051b246ce.jpg",
+   "name": "vienna-228943_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-228943_1920_ShiftedLeft_Resized_1__eaedf7b1-1938-4abd-ba9a-edd051b246ce.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 189350,
+   "uploaded_bytes": 189350,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-2377346_1920_CenterCrop_Resized_1__575482fa-5981-4876-b491-c4440b43ce6b.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-2377346_1920_CenterCrop_Resized_1__575482fa-5981-4876-b491-c4440b43ce6b.jpg",
+   "name": "vienna-2377346_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-2377346_1920_CenterCrop_Resized_1__575482fa-5981-4876-b491-c4440b43ce6b.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 186853,
+   "uploaded_bytes": 186853,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-2506897_1920_CenterCrop_Resized_1__831da77a-68af-4ffa-b5e6-db55e837e189.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-2506897_1920_CenterCrop_Resized_1__831da77a-68af-4ffa-b5e6-db55e837e189.jpg",
+   "name": "vienna-2506897_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-2506897_1920_CenterCrop_Resized_1__831da77a-68af-4ffa-b5e6-db55e837e189.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 150445,
+   "uploaded_bytes": 150445,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-2506903_1920_ShiftedLeft_Resized_1__c3237f83-c5be-4293-92ce-3527c50b811f.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-2506903_1920_ShiftedLeft_Resized_1__c3237f83-c5be-4293-92ce-3527c50b811f.jpg",
+   "name": "vienna-2506903_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-2506903_1920_ShiftedLeft_Resized_1__c3237f83-c5be-4293-92ce-3527c50b811f.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 191052,
+   "uploaded_bytes": 191052,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-2539604_1920_CenterCrop_Resized_1__eeac0979-bec5-40f7-a054-c00a6307ebf8.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-2539604_1920_CenterCrop_Resized_1__eeac0979-bec5-40f7-a054-c00a6307ebf8.jpg",
+   "name": "vienna-2539604_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-2539604_1920_CenterCrop_Resized_1__eeac0979-bec5-40f7-a054-c00a6307ebf8.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 240348,
+   "uploaded_bytes": 240348,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-2681753_1920_CenterCrop_Resized_1__d14d7e0a-6f11-4ef6-b8fe-5dc0d5ba01c3.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-2681753_1920_CenterCrop_Resized_1__d14d7e0a-6f11-4ef6-b8fe-5dc0d5ba01c3.jpg",
+   "name": "vienna-2681753_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-2681753_1920_CenterCrop_Resized_1__d14d7e0a-6f11-4ef6-b8fe-5dc0d5ba01c3.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 181182,
+   "uploaded_bytes": 181182,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-3203348_1920_ShiftedRight_Resized_1__cb47eff3-6a04-430f-93fa-c4501bcf49f9.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-3203348_1920_ShiftedRight_Resized_1__cb47eff3-6a04-430f-93fa-c4501bcf49f9.jpg",
+   "name": "vienna-3203348_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-3203348_1920_ShiftedRight_Resized_1__cb47eff3-6a04-430f-93fa-c4501bcf49f9.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 205662,
+   "uploaded_bytes": 205662,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-3559883_1920_CenterCrop_Resized_1__ac6fb7b2-2dff-45e4-b1b3-59ebb0302be9.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-3559883_1920_CenterCrop_Resized_1__ac6fb7b2-2dff-45e4-b1b3-59ebb0302be9.jpg",
+   "name": "vienna-3559883_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-3559883_1920_CenterCrop_Resized_1__ac6fb7b2-2dff-45e4-b1b3-59ebb0302be9.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 257265,
+   "uploaded_bytes": 257265,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-363186_1920_ShiftedLeft_Resized_1__da6f9fb5-47d4-4379-906d-3189a7275be6.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-363186_1920_ShiftedLeft_Resized_1__da6f9fb5-47d4-4379-906d-3189a7275be6.jpg",
+   "name": "vienna-363186_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-363186_1920_ShiftedLeft_Resized_1__da6f9fb5-47d4-4379-906d-3189a7275be6.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 268929,
+   "uploaded_bytes": 268929,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-3756166_1920_ShiftedRight_Resized_1__659aff3a-f780-4cd1-95f1-f2e595365c22.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-3756166_1920_ShiftedRight_Resized_1__659aff3a-f780-4cd1-95f1-f2e595365c22.jpg",
+   "name": "vienna-3756166_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-3756166_1920_ShiftedRight_Resized_1__659aff3a-f780-4cd1-95f1-f2e595365c22.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 225933,
+   "uploaded_bytes": 225933,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-3817679_1920_CenterCrop_Resized_1__922dfbe5-7df1-4ab7-8b33-c45786a40d57.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-3817679_1920_CenterCrop_Resized_1__922dfbe5-7df1-4ab7-8b33-c45786a40d57.jpg",
+   "name": "vienna-3817679_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-3817679_1920_CenterCrop_Resized_1__922dfbe5-7df1-4ab7-8b33-c45786a40d57.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 204222,
+   "uploaded_bytes": 204222,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-430031_1920_ShiftedLeft_Resized_1__e1174995-5eae-45fc-83b6-36d79d7c4b47.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-430031_1920_ShiftedLeft_Resized_1__e1174995-5eae-45fc-83b6-36d79d7c4b47.jpg",
+   "name": "vienna-430031_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-430031_1920_ShiftedLeft_Resized_1__e1174995-5eae-45fc-83b6-36d79d7c4b47.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 96885,
+   "uploaded_bytes": 96885,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-4646145_1920_ShiftedLeft_Resized_1__7ad0530c-8a54-4644-aae6-8f1d1c5a97bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-4646145_1920_ShiftedLeft_Resized_1__7ad0530c-8a54-4644-aae6-8f1d1c5a97bf.jpg",
+   "name": "vienna-4646145_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-4646145_1920_ShiftedLeft_Resized_1__7ad0530c-8a54-4644-aae6-8f1d1c5a97bf.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 182390,
+   "uploaded_bytes": 182390,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-4646146_1920_CenterCrop_Resized_1__109dbf4b-20b5-46ce-a41f-bd30d474e31a.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-4646146_1920_CenterCrop_Resized_1__109dbf4b-20b5-46ce-a41f-bd30d474e31a.jpg",
+   "name": "vienna-4646146_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-4646146_1920_CenterCrop_Resized_1__109dbf4b-20b5-46ce-a41f-bd30d474e31a.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 244975,
+   "uploaded_bytes": 244975,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-4648905_1920_CenterCrop_Resized_1__31fcb750-5033-4cb6-ab0e-109989e52da3.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-4648905_1920_CenterCrop_Resized_1__31fcb750-5033-4cb6-ab0e-109989e52da3.jpg",
+   "name": "vienna-4648905_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-4648905_1920_CenterCrop_Resized_1__31fcb750-5033-4cb6-ab0e-109989e52da3.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 235077,
+   "uploaded_bytes": 235077,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-4991937_1920_CenterCrop_Resized_1__47b262ff-d49d-47cc-8945-7e070dc9df81.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-4991937_1920_CenterCrop_Resized_1__47b262ff-d49d-47cc-8945-7e070dc9df81.jpg",
+   "name": "vienna-4991937_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-4991937_1920_CenterCrop_Resized_1__47b262ff-d49d-47cc-8945-7e070dc9df81.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 215559,
+   "uploaded_bytes": 215559,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-5419044_1920_ShiftedRight_Resized_1__21bb1467-67da-460d-84a9-81df3231edc5.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-5419044_1920_ShiftedRight_Resized_1__21bb1467-67da-460d-84a9-81df3231edc5.jpg",
+   "name": "vienna-5419044_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-5419044_1920_ShiftedRight_Resized_1__21bb1467-67da-460d-84a9-81df3231edc5.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 163998,
+   "uploaded_bytes": 163998,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-5893440_1920_ShiftedLeft_Resized_1__f239f987-dd50-441a-a3b8-d24fcf854fc2.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-5893440_1920_ShiftedLeft_Resized_1__f239f987-dd50-441a-a3b8-d24fcf854fc2.jpg",
+   "name": "vienna-5893440_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-5893440_1920_ShiftedLeft_Resized_1__f239f987-dd50-441a-a3b8-d24fcf854fc2.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 252812,
+   "uploaded_bytes": 252812,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-6018414_1920_ShiftedLeft_Resized_1__c7fe0f8c-6d6d-4459-a8df-789ae1dc7cbc.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-6018414_1920_ShiftedLeft_Resized_1__c7fe0f8c-6d6d-4459-a8df-789ae1dc7cbc.jpg",
+   "name": "vienna-6018414_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-6018414_1920_ShiftedLeft_Resized_1__c7fe0f8c-6d6d-4459-a8df-789ae1dc7cbc.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 134206,
+   "uploaded_bytes": 134206,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-843828_1920_ShiftedRight_Resized_1__7fb82fa0-1f43-4b0a-934b-e131dbacea11.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-843828_1920_ShiftedRight_Resized_1__7fb82fa0-1f43-4b0a-934b-e131dbacea11.jpg",
+   "name": "vienna-843828_1920_ShiftedRight_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-843828_1920_ShiftedRight_Resized_1__7fb82fa0-1f43-4b0a-934b-e131dbacea11.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 166410,
+   "uploaded_bytes": 166410,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-89386_1920_CenterCrop_Resized_1__98107dae-6834-4c35-ae36-aaf450e88d0e.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-89386_1920_CenterCrop_Resized_1__98107dae-6834-4c35-ae36-aaf450e88d0e.jpg",
+   "name": "vienna-89386_1920_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-89386_1920_CenterCrop_Resized_1__98107dae-6834-4c35-ae36-aaf450e88d0e.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 202819,
+   "uploaded_bytes": 202819,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-city-hall-944804_CenterCrop_Resized_1__8b967016-6ff6-4151-b109-8555e47feef6.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-city-hall-944804_CenterCrop_Resized_1__8b967016-6ff6-4151-b109-8555e47feef6.jpg",
+   "name": "vienna-city-hall-944804_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-city-hall-944804_CenterCrop_Resized_1__8b967016-6ff6-4151-b109-8555e47feef6.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 202371,
+   "uploaded_bytes": 202371,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/vienna-hofburg-2536175_1920_ShiftedLeft_Resized_1__27fa2c49-1492-48ed-80ab-b9c79aa08e73.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/vienna-hofburg-2536175_1920_ShiftedLeft_Resized_1__27fa2c49-1492-48ed-80ab-b9c79aa08e73.jpg",
+   "name": "vienna-hofburg-2536175_1920_ShiftedLeft_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/vienna-hofburg-2536175_1920_ShiftedLeft_Resized_1__27fa2c49-1492-48ed-80ab-b9c79aa08e73.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 241556,
+   "uploaded_bytes": 241556,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-gartus-symmetry/images/zhang-xiaoyu-nSlTrUHXFH4-unsplash_CenterCrop_Resized_1__92c47dd6-5fb7-4a07-a6d5-67c1c91db104.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-gartus-symmetry/images/zhang-xiaoyu-nSlTrUHXFH4-unsplash_CenterCrop_Resized_1__92c47dd6-5fb7-4a07-a6d5-67c1c91db104.jpg",
+   "name": "zhang-xiaoyu-nSlTrUHXFH4-unsplash_CenterCrop_Resized_1.jpg",
+   "type": "image",
+   "folder": "images",
+   "media_id": "templates/2024-gartus-symmetry/images/zhang-xiaoyu-nSlTrUHXFH4-unsplash_CenterCrop_Resized_1__92c47dd6-5fb7-4a07-a6d5-67c1c91db104.jpg",
+   "logicalFolder": "images",
+   "original_bytes": 234420,
+   "uploaded_bytes": 234420,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Symmetry Suits Cities, but Not Nature or Food: Image Beauty Effects Across Urban, Nature, and Food Photography",
+  "authors": [
+   "Andreas Gartus",
+   "Valuch",
+   "Hakala",
+   "Peltoketo",
+   "Pelowski",
+   "Leder"
+  ],
+  "year": 2024,
+  "venue": "Manuscript submitted for publication (data and stimuli on OSF)",
+  "doi": "10.17605/osf.io/tvqeg",
+  "url": "https://doi.org/10.17605/OSF.IO/TVQEG"
+ }
+}
