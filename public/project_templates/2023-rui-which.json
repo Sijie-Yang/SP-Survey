@@ -1,0 +1,755 @@
+{
+ "id": "2023-rui-which",
+ "name": "Which Street Landscape Looks Better? (Fuzhou)",
+ "description": "Method replication: participants see two street views from the main urban area of Fuzhou and answer the paper's question, \"Which image has a better visual effect on the street landscape?\", choosing either image or \"About the same\" (the paper's >, < and =), for 30 pairs. The choices can be turned into Elo scores as in the paper. The images are not the paper's stimuli (49 Baidu Street View forward views of the Gulou, Taijiang, Cangshan and Jin'an districts, 2016–2023, cropped to remove the capture car).\nOriginal study: Rui & Cheng (2023), \"Quantifying the spatial quality of urban streets with open street view images: A case study of the main urban area of Fuzhou\", Ecological Indicators 156, 111204. 500 of 24,636 Baidu sample points were compared in pairs by two groups, city residents and landscape architects; the Elo scores (starting at 1,000 points, averaged over the two groups) trained a random forest on segmentation indicators (green view, sky view, enclosure, colour richness, visual entropy and others) that mapped visual street quality across the city.\nDifferences from the original study: (1) 30 pairs per participant from 49 new images instead of the paper's 500 sample points; (2) one forward view per point instead of four directions; (3) participants say whether they are residents or landscape architects instead of being recruited as two separate groups; (4) gender is asked.",
+ "author": "Rui & Cheng",
+ "year": "2023",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "street view",
+  "pairwise",
+  "China",
+  "source:paper",
+  "concept:overall_quality",
+  "concept:beauty",
+  "scene:street",
+  "modality:street_view",
+  "task:pairwise",
+  "setting:online",
+  "participants:locals",
+  "participants:experts",
+  "country:China",
+  "city:Fuzhou"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1016/j.ecolind.2023.111204",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T12:12:28.989+00:00",
+ "updatedAt": "2026-11-28T12:12:36.803+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about_you_first",
+    "elements": [
+     {
+      "name": "background",
+      "type": "radiogroup",
+      "title": "Which describes you best?",
+      "choices": [
+       {
+        "text": "I live in Fuzhou",
+        "value": "resident"
+       },
+       {
+        "text": "I am a landscape architect or work in a related design field",
+        "value": "landscape_architect"
+       },
+       {
+        "text": "Both",
+        "value": "both"
+       },
+       {
+        "text": "Neither",
+        "value": "neither"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "Gender",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "better_landscape",
+      "type": "imagepicker",
+      "title": "Which image has a better visual effect on the street landscape?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "contain",
+      "tieLabel": "About the same",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 30,
+      "mediaFolders": [
+       "fuzhou"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   }
+  ],
+  "title": "Which Street Landscape Looks Better? (Fuzhou)",
+  "locale": "en",
+  "spSite": {
+   "id": "site-135a69be6c6da976",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Which Street Landscape Looks Better? (Fuzhou)</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Which Street Landscape Looks Better? (Fuzhou)\",\n  \"description\": \"\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you_first\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"background\",\n      \"title\": \"Which describes you best?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"resident\",\n        \"text\": \"I live in Fuzhou\"\n       },\n       {\n        \"value\": \"landscape_architect\",\n        \"text\": \"I am a landscape architect or work in a related design field\"\n       },\n       {\n        \"value\": \"both\",\n        \"text\": \"Both\"\n       },\n       {\n        \"value\": \"neither\",\n        \"text\": \"Neither\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"Gender\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"better_landscape\",\n      \"title\": \"Which image has a better visual effect on the street landscape?\",\n      \"imageCount\": 2,\n      \"trialCount\": 30,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"fuzhou\"\n      ],\n      \"allowTie\": true,\n      \"tieLabel\": \"About the same\",\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#3b6b4f;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.pair.many{grid-template-columns:repeat(var(--k),1fr);gap:8px}\n@media (max-width:640px){.pair.many{grid-template-columns:1fr}.pair.many .pick{aspect-ratio:16/9}}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.rng{accent-color:var(--accent)}.lks{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:6px;margin:6px 0 2px}.lk{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:9px 0;font:inherit;cursor:pointer}.lk[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}.q{margin-top:10px}.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}.scale.num{grid-template-columns:repeat(5,1fr)}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Gulou, Taijiang, Cangshan and Jin’an districts of Fuzhou, Baidu Street View (© Baidu), forward view, cropped to remove the capture car. Question from Rui &amp; Cheng, “Quantifying the spatial quality of urban streets with open street view images: A case study of the main urban area of Fuzhou”, Ecological Indicators 156, 111204 (2023), doi:10.1016/j.ecolind.2023.111204.</footer>\n<script>\n(function(){\n  var C={\"before\": [\"background\", \"gender\"], \"after\": [], \"tasks\": [\"better_landscape\"], \"minutes\": 5, \"alt\": \"Street view in Fuzhou\", \"labels\": {}, \"buttons\": [], \"minSec\": {}, \"words\": {}, \"captions\": {}, \"pickOne\": null, \"heading\": \"Which image has a better visual effect on the street landscape?\", \"intro\": \"<p>You will see <b>30 pairs</b> of street views from the main urban area of Fuzhou, China. For each pair, click the image you think has a <b>better visual effect on the street landscape</b>. Choose <b>About the same</b> only if you really cannot tell them apart.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&C.pickOne.ask&&!filled(C.pickOne.name))return form(C.before,'About you',start);\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?((t.choices||q.choices||[]).filter(function(c){return !c.tie;}).length>2?'Set ':'Pair '):'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair'+(imgs.length>2?' many\" style=\"--k:'+imgs.length:'')+'\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else if(q.kind==='sliders'||/slidergroup$/.test(q.type)){\n      h+='<img class=\"shot\" style=\"max-height:'+((q.dimensions||[]).length>4?'32vh;position:sticky;top:0;z-index:2':(q.dimensions||[]).length>2?'40vh':'56vh')+'\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">';\n      var cu=(md[0]&&md[0].url)||'',cap=Object.keys(C.captions||{}).filter(function(x){return cu.indexOf(x)>=0;})[0];\n      if(cap)h+='<p style=\"margin:8px 0 0;color:var(--ink)\">'+C.captions[cap]+'</p>';\n      var BT=(C.buttons||[]).indexOf(n)>=0,W=(C.words||{})[n]||{};\n      if(BT)(q.dimensions||[]).forEach(function(d){var b='';for(var v=d.min;v<=d.max;v+=(d.step||1))b+='<button type=\"button\" class=\"lk\" data-d=\"'+esc(d.id)+'\" data-val=\"'+v+'\">'+esc(W[d.id]?W[d.id][v-d.min]:v)+'</button>';\n        h+='<div class=\"q\"><b>'+esc(d.label)+'</b><div class=\"lks\" style=\"--n:'+Math.round((d.max-d.min)/(d.step||1)+1)+'\">'+b+'</div>'+(W[d.id]?'':'<p style=\"display:flex;justify-content:space-between;margin:0;font-size:.85rem\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p>')+'</div>';});\n      else (q.dimensions||[]).forEach(function(d){h+='<div class=\"q\"><b>'+esc(d.label)+': <span id=\"v_'+esc(d.id)+'\">–</span></b><input type=\"range\" class=\"rng\" data-d=\"'+esc(d.id)+'\" min=\"'+d.min+'\" max=\"'+d.max+'\" step=\"'+(d.step||1)+'\" value=\"'+Math.round((d.min+d.max)/2)+'\" style=\"width:100%\"><p style=\"display:flex;justify-content:space-between;margin:0\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      h+='<div class=\"row\"><button class=\"btn\" id=\"next\" disabled>Next</button></div><p style=\"font-size:.85rem\">'+(BT?'Answer every line to continue.':'Move the slider to give your answer.')+'</p>';\n      app.innerHTML=h+'<div class=\"err\"></div>';\n      var vals={},rs=app.querySelectorAll('.rng'),nx=document.getElementById('next');\n      var MS=(C.minSec||{})[n]||0,t0=Date.now(),okT=!MS;\n      function gate(){nx.disabled=!(okT&&Object.keys(vals).length>=(q.dimensions||[]).length);}\n      if(MS){var tm=document.createElement('p');tm.className='tmr';tm.style.fontWeight='600';nx.parentNode.parentNode.insertBefore(tm,nx.parentNode);\n        var iv=setInterval(function(){var left=Math.ceil(MS-(Date.now()-t0)/1000);if(!document.body.contains(tm)){clearInterval(iv);return;}\n          if(left>0)tm.textContent='Please keep looking: '+left+' s';else{tm.textContent='';okT=true;clearInterval(iv);gate();}},250);}\n      if(BT){var nd=(q.dimensions||[]).length;app.querySelectorAll('.lk').forEach(function(b){b.onclick=function(){var d=b.getAttribute('data-d');vals[d]=Number(b.getAttribute('data-val'));\n        app.querySelectorAll('.lk[data-d=\"'+d+'\"]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});gate();};});}\n      rs.forEach(function(r){r.oninput=function(){vals[r.getAttribute('data-d')]=Number(r.value);document.getElementById('v_'+r.getAttribute('data-d')).textContent=r.value;gate();};});\n      nx.onclick=function(){nx.disabled=true;SPSite.answer(n,vals,{trial:k}).then(function(r){if(r&&r.ok===false){err(r.error);nx.disabled=false;return;}(done[n]=done[n]||{})[k]=true;nextStep();});};\n      window.scrollTo(0,0);return;\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      var words=!!(lab&&lab.some(function(x){return isNaN(Number(x));}));\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale'+(words?'':' num')+'\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(words?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T12:11:32.421Z",
+   "mediaFolders": [
+    "fuzhou"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T12:11:32.421Z"
+  },
+  "description": "",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_001__9e11c9c9-4e15-42c1-9f95-848428f87954.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_001__9e11c9c9-4e15-42c1-9f95-848428f87954.jpg",
+   "name": "fuzhou_a_001.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_001__9e11c9c9-4e15-42c1-9f95-848428f87954.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 101389,
+   "uploaded_bytes": 101389,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_002__f94e2463-def5-4c0f-bf99-4d2376d448af.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_002__f94e2463-def5-4c0f-bf99-4d2376d448af.jpg",
+   "name": "fuzhou_a_002.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_002__f94e2463-def5-4c0f-bf99-4d2376d448af.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 173988,
+   "uploaded_bytes": 173988,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_003__2103ac86-f87a-4dfa-ad35-d880f77cf9bf.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_003__2103ac86-f87a-4dfa-ad35-d880f77cf9bf.jpg",
+   "name": "fuzhou_a_003.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_003__2103ac86-f87a-4dfa-ad35-d880f77cf9bf.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 99364,
+   "uploaded_bytes": 99364,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_004__db537ccc-fbbe-4728-bee1-572e6f704e07.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_004__db537ccc-fbbe-4728-bee1-572e6f704e07.jpg",
+   "name": "fuzhou_a_004.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_004__db537ccc-fbbe-4728-bee1-572e6f704e07.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 129582,
+   "uploaded_bytes": 129582,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_005__830f9062-58a8-4831-8f85-e415c7d490af.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_005__830f9062-58a8-4831-8f85-e415c7d490af.jpg",
+   "name": "fuzhou_a_005.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_005__830f9062-58a8-4831-8f85-e415c7d490af.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 141564,
+   "uploaded_bytes": 141564,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_006__d75aa1ea-c649-4d8b-8b9c-60783a3f5781.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_006__d75aa1ea-c649-4d8b-8b9c-60783a3f5781.jpg",
+   "name": "fuzhou_a_006.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_006__d75aa1ea-c649-4d8b-8b9c-60783a3f5781.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 160532,
+   "uploaded_bytes": 160532,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_007__e0c1abee-d38f-4e97-8e3d-8f62a472ff4e.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_007__e0c1abee-d38f-4e97-8e3d-8f62a472ff4e.jpg",
+   "name": "fuzhou_a_007.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_007__e0c1abee-d38f-4e97-8e3d-8f62a472ff4e.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 86361,
+   "uploaded_bytes": 86361,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_008__1f6cc8e0-8f68-42ca-88f9-03708f9d6cb6.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_008__1f6cc8e0-8f68-42ca-88f9-03708f9d6cb6.jpg",
+   "name": "fuzhou_a_008.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_008__1f6cc8e0-8f68-42ca-88f9-03708f9d6cb6.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 164689,
+   "uploaded_bytes": 164689,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_009__519d6ab3-8580-40ec-baa0-f87e89eccdf4.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_009__519d6ab3-8580-40ec-baa0-f87e89eccdf4.jpg",
+   "name": "fuzhou_a_009.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_009__519d6ab3-8580-40ec-baa0-f87e89eccdf4.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 105033,
+   "uploaded_bytes": 105033,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_010__4be2ec71-6bf8-4038-9ecd-a3f07b7ce60c.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_010__4be2ec71-6bf8-4038-9ecd-a3f07b7ce60c.jpg",
+   "name": "fuzhou_a_010.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_010__4be2ec71-6bf8-4038-9ecd-a3f07b7ce60c.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 93167,
+   "uploaded_bytes": 93167,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_011__b1b5ffd8-7c37-4bc9-9805-f736f23ed5b6.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_011__b1b5ffd8-7c37-4bc9-9805-f736f23ed5b6.jpg",
+   "name": "fuzhou_a_011.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_011__b1b5ffd8-7c37-4bc9-9805-f736f23ed5b6.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 79957,
+   "uploaded_bytes": 79957,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_012__4451ed77-9fe6-4d9b-af93-56aa11d699f7.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_012__4451ed77-9fe6-4d9b-af93-56aa11d699f7.jpg",
+   "name": "fuzhou_a_012.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_012__4451ed77-9fe6-4d9b-af93-56aa11d699f7.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 151101,
+   "uploaded_bytes": 151101,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_013__c1ca46ee-ff09-4eef-a233-340fcdb952a4.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_013__c1ca46ee-ff09-4eef-a233-340fcdb952a4.jpg",
+   "name": "fuzhou_a_013.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_013__c1ca46ee-ff09-4eef-a233-340fcdb952a4.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 190969,
+   "uploaded_bytes": 190969,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_014__5e75320a-8bd5-4248-ba3b-93e9318ab100.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_014__5e75320a-8bd5-4248-ba3b-93e9318ab100.jpg",
+   "name": "fuzhou_a_014.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_014__5e75320a-8bd5-4248-ba3b-93e9318ab100.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 162913,
+   "uploaded_bytes": 162913,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_015__66f26646-4c46-4e50-a37a-d263a730b4b4.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_015__66f26646-4c46-4e50-a37a-d263a730b4b4.jpg",
+   "name": "fuzhou_a_015.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_015__66f26646-4c46-4e50-a37a-d263a730b4b4.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 95093,
+   "uploaded_bytes": 95093,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_016__8bb881e7-296a-4a24-8b1c-33327b89902d.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_016__8bb881e7-296a-4a24-8b1c-33327b89902d.jpg",
+   "name": "fuzhou_a_016.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_016__8bb881e7-296a-4a24-8b1c-33327b89902d.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 130937,
+   "uploaded_bytes": 130937,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_017__6443c745-fe7e-4f45-9b74-7b2fe4af8957.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_017__6443c745-fe7e-4f45-9b74-7b2fe4af8957.jpg",
+   "name": "fuzhou_a_017.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_017__6443c745-fe7e-4f45-9b74-7b2fe4af8957.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 116931,
+   "uploaded_bytes": 116931,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_018__a4c2e763-5d77-421c-9aa5-b63d9e43e672.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_018__a4c2e763-5d77-421c-9aa5-b63d9e43e672.jpg",
+   "name": "fuzhou_a_018.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_018__a4c2e763-5d77-421c-9aa5-b63d9e43e672.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 204351,
+   "uploaded_bytes": 204351,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_019__7561f15a-1084-4236-9ec8-d5d2ead3e58f.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_019__7561f15a-1084-4236-9ec8-d5d2ead3e58f.jpg",
+   "name": "fuzhou_a_019.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_019__7561f15a-1084-4236-9ec8-d5d2ead3e58f.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 129959,
+   "uploaded_bytes": 129959,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_021__f292b957-8b0c-4835-8748-a98a016526dc.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_021__f292b957-8b0c-4835-8748-a98a016526dc.jpg",
+   "name": "fuzhou_a_021.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_021__f292b957-8b0c-4835-8748-a98a016526dc.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 141881,
+   "uploaded_bytes": 141881,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_022__79b9d634-619a-4633-8eaf-bb7ba66c66b1.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_022__79b9d634-619a-4633-8eaf-bb7ba66c66b1.jpg",
+   "name": "fuzhou_a_022.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_022__79b9d634-619a-4633-8eaf-bb7ba66c66b1.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 139994,
+   "uploaded_bytes": 139994,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_023__42df1974-d089-4b96-bb4a-33febe87fa89.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_023__42df1974-d089-4b96-bb4a-33febe87fa89.jpg",
+   "name": "fuzhou_a_023.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_023__42df1974-d089-4b96-bb4a-33febe87fa89.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 110625,
+   "uploaded_bytes": 110625,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_024__d9c01f0b-8693-41b7-9811-2a4aff4f1e9b.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_024__d9c01f0b-8693-41b7-9811-2a4aff4f1e9b.jpg",
+   "name": "fuzhou_a_024.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_024__d9c01f0b-8693-41b7-9811-2a4aff4f1e9b.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 185585,
+   "uploaded_bytes": 185585,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_a_026__c5aa935d-ad67-4cdc-8321-cc8706cd9129.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_a_026__c5aa935d-ad67-4cdc-8321-cc8706cd9129.jpg",
+   "name": "fuzhou_a_026.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_a_026__c5aa935d-ad67-4cdc-8321-cc8706cd9129.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 131017,
+   "uploaded_bytes": 131017,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_001__6d0082e7-8622-4f97-a320-20356665fd46.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_001__6d0082e7-8622-4f97-a320-20356665fd46.jpg",
+   "name": "fuzhou_b_001.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_001__6d0082e7-8622-4f97-a320-20356665fd46.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 167973,
+   "uploaded_bytes": 167973,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_002__fc65b317-3c44-40cb-84ce-f42ede3d1e46.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_002__fc65b317-3c44-40cb-84ce-f42ede3d1e46.jpg",
+   "name": "fuzhou_b_002.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_002__fc65b317-3c44-40cb-84ce-f42ede3d1e46.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 150785,
+   "uploaded_bytes": 150785,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_003__9e618b65-ce29-4ce0-97ef-140187dbd522.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_003__9e618b65-ce29-4ce0-97ef-140187dbd522.jpg",
+   "name": "fuzhou_b_003.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_003__9e618b65-ce29-4ce0-97ef-140187dbd522.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 159338,
+   "uploaded_bytes": 159338,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_004__bb45f39a-a10b-4819-83ee-91f88ed4299b.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_004__bb45f39a-a10b-4819-83ee-91f88ed4299b.jpg",
+   "name": "fuzhou_b_004.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_004__bb45f39a-a10b-4819-83ee-91f88ed4299b.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 97323,
+   "uploaded_bytes": 97323,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_005__1c660683-95f8-4a14-92e9-f375d4ee648f.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_005__1c660683-95f8-4a14-92e9-f375d4ee648f.jpg",
+   "name": "fuzhou_b_005.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_005__1c660683-95f8-4a14-92e9-f375d4ee648f.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 140714,
+   "uploaded_bytes": 140714,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_006__52c0a9ed-cf00-4a5d-bcd4-3dd8bc936a6b.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_006__52c0a9ed-cf00-4a5d-bcd4-3dd8bc936a6b.jpg",
+   "name": "fuzhou_b_006.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_006__52c0a9ed-cf00-4a5d-bcd4-3dd8bc936a6b.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 229515,
+   "uploaded_bytes": 229515,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_007__1d544c89-5adf-4298-a511-533cae86893c.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_007__1d544c89-5adf-4298-a511-533cae86893c.jpg",
+   "name": "fuzhou_b_007.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_007__1d544c89-5adf-4298-a511-533cae86893c.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 151518,
+   "uploaded_bytes": 151518,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_008__66b60917-c304-453a-b435-7e356459c2f4.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_008__66b60917-c304-453a-b435-7e356459c2f4.jpg",
+   "name": "fuzhou_b_008.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_008__66b60917-c304-453a-b435-7e356459c2f4.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 81710,
+   "uploaded_bytes": 81710,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_009__8d804d7a-6053-4b31-ba0b-c7c049f7ed81.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_009__8d804d7a-6053-4b31-ba0b-c7c049f7ed81.jpg",
+   "name": "fuzhou_b_009.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_009__8d804d7a-6053-4b31-ba0b-c7c049f7ed81.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 110881,
+   "uploaded_bytes": 110881,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_010__6f579aa0-2c99-45ed-8040-b85e80c55038.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_010__6f579aa0-2c99-45ed-8040-b85e80c55038.jpg",
+   "name": "fuzhou_b_010.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_010__6f579aa0-2c99-45ed-8040-b85e80c55038.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 113447,
+   "uploaded_bytes": 113447,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_011__84d2a9dc-acda-41ef-a200-c442ce03f9ec.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_011__84d2a9dc-acda-41ef-a200-c442ce03f9ec.jpg",
+   "name": "fuzhou_b_011.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_011__84d2a9dc-acda-41ef-a200-c442ce03f9ec.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 144103,
+   "uploaded_bytes": 144103,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_013__662ccaeb-19eb-4b31-9686-86142a818135.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_013__662ccaeb-19eb-4b31-9686-86142a818135.jpg",
+   "name": "fuzhou_b_013.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_013__662ccaeb-19eb-4b31-9686-86142a818135.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 138115,
+   "uploaded_bytes": 138115,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_014__638c2f54-dbd8-4cff-8843-3f0a3c16f06b.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_014__638c2f54-dbd8-4cff-8843-3f0a3c16f06b.jpg",
+   "name": "fuzhou_b_014.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_014__638c2f54-dbd8-4cff-8843-3f0a3c16f06b.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 98508,
+   "uploaded_bytes": 98508,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_015__133f68d4-d5c1-4b9e-93e2-92500a668b91.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_015__133f68d4-d5c1-4b9e-93e2-92500a668b91.jpg",
+   "name": "fuzhou_b_015.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_015__133f68d4-d5c1-4b9e-93e2-92500a668b91.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 115449,
+   "uploaded_bytes": 115449,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_016__88b7b034-ee48-4e40-b5a7-4a4c456dc880.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_016__88b7b034-ee48-4e40-b5a7-4a4c456dc880.jpg",
+   "name": "fuzhou_b_016.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_016__88b7b034-ee48-4e40-b5a7-4a4c456dc880.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 114071,
+   "uploaded_bytes": 114071,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_017__f3612d4c-918d-4b51-8273-4ccc80c353b1.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_017__f3612d4c-918d-4b51-8273-4ccc80c353b1.jpg",
+   "name": "fuzhou_b_017.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_017__f3612d4c-918d-4b51-8273-4ccc80c353b1.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 72945,
+   "uploaded_bytes": 72945,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_018__410ae267-7502-4a86-8c69-2efe8fb58436.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_018__410ae267-7502-4a86-8c69-2efe8fb58436.jpg",
+   "name": "fuzhou_b_018.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_018__410ae267-7502-4a86-8c69-2efe8fb58436.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 76324,
+   "uploaded_bytes": 76324,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_019__68973029-99f4-47d6-a93f-d792c4f7219d.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_019__68973029-99f4-47d6-a93f-d792c4f7219d.jpg",
+   "name": "fuzhou_b_019.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_019__68973029-99f4-47d6-a93f-d792c4f7219d.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 82544,
+   "uploaded_bytes": 82544,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_020__5bc6a57c-1275-41f6-ad64-0ac8de1cad7f.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_020__5bc6a57c-1275-41f6-ad64-0ac8de1cad7f.jpg",
+   "name": "fuzhou_b_020.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_020__5bc6a57c-1275-41f6-ad64-0ac8de1cad7f.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 142444,
+   "uploaded_bytes": 142444,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_021__90ffa4f7-104a-4556-897d-698704e206bd.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_021__90ffa4f7-104a-4556-897d-698704e206bd.jpg",
+   "name": "fuzhou_b_021.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_021__90ffa4f7-104a-4556-897d-698704e206bd.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 87185,
+   "uploaded_bytes": 87185,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_022__97716656-891b-4dc0-83a3-da9fff24c973.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_022__97716656-891b-4dc0-83a3-da9fff24c973.jpg",
+   "name": "fuzhou_b_022.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_022__97716656-891b-4dc0-83a3-da9fff24c973.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 182471,
+   "uploaded_bytes": 182471,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_023__dee9c63b-9151-42c8-86e8-b4133d4f690b.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_023__dee9c63b-9151-42c8-86e8-b4133d4f690b.jpg",
+   "name": "fuzhou_b_023.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_023__dee9c63b-9151-42c8-86e8-b4133d4f690b.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 183999,
+   "uploaded_bytes": 183999,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_024__ab8f8356-5773-42cc-ac08-f434e9469c54.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_024__ab8f8356-5773-42cc-ac08-f434e9469c54.jpg",
+   "name": "fuzhou_b_024.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_024__ab8f8356-5773-42cc-ac08-f434e9469c54.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 155479,
+   "uploaded_bytes": 155479,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_025__090a227c-b6b1-4c91-9cc5-a7c74569c0bb.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_025__090a227c-b6b1-4c91-9cc5-a7c74569c0bb.jpg",
+   "name": "fuzhou_b_025.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_025__090a227c-b6b1-4c91-9cc5-a7c74569c0bb.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 94953,
+   "uploaded_bytes": 94953,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2023-rui-which/fuzhou/fuzhou_b_026__a4cd1d56-ce2a-445d-aba0-616cc960d11a.jpg",
+   "url": "https://media.sp-survey.org/templates/2023-rui-which/fuzhou/fuzhou_b_026__a4cd1d56-ce2a-445d-aba0-616cc960d11a.jpg",
+   "name": "fuzhou_b_026.jpg",
+   "type": "image",
+   "folder": "fuzhou",
+   "media_id": "templates/2023-rui-which/fuzhou/fuzhou_b_026__a4cd1d56-ce2a-445d-aba0-616cc960d11a.jpg",
+   "logicalFolder": "fuzhou",
+   "original_bytes": 120727,
+   "uploaded_bytes": 120727,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Quantifying the spatial quality of urban streets with open street view images: A case study of the main urban area of Fuzhou",
+  "authors": [
+   "Rui Q.",
+   "Cheng H."
+  ],
+  "year": 2023,
+  "venue": "Ecological Indicators",
+  "doi": "10.1016/j.ecolind.2023.111204",
+  "url": "https://doi.org/10.1016/j.ecolind.2023.111204"
+ }
+}

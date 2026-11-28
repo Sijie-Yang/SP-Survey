@@ -1,0 +1,1388 @@
+{
+ "id": "2026-lin-shenzhen",
+ "name": "Shenzhen Streets for People with Disabilities: Six Pairwise Questions",
+ "description": "Method replication: participants say whether they have a physical, visual, hearing or age-related impairment, then answer six pairwise questions about Shenzhen street scenes from the perspective of their own condition (environmental clarity, barrier-free safety, inclusive vitality, social disconnection, resource accessibility, psychological distress), 8 pairs each, with a \"Difficult to judge\" option; the images are not the paper's stimuli (87 re-fetched Baidu street views across Futian, Luohu and Nanshan, 2019–2025).\n\nOriginal study: Lin, Zhang, Qiu & Huang (2026), ISPRS International Journal of Geo-Information 15(6), 274. Baidu street views were collected in four orientations at 201,860 points in Shenzhen. Volunteers from different disability groups compared pairs of street scenes on six dimensions grounded in Attention Restoration Theory, using the comparison instructions in the paper's Table 4; TrueSkill turned the choices into scores used to train a city-wide perception model, combined with segmentation of accessibility elements, social-media sentiment and XGBoost-SHAP analysis of urban restorativeness for people with disabilities.\n\nDifferences from the original study: (1) newly fetched Baidu street views instead of the authors' images, which are not released; (2) a fixed 8 random pairs per question instead of the authors' comparison set; (3) the screening question on disability type, the demographic questions and the \"Difficult to judge\" option are added, since the paper does not report its volunteer form; (4) the question wording is the paper's Table 4 instructions; the prediction model and the other analyses are not part of the survey.",
+ "author": "Lin, Zhang, Qiu & Huang",
+ "year": "2026",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "restorativeness",
+  "accessibility",
+  "disability",
+  "pairwise",
+  "street view",
+  "Shenzhen",
+  "China",
+  "Baidu",
+  "source:paper",
+  "concept:accessibility",
+  "concept:safety",
+  "concept:liveliness",
+  "concept:emotion",
+  "scene:street",
+  "modality:street_view",
+  "task:pairwise",
+  "setting:online",
+  "participants:specific"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/ijgi15060274",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T08:56:54.673+00:00",
+ "updatedAt": "2026-11-28T10:32:51.668+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about_you_first",
+    "elements": [
+     {
+      "name": "disability",
+      "type": "checkbox",
+      "title": "Do you have any of the following? (choose all that apply)",
+      "choices": [
+       {
+        "text": "Physical disability (for example, I use a wheelchair, crutches or a walking aid)",
+        "value": "physical"
+       },
+       {
+        "text": "Visual impairment (blind or partially sighted)",
+        "value": "visual"
+       },
+       {
+        "text": "Hearing impairment",
+        "value": "hearing"
+       },
+       {
+        "text": "Age-related difficulty walking, seeing or hearing",
+        "value": "age_related"
+       },
+       {
+        "text": "Another disability",
+        "value": "other"
+       },
+       {
+        "text": "None of these",
+        "value": "none"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "What is your gender?",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "How old are you?",
+      "choices": [
+       {
+        "text": "Under 18",
+        "value": "under_18"
+       },
+       {
+        "text": "18–30",
+        "value": "18_30"
+       },
+       {
+        "text": "31–44",
+        "value": "31_44"
+       },
+       {
+        "text": "45–59",
+        "value": "45_59"
+       },
+       {
+        "text": "60 or older",
+        "value": "60_plus"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "know_city",
+      "type": "radiogroup",
+      "title": "Do you live in Shenzhen?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "live"
+       },
+       {
+        "text": "No, but I have visited",
+        "value": "visited"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "environmental_clarity",
+      "type": "imagepicker",
+      "title": "Which street scene feels easier to navigate and visually clearer for someone with your condition?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "contain",
+      "tieLabel": "Difficult to judge",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 8,
+      "mediaFolders": [
+       "shenzhen"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_2",
+    "elements": [
+     {
+      "name": "barrier_free_safety",
+      "type": "imagepicker",
+      "title": "In which street scene do you feel safer moving around, with fewer physical barriers or risks?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "contain",
+      "tieLabel": "Difficult to judge",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 8,
+      "mediaFolders": [
+       "shenzhen"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_3",
+    "elements": [
+     {
+      "name": "inclusive_vitality",
+      "type": "imagepicker",
+      "title": "Which street scene gives you a stronger sense that you could be part of the activity, rather than excluded from it?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "contain",
+      "tieLabel": "Difficult to judge",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 8,
+      "mediaFolders": [
+       "shenzhen"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_4",
+    "elements": [
+     {
+      "name": "social_disconnection",
+      "type": "imagepicker",
+      "title": "Which street scene makes you feel more isolated, detached, or unwelcome?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "contain",
+      "tieLabel": "Difficult to judge",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 8,
+      "mediaFolders": [
+       "shenzhen"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_5",
+    "elements": [
+     {
+      "name": "resource_accessibility",
+      "type": "imagepicker",
+      "title": "In which street scene do you perceive more equitable access to public resources and amenities?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "contain",
+      "tieLabel": "Difficult to judge",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 8,
+      "mediaFolders": [
+       "shenzhen"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   },
+   {
+    "name": "task_6",
+    "elements": [
+     {
+      "name": "psychological_distress",
+      "type": "imagepicker",
+      "title": "Which street scene evokes more feelings of anxiety, unease, or emotional discomfort?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "contain",
+      "tieLabel": "Difficult to judge",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 8,
+      "mediaFolders": [
+       "shenzhen"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   }
+  ],
+  "title": "Shenzhen Streets from the Perspective of People with Disabilities",
+  "locale": "en",
+  "spSite": {
+   "id": "site-020cf323433d947b",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Shenzhen Streets from the Perspective of People with Disabilities</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Shenzhen Streets from the Perspective of People with Disabilities\",\n  \"description\": \"\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you_first\",\n    \"elements\": [\n     {\n      \"type\": \"checkbox\",\n      \"name\": \"disability\",\n      \"title\": \"Do you have any of the following? (choose all that apply)\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"physical\",\n        \"text\": \"Physical disability (for example, I use a wheelchair, crutches or a walking aid)\"\n       },\n       {\n        \"value\": \"visual\",\n        \"text\": \"Visual impairment (blind or partially sighted)\"\n       },\n       {\n        \"value\": \"hearing\",\n        \"text\": \"Hearing impairment\"\n       },\n       {\n        \"value\": \"age_related\",\n        \"text\": \"Age-related difficulty walking, seeing or hearing\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Another disability\"\n       },\n       {\n        \"value\": \"none\",\n        \"text\": \"None of these\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"What is your gender?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"under_18\",\n        \"text\": \"Under 18\"\n       },\n       {\n        \"value\": \"18_30\",\n        \"text\": \"18–30\"\n       },\n       {\n        \"value\": \"31_44\",\n        \"text\": \"31–44\"\n       },\n       {\n        \"value\": \"45_59\",\n        \"text\": \"45–59\"\n       },\n       {\n        \"value\": \"60_plus\",\n        \"text\": \"60 or older\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"know_city\",\n      \"title\": \"Do you live in Shenzhen?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"live\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"visited\",\n        \"text\": \"No, but I have visited\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"environmental_clarity\",\n      \"title\": \"Which street scene feels easier to navigate and visually clearer for someone with your condition?\",\n      \"imageCount\": 2,\n      \"trialCount\": 8,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"shenzhen\"\n      ],\n      \"allowTie\": true,\n      \"tieLabel\": \"Difficult to judge\",\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_2\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"barrier_free_safety\",\n      \"title\": \"In which street scene do you feel safer moving around, with fewer physical barriers or risks?\",\n      \"imageCount\": 2,\n      \"trialCount\": 8,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"shenzhen\"\n      ],\n      \"allowTie\": true,\n      \"tieLabel\": \"Difficult to judge\",\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_3\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"inclusive_vitality\",\n      \"title\": \"Which street scene gives you a stronger sense that you could be part of the activity, rather than excluded from it?\",\n      \"imageCount\": 2,\n      \"trialCount\": 8,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"shenzhen\"\n      ],\n      \"allowTie\": true,\n      \"tieLabel\": \"Difficult to judge\",\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_4\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"social_disconnection\",\n      \"title\": \"Which street scene makes you feel more isolated, detached, or unwelcome?\",\n      \"imageCount\": 2,\n      \"trialCount\": 8,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"shenzhen\"\n      ],\n      \"allowTie\": true,\n      \"tieLabel\": \"Difficult to judge\",\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_5\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"resource_accessibility\",\n      \"title\": \"In which street scene do you perceive more equitable access to public resources and amenities?\",\n      \"imageCount\": 2,\n      \"trialCount\": 8,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"shenzhen\"\n      ],\n      \"allowTie\": true,\n      \"tieLabel\": \"Difficult to judge\",\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   },\n   {\n    \"name\": \"task_6\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"psychological_distress\",\n      \"title\": \"Which street scene evokes more feelings of anxiety, unease, or emotional discomfort?\",\n      \"imageCount\": 2,\n      \"trialCount\": 8,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"shenzhen\"\n      ],\n      \"allowTie\": true,\n      \"tieLabel\": \"Difficult to judge\",\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#3f6b4f;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.rng{accent-color:var(--accent)}.lks{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:6px;margin:6px 0 2px}.lk{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:9px 0;font:inherit;cursor:pointer}.lk[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}.q{margin-top:10px}.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}.scale.num{grid-template-columns:repeat(5,1fr)}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Shenzhen, Baidu street view (© Baidu). Questions from Lin, Zhang, Qiu &amp; Huang, “Analyzing the Non-Linear Correlation Between Streetscape Accessibility Elements and Urban Restorativeness Using Explainable Machine Learning Models”, ISPRS International Journal of Geo-Information 15(6), 274 (2026), doi:10.3390/ijgi15060274, Table 4.</footer>\n<script>\n(function(){\n  var C={\"before\": [\"disability\", \"gender\", \"age_group\", \"know_city\"], \"after\": [], \"tasks\": [\"environmental_clarity\", \"barrier_free_safety\", \"inclusive_vitality\", \"social_disconnection\", \"resource_accessibility\", \"psychological_distress\"], \"minutes\": 10, \"alt\": \"Street view in Shenzhen\", \"labels\": {}, \"buttons\": [], \"minSec\": {}, \"words\": {}, \"captions\": {}, \"pickOne\": null, \"heading\": \"Compare two street scenes\", \"intro\": \"<p>This study asks how streets in <b>Shenzhen</b> feel for people with disabilities. It is meant for people with a physical, visual or hearing impairment, but anyone can take part. You will answer <b>6 questions</b>, each with <b>8 pairs</b> of street scenes (48 choices in all). For each pair, click the scene that fits the question better, thinking of your own condition. If you cannot decide, choose <b>Difficult to judge</b>. The task takes about 10 minutes.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?'Pair ':'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else if(q.kind==='sliders'||/slidergroup$/.test(q.type)){\n      h+='<img class=\"shot\" style=\"max-height:'+((q.dimensions||[]).length>4?'32vh;position:sticky;top:0;z-index:2':(q.dimensions||[]).length>2?'40vh':'56vh')+'\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">';\n      var cu=(md[0]&&md[0].url)||'',cap=Object.keys(C.captions||{}).filter(function(x){return cu.indexOf(x)>=0;})[0];\n      if(cap)h+='<p style=\"margin:8px 0 0;color:var(--ink)\">'+C.captions[cap]+'</p>';\n      var BT=(C.buttons||[]).indexOf(n)>=0,W=(C.words||{})[n]||{};\n      if(BT)(q.dimensions||[]).forEach(function(d){var b='';for(var v=d.min;v<=d.max;v+=(d.step||1))b+='<button type=\"button\" class=\"lk\" data-d=\"'+esc(d.id)+'\" data-val=\"'+v+'\">'+esc(W[d.id]?W[d.id][v-d.min]:v)+'</button>';\n        h+='<div class=\"q\"><b>'+esc(d.label)+'</b><div class=\"lks\" style=\"--n:'+Math.round((d.max-d.min)/(d.step||1)+1)+'\">'+b+'</div><p style=\"display:flex;justify-content:space-between;margin:0;font-size:.85rem\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      else (q.dimensions||[]).forEach(function(d){h+='<div class=\"q\"><b>'+esc(d.label)+': <span id=\"v_'+esc(d.id)+'\">–</span></b><input type=\"range\" class=\"rng\" data-d=\"'+esc(d.id)+'\" min=\"'+d.min+'\" max=\"'+d.max+'\" step=\"'+(d.step||1)+'\" value=\"'+Math.round((d.min+d.max)/2)+'\" style=\"width:100%\"><p style=\"display:flex;justify-content:space-between;margin:0\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      h+='<div class=\"row\"><button class=\"btn\" id=\"next\" disabled>Next</button></div><p style=\"font-size:.85rem\">'+(BT?'Answer every line to continue.':'Move the slider to give your answer.')+'</p>';\n      app.innerHTML=h+'<div class=\"err\"></div>';\n      var vals={},rs=app.querySelectorAll('.rng'),nx=document.getElementById('next');\n      var MS=(C.minSec||{})[n]||0,t0=Date.now(),okT=!MS;\n      function gate(){nx.disabled=!(okT&&Object.keys(vals).length>=(q.dimensions||[]).length);}\n      if(MS){var tm=document.createElement('p');tm.className='tmr';tm.style.fontWeight='600';nx.parentNode.parentNode.insertBefore(tm,nx.parentNode);\n        var iv=setInterval(function(){var left=Math.ceil(MS-(Date.now()-t0)/1000);if(!document.body.contains(tm)){clearInterval(iv);return;}\n          if(left>0)tm.textContent='Please keep looking: '+left+' s';else{tm.textContent='';okT=true;clearInterval(iv);gate();}},250);}\n      if(BT){var nd=(q.dimensions||[]).length;app.querySelectorAll('.lk').forEach(function(b){b.onclick=function(){var d=b.getAttribute('data-d');vals[d]=Number(b.getAttribute('data-val'));\n        app.querySelectorAll('.lk[data-d=\"'+d+'\"]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});gate();};});}\n      rs.forEach(function(r){r.oninput=function(){vals[r.getAttribute('data-d')]=Number(r.value);document.getElementById('v_'+r.getAttribute('data-d')).textContent=r.value;gate();};});\n      nx.onclick=function(){nx.disabled=true;SPSite.answer(n,vals,{trial:k}).then(function(r){if(r&&r.ok===false){err(r.error);nx.disabled=false;return;}(done[n]=done[n]||{})[k]=true;nextStep();});};\n      window.scrollTo(0,0);return;\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      var words=!!(lab&&lab.some(function(x){return isNaN(Number(x));}));\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale'+(words?'':' num')+'\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(words?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T08:56:14.632Z",
+   "mediaFolders": [
+    "shenzhen"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T08:56:14.632Z"
+  },
+  "description": "",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_001__272ba54c-7052-4960-a7b5-cb50014fa21f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_001__272ba54c-7052-4960-a7b5-cb50014fa21f.jpg",
+   "name": "sz_001.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_001__272ba54c-7052-4960-a7b5-cb50014fa21f.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 86914,
+   "uploaded_bytes": 86914,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_002__3e45df54-7b23-4c76-b95a-55ef08d2a5dd.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_002__3e45df54-7b23-4c76-b95a-55ef08d2a5dd.jpg",
+   "name": "sz_002.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_002__3e45df54-7b23-4c76-b95a-55ef08d2a5dd.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 125661,
+   "uploaded_bytes": 125661,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_003__1afc50aa-0f3f-4578-9457-83deaade7b17.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_003__1afc50aa-0f3f-4578-9457-83deaade7b17.jpg",
+   "name": "sz_003.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_003__1afc50aa-0f3f-4578-9457-83deaade7b17.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 124041,
+   "uploaded_bytes": 124041,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_004__d2034e0a-d286-4d29-86f6-43c7bd35e1d6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_004__d2034e0a-d286-4d29-86f6-43c7bd35e1d6.jpg",
+   "name": "sz_004.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_004__d2034e0a-d286-4d29-86f6-43c7bd35e1d6.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 99198,
+   "uploaded_bytes": 99198,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_005__d5290b86-3d4b-4c2a-bb9c-98f298cfbfee.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_005__d5290b86-3d4b-4c2a-bb9c-98f298cfbfee.jpg",
+   "name": "sz_005.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_005__d5290b86-3d4b-4c2a-bb9c-98f298cfbfee.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 131283,
+   "uploaded_bytes": 131283,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_006__3eae650f-0ee9-45ba-9577-f00bd64bce38.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_006__3eae650f-0ee9-45ba-9577-f00bd64bce38.jpg",
+   "name": "sz_006.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_006__3eae650f-0ee9-45ba-9577-f00bd64bce38.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 181813,
+   "uploaded_bytes": 181813,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_007__5ca36c22-6dfa-41b9-9f5c-56888deb8377.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_007__5ca36c22-6dfa-41b9-9f5c-56888deb8377.jpg",
+   "name": "sz_007.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_007__5ca36c22-6dfa-41b9-9f5c-56888deb8377.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 195940,
+   "uploaded_bytes": 195940,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_008__a971f67f-60d3-4bbb-aebf-0f6de805ff1d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_008__a971f67f-60d3-4bbb-aebf-0f6de805ff1d.jpg",
+   "name": "sz_008.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_008__a971f67f-60d3-4bbb-aebf-0f6de805ff1d.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 125941,
+   "uploaded_bytes": 125941,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_009__3ac09518-74a4-4a68-951c-d70642ace99d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_009__3ac09518-74a4-4a68-951c-d70642ace99d.jpg",
+   "name": "sz_009.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_009__3ac09518-74a4-4a68-951c-d70642ace99d.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 133614,
+   "uploaded_bytes": 133614,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_010__8a611a9f-ece1-4dec-8dff-222dcab4a73c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_010__8a611a9f-ece1-4dec-8dff-222dcab4a73c.jpg",
+   "name": "sz_010.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_010__8a611a9f-ece1-4dec-8dff-222dcab4a73c.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 62998,
+   "uploaded_bytes": 62998,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_011__a5b6947d-2bc5-4be1-8e65-4e2d79bee63f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_011__a5b6947d-2bc5-4be1-8e65-4e2d79bee63f.jpg",
+   "name": "sz_011.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_011__a5b6947d-2bc5-4be1-8e65-4e2d79bee63f.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 139920,
+   "uploaded_bytes": 139920,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_012__4742fefc-8413-47ee-90be-324f24e0b40f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_012__4742fefc-8413-47ee-90be-324f24e0b40f.jpg",
+   "name": "sz_012.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_012__4742fefc-8413-47ee-90be-324f24e0b40f.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 135570,
+   "uploaded_bytes": 135570,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_013__4f480197-e95d-49a5-9f2f-2beb0d855513.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_013__4f480197-e95d-49a5-9f2f-2beb0d855513.jpg",
+   "name": "sz_013.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_013__4f480197-e95d-49a5-9f2f-2beb0d855513.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 132798,
+   "uploaded_bytes": 132798,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_014__fd48a3b4-f9ac-484e-9394-e954077ee612.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_014__fd48a3b4-f9ac-484e-9394-e954077ee612.jpg",
+   "name": "sz_014.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_014__fd48a3b4-f9ac-484e-9394-e954077ee612.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 111000,
+   "uploaded_bytes": 111000,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_015__115344ac-1c74-40f4-966e-d9a106b94f70.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_015__115344ac-1c74-40f4-966e-d9a106b94f70.jpg",
+   "name": "sz_015.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_015__115344ac-1c74-40f4-966e-d9a106b94f70.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 94392,
+   "uploaded_bytes": 94392,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_016__5dd5be59-7b44-4a67-95be-9ab3b93afa6a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_016__5dd5be59-7b44-4a67-95be-9ab3b93afa6a.jpg",
+   "name": "sz_016.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_016__5dd5be59-7b44-4a67-95be-9ab3b93afa6a.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 89847,
+   "uploaded_bytes": 89847,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_017__7a464eb8-7ce2-4665-b859-1b16d7b9260d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_017__7a464eb8-7ce2-4665-b859-1b16d7b9260d.jpg",
+   "name": "sz_017.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_017__7a464eb8-7ce2-4665-b859-1b16d7b9260d.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 140410,
+   "uploaded_bytes": 140410,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_018__f28492ab-3757-45dc-83dd-e1e84856555e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_018__f28492ab-3757-45dc-83dd-e1e84856555e.jpg",
+   "name": "sz_018.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_018__f28492ab-3757-45dc-83dd-e1e84856555e.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 178856,
+   "uploaded_bytes": 178856,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_019__ae74d116-7098-4518-87ff-6cf6fc74f9aa.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_019__ae74d116-7098-4518-87ff-6cf6fc74f9aa.jpg",
+   "name": "sz_019.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_019__ae74d116-7098-4518-87ff-6cf6fc74f9aa.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 124119,
+   "uploaded_bytes": 124119,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_020__eb63d5df-4e6a-4b10-8453-8308979f6d24.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_020__eb63d5df-4e6a-4b10-8453-8308979f6d24.jpg",
+   "name": "sz_020.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_020__eb63d5df-4e6a-4b10-8453-8308979f6d24.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 144048,
+   "uploaded_bytes": 144048,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_021__d066279b-0200-4f09-9dc8-6b0cc101a374.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_021__d066279b-0200-4f09-9dc8-6b0cc101a374.jpg",
+   "name": "sz_021.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_021__d066279b-0200-4f09-9dc8-6b0cc101a374.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 187334,
+   "uploaded_bytes": 187334,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_022__144f5b54-496d-4902-90c4-1c0ef13888b9.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_022__144f5b54-496d-4902-90c4-1c0ef13888b9.jpg",
+   "name": "sz_022.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_022__144f5b54-496d-4902-90c4-1c0ef13888b9.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 141413,
+   "uploaded_bytes": 141413,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_023__7309b2e1-70ad-476b-8960-f04818e540ec.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_023__7309b2e1-70ad-476b-8960-f04818e540ec.jpg",
+   "name": "sz_023.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_023__7309b2e1-70ad-476b-8960-f04818e540ec.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 96312,
+   "uploaded_bytes": 96312,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_024__38209279-62e8-4552-ac37-6730307ddf7a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_024__38209279-62e8-4552-ac37-6730307ddf7a.jpg",
+   "name": "sz_024.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_024__38209279-62e8-4552-ac37-6730307ddf7a.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 116876,
+   "uploaded_bytes": 116876,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_025__109b97f3-89a5-4ca6-9dee-09018b955f15.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_025__109b97f3-89a5-4ca6-9dee-09018b955f15.jpg",
+   "name": "sz_025.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_025__109b97f3-89a5-4ca6-9dee-09018b955f15.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 74722,
+   "uploaded_bytes": 74722,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_026__047aee6a-541c-42fc-aefe-41e8eac107cd.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_026__047aee6a-541c-42fc-aefe-41e8eac107cd.jpg",
+   "name": "sz_026.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_026__047aee6a-541c-42fc-aefe-41e8eac107cd.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 99065,
+   "uploaded_bytes": 99065,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_027__9a0f1845-f770-485d-bcfe-182434e2807d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_027__9a0f1845-f770-485d-bcfe-182434e2807d.jpg",
+   "name": "sz_027.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_027__9a0f1845-f770-485d-bcfe-182434e2807d.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 152776,
+   "uploaded_bytes": 152776,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_028__878e1956-43d4-4d8b-a678-3a5afec8d5a4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_028__878e1956-43d4-4d8b-a678-3a5afec8d5a4.jpg",
+   "name": "sz_028.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_028__878e1956-43d4-4d8b-a678-3a5afec8d5a4.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 119360,
+   "uploaded_bytes": 119360,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_029__595f9df6-87a0-490b-8ae1-f080ca5c7c8d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_029__595f9df6-87a0-490b-8ae1-f080ca5c7c8d.jpg",
+   "name": "sz_029.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_029__595f9df6-87a0-490b-8ae1-f080ca5c7c8d.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 133954,
+   "uploaded_bytes": 133954,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_031__274c6971-b9fd-47b2-97a3-22da0a80699a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_031__274c6971-b9fd-47b2-97a3-22da0a80699a.jpg",
+   "name": "sz_031.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_031__274c6971-b9fd-47b2-97a3-22da0a80699a.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 128087,
+   "uploaded_bytes": 128087,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_032__86d4b5bf-4b83-4390-83b3-2f6bafc19866.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_032__86d4b5bf-4b83-4390-83b3-2f6bafc19866.jpg",
+   "name": "sz_032.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_032__86d4b5bf-4b83-4390-83b3-2f6bafc19866.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 154730,
+   "uploaded_bytes": 154730,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_033__87b85b14-dac8-45eb-b6e8-410ad0e120c6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_033__87b85b14-dac8-45eb-b6e8-410ad0e120c6.jpg",
+   "name": "sz_033.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_033__87b85b14-dac8-45eb-b6e8-410ad0e120c6.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 158187,
+   "uploaded_bytes": 158187,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_034__f232c48a-9e9e-4c85-89e8-8390cf579d1f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_034__f232c48a-9e9e-4c85-89e8-8390cf579d1f.jpg",
+   "name": "sz_034.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_034__f232c48a-9e9e-4c85-89e8-8390cf579d1f.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 135067,
+   "uploaded_bytes": 135067,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_036__0315e44e-dd7f-4f64-a01e-40d24f71125a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_036__0315e44e-dd7f-4f64-a01e-40d24f71125a.jpg",
+   "name": "sz_036.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_036__0315e44e-dd7f-4f64-a01e-40d24f71125a.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 186983,
+   "uploaded_bytes": 186983,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_037__e914853a-c312-42a5-80a5-9acf14bb0020.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_037__e914853a-c312-42a5-80a5-9acf14bb0020.jpg",
+   "name": "sz_037.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_037__e914853a-c312-42a5-80a5-9acf14bb0020.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 100157,
+   "uploaded_bytes": 100157,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_038__a14719d4-2d28-422d-b92e-6defc87d0521.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_038__a14719d4-2d28-422d-b92e-6defc87d0521.jpg",
+   "name": "sz_038.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_038__a14719d4-2d28-422d-b92e-6defc87d0521.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 127957,
+   "uploaded_bytes": 127957,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_039__94dc0e50-0343-4cfd-9d9a-3e1cebdcfb69.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_039__94dc0e50-0343-4cfd-9d9a-3e1cebdcfb69.jpg",
+   "name": "sz_039.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_039__94dc0e50-0343-4cfd-9d9a-3e1cebdcfb69.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 163914,
+   "uploaded_bytes": 163914,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_040__32ea203c-e5c9-49cb-916b-ac63614ffcd2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_040__32ea203c-e5c9-49cb-916b-ac63614ffcd2.jpg",
+   "name": "sz_040.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_040__32ea203c-e5c9-49cb-916b-ac63614ffcd2.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 85183,
+   "uploaded_bytes": 85183,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_041__8709db8d-3402-4fc2-90c3-4b8aac2fb4e0.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_041__8709db8d-3402-4fc2-90c3-4b8aac2fb4e0.jpg",
+   "name": "sz_041.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_041__8709db8d-3402-4fc2-90c3-4b8aac2fb4e0.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 167644,
+   "uploaded_bytes": 167644,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_042__b769fa27-9515-42de-b5e0-f2895d061104.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_042__b769fa27-9515-42de-b5e0-f2895d061104.jpg",
+   "name": "sz_042.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_042__b769fa27-9515-42de-b5e0-f2895d061104.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 59216,
+   "uploaded_bytes": 59216,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_043__9d745361-f8ea-405c-8a11-0885925b53a9.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_043__9d745361-f8ea-405c-8a11-0885925b53a9.jpg",
+   "name": "sz_043.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_043__9d745361-f8ea-405c-8a11-0885925b53a9.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 158720,
+   "uploaded_bytes": 158720,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_044__5c9b989f-cdcb-4d00-ab9c-8fa180bea55f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_044__5c9b989f-cdcb-4d00-ab9c-8fa180bea55f.jpg",
+   "name": "sz_044.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_044__5c9b989f-cdcb-4d00-ab9c-8fa180bea55f.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 155276,
+   "uploaded_bytes": 155276,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_045__cc629532-75cd-4f6f-ac92-f75c1a69f992.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_045__cc629532-75cd-4f6f-ac92-f75c1a69f992.jpg",
+   "name": "sz_045.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_045__cc629532-75cd-4f6f-ac92-f75c1a69f992.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 157680,
+   "uploaded_bytes": 157680,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_046__a9fc6da8-01dd-4c72-b4e0-6828ae2ef3a6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_046__a9fc6da8-01dd-4c72-b4e0-6828ae2ef3a6.jpg",
+   "name": "sz_046.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_046__a9fc6da8-01dd-4c72-b4e0-6828ae2ef3a6.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 147361,
+   "uploaded_bytes": 147361,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_047__d943c0e9-96e5-406e-8bfe-ef2aa749eb81.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_047__d943c0e9-96e5-406e-8bfe-ef2aa749eb81.jpg",
+   "name": "sz_047.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_047__d943c0e9-96e5-406e-8bfe-ef2aa749eb81.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 133503,
+   "uploaded_bytes": 133503,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_048__051bb6f4-096c-470f-87d5-f71adf5737ee.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_048__051bb6f4-096c-470f-87d5-f71adf5737ee.jpg",
+   "name": "sz_048.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_048__051bb6f4-096c-470f-87d5-f71adf5737ee.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 138189,
+   "uploaded_bytes": 138189,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_049__7fbefbd5-0975-418c-a323-798da542df3c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_049__7fbefbd5-0975-418c-a323-798da542df3c.jpg",
+   "name": "sz_049.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_049__7fbefbd5-0975-418c-a323-798da542df3c.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 177169,
+   "uploaded_bytes": 177169,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_050__8d0d99d7-4fa2-49b5-8021-eb0cfd83a0d2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_050__8d0d99d7-4fa2-49b5-8021-eb0cfd83a0d2.jpg",
+   "name": "sz_050.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_050__8d0d99d7-4fa2-49b5-8021-eb0cfd83a0d2.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 119854,
+   "uploaded_bytes": 119854,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_051__7cac7893-d717-46a3-815f-e7eaa80c8710.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_051__7cac7893-d717-46a3-815f-e7eaa80c8710.jpg",
+   "name": "sz_051.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_051__7cac7893-d717-46a3-815f-e7eaa80c8710.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 147811,
+   "uploaded_bytes": 147811,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_052__b288bac9-cc6a-481d-8943-8b78e29f66b9.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_052__b288bac9-cc6a-481d-8943-8b78e29f66b9.jpg",
+   "name": "sz_052.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_052__b288bac9-cc6a-481d-8943-8b78e29f66b9.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 75422,
+   "uploaded_bytes": 75422,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_053__9dfae4dd-fee1-4eb9-9360-e9329fa5b119.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_053__9dfae4dd-fee1-4eb9-9360-e9329fa5b119.jpg",
+   "name": "sz_053.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_053__9dfae4dd-fee1-4eb9-9360-e9329fa5b119.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 107014,
+   "uploaded_bytes": 107014,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_054__ec5ef0f8-33bb-4190-b650-1a08c3ccb518.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_054__ec5ef0f8-33bb-4190-b650-1a08c3ccb518.jpg",
+   "name": "sz_054.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_054__ec5ef0f8-33bb-4190-b650-1a08c3ccb518.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 89678,
+   "uploaded_bytes": 89678,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_055__42bd8164-fe1a-44db-b9ac-ef1c9a598179.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_055__42bd8164-fe1a-44db-b9ac-ef1c9a598179.jpg",
+   "name": "sz_055.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_055__42bd8164-fe1a-44db-b9ac-ef1c9a598179.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 92742,
+   "uploaded_bytes": 92742,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_056__73b8c672-f842-4418-b460-3191e689ffad.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_056__73b8c672-f842-4418-b460-3191e689ffad.jpg",
+   "name": "sz_056.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_056__73b8c672-f842-4418-b460-3191e689ffad.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 119071,
+   "uploaded_bytes": 119071,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_057__d10c6266-a415-451f-9e5c-c6b1a8c080ee.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_057__d10c6266-a415-451f-9e5c-c6b1a8c080ee.jpg",
+   "name": "sz_057.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_057__d10c6266-a415-451f-9e5c-c6b1a8c080ee.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 95210,
+   "uploaded_bytes": 95210,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_058__02bc1954-051b-4125-bd6a-45a4c4c5a1a0.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_058__02bc1954-051b-4125-bd6a-45a4c4c5a1a0.jpg",
+   "name": "sz_058.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_058__02bc1954-051b-4125-bd6a-45a4c4c5a1a0.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 113041,
+   "uploaded_bytes": 113041,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_059__31449c99-e58d-4158-86b4-3b07d1a5940a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_059__31449c99-e58d-4158-86b4-3b07d1a5940a.jpg",
+   "name": "sz_059.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_059__31449c99-e58d-4158-86b4-3b07d1a5940a.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 129464,
+   "uploaded_bytes": 129464,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_060__2950069d-a234-40fa-ba00-f08a2ffc6d98.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_060__2950069d-a234-40fa-ba00-f08a2ffc6d98.jpg",
+   "name": "sz_060.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_060__2950069d-a234-40fa-ba00-f08a2ffc6d98.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 168933,
+   "uploaded_bytes": 168933,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_061__2806295b-2afb-4780-9a86-5a2231d7c19e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_061__2806295b-2afb-4780-9a86-5a2231d7c19e.jpg",
+   "name": "sz_061.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_061__2806295b-2afb-4780-9a86-5a2231d7c19e.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 113389,
+   "uploaded_bytes": 113389,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_063__597b7c0d-620c-49b7-abf4-9a6c6193fdc2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_063__597b7c0d-620c-49b7-abf4-9a6c6193fdc2.jpg",
+   "name": "sz_063.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_063__597b7c0d-620c-49b7-abf4-9a6c6193fdc2.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 135614,
+   "uploaded_bytes": 135614,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_064__9adc7913-7384-4bfc-98bf-c0fa0be18c9b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_064__9adc7913-7384-4bfc-98bf-c0fa0be18c9b.jpg",
+   "name": "sz_064.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_064__9adc7913-7384-4bfc-98bf-c0fa0be18c9b.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 103271,
+   "uploaded_bytes": 103271,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_065__a627910e-ecb6-4af3-b846-0b724d1d76d0.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_065__a627910e-ecb6-4af3-b846-0b724d1d76d0.jpg",
+   "name": "sz_065.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_065__a627910e-ecb6-4af3-b846-0b724d1d76d0.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 148960,
+   "uploaded_bytes": 148960,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_066__c1b57fe3-73ce-4e9b-83fd-c4f301bf07fb.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_066__c1b57fe3-73ce-4e9b-83fd-c4f301bf07fb.jpg",
+   "name": "sz_066.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_066__c1b57fe3-73ce-4e9b-83fd-c4f301bf07fb.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 92517,
+   "uploaded_bytes": 92517,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_067__ca6579ab-b593-4f01-b6ec-dbab3721aa50.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_067__ca6579ab-b593-4f01-b6ec-dbab3721aa50.jpg",
+   "name": "sz_067.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_067__ca6579ab-b593-4f01-b6ec-dbab3721aa50.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 183443,
+   "uploaded_bytes": 183443,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_068__384a8a19-9be5-4f61-8df3-81a5304dcc21.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_068__384a8a19-9be5-4f61-8df3-81a5304dcc21.jpg",
+   "name": "sz_068.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_068__384a8a19-9be5-4f61-8df3-81a5304dcc21.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 104514,
+   "uploaded_bytes": 104514,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_069__d09c1710-4ef6-4e1d-b296-414901cc9158.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_069__d09c1710-4ef6-4e1d-b296-414901cc9158.jpg",
+   "name": "sz_069.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_069__d09c1710-4ef6-4e1d-b296-414901cc9158.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 134725,
+   "uploaded_bytes": 134725,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_070__55add93b-2f19-4287-85fb-341f0c918079.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_070__55add93b-2f19-4287-85fb-341f0c918079.jpg",
+   "name": "sz_070.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_070__55add93b-2f19-4287-85fb-341f0c918079.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 201321,
+   "uploaded_bytes": 201321,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_071__b541aa09-3623-4cdb-877e-5eb9d375befb.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_071__b541aa09-3623-4cdb-877e-5eb9d375befb.jpg",
+   "name": "sz_071.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_071__b541aa09-3623-4cdb-877e-5eb9d375befb.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 129287,
+   "uploaded_bytes": 129287,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_072__9cce8826-1840-46cb-97a3-fd187ff5d66a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_072__9cce8826-1840-46cb-97a3-fd187ff5d66a.jpg",
+   "name": "sz_072.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_072__9cce8826-1840-46cb-97a3-fd187ff5d66a.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 166816,
+   "uploaded_bytes": 166816,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_073__bf69f886-ab54-41a9-8316-1645dcfed30a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_073__bf69f886-ab54-41a9-8316-1645dcfed30a.jpg",
+   "name": "sz_073.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_073__bf69f886-ab54-41a9-8316-1645dcfed30a.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 73882,
+   "uploaded_bytes": 73882,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_074__683cceff-7738-48ea-ab63-286def8e0926.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_074__683cceff-7738-48ea-ab63-286def8e0926.jpg",
+   "name": "sz_074.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_074__683cceff-7738-48ea-ab63-286def8e0926.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 168829,
+   "uploaded_bytes": 168829,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_075__98ab0b83-c14b-4ca5-9324-55c510d996f2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_075__98ab0b83-c14b-4ca5-9324-55c510d996f2.jpg",
+   "name": "sz_075.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_075__98ab0b83-c14b-4ca5-9324-55c510d996f2.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 110703,
+   "uploaded_bytes": 110703,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_076__f1f8a08b-f7a0-4f3a-aa14-417a2caef254.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_076__f1f8a08b-f7a0-4f3a-aa14-417a2caef254.jpg",
+   "name": "sz_076.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_076__f1f8a08b-f7a0-4f3a-aa14-417a2caef254.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 165135,
+   "uploaded_bytes": 165135,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_077__25daa931-9a24-4773-ae88-6d4cf6320613.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_077__25daa931-9a24-4773-ae88-6d4cf6320613.jpg",
+   "name": "sz_077.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_077__25daa931-9a24-4773-ae88-6d4cf6320613.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 104284,
+   "uploaded_bytes": 104284,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_078__c901711a-72ca-45c3-b350-85318164c2a1.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_078__c901711a-72ca-45c3-b350-85318164c2a1.jpg",
+   "name": "sz_078.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_078__c901711a-72ca-45c3-b350-85318164c2a1.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 130647,
+   "uploaded_bytes": 130647,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_079__9043ef02-ae37-46bd-826b-bdfdf335fcfb.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_079__9043ef02-ae37-46bd-826b-bdfdf335fcfb.jpg",
+   "name": "sz_079.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_079__9043ef02-ae37-46bd-826b-bdfdf335fcfb.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 99722,
+   "uploaded_bytes": 99722,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_080__abc0a5c2-c885-4a19-9f99-618282989a2a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_080__abc0a5c2-c885-4a19-9f99-618282989a2a.jpg",
+   "name": "sz_080.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_080__abc0a5c2-c885-4a19-9f99-618282989a2a.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 217530,
+   "uploaded_bytes": 217530,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_081__5bc49471-4911-457e-bcbb-345a2f37a892.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_081__5bc49471-4911-457e-bcbb-345a2f37a892.jpg",
+   "name": "sz_081.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_081__5bc49471-4911-457e-bcbb-345a2f37a892.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 92991,
+   "uploaded_bytes": 92991,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_082__5106d53f-36a8-462e-ac46-6e531fb02a26.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_082__5106d53f-36a8-462e-ac46-6e531fb02a26.jpg",
+   "name": "sz_082.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_082__5106d53f-36a8-462e-ac46-6e531fb02a26.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 180691,
+   "uploaded_bytes": 180691,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_083__8c6d0368-6942-4dbd-bc96-3fce7847e1e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_083__8c6d0368-6942-4dbd-bc96-3fce7847e1e6.jpg",
+   "name": "sz_083.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_083__8c6d0368-6942-4dbd-bc96-3fce7847e1e6.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 175084,
+   "uploaded_bytes": 175084,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_084__81b75146-1426-4163-8dac-6f3aa03cfe1d.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_084__81b75146-1426-4163-8dac-6f3aa03cfe1d.jpg",
+   "name": "sz_084.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_084__81b75146-1426-4163-8dac-6f3aa03cfe1d.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 85023,
+   "uploaded_bytes": 85023,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_085__b709c52a-dd65-4c39-a33c-bfa16394faf2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_085__b709c52a-dd65-4c39-a33c-bfa16394faf2.jpg",
+   "name": "sz_085.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_085__b709c52a-dd65-4c39-a33c-bfa16394faf2.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 104082,
+   "uploaded_bytes": 104082,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_086__40868dd8-4127-4e20-8adf-ff06cbffaf91.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_086__40868dd8-4127-4e20-8adf-ff06cbffaf91.jpg",
+   "name": "sz_086.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_086__40868dd8-4127-4e20-8adf-ff06cbffaf91.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 103588,
+   "uploaded_bytes": 103588,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_087__70b693f9-0dcc-4f9d-8bea-a1f64596ad70.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_087__70b693f9-0dcc-4f9d-8bea-a1f64596ad70.jpg",
+   "name": "sz_087.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_087__70b693f9-0dcc-4f9d-8bea-a1f64596ad70.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 138335,
+   "uploaded_bytes": 138335,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_088__d3b48361-4d00-415c-b3df-3b6889f70698.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_088__d3b48361-4d00-415c-b3df-3b6889f70698.jpg",
+   "name": "sz_088.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_088__d3b48361-4d00-415c-b3df-3b6889f70698.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 81063,
+   "uploaded_bytes": 81063,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_089__0707a0c3-9fd0-4493-a773-69690abf02f2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_089__0707a0c3-9fd0-4493-a773-69690abf02f2.jpg",
+   "name": "sz_089.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_089__0707a0c3-9fd0-4493-a773-69690abf02f2.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 104337,
+   "uploaded_bytes": 104337,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-lin-shenzhen/shenzhen/sz_090__28fb7e76-9870-4bde-87e5-063a5924d125.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-lin-shenzhen/shenzhen/sz_090__28fb7e76-9870-4bde-87e5-063a5924d125.jpg",
+   "name": "sz_090.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2026-lin-shenzhen/shenzhen/sz_090__28fb7e76-9870-4bde-87e5-063a5924d125.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 158081,
+   "uploaded_bytes": 158081,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Analyzing the Non-Linear Correlation Between Streetscape Accessibility Elements and Urban Restorativeness Using Explainable Machine Learning Models",
+  "authors": [
+   "Jinying Lin",
+   "Zhe Zhang",
+   "Hualong Qiu",
+   "Zhihuan Huang"
+  ],
+  "year": 2026,
+  "venue": "ISPRS International Journal of Geo-Information",
+  "doi": "10.3390/ijgi15060274",
+  "url": "https://doi.org/10.3390/ijgi15060274"
+ }
+}

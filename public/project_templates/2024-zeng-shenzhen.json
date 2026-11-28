@@ -1,0 +1,796 @@
+{
+ "id": "2024-zeng-shenzhen",
+ "name": "Shenzhen Streets for Cyclists: Good or Bad on Three Dimensions",
+ "description": "Method replication: participants imagine cycling at 30 Shenzhen street scenes, each shown as four views around one spot, and judge each as Good or Bad for public security, traffic safety and scenic beauty; the images are not the paper's stimuli (50 newly fetched Baidu street views in Nanshan, Futian and Luohu, four directions at 90° field of view, cropped to remove the camera car).\n\nOriginal study: Zeng, Gong, Wu, Zhuang & Li (2024), International Journal of Applied Earth Observation and Geoinformation 128, 103739. Baidu street views were taken at the midpoint of every road in central Shenzhen (10,194 points, four 90° frames, 2016–2021). In the authors' rating software, 50 volunteers (equal gender split) each viewed 500 four-view scenes and marked each Good or Bad on the three dimensions (75,000 ratings). K-means SMOTE balanced the classes, a random forest per volunteer mapped the perceptions, and SHAP showed which visual elements mattered.\n\nDifferences from the original study: (1) 30 random scenes per participant instead of 500; (2) the four views are shown as a 2 × 2 grid; (3) the short definitions of each dimension are condensed from the paper's text; (4) the cycling-frequency question is added for this template.",
+ "author": "Zeng, Gong, Wu, Zhuang & Li",
+ "year": "2024",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "street-view",
+  "cycling",
+  "Shenzhen",
+  "source:paper",
+  "concept:safety",
+  "concept:beauty",
+  "concept:bikeability",
+  "concept:traffic",
+  "scene:street",
+  "modality:street_view",
+  "task:rating",
+  "setting:lab",
+  "participants:public",
+  "sample:lt100",
+  "country:China",
+  "city:Shenzhen"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.1016/j.jag.2024.103739",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T10:32:54.998+00:00",
+ "updatedAt": "2026-11-28T10:33:08.586+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about_you_first",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "What is your gender?",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "cycling",
+      "type": "radiogroup",
+      "title": "How often do you cycle in a city?",
+      "choices": [
+       {
+        "text": "Every week",
+        "value": "weekly"
+       },
+       {
+        "text": "Sometimes",
+        "value": "sometimes"
+       },
+       {
+        "text": "Rarely or never",
+        "value": "never"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "cycling_perception",
+      "type": "imageslidergroup",
+      "title": "Imagine cycling here: good or bad?",
+      "buttons": true,
+      "choices": [],
+      "imageFit": "contain",
+      "dimensions": [
+       {
+        "id": "public_security",
+        "max": 1,
+        "min": 0,
+        "left": "0 = Bad",
+        "step": 1,
+        "label": "Public security: risk of crime while cycling here",
+        "right": "1 = Good"
+       },
+       {
+        "id": "traffic_safety",
+        "max": 1,
+        "min": 0,
+        "left": "0 = Bad",
+        "step": 1,
+        "label": "Traffic safety: how safe and confident you would feel cycling here among traffic",
+        "right": "1 = Good"
+       },
+       {
+        "id": "scenic_beauty",
+        "max": 1,
+        "min": 0,
+        "left": "0 = Bad",
+        "step": 1,
+        "label": "Scenic beauty: how pleasant the surroundings would be to ride through",
+        "right": "1 = Good"
+       }
+      ],
+      "imageCount": 1,
+      "isRequired": true,
+      "trialCount": 30,
+      "mediaFolders": [
+       "shenzhen"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   }
+  ],
+  "title": "Shenzhen Streets for Cyclists: Good or Bad on Three Dimensions",
+  "locale": "en",
+  "spSite": {
+   "id": "site-9a7e5ad8a41962f8",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Shenzhen Streets for Cyclists: Good or Bad on Three Dimensions</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Shenzhen Streets for Cyclists: Good or Bad on Three Dimensions\",\n  \"description\": \"\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you_first\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"What is your gender?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"cycling\",\n      \"title\": \"How often do you cycle in a city?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"weekly\",\n        \"text\": \"Every week\"\n       },\n       {\n        \"value\": \"sometimes\",\n        \"text\": \"Sometimes\"\n       },\n       {\n        \"value\": \"never\",\n        \"text\": \"Rarely or never\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imageslidergroup\",\n      \"name\": \"cycling_perception\",\n      \"title\": \"Imagine cycling here: good or bad?\",\n      \"isRequired\": true,\n      \"imageCount\": 1,\n      \"trialCount\": 30,\n      \"buttons\": true,\n      \"mediaFolders\": [\n       \"shenzhen\"\n      ],\n      \"imageFit\": \"contain\",\n      \"dimensions\": [\n       {\n        \"id\": \"public_security\",\n        \"label\": \"Public security: risk of crime while cycling here\",\n        \"left\": \"0 = Bad\",\n        \"right\": \"1 = Good\",\n        \"min\": 0,\n        \"max\": 1,\n        \"step\": 1\n       },\n       {\n        \"id\": \"traffic_safety\",\n        \"label\": \"Traffic safety: how safe and confident you would feel cycling here among traffic\",\n        \"left\": \"0 = Bad\",\n        \"right\": \"1 = Good\",\n        \"min\": 0,\n        \"max\": 1,\n        \"step\": 1\n       },\n       {\n        \"id\": \"scenic_beauty\",\n        \"label\": \"Scenic beauty: how pleasant the surroundings would be to ride through\",\n        \"left\": \"0 = Bad\",\n        \"right\": \"1 = Good\",\n        \"min\": 0,\n        \"max\": 1,\n        \"step\": 1\n       }\n      ],\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#2a6f97;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.pair.many{grid-template-columns:repeat(var(--k),1fr);gap:8px}\n@media (max-width:640px){.pair.many{grid-template-columns:1fr}.pair.many .pick{aspect-ratio:16/9}}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.rng{accent-color:var(--accent)}.lks{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:6px;margin:6px 0 2px}.lk{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:9px 0;font:inherit;cursor:pointer}.lk[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}.q{margin-top:10px}.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}.scale.num{grid-template-columns:repeat(5,1fr)}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: Nanshan, Futian and Luohu districts of Shenzhen, Baidu street view (© Baidu), four directions at 90° field of view. Task and three dimensions from Zeng, Gong, Wu, Zhuang &amp; Li, “Measuring cyclists' subjective perceptions of the street riding environment using K-means SMOTE-RF model and street view imagery”, International Journal of Applied Earth Observation and Geoinformation 128, 103739 (2024), doi:10.1016/j.jag.2024.103739.</footer>\n<script>\n(function(){\n  var C={\"before\": [\"gender\", \"cycling\"], \"after\": [], \"tasks\": [\"cycling_perception\"], \"minutes\": 10, \"alt\": \"Street view in Shenzhen\", \"labels\": {}, \"buttons\": [\"cycling_perception\"], \"minSec\": {}, \"words\": {\"cycling_perception\": {\"public_security\": [\"Bad\", \"Good\"], \"traffic_safety\": [\"Bad\", \"Good\"], \"scenic_beauty\": [\"Bad\", \"Good\"]}}, \"captions\": {}, \"pickOne\": null, \"heading\": \"Would this Shenzhen street be good for cycling?\", \"intro\": \"<p>You will see <b>30 street scenes</b> from central Shenzhen (Nanshan, Futian and Luohu). Each picture shows one spot in four directions. Imagine you are cycling there and judge each scene as <b>Good</b> or <b>Bad</b> on three things:</p><ul><li><b>Public security</b>: the risk of crime while cycling.</li><li><b>Traffic safety</b>: how visible and confident you would be among the traffic.</li><li><b>Scenic beauty</b>: the aesthetic pleasure of the surroundings.</li></ul>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?((t.choices||q.choices||[]).filter(function(c){return !c.tie;}).length>2?'Set ':'Pair '):'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair'+(imgs.length>2?' many\" style=\"--k:'+imgs.length:'')+'\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else if(q.kind==='sliders'||/slidergroup$/.test(q.type)){\n      h+='<img class=\"shot\" style=\"max-height:'+((q.dimensions||[]).length>4?'32vh;position:sticky;top:0;z-index:2':(q.dimensions||[]).length>2?'40vh':'56vh')+'\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">';\n      var cu=(md[0]&&md[0].url)||'',cap=Object.keys(C.captions||{}).filter(function(x){return cu.indexOf(x)>=0;})[0];\n      if(cap)h+='<p style=\"margin:8px 0 0;color:var(--ink)\">'+C.captions[cap]+'</p>';\n      var BT=(C.buttons||[]).indexOf(n)>=0,W=(C.words||{})[n]||{};\n      if(BT)(q.dimensions||[]).forEach(function(d){var b='';for(var v=d.min;v<=d.max;v+=(d.step||1))b+='<button type=\"button\" class=\"lk\" data-d=\"'+esc(d.id)+'\" data-val=\"'+v+'\">'+esc(W[d.id]?W[d.id][v-d.min]:v)+'</button>';\n        h+='<div class=\"q\"><b>'+esc(d.label)+'</b><div class=\"lks\" style=\"--n:'+Math.round((d.max-d.min)/(d.step||1)+1)+'\">'+b+'</div><p style=\"display:flex;justify-content:space-between;margin:0;font-size:.85rem\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      else (q.dimensions||[]).forEach(function(d){h+='<div class=\"q\"><b>'+esc(d.label)+': <span id=\"v_'+esc(d.id)+'\">–</span></b><input type=\"range\" class=\"rng\" data-d=\"'+esc(d.id)+'\" min=\"'+d.min+'\" max=\"'+d.max+'\" step=\"'+(d.step||1)+'\" value=\"'+Math.round((d.min+d.max)/2)+'\" style=\"width:100%\"><p style=\"display:flex;justify-content:space-between;margin:0\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      h+='<div class=\"row\"><button class=\"btn\" id=\"next\" disabled>Next</button></div><p style=\"font-size:.85rem\">'+(BT?'Answer every line to continue.':'Move the slider to give your answer.')+'</p>';\n      app.innerHTML=h+'<div class=\"err\"></div>';\n      var vals={},rs=app.querySelectorAll('.rng'),nx=document.getElementById('next');\n      var MS=(C.minSec||{})[n]||0,t0=Date.now(),okT=!MS;\n      function gate(){nx.disabled=!(okT&&Object.keys(vals).length>=(q.dimensions||[]).length);}\n      if(MS){var tm=document.createElement('p');tm.className='tmr';tm.style.fontWeight='600';nx.parentNode.parentNode.insertBefore(tm,nx.parentNode);\n        var iv=setInterval(function(){var left=Math.ceil(MS-(Date.now()-t0)/1000);if(!document.body.contains(tm)){clearInterval(iv);return;}\n          if(left>0)tm.textContent='Please keep looking: '+left+' s';else{tm.textContent='';okT=true;clearInterval(iv);gate();}},250);}\n      if(BT){var nd=(q.dimensions||[]).length;app.querySelectorAll('.lk').forEach(function(b){b.onclick=function(){var d=b.getAttribute('data-d');vals[d]=Number(b.getAttribute('data-val'));\n        app.querySelectorAll('.lk[data-d=\"'+d+'\"]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});gate();};});}\n      rs.forEach(function(r){r.oninput=function(){vals[r.getAttribute('data-d')]=Number(r.value);document.getElementById('v_'+r.getAttribute('data-d')).textContent=r.value;gate();};});\n      nx.onclick=function(){nx.disabled=true;SPSite.answer(n,vals,{trial:k}).then(function(r){if(r&&r.ok===false){err(r.error);nx.disabled=false;return;}(done[n]=done[n]||{})[k]=true;nextStep();});};\n      window.scrollTo(0,0);return;\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      var words=!!(lab&&lab.some(function(x){return isNaN(Number(x));}));\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale'+(words?'':' num')+'\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(words?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T10:32:23.431Z",
+   "mediaFolders": [
+    "shenzhen"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T10:32:23.431Z"
+  },
+  "description": "",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs1_001__39f1f7ab-5cca-45d8-9046-0b4b8a400b27.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs1_001__39f1f7ab-5cca-45d8-9046-0b4b8a400b27.jpg",
+   "name": "zs1_001.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs1_001__39f1f7ab-5cca-45d8-9046-0b4b8a400b27.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 266646,
+   "uploaded_bytes": 266646,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs1_003__a4cce54e-ac1c-4464-a999-9761a8dcdd29.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs1_003__a4cce54e-ac1c-4464-a999-9761a8dcdd29.jpg",
+   "name": "zs1_003.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs1_003__a4cce54e-ac1c-4464-a999-9761a8dcdd29.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 273482,
+   "uploaded_bytes": 273482,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs1_004__762d68ac-a670-4906-92c0-fe4fef8a90ae.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs1_004__762d68ac-a670-4906-92c0-fe4fef8a90ae.jpg",
+   "name": "zs1_004.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs1_004__762d68ac-a670-4906-92c0-fe4fef8a90ae.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 211393,
+   "uploaded_bytes": 211393,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs1_005__1a28a7c9-0d34-4b33-8eed-496188b45031.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs1_005__1a28a7c9-0d34-4b33-8eed-496188b45031.jpg",
+   "name": "zs1_005.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs1_005__1a28a7c9-0d34-4b33-8eed-496188b45031.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 187142,
+   "uploaded_bytes": 187142,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs1_006__ff815ba3-7f58-4eff-8833-79f76f8e07fa.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs1_006__ff815ba3-7f58-4eff-8833-79f76f8e07fa.jpg",
+   "name": "zs1_006.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs1_006__ff815ba3-7f58-4eff-8833-79f76f8e07fa.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 180156,
+   "uploaded_bytes": 180156,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs1_007__f3378d42-08d9-4ef4-9d0b-d2a177e7a388.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs1_007__f3378d42-08d9-4ef4-9d0b-d2a177e7a388.jpg",
+   "name": "zs1_007.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs1_007__f3378d42-08d9-4ef4-9d0b-d2a177e7a388.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 157002,
+   "uploaded_bytes": 157002,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs1_008__de95445a-32b3-4dc2-88bb-2dc0017ece6c.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs1_008__de95445a-32b3-4dc2-88bb-2dc0017ece6c.jpg",
+   "name": "zs1_008.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs1_008__de95445a-32b3-4dc2-88bb-2dc0017ece6c.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 204664,
+   "uploaded_bytes": 204664,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs1_009__b0eea565-3110-47b1-a78f-ca643ece2e00.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs1_009__b0eea565-3110-47b1-a78f-ca643ece2e00.jpg",
+   "name": "zs1_009.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs1_009__b0eea565-3110-47b1-a78f-ca643ece2e00.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 195913,
+   "uploaded_bytes": 195913,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs1_010__14ebe2a0-336f-49d2-8a5f-60dfefc32577.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs1_010__14ebe2a0-336f-49d2-8a5f-60dfefc32577.jpg",
+   "name": "zs1_010.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs1_010__14ebe2a0-336f-49d2-8a5f-60dfefc32577.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 153864,
+   "uploaded_bytes": 153864,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs1_011__82ee242a-e3e1-4e4d-9357-967685657704.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs1_011__82ee242a-e3e1-4e4d-9357-967685657704.jpg",
+   "name": "zs1_011.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs1_011__82ee242a-e3e1-4e4d-9357-967685657704.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 144306,
+   "uploaded_bytes": 144306,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs1_012__99dde80d-19f3-435c-874a-103304263fa9.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs1_012__99dde80d-19f3-435c-874a-103304263fa9.jpg",
+   "name": "zs1_012.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs1_012__99dde80d-19f3-435c-874a-103304263fa9.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 122496,
+   "uploaded_bytes": 122496,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs2_001__d08a692b-1b60-4cd9-9e2a-bf32b10541c5.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs2_001__d08a692b-1b60-4cd9-9e2a-bf32b10541c5.jpg",
+   "name": "zs2_001.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs2_001__d08a692b-1b60-4cd9-9e2a-bf32b10541c5.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 125584,
+   "uploaded_bytes": 125584,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs2_002__df7daa14-7718-4774-a007-75d7bef050de.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs2_002__df7daa14-7718-4774-a007-75d7bef050de.jpg",
+   "name": "zs2_002.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs2_002__df7daa14-7718-4774-a007-75d7bef050de.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 194079,
+   "uploaded_bytes": 194079,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs2_003__83584918-9d20-4428-87e2-e068a6bb2510.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs2_003__83584918-9d20-4428-87e2-e068a6bb2510.jpg",
+   "name": "zs2_003.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs2_003__83584918-9d20-4428-87e2-e068a6bb2510.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 222103,
+   "uploaded_bytes": 222103,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs2_004__233fd798-39f8-4f5b-894d-032ca6174f77.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs2_004__233fd798-39f8-4f5b-894d-032ca6174f77.jpg",
+   "name": "zs2_004.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs2_004__233fd798-39f8-4f5b-894d-032ca6174f77.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 239307,
+   "uploaded_bytes": 239307,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs2_005__d336463d-1d4b-40b7-b438-aec7d9444368.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs2_005__d336463d-1d4b-40b7-b438-aec7d9444368.jpg",
+   "name": "zs2_005.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs2_005__d336463d-1d4b-40b7-b438-aec7d9444368.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 224322,
+   "uploaded_bytes": 224322,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs2_006__c0407c65-8c91-4b30-8246-ec7756d4c9f2.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs2_006__c0407c65-8c91-4b30-8246-ec7756d4c9f2.jpg",
+   "name": "zs2_006.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs2_006__c0407c65-8c91-4b30-8246-ec7756d4c9f2.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 202423,
+   "uploaded_bytes": 202423,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs2_007__b405f29a-a4f0-4307-8022-bd706e49079e.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs2_007__b405f29a-a4f0-4307-8022-bd706e49079e.jpg",
+   "name": "zs2_007.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs2_007__b405f29a-a4f0-4307-8022-bd706e49079e.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 132762,
+   "uploaded_bytes": 132762,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs2_008__a3ba2cec-ec60-4aa0-b586-9bc6395991dd.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs2_008__a3ba2cec-ec60-4aa0-b586-9bc6395991dd.jpg",
+   "name": "zs2_008.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs2_008__a3ba2cec-ec60-4aa0-b586-9bc6395991dd.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 219570,
+   "uploaded_bytes": 219570,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs2_009__77ec9031-0542-45c2-b6f5-695ea73e2337.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs2_009__77ec9031-0542-45c2-b6f5-695ea73e2337.jpg",
+   "name": "zs2_009.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs2_009__77ec9031-0542-45c2-b6f5-695ea73e2337.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 213679,
+   "uploaded_bytes": 213679,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs2_010__24cdc456-1d3f-48a2-bed5-f397455b915d.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs2_010__24cdc456-1d3f-48a2-bed5-f397455b915d.jpg",
+   "name": "zs2_010.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs2_010__24cdc456-1d3f-48a2-bed5-f397455b915d.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 134670,
+   "uploaded_bytes": 134670,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs2_011__703f61ff-4ae5-4644-bf7e-e2cdf948c24a.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs2_011__703f61ff-4ae5-4644-bf7e-e2cdf948c24a.jpg",
+   "name": "zs2_011.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs2_011__703f61ff-4ae5-4644-bf7e-e2cdf948c24a.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 222891,
+   "uploaded_bytes": 222891,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs2_012__15b6dc5f-e14d-4b74-a52a-005a898399b2.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs2_012__15b6dc5f-e14d-4b74-a52a-005a898399b2.jpg",
+   "name": "zs2_012.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs2_012__15b6dc5f-e14d-4b74-a52a-005a898399b2.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 195977,
+   "uploaded_bytes": 195977,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs2_013__9412ab6c-65c0-4d0e-9933-36f5de126de6.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs2_013__9412ab6c-65c0-4d0e-9933-36f5de126de6.jpg",
+   "name": "zs2_013.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs2_013__9412ab6c-65c0-4d0e-9933-36f5de126de6.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 268983,
+   "uploaded_bytes": 268983,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs2_014__811c00d9-1f1a-418f-8d49-2246227da623.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs2_014__811c00d9-1f1a-418f-8d49-2246227da623.jpg",
+   "name": "zs2_014.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs2_014__811c00d9-1f1a-418f-8d49-2246227da623.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 174238,
+   "uploaded_bytes": 174238,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs3_001__266da7ec-f793-4cc9-b111-112bf74b875c.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs3_001__266da7ec-f793-4cc9-b111-112bf74b875c.jpg",
+   "name": "zs3_001.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs3_001__266da7ec-f793-4cc9-b111-112bf74b875c.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 256030,
+   "uploaded_bytes": 256030,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs3_002__7121b89e-e438-4136-8478-e9de992a1191.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs3_002__7121b89e-e438-4136-8478-e9de992a1191.jpg",
+   "name": "zs3_002.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs3_002__7121b89e-e438-4136-8478-e9de992a1191.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 266429,
+   "uploaded_bytes": 266429,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs3_003__4b7ad159-3a2b-4152-9c2d-528a2bb6eee4.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs3_003__4b7ad159-3a2b-4152-9c2d-528a2bb6eee4.jpg",
+   "name": "zs3_003.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs3_003__4b7ad159-3a2b-4152-9c2d-528a2bb6eee4.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 203483,
+   "uploaded_bytes": 203483,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs3_004__50012a4d-0981-41fa-89b3-f3b26af980d0.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs3_004__50012a4d-0981-41fa-89b3-f3b26af980d0.jpg",
+   "name": "zs3_004.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs3_004__50012a4d-0981-41fa-89b3-f3b26af980d0.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 149388,
+   "uploaded_bytes": 149388,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs3_005__74d056c8-5bc4-46af-b921-2cfe6c02a5de.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs3_005__74d056c8-5bc4-46af-b921-2cfe6c02a5de.jpg",
+   "name": "zs3_005.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs3_005__74d056c8-5bc4-46af-b921-2cfe6c02a5de.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 207898,
+   "uploaded_bytes": 207898,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs3_006__873c01a4-bf2d-416c-bc13-286c9b1b4c01.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs3_006__873c01a4-bf2d-416c-bc13-286c9b1b4c01.jpg",
+   "name": "zs3_006.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs3_006__873c01a4-bf2d-416c-bc13-286c9b1b4c01.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 191878,
+   "uploaded_bytes": 191878,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs3_007__4c6ae414-00a6-4744-9555-98c470e03971.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs3_007__4c6ae414-00a6-4744-9555-98c470e03971.jpg",
+   "name": "zs3_007.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs3_007__4c6ae414-00a6-4744-9555-98c470e03971.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 189023,
+   "uploaded_bytes": 189023,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs3_008__09ac7c7f-70d7-4ee1-b962-1f004fb51dc2.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs3_008__09ac7c7f-70d7-4ee1-b962-1f004fb51dc2.jpg",
+   "name": "zs3_008.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs3_008__09ac7c7f-70d7-4ee1-b962-1f004fb51dc2.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 192105,
+   "uploaded_bytes": 192105,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs3_009__ae5bbe3a-004f-44f8-b961-43b96edcadc2.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs3_009__ae5bbe3a-004f-44f8-b961-43b96edcadc2.jpg",
+   "name": "zs3_009.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs3_009__ae5bbe3a-004f-44f8-b961-43b96edcadc2.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 171439,
+   "uploaded_bytes": 171439,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs3_010__18541beb-59e0-4bd6-9daa-901025e1e519.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs3_010__18541beb-59e0-4bd6-9daa-901025e1e519.jpg",
+   "name": "zs3_010.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs3_010__18541beb-59e0-4bd6-9daa-901025e1e519.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 165506,
+   "uploaded_bytes": 165506,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs3_011__9e819dce-35cf-498f-9337-5dc6bd152ec3.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs3_011__9e819dce-35cf-498f-9337-5dc6bd152ec3.jpg",
+   "name": "zs3_011.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs3_011__9e819dce-35cf-498f-9337-5dc6bd152ec3.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 249320,
+   "uploaded_bytes": 249320,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs3_013__2ad0333b-765d-487d-b1a1-c5a14d8bd11e.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs3_013__2ad0333b-765d-487d-b1a1-c5a14d8bd11e.jpg",
+   "name": "zs3_013.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs3_013__2ad0333b-765d-487d-b1a1-c5a14d8bd11e.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 259388,
+   "uploaded_bytes": 259388,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs3_014__f4ae7c40-aa3b-468c-9ea6-05ce1b8ddec7.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs3_014__f4ae7c40-aa3b-468c-9ea6-05ce1b8ddec7.jpg",
+   "name": "zs3_014.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs3_014__f4ae7c40-aa3b-468c-9ea6-05ce1b8ddec7.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 214953,
+   "uploaded_bytes": 214953,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs4_001__2c676652-efba-401c-aa79-6996a1add3fb.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs4_001__2c676652-efba-401c-aa79-6996a1add3fb.jpg",
+   "name": "zs4_001.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs4_001__2c676652-efba-401c-aa79-6996a1add3fb.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 134809,
+   "uploaded_bytes": 134809,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs4_002__ababd4a7-f1e5-4a70-9d94-521596f6bdba.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs4_002__ababd4a7-f1e5-4a70-9d94-521596f6bdba.jpg",
+   "name": "zs4_002.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs4_002__ababd4a7-f1e5-4a70-9d94-521596f6bdba.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 180342,
+   "uploaded_bytes": 180342,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs4_003__f952de2a-5631-4597-b942-55b7bbccfe6f.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs4_003__f952de2a-5631-4597-b942-55b7bbccfe6f.jpg",
+   "name": "zs4_003.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs4_003__f952de2a-5631-4597-b942-55b7bbccfe6f.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 276445,
+   "uploaded_bytes": 276445,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs4_004__ad4f8fd7-f4cf-45d5-bbed-967fb82bb967.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs4_004__ad4f8fd7-f4cf-45d5-bbed-967fb82bb967.jpg",
+   "name": "zs4_004.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs4_004__ad4f8fd7-f4cf-45d5-bbed-967fb82bb967.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 245630,
+   "uploaded_bytes": 245630,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs4_005__a07a0926-8a82-49cc-9022-a729c384454e.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs4_005__a07a0926-8a82-49cc-9022-a729c384454e.jpg",
+   "name": "zs4_005.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs4_005__a07a0926-8a82-49cc-9022-a729c384454e.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 253092,
+   "uploaded_bytes": 253092,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs4_007__48a32f17-cc3c-49c5-b88e-f2cf5e9bef0f.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs4_007__48a32f17-cc3c-49c5-b88e-f2cf5e9bef0f.jpg",
+   "name": "zs4_007.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs4_007__48a32f17-cc3c-49c5-b88e-f2cf5e9bef0f.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 192292,
+   "uploaded_bytes": 192292,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs4_008__2d2f9a7c-c76d-403c-9177-150ae62b0057.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs4_008__2d2f9a7c-c76d-403c-9177-150ae62b0057.jpg",
+   "name": "zs4_008.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs4_008__2d2f9a7c-c76d-403c-9177-150ae62b0057.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 121646,
+   "uploaded_bytes": 121646,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs4_009__a986294d-09c4-44b8-a638-a896da0a541c.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs4_009__a986294d-09c4-44b8-a638-a896da0a541c.jpg",
+   "name": "zs4_009.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs4_009__a986294d-09c4-44b8-a638-a896da0a541c.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 156236,
+   "uploaded_bytes": 156236,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs4_010__927271e7-939b-44e4-b31e-192f73bb736f.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs4_010__927271e7-939b-44e4-b31e-192f73bb736f.jpg",
+   "name": "zs4_010.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs4_010__927271e7-939b-44e4-b31e-192f73bb736f.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 212099,
+   "uploaded_bytes": 212099,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs4_011__e3fc1de6-928e-425b-828b-19533662245e.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs4_011__e3fc1de6-928e-425b-828b-19533662245e.jpg",
+   "name": "zs4_011.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs4_011__e3fc1de6-928e-425b-828b-19533662245e.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 176369,
+   "uploaded_bytes": 176369,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs4_012__af8aac81-f4f4-449c-afaf-5bb399c201ec.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs4_012__af8aac81-f4f4-449c-afaf-5bb399c201ec.jpg",
+   "name": "zs4_012.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs4_012__af8aac81-f4f4-449c-afaf-5bb399c201ec.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 217598,
+   "uploaded_bytes": 217598,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2024-zeng-shenzhen/shenzhen/zs4_013__cd1e52b9-164e-47a5-90d0-6811c0e1e192.jpg",
+   "url": "https://media.sp-survey.org/templates/2024-zeng-shenzhen/shenzhen/zs4_013__cd1e52b9-164e-47a5-90d0-6811c0e1e192.jpg",
+   "name": "zs4_013.jpg",
+   "type": "image",
+   "folder": "shenzhen",
+   "media_id": "templates/2024-zeng-shenzhen/shenzhen/zs4_013__cd1e52b9-164e-47a5-90d0-6811c0e1e192.jpg",
+   "logicalFolder": "shenzhen",
+   "original_bytes": 154022,
+   "uploaded_bytes": 154022,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Measuring cyclists’ subjective perceptions of the street riding environment using K-means SMOTE-RF model and street view imagery",
+  "authors": [
+   "Zeng Q.",
+   "Gong Z.",
+   "Wu S.",
+   "Zhuang C.",
+   "Li S."
+  ],
+  "year": 2024,
+  "venue": "International Journal of Applied Earth Observation and Geoinformation",
+  "doi": "10.1016/j.jag.2024.103739",
+  "url": "https://doi.org/10.1016/j.jag.2024.103739"
+ }
+}

@@ -1,0 +1,1199 @@
+{
+ "id": "2026-zhang-perceived",
+ "name": "Perceived Street Vitality in Central Tianjin: Pairwise Comparison",
+ "description": "Method replication: participants compare 30 pairs of street views from central Tianjin, each shown as four directions (front, right, back, left) in a 2 × 2 grid, and click the one with a higher level of perceived street vitality, or choose \"Equal / no obvious difference\"; the images are not the paper's stimuli (79 re-fetched Baidu street view locations in Heping, Hedong, Hexi, Hebei, Nankai and Hongqiao districts, 2019–2023).\n\nOriginal study: Zhang, Zhong, Wu, Wang, Liu, Ji, Yu & Hou (2026), Sustainability 18(10), 5165. Baidu street views were requested in four directions at 143,956 points in central Tianjin and merged into 1024 × 768 images; 1,333 of them were each compared at least 15 times by 330 respondents who had lived, studied or worked in Tianjin (10,000 comparisons, left–right order randomised, an equal option allowed). Q-scores trained an EfficientNetV2 model, and geographically weighted machine learning related streetscape elements to the predicted vitality.\n\nDifferences from the original study: (1) newly fetched Baidu street views instead of the authors' images, which are not released, with the bottom of each view cropped to remove the camera car; (2) 30 random pairs per participant, close to the paper's average of about 30 per respondent; (3) the background questions follow the categories of the paper's Table 2, with the question wording written for this template.",
+ "author": "Zhang, Zhong, Wu, Wang, Liu, Ji, Yu & Hou",
+ "year": "2026",
+ "category": "Academic Research",
+ "tags": [
+  "official",
+  "paper",
+  "method-replication",
+  "vitality",
+  "pairwise",
+  "street view",
+  "Tianjin",
+  "China",
+  "Baidu",
+  "source:paper",
+  "concept:liveliness",
+  "scene:street",
+  "modality:street_view",
+  "task:pairwise",
+  "setting:online",
+  "participants:locals",
+  "sample:300to500",
+  "country:China",
+  "city:Tianjin"
+ ],
+ "isPinned": false,
+ "isApproved": true,
+ "showOnLanding": true,
+ "thumbnailUrl": null,
+ "website": "https://doi.org/10.3390/su18105165",
+ "huggingfaceDataset": null,
+ "createdAt": "2026-11-28T09:39:13.652+00:00",
+ "updatedAt": "2026-11-28T10:32:59.129+00:00",
+ "config": {
+  "logo": "",
+  "pages": [
+   {
+    "name": "intro",
+    "elements": [
+     {
+      "name": "consent",
+      "type": "boolean",
+      "title": "I agree to take part. My answers are recorded anonymously for research.",
+      "labelTrue": "I agree",
+      "isRequired": true,
+      "labelFalse": "I do not agree"
+     }
+    ]
+   },
+   {
+    "name": "about_you_first",
+    "elements": [
+     {
+      "name": "gender",
+      "type": "radiogroup",
+      "title": "What is your gender?",
+      "choices": [
+       {
+        "text": "Female",
+        "value": "female"
+       },
+       {
+        "text": "Male",
+        "value": "male"
+       },
+       {
+        "text": "Other / prefer not to say",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "age_group",
+      "type": "radiogroup",
+      "title": "How old are you?",
+      "choices": [
+       {
+        "text": "Under 18",
+        "value": "under_18"
+       },
+       {
+        "text": "19–25",
+        "value": "19_25"
+       },
+       {
+        "text": "26–30",
+        "value": "26_30"
+       },
+       {
+        "text": "31–40",
+        "value": "31_40"
+       },
+       {
+        "text": "41 or older",
+        "value": "over_41"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "education",
+      "type": "radiogroup",
+      "title": "What is your highest education?",
+      "choices": [
+       {
+        "text": "Junior high school or below",
+        "value": "junior_high"
+       },
+       {
+        "text": "Senior high school / technical secondary / vocational school",
+        "value": "senior_high"
+       },
+       {
+        "text": "Bachelor's or associate degree, or postgraduate",
+        "value": "bachelor_plus"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "occupation",
+      "type": "radiogroup",
+      "title": "What is your occupation?",
+      "choices": [
+       {
+        "text": "Student",
+        "value": "student"
+       },
+       {
+        "text": "Employee of a private or state-owned enterprise",
+        "value": "enterprise"
+       },
+       {
+        "text": "Civil servant",
+        "value": "civil_servant"
+       },
+       {
+        "text": "Staff of a government agency, Party organisation or public institution",
+        "value": "public_staff"
+       },
+       {
+        "text": "Self-employed",
+        "value": "self_employed"
+       },
+       {
+        "text": "Other",
+        "value": "other"
+       }
+      ],
+      "isRequired": true
+     },
+     {
+      "name": "tianjin_tie",
+      "type": "radiogroup",
+      "title": "Have you lived, studied or worked in Tianjin?",
+      "choices": [
+       {
+        "text": "Yes",
+        "value": "yes"
+       },
+       {
+        "text": "No, but I have visited",
+        "value": "visited"
+       },
+       {
+        "text": "No",
+        "value": "no"
+       }
+      ],
+      "isRequired": true
+     }
+    ]
+   },
+   {
+    "name": "task_1",
+    "elements": [
+     {
+      "name": "street_vitality",
+      "type": "imagepicker",
+      "title": "Which street shows a higher level of perceived street vitality?",
+      "choices": [],
+      "allowTie": true,
+      "imageFit": "contain",
+      "tieLabel": "Equal / no obvious difference",
+      "imageCount": 2,
+      "isRequired": true,
+      "trialCount": 30,
+      "mediaFolders": [
+       "tianjin"
+      ],
+      "imageSelectionMode": "huggingface_random",
+      "randomImageSelection": true,
+      "excludePreviouslyUsedImages": true
+     }
+    ]
+   }
+  ],
+  "title": "Perceived Street Vitality in Central Tianjin",
+  "locale": "en",
+  "spSite": {
+   "id": "site-84979f68ff9e91c2",
+   "html": "<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Perceived Street Vitality in Central Tianjin</title>\n<script type=\"application/json\" id=\"sp-scheme\">\n{\n \"format\": \"sp-scheme-package\",\n \"spScheme\": \"2.0\",\n \"survey\": {\n  \"title\": \"Perceived Street Vitality in Central Tianjin\",\n  \"description\": \"\",\n  \"locale\": \"en\",\n  \"pages\": [\n   {\n    \"name\": \"intro\",\n    \"elements\": [\n     {\n      \"type\": \"consent\",\n      \"name\": \"consent\",\n      \"title\": \"I agree to take part. My answers are recorded anonymously for research.\",\n      \"isRequired\": true,\n      \"labelTrue\": \"I agree\",\n      \"labelFalse\": \"I do not agree\"\n     }\n    ]\n   },\n   {\n    \"name\": \"about_you_first\",\n    \"elements\": [\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"gender\",\n      \"title\": \"What is your gender?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"female\",\n        \"text\": \"Female\"\n       },\n       {\n        \"value\": \"male\",\n        \"text\": \"Male\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other / prefer not to say\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"age_group\",\n      \"title\": \"How old are you?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"under_18\",\n        \"text\": \"Under 18\"\n       },\n       {\n        \"value\": \"19_25\",\n        \"text\": \"19–25\"\n       },\n       {\n        \"value\": \"26_30\",\n        \"text\": \"26–30\"\n       },\n       {\n        \"value\": \"31_40\",\n        \"text\": \"31–40\"\n       },\n       {\n        \"value\": \"over_41\",\n        \"text\": \"41 or older\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"education\",\n      \"title\": \"What is your highest education?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"junior_high\",\n        \"text\": \"Junior high school or below\"\n       },\n       {\n        \"value\": \"senior_high\",\n        \"text\": \"Senior high school / technical secondary / vocational school\"\n       },\n       {\n        \"value\": \"bachelor_plus\",\n        \"text\": \"Bachelor's or associate degree, or postgraduate\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"occupation\",\n      \"title\": \"What is your occupation?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"student\",\n        \"text\": \"Student\"\n       },\n       {\n        \"value\": \"enterprise\",\n        \"text\": \"Employee of a private or state-owned enterprise\"\n       },\n       {\n        \"value\": \"civil_servant\",\n        \"text\": \"Civil servant\"\n       },\n       {\n        \"value\": \"public_staff\",\n        \"text\": \"Staff of a government agency, Party organisation or public institution\"\n       },\n       {\n        \"value\": \"self_employed\",\n        \"text\": \"Self-employed\"\n       },\n       {\n        \"value\": \"other\",\n        \"text\": \"Other\"\n       }\n      ]\n     },\n     {\n      \"type\": \"radiogroup\",\n      \"name\": \"tianjin_tie\",\n      \"title\": \"Have you lived, studied or worked in Tianjin?\",\n      \"isRequired\": true,\n      \"choices\": [\n       {\n        \"value\": \"yes\",\n        \"text\": \"Yes\"\n       },\n       {\n        \"value\": \"visited\",\n        \"text\": \"No, but I have visited\"\n       },\n       {\n        \"value\": \"no\",\n        \"text\": \"No\"\n       }\n      ]\n     }\n    ]\n   },\n   {\n    \"name\": \"task_1\",\n    \"elements\": [\n     {\n      \"type\": \"imagepicker\",\n      \"name\": \"street_vitality\",\n      \"title\": \"Which street shows a higher level of perceived street vitality?\",\n      \"imageCount\": 2,\n      \"trialCount\": 30,\n      \"isRequired\": true,\n      \"mediaFolders\": [\n       \"tianjin\"\n      ],\n      \"allowTie\": true,\n      \"tieLabel\": \"Equal / no obvious difference\",\n      \"imageFit\": \"contain\",\n      \"imageSelectionMode\": \"huggingface_random\",\n      \"randomImageSelection\": true,\n      \"excludePreviouslyUsedImages\": true,\n      \"choices\": []\n     }\n    ]\n   }\n  ]\n }\n}\n</script>\n<style>\n:root{--bg:#f6f5f2;--card:#fff;--ink:#1f2224;--muted:#5c6268;--accent:#a0522d;--accent-ink:#fff;--line:#dedbd6}\n*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,\"Segoe UI\",Roboto,sans-serif}\nmain{max-width:980px;margin:0 auto;padding:20px 16px 40px}\nh1{font-size:1.4rem;margin:0 0 6px}p{margin:0 0 10px;color:var(--muted)}\n.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px}\n.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:600;cursor:pointer;background:var(--accent);color:var(--accent-ink)}\n.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}\n.btn.opt{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:10px 6px;line-height:1.25}\n.btn.opt:hover,.btn.opt:focus-visible{border-color:var(--accent)}\n.btn:disabled{opacity:.45;cursor:not-allowed}\n.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:6px 0 12px}.progress>i{display:block;height:100%;background:var(--accent)}\n.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}\n.pick{position:relative;border:3px solid transparent;border-radius:12px;padding:0;background:transparent;cursor:pointer;overflow:hidden;aspect-ratio:3/2}\n.pick img{width:100%;height:100%;object-fit:cover;display:block;border-radius:9px;background:#000}\n.pick:focus-visible,.pick:hover{border-color:var(--accent)}\n.pick span{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:6px;padding:2px 8px;font-size:.85rem}\n.tie{margin-top:12px;width:100%}\n.shot{width:100%;aspect-ratio:3/2;max-height:60vh;object-fit:contain;display:block;border-radius:8px;background:#000}\n.scale{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;margin-top:14px}\n.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}\nlabel.o{display:flex;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-top:6px;cursor:pointer}\ninput.t{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-top:6px}\n.q{margin-top:14px}.q>b{display:block;margin-bottom:4px}\n.rng{accent-color:var(--accent)}.lks{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:6px;margin:6px 0 2px}.lk{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:9px 0;font:inherit;cursor:pointer}.lk[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}.q{margin-top:10px}.err{color:#b3261e;margin-top:8px;min-height:1.2em}\n.credit{max-width:980px;margin:0 auto;padding:0 16px 24px;font-size:.8rem;color:var(--muted)}\n@media (max-width:620px){.pair{grid-template-columns:1fr;gap:8px}.pick{aspect-ratio:16/9}.scale{grid-template-columns:1fr}.scale.num{grid-template-columns:repeat(5,1fr)}h1{font-size:1.2rem}}\n</style>\n</head>\n<body>\n<main id=\"app\" aria-live=\"polite\"><p>Loading…</p></main>\n<footer class=\"credit\">Street images: central Tianjin (Heping, Hedong, Hexi, Hebei, Nankai, Hongqiao), Baidu street view (© Baidu). Task from Zhang, Zhong, Wu, Wang, Liu, Ji, Yu &amp; Hou, “Streetscape Elements and Perceived Street Vitality for Sustainable Urban Renewal: A Geographically Weighted Machine Learning Analysis in Tianjin, China”, Sustainability 18(10), 5165 (2026), doi:10.3390/su18105165.</footer>\n<script>\n(function(){\n  var C={\"before\": [\"gender\", \"age_group\", \"education\", \"occupation\", \"tianjin_tie\"], \"after\": [], \"tasks\": [\"street_vitality\"], \"minutes\": 8, \"alt\": \"Street view in Tianjin, four directions\", \"labels\": {}, \"buttons\": [], \"minSec\": {}, \"words\": {}, \"captions\": {}, \"pickOne\": null, \"heading\": \"Which street shows higher vitality?\", \"intro\": \"<p>This study is about how <b>lively</b> the streets of <b>central Tianjin</b> look. Each picture shows one street location from four directions (front, right, back, left) in a 2 × 2 grid. You will see <b>30 pairs</b>. For each pair, click the street that shows a <b>higher level of street vitality</b>. If you see no obvious difference, choose <b>Equal / no obvious difference</b>. The task takes about 8 minutes.</p>\"};\n  var app=document.getElementById('app'),A={},tasks=[],ti=0,i=0,done={};\n  function esc(s){return String(s==null?'':s).replace(/[&<>\"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c];});}\n  function err(m){var e=app.querySelector('.err');if(e)e.textContent=m||'';}\n  function Q(n){return SPSite.getQuestion(n);}\n  function trialsOf(n){var p=A[n];return p&&Array.isArray(p.trials)?p.trials:(Array.isArray(p)?p:[]);}\n  function filled(n){var v=A[n];return v!=null&&v!==''&&!(Array.isArray(v)&&!v.length);}\n  function nextStep(){\n    for(;ti<tasks.length;ti++){var q=Q(tasks[ti]);for(i=0;i<q.trialCount;i++){if(!(done[tasks[ti]]||{})[i])return trial();}}\n    return about();\n  }\n  function form(names,label,after){\n    var h='<h1>'+esc(label)+'</h1><div class=\"card\">';\n    names.forEach(function(n){var q=Q(n);if(!q)return;\n      if(q.type==='text'||q.type==='comment'){h+='<div class=\"q\"><b>'+esc(q.title)+'</b><input class=\"t\" name=\"'+n+'\" value=\"'+esc(A[n]||'')+'\"></div>';}\n      else{var multi=q.type==='checkbox';h+='<div class=\"q\"><b>'+esc(q.title)+'</b>'+(q.choices||[]).map(function(c){var v=c.value!=null?c.value:c;var t=c.text!=null?c.text:c;\n        var on=multi?(A[n]||[]).indexOf(v)>=0:A[n]===v;return '<label class=\"o\"><input type=\"'+(multi?'checkbox':'radio')+'\" name=\"'+n+'\" value=\"'+esc(v)+'\"'+(on?' checked':'')+'> '+esc(t)+'</label>';}).join('')+'</div>';}\n    });\n    app.innerHTML=h+'<div class=\"row\"><button class=\"btn\" id=\"go\">Continue</button></div><div class=\"err\"></div></div>';\n    names.forEach(function(n){app.querySelectorAll('[name=\"'+n+'\"]').forEach(function(el){el.onchange=function(){\n      var q=Q(n),v;if(q.type==='checkbox'){v=[].map.call(app.querySelectorAll('[name=\"'+n+'\"]:checked'),function(x){return x.value;});}else v=el.value;\n      A[n]=v;SPSite.answer(n,v).then(function(r){if(r&&r.ok===false)err(r.error);});};});});\n    document.getElementById('go').onclick=function(){var miss=names.filter(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);});\n      if(miss.length)return err('Please answer: '+miss.map(function(n){return Q(n).title;}).join('; '));after();};\n    window.scrollTo(0,0);\n  }\n  function intro(){\n    var c=Q('consent');\n    app.innerHTML='<h1>'+C.heading+'</h1>'+C.intro+'<p>It takes about '+C.minutes+' minutes. There are no right or wrong answers.</p>'+\n      '<div class=\"card\"><p>'+esc(c.title)+'</p><div class=\"row\"><button class=\"btn\" id=\"yes\">'+esc(c.labelTrue||'I agree')+'</button></div><div class=\"err\"></div></div>';\n    document.getElementById('yes').onclick=function(){SPSite.answer('consent',true).then(function(r){if(r&&r.ok===false)return err(r.error);A.consent=true;start();});};\n  }\n  function start(){\n    if(C.pickOne&&!filled(C.pickOne.name)){var k=Math.floor(Math.random()*C.pickOne.values.length);A[C.pickOne.name]=C.pickOne.values[k];SPSite.answer(C.pickOne.name,A[C.pickOne.name]);}\n    if(C.pickOne){var g=C.pickOne.groups[C.pickOne.values.indexOf(A[C.pickOne.name])]||C.pickOne.groups[0];tasks=C.tasks.filter(function(n){return g.indexOf(n)>=0;});}else tasks=C.tasks.slice();\n    ti=0;\n    if(C.before.length&&C.before.some(function(n){var q=Q(n);return q&&(q.required||q.isRequired)&&!filled(n);}))return form(C.before,'About you',nextStep);\n    nextStep();\n  }\n  function trial(){\n    var n=tasks[ti],q=Q(n),t=(q.trials&&q.trials[i])||{},md=t.media||q.media||[],k=i;\n    var head='<h1>'+esc(q.title)+'</h1>'+(q.description?'<p>'+esc(q.description)+'</p>':'')+'<p>'+(q.type==='imagepicker'?'Pair ':'Image ')+(i+1)+' of '+q.trialCount+(tasks.length>1?' · part '+(ti+1)+' of '+tasks.length:'')+'</p>'+\n      '<div class=\"progress\" aria-hidden=\"true\"><i style=\"width:'+(100*i/q.trialCount)+'%\"></i></div>';\n    var h=head;\n    if(q.type==='imagepicker'){\n      var ch=t.choices||q.choices||[],imgs=ch.filter(function(c){return !c.tie;}),tie=ch.find(function(c){return c.tie;});\n      h+='<div class=\"pair\">';imgs.forEach(function(c,j){var src=c.imageUrl||(md[j]&&md[j].url)||'';var L=String.fromCharCode(65+j);\n        h+='<button class=\"pick\" data-v=\"'+esc(c.value)+'\" aria-label=\"Choose '+L+'\"><img src=\"'+esc(src)+'\" alt=\"'+esc(C.alt)+' '+L+'\"><span>'+L+'</span></button>';});\n      h+='</div>'+(tie?'<button class=\"btn ghost tie\" data-v=\"'+esc(tie.value)+'\">'+esc(tie.text)+'</button>':'');\n    }else if(q.kind==='sliders'||/slidergroup$/.test(q.type)){\n      h+='<img class=\"shot\" style=\"max-height:'+((q.dimensions||[]).length>4?'32vh;position:sticky;top:0;z-index:2':(q.dimensions||[]).length>2?'40vh':'56vh')+'\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">';\n      var cu=(md[0]&&md[0].url)||'',cap=Object.keys(C.captions||{}).filter(function(x){return cu.indexOf(x)>=0;})[0];\n      if(cap)h+='<p style=\"margin:8px 0 0;color:var(--ink)\">'+C.captions[cap]+'</p>';\n      var BT=(C.buttons||[]).indexOf(n)>=0,W=(C.words||{})[n]||{};\n      if(BT)(q.dimensions||[]).forEach(function(d){var b='';for(var v=d.min;v<=d.max;v+=(d.step||1))b+='<button type=\"button\" class=\"lk\" data-d=\"'+esc(d.id)+'\" data-val=\"'+v+'\">'+esc(W[d.id]?W[d.id][v-d.min]:v)+'</button>';\n        h+='<div class=\"q\"><b>'+esc(d.label)+'</b><div class=\"lks\" style=\"--n:'+Math.round((d.max-d.min)/(d.step||1)+1)+'\">'+b+'</div><p style=\"display:flex;justify-content:space-between;margin:0;font-size:.85rem\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      else (q.dimensions||[]).forEach(function(d){h+='<div class=\"q\"><b>'+esc(d.label)+': <span id=\"v_'+esc(d.id)+'\">–</span></b><input type=\"range\" class=\"rng\" data-d=\"'+esc(d.id)+'\" min=\"'+d.min+'\" max=\"'+d.max+'\" step=\"'+(d.step||1)+'\" value=\"'+Math.round((d.min+d.max)/2)+'\" style=\"width:100%\"><p style=\"display:flex;justify-content:space-between;margin:0\"><span>'+esc(d.left)+'</span><span>'+esc(d.right)+'</span></p></div>';});\n      h+='<div class=\"row\"><button class=\"btn\" id=\"next\" disabled>Next</button></div><p style=\"font-size:.85rem\">'+(BT?'Answer every line to continue.':'Move the slider to give your answer.')+'</p>';\n      app.innerHTML=h+'<div class=\"err\"></div>';\n      var vals={},rs=app.querySelectorAll('.rng'),nx=document.getElementById('next');\n      var MS=(C.minSec||{})[n]||0,t0=Date.now(),okT=!MS;\n      function gate(){nx.disabled=!(okT&&Object.keys(vals).length>=(q.dimensions||[]).length);}\n      if(MS){var tm=document.createElement('p');tm.className='tmr';tm.style.fontWeight='600';nx.parentNode.parentNode.insertBefore(tm,nx.parentNode);\n        var iv=setInterval(function(){var left=Math.ceil(MS-(Date.now()-t0)/1000);if(!document.body.contains(tm)){clearInterval(iv);return;}\n          if(left>0)tm.textContent='Please keep looking: '+left+' s';else{tm.textContent='';okT=true;clearInterval(iv);gate();}},250);}\n      if(BT){var nd=(q.dimensions||[]).length;app.querySelectorAll('.lk').forEach(function(b){b.onclick=function(){var d=b.getAttribute('data-d');vals[d]=Number(b.getAttribute('data-val'));\n        app.querySelectorAll('.lk[data-d=\"'+d+'\"]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});gate();};});}\n      rs.forEach(function(r){r.oninput=function(){vals[r.getAttribute('data-d')]=Number(r.value);document.getElementById('v_'+r.getAttribute('data-d')).textContent=r.value;gate();};});\n      nx.onclick=function(){nx.disabled=true;SPSite.answer(n,vals,{trial:k}).then(function(r){if(r&&r.ok===false){err(r.error);nx.disabled=false;return;}(done[n]=done[n]||{})[k]=true;nextStep();});};\n      window.scrollTo(0,0);return;\n    }else{\n      var lo=q.rateMin||1,hi=q.rateMax||5,lab=C.labels[n]||(q.rateValues&&q.rateValues.map(function(x){return x.text;})),b='';\n      var words=!!(lab&&lab.some(function(x){return isNaN(Number(x));}));\n      for(var v=lo;v<=hi;v++)b+='<button class=\"btn opt\" data-v=\"'+v+'\">'+esc(lab&&lab[v-lo]?lab[v-lo]:v)+'</button>';\n      h+='<img class=\"shot\" src=\"'+esc((md[0]&&md[0].url)||'')+'\" alt=\"'+esc(C.alt)+'\">'+\n        '<div class=\"scale'+(words?'':' num')+'\" style=\"--n:'+(hi-lo+1)+'\">'+b+'</div>'+(words?'':'<p style=\"display:flex;justify-content:space-between;margin-top:4px\"><span>'+lo+' = '+esc(q.minLabel||'')+'</span><span>'+hi+' = '+esc(q.maxLabel||'')+'</span></p>');\n    }\n    app.innerHTML=h+'<div class=\"err\"></div>';\n    var bs=app.querySelectorAll('[data-v]');\n    bs.forEach(function(b){b.onclick=function(){bs.forEach(function(x){x.disabled=true;});\n      var val=q.type==='imagerating'?Number(b.getAttribute('data-v')):b.getAttribute('data-v');\n      SPSite.answer(n,val,{trial:k}).then(function(r){\n        if(r&&r.ok===false){err(r.error);bs.forEach(function(x){x.disabled=false;});return;}\n        (done[n]=done[n]||{})[k]=true;nextStep();});};});\n    window.scrollTo(0,0);\n  }\n  function about(){\n    if(!C.after.length)return finish();\n    form(C.after,'About you',finish);\n  }\n  function finish(){\n    app.innerHTML='<h1>Thank you</h1><div class=\"card\"><p>Submitting your answers…</p><div class=\"err\"></div></div>';\n    SPSite.complete().then(function(r){if(r&&r.ok===false){var m=r.missing||[];\n      app.innerHTML='<h1>Almost done</h1><div class=\"card\"><p>'+esc(r.error||('Please answer: '+m.join(', ')))+'</p><div class=\"row\"><button class=\"btn\" id=\"re\">Go back</button></div></div>';\n      document.getElementById('re').onclick=function(){if(m.indexOf('consent')>=0)return intro();start();};}});\n  }\n  SPSite.onReady(function(ctx){\n    A=(ctx&&ctx.answers)||{};\n    C.tasks.forEach(function(n){done[n]={};trialsOf(n).forEach(function(t,k){var v=t&&typeof t==='object'?(t.value!=null?t.value:t.answer):t;if(v!=null&&v!=='')done[n][k]=true;});});\n    if(A.consent===true)start();else intro();\n  });\n})();\n</script>\n</body>\n</html>\n",
+   "version": "1.0",
+   "importedAt": "2026-11-28T09:37:59.000Z",
+   "mediaFolders": [
+    "tianjin"
+   ]
+  },
+  "spScheme": {
+   "version": "2.0",
+   "importedAt": "2026-11-28T09:37:59.000Z"
+  },
+  "description": "",
+  "logoPosition": "right",
+  "completedHtml": "<h3>Thank you for completing the survey.</h3>",
+  "autoGrowComment": true,
+  "progressBarType": "questions",
+  "showProgressBar": "top",
+  "showQuestionNumbers": "off",
+  "includeResearcherPractice": true,
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "excludeFlaggedFromAnalysis": false
+ },
+ "imageDatasetConfig": {
+  "mediaFolders": [],
+  "mediaFolderTags": {}
+ },
+ "preloadedImages": [
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_001__90f38095-411b-4bd5-bbd0-e00e163ad6f0.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_001__90f38095-411b-4bd5-bbd0-e00e163ad6f0.jpg",
+   "name": "tja_001.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_001__90f38095-411b-4bd5-bbd0-e00e163ad6f0.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 159625,
+   "uploaded_bytes": 159625,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_002__3f65e034-b3d3-4751-9a47-fdb9e6dfdb93.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_002__3f65e034-b3d3-4751-9a47-fdb9e6dfdb93.jpg",
+   "name": "tja_002.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_002__3f65e034-b3d3-4751-9a47-fdb9e6dfdb93.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 219527,
+   "uploaded_bytes": 219527,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_003__af9385af-5396-4e6c-b816-30230780a635.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_003__af9385af-5396-4e6c-b816-30230780a635.jpg",
+   "name": "tja_003.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_003__af9385af-5396-4e6c-b816-30230780a635.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 147380,
+   "uploaded_bytes": 147380,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_004__27705b35-31de-4091-95e2-34a3b7bc7c63.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_004__27705b35-31de-4091-95e2-34a3b7bc7c63.jpg",
+   "name": "tja_004.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_004__27705b35-31de-4091-95e2-34a3b7bc7c63.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 127963,
+   "uploaded_bytes": 127963,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_005__a719b340-119b-4b3b-a58b-f6ede1fe4a58.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_005__a719b340-119b-4b3b-a58b-f6ede1fe4a58.jpg",
+   "name": "tja_005.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_005__a719b340-119b-4b3b-a58b-f6ede1fe4a58.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 119176,
+   "uploaded_bytes": 119176,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_006__69192670-6802-4ce6-bd37-60ae5bf76958.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_006__69192670-6802-4ce6-bd37-60ae5bf76958.jpg",
+   "name": "tja_006.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_006__69192670-6802-4ce6-bd37-60ae5bf76958.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 243352,
+   "uploaded_bytes": 243352,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_007__f128297a-359b-4e3e-9f4f-89e0df2dbd25.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_007__f128297a-359b-4e3e-9f4f-89e0df2dbd25.jpg",
+   "name": "tja_007.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_007__f128297a-359b-4e3e-9f4f-89e0df2dbd25.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 142391,
+   "uploaded_bytes": 142391,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_008__3c2f15dc-092c-4049-9cac-9f1739135b76.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_008__3c2f15dc-092c-4049-9cac-9f1739135b76.jpg",
+   "name": "tja_008.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_008__3c2f15dc-092c-4049-9cac-9f1739135b76.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 140684,
+   "uploaded_bytes": 140684,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_009__0b383ec2-2cf5-4e74-8ef8-99a31e8eaf25.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_009__0b383ec2-2cf5-4e74-8ef8-99a31e8eaf25.jpg",
+   "name": "tja_009.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_009__0b383ec2-2cf5-4e74-8ef8-99a31e8eaf25.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 188744,
+   "uploaded_bytes": 188744,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_010__e78c51b7-7996-4aeb-8387-ba85e166ade6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_010__e78c51b7-7996-4aeb-8387-ba85e166ade6.jpg",
+   "name": "tja_010.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_010__e78c51b7-7996-4aeb-8387-ba85e166ade6.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 187581,
+   "uploaded_bytes": 187581,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_011__44ad4728-d803-472a-81a0-f17e4de53d70.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_011__44ad4728-d803-472a-81a0-f17e4de53d70.jpg",
+   "name": "tja_011.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_011__44ad4728-d803-472a-81a0-f17e4de53d70.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 242408,
+   "uploaded_bytes": 242408,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_012__d64bc506-2c98-410c-b0f5-b884fd079842.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_012__d64bc506-2c98-410c-b0f5-b884fd079842.jpg",
+   "name": "tja_012.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_012__d64bc506-2c98-410c-b0f5-b884fd079842.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 183002,
+   "uploaded_bytes": 183002,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_013__dfdcf27f-ea65-43b3-883b-b41a38fbc82f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_013__dfdcf27f-ea65-43b3-883b-b41a38fbc82f.jpg",
+   "name": "tja_013.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_013__dfdcf27f-ea65-43b3-883b-b41a38fbc82f.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 198931,
+   "uploaded_bytes": 198931,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_014__866b7d76-bdf9-43c8-89de-6b650ce062a5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_014__866b7d76-bdf9-43c8-89de-6b650ce062a5.jpg",
+   "name": "tja_014.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_014__866b7d76-bdf9-43c8-89de-6b650ce062a5.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 119351,
+   "uploaded_bytes": 119351,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_015__306601b7-16e5-4f50-b425-d1844b90f1e6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_015__306601b7-16e5-4f50-b425-d1844b90f1e6.jpg",
+   "name": "tja_015.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_015__306601b7-16e5-4f50-b425-d1844b90f1e6.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 162623,
+   "uploaded_bytes": 162623,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_016__a9d48af9-1cba-400f-a3bd-e02a2b53b694.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_016__a9d48af9-1cba-400f-a3bd-e02a2b53b694.jpg",
+   "name": "tja_016.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_016__a9d48af9-1cba-400f-a3bd-e02a2b53b694.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 173750,
+   "uploaded_bytes": 173750,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_017__0da1ba6e-5631-4182-86a8-ff0fa5bf3c44.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_017__0da1ba6e-5631-4182-86a8-ff0fa5bf3c44.jpg",
+   "name": "tja_017.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_017__0da1ba6e-5631-4182-86a8-ff0fa5bf3c44.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 262205,
+   "uploaded_bytes": 262205,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_018__e492ae6f-c140-429d-b46e-d18aecba2dab.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_018__e492ae6f-c140-429d-b46e-d18aecba2dab.jpg",
+   "name": "tja_018.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_018__e492ae6f-c140-429d-b46e-d18aecba2dab.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 176072,
+   "uploaded_bytes": 176072,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_019__a6032884-cafe-49b2-8fa3-6b5671eebb33.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_019__a6032884-cafe-49b2-8fa3-6b5671eebb33.jpg",
+   "name": "tja_019.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_019__a6032884-cafe-49b2-8fa3-6b5671eebb33.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 206713,
+   "uploaded_bytes": 206713,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tja_020__77684655-f207-4844-b6cc-f8039467aaf4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tja_020__77684655-f207-4844-b6cc-f8039467aaf4.jpg",
+   "name": "tja_020.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tja_020__77684655-f207-4844-b6cc-f8039467aaf4.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 185329,
+   "uploaded_bytes": 185329,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_001__f6b1e20c-c988-43f5-87dd-aa90e1871dbe.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_001__f6b1e20c-c988-43f5-87dd-aa90e1871dbe.jpg",
+   "name": "tjb_001.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_001__f6b1e20c-c988-43f5-87dd-aa90e1871dbe.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 213059,
+   "uploaded_bytes": 213059,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_002__9ac06a4a-39ca-485f-96cd-21b5897b8a2c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_002__9ac06a4a-39ca-485f-96cd-21b5897b8a2c.jpg",
+   "name": "tjb_002.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_002__9ac06a4a-39ca-485f-96cd-21b5897b8a2c.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 182426,
+   "uploaded_bytes": 182426,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_003__a3b9c322-9c29-42f7-b668-48d088b73874.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_003__a3b9c322-9c29-42f7-b668-48d088b73874.jpg",
+   "name": "tjb_003.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_003__a3b9c322-9c29-42f7-b668-48d088b73874.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 200702,
+   "uploaded_bytes": 200702,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_004__58540c21-ba2b-4074-8e10-a3c337745c7c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_004__58540c21-ba2b-4074-8e10-a3c337745c7c.jpg",
+   "name": "tjb_004.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_004__58540c21-ba2b-4074-8e10-a3c337745c7c.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 146477,
+   "uploaded_bytes": 146477,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_005__f57e6ada-a63e-49ae-8e92-8548dc19562e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_005__f57e6ada-a63e-49ae-8e92-8548dc19562e.jpg",
+   "name": "tjb_005.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_005__f57e6ada-a63e-49ae-8e92-8548dc19562e.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 199161,
+   "uploaded_bytes": 199161,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_006__53c04db5-cdf0-4bf5-bb91-b86b760131d7.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_006__53c04db5-cdf0-4bf5-bb91-b86b760131d7.jpg",
+   "name": "tjb_006.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_006__53c04db5-cdf0-4bf5-bb91-b86b760131d7.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 205709,
+   "uploaded_bytes": 205709,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_007__05ee0c23-be63-4cf1-8717-9b256165aa05.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_007__05ee0c23-be63-4cf1-8717-9b256165aa05.jpg",
+   "name": "tjb_007.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_007__05ee0c23-be63-4cf1-8717-9b256165aa05.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 213647,
+   "uploaded_bytes": 213647,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_008__c42aadf6-24b6-4e17-83da-2762ee2652f6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_008__c42aadf6-24b6-4e17-83da-2762ee2652f6.jpg",
+   "name": "tjb_008.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_008__c42aadf6-24b6-4e17-83da-2762ee2652f6.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 174449,
+   "uploaded_bytes": 174449,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_009__1864590f-7eed-4143-8154-3563be6ba05f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_009__1864590f-7eed-4143-8154-3563be6ba05f.jpg",
+   "name": "tjb_009.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_009__1864590f-7eed-4143-8154-3563be6ba05f.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 200904,
+   "uploaded_bytes": 200904,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_010__c3857539-3446-4012-ae3f-6f904eab69af.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_010__c3857539-3446-4012-ae3f-6f904eab69af.jpg",
+   "name": "tjb_010.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_010__c3857539-3446-4012-ae3f-6f904eab69af.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 213987,
+   "uploaded_bytes": 213987,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_011__8866f6ad-b7cf-4d55-87aa-bb3f85e77276.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_011__8866f6ad-b7cf-4d55-87aa-bb3f85e77276.jpg",
+   "name": "tjb_011.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_011__8866f6ad-b7cf-4d55-87aa-bb3f85e77276.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 196984,
+   "uploaded_bytes": 196984,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_012__2934233d-15c3-4e90-8485-03d0d9759dea.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_012__2934233d-15c3-4e90-8485-03d0d9759dea.jpg",
+   "name": "tjb_012.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_012__2934233d-15c3-4e90-8485-03d0d9759dea.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 130758,
+   "uploaded_bytes": 130758,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_013__8252af20-06aa-4f17-9554-1e2f97013152.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_013__8252af20-06aa-4f17-9554-1e2f97013152.jpg",
+   "name": "tjb_013.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_013__8252af20-06aa-4f17-9554-1e2f97013152.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 147332,
+   "uploaded_bytes": 147332,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_014__0e8fb24c-a22b-4bb3-bb14-bedfaeda497c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_014__0e8fb24c-a22b-4bb3-bb14-bedfaeda497c.jpg",
+   "name": "tjb_014.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_014__0e8fb24c-a22b-4bb3-bb14-bedfaeda497c.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 167555,
+   "uploaded_bytes": 167555,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_015__7a72856c-de5e-456b-b9b5-6a4c59d136c9.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_015__7a72856c-de5e-456b-b9b5-6a4c59d136c9.jpg",
+   "name": "tjb_015.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_015__7a72856c-de5e-456b-b9b5-6a4c59d136c9.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 200109,
+   "uploaded_bytes": 200109,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_016__a8e95410-86e9-4fe5-ab46-69cd4c516b96.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_016__a8e95410-86e9-4fe5-ab46-69cd4c516b96.jpg",
+   "name": "tjb_016.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_016__a8e95410-86e9-4fe5-ab46-69cd4c516b96.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 212552,
+   "uploaded_bytes": 212552,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_017__f578d8b7-93a1-4b15-b247-54270f3f7354.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_017__f578d8b7-93a1-4b15-b247-54270f3f7354.jpg",
+   "name": "tjb_017.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_017__f578d8b7-93a1-4b15-b247-54270f3f7354.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 178131,
+   "uploaded_bytes": 178131,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_018__d4f5b1ce-f84f-439d-b607-08e30f5b2d0e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_018__d4f5b1ce-f84f-439d-b607-08e30f5b2d0e.jpg",
+   "name": "tjb_018.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_018__d4f5b1ce-f84f-439d-b607-08e30f5b2d0e.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 177786,
+   "uploaded_bytes": 177786,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_019__e1b54c7a-362f-468c-a4a2-bc7194f5aba3.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_019__e1b54c7a-362f-468c-a4a2-bc7194f5aba3.jpg",
+   "name": "tjb_019.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_019__e1b54c7a-362f-468c-a4a2-bc7194f5aba3.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 200580,
+   "uploaded_bytes": 200580,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjb_020__501c7821-7d00-4747-ab36-85c7e500ebac.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjb_020__501c7821-7d00-4747-ab36-85c7e500ebac.jpg",
+   "name": "tjb_020.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjb_020__501c7821-7d00-4747-ab36-85c7e500ebac.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 139209,
+   "uploaded_bytes": 139209,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjc_001__25e3b223-0a53-4a0a-b425-d5c6f8f266a3.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjc_001__25e3b223-0a53-4a0a-b425-d5c6f8f266a3.jpg",
+   "name": "tjc_001.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjc_001__25e3b223-0a53-4a0a-b425-d5c6f8f266a3.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 102935,
+   "uploaded_bytes": 102935,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjc_002__c6eb472b-62a1-440c-83da-10f06d1b15ef.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjc_002__c6eb472b-62a1-440c-83da-10f06d1b15ef.jpg",
+   "name": "tjc_002.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjc_002__c6eb472b-62a1-440c-83da-10f06d1b15ef.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 174738,
+   "uploaded_bytes": 174738,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjc_003__6008eaa6-c34f-4321-90e0-b9dc02068ce2.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjc_003__6008eaa6-c34f-4321-90e0-b9dc02068ce2.jpg",
+   "name": "tjc_003.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjc_003__6008eaa6-c34f-4321-90e0-b9dc02068ce2.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 161953,
+   "uploaded_bytes": 161953,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjc_004__ea190ee0-f386-4b3a-8058-c5b9884c1ae7.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjc_004__ea190ee0-f386-4b3a-8058-c5b9884c1ae7.jpg",
+   "name": "tjc_004.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjc_004__ea190ee0-f386-4b3a-8058-c5b9884c1ae7.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 198724,
+   "uploaded_bytes": 198724,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjc_005__53f9c320-2c97-4d17-a5d9-212dfb429364.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjc_005__53f9c320-2c97-4d17-a5d9-212dfb429364.jpg",
+   "name": "tjc_005.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjc_005__53f9c320-2c97-4d17-a5d9-212dfb429364.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 194473,
+   "uploaded_bytes": 194473,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjc_006__2694a7af-d4cb-4ab1-beb3-5890fc78c968.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjc_006__2694a7af-d4cb-4ab1-beb3-5890fc78c968.jpg",
+   "name": "tjc_006.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjc_006__2694a7af-d4cb-4ab1-beb3-5890fc78c968.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 198756,
+   "uploaded_bytes": 198756,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjc_007__39bb6b03-1f0b-4c67-808e-640efece2b6e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjc_007__39bb6b03-1f0b-4c67-808e-640efece2b6e.jpg",
+   "name": "tjc_007.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjc_007__39bb6b03-1f0b-4c67-808e-640efece2b6e.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 172642,
+   "uploaded_bytes": 172642,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjc_008__e5197adf-0a18-4a8f-bcda-939c9c285e62.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjc_008__e5197adf-0a18-4a8f-bcda-939c9c285e62.jpg",
+   "name": "tjc_008.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjc_008__e5197adf-0a18-4a8f-bcda-939c9c285e62.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 187680,
+   "uploaded_bytes": 187680,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjc_009__3091cbec-3a2f-476b-9745-430804dc0476.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjc_009__3091cbec-3a2f-476b-9745-430804dc0476.jpg",
+   "name": "tjc_009.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjc_009__3091cbec-3a2f-476b-9745-430804dc0476.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 202585,
+   "uploaded_bytes": 202585,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjc_010__c044d661-4f51-4405-8348-0f9573bb31a0.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjc_010__c044d661-4f51-4405-8348-0f9573bb31a0.jpg",
+   "name": "tjc_010.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjc_010__c044d661-4f51-4405-8348-0f9573bb31a0.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 257302,
+   "uploaded_bytes": 257302,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjc_011__0b1e3d52-2287-4197-835c-717f1435d37e.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjc_011__0b1e3d52-2287-4197-835c-717f1435d37e.jpg",
+   "name": "tjc_011.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjc_011__0b1e3d52-2287-4197-835c-717f1435d37e.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 207931,
+   "uploaded_bytes": 207931,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjc_012__58fe608d-5cdc-4bae-bc96-f14e211c5a36.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjc_012__58fe608d-5cdc-4bae-bc96-f14e211c5a36.jpg",
+   "name": "tjc_012.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjc_012__58fe608d-5cdc-4bae-bc96-f14e211c5a36.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 157856,
+   "uploaded_bytes": 157856,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjc_013__4ffe88d6-59bc-44ce-b64d-240d445a9cba.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjc_013__4ffe88d6-59bc-44ce-b64d-240d445a9cba.jpg",
+   "name": "tjc_013.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjc_013__4ffe88d6-59bc-44ce-b64d-240d445a9cba.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 138443,
+   "uploaded_bytes": 138443,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjc_014__1e0997b5-106b-429b-abc3-ce6da541ad8c.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjc_014__1e0997b5-106b-429b-abc3-ce6da541ad8c.jpg",
+   "name": "tjc_014.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjc_014__1e0997b5-106b-429b-abc3-ce6da541ad8c.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 172672,
+   "uploaded_bytes": 172672,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjc_015__603da362-d2d2-4d1b-98e5-bbe6547371d5.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjc_015__603da362-d2d2-4d1b-98e5-bbe6547371d5.jpg",
+   "name": "tjc_015.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjc_015__603da362-d2d2-4d1b-98e5-bbe6547371d5.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 170174,
+   "uploaded_bytes": 170174,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjc_017__953f159c-59bd-498e-a592-24338ce82a51.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjc_017__953f159c-59bd-498e-a592-24338ce82a51.jpg",
+   "name": "tjc_017.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjc_017__953f159c-59bd-498e-a592-24338ce82a51.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 223013,
+   "uploaded_bytes": 223013,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjc_018__4425179d-674c-4fce-9ea6-2a2a90bc37a6.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjc_018__4425179d-674c-4fce-9ea6-2a2a90bc37a6.jpg",
+   "name": "tjc_018.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjc_018__4425179d-674c-4fce-9ea6-2a2a90bc37a6.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 203286,
+   "uploaded_bytes": 203286,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjc_019__7d131c62-64c6-42f1-bfd7-de893cb95f6f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjc_019__7d131c62-64c6-42f1-bfd7-de893cb95f6f.jpg",
+   "name": "tjc_019.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjc_019__7d131c62-64c6-42f1-bfd7-de893cb95f6f.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 114565,
+   "uploaded_bytes": 114565,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjc_020__bd427098-2478-4ab7-86a2-0ed84a63a1ff.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjc_020__bd427098-2478-4ab7-86a2-0ed84a63a1ff.jpg",
+   "name": "tjc_020.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjc_020__bd427098-2478-4ab7-86a2-0ed84a63a1ff.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 196490,
+   "uploaded_bytes": 196490,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_001__efb74b97-edcb-48a5-9444-366b5f5e72d7.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_001__efb74b97-edcb-48a5-9444-366b5f5e72d7.jpg",
+   "name": "tjd_001.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_001__efb74b97-edcb-48a5-9444-366b5f5e72d7.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 230249,
+   "uploaded_bytes": 230249,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_002__7e846a1d-47d2-4eb2-9d24-38b723926800.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_002__7e846a1d-47d2-4eb2-9d24-38b723926800.jpg",
+   "name": "tjd_002.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_002__7e846a1d-47d2-4eb2-9d24-38b723926800.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 109286,
+   "uploaded_bytes": 109286,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_003__d3073ee1-8576-45f1-8fd6-bce668b663b7.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_003__d3073ee1-8576-45f1-8fd6-bce668b663b7.jpg",
+   "name": "tjd_003.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_003__d3073ee1-8576-45f1-8fd6-bce668b663b7.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 138591,
+   "uploaded_bytes": 138591,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_004__61e50bf0-bde6-43c0-91bb-e5a30b3e9a2b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_004__61e50bf0-bde6-43c0-91bb-e5a30b3e9a2b.jpg",
+   "name": "tjd_004.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_004__61e50bf0-bde6-43c0-91bb-e5a30b3e9a2b.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 179703,
+   "uploaded_bytes": 179703,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_005__7e4298e0-7439-4ac1-8938-c3e1a8ddd4e4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_005__7e4298e0-7439-4ac1-8938-c3e1a8ddd4e4.jpg",
+   "name": "tjd_005.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_005__7e4298e0-7439-4ac1-8938-c3e1a8ddd4e4.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 260670,
+   "uploaded_bytes": 260670,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_006__69df958d-17be-4209-b0bb-fcb5143dce5f.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_006__69df958d-17be-4209-b0bb-fcb5143dce5f.jpg",
+   "name": "tjd_006.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_006__69df958d-17be-4209-b0bb-fcb5143dce5f.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 231304,
+   "uploaded_bytes": 231304,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_007__2166f995-c169-4cb6-a8f8-0a4157f4b18b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_007__2166f995-c169-4cb6-a8f8-0a4157f4b18b.jpg",
+   "name": "tjd_007.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_007__2166f995-c169-4cb6-a8f8-0a4157f4b18b.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 124570,
+   "uploaded_bytes": 124570,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_008__359083f5-1d1b-458d-9a08-903d3e8652df.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_008__359083f5-1d1b-458d-9a08-903d3e8652df.jpg",
+   "name": "tjd_008.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_008__359083f5-1d1b-458d-9a08-903d3e8652df.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 198590,
+   "uploaded_bytes": 198590,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_009__a34e5eb6-e42b-4524-a9d3-4deedd19747b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_009__a34e5eb6-e42b-4524-a9d3-4deedd19747b.jpg",
+   "name": "tjd_009.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_009__a34e5eb6-e42b-4524-a9d3-4deedd19747b.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 202200,
+   "uploaded_bytes": 202200,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_010__8b60a41c-7fde-4f46-a523-18cb23559905.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_010__8b60a41c-7fde-4f46-a523-18cb23559905.jpg",
+   "name": "tjd_010.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_010__8b60a41c-7fde-4f46-a523-18cb23559905.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 163887,
+   "uploaded_bytes": 163887,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_011__ee679d56-068a-4de0-a995-48feaf1925eb.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_011__ee679d56-068a-4de0-a995-48feaf1925eb.jpg",
+   "name": "tjd_011.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_011__ee679d56-068a-4de0-a995-48feaf1925eb.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 168556,
+   "uploaded_bytes": 168556,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_012__386ed2fb-5763-48b3-bf16-a1a968e1548a.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_012__386ed2fb-5763-48b3-bf16-a1a968e1548a.jpg",
+   "name": "tjd_012.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_012__386ed2fb-5763-48b3-bf16-a1a968e1548a.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 176761,
+   "uploaded_bytes": 176761,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_013__3937ea13-f5c3-44fe-a8ca-e5a1c71becd4.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_013__3937ea13-f5c3-44fe-a8ca-e5a1c71becd4.jpg",
+   "name": "tjd_013.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_013__3937ea13-f5c3-44fe-a8ca-e5a1c71becd4.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 191450,
+   "uploaded_bytes": 191450,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_014__68135434-1795-4989-93aa-4950006e11da.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_014__68135434-1795-4989-93aa-4950006e11da.jpg",
+   "name": "tjd_014.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_014__68135434-1795-4989-93aa-4950006e11da.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 188012,
+   "uploaded_bytes": 188012,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_015__732d879f-f78c-4124-bcc5-059109380220.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_015__732d879f-f78c-4124-bcc5-059109380220.jpg",
+   "name": "tjd_015.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_015__732d879f-f78c-4124-bcc5-059109380220.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 250023,
+   "uploaded_bytes": 250023,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_016__60c68960-cac8-4c94-a115-9696df9fb2af.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_016__60c68960-cac8-4c94-a115-9696df9fb2af.jpg",
+   "name": "tjd_016.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_016__60c68960-cac8-4c94-a115-9696df9fb2af.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 237278,
+   "uploaded_bytes": 237278,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_017__c365fdcb-a07a-4008-a1e8-3626e781bf8b.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_017__c365fdcb-a07a-4008-a1e8-3626e781bf8b.jpg",
+   "name": "tjd_017.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_017__c365fdcb-a07a-4008-a1e8-3626e781bf8b.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 198023,
+   "uploaded_bytes": 198023,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_018__76979634-b86a-4f2f-9a74-ff1551be8ded.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_018__76979634-b86a-4f2f-9a74-ff1551be8ded.jpg",
+   "name": "tjd_018.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_018__76979634-b86a-4f2f-9a74-ff1551be8ded.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 206285,
+   "uploaded_bytes": 206285,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_019__5360275b-089a-4103-92fa-7bbf5582ba42.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_019__5360275b-089a-4103-92fa-7bbf5582ba42.jpg",
+   "name": "tjd_019.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_019__5360275b-089a-4103-92fa-7bbf5582ba42.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 173805,
+   "uploaded_bytes": 173805,
+   "image_compressed": false
+  },
+  {
+   "key": "templates/2026-zhang-perceived/tianjin/tjd_020__e767f5a9-7947-442c-b713-6ee539b24583.jpg",
+   "url": "https://media.sp-survey.org/templates/2026-zhang-perceived/tianjin/tjd_020__e767f5a9-7947-442c-b713-6ee539b24583.jpg",
+   "name": "tjd_020.jpg",
+   "type": "image",
+   "folder": "tianjin",
+   "media_id": "templates/2026-zhang-perceived/tianjin/tjd_020__e767f5a9-7947-442c-b713-6ee539b24583.jpg",
+   "logicalFolder": "tianjin",
+   "original_bytes": 158779,
+   "uploaded_bytes": 158779,
+   "image_compressed": false
+  }
+ ],
+ "paper": {
+  "title": "Streetscape Elements and Perceived Street Vitality for Sustainable Urban Renewal: A Geographically Weighted Machine Learning Analysis in Tianjin, China",
+  "authors": [
+   "Zhang Y.",
+   "Zhong K.",
+   "Wu J.",
+   "Wang K.",
+   "Liu Y.",
+   "Ji Q.",
+   "Yu Y.",
+   "Hou L."
+  ],
+  "year": 2026,
+  "venue": "Sustainability (Switzerland)",
+  "doi": "10.3390/su18105165",
+  "url": "https://doi.org/10.3390/su18105165"
+ }
+}
