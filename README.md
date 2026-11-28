@@ -1,10 +1,10 @@
 <div align="center">
 
-<img src="./docs/cover.jpg" alt="SP-Survey: platform and template library for urban visual surveys, shown over a wall of images from the template library" width="100%">
+<img src="./docs/cover.jpg" alt="SP-Survey: open-source platform and template library for visual assessment of urban environment. 319 published studies from 48 countries and regions, 17,169 images, 280 videos and 694 audio clips, with a world map of study locations" width="100%">
 
 # SP-Survey
 
-### Platform & Template Library for Urban Visual Surveys
+### Open-Source Platform & Template Library for Visual Assessment of Urban Environment
 
 **Run image-based perception surveys. Start from 300+ published studies, or describe yours and let an AI write it.**
 
