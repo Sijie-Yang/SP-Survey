@@ -20,11 +20,13 @@ Media files are welcome in the folder: most studies use a few dozen to a few hun
 - Keep one study under 50 MB, and each file under 5 MB. If your set is larger, put it on OSF, Zenodo, Figshare or Hugging Face and give the link in `study.md`.
 - Only add media you are allowed to share in public. If you are not sure, or the images cannot be shared, say so in `study.md`: we then build the template with the same task and scales and new images of the same kind, and label it a method replication.
 
-## Two ways to send it
+## Three ways to send it
 
 **Pull request.** Copy `contributions/_template/` to `contributions/<year>-<first-author>-<keyword>/` (for example `contributions/2024-tan-night-safety/`), fill in `study.md`, add your survey files and media, and open the PR.
 
 **Issue.** If you do not use git, open an [Add a study](https://github.com/Sijie-Yang/SP-Survey/issues/new?template=add-study.yml) issue, answer the questions and drag your files into the text box.
+
+**Online form.** If you have no GitHub account, fill in the [Add a template](https://sp-survey.org/add-template) form on sp-survey.org. It asks for the paper's title, authors and link, and takes your images and other files (PDF, Word, ZIP). The form needs a link to a paper or preprint, so for an unpublished study use one of the two ways above.
 
 ## What happens next
 
