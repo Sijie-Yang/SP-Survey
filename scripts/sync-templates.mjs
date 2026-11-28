@@ -64,20 +64,30 @@ function mediaPath(id, entry) {
   return `${folder}${entry?.name || String(entry?.url || '').split('/').pop()}`;
 }
 
+let missed = 0;
 async function downloadMedia(template) {
-  const entries = (template.preloadedImages || []).filter((entry) => entry?.url);
+  // Files that ship in this repository have a path, not a web address: nothing to fetch.
+  const entries = (template.preloadedImages || []).filter((entry) => /^https?:\/\//.test(String(entry?.url || '')));
   let fetched = 0;
-  await pool(entries, 6, async (entry) => {
+  await pool(entries, 16, async (entry) => {
     const rel = mediaPath(template.id, entry);
     if (!rel || rel.includes('..')) return;
     const file = path.join(DIR, template.id, 'media', rel);
     const existing = await stat(file).catch(() => null);
     if (existing && (!entry.size || existing.size === entry.size)) return;
-    const res = await fetch(entry.url, { headers: HEADERS });
-    if (!res.ok) { console.warn(`  media ${rel}: ${res.status}`); return; }
-    await mkdir(path.dirname(file), { recursive: true });
-    await writeFile(file, Buffer.from(await res.arrayBuffer()));
-    fetched += 1;
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      try {
+        const res = await fetch(entry.url, { headers: HEADERS });
+        if (!res.ok) throw new Error(String(res.status));
+        await mkdir(path.dirname(file), { recursive: true });
+        await writeFile(file, Buffer.from(await res.arrayBuffer()));
+        fetched += 1;
+        return;
+      } catch (error) {
+        if (attempt === 2) { missed += 1; console.warn(`  media ${template.id}/${rel}: ${error.message}`); }
+        else await new Promise((resolve) => setTimeout(resolve, 1500 * (attempt + 1)));
+      }
+    }
   });
   return fetched;
 }
@@ -89,8 +99,8 @@ if (MEDIA_ONLY) {
     const template = await readJson(path.join(DIR, name));
     if (template?.id) total += await downloadMedia(template);
   }
-  console.log(`${names.length} templates: ${total} media files downloaded.`);
-  process.exit(0);
+  console.log(`${names.length} templates: ${total} media files downloaded, ${missed} could not be fetched.`);
+  process.exit(missed > 50 ? 1 : 0);
 }
 
 const { templates: online } = await getJson(`${SOURCE}/api/public/templates`);
