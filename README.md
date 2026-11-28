@@ -27,6 +27,13 @@ SP-Survey is an open-source tool for studies where people look at streets, build
 
 </div>
 
+<div align="center">
+<br>
+<a href="https://ual.sg"><picture><source media="(prefers-color-scheme: dark)" srcset="./docs/ual-logo-dark.png"><img src="./docs/ual-logo.png" alt="Urban Analytics Lab" height="72"></picture></a>
+<br>
+<sub>Developed at the <a href="https://ual.sg">Urban Analytics Lab</a>, National University of Singapore</sub>
+</div>
+
 ## Add your study
 
 This list grows by contributions. If you ran an image-based perception study, published or not, send the survey materials and it becomes a template that others can rerun and cite.
