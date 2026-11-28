@@ -157,3 +157,4 @@ if (!marked.test(readme)) throw new Error('README.md has no <!-- templates:start
 const rounded = `${Math.floor(papers.length / 50) * 50}+`;
 writeFileSync(readmeUrl, readme.replace(marked, () => block).replace(/\b\d{3}\+/g, rounded));
 console.log(`README.md: ${papers.length} paper templates in ${shown.length} sections (${shown.map((s) => `${s.title} ${s.rows.length}`).join(', ')}), ${others.length} others`);
+console.log('Next: node scripts/build-readme-images.mjs redraws docs/cover.jpg and docs/library.jpg with these numbers.');
