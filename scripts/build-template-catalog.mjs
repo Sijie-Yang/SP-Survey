@@ -7,6 +7,7 @@
 //   concept       what people judge or feel        -> the columns of the overview table
 //   stimulus, task, setting, participants, where it was run -> one line of counts each
 // Every count links to the same selection in the online library.
+// The picture above the list (docs/library.jpg) is drawn by scripts/build-readme-images.mjs.
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const data = JSON.parse(readFileSync(new URL('../public/project_templates/catalog.json', import.meta.url), 'utf8'));
@@ -101,6 +102,9 @@ const recentLines = recent.length ? [
 
 const block = [
   '<!-- templates:start (written by scripts/build-template-catalog.mjs; do not edit this list by hand) -->',
+  `<p><img src="./docs/library.jpg" alt="The template library at a glance: ${papers.length} published studies by kind of place (${
+    sections.filter((section) => section.rows.length).map((section) => `${section.title} ${section.rows.length}`).join(', ')}), by what people judge, what they are shown, how they answer, where the study is run and who takes part" width="100%"></p>`,
+  '',
   `**${papers.length} published perception studies**, from ${Math.min(...papers.map(yearOf))} to ${Math.max(...papers.map(yearOf))}, run in ${places.length} countries and regions. Each one is rebuilt as a ready-to-run survey: [preview, use or download it at sp-survey.org/templates](${data.source}). Snapshot of ${data.snapshot}.`,
   '',
   ...recentLines,
