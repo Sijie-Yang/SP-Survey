@@ -58,10 +58,10 @@ papers.forEach((tpl) => {
 });
 const shown = [...sections, rest].filter((section) => section.rows.length);
 
-// The five templates added last, once the catalog knows when each was added.
-const recent = papers.filter((tpl) => tpl.added).sort((a, b) => b.added.localeCompare(a.added) || a.id.localeCompare(b.id)).slice(0, 5);
+// The three templates added last, once the catalog knows when each was added.
+const recent = papers.filter((tpl) => tpl.added).sort((a, b) => b.added.localeCompare(a.added) || a.id.localeCompare(b.id)).slice(0, 3);
 const recentLines = recent.length ? [
-  `**Recently added:** ${recent.map((tpl) => `${cell(tpl.name)} (${tpl.added})`).join(' · ')}`,
+  `**Recently added:** ${recent.map((tpl) => cell(tpl.name)).join(' · ')}`,
   '',
 ] : [];
 

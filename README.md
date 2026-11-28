@@ -1,32 +1,31 @@
 <div align="center">
 
-<img src="./docs/cover.jpg" alt="SP-Survey: open-source platform and template library for visual assessment of urban environment. 319 published studies from 48 countries and regions, 17,169 images, 280 videos and 694 audio clips, with a world map of study locations" width="100%">
+<p><img src="./docs/cover.jpg" alt="SP-Survey: open-source platform and template library for visual assessment of urban environment. 319 published studies from 48 countries and regions, 17,169 images, 280 videos and 694 audio clips, with a world map of study locations" width="100%"></p>
 
-# SP-Survey
+[**Template library**](#template-library) &nbsp;·&nbsp; [**Add your study**](#add-your-study) &nbsp;·&nbsp; [**Run it yourself**](#run-it-yourself) &nbsp;·&nbsp; [**Hosted platform**](https://sp-survey.org)
 
-### Open-Source Platform & Template Library for Visual Assessment of Urban Environment
-
-**Run image-based perception surveys. Start from 300+ published studies, or describe yours and let an AI write it.**
-
-[![Stars](https://img.shields.io/github/stars/Sijie-Yang/SP-Survey?style=social)](https://github.com/Sijie-Yang/SP-Survey)
-[![Website](https://img.shields.io/badge/🌐-sp--survey.org-blue)](https://sp-survey.org)
-[![Templates](https://img.shields.io/badge/paper_templates-300+-8A2BE2)](#template-library)
-[![Paper](https://img.shields.io/badge/📄-Paper-9cf)](https://www.sciencedirect.com/science/article/pii/S0360132325000514)
-[![License](https://img.shields.io/badge/License-CC_BY_4.0-green)](https://creativecommons.org/licenses/by/4.0/)
-
-[Template library](#template-library) · [Add your study](#add-your-study) · [Run it yourself](#run-it-yourself) · [Hosted platform](https://sp-survey.org)
+[![Stars](https://img.shields.io/github/stars/Sijie-Yang/SP-Survey?style=flat-square&logo=github&label=stars&labelColor=0b1320&color=2f8cff)](https://github.com/Sijie-Yang/SP-Survey/stargazers)
+[![Templates](https://img.shields.io/badge/templates-300+-2f8cff?style=flat-square&labelColor=0b1320)](#template-library)
+[![Paper](https://img.shields.io/badge/paper-Building_and_Environment-2f8cff?style=flat-square&labelColor=0b1320)](https://www.sciencedirect.com/science/article/pii/S0360132325000514)
+[![License](https://img.shields.io/badge/license-CC_BY_4.0-2f8cff?style=flat-square&labelColor=0b1320)](https://creativecommons.org/licenses/by/4.0/)
 
 </div>
 
+<br>
+
 SP-Survey is an open-source tool for studies where people look at streets, buildings, landscapes or interiors (images, video or audio) and say what they perceive: safer, greener, more beautiful, more comfortable.
 
+<p><img src="./docs/showcase.jpg" alt="Three steps: pick a published study from the template library, or describe your own study in Studio and let AI write the survey page, then send one link and collect answers on any device" width="100%"></p>
+
 - **Start from a published study.** Place Pulse, Streetscore, Scenic-Or-Not, Kaplan's restoration scale and 300+ more are rebuilt as surveys you can rerun or adapt.
-- **Or describe your study.** In Studio you write one paragraph and the AI writes the whole participant page. A page is saved only when it passes the SP-Scheme check, so responses are always recorded in a form the platform can analyse.
+- **Or describe your own.** In Studio you write one paragraph and the AI writes the whole participant page. A page is saved only when it passes the SP-Scheme check, so responses are always recorded in a form the platform can analyse.
 - **Keep your data.** No login. Projects are local files, responses and media go to your own Supabase, and you deploy the participant site yourself.
 
-<img src="./docs/demo-templates.gif" alt="Filtering the template library by street view, then previewing a Helsinki street-greenery study and rating two street photos" width="100%">
+<div align="center">
 
-If this saves you time, a ⭐ helps other researchers find it.
+**New studies are added every month.** [⭐ Star the repo](https://github.com/Sijie-Yang/SP-Survey) to follow them, and to help other researchers find it.
+
+</div>
 
 ## Add your study
 
@@ -57,7 +56,7 @@ Open http://localhost:3000/studio and click **Start from the example**: a workin
 <!-- templates:start (written by scripts/build-template-catalog.mjs; do not edit this list by hand) -->
 **319 published perception studies**, from 1876 to 2027, across 48 countries and regions. Each one is rebuilt as a ready-to-run survey: [preview, use or download it at sp-survey.org/templates](https://sp-survey.org/templates). Snapshot of 2026-11-28.
 
-**Recently added:** Alpine Landscape Liking (rating) (2026-11-28) · Meadows and Lawns: First Impressions and Attractiveness Ratings (Tübingen) (2026-11-28) · Building and Background Trees - Height Ratio Integration Rating (2026-11-28) · Trees Outside Forests Landscape Ranking (2026-11-28) · Urban Meadows and Lawns: Choosing the Most Appealing Green Space (Tübingen) (2026-11-28)
+**Recently added:** Alpine Landscape Liking (rating) · Meadows and Lawns: First Impressions and Attractiveness Ratings (Tübingen) · Building and Background Trees - Height Ratio Integration Rating
 
 [Street view](#street-view) (84) · [Panorama and 360°](#panorama-and-360) (6) · [Landscape, nature and other scene photos](#landscape-nature-and-other-scene-photos) (150) · [Rendered and simulated scenes](#rendered-and-simulated-scenes) (54) · [Indoor](#indoor) (5) · [Window view](#window-view) (1) · [Video](#video) (6) · [Sound](#sound) (5) · [Map](#map) (3) · [In situ](#in-situ) (3) · [Other](#other) (2) · [Demos and examples](#demos-and-examples) (12)
 
