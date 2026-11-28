@@ -1,9 +1,9 @@
-// Writes the template list in README.md from docs/templates.json, a snapshot
-// of the online template library at https://sp-survey.org/templates.
+// Writes the template list in README.md from public/project_templates/catalog.json,
+// which `node scripts/sync-templates.mjs` refreshes from the online library.
 // Usage: node scripts/build-template-catalog.mjs
 import { readFileSync, writeFileSync } from 'node:fs';
 
-const data = JSON.parse(readFileSync(new URL('../docs/templates.json', import.meta.url), 'utf8'));
+const data = JSON.parse(readFileSync(new URL('../public/project_templates/catalog.json', import.meta.url), 'utf8'));
 
 // Groups, in the order they appear. A template is listed once, under the
 // first group that matches one of its stimuli.
@@ -58,10 +58,18 @@ papers.forEach((tpl) => {
 });
 const shown = [...sections, rest].filter((section) => section.rows.length);
 
+// The five templates added last, once the catalog knows when each was added.
+const recent = papers.filter((tpl) => tpl.added).sort((a, b) => b.added.localeCompare(a.added) || a.id.localeCompare(b.id)).slice(0, 5);
+const recentLines = recent.length ? [
+  `**Recently added:** ${recent.map((tpl) => `${cell(tpl.name)} (${tpl.added})`).join(' · ')}`,
+  '',
+] : [];
+
 const block = [
-  '<!-- templates:start (written by scripts/build-template-catalog.mjs; edit docs/templates.json, not this list) -->',
+  '<!-- templates:start (written by scripts/build-template-catalog.mjs; do not edit this list by hand) -->',
   `**${papers.length} published perception studies**, from ${Math.min(...papers.map(yearOf))} to ${Math.max(...papers.map(yearOf))}, across ${places.size} countries and regions. Each one is rebuilt as a ready-to-run survey: [preview, use or download it at sp-survey.org/templates](${data.source}). Snapshot of ${data.snapshot}.`,
   '',
+  ...recentLines,
   shown.map((section) => `[${section.title}](#${slug(section.title)}) (${section.rows.length})`).join(' · ')
     + ` · [Demos and examples](#demos-and-examples) (${others.length})`,
   '',

@@ -263,7 +263,7 @@ app.delete('/api/projects/:projectId', async (req, res) => {
 app.get('/api/templates', async (req, res) => {
   try {
     const files = await fs.readdir(TEMPLATES_PATH);
-    const jsonFiles = files.filter(file => file.endsWith('.json') && file !== 'index.json');
+    const jsonFiles = files.filter(file => file.endsWith('.json') && !['index.json', 'catalog.json'].includes(file));
     res.json({ files: jsonFiles });
   } catch (error) {
     console.error('Error listing templates:', error);

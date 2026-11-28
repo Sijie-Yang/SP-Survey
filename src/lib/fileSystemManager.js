@@ -21,7 +21,7 @@ export const loadTemplatesFromFiles = async () => {
     }
     
     const { files } = await response.json();
-    const templateFiles = (files || []).filter((f) => f !== 'index.json');
+    const templateFiles = (files || []).filter((f) => f !== 'index.json' && f !== 'catalog.json');
 
     // Optional ordering from index.json
     let ordered = templateFiles;

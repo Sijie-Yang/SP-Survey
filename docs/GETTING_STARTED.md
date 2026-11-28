@@ -47,5 +47,6 @@ While `npm run dev` is running, a local agent API (this machine only) lets a cod
 CI=true npm test -- --watchAll=false
 npm run test:server
 npm run build
-node scripts/build-template-catalog.mjs   # rebuild the README template list from docs/templates.json
+node scripts/sync-templates.mjs           # mirror the online template library into public/project_templates/
+node scripts/build-template-catalog.mjs   # rebuild the README template list from it
 ```

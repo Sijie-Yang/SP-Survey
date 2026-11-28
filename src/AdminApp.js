@@ -43,6 +43,7 @@ import {
   OpenInNew,
   MoreVert,
   GitHub,
+  CollectionsBookmark,
   SpaceDashboardOutlined,
 } from '@mui/icons-material';
 import { themes, createCustomTheme } from './themes/themeConfig';
@@ -1751,6 +1752,10 @@ export default function AdminApp() {
         <MenuItem onClick={handleThemeFromTools}>
           <ListItemIcon><Palette fontSize="small" /></ListItemIcon>
           <ListItemText primary={t.changeTheme} />
+        </MenuItem>
+        <MenuItem onClick={() => { handleToolsMenuClose(); navigate('/templates'); }}>
+          <ListItemIcon><CollectionsBookmark fontSize="small" /></ListItemIcon>
+          <ListItemText primary="Template Library" />
         </MenuItem>
         <MenuItem onClick={() => { handleToolsMenuClose(); navigate('/skills'); }}>
           <ListItemIcon><EditNote fontSize="small" /></ListItemIcon>

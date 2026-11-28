@@ -48,11 +48,11 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000/studio and click **Start from the example**: a working study with a participant preview, with no key and no account. To collect real responses you connect your own Supabase and deploy the participant site; [docs/GETTING_STARTED.md](./docs/GETTING_STARTED.md) walks through it. Don't want to install anything? The [hosted platform](https://sp-survey.org) has the same features.
+Open http://localhost:3000/studio and click **Start from the example**: a working study with a participant preview, with no key and no account. Open http://localhost:3000/templates to browse the whole template library and start a project from any study; every template is a file in [`public/project_templates/`](./public/project_templates), mirrored from the online library once a month. To collect real responses you connect your own Supabase and deploy the participant site; [docs/GETTING_STARTED.md](./docs/GETTING_STARTED.md) walks through it. Don't want to install anything? The [hosted platform](https://sp-survey.org) has the same features.
 
 ## Template library
 
-<!-- templates:start (written by scripts/build-template-catalog.mjs; edit docs/templates.json, not this list) -->
+<!-- templates:start (written by scripts/build-template-catalog.mjs; do not edit this list by hand) -->
 **315 published perception studies**, from 1876 to 2027, across 47 countries and regions. Each one is rebuilt as a ready-to-run survey: [preview, use or download it at sp-survey.org/templates](https://sp-survey.org/templates). Snapshot of 2026-11-28.
 
 [Street view](#street-view) (83) · [Panorama and 360°](#panorama-and-360) (6) · [Landscape, nature and other scene photos](#landscape-nature-and-other-scene-photos) (150) · [Rendered and simulated scenes](#rendered-and-simulated-scenes) (51) · [Indoor](#indoor) (5) · [Window view](#window-view) (1) · [Video](#video) (6) · [Sound](#sound) (5) · [Map](#map) (3) · [In situ](#in-situ) (3) · [Other](#other) (2) · [Demos and examples](#demos-and-examples) (10)
