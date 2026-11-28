@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="./docs/cover.jpg" alt="SP-Survey: platform and template library for urban visual surveys, shown over a wall of images from the template library" width="100%">
+
 # SP-Survey
 
 ### Platform & Template Library for Urban Visual Surveys
@@ -12,8 +14,6 @@
 [![Paper](https://img.shields.io/badge/📄-Paper-9cf)](https://www.sciencedirect.com/science/article/pii/S0360132325000514)
 [![License](https://img.shields.io/badge/License-CC_BY_4.0-green)](https://creativecommons.org/licenses/by/4.0/)
 
-<img src="./docs/demo-templates.gif" alt="Filtering the template library by street view, then previewing a Helsinki street-greenery study and rating two street photos" width="100%">
-
 [Template library](#template-library) · [Add your study](#add-your-study) · [Run it yourself](#run-it-yourself) · [Hosted platform](https://sp-survey.org)
 
 </div>
@@ -23,6 +23,8 @@ SP-Survey is an open-source tool for studies where people look at streets, build
 - **Start from a published study.** Place Pulse, Streetscore, Scenic-Or-Not, Kaplan's restoration scale and 300+ more are rebuilt as surveys you can rerun or adapt.
 - **Or describe your study.** In Studio you write one paragraph and the AI writes the whole participant page. A page is saved only when it passes the SP-Scheme check, so responses are always recorded in a form the platform can analyse.
 - **Keep your data.** No login. Projects are local files, responses and media go to your own Supabase, and you deploy the participant site yourself.
+
+<img src="./docs/demo-templates.gif" alt="Filtering the template library by street view, then previewing a Helsinki street-greenery study and rating two street photos" width="100%">
 
 If this saves you time, a ⭐ helps other researchers find it.
 
