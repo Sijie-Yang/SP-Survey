@@ -12,7 +12,7 @@
 [![Paper](https://img.shields.io/badge/📄-Paper-9cf)](https://www.sciencedirect.com/science/article/pii/S0360132325000514)
 [![License](https://img.shields.io/badge/License-CC_BY_4.0-green)](https://creativecommons.org/licenses/by/4.0/)
 
-<img src="./docs/demo-templates.gif" alt="Filtering the template library, then previewing Fechner's 1876 golden-section study" width="100%">
+<img src="./docs/demo-templates.gif" alt="Filtering the template library by street view, then previewing a Helsinki street-greenery study and rating two street photos" width="100%">
 
 [Template library](#template-library) · [Add your study](#add-your-study) · [Run it yourself](#run-it-yourself) · [Hosted platform](https://sp-survey.org)
 
