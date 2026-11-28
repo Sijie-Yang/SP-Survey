@@ -44,6 +44,13 @@ function studyCell(tpl) {
   return tpl.contributor ? `${cell(tpl.name)} <sub>by @${tpl.contributor}</sub>` : cell(tpl.name);
 }
 
+// One study = one row of two lines: the full title, then paper · task · place.
+function studyRow(tpl) {
+  const details = [paperCell(tpl.paper), labels(tpl.task, TASK), placeOf(tpl)].filter(Boolean).join(' · ');
+  const by = tpl.contributor ? ` <sub>by @${tpl.contributor}</sub>` : '';
+  return `| ${yearOf(tpl)} | **${cell(tpl.name)}**${by}<br>${details} |`;
+}
+
 const isPaper = (tpl) => tpl.paper || tpl.source === 'paper';
 const papers = data.templates.filter(isPaper).sort((a, b) => yearOf(b) - yearOf(a) || a.id.localeCompare(b.id));
 const others = data.templates.filter((tpl) => !isPaper(tpl));
@@ -76,9 +83,9 @@ const block = [
   ...shown.flatMap((section) => [
     `### ${section.title}`,
     '',
-    '| Year | Study | Paper | Task | Place |',
-    '|---|---|---|---|---|',
-    ...section.rows.map((tpl) => `| ${yearOf(tpl)} | ${studyCell(tpl)} | ${paperCell(tpl.paper)} | ${labels(tpl.task, TASK)} | ${placeOf(tpl)} |`),
+    '| Year | Study |',
+    '|---|:---|',
+    ...section.rows.map(studyRow),
     '',
   ]),
   '### Demos and examples',
