@@ -2,8 +2,7 @@
 
 <p><img src="./docs/cover.jpg" alt="SP-Survey: open-source platform and template library for visual assessment of urban environment. 319 published studies from 48 countries and regions, 17,169 images, 280 videos and 694 audio clips, with a world map of study locations" width="100%"></p>
 
-<p><picture><source media="(prefers-color-scheme: dark)" srcset="./docs/logos-dark.png"><img src="./docs/logos.png" alt="National University of Singapore and Urban Analytics Lab" height="125"></picture><br>
-<sub>Developed at the <a href="https://ual.sg">Urban Analytics Lab</a>, <a href="https://nus.edu.sg">National University of Singapore</a></sub></p>
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="./docs/logos-dark.png"><img src="./docs/logos.png" alt="National University of Singapore and Urban Analytics Lab" height="125"></picture></p>
 
 [**Template library**](#template-library) &nbsp;·&nbsp; [**Add your study**](#add-your-study) &nbsp;·&nbsp; [**Run it yourself**](#run-it-yourself) &nbsp;·&nbsp; [**Hosted platform**](https://sp-survey.org)
 
