@@ -1,8 +1,10 @@
 <div align="center">
 
+<img src="./docs/cover.jpg" alt="SP-Survey: open-source platform and template library for visual assessment of urban environment. 319 published studies from 48 countries and regions, 17,169 images, 280 videos and 694 audio clips, with a world map of study locations" width="100%">
+
 # SP-Survey
 
-### Platform & Template Library for Urban Visual Surveys
+### Open-Source Platform & Template Library for Visual Assessment of Urban Environment
 
 **Run image-based perception surveys. Start from 300+ published studies, or describe yours and let an AI write it.**
 
@@ -11,8 +13,6 @@
 [![Templates](https://img.shields.io/badge/paper_templates-300+-8A2BE2)](#template-library)
 [![Paper](https://img.shields.io/badge/📄-Paper-9cf)](https://www.sciencedirect.com/science/article/pii/S0360132325000514)
 [![License](https://img.shields.io/badge/License-CC_BY_4.0-green)](https://creativecommons.org/licenses/by/4.0/)
-
-<img src="./docs/demo-templates.gif" alt="Filtering the template library, then previewing Fechner's 1876 golden-section study" width="100%">
 
 [Template library](#template-library) · [Add your study](#add-your-study) · [Run it yourself](#run-it-yourself) · [Hosted platform](https://sp-survey.org)
 
@@ -23,6 +23,8 @@ SP-Survey is an open-source tool for studies where people look at streets, build
 - **Start from a published study.** Place Pulse, Streetscore, Scenic-Or-Not, Kaplan's restoration scale and 300+ more are rebuilt as surveys you can rerun or adapt.
 - **Or describe your study.** In Studio you write one paragraph and the AI writes the whole participant page. A page is saved only when it passes the SP-Scheme check, so responses are always recorded in a form the platform can analyse.
 - **Keep your data.** No login. Projects are local files, responses and media go to your own Supabase, and you deploy the participant site yourself.
+
+<img src="./docs/demo-templates.gif" alt="Filtering the template library by street view, then previewing a Helsinki street-greenery study and rating two street photos" width="100%">
 
 If this saves you time, a ⭐ helps other researchers find it.
 
