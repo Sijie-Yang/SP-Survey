@@ -9,12 +9,13 @@
 //                                              files already here, change nothing else
 //
 // The source is the public API of sp-survey.org (SP_SURVEY_URL overrides it).
-// One file per template: public/project_templates/<id>.json. Files of
-// templates that are not online, and of templates whose media ship in this
-// repository (the bundled demos), are left alone. It also writes catalog.json,
+// One file per template: public/project_templates/<id>.json. A template that
+// was mirrored from the library and has since been deleted there is deleted
+// here too. Files that never came from the library, and templates whose media
+// ship in this repository (the bundled demos), are left alone. It also writes catalog.json,
 // the light list that the Template Library page and the README are built from.
 // Afterwards run `node scripts/build-template-catalog.mjs` to refresh the README.
-import { mkdir, readFile, readdir, writeFile, stat } from 'node:fs/promises';
+import { mkdir, readFile, readdir, rm, writeFile, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
@@ -141,9 +142,28 @@ await pool(online, 4, async (row) => {
   }
 });
 
+// A mirrored file carries the library's `updatedAt`. When its template is no
+// longer online it was deleted there, so it goes here as well. If a tenth of
+// the mirror would go at once, the list is more likely wrong than the mirror.
+const onlineNow = new Set(online.map((row) => row.id));
+const allFiles = (await readdir(DIR)).filter((name) => name.endsWith('.json') && !['index.json', 'catalog.json'].includes(name));
+const allLoaded = await Promise.all(allFiles.map(async (name) => ({ name, tpl: await readJson(path.join(DIR, name)) })));
+const mirrored = allLoaded.filter(({ tpl }) => tpl?.updatedAt && !bundlesMedia(tpl));
+const gone = mirrored.filter(({ tpl }) => !onlineNow.has(tpl.id));
+const removed = [];
+if (gone.length * 10 > mirrored.length) {
+  failed.push(`${gone.length} of ${mirrored.length} mirrored templates are missing online; none was removed`);
+} else {
+  for (const { name, tpl } of gone) {
+    await rm(path.join(DIR, name));
+    await rm(path.join(DIR, tpl.id, 'media'), { recursive: true, force: true });
+    removed.push(tpl.id);
+  }
+}
+
 // index.json lists every template file, newest study first.
-const files = (await readdir(DIR)).filter((name) => name.endsWith('.json') && !['index.json', 'catalog.json'].includes(name));
-const loaded = await Promise.all(files.map(async (name) => ({ name, tpl: await readJson(path.join(DIR, name)) })));
+const loaded = allLoaded.filter(({ tpl }) => !removed.includes(tpl?.id));
+const files = loaded.map(({ name }) => name);
 const meta = loaded.map(({ name, tpl }) => (
   { name, year: Number(tpl?.paper?.year || tpl?.year) || 0, pinned: !!tpl?.isPinned }
 ));
@@ -201,5 +221,6 @@ const onlineIds = new Set(online.map((row) => `${row.id}.json`));
 const localOnly = files.filter((name) => !onlineIds.has(name));
 console.log(`${online.length} templates online: ${written} written, ${unchanged} unchanged${MEDIA ? `, ${mediaFiles} media files downloaded` : ''}.`);
 if (bundled.length) console.log(`Kept as they are (their media ship in this repository): ${bundled.join(', ')}`);
+if (removed.length) console.log(`Removed (deleted from the online library): ${removed.join(', ')}`);
 if (localOnly.length) console.log(`Only in this repository (left as they are): ${localOnly.join(', ')}`);
 if (failed.length) { console.error(`Failed:\n  ${failed.join('\n  ')}`); process.exitCode = 1; }
