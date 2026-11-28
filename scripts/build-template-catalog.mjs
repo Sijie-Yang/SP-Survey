@@ -39,21 +39,21 @@ function paperCell(paper) {
   return `[${cell(who)} (${paper.year})](${url}), *${cell(paper.venue)}*`;
 }
 
-function studyCell(tpl) {
-  // `contributor` is the GitHub login of whoever sent the study in.
-  return tpl.contributor ? `${cell(tpl.name)} <sub>by @${tpl.contributor}</sub>` : cell(tpl.name);
-}
+// The title opens the study's live preview in the online library.
+const previewLink = (tpl) => `[**${cell(tpl.name).replace(/\[/g, '\\[').replace(/\]/g, '\\]')}**](${data.source}?preview=${encodeURIComponent(tpl.id)})`;
 
 // One study = one row of two lines: the full title, then paper · task · place.
 function studyRow(tpl) {
   const details = [paperCell(tpl.paper), labels(tpl.task, TASK), placeOf(tpl)].filter(Boolean).join(' · ');
   const by = tpl.contributor ? ` <sub>by @${tpl.contributor}</sub>` : '';
-  return `| ${yearOf(tpl)} | **${cell(tpl.name)}**${by}<br>${details} |`;
+  return `| ${yearOf(tpl)} | ${previewLink(tpl)}${by}<br>${details} |`;
 }
 
 const isPaper = (tpl) => tpl.paper || tpl.source === 'paper';
-const papers = data.templates.filter(isPaper).sort((a, b) => yearOf(b) - yearOf(a) || a.id.localeCompare(b.id));
-const others = data.templates.filter((tpl) => !isPaper(tpl));
+// Templates marked online as duplicates waiting to be removed stay out of the list.
+const listed = data.templates.filter((tpl) => !/^\[duplicate/i.test(tpl.name || ''));
+const papers = listed.filter(isPaper).sort((a, b) => yearOf(b) - yearOf(a) || a.id.localeCompare(b.id));
+const others = listed.filter((tpl) => !isPaper(tpl));
 const places = new Set(papers.flatMap((tpl) => (tpl.location || []).map((c) => LOCATION[c] || c))
   .filter((label) => !['Global', 'International', 'Europe'].includes(label)));
 
@@ -92,7 +92,7 @@ const block = [
   '',
   '| Template | Task |',
   '|---|---|',
-  ...others.map((tpl) => `| ${studyCell(tpl)} | ${labels(tpl.task, TASK)} |`),
+  ...others.map((tpl) => `| ${previewLink(tpl)}${tpl.contributor ? ` <sub>by @${tpl.contributor}</sub>` : ''} | ${labels(tpl.task, TASK)} |`),
   '<!-- templates:end -->',
 ].join('\n');
 
